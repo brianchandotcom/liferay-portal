@@ -54,7 +54,6 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 
 		if (!hasOffset) {
 			addQueryForLimitedRows(sb, sql, limit);
-			addOptimizeForLimitedRows(sb, limit);
 
 			return sb.toString();
 		}
@@ -77,8 +76,6 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 		sb.append(") AS outerQuery WHERE rowNumber_ > ");
 		sb.append(offset);
 
-		addOptimizeForLimitedRows(sb, limit);
-
 		return sb.toString();
 	}
 
@@ -87,12 +84,11 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 		return _SUPPORTS_VARIABLE_LIMIT;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	protected void addOptimizeForLimitedRows(StringBundler sb, int limit) {
-		sb.append(StringPool.SPACE);
-		sb.append(
-			StringUtil.replace(
-				_SQL_OPTIMIZE_FOR_LIMITED_ROWS, "[$LIMIT$]",
-				String.valueOf(limit)));
 	}
 
 	protected void addQueryForLimitedRows(
@@ -108,9 +104,6 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 
 	private static final String _SQL_FETCH_FIRST_LIMITED_ROWS_ONLY =
 		"FETCH FIRST [$LIMIT$] ROWS ONLY";
-
-	private static final String _SQL_OPTIMIZE_FOR_LIMITED_ROWS =
-		"OPTIMIZE FOR [$LIMIT$] ROWS";
 
 	private static final boolean _SUPPORTS_VARIABLE_LIMIT = false;
 

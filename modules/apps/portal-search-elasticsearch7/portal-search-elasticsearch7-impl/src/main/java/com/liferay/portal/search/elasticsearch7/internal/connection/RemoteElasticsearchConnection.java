@@ -14,11 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch7.configuration.XPackSecurityConfiguration;
 
 import java.io.InputStream;
 
@@ -55,10 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = {
-		"com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
-		"com.liferay.portal.search.elasticsearch7.configuration.XPackSecurityConfiguration"
-	},
+	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
 	immediate = true, property = "operation.mode=REMOTE",
 	service = ElasticsearchConnection.class
 )
@@ -71,7 +66,8 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		replaceConfigurations(properties);
+		elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
+			ElasticsearchConfiguration.class, properties);
 	}
 
 	protected void configureSecurity(RestClientBuilder restClientBuilder) {
@@ -85,7 +81,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 					httpClientBuilder.setDefaultCredentialsProvider(
 						createCredentialsProvider());
 
-					if (xPackSecurityConfiguration.transportSSLEnabled()) {
+					if (elasticsearchConfiguration.httpSSLEnabled()) {
 						httpClientBuilder.setSSLContext(createSSLContext());
 					}
 
@@ -96,15 +92,14 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	}
 
 	protected CredentialsProvider createCredentialsProvider() {
-		String usernamePassword =
-			xPackSecurityConfiguration.username() + StringPool.COLON +
-				xPackSecurityConfiguration.password();
-
 		CredentialsProvider credentialsProvider =
 			new BasicCredentialsProvider();
 
 		credentialsProvider.setCredentials(
-			AuthScope.ANY, new UsernamePasswordCredentials(usernamePassword));
+			AuthScope.ANY,
+			new UsernamePasswordCredentials(
+				elasticsearchConfiguration.username(),
+				elasticsearchConfiguration.password()));
 
 		return credentialsProvider;
 	}
@@ -121,7 +116,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 		RestClientBuilder restClientBuilder = RestClient.builder(httpHosts);
 
-		if (xPackSecurityConfiguration.requiresAuthentication()) {
+		if (elasticsearchConfiguration.authenticationEnabled()) {
 			configureSecurity(restClientBuilder);
 		}
 
@@ -129,71 +124,30 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	}
 
 	protected SSLContext createSSLContext() {
+		try {
+			KeyStore keyStore = KeyStore.getInstance(
+				elasticsearchConfiguration.truststoreType());
+			String truststorePath = elasticsearchConfiguration.truststorePath();
+			String truststorePassword =
+				elasticsearchConfiguration.truststorePassword();
 
-		// This method will be updated in
-		// https://issues.liferay.com/browse/LPS-102296
-		// [Technical Task] Security and Encryption over https connection
+			Path path = Paths.get(truststorePath);
 
-		// These are the existing properties for the transport client in
-		// XPackSecuritySettingsContributor. We need to determine which ones
-		// still apply to the REST client
+			InputStream is = Files.newInputStream(path);
 
-		//"xpack.security.transport.ssl.enabled", "true"
+			keyStore.load(is, truststorePassword.toCharArray());
 
-		//"xpack.security.transport.ssl.verification_mode",
-		//XPackSecurityConfiguration.transportSSLVerificationMode()
+			SSLContextBuilder sslContextBuilder = SSLContexts.custom();
 
-		String certificateFormat =
-			xPackSecurityConfiguration.certificateFormat();
+			sslContextBuilder.loadKeyMaterial(
+				keyStore, truststorePassword.toCharArray());
+			sslContextBuilder.loadTrustMaterial(keyStore, null);
 
-		if (certificateFormat.equals("PKCS#12")) {
-			//"xpack.ssl.certificate",
-			//xPackSecurityConfiguration.sslCertificatePath()
-
-			//"xpack.ssl.certificate_authorities",
-			//xPackSecurityConfiguration.sslCertificateAuthoritiesPaths()
-
-			//"xpack.ssl.key", xPackSecurityConfiguration.sslKeyPath()
-		}
-		else {
-			//"xpack.ssl.keystore.password",
-			//xPackSecurityConfiguration.sslKeystorePassword()
-
-			//"xpack.ssl.keystore.path",
-			//xPackSecurityConfiguration.sslKeystorePath()
-
-			//"xpack.ssl.truststore.password",
-			//xPackSecurityConfiguration.sslTruststorePassword()
-
-			//"xpack.ssl.truststore.path",
-			//xPackSecurityConfiguration.sslTruststorePath()
-		}
-
-		String keyStoreFilePath = xPackSecurityConfiguration.sslKeystorePath();
-
-		Path keyStorePath = Paths.get(keyStoreFilePath);
-
-		SSLContext sslContext;
-
-		try (InputStream is = Files.newInputStream(keyStorePath)) {
-			KeyStore truststore = KeyStore.getInstance("jks");
-
-			String keyStorePass =
-				xPackSecurityConfiguration.sslKeystorePassword();
-
-			truststore.load(is, keyStorePass.toCharArray());
-
-			SSLContextBuilder sslBuilder = SSLContexts.custom();
-
-			sslBuilder.loadTrustMaterial(truststore, null);
-
-			sslContext = sslBuilder.build();
+			return sslContextBuilder.build();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
-		return sslContext;
 	}
 
 	@Deactivate
@@ -203,7 +157,8 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 	@Modified
 	protected synchronized void modified(Map<String, Object> properties) {
-		replaceConfigurations(properties);
+		elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
+			ElasticsearchConfiguration.class, properties);
 
 		if (isConnected()) {
 			close();
@@ -218,16 +173,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		}
 	}
 
-	protected void replaceConfigurations(Map<String, Object> properties) {
-		elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
-			ElasticsearchConfiguration.class, properties);
-		xPackSecurityConfiguration = ConfigurableUtil.createConfigurable(
-			XPackSecurityConfiguration.class, properties);
-	}
-
 	@Reference
 	protected Props props;
-
-	protected volatile XPackSecurityConfiguration xPackSecurityConfiguration;
 
 }

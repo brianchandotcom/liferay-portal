@@ -36,17 +36,6 @@ public class BackgroundTaskDisplayFactoryUtil {
 			backgroundTaskId);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #_getBackgroundTaskDisplayFactory()}
-	 */
-	@Deprecated
-	public static BackgroundTaskDisplayFactory
-		getBackgroundTaskDisplayFactory() {
-
-		return _getBackgroundTaskDisplayFactory();
-	}
-
 	private static BackgroundTaskDisplayFactory
 		_getBackgroundTaskDisplayFactory() {
 

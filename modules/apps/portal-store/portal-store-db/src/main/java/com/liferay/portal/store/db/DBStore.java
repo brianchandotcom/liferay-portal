@@ -19,7 +19,6 @@ import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.model.DLContentDataBlobModel;
 import com.liferay.document.library.content.service.DLContentLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
-import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.io.AutoDeleteFileInputStream;
 import com.liferay.petra.string.StringPool;
@@ -62,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "store.type=com.liferay.portal.store.db.DBStore",
 	service = Store.class
 )
-public class DBStore extends BaseStore {
+public class DBStore implements Store {
 
 	@Override
 	public void addFile(
@@ -151,8 +150,7 @@ public class DBStore extends BaseStore {
 				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (PortalException pe) {
-			logFailedDeletion(
-				companyId, repositoryId, fileName, versionLabel, pe);
+			throw new SystemException(pe);
 		}
 	}
 

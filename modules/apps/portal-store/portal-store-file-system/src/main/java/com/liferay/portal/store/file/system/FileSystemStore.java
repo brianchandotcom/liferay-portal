@@ -15,7 +15,7 @@
 package com.liferay.portal.store.file.system;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
-import com.liferay.document.library.kernel.store.BaseStore;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,7 +45,7 @@ import java.util.List;
  * @author Edward Han
  * @author Manuel de la Peña
  */
-public class FileSystemStore extends BaseStore {
+public class FileSystemStore implements Store {
 
 	public FileSystemStore(
 		FileSystemStoreConfiguration fileSystemStoreConfiguration) {
@@ -91,8 +91,6 @@ public class FileSystemStore extends BaseStore {
 		File dirNameDir = getDirNameDir(companyId, repositoryId, dirName);
 
 		if (!dirNameDir.exists()) {
-			logFailedDeletion(companyId, repositoryId, dirName, null, null);
-
 			return;
 		}
 
@@ -112,9 +110,6 @@ public class FileSystemStore extends BaseStore {
 			companyId, repositoryId, fileName, versionLabel);
 
 		if (!fileNameVersionFile.exists()) {
-			logFailedDeletion(
-				companyId, repositoryId, fileName, versionLabel, null);
-
 			return;
 		}
 
@@ -228,7 +223,7 @@ public class FileSystemStore extends BaseStore {
 
 		File repositoryDir = getRepositoryDir(companyId, repositoryId);
 
-		return new File(repositoryDir + StringPool.SLASH + fileName);
+		return new File(repositoryDir, fileName);
 	}
 
 	protected void getFileNames(
@@ -266,7 +261,7 @@ public class FileSystemStore extends BaseStore {
 
 		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
 
-		return new File(fileNameDir + StringPool.SLASH + version);
+		return new File(fileNameDir, version);
 	}
 
 	protected String getHeadVersionLabel(

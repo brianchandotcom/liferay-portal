@@ -45,7 +45,6 @@ import com.amazonaws.services.s3.transfer.Upload;
 
 import com.liferay.document.library.kernel.exception.AccessDeniedException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
-import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -94,7 +93,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "store.type=com.liferay.portal.store.s3.S3Store",
 	service = Store.class
 )
-public class S3Store extends BaseStore {
+public class S3Store implements Store {
 
 	@Override
 	public void addFile(

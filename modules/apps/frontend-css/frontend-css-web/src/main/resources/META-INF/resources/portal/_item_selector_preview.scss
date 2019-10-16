@@ -52,6 +52,8 @@
 
 		.icon-arrow {
 			font-size: 2rem;
+			position: relative;
+			z-index: 20;
 
 			&:active,
 			&:hover,
@@ -62,6 +64,15 @@
 
 		.info-panel {
 			color: #fff;
+			text-align: left;
+
+			.nav-link.active {
+				color: #fff;
+			}
+
+			.sidebar-dd {
+				color: #A7A9BC;
+			}
 		}
 	}
 

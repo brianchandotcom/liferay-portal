@@ -24,9 +24,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ViewCountService {
 
-	public void addViewCountEntry(
-		long companyId, long classNameId, long classPK);
-
 	public long getViewCount(long companyId, Class<?> clazz, long classPK);
 
 	public long getViewCount(long companyId, long classNameId, long classPK);

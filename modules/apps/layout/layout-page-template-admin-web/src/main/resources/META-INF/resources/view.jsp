@@ -21,6 +21,9 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
 <c:choose>
+	<c:when test='<%= Objects.equals(layoutPageTemplatesAdminDisplayContext.getTabs1(), "display-page-templates") %>'>
+		<liferay-util:include page="/view_display_pages.jsp" servletContext="<%= application %>" />
+	</c:when>
 	<c:when test='<%= Objects.equals(layoutPageTemplatesAdminDisplayContext.getTabs1(), "master-pages") %>'>
 		<liferay-util:include page="/view_master_pages.jsp" servletContext="<%= application %>" />
 	</c:when>

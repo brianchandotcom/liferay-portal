@@ -52,6 +52,16 @@ public class SafeLdapFilter {
 			Collections.emptyList());
 	}
 
+	public static SafeLdapFilter fromUnsafeFilter(
+			String unsafeFilter, LDAPFilterValidator ldapFilterValidator)
+		throws LDAPFilterException {
+
+		ldapFilterValidator.validate(unsafeFilter);
+
+		return new SafeLdapFilter(
+			new StringBundler(unsafeFilter), Collections.emptyList());
+	}
+
 	public static SafeLdapFilter ge(String key, Object value) {
 		return new SafeLdapFilter(
 			_concat(
@@ -89,16 +99,6 @@ public class SafeLdapFilter {
 				rfc2254Escape(key), StringPool.EQUAL,
 				rfc2254Escape(value, true)),
 			Collections.emptyList());
-	}
-
-	public static SafeLdapFilter validate(
-			String unsafeFilter, LDAPFilterValidator ldapFilterValidator)
-		throws LDAPFilterException {
-
-		ldapFilterValidator.validate(unsafeFilter);
-
-		return new SafeLdapFilter(
-			new StringBundler(unsafeFilter), Collections.emptyList());
 	}
 
 	public SafeLdapFilter and(SafeLdapFilter... safeLdapFilters) {
@@ -195,90 +195,6 @@ public class SafeLdapFilter {
 		return new SafeLdapFilter(filterSB, arguments);
 	}
 
-	public SafeLdapFilter replace(String[] keys, String[] values) {
-		if (keys == null) {
-			throw new IllegalArgumentException("Parameter keys array is null");
-		}
-
-		if (values == null) {
-			throw new IllegalArgumentException(
-				"Parameter values array is null");
-		}
-
-		if (keys.length > values.length) {
-			throw new IllegalArgumentException(
-				"Parameters keys and values must have the same length");
-		}
-
-		String[] placeholderValues = new String[values.length];
-
-		Arrays.fill(placeholderValues, _ARGUMENT_PLACEHOLDER);
-
-		List<Object> arguments = new ArrayList<>();
-		int argumentsPos = 0;
-		StringBundler sb = new StringBundler();
-
-		for (int i = 0; i < _filterSB.index(); i++) {
-			String string = _filterSB.stringAt(i);
-
-			if (string == null) {
-				continue;
-			}
-
-			if (Objects.equals(string, _ARGUMENT_PLACEHOLDER)) {
-				sb.append(_ARGUMENT_PLACEHOLDER);
-
-				arguments.add(_arguments.get(argumentsPos));
-
-				argumentsPos++;
-
-				continue;
-			}
-
-			TreeMap<Integer, String> valuesTreeMap = new TreeMap<>();
-
-			for (int j = 0; j < keys.length; j++) {
-				String key = keys[j];
-
-				int pos = string.indexOf(key);
-
-				while (pos > -1) {
-					valuesTreeMap.put(pos, values[j]);
-
-					pos = string.indexOf(key, pos + key.length());
-				}
-			}
-
-			if (valuesTreeMap.isEmpty()) {
-				sb.append(string);
-			}
-			else {
-				arguments.addAll(valuesTreeMap.values());
-
-				String replacedKeys = StringUtil.replace(
-					string, keys, placeholderValues);
-
-				int lastPos = 0;
-				int pos = replacedKeys.indexOf(_ARGUMENT_PLACEHOLDER);
-
-				while (pos > -1) {
-					sb.append(replacedKeys.substring(lastPos, pos));
-					sb.append(_ARGUMENT_PLACEHOLDER);
-
-					lastPos = pos + _ARGUMENT_PLACEHOLDER.length();
-
-					pos = replacedKeys.indexOf(_ARGUMENT_PLACEHOLDER, lastPos);
-				}
-
-				if (lastPos < replacedKeys.length()) {
-					sb.append(replacedKeys.substring(lastPos));
-				}
-			}
-		}
-
-		return new SafeLdapFilter(sb, arguments);
-	}
-
 	@Override
 	public String toString() {
 		return StringBundler.concat(generateFilter(), " ", _arguments);
@@ -287,6 +203,10 @@ public class SafeLdapFilter {
 	protected SafeLdapFilter(StringBundler filterSB, List<Object> arguments) {
 		_filterSB = filterSB;
 		_arguments = arguments;
+	}
+
+	protected StringBundler getFilterStringBundler() {
+		return _filterSB;
 	}
 
 	private static StringBundler _concat(String key, String op, String value) {
@@ -301,7 +221,7 @@ public class SafeLdapFilter {
 		return sb;
 	}
 
-	private static final String _ARGUMENT_PLACEHOLDER = "(PLACEHOLDER)";
+	protected static final String _ARGUMENT_PLACEHOLDER = "(PLACEHOLDER)";
 
 	private static final String[] _RFC2254_ESCAPE_KEYS = {
 		StringPool.BACK_SLASH, StringPool.CLOSE_PARENTHESIS,

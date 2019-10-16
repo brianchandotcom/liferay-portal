@@ -83,7 +83,7 @@ if (fileEntryId != 0) {
 		</div>
 	</div>
 
-	<span class="icon-check">
+	<span class="selection-status">
 		<clay:icon
 			symbol="check"
 		/>

@@ -455,7 +455,7 @@ input.switch {
 /* ---------- Image selector ---------- */
 
 .taglib-image-selector {
-	.icon-check {
+	.selection-status {
 		@include transition(opacity 0.2s ease-in-out);
 
 		border-radius: 30px;

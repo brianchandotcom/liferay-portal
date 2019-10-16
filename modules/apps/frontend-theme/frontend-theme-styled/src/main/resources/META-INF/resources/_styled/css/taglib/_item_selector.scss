@@ -3,7 +3,7 @@
 		background: #fff;
 	}
 
-	.icon-check {
+	.selection-status {
 		background: #fff;
 		opacity: 0;
 		z-index: -1;
@@ -16,7 +16,7 @@
 		}
 	}
 
-	&.check-active .icon-check {
+	&.check-active .selection-status {
 		opacity: 1;
 		z-index: 0;
 	}
@@ -28,7 +28,7 @@
 			opacity: 0;
 		}
 
-		.icon-check {
+		.selection-status {
 			opacity: 0;
 		}
 
@@ -54,7 +54,7 @@
 			opacity: 0;
 		}
 
-		.icon-check {
+		.selection-status {
 			opacity: 0;
 		}
 	}

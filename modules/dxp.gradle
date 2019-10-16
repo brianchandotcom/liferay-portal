@@ -14,28 +14,13 @@ if (System.getenv("JENKINS_HOME")) {
 
 setUpProfileDXP {
 	doLast {
-		File gitCommitPortalPrivateFile = new File(projectDir.parentFile, "git-commit-portal-private")
-
-		String gitCommitPortalPrivateCommit = gitCommitPortalPrivateFile.text.trim()
-
-		ByteArrayOutputStream outputByteArrayOutputStream = new ByteArrayOutputStream()
-
 		exec {
-			commandLine "git", "log", "-n", "1", gitCommitPortalPrivateCommit
-			ignoreExitValue = true
-			standardOutput = outputByteArrayOutputStream
+			commandLine "git", "fetch", "--force", "--no-tags", repositoryURL, "master-private:master-private"
 			workingDir = projectDir.parentFile
 		}
 
-		if (Validator.isNull(outputByteArrayOutputStream.toString())) {
-			exec {
-				commandLine "git", "fetch", "--force", "--no-tags", repositoryURL, "master-private:master-private"
-				workingDir = projectDir.parentFile
-			}
-		}
-
 		exec {
-			commandLine "git", "tag", "--force", "git-commit-portal-private", gitCommitPortalPrivateCommit
+			commandLine "git", "tag", "--force", "git-commit-portal-private", "master-private"
 			workingDir = projectDir.parentFile
 		}
 

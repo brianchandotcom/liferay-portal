@@ -13,7 +13,7 @@
  */
 
 import Collapse from './../../common/Collapse.es';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import SearchForm from '../../common/SearchForm.es';
 import SidebarCard from './../SidebarCard.es';
 import SidebarElementsDragDrop from './SidebarElementsDragDrop.es';
@@ -26,7 +26,26 @@ const SidebarElements = () => {
 	const dispatch = useDispatch();
 	const elements = useSelector(state => state.elements);
 	const [searchValue, setSearchValue] = useState('');
-	const [filteredElements, setFilteredElements] = useState(elements);
+
+	const filteredElements = useMemo(() => {
+		const searchValueLowerCase = searchValue.toLowerCase();
+
+		return elements
+			.map(fragmentCollection => {
+				return {
+					...fragmentCollection,
+					fragmentEntries: fragmentCollection.fragmentEntries.filter(
+						fragmentEntry =>
+							fragmentEntry.name
+								.toLowerCase()
+								.indexOf(searchValueLowerCase) !== -1
+					)
+				};
+			})
+			.filter(fragmentCollection => {
+				return fragmentCollection.fragmentEntries.length > 0;
+			});
+	}, [searchValue, elements]);
 
 	useEffect(() => {
 		const dragDrop = new SidebarElementsDragDrop({dispatch});
@@ -35,28 +54,6 @@ const SidebarElements = () => {
 			dragDrop.dispose();
 		};
 	}, [dispatch]);
-
-	useEffect(() => {
-		const searchValueLowerCase = searchValue.toLowerCase();
-
-		setFilteredElements(
-			elements
-				.map(fragmentCollection => {
-					return {
-						...fragmentCollection,
-						fragmentEntries: fragmentCollection.fragmentEntries.filter(
-							fragmentEntry =>
-								fragmentEntry.name
-									.toLowerCase()
-									.indexOf(searchValueLowerCase) !== -1
-						)
-					};
-				})
-				.filter(fragmentCollection => {
-					return fragmentCollection.fragmentEntries.length > 0;
-				})
-		);
-	}, [searchValue, elements]);
 
 	return (
 		<>

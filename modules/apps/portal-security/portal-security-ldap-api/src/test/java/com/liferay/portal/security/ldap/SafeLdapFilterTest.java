@@ -300,6 +300,13 @@ public class SafeLdapFilterTest {
 			SafeLdapFilter.rfc2254Escape("C:\\* (DOS) \u0000", false));
 	}
 
+
+	@Test
+	public void testOperatorsEscape() {
+		Assert.assertEquals(
+			"\\3c\\3d\\3e\\7e", SafeLdapFilter.rfc2254Escape("<=>~"));
+	}
+
 	@Test
 	public void testSubstring() {
 		test(SafeLdapFilter.substring("key", "prefix*"), "(key=prefix*)");

@@ -1756,16 +1756,16 @@ public class JournalArticleFinderImpl
 			qPos.add(groupId);
 			qPos.add(classNameId);
 
+			for (long folderId : folderIds) {
+				qPos.add(folderId);
+			}
+
 			if (queryDefinition.getOwnerUserId() > 0) {
 				qPos.add(queryDefinition.getOwnerUserId());
 
 				if (queryDefinition.isIncludeOwner()) {
 					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
 				}
-			}
-
-			for (long folderId : folderIds) {
-				qPos.add(folderId);
 			}
 
 			qPos.add(queryDefinition.getStatus());

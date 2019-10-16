@@ -17,11 +17,11 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const ImagePreview = props => {
-	if (props.imagePreviewURL) {
+const ImagePreview = ({imagePreviewURL}) => {
+	if (imagePreviewURL) {
 		return (
 			<div className="fragments-editor-sidebar-section__card-image">
-				<img alt="thumbnail" src={props.imagePreviewURL} />
+				<img alt="thumbnail" src={imagePreviewURL} />
 			</div>
 		);
 	}

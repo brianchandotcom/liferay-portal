@@ -16,7 +16,7 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const SearchForm = props => (
+const SearchForm = ({onChange, value}) => (
 	<form className="mb-3" role="search">
 		<div className="input-group">
 			<div className="input-group-item">
@@ -27,11 +27,11 @@ const SearchForm = props => (
 					className="form-control form-control-sm input-group-inset input-group-inset-after"
 					id="searchInput"
 					onChange={event => {
-						props.onChange(event.target.value);
+						onChange(event.target.value);
 					}}
 					placeholder={`${Liferay.Language.get('search')}...`}
 					type="text"
-					value={props.value}
+					value={value}
 				/>
 				<div className="input-group-inset-item input-group-inset-item-after">
 					<ClayIcon symbol="search" />

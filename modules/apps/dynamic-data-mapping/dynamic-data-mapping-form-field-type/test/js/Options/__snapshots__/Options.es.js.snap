@@ -1,38 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Options should allow the user to order the fieldName options by dragging and dropping the options 1`] = `
-<div>
-  <div class="form-group">
-    <div class="ddm-field-options-container">
-      <div class="ddm-options-target" data-index="0"></div>
-      <div class="ddm-field-options" data-index="0"><span class="ddm-options-drag "><svg aria-hidden="true" class="lexicon-icon lexicon-icon-drag">
-            <use xlink:href="icons.svg#drag"></use>
-          </svg></span>
-        <div class="ddm-option-entry">
-          <div class="form-group">
-            <div class="form-group"><input class="ddm-field-text form-control" name="keyValueLabeloption0" type="text" placeholder="enter-an-option" value=""></div>
-            <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Options should show the options 1`] = `
-<div>
-  <div class="form-group">
-    <div class="ddm-field-options-container">
-      <div class="ddm-options-target" data-index="0"></div>
-      <div class="ddm-field-options" data-index="0"><span class="ddm-options-drag "><svg aria-hidden="true" class="lexicon-icon lexicon-icon-drag">
-            <use xlink:href="icons.svg#drag"></use>
-          </svg></span>
-        <div class="ddm-option-entry">
-          <div class="form-group">
-            <div class="form-group"><input class="ddm-field-text form-control" name="keyValueLabeloption0" type="text" placeholder="enter-an-option" value=""></div>
-            <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
-          </div>
+exports[`Options shows the options 1`] = `
+<div class="form-group" data-field-name="options">
+  <div class="ddm-field-options-container">
+    <div class="ddm-options-target" data-index="0"></div>
+    <div class="ddm-field-options" data-index="0"><span class="ddm-options-drag "><svg aria-hidden="true" class="lexicon-icon lexicon-icon-drag">
+          <use xlink:href="icons.svg#drag"></use>
+        </svg></span>
+      <div class="ddm-option-entry">
+        <div class="form-group" data-field-name="option0">
+          <div class="form-group" data-field-name="keyValueLabeloption0"><input class="ddm-field-text form-control" name="keyValueLabeloption0" type="text" placeholder="enter-an-option" value=""></div>
+          <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
         </div>
       </div>
     </div>

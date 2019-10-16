@@ -48,20 +48,6 @@ public class ExportImportLocalServiceWrapper
 			exportImportConfiguration);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public java.io.File exportLayoutsAsFile(
-			long userId, long groupId, boolean privateLayout,
-			java.util.Map<String, String[]> parameterMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _exportImportLocalService.exportLayoutsAsFile(
-			userId, groupId, privateLayout, parameterMap);
-	}
-
 	@Override
 	public long exportLayoutsAsFileInBackground(
 			long userId,
@@ -142,20 +128,6 @@ public class ExportImportLocalServiceWrapper
 
 		_exportImportLocalService.importLayouts(
 			exportImportConfiguration, inputStream);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void importLayouts(
-			long userId, long groupId, boolean privateLayout,
-			java.util.Map<String, String[]> parameterMap, java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_exportImportLocalService.importLayouts(
-			userId, groupId, privateLayout, parameterMap, file);
 	}
 
 	@Override

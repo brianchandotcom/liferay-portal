@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import java.io.File;
 import java.io.InputStream;
 
-import java.util.Map;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -53,15 +51,6 @@ public interface ExportImportLocalService extends BaseLocalService {
 	 */
 	public File exportLayoutsAsFile(
 			ExportImportConfiguration exportImportConfiguration)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public File exportLayoutsAsFile(
-			long userId, long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap)
 		throws PortalException;
 
 	public long exportLayoutsAsFileInBackground(
@@ -98,15 +87,6 @@ public interface ExportImportLocalService extends BaseLocalService {
 	public void importLayouts(
 			ExportImportConfiguration exportImportConfiguration,
 			InputStream inputStream)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public void importLayouts(
-			long userId, long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, File file)
 		throws PortalException;
 
 	public void importLayoutsDataDeletions(

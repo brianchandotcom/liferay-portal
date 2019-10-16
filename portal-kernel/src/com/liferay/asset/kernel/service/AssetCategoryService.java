@@ -71,15 +71,6 @@ public interface AssetCategoryService extends BaseService {
 
 	public void deleteCategories(long[] categoryIds) throws PortalException;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), Replaced by {@link
-	 #deleteCategories(long[])}
-	 */
-	@Deprecated
-	public List<AssetCategory> deleteCategories(
-			long[] categoryIds, ServiceContext serviceContext)
-		throws PortalException;
-
 	public void deleteCategory(long categoryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -116,20 +116,6 @@ public class StagingLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static com.liferay.exportimport.kernel.lar.MissingReferences
-			publishStagingRequest(
-				long userId, long stagingRequestId, boolean privateLayout,
-				java.util.Map<String, String[]> parameterMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().publishStagingRequest(
-			userId, stagingRequestId, privateLayout, parameterMap);
-	}
-
 	public static com.liferay.exportimport.kernel.lar.MissingReferences
 			publishStagingRequest(
 				long userId, long stagingRequestId,
@@ -147,20 +133,6 @@ public class StagingLocalServiceUtil {
 
 		getService().updateStagingRequest(
 			userId, stagingRequestId, fileName, bytes);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #publishStagingRequest(long, long, boolean, Map)}
-	 */
-	@Deprecated
-	public static com.liferay.exportimport.kernel.lar.MissingReferences
-		validateStagingRequest(
-			long userId, long stagingRequestId, boolean privateLayout,
-			java.util.Map<String, String[]> parameterMap) {
-
-		return getService().validateStagingRequest(
-			userId, stagingRequestId, privateLayout, parameterMap);
 	}
 
 	public static StagingLocalService getService() {

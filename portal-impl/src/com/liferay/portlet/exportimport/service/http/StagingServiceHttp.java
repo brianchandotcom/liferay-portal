@@ -200,48 +200,6 @@ public class StagingServiceHttp {
 	public static com.liferay.exportimport.kernel.lar.MissingReferences
 			publishStagingRequest(
 				HttpPrincipal httpPrincipal, long stagingRequestId,
-				boolean privateLayout,
-				java.util.Map<String, String[]> parameterMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				StagingServiceUtil.class, "publishStagingRequest",
-				_publishStagingRequestParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, stagingRequestId, privateLayout, parameterMap);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (com.liferay.exportimport.kernel.lar.MissingReferences)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.exportimport.kernel.lar.MissingReferences
-			publishStagingRequest(
-				HttpPrincipal httpPrincipal, long stagingRequestId,
 				com.liferay.exportimport.kernel.model.ExportImportConfiguration
 					exportImportConfiguration)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -249,7 +207,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StagingServiceUtil.class, "publishStagingRequest",
-				_publishStagingRequestParameterTypes5);
+				_publishStagingRequestParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, stagingRequestId, exportImportConfiguration);
@@ -289,7 +247,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StagingServiceUtil.class, "updateStagingRequest",
-				_updateStagingRequestParameterTypes6);
+				_updateStagingRequestParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, stagingRequestId, fileName, bytes);
@@ -316,48 +274,6 @@ public class StagingServiceHttp {
 		}
 	}
 
-	public static com.liferay.exportimport.kernel.lar.MissingReferences
-			validateStagingRequest(
-				HttpPrincipal httpPrincipal, long stagingRequestId,
-				boolean privateLayout,
-				java.util.Map<String, String[]> parameterMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				StagingServiceUtil.class, "validateStagingRequest",
-				_validateStagingRequestParameterTypes7);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, stagingRequestId, privateLayout, parameterMap);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (com.liferay.exportimport.kernel.lar.MissingReferences)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(StagingServiceHttp.class);
 
 	private static final Class<?>[] _cleanUpStagingRequestParameterTypes0 =
@@ -371,16 +287,12 @@ public class StagingServiceHttp {
 			int.class, int.class, String.class, java.util.List.class
 		};
 	private static final Class<?>[] _publishStagingRequestParameterTypes4 =
-		new Class[] {long.class, boolean.class, java.util.Map.class};
-	private static final Class<?>[] _publishStagingRequestParameterTypes5 =
 		new Class[] {
 			long.class,
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
 				class
 		};
-	private static final Class<?>[] _updateStagingRequestParameterTypes6 =
+	private static final Class<?>[] _updateStagingRequestParameterTypes5 =
 		new Class[] {long.class, String.class, byte[].class};
-	private static final Class<?>[] _validateStagingRequestParameterTypes7 =
-		new Class[] {long.class, boolean.class, java.util.Map.class};
 
 }

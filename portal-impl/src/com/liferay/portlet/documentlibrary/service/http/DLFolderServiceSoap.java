@@ -394,26 +394,6 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getSubfolderIds(List, long, long, boolean)}
-	 */
-	@Deprecated
-	public static void getSubfolderIds(
-			Long[] folderIds, long groupId, long folderId)
-		throws RemoteException {
-
-		try {
-			DLFolderServiceUtil.getSubfolderIds(
-				ListUtil.toList(folderIds), groupId, folderId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void getSubfolderIds(
 			Long[] folderIds, long groupId, long folderId, boolean recurse)
 		throws RemoteException {
@@ -604,37 +584,6 @@ public class DLFolderServiceSoap {
 					folderId, parentFolderId, name, description,
 					defaultFileEntryTypeId, ListUtil.toList(fileEntryTypeIds),
 					restrictionType, serviceContext);
-
-			return com.liferay.document.library.kernel.model.DLFolderSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by more general {@link
-	 #updateFolder(long, String, String, long, List, int,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.document.library.kernel.model.DLFolderSoap
-			updateFolder(
-				long folderId, String name, String description,
-				long defaultFileEntryTypeId, Long[] fileEntryTypeIds,
-				boolean overrideFileEntryTypes,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.document.library.kernel.model.DLFolder returnValue =
-				DLFolderServiceUtil.updateFolder(
-					folderId, name, description, defaultFileEntryTypeId,
-					ListUtil.toList(fileEntryTypeIds), overrideFileEntryTypes,
-					serviceContext);
 
 			return com.liferay.document.library.kernel.model.DLFolderSoap.
 				toSoapModel(returnValue);

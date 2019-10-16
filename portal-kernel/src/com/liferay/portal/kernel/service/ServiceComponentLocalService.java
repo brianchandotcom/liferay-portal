@@ -241,18 +241,6 @@ public interface ServiceComponentLocalService
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #initServiceComponent(ServiceComponentConfiguration,
-	 ClassLoader, String, long, long)}
-	 */
-	@Deprecated
-	public ServiceComponent initServiceComponent(
-			ServiceComponentConfiguration serviceComponentConfiguration,
-			ClassLoader classLoader, String buildNamespace, long buildNumber,
-			long buildDate, boolean buildAutoUpgrade)
-		throws PortalException;
-
-	/**
 	 * Updates the service component in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param serviceComponent the service component
@@ -261,18 +249,6 @@ public interface ServiceComponentLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ServiceComponent updateServiceComponent(
 		ServiceComponent serviceComponent);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #upgradeDB(ClassLoader, String, long, ServiceComponent,
-	 String, String, String)}
-	 */
-	@Deprecated
-	public void upgradeDB(
-			ClassLoader classLoader, String buildNamespace, long buildNumber,
-			boolean buildAutoUpgrade, ServiceComponent previousServiceComponent,
-			String tablesSQL, String sequencesSQL, String indexesSQL)
-		throws Exception;
 
 	public void upgradeDB(
 			ClassLoader classLoader, String buildNamespace, long buildNumber,

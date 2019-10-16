@@ -81,22 +81,6 @@ public interface AnnouncementsEntryLocalService
 			Date expirationDate, int priority, boolean alert)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(long,
-	 long, long, String, String, String, String, Date, Date, int,
-	 boolean)}
-	 */
-	@Deprecated
-	public AnnouncementsEntry addEntry(
-			long userId, long classNameId, long classPK, String title,
-			String content, String url, String type, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, boolean displayImmediately,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, int priority, boolean alert)
-		throws PortalException;
-
 	public void checkEntries() throws PortalException;
 
 	public void checkEntries(Date startDate, Date endDate)
@@ -294,15 +278,6 @@ public interface AnnouncementsEntryLocalService
 		int expirationDateMinute, boolean alert, int flagValue, int start,
 		int end);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getEntries(long,
-	 long, long, boolean, int, int)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AnnouncementsEntry> getEntries(
-		long classNameId, long classPK, boolean alert, int start, int end);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AnnouncementsEntry> getEntries(
 		long companyId, long classNameId, long classPK, boolean alert,
@@ -329,14 +304,6 @@ public interface AnnouncementsEntryLocalService
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getEntriesCount(long, long, long, boolean)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long classNameId, long classPK, boolean alert);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(
@@ -393,20 +360,6 @@ public interface AnnouncementsEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AnnouncementsEntry updateAnnouncementsEntry(
 		AnnouncementsEntry announcementsEntry);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateEntry(long,
-	 String, String, String, String, Date, Date, int)}
-	 */
-	@Deprecated
-	public AnnouncementsEntry updateEntry(
-			long userId, long entryId, String title, String content, String url,
-			String type, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			boolean displayImmediately, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute, int priority)
-		throws PortalException;
 
 	public AnnouncementsEntry updateEntry(
 			long entryId, String title, String content, String url, String type,

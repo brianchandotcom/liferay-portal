@@ -108,13 +108,6 @@ public interface DLFolderLocalService
 	@Transactional(enabled = false)
 	public DLFolder createDLFolder(long folderId);
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #deleteAllByGroup(long)}
-	 */
-	@Deprecated
-	public void deleteAll(long groupId) throws PortalException;
-
 	public void deleteAllByGroup(long groupId) throws PortalException;
 
 	public void deleteAllByRepository(long repositoryId) throws PortalException;
@@ -398,14 +391,6 @@ public interface DLFolderLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getFolderId(long companyId, long folderId);
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getGroupFolderIds(long, long)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Long> getFolderIds(long groupId, long parentFolderId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFolder> getFolders(long groupId, long parentFolderId);
 
@@ -502,15 +487,6 @@ public interface DLFolderLocalService
 	public void getRepositorySubfolderIds(
 		List<Long> folderIds, long repositoryId, long folderId);
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getGroupSubfolderIds(List, long, long)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(
-		List<Long> folderIds, long groupId, long folderId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getUniqueFolderName(
 		String uuid, long groupId, long parentFolderId, String name, int count);
@@ -567,18 +543,6 @@ public interface DLFolderLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFolder updateDLFolder(DLFolder dlFolder);
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateFolder(long, long, String, String, long, List, int,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public DLFolder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
-			boolean overrideFileEntryTypes, ServiceContext serviceContext)
-		throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
@@ -586,36 +550,11 @@ public interface DLFolderLocalService
 			int restrictionType, ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced {@link
-	 #updateFolder(long, long, String, String, long, List, int,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public DLFolder updateFolder(
-			long folderId, String name, String description,
-			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
-			boolean overrideFileEntryTypes, ServiceContext serviceContext)
-		throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFolder updateFolder(
 			long folderId, String name, String description,
 			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
 			int restrictionType, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #
-	 updateFolderAndFileEntryTypes(long, long, long, String,
-	 String, long, List, int, ServiceContext)}
-	 */
-	@Deprecated
-	public DLFolder updateFolderAndFileEntryTypes(
-			long userId, long folderId, long parentFolderId, String name,
-			String description, long defaultFileEntryTypeId,
-			List<Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 	public DLFolder updateFolderAndFileEntryTypes(

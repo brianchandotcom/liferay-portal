@@ -808,18 +808,6 @@ public interface GroupLocalService
 	public List<Group> getLiveGroups();
 
 	/**
-	 * Returns all non-system groups having <code>null</code> or empty friendly
-	 * URLs.
-	 *
-	 * @return the non-system groups having <code>null</code> or empty
-	 friendly URLs
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Group> getNullFriendlyURLGroups();
-
-	/**
 	 * Returns the specified organization group.
 	 *
 	 * @param companyId the primary key of the company

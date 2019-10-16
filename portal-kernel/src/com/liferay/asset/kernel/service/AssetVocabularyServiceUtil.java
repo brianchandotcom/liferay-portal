@@ -83,17 +83,6 @@ public class AssetVocabularyServiceUtil {
 		return getService().fetchVocabulary(vocabularyId);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary>
-			getCompanyVocabularies(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getCompanyVocabularies(companyId);
-	}
-
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary>
 		getGroupsVocabularies(long[] groupIds) {
 
@@ -208,18 +197,6 @@ public class AssetVocabularyServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 AssetUtil#filterVocabularyIds(PermissionChecker, long[])}
-	 */
-	@Deprecated
-	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary>
-			getVocabularies(long[] vocabularyIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getVocabularies(vocabularyIds);
 	}
 
 	public static com.liferay.asset.kernel.model.AssetVocabulary getVocabulary(

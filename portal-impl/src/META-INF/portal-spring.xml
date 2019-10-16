@@ -263,10 +263,8 @@
 	<bean class="com.liferay.portlet.ratings.service.impl.RatingsEntryLocalServiceImpl" id="com.liferay.ratings.kernel.service.RatingsEntryLocalService" />
 	<bean class="com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl" id="com.liferay.ratings.kernel.service.RatingsEntryService" />
 	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryPersistenceImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence" />
-	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryFinderImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsEntryFinder" />
 	<bean class="com.liferay.portlet.ratings.service.impl.RatingsStatsLocalServiceImpl" id="com.liferay.ratings.kernel.service.RatingsStatsLocalService" />
 	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsPersistenceImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence" />
-	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsFinderImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsStatsFinder" />
 	<bean class="com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityLocalService" />
 	<bean class="com.liferay.portlet.social.service.impl.SocialActivityServiceImpl" id="com.liferay.social.kernel.service.SocialActivityService" />
 	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityPersistence" />

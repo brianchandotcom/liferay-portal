@@ -154,19 +154,6 @@ public class DLAppHelperLocalServiceUtil {
 		getService().moveDependentsToTrash(dlFolder);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #moveDependentsToTrash(DLFolder)}
-	 */
-	@Deprecated
-	public static void moveDependentsToTrash(
-			java.util.List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().moveDependentsToTrash(
-			dlFileEntriesAndDLFolders, trashEntryId);
-	}
-
 	public static com.liferay.portal.kernel.repository.model.FileEntry
 			moveFileEntryFromTrash(
 				long userId,
@@ -265,31 +252,6 @@ public class DLAppHelperLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().restoreDependentsFromTrash(dlFolder);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #restoreDependentsFromTrash(DLFolder)}
-	 */
-	@Deprecated
-	public static void restoreDependentsFromTrash(
-			java.util.List<Object> dlFileEntriesAndDLFolders)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().restoreDependentsFromTrash(dlFileEntriesAndDLFolders);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #restoreDependentsFromTrash(List)}
-	 */
-	@Deprecated
-	public static void restoreDependentsFromTrash(
-			java.util.List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().restoreDependentsFromTrash(
-			dlFileEntriesAndDLFolders, trashEntryId);
 	}
 
 	public static void restoreFileEntryFromTrash(

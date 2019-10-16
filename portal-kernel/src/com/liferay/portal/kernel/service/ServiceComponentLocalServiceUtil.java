@@ -290,25 +290,6 @@ public class ServiceComponentLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #initServiceComponent(ServiceComponentConfiguration,
-	 ClassLoader, String, long, long)}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.model.ServiceComponent
-			initServiceComponent(
-				com.liferay.portal.kernel.service.configuration.
-					ServiceComponentConfiguration serviceComponentConfiguration,
-				ClassLoader classLoader, String buildNamespace,
-				long buildNumber, long buildDate, boolean buildAutoUpgrade)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().initServiceComponent(
-			serviceComponentConfiguration, classLoader, buildNamespace,
-			buildNumber, buildDate, buildAutoUpgrade);
-	}
-
-	/**
 	 * Updates the service component in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param serviceComponent the service component
@@ -319,25 +300,6 @@ public class ServiceComponentLocalServiceUtil {
 			com.liferay.portal.kernel.model.ServiceComponent serviceComponent) {
 
 		return getService().updateServiceComponent(serviceComponent);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #upgradeDB(ClassLoader, String, long, ServiceComponent,
-	 String, String, String)}
-	 */
-	@Deprecated
-	public static void upgradeDB(
-			ClassLoader classLoader, String buildNamespace, long buildNumber,
-			boolean buildAutoUpgrade,
-			com.liferay.portal.kernel.model.ServiceComponent
-				previousServiceComponent,
-			String tablesSQL, String sequencesSQL, String indexesSQL)
-		throws Exception {
-
-		getService().upgradeDB(
-			classLoader, buildNamespace, buildNumber, buildAutoUpgrade,
-			previousServiceComponent, tablesSQL, sequencesSQL, indexesSQL);
 	}
 
 	public static void upgradeDB(

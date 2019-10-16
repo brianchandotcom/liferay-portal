@@ -72,23 +72,6 @@ public class DLFileEntryLocalServiceWrapper
 		return _dlFileEntryLocalService.cancelCheckOut(userId, fileEntryId);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #checkInFileEntry(long, long, DLVersionNumberIncrease,
-	 String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean majorVersion,
-			String changeLog,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_dlFileEntryLocalService.checkInFileEntry(
-			userId, fileEntryId, majorVersion, changeLog, serviceContext);
-	}
-
 	@Override
 	public void checkInFileEntry(
 			long userId, long fileEntryId,
@@ -611,36 +594,6 @@ public class DLFileEntryLocalServiceWrapper
 		return _dlFileEntryLocalService.getExtraSettingsFileEntriesCount();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
-	 String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public java.io.File getFile(
-			long userId, long fileEntryId, String version,
-			boolean incrementCounter)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFileEntryLocalService.getFile(
-			userId, fileEntryId, version, incrementCounter);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
-	 String, boolean, int)}
-	 */
-	@Deprecated
-	@Override
-	public java.io.File getFile(
-			long userId, long fileEntryId, String version,
-			boolean incrementCounter, int increment)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFileEntryLocalService.getFile(
-			userId, fileEntryId, version, incrementCounter, increment);
-	}
-
 	@Override
 	public java.io.File getFile(
 			long fileEntryId, String version, boolean incrementCounter)
@@ -662,20 +615,6 @@ public class DLFileEntryLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getFileAsStream(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public java.io.InputStream getFileAsStream(
-			long userId, long fileEntryId, String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFileEntryLocalService.getFileAsStream(
-			userId, fileEntryId, version);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 #getFileAsStream(long, String, boolean)}
 	 */
 	@Deprecated
@@ -687,21 +626,6 @@ public class DLFileEntryLocalServiceWrapper
 
 		return _dlFileEntryLocalService.getFileAsStream(
 			userId, fileEntryId, version, incrementCounter);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getFileAsStream(long, String, boolean, int)}
-	 */
-	@Deprecated
-	@Override
-	public java.io.InputStream getFileAsStream(
-			long userId, long fileEntryId, String version,
-			boolean incrementCounter, int increment)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFileEntryLocalService.getFileAsStream(
-			userId, fileEntryId, version, incrementCounter, increment);
 	}
 
 	@Override
@@ -803,22 +727,6 @@ public class DLFileEntryLocalServiceWrapper
 	@Override
 	public int getFileEntriesCount() {
 		return _dlFileEntryLocalService.getFileEntriesCount();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public int getFileEntriesCount(
-		long groupId, com.liferay.portal.kernel.util.DateRange dateRange,
-		long repositoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.document.library.kernel.model.DLFileEntry>
-				queryDefinition) {
-
-		return _dlFileEntryLocalService.getFileEntriesCount(
-			groupId, dateRange, repositoryId, queryDefinition);
 	}
 
 	@Override
@@ -970,33 +878,11 @@ public class DLFileEntryLocalServiceWrapper
 		return _dlFileEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry>
-		getMisversionedFileEntries() {
-
-		return _dlFileEntryLocalService.getMisversionedFileEntries();
-	}
-
 	@Override
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry>
 		getNoAssetFileEntries() {
 
 		return _dlFileEntryLocalService.getNoAssetFileEntries();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry>
-		getOrphanedFileEntries() {
-
-		return _dlFileEntryLocalService.getOrphanedFileEntries();
 	}
 
 	/**
@@ -1072,35 +958,6 @@ public class DLFileEntryLocalServiceWrapper
 	@Override
 	public boolean isFileEntryCheckedOut(long fileEntryId) {
 		return _dlFileEntryLocalService.isFileEntryCheckedOut(fileEntryId);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean isKeepFileVersionLabel(
-			long fileEntryId, boolean majorVersion,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFileEntryLocalService.isKeepFileVersionLabel(
-			fileEntryId, majorVersion, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #isKeepFileVersionLabel(long, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public boolean isKeepFileVersionLabel(
-			long fileEntryId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFileEntryLocalService.isKeepFileVersionLabel(
-			fileEntryId, serviceContext);
 	}
 
 	@Override

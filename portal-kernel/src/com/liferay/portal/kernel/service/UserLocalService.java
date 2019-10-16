@@ -1009,16 +1009,6 @@ public interface UserLocalService
 	public List<User> getNoAnnouncementsDeliveries(String type);
 
 	/**
-	 * Returns all the users who do not have any contacts.
-	 *
-	 * @return the users who do not have any contacts
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> getNoContacts();
-
-	/**
 	 * Returns all the users who do not belong to any groups, excluding the
 	 * default user.
 	 *
@@ -1565,20 +1555,6 @@ public interface UserLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isPasswordExpired(User user) throws PortalException;
-
-	/**
-	 * Returns <code>true</code> if the password policy is configured to warn
-	 * the user that his password is expiring and the remaining time until
-	 * expiration is equal or less than the configured warning time.
-	 *
-	 * @param user the user
-	 * @return <code>true</code> if the user's password is expiring soon;
-	 <code>false</code> otherwise
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isPasswordExpiringSoon(User user) throws PortalException;
 
 	/**
 	 * Returns the default user for the company.

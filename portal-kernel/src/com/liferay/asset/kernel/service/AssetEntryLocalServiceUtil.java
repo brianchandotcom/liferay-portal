@@ -920,32 +920,6 @@ public class AssetEntryLocalServiceUtil {
 			summary, url, layoutUuid, height, width, priority);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateEntry(long, long, Date, Date, String, long, String,
-	 long, long[], String[], boolean, boolean, Date, Date, Date,
-	 Date, String, String, String, String, String, String, int,
-	 int, Double)}
-	 */
-	@Deprecated
-	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
-			long userId, long groupId, java.util.Date createDate,
-			java.util.Date modifiedDate, String className, long classPK,
-			String classUuid, long classTypeId, long[] categoryIds,
-			String[] tagNames, boolean visible, java.util.Date startDate,
-			java.util.Date endDate, java.util.Date expirationDate,
-			String mimeType, String title, String description, String summary,
-			String url, String layoutUuid, int height, int width,
-			Integer priority, boolean sync)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateEntry(
-			userId, groupId, createDate, modifiedDate, className, classPK,
-			classUuid, classTypeId, categoryIds, tagNames, visible, startDate,
-			endDate, expirationDate, mimeType, title, description, summary, url,
-			layoutUuid, height, width, priority, sync);
-	}
-
 	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
 			long userId, long groupId, String className, long classPK,
 			long[] categoryIds, String[] tagNames)
@@ -953,34 +927,6 @@ public class AssetEntryLocalServiceUtil {
 
 		return getService().updateEntry(
 			userId, groupId, className, classPK, categoryIds, tagNames);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateEntry(String, long, Date, Date, boolean, boolean)}
-	 */
-	@Deprecated
-	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
-			String className, long classPK, java.util.Date publishDate,
-			boolean visible)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateEntry(
-			className, classPK, publishDate, visible);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateEntry(String, long, Date, Date, boolean, boolean)}
-	 */
-	@Deprecated
-	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
-			String className, long classPK, java.util.Date publishDate,
-			java.util.Date expirationDate, boolean visible)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateEntry(
-			className, classPK, publishDate, expirationDate, visible);
 	}
 
 	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
@@ -1022,19 +968,6 @@ public class AssetEntryLocalServiceUtil {
 
 		getService().validate(
 			groupId, className, classTypePK, categoryIds, tagNames);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #validate(long,
-	 String, long, long[], String[])}
-	 */
-	@Deprecated
-	public static void validate(
-			long groupId, String className, long[] categoryIds,
-			String[] tagNames)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().validate(groupId, className, categoryIds, tagNames);
 	}
 
 	public static AssetEntryLocalService getService() {

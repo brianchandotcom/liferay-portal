@@ -303,22 +303,6 @@ public class DLAppServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #checkInFileEntry(long, DLVersionNumberIncrease, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void checkInFileEntry(
-			long fileEntryId, boolean majorVersion, String changeLog,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_dlAppService.checkInFileEntry(
-			fileEntryId, majorVersion, changeLog, serviceContext);
-	}
-
-	/**
 	 * Checks in the file entry. If a user has not checked out the specified
 	 * file entry, invoking this method will result in no changes.
 	 *

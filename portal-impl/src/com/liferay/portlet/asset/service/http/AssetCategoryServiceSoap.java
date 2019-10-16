@@ -128,32 +128,6 @@ public class AssetCategoryServiceSoap {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), Replaced by {@link
-	 #deleteCategories(long[])}
-	 */
-	@Deprecated
-	public static com.liferay.asset.kernel.model.AssetCategorySoap[]
-			deleteCategories(
-				long[] categoryIds,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			java.util.List<com.liferay.asset.kernel.model.AssetCategory>
-				returnValue = AssetCategoryServiceUtil.deleteCategories(
-					categoryIds, serviceContext);
-
-			return com.liferay.asset.kernel.model.AssetCategorySoap.
-				toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void deleteCategory(long categoryId) throws RemoteException {
 		try {
 			AssetCategoryServiceUtil.deleteCategory(categoryId);

@@ -245,18 +245,6 @@ public class DLFolderServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getSubfolderIds(List, long, long, boolean)}
-	 */
-	@Deprecated
-	public static void getSubfolderIds(
-			java.util.List<Long> folderIds, long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().getSubfolderIds(folderIds, groupId, folderId);
-	}
-
 	public static void getSubfolderIds(
 			java.util.List<Long> folderIds, long groupId, long folderId,
 			boolean recurse)
@@ -344,26 +332,6 @@ public class DLFolderServiceUtil {
 		return getService().updateFolder(
 			folderId, parentFolderId, name, description, defaultFileEntryTypeId,
 			fileEntryTypeIds, restrictionType, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by more general {@link
-	 #updateFolder(long, String, String, long, List, int,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.document.library.kernel.model.DLFolder
-			updateFolder(
-				long folderId, String name, String description,
-				long defaultFileEntryTypeId,
-				java.util.List<Long> fileEntryTypeIds,
-				boolean overrideFileEntryTypes,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateFolder(
-			folderId, name, description, defaultFileEntryTypeId,
-			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 	}
 
 	public static com.liferay.document.library.kernel.model.DLFolder

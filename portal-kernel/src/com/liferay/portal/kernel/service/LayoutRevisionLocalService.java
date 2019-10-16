@@ -204,14 +204,6 @@ public interface LayoutRevisionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutRevision fetchLayoutRevision(long layoutRevisionId);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutRevision fetchLayoutRevision(
-		long layoutSetBranchId, boolean head, long plid);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutRevision fetchLayoutRevision(
 		long layoutSetBranchId, long layoutBranchId, boolean head, long plid);
@@ -244,15 +236,6 @@ public interface LayoutRevisionLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutRevision getLayoutRevision(long layoutRevisionId)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutRevision getLayoutRevision(
-			long layoutSetBranchId, long plid, boolean head)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -1345,19 +1345,6 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
-	 * Returns all the users who do not have any contacts.
-	 *
-	 * @return the users who do not have any contacts
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static java.util.List<com.liferay.portal.kernel.model.User>
-		getNoContacts() {
-
-		return getService().getNoContacts();
-	}
-
-	/**
 	 * Returns all the users who do not belong to any groups, excluding the
 	 * default user.
 	 *
@@ -2077,24 +2064,6 @@ public class UserLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().isPasswordExpired(user);
-	}
-
-	/**
-	 * Returns <code>true</code> if the password policy is configured to warn
-	 * the user that his password is expiring and the remaining time until
-	 * expiration is equal or less than the configured warning time.
-	 *
-	 * @param user the user
-	 * @return <code>true</code> if the user's password is expiring soon;
-	 <code>false</code> otherwise
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public static boolean isPasswordExpiringSoon(
-			com.liferay.portal.kernel.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().isPasswordExpiringSoon(user);
 	}
 
 	/**

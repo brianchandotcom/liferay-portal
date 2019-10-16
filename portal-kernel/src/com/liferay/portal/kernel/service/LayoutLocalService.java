@@ -1078,27 +1078,6 @@ public interface LayoutLocalService
 	public long getNextLayoutId(long groupId, boolean privateLayout);
 
 	/**
-	 * Returns all the layouts without resource permissions
-	 *
-	 * @param roleId the primary key of the role
-	 * @return all the layouts without resource permissions
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Layout> getNoPermissionLayouts(long roleId);
-
-	/**
-	 * Returns all the layouts whose friendly URLs are <code>null</code>
-	 *
-	 * @return all the layouts whose friendly URLs are <code>null</code>
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Layout> getNullFriendlyURLLayouts();
-
-	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier

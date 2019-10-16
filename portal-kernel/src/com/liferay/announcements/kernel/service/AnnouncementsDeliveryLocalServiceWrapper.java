@@ -370,22 +370,6 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 			userId, type, email, sms);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #updateDelivery(long, String, boolean, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
-			updateDelivery(
-				long userId, String type, boolean email, boolean sms,
-				boolean website)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _announcementsDeliveryLocalService.updateDelivery(
-			userId, type, email, sms, website);
-	}
-
 	@Override
 	public AnnouncementsDeliveryLocalService getWrappedService() {
 		return _announcementsDeliveryLocalService;

@@ -296,17 +296,6 @@ public class RatingsStatsLocalServiceWrapper
 		return _ratingsStatsLocalService.getStats(statsId);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.ratings.kernel.model.RatingsStats>
-		getStats(String className, java.util.List<Long> classPKs) {
-
-		return _ratingsStatsLocalService.getStats(className, classPKs);
-	}
-
 	@Override
 	public com.liferay.ratings.kernel.model.RatingsStats getStats(
 			String className, long classPK)

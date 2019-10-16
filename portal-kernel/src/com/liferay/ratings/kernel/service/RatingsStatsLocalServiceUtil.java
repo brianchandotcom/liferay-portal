@@ -281,16 +281,6 @@ public class RatingsStatsLocalServiceUtil {
 		return getService().getStats(statsId);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static java.util.List<com.liferay.ratings.kernel.model.RatingsStats>
-		getStats(String className, java.util.List<Long> classPKs) {
-
-		return getService().getStats(className, classPKs);
-	}
-
 	public static com.liferay.ratings.kernel.model.RatingsStats getStats(
 			String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {

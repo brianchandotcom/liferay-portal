@@ -235,13 +235,6 @@ public interface RatingsStatsLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public RatingsStats getStats(long statsId) throws PortalException;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<RatingsStats> getStats(String className, List<Long> classPKs);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public RatingsStats getStats(String className, long classPK)
 		throws PortalException;

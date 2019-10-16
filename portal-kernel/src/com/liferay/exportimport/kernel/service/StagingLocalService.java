@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
-import java.util.Map;
-
 import javax.portlet.PortletRequest;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -91,15 +89,6 @@ public interface StagingLocalService extends BaseLocalService {
 	 */
 	public String getOSGiServiceIdentifier();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public MissingReferences publishStagingRequest(
-			long userId, long stagingRequestId, boolean privateLayout,
-			Map<String, String[]> parameterMap)
-		throws PortalException;
-
 	public MissingReferences publishStagingRequest(
 			long userId, long stagingRequestId,
 			ExportImportConfiguration exportImportConfiguration)
@@ -108,14 +97,5 @@ public interface StagingLocalService extends BaseLocalService {
 	public void updateStagingRequest(
 			long userId, long stagingRequestId, String fileName, byte[] bytes)
 		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #publishStagingRequest(long, long, boolean, Map)}
-	 */
-	@Deprecated
-	public MissingReferences validateStagingRequest(
-		long userId, long stagingRequestId, boolean privateLayout,
-		Map<String, String[]> parameterMap);
 
 }

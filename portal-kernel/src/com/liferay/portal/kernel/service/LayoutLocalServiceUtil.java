@@ -1306,33 +1306,6 @@ public class LayoutLocalServiceUtil {
 	}
 
 	/**
-	 * Returns all the layouts without resource permissions
-	 *
-	 * @param roleId the primary key of the role
-	 * @return all the layouts without resource permissions
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static java.util.List<com.liferay.portal.kernel.model.Layout>
-		getNoPermissionLayouts(long roleId) {
-
-		return getService().getNoPermissionLayouts(roleId);
-	}
-
-	/**
-	 * Returns all the layouts whose friendly URLs are <code>null</code>
-	 *
-	 * @return all the layouts whose friendly URLs are <code>null</code>
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static java.util.List<com.liferay.portal.kernel.model.Layout>
-		getNullFriendlyURLLayouts() {
-
-		return getService().getNullFriendlyURLLayouts();
-	}
-
-	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier

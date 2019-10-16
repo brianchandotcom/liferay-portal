@@ -110,15 +110,6 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 
 	public void moveDependentsToTrash(DLFolder dlFolder) throws PortalException;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #moveDependentsToTrash(DLFolder)}
-	 */
-	@Deprecated
-	public void moveDependentsToTrash(
-			List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
-		throws PortalException;
-
 	public FileEntry moveFileEntryFromTrash(
 			long userId, FileEntry fileEntry, long newFolderId,
 			ServiceContext serviceContext)
@@ -171,24 +162,6 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws PortalException;
 
 	public void restoreDependentsFromTrash(DLFolder dlFolder)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #restoreDependentsFromTrash(DLFolder)}
-	 */
-	@Deprecated
-	public void restoreDependentsFromTrash(
-			List<Object> dlFileEntriesAndDLFolders)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #restoreDependentsFromTrash(List)}
-	 */
-	@Deprecated
-	public void restoreDependentsFromTrash(
-			List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
 		throws PortalException;
 
 	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)

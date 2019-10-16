@@ -77,21 +77,6 @@ public class StagingServiceWrapper
 			code, processFlag, processId, arguments);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.exportimport.kernel.lar.MissingReferences
-			publishStagingRequest(
-				long stagingRequestId, boolean privateLayout,
-				java.util.Map<String, String[]> parameterMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _stagingService.publishStagingRequest(
-			stagingRequestId, privateLayout, parameterMap);
-	}
-
 	@Override
 	public com.liferay.exportimport.kernel.lar.MissingReferences
 			publishStagingRequest(
@@ -110,22 +95,6 @@ public class StagingServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_stagingService.updateStagingRequest(stagingRequestId, fileName, bytes);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #publishStagingRequest(long, boolean, Map)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.exportimport.kernel.lar.MissingReferences
-			validateStagingRequest(
-				long stagingRequestId, boolean privateLayout,
-				java.util.Map<String, String[]> parameterMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _stagingService.validateStagingRequest(
-			stagingRequestId, privateLayout, parameterMap);
 	}
 
 	@Override

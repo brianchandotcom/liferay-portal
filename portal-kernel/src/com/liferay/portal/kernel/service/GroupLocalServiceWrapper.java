@@ -1178,22 +1178,6 @@ public class GroupLocalServiceWrapper
 	}
 
 	/**
-	 * Returns all non-system groups having <code>null</code> or empty friendly
-	 * URLs.
-	 *
-	 * @return the non-system groups having <code>null</code> or empty
-	 friendly URLs
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Group>
-		getNullFriendlyURLGroups() {
-
-		return _groupLocalService.getNullFriendlyURLGroups();
-	}
-
-	/**
 	 * Returns the specified organization group.
 	 *
 	 * @param companyId the primary key of the company

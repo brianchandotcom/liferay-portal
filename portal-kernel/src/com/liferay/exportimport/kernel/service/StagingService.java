@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -78,15 +77,6 @@ public interface StagingService extends BaseService {
 			List<Serializable> arguments)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public MissingReferences publishStagingRequest(
-			long stagingRequestId, boolean privateLayout,
-			Map<String, String[]> parameterMap)
-		throws PortalException;
-
 	public MissingReferences publishStagingRequest(
 			long stagingRequestId,
 			ExportImportConfiguration exportImportConfiguration)
@@ -94,16 +84,6 @@ public interface StagingService extends BaseService {
 
 	public void updateStagingRequest(
 			long stagingRequestId, String fileName, byte[] bytes)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #publishStagingRequest(long, boolean, Map)}
-	 */
-	@Deprecated
-	public MissingReferences validateStagingRequest(
-			long stagingRequestId, boolean privateLayout,
-			Map<String, String[]> parameterMap)
 		throws PortalException;
 
 }

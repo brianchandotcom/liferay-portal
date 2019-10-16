@@ -81,28 +81,6 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #checkInFileEntry(long, DLVersionNumberIncrease, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static void checkInFileEntry(
-			long fileEntryId, boolean major, String changeLog,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			DLFileEntryServiceUtil.checkInFileEntry(
-				fileEntryId, major, changeLog, serviceContext);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void checkInFileEntry(
 			long fileEntryId,
 			com.liferay.document.library.kernel.model.DLVersionNumberIncrease
@@ -702,51 +680,6 @@ public class DLFileEntryServiceSoap {
 		try {
 			boolean returnValue = DLFileEntryServiceUtil.isFileEntryCheckedOut(
 				fileEntryId);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static boolean isKeepFileVersionLabel(
-			long fileEntryId, boolean majorVersion,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			boolean returnValue = DLFileEntryServiceUtil.isKeepFileVersionLabel(
-				fileEntryId, majorVersion, serviceContext);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #isKeepFileVersionLabel(long, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	public static boolean isKeepFileVersionLabel(
-			long fileEntryId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			boolean returnValue = DLFileEntryServiceUtil.isKeepFileVersionLabel(
-				fileEntryId, serviceContext);
 
 			return returnValue;
 		}

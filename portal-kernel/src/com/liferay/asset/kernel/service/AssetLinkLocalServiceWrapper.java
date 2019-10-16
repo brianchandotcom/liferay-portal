@@ -364,20 +364,6 @@ public class AssetLinkLocalServiceWrapper
 			entryId, typeId, excludeInvisibleLinks);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
-		getExportActionbleDynamicQuery(
-			com.liferay.exportimport.kernel.lar.PortletDataContext
-				portletDataContext) {
-
-		return _assetLinkLocalService.getExportActionbleDynamicQuery(
-			portletDataContext);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {

@@ -205,14 +205,6 @@ public interface RatingsEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<RatingsEntry> getEntries(
-		long userId, String className, List<Long> classPKs);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Long, RatingsEntry> getEntries(
 		long userId, String className, long[] classPKs);

@@ -68,22 +68,6 @@ public class AssetCategoryServiceWrapper
 		_assetCategoryService.deleteCategories(categoryIds);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), Replaced by {@link
-	 #deleteCategories(long[])}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetCategory>
-			deleteCategories(
-				long[] categoryIds,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _assetCategoryService.deleteCategories(
-			categoryIds, serviceContext);
-	}
-
 	@Override
 	public void deleteCategory(long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

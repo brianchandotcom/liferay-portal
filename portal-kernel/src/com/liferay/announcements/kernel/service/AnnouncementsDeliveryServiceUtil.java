@@ -52,20 +52,6 @@ public class AnnouncementsDeliveryServiceUtil {
 		return getService().updateDelivery(userId, type, email, sms);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #updateDelivery(long, String, boolean, boolean)}
-	 */
-	@Deprecated
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
-			updateDelivery(
-				long userId, String type, boolean email, boolean sms,
-				boolean website)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateDelivery(userId, type, email, sms, website);
-	}
-
 	public static AnnouncementsDeliveryService getService() {
 		if (_service == null) {
 			_service =

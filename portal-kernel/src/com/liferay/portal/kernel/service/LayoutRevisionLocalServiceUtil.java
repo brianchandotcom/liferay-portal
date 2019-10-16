@@ -249,16 +249,6 @@ public class LayoutRevisionLocalServiceUtil {
 		return getService().fetchLayoutRevision(layoutRevisionId);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.model.LayoutRevision
-		fetchLayoutRevision(long layoutSetBranchId, boolean head, long plid) {
-
-		return getService().fetchLayoutRevision(layoutSetBranchId, head, plid);
-	}
-
 	public static com.liferay.portal.kernel.model.LayoutRevision
 		fetchLayoutRevision(
 			long layoutSetBranchId, long layoutBranchId, boolean head,
@@ -321,17 +311,6 @@ public class LayoutRevisionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getLayoutRevision(layoutRevisionId);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.model.LayoutRevision
-			getLayoutRevision(long layoutSetBranchId, long plid, boolean head)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getLayoutRevision(layoutSetBranchId, plid, head);
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutRevision

@@ -290,17 +290,6 @@ public interface DLAppService extends BaseService {
 	public void cancelCheckOut(long fileEntryId) throws PortalException;
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #checkInFileEntry(long, DLVersionNumberIncrease, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public void checkInFileEntry(
-			long fileEntryId, boolean majorVersion, String changeLog,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
 	 * Checks in the file entry. If a user has not checked out the specified
 	 * file entry, invoking this method will result in no changes.
 	 *

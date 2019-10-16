@@ -36,9 +36,9 @@ public class UpgradeAssetDisplayLayoutFriendlyURLPrivateLayout
 	private void _upgradeAssetDisplayLayoutFriendlyURLs() throws Exception {
 		StringBundler sb = new StringBundler(4);
 
-		sb.append("select LayoutFriendlyURL.plid from LayoutFriendlyURL ");
-		sb.append("inner join Layout on Layout.plid = LayoutFriendlyURL.plid ");
-		sb.append("where Layout.type_ = ? and ");
+		sb.append("select distinct LayoutFriendlyURL.plid from ");
+		sb.append("LayoutFriendlyURL inner join Layout on Layout.plid = ");
+		sb.append("LayoutFriendlyURL.plid where Layout.type_ = ? and ");
 		sb.append("LayoutFriendlyURL.privateLayout = ?");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());

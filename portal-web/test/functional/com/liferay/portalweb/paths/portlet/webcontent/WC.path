@@ -142,6 +142,11 @@
 	<td>//button[contains(@class,'btn-borderless') and contains(@id,'SidebarButton')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SIDEBAR_TAG</td>
+	<td>//span//span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

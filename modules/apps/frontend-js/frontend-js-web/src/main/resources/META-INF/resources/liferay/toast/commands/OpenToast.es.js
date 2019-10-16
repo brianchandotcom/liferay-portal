@@ -12,9 +12,9 @@
  * details.
  */
 
-import {render} from 'frontend-js-react-web';
 import ClayAlert from '@clayui/alert';
-import React, {useState, useLayoutEffect} from 'react';
+import {render} from 'frontend-js-react-web';
+import React from 'react';
 import {unmountComponentAtNode} from 'react-dom';
 
 const DEFAULT_ALERT_CONTAINER_ID = 'alertContainer';
@@ -37,40 +37,21 @@ const getDefaultAlertContainer = () => {
 	return container;
 };
 
-const Toast = ({
-	displayType,
-	message,
-	onUnmount,
-	title,
-	toastProps,
-	variant
-}) => {
-	const [showDismissible, setShowDismissible] = useState(true);
-
-	useLayoutEffect(() => {
-		return () => {
-			onUnmount();
-		};
-	}, [onUnmount, showDismissible]);
-
-	if (showDismissible) {
-		return (
-			<ClayAlert.ToastContainer>
-				<ClayAlert
-					autoClose={TOAST_AUTO_CLOSE_INTERVAL}
-					displayType={displayType}
-					onClose={() => setShowDismissible(false)}
-					title={title}
-					variant={variant}
-					{...toastProps}
-				>
-					{message}
-				</ClayAlert>
-			</ClayAlert.ToastContainer>
-		);
-	}
-
-	return null;
+const Toast = ({displayType, message, onClose, title, toastProps, variant}) => {
+	return (
+		<ClayAlert.ToastContainer>
+			<ClayAlert
+				autoClose={TOAST_AUTO_CLOSE_INTERVAL}
+				displayType={displayType}
+				onClose={onClose}
+				title={title}
+				variant={variant}
+				{...toastProps}
+			>
+				{message}
+			</ClayAlert>
+		</ClayAlert.ToastContainer>
+	);
 };
 
 /**
@@ -97,22 +78,20 @@ function openToast({
 	const container =
 		document.getElementById(containerId) || getDefaultAlertContainer();
 
+	unmountComponentAtNode(container);
+
+	const onClose = () => unmountComponentAtNode(container);
+
 	const ToastComponent = () => (
 		<Toast
 			displayType={type}
 			message={message}
-			onUnmount={() => {
-				unmountComponentAtNode(container);
-			}}
+			onClose={onClose}
 			title={title}
 			toastProps={toastProps}
 			variant={variant}
 		/>
 	);
-
-	if (container) {
-		unmountComponentAtNode(container);
-	}
 
 	render(ToastComponent, renderData, container);
 }

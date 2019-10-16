@@ -29,6 +29,10 @@ const Collapse = props => {
 		setOpen(!open);
 	};
 
+	// "key" here in ClayIcon works around a bug caused by svg4everybody
+	// wherein the icon doesn't update when "symbol" changes.
+	const iconKey = icon;
+
 	return (
 		<div className="mb-2">
 			<button
@@ -48,8 +52,7 @@ const Collapse = props => {
 				type="button"
 			>
 				{props.label}
-
-				<ClayIcon key={icon} symbol={icon} />
+				<ClayIcon key={iconKey} symbol={icon} />
 			</button>
 
 			{open && props.children}

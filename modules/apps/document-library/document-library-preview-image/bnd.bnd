@@ -4,13 +4,8 @@ Bundle-Version: 2.0.0
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.document.library.preview.lang)";\
-		resource.bundle.base.name="content.Language",\
-	soy;\
-		type="document-library-preview-image";\
-		version:Version="${Bundle-Version}"
+		resource.bundle.base.name="content.Language"
 Require-Capability:\
 	liferay.resource.bundle;\
-		filter:="(bundle.symbolic.name=com.liferay.document.library.preview.lang)",\
-	osgi.extender;\
-		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
+		filter:="(bundle.symbolic.name=com.liferay.document.library.preview.lang)"
 Web-ContextPath: /document-library-preview-image

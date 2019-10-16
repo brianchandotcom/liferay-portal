@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useState, useEffect} from 'react';
+import React, {useState, useMemo, useEffect} from 'react';
 import Collapse from './../../common/Collapse.es';
 import SearchForm from '../../common/SearchForm.es';
 import SidebarHeader from '../SidebarHeader.es';
@@ -25,7 +25,6 @@ const SidebarWidgets = () => {
 	const dispatch = useDispatch();
 	const widgets = useSelector(state => state.widgets);
 	const [searchValue, setSearchValue] = useState('');
-	const [filteredWidgets, setFilteredWidgets] = useState(widgets);
 
 	useEffect(() => {
 		const dragDrop = new SidebarWidgetsDragDrop({dispatch});
@@ -35,26 +34,24 @@ const SidebarWidgets = () => {
 		};
 	}, [dispatch]);
 
-	useEffect(() => {
+	const filteredWidgets = useMemo(() => {
 		const searchValueLowerCase = searchValue.toLowerCase();
 
-		setFilteredWidgets(
-			widgets
-				.map(category => {
-					return {
-						...category,
-						portlets: category.portlets.filter(
-							widget =>
-								widget.title
-									.toLowerCase()
-									.indexOf(searchValueLowerCase) !== -1
-						)
-					};
-				})
-				.filter(category => {
-					return category.portlets.length > 0;
-				})
-		);
+		return widgets
+			.map(category => {
+				return {
+					...category,
+					portlets: category.portlets.filter(
+						widget =>
+							widget.title
+								.toLowerCase()
+								.indexOf(searchValueLowerCase) !== -1
+					)
+				};
+			})
+			.filter(category => {
+				return category.portlets.length > 0;
+			});
 	}, [searchValue, widgets]);
 
 	return (

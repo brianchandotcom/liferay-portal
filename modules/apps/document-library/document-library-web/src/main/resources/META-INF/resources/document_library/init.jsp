@@ -34,7 +34,8 @@ page import="com.liferay.portal.util.RepositoryUtil" %><%@
 page import="com.liferay.staging.StagingGroupHelper" %><%@
 page import="com.liferay.staging.StagingGroupHelperUtil" %>
 
-<%@ page import="java.util.Objects" %>
+<%@ page import="java.util.Collections" %><%@
+page import="java.util.Objects" %>
 
 <%
 DLRequestHelper dlRequestHelper = new DLRequestHelper(request);

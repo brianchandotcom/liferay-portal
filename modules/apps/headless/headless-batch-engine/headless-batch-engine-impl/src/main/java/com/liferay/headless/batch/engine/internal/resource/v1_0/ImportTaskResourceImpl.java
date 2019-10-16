@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
@@ -37,6 +38,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.AbstractMap;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -90,7 +92,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		return _importFile(
 			BatchEngineTaskOperation.DELETE,
-			multipartBody.getBinaryFile("file"), callbackURL, className,
+			multipartBody.getBinaryFile("file"), callbackURL, className, null,
 			version);
 	}
 
@@ -103,13 +105,13 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	@Override
 	public ImportTask postImportTask(
 			String className, String version, String callbackURL,
-			MultipartBody multipartBody)
+			String fieldNameMapping, MultipartBody multipartBody)
 		throws Exception {
 
 		return _importFile(
 			BatchEngineTaskOperation.CREATE,
 			multipartBody.getBinaryFile("file"), callbackURL, className,
-			version);
+			fieldNameMapping, version);
 	}
 
 	@Override
@@ -120,7 +122,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		return _importFile(
 			BatchEngineTaskOperation.UPDATE,
-			multipartBody.getBinaryFile("file"), callbackURL, className,
+			multipartBody.getBinaryFile("file"), callbackURL, className, null,
 			version);
 	}
 
@@ -140,7 +142,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	private ImportTask _importFile(
 			BatchEngineTaskOperation batchEngineTaskOperation,
 			BinaryFile binaryFile, String callbackURL, String className,
-			String version)
+			String fieldNameMappingString, String version)
 		throws Exception {
 
 		Class<?> clazz = _itemClassRegistry.getItemClass(className);
@@ -177,7 +179,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				callbackURL, className, content,
 				StringUtil.upperCase(extension),
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
-				batchEngineTaskOperation.name(), version);
+				_toMap(fieldNameMappingString), batchEngineTaskOperation.name(),
+				version);
 
 		executorService.submit(
 			() -> _batchEngineTaskExecutor.execute(batchEngineTask));
@@ -200,6 +203,25 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				version = batchEngineTask.getVersion();
 			}
 		};
+	}
+
+	private Map<String, String> _toMap(String fieldNameMappingString) {
+		if (Validator.isNull(fieldNameMappingString)) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, String> fieldNameMappingMap = new HashMap<>();
+
+		String[] fieldNameMappings = StringUtil.split(
+			fieldNameMappingString, ',');
+
+		for (String fieldNameMapping : fieldNameMappings) {
+			String[] fieldNames = StringUtil.split(fieldNameMapping, '=');
+
+			fieldNameMappingMap.put(fieldNames[0], fieldNames[1]);
+		}
+
+		return fieldNameMappingMap;
 	}
 
 	@Reference

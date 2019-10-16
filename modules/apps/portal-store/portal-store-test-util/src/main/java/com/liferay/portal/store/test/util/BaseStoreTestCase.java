@@ -222,7 +222,8 @@ public abstract class BaseStoreTestCase {
 			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
-		String[] fileNames = store.getFileNames(companyId, repositoryId);
+		String[] fileNames = store.getFileNames(
+			companyId, repositoryId, StringPool.BLANK);
 
 		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
 
@@ -318,7 +319,8 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testGetFileNamesWithInvalidRepository() throws Exception {
-		String[] fileNames = store.getFileNames(companyId, repositoryId);
+		String[] fileNames = store.getFileNames(
+			companyId, repositoryId, StringPool.BLANK);
 
 		Assert.assertEquals(Arrays.toString(fileNames), 0, fileNames.length);
 	}
@@ -341,7 +343,8 @@ public abstract class BaseStoreTestCase {
 			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
-		String[] fileNames = store.getFileNames(companyId, repositoryId);
+		String[] fileNames = store.getFileNames(
+			companyId, repositoryId, StringPool.BLANK);
 
 		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
 

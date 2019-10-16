@@ -70,11 +70,6 @@ public class IgnoreDuplicatesStore implements Store {
 	}
 
 	@Override
-	public String[] getFileNames(long companyId, long repositoryId) {
-		return _store.getFileNames(companyId, repositoryId);
-	}
-
-	@Override
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 

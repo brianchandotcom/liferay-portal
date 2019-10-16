@@ -179,11 +179,6 @@ public class S3Store extends BaseStore {
 	}
 
 	@Override
-	public String[] getFileNames(long companyId, long repositoryId) {
-		return getFileNames(companyId, repositoryId, StringPool.BLANK);
-	}
-
-	@Override
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 

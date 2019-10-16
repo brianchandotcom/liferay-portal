@@ -128,19 +128,6 @@ public class SafeFileNameStore implements Store {
 	}
 
 	@Override
-	public String[] getFileNames(long companyId, long repositoryId) {
-		String[] fileNames = _store.getFileNames(companyId, repositoryId);
-
-		String[] decodedFileNames = new String[fileNames.length];
-
-		for (int i = 0; i < fileNames.length; i++) {
-			decodedFileNames[i] = FileUtil.decodeSafeFileName(fileNames[i]);
-		}
-
-		return decodedFileNames;
-	}
-
-	@Override
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 

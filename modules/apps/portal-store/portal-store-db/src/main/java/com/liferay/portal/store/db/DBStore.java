@@ -178,28 +178,19 @@ public class DBStore extends BaseStore {
 	}
 
 	@Override
-	public String[] getFileNames(long companyId, long repositoryId) {
-		List<DLContent> dlContents = _dlContentLocalService.getContents(
-			companyId, repositoryId);
-
-		String[] fileNames = new String[dlContents.size()];
-
-		for (int i = 0; i < dlContents.size(); i++) {
-			DLContent dlContent = dlContents.get(i);
-
-			fileNames[i] = dlContent.getPath();
-		}
-
-		return fileNames;
-	}
-
-	@Override
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 
-		List<DLContent> dlContents =
-			_dlContentLocalService.getContentsByDirectory(
+		List<DLContent> dlContents = null;
+
+		if (dirName.isEmpty()) {
+			dlContents = _dlContentLocalService.getContents(
+				companyId, repositoryId);
+		}
+		else {
+			dlContents = _dlContentLocalService.getContentsByDirectory(
 				companyId, repositoryId, dirName);
+		}
 
 		String[] fileNames = new String[dlContents.size()];
 

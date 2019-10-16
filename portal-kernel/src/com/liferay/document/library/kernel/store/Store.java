@@ -87,8 +87,6 @@ public interface Store {
 			String versionLabel)
 		throws PortalException;
 
-	public String[] getFileNames(long companyId, long repositoryId);
-
 	/**
 	 * Returns all files of the directory.
 	 *

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.SafeLdapFilter;
+import com.liferay.portal.security.ldap.SafeLdapFilterTemplate;
 import com.liferay.portal.security.ldap.SafeLdapName;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.security.ldap.validator.LDAPFilterException;
@@ -208,7 +209,7 @@ public class LDAPUtil {
 		return array;
 	}
 
-	public static SafeLdapFilter getAuthSearchSafeLdapFilter(
+	public static SafeLdapFilterTemplate getAuthSearchSafeLdapFilterTemplate(
 			LDAPServerConfiguration ldapServerConfiguration,
 			LDAPFilterValidator ldapFilterValidator)
 		throws LDAPFilterException {
@@ -220,7 +221,11 @@ public class LDAPUtil {
 		}
 
 		try {
-			return SafeLdapFilter.validate(filter, ldapFilterValidator);
+			return new SafeLdapFilterTemplate(
+				filter, new String[] {
+					"@company_id@", "@email_address@", "@screen_name@",
+					"@user_id@"},
+				ldapFilterValidator);
 		}
 		catch (LDAPFilterException ldapfe) {
 			throw new LDAPFilterException(
@@ -261,7 +266,7 @@ public class LDAPUtil {
 		}
 
 		try {
-			return SafeLdapFilter.validate(filter, ldapFilterValidator);
+			return SafeLdapFilter.fromUnsafeFilter(filter, ldapFilterValidator);
 		}
 		catch (LDAPFilterException ldapfe) {
 			throw new LDAPFilterException(
@@ -291,7 +296,7 @@ public class LDAPUtil {
 		}
 
 		try {
-			return SafeLdapFilter.validate(filter, ldapFilterValidator);
+			return SafeLdapFilter.fromUnsafeFilter(filter, ldapFilterValidator);
 		}
 		catch (LDAPFilterException ldapfe) {
 			throw new LDAPFilterException(

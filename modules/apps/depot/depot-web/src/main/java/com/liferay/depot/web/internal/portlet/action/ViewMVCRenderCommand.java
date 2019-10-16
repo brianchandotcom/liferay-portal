@@ -46,7 +46,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			DepotAdminWebKeys.DEPOT_ADMIN_GROUP_SEARCH_PROVIDER,
 			_depotAdminGroupSearchProvider);
-
 		renderRequest.setAttribute(
 			DepotAdminWebKeys.DEPOT_ADMIN_GROUP_URL_PROVIDER,
 			_groupURLProvider);

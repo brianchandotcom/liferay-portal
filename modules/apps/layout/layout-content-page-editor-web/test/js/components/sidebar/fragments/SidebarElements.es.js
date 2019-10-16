@@ -20,6 +20,8 @@ import Store from '../../../../../src/main/resources/META-INF/resources/js/store
 import StoreContext from '../../../../../src/main/resources/META-INF/resources/js/store/StoreContext.es';
 import userEvent from '@testing-library/user-event';
 
+import '@testing-library/jest-dom/extend-expect';
+
 const elements = [
 	{
 		fragmentCollectionId: 'basicComponents',
@@ -64,9 +66,9 @@ describe('SidebarElements', () => {
 			<RenderSidebarElements />
 		);
 
-		expect(getByText('Basic Components'));
-		expect(getByText('layouts'));
-		expect(getByLabelText('search-form'));
+		expect(getByText('Basic Components')).toBeInTheDocument();
+		expect(getByText('layouts')).toBeInTheDocument();
+		expect(getByLabelText('search-form')).toBeInTheDocument();
 
 		expect(queryByText('Button')).toBe(null);
 	});
@@ -100,7 +102,7 @@ describe('SidebarElements', () => {
 
 		userEvent.type(searchFormInput, 'button');
 
-		expect(getByText('Button'));
+		expect(getByText('Button')).toBeInTheDocument();
 
 		expect(queryByText('Heading')).toBe(null);
 	});

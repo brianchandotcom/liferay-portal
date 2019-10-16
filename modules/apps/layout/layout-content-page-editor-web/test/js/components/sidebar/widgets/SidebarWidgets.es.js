@@ -20,6 +20,8 @@ import Store from '../../../../../src/main/resources/META-INF/resources/js/store
 import StoreContext from '../../../../../src/main/resources/META-INF/resources/js/store/StoreContext.es';
 import userEvent from '@testing-library/user-event';
 
+import '@testing-library/jest-dom/extend-expect';
+
 const widgets = [
 	{
 		portlets: [
@@ -83,9 +85,9 @@ describe('SidebarWidgets', () => {
 			<RenderSidebarWidgets />
 		);
 
-		expect(getByText('Collaboration')).not.toBe(null);
-		expect(getByText('Highlighted')).not.toBe(null);
-		expect(getByLabelText('search-form')).not.toBe(null);
+		expect(getByText('Collaboration')).toBeInTheDocument();
+		expect(getByText('Highlighted')).toBeInTheDocument();
+		expect(getByLabelText('search-form')).toBeInTheDocument();
 
 		expect(queryByText('Asset Publisher')).toBe(null);
 	});
@@ -98,7 +100,7 @@ describe('SidebarWidgets', () => {
 
 		expect(highlightedCategory.getAttribute('aria-expanded')).toBe('true');
 
-		expect(getByText('Asset Publisher')).not.toBe(null);
+		expect(getByText('Asset Publisher')).toBeInTheDocument();
 
 		fireEvent.click(highlightedCategory);
 
@@ -114,7 +116,7 @@ describe('SidebarWidgets', () => {
 
 		userEvent.type(getByLabelText('search-form'), 'asset');
 
-		expect(getByText('Asset Publisher')).not.toBe(null);
+		expect(getByText('Asset Publisher')).toBeInTheDocument();
 
 		expect(queryByText('Blogs')).toBe(null);
 	});

@@ -268,7 +268,10 @@ public class AssetTagsSelectorTag extends IncludeTag {
 				put("groupIds", getGroupIds());
 				put("id", _getNamespace() + getId() + "assetTagsSelector");
 				put("inputName", _getInputName());
-				put("portletURL", getPortletURL().toString());
+
+				PortletURL portletURL = getPortletURL();
+
+				put("portletURL", portletURL.toString());
 
 				if (Validator.isNotNull(_removeCallback)) {
 					put("removeCallback", _getNamespace() + _removeCallback);

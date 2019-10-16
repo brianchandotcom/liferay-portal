@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INLINE_PERMISSIONS_ADD_MESSAGE_CHECKBOX</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ADD_MESSAGE']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX</td>
 	<td>//input[@id='${key_roleTitle}_ACTION_ADD_SHORTCUT']</td>
 	<td></td>

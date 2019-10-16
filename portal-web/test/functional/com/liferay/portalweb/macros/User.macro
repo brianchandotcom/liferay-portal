@@ -1645,8 +1645,6 @@ definition {
 			Check(locator1 = "Checkbox#REMEMBER_ME");
 		}
 
-		takeScreenshot();
-
 		if (isSet(localization)) {
 			var localizedSignIn = User._signInLocalization(localization = "${localization}");
 

@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.constants;
+import {DefaultEventHandler} from 'frontend-js-web';
 
-/**
- * @author Alejandro Tardín
- */
-public class DepotAdminWebKeys {
-
-	public static final String DEPOT_ADMIN_GROUP_SEARCH_PROVIDER =
-		"DEPOT_ADMIN_GROUP_SEARCH_PROVIDER";
-
-	public static final String DEPOT_ADMIN_GROUP_URL_PROVIDER =
-		"DEPOT_ADMIN_GROUP_URL_PROVIDER";
-
-	public static final String DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER =
-		"DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER";
-
+class DepotEntryDropdownDefaultEventHandler extends DefaultEventHandler {
+	deleteDepotEntry(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get(
+					'removing-a-repository-can-affect-sites-that-use-the-contents-stored-in-it.-are-you-sure-you-want-to-continue-removing-this-repository'
+				)
+			)
+		) {
+			submitForm(document.hrefFm, itemData.deleteDepotEntryURL);
+		}
+	}
 }
+
+export default DepotEntryDropdownDefaultEventHandler;

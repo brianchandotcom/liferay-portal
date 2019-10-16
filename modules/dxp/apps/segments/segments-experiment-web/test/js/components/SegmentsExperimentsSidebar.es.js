@@ -523,6 +523,85 @@ describe('Experiment history tab', () => {
 	});
 });
 
+describe('No Winner Declared', () => {
+	afterEach(cleanup);
+
+	it('variant publish action confirming in No Winner Declared status', async () => {
+		/**
+		 * The user accepts the confirmation message
+		 */
+		global.confirm = jest.fn(() => true);
+
+		const {APIServiceMocks, getByText} = renderApp({
+			initialSegmentsExperiences: segmentsExperiences,
+			initialSegmentsExperiment: {
+				...segmentsExperiment,
+				editable: false,
+				status: {
+					label: 'No Winner Declared',
+					value: STATUS_FINISHED_NO_WINNER
+				}
+			},
+			initialSegmentsVariants: segmentsVariants,
+			winnerSegmentsVariantId: ''
+		});
+		const {publishExperience} = APIServiceMocks;
+
+		const publishButton = getByText('publish');
+
+		userEvent.click(publishButton);
+
+		/**
+		 * The user has accepted one confirmation message
+		 */
+		expect(global.confirm).toHaveBeenCalledTimes(1);
+
+		expect(publishExperience).toHaveBeenCalledWith({
+			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+			status: STATUS_COMPLETED,
+			winnerSegmentsExperienceId: segmentsVariants[1].segmentsExperienceId
+		});
+
+		await waitForElement(() => getByText('completed'));
+	});
+
+	it('variant publish action not confirming in No Winner Declared status', async () => {
+		/**
+		 * The user rejects the confirmation message
+		 */
+		global.confirm = jest.fn(() => false);
+
+		const {APIServiceMocks, getByText} = renderApp({
+			initialSegmentsExperiences: segmentsExperiences,
+			initialSegmentsExperiment: {
+				...segmentsExperiment,
+				editable: false,
+				status: {
+					label: 'No Winner Declared',
+					value: STATUS_FINISHED_NO_WINNER
+				}
+			},
+			initialSegmentsVariants: segmentsVariants,
+			winnerSegmentsVariantId: ''
+		});
+		const {publishExperience} = APIServiceMocks;
+
+		const publishButton = getByText('publish');
+
+		userEvent.click(publishButton);
+
+		/**
+		 * The user has rejected one confirmation message
+		 */
+		expect(global.confirm).toHaveBeenCalledTimes(1);
+
+		/**
+		 * API has not been called
+		 */
+		expect(publishExperience).toHaveBeenCalledTimes(0);
+	});
+});
+
 describe('Winner declared', () => {
 	afterEach(cleanup);
 
@@ -548,7 +627,7 @@ describe('Winner declared', () => {
 		expect(allPublishButtons.length).toBe(segmentsVariants.length - 1);
 	});
 
-	it('variants publish action button confirming', async () => {
+	it('variant publish action confirming in Winner Declared status', async () => {
 		/**
 		 * The user accepts the confirmation message
 		 */
@@ -587,7 +666,7 @@ describe('Winner declared', () => {
 		await waitForElement(() => getByText('completed'));
 	});
 
-	it('variants publish action not confirming', async () => {
+	it('variant publish action not confirming in Winner Declared status', async () => {
 		/**
 		 * The user rejects the confirmation message
 		 */

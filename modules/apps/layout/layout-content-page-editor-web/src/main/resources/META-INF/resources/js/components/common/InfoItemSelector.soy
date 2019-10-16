@@ -40,21 +40,21 @@
 			{/let}
 
 			<div class="btn-group">
-				<button
-					aria-expanded="false"
-					aria-haspopup="true"
-					class="btn btn-monospaced btn-secondary btn-sm dropdown-toggle"
-					data-toggle="dropdown"
-					id="{$buttonId}"
-					type="button"
-				>
-					<svg class="lexicon-icon">
-						<use xlink:href="{$spritemap ?: ''}#plus"></use>
-					</svg>
-				</button>
+				{if $recentlyUsedAssetEntries and length($recentlyUsedAssetEntries) > 0}
+					<button
+						aria-expanded="false"
+						aria-haspopup="true"
+						class="btn btn-monospaced btn-secondary btn-sm dropdown-toggle"
+						data-toggle="dropdown"
+						id="{$buttonId}"
+						type="button"
+					>
+						<svg class="lexicon-icon">
+							<use xlink:href="{$spritemap ?: ''}#plus"></use>
+						</svg>
+					</button>
 
-				<div class="dropdown-menu item-selector-dropdown-menu" id="{$dropdownId}">
-					{if $recentlyUsedAssetEntries and length($recentlyUsedAssetEntries) > 0}
+					<div class="dropdown-menu item-selector-dropdown-menu" id="{$dropdownId}">
 						{foreach $assetEntry in $recentlyUsedAssetEntries}
 							<button
 								class="dropdown-item"
@@ -73,17 +73,28 @@
 							class="dropdown-divider"
 							role="presentation"
 						></div>
-					{/if}
-					{if $infoItemSelectorURL}
-						<button
-							class="dropdown-item"
-							data-onclick="{$handleAssetBrowserLinkClick}"
-							type="button"
-						>
-							{msg desc=""}select-content{/msg} ...
-						</button>
-					{/if}
-				</div>
+
+						{if $infoItemSelectorURL}
+							<button
+								class="dropdown-item"
+								data-onclick="{$handleAssetBrowserLinkClick}"
+								type="button"
+							>
+								{msg desc=""}select-content{/msg} ...
+							</button>
+						{/if}
+					</div>
+				{else}
+					<button
+						class="btn btn-monospaced btn-secondary btn-sm"
+						data-onclick="{$handleAssetBrowserLinkClick}"
+						type="button"
+					>
+						<svg class="lexicon-icon">
+							<use xlink:href="{$spritemap ?: ''}#plus"></use>
+						</svg>
+					</button>
+				{/if}
 			</div>
 		</div>
 	</div>

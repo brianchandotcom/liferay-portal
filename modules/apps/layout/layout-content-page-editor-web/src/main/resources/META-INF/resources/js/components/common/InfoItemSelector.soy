@@ -49,27 +49,12 @@
 					type="button"
 				>
 					<svg class="lexicon-icon">
-						<use xlink:href="{$spritemap ?: ''}#caret-bottom"></use>
+						<use xlink:href="{$spritemap ?: ''}#plus"></use>
 					</svg>
 				</button>
 
 				<div class="dropdown-menu item-selector-dropdown-menu" id="{$dropdownId}">
-					{if $infoItemSelectorURL}
-						<button
-							class="dropdown-item"
-							data-onclick="{$handleAssetBrowserLinkClick}"
-							type="button"
-						>
-							{msg desc=""}select{/msg}...
-						</button>
-					{/if}
 					{if $recentlyUsedAssetEntries and length($recentlyUsedAssetEntries) > 0}
-						<div
-							aria-hidden="true"
-							class="dropdown-divider"
-							role="presentation"
-						></div>
-
 						{foreach $assetEntry in $recentlyUsedAssetEntries}
 							<button
 								class="dropdown-item"
@@ -82,6 +67,21 @@
 								{$assetEntry.title}
 							</button>
 						{/foreach}
+
+						<div
+							aria-hidden="true"
+							class="dropdown-divider"
+							role="presentation"
+						></div>
+					{/if}
+					{if $infoItemSelectorURL}
+						<button
+							class="dropdown-item"
+							data-onclick="{$handleAssetBrowserLinkClick}"
+							type="button"
+						>
+							{msg desc=""}select-content{/msg} ...
+						</button>
 					{/if}
 				</div>
 			</div>

@@ -46,12 +46,6 @@ else if (group.isStagingGroup()) {
 
 	inStaging = true;
 }
-
-boolean layoutException = false;
-
-if (!SessionErrors.isEmpty(request)) {
-	layoutException = SessionErrors.contains(request, NoSuchLayoutException.class.getName());
-}
 %>
 
 <c:if test="<%= liveGroup.isStaged() && !liveGroup.isStagedPortlet(portlet.getRootPortletId()) %>">
@@ -103,6 +97,6 @@ if (!SessionErrors.isEmpty(request)) {
 <liferay-ui:success key="<%= portlet.getPortletId() + SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION %>" message="you-have-successfully-updated-the-setup" />
 <liferay-ui:success key="<%= portlet.getPortletId() + SessionMessages.KEY_SUFFIX_UPDATED_PREFERENCES %>" message="you-have-successfully-updated-your-preferences" />
 
-<c:if test="<%= !layoutException && !MultiSessionMessages.contains(renderRequest, portlet.getPortletId() + SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE) %>">
+<c:if test="<%= !MultiSessionErrors.contains(renderRequest, NoSuchLayoutException.class.getName()) && !MultiSessionMessages.contains(renderRequest, portlet.getPortletId() + SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE) %>">
 	<liferay-ui:error embed="<%= false %>" />
 </c:if>

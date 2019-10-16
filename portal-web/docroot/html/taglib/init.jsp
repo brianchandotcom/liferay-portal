@@ -17,6 +17,7 @@
 <%@ include file="/html/common/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.exception.NoSuchLayoutException" %><%@
+page import="com.liferay.portal.kernel.servlet.MultiSessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.util.InlineUtil" %><%@

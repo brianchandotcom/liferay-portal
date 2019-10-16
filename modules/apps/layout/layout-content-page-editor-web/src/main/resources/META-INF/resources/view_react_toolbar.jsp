@@ -20,7 +20,7 @@
 ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT);
 %>
 
-<div class="page-editor-toolbar management-bar navbar navbar-expand-md" id="<%= contentPageEditorDisplayContext.getPortletNamespace() %>pageEditorToolbar">
+<div class="management-bar navbar navbar-expand-md page-editor-toolbar" id="<%= contentPageEditorDisplayContext.getPortletNamespace() %>pageEditorToolbar">
 	<div class="container-fluid container-fluid-max-xl">
 		<ul class="navbar-nav">
 		</ul>

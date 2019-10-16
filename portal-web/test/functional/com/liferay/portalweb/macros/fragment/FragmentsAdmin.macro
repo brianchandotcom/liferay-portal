@@ -82,6 +82,12 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");
 	}
 
+	macro selectCollection {
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		LexiconCard.clickCard(card = "${collectionName}");
+	}
+
 	macro viewEntryNotPresent {
 		LexiconCard.viewCardNotPresent(card = "${entry}");
 	}

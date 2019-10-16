@@ -235,23 +235,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		breadcrumbTag.runTag();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #breadcrumb(long,
-	 *             String, boolean, boolean, boolean, boolean)}}
-	 */
-	@Deprecated
-	@Override
-	public void breadcrumb(
-			String ddmTemplateKey, boolean showGuestGroup,
-			boolean showParentGroups, boolean showLayout,
-			boolean showPortletBreadcrumb)
-		throws Exception {
-
-		breadcrumb(
-			0, ddmTemplateKey, showGuestGroup, showParentGroups, showLayout,
-			showPortletBreadcrumb);
-	}
-
 	@Override
 	public void doAsURL(long doAsUserId) throws Exception {
 		DoAsURLTag.doTag(doAsUserId, _httpServletRequest);
@@ -704,14 +687,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		sitesDirectoryTag.setSites(sites);
 
 		sitesDirectoryTag.runTag();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void staging() throws Exception {
 	}
 
 	@Override

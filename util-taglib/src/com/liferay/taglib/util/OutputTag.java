@@ -29,29 +29,6 @@ import javax.servlet.jsp.JspWriter;
  */
 public class OutputTag extends PositionTagSupport {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getDataSB(ServletRequest, String)}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.util.StringBundler getData(
-		ServletRequest servletRequest, String webKey) {
-
-		StringBundler petraSB = getDataSB(servletRequest, webKey);
-
-		if (petraSB == null) {
-			return null;
-		}
-
-		com.liferay.portal.kernel.util.StringBundler sb =
-			new com.liferay.portal.kernel.util.StringBundler(
-				petraSB.getStrings());
-
-		sb.setIndex(petraSB.index());
-
-		return sb;
-	}
-
 	public static StringBundler getDataSB(
 		ServletRequest servletRequest, String webKey) {
 

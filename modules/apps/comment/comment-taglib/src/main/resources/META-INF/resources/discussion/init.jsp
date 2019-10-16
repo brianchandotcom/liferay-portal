@@ -33,4 +33,6 @@ page import="com.liferay.portal.kernel.service.ServiceContextFunction" %><%@
 page import="com.liferay.staging.StagingGroupHelper" %><%@
 page import="com.liferay.staging.StagingGroupHelperUtil" %>
 
+<liferay-theme:defineObjects/>
+
 <portlet:defineObjects />

@@ -31,11 +31,8 @@ import java.util.Map;
 public class JSONLBatchEngineTaskItemReader
 	implements BatchEngineTaskItemReader {
 
-	public JSONLBatchEngineTaskItemReader(
-		InputStream inputStream, Class<?> itemClass) {
-
+	public JSONLBatchEngineTaskItemReader(InputStream inputStream) {
 		_inputStream = inputStream;
-		_itemClass = itemClass;
 
 		_unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(_inputStream));
@@ -47,25 +44,22 @@ public class JSONLBatchEngineTaskItemReader
 	}
 
 	@Override
-	public Object read() throws Exception {
+	public Map<String, Object> read() throws Exception {
 		String line = _unsyncBufferedReader.readLine();
 
 		if (line == null) {
 			return null;
 		}
 
-		Map<String, Object> columnNameValueMap = _objectMapper.readValue(
+		return _objectMapper.readValue(
 			line,
 			new TypeReference<Map<String, Object>>() {
 			});
-
-		return ColumnUtil.convertValue(_itemClass, columnNameValueMap);
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private final InputStream _inputStream;
-	private final Class<?> _itemClass;
 	private final UnsyncBufferedReader _unsyncBufferedReader;
 
 }

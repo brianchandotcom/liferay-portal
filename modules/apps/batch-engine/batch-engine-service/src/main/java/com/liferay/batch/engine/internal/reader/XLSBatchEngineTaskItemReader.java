@@ -36,12 +36,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class XLSBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 
-	public XLSBatchEngineTaskItemReader(
-			InputStream inputStream, Class<?> itemClass)
+	public XLSBatchEngineTaskItemReader(InputStream inputStream)
 		throws IOException {
 
 		_inputStream = inputStream;
-		_itemClass = itemClass;
 
 		_workbook = new XSSFWorkbook(_inputStream);
 
@@ -57,7 +55,7 @@ public class XLSBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 			columnNames.add(cell.getStringCellValue());
 		}
 
-		_columnNames = columnNames.toArray(new String[0]);
+		_fieldNames = columnNames.toArray(new String[0]);
 	}
 
 	@Override
@@ -67,34 +65,34 @@ public class XLSBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 	}
 
 	@Override
-	public Object read() throws Exception {
+	public Map<String, Object> read() throws Exception {
 		if (!_iterator.hasNext()) {
 			return null;
 		}
 
 		Row row = _iterator.next();
 
-		Map<String, Object> columnNameValueMap = new HashMap<>();
+		Map<String, Object> fieldNameValueMap = new HashMap<>();
 
 		int index = 0;
 
 		for (Cell cell : row) {
-			String columnName = _columnNames[index++];
+			String fieldName = _fieldNames[index++];
 
-			if (columnName == null) {
+			if (fieldName == null) {
 				continue;
 			}
 
 			if (CellType.BOOLEAN == cell.getCellType()) {
-				columnNameValueMap.put(columnName, cell.getBooleanCellValue());
+				fieldNameValueMap.put(fieldName, cell.getBooleanCellValue());
 			}
 			else if (CellType.NUMERIC == cell.getCellType()) {
 				if (DateUtil.isCellDateFormatted(cell)) {
-					columnNameValueMap.put(columnName, cell.getDateCellValue());
+					fieldNameValueMap.put(fieldName, cell.getDateCellValue());
 				}
 				else {
-					columnNameValueMap.put(
-						columnName, cell.getNumericCellValue());
+					fieldNameValueMap.put(
+						fieldName, cell.getNumericCellValue());
 				}
 			}
 			else {
@@ -106,25 +104,24 @@ public class XLSBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 					value = null;
 				}
 
-				int lastDelimiterIndex = columnName.lastIndexOf('_');
+				int lastDelimiterIndex = fieldName.lastIndexOf('_');
 
 				if (lastDelimiterIndex == -1) {
-					columnNameValueMap.put(columnName, value);
+					fieldNameValueMap.put(fieldName, value);
 				}
 				else {
-					ColumnUtil.handleLocalizationColumn(
-						columnName, columnNameValueMap, lastDelimiterIndex,
+					BatchEngineTaskItemReaderUtil.handleLocalizationField(
+						fieldName, fieldNameValueMap, lastDelimiterIndex,
 						value);
 				}
 			}
 		}
 
-		return ColumnUtil.convertValue(_itemClass, columnNameValueMap);
+		return fieldNameValueMap;
 	}
 
-	private final String[] _columnNames;
+	private final String[] _fieldNames;
 	private final InputStream _inputStream;
-	private final Class<?> _itemClass;
 	private final Iterator<Row> _iterator;
 	private final Workbook _workbook;
 

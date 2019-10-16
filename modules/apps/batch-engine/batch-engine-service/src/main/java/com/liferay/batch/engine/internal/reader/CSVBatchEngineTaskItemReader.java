@@ -30,17 +30,17 @@ import java.util.Map;
 public class CSVBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 
 	public CSVBatchEngineTaskItemReader(
-			String delimiter, InputStream inputStream, Class<?> itemClass)
+			String delimiter, InputStream inputStream)
 		throws IOException {
 
 		_delimiter = delimiter;
+
 		_inputStream = inputStream;
-		_itemClass = itemClass;
 
 		_unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(_inputStream));
 
-		_columnNames = StringUtil.split(
+		_fieldNames = StringUtil.split(
 			_unsyncBufferedReader.readLine(), delimiter);
 	}
 
@@ -50,21 +50,21 @@ public class CSVBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 	}
 
 	@Override
-	public Object read() throws Exception {
+	public Map<String, Object> read() throws Exception {
 		String line = _unsyncBufferedReader.readLine();
 
 		if (line == null) {
 			return null;
 		}
 
-		Map<String, Object> columnNameValueMap = new HashMap<>();
+		Map<String, Object> fieldNameValueMap = new HashMap<>();
 
 		String[] values = StringUtil.split(line, _delimiter);
 
 		for (int i = 0; i < values.length; i++) {
-			String columnName = _columnNames[i];
+			String fieldName = _fieldNames[i];
 
-			if (columnName == null) {
+			if (fieldName == null) {
 				continue;
 			}
 
@@ -74,24 +74,23 @@ public class CSVBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 				value = null;
 			}
 
-			int lastDelimiterIndex = columnName.lastIndexOf('_');
+			int lastDelimiterIndex = fieldName.lastIndexOf('_');
 
 			if (lastDelimiterIndex == -1) {
-				columnNameValueMap.put(columnName, value);
+				fieldNameValueMap.put(fieldName, value);
 			}
 			else {
-				ColumnUtil.handleLocalizationColumn(
-					columnName, columnNameValueMap, lastDelimiterIndex, value);
+				BatchEngineTaskItemReaderUtil.handleLocalizationField(
+					fieldName, fieldNameValueMap, lastDelimiterIndex, value);
 			}
 		}
 
-		return ColumnUtil.convertValue(_itemClass, columnNameValueMap);
+		return fieldNameValueMap;
 	}
 
-	private final String[] _columnNames;
 	private final String _delimiter;
+	private final String[] _fieldNames;
 	private final InputStream _inputStream;
-	private final Class<?> _itemClass;
 	private final UnsyncBufferedReader _unsyncBufferedReader;
 
 }

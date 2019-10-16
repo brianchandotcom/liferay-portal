@@ -37,8 +37,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Brian Wing Shun Chan
@@ -101,11 +99,6 @@ public class FileSystemStore extends BaseStore {
 		File parentFile = dirNameDir.getParentFile();
 
 		FileUtil.deltree(dirNameDir);
-
-		RepositoryDirKey repositoryDirKey = new RepositoryDirKey(
-			companyId, repositoryId);
-
-		_repositoryDirs.remove(repositoryDirKey);
 
 		deleteEmptyAncestors(-1, -1, parentFile);
 	}
@@ -232,17 +225,6 @@ public class FileSystemStore extends BaseStore {
 				return;
 			}
 
-			String fileName = file.getName();
-
-			if ((repositoryId > 0) &&
-				fileName.equals(String.valueOf(repositoryId))) {
-
-				RepositoryDirKey repositoryDirKey = new RepositoryDirKey(
-					companyId, repositoryId);
-
-				_repositoryDirs.remove(repositoryDirKey);
-			}
-
 			file = file.getParentFile();
 		}
 	}
@@ -322,60 +304,16 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	protected File getRepositoryDir(long companyId, long repositoryId) {
-		RepositoryDirKey repositoryDirKey = new RepositoryDirKey(
-			companyId, repositoryId);
+		File repositoryDir = new File(
+			_rootDir, companyId + StringPool.SLASH + repositoryId);
 
-		File repositoryDir = _repositoryDirs.get(repositoryDirKey);
-
-		if (repositoryDir == null) {
-			repositoryDir = new File(
-				_rootDir, companyId + StringPool.SLASH + repositoryId);
-
-			try {
-				FileUtil.mkdirs(repositoryDir);
-			}
-			catch (IOException ioe) {
-				throw new SystemException(ioe);
-			}
-
-			_repositoryDirs.put(repositoryDirKey, repositoryDir);
+		if (!repositoryDir.exists()) {
+			repositoryDir.mkdirs();
 		}
 
 		return repositoryDir;
 	}
 
-	private final Map<RepositoryDirKey, File> _repositoryDirs =
-		new ConcurrentHashMap<>();
 	private final File _rootDir;
-
-	private static class RepositoryDirKey {
-
-		public RepositoryDirKey(long companyId, long repositoryId) {
-			_companyId = companyId;
-			_repositoryId = repositoryId;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			RepositoryDirKey repositoryDirKey = (RepositoryDirKey)obj;
-
-			if ((_companyId == repositoryDirKey._companyId) &&
-				(_repositoryId == repositoryDirKey._repositoryId)) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public int hashCode() {
-			return (int)(_companyId * 11 + _repositoryId);
-		}
-
-		private final long _companyId;
-		private final long _repositoryId;
-
-	}
 
 }

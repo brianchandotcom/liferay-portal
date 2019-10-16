@@ -431,6 +431,26 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-102173. Inherited contributed fragments can be copied."
+	@priority = "5"
+	test CopyInheritedContributedFragment {
+		property portal.acceptance = "true";
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
+
+		task ("Copy button fragment to created collection") {
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Button",
+				item = "Copy To");
+
+			FragmentsAdmin.selectCollection(collectionName = "Collection Name");
+		}
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+		FragmentsAdmin.viewEntryPresent(entry = "Button (Copy)");
+	}
+
 	@description = "Fragments can be deleted."
 	@priority = "5"
 	test DeleteFragment {

@@ -14,26 +14,16 @@
 
 package com.liferay.document.library.web.internal.info.display.contributor.field;
 
-import com.liferay.info.display.contributor.field.BaseInfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldType;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -42,12 +32,12 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
 	service = InfoDisplayContributorField.class
 )
-public class DLFileEntryAuthorProfileImageInfoDisplayContributorField
-	extends BaseInfoDisplayContributorField<FileEntry> {
+public class FileEntryDescriptionInfoDisplayContributorField
+	implements InfoDisplayContributorField<FileEntry> {
 
 	@Override
 	public String getKey() {
-		return "authorProfileImage";
+		return "description";
 	}
 
 	@Override
@@ -55,43 +45,17 @@ public class DLFileEntryAuthorProfileImageInfoDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "author-profile-image");
+		return LanguageUtil.get(resourceBundle, "description");
 	}
 
 	@Override
 	public InfoDisplayContributorFieldType getType() {
-		return InfoDisplayContributorFieldType.IMAGE;
+		return InfoDisplayContributorFieldType.TEXT;
 	}
 
 	@Override
-	public Object getValue(FileEntry fileEntry, Locale locale) {
-		User user = _userLocalService.fetchUser(fileEntry.getUserId());
-
-		if (user == null) {
-			return StringPool.BLANK;
-		}
-
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		if (themeDisplay != null) {
-			try {
-				return JSONUtil.put(
-					"url", user.getPortraitURL(getThemeDisplay()));
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-			}
-		}
-
-		return StringPool.BLANK;
+	public String getValue(FileEntry fileEntry, Locale locale) {
+		return fileEntry.getDescription();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileEntryAuthorProfileImageInfoDisplayContributorField.class);
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(service = InfoDisplayContributor.class)
-public class DLFileEntryInfoDisplayContributor
+public class FileEntryInfoDisplayContributor
 	implements InfoDisplayContributor<FileEntry> {
 
 	@Override
@@ -143,7 +143,7 @@ public class DLFileEntryInfoDisplayContributor
 			return null;
 		}
 
-		return new DLFileEntryInfoDisplayObjectProvider(fileEntry);
+		return new FileEntryInfoDisplayObjectProvider(fileEntry);
 	}
 
 	@Override

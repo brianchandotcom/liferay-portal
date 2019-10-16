@@ -14,57 +14,61 @@
 
 package com.liferay.document.library.web.internal.info.display.contributor.field;
 
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldType;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Eudaldo Alonso
  */
 @Component(
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
 	service = InfoDisplayContributorField.class
 )
-public class DLFileEntryPreviewImageInfoDisplayContributorField
+public class FileEntryAuthorNameInfoDisplayContributorField
 	implements InfoDisplayContributorField<FileEntry> {
 
 	@Override
 	public String getKey() {
-		return "previewImage";
+		return "authorName";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
-			ResourceBundleUtil.getBundle(locale, getClass()), "preview-image");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "author-name");
 	}
 
 	@Override
 	public InfoDisplayContributorFieldType getType() {
-		return InfoDisplayContributorFieldType.IMAGE;
+		return InfoDisplayContributorFieldType.TEXT;
 	}
 
 	@Override
-	public Object getValue(FileEntry fileEntry, Locale locale) {
-		try {
-			return JSONUtil.put(
-				"url", _dlURLHelper.getImagePreviewURL(fileEntry, null));
+	public String getValue(FileEntry fileEntry, Locale locale) {
+		User user = _userLocalService.fetchUser(fileEntry.getUserId());
+
+		if (user != null) {
+			return user.getFullName();
 		}
-		catch (Exception pe) {
-			return null;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	@Reference
-	private DLURLHelper _dlURLHelper;
+	private UserLocalService _userLocalService;
 
 }

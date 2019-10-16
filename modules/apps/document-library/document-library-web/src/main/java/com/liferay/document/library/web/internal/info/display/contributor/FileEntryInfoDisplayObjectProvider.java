@@ -32,10 +32,10 @@ import java.util.Locale;
 /**
  * @author Jürgen Kappler
  */
-public class DLFileEntryInfoDisplayObjectProvider
+public class FileEntryInfoDisplayObjectProvider
 	implements InfoDisplayObjectProvider<FileEntry> {
 
-	public DLFileEntryInfoDisplayObjectProvider(FileEntry fileEntry) {
+	public FileEntryInfoDisplayObjectProvider(FileEntry fileEntry) {
 		_assetEntry = _getAssetEntry(fileEntry);
 		_fileEntry = fileEntry;
 	}
@@ -116,7 +116,7 @@ public class DLFileEntryInfoDisplayObjectProvider
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileEntryInfoDisplayObjectProvider.class);
+		FileEntryInfoDisplayObjectProvider.class);
 
 	private final AssetEntry _assetEntry;
 	private final FileEntry _fileEntry;

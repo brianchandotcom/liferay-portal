@@ -31,18 +31,18 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
 	service = InfoDisplayContributorField.class
 )
-public class DLFileEntryVersionInfoDisplayContributorField
+public class FileEntryMimeTypeInfoDisplayContributorField
 	implements InfoDisplayContributorField<FileEntry> {
 
 	@Override
 	public String getKey() {
-		return "version";
+		return "mimeType";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(
-			ResourceBundleUtil.getBundle(locale, getClass()), "version");
+			ResourceBundleUtil.getBundle(locale, getClass()), "content-type");
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class DLFileEntryVersionInfoDisplayContributorField
 
 	@Override
 	public String getValue(FileEntry fileEntry, Locale locale) {
-		return fileEntry.getVersion();
+		return fileEntry.getMimeType();
 	}
 
 }

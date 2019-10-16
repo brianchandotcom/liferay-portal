@@ -225,11 +225,14 @@ public class SafeLdapFilter {
 
 	private static final String[] _RFC2254_ESCAPE_KEYS = {
 		StringPool.BACK_SLASH, StringPool.CLOSE_PARENTHESIS,
-		StringPool.NULL_CHAR, StringPool.OPEN_PARENTHESIS, StringPool.STAR
+		StringPool.NULL_CHAR, StringPool.OPEN_PARENTHESIS, StringPool.STAR,
+		StringPool.EQUAL, StringPool.GREATER_THAN, StringPool.LESS_THAN,
+		StringPool.TILDE
 	};
 
 	private static final String[] _RFC2254_ESCAPE_VALUES = {
-		"\\5c", "\\29", "\\00", "\\28", "\\2a"
+		"\\5c", "\\29", "\\00", "\\28", "\\2a", "\\3d", "\\3e", "\\3c",
+		"\\7e"
 	};
 
 	private final List<Object> _arguments;

@@ -560,6 +560,14 @@
 						path: 'translation_manager.js',
 						requires: ['aui-base']
 					},
+					'liferay-tree-view-icons': {
+						condition: {
+							name: 'liferay-tree-view-icons',
+							trigger: 'aui-tree-view'
+						},
+						path: 'tree_view_icons.js',
+						requires: ['aui-tree-view']
+					},
 					'liferay-undo-manager': {
 						path: 'undo_manager.js',
 						requires: ['aui-data-set-deprecated', 'base']

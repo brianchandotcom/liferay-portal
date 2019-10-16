@@ -35,3 +35,9 @@
 		margin-left: 15px;
 	}
 }
+
+.tree-view li.tree-node .tree-node-content {
+	svg.lexicon-icon {
+		pointer-events: none;
+	}
+}

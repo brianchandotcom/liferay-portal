@@ -54,7 +54,8 @@ function addFragment(
 	dropTargetItemId,
 	dropTargetItemType,
 	layoutData,
-	fragmentEntryLinkRowType = FRAGMENTS_EDITOR_ROW_TYPES.componentRow
+	fragmentEntryLinkRowType = FRAGMENTS_EDITOR_ROW_TYPES.componentRow,
+	fragmentEntryKey
 ) {
 	let nextData = layoutData;
 
@@ -68,7 +69,8 @@ function addFragment(
 			layoutData,
 			fragmentEntryLinkId,
 			dropTargetItemId,
-			fragmentColumn.fragmentEntryLinkIds.length
+			fragmentColumn.fragmentEntryLinkIds.length,
+			fragmentEntryKey
 		);
 	} else if (dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
 		const fragmentColumn = getFragmentColumn(
@@ -86,7 +88,8 @@ function addFragment(
 			layoutData,
 			fragmentEntryLinkId,
 			fragmentColumn.columnId,
-			position
+			position,
+			fragmentEntryKey
 		);
 	} else if (dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) {
 		const position = getDropRowPosition(
@@ -99,14 +102,16 @@ function addFragment(
 			layoutData,
 			fragmentEntryLinkId,
 			fragmentEntryLinkRowType,
-			position
+			position,
+			fragmentEntryKey
 		);
 	} else {
 		nextData = _addSingleFragmentRow(
 			layoutData,
 			fragmentEntryLinkId,
 			fragmentEntryLinkRowType,
-			layoutData.structure.length
+			layoutData.structure.length,
+			fragmentEntryKey
 		);
 	}
 
@@ -246,7 +251,8 @@ function addFragmentEntryLinkReducer(state, action) {
 					nextState.dropTargetItemId,
 					nextState.dropTargetItemType,
 					nextState.layoutData,
-					action.fragmentEntryLinkRowType
+					action.fragmentEntryLinkRowType,
+					action.fragmentEntryKey
 				);
 
 				return updatePageEditorLayoutData(
@@ -657,7 +663,8 @@ function _addFragmentToColumn(
 	layoutData,
 	fragmentEntryLinkId,
 	targetColumnId,
-	position
+	position,
+	fragmentEntryKey
 ) {
 	const {structure} = layoutData;
 
@@ -669,8 +676,20 @@ function _addFragmentToColumn(
 	const columnIndex = row.columns.indexOf(column);
 	const rowIndex = structure.indexOf(row);
 
-	return updateIn(
+	const newLayoutData = updateIn(
 		layoutData,
+		['structure', rowIndex, 'columns', columnIndex],
+		column => ({
+			...column,
+			config: {
+				isDropZone:
+					fragmentEntryKey && fragmentEntryKey.startsWith('drop-zone')
+			}
+		})
+	);
+
+	return updateIn(
+		newLayoutData,
 		['structure', rowIndex, 'columns', columnIndex, 'fragmentEntryLinkIds'],
 		fragmentEntryLinkIds =>
 			add(fragmentEntryLinkIds, fragmentEntryLinkId, position)
@@ -691,14 +710,16 @@ function _addSingleFragmentRow(
 	layoutData,
 	fragmentEntryLinkId,
 	fragmentEntryLinkRowType,
-	position
+	position,
+	fragmentEntryKey
 ) {
 	return addRow(
 		['12'],
 		layoutData,
 		position,
 		[fragmentEntryLinkId],
-		fragmentEntryLinkRowType
+		fragmentEntryLinkRowType,
+		fragmentEntryKey
 	);
 }
 

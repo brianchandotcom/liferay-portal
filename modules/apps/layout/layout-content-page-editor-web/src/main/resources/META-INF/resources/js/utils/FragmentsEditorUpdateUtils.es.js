@@ -64,7 +64,8 @@ function addRow(
 	layoutData,
 	position,
 	fragmentEntryLinkIds = [],
-	type = FRAGMENTS_EDITOR_ROW_TYPES.componentRow
+	type = FRAGMENTS_EDITOR_ROW_TYPES.componentRow,
+	fragmentEntryKey
 ) {
 	let nextColumnId = layoutData.nextColumnId || 0;
 	const nextRowId = layoutData.nextRowId || 0;
@@ -90,7 +91,11 @@ function addRow(
 		layoutData.structure,
 		{
 			columns,
-			config: defaultConfig,
+			config: {
+				...defaultConfig,
+				isDropZone:
+					fragmentEntryKey && fragmentEntryKey.startsWith('drop-zone')
+			},
 			rowId: `${nextRowId}`,
 			type
 		},

@@ -29,7 +29,7 @@ DiscussionPermission discussionPermission = CommentManagerUtil.getDiscussionPerm
 Discussion discussion = (Discussion)request.getAttribute("liferay-comment:discussion:discussion");
 
 if (discussion == null) {
-	discussion = CommentManagerUtil.getDiscussion(discussionTaglibHelper.getUserId(), discussionRequestHelper.getScopeGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), new ServiceContextFunction(renderRequest));
+	discussion = CommentManagerUtil.getDiscussion(user.getUserId(), discussionRequestHelper.getScopeGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), new ServiceContextFunction(renderRequest));
 }
 
 DiscussionComment rootDiscussionComment = (discussion == null) ? null : discussion.getRootDiscussionComment();

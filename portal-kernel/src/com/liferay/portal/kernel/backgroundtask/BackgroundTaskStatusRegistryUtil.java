@@ -28,17 +28,6 @@ public class BackgroundTaskStatusRegistryUtil {
 			backgroundTaskId);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #_getBackgroundTaskStatusRegistry()}
-	 */
-	@Deprecated
-	public static BackgroundTaskStatusRegistry
-		getBackgroundTaskStatusRegistry() {
-
-		return _getBackgroundTaskStatusRegistry();
-	}
-
 	public static BackgroundTaskStatus registerBackgroundTaskStatus(
 		long backgroundTaskId) {
 

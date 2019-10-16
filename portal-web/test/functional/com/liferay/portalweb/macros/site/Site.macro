@@ -455,8 +455,6 @@ definition {
 	}
 
 	macro configureCurrentLanguagesCP {
-		var key_displaySettings = "${displaySettings}";
-
 		if (IsNotVisible(locator1 = "SiteSettingsDisplaySettings#DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO")) {
 			if (isSet(localizedLanguageTab)) {
 				Navigator.gotoNavTab(navTab = "${localizedLanguageTab}");

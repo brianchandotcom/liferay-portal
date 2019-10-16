@@ -168,7 +168,11 @@ public class LayoutLocalServiceUtil {
 	 prototype.
 	 * @return the layout
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addLayout(long,
+	 long, boolean, long, long, long, Map, Map, Map, Map, Map,
+	 String, String, boolean, boolean, long, Map, ServiceContext)}
 	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.model.Layout addLayout(
 			long userId, long groupId, boolean privateLayout,
 			long parentLayoutId, long classNameId, long classPK,

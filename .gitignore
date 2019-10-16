@@ -13,6 +13,7 @@
 *~
 .ant-targets-build.xml
 .ant_targets
+.build-profile-dxp.generated
 .gh.json
 .sass-cache
 .sass_cache_*.css

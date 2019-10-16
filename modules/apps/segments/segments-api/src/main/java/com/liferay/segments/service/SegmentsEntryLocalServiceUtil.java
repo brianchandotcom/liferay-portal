@@ -428,6 +428,19 @@ public class SegmentsEntryLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.segments.model.SegmentsEntry> searchSegmentsEntries(
+				long companyId, long groupId, String keywords,
+				boolean includeAncestorSegmentsEntries,
+				java.util.LinkedHashMap<String, Object> params, int start,
+				int end, com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchSegmentsEntries(
+			companyId, groupId, keywords, includeAncestorSegmentsEntries,
+			params, start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.segments.model.SegmentsEntry> searchSegmentsEntries(
 				com.liferay.portal.kernel.search.SearchContext searchContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
 

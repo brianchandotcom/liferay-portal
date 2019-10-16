@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.portlet.action;
+package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.NoSuchClassTypeException;
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
+import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.NoSuchClassNameException;
@@ -58,8 +58,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/add_display_page"
+		"javax.portlet.name=" + LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+		"mvc.command.name=/layout_page_template/add_display_page"
 	},
 	service = MVCActionCommand.class
 )

@@ -14,12 +14,12 @@
 
 package com.liferay.portal.security.ldap.internal.exportimport;
 
+import com.liferay.portal.security.ldap.SafeLdapContext;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-
-import javax.naming.ldap.LdapContext;
 
 /**
  * @author Edward C. Han
@@ -29,7 +29,7 @@ public class LDAPImportContext {
 	public LDAPImportContext(
 		long companyId, Properties contactExpandoMappings,
 		Properties contactMappings, Properties groupMappings,
-		LdapContext ldapContext, long ldapServerId,
+		SafeLdapContext safeLdapContext, long ldapServerId,
 		Set<String> ldapUserIgnoreAttributes, Properties userExpandoMappings,
 		Properties userMappings) {
 
@@ -37,7 +37,7 @@ public class LDAPImportContext {
 		_contactExpandoMappings = contactExpandoMappings;
 		_contactMappings = contactMappings;
 		_groupMappings = groupMappings;
-		_ldapContext = ldapContext;
+		_safeLdapContext = safeLdapContext;
 		_ldapServerId = ldapServerId;
 		_ldapUserIgnoreAttributes = ldapUserIgnoreAttributes;
 		_userExpandoMappings = userExpandoMappings;
@@ -72,16 +72,16 @@ public class LDAPImportContext {
 		return _importedLdapUsers.get(fullUserDN);
 	}
 
-	public LdapContext getLdapContext() {
-		return _ldapContext;
-	}
-
 	public long getLdapServerId() {
 		return _ldapServerId;
 	}
 
 	public Set<String> getLdapUserIgnoreAttributes() {
 		return _ldapUserIgnoreAttributes;
+	}
+
+	public SafeLdapContext getSafeLdapContext() {
+		return _safeLdapContext;
 	}
 
 	public Properties getUserExpandoMappings() {
@@ -97,9 +97,9 @@ public class LDAPImportContext {
 	private final Properties _contactMappings;
 	private final Properties _groupMappings;
 	private final Map<String, Long> _importedLdapUsers = new HashMap<>();
-	private final LdapContext _ldapContext;
 	private final long _ldapServerId;
 	private final Set<String> _ldapUserIgnoreAttributes;
+	private final SafeLdapContext _safeLdapContext;
 	private final Properties _userExpandoMappings;
 	private final Properties _userMappings;
 

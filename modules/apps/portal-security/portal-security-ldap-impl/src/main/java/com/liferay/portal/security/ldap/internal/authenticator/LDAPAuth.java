@@ -35,7 +35,10 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.ldap.PortalLDAP;
+import com.liferay.portal.security.ldap.SafeLdapContext;
+import com.liferay.portal.security.ldap.SafeLdapFilter;
+import com.liferay.portal.security.ldap.SafeLdapName;
+import com.liferay.portal.security.ldap.SafePortalLDAP;
 import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
@@ -44,6 +47,7 @@ import com.liferay.portal.security.ldap.constants.LDAPConstants;
 import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.security.ldap.util.LDAPUtil;
+import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
 
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -276,10 +280,10 @@ public class LDAPAuth implements Authenticator {
 			String screenName, long userId, String password)
 		throws Exception {
 
-		LdapContext ldapContext = _portalLDAP.getContext(
+		SafeLdapContext safeLdapContext = _portalLDAP.getSafeLdapContext(
 			ldapServerId, companyId);
 
-		if (ldapContext == null) {
+		if (safeLdapContext == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
@@ -297,16 +301,31 @@ public class LDAPAuth implements Authenticator {
 				_ldapServerConfigurationProvider.getConfiguration(
 					companyId, ldapServerId);
 
-			String baseDN = LDAPUtil.escapeCharacters(
-				ldapServerConfiguration.baseDN());
+			if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+				return DNE;
+			}
 
 			//  Process LDAP auth search filter
 
-			String filter = _ldapSettings.getAuthSearchFilter(
-				ldapServerId, companyId,
-				_portalLDAP.encodeFilterAttribute(emailAddress, false),
-				_portalLDAP.encodeFilterAttribute(screenName, false),
-				String.valueOf(userId));
+			SafeLdapFilter authSearchSafeLdapFilter =
+				LDAPUtil.getAuthSearchSafeLdapFilter(
+					ldapServerConfiguration, _ldapFilterValidator);
+
+			if (authSearchSafeLdapFilter == null) {
+				_log.error("Missing authSearchFilter");
+
+				return FAILURE;
+			}
+
+			SafeLdapFilter safeLdapFilter = authSearchSafeLdapFilter.replace(
+				new String[] {
+					"@company_id@", "@email_address@", "@screen_name@",
+					"@user_id@"
+				},
+				new String[] {
+					String.valueOf(companyId), emailAddress, screenName,
+					String.valueOf(userId)
+				});
 
 			Properties userMappings = _ldapSettings.getUserMappings(
 				ldapServerId, companyId);
@@ -321,41 +340,46 @@ public class LDAPAuth implements Authenticator {
 				SearchControls.SUBTREE_SCOPE, 1, 0,
 				new String[] {userMappingsScreenName}, false, false);
 
-			enu = ldapContext.search(baseDN, filter, searchControls);
+			enu = safeLdapContext.search(
+				LDAPUtil.getBaseDNSafeLdapName(ldapServerConfiguration),
+				safeLdapFilter, searchControls);
 
 			if (!enu.hasMoreElements()) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"No results found with search filter: " + filter);
+						"No results found with search filter: " +
+							safeLdapFilter);
 				}
 
 				return DNE;
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Found results with search filter: " + filter);
+				_log.debug(
+					"Found results with search filter: " + safeLdapFilter);
 			}
 
 			SearchResult searchResult = enu.nextElement();
 
-			String fullUserDN = searchResult.getNameInNamespace();
-
 			Attributes attributes = _portalLDAP.getUserAttributes(
-				ldapServerId, companyId, ldapContext, fullUserDN);
+				ldapServerId, companyId, safeLdapContext,
+				SafeLdapName.from(searchResult));
 
 			// Authenticate
 
-			LDAPAuthResult ldapAuthResult = authenticate(
-				ldapContext, companyId, attributes, fullUserDN, password);
+			String fullUserDN = searchResult.getNameInNamespace();
 
-			// Get user or create from LDAP
+			LDAPAuthResult ldapAuthResult = authenticate(
+				safeLdapContext, companyId, attributes, fullUserDN, password);
+
+			// Get user or create fromUnsafe LDAP
 
 			if (!ldapAuthResult.isAuthenticated()) {
 				password = null;
 			}
 
 			User user = _ldapUserImporter.importUser(
-				ldapServerId, companyId, ldapContext, attributes, password);
+				ldapServerId, companyId, safeLdapContext, attributes, password);
 
 			// Process LDAP failure codes
 
@@ -396,7 +420,7 @@ public class LDAPAuth implements Authenticator {
 					sb.append(", company ");
 					sb.append(companyId);
 					sb.append(", and LDAP context ");
-					sb.append(ldapContext);
+					sb.append(safeLdapContext);
 					sb.append(": ");
 					sb.append(errorMessage);
 
@@ -430,7 +454,7 @@ public class LDAPAuth implements Authenticator {
 				enu.close();
 			}
 
-			ldapContext.close();
+			safeLdapContext.close();
 		}
 
 		return SUCCESS;
@@ -524,27 +548,41 @@ public class LDAPAuth implements Authenticator {
 			String screenName, long userId, String password)
 		throws Exception {
 
-		int result = DNE;
-
 		if (ldapServerId < 0) {
-			return result;
+			if (_log.isDebugEnabled()) {
+				_log.debug("No preferred LDAP server ID provided");
+			}
+
+			return DNE;
 		}
 
 		LDAPServerConfiguration ldapServerConfiguration =
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		String providerUrl = ldapServerConfiguration.baseProviderURL();
+		if (Validator.isNull(ldapServerConfiguration.baseProviderURL())) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("BaseProviderURL is not set");
+			}
 
-		if (Validator.isNull(providerUrl)) {
-			return result;
+			return DNE;
 		}
 
-		result = authenticate(
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"LDAP server id ", ldapServerId,
+						" is no longer valid, company ", companyId,
+						" now uses ", ldapServerConfiguration.ldapServerId()));
+			}
+
+			return DNE;
+		}
+
+		return authenticate(
 			ldapServerId, companyId, emailAddress, screenName, userId,
 			password);
-
-		return result;
 	}
 
 	protected int authenticateOmniadmin(
@@ -785,6 +823,13 @@ public class LDAPAuth implements Authenticator {
 			LDAPAuth.class + "._failedLDAPAuthResultCache", HashMap::new);
 	private ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile LDAPFilterValidator _ldapFilterValidator;
+
 	private ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
 	private ConfigurationProvider<LDAPServerConfiguration>
@@ -804,7 +849,7 @@ public class LDAPAuth implements Authenticator {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private volatile PortalLDAP _portalLDAP;
+	private volatile SafePortalLDAP _portalLDAP;
 
 	private Props _props;
 	private ConfigurationProvider<SystemLDAPConfiguration>

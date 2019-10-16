@@ -153,7 +153,7 @@ public class SampleSQLBuilderTest {
 		properties.put("sample.sql.optimize.buffer.size", "8192");
 		properties.put(
 			"sample.sql.output.csv.file.names",
-			"assetPublisher,blog,company,cpfriendlyurlentry,documentLibrary," +
+			"assetPublisher,blog,company,cpFriendlyURLEntry,documentLibrary," +
 				"dynamicDataList,layout,mbCategory,mbThread,repository,wiki");
 		properties.put("sample.sql.output.dir", outputDir);
 		properties.put("sample.sql.output.merge", "true");

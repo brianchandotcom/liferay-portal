@@ -21,7 +21,7 @@ ${dataFactory.toInsertSQL(dataFactory.commerceChannelModel)}
 <#list dataFactory.CPFriendlyURLEntryModels as cpFriendlyURLEntryModel>
 	${dataFactory.toInsertSQL(cpFriendlyURLEntryModel)}
 
-	${dataFactory.getCSVWriter("cpfriendlyurlentry").write(cpFriendlyURLEntryModel.urlTitle + "\n")}
+	${dataFactory.getCSVWriter("cpFriendlyURLEntry").write(cpFriendlyURLEntryModel.urlTitle + "\n")}
 </#list>
 
 <#list dataFactory.CPInstanceModels as cpInstanceModel>

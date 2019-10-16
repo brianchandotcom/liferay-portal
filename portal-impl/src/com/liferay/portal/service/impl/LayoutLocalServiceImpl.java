@@ -432,7 +432,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         prototype.
 	 * @return the layout
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addLayout(long,
+	 *			long, boolean, long, long, long, Map, Map, Map, Map, Map,
+	 *			String, String, boolean, boolean, long, Map, ServiceContext)}
 	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Layout addLayout(

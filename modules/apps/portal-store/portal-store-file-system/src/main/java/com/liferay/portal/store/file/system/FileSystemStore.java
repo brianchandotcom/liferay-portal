@@ -14,7 +14,6 @@
 
 package com.liferay.portal.store.file.system;
 
-import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -86,18 +85,12 @@ public class FileSystemStore extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
-		throws DuplicateFileException {
+		long companyId, long repositoryId, String fileName, String versionLabel,
+		InputStream is) {
 
 		try {
 			File fileNameVersionFile = getFileNameVersionFile(
 				companyId, repositoryId, fileName, versionLabel);
-
-			if (fileNameVersionFile.exists()) {
-				throw new DuplicateFileException(
-					companyId, repositoryId, fileName);
-			}
 
 			FileUtil.write(fileNameVersionFile, is);
 		}

@@ -28,7 +28,6 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.S3ClientOptions;
-import com.amazonaws.services.s3.model.CopyObjectRequest;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.GetObjectMetadataRequest;
@@ -45,7 +44,6 @@ import com.amazonaws.services.s3.transfer.TransferManagerConfiguration;
 import com.amazonaws.services.s3.transfer.Upload;
 
 import com.liferay.document.library.kernel.exception.AccessDeniedException;
-import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
@@ -105,8 +103,7 @@ public class S3Store extends BaseStore {
 		throws PortalException {
 
 		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
-			throw new DuplicateFileException(
-				companyId, repositoryId, fileName, versionLabel);
+			deleteFile(companyId, repositoryId, fileName, versionLabel);
 		}
 
 		File file = null;
@@ -657,47 +654,6 @@ public class S3Store extends BaseStore {
 		deactivate();
 
 		activate(properties);
-	}
-
-	protected void moveObjects(String oldPrefix, String newPrefix)
-		throws DuplicateFileException {
-
-		ObjectListing objectListing = _amazonS3.listObjects(
-			_bucketName, newPrefix);
-
-		List<S3ObjectSummary> newS3ObjectSummaries =
-			objectListing.getObjectSummaries();
-
-		if (!newS3ObjectSummaries.isEmpty()) {
-			throw new DuplicateFileException(
-				StringBundler.concat(
-					"Duplicate S3 object found when moving files from ",
-					oldPrefix, " to ", newPrefix));
-		}
-
-		List<S3ObjectSummary> oldS3ObjectSummaries = getS3ObjectSummaries(
-			oldPrefix);
-
-		for (S3ObjectSummary s3ObjectSummary : oldS3ObjectSummaries) {
-			String oldKey = s3ObjectSummary.getKey();
-
-			String newKey = _s3KeyTransformer.moveKey(
-				oldKey, oldPrefix, newPrefix);
-
-			CopyObjectRequest copyObjectRequest = new CopyObjectRequest(
-				_bucketName, oldKey, _bucketName, newKey);
-
-			_amazonS3.copyObject(copyObjectRequest);
-		}
-
-		for (S3ObjectSummary objectSummary : oldS3ObjectSummaries) {
-			String oldKey = objectSummary.getKey();
-
-			DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(
-				_bucketName, oldKey);
-
-			_amazonS3.deleteObject(deleteObjectRequest);
-		}
 	}
 
 	protected void putObject(

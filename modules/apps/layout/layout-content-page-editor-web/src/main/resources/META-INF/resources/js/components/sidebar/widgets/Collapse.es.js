@@ -45,7 +45,7 @@ const Collapse = props => {
 	);
 };
 
-Collapse.PropTypes = {
+Collapse.propTypes = {
 	children: PropTypes.node.isRequired,
 	open: PropTypes.bool
 };

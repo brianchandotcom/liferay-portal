@@ -306,23 +306,21 @@ String navigation = ParamUtil.getString(request, "navigation");
 		</aui:script>
 
 		<%
-		String pathModule = PortalUtil.getPathModule();
+		Map<String, Object> data = new HashMap<>();
 
-		long groupIds[] = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
-
-		Map<String, Object> tagsContext = new HashMap<>();
-
-		tagsContext.put("namespace", liferayPortletResponse.getNamespace());
+		data.put("context", Collections.singletonMap("namespace", liferayPortletResponse.getNamespace()));
 
 		Map<String, Object> props = new HashMap<>();
 
 		props.put("componentId", liferayPortletResponse.getNamespace() + "EditTagsComponent");
+
+		long groupIds[] = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
+
 		props.put("groupIds", groupIds);
-		props.put("pathModule", pathModule);
+
+		props.put("pathModule", PortalUtil.getPathModule());
 		props.put("repositoryId", String.valueOf(repositoryId));
 
-		Map<String, Object> data = new HashMap<>();
-		data.put("context", tagsContext);
 		data.put("props", props);
 		%>
 
@@ -337,7 +335,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 		Map<String, Object> categoriesContext = new HashMap<>();
 
 		categoriesContext.put("groupIds", groupIds);
-		categoriesContext.put("pathModule", pathModule);
+		categoriesContext.put("pathModule", PortalUtil.getPathModule());
 		categoriesContext.put("repositoryId", String.valueOf(repositoryId));
 		categoriesContext.put("selectCategoriesUrl", selectCategoriesURL.toString());
 		%>

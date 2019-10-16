@@ -22,7 +22,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= layoutPageTemplatesAdminDisplayContext.getNavigationItems() %>"
 />
 
 <liferay-ui:success key="displayPagePublished" message="the-display-page-template-was-published-succesfully" />
@@ -78,7 +78,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 </aui:form>
 
 <liferay-frontend:component
-	componentId="<%= LayoutAdminWebKeys.DISPLAY_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	componentId="<%= LayoutPageTemplateAdminWebKeys.DISPLAY_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 	module="js/DisplayPageDropdownDefaultEventHandler.es"
 />
 

@@ -364,7 +364,8 @@ public abstract class BaseStoreTestCase {
 			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
-		long size = store.getFileSize(companyId, repositoryId, fileName);
+		long size = store.getFileSize(
+			companyId, repositoryId, fileName, StringPool.BLANK);
 
 		Assert.assertEquals(_DATA_SIZE, size);
 	}
@@ -372,7 +373,8 @@ public abstract class BaseStoreTestCase {
 	@Test(expected = NoSuchFileException.class)
 	public void testGetFileSizeNoSuchFileException() throws Exception {
 		store.getFileSize(
-			companyId, repositoryId, RandomTestUtil.randomString());
+			companyId, repositoryId, RandomTestUtil.randomString(),
+			StringPool.BLANK);
 	}
 
 	@Test

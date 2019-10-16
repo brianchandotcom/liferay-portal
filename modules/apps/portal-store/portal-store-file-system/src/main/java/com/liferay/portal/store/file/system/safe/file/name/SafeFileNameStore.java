@@ -146,7 +146,9 @@ public class SafeFileNameStore implements Store {
 	}
 
 	@Override
-	public long getFileSize(long companyId, long repositoryId, String fileName)
+	public long getFileSize(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
 		throws PortalException {
 
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
@@ -155,10 +157,12 @@ public class SafeFileNameStore implements Store {
 			_store.hasFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT)) {
 
-			return _store.getFileSize(companyId, repositoryId, fileName);
+			return _store.getFileSize(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 
-		return _store.getFileSize(companyId, repositoryId, safeFileName);
+		return _store.getFileSize(
+			companyId, repositoryId, safeFileName, versionLabel);
 	}
 
 	@Override

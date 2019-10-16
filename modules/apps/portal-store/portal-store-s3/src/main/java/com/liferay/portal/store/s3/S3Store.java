@@ -209,14 +209,18 @@ public class S3Store extends BaseStore {
 	}
 
 	@Override
-	public long getFileSize(long companyId, long repositoryId, String fileName)
+	public long getFileSize(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
 		throws PortalException {
 
-		String headVersionLabel = getHeadVersionLabel(
-			companyId, repositoryId, fileName);
+		if (Validator.isNull(versionLabel)) {
+			versionLabel = getHeadVersionLabel(
+				companyId, repositoryId, fileName);
+		}
 
 		String key = _s3KeyTransformer.getFileVersionKey(
-			companyId, repositoryId, fileName, headVersionLabel);
+			companyId, repositoryId, fileName, versionLabel);
 
 		GetObjectMetadataRequest getObjectMetadataRequest =
 			new GetObjectMetadataRequest(_bucketName, key);

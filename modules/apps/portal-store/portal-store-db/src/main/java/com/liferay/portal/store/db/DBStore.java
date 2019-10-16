@@ -204,14 +204,16 @@ public class DBStore extends BaseStore {
 	}
 
 	@Override
-	public long getFileSize(long companyId, long repositoryId, String fileName)
+	public long getFileSize(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
 		throws NoSuchFileException {
 
 		DLContent dlContent = null;
 
 		try {
 			dlContent = _dlContentLocalService.getContent(
-				companyId, repositoryId, fileName);
+				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (NoSuchContentException nsce) {
 			throw new NoSuchFileException(

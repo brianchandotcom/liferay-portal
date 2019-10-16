@@ -77,10 +77,13 @@ public class IgnoreDuplicatesStore implements Store {
 	}
 
 	@Override
-	public long getFileSize(long companyId, long repositoryId, String fileName)
+	public long getFileSize(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
 		throws PortalException {
 
-		return _store.getFileSize(companyId, repositoryId, fileName);
+		return _store.getFileSize(
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	@Override

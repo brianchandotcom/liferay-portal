@@ -283,13 +283,6 @@ public class AppResourceImpl
 		for (AppBuilderAppDeployment appBuilderAppDeployment :
 				appBuilderAppDeployments) {
 
-			AppDeployer appDeployer = _appDeployerTracker.getAppDeployer(
-				appBuilderAppDeployment.getType());
-
-			if (appDeployer != null) {
-				appDeployer.undeploy(appId);
-			}
-
 			_appBuilderAppDeploymentLocalService.deleteAppBuilderAppDeployment(
 				appBuilderAppDeployment.getAppBuilderAppDeploymentId());
 		}
@@ -302,16 +295,12 @@ public class AppResourceImpl
 			AppDeployer appDeployer = _appDeployerTracker.getAppDeployer(
 				appDeployment.getType());
 
-			if (appDeployer != null) {
-				if (Objects.equals(
-						appBuilderAppConstantsStatus,
-						AppBuilderAppConstants.Status.DEPLOYED)) {
+			if ((appDeployer != null) &&
+				Objects.equals(
+					appBuilderAppConstantsStatus,
+					AppBuilderAppConstants.Status.DEPLOYED)) {
 
-					appDeployer.deploy(appId);
-				}
-				else {
-					appDeployer.undeploy(appId);
-				}
+				appDeployer.deploy(appId);
 			}
 		}
 

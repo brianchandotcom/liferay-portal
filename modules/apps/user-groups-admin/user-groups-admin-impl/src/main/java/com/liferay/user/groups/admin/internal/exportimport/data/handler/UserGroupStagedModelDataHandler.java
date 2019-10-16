@@ -66,7 +66,7 @@ public class UserGroupStagedModelDataHandler
 	public List<UserGroup> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return ListUtil.toList(
+		return ListUtil.fromArray(
 			_userGroupLocalService.fetchUserGroupByUuidAndCompanyId(
 				uuid, companyId));
 	}

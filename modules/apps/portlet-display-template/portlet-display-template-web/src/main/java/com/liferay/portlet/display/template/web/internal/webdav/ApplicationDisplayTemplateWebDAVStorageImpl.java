@@ -91,7 +91,7 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 	protected List<Resource> getFolders(WebDAVRequest webDAVRequest)
 		throws Exception {
 
-		return ListUtil.toList(
+		return ListUtil.fromArray(
 			_ddmWebDAV.toResource(
 				webDAVRequest, DDMWebDAV.TYPE_TEMPLATES, getRootPath(), true));
 	}

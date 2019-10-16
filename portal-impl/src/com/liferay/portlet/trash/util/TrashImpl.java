@@ -168,7 +168,7 @@ public class TrashImpl implements Trash {
 		ActionRequest actionRequest, TrashedModel trashedModel, String cmd) {
 
 		addTrashSessionMessages(
-			actionRequest, ListUtil.toList(trashedModel), cmd);
+			actionRequest, ListUtil.fromArray(trashedModel), cmd);
 	}
 
 	@Override

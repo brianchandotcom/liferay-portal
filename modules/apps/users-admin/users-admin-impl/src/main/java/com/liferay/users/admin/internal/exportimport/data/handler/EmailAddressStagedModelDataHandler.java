@@ -64,7 +64,7 @@ public class EmailAddressStagedModelDataHandler
 	public List<EmailAddress> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return ListUtil.toList(
+		return ListUtil.fromArray(
 			_emailAddressLocalService.fetchEmailAddressByUuidAndCompanyId(
 				uuid, companyId));
 	}

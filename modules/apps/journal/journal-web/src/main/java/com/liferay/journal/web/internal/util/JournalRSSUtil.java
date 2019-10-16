@@ -472,7 +472,7 @@ public class JournalRSSUtil {
 
 		selfSyndLink.setRel("self");
 
-		syndFeed.setLinks(ListUtil.toList(selfSyndLink));
+		syndFeed.setLinks(ListUtil.fromArray(selfSyndLink));
 
 		syndFeed.setPublishedDate(new Date());
 		syndFeed.setTitle(feed.getName());

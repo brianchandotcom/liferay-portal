@@ -61,7 +61,7 @@ public class ReleaseVersionsTest {
 	public void testReleaseVersions() throws IOException {
 		Assume.assumeTrue(Validator.isNull(System.getenv("JENKINS_HOME")));
 
-		List<String> portalDirNames = ListUtil.toList(
+		List<String> portalDirNames = ListUtil.fromArray(
 			System.getProperty("user.dir"));
 
 		Collections.addAll(

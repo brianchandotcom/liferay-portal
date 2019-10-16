@@ -157,7 +157,7 @@ public class RSSFeedEntry {
 			return _syndEntry.getContents();
 		}
 
-		return ListUtil.toList(syndContent);
+		return ListUtil.fromArray(syndContent);
 	}
 
 	private String _sanitize(String value, String baseURL) {

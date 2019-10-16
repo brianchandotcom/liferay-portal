@@ -109,7 +109,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 				"com.liferay.portlet.documentlibrary.model.DLFileEntry");
 
 			long bitwiseValue = getBitwiseValue(
-				bitwiseValues, ListUtil.toList(ActionKeys.VIEW));
+				bitwiseValues, ListUtil.fromArray(ActionKeys.VIEW));
 
 			addResourcePermission(
 				companyId,
@@ -253,7 +253,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 				"com.liferay.portlet.documentlibrary.model.DLFolder");
 
 			long guestBitwiseValue = getBitwiseValue(
-				bitwiseValues, ListUtil.toList(ActionKeys.VIEW));
+				bitwiseValues, ListUtil.fromArray(ActionKeys.VIEW));
 
 			addResourcePermission(
 				companyId, "com.liferay.portlet.documentlibrary.model.DLFolder",

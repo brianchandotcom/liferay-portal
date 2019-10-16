@@ -36,7 +36,7 @@ public class FlickrItemSelectorCriterionHandler
 		getItemSelectorViews(
 			FlickrItemSelectorCriterion flickrItemSelectorCriterion) {
 
-		return ListUtil.toList(new FlickrItemSelectorView());
+		return ListUtil.fromArray(new FlickrItemSelectorView());
 	}
 
 }

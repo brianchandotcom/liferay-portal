@@ -65,7 +65,7 @@ public class WebsiteStagedModelDataHandler
 	public List<Website> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return ListUtil.toList(
+		return ListUtil.fromArray(
 			_websiteLocalService.fetchWebsiteByUuidAndCompanyId(
 				uuid, companyId));
 	}

@@ -60,7 +60,7 @@ public class GadgetStagedModelDataHandler
 	public List<Gadget> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return ListUtil.toList(
+		return ListUtil.fromArray(
 			GadgetLocalServiceUtil.fetchGadgetByUuidAndCompanyId(
 				uuid, companyId));
 	}

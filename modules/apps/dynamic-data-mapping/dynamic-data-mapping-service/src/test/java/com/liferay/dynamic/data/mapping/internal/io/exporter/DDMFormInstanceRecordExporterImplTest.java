@@ -569,7 +569,7 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		when(
 			ddmFormInstanceRecordExporterImpl.getStructureVersions(1L)
 		).thenReturn(
-			ListUtil.toList(ddmStructureVersion)
+			ListUtil.fromArray(ddmStructureVersion)
 		);
 
 		Map<String, DDMFormField> ddmFormFields = new LinkedHashMap<>();

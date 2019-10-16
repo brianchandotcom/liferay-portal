@@ -36,7 +36,7 @@ public class MediaItemSelectorCriterionHandler
 		getItemSelectorViews(
 			MediaItemSelectorCriterion mediaItemSelectorCriterion) {
 
-		return ListUtil.toList(new MediaItemSelectorView());
+		return ListUtil.fromArray(new MediaItemSelectorView());
 	}
 
 }

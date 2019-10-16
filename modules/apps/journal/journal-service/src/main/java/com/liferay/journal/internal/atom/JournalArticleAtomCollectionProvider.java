@@ -62,7 +62,7 @@ public class JournalArticleAtomCollectionProvider
 
 	@Override
 	public List<String> getEntryAuthors(JournalArticle journalArticle) {
-		return ListUtil.toList(journalArticle.getUserName());
+		return ListUtil.fromArray(journalArticle.getUserName());
 	}
 
 	@Override

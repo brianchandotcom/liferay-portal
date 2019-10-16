@@ -113,7 +113,7 @@ public class AssetVocabularyUtilTest {
 
 		String unambiguousCompanyVocabularyTitle =
 			_companyVocabulary.getUnambiguousTitle(
-				ListUtil.toList(_companyVocabulary), _group.getGroupId(),
+				ListUtil.fromArray(_companyVocabulary), _group.getGroupId(),
 				_LOCALE);
 
 		Assert.assertEquals(_TITLE, unambiguousCompanyVocabularyTitle);

@@ -46,7 +46,7 @@ public class UserAtomCollectionAdapter extends BaseAtomCollectionAdapter<User> {
 
 	@Override
 	public List<String> getEntryAuthors(User user) {
-		return ListUtil.toList(user.getFullName());
+		return ListUtil.fromArray(user.getFullName());
 	}
 
 	@Override

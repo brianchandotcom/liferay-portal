@@ -67,7 +67,7 @@ public class BlogsEntryFinderImpl
 		QueryDefinition<BlogsEntry> queryDefinition) {
 
 		return countByOrganizationIds(
-			ListUtil.toList(organizationId), displayDate, queryDefinition);
+			ListUtil.fromArray(organizationId), displayDate, queryDefinition);
 	}
 
 	@Override
@@ -192,7 +192,7 @@ public class BlogsEntryFinderImpl
 		QueryDefinition<BlogsEntry> queryDefinition) {
 
 		return findByOrganizationIds(
-			ListUtil.toList(organizationId), displayDate, queryDefinition);
+			ListUtil.fromArray(organizationId), displayDate, queryDefinition);
 	}
 
 	@Override

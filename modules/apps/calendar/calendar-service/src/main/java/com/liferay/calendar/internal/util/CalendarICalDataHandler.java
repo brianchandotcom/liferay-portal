@@ -147,7 +147,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 		throws Exception {
 
 		net.fortuna.ical4j.model.Calendar iCalCalendar = toICalCalendar(
-			ListUtil.toList(
+			ListUtil.fromArray(
 				CalendarBookingLocalServiceUtil.getCalendarBooking(
 					calendarBookingId)));
 

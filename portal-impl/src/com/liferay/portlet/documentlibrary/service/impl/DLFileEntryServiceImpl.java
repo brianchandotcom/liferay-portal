@@ -335,7 +335,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	@Override
 	public int getFileEntriesCount(long groupId, long folderId, int status) {
 		return dlFileEntryFinder.filterCountByG_F(
-			groupId, ListUtil.toList(folderId), new QueryDefinition<>(status));
+			groupId, ListUtil.fromArray(folderId),
+			new QueryDefinition<>(status));
 	}
 
 	@Override
@@ -359,7 +360,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		long groupId, long folderId, String[] mimeTypes, int status) {
 
 		return dlFileEntryFinder.filterCountByG_U_F_M(
-			groupId, 0, ListUtil.toList(folderId), mimeTypes,
+			groupId, 0, ListUtil.fromArray(folderId), mimeTypes,
 			new QueryDefinition<>(status));
 	}
 

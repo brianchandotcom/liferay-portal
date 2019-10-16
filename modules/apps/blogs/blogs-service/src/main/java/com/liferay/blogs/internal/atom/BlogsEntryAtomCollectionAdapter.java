@@ -58,7 +58,7 @@ public class BlogsEntryAtomCollectionAdapter
 
 	@Override
 	public List<String> getEntryAuthors(BlogsEntry blogsEntry) {
-		return ListUtil.toList(blogsEntry.getUserName());
+		return ListUtil.fromArray(blogsEntry.getUserName());
 	}
 
 	@Override

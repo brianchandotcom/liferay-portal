@@ -77,7 +77,7 @@ public class RatingsEntryStagedModelDataHandler
 	public List<RatingsEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return ListUtil.toList(
+		return ListUtil.fromArray(
 			_ratingsEntryLocalService.fetchRatingsEntryByUuidAndCompanyId(
 				uuid, companyId));
 	}

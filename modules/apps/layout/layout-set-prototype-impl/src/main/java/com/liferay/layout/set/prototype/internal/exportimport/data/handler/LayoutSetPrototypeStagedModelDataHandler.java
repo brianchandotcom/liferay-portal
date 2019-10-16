@@ -92,7 +92,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 	public List<LayoutSetPrototype> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return ListUtil.toList(
+		return ListUtil.fromArray(
 			_layoutSetPrototypeLocalService.
 				fetchLayoutSetPrototypeByUuidAndCompanyId(uuid, companyId));
 	}

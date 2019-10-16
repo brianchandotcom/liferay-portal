@@ -1139,7 +1139,7 @@ public class AssetPublisherExportImportTest
 	protected void testExportImportAssetEntries(Group scopeGroup)
 		throws Exception {
 
-		testExportImportAssetEntries(ListUtil.toList(scopeGroup));
+		testExportImportAssetEntries(ListUtil.fromArray(scopeGroup));
 	}
 
 	protected void testExportImportAssetEntries(List<Group> scopeGroups)

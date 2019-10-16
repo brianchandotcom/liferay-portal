@@ -548,7 +548,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	@Override
 	public Enumeration<String> getResponseContentTypes() {
 		return Collections.enumeration(
-			ListUtil.toList(getResponseContentType()));
+			ListUtil.fromArray(getResponseContentType()));
 	}
 
 	@Override

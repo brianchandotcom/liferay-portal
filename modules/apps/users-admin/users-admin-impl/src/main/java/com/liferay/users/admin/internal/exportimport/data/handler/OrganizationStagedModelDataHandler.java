@@ -91,7 +91,7 @@ public class OrganizationStagedModelDataHandler
 	public List<Organization> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return ListUtil.toList(
+		return ListUtil.fromArray(
 			_organizationLocalService.fetchOrganizationByUuidAndCompanyId(
 				uuid, companyId));
 	}

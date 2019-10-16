@@ -62,7 +62,7 @@ public class FileEntryAtomCollectionAdapter
 
 	@Override
 	public List<String> getEntryAuthors(FileEntry fileEntry) {
-		return ListUtil.toList(fileEntry.getUserName());
+		return ListUtil.fromArray(fileEntry.getUserName());
 	}
 
 	@Override

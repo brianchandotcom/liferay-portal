@@ -131,7 +131,7 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		DDMFormField parentDDMFormField = createTextDDMFormField(parentName);
 
 		parentDDMFormField.setNestedDDMFormFields(
-			ListUtil.toList(createSelectDDMFormField(childName)));
+			ListUtil.fromArray(createSelectDDMFormField(childName)));
 
 		return parentDDMFormField;
 	}

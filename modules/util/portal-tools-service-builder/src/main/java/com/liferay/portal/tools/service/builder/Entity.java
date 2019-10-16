@@ -655,7 +655,7 @@ public class Entity implements Comparable<Entity> {
 		for (EntityColumn entityColumn : _entityColumns) {
 			if (entityColumn.isUADUserId()) {
 				uadAnonymizableEntityColumnsMap.put(
-					entityColumn.getName(), ListUtil.toList(entityColumn));
+					entityColumn.getName(), ListUtil.fromArray(entityColumn));
 			}
 		}
 

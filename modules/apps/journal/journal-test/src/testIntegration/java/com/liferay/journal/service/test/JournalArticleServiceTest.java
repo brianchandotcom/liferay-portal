@@ -642,7 +642,7 @@ public class JournalArticleServiceTest {
 
 		return JournalArticleLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), _group.getGroupId(),
-			ListUtil.toList(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
+			ListUtil.fromArray(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, null, null, null,
 			null, keyword, "", "", null, null, status, null, true);
 	}
@@ -694,7 +694,7 @@ public class JournalArticleServiceTest {
 
 		return JournalArticleLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), _group.getGroupId(),
-			ListUtil.toList(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
+			ListUtil.fromArray(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, null, null, null,
 			null, keyword, "", "", null, null, status, null, false,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);

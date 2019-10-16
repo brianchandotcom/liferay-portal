@@ -135,7 +135,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			Map<String, Object> data = new HashMap<>();
 
 			data.put(Constants.CMD, Constants.REMOVE);
-			data.put("trashedModels", ListUtil.toList(trashedModel));
+			data.put("trashedModels", ListUtil.fromArray(trashedModel));
 
 			addDeleteSuccessData(actionRequest, data);
 		}

@@ -38,7 +38,7 @@ public class DefaultTaskAssignmentSelector implements TaskAssignmentSelector {
 		KaleoTaskAssignment kaleoTaskAssignment,
 		ExecutionContext executionContext) {
 
-		return ListUtil.toList(kaleoTaskAssignment);
+		return ListUtil.fromArray(kaleoTaskAssignment);
 	}
 
 }

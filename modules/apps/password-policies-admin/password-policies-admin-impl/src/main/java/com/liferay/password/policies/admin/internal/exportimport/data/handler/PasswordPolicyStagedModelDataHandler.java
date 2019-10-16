@@ -68,7 +68,7 @@ public class PasswordPolicyStagedModelDataHandler
 	public List<PasswordPolicy> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return ListUtil.toList(
+		return ListUtil.fromArray(
 			_passwordPolicyLocalService.fetchPasswordPolicyByUuidAndCompanyId(
 				uuid, companyId));
 	}

@@ -112,7 +112,7 @@ public class ChildSitesItemSelectorViewDisplayContext
 			WebKeys.THEME_DISPLAY);
 
 		_groupParams.put(
-			"groupsTree", ListUtil.toList(themeDisplay.getSiteGroup()));
+			"groupsTree", ListUtil.fromArray(themeDisplay.getSiteGroup()));
 
 		_groupParams.put("site", Boolean.TRUE);
 

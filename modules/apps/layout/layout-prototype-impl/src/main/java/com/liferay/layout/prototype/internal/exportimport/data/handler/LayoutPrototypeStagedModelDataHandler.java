@@ -77,7 +77,7 @@ public class LayoutPrototypeStagedModelDataHandler
 	public List<LayoutPrototype> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return ListUtil.toList(
+		return ListUtil.fromArray(
 			_layoutPrototypeLocalService.fetchLayoutPrototypeByUuidAndCompanyId(
 				uuid, companyId));
 	}

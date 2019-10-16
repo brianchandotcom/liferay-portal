@@ -493,7 +493,7 @@ public class SiteBrowserDisplayContext {
 		if (type.equals("child-sites")) {
 			Group parentGroup = GroupLocalServiceUtil.getGroup(groupId);
 
-			_groupParams.put("groupsTree", ListUtil.toList(parentGroup));
+			_groupParams.put("groupsTree", ListUtil.fromArray(parentGroup));
 		}
 		else if (filterManageableGroups) {
 			User user = themeDisplay.getUser();

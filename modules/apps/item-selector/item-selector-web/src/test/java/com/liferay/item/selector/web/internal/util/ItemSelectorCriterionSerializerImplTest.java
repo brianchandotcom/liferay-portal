@@ -100,7 +100,7 @@ public class ItemSelectorCriterionSerializerImplTest {
 			_flickrItemSelectorCriterion.getTags());
 
 		Assert.assertEquals(
-			ListUtil.toList(_testURLItemSelectorReturnType),
+			ListUtil.fromArray(_testURLItemSelectorReturnType),
 			_flickrItemSelectorCriterion.getDesiredItemSelectorReturnTypes());
 	}
 

@@ -157,7 +157,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	public List<ContainerModel> getParentContainerModels(long classPK)
 		throws PortalException {
 
-		return ListUtil.toList(getParentContainerModel(classPK));
+		return ListUtil.fromArray(getParentContainerModel(classPK));
 	}
 
 	@Override

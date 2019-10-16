@@ -596,7 +596,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		WikiNode node = wikiNodeLocalService.addDefaultNode(
 			defaultUserId, serviceContext);
 
-		return ListUtil.toList(node);
+		return ListUtil.fromArray(node);
 	}
 
 	protected void moveDependentsToTrash(long nodeId, long trashEntryId)

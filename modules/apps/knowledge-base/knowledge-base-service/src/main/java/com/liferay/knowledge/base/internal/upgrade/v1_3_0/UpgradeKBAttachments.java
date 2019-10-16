@@ -142,8 +142,14 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 					groupId, userId, _KB_ARTICLE_CLASS_NAME, resourcePrimKey,
 					_PORTLET_ID, folderId, bytes, title, mimeType, false);
 
-				_store.deleteFile(
-					companyId, CompanyConstants.SYSTEM, attachment);
+				for (String versionLabel :
+						_store.getFileVersions(
+							companyId, CompanyConstants.SYSTEM, attachment)) {
+
+					_store.deleteFile(
+						companyId, CompanyConstants.SYSTEM, attachment,
+						versionLabel);
+				}
 			}
 			catch (PortalException pe) {
 				if (_log.isWarnEnabled()) {

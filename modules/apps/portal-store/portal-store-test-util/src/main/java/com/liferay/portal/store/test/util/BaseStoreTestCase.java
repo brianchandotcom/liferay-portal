@@ -168,25 +168,6 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
-	public void testDeleteFile() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		addVersions(fileName, 1);
-
-		store.deleteFile(companyId, repositoryId, fileName);
-
-		Assert.assertFalse(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
-		Assert.assertFalse(
-			store.hasFile(companyId, repositoryId, fileName, "1.1"));
-	}
-
-	@Test
 	public void testDeleteFileWithVersion() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
@@ -409,21 +390,6 @@ public abstract class BaseStoreTestCase {
 				store.hasFile(
 					companyId, repositoryId, fileName, versionLabel + i));
 		}
-	}
-
-	@ExpectedLogs(
-		expectedLogs = {
-			@ExpectedLog(
-				expectedLog = "Unable to delete file {companyId=",
-				expectedType = ExpectedType.PREFIX
-			)
-		},
-		level = "WARN", loggerClass = BaseStore.class
-	)
-	@Test
-	public void testLogFailedDeletion() {
-		store.deleteFile(
-			companyId, repositoryId, RandomTestUtil.randomString());
 	}
 
 	@ExpectedLogs(

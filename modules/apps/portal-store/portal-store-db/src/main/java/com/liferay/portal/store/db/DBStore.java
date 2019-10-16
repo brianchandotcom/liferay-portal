@@ -143,12 +143,6 @@ public class DBStore extends BaseStore {
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName) {
-		_dlContentLocalService.deleteContents(
-			companyId, repositoryId, fileName);
-	}
-
-	@Override
 	public void deleteFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {

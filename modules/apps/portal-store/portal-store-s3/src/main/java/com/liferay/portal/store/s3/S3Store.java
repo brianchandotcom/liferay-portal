@@ -135,14 +135,6 @@ public class S3Store extends BaseStore {
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName) {
-		String key = _s3KeyTransformer.getFileKey(
-			companyId, repositoryId, fileName);
-
-		deleteObjects(key);
-	}
-
-	@Override
 	public void deleteFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {

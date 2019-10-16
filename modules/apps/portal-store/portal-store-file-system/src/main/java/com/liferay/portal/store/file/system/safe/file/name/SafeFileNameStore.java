@@ -68,22 +68,6 @@ public class SafeFileNameStore implements Store {
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName) {
-		String safeFileName = FileUtil.encodeSafeFileName(fileName);
-
-		if (!safeFileName.equals(fileName) &&
-			_store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT)) {
-
-			_store.deleteFile(companyId, repositoryId, fileName);
-
-			return;
-		}
-
-		_store.deleteFile(companyId, repositoryId, safeFileName);
-	}
-
-	@Override
 	public void deleteFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {

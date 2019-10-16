@@ -45,7 +45,7 @@ setUpProfileDXP {
 			workingDir = projectDir.parentFile
 		}
 
-		File buildPropertiesFile = new File(projectDir.parentFile, "build." + System.getenv("COMPUTERNAME") + ".properties")
+		File buildProfileDXPGeneratedFile = new File(projectDir.parentFile, ".build-profile-dxp.generated")
 
 		String content = """\
 			|##
@@ -56,11 +56,7 @@ setUpProfileDXP {
 			|build.repository.private.url=${repositoryPrivateURL}
 			|build.repository.private.username=${repositoryPrivateUsername}""".stripMargin()
 
-		if (buildPropertiesFile.exists() && !buildPropertiesFile.text.equals(content)) {
-			buildPropertiesFile.renameTo("build." + System.getenv("COMPUTERNAME") + ".properties." + System.currentTimeMillis() + ".bak")
-		}
-
-		buildPropertiesFile.write(content)
+		buildProfileDXPGeneratedFile.write(content)
 	}
 
 }

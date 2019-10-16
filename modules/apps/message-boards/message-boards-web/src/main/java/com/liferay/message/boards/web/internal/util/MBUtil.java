@@ -23,8 +23,6 @@ import com.liferay.message.boards.web.internal.security.permission.MBMessagePerm
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -253,17 +251,16 @@ public class MBUtil {
 			String[] priorityArray = StringUtil.split(
 				priority, StringPool.PIPE);
 
-			try {
-				String priorityName = priorityArray[0];
-				String priorityImage = priorityArray[1];
-				double priorityValue = GetterUtil.getDouble(priorityArray[2]);
-
-				if (value == priorityValue) {
-					return new String[] {priorityName, priorityImage};
-				}
+			if ((priorityArray == null) || (priorityArray.length < 3)) {
+				continue;
 			}
-			catch (Exception e) {
-				_log.error("Unable to determine thread priority", e);
+
+			String priorityName = priorityArray[0];
+			String priorityImage = priorityArray[1];
+			double priorityValue = GetterUtil.getDouble(priorityArray[2]);
+
+			if (value == priorityValue) {
+				return new String[] {priorityName, priorityImage};
 			}
 		}
 
@@ -279,7 +276,5 @@ public class MBUtil {
 
 		return HtmlUtil.escape(PortalUtil.getUserName(parentMessage));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(MBUtil.class);
 
 }

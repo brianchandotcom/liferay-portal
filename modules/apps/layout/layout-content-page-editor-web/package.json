@@ -8,7 +8,7 @@
 		"@clayui/label": "3.0.0",
 		"@clayui/loading-indicator": "3.0.0",
 		"@clayui/sticker": "3.0.0",
-		"@clayui/tooltip": "3.0.0",
+		"@clayui/tooltip": "3.0.1",
 		"clay-alert": "2.18.1",
 		"clay-checkbox": "2.18.1",
 		"clay-dropdown": "2.18.1",

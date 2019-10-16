@@ -42,8 +42,8 @@ $zIndexContent: 0;
 	}
 
 	&-content {
-		border-left: 1px solid $sidebarBorderColor;
 		background-color: $sidebarContentBackgroundColor;
+		border-left: 1px solid $sidebarBorderColor;
 		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
 		overflow-x: hidden;
 		padding: 8px;

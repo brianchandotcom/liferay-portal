@@ -12,6 +12,10 @@
 
 apply plugin: "com.liferay.plugin"
 
+dependencies {
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "@com.liferay.css.builder.version@"
+}
+
 repositories {
 	maven {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"

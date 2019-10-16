@@ -20,11 +20,4 @@
 portletDisplay.setShowStagingIcon(false);
 %>
 
-<c:choose>
-	<c:when test='<%= Objects.equals(layoutsAdminDisplayContext.getTabs1(), "display-page-templates") %>'>
-		<liferay-util:include page="/view_display_pages.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test='<%= Objects.equals(layoutsAdminDisplayContext.getTabs1(), "pages") %>'>
-		<liferay-util:include page="/view_layouts.jsp" servletContext="<%= application %>" />
-	</c:when>
-</c:choose>
+<liferay-util:include page="/view_layouts.jsp" servletContext="<%= application %>" />

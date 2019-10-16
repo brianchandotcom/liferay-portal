@@ -48,6 +48,7 @@ public class BatchEngineTaskSoap implements Serializable {
 		soapModel.setEndTime(model.getEndTime());
 		soapModel.setErrorMessage(model.getErrorMessage());
 		soapModel.setExecuteStatus(model.getExecuteStatus());
+		soapModel.setFieldNameMapping(model.getFieldNameMapping());
 		soapModel.setOperation(model.getOperation());
 		soapModel.setStartTime(model.getStartTime());
 		soapModel.setVersion(model.getVersion());
@@ -230,6 +231,14 @@ public class BatchEngineTaskSoap implements Serializable {
 		_executeStatus = executeStatus;
 	}
 
+	public String getFieldNameMapping() {
+		return _fieldNameMapping;
+	}
+
+	public void setFieldNameMapping(String fieldNameMapping) {
+		_fieldNameMapping = fieldNameMapping;
+	}
+
 	public String getOperation() {
 		return _operation;
 	}
@@ -269,6 +278,7 @@ public class BatchEngineTaskSoap implements Serializable {
 	private Date _endTime;
 	private String _errorMessage;
 	private String _executeStatus;
+	private String _fieldNameMapping;
 	private String _operation;
 	private Date _startTime;
 	private String _version;

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -76,7 +77,8 @@ public interface BatchEngineTaskLocalService
 	public BatchEngineTask addBatchEngineTask(
 		long companyId, long userId, long batchSize, String callbackURL,
 		String className, byte[] content, String contentType,
-		String executeStatus, String operation, String version);
+		String executeStatus, Map<String, String> fieldNameMappingMap,
+		String operation, String version);
 
 	/**
 	 * Creates a new batch engine task with the primary key. Does not add the batch engine task to the database.

@@ -78,7 +78,7 @@ public class BatchEngineTaskCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -108,6 +108,8 @@ public class BatchEngineTaskCacheModel
 		sb.append(errorMessage);
 		sb.append(", executeStatus=");
 		sb.append(executeStatus);
+		sb.append(", fieldNameMapping=");
+		sb.append(fieldNameMapping);
 		sb.append(", operation=");
 		sb.append(operation);
 		sb.append(", startTime=");
@@ -194,6 +196,13 @@ public class BatchEngineTaskCacheModel
 			batchEngineTaskImpl.setExecuteStatus(executeStatus);
 		}
 
+		if (fieldNameMapping == null) {
+			batchEngineTaskImpl.setFieldNameMapping("");
+		}
+		else {
+			batchEngineTaskImpl.setFieldNameMapping(fieldNameMapping);
+		}
+
 		if (operation == null) {
 			batchEngineTaskImpl.setOperation("");
 		}
@@ -240,6 +249,7 @@ public class BatchEngineTaskCacheModel
 		endTime = objectInput.readLong();
 		errorMessage = objectInput.readUTF();
 		executeStatus = objectInput.readUTF();
+		fieldNameMapping = objectInput.readUTF();
 		operation = objectInput.readUTF();
 		startTime = objectInput.readLong();
 		version = objectInput.readUTF();
@@ -303,6 +313,13 @@ public class BatchEngineTaskCacheModel
 			objectOutput.writeUTF(executeStatus);
 		}
 
+		if (fieldNameMapping == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(fieldNameMapping);
+		}
+
 		if (operation == null) {
 			objectOutput.writeUTF("");
 		}
@@ -334,6 +351,7 @@ public class BatchEngineTaskCacheModel
 	public long endTime;
 	public String errorMessage;
 	public String executeStatus;
+	public String fieldNameMapping;
 	public String operation;
 	public long startTime;
 	public String version;

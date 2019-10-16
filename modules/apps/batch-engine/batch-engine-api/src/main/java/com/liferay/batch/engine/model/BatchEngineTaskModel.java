@@ -302,6 +302,21 @@ public interface BatchEngineTaskModel
 	public void setExecuteStatus(String executeStatus);
 
 	/**
+	 * Returns the field name mapping of this batch engine task.
+	 *
+	 * @return the field name mapping of this batch engine task
+	 */
+	@AutoEscape
+	public String getFieldNameMapping();
+
+	/**
+	 * Sets the field name mapping of this batch engine task.
+	 *
+	 * @param fieldNameMapping the field name mapping of this batch engine task
+	 */
+	public void setFieldNameMapping(String fieldNameMapping);
+
+	/**
 	 * Returns the operation of this batch engine task.
 	 *
 	 * @return the operation of this batch engine task

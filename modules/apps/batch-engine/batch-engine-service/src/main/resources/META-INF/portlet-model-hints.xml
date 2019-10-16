@@ -17,6 +17,7 @@
 		<field name="endTime" type="Date" />
 		<field name="errorMessage" type="String" />
 		<field name="executeStatus" type="String" />
+		<field name="fieldNameMapping" type="String" />
 		<field name="operation" type="String" />
 		<field name="startTime" type="Date" />
 		<field name="version" type="String" />

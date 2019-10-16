@@ -55,11 +55,14 @@ public class BatchEngineTaskLocalServiceUtil {
 		addBatchEngineTask(
 			long companyId, long userId, long batchSize, String callbackURL,
 			String className, byte[] content, String contentType,
-			String executeStatus, String operation, String version) {
+			String executeStatus,
+			java.util.Map<String, String> fieldNameMappingMap, String operation,
+			String version) {
 
 		return getService().addBatchEngineTask(
 			companyId, userId, batchSize, callbackURL, className, content,
-			contentType, executeStatus, operation, version);
+			contentType, executeStatus, fieldNameMappingMap, operation,
+			version);
 	}
 
 	/**

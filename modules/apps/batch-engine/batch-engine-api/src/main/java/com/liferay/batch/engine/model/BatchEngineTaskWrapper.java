@@ -60,6 +60,7 @@ public class BatchEngineTaskWrapper
 		attributes.put("endTime", getEndTime());
 		attributes.put("errorMessage", getErrorMessage());
 		attributes.put("executeStatus", getExecuteStatus());
+		attributes.put("fieldNameMapping", getFieldNameMapping());
 		attributes.put("operation", getOperation());
 		attributes.put("startTime", getStartTime());
 		attributes.put("version", getVersion());
@@ -157,6 +158,12 @@ public class BatchEngineTaskWrapper
 
 		if (executeStatus != null) {
 			setExecuteStatus(executeStatus);
+		}
+
+		String fieldNameMapping = (String)attributes.get("fieldNameMapping");
+
+		if (fieldNameMapping != null) {
+			setFieldNameMapping(fieldNameMapping);
 		}
 
 		String operation = (String)attributes.get("operation");
@@ -286,6 +293,21 @@ public class BatchEngineTaskWrapper
 	@Override
 	public String getExecuteStatus() {
 		return model.getExecuteStatus();
+	}
+
+	/**
+	 * Returns the field name mapping of this batch engine task.
+	 *
+	 * @return the field name mapping of this batch engine task
+	 */
+	@Override
+	public String getFieldNameMapping() {
+		return model.getFieldNameMapping();
+	}
+
+	@Override
+	public Map<String, String> getFieldNameMappingMap() {
+		return model.getFieldNameMappingMap();
 	}
 
 	/**
@@ -496,6 +518,23 @@ public class BatchEngineTaskWrapper
 	@Override
 	public void setExecuteStatus(String executeStatus) {
 		model.setExecuteStatus(executeStatus);
+	}
+
+	/**
+	 * Sets the field name mapping of this batch engine task.
+	 *
+	 * @param fieldNameMapping the field name mapping of this batch engine task
+	 */
+	@Override
+	public void setFieldNameMapping(String fieldNameMapping) {
+		model.setFieldNameMapping(fieldNameMapping);
+	}
+
+	@Override
+	public void setFieldNameMappingMap(
+		Map<String, String> fieldNameMappingMap) {
+
+		model.setFieldNameMappingMap(fieldNameMappingMap);
 	}
 
 	/**

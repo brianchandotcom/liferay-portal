@@ -58,4 +58,9 @@ public interface BatchEngineTask extends BatchEngineTaskModel, PersistedModel {
 
 		};
 
+	public java.util.Map<String, String> getFieldNameMappingMap();
+
+	public void setFieldNameMappingMap(
+		java.util.Map<String, String> fieldNameMappingMap);
+
 }

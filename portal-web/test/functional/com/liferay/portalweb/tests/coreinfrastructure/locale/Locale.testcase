@@ -6,15 +6,24 @@ definition {
 	property testray.main.component.name = "Locale";
 
 	setUp {
-		User.firstLoginPG();
+		TestCase.setUpPortalInstance();
 	}
 
 	tearDown {
-		Site.tearDownCP();
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+		}
 	}
 
 	@priority = "4"
 	test ViewSiteLanguageWithoutUserPreferredLanguages {
+		User.firstLoginPG();
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

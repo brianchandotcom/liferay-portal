@@ -15,6 +15,7 @@
 package com.liferay.portal.odata.entity;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,9 +57,8 @@ public interface EntityModel {
 	public default String getName() {
 		Class<?> clazz = getClass();
 
-		String name = clazz.getName();
-
-		return name.replace(CharPool.PERIOD, CharPool.UNDERLINE);
+		return StringUtil.replace(
+			clazz.getName(), CharPool.PERIOD, CharPool.UNDERLINE);
 	}
 
 }

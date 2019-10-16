@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,8 +37,8 @@ public class UpgradeKaleoDefinition extends UpgradeProcess {
 
 				String content = rs.getString(2);
 
-				content = content.replace(
-					"WorkflowConstants.toStatus(",
+				content = StringUtil.replace(
+					content, "WorkflowConstants.toStatus(",
 					"WorkflowConstants.getLabelStatus(");
 
 				updateContent(kaleoDefinitionId, content);

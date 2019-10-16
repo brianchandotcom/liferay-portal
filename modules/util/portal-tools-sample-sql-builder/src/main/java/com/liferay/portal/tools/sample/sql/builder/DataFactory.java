@@ -3745,8 +3745,15 @@ public class DataFactory {
 			for (Object[] tableColumn :
 					(Object[][])tableColumnsField.get(null)) {
 
-				String name = TextFormatter.format(
-					(String)tableColumn[0], TextFormatter.G);
+				String name = null;
+
+				if (tableColumn[0].equals("mLayoutPageTemplateEntryId")) {
+					name = "MasterLayoutPageTemplateEntryId";
+				}
+				else {
+					name = TextFormatter.format(
+						(String)tableColumn[0], TextFormatter.G);
+				}
 
 				if (name.endsWith(StringPool.UNDERLINE)) {
 					name = name.substring(0, name.length() - 1);

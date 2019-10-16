@@ -17,7 +17,6 @@ package com.liferay.portal.store.file.system;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -33,9 +32,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,15 +67,6 @@ public class FileSystemStore extends BaseStore {
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
-		}
-
-		if (fileSystemStoreConfiguration.useHardLinks() &&
-			_isSupportHardLink(_rootDir.toPath())) {
-
-			_useHardLink = true;
-		}
-		else {
-			_useHardLink = false;
 		}
 	}
 
@@ -357,70 +344,9 @@ public class FileSystemStore extends BaseStore {
 		return repositoryDir;
 	}
 
-	protected void move(File source, File destination) {
-		if (_useHardLink) {
-			try {
-				Files.move(source.toPath(), destination.toPath());
-			}
-			catch (IOException ioe) {
-				throw new SystemException(
-					StringBundler.concat(
-						"File name was not renamed from ", source.getPath(),
-						" to ", destination.getPath()),
-					ioe);
-			}
-		}
-		else {
-			boolean renamed = FileUtil.move(source, destination);
-
-			if (!renamed) {
-				throw new SystemException(
-					StringBundler.concat(
-						"File name was not renamed from ", source.getPath(),
-						" to ", destination.getPath()));
-			}
-		}
-	}
-
-	private static boolean _isSupportHardLink(Path path) {
-		Path sourceFilePath = null;
-		Path destinationFilePath = null;
-
-		try {
-			sourceFilePath = Files.createTempFile(path, null, null);
-
-			Path fileNamePath = sourceFilePath.getFileName();
-
-			destinationFilePath = sourceFilePath.resolveSibling(
-				fileNamePath.toString() + "-link");
-
-			Files.createLink(destinationFilePath, sourceFilePath);
-
-			return true;
-		}
-		catch (IOException ioe) {
-		}
-		finally {
-			try {
-				Files.deleteIfExists(sourceFilePath);
-			}
-			catch (IOException ioe) {
-			}
-
-			try {
-				Files.deleteIfExists(destinationFilePath);
-			}
-			catch (IOException ioe) {
-			}
-		}
-
-		return false;
-	}
-
 	private final Map<RepositoryDirKey, File> _repositoryDirs =
 		new ConcurrentHashMap<>();
 	private final File _rootDir;
-	private final boolean _useHardLink;
 
 	private static class RepositoryDirKey {
 

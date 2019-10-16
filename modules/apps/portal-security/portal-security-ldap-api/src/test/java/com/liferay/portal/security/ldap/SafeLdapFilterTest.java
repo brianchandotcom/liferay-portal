@@ -15,6 +15,7 @@
 package com.liferay.portal.security.ldap;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.security.ldap.validator.LDAPFilterException;
 
 import java.util.Arrays;
@@ -82,6 +83,60 @@ public class SafeLdapFilterTest {
 				"valueInvalid", "invalid", "value1", "value2", "value2",
 				"value1", "value1", "value2", "valueInvalid", "invalid"
 			});
+	}
+
+	@Test
+	public void testReplaceInKey() {
+		SafeLdapFilter safeLdapFilter =
+			SafeLdapFilter.eq("keyInvalid@placeholderInvalid@", "invalid");
+
+		safeLdapFilter = safeLdapFilter.replace(
+			new String[] {"@placeholderInvalid@"},
+			new String[] {"=valueInvalid"});
+
+		test(safeLdapFilter, "(keyInvalid@placeholderInvalid@={0})", "invalid");
+
+		safeLdapFilter = SafeLdapFilter.eq("keySUBvalue", "invalid");
+
+		safeLdapFilter = safeLdapFilter.replace(
+			new String[] {"SUB"},
+			new String[] {"="});
+
+		test(safeLdapFilter, "(keySUBvalue={0})", "invalid");
+	}
+
+	@Test
+	public void testKeyInjection() {
+		String[] operators = {
+			"~=", StringPool.EQUAL, StringPool.GREATER_THAN_OR_EQUAL,
+			StringPool.LESS_THAN_OR_EQUAL
+		};
+
+		for (String operator : operators) {
+			String operatorEscaped =
+				"\\" + Integer.toHexString(operator.charAt(0) & 0xFF);
+
+			if (operator.length() == 2) {
+				operatorEscaped +=
+					"\\" + Integer.toHexString(operator.charAt(1) & 0xFF);
+			}
+
+			test(
+				SafeLdapFilter.approx("key" + operator + "value", "invalid"),
+				"(key" + operatorEscaped + "value~={0})", "invalid");
+
+			test(
+				SafeLdapFilter.eq("key" + operator + "value", "invalid"),
+				"(key" + operatorEscaped + "value={0})", "invalid");
+
+			test(
+				SafeLdapFilter.ge("key" + operator + "value", "invalid"),
+				"(key" + operatorEscaped + "value>={0})", "invalid");
+
+			test(
+				SafeLdapFilter.le("key" + operator + "value", "invalid"),
+				"(key" + operatorEscaped + "value<={0})", "invalid");
+		}
 	}
 
 	@Test

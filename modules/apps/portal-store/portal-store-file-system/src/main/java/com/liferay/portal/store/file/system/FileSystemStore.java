@@ -196,7 +196,7 @@ public class FileSystemStore implements Store {
 
 		String[] versions = FileUtil.listFiles(fileNameDir);
 
-		Arrays.sort(versions);
+		Arrays.sort(versions, DLUtil::compareVersions);
 
 		return versions;
 	}

@@ -46,6 +46,7 @@ import com.amazonaws.services.s3.transfer.Upload;
 import com.liferay.document.library.kernel.exception.AccessDeniedException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -256,7 +257,7 @@ public class S3Store implements Store {
 				versionKey.lastIndexOf(CharPool.SLASH) + 1);
 		}
 
-		Arrays.sort(versions);
+		Arrays.sort(versions, DLUtil::compareVersions);
 
 		return versions;
 	}

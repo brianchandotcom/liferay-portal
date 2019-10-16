@@ -51,6 +51,8 @@ class ItemSelectorPreview extends Component {
 			currentItemIndex: currentIndex,
 			items
 		};
+
+		this.infoButtonRef = React.createRef();
 	}
 
 	componentDidMount() {
@@ -58,6 +60,18 @@ class ItemSelectorPreview extends Component {
 			'keydown',
 			this.handleOnKeyDown.bind(this)
 		);
+
+		const sidenavToggle = this.infoButtonRef.current;
+
+		if (sidenavToggle) {
+			Liferay.SideNavigation.initialize(sidenavToggle, {
+				container: '.sidenav-container',
+				position: 'right',
+				type: 'relative',
+				typeMobile: 'fixed',
+				width: '320px'
+			});
+		}
 	}
 
 	componentWillUnmount() {
@@ -223,6 +237,7 @@ class ItemSelectorPreview extends Component {
 					handleClickDone={this.handleClickDone}
 					handleClickEdit={this.handleClickEdit}
 					headerTitle={this.props.headerTitle}
+					infoButtonRef={this.infoButtonRef}
 				/>
 
 				<Carousel

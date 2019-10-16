@@ -40,7 +40,7 @@ const Carousel = ({
 	handleClickPrevious,
 	showArrows
 }) => (
-	<div className="carousel sidenav-container">
+	<div className="carousel closed sidenav-container">
 		<div className="info-panel sidenav-menu-slider">
 			<InfoPanel imageData={currentItem.metadata} />
 		</div>

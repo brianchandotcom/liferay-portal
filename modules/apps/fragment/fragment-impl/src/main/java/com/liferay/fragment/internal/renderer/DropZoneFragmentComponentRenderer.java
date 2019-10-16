@@ -47,7 +47,7 @@ public class DropZoneFragmentComponentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
-		return "drop-zone-component";
+		return "drop-zone";
 	}
 
 	@Override

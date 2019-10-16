@@ -110,6 +110,7 @@
 		<suppress checks="PropertiesWhitespaceCheck" files="sql/lportal\.properties" />
 		<suppress checks="ResourceBundleCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ClassResourceBundleLoader\.java" />
 		<suppress checks="ResourceBundleCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ResourceBundleUtil\.java" />
+		<suppress checks="StringMethodsCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/StringUtil\.java" />
 		<suppress checks="StringMethodsCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringUtilTest\.java" />
 		<suppress checks="XMLIndentationCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Calendar\.macro" />
 		<suppress checks="XMLIndentationCheck" files="tools/jalopy\.xml" />

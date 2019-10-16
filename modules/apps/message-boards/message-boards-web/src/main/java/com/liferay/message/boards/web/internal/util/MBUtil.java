@@ -32,9 +32,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -172,6 +176,29 @@ public class MBUtil {
 		return LanguageUtil.format(
 			httpServletRequest, "the-new-thread-can-be-found-at-x",
 			sb.toString(), false);
+	}
+
+	public static String getMBMessageURL(
+		long messageId, RenderResponse renderResponse) {
+
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/message_boards/view_message");
+		portletURL.setParameter("messageId", String.valueOf(messageId));
+
+		return StringBundler.concat(
+			portletURL.toString(), StringPool.POUND,
+			renderResponse.getNamespace(), "message_", messageId);
+	}
+
+	public static String getMBMessageURL(
+		long messageId, String layoutURL, RenderResponse renderResponse) {
+
+		return StringBundler.concat(
+			layoutURL, Portal.FRIENDLY_URL_SEPARATOR,
+			"message_boards/view_message/", messageId, StringPool.POUND,
+			renderResponse.getNamespace(), "message_", messageId);
 	}
 
 	public static String[] getThreadPriority(

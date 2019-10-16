@@ -58,6 +58,10 @@ public class FlagsTag extends IncludeTag {
 		return _contentTitle;
 	}
 
+	public String getContentURL() {
+		return _contentURL;
+	}
+
 	public String getElementClasses() {
 		return _elementClasses;
 	}
@@ -88,6 +92,10 @@ public class FlagsTag extends IncludeTag {
 
 	public void setContentTitle(String contentTitle) {
 		_contentTitle = contentTitle;
+	}
+
+	public void setContentURL(String contentURL) {
+		_contentURL = contentURL;
 	}
 
 	public void setElementClasses(String elementClasses) {
@@ -124,6 +132,7 @@ public class FlagsTag extends IncludeTag {
 		_className = null;
 		_classPK = 0;
 		_contentTitle = null;
+		_contentURL = null;
 		_elementClasses = null;
 		_enabled = true;
 		_label = true;
@@ -204,6 +213,12 @@ public class FlagsTag extends IncludeTag {
 	private JSONObject _getDataJSONObject(ThemeDisplay themeDisplay) {
 		String namespace = PortalUtil.getPortletNamespace(PortletKeys.FLAGS);
 
+		String contentURL = _contentURL;
+
+		if (Validator.isNull(contentURL)) {
+			contentURL = FlagsTagUtil.getCurrentURL(request);
+		}
+
 		JSONObject dataJSONObject = JSONUtil.put(
 			namespace + "className", _className
 		).put(
@@ -211,7 +226,7 @@ public class FlagsTag extends IncludeTag {
 		).put(
 			namespace + "contentTitle", _contentTitle
 		).put(
-			namespace + "contentURL", FlagsTagUtil.getCurrentURL(request)
+			namespace + "contentURL", contentURL
 		).put(
 			namespace + "reportedUserId", _reportedUserId
 		);
@@ -250,6 +265,7 @@ public class FlagsTag extends IncludeTag {
 	private String _className;
 	private long _classPK;
 	private String _contentTitle;
+	private String _contentURL;
 	private String _elementClasses;
 	private boolean _enabled = true;
 	private boolean _label = true;

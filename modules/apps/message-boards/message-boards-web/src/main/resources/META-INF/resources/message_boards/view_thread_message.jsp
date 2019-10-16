@@ -172,6 +172,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 								className="<%= MBMessage.class.getName() %>"
 								classPK="<%= message.getMessageId() %>"
 								contentTitle="<%= message.getSubject() %>"
+								contentURL="<%= MBUtil.getMBMessageURL(message.getMessageId(), renderResponse) %>"
 								enabled="<%= !message.isInTrash() %>"
 								label="<%= false %>"
 								message='<%= message.isInTrash() ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : null %>'

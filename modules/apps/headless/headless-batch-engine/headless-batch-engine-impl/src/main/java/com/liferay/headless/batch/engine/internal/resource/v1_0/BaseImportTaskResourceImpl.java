@@ -105,7 +105,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
 			@Parameter(in = ParameterIn.PATH, name = "version"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL"),
+			@Parameter(in = ParameterIn.QUERY, name = "fieldNameMapping")
 		}
 	)
 	@Path("/import-task/{className}/{version}")
@@ -118,6 +119,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 				version,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
+			@Parameter(hidden = true) @QueryParam("fieldNameMapping") String
+				fieldNameMapping,
 			MultipartBody multipartBody)
 		throws Exception {
 

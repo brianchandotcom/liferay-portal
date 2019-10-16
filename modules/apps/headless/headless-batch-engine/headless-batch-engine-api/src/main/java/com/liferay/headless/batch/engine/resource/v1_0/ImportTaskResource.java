@@ -48,7 +48,7 @@ public interface ImportTaskResource {
 
 	public ImportTask postImportTask(
 			String className, String version, String callbackURL,
-			MultipartBody multipartBody)
+			String fieldNameMapping, MultipartBody multipartBody)
 		throws Exception;
 
 	public ImportTask putImportTask(

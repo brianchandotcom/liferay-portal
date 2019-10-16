@@ -170,6 +170,10 @@ public class ContentPageEditorDisplayContext {
 			ContentPageEditorWebKeys.ITEM_SELECTOR);
 	}
 
+	public String getDiscardDraftURL() {
+		return getFragmentEntryActionURL("/content_layout/publish_layout");
+	}
+
 	public SoyContext getEditorReactContext() throws Exception {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
@@ -222,8 +226,7 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"discardDraftRedirectURL", themeDisplay.getURLCurrent()
 		).put(
-			"discardDraftURL",
-			getFragmentEntryActionURL("/content_layout/discard_draft_layout")
+			"discardDraftURL", getDiscardDraftURL()
 		).put(
 			"duplicateFragmentEntryLinkURL",
 			getFragmentEntryActionURL(
@@ -283,10 +286,9 @@ public class ContentPageEditorDisplayContext {
 			ContentUtil.getPageContentsJSONArray(
 				themeDisplay.getPlid(), themeDisplay.getURLCurrent(), request)
 		).put(
-			"portletNamespace", _renderResponse.getNamespace()
+			"portletNamespace", getPortletNamespace()
 		).put(
-			"publishURL",
-			getFragmentEntryActionURL("/content_layout/publish_layout")
+			"publishURL", getPublishURL()
 		).put(
 			"redirectURL", _getRedirect()
 		).put(
@@ -353,6 +355,19 @@ public class ContentPageEditorDisplayContext {
 		);
 
 		return soyContext;
+	}
+
+	public String getPortletNamespace() {
+		return _renderResponse.getNamespace();
+	}
+
+	public String getPublishURL() {
+		return getFragmentEntryActionURL(
+			"/content_layout/discard_draft_layout");
+	}
+
+	public boolean isSingleSegmentsExperienceMode() {
+		return false;
 	}
 
 	protected String getFragmentEntryActionURL(String action) {

@@ -18,26 +18,19 @@
 
 <%
 ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT);
-
-SoyContext soyContext = contentPageEditorDisplayContext.getEditorReactContext();
-
-String discardDraftURL = (String)soyContext.get("discardDraftURL");
-String portletNamespace = (String)soyContext.get("portletNamespace");
-String publishURL = (String)soyContext.get("publishURL");
-Boolean singleSegmentsExperienceMode = (Boolean)soyContext.get("singleSegmentsExperienceMode");
 %>
 
-<div class="page-editor-toolbar management-bar navbar navbar-expand-md" id="<%= portletNamespace %>pageEditorToolbar">
+<div class="page-editor-toolbar management-bar navbar navbar-expand-md" id="<%= contentPageEditorDisplayContext.getPortletNamespace() %>pageEditorToolbar">
 	<div class="container-fluid container-fluid-max-xl">
 		<ul class="navbar-nav">
 		</ul>
 
 		<ul class="navbar-nav">
-			<c:if test="<%= discardDraftURL != null %>">
+			<c:if test="<%= Validator.isNotNull(contentPageEditorDisplayContext.getDiscardDraftURL()) %>">
 				<li class="nav-item">
 					<button class="btn btn-secondary nav-btn" disabled type="submit">
 						<c:choose>
-							<c:when test="<%= singleSegmentsExperienceMode %>">
+							<c:when test="<%= contentPageEditorDisplayContext.isSingleSegmentsExperienceMode() %>">
 								<liferay-ui:message key="discard-variant" />
 							</c:when>
 							<c:otherwise>
@@ -48,11 +41,11 @@ Boolean singleSegmentsExperienceMode = (Boolean)soyContext.get("singleSegmentsEx
 				</li>
 			</c:if>
 
-			<c:if test="<%= publishURL != null %>">
+			<c:if test="<%= Validator.isNotNull(contentPageEditorDisplayContext.getPublishURL()) %>">
 				<li class="nav-item">
 					<button class="btn btn-primary nav-btn" disabled type="submit">
 						<c:choose>
-							<c:when test="<%= singleSegmentsExperienceMode %>">
+							<c:when test="<%= contentPageEditorDisplayContext.isSingleSegmentsExperienceMode() %>">
 								<liferay-ui:message key="save-variant" />
 							</c:when>
 							<c:otherwise>

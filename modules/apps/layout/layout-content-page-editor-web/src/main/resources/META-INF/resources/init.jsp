@@ -34,7 +34,7 @@ page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
-page import="com.liferay.portal.template.soy.util.SoyContext" %>
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.Objects" %>
 

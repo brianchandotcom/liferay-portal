@@ -87,12 +87,12 @@ const SidebarLayouts = () => {
 		<>
 			<Collapse label={Liferay.Language.get('layouts')} open={false}>
 				<div className="sidebar-layouts-section sidebar-section">
-					{layouts.map(layout => {
+					{layouts.map((layout, index) => {
 						return (
 							<SidebarLayoutCard
 								key={`layout-of-${layout.columns.join('-')}`}
 								layoutColumns={layout.columns}
-								layoutIndex={layouts.indexOf(layout)}
+								layoutIndex={index}
 							/>
 						);
 					})}

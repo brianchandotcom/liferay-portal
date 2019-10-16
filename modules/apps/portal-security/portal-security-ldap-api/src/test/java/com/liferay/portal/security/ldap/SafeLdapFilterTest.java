@@ -87,11 +87,59 @@ public class SafeLdapFilterTest {
 	}
 */
 
-	@Test(expected = LDAPFilterException.class)
-	public void testReplaceInTemplateKey() throws LDAPFilterException {
-		new SafeLdapFilterTemplate(
-			"(key@placeholderInsideKey@=value)",
-			new String[] {"@placeholderInsideKey@"}, filter -> true);
+	@Test
+	public void testReplaceInTemplateKey() {
+		try {
+			new SafeLdapFilterTemplate(
+				"(key>=@in@)", new String[] {"@in@"}, filter -> true);
+
+			new SafeLdapFilterTemplate(
+				"(key>=val@in@ue)", new String[] {"@in@"}, filter -> true);
+
+			new SafeLdapFilterTemplate(
+				"(key>=value<=@in@)", new String[] {"@in@"}, filter -> true);
+
+			new SafeLdapFilterTemplate(
+				"(key>=@in@<=value)", new String[] {"@in@"}, filter -> true);
+
+			new SafeLdapFilterTemplate(
+				"(&(key=in)(key=@in@))", new String[] {"@in@"}, filter -> true);
+
+			new SafeLdapFilterTemplate(
+				"(&(key=@in@)(key=in))", new String[] {"@in@"}, filter -> true);
+
+			new SafeLdapFilterTemplate(
+				"(&(key=@in@)(key=@in@))", new String[] {"@in@"},
+				filter -> true);
+
+			new SafeLdapFilterTemplate(
+				"(&(key>=val@in@ue)(key>=val@in@ue))", new String[] {"@in@"},
+				filter -> true);
+
+			new SafeLdapFilterTemplate(
+				"(&(key>=value<=@in@)(key>=value<=@in@))",
+				new String[] {"@in@"}, filter -> true);
+
+			new SafeLdapFilterTemplate(
+				"(&(key>=@in@<=value)(key>=@in@<=value))",
+				new String[] {"@in@"}, filter -> true);
+		}
+		catch (LDAPFilterException ldapfe) {
+			Assert.fail(ldapfe.getMessage());
+		}
+
+		try {
+			new SafeLdapFilterTemplate(
+				"(key@in@=value)", new String[] {"@in@"}, filter -> true);
+
+			Assert.fail();
+		}
+		catch (LDAPFilterException ldapfe) {
+			Assert.assertEquals(
+				"Expression '(key@in@' cannot contain '@in@' inside template " +
+					"'(key@in@=value)'",
+				ldapfe.getMessage());
+		}
 	}
 
 	@Test

@@ -14,7 +14,9 @@
 
 package com.liferay.portal.security.ldap;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.ldap.validator.LDAPFilterException;
 import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
@@ -47,7 +49,37 @@ public class SafeLdapFilterTemplate extends SafeLdapFilter {
 		_replaceKeys = replaceKeys;
 		_ldapFilterValidator = ldapFilterValidator;
 
-		ldapFilterValidator.validate(template);
+		_ldapFilterValidator.validate(template);
+
+		_validateReplaceKeyInObject(template);
+	}
+
+	private void _validateReplaceKeyInObject(String template) throws LDAPFilterException {
+		int pos = template.lastIndexOf(StringPool.EQUAL);
+		while (pos > -1) {
+			String expression = template.substring(
+				template.lastIndexOf(StringPool.OPEN_PARENTHESIS, pos), pos);
+
+			if (expression.contains(StringPool.EQUAL)) {
+
+				// subexpression object=a<=b>=c
+
+				pos = template.lastIndexOf(StringPool.EQUAL, pos - 1);
+
+				continue;
+			}
+
+			for (String replaceKey : _replaceKeys) {
+				if (expression.contains(replaceKey)) {
+					throw new LDAPFilterException(
+						StringBundler.concat(
+							"Expression '", expression, "' cannot contain '" ,
+							replaceKey, "' inside template '", template, "'"));
+				}
+			}
+
+			pos = template.lastIndexOf(StringPool.EQUAL, pos - 1);
+		}
 	}
 
 	public String[] getReplaceKeys() {

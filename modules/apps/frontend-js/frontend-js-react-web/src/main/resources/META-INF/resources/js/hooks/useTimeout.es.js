@@ -12,9 +12,27 @@
  * details.
  */
 
-export {default as render} from './render.es';
-export {default as useEventListener} from './hooks/useEventListener.es';
-export {default as useInterval} from './hooks/useInterval.es';
-export {default as useIsMounted} from './hooks/useIsMounted.es';
-export {default as usePrevious} from './hooks/usePrevious.es';
-export {default as useTimeout} from './hooks/useTimeout.es';
+import {useCallback} from 'react';
+
+import useIsMounted from './useIsMounted.es';
+
+/**
+ * Hook for delaying a function call by the specified interval (in
+ * milliseconds).
+ */
+export default function useTimeout() {
+	const isMounted = useIsMounted();
+
+	return useCallback(
+		function delay(fn, ms) {
+			const handle = setTimeout(() => {
+				if (isMounted()) {
+					fn();
+				}
+			}, ms);
+
+			return () => clearTimeout(handle);
+		},
+		[isMounted]
+	);
+}

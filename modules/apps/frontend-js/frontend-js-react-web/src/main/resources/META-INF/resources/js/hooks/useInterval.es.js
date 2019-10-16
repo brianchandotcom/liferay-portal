@@ -12,9 +12,29 @@
  * details.
  */
 
-export {default as render} from './render.es';
-export {default as useEventListener} from './hooks/useEventListener.es';
-export {default as useInterval} from './hooks/useInterval.es';
-export {default as useIsMounted} from './hooks/useIsMounted.es';
-export {default as usePrevious} from './hooks/usePrevious.es';
-export {default as useTimeout} from './hooks/useTimeout.es';
+import {useCallback} from 'react';
+
+import useIsMounted from './useIsMounted.es';
+
+/**
+ * Hook for scheduling a repeating function call with the specified
+ * interval (in milliseconds).
+ */
+export default function useInterval() {
+	const isMounted = useIsMounted();
+
+	return useCallback(
+		function schedule(fn, ms) {
+			const handle = setInterval(() => {
+				if (isMounted()) {
+					fn();
+				} else {
+					clearInterval(handle);
+				}
+			}, ms);
+
+			return () => clearInterval(handle);
+		},
+		[isMounted]
+	);
+}

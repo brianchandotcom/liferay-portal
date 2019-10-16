@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.ldap.PortalLDAP;
+import com.liferay.portal.security.ldap.SafePortalLDAP;
 import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration;
@@ -92,8 +92,8 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 		_configurationAdmin = _bundleContext.getService(
 			configurationAdminServiceReference);
 
-		ServiceReference<PortalLDAP> serviceReference =
-			_bundleContext.getServiceReference(PortalLDAP.class);
+		ServiceReference<SafePortalLDAP> serviceReference =
+			_bundleContext.getServiceReference(SafePortalLDAP.class);
 
 		bundle = serviceReference.getBundle();
 

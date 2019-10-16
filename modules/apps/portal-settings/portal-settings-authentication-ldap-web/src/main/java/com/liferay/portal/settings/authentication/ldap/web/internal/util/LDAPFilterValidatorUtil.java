@@ -25,8 +25,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class LDAPFilterValidatorUtil {
 
-	public static boolean isValidFilter(String filter) {
-		return _ldapFilterValidator.isValid(filter);
+	public static LDAPFilterValidator getInstance() {
+		return _ldapFilterValidator;
 	}
 
 	@Reference(unbind = "-")

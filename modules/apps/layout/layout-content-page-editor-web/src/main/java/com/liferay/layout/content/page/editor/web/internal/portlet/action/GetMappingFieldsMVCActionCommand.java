@@ -58,32 +58,38 @@ public class GetMappingFieldsMVCActionCommand extends BaseMVCActionCommand {
 
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		InfoDisplayContributor infoDisplayContributor =
 			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				_portal.getClassName(classNameId));
 
-		if (infoDisplayContributor != null) {
-			long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		if (infoDisplayContributor == null) {
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONFactoryUtil.createJSONArray());
 
-			Set<InfoDisplayField> infoDisplayFields =
-				infoDisplayContributor.getInfoDisplayFields(
-					classTypeId, themeDisplay.getLocale());
+			return;
+		}
 
-			for (InfoDisplayField infoDisplayField : infoDisplayFields) {
-				JSONObject jsonObject = JSONUtil.put(
-					"key", infoDisplayField.getKey()
-				).put(
-					"label", infoDisplayField.getLabel()
-				).put(
-					"type", infoDisplayField.getType()
-				);
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-				jsonArray.put(jsonObject);
-			}
+		long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Set<InfoDisplayField> infoDisplayFields =
+			infoDisplayContributor.getInfoDisplayFields(
+				classTypeId, themeDisplay.getLocale());
+
+		for (InfoDisplayField infoDisplayField : infoDisplayFields) {
+			JSONObject jsonObject = JSONUtil.put(
+				"key", infoDisplayField.getKey()
+			).put(
+				"label", infoDisplayField.getLabel()
+			).put(
+				"type", infoDisplayField.getType()
+			);
+
+			jsonArray.put(jsonObject);
 		}
 
 		JSONPortletResponseUtil.writeJSON(

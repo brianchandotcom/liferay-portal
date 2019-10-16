@@ -1048,6 +1048,15 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		</gradle-execute>
 	</target>
 
+	<target name="setup-profile-portal">
+		<if>
+			<available file="${project.dir}/build.${env.COMPUTERNAME}.properties" />
+			<then>
+				<delete file="${project.dir}/build.${env.COMPUTERNAME}.properties" />
+			</then>
+		</if>
+	</target>
+
 	<target name="setup-sdk">
 		<setup-sdk />
 	</target>

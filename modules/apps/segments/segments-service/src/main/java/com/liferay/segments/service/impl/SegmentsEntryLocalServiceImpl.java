@@ -291,9 +291,21 @@ public class SegmentsEntryLocalServiceImpl
 			Sort sort)
 		throws PortalException {
 
+		return searchSegmentsEntries(
+			companyId, groupId, keywords, includeAncestorSegmentsEntries,
+			new LinkedHashMap<>(), start, end, sort);
+	}
+
+	@Override
+	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
+			long companyId, long groupId, String keywords,
+			boolean includeAncestorSegmentsEntries,
+			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
+		throws PortalException {
+
 		SearchContext searchContext = buildSearchContext(
-			companyId, groupId, keywords, includeAncestorSegmentsEntries, start,
-			end, sort);
+			companyId, groupId, keywords, includeAncestorSegmentsEntries,
+			params, start, end, sort);
 
 		return segmentsEntryLocalService.searchSegmentsEntries(searchContext);
 	}
@@ -351,7 +363,8 @@ public class SegmentsEntryLocalServiceImpl
 
 	protected SearchContext buildSearchContext(
 		long companyId, long groupId, String keywords,
-		boolean includeAncestorSegmentsEntries, int start, int end, Sort sort) {
+		boolean includeAncestorSegmentsEntries,
+		LinkedHashMap<String, Object> params, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -363,8 +376,6 @@ public class SegmentsEntryLocalServiceImpl
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(Field.NAME, keywords);
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("keywords", keywords);
 

@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of Mueller (7.2.x), replaced by {@link
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
  *  		com.liferay.portal.messaging.internal.SynchronousDestination}
  */
 @Deprecated

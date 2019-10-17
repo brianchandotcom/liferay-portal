@@ -144,25 +144,6 @@ public class AlloyServiceInvoker {
 			identifiableOSGiService, classPK);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #executeDynamicQuery(DynamicQuery)}
-	 */
-	@Deprecated
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) throws Exception {
-		return executeDynamicQuery(dynamicQuery);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #executeDynamicQueryCount(DynamicQuery)}
-	 */
-	@Deprecated
-	public long dynamicQueryCount(DynamicQuery dynamicQuery) throws Exception {
-		return executeDynamicQueryCount(dynamicQuery);
-	}
-
 	@SuppressWarnings("rawtypes")
 	public List executeDynamicQuery(DynamicQuery dynamicQuery)
 		throws Exception {

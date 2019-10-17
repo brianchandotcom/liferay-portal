@@ -333,19 +333,6 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), as of 7.1.x, with no direct replacement
-	 */
-	@Deprecated
-	@SuppressWarnings("unused")
-	@Transactional(
-		isolation = Isolation.PORTAL, propagation = Propagation.REQUIRES_NEW,
-		rollbackFor = Exception.class
-	)
-	public void invoke(Method method) throws Exception {
-		method.invoke(this);
-	}
-
 	@Override
 	public void persistModel(BaseModel<?> baseModel) throws Exception {
 		if (!(baseModel instanceof PersistedModel)) {

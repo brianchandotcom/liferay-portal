@@ -68,18 +68,6 @@ public class TrashVersionLocalServiceImpl
 		return null;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #fetchVersion(String, long)}
-	 */
-	@Deprecated
-	@Override
-	public TrashVersion fetchVersion(
-		long entryId, String className, long classPK) {
-
-		return fetchVersion(className, classPK);
-	}
-
 	@Override
 	public TrashVersion fetchVersion(String className, long classPK) {
 		return trashVersionPersistence.fetchByC_C(

@@ -620,40 +620,6 @@ public class BookmarksFolderLocalServiceImpl
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateFolder(long, long, long, String, String,
-	 *             ServiceContext)} and {@link #mergeFolders(long, long)}
-	 */
-	@Deprecated
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public BookmarksFolder updateFolder(
-			long userId, long folderId, long parentFolderId, String name,
-			String description, boolean mergeWithParentFolder,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		// Merge folders
-
-		BookmarksFolder folder = bookmarksFolderPersistence.findByPrimaryKey(
-			folderId);
-
-		parentFolderId = getParentFolderId(folder, parentFolderId);
-
-		if (mergeWithParentFolder && (folderId != parentFolderId)) {
-			mergeFolders(folder, parentFolderId);
-
-			return folder;
-		}
-
-		// Folder
-
-		return updateFolder(
-			userId, folderId, parentFolderId, name, description,
-			serviceContext);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BookmarksFolder updateFolder(

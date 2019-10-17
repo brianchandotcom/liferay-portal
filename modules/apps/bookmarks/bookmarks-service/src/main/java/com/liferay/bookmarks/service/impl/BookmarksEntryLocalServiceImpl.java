@@ -336,15 +336,6 @@ public class BookmarksEntryLocalServiceImpl
 			groupId, userId, WorkflowConstants.STATUS_APPROVED);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<BookmarksEntry> getNoAssetEntries() {
-		return bookmarksEntryFinder.findByNoAssets();
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BookmarksEntry moveEntry(long entryId, long parentFolderId)

@@ -200,18 +200,6 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 			groupId, parentFolderId, status);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSubfolderIds(List, long, long, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void getSubfolderIds(
-		List<Long> folderIds, long groupId, long folderId) {
-
-		getSubfolderIds(folderIds, groupId, folderId, true);
-	}
-
 	@Override
 	public void getSubfolderIds(
 		List<Long> folderIds, long groupId, long folderId, boolean recurse) {
@@ -321,27 +309,6 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 		bookmarksFolderLocalService.unsubscribeFolder(
 			getUserId(), groupId, folderId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateFolder(long, long, String, String, ServiceContext)}
-	 *             and {@link #mergeFolders(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public BookmarksFolder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			boolean mergeWithParentFolder, ServiceContext serviceContext)
-		throws PortalException {
-
-		_bookmarksFolderModelResourcePermission.check(
-			getPermissionChecker(),
-			bookmarksFolderLocalService.getFolder(folderId), ActionKeys.UPDATE);
-
-		return bookmarksFolderLocalService.updateFolder(
-			getUserId(), folderId, parentFolderId, name, description,
-			mergeWithParentFolder, serviceContext);
 	}
 
 	@Override

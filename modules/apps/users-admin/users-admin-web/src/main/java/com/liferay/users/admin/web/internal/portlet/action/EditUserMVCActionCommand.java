@@ -517,10 +517,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 			SessionMessages.add(actionRequest, "verificationEmailSent");
 
-			SessionMessages.add(
-				actionRequest,
-				portal.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+			hideDefaultSuccessMessage(actionRequest);
 		}
 
 		return new Object[] {user, oldScreenName, updateLanguageId};

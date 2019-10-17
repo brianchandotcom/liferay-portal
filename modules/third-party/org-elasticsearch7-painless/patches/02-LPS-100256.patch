@@ -1,9 +1,9 @@
 diff --git a/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java b/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java
-index 0053b60eddf7..7a8cf7be8c4c 100644
+index d2ae07d..91ea16d 100644
 --- a/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java
 +++ b/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java
-@@ -35,11 +35,12 @@ import java.lang.reflect.Method;
- import java.lang.reflect.Modifier;
+@@ -51,10 +51,11 @@ import java.security.SecureClassLoader;
+ import java.security.cert.Certificate;
  import java.util.ArrayList;
  import java.util.HashMap;
 +import java.util.HashSet;
@@ -11,12 +11,11 @@ index 0053b60eddf7..7a8cf7be8c4c 100644
  import java.util.Map;
  import java.util.Objects;
 -import java.util.regex.Pattern;
- 
 +import java.util.Set;
- import static org.elasticsearch.painless.lookup.PainlessLookupUtility.DEF_CLASS_NAME;
- import static org.elasticsearch.painless.lookup.PainlessLookupUtility.buildPainlessConstructorKey;
- import static org.elasticsearch.painless.lookup.PainlessLookupUtility.buildPainlessFieldKey;
-@@ -1107,26 +1108,22 @@ public final class PainlessLookupBuilder {
+ 
+ import static org.elasticsearch.painless.WriterConstants.DEF_TO_B_BYTE_IMPLICIT;
+ import static org.elasticsearch.painless.WriterConstants.DEF_TO_B_CHARACTER_IMPLICIT;
+@@ -1290,26 +1291,22 @@ public final class PainlessLookupBuilder {
  
      private void setFunctionalInterfaceMethod(Class<?> targetClass, PainlessClassBuilder painlessClassBuilder) {
          if (targetClass.isInterface()) {
@@ -54,7 +53,7 @@ index 0053b60eddf7..7a8cf7be8c4c 100644
          }
      }
  
-@@ -1158,5 +1155,29 @@ public final class PainlessLookupBuilder {
+@@ -1515,5 +1512,29 @@ public final class PainlessLookupBuilder {
  			return false;
  		}
  	}

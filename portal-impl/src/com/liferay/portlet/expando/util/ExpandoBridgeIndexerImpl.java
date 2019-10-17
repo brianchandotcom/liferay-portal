@@ -59,17 +59,6 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #encodeFieldName(String, int)}
-	 */
-	@Deprecated
-	@Override
-	public String encodeFieldName(String columnName) {
-		return encodeFieldName(
-			columnName, ExpandoColumnConstants.INDEX_TYPE_TEXT);
-	}
-
 	@Override
 	public String encodeFieldName(String columnName, int indexType) {
 		StringBundler sb = new StringBundler(7);

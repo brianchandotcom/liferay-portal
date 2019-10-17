@@ -27,13 +27,6 @@ public interface ExpandoBridgeIndexer {
 
 	public void addAttributes(Document document, ExpandoBridge expandoBridge);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #encodeFieldName(String, int)}
-	 */
-	@Deprecated
-	public String encodeFieldName(String columnName);
-
 	public String encodeFieldName(String columnName, int indexType);
 
 }

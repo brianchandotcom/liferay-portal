@@ -28,15 +28,6 @@ public class ExpandoBridgeIndexerUtil {
 		getExpandoBridgeIndexer().addAttributes(doc, expandoBridge);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #encodeFieldName(String, int)}
-	 */
-	@Deprecated
-	public static String encodeFieldName(String columnName) {
-		return getExpandoBridgeIndexer().encodeFieldName(columnName);
-	}
-
 	public static String encodeFieldName(String columnName, int indexType) {
 		return getExpandoBridgeIndexer().encodeFieldName(columnName, indexType);
 	}

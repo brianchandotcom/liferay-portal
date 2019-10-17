@@ -33,6 +33,11 @@
 	<td>//nav[contains(@class,'management-bar')]//a[contains(@class,'${key_order}')][@title='Reverse Sort Direction']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SEARCH_RESULT_SUMMARY</td>
+	<td>//div[contains(@id,'ManagementToolbar')]//span[@class='text-truncate']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

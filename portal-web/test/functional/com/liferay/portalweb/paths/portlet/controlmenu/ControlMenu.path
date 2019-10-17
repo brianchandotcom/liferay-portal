@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HEADING</td>
+	<td>//*[@data-qa-id='headerTitle']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO</td>
 	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='info']</td>
 	<td></td>

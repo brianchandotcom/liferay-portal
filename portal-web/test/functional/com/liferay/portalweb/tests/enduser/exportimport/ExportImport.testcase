@@ -2016,6 +2016,157 @@ definition {
 			uploadFrom = "dependencies");
 	}
 
+	@description = "This is a use case for LPS-97544 and LPS-90886."
+	@priority = "3"
+	test ImportStagedSiteWithCircularReference {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page A");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page B");
+
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description A",
+			structureName = "Structure Name A");
+
+		DynamicDataMapping.addField(
+			field = "Link to Page",
+			fieldFieldLabel = "Link to Page",
+			fieldName = "LinkToPage");
+
+		WebContentStructures.saveCP(structureName = "Structure Name A");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Structure Name A",
+			templateDescription = "Template Description A",
+			templateFieldNames = "Link to Page",
+			templateName = "Template Name A");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description B",
+			structureName = "Structure Name B");
+
+		DynamicDataMapping.addField(
+			field = "Web Content",
+			fieldFieldLabel = "Web Content",
+			fieldName = "WebContent");
+
+		WebContentStructures.saveCP(structureName = "Structure Name B");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Structure Name B",
+			templateDescription = "Template Description B",
+			templateFieldNames = "Web Content",
+			templateName = "Template Name B");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name A");
+
+		WebContent.addWithStructureCP(
+			linkedPageName = "Page B",
+			linkFieldName = "LinkToPage",
+			structureName = "Structure Name A",
+			templateName = "Template Name A",
+			webContentTitle = "WC WebContent Title 1");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name B");
+
+		WebContent.addWithStructureCP(
+			fieldName = "WebContent",
+			structureName = "Structure Name B",
+			templateName = "Template Name B",
+			webContentSelectWCFile = "WC WebContent Title 1",
+			webContentTitle = "WC WebContent Title 2");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Page A",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 1");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Page B",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.publishCustomPublication(rangeAll = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Page A",
+			siteName = "Site Name");
+
+		WebContent.viewPGViaWCD(
+			linkName = "Link to Page",
+			linkToPage = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Page B",
+			siteName = "Site Name");
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Title 1");
+
+		LAR.exportSiteCP();
+
+		var key_larFileName = "${larFileName}";
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+		JSONGroup.addGroup(groupName = "Site Name B");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name-b");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Site Name B");
+	}
+
 	@description = "This is a use case for LPS-94738."
 	@priority = "4"
 	test ImportWCDReferenceAfterActivateStaging {

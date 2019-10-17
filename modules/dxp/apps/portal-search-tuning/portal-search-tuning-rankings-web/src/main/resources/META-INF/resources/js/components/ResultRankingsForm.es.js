@@ -762,6 +762,7 @@ class ResultRankingsForm extends Component {
 											onClick={() =>
 												this._setActiveTabKeyValue(0)
 											}
+											role="tab"
 										>
 											{Liferay.Language.get('visible')}
 										</ClayTabs.Item>
@@ -774,6 +775,7 @@ class ResultRankingsForm extends Component {
 											onClick={() =>
 												this._setActiveTabKeyValue(1)
 											}
+											role="tab"
 										>
 											{Liferay.Language.get('hidden')}
 										</ClayTabs.Item>

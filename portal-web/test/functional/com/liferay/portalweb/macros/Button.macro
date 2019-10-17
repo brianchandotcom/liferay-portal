@@ -84,10 +84,6 @@ definition {
 		Button.click(button = "Save as Draft");
 	}
 
-	macro clickSaveLocalized {
-		Button.click(button = "${localizedSaveButton}");
-	}
-
 	macro clickSelect {
 		Button.click(button = "Select");
 	}

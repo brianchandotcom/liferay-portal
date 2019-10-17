@@ -49,11 +49,13 @@ definition {
 	macro acceptEndUserLicenseAgreementLocalized {
 		var key_localizedAgree = "${localizedAgree}";
 
-		AssertClick(
-			locator1 = "Button#AGREE_LOCALIZED",
-			value1 = "${localizedAgree}");
+		if (IsElementPresent(locator1 = "Button#I_AGREE_LOCALIZED", value1 = "${localizedAgree}")) {
+			AssertClick(
+				locator1 = "Button#I_AGREE_LOCALIZED",
+				value1 = "${localizedAgree}");
 
-		AssertElementNotPresent(locator1 = "Button#AGREE_LOCALIZED");
+			AssertElementNotPresent(locator1 = "Button#I_AGREE_LOCALIZED");
+		}
 	}
 
 	macro activateCP {
@@ -702,15 +704,16 @@ definition {
 		Pause(locator1 = "3000");
 
 		var key_localizedAnswer = "${localizedAnswer}";
-		var key_localizedSaveButton = "${localizedSaveButton}";
 
-		Type(
-			locator1 = "TextInput#ANSWER_LOCALIZED",
-			value1 = "test");
+		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#ANSWER_LOCALIZED")) {
+			Type(
+				locator1 = "TextInput#ANSWER_LOCALIZED",
+				value1 = "test");
 
-		Button.clickSaveLocalized(localizedSaveButton = "${localizedSaveButton}");
+			Button.click(button = "${localizedSaveButton}");
 
-		AssertElementNotPresent(locator1 = "Button#SAVE_LOCALE");
+			Button.viewNotPresent(button = "${localizedSaveButton}");
+		}
 	}
 
 	macro assignOrgRoleCP {

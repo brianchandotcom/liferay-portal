@@ -20,6 +20,8 @@ import {Config} from 'metal-state';
 import './components/fragment_entry_link/FragmentEntryLinkList.es';
 import './components/sidebar/FragmentsEditorSidebar.es';
 import './components/toolbar/FragmentsEditorToolbar.es';
+import './components/master_page/MasterFragmentEntryLinkList.es';
+
 import {
 	CLEAR_ACTIVE_ITEM,
 	CLEAR_HOVERED_ITEM,

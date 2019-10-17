@@ -22,8 +22,6 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 String canonicalURL = layoutsAdminDisplayContext.getCanonicalLayoutURL();
-String companyName = layoutsAdminDisplayContext.getSiteAndCompanyName();
-String layoutTitle = layoutsAdminDisplayContext.getLayoutTitle();
 %>
 
 <liferay-ui:error-marker
@@ -34,7 +32,7 @@ String layoutTitle = layoutsAdminDisplayContext.getLayoutTitle();
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 <c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
-	<aui:input id="title" label="html-title" name="title" placeholder="<%= layoutTitle %>" />
+	<aui:input id="title" label="html-title" name="title" placeholder="<%= layoutsAdminDisplayContext.getFullPageTitle() %>" />
 
 	<h4><liferay-ui:message key="meta-tags" /></h4>
 
@@ -75,7 +73,7 @@ String layoutTitle = layoutsAdminDisplayContext.getLayoutTitle();
 						"usePlaceholderAsFallback", true
 					)));
 
-			data.put("titleSuffix", companyName);
+			data.put("titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix());
 			%>
 
 			<react:component

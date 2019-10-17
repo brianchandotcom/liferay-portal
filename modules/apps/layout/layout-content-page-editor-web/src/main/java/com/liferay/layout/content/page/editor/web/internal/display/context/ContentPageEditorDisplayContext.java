@@ -87,7 +87,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -106,7 +105,6 @@ import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.constants.SegmentsWebKeys;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -1102,12 +1100,8 @@ public class ContentPageEditorDisplayContext {
 						PortalUtil.getClassNameId(Layout.class.getName()),
 						masterLayoutPageTemplateEntry.getPlid(), true);
 
-			long[] segmentsExperienceIds = GetterUtil.getLongValues(
-				request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
-				new long[] {SegmentsExperienceConstants.ID_DEFAULT});
-
 			String data = layoutPageTemplateStructure.getData(
-				segmentsExperienceIds);
+				SegmentsExperienceConstants.ID_DEFAULT);
 
 			if (Validator.isNull(data)) {
 				return null;

@@ -6,6 +6,7 @@
 {template .render}
 	{@param fragmentEntryLinks: ?}
 	{@param layoutData: ?}
+	{@param masterPageLayoutData: ?}
 	{@param? hasUpdatePermissions: bool}
 	{@param? id: string}
 	{@param? store: ?}
@@ -24,10 +25,19 @@
 			{param store: $store /}
 		{/call}
 
-		{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkList.render}
-			{param fragmentEntryLinks: $fragmentEntryLinks /}
-			{param layoutData: $layoutData /}
-			{param store: $store /}
-		{/call}
+		{if $masterPageLayoutData}
+			{call com.liferay.layout.content.page.editor.web.MasterFragmentEntryLinkList.render}
+				{param fragmentEntryLinks: $fragmentEntryLinks /}
+				{param layoutData: $layoutData /}
+				{param masterPageLayoutData: $masterPageLayoutData /}
+				{param store: $store /}
+			{/call}
+		{else}
+			{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkList.render}
+				{param fragmentEntryLinks: $fragmentEntryLinks /}
+				{param layoutData: $layoutData /}
+				{param store: $store /}
+			{/call}
+		{/if}
 	</div>
 {/template}

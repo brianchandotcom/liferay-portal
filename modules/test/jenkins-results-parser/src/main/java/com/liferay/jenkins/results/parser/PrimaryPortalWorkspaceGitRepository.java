@@ -29,6 +29,19 @@ public class PrimaryPortalWorkspaceGitRepository
 		return TYPE;
 	}
 
+	@Override
+	public void setUp() {
+		super.setUp();
+
+		String upstreamBranchName = getUpstreamBranchName();
+
+		if (!upstreamBranchName.startsWith("ee-") &&
+			!upstreamBranchName.endsWith("-private")) {
+
+			_setupProfileDXP();
+		}
+	}
+
 	protected PrimaryPortalWorkspaceGitRepository(JSONObject jsonObject) {
 		super(jsonObject);
 	}
@@ -43,6 +56,22 @@ public class PrimaryPortalWorkspaceGitRepository
 		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
 		super(remoteGitRef, upstreamBranchName);
+	}
+
+	private void _setupProfileDXP() {
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		GitUtil.ExecutionResult executionResult =
+			gitWorkingDirectory.executeBashCommands(
+				GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+				GitUtil.MILLIS_TIMEOUT, "ant setup-profile-dxp");
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to set up dxp profile\n",
+					executionResult.getStandardError()));
+		}
 	}
 
 }

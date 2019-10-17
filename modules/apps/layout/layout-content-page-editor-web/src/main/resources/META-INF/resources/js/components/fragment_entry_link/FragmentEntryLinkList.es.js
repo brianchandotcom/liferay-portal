@@ -390,12 +390,15 @@ const ConnectedFragmentEntryLinkList = getConnectedComponent(
 	[
 		'activeItemId',
 		'activeItemType',
+		'defaultLanguageId',
 		'dropTargetBorder',
 		'dropTargetItemId',
 		'dropTargetItemType',
 		'hoveredItemId',
 		'hoveredItemType',
 		'layoutData',
+		'languageId',
+		'portletNamespace',
 		'selectedItems'
 	]
 );

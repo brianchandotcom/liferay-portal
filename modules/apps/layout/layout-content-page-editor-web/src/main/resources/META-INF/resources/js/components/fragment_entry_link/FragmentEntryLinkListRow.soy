@@ -9,7 +9,6 @@
 		fragmentEntryLinkIds: list<string>,
 		size: string
 	]>}
-	{@param defaultEditorConfigurations: ?}
 	{@param fragmentEntryLinks: ?}
 	{@param key: string}
 	{@param row: ?}
@@ -26,7 +25,6 @@
 	{@param? _resizing: bool}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
-	{@param? defaultSegmentsExperienceId: string}
 	{@param? dropTargetItemTypes: ?}
 	{@param? empty: bool}
 	{@param? dropTargetBorder: string}
@@ -34,17 +32,6 @@
 	{@param? dropTargetItemType: string}
 	{@param? hoveredItemId: string}
 	{@param? hoveredItemType: string}
-	{@param? mappingFieldsURL: string}
-	{@param? selectedMappingTypes: [
-		subtype: [
-			id: string,
-			label: string
-		],
-		type: [
-			id: string,
-			label: string
-		]
-	]}
 	{@param? spritemap: string}
 	{@param? store: ?}
 
@@ -190,8 +177,6 @@
 						{param activeItemType: $activeItemType /}
 						{param columnId: $column.columnId /}
 						{param columnIndex: index($column) /}
-						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
-						{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
 						{param dropTargetItemTypes: $dropTargetItemTypes /}
 						{param fragmentEntryLinkIds: $column.fragmentEntryLinkIds /}
 						{param fragmentEntryLinks: $fragmentEntryLinks /}
@@ -203,9 +188,7 @@
 						{param hoveredItemType: $hoveredItemType /}
 						{param key: $column.columnId /}
 						{param lastColumn: isLast($column) /}
-						{param mappingFieldsURL: $mappingFieldsURL /}
 						{param rowType: $row.type /}
-						{param selectedMappingTypes: $selectedMappingTypes /}
 						{param size: $column.size /}
 						{param store: $store /}
 					{/call}
@@ -221,7 +204,6 @@
 {template .column}
 	{@param columnId: string}
 	{@param columnIndex: number}
-	{@param defaultEditorConfigurations: ?}
 	{@param fragmentEntryLinkIds: list<string>}
 	{@param fragmentEntryLinks: ?}
 	{@param fragmentsEditorRowTypes: ?}
@@ -229,7 +211,6 @@
 	{@param? _columnResizerVisible: bool}
 	{@param? _handleResizerMouseDown: any}
 	{@param? _resizeColumnIndex: number}
-	{@param? defaultSegmentsExperienceId: string}
 	{@param? dropTargetItemTypes: ?}
 	{@param? dropTargetBorder: string}
 	{@param? dropTargetItemId: string}
@@ -239,18 +220,7 @@
 	{@param? hoveredItemId: string}
 	{@param? hoveredItemType: string}
 	{@param? lastColumn: bool}
-	{@param? mappingFieldsURL: string}
 	{@param? rowType: string}
-	{@param? selectedMappingTypes: [
-		subtype: [
-			id: string,
-			label: string
-		],
-		type: [
-			id: string,
-			label: string
-		]
-	]}
 	{@param? size: string}
 	{@param? store: ?}
 
@@ -294,8 +264,6 @@
 					{param activeItemId: $activeItemId /}
 					{param activeItemType: $activeItemType /}
 					{param content: $fragmentEntryLink.content /}
-					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
-					{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
 					{param dropTargetItemTypes: $dropTargetItemTypes /}
 					{param editableValues: $fragmentEntryLink.editableValues /}
 					{param error: $fragmentEntryLink.error /}
@@ -306,10 +274,8 @@
 					{param hoveredItemId: $hoveredItemId /}
 					{param hoveredItemType: $hoveredItemType /}
 					{param key: $fragmentEntryLink.fragmentEntryLinkId /}
-					{param mappingFieldsURL: $mappingFieldsURL /}
 					{param name: $fragmentEntryLink.name /}
 					{param rowType: $rowType /}
-					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param store: $store /}
 				{/call}
 			{/if}
@@ -329,14 +295,10 @@
  * FragmentEntryLink
  */
 {template .fragmentEntryLink}
-	{@param defaultEditorConfigurations: ?}
-	{@param? defaultSegmentsExperienceId: string}
 	{@param editableValues: ?}
 	{@param fragmentEntryLinkId: string}
 	{@param key: string}
-	{@param mappingFieldsURL: ?}
 	{@param name: string}
-	{@param selectedMappingTypes: ?}
 	{@param store: ?}
 	{@param? content: ?}
 	{@param? error: bool}
@@ -344,8 +306,6 @@
 
 	{call com.liferay.layout.content.page.editor.web.FragmentEntryLink.render}
 		{param content: $content /}
-		{param defaultEditorConfigurations: $defaultEditorConfigurations /}
-		{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
 		{param editableValues: $editableValues /}
 		{param error: $error /}
 		{param fragmentEntryLinkId: $fragmentEntryLinkId /}
@@ -353,7 +313,6 @@
 		{param name: $name /}
 		{param ref: $key /}
 		{param rowType: $rowType /}
-		{param showMapping: $selectedMappingTypes and $mappingFieldsURL ? true : false /}
 		{param store: $store /}
 	{/call}
 {/template}

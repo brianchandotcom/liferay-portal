@@ -1,4 +1,13 @@
 {
+	"dependencies": {
+		"@clayui/button": "3.0.0",
+		"@clayui/drop-down": "3.0.0",
+		"@clayui/icon": "3.0.0",
+		"@clayui/sticker": "3.0.0",
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
+		"react": "16.9.0"
+	},
 	"name": "product-navigation-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

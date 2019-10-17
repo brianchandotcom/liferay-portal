@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
-
-<%@ page import="com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys" %><%@
-page import="com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry" %><%@
-page import="com.liferay.product.navigation.taglib.internal.servlet.ServletContextUtil" %>
-
-<%@ page import="java.util.LinkedHashMap" %>
+module.exports = {
+	extends: ['liferay/react']
+};

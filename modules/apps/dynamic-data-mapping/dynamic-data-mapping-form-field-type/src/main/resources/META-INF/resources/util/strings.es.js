@@ -45,19 +45,17 @@ export function subWords(langKey, args) {
 		.split(SPLIT_WORDS_REGEX)
 		.filter(val => val.length !== 0);
 
-	for (const arg in args) {
-		if (Object.hasOwnProperty.call(args, arg)) {
-			const indexKey = `{${arg}}`;
+	Object.keys(args).forEach(arg => {
+		const indexKey = `{${arg}}`;
 
-			let argIndex = keyArray.indexOf(indexKey);
+		let argIndex = keyArray.indexOf(indexKey);
 
-			while (argIndex >= 0) {
-				keyArray.splice(argIndex, 1, args[arg]);
+		while (argIndex >= 0) {
+			keyArray.splice(argIndex, 1, args[arg]);
 
-				argIndex = keyArray.indexOf(indexKey);
-			}
+			argIndex = keyArray.indexOf(indexKey);
 		}
-	}
+	});
 
 	return keyArray.join('');
 }

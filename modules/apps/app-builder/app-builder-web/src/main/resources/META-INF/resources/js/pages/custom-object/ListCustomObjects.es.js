@@ -22,8 +22,7 @@ import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import ListView from '../../components/list-view/ListView.es';
 import {useKeyDown} from '../../hooks/index.es';
 import isClickOutside from '../../utils/clickOutside.es';
-import {addItem} from '../../utils/client.es';
-import {confirmDelete} from '../../utils/client.es';
+import {addItem, confirmDelete} from '../../utils/client.es';
 import CustomObjectPopover from './CustomObjectPopover.es';
 
 const COLUMNS = [

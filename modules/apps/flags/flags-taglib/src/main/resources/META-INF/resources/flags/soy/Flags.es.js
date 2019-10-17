@@ -109,6 +109,7 @@ class Flags extends PortletBase {
 
 		const formData = new FormData();
 
+		// eslint-disable-next-line no-unused-vars
 		for (const name in this.formData) {
 			formData.append(name, this.formData[name]);
 		}

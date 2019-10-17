@@ -1,13 +1,7 @@
 definition {
 
 	macro checkFacet {
-		Check(
-			checkboxName = "${facetValueName}",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
-		AssertChecked(
-			checkboxName = "${facetValueName}",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		FormFields.enableCheckbox(fieldName = "${facetValueName}");
 	}
 
 	macro checkFacetAndViewURL {
@@ -205,13 +199,7 @@ definition {
 	}
 
 	macro uncheckFacet {
-		Uncheck(
-			checkboxName = "${facetValueName}",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
-		AssertNotChecked(
-			checkboxName = "${facetValueName}",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		FormFields.disableCheckbox(fieldName = "${facetValueName}");
 	}
 
 	macro uncheckFacetAndViewURL {

@@ -91,10 +91,7 @@ definition {
 		}
 
 		task ("Flag the Page facet in the search results to filter results to only show pages") {
-			Check(
-				key_checkboxName = "Page",
-				key_facetClass = "Type",
-				locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC");
+			SearchFacetPortlet.checkFacet(facetValueName = "Page");
 		}
 
 		task ("Assert the content page appears in the search results") {

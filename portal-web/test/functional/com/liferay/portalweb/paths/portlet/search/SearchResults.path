@@ -125,11 +125,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FACET_PORTLET_CHECKBOX_SPECIFIC</td>
-	<td>//div[contains(@class,'portlet-content')][contains(.,'${key_facetClass}')]//label[contains(.,'${key_checkboxName}')]/input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FACET_PORTLET_CLEAR_GENERIC</td>
 	<td>//div[contains(@class,'search-facet')]//a[contains(@onclick,'clearSelections(event);')]</td>
 	<td></td>

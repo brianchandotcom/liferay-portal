@@ -73,7 +73,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		AssertVisible(
+		AssertElementPresent(
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
@@ -85,9 +85,7 @@ definition {
 
 		Refresh();
 
-		AssertChecked(
-			checkboxName = "Blogs Entry",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		FormFields.viewCheckboxChecked(fieldName = "Blogs Entry");
 
 		AssertElementNotPresent(
 			checkboxName = "fruit",
@@ -95,7 +93,7 @@ definition {
 
 		SearchFacetPortlet.uncheckFacet(facetValueName = "Blogs Entry");
 
-		AssertVisible(
+		AssertElementPresent(
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
@@ -103,13 +101,13 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "apple");
 
-		AssertVisible(
+		AssertElementPresent(
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		SearchFacetPortlet.checkFacet(facetValueName = "Blogs Entry");
 
-		AssertVisible(
+		AssertElementPresent(
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
@@ -119,13 +117,9 @@ definition {
 
 		Refresh();
 
-		AssertChecked(
-			checkboxName = "Blogs Entry",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		FormFields.viewCheckboxChecked(fieldName = "Blogs Entry");
 
-		AssertChecked(
-			checkboxName = "fruit",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		FormFields.viewCheckboxChecked(fieldName = "fruit");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
 	}
@@ -519,9 +513,7 @@ definition {
 			searchAssetTitle = "Potato Blog",
 			searchAssetType = "Blogs Entry");
 
-		AssertChecked(
-			checkboxName = "Blogs Entry",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		FormFields.viewCheckboxChecked(fieldName = "Blogs Entry");
 	}
 
 	test SearchAfterViewingResultDetails {
@@ -1495,10 +1487,10 @@ definition {
 			key_facetClass = "Custom Facet",
 			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
 
-		Check(
+		Click(
 			key_checkboxName = "1.0",
 			key_facetClass = "Custom Facet",
-			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC");
+			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1",
@@ -1534,10 +1526,10 @@ definition {
 			key_facetClass = "Custom Facet",
 			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
 
-		Check(
+		Click(
 			key_checkboxName = "1.1",
 			key_facetClass = "Custom Facet",
-			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC");
+			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1.1",
@@ -2116,9 +2108,7 @@ definition {
 			searchAssetTitle = "Test Test",
 			searchAssetType = "User");
 
-		AssertChecked(
-			checkboxName = "${siteName}",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		FormFields.viewCheckboxChecked(fieldName = "${siteName}");
 	}
 
 	@priority = "5"

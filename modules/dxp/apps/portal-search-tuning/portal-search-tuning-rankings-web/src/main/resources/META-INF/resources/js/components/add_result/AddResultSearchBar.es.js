@@ -33,6 +33,7 @@ const AddResultSearchBar = ({
 							aria-label={Liferay.Language.get(
 								'search-the-engine'
 							)}
+							autoFocus={true}
 							className="form-control input-group-inset input-group-inset-after"
 							onChange={onSearchQueryChange}
 							onKeyDown={onSearchKeyDown}

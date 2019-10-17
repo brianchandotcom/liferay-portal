@@ -40,6 +40,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_VIDEO_PLAYED</td>
+	<td>//div[contains(@class,'preview-video-content')]/video</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -1771,7 +1771,7 @@ definition {
 
 		// Workaround for LPS-82584
 
-		Click(locator1 = "Link#CLEAR");
+		SearchFacetPortlet.clearFacet();
 
 		Click(
 			locator1 = "Search#MODIFIED_FACET_SELECTION",

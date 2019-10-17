@@ -126,7 +126,7 @@
 </tr>
 <tr>
 	<td>FACET_PORTLET_CLEAR_GENERIC</td>
-	<td>//div[contains(@class,'search-facet')]//a[contains(@onclick,'clearSelections(event);')]</td>
+	<td>//div[contains(@class,'search-facet')]//button[contains(@onclick,'clearSelections(event);')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -136,7 +136,7 @@
 </tr>
 <tr>
 	<td>FACET_PORTLET_CLEAR_SPECIFIC</td>
-	<td>//div[contains(@class,'search-facet') and contains(@id,'${key_facetClass}')]//a[contains(@onclick,'clearSelections(event);')]</td>
+	<td>//div[contains(@class,'search-facet') and contains(@id,'${key_facetClass}')]//button[contains(@onclick,'clearSelections(event);')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -271,7 +271,8 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"mappedAssetEntries", _getMappedAssetEntriesSoyContexts()
 		).put(
-			"masterPageLayoutData", _getMasterPageLayoutDataJSONObject()
+			"masterPageLayoutData",
+			JSONFactoryUtil.createJSONObject(_getMasterPageLayoutData())
 		).put(
 			"pageContents",
 			ContentUtil.getPageContentsJSONArray(
@@ -1052,7 +1053,7 @@ public class ContentPageEditorDisplayContext {
 		return mappedAssetEntriesSoyContexts;
 	}
 
-	private JSONObject _getMasterPageLayoutDataJSONObject() {
+	private String _getMasterPageLayoutData() {
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.getMasterLayoutPageTemplateEntryId() <= 0) {
@@ -1076,14 +1077,8 @@ public class ContentPageEditorDisplayContext {
 						PortalUtil.getClassNameId(Layout.class.getName()),
 						masterLayoutPageTemplateEntry.getPlid(), true);
 
-			String data = layoutPageTemplateStructure.getData(
+			return layoutPageTemplateStructure.getData(
 				SegmentsExperienceConstants.ID_DEFAULT);
-
-			if (Validator.isNull(data)) {
-				return null;
-			}
-
-			return JSONFactoryUtil.createJSONObject(data);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

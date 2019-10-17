@@ -1,11 +1,11 @@
 definition {
 
 	macro acceptConditions {
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "GoogleLogin#ALLOW", value1 = "Allow")) {
+		if (IsElementPresent.pauseIsElementPresent(locator1 = "GoogleLogin#ALLOW")) {
 			Click(locator1 = "GoogleLogin#ALLOW");
 		}
 
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "Button#I_AGREE", value1 = "I Agree")) {
+		if (IsElementPresent.pauseIsElementPresent(locator1 = "Button#I_AGREE")) {
 			Click(locator1 = "Button#I_AGREE");
 		}
 

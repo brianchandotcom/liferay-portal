@@ -32,7 +32,7 @@ definition {
 	macro gotoAddWithStructureCP {
 		LexiconEntry.gotoAdd();
 
-		if (IsElementPresent(locator1 = "MenuItem#ANY_MENU_ITEM", value1 = "${structureName}", key_menuItem = "${structureName}")) {
+		if (IsElementPresent(locator1 = "MenuItem#ANY_MENU_ITEM", key_menuItem = "${structureName}")) {
 			MenuItem.click(menuItem = "${structureName}");
 		}
 		else {

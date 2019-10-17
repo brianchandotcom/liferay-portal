@@ -138,7 +138,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Checkbox#ADD_HIGH_DENSITY_DISPLAY");
 
-		if (IsElementPresent(locator1 = "Message#INFO", value1 = "The images for this resolution are already adapted.")) {
+		if (IsElementPresent(locator1 = "Message#INFO")) {
 			AssertNotEditable(locator1 = "TextInput#IMAGE_ID");
 
 			AssertNotEditable(locator1 = "TextInput#MAX_HEIGHT");

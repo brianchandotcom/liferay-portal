@@ -633,7 +633,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 		else {
-			while (IsElementPresent(locator1 = "UsersAndOrganizations#ORGANIZATION_TABLE_NAME_GENERIC", value1 = "${orgName}")) {
+			while (IsElementPresent(locator1 = "UsersAndOrganizations#ORGANIZATION_TABLE_NAME_GENERIC")) {
 				Click(
 					locator1 = "UsersAndOrganizations#ORGANIZATION_TABLE_NAME_GENERIC",
 					value1 = "${orgName}");

@@ -30,7 +30,7 @@ definition {
 	macro enableDebugging {
 		Navigator.openSpecificURL(url = "http://localhost:${nodePort}");
 
-		if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN", value1 = "Sign In")) {
+		if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) {
 			User.loginPG(
 				nodePort = "${nodePort}",
 				password = "test",
@@ -119,7 +119,7 @@ definition {
 	macro runGroovyScript {
 		Navigator.openSpecificURL(url = "http://localhost:${nodePort}");
 
-		if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN", value1 = "Sign In")) {
+		if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) {
 			User.loginPG(
 				nodePort = "${nodePort}",
 				password = "test",

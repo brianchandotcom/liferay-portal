@@ -37,7 +37,7 @@ definition {
 	}
 
 	macro acceptEndUserLicenseAgreement {
-		if (IsElementPresent(locator1 = "Button#I_AGREE", value1 = "I Agree")) {
+		if (IsElementPresent(locator1 = "Button#I_AGREE")) {
 			AssertClick(
 				locator1 = "Button#I_AGREE",
 				value1 = "I Agree");
@@ -49,7 +49,7 @@ definition {
 	macro acceptEndUserLicenseAgreementLocalized {
 		var key_localizedAgree = "${localizedAgree}";
 
-		if (IsElementPresent(locator1 = "Button#I_AGREE_LOCALIZED", value1 = "${localizedAgree}")) {
+		if (IsElementPresent(locator1 = "Button#I_AGREE_LOCALIZED")) {
 			AssertClick(
 				locator1 = "Button#I_AGREE_LOCALIZED",
 				value1 = "${localizedAgree}");

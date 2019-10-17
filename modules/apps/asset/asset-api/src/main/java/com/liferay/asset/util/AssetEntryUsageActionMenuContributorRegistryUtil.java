@@ -22,7 +22,10 @@ import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Pavel Savinov
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.layout.util.LayoutClassedModelUsageActionMenuContributorRegistryUtil}
  */
+@Deprecated
 public class AssetEntryUsageActionMenuContributorRegistryUtil {
 
 	public static AssetEntryUsageActionMenuContributor

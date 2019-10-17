@@ -34,7 +34,10 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.layout.taglib.servlet.taglib.LayoutClassedModelUsagesAdminTag}
  */
+@Deprecated
 public class AssetEntryUsagesTag extends IncludeTag {
 
 	@Override

@@ -19,8 +19,11 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Pavel Savinov
+ * @author     Pavel Savinov
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.layout.util.comparator.LayoutClassedModelUsageModifiedDateComparator}
  */
+@Deprecated
 public class AssetEntryUsageModifiedDateComparator
 	extends OrderByComparator<AssetEntryUsage> {
 

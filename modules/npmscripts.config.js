@@ -15,8 +15,8 @@
 const CHECK_AND_FIX_GLOBS = [
 	'/*.js',
 	'/apps/*/*/*.js',
-	'/apps/*/*/{src,test}/**/*.js',
-	'/apps/*/*/{src,test}/**/*.scss'
+	'/apps/*/*/{src,test}/**/*.{js,scss}',
+	'/apps/*/*/{src}/**/*.{jsp,jspf}'
 ];
 
 module.exports = {

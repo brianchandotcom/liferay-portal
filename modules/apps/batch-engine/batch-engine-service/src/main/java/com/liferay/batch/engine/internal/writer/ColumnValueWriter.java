@@ -14,8 +14,8 @@
 
 package com.liferay.batch.engine.internal.writer;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Field;
 
@@ -104,7 +104,7 @@ public class ColumnValueWriter {
 
 			String name = field.getName();
 
-			if (StringUtil.startsWith(name, StringPool.UNDERLINE)) {
+			if (name.charAt(0) == CharPool.UNDERLINE) {
 				name = name.substring(1);
 			}
 

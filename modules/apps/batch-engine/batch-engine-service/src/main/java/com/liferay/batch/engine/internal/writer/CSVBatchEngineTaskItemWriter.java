@@ -28,7 +28,6 @@ import java.text.SimpleDateFormat;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,7 +51,7 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 	}
 
 	@Override
-	public void write(List<?> items) throws Exception {
+	public void write(Collection<?> items) throws Exception {
 		DateFormat dateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 

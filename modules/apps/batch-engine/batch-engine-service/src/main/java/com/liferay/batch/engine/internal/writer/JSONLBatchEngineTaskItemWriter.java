@@ -23,7 +23,7 @@ import com.liferay.petra.string.StringPool;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author Ivica cardic
@@ -41,7 +41,7 @@ public class JSONLBatchEngineTaskItemWriter
 	}
 
 	@Override
-	public void write(List<?> items) throws Exception {
+	public void write(Collection<?> items) throws Exception {
 		for (Object item : items) {
 			_unsyncPrintWriter.write(_objectMapper.writeValueAsString(item));
 			_unsyncPrintWriter.write(StringPool.NEW_LINE);

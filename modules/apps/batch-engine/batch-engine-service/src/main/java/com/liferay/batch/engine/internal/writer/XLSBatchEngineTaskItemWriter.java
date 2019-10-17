@@ -21,7 +21,6 @@ import java.lang.reflect.Field;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -60,7 +59,7 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 	}
 
 	@Override
-	public void write(List<?> items) throws Exception {
+	public void write(Collection<?> items) throws Exception {
 		for (Object item : items) {
 			_columnValueWriter.write(item, _fieldMap, this::_write);
 		}

@@ -17,7 +17,6 @@ package com.liferay.expando.kernel.model;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
  * @author Jorge Ferrer
@@ -39,15 +38,6 @@ public abstract class BaseCustomAttributesDisplay
 			return assetRendererFactory.getIconCssClass();
 		}
 
-		return StringPool.BLANK;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
 		return StringPool.BLANK;
 	}
 

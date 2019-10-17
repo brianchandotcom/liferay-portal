@@ -32,6 +32,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
@@ -81,6 +82,7 @@ public class ExperimentRun {
 	protected Double confidenceLevel;
 
 	@Schema
+	@Valid
 	public ExperimentVariant[] getExperimentVariants() {
 		return experimentVariants;
 	}

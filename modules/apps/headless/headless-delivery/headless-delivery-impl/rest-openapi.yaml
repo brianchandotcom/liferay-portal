@@ -2446,7 +2446,6 @@ paths:
             tags: ["Comment"]
     "/content-sets/{contentSetId}/content-set-elements":
         get:
-            operationId: getContentSetContentSetElementsPage
             #review
             description:
                 "Retrieves the content set's elements (e.g., structured content, blogs, etc.). Results can be paginated.
@@ -2455,6 +2454,7 @@ paths:
                 X-Device-Screen-Resolution-Height (double), X-Device-Screen-Resolution-Width (double),
                 X-Last-Sign-In-Date-Time (date time) and X-Signed-In (boolean). Local date will be always present in the
                 request."
+            operationId: getContentSetContentSetElementsPage
             parameters:
                 - in: path
                   name: contentSetId
@@ -6068,10 +6068,10 @@ paths:
             tags: ["StructuredContent"]
     "/sites/{siteId}/wiki-nodes/":
         get:
-            operationId: getSiteWikiNodesPage
             # @review
             description:
                 Retrieves the wiki node's of a site. Results can be paginated, filtered, searched, and sorted.
+            operationId: getSiteWikiNodesPage
             parameters:
                 - in: path
                   name: siteId
@@ -6928,10 +6928,10 @@ paths:
             tags: ["WikiNode"]
     "/wiki-nodes/{wikiNodeId}/wiki-pages/":
         get:
-            operationId: getWikiNodeWikiPagesPage
             # @review
             description:
                 Retrieves the wiki page's of a node. Results can be paginated, filtered, searched, and sorted.
+            operationId: getWikiNodeWikiPagesPage
             parameters:
                 - in: path
                   name: wikiNodeId
@@ -7006,10 +7006,10 @@ paths:
             tags: ["WikiPage"]
     "/wiki-page-attachments/{wikiPageAttachmentId}":
         delete:
-            operationId: deleteWikiPageAttachment
             # @review
             description:
                 Deletes the wiki page attachment and returns a 204 if the operation succeeds.
+            operationId: deleteWikiPageAttachment
             parameters:
                 - in: path
                   name: wikiPageAttachmentId
@@ -7083,10 +7083,10 @@ paths:
             tags: ["WikiPage"]
     "/wiki-pages/{parentWikiPageId}/wiki-pages":
         get:
-            operationId: getWikiPageWikiPagesPage
             # @review
             description:
                 Retrieves the child wiki page's of a wiki page.
+            operationId: getWikiPageWikiPagesPage
             parameters:
                 - in: path
                   name: parentWikiPageId
@@ -7216,10 +7216,10 @@ paths:
             tags: ["WikiPage"]
     "/wiki-pages/{wikiPageId}/wiki-page-attachments":
         get:
-            operationId: getWikiPageWikiPageAttachmentsPage
             # @review
             description:
                 Retrieves the wiki page's attachments.
+            operationId: getWikiPageWikiPageAttachmentsPage
             parameters:
                 - in: path
                   name: wikiPageId

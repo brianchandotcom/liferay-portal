@@ -16,6 +16,7 @@ package com.liferay.info.service.base;
 
 import com.liferay.info.model.InfoItemUsage;
 import com.liferay.info.service.InfoItemUsageLocalService;
+import com.liferay.info.service.persistence.InfoItemUsageFinder;
 import com.liferay.info.service.persistence.InfoItemUsagePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -417,11 +418,10 @@ public abstract class InfoItemUsageLocalServiceBaseImpl
 	protected InfoItemUsagePersistence infoItemUsagePersistence;
 
 	@Reference
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
+	protected InfoItemUsageFinder infoItemUsageFinder;
 
 	@Reference
-	protected com.liferay.portal.kernel.service.LayoutLocalService
-		layoutLocalService;
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
 
 }

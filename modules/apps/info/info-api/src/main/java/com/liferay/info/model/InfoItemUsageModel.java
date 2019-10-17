@@ -188,20 +188,6 @@ public interface InfoItemUsageModel
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the container type of this info item usage.
-	 *
-	 * @return the container type of this info item usage
-	 */
-	public long getContainerType();
-
-	/**
-	 * Sets the container type of this info item usage.
-	 *
-	 * @param containerType the container type of this info item usage
-	 */
-	public void setContainerType(long containerType);
-
-	/**
 	 * Returns the container key of this info item usage.
 	 *
 	 * @return the container key of this info item usage
@@ -215,6 +201,20 @@ public interface InfoItemUsageModel
 	 * @param containerKey the container key of this info item usage
 	 */
 	public void setContainerKey(String containerKey);
+
+	/**
+	 * Returns the container type of this info item usage.
+	 *
+	 * @return the container type of this info item usage
+	 */
+	public long getContainerType();
+
+	/**
+	 * Sets the container type of this info item usage.
+	 *
+	 * @param containerType the container type of this info item usage
+	 */
+	public void setContainerType(long containerType);
 
 	/**
 	 * Returns the plid of this info item usage.

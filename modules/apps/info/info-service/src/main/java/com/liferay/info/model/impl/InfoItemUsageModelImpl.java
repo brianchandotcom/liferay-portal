@@ -70,7 +70,7 @@ public class InfoItemUsageModelImpl
 		{"infoItemUsageId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"containerType", Types.BIGINT}, {"containerKey", Types.VARCHAR},
+		{"containerKey", Types.VARCHAR}, {"containerType", Types.BIGINT},
 		{"plid", Types.BIGINT}, {"type_", Types.INTEGER},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
@@ -87,15 +87,15 @@ public class InfoItemUsageModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("containerType", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("containerKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("containerType", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table InfoItemUsage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,infoItemUsageId LONG not null primary key,groupId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,containerType LONG,containerKey VARCHAR(75) null,plid LONG,type_ INTEGER,lastPublishDate DATE null)";
+		"create table InfoItemUsage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,infoItemUsageId LONG not null primary key,groupId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,containerKey VARCHAR(75) null,containerType LONG,plid LONG,type_ INTEGER,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table InfoItemUsage";
 
@@ -299,15 +299,15 @@ public class InfoItemUsageModelImpl
 			"classPK",
 			(BiConsumer<InfoItemUsage, Long>)InfoItemUsage::setClassPK);
 		attributeGetterFunctions.put(
-			"containerType", InfoItemUsage::getContainerType);
-		attributeSetterBiConsumers.put(
-			"containerType",
-			(BiConsumer<InfoItemUsage, Long>)InfoItemUsage::setContainerType);
-		attributeGetterFunctions.put(
 			"containerKey", InfoItemUsage::getContainerKey);
 		attributeSetterBiConsumers.put(
 			"containerKey",
 			(BiConsumer<InfoItemUsage, String>)InfoItemUsage::setContainerKey);
+		attributeGetterFunctions.put(
+			"containerType", InfoItemUsage::getContainerType);
+		attributeSetterBiConsumers.put(
+			"containerType",
+			(BiConsumer<InfoItemUsage, Long>)InfoItemUsage::setContainerType);
 		attributeGetterFunctions.put("plid", InfoItemUsage::getPlid);
 		attributeSetterBiConsumers.put(
 			"plid", (BiConsumer<InfoItemUsage, Long>)InfoItemUsage::setPlid);
@@ -484,28 +484,6 @@ public class InfoItemUsageModelImpl
 	}
 
 	@Override
-	public long getContainerType() {
-		return _containerType;
-	}
-
-	@Override
-	public void setContainerType(long containerType) {
-		_columnBitmask |= CONTAINERTYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalContainerType) {
-			_setOriginalContainerType = true;
-
-			_originalContainerType = _containerType;
-		}
-
-		_containerType = containerType;
-	}
-
-	public long getOriginalContainerType() {
-		return _originalContainerType;
-	}
-
-	@Override
 	public String getContainerKey() {
 		if (_containerKey == null) {
 			return "";
@@ -528,6 +506,28 @@ public class InfoItemUsageModelImpl
 
 	public String getOriginalContainerKey() {
 		return GetterUtil.getString(_originalContainerKey);
+	}
+
+	@Override
+	public long getContainerType() {
+		return _containerType;
+	}
+
+	@Override
+	public void setContainerType(long containerType) {
+		_columnBitmask |= CONTAINERTYPE_COLUMN_BITMASK;
+
+		if (!_setOriginalContainerType) {
+			_setOriginalContainerType = true;
+
+			_originalContainerType = _containerType;
+		}
+
+		_containerType = containerType;
+	}
+
+	public long getOriginalContainerType() {
+		return _originalContainerType;
 	}
 
 	@Override
@@ -628,8 +628,8 @@ public class InfoItemUsageModelImpl
 		infoItemUsageImpl.setModifiedDate(getModifiedDate());
 		infoItemUsageImpl.setClassNameId(getClassNameId());
 		infoItemUsageImpl.setClassPK(getClassPK());
-		infoItemUsageImpl.setContainerType(getContainerType());
 		infoItemUsageImpl.setContainerKey(getContainerKey());
+		infoItemUsageImpl.setContainerType(getContainerType());
 		infoItemUsageImpl.setPlid(getPlid());
 		infoItemUsageImpl.setType(getType());
 		infoItemUsageImpl.setLastPublishDate(getLastPublishDate());
@@ -714,13 +714,13 @@ public class InfoItemUsageModelImpl
 
 		infoItemUsageModelImpl._setOriginalClassPK = false;
 
+		infoItemUsageModelImpl._originalContainerKey =
+			infoItemUsageModelImpl._containerKey;
+
 		infoItemUsageModelImpl._originalContainerType =
 			infoItemUsageModelImpl._containerType;
 
 		infoItemUsageModelImpl._setOriginalContainerType = false;
-
-		infoItemUsageModelImpl._originalContainerKey =
-			infoItemUsageModelImpl._containerKey;
 
 		infoItemUsageModelImpl._originalPlid = infoItemUsageModelImpl._plid;
 
@@ -774,8 +774,6 @@ public class InfoItemUsageModelImpl
 
 		infoItemUsageCacheModel.classPK = getClassPK();
 
-		infoItemUsageCacheModel.containerType = getContainerType();
-
 		infoItemUsageCacheModel.containerKey = getContainerKey();
 
 		String containerKey = infoItemUsageCacheModel.containerKey;
@@ -783,6 +781,8 @@ public class InfoItemUsageModelImpl
 		if ((containerKey != null) && (containerKey.length() == 0)) {
 			infoItemUsageCacheModel.containerKey = null;
 		}
+
+		infoItemUsageCacheModel.containerType = getContainerType();
 
 		infoItemUsageCacheModel.plid = getPlid();
 
@@ -889,11 +889,11 @@ public class InfoItemUsageModelImpl
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
+	private String _containerKey;
+	private String _originalContainerKey;
 	private long _containerType;
 	private long _originalContainerType;
 	private boolean _setOriginalContainerType;
-	private String _containerKey;
-	private String _originalContainerKey;
 	private long _plid;
 	private long _originalPlid;
 	private boolean _setOriginalPlid;

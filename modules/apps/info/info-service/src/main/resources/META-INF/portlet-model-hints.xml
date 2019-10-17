@@ -10,8 +10,8 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="containerType" type="long" />
 		<field name="containerKey" type="String" />
+		<field name="containerType" type="long" />
 		<field name="plid" type="long" />
 		<field name="type" type="int" />
 		<field name="lastPublishDate" type="Date" />

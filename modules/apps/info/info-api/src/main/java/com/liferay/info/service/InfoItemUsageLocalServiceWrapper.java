@@ -34,6 +34,20 @@ public class InfoItemUsageLocalServiceWrapper
 	}
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link InfoItemUsageLocalServiceUtil} to access the info item usage local service. Add custom service methods to <code>com.liferay.info.service.impl.InfoItemUsageLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 */
+	@Override
+	public com.liferay.info.model.InfoItemUsage addDefaultInfoItemUsage(
+		long groupId, long classNameId, long classPK,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return _infoItemUsageLocalService.addDefaultInfoItemUsage(
+			groupId, classNameId, classPK, serviceContext);
+	}
+
+	/**
 	 * Adds the info item usage to the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param infoItemUsage the info item usage
@@ -44,6 +58,17 @@ public class InfoItemUsageLocalServiceWrapper
 		com.liferay.info.model.InfoItemUsage infoItemUsage) {
 
 		return _infoItemUsageLocalService.addInfoItemUsage(infoItemUsage);
+	}
+
+	@Override
+	public com.liferay.info.model.InfoItemUsage addInfoItemUsage(
+		long groupId, long classNameId, long classPK, long containerType,
+		String containerKey, long plid, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return _infoItemUsageLocalService.addInfoItemUsage(
+			groupId, classNameId, classPK, containerType, containerKey, plid,
+			type, serviceContext);
 	}
 
 	/**
@@ -85,6 +110,24 @@ public class InfoItemUsageLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _infoItemUsageLocalService.deleteInfoItemUsage(infoItemUsageId);
+	}
+
+	@Override
+	public void deleteInfoItemUsages(long classNameId, long classPK) {
+		_infoItemUsageLocalService.deleteInfoItemUsages(classNameId, classPK);
+	}
+
+	@Override
+	public void deleteInfoItemUsages(
+		String containerKey, long containerType, long plid) {
+
+		_infoItemUsageLocalService.deleteInfoItemUsages(
+			containerKey, containerType, plid);
+	}
+
+	@Override
+	public void deleteInfoItemUsagesByPlid(long plid) {
+		_infoItemUsageLocalService.deleteInfoItemUsagesByPlid(plid);
 	}
 
 	/**
@@ -196,6 +239,15 @@ public class InfoItemUsageLocalServiceWrapper
 		return _infoItemUsageLocalService.fetchInfoItemUsage(infoItemUsageId);
 	}
 
+	@Override
+	public com.liferay.info.model.InfoItemUsage fetchInfoItemUsage(
+		long classNameId, long classPK, String containerKey, long containerType,
+		long plid) {
+
+		return _infoItemUsageLocalService.fetchInfoItemUsage(
+			classNameId, classPK, containerKey, containerType, plid);
+	}
+
 	/**
 	 * Returns the info item usage matching the UUID and group.
 	 *
@@ -275,6 +327,43 @@ public class InfoItemUsageLocalServiceWrapper
 		return _infoItemUsageLocalService.getInfoItemUsages(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.info.model.InfoItemUsage>
+		getInfoItemUsages(long classNameId, long classPK) {
+
+		return _infoItemUsageLocalService.getInfoItemUsages(
+			classNameId, classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.info.model.InfoItemUsage>
+		getInfoItemUsages(
+			long classNameId, long classPK, int type, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.info.model.InfoItemUsage> orderByComparator) {
+
+		return _infoItemUsageLocalService.getInfoItemUsages(
+			classNameId, classPK, type, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.info.model.InfoItemUsage>
+		getInfoItemUsages(
+			long classNameId, long classPK, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.info.model.InfoItemUsage> orderByComparator) {
+
+		return _infoItemUsageLocalService.getInfoItemUsages(
+			classNameId, classPK, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.info.model.InfoItemUsage>
+		getInfoItemUsagesByPlid(long plid) {
+
+		return _infoItemUsageLocalService.getInfoItemUsagesByPlid(plid);
+	}
+
 	/**
 	 * Returns the number of info item usages.
 	 *
@@ -283,6 +372,20 @@ public class InfoItemUsageLocalServiceWrapper
 	@Override
 	public int getInfoItemUsagesCount() {
 		return _infoItemUsageLocalService.getInfoItemUsagesCount();
+	}
+
+	@Override
+	public int getInfoItemUsagesCount(long classNameId, long classPK) {
+		return _infoItemUsageLocalService.getInfoItemUsagesCount(
+			classNameId, classPK);
+	}
+
+	@Override
+	public int getInfoItemUsagesCount(
+		long classNameId, long classPK, int type) {
+
+		return _infoItemUsageLocalService.getInfoItemUsagesCount(
+			classNameId, classPK, type);
 	}
 
 	/**
@@ -301,6 +404,18 @@ public class InfoItemUsageLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _infoItemUsageLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public int getUniqueInfoItemUsagesCount(long classNameId, long classPK) {
+		return _infoItemUsageLocalService.getUniqueInfoItemUsagesCount(
+			classNameId, classPK);
+	}
+
+	@Override
+	public boolean hasDefaultInfoItemUsage(long classNameId, long classPK) {
+		return _infoItemUsageLocalService.hasDefaultInfoItemUsage(
+			classNameId, classPK);
 	}
 
 	/**

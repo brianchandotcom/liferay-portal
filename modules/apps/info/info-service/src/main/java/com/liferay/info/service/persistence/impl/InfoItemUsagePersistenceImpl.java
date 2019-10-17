@@ -2507,58 +2507,59 @@ public class InfoItemUsagePersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_T_TYPE_2 =
 		"infoItemUsage.type = ? AND infoItemUsage.containerKey IS NOT NULL";
 
-	private FinderPath _finderPathWithPaginationFindByC_C_P;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_P;
-	private FinderPath _finderPathCountByC_C_P;
+	private FinderPath _finderPathWithPaginationFindByCK_CT_P;
+	private FinderPath _finderPathWithoutPaginationFindByCK_CT_P;
+	private FinderPath _finderPathCountByCK_CT_P;
 
 	/**
-	 * Returns all the info item usages where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns all the info item usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the matching info item usages
 	 */
 	@Override
-	public List<InfoItemUsage> findByC_C_P(
-		long containerType, String containerKey, long plid) {
+	public List<InfoItemUsage> findByCK_CT_P(
+		String containerKey, long containerType, long plid) {
 
-		return findByC_C_P(
-			containerType, containerKey, plid, QueryUtil.ALL_POS,
+		return findByCK_CT_P(
+			containerKey, containerType, plid, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the info item usages where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns a range of all the info item usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>InfoItemUsageModelImpl</code>.
 	 * </p>
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param start the lower bound of the range of info item usages
 	 * @param end the upper bound of the range of info item usages (not inclusive)
 	 * @return the range of matching info item usages
 	 */
 	@Override
-	public List<InfoItemUsage> findByC_C_P(
-		long containerType, String containerKey, long plid, int start,
+	public List<InfoItemUsage> findByCK_CT_P(
+		String containerKey, long containerType, long plid, int start,
 		int end) {
 
-		return findByC_C_P(containerType, containerKey, plid, start, end, null);
+		return findByCK_CT_P(
+			containerKey, containerType, plid, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the info item usages where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns an ordered range of all the info item usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>InfoItemUsageModelImpl</code>.
 	 * </p>
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param start the lower bound of the range of info item usages
 	 * @param end the upper bound of the range of info item usages (not inclusive)
@@ -2566,24 +2567,24 @@ public class InfoItemUsagePersistenceImpl
 	 * @return the ordered range of matching info item usages
 	 */
 	@Override
-	public List<InfoItemUsage> findByC_C_P(
-		long containerType, String containerKey, long plid, int start, int end,
+	public List<InfoItemUsage> findByCK_CT_P(
+		String containerKey, long containerType, long plid, int start, int end,
 		OrderByComparator<InfoItemUsage> orderByComparator) {
 
-		return findByC_C_P(
-			containerType, containerKey, plid, start, end, orderByComparator,
+		return findByCK_CT_P(
+			containerKey, containerType, plid, start, end, orderByComparator,
 			true);
 	}
 
 	/**
-	 * Returns an ordered range of all the info item usages where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns an ordered range of all the info item usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>InfoItemUsageModelImpl</code>.
 	 * </p>
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param start the lower bound of the range of info item usages
 	 * @param end the upper bound of the range of info item usages (not inclusive)
@@ -2592,8 +2593,8 @@ public class InfoItemUsagePersistenceImpl
 	 * @return the ordered range of matching info item usages
 	 */
 	@Override
-	public List<InfoItemUsage> findByC_C_P(
-		long containerType, String containerKey, long plid, int start, int end,
+	public List<InfoItemUsage> findByCK_CT_P(
+		String containerKey, long containerType, long plid, int start, int end,
 		OrderByComparator<InfoItemUsage> orderByComparator,
 		boolean useFinderCache) {
 
@@ -2606,14 +2607,14 @@ public class InfoItemUsagePersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_C_P;
-				finderArgs = new Object[] {containerType, containerKey, plid};
+				finderPath = _finderPathWithoutPaginationFindByCK_CT_P;
+				finderArgs = new Object[] {containerKey, containerType, plid};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_C_P;
+			finderPath = _finderPathWithPaginationFindByCK_CT_P;
 			finderArgs = new Object[] {
-				containerType, containerKey, plid, start, end, orderByComparator
+				containerKey, containerType, plid, start, end, orderByComparator
 			};
 		}
 
@@ -2625,8 +2626,8 @@ public class InfoItemUsagePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (InfoItemUsage infoItemUsage : list) {
-					if ((containerType != infoItemUsage.getContainerType()) ||
-						!containerKey.equals(infoItemUsage.getContainerKey()) ||
+					if (!containerKey.equals(infoItemUsage.getContainerKey()) ||
+						(containerType != infoItemUsage.getContainerType()) ||
 						(plid != infoItemUsage.getPlid())) {
 
 						list = null;
@@ -2650,20 +2651,20 @@ public class InfoItemUsagePersistenceImpl
 
 			query.append(_SQL_SELECT_INFOITEMUSAGE_WHERE);
 
-			query.append(_FINDER_COLUMN_C_C_P_CONTAINERTYPE_2);
-
 			boolean bindContainerKey = false;
 
 			if (containerKey.isEmpty()) {
-				query.append(_FINDER_COLUMN_C_C_P_CONTAINERKEY_3);
+				query.append(_FINDER_COLUMN_CK_CT_P_CONTAINERKEY_3);
 			}
 			else {
 				bindContainerKey = true;
 
-				query.append(_FINDER_COLUMN_C_C_P_CONTAINERKEY_2);
+				query.append(_FINDER_COLUMN_CK_CT_P_CONTAINERKEY_2);
 			}
 
-			query.append(_FINDER_COLUMN_C_C_P_PLID_2);
+			query.append(_FINDER_COLUMN_CK_CT_P_CONTAINERTYPE_2);
+
+			query.append(_FINDER_COLUMN_CK_CT_P_PLID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -2684,11 +2685,11 @@ public class InfoItemUsagePersistenceImpl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(containerType);
-
 				if (bindContainerKey) {
 					qPos.add(containerKey);
 				}
+
+				qPos.add(containerType);
 
 				qPos.add(plid);
 
@@ -2717,23 +2718,23 @@ public class InfoItemUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the first info item usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the first info item usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching info item usage
 	 * @throws NoSuchItemUsageException if a matching info item usage could not be found
 	 */
 	@Override
-	public InfoItemUsage findByC_C_P_First(
-			long containerType, String containerKey, long plid,
+	public InfoItemUsage findByCK_CT_P_First(
+			String containerKey, long containerType, long plid,
 			OrderByComparator<InfoItemUsage> orderByComparator)
 		throws NoSuchItemUsageException {
 
-		InfoItemUsage infoItemUsage = fetchByC_C_P_First(
-			containerType, containerKey, plid, orderByComparator);
+		InfoItemUsage infoItemUsage = fetchByCK_CT_P_First(
+			containerKey, containerType, plid, orderByComparator);
 
 		if (infoItemUsage != null) {
 			return infoItemUsage;
@@ -2743,11 +2744,11 @@ public class InfoItemUsagePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("containerType=");
-		msg.append(containerType);
-
-		msg.append(", containerKey=");
+		msg.append("containerKey=");
 		msg.append(containerKey);
+
+		msg.append(", containerType=");
+		msg.append(containerType);
 
 		msg.append(", plid=");
 		msg.append(plid);
@@ -2758,21 +2759,21 @@ public class InfoItemUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the first info item usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the first info item usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching info item usage, or <code>null</code> if a matching info item usage could not be found
 	 */
 	@Override
-	public InfoItemUsage fetchByC_C_P_First(
-		long containerType, String containerKey, long plid,
+	public InfoItemUsage fetchByCK_CT_P_First(
+		String containerKey, long containerType, long plid,
 		OrderByComparator<InfoItemUsage> orderByComparator) {
 
-		List<InfoItemUsage> list = findByC_C_P(
-			containerType, containerKey, plid, 0, 1, orderByComparator);
+		List<InfoItemUsage> list = findByCK_CT_P(
+			containerKey, containerType, plid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2782,23 +2783,23 @@ public class InfoItemUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the last info item usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the last info item usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching info item usage
 	 * @throws NoSuchItemUsageException if a matching info item usage could not be found
 	 */
 	@Override
-	public InfoItemUsage findByC_C_P_Last(
-			long containerType, String containerKey, long plid,
+	public InfoItemUsage findByCK_CT_P_Last(
+			String containerKey, long containerType, long plid,
 			OrderByComparator<InfoItemUsage> orderByComparator)
 		throws NoSuchItemUsageException {
 
-		InfoItemUsage infoItemUsage = fetchByC_C_P_Last(
-			containerType, containerKey, plid, orderByComparator);
+		InfoItemUsage infoItemUsage = fetchByCK_CT_P_Last(
+			containerKey, containerType, plid, orderByComparator);
 
 		if (infoItemUsage != null) {
 			return infoItemUsage;
@@ -2808,11 +2809,11 @@ public class InfoItemUsagePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("containerType=");
-		msg.append(containerType);
-
-		msg.append(", containerKey=");
+		msg.append("containerKey=");
 		msg.append(containerKey);
+
+		msg.append(", containerType=");
+		msg.append(containerType);
 
 		msg.append(", plid=");
 		msg.append(plid);
@@ -2823,27 +2824,27 @@ public class InfoItemUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the last info item usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the last info item usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching info item usage, or <code>null</code> if a matching info item usage could not be found
 	 */
 	@Override
-	public InfoItemUsage fetchByC_C_P_Last(
-		long containerType, String containerKey, long plid,
+	public InfoItemUsage fetchByCK_CT_P_Last(
+		String containerKey, long containerType, long plid,
 		OrderByComparator<InfoItemUsage> orderByComparator) {
 
-		int count = countByC_C_P(containerType, containerKey, plid);
+		int count = countByCK_CT_P(containerKey, containerType, plid);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<InfoItemUsage> list = findByC_C_P(
-			containerType, containerKey, plid, count - 1, count,
+		List<InfoItemUsage> list = findByCK_CT_P(
+			containerKey, containerType, plid, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2854,19 +2855,19 @@ public class InfoItemUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the info item usages before and after the current info item usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the info item usages before and after the current info item usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * @param infoItemUsageId the primary key of the current info item usage
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next info item usage
 	 * @throws NoSuchItemUsageException if a info item usage with the primary key could not be found
 	 */
 	@Override
-	public InfoItemUsage[] findByC_C_P_PrevAndNext(
-			long infoItemUsageId, long containerType, String containerKey,
+	public InfoItemUsage[] findByCK_CT_P_PrevAndNext(
+			long infoItemUsageId, String containerKey, long containerType,
 			long plid, OrderByComparator<InfoItemUsage> orderByComparator)
 		throws NoSuchItemUsageException {
 
@@ -2881,14 +2882,14 @@ public class InfoItemUsagePersistenceImpl
 
 			InfoItemUsage[] array = new InfoItemUsageImpl[3];
 
-			array[0] = getByC_C_P_PrevAndNext(
-				session, infoItemUsage, containerType, containerKey, plid,
+			array[0] = getByCK_CT_P_PrevAndNext(
+				session, infoItemUsage, containerKey, containerType, plid,
 				orderByComparator, true);
 
 			array[1] = infoItemUsage;
 
-			array[2] = getByC_C_P_PrevAndNext(
-				session, infoItemUsage, containerType, containerKey, plid,
+			array[2] = getByCK_CT_P_PrevAndNext(
+				session, infoItemUsage, containerKey, containerType, plid,
 				orderByComparator, false);
 
 			return array;
@@ -2901,9 +2902,9 @@ public class InfoItemUsagePersistenceImpl
 		}
 	}
 
-	protected InfoItemUsage getByC_C_P_PrevAndNext(
-		Session session, InfoItemUsage infoItemUsage, long containerType,
-		String containerKey, long plid,
+	protected InfoItemUsage getByCK_CT_P_PrevAndNext(
+		Session session, InfoItemUsage infoItemUsage, String containerKey,
+		long containerType, long plid,
 		OrderByComparator<InfoItemUsage> orderByComparator, boolean previous) {
 
 		StringBundler query = null;
@@ -2919,20 +2920,20 @@ public class InfoItemUsagePersistenceImpl
 
 		query.append(_SQL_SELECT_INFOITEMUSAGE_WHERE);
 
-		query.append(_FINDER_COLUMN_C_C_P_CONTAINERTYPE_2);
-
 		boolean bindContainerKey = false;
 
 		if (containerKey.isEmpty()) {
-			query.append(_FINDER_COLUMN_C_C_P_CONTAINERKEY_3);
+			query.append(_FINDER_COLUMN_CK_CT_P_CONTAINERKEY_3);
 		}
 		else {
 			bindContainerKey = true;
 
-			query.append(_FINDER_COLUMN_C_C_P_CONTAINERKEY_2);
+			query.append(_FINDER_COLUMN_CK_CT_P_CONTAINERKEY_2);
 		}
 
-		query.append(_FINDER_COLUMN_C_C_P_PLID_2);
+		query.append(_FINDER_COLUMN_CK_CT_P_CONTAINERTYPE_2);
+
+		query.append(_FINDER_COLUMN_CK_CT_P_PLID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -3003,11 +3004,11 @@ public class InfoItemUsagePersistenceImpl
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(containerType);
-
 		if (bindContainerKey) {
 			qPos.add(containerKey);
 		}
+
+		qPos.add(containerType);
 
 		qPos.add(plid);
 
@@ -3031,19 +3032,19 @@ public class InfoItemUsagePersistenceImpl
 	}
 
 	/**
-	 * Removes all the info item usages where containerType = &#63; and containerKey = &#63; and plid = &#63; from the database.
+	 * Removes all the info item usages where containerKey = &#63; and containerType = &#63; and plid = &#63; from the database.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 */
 	@Override
-	public void removeByC_C_P(
-		long containerType, String containerKey, long plid) {
+	public void removeByCK_CT_P(
+		String containerKey, long containerType, long plid) {
 
 		for (InfoItemUsage infoItemUsage :
-				findByC_C_P(
-					containerType, containerKey, plid, QueryUtil.ALL_POS,
+				findByCK_CT_P(
+					containerKey, containerType, plid, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null)) {
 
 			remove(infoItemUsage);
@@ -3051,22 +3052,22 @@ public class InfoItemUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the number of info item usages where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the number of info item usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the number of matching info item usages
 	 */
 	@Override
-	public int countByC_C_P(
-		long containerType, String containerKey, long plid) {
+	public int countByCK_CT_P(
+		String containerKey, long containerType, long plid) {
 
 		containerKey = Objects.toString(containerKey, "");
 
-		FinderPath finderPath = _finderPathCountByC_C_P;
+		FinderPath finderPath = _finderPathCountByCK_CT_P;
 
-		Object[] finderArgs = new Object[] {containerType, containerKey, plid};
+		Object[] finderArgs = new Object[] {containerKey, containerType, plid};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -3075,20 +3076,20 @@ public class InfoItemUsagePersistenceImpl
 
 			query.append(_SQL_COUNT_INFOITEMUSAGE_WHERE);
 
-			query.append(_FINDER_COLUMN_C_C_P_CONTAINERTYPE_2);
-
 			boolean bindContainerKey = false;
 
 			if (containerKey.isEmpty()) {
-				query.append(_FINDER_COLUMN_C_C_P_CONTAINERKEY_3);
+				query.append(_FINDER_COLUMN_CK_CT_P_CONTAINERKEY_3);
 			}
 			else {
 				bindContainerKey = true;
 
-				query.append(_FINDER_COLUMN_C_C_P_CONTAINERKEY_2);
+				query.append(_FINDER_COLUMN_CK_CT_P_CONTAINERKEY_2);
 			}
 
-			query.append(_FINDER_COLUMN_C_C_P_PLID_2);
+			query.append(_FINDER_COLUMN_CK_CT_P_CONTAINERTYPE_2);
+
+			query.append(_FINDER_COLUMN_CK_CT_P_PLID_2);
 
 			String sql = query.toString();
 
@@ -3101,11 +3102,11 @@ public class InfoItemUsagePersistenceImpl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(containerType);
-
 				if (bindContainerKey) {
 					qPos.add(containerKey);
 				}
+
+				qPos.add(containerType);
 
 				qPos.add(plid);
 
@@ -3126,40 +3127,40 @@ public class InfoItemUsagePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_P_CONTAINERTYPE_2 =
-		"infoItemUsage.containerType = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_P_CONTAINERKEY_2 =
+	private static final String _FINDER_COLUMN_CK_CT_P_CONTAINERKEY_2 =
 		"infoItemUsage.containerKey = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_C_P_CONTAINERKEY_3 =
+	private static final String _FINDER_COLUMN_CK_CT_P_CONTAINERKEY_3 =
 		"(infoItemUsage.containerKey IS NULL OR infoItemUsage.containerKey = '') AND ";
 
-	private static final String _FINDER_COLUMN_C_C_P_PLID_2 =
+	private static final String _FINDER_COLUMN_CK_CT_P_CONTAINERTYPE_2 =
+		"infoItemUsage.containerType = ? AND ";
+
+	private static final String _FINDER_COLUMN_CK_CT_P_PLID_2 =
 		"infoItemUsage.plid = ? AND infoItemUsage.containerKey IS NOT NULL";
 
-	private FinderPath _finderPathFetchByC_C_C_C_P;
-	private FinderPath _finderPathCountByC_C_C_C_P;
+	private FinderPath _finderPathFetchByC_C_CK_CT_P;
+	private FinderPath _finderPathCountByC_C_CK_CT_P;
 
 	/**
-	 * Returns the info item usage where classNameId = &#63; and classPK = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; or throws a <code>NoSuchItemUsageException</code> if it could not be found.
+	 * Returns the info item usage where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or throws a <code>NoSuchItemUsageException</code> if it could not be found.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the matching info item usage
 	 * @throws NoSuchItemUsageException if a matching info item usage could not be found
 	 */
 	@Override
-	public InfoItemUsage findByC_C_C_C_P(
-			long classNameId, long classPK, long containerType,
-			String containerKey, long plid)
+	public InfoItemUsage findByC_C_CK_CT_P(
+			long classNameId, long classPK, String containerKey,
+			long containerType, long plid)
 		throws NoSuchItemUsageException {
 
-		InfoItemUsage infoItemUsage = fetchByC_C_C_C_P(
-			classNameId, classPK, containerType, containerKey, plid);
+		InfoItemUsage infoItemUsage = fetchByC_C_CK_CT_P(
+			classNameId, classPK, containerKey, containerType, plid);
 
 		if (infoItemUsage == null) {
 			StringBundler msg = new StringBundler(12);
@@ -3172,11 +3173,11 @@ public class InfoItemUsagePersistenceImpl
 			msg.append(", classPK=");
 			msg.append(classPK);
 
-			msg.append(", containerType=");
-			msg.append(containerType);
-
 			msg.append(", containerKey=");
 			msg.append(containerKey);
+
+			msg.append(", containerType=");
+			msg.append(containerType);
 
 			msg.append(", plid=");
 			msg.append(plid);
@@ -3194,38 +3195,38 @@ public class InfoItemUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the info item usage where classNameId = &#63; and classPK = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the info item usage where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the matching info item usage, or <code>null</code> if a matching info item usage could not be found
 	 */
 	@Override
-	public InfoItemUsage fetchByC_C_C_C_P(
-		long classNameId, long classPK, long containerType, String containerKey,
+	public InfoItemUsage fetchByC_C_CK_CT_P(
+		long classNameId, long classPK, String containerKey, long containerType,
 		long plid) {
 
-		return fetchByC_C_C_C_P(
-			classNameId, classPK, containerType, containerKey, plid, true);
+		return fetchByC_C_CK_CT_P(
+			classNameId, classPK, containerKey, containerType, plid, true);
 	}
 
 	/**
-	 * Returns the info item usage where classNameId = &#63; and classPK = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the info item usage where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching info item usage, or <code>null</code> if a matching info item usage could not be found
 	 */
 	@Override
-	public InfoItemUsage fetchByC_C_C_C_P(
-		long classNameId, long classPK, long containerType, String containerKey,
+	public InfoItemUsage fetchByC_C_CK_CT_P(
+		long classNameId, long classPK, String containerKey, long containerType,
 		long plid, boolean useFinderCache) {
 
 		containerKey = Objects.toString(containerKey, "");
@@ -3234,7 +3235,7 @@ public class InfoItemUsagePersistenceImpl
 
 		if (useFinderCache) {
 			finderArgs = new Object[] {
-				classNameId, classPK, containerType, containerKey, plid
+				classNameId, classPK, containerKey, containerType, plid
 			};
 		}
 
@@ -3242,7 +3243,7 @@ public class InfoItemUsagePersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_C_C_C_P, finderArgs, this);
+				_finderPathFetchByC_C_CK_CT_P, finderArgs, this);
 		}
 
 		if (result instanceof InfoItemUsage) {
@@ -3250,9 +3251,9 @@ public class InfoItemUsagePersistenceImpl
 
 			if ((classNameId != infoItemUsage.getClassNameId()) ||
 				(classPK != infoItemUsage.getClassPK()) ||
-				(containerType != infoItemUsage.getContainerType()) ||
 				!Objects.equals(
 					containerKey, infoItemUsage.getContainerKey()) ||
+				(containerType != infoItemUsage.getContainerType()) ||
 				(plid != infoItemUsage.getPlid())) {
 
 				result = null;
@@ -3264,24 +3265,24 @@ public class InfoItemUsagePersistenceImpl
 
 			query.append(_SQL_SELECT_INFOITEMUSAGE_WHERE);
 
-			query.append(_FINDER_COLUMN_C_C_C_C_P_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_C_C_CK_CT_P_CLASSNAMEID_2);
 
-			query.append(_FINDER_COLUMN_C_C_C_C_P_CLASSPK_2);
-
-			query.append(_FINDER_COLUMN_C_C_C_C_P_CONTAINERTYPE_2);
+			query.append(_FINDER_COLUMN_C_C_CK_CT_P_CLASSPK_2);
 
 			boolean bindContainerKey = false;
 
 			if (containerKey.isEmpty()) {
-				query.append(_FINDER_COLUMN_C_C_C_C_P_CONTAINERKEY_3);
+				query.append(_FINDER_COLUMN_C_C_CK_CT_P_CONTAINERKEY_3);
 			}
 			else {
 				bindContainerKey = true;
 
-				query.append(_FINDER_COLUMN_C_C_C_C_P_CONTAINERKEY_2);
+				query.append(_FINDER_COLUMN_C_C_CK_CT_P_CONTAINERKEY_2);
 			}
 
-			query.append(_FINDER_COLUMN_C_C_C_C_P_PLID_2);
+			query.append(_FINDER_COLUMN_C_C_CK_CT_P_CONTAINERTYPE_2);
+
+			query.append(_FINDER_COLUMN_C_C_CK_CT_P_PLID_2);
 
 			String sql = query.toString();
 
@@ -3298,11 +3299,11 @@ public class InfoItemUsagePersistenceImpl
 
 				qPos.add(classPK);
 
-				qPos.add(containerType);
-
 				if (bindContainerKey) {
 					qPos.add(containerKey);
 				}
+
+				qPos.add(containerType);
 
 				qPos.add(plid);
 
@@ -3311,7 +3312,7 @@ public class InfoItemUsagePersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByC_C_C_C_P, finderArgs, list);
+							_finderPathFetchByC_C_CK_CT_P, finderArgs, list);
 					}
 				}
 				else {
@@ -3325,7 +3326,7 @@ public class InfoItemUsagePersistenceImpl
 			catch (Exception e) {
 				if (useFinderCache) {
 					finderCache.removeResult(
-						_finderPathFetchByC_C_C_C_P, finderArgs);
+						_finderPathFetchByC_C_CK_CT_P, finderArgs);
 				}
 
 				throw processException(e);
@@ -3344,48 +3345,48 @@ public class InfoItemUsagePersistenceImpl
 	}
 
 	/**
-	 * Removes the info item usage where classNameId = &#63; and classPK = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; from the database.
+	 * Removes the info item usage where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the info item usage that was removed
 	 */
 	@Override
-	public InfoItemUsage removeByC_C_C_C_P(
-			long classNameId, long classPK, long containerType,
-			String containerKey, long plid)
+	public InfoItemUsage removeByC_C_CK_CT_P(
+			long classNameId, long classPK, String containerKey,
+			long containerType, long plid)
 		throws NoSuchItemUsageException {
 
-		InfoItemUsage infoItemUsage = findByC_C_C_C_P(
-			classNameId, classPK, containerType, containerKey, plid);
+		InfoItemUsage infoItemUsage = findByC_C_CK_CT_P(
+			classNameId, classPK, containerKey, containerType, plid);
 
 		return remove(infoItemUsage);
 	}
 
 	/**
-	 * Returns the number of info item usages where classNameId = &#63; and classPK = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the number of info item usages where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the number of matching info item usages
 	 */
 	@Override
-	public int countByC_C_C_C_P(
-		long classNameId, long classPK, long containerType, String containerKey,
+	public int countByC_C_CK_CT_P(
+		long classNameId, long classPK, String containerKey, long containerType,
 		long plid) {
 
 		containerKey = Objects.toString(containerKey, "");
 
-		FinderPath finderPath = _finderPathCountByC_C_C_C_P;
+		FinderPath finderPath = _finderPathCountByC_C_CK_CT_P;
 
 		Object[] finderArgs = new Object[] {
-			classNameId, classPK, containerType, containerKey, plid
+			classNameId, classPK, containerKey, containerType, plid
 		};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -3395,24 +3396,24 @@ public class InfoItemUsagePersistenceImpl
 
 			query.append(_SQL_COUNT_INFOITEMUSAGE_WHERE);
 
-			query.append(_FINDER_COLUMN_C_C_C_C_P_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_C_C_CK_CT_P_CLASSNAMEID_2);
 
-			query.append(_FINDER_COLUMN_C_C_C_C_P_CLASSPK_2);
-
-			query.append(_FINDER_COLUMN_C_C_C_C_P_CONTAINERTYPE_2);
+			query.append(_FINDER_COLUMN_C_C_CK_CT_P_CLASSPK_2);
 
 			boolean bindContainerKey = false;
 
 			if (containerKey.isEmpty()) {
-				query.append(_FINDER_COLUMN_C_C_C_C_P_CONTAINERKEY_3);
+				query.append(_FINDER_COLUMN_C_C_CK_CT_P_CONTAINERKEY_3);
 			}
 			else {
 				bindContainerKey = true;
 
-				query.append(_FINDER_COLUMN_C_C_C_C_P_CONTAINERKEY_2);
+				query.append(_FINDER_COLUMN_C_C_CK_CT_P_CONTAINERKEY_2);
 			}
 
-			query.append(_FINDER_COLUMN_C_C_C_C_P_PLID_2);
+			query.append(_FINDER_COLUMN_C_C_CK_CT_P_CONTAINERTYPE_2);
+
+			query.append(_FINDER_COLUMN_C_C_CK_CT_P_PLID_2);
 
 			String sql = query.toString();
 
@@ -3429,11 +3430,11 @@ public class InfoItemUsagePersistenceImpl
 
 				qPos.add(classPK);
 
-				qPos.add(containerType);
-
 				if (bindContainerKey) {
 					qPos.add(containerKey);
 				}
+
+				qPos.add(containerType);
 
 				qPos.add(plid);
 
@@ -3454,22 +3455,22 @@ public class InfoItemUsagePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_C_C_P_CLASSNAMEID_2 =
+	private static final String _FINDER_COLUMN_C_C_CK_CT_P_CLASSNAMEID_2 =
 		"infoItemUsage.classNameId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_C_C_C_P_CLASSPK_2 =
+	private static final String _FINDER_COLUMN_C_C_CK_CT_P_CLASSPK_2 =
 		"infoItemUsage.classPK = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_C_C_C_P_CONTAINERTYPE_2 =
-		"infoItemUsage.containerType = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_C_C_P_CONTAINERKEY_2 =
+	private static final String _FINDER_COLUMN_C_C_CK_CT_P_CONTAINERKEY_2 =
 		"infoItemUsage.containerKey = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_C_C_C_P_CONTAINERKEY_3 =
+	private static final String _FINDER_COLUMN_C_C_CK_CT_P_CONTAINERKEY_3 =
 		"(infoItemUsage.containerKey IS NULL OR infoItemUsage.containerKey = '') AND ";
 
-	private static final String _FINDER_COLUMN_C_C_C_C_P_PLID_2 =
+	private static final String _FINDER_COLUMN_C_C_CK_CT_P_CONTAINERTYPE_2 =
+		"infoItemUsage.containerType = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_CK_CT_P_PLID_2 =
 		"infoItemUsage.plid = ?";
 
 	public InfoItemUsagePersistenceImpl() {
@@ -3503,11 +3504,11 @@ public class InfoItemUsagePersistenceImpl
 			infoItemUsage);
 
 		finderCache.putResult(
-			_finderPathFetchByC_C_C_C_P,
+			_finderPathFetchByC_C_CK_CT_P,
 			new Object[] {
 				infoItemUsage.getClassNameId(), infoItemUsage.getClassPK(),
-				infoItemUsage.getContainerType(),
-				infoItemUsage.getContainerKey(), infoItemUsage.getPlid()
+				infoItemUsage.getContainerKey(),
+				infoItemUsage.getContainerType(), infoItemUsage.getPlid()
 			},
 			infoItemUsage);
 
@@ -3600,15 +3601,15 @@ public class InfoItemUsagePersistenceImpl
 		args = new Object[] {
 			infoItemUsageModelImpl.getClassNameId(),
 			infoItemUsageModelImpl.getClassPK(),
-			infoItemUsageModelImpl.getContainerType(),
 			infoItemUsageModelImpl.getContainerKey(),
+			infoItemUsageModelImpl.getContainerType(),
 			infoItemUsageModelImpl.getPlid()
 		};
 
 		finderCache.putResult(
-			_finderPathCountByC_C_C_C_P, args, Long.valueOf(1), false);
+			_finderPathCountByC_C_CK_CT_P, args, Long.valueOf(1), false);
 		finderCache.putResult(
-			_finderPathFetchByC_C_C_C_P, args, infoItemUsageModelImpl, false);
+			_finderPathFetchByC_C_CK_CT_P, args, infoItemUsageModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -3640,28 +3641,28 @@ public class InfoItemUsagePersistenceImpl
 			Object[] args = new Object[] {
 				infoItemUsageModelImpl.getClassNameId(),
 				infoItemUsageModelImpl.getClassPK(),
-				infoItemUsageModelImpl.getContainerType(),
 				infoItemUsageModelImpl.getContainerKey(),
+				infoItemUsageModelImpl.getContainerType(),
 				infoItemUsageModelImpl.getPlid()
 			};
 
-			finderCache.removeResult(_finderPathCountByC_C_C_C_P, args);
-			finderCache.removeResult(_finderPathFetchByC_C_C_C_P, args);
+			finderCache.removeResult(_finderPathCountByC_C_CK_CT_P, args);
+			finderCache.removeResult(_finderPathFetchByC_C_CK_CT_P, args);
 		}
 
 		if ((infoItemUsageModelImpl.getColumnBitmask() &
-			 _finderPathFetchByC_C_C_C_P.getColumnBitmask()) != 0) {
+			 _finderPathFetchByC_C_CK_CT_P.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
 				infoItemUsageModelImpl.getOriginalClassNameId(),
 				infoItemUsageModelImpl.getOriginalClassPK(),
-				infoItemUsageModelImpl.getOriginalContainerType(),
 				infoItemUsageModelImpl.getOriginalContainerKey(),
+				infoItemUsageModelImpl.getOriginalContainerType(),
 				infoItemUsageModelImpl.getOriginalPlid()
 			};
 
-			finderCache.removeResult(_finderPathCountByC_C_C_C_P, args);
-			finderCache.removeResult(_finderPathFetchByC_C_C_C_P, args);
+			finderCache.removeResult(_finderPathCountByC_C_CK_CT_P, args);
+			finderCache.removeResult(_finderPathFetchByC_C_CK_CT_P, args);
 		}
 	}
 
@@ -3883,14 +3884,14 @@ public class InfoItemUsagePersistenceImpl
 				_finderPathWithoutPaginationFindByC_C_T, args);
 
 			args = new Object[] {
-				infoItemUsageModelImpl.getContainerType(),
 				infoItemUsageModelImpl.getContainerKey(),
+				infoItemUsageModelImpl.getContainerType(),
 				infoItemUsageModelImpl.getPlid()
 			};
 
-			finderCache.removeResult(_finderPathCountByC_C_P, args);
+			finderCache.removeResult(_finderPathCountByCK_CT_P, args);
 			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByC_C_P, args);
+				_finderPathWithoutPaginationFindByCK_CT_P, args);
 
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
@@ -3984,28 +3985,28 @@ public class InfoItemUsagePersistenceImpl
 			}
 
 			if ((infoItemUsageModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByC_C_P.getColumnBitmask()) !=
-					 0) {
+				 _finderPathWithoutPaginationFindByCK_CT_P.
+					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					infoItemUsageModelImpl.getOriginalContainerType(),
 					infoItemUsageModelImpl.getOriginalContainerKey(),
+					infoItemUsageModelImpl.getOriginalContainerType(),
 					infoItemUsageModelImpl.getOriginalPlid()
 				};
 
-				finderCache.removeResult(_finderPathCountByC_C_P, args);
+				finderCache.removeResult(_finderPathCountByCK_CT_P, args);
 				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByC_C_P, args);
+					_finderPathWithoutPaginationFindByCK_CT_P, args);
 
 				args = new Object[] {
-					infoItemUsageModelImpl.getContainerType(),
 					infoItemUsageModelImpl.getContainerKey(),
+					infoItemUsageModelImpl.getContainerType(),
 					infoItemUsageModelImpl.getPlid()
 				};
 
-				finderCache.removeResult(_finderPathCountByC_C_P, args);
+				finderCache.removeResult(_finderPathCountByCK_CT_P, args);
 				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByC_C_P, args);
+					_finderPathWithoutPaginationFindByCK_CT_P, args);
 			}
 		}
 
@@ -4404,54 +4405,54 @@ public class InfoItemUsagePersistenceImpl
 				Integer.class.getName()
 			});
 
-		_finderPathWithPaginationFindByC_C_P = new FinderPath(
+		_finderPathWithPaginationFindByCK_CT_P = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, InfoItemUsageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_P",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCK_CT_P",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
-		_finderPathWithoutPaginationFindByC_C_P = new FinderPath(
+		_finderPathWithoutPaginationFindByCK_CT_P = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, InfoItemUsageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_P",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCK_CT_P",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
 			},
-			InfoItemUsageModelImpl.CONTAINERTYPE_COLUMN_BITMASK |
 			InfoItemUsageModelImpl.CONTAINERKEY_COLUMN_BITMASK |
+			InfoItemUsageModelImpl.CONTAINERTYPE_COLUMN_BITMASK |
 			InfoItemUsageModelImpl.PLID_COLUMN_BITMASK);
 
-		_finderPathCountByC_C_P = new FinderPath(
+		_finderPathCountByCK_CT_P = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_P",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCK_CT_P",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
 			});
 
-		_finderPathFetchByC_C_C_C_P = new FinderPath(
+		_finderPathFetchByC_C_CK_CT_P = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, InfoItemUsageImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C_C_P",
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_CK_CT_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
 			},
 			InfoItemUsageModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			InfoItemUsageModelImpl.CLASSPK_COLUMN_BITMASK |
-			InfoItemUsageModelImpl.CONTAINERTYPE_COLUMN_BITMASK |
 			InfoItemUsageModelImpl.CONTAINERKEY_COLUMN_BITMASK |
+			InfoItemUsageModelImpl.CONTAINERTYPE_COLUMN_BITMASK |
 			InfoItemUsageModelImpl.PLID_COLUMN_BITMASK);
 
-		_finderPathCountByC_C_C_C_P = new FinderPath(
+		_finderPathCountByC_C_CK_CT_P = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_C_P",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_CK_CT_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
 			});
 	}

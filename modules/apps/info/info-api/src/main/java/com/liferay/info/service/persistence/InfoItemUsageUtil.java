@@ -901,73 +901,74 @@ public class InfoItemUsageUtil {
 	}
 
 	/**
-	 * Returns all the info item usages where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns all the info item usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the matching info item usages
 	 */
-	public static List<InfoItemUsage> findByC_C_P(
-		long containerType, String containerKey, long plid) {
+	public static List<InfoItemUsage> findByCK_CT_P(
+		String containerKey, long containerType, long plid) {
 
-		return getPersistence().findByC_C_P(containerType, containerKey, plid);
+		return getPersistence().findByCK_CT_P(
+			containerKey, containerType, plid);
 	}
 
 	/**
-	 * Returns a range of all the info item usages where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns a range of all the info item usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>InfoItemUsageModelImpl</code>.
 	 * </p>
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param start the lower bound of the range of info item usages
 	 * @param end the upper bound of the range of info item usages (not inclusive)
 	 * @return the range of matching info item usages
 	 */
-	public static List<InfoItemUsage> findByC_C_P(
-		long containerType, String containerKey, long plid, int start,
+	public static List<InfoItemUsage> findByCK_CT_P(
+		String containerKey, long containerType, long plid, int start,
 		int end) {
 
-		return getPersistence().findByC_C_P(
-			containerType, containerKey, plid, start, end);
+		return getPersistence().findByCK_CT_P(
+			containerKey, containerType, plid, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the info item usages where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns an ordered range of all the info item usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>InfoItemUsageModelImpl</code>.
 	 * </p>
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param start the lower bound of the range of info item usages
 	 * @param end the upper bound of the range of info item usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching info item usages
 	 */
-	public static List<InfoItemUsage> findByC_C_P(
-		long containerType, String containerKey, long plid, int start, int end,
+	public static List<InfoItemUsage> findByCK_CT_P(
+		String containerKey, long containerType, long plid, int start, int end,
 		OrderByComparator<InfoItemUsage> orderByComparator) {
 
-		return getPersistence().findByC_C_P(
-			containerType, containerKey, plid, start, end, orderByComparator);
+		return getPersistence().findByCK_CT_P(
+			containerKey, containerType, plid, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the info item usages where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns an ordered range of all the info item usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>InfoItemUsageModelImpl</code>.
 	 * </p>
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param start the lower bound of the range of info item usages
 	 * @param end the upper bound of the range of info item usages (not inclusive)
@@ -975,229 +976,230 @@ public class InfoItemUsageUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching info item usages
 	 */
-	public static List<InfoItemUsage> findByC_C_P(
-		long containerType, String containerKey, long plid, int start, int end,
+	public static List<InfoItemUsage> findByCK_CT_P(
+		String containerKey, long containerType, long plid, int start, int end,
 		OrderByComparator<InfoItemUsage> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByC_C_P(
-			containerType, containerKey, plid, start, end, orderByComparator,
+		return getPersistence().findByCK_CT_P(
+			containerKey, containerType, plid, start, end, orderByComparator,
 			useFinderCache);
 	}
 
 	/**
-	 * Returns the first info item usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the first info item usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching info item usage
 	 * @throws NoSuchItemUsageException if a matching info item usage could not be found
 	 */
-	public static InfoItemUsage findByC_C_P_First(
-			long containerType, String containerKey, long plid,
+	public static InfoItemUsage findByCK_CT_P_First(
+			String containerKey, long containerType, long plid,
 			OrderByComparator<InfoItemUsage> orderByComparator)
 		throws com.liferay.info.exception.NoSuchItemUsageException {
 
-		return getPersistence().findByC_C_P_First(
-			containerType, containerKey, plid, orderByComparator);
+		return getPersistence().findByCK_CT_P_First(
+			containerKey, containerType, plid, orderByComparator);
 	}
 
 	/**
-	 * Returns the first info item usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the first info item usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching info item usage, or <code>null</code> if a matching info item usage could not be found
 	 */
-	public static InfoItemUsage fetchByC_C_P_First(
-		long containerType, String containerKey, long plid,
+	public static InfoItemUsage fetchByCK_CT_P_First(
+		String containerKey, long containerType, long plid,
 		OrderByComparator<InfoItemUsage> orderByComparator) {
 
-		return getPersistence().fetchByC_C_P_First(
-			containerType, containerKey, plid, orderByComparator);
+		return getPersistence().fetchByCK_CT_P_First(
+			containerKey, containerType, plid, orderByComparator);
 	}
 
 	/**
-	 * Returns the last info item usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the last info item usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching info item usage
 	 * @throws NoSuchItemUsageException if a matching info item usage could not be found
 	 */
-	public static InfoItemUsage findByC_C_P_Last(
-			long containerType, String containerKey, long plid,
+	public static InfoItemUsage findByCK_CT_P_Last(
+			String containerKey, long containerType, long plid,
 			OrderByComparator<InfoItemUsage> orderByComparator)
 		throws com.liferay.info.exception.NoSuchItemUsageException {
 
-		return getPersistence().findByC_C_P_Last(
-			containerType, containerKey, plid, orderByComparator);
+		return getPersistence().findByCK_CT_P_Last(
+			containerKey, containerType, plid, orderByComparator);
 	}
 
 	/**
-	 * Returns the last info item usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the last info item usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching info item usage, or <code>null</code> if a matching info item usage could not be found
 	 */
-	public static InfoItemUsage fetchByC_C_P_Last(
-		long containerType, String containerKey, long plid,
+	public static InfoItemUsage fetchByCK_CT_P_Last(
+		String containerKey, long containerType, long plid,
 		OrderByComparator<InfoItemUsage> orderByComparator) {
 
-		return getPersistence().fetchByC_C_P_Last(
-			containerType, containerKey, plid, orderByComparator);
+		return getPersistence().fetchByCK_CT_P_Last(
+			containerKey, containerType, plid, orderByComparator);
 	}
 
 	/**
-	 * Returns the info item usages before and after the current info item usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the info item usages before and after the current info item usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * @param infoItemUsageId the primary key of the current info item usage
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next info item usage
 	 * @throws NoSuchItemUsageException if a info item usage with the primary key could not be found
 	 */
-	public static InfoItemUsage[] findByC_C_P_PrevAndNext(
-			long infoItemUsageId, long containerType, String containerKey,
+	public static InfoItemUsage[] findByCK_CT_P_PrevAndNext(
+			long infoItemUsageId, String containerKey, long containerType,
 			long plid, OrderByComparator<InfoItemUsage> orderByComparator)
 		throws com.liferay.info.exception.NoSuchItemUsageException {
 
-		return getPersistence().findByC_C_P_PrevAndNext(
-			infoItemUsageId, containerType, containerKey, plid,
+		return getPersistence().findByCK_CT_P_PrevAndNext(
+			infoItemUsageId, containerKey, containerType, plid,
 			orderByComparator);
 	}
 
 	/**
-	 * Removes all the info item usages where containerType = &#63; and containerKey = &#63; and plid = &#63; from the database.
+	 * Removes all the info item usages where containerKey = &#63; and containerType = &#63; and plid = &#63; from the database.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 */
-	public static void removeByC_C_P(
-		long containerType, String containerKey, long plid) {
+	public static void removeByCK_CT_P(
+		String containerKey, long containerType, long plid) {
 
-		getPersistence().removeByC_C_P(containerType, containerKey, plid);
+		getPersistence().removeByCK_CT_P(containerKey, containerType, plid);
 	}
 
 	/**
-	 * Returns the number of info item usages where containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the number of info item usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the number of matching info item usages
 	 */
-	public static int countByC_C_P(
-		long containerType, String containerKey, long plid) {
+	public static int countByCK_CT_P(
+		String containerKey, long containerType, long plid) {
 
-		return getPersistence().countByC_C_P(containerType, containerKey, plid);
+		return getPersistence().countByCK_CT_P(
+			containerKey, containerType, plid);
 	}
 
 	/**
-	 * Returns the info item usage where classNameId = &#63; and classPK = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; or throws a <code>NoSuchItemUsageException</code> if it could not be found.
+	 * Returns the info item usage where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or throws a <code>NoSuchItemUsageException</code> if it could not be found.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the matching info item usage
 	 * @throws NoSuchItemUsageException if a matching info item usage could not be found
 	 */
-	public static InfoItemUsage findByC_C_C_C_P(
-			long classNameId, long classPK, long containerType,
-			String containerKey, long plid)
+	public static InfoItemUsage findByC_C_CK_CT_P(
+			long classNameId, long classPK, String containerKey,
+			long containerType, long plid)
 		throws com.liferay.info.exception.NoSuchItemUsageException {
 
-		return getPersistence().findByC_C_C_C_P(
-			classNameId, classPK, containerType, containerKey, plid);
+		return getPersistence().findByC_C_CK_CT_P(
+			classNameId, classPK, containerKey, containerType, plid);
 	}
 
 	/**
-	 * Returns the info item usage where classNameId = &#63; and classPK = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the info item usage where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the matching info item usage, or <code>null</code> if a matching info item usage could not be found
 	 */
-	public static InfoItemUsage fetchByC_C_C_C_P(
-		long classNameId, long classPK, long containerType, String containerKey,
+	public static InfoItemUsage fetchByC_C_CK_CT_P(
+		long classNameId, long classPK, String containerKey, long containerType,
 		long plid) {
 
-		return getPersistence().fetchByC_C_C_C_P(
-			classNameId, classPK, containerType, containerKey, plid);
+		return getPersistence().fetchByC_C_CK_CT_P(
+			classNameId, classPK, containerKey, containerType, plid);
 	}
 
 	/**
-	 * Returns the info item usage where classNameId = &#63; and classPK = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the info item usage where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching info item usage, or <code>null</code> if a matching info item usage could not be found
 	 */
-	public static InfoItemUsage fetchByC_C_C_C_P(
-		long classNameId, long classPK, long containerType, String containerKey,
+	public static InfoItemUsage fetchByC_C_CK_CT_P(
+		long classNameId, long classPK, String containerKey, long containerType,
 		long plid, boolean useFinderCache) {
 
-		return getPersistence().fetchByC_C_C_C_P(
-			classNameId, classPK, containerType, containerKey, plid,
+		return getPersistence().fetchByC_C_CK_CT_P(
+			classNameId, classPK, containerKey, containerType, plid,
 			useFinderCache);
 	}
 
 	/**
-	 * Removes the info item usage where classNameId = &#63; and classPK = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; from the database.
+	 * Removes the info item usage where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the info item usage that was removed
 	 */
-	public static InfoItemUsage removeByC_C_C_C_P(
-			long classNameId, long classPK, long containerType,
-			String containerKey, long plid)
+	public static InfoItemUsage removeByC_C_CK_CT_P(
+			long classNameId, long classPK, String containerKey,
+			long containerType, long plid)
 		throws com.liferay.info.exception.NoSuchItemUsageException {
 
-		return getPersistence().removeByC_C_C_C_P(
-			classNameId, classPK, containerType, containerKey, plid);
+		return getPersistence().removeByC_C_CK_CT_P(
+			classNameId, classPK, containerKey, containerType, plid);
 	}
 
 	/**
-	 * Returns the number of info item usages where classNameId = &#63; and classPK = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63;.
+	 * Returns the number of info item usages where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param containerType the container type
 	 * @param containerKey the container key
+	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the number of matching info item usages
 	 */
-	public static int countByC_C_C_C_P(
-		long classNameId, long classPK, long containerType, String containerKey,
+	public static int countByC_C_CK_CT_P(
+		long classNameId, long classPK, String containerKey, long containerType,
 		long plid) {
 
-		return getPersistence().countByC_C_C_C_P(
-			classNameId, classPK, containerType, containerKey, plid);
+		return getPersistence().countByC_C_CK_CT_P(
+			classNameId, classPK, containerKey, containerType, plid);
 	}
 
 	/**

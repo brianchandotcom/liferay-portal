@@ -95,10 +95,10 @@ public class InfoItemUsageCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", containerType=");
-		sb.append(containerType);
 		sb.append(", containerKey=");
 		sb.append(containerKey);
+		sb.append(", containerType=");
+		sb.append(containerType);
 		sb.append(", plid=");
 		sb.append(plid);
 		sb.append(", type=");
@@ -142,7 +142,6 @@ public class InfoItemUsageCacheModel
 
 		infoItemUsageImpl.setClassNameId(classNameId);
 		infoItemUsageImpl.setClassPK(classPK);
-		infoItemUsageImpl.setContainerType(containerType);
 
 		if (containerKey == null) {
 			infoItemUsageImpl.setContainerKey("");
@@ -151,6 +150,7 @@ public class InfoItemUsageCacheModel
 			infoItemUsageImpl.setContainerKey(containerKey);
 		}
 
+		infoItemUsageImpl.setContainerType(containerType);
 		infoItemUsageImpl.setPlid(plid);
 		infoItemUsageImpl.setType(type);
 
@@ -180,9 +180,9 @@ public class InfoItemUsageCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
+		containerKey = objectInput.readUTF();
 
 		containerType = objectInput.readLong();
-		containerKey = objectInput.readUTF();
 
 		plid = objectInput.readLong();
 
@@ -211,14 +211,14 @@ public class InfoItemUsageCacheModel
 
 		objectOutput.writeLong(classPK);
 
-		objectOutput.writeLong(containerType);
-
 		if (containerKey == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(containerKey);
 		}
+
+		objectOutput.writeLong(containerType);
 
 		objectOutput.writeLong(plid);
 
@@ -234,8 +234,8 @@ public class InfoItemUsageCacheModel
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public long containerType;
 	public String containerKey;
+	public long containerType;
 	public long plid;
 	public int type;
 	public long lastPublishDate;

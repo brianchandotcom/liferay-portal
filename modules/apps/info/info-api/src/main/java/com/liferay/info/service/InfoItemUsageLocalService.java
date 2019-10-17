@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -60,6 +61,9 @@ public interface InfoItemUsageLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link InfoItemUsageLocalServiceUtil} to access the info item usage local service. Add custom service methods to <code>com.liferay.info.service.impl.InfoItemUsageLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public InfoItemUsage addDefaultInfoItemUsage(
+		long groupId, long classNameId, long classPK,
+		ServiceContext serviceContext);
 
 	/**
 	 * Adds the info item usage to the database. Also notifies the appropriate model listeners.
@@ -69,6 +73,11 @@ public interface InfoItemUsageLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public InfoItemUsage addInfoItemUsage(InfoItemUsage infoItemUsage);
+
+	public InfoItemUsage addInfoItemUsage(
+		long groupId, long classNameId, long classPK, long containerType,
+		String containerKey, long plid, int type,
+		ServiceContext serviceContext);
 
 	/**
 	 * Creates a new info item usage with the primary key. Does not add the info item usage to the database.
@@ -98,6 +107,13 @@ public interface InfoItemUsageLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public InfoItemUsage deleteInfoItemUsage(long infoItemUsageId)
 		throws PortalException;
+
+	public void deleteInfoItemUsages(long classNameId, long classPK);
+
+	public void deleteInfoItemUsages(
+		String containerKey, long containerType, long plid);
+
+	public void deleteInfoItemUsagesByPlid(long plid);
 
 	/**
 	 * @throws PortalException
@@ -175,6 +191,11 @@ public interface InfoItemUsageLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public InfoItemUsage fetchInfoItemUsage(long infoItemUsageId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public InfoItemUsage fetchInfoItemUsage(
+		long classNameId, long classPK, String containerKey, long containerType,
+		long plid);
+
 	/**
 	 * Returns the info item usage matching the UUID and group.
 	 *
@@ -230,6 +251,23 @@ public interface InfoItemUsageLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<InfoItemUsage> getInfoItemUsages(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<InfoItemUsage> getInfoItemUsages(
+		long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<InfoItemUsage> getInfoItemUsages(
+		long classNameId, long classPK, int type, int start, int end,
+		OrderByComparator<InfoItemUsage> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<InfoItemUsage> getInfoItemUsages(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<InfoItemUsage> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<InfoItemUsage> getInfoItemUsagesByPlid(long plid);
+
 	/**
 	 * Returns the number of info item usages.
 	 *
@@ -237,6 +275,12 @@ public interface InfoItemUsageLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getInfoItemUsagesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getInfoItemUsagesCount(long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getInfoItemUsagesCount(long classNameId, long classPK, int type);
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -249,6 +293,12 @@ public interface InfoItemUsageLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUniqueInfoItemUsagesCount(long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasDefaultInfoItemUsage(long classNameId, long classPK);
 
 	/**
 	 * Updates the info item usage in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

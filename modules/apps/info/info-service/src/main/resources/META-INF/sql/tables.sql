@@ -7,8 +7,8 @@ create table InfoItemUsage (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	containerType LONG,
 	containerKey VARCHAR(75) null,
+	containerType LONG,
 	plid LONG,
 	type_ INTEGER,
 	lastPublishDate DATE null

@@ -138,9 +138,9 @@ public class InfoItemUsagePersistenceTest {
 
 		newInfoItemUsage.setClassPK(RandomTestUtil.nextLong());
 
-		newInfoItemUsage.setContainerType(RandomTestUtil.nextLong());
-
 		newInfoItemUsage.setContainerKey(RandomTestUtil.randomString());
+
+		newInfoItemUsage.setContainerType(RandomTestUtil.nextLong());
 
 		newInfoItemUsage.setPlid(RandomTestUtil.nextLong());
 
@@ -175,11 +175,11 @@ public class InfoItemUsagePersistenceTest {
 		Assert.assertEquals(
 			existingInfoItemUsage.getClassPK(), newInfoItemUsage.getClassPK());
 		Assert.assertEquals(
-			existingInfoItemUsage.getContainerType(),
-			newInfoItemUsage.getContainerType());
-		Assert.assertEquals(
 			existingInfoItemUsage.getContainerKey(),
 			newInfoItemUsage.getContainerKey());
+		Assert.assertEquals(
+			existingInfoItemUsage.getContainerType(),
+			newInfoItemUsage.getContainerType());
 		Assert.assertEquals(
 			existingInfoItemUsage.getPlid(), newInfoItemUsage.getPlid());
 		Assert.assertEquals(
@@ -232,24 +232,24 @@ public class InfoItemUsagePersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_C_P() throws Exception {
-		_persistence.countByC_C_P(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.nextLong());
+	public void testCountByCK_CT_P() throws Exception {
+		_persistence.countByCK_CT_P(
+			"", RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByC_C_P(0L, "null", 0L);
+		_persistence.countByCK_CT_P("null", 0L, 0L);
 
-		_persistence.countByC_C_P(0L, (String)null, 0L);
+		_persistence.countByCK_CT_P((String)null, 0L, 0L);
 	}
 
 	@Test
-	public void testCountByC_C_C_C_P() throws Exception {
-		_persistence.countByC_C_C_C_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), "", RandomTestUtil.nextLong());
+	public void testCountByC_C_CK_CT_P() throws Exception {
+		_persistence.countByC_C_CK_CT_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByC_C_C_C_P(0L, 0L, 0L, "null", 0L);
+		_persistence.countByC_C_CK_CT_P(0L, 0L, "null", 0L, 0L);
 
-		_persistence.countByC_C_C_C_P(0L, 0L, 0L, (String)null, 0L);
+		_persistence.countByC_C_CK_CT_P(0L, 0L, (String)null, 0L, 0L);
 	}
 
 	@Test
@@ -280,7 +280,7 @@ public class InfoItemUsagePersistenceTest {
 			"InfoItemUsage", "mvccVersion", true, "uuid", true,
 			"infoItemUsageId", true, "groupId", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"containerType", true, "containerKey", true, "plid", true, "type",
+			"containerKey", true, "containerType", true, "plid", true, "type",
 			true, "lastPublishDate", true);
 	}
 
@@ -526,17 +526,17 @@ public class InfoItemUsagePersistenceTest {
 			Long.valueOf(existingInfoItemUsage.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
 				existingInfoItemUsage, "getOriginalClassPK", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingInfoItemUsage.getContainerType()),
-			ReflectionTestUtil.<Long>invoke(
-				existingInfoItemUsage, "getOriginalContainerType",
-				new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
 				existingInfoItemUsage.getContainerKey(),
 				ReflectionTestUtil.invoke(
 					existingInfoItemUsage, "getOriginalContainerKey",
 					new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingInfoItemUsage.getContainerType()),
+			ReflectionTestUtil.<Long>invoke(
+				existingInfoItemUsage, "getOriginalContainerType",
+				new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(existingInfoItemUsage.getPlid()),
 			ReflectionTestUtil.<Long>invoke(
@@ -562,9 +562,9 @@ public class InfoItemUsagePersistenceTest {
 
 		infoItemUsage.setClassPK(RandomTestUtil.nextLong());
 
-		infoItemUsage.setContainerType(RandomTestUtil.nextLong());
-
 		infoItemUsage.setContainerKey(RandomTestUtil.randomString());
+
+		infoItemUsage.setContainerType(RandomTestUtil.nextLong());
 
 		infoItemUsage.setPlid(RandomTestUtil.nextLong());
 

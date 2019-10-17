@@ -39,8 +39,8 @@ public class InfoItemUsageSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setContainerType(model.getContainerType());
 		soapModel.setContainerKey(model.getContainerKey());
+		soapModel.setContainerType(model.getContainerType());
 		soapModel.setPlid(model.getPlid());
 		soapModel.setType(model.getType());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
@@ -161,20 +161,20 @@ public class InfoItemUsageSoap implements Serializable {
 		_classPK = classPK;
 	}
 
-	public long getContainerType() {
-		return _containerType;
-	}
-
-	public void setContainerType(long containerType) {
-		_containerType = containerType;
-	}
-
 	public String getContainerKey() {
 		return _containerKey;
 	}
 
 	public void setContainerKey(String containerKey) {
 		_containerKey = containerKey;
+	}
+
+	public long getContainerType() {
+		return _containerType;
+	}
+
+	public void setContainerType(long containerType) {
+		_containerType = containerType;
 	}
 
 	public long getPlid() {
@@ -209,8 +209,8 @@ public class InfoItemUsageSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private long _containerType;
 	private String _containerKey;
+	private long _containerType;
 	private long _plid;
 	private int _type;
 	private Date _lastPublishDate;

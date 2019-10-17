@@ -50,8 +50,8 @@ public class InfoItemUsageWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("containerType", getContainerType());
 		attributes.put("containerKey", getContainerKey());
+		attributes.put("containerType", getContainerType());
 		attributes.put("plid", getPlid());
 		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -109,16 +109,16 @@ public class InfoItemUsageWrapper
 			setClassPK(classPK);
 		}
 
-		Long containerType = (Long)attributes.get("containerType");
-
-		if (containerType != null) {
-			setContainerType(containerType);
-		}
-
 		String containerKey = (String)attributes.get("containerKey");
 
 		if (containerKey != null) {
 			setContainerKey(containerKey);
+		}
+
+		Long containerType = (Long)attributes.get("containerType");
+
+		if (containerType != null) {
+			setContainerType(containerType);
 		}
 
 		Long plid = (Long)attributes.get("plid");

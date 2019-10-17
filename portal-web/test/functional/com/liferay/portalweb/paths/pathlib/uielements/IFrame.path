@@ -119,6 +119,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_MEDIA_GALLERY_VIDEO</td>
+	<td>//iframe[@class='image-viewer-base-image']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_ORGANIZATION_ROLE</td>
 	<td>//iframe[contains(@id,'selectOrganizationRole_iframe_')]</td>
 	<td></td>

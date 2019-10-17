@@ -452,15 +452,6 @@ FragmentEditableBackgroundImage.STATE = {
 	processor: Config.string().required(),
 
 	/**
-	 * If <code>true</code>, the mapping is activated.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableBackgroundImage
-	 * @type {!boolean}
-	 */
-	showMapping: Config.bool().required(),
-
-	/**
 	 * Store instance.
 	 * @default undefined
 	 * @instance

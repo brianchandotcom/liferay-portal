@@ -4,10 +4,7 @@
  * FragmentEntryLinkList
  */
 {template .render}
-	{@param defaultEditorConfigurations: ?}
-	{@param defaultLanguageId: string}
 	{@param fragmentEntryLinks: ?}
-	{@param languageId: string}
 	{@param layoutData: [
 		nextColumnId: number,
 		nextRowId: number,
@@ -22,7 +19,7 @@
 			type: string
 		]>
 	]}
-	{@param? defaultSegmentsExperienceId: string}
+	{@param? defaultLanguageId: string}
 	{@param? dropTargetBorder: string}
 	{@param? dropTargetItemId: string}
 	{@param? dropTargetItemType: string}
@@ -32,9 +29,9 @@
 	{@param? fragmentsEditorRowTypes: [
 		sectionRow: string
 	]}
+	{@param? languageId: string}
 	{@param? selectedItems: list<?>}
 	{@param? selectedSidebarPanelId: string}
-	{@param? mappingFieldsURL: string}
 	{@param? store: ?}
 
 	{let $entryLinksClasses kind="text"}
@@ -56,7 +53,7 @@
 			{sp}fragment-entry-link-list--with-selection
 		{/if}
 
-		{if $languageId != $defaultLanguageId}
+		{if isNonnull($defaultLanguageId) and isNonnull($languageId) and $languageId != $defaultLanguageId}
 			{sp}translating
 		{/if}
 	{/let}
@@ -105,13 +102,10 @@
 				{else}
 					{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkListRow.render}
 						{param columns: $row.columns /}
-						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
-						{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
 						{param dropTargetItemTypes: $dropTargetItemTypes /}
 						{param empty: $row.empty /}
 						{param fragmentEntryLinks: $fragmentEntryLinks /}
 						{param key: $row.rowId /}
-						{param mappingFieldsURL: $mappingFieldsURL /}
 						{param row: $row /}
 						{param rowId: $row.rowId /}
 						{param store: $store /}

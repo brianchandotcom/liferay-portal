@@ -19,7 +19,8 @@ components:
             type: object
         Creator:
             description:
-                Represents the user who created the content. Properties follow the [creator](https://schema.org/creator) specification.
+                Represents the user who created the content. Properties follow the [creator](https://schema.org/creator)
+                specification.
             properties:
                 additionalName:
                     description:
@@ -62,7 +63,8 @@ components:
             type: object
         Keyword:
             description:
-                Represents a keyword that describes content. Properties follow the [keywords](https://schema.org/keywords) specification.
+                Represents a keyword that describes content. Properties follow the
+                [keywords](https://schema.org/keywords) specification.
             properties:
                 creator:
                     allOf:
@@ -108,7 +110,8 @@ components:
             type: object
         TaxonomyCategory:
             description:
-                Represents a category, which is a hierarchical classification that can be associated with particular asset types. Properties follow the [category](https://schema.org/category) specification.
+                Represents a category, which is a hierarchical classification that can be associated with particular
+                asset types. Properties follow the [category](https://schema.org/category) specification.
             properties:
                 availableLanguages:
                     description:
@@ -187,7 +190,8 @@ components:
             type: object
         TaxonomyVocabulary:
             description:
-                Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification, sorting, etc.).
+                Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification,
+                sorting, etc.).
             properties:
                 assetTypes:
                     description:
@@ -308,7 +312,8 @@ paths:
             tags: ["Keyword"]
         put:
             description:
-                Replaces the keyword with the information sent in the request body. Any missing fields are deleted, unless required.
+                Replaces the keyword with the information sent in the request body. Any missing fields are deleted,
+                unless required.
             operationId: putKeyword
             parameters:
                 - in: path
@@ -498,7 +503,8 @@ paths:
     "/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories":
         get:
             description:
-                Retrieves a taxonomy category's child taxonomy categories. Results can be paginated, filtered, searched, and sorted.
+                Retrieves a taxonomy category's child taxonomy categories. Results can be paginated, filtered, searched,
+                and sorted.
             operationId: getTaxonomyCategoryTaxonomyCategoriesPage
             parameters:
                 - in: path
@@ -649,7 +655,8 @@ paths:
             tags: ["TaxonomyCategory"]
         put:
             description:
-                Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted unless they are required.
+                Replaces the taxonomy category with the information sent in the request body. Any missing fields are
+                deleted unless they are required.
             operationId: putTaxonomyCategory
             parameters:
                 - in: path
@@ -753,7 +760,8 @@ paths:
             tags: ["TaxonomyVocabulary"]
         put:
             description:
-                Replaces the taxonomy vocabulary with the information sent in the request body. Any missing fields are deleted unless they are required.
+                Replaces the taxonomy vocabulary with the information sent in the request body. Any missing fields are
+                deleted unless they are required.
             operationId: putTaxonomyVocabulary
             parameters:
                 - in: path

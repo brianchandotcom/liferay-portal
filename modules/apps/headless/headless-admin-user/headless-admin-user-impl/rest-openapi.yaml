@@ -2,7 +2,8 @@ components:
     schemas:
         Creator:
             description:
-                Represents the user who created/authored the content. Properties follow the [creator](https://schema.org/creator) specification.
+                Represents the user who created/authored the content. Properties follow the
+                [creator](https://schema.org/creator) specification.
             properties:
                 additionalName:
                     description:
@@ -46,7 +47,8 @@ components:
         CustomField:
             # @review
             description:
-                Represents the value of each custom field. Fields can contain different information types (e.g., geolocation, strings, etc.).
+                Represents the value of each custom field. Fields can contain different information types (e.g.,
+                geolocation, strings, etc.).
             properties:
                 customValue:
                     properties:
@@ -107,7 +109,8 @@ components:
             type: object
         Organization:
             description:
-                Represents an organization. Organizations can contain other organizations (suborganizations). Properties follow the [Organization](https://schema.org/Organization) specification.
+                Represents an organization. Organizations can contain other organizations (suborganizations). Properties
+                follow the [Organization](https://schema.org/Organization) specification.
             properties:
                 comment:
                     description:
@@ -116,7 +119,8 @@ components:
                     type: string
                 contactInformation:
                     description:
-                        The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`.
+                        The organization's contact information, which includes email addresses, postal addresses, phone
+                        numbers, and web URLs. This is modeled internally as a `Contact`.
                     properties:
                         emailAddresses:
                             description:
@@ -189,12 +193,14 @@ components:
                     properties:
                         addressCountry:
                             description:
-                                The organization's country. This follows the [`addressCountry`](https://schema.org/addressCountry) specification.
+                                The organization's country. This follows the
+                                [`addressCountry`](https://schema.org/addressCountry) specification.
                             readOnly: true
                             type: string
                         addressRegion:
                             description:
-                                The organization's region. This follows the [`addressRegion`](https://schema.org/addressRegion) specification.
+                                The organization's region. This follows the
+                                [`addressRegion`](https://schema.org/addressRegion) specification.
                             readOnly: true
                             type: string
                         id:
@@ -223,12 +229,15 @@ components:
                     readOnly: true
                 services:
                     description:
-                        A list of services the organization provides. This follows the [`Service`](https://www.schema.org/Service) specification.
+                        A list of services the organization provides. This follows the
+                        [`Service`](https://www.schema.org/Service) specification.
                     items:
                         properties:
                             hoursAvailable:
                                 description:
-                                    A list of hours when the organization is open. This follows the [`OpeningHoursSpecification`](https://www.schema.org/OpeningHoursSpecification) specification.
+                                    A list of hours when the organization is open. This follows the
+                                    [`OpeningHoursSpecification`](https://www.schema.org/OpeningHoursSpecification)
+                                    specification.
                                 items:
                                     properties:
                                         closes:
@@ -260,7 +269,8 @@ components:
             type: object
         OrganizationBrief:
             description:
-                Represents an organization's basic information, to be embedded in other resources. This resource's ID can be used to query the organization's complete information.
+                Represents an organization's basic information, to be embedded in other resources. This resource's ID
+                can be used to query the organization's complete information.
             properties:
                 id:
                     description:
@@ -307,7 +317,8 @@ components:
             type: object
         PostalAddress:
             description:
-                Represents a mailing address. This follows the [`PostalAddress`](https://www.schema.org/PostalAddress) specification.
+                Represents a mailing address. This follows the [`PostalAddress`](https://www.schema.org/PostalAddress)
+                specification.
             properties:
                 addressCountry:
                     description:
@@ -363,7 +374,8 @@ components:
             type: object
         Role:
             description:
-                Represents a relationship between a user and a company or site. This follows the [`Role`](https://www.schema.org/Role) specification.
+                Represents a relationship between a user and a company or site. This follows the
+                [`Role`](https://www.schema.org/Role) specification.
             properties:
                 availableLanguages:
                     description:
@@ -414,7 +426,8 @@ components:
             type: object
         RoleBrief:
             description:
-                Represents a role's basic information, to be embedded with other resources. The ID of this resource can be used to query the role's complete information.
+                Represents a role's basic information, to be embedded with other resources. The ID of this resource can
+                be used to query the role's complete information.
             properties:
                 id:
                     description:
@@ -430,7 +443,8 @@ components:
             type: object
         Segment:
             description:
-                Represents a set of users that meet certain criteria. Segments may be used to create customized experiences for users.
+                Represents a set of users that meet certain criteria. Segments may be used to create customized
+                experiences for users.
             properties:
                 active:
                     description:
@@ -504,7 +518,8 @@ components:
         Site:
             #@review
             description:
-                Represents the site where the content is created. Properties follow the [WebSite](https://schema.org/WebSite) specification.
+                Represents the site where the content is created. Properties follow the
+                [WebSite](https://schema.org/WebSite) specification.
             properties:
                 availableLanguages:
                     items:
@@ -1157,7 +1172,8 @@ paths:
     "/organizations/{parentOrganizationId}/organizations":
         get:
             description:
-                Retrieves the parent organization's child organizations. Results can be paginated, filtered, searched, and sorted.
+                Retrieves the parent organization's child organizations. Results can be paginated, filtered, searched,
+                and sorted.
             operationId: getOrganizationOrganizationsPage
             parameters:
                 - in: path

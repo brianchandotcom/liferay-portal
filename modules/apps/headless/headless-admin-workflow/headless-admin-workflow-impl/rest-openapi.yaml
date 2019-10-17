@@ -10,7 +10,8 @@ components:
             type: object
         Creator:
             description:
-                Represents the user who created/authored the content. Properties follow the [creator](https://schema.org/creator) specification.
+                Represents the user who created/authored the content. Properties follow the
+                [creator](https://schema.org/creator) specification.
             properties:
                 additionalName:
                     description:

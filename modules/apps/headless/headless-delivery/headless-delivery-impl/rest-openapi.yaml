@@ -2,7 +2,8 @@ components:
     schemas:
         AggregateRating:
             description:
-                Represents the average rating. See [AggregateRating](https://www.schema.org/AggregateRating) for more information.
+                Represents the average rating. See [AggregateRating](https://www.schema.org/AggregateRating) for more
+                information.
             properties:
                 bestRating:
                     description:
@@ -152,7 +153,8 @@ components:
                         properties:
                             taxonomyCategoryId:
                                 description:
-                                    The category's ID. This can be used to retrieve more information in the `TaxonomyCategory` API.
+                                    The category's ID. This can be used to retrieve more information in the
+                                    `TaxonomyCategory` API.
                                 format: int64
                                 type: integer
                             taxonomyCategoryName:
@@ -262,7 +264,8 @@ components:
             type: object
         ContentDocument:
             description:
-                Represents a document (binary data and metadata) associated with structured content. Properties follow the [Media Object](https://schema.org/MediaObject) specification.
+                Represents a document (binary data and metadata) associated with structured content. Properties follow
+                the [Media Object](https://schema.org/MediaObject) specification.
             properties:
                 contentUrl:
                     description:
@@ -302,7 +305,8 @@ components:
             type: object
         ContentField:
             description:
-                Represents the value of each field in structured content. Fields can contain different information types (e.g., geolocation, documents, etc.).
+                Represents the value of each field in structured content. Fields can contain different information types
+                (e.g., geolocation, documents, etc.).
             properties:
                 dataType:
                     description:
@@ -412,7 +416,8 @@ components:
                     type: string
         ContentStructure:
             description:
-                Represents the content structure that backs structured content. This defines which form fields are available and the possible types and values.
+                Represents the content structure that backs structured content. This defines which form fields are
+                available and the possible types and values.
             properties:
                 availableLanguages:
                     description:
@@ -549,7 +554,8 @@ components:
             type: object
         Creator:
             description:
-                Represents the user account of the content's creator/author. Properties follow the [creator](https://schema.org/creator) specification.
+                Represents the user account of the content's creator/author. Properties follow the
+                [creator](https://schema.org/creator) specification.
             properties:
                 additionalName:
                     description:
@@ -593,7 +599,8 @@ components:
         CustomField:
             # @review
             description:
-                Represents the value of each custom field. Fields can contain different information types (e.g., geolocation, strings, etc.).
+                Represents the value of each custom field. Fields can contain different information types (e.g.,
+                geolocation, strings, etc.).
             properties:
                 customValue:
                     properties:
@@ -628,7 +635,8 @@ components:
                     type: string
         Document:
             description:
-                Represents a Document Library file, storing binary and metadata information. Properties follow the [MediaObject](https://schema.org/MediaObject) specification.
+                Represents a Document Library file, storing binary and metadata information. Properties follow the
+                [MediaObject](https://schema.org/MediaObject) specification.
             properties:
                 adaptedImages:
                     description:
@@ -749,7 +757,8 @@ components:
                         properties:
                             taxonomyCategoryId:
                                 description:
-                                    The category's ID. This can be used to retrieve more information via the `TaxonomyCategory` API.
+                                    The category's ID. This can be used to retrieve more information via the
+                                    `TaxonomyCategory` API.
                                 format: int64
                                 type: integer
                             taxonomyCategoryName:
@@ -959,7 +968,8 @@ components:
                         properties:
                             taxonomyCategoryId:
                                 description:
-                                    The category's ID, which can be used to retrieve more information in the `TaxonomyCategory` API.
+                                    The category's ID, which can be used to retrieve more information in the
+                                    `TaxonomyCategory` API.
                                 format: int64
                                 type: integer
                             taxonomyCategoryName:
@@ -1151,7 +1161,8 @@ components:
             type: object
         MessageBoardMessage:
             description:
-                Represents a message on a message board. Properties follow the [Discussion Forum Posting](https://schema.org/DiscussionForumPosting) specification.
+                Represents a message on a message board. Properties follow the [Discussion Forum
+                Posting](https://schema.org/DiscussionForumPosting) specification.
             properties:
                 aggregateRating:
                     allOf:
@@ -1395,7 +1406,8 @@ components:
                     type: array
                 showAsQuestion:
                     description:
-                        A flag that indicates whether this thread was posted as a question that can receive approved answers.
+                        A flag that indicates whether this thread was posted as a question that can receive approved
+                        answers.
                     type: boolean
                 siteId:
                     description:
@@ -1426,7 +1438,8 @@ components:
             type: object
         Rating:
             description:
-                Represents a rating/score received by any kind of asset. Properties follow the [Rating](https://schema.org/Rating) specification.
+                Represents a rating/score received by any kind of asset. Properties follow the
+                [Rating](https://schema.org/Rating) specification.
             properties:
                 bestRating:
                     description:
@@ -1493,7 +1506,8 @@ components:
                     type: string
         StructuredContent:
             description:
-                Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is modeled internally as a `JournalArticle`.
+                Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is
+                modeled internally as a `JournalArticle`.
             properties:
                 aggregateRating:
                     allOf:
@@ -1562,7 +1576,8 @@ components:
                     type: integer
                 key:
                     description:
-                        An identifier, independent of the database, that can be used to reference the structured content.
+                        An identifier, independent of the database, that can be used to reference the structured
+                        content.
                     readOnly: true
                     type: string
                 keywords:
@@ -1583,7 +1598,8 @@ components:
                     type: array
                 renderedContents:
                     description:
-                        A list of rendered structured content, which results from using a template to process the content and return HTML.
+                        A list of rendered structured content, which results from using a template to process the
+                        content and return HTML.
                     items:
                         properties:
                             renderedContentURL:
@@ -1614,7 +1630,8 @@ components:
                         properties:
                             taxonomyCategoryId:
                                 description:
-                                    The category's ID, which can be used to retrieve more information via the `TaxonomyCategory` API.
+                                    The category's ID, which can be used to retrieve more information via the
+                                    `TaxonomyCategory` API.
                                 format: int64
                                 type: integer
                             taxonomyCategoryName:
@@ -1867,7 +1884,8 @@ components:
                         properties:
                             taxonomyCategoryId:
                                 description:
-                                    The category's ID. This can be used to retrieve more information in the `TaxonomyCategory` API.
+                                    The category's ID. This can be used to retrieve more information in the
+                                    `TaxonomyCategory` API.
                                 format: int64
                                 type: integer
                             taxonomyCategoryName:
@@ -2028,7 +2046,8 @@ paths:
             tags: ["BlogPosting"]
         patch:
             description:
-                Updates the blog post using only the fields received in the request body. Any other fields are left untouched. Returns the updated blog post.
+                Updates the blog post using only the fields received in the request body. Any other fields are left
+                untouched. Returns the updated blog post.
             operationId: patchBlogPosting
             parameters:
                 - in: path
@@ -2059,7 +2078,8 @@ paths:
             tags: ["BlogPosting"]
         put:
             description:
-                Replaces the blog post with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the blog post with the information sent in the request body. Any missing fields are deleted,
+                unless they are required.
             operationId: putBlogPosting
             parameters:
                 - in: path
@@ -2315,7 +2335,8 @@ paths:
             tags: ["Comment"]
         put:
             description:
-                Replaces the comment with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the comment with the information sent in the request body. Any missing fields are deleted,
+                unless they are required.
             operationId: putComment
             parameters:
                 - in: path
@@ -2486,7 +2507,8 @@ paths:
     "/content-structures/{contentStructureId}/structured-contents":
         get:
             description:
-                Retrieves a list of the content structure's structured content. Results can be paginated, filtered, searched, and sorted.
+                Retrieves a list of the content structure's structured content. Results can be paginated, filtered,
+                searched, and sorted.
             operationId: getContentStructureStructuredContentsPage
             parameters:
                 - in: path
@@ -2610,7 +2632,8 @@ paths:
             tags: ["DocumentFolder"]
         put:
             description:
-                Replaces the document folder with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the document folder with the information sent in the request body. Any missing fields are
+                deleted, unless they are required.
             operationId: putDocumentFolder
             parameters:
                 - in: path
@@ -2693,7 +2716,9 @@ paths:
             tags: ["Document"]
         post:
             description:
-                Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
+                Creates a new document inside the folder identified by `documentFolderId`. The request body must be
+                `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string
+                (`document`) with the metadata.
             operationId: postDocumentFolderDocument
             parameters:
                 - in: path
@@ -2886,7 +2911,9 @@ paths:
             tags: ["Document"]
         patch:
             description:
-                Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
+                Updates only the fields received in the request body, leaving any other fields untouched. The request
+                body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON
+                string (`document`) with the metadata.
             operationId: patchDocument
             parameters:
                 - in: path
@@ -2920,7 +2947,9 @@ paths:
             tags: ["Document"]
         put:
             description:
-                Replaces the document with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
+                Replaces the document with the information sent in the request body. Any missing fields are deleted,
+                unless they are required. The request body must be `multipart/form-data` with two parts, the file's
+                bytes (`file`), and an optional JSON string (`document`) with the metadata.
             operationId: putDocument
             parameters:
                 - in: path
@@ -3106,7 +3135,8 @@ paths:
             tags: ["Document"]
         put:
             description:
-                Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the rating with the information sent in the request body. Any missing fields are deleted,
+                unless they are required.
             operationId: putDocumentMyRating
             parameters:
                 - in: path
@@ -3210,7 +3240,8 @@ paths:
             tags: ["KnowledgeBaseArticle"]
         put:
             description:
-                Replaces the knowledge base article with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the knowledge base article with the information sent in the request body. Any missing fields
+                are deleted, unless they are required.
             operationId: putKnowledgeBaseArticle
             parameters:
                 - in: path
@@ -3269,7 +3300,9 @@ paths:
             tags: ["KnowledgeBaseAttachment"]
         post:
             description:
-                Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.
+                Creates a new attachment for an existing knowledge base article. The request body must be
+                `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string
+                (`knowledgeBaseAttachment`) with the metadata.
             operationId: postKnowledgeBaseArticleKnowledgeBaseAttachment
             parameters:
                 - in: path
@@ -3376,7 +3409,8 @@ paths:
             tags: ["KnowledgeBaseArticle"]
         put:
             description:
-                Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the rating with the information sent in the request body. Any missing fields are deleted,
+                unless they are required.
             operationId: putKnowledgeBaseArticleMyRating
             parameters:
                 - in: path
@@ -3442,7 +3476,8 @@ paths:
     "/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles":
         get:
             description:
-                Retrieves the parent knowledge base article's child knowledge base articles. Results can be paginated, filtered, searched, and sorted.
+                Retrieves the parent knowledge base article's child knowledge base articles. Results can be paginated,
+                filtered, searched, and sorted.
             operationId: getKnowledgeBaseArticleKnowledgeBaseArticlesPage
             parameters:
                 - in: path
@@ -3489,7 +3524,8 @@ paths:
             tags: ["KnowledgeBaseArticle"]
         post:
             description:
-                Creates a child knowledge base article of the knowledge base article identified by `parentKnowledgeBaseArticleId`.
+                Creates a child knowledge base article of the knowledge base article identified by
+                `parentKnowledgeBaseArticleId`.
             operationId: postKnowledgeBaseArticleKnowledgeBaseArticle
             parameters:
                 - in: path
@@ -3635,7 +3671,8 @@ paths:
             tags: ["KnowledgeBaseFolder"]
         put:
             description:
-                Replaces the knowledge base folder with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the knowledge base folder with the information sent in the request body. Any missing fields are
+                deleted, unless they are required.
             operationId: putKnowledgeBaseFolder
             parameters:
                 - in: path
@@ -3667,7 +3704,8 @@ paths:
     "/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles":
         get:
             description:
-                Retrieves the folder's knowledge base articles. Results can be paginated, filtered, searched, flattened, and sorted.
+                Retrieves the folder's knowledge base articles. Results can be paginated, filtered, searched, flattened,
+                and sorted.
             operationId: getKnowledgeBaseFolderKnowledgeBaseArticlesPage
             parameters:
                 - in: path
@@ -3931,7 +3969,8 @@ paths:
             tags: ["MessageBoardMessage"]
         put:
             description:
-                Replaces the message board message with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the message board message with the information sent in the request body. Any missing fields are
+                deleted, unless they are required.
             operationId: putMessageBoardMessage
             parameters:
                 - in: path
@@ -3990,7 +4029,9 @@ paths:
             tags: ["MessageBoardAttachment"]
         post:
             description:
-                Creates an attachment for the message board message. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`MessageBoardAttachment`) with the metadata.
+                Creates an attachment for the message board message. The request body must be `multipart/form-data` with
+                two parts, the file's bytes (`file`), and an optional JSON string (`MessageBoardAttachment`) with the
+                metadata.
             operationId: postMessageBoardMessageMessageBoardAttachment
             parameters:
                 - in: path
@@ -4097,7 +4138,8 @@ paths:
             tags: ["MessageBoardMessage"]
         put:
             description:
-                Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the rating with the information sent in the request body. Any missing fields are deleted,
+                unless they are required.
             operationId: putMessageBoardMessageMyRating
             parameters:
                 - in: path
@@ -4163,7 +4205,8 @@ paths:
     "/message-board-messages/{parentMessageBoardMessageId}/message-board-messages":
         get:
             description:
-                Retrieves the parent message board message's child messages. Results can be paginated, filtered, searched, and sorted.
+                Retrieves the parent message board message's child messages. Results can be paginated, filtered,
+                searched, and sorted.
             operationId: getMessageBoardMessageMessageBoardMessagesPage
             parameters:
                 - in: path
@@ -4314,7 +4357,8 @@ paths:
             tags: ["MessageBoardSection"]
         put:
             description:
-                Replaces the message board section with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the message board section with the information sent in the request body. Any missing fields are
+                deleted, unless they are required.
             operationId: putMessageBoardSection
             parameters:
                 - in: path
@@ -4459,7 +4503,8 @@ paths:
     "/message-board-sections/{parentMessageBoardSectionId}/message-board-sections":
         get:
             description:
-                Retrieves the parent message board section's subsections. Results can be paginated, filtered, searched, and sorted.
+                Retrieves the parent message board section's subsections. Results can be paginated, filtered, searched,
+                and sorted.
             operationId: getMessageBoardSectionMessageBoardSectionsPage
             parameters:
                 - in: path
@@ -4610,7 +4655,8 @@ paths:
             tags: ["MessageBoardThread"]
         put:
             description:
-                Replaces the message board thread with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the message board thread with the information sent in the request body. Any missing fields are
+                deleted, unless they are required.
             operationId: putMessageBoardThread
             parameters:
                 - in: path
@@ -4669,7 +4715,9 @@ paths:
             tags: ["MessageBoardAttachment"]
         post:
             description:
-                Creates a new attachment for the message board thread. The request body should be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.
+                Creates a new attachment for the message board thread. The request body should be `multipart/form-data`
+                with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with
+                the metadata.
             operationId: postMessageBoardThreadMessageBoardAttachment
             parameters:
                 - in: path
@@ -4855,7 +4903,8 @@ paths:
             tags: ["MessageBoardThread"]
         put:
             description:
-                Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the rating with the information sent in the request body. Any missing fields are deleted,
+                unless they are required.
             operationId: putMessageBoardThreadMyRating
             parameters:
                 - in: path
@@ -4968,7 +5017,8 @@ paths:
             tags: ["BlogPostingImage"]
         post:
             description:
-                Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata.
+                Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's
+                bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata.
             operationId: postSiteBlogPostingImage
             parameters:
                 - in: path
@@ -5246,7 +5296,8 @@ paths:
     "/sites/{siteId}/document-folders":
         get:
             description:
-                Retrieves the Site's document folders. Results can be paginated, filtered, searched, flattened, and sorted.
+                Retrieves the Site's document folders. Results can be paginated, filtered, searched, flattened, and
+                sorted.
             operationId: getSiteDocumentFoldersPage
             parameters:
                 - in: path
@@ -5329,7 +5380,8 @@ paths:
     "/sites/{siteId}/documents":
         get:
             description:
-                Retrieves the documents in the Site's root folder. Results can be paginated, filtered, searched, flattened, and sorted.
+                Retrieves the documents in the Site's root folder. Results can be paginated, filtered, searched,
+                flattened, and sorted.
             operationId: getSiteDocumentsPage
             parameters:
                 - in: path
@@ -5380,7 +5432,8 @@ paths:
             tags: ["Document"]
         post:
             description:
-                Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
+                Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes
+                (`file`), and an optional JSON string (`document`) with the metadata.
             operationId: postSiteDocument
             parameters:
                 - in: path
@@ -5415,7 +5468,8 @@ paths:
     "/sites/{siteId}/knowledge-base-articles":
         get:
             description:
-                Retrieves the Site's knowledge base articles. Results can be paginated, filtered, searched, flattened, and sorted.
+                Retrieves the Site's knowledge base articles. Results can be paginated, filtered, searched, flattened,
+                and sorted.
             operationId: getSiteKnowledgeBaseArticlesPage
             parameters:
                 - in: path
@@ -5599,7 +5653,8 @@ paths:
     "/sites/{siteId}/message-board-sections":
         get:
             description:
-                Retrieves the Site's message board sections. Results can be paginated, filtered, searched, flattened, and sorted.
+                Retrieves the Site's message board sections. Results can be paginated, filtered, searched, flattened,
+                and sorted.
             operationId: getSiteMessageBoardSectionsPage
             parameters:
                 - in: path
@@ -5682,7 +5737,8 @@ paths:
     "/sites/{siteId}/message-board-threads":
         get:
             description:
-                Retrieves the Site's message board threads. Results can be paginated, filtered, searched, flattened, and sorted.
+                Retrieves the Site's message board threads. Results can be paginated, filtered, searched, flattened, and
+                sorted.
             operationId: getSiteMessageBoardThreadsPage
             parameters:
                 - in: path
@@ -5765,7 +5821,8 @@ paths:
     "/sites/{siteId}/structured-content-folders":
         get:
             description:
-                Retrieves the Site's structured content folders. Results can be paginated, filtered, searched, flattened, and sorted.
+                Retrieves the Site's structured content folders. Results can be paginated, filtered, searched,
+                flattened, and sorted.
             operationId: getSiteStructuredContentFoldersPage
             parameters:
                 - in: path
@@ -5848,7 +5905,8 @@ paths:
     "/sites/{siteId}/structured-contents":
         get:
             description:
-                Retrieves the Site's structured content. Results can be paginated, filtered, searched, flattened, and sorted.
+                Retrieves the Site's structured content. Results can be paginated, filtered, searched, flattened, and
+                sorted.
             operationId: getSiteStructuredContentsPage
             parameters:
                 - in: path
@@ -6083,7 +6141,8 @@ paths:
     "/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders":
         get:
             description:
-                Retrieves the parent structured content folder's subfolders. Results can be paginated, filtered, searched, and sorted.
+                Retrieves the parent structured content folder's subfolders. Results can be paginated, filtered,
+                searched, and sorted.
             operationId: getStructuredContentFolderStructuredContentFoldersPage
             parameters:
                 - in: path
@@ -6234,7 +6293,8 @@ paths:
             tags: ["StructuredContentFolder"]
         put:
             description:
-                Replaces the structured content folder with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the structured content folder with the information sent in the request body. Any missing fields
+                are deleted, unless they are required.
             operationId: putStructuredContentFolder
             parameters:
                 - in: path
@@ -6505,7 +6565,8 @@ paths:
             tags: ["StructuredContent"]
         put:
             description:
-                Replaces the structured content with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the structured content with the information sent in the request body. Any missing fields are
+                deleted, unless they are required.
             operationId: putStructuredContent
             parameters:
                 - in: path
@@ -6692,7 +6753,8 @@ paths:
             tags: ["StructuredContent"]
         put:
             description:
-                Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the rating with the information sent in the request body. Any missing fields are deleted,
+                unless they are required.
             operationId: putStructuredContentMyRating
             parameters:
                 - in: path
@@ -6724,7 +6786,8 @@ paths:
     "/structured-contents/{structuredContentId}/rendered-content/{templateId}":
         get:
             description:
-                Retrieves the structured content's rendered template (the result of applying the structure's values to a template).
+                Retrieves the structured content's rendered template (the result of applying the structure's values to a
+                template).
             operationId: getStructuredContentRenderedContentTemplate
             parameters:
                 - in: path
@@ -6827,7 +6890,8 @@ paths:
             tags: ["WikiNode"]
         put:
             description:
-                Replaces the wiki node with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the wiki node with the information sent in the request body. Any missing fields are deleted,
+                unless they are required.
             operationId: putWikiNode
             parameters:
                 - in: path
@@ -7114,7 +7178,8 @@ paths:
             tags: ["WikiPage"]
         put:
             description:
-                Replaces the wiki page with the information sent in the request body. Any missing fields are deleted, unless they are required.
+                Replaces the wiki page with the information sent in the request body. Any missing fields are deleted,
+                unless they are required.
             operationId: putWikiPage
             parameters:
                 - in: path
@@ -7174,7 +7239,8 @@ paths:
             tags: ["WikiPageAttachment"]
         post:
             description:
-                Creates an attachment for the wiki page. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`WikiPageAttachment`) with the metadata.
+                Creates an attachment for the wiki page. The request body must be `multipart/form-data` with two parts,
+                the file's bytes (`file`), and an optional JSON string (`WikiPageAttachment`) with the metadata.
             operationId: postWikiPageWikiPageAttachment
             parameters:
                 - in: path

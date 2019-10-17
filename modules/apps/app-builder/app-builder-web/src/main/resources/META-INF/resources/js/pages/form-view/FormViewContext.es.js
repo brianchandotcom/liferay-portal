@@ -40,7 +40,8 @@ const initialState = {
 	dataDefinitionId: 0,
 	dataLayout: {
 		dataLayoutPages: [],
-		name: {}
+		name: {},
+		pagination: 'wizard'
 	},
 	dataLayoutId: 0,
 	fieldTypes: [],

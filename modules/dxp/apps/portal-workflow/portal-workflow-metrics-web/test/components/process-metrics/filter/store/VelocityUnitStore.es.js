@@ -15,7 +15,13 @@ import React, {useContext} from 'react';
 
 import {TimeRangeContext} from '../../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/TimeRangeStore.es';
 import {
-	velocityUnitConstants,
+	daysUnit,
+	hoursUnit,
+	monthsUnit,
+	weeksUnit,
+	yearsUnit
+} from '../../../../../src/main/resources/META-INF/resources/js/shared/components/filter/util/filterUtil.es';
+import {
 	useVelocityUnit,
 	VelocityUnitProvider,
 	VelocityUnitContext
@@ -32,9 +38,7 @@ describe('The default Velocity Unit should', () => {
 			wrapper
 		});
 
-		expect(result.current.defaultVelocityUnit.key).toBe(
-			velocityUnitConstants.hours
-		);
+		expect(result.current.defaultVelocityUnit.key).toBe(hoursUnit.key);
 
 		unmount();
 	});
@@ -49,9 +53,7 @@ describe('The default Velocity Unit should', () => {
 			wrapper
 		});
 
-		expect(result.current.defaultVelocityUnit.key).toBe(
-			velocityUnitConstants.days
-		);
+		expect(result.current.defaultVelocityUnit.key).toBe(daysUnit.key);
 
 		unmount();
 	});
@@ -66,9 +68,7 @@ describe('The default Velocity Unit should', () => {
 			wrapper
 		});
 
-		expect(result.current.defaultVelocityUnit.key).toBe(
-			velocityUnitConstants.weeks
-		);
+		expect(result.current.defaultVelocityUnit.key).toBe(weeksUnit.key);
 
 		unmount();
 	});
@@ -83,9 +83,7 @@ describe('The default Velocity Unit should', () => {
 			wrapper
 		});
 
-		expect(result.current.defaultVelocityUnit.key).toBe(
-			velocityUnitConstants.months
-		);
+		expect(result.current.defaultVelocityUnit.key).toBe(monthsUnit.key);
 
 		unmount();
 	});
@@ -100,9 +98,7 @@ describe('The default Velocity Unit should', () => {
 			wrapper
 		});
 
-		expect(result.current.defaultVelocityUnit.key).toBe(
-			velocityUnitConstants.years
-		);
+		expect(result.current.defaultVelocityUnit.key).toBe(yearsUnit.key);
 
 		unmount();
 	});
@@ -124,25 +120,23 @@ describe('When the time range is less than 90 days, the selected Velocity Unit s
 
 	test('Be "Inst/Days" when the initial key is "Days"', async () => {
 		const {result, unmount} = renderHook(
-			() => useVelocityUnit([velocityUnitConstants.days]),
+			() => useVelocityUnit([daysUnit.key]),
 			{wrapper}
 		);
 
-		expect(result.current.getSelectedVelocityUnit().key).toBe(
-			velocityUnitConstants.days
-		);
+		expect(result.current.getSelectedVelocityUnit().key).toBe(daysUnit.key);
 
 		unmount();
 	});
 
 	test('Be "Inst/Days" when the initial key is "Weeks"', async () => {
 		const {result, unmount} = renderHook(
-			() => useVelocityUnit([velocityUnitConstants.weeks]),
+			() => useVelocityUnit([weeksUnit.key]),
 			{wrapper}
 		);
 
 		expect(result.current.getSelectedVelocityUnit().key).toBe(
-			velocityUnitConstants.weeks
+			weeksUnit.key
 		);
 
 		unmount();
@@ -150,12 +144,12 @@ describe('When the time range is less than 90 days, the selected Velocity Unit s
 
 	test('Be "Inst/Days" when the initial key is "Months"', async () => {
 		const {result, unmount} = renderHook(
-			() => useVelocityUnit([velocityUnitConstants.months]),
+			() => useVelocityUnit([monthsUnit.key]),
 			{wrapper}
 		);
 
 		expect(result.current.getSelectedVelocityUnit().key).toBe(
-			velocityUnitConstants.months
+			monthsUnit.key
 		);
 
 		unmount();
@@ -175,7 +169,7 @@ describe('The velocity unit store should', () => {
 			({velocityUnitKeys}) => useVelocityUnit(velocityUnitKeys),
 			{
 				initialProps: {
-					velocityUnitKeys: [velocityUnitConstants.days]
+					velocityUnitKeys: [daysUnit.key]
 				},
 				wrapper
 			}
@@ -191,24 +185,24 @@ describe('The velocity unit store should', () => {
 		const {rerender, result} = renderer;
 
 		rerender({
-			velocityUnitKeys: [velocityUnitConstants.days]
+			velocityUnitKeys: [daysUnit.key]
 		});
 
 		const selectedVelocityUnit = result.current.getSelectedVelocityUnit();
 
-		expect(selectedVelocityUnit.key).toBe(velocityUnitConstants.days);
+		expect(selectedVelocityUnit.key).toBe(daysUnit.key);
 	});
 
 	test('Update the selected velocity unit when the keys changed', () => {
 		const {rerender, result} = renderer;
 
 		rerender({
-			velocityUnitKeys: [velocityUnitConstants.weeks]
+			velocityUnitKeys: [weeksUnit.key]
 		});
 
 		const selectedVelocityUnit = result.current.getSelectedVelocityUnit();
 
-		expect(selectedVelocityUnit.key).toBe(velocityUnitConstants.weeks);
+		expect(selectedVelocityUnit.key).toBe(weeksUnit.key);
 	});
 });
 
@@ -222,9 +216,7 @@ test('The velocity unit provider should be rendered', () => {
 				})
 			}}
 		>
-			<VelocityUnitProvider
-				velocityUnitKeys={[velocityUnitConstants.days]}
-			>
+			<VelocityUnitProvider velocityUnitKeys={[daysUnit.key]}>
 				<MockVelocityUnitConsumer />
 			</VelocityUnitProvider>
 		</TimeRangeContext.Provider>

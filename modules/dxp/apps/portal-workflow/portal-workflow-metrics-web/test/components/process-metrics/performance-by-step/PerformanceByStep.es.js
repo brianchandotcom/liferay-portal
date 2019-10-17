@@ -20,7 +20,7 @@ import fetch from '../../../mock/fetch.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-test('Should render velocity data provider', async () => {
+test('Should render performance by step', async () => {
 	const data = {
 		items: [
 			{
@@ -57,9 +57,10 @@ test('Should render velocity data provider', async () => {
 					page={1}
 					pageSize={10}
 					processId="123456"
+					search={'test'}
 					sort={'overdueInstanceCount:asc'}
 				>
-					<div>{children}</div>
+					<div data-testid="performance-test">{children}</div>
 				</PerformanceDataProvider>
 			</Router>
 		</AppContext.Provider>
@@ -71,6 +72,7 @@ test('Should render velocity data provider', async () => {
 				page={1}
 				pageSize={10}
 				processId="123456"
+				search={'test'}
 				sort={'overdueInstanceCount:asc'}
 			/>
 		</Wrapper>

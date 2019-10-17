@@ -193,6 +193,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true, service = {})
 public class GraphQLServletExtender {
 
+	public static final String GRAPHQL_NODE_PROPERTY = "graphQLNode";
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -517,7 +519,7 @@ public class GraphQLServletExtender {
 			).type(
 				Scalars.GraphQLLong
 			).build());
-		builder.name("graphQLNode");
+		builder.name(GRAPHQL_NODE_PROPERTY);
 		builder.type(graphQLOutputType);
 
 		return builder.build();
@@ -548,8 +550,12 @@ public class GraphQLServletExtender {
 
 		Object instance = null;
 
-		if (dataFetchingEnvironment.getRoot() ==
-				dataFetchingEnvironment.getSource()) {
+		GraphQLFieldDefinition fieldDefinition =
+			dataFetchingEnvironment.getFieldDefinition();
+
+		if ((dataFetchingEnvironment.getRoot() ==
+				dataFetchingEnvironment.getSource()) ||
+			GRAPHQL_NODE_PROPERTY.equals(fieldDefinition.getName())) {
 
 			instance = _createQueryInstance(
 				method.getDeclaringClass(), dataFetchingEnvironment);
@@ -923,6 +929,19 @@ public class GraphQLServletExtender {
 			ContextProviderUtil.getMultivaluedHashMap(parameterMap));
 	}
 
+	private Field _getFieldDefinitionsByName(
+			GraphQLObjectType graphQLObjectType)
+		throws NoSuchFieldException {
+
+		Class<? extends GraphQLObjectType> clazz = graphQLObjectType.getClass();
+
+		Field field = clazz.getDeclaredField("fieldDefinitionsByName");
+
+		field.setAccessible(true);
+
+		return field;
+	}
+
 	private Boolean _getGraphQLFieldValue(AnnotatedElement annotatedElement) {
 		GraphQLField graphQLField = annotatedElement.getAnnotation(
 			GraphQLField.class);
@@ -997,7 +1016,8 @@ public class GraphQLServletExtender {
 
 			graphQLSchemaBuilder.codeRegistry(
 				builder.dataFetcher(
-					FieldCoordinates.coordinates("query", "graphQLNode"),
+					FieldCoordinates.coordinates(
+						"query", GRAPHQL_NODE_PROPERTY),
 					new NodeDataFetcher()
 				).typeResolver(
 					"GraphQLNode", new GraphQLNodeTypeResolver()
@@ -1025,6 +1045,10 @@ public class GraphQLServletExtender {
 					_replaceFieldDefinition(
 						graphQLInterfaceType, graphQLObjectType);
 
+					_replaceFieldNodes(
+						builder, graphQLInterfaceType, graphQLSchemaBuilder,
+						graphQLObjectType);
+
 					_replaceInterface(graphQLInterfaceType, graphQLObjectType);
 				}
 			}
@@ -1039,11 +1063,7 @@ public class GraphQLServletExtender {
 			GraphQLObjectType graphQLObjectType)
 		throws Exception {
 
-		Class<? extends GraphQLObjectType> clazz = graphQLObjectType.getClass();
-
-		Field field = clazz.getDeclaredField("fieldDefinitionsByName");
-
-		field.setAccessible(true);
+		Field field = _getFieldDefinitionsByName(graphQLObjectType);
 
 		Map<String, GraphQLFieldDefinition> fieldDefinitionMap =
 			(Map<String, GraphQLFieldDefinition>)field.get(graphQLObjectType);
@@ -1073,6 +1093,47 @@ public class GraphQLServletExtender {
 		}
 
 		field.set(graphQLObjectType, fieldDefinitionMap);
+	}
+
+	private void _replaceFieldNodes(
+			GraphQLCodeRegistry.Builder builder,
+			GraphQLInterfaceType graphQLInterfaceType,
+			GraphQLSchema.Builder graphQLSchemaBuilder,
+			GraphQLObjectType graphQLObjectType)
+		throws Exception {
+
+		GraphQLFieldDefinition contentType =
+			graphQLObjectType.getFieldDefinition("contentType");
+
+		if (contentType != null) {
+			Field field = _getFieldDefinitionsByName(graphQLObjectType);
+
+			Map<String, GraphQLFieldDefinition> fieldDefinitionMap =
+				(Map<String, GraphQLFieldDefinition>)field.get(
+					graphQLObjectType);
+
+			GraphQLFieldDefinition.Builder graphQLFieldDefinitionBuilder =
+				GraphQLFieldDefinition.newFieldDefinition();
+
+			fieldDefinitionMap.put(
+				GRAPHQL_NODE_PROPERTY,
+				graphQLFieldDefinitionBuilder.name(
+					GRAPHQL_NODE_PROPERTY
+				).type(
+					graphQLInterfaceType
+				).build());
+
+			graphQLSchemaBuilder.codeRegistry(
+				builder.dataFetcher(
+					FieldCoordinates.coordinates(
+						graphQLObjectType.getName(), GRAPHQL_NODE_PROPERTY),
+					new GraphQLNodePropertyDataFetcher()
+				).typeResolver(
+					"GraphQLNode", new GraphQLNodeTypeResolver()
+				).build());
+
+			field.set(graphQLObjectType, fieldDefinitionMap);
+		}
 	}
 
 	private void _replaceInterface(
@@ -1306,6 +1367,59 @@ public class GraphQLServletExtender {
 			}
 
 			return false;
+		}
+
+	}
+
+	private static class GraphQLNodePropertyDataFetcher
+		implements DataFetcher<Object> {
+
+		@Override
+		public Object get(DataFetchingEnvironment dataFetchingEnvironment)
+			throws Exception {
+
+			GraphQLSchema graphQLSchema =
+				dataFetchingEnvironment.getGraphQLSchema();
+
+			GraphQLCodeRegistry graphQLCodeRegistry =
+				graphQLSchema.getCodeRegistry();
+
+			Map<String, GraphQLType> typeMap = graphQLSchema.getTypeMap();
+
+			GraphQLFieldDefinition.Builder builder =
+				GraphQLFieldDefinition.newFieldDefinition();
+
+			Object source = dataFetchingEnvironment.getSource();
+
+			Class<?> clazz = source.getClass();
+
+			Method contentTypeMethod = clazz.getMethod("getContentType");
+
+			String fieldName = StringUtil.lowerCaseFirstLetter(
+				(String)contentTypeMethod.invoke(source));
+
+			GraphQLFieldDefinition graphQLFieldDefinition =
+				dataFetchingEnvironment.getFieldDefinition();
+
+			DataFetcher dataFetcher = graphQLCodeRegistry.getDataFetcher(
+				(GraphQLFieldsContainer)typeMap.get("query"),
+				builder.name(
+					fieldName
+				).type(
+					graphQLFieldDefinition.getType()
+				).build());
+
+			DataFetchingEnvironmentImpl.Builder dataFetchingEnvironmentBuilder =
+				DataFetchingEnvironmentImpl.newDataFetchingEnvironment(
+					dataFetchingEnvironment);
+
+			Method idMethod = clazz.getMethod("getId");
+
+			return dataFetcher.get(
+				dataFetchingEnvironmentBuilder.arguments(
+					Collections.singletonMap(
+						fieldName + "Id", idMethod.invoke(source))
+				).build());
 		}
 
 	}

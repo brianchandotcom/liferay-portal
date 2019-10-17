@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -545,14 +546,9 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			long parentOrganizationId, boolean site)
 		throws PortalException {
 
-		Organization organization =
-			OrganizationLocalServiceUtil.addOrganization(
-				adminUser.getUserId(), parentOrganizationId,
-				StringUtil.randomString(), site);
-
-		_organizations.add(0, organization);
-
-		return organization;
+		return OrganizationLocalServiceUtil.addOrganization(
+			adminUser.getUserId(), parentOrganizationId,
+			StringUtil.randomString(), site);
 	}
 
 	protected void createScriptedAssignmentWorkflow() throws Exception {
@@ -612,8 +608,6 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext());
-
-		_users.add(user);
 
 		Role role = RoleLocalServiceUtil.getRole(
 			company.getCompanyId(), roleName);
@@ -895,6 +889,9 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	protected User siteContentReviewerUser;
 	protected User siteMemberUser;
 
+	@Inject
+	protected UserLocalService userLocalService;
+
 	private List<WorkflowTask> _getWorkflowTasks(User user, boolean completed)
 		throws Exception {
 
@@ -943,13 +940,6 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	private final List<DLFolder> _dlFolders = new ArrayList<>();
 
 	private String _name;
-
-	@DeleteAfterTestRun
-	private final List<Organization> _organizations = new ArrayList<>();
-
 	private PermissionChecker _permissionChecker;
-
-	@DeleteAfterTestRun
-	private final List<User> _users = new ArrayList<>();
 
 }

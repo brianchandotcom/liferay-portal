@@ -696,6 +696,33 @@ public class WorkflowTaskManagerImplTest
 	}
 
 	@Test
+	public void testDeleteUserWithWorkflowTaskAssigned() throws Exception {
+		activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
+
+		addBlogsEntry();
+
+		checkUserNotificationEventsByUsers(siteAdminUser);
+
+		User user = createUser(RoleConstants.SITE_ADMINISTRATOR);
+
+		assignWorkflowTaskToUser(siteAdminUser, user);
+
+		Assert.assertEquals(
+			1,
+			WorkflowTaskManagerUtil.getWorkflowTaskCountByUser(
+				user.getCompanyId(), user.getUserId(), false));
+
+		userLocalService.deleteUser(user);
+
+		Assert.assertEquals(
+			0,
+			WorkflowTaskManagerUtil.getWorkflowTaskCountByUser(
+				user.getCompanyId(), user.getUserId(), false));
+
+		deactivateWorkflow(BlogsEntry.class.getName(), 0, 0);
+	}
+
+	@Test
 	public void testMovetoTrashAndRestoreFromTrashPendingDLFileEntryInDLFolderWithWorkflow()
 		throws Exception {
 

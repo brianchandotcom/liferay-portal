@@ -932,7 +932,7 @@ public class DDMImpl implements DDM {
 				fieldNamespace + FIELDS_DISPLAY_NAME));
 
 		List<String> privateFieldNames = ListUtil.fromArray(
-			new String[] {FIELDS_DISPLAY_NAME});
+			FIELDS_DISPLAY_NAME);
 
 		List<String> fieldNames = new ArrayList<>();
 

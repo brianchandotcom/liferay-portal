@@ -378,9 +378,7 @@ public class ConfigurationEntryRetrieverImpl
 
 		private final List<String> _orderedConfigurationCategorySections =
 			ListUtil.fromArray(
-				new String[] {
-					"content", "social", "commerce", "platform", "security"
-				});
+				"content", "social", "commerce", "platform", "security");
 
 	}
 

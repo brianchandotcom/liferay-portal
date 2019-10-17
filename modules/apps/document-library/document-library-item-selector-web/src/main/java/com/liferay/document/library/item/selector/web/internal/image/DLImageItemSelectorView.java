@@ -81,12 +81,10 @@ public class DLImageItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new DownloadFileEntryItemSelectorReturnType(),
-					new DownloadURLItemSelectorReturnType(),
-					new FileEntryItemSelectorReturnType(),
-					new URLItemSelectorReturnType()
-				}));
+				new DownloadFileEntryItemSelectorReturnType(),
+				new DownloadURLItemSelectorReturnType(),
+				new FileEntryItemSelectorReturnType(),
+				new URLItemSelectorReturnType()));
 
 	private volatile DLImageItemSelectorViewConfiguration
 		_dlImageItemSelectorViewConfiguration;

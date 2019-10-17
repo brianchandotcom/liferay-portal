@@ -106,10 +106,7 @@ public class ItemSelectorURLView
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new URLItemSelectorReturnType()
-				}));
+			ListUtil.fromArray(new URLItemSelectorReturnType()));
 
 	private ServletContext _servletContext;
 

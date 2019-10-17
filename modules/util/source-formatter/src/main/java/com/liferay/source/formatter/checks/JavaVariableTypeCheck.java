@@ -241,11 +241,9 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 	private synchronized List<String> _getAnnotationsExclusions() {
 		if (_annotationsExclusions == null) {
 			_annotationsExclusions = ListUtil.fromArray(
-				new String[] {
-					"ArquillianResource", "Autowired", "BeanReference",
-					"Captor", "Context", "Inject", "Mock", "Parameter",
-					"Reference", "ServiceReference", "SuppressWarnings", "Value"
-				});
+				"ArquillianResource", "Autowired", "BeanReference", "Captor",
+				"Context", "Inject", "Mock", "Parameter", "Reference",
+				"ServiceReference", "SuppressWarnings", "Value");
 		}
 
 		return _annotationsExclusions;

@@ -70,7 +70,7 @@ public class CountrySegmentsFieldCustomizer
 	}
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
-		new String[] {"country"});
+		"country");
 
 	@Reference
 	private CountryService _countryService;

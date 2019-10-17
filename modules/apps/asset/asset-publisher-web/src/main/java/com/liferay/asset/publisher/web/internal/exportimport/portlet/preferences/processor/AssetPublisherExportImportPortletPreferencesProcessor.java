@@ -124,12 +124,12 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		return ListUtil.fromArray(new Capability[] {assetExportCapability});
+		return ListUtil.fromArray(assetExportCapability);
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return ListUtil.fromArray(new Capability[] {assetImportCapability});
+		return ListUtil.fromArray(assetImportCapability);
 	}
 
 	@Override

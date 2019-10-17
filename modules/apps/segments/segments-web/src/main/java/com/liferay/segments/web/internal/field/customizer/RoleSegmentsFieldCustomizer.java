@@ -137,7 +137,7 @@ public class RoleSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 		RoleSegmentsFieldCustomizer.class);
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
-		new String[] {"roleIds"});
+		"roleIds");
 
 	@Reference
 	private Portal _portal;

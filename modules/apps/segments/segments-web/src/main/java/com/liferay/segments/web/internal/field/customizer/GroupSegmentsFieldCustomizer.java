@@ -137,7 +137,7 @@ public class GroupSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 		GroupSegmentsFieldCustomizer.class);
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
-		new String[] {"groupIds"});
+		"groupIds");
 
 	@Reference
 	private GroupLocalService _groupLocalService;

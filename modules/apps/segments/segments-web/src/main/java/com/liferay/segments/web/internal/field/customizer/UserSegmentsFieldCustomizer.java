@@ -123,7 +123,7 @@ public class UserSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 		UserSegmentsFieldCustomizer.class);
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
-		new String[] {"userId"});
+		"userId");
 
 	@Reference
 	private Portal _portal;

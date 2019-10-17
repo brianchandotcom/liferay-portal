@@ -114,10 +114,8 @@ public class ItemSelectorUploadView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new DownloadFileEntryItemSelectorReturnType(),
-					new FileEntryItemSelectorReturnType()
-				}));
+				new DownloadFileEntryItemSelectorReturnType(),
+				new FileEntryItemSelectorReturnType()));
 
 	@Reference
 	private ItemSelectorReturnTypeResolverHandler

@@ -139,7 +139,7 @@ public class AssetTagSegmentsFieldCustomizer
 		AssetTagSegmentsFieldCustomizer.class);
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
-		new String[] {"assetTagIds"});
+		"assetTagIds");
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

@@ -126,7 +126,7 @@ public class OrganizationSegmentsFieldCustomizer
 		OrganizationSegmentsFieldCustomizer.class);
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
-		new String[] {"organizationId", "parentOrganizationId"});
+		"organizationId", "parentOrganizationId");
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

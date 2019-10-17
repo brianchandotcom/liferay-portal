@@ -57,14 +57,12 @@ public class MBExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		return ListUtil.fromArray(
-			new Capability[] {_mbRatingsExporterImporterCapability});
+		return ListUtil.fromArray(_mbRatingsExporterImporterCapability);
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return ListUtil.fromArray(
-			new Capability[] {_mbRatingsExporterImporterCapability});
+		return ListUtil.fromArray(_mbRatingsExporterImporterCapability);
 	}
 
 	@Override

@@ -419,9 +419,7 @@ public class AnnouncementsEntryLocalServiceImpl
 
 				toName = organization.getName();
 
-				params.put(
-					"usersOrgsTree",
-					ListUtil.fromArray(new Organization[] {organization}));
+				params.put("usersOrgsTree", ListUtil.fromArray(organization));
 			}
 			else if (className.equals(Role.class.getName())) {
 				Role role = rolePersistence.findByPrimaryKey(classPK);
@@ -457,9 +455,8 @@ public class AnnouncementsEntryLocalServiceImpl
 			}
 
 			notifyUsers(
-				ListUtil.fromArray(new User[] {user}), entry,
-				company.getLocale(), user.getEmailAddress(),
-				user.getFullName());
+				ListUtil.fromArray(user), entry, company.getLocale(),
+				user.getEmailAddress(), user.getFullName());
 		}
 		else {
 			String toAddress = PropsValues.ANNOUNCEMENTS_EMAIL_TO_ADDRESS;

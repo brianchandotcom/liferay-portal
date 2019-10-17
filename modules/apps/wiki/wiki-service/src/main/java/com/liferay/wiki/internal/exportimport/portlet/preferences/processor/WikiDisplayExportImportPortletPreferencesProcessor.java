@@ -63,7 +63,7 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return ListUtil.fromArray(new Capability[] {_capability});
+		return ListUtil.fromArray(_capability);
 	}
 
 	@Override

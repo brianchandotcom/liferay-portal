@@ -129,7 +129,7 @@ public class UserGroupSegmentsFieldCustomizer
 		UserGroupSegmentsFieldCustomizer.class);
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
-		new String[] {"userGroupIds"});
+		"userGroupIds");
 
 	@Reference
 	private Portal _portal;

@@ -116,10 +116,8 @@ public class WikiPageItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new WikiPageURLItemSelectorReturnType(),
-					new WikiPageTitleItemSelectorReturnType()
-				}));
+				new WikiPageURLItemSelectorReturnType(),
+				new WikiPageTitleItemSelectorReturnType()));
 
 	@Reference
 	private ItemSelectorReturnTypeResolverHandler

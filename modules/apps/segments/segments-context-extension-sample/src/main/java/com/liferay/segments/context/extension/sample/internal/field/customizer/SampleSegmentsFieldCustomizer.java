@@ -60,6 +60,6 @@ public class SampleSegmentsFieldCustomizer implements SegmentsFieldCustomizer {
 	}
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
-		new String[] {"sample"});
+		"sample");
 
 }

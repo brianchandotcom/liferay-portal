@@ -127,7 +127,7 @@ public class TeamSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 		TeamSegmentsFieldCustomizer.class);
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
-		new String[] {"teamIds"});
+		"teamIds");
 
 	@Reference
 	private Portal _portal;

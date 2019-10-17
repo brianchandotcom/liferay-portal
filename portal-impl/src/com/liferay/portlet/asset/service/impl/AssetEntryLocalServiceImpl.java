@@ -74,11 +74,6 @@ import java.util.List;
 public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
-	public AssetEntry addAssetEntry(AssetEntry assetEntry) {
-		return super.addAssetEntry(assetEntry);
-	}
-
-	@Override
 	public void deleteEntry(AssetEntry entry) throws PortalException {
 
 		// Entry

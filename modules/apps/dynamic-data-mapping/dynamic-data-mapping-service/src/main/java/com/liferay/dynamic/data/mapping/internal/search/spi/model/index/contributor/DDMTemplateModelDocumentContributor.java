@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.internal.search.spi.model.index.contrib
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -53,6 +54,11 @@ public class DDMTemplateModelDocumentContributor
 
 			document.addKeyword(Field.STATUS, templateVersion.getStatus());
 			document.addKeyword(Field.VERSION, templateVersion.getVersion());
+
+			document.addKeyword(
+				"resourcePermissionName",
+				_ddmPermissionSupport.getTemplateModelResourceName(
+					ddmTemplate.getResourceClassNameId()));
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -93,5 +99,8 @@ public class DDMTemplateModelDocumentContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMTemplateModelDocumentContributor.class);
+
+	@Reference
+	private DDMPermissionSupport _ddmPermissionSupport;
 
 }

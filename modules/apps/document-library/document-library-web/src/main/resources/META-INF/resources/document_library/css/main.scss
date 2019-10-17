@@ -78,10 +78,6 @@
 		}
 	}
 
-	.edit-tags .clay-multi-select {
-		margin-top: 1em;
-	}
-
 	.document-container {
 		&:after {
 			clear: both;
@@ -145,8 +141,7 @@
 		margin-top: 1em;
 	}
 
-	.modal .edit-categories,
-	.modal .edit-tags {
+	.modal .edit-categories {
 		.modal-content {
 			height: 445px;
 		}

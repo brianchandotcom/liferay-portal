@@ -39,7 +39,17 @@ public class AccountEntryTestUtil {
 
 		return accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
-			RandomTestUtil.randomString(50), null, status);
+			RandomTestUtil.randomString(50), null, null, status);
+	}
+
+	public static AccountEntry addAccountEntry(
+			AccountEntryLocalService accountEntryLocalService, String[] domains)
+		throws Exception {
+
+		return accountEntryLocalService.addAccountEntry(
+			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
+			RandomTestUtil.randomString(50), domains, null,
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 }

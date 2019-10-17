@@ -88,6 +88,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.text.StrMatcher;
+import org.apache.commons.lang.text.StrTokenizer;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -464,8 +467,14 @@ public class AssetPublisherConfigurationAction
 				actionRequest, "queryTagNames" + index);
 		}
 		else if (name.equals("keywords")) {
-			values = ParamUtil.getStringValues(
-				actionRequest, "keywords" + index);
+			StrTokenizer tokenizer = new StrTokenizer(
+				ParamUtil.getString(actionRequest, "keywords" + index));
+
+			tokenizer.setQuoteMatcher(StrMatcher.quoteMatcher());
+
+			List<String> tokenList = (List<String>)tokenizer.getTokenList();
+
+			values = tokenList.toArray(new String[0]);
 		}
 		else {
 			values = ParamUtil.getStringValues(

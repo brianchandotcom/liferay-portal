@@ -38,6 +38,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -281,24 +282,28 @@ public class EditAssetListDisplayContext {
 					_httpServletRequest, "keywords" + queryLogicIndex,
 					queryValues);
 
-				String[] keywords = StringUtil.split(queryValues, " ");
+				String[] keywords = StringUtil.split(queryValues, ",");
 
 				if (ArrayUtil.isEmpty(keywords)) {
 					continue;
 				}
 
-				List<HashMap<String, String>> selectedItems = new ArrayList<>();
+				List<String> items = new ArrayList<>();
 
 				for (String keyword : keywords) {
-					HashMap<String, String> selectedCategory = new HashMap<>();
+					if (keyword.contains(" ")) {
+						keyword = StringUtil.quote(keyword, CharPool.QUOTE);
+					}
 
-					selectedCategory.put("label", keyword);
-					selectedCategory.put("value", keyword);
-
-					selectedItems.add(selectedCategory);
+					items.add(keyword);
 				}
 
-				ruleJSONObject.put("selectedItems", selectedItems);
+				Stream<String> stream = items.stream();
+
+				queryValues = stream.collect(
+					Collectors.joining(StringPool.SPACE));
+
+				ruleJSONObject.put("selectedItems", queryValues);
 			}
 			else {
 				queryValues = ParamUtil.getString(

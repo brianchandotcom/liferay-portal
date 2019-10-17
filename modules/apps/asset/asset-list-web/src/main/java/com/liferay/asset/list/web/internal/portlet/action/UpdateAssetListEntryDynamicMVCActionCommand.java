@@ -39,6 +39,9 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.apache.commons.lang.text.StrMatcher;
+import org.apache.commons.lang.text.StrTokenizer;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -117,8 +120,14 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 				actionRequest, "queryTagNames" + index);
 		}
 		else if (name.equals("keywords")) {
-			values = ParamUtil.getStringValues(
-				actionRequest, "keywords" + index);
+			StrTokenizer tokenizer = new StrTokenizer(
+				ParamUtil.getString(actionRequest, "keywords" + index));
+
+			tokenizer.setQuoteMatcher(StrMatcher.quoteMatcher());
+
+			List<String> tokenList = (List<String>)tokenizer.getTokenList();
+
+			values = tokenList.toArray(new String[0]);
 		}
 		else {
 			values = ParamUtil.getStringValues(

@@ -78,9 +78,9 @@ class Text extends Component {
 	}
 
 	shouldUpdate(changes) {
-		for (const key in changes || {}) {
+		return Object.keys(changes || {}).some(key => {
 			if (key === 'events' || key === 'value') {
-				continue;
+				return false;
 			}
 
 			if (
@@ -88,9 +88,7 @@ class Text extends Component {
 			) {
 				return true;
 			}
-		}
-
-		return false;
+		});
 	}
 
 	willReceiveState(changes) {

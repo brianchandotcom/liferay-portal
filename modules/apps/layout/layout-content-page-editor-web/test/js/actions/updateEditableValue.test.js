@@ -12,15 +12,6 @@
  * details.
  */
 
-jest.mock(
-	'../../../src/main/resources/META-INF/resources/js/utils/FragmentsEditorFetchUtils.es',
-	() => ({
-		updateEditableValues: jest.fn((fragmentEntryLinkId, editableValues) =>
-			Promise.resolve(fragmentEntryLinkId, editableValues)
-		)
-	})
-);
-
 import {
 	updateEditableValueContentAction,
 	updateEditableValueMappedFieldAction,
@@ -33,6 +24,15 @@ import {
 	FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 } from '../../../src/main/resources/META-INF/resources/js/utils/constants';
 import {prefixSegmentsExperienceId} from '../../../src/main/resources/META-INF/resources/js/utils/prefixSegmentsExperienceId.es';
+
+jest.mock(
+	'../../../src/main/resources/META-INF/resources/js/utils/FragmentsEditorFetchUtils.es',
+	() => ({
+		updateEditableValues: jest.fn((fragmentEntryLinkId, editableValues) =>
+			Promise.resolve(fragmentEntryLinkId, editableValues)
+		)
+	})
+);
 
 describe('updateEditableValuesAction', () => {
 	let editableValues;

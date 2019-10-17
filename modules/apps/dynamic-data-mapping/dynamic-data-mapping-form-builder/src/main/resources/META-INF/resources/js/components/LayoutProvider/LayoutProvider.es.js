@@ -597,7 +597,7 @@ class LayoutProvider extends Component {
 						});
 					};
 
-					for (const languageId in field.value) {
+					Object.keys(field.value).forEach(languageId => {
 						field = {
 							...field,
 							value: {
@@ -605,7 +605,7 @@ class LayoutProvider extends Component {
 								[languageId]: getOptions(languageId, field)
 							}
 						};
-					}
+					});
 				}
 
 				return field;

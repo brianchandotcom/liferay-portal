@@ -17,9 +17,9 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.
 
 import {
 	generateInstanceId,
-	getFieldProperties
+	getFieldProperties,
+	normalizeSettingsContextPages
 } from '../../../util/fieldSupport.es';
-import {normalizeSettingsContextPages} from '../../../util/fieldSupport.es';
 
 const handleFieldAdded = (props, state, event) => {
 	const {

@@ -56,14 +56,14 @@ class Options extends Component {
 	deleteOption(deletedIndex) {
 		let {value} = this;
 
-		for (const languageId in value) {
+		Object.keys(value).forEach(languageId => {
 			value = {
 				...value,
 				[languageId]: value[languageId].filter(
 					(option, currentIndex) => currentIndex !== deletedIndex
 				)
 			};
-		}
+		});
 
 		this._handleFieldEdited({}, value);
 	}
@@ -129,7 +129,7 @@ class Options extends Component {
 	moveOption(sourceIndex, targetIndex) {
 		let {value} = this;
 
-		for (const languageId in value) {
+		Object.keys(value).forEach(languageId => {
 			const options = [...value[languageId]];
 
 			if (sourceIndex < options.length) {
@@ -146,7 +146,7 @@ class Options extends Component {
 					})
 				};
 			}
-		}
+		});
 
 		this._handleFieldEdited({}, value);
 	}
@@ -392,16 +392,16 @@ class Options extends Component {
 				});
 			};
 
-			for (const languageId in this.value) {
+			Object.keys(this.value).forEach(languageId => {
 				if (defaultLanguageId === languageId) {
-					continue;
+					return;
 				}
 
 				newValue = {
 					...newValue,
 					[languageId]: copyLanguageLabels(languageId, options)
 				};
-			}
+			});
 		}
 
 		this.setState(
@@ -437,13 +437,13 @@ class Options extends Component {
 		const {defaultLanguageId} = this;
 		const formattedValue = {...value};
 
-		for (const languageId in value) {
+		Object.keys(value).forEach(languageId => {
 			if (defaultLanguageId !== languageId) {
 				formattedValue[languageId] = formattedValue[languageId].filter(
 					({value}) => !!value
 				);
 			}
-		}
+		});
 
 		return formattedValue;
 	}

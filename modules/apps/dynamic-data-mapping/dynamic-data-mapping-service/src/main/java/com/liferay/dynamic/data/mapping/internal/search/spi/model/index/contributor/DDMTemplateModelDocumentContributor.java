@@ -54,7 +54,14 @@ public class DDMTemplateModelDocumentContributor
 
 			document.addKeyword(Field.STATUS, templateVersion.getStatus());
 			document.addKeyword(Field.VERSION, templateVersion.getVersion());
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
 
+		try {
 			document.addKeyword(
 				"resourcePermissionName",
 				_ddmPermissionSupport.getTemplateModelResourceName(

@@ -14,9 +14,13 @@
 
 package com.liferay.batch.engine.internal.writer;
 
+import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 
+import java.lang.ref.Reference;
 import java.lang.reflect.Field;
 
 import java.math.BigDecimal;
@@ -93,22 +97,32 @@ public class ColumnValueWriter {
 	private Map<String, Object> _getColumnNameValueMap(Object item)
 		throws IllegalAccessException {
 
+		Map<String, Field> fields = _fieldsMap.computeIfAbsent(
+			item.getClass(),
+			clazz -> {
+				Map<String, Field> fieldMap = new HashMap<>();
+
+				for (Field field : clazz.getDeclaredFields()) {
+					field.setAccessible(true);
+
+					String name = field.getName();
+
+					if (name.charAt(0) == CharPool.UNDERLINE) {
+						name = name.substring(1);
+					}
+
+					fieldMap.put(name, field);
+				}
+
+				return fieldMap;
+			});
+
 		Map<String, Object> columnNameValueMap = new HashMap<>();
 
-		Class<?> itemClass = item.getClass();
+		for (Map.Entry<String, Field> entry : fields.entrySet()) {
+			Field field = entry.getValue();
 
-		Field[] fields = itemClass.getDeclaredFields();
-
-		for (Field field : fields) {
-			field.setAccessible(true);
-
-			String name = field.getName();
-
-			if (name.charAt(0) == CharPool.UNDERLINE) {
-				name = name.substring(1);
-			}
-
-			columnNameValueMap.put(name, field.get(item));
+			columnNameValueMap.put(entry.getKey(), field.get(item));
 		}
 
 		return columnNameValueMap;
@@ -179,6 +193,12 @@ public class ColumnValueWriter {
 		return false;
 	}
 
+	private static final Map<Class<?>, Map<String, Field>> _fieldsMap =
+		new ConcurrentReferenceKeyHashMap<>(
+			new ConcurrentReferenceValueHashMap
+				<Reference<Class<?>>, Map<String, Field>>(
+					FinalizeManager.WEAK_REFERENCE_FACTORY),
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final List<Class<?>> _objectTypes = Arrays.asList(
 		Boolean.class, BigDecimal.class, BigInteger.class, Byte.class,
 		Date.class, Double.class, Float.class, Integer.class, Long.class,

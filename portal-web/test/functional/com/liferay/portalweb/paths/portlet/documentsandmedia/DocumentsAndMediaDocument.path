@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_INFO_UPLOADER_NO_PROFILE</td>
+	<td>//div[contains(@class,'username')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_INFO_RATING</td>
 	<td>//dd[contains(@class,'sidebar-dd')]/div[contains(@class,'taglib-ratings')]</td>
 	<td></td>

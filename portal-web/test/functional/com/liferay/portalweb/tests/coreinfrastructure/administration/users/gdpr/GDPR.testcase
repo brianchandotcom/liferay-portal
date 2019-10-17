@@ -123,7 +123,7 @@ definition {
 		DMDocument.expandInfo();
 
 		AssertTextEquals(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
 			value1 = "Anonymous Anonymous");
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
@@ -190,7 +190,7 @@ definition {
 		DMDocument.expandInfo();
 
 		AssertTextEquals(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
 			value1 = "Anonymous Anonymous");
 	}
 

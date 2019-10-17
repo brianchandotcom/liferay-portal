@@ -296,31 +296,6 @@ public class CalendarBookingLocalServiceImpl
 		return calendarBooking;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addCalendarBooking(long, long, long[], long, long, Map, Map,
-	 *             String, long, long, boolean, String, long, String, long,
-	 *             String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public CalendarBooking addCalendarBooking(
-			long userId, long calendarId, long[] childCalendarIds,
-			long parentCalendarBookingId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String location, long startTime,
-			long endTime, boolean allDay, String recurrence, long firstReminder,
-			String firstReminderType, long secondReminder,
-			String secondReminderType, ServiceContext serviceContext)
-		throws PortalException {
-
-		return calendarBookingLocalService.addCalendarBooking(
-			userId, calendarId, childCalendarIds, parentCalendarBookingId,
-			CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
-			titleMap, descriptionMap, location, startTime, endTime, allDay,
-			recurrence, firstReminder, firstReminderType, secondReminder,
-			secondReminderType, serviceContext);
-	}
-
 	@Override
 	public void checkCalendarBookings() throws PortalException {
 		Date now = new Date();
@@ -473,74 +448,6 @@ public class CalendarBookingLocalServiceImpl
 		return calendarBooking;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #deleteCalendarBookingInstance(long, CalendarBooking, int,
-	 *             boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void deleteCalendarBookingInstance(
-			CalendarBooking calendarBooking, int instanceIndex,
-			boolean allFollowing)
-		throws PortalException {
-
-		deleteCalendarBookingInstance(
-			calendarBooking.getUserId(), calendarBooking, instanceIndex,
-			allFollowing);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #deleteCalendarBookingInstance(long, CalendarBooking, int,
-	 *             boolean, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void deleteCalendarBookingInstance(
-			CalendarBooking calendarBooking, int instanceIndex,
-			boolean allFollowing, boolean deleteRecurringCalendarBookings)
-		throws PortalException {
-
-		deleteCalendarBookingInstance(
-			calendarBooking.getUserId(), calendarBooking, instanceIndex,
-			allFollowing, deleteRecurringCalendarBookings);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #deleteCalendarBookingInstance(long, CalendarBooking, long,
-	 *             boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void deleteCalendarBookingInstance(
-			CalendarBooking calendarBooking, long startTime,
-			boolean allFollowing)
-		throws PortalException {
-
-		deleteCalendarBookingInstance(
-			calendarBooking.getUserId(), calendarBooking, startTime,
-			allFollowing);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #deleteCalendarBookingInstance(long, CalendarBooking, long,
-	 *             boolean, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void deleteCalendarBookingInstance(
-			CalendarBooking calendarBooking, long startTime,
-			boolean allFollowing, boolean deleteRecurringCalendarBookings)
-		throws PortalException {
-
-		deleteCalendarBookingInstance(
-			calendarBooking.getUserId(), calendarBooking, startTime,
-			allFollowing, deleteRecurringCalendarBookings);
-	}
-
 	@Override
 	public void deleteCalendarBookingInstance(
 			long userId, CalendarBooking calendarBooking, int instanceIndex,
@@ -661,24 +568,6 @@ public class CalendarBookingLocalServiceImpl
 
 		sendChildrenNotifications(
 			calendarBooking, notificationTemplateType, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #deleteCalendarBookingInstance(long, long, long, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void deleteCalendarBookingInstance(
-			long calendarBookingId, long startTime, boolean allFollowing)
-		throws PortalException {
-
-		CalendarBooking calendarBooking = fetchCalendarBooking(
-			calendarBookingId);
-
-		deleteCalendarBookingInstance(
-			calendarBooking.getUserId(), calendarBookingId, startTime,
-			allFollowing);
 	}
 
 	@Override

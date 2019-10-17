@@ -877,6 +877,8 @@ xpack.monitoring.collection.enabled: true</echo>
 	<target name="start-kibana">
 		<lstopwatch action="start" name="start.kibana" />
 
+		<configure-elasticsearch7-test-properties />
+
 		<unzip-kibana />
 
 		<chmod

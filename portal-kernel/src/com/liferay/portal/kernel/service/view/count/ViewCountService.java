@@ -24,24 +24,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ViewCountService {
 
-	public long getViewCount(long companyId, Class<?> clazz, long classPK);
-
 	public long getViewCount(long companyId, long classNameId, long classPK);
-
-	public void incrementViewCount(
-		long companyId, Class<?> clazz, long classPK);
-
-	public void incrementViewCount(
-		long companyId, Class<?> clazz, long classPK, int increment);
 
 	public void incrementViewCount(
 		long companyId, long classNameId, long classPK);
 
 	public void incrementViewCount(
 		long companyId, long classNameId, long classPK, int increment);
-
-	public void removeViewCount(long companyId, Class<?> clazz, long classPK)
-		throws PortalException;
 
 	public void removeViewCount(long companyId, long classNameId, long classPK)
 		throws PortalException;

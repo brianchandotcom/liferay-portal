@@ -24,6 +24,9 @@ public class YMLStylingCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		content = content.replaceAll(
+			"(\\A|\n)( *.+:) {2,}(.+)(\\Z|\n)", "$1$2 $3$4");
+
+		content = content.replaceAll(
 			"(\\A|\n)( *)(description:) (.+)(\\Z|\n)", "$1$2$3\n    $2$4$5");
 
 		return content;

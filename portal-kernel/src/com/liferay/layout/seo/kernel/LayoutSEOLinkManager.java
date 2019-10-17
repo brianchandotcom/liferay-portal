@@ -59,8 +59,7 @@ public interface LayoutSEOLinkManager {
 		throw new UnsupportedOperationException();
 	}
 
-	public default String getPageTitleSuffix(
-			Layout layout, String companyName)
+	public default String getPageTitleSuffix(Layout layout, String companyName)
 		throws PortalException {
 
 		throw new UnsupportedOperationException();

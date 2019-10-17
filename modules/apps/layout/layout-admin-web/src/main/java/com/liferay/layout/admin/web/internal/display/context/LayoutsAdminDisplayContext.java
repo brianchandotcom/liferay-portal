@@ -543,6 +543,25 @@ public class LayoutsAdminDisplayContext {
 		return 0;
 	}
 
+	public String getFullPageTitle() throws PortalException {
+		String portletId = (String)_httpServletRequest.getAttribute(
+			WebKeys.PORTLET_ID);
+
+		ListMergeable<String> titleListMergeable =
+			(ListMergeable<String>)_httpServletRequest.getAttribute(
+				WebKeys.PAGE_TITLE);
+		ListMergeable<String> subtitleListMergeable =
+			(ListMergeable<String>)_httpServletRequest.getAttribute(
+				WebKeys.PAGE_SUBTITLE);
+
+		Company company = _themeDisplay.getCompany();
+
+		return _layoutSEOLinkManager.getFullPageTitle(
+			_selLayout, portletId, _themeDisplay.getTilesTitle(),
+			titleListMergeable, subtitleListMergeable, company.getName(),
+			_themeDisplay.getLocale());
+	}
+
 	public Group getGroup() {
 		return _groupDisplayContextHelper.getGroup();
 	}
@@ -811,23 +830,6 @@ public class LayoutsAdminDisplayContext {
 		return _layoutsSearchContainer;
 	}
 
-	public String getPageTitle() throws PortalException {
-		String portletId = (String)_httpServletRequest.getAttribute(
-			WebKeys.PORTLET_ID);
-
-		ListMergeable<String> titleListMergeable =
-			(ListMergeable<String>)_httpServletRequest.getAttribute(
-				WebKeys.PAGE_TITLE);
-		ListMergeable<String> subtitleListMergeable =
-			(ListMergeable<String>)_httpServletRequest.getAttribute(
-				WebKeys.PAGE_SUBTITLE);
-
-		return _layoutSEOLinkManager.getPageTitle(
-			_selLayout, portletId, _themeDisplay.getTilesTitle(),
-			titleListMergeable, subtitleListMergeable,
-			_themeDisplay.getLocale());
-	}
-
 	public Group getLiveGroup() {
 		return _groupDisplayContextHelper.getLiveGroup();
 	}
@@ -923,7 +925,7 @@ public class LayoutsAdminDisplayContext {
 		return orphanPortletsURL.toString();
 	}
 
-	public String getFullPageTitle() throws PortalException {
+	public String getPageTitle() throws PortalException {
 		String portletId = (String)_httpServletRequest.getAttribute(
 			WebKeys.PORTLET_ID);
 
@@ -934,12 +936,17 @@ public class LayoutsAdminDisplayContext {
 			(ListMergeable<String>)_httpServletRequest.getAttribute(
 				WebKeys.PAGE_SUBTITLE);
 
+		return _layoutSEOLinkManager.getPageTitle(
+			_selLayout, portletId, _themeDisplay.getTilesTitle(),
+			titleListMergeable, subtitleListMergeable,
+			_themeDisplay.getLocale());
+	}
+
+	public String getPageTitleSuffix() throws PortalException {
 		Company company = _themeDisplay.getCompany();
 
-		return _layoutSEOLinkManager.getFullPageTitle(
-			_selLayout, portletId, _themeDisplay.getTilesTitle(),
-			titleListMergeable, subtitleListMergeable, company.getName(),
-			_themeDisplay.getLocale());
+		return _layoutSEOLinkManager.getPageTitleSuffix(
+			_selLayout, company.getName());
 	}
 
 	public long getParentLayoutId() {
@@ -1231,13 +1238,6 @@ public class LayoutsAdminDisplayContext {
 			_liferayPortletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 
 		return _selPlid;
-	}
-
-	public String getPageTitleSuffix() throws PortalException {
-		Company company = _themeDisplay.getCompany();
-
-		return _layoutSEOLinkManager.getPageTitleSuffix(
-			_selLayout, company.getName());
 	}
 
 	public Group getStagingGroup() {

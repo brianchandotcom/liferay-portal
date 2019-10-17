@@ -21,11 +21,8 @@ import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.taglib.ui.MessageTag;
 import com.liferay.taglib.util.IncludeTag;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
@@ -80,41 +77,6 @@ public class LayoutIconTag extends IncludeTag implements BodyTag {
 		catch (Exception e) {
 			throw new JspException(e);
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #doTag(Layout,
-	 *             PageContext)}
-	 */
-	@Deprecated
-	public static void doTag(
-			Layout layout, ServletContext servletContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		doTag(
-			_PAGE, layout, servletContext, httpServletRequest,
-			httpServletResponse);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #doTag(Layout,
-	 *             PageContext)}
-	 */
-	@Deprecated
-	public static void doTag(
-			String page, Layout layout, ServletContext servletContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		setRequestAttributes(httpServletRequest, layout);
-
-		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(page);
-
-		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
 	public static void setRequestAttributes(

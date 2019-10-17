@@ -20,6 +20,7 @@ const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.sv
 const UNIMPLIMENTED_PROPERTIES = [
 	'fieldNamespace',
 	'indexType',
+	'localizable',
 	'readOnly',
 	'type',
 	'validation',

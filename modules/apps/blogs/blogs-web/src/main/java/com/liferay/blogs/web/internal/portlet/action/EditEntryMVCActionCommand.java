@@ -112,7 +112,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteEntries(
+	private void _deleteEntries(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
@@ -175,19 +175,19 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					_transactionConfig, updateEntryCallable);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteEntries(actionRequest, false);
+				_deleteEntries(actionRequest, false);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteEntries(actionRequest, true);
+				_deleteEntries(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
-				restoreTrashEntries(actionRequest);
+				_restoreTrashEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
-				subscribe(actionRequest);
+				_subscribe(actionRequest);
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-				unsubscribe(actionRequest);
+				_unsubscribe(actionRequest);
 			}
 
 			boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
@@ -281,7 +281,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected String getSaveAndContinueRedirect(
+	private String _getSaveAndContinueRedirect(
 			ActionRequest actionRequest, BlogsEntry entry, String redirect)
 		throws Exception {
 
@@ -305,7 +305,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		return portletURL.toString();
 	}
 
-	protected void restoreTrashEntries(ActionRequest actionRequest)
+	private void _restoreTrashEntries(ActionRequest actionRequest)
 		throws Exception {
 
 		long[] restoreTrashEntryIds = StringUtil.split(
@@ -316,21 +316,21 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void subscribe(ActionRequest actionRequest) throws Exception {
+	private void _subscribe(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_blogsEntryService.subscribe(themeDisplay.getScopeGroupId());
 	}
 
-	protected void unsubscribe(ActionRequest actionRequest) throws Exception {
+	private void _unsubscribe(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_blogsEntryService.unsubscribe(themeDisplay.getScopeGroupId());
 	}
 
-	protected BlogsEntry updateEntry(ActionRequest actionRequest)
+	private BlogsEntry _updateEntry(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -577,7 +577,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		sendRedirect(
 			actionRequest, actionResponse,
-			getSaveAndContinueRedirect(actionRequest, entry, redirect));
+			_getSaveAndContinueRedirect(actionRequest, entry, redirect));
 	}
 
 	private void _sendUpdateRedirect(
@@ -644,7 +644,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		@Override
 		public BlogsEntry call() throws Exception {
-			return updateEntry(_actionRequest);
+			return _updateEntry(_actionRequest);
 		}
 
 		private UpdateEntryCallable(ActionRequest actionRequest) {

@@ -125,6 +125,49 @@ public class AccountUserRetrieverTest {
 	}
 
 	@Test
+	public void testSearchAccountUsersWithMultipleAccounts() throws Exception {
+		User user1 = UserTestUtil.addUser();
+
+		_users.add(user1);
+
+		AccountEntry accountEntry1 = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		_accountEntries.add(accountEntry1);
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry1.getAccountEntryId(), user1.getUserId());
+
+		User user2 = UserTestUtil.addUser();
+
+		_users.add(user2);
+
+		AccountEntry accountEntry2 = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		_accountEntries.add(accountEntry2);
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry2.getAccountEntryId(), user2.getUserId());
+
+		_users.add(UserTestUtil.addUser());
+
+		BaseModelSearchResult<User> baseModelSearchResult = _searchAccountUsers(
+			new long[] {
+				accountEntry1.getAccountEntryId(),
+				accountEntry2.getAccountEntryId()
+			},
+			null, -1, -1, "screenName", false);
+
+		Assert.assertEquals(2, baseModelSearchResult.getLength());
+
+		List<User> users = baseModelSearchResult.getBaseModels();
+
+		Assert.assertTrue(users.contains(user1));
+		Assert.assertTrue(users.contains(user2));
+	}
+
+	@Test
 	public void testSearchAccountUsersWithNoAccountUsers() throws Exception {
 
 		// Add a user that is not part of the account
@@ -229,6 +272,16 @@ public class AccountUserRetrieverTest {
 	}
 
 	private BaseModelSearchResult<User> _searchAccountUsers(
+			long[] accountEntryIds, String keywords, int cur, int delta,
+			String sortField, boolean reverse)
+		throws Exception {
+
+		return _accountUserRetriever.searchAccountUsers(
+			accountEntryIds, keywords, WorkflowConstants.STATUS_APPROVED, cur,
+			delta, sortField, reverse);
+	}
+
+	private BaseModelSearchResult<User> _searchAccountUsers(
 			String keywords, int cur, int delta, boolean reverse)
 		throws Exception {
 
@@ -244,6 +297,9 @@ public class AccountUserRetrieverTest {
 			_accountEntry.getAccountEntryId(), keywords,
 			WorkflowConstants.STATUS_APPROVED, cur, delta, sortField, reverse);
 	}
+
+	@DeleteAfterTestRun
+	private final List<AccountEntry> _accountEntries = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;

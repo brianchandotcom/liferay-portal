@@ -88,48 +88,8 @@ public class FinderPath {
 		return StringUtil.toHexString(_getCacheKey(keys));
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #encodeCacheKey(String)}
-	 */
-	@Deprecated
-	public Serializable encodeCacheKey(Object[] arguments) {
-		String[] keys = new String[arguments.length * 2 + 1];
-
-		keys[0] = _cacheKeyPrefix;
-
-		for (int i = 0; i < arguments.length; i++) {
-			int index = i * 2 + 1;
-
-			keys[index] = StringPool.PERIOD;
-			keys[index + 1] = StringUtil.toHexString(arguments[i]);
-		}
-
-		return _getCacheKey(keys);
-	}
-
 	public Serializable encodeCacheKey(String encodedArguments) {
 		return _getCacheKey(new String[] {_cacheKeyPrefix, encodedArguments});
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #encodeLocalCacheKey(String)}
-	 */
-	@Deprecated
-	public Serializable encodeLocalCacheKey(Object[] arguments) {
-		String[] keys = new String[arguments.length * 2 + 1];
-
-		keys[0] = _localCacheKeyPrefix;
-
-		for (int i = 0; i < arguments.length; i++) {
-			int index = i * 2 + 1;
-
-			keys[index] = StringPool.PERIOD;
-			keys[index + 1] = StringUtil.toHexString(arguments[i]);
-		}
-
-		return _getCacheKey(keys);
 	}
 
 	public Serializable encodeLocalCacheKey(String encodedArguments) {

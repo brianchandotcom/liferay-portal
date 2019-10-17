@@ -29,13 +29,6 @@ public interface SettingsFactory {
 	public List<ArchivedSettings> getPortletInstanceArchivedSettingsList(
 		long groupId, String portletId);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             SettingsLocatorHelper#getServerSettings(String)}
-	 */
-	@Deprecated
-	public Settings getServerSettings(String settingsId);
-
 	public Settings getSettings(SettingsLocator settingsLocator)
 		throws SettingsException;
 

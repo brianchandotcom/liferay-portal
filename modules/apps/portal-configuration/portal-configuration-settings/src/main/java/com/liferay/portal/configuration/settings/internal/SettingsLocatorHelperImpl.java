@@ -113,18 +113,6 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		return configurationBeanSettings;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getConfigurationBeanSettings(String)}
-	 */
-	@Deprecated
-	@Override
-	public Settings getConfigurationBeanSettings(
-		String configurationPid, Settings parentSettings) {
-
-		return getConfigurationBeanSettings(configurationPid);
-	}
-
 	@Override
 	public Settings getGroupConfigurationBeanSettings(
 		long groupId, String configurationPid, Settings parentSettings) {
@@ -163,15 +151,6 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 		return new PortletPreferencesSettings(
 			PrefsPropsUtil.getPreferences(companyId), parentSettings);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Settings getPortalPropertiesSettings() {
-		return _portalPropertiesSettings;
 	}
 
 	@Override

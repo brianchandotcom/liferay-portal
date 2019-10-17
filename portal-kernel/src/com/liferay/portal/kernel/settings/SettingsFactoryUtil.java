@@ -40,15 +40,6 @@ public class SettingsFactoryUtil {
 			groupId, portletId);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             SettingsLocatorHelperUtil#getServerSettings(String)}
-	 */
-	@Deprecated
-	public static Settings getServerSettings(String settingsId) {
-		return getSettingsFactory().getServerSettings(settingsId);
-	}
-
 	public static Settings getSettings(SettingsLocator settingsLocator)
 		throws SettingsException {
 

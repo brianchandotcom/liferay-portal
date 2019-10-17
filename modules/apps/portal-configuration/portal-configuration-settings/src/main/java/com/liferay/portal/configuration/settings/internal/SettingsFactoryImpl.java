@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
-import com.liferay.portal.kernel.settings.SettingsLocatorHelperUtil;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
@@ -95,19 +93,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		}
 
 		return archivedSettingsList;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             SettingsLocatorHelperImpl#getServerSettings(String)}
-	 */
-	@Deprecated
-	@Override
-	public Settings getServerSettings(String settingsId) {
-		SettingsLocatorHelper settingsLocatorHelper =
-			SettingsLocatorHelperUtil.getSettingsLocatorHelper();
-
-		return settingsLocatorHelper.getServerSettings(settingsId);
 	}
 
 	@Override

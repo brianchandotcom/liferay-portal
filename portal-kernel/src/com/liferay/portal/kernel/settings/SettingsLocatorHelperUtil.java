@@ -60,18 +60,6 @@ public class SettingsLocatorHelperUtil {
 			settingsId);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getConfigurationBeanSettings(String)}
-	 */
-	@Deprecated
-	public Settings getConfigurationBeanSettings(
-		String settingsId, Settings parentSettings) {
-
-		return getSettingsLocatorHelper().getConfigurationBeanSettings(
-			settingsId, parentSettings);
-	}
-
 	public Settings getGroupPortletPreferencesSettings(
 		long groupId, String settingsId, Settings parentSettings) {
 
@@ -84,14 +72,6 @@ public class SettingsLocatorHelperUtil {
 
 		return getSettingsLocatorHelper().getPortalPreferencesSettings(
 			companyId, parentSettings);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public Settings getPortalPropertiesSettings() {
-		return getSettingsLocatorHelper().getPortalPropertiesSettings();
 	}
 
 	public Settings getPortletInstancePortletPreferencesSettings(

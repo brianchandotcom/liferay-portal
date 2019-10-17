@@ -81,14 +81,6 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 		return _portletInstanceKey;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected long getCompanyId(long groupId) {
-		return _layout.getCompanyId();
-	}
-
 	protected boolean isEmbeddedPortlet() {
 		if (_embeddedPortlet != null) {
 			return _embeddedPortlet;

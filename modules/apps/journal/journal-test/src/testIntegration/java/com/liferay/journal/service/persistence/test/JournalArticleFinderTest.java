@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.ArrayList;
@@ -83,6 +84,7 @@ public class JournalArticleFinderTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE,
 			new TransactionalTestRule(
 				Propagation.SUPPORTS, "com.liferay.journal.service"));
 
@@ -264,6 +266,32 @@ public class JournalArticleFinderTest {
 			queryDefinition);
 
 		Assert.assertEquals(articles.toString(), 0, articles.size());
+	}
+
+	@Test
+	public void testFindByG_F_C_L() throws Exception {
+		List<Long> folderIds = new ArrayList<>();
+
+		folderIds.add(_folder.getFolderId());
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<>();
+
+		queryDefinition.setIncludeOwner(true);
+		queryDefinition.setOwnerUserId(TestPropsValues.getUserId());
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		List<JournalArticle> articles =
+			_journalArticleFinder.filterFindByG_F_C_L(
+				_group.getGroupId(), folderIds,
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT, locale,
+				queryDefinition);
+
+		Assert.assertEquals(articles.toString(), 1, articles.size());
+
+		Assert.assertEquals(articles.get(0), _article);
 	}
 
 	@Test

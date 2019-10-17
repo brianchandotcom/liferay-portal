@@ -1092,14 +1092,6 @@ public class ThemeDisplay
 		return _async;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), as of 7.1.x, with no direct replacement
-	 */
-	@Deprecated
-	public boolean isFreeformLayout() {
-		return _freeformLayout;
-	}
-
 	public boolean isHubAction() {
 		return _hubAction;
 	}
@@ -1343,14 +1335,6 @@ public class ThemeDisplay
 
 	public void setDoAsUserLanguageId(String doAsUserLanguageId) {
 		_doAsUserLanguageId = doAsUserLanguageId;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), as of 7.1.x, with no direct replacement
-	 */
-	@Deprecated
-	public void setFreeformLayout(boolean freeformLayout) {
-		_freeformLayout = freeformLayout;
 	}
 
 	public void setHubAction(boolean hubAction) {
@@ -1926,7 +1910,6 @@ public class ThemeDisplay
 	private long _doAsGroupId;
 	private String _doAsUserId = StringPool.BLANK;
 	private String _doAsUserLanguageId = StringPool.BLANK;
-	private boolean _freeformLayout;
 	private transient HttpServletRequest _httpServletRequest;
 	private transient HttpServletResponse _httpServletResponse;
 	private boolean _hubAction;

@@ -52,6 +52,7 @@ const Body = ({currentTab, processId, query}) => {
 					<WorkloadByAssigneeCard.Table
 						currentTab={currentTab}
 						items={data.items}
+						processId={processId}
 					/>
 
 					<div className="mb-1 text-right">

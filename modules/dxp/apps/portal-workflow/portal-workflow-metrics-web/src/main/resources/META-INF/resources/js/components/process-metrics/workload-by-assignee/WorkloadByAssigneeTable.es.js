@@ -9,17 +9,23 @@
  * distribution rights of the Software.
  */
 
-import React from 'react';
-
+import React, {useContext} from 'react';
+import {AppContext} from '../../AppContext.es';
+import {ChildLink} from '../../../shared/components/router/routerWrapper.es';
+import {filterConstants} from '../instance-list/store/InstanceListStore.es';
 import {formatNumber} from '../../../shared/util/numeral.es';
 import {getPercentage} from '../../../shared/util/util.es';
+import {processStatusConstants} from '../filter/store/ProcessStatusStore.es';
+import {slaStatusConstants} from '../../process-metrics/filter/store/SLAStatusStore.es';
 import WorkloadByAssigneeCard from './WorkloadByAssigneeCard.es';
 
 const Item = ({
 	currentTab,
+	id,
 	name,
 	onTimeTaskCount,
 	overdueTaskCount,
+	processId,
 	taskCount
 }) => {
 	const currentCount =
@@ -28,6 +34,7 @@ const Item = ({
 			: currentTab === 'onTime'
 			? onTimeTaskCount
 			: taskCount;
+	const {defaultDelta} = useContext(AppContext);
 
 	const getFormattedPercentage = () => {
 		const percentage = getPercentage(currentCount, taskCount);
@@ -35,10 +42,28 @@ const Item = ({
 		return formatNumber(percentage, '0[.]00%');
 	};
 
+	const getFiltersQuery = () => {
+		const filterParams = {
+			[filterConstants.assignees]: [id],
+			[filterConstants.processStatus]: [processStatusConstants.pending],
+			[filterConstants.slaStatus]: [slaStatusConstants[currentTab]]
+		};
+
+		return filterParams;
+	};
+
+	const instancesListPath = `/instances/${processId}/${defaultDelta}/1`;
+
 	return (
 		<tr>
-			<td className="border-0 assignee-name" data-testid="assigneeName">
-				{name}
+			<td className="assignee-name border-0">
+				<ChildLink
+					className={'workload-by-assignee-link'}
+					query={{filters: getFiltersQuery()}}
+					to={instancesListPath}
+				>
+					<span data-testid="assigneeName">{name}</span>
+				</ChildLink>
 			</td>
 
 			<td className="border-0 text-right" data-testid="taskCount">
@@ -61,7 +86,7 @@ const Item = ({
 	);
 };
 
-const Table = ({currentTab, items = []}) => (
+const Table = ({currentTab, items = [], processId}) => (
 	<div className="mb-3 table-fit-panel">
 		<table className="table table-autofit table-hover">
 			<tbody>
@@ -70,6 +95,7 @@ const Table = ({currentTab, items = []}) => (
 						{...item}
 						currentTab={currentTab}
 						key={index}
+						processId={processId}
 					/>
 				))}
 			</tbody>

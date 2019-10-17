@@ -19,7 +19,7 @@
 <%
 String backURL = ParamUtil.getString(request, "redirect");
 
-DepotEntry depotEntry = (DepotEntry)request.getAttribute("depotEntry");
+DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT_ENTRY);
 
 Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
 

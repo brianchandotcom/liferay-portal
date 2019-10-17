@@ -25,6 +25,8 @@ public class DepotAdminWebKeys {
 	public static final String DEPOT_ADMIN_GROUP_URL_PROVIDER =
 		"DEPOT_ADMIN_GROUP_URL_PROVIDER";
 
+	public static final String DEPOT_ENTRY = "DEPOT_ENTRY";
+
 	public static final String DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER =
 		"DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER";
 

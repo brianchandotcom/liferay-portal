@@ -29,11 +29,12 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
 import java.util.List;
+
+import org.apache.commons.validator.routines.DomainValidator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -244,8 +245,10 @@ public class AccountEntryLocalServiceImpl
 			return domains;
 		}
 
+		DomainValidator domainValidator = DomainValidator.getInstance();
+
 		for (String domain : domains) {
-			if (!Validator.isDomain(domain)) {
+			if (!domainValidator.isValid(domain)) {
 				throw new AccountEntryDomainsException();
 			}
 		}

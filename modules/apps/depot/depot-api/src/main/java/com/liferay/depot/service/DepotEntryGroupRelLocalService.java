@@ -14,6 +14,7 @@
 
 package com.liferay.depot.service;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -70,6 +71,9 @@ public interface DepotEntryGroupRelLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DepotEntryGroupRel addDepotEntryGroupRel(
 		DepotEntryGroupRel depotEntryGroupRel);
+
+	public DepotEntryGroupRel addDepotEntryGroupRel(
+		long depotEntryId, long toGroupId);
 
 	/**
 	 * Creates a new depot entry group rel with the primary key. Does not add the depot entry group rel to the database.
@@ -193,6 +197,10 @@ public interface DepotEntryGroupRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DepotEntryGroupRel getDepotEntryGroupRel(long depotEntryGroupRelId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DepotEntryGroupRel> getDepotEntryGroupRels(
+		DepotEntry depotEntry);
 
 	/**
 	 * Returns a range of all the depot entry group rels.

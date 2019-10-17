@@ -173,7 +173,7 @@ class DataLayoutBuilder extends Component {
 						...field.localizedValue,
 						[themeDisplay.getLanguageId()]: propertyValue
 					},
-					value: propertyValue || field.value
+					value: propertyValue
 				};
 			})
 		};

@@ -40,7 +40,7 @@ checkoutDXPProperties {
 cleanDXPProperties {
 	doLast {
 		exec {
-			commandLine "git", "rm", "--cached", "build-working-dir.xml", "working.dir.properties"
+			commandLine "git", "rm", "--force", "build-working-dir.xml", "working.dir.properties"
 			workingDir = projectDir.parentFile
 		}
 	}

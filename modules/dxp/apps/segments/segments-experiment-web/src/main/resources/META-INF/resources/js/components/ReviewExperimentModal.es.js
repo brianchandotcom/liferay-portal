@@ -98,8 +98,7 @@ function ReviewExperimentModal({onRun, setVisible, variants, visible}) {
 			.catch(_error => {
 				if (mounted.current) {
 					setEstimation({
-						days: null,
-						loading: false
+						error: true
 					});
 				}
 			});
@@ -187,29 +186,38 @@ function ReviewExperimentModal({onRun, setVisible, variants, visible}) {
 							/>
 
 							<hr />
-							<div>
-								<div className="d-flex">
-									<label className="w-100">
+							<div className="d-flex">
+								<div className="w-100">
+									<label>
 										{Liferay.Language.get(
 											'estimated-time-to-declare-winner'
 										)}
 									</label>
 
-									<p className="mb-0 text-nowrap">
-										{estimation.loading ? (
-											<ClayLoadingIndicator
-												className="my-0"
-												small
-											/>
-										) : (
-											estimation.days &&
-											_getDaysMessage(estimation.days)
+									<p className="small text-secondary">
+										{Liferay.Language.get(
+											'time-depends-on-confidence-level-and-traffic-to-the-variants'
 										)}
 									</p>
 								</div>
-								<p className="small text-secondary">
-									{Liferay.Language.get(
-										'time-depends-on-confidence-level-and-traffic-to-the-variants'
+
+								<p className="mb-0 text-nowrap">
+									{estimation.loading ? (
+										<ClayLoadingIndicator
+											className="my-0"
+											small
+										/>
+									) : estimation.error ||
+									  estimation.days === undefined ||
+									  estimation.days === null ? (
+										<span className="small text-secondary">
+											{Liferay.Language.get(
+												'not-available'
+											)}
+										</span>
+									) : (
+										estimation.days &&
+										_getDaysMessage(estimation.days)
 									)}
 								</p>
 							</div>

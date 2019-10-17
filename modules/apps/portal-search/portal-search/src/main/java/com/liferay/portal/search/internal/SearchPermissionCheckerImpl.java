@@ -20,7 +20,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -41,9 +40,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.UserBag;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -235,9 +232,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	@Reference
-	protected ClassNameLocalService classNameLocalService;
-
-	@Reference
 	protected GroupLocalService groupLocalService;
 
 	@Reference
@@ -250,9 +244,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	@Reference
 	protected Portal portal;
-
-	@Reference
-	protected ResourceActions resourceActions;
 
 	@Reference
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
@@ -511,17 +502,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		searchContext.setAttribute(
 			"searchPermissionContext", searchPermissionContext);
 
-		ClassName resourceClassName = classNameLocalService.fetchClassName(
-			GetterUtil.getLong(
-				searchContext.getAttribute("resourceClassNameId")));
-
-		if (resourceClassName != null) {
-			className = resourceActions.getCompositeModelName(
-				className, resourceClassName.getClassName());
-		}
-
 		return _getPermissionFilter(
-			companyId, searchGroupIds, userId, permissionChecker, className,
+			companyId, searchGroupIds, userId, permissionChecker,
+			_getPermissionName(searchContext, className),
 			searchPermissionContext);
 	}
 
@@ -618,6 +601,13 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		}
 
 		return booleanFilter;
+	}
+
+	private String _getPermissionName(
+		SearchContext searchContext, String defaultValue) {
+
+		return GetterUtil.getString(
+			searchContext.getAttribute("resourcePermissionName"), defaultValue);
 	}
 
 	private static final String _NULL_SEARCH_PERMISSION_CONTEXT =

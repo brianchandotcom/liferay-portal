@@ -1,8 +1,8 @@
 dependencies {
 	compileInclude group: "com.github.stephenc.jcip", name: "jcip-annotations", version: "1.0-1"
 	compileInclude group: "com.nimbusds", name: "lang-tag", version: "1.4.4"
-	compileInclude group: "com.nimbusds", name: "nimbus-jose-jwt", version: "6.7"
-	compileInclude group: "com.nimbusds", name: "oauth2-oidc-sdk", version: "6.5"
+	compileInclude group: "com.nimbusds", name: "nimbus-jose-jwt", version: "7.9"
+	compileInclude group: "com.nimbusds", name: "oauth2-oidc-sdk", version: "6.16.2"
 	compileInclude group: "com.sun.mail", name: "javax.mail", version: "1.6.2"
 	compileInclude group: "javax.activation", name: "activation", version: "1.1.1"
 	compileInclude group: "net.minidev", name: "accessors-smart", version: "1.2"

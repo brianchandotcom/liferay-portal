@@ -791,8 +791,7 @@ public class ContentPageEditorDisplayContext {
 				getGroupId(), PortalUtil.getClassNameId(Layout.class.getName()),
 				themeDisplay.getPlid()));
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
-			themeDisplay.getPlid());
+		Layout layout = themeDisplay.getLayout();
 
 		if (layout.getMasterLayoutPageTemplateEntryId() > 0) {
 			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
@@ -1080,25 +1079,28 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private JSONObject _getMasterPageLayoutDataJSONObject() {
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.getMasterLayoutPageTemplateEntryId() <= 0) {
+			return null;
+		}
+
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntry(
+					layout.getMasterLayoutPageTemplateEntryId());
+
+		if (masterLayoutPageTemplateEntry == null) {
+			return null;
+		}
+
 		try {
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(
-				themeDisplay.getPlid());
-
-			if (layout.getMasterLayoutPageTemplateEntryId() <= 0) {
-				return null;
-			}
-
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				LayoutPageTemplateEntryLocalServiceUtil.
-					getLayoutPageTemplateEntry(
-						layout.getMasterLayoutPageTemplateEntryId());
-
 			LayoutPageTemplateStructure layoutPageTemplateStructure =
 				LayoutPageTemplateStructureLocalServiceUtil.
 					fetchLayoutPageTemplateStructure(
-						_groupId,
+						getGroupId(),
 						PortalUtil.getClassNameId(Layout.class.getName()),
-						layoutPageTemplateEntry.getPlid(), true);
+						masterLayoutPageTemplateEntry.getPlid(), true);
 
 			long[] segmentsExperienceIds = GetterUtil.getLongValues(
 				request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
@@ -1114,10 +1116,12 @@ public class ContentPageEditorDisplayContext {
 			return JSONFactoryUtil.createJSONObject(data);
 		}
 		catch (Exception e) {
-			_log.error("Unable to get structure JSON array", e);
-
-			return null;
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get structure JSON array", e);
+			}
 		}
+
+		return null;
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {

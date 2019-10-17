@@ -1,3 +1,4 @@
+import com.liferay.gradle.util.GradleUtil
 import com.liferay.gradle.util.Validator
 
 buildscript {
@@ -14,13 +15,19 @@ if (System.getenv("JENKINS_HOME")) {
 
 setUpProfileDXP {
 	doLast {
+		String branchName = GradleUtil.getProperty(project, "git.working.branch.name", (String)null)
+
+		if (!branchName.endsWith("-private")) {
+			branchName = branchName + "-private"
+		}
+
 		exec {
-			commandLine "git", "fetch", "--depth=1", "--force", "--no-tags", repositoryURL, "master-private:master-private"
+			commandLine "git", "fetch", "--depth=1", "--force", "--no-tags", repositoryURL, branchName + ":" + branchName
 			workingDir = projectDir.parentFile
 		}
 
 		exec {
-			commandLine "git", "tag", "--force", "git-commit-portal-private", "master-private"
+			commandLine "git", "tag", "--force", "git-commit-portal-private", branchName
 			workingDir = projectDir.parentFile
 		}
 
@@ -36,9 +43,9 @@ setUpProfileDXP {
 
 		Properties workingDirProperties = GUtil.loadProperties(new File(projectDir.parentFile, "working.dir.properties"))
 
-		String repositoryPrivatePassword = workingDirProperties.getProperty("build.repository.private.password[master-private]")
-		String repositoryPrivateUsername = workingDirProperties.getProperty("build.repository.private.username[master-private]")
-		String repositoryPrivateURL = workingDirProperties.getProperty("build.repository.private.url[master-private]")
+		String repositoryPrivatePassword = workingDirProperties.getProperty("build.repository.private.password[" + branchName + "]")
+		String repositoryPrivateUsername = workingDirProperties.getProperty("build.repository.private.username[" + branchName + "]")
+		String repositoryPrivateURL = workingDirProperties.getProperty("build.repository.private.url[" + branchName + "]")
 
 		exec {
 			commandLine "git", "rm", "--cached", "working.dir.properties"

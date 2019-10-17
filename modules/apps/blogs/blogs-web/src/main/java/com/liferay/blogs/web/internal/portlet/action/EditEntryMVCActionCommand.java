@@ -229,44 +229,17 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			if ((entry != null) &&
 				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
-				redirect = getSaveAndContinueRedirect(
-					actionRequest, entry, redirect);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
+				_sendDraftRedirect(actionRequest, actionResponse, entry);
 			}
-			else {
-				if (Validator.isNotNull(redirect) &&
-					cmd.equals(Constants.UPDATE)) {
+			else if (Validator.isNotNull(redirect) &&
+					 cmd.equals(Constants.UPDATE)) {
 
-					String namespace = actionResponse.getNamespace();
+				_sendUpdateRedirect(actionRequest, actionResponse);
+			}
+			else if (Validator.isNotNull(redirect) &&
+					 cmd.equals(Constants.ADD) && (entry != null)) {
 
-					redirect = _http.setParameter(
-						redirect, namespace + "redirectToLastFriendlyURL",
-						false);
-				}
-
-				redirect = _portal.escapeRedirect(redirect);
-
-				if (Validator.isNotNull(redirect)) {
-					if (cmd.equals(Constants.ADD) && (entry != null)) {
-						String portletResource = _http.getParameter(
-							redirect, "portletResource", false);
-
-						String namespace = _portal.getPortletNamespace(
-							portletResource);
-
-						if (Validator.isNotNull(portletResource)) {
-							redirect = _http.addParameter(
-								redirect, namespace + "className",
-								BlogsEntry.class.getName());
-							redirect = _http.addParameter(
-								redirect, namespace + "classPK",
-								entry.getEntryId());
-						}
-					}
-
-					actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-				}
+				_sendAddRedirect(actionRequest, entry.getEntryId());
 			}
 		}
 		catch (AssetCategoryException | AssetTagException e) {
@@ -574,6 +547,51 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			});
 
 		return parameterMap;
+	}
+
+	private void _sendAddRedirect(ActionRequest actionRequest, long entryId) {
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		String portletResource = _http.getParameter(
+			redirect, "portletResource", false);
+
+		if (Validator.isNotNull(portletResource)) {
+			String namespace = _portal.getPortletNamespace(portletResource);
+
+			redirect = _http.addParameter(
+				redirect, namespace + "className", BlogsEntry.class.getName());
+			redirect = _http.addParameter(
+				redirect, namespace + "classPK", entryId);
+		}
+
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT, _portal.escapeRedirect(redirect));
+	}
+
+	private void _sendDraftRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			BlogsEntry entry)
+		throws Exception {
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		sendRedirect(
+			actionRequest, actionResponse,
+			getSaveAndContinueRedirect(actionRequest, entry, redirect));
+	}
+
+	private void _sendUpdateRedirect(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		String namespace = actionResponse.getNamespace();
+
+		redirect = _http.setParameter(
+			redirect, namespace + "redirectToLastFriendlyURL", false);
+
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT, _portal.escapeRedirect(redirect));
 	}
 
 	private String _updateContent(

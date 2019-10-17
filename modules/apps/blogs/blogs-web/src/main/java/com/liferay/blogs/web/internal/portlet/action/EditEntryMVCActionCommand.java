@@ -112,28 +112,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
-	private void _deleteEntries(
-			ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		BulkSelection<BlogsEntry> blogsEntryBulkSelection =
-			_blogsEntryBulkSelectionFactory.create(
-				_getParameterMap(actionRequest));
-
-		blogsEntryBulkSelection.forEach(
-			blogsEntry -> _deleteEntry(blogsEntry, moveToTrash, trashedModels));
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("trashedModels", trashedModels);
-
-			addDeleteSuccessData(actionRequest, data);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
@@ -280,6 +258,61 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private void _deleteEntries(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		BulkSelection<BlogsEntry> blogsEntryBulkSelection =
+			_blogsEntryBulkSelectionFactory.create(
+				_getParameterMap(actionRequest));
+
+		blogsEntryBulkSelection.forEach(
+			blogsEntry -> _deleteEntry(blogsEntry, moveToTrash, trashedModels));
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			Map<String, Object> data = new HashMap<>();
+
+			data.put("trashedModels", trashedModels);
+
+			addDeleteSuccessData(actionRequest, data);
+		}
+	}
+
+	private void _deleteEntry(
+		BlogsEntry entry, boolean moveToTrash,
+		List<TrashedModel> trashedModels) {
+
+		try {
+			if (moveToTrash) {
+				trashedModels.add(
+					_blogsEntryService.moveEntryToTrash(entry.getEntryId()));
+			}
+			else {
+				_blogsEntryService.deleteEntry(entry.getEntryId());
+			}
+		}
+		catch (PortalException pe) {
+			ReflectionUtil.throwException(pe);
+		}
+	}
+
+	private Map<String, String[]> _getParameterMap(ActionRequest actionRequest)
+		throws PortalException {
+
+		Map<String, String[]> parameterMap = new HashMap<>(
+			actionRequest.getParameterMap());
+
+		parameterMap.put(
+			"groupId",
+			new String[] {
+				String.valueOf(_portal.getScopeGroupId(actionRequest))
+			});
+
+		return parameterMap;
+	}
+
 	private String _getSaveAndContinueRedirect(
 			ActionRequest actionRequest, BlogsEntry entry, String redirect)
 		throws Exception {
@@ -315,6 +348,51 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private void _sendAddRedirect(ActionRequest actionRequest, long entryId) {
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		String portletResource = _http.getParameter(
+			redirect, "portletResource", false);
+
+		if (Validator.isNotNull(portletResource)) {
+			String namespace = _portal.getPortletNamespace(portletResource);
+
+			redirect = _http.addParameter(
+				redirect, namespace + "className", BlogsEntry.class.getName());
+			redirect = _http.addParameter(
+				redirect, namespace + "classPK", entryId);
+		}
+
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT, _portal.escapeRedirect(redirect));
+	}
+
+	private void _sendDraftRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			BlogsEntry entry)
+		throws Exception {
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		sendRedirect(
+			actionRequest, actionResponse,
+			_getSaveAndContinueRedirect(actionRequest, entry, redirect));
+	}
+
+	private void _sendUpdateRedirect(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		String namespace = actionResponse.getNamespace();
+
+		redirect = _http.setParameter(
+			redirect, namespace + "redirectToLastFriendlyURL", false);
+
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT, _portal.escapeRedirect(redirect));
+	}
+
 	private void _subscribe(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -327,6 +405,17 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		_blogsEntryService.unsubscribe(themeDisplay.getScopeGroupId());
+	}
+
+	private String _updateContent(
+			BlogsEntry entry, String content, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return _attachmentContentUpdater.updateContent(
+			content, ContentTypes.TEXT_HTML,
+			tempFileEntry -> _blogsEntryLocalService.addAttachmentFileEntry(
+				entry, themeDisplay.getUserId(), tempFileEntry.getTitle(),
+				tempFileEntry.getMimeType(), tempFileEntry.getContentStream()));
 	}
 
 	private BlogsEntry _updateEntry(ActionRequest actionRequest)
@@ -513,95 +602,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return entry;
-	}
-
-	private void _deleteEntry(
-		BlogsEntry entry, boolean moveToTrash,
-		List<TrashedModel> trashedModels) {
-
-		try {
-			if (moveToTrash) {
-				trashedModels.add(
-					_blogsEntryService.moveEntryToTrash(entry.getEntryId()));
-			}
-			else {
-				_blogsEntryService.deleteEntry(entry.getEntryId());
-			}
-		}
-		catch (PortalException pe) {
-			ReflectionUtil.throwException(pe);
-		}
-	}
-
-	private Map<String, String[]> _getParameterMap(ActionRequest actionRequest)
-		throws PortalException {
-
-		Map<String, String[]> parameterMap = new HashMap<>(
-			actionRequest.getParameterMap());
-
-		parameterMap.put(
-			"groupId",
-			new String[] {
-				String.valueOf(_portal.getScopeGroupId(actionRequest))
-			});
-
-		return parameterMap;
-	}
-
-	private void _sendAddRedirect(ActionRequest actionRequest, long entryId) {
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		String portletResource = _http.getParameter(
-			redirect, "portletResource", false);
-
-		if (Validator.isNotNull(portletResource)) {
-			String namespace = _portal.getPortletNamespace(portletResource);
-
-			redirect = _http.addParameter(
-				redirect, namespace + "className", BlogsEntry.class.getName());
-			redirect = _http.addParameter(
-				redirect, namespace + "classPK", entryId);
-		}
-
-		actionRequest.setAttribute(
-			WebKeys.REDIRECT, _portal.escapeRedirect(redirect));
-	}
-
-	private void _sendDraftRedirect(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			BlogsEntry entry)
-		throws Exception {
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		sendRedirect(
-			actionRequest, actionResponse,
-			_getSaveAndContinueRedirect(actionRequest, entry, redirect));
-	}
-
-	private void _sendUpdateRedirect(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		String namespace = actionResponse.getNamespace();
-
-		redirect = _http.setParameter(
-			redirect, namespace + "redirectToLastFriendlyURL", false);
-
-		actionRequest.setAttribute(
-			WebKeys.REDIRECT, _portal.escapeRedirect(redirect));
-	}
-
-	private String _updateContent(
-			BlogsEntry entry, String content, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return _attachmentContentUpdater.updateContent(
-			content, ContentTypes.TEXT_HTML,
-			tempFileEntry -> _blogsEntryLocalService.addAttachmentFileEntry(
-				entry, themeDisplay.getUserId(), tempFileEntry.getTitle(),
-				tempFileEntry.getMimeType(), tempFileEntry.getContentStream()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

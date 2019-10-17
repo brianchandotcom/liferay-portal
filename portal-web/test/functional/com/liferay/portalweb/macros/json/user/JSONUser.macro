@@ -3,15 +3,20 @@ definition {
 	macro addUser {
 		Variables.assertDefined(parameterList = "${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
+		var locale = JSONUserSetter.setLocale(locale = "${preferredLocale}");
+
 		var userFirstName = JSONUserSetter.setUserFirstName(userFirstName = "${userFirstName}");
 
 		var userLastName = JSONUserSetter.setUserLastName(userLastName = "${userLastName}");
 
 		JSONUserAPI._addUser(
+			locale = "${locale}",
 			userEmailAddress = "${userEmailAddress}",
 			userFirstName = "${userFirstName}",
 			userLastName = "${userLastName}",
 			userScreenName = "${userScreenName}");
+
+		JSONUserAPI._disablePasswordChangeRequired();
 	}
 
 	macro addUserToSite {

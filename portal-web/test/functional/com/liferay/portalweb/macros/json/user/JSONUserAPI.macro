@@ -1,7 +1,7 @@
 definition {
 
 	macro _addUser {
-		Variables.assertDefined(parameterList = "${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
+		Variables.assertDefined(parameterList = "${locale},${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -11,7 +11,7 @@ definition {
 			${portalURL}/api/jsonws/user/add-user \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
-				-d autoPassword=true \
+				-d autoPassword=false \
 				-d password1=test \
 				-d password2=test \
 				-d autoScreenName=false \
@@ -19,7 +19,7 @@ definition {
 				-d emailAddress=${userEmailAddress} \
 				-d facebookId=0 \
 				-d openId= \
-				-d locale= \
+				-d locale=${locale} \
 				-d firstName=${userFirstName} \
 				-d middleName= \
 				-d lastName=${userLastName} \

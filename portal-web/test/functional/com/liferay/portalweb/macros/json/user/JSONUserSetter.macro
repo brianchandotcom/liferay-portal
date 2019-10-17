@@ -8,6 +8,16 @@ definition {
 		return "${groupId}";
 	}
 
+	macro setLocale {
+		if (!(isSet(locale))) {
+			var locale = "";
+		} else {
+			Object.assertValidLocale(locale = "${locale}");
+		}
+
+		return "${locale}";
+	}
+
 	macro setNewPassword {
 		if (!(isSet(newPassword))) {
 			var newPassword = "test";

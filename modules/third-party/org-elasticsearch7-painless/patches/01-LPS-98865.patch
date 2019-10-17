@@ -1,0 +1,96 @@
+diff --git a/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java b/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java
+index 552ad56..0053b60 100644
+--- a/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java
++++ b/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java
+@@ -55,10 +55,6 @@ public final class PainlessLookupBuilder {
+     private static final Map<PainlessField       , PainlessField>        painlessFieldCache        = new HashMap<>();
+     private static final Map<PainlessClassBinding, PainlessClassBinding> painlessClassBindingCache = new HashMap<>();
+
+-    private static final Pattern CLASS_NAME_PATTERN  = Pattern.compile("^[_a-zA-Z][._a-zA-Z0-9]*$");
+-    private static final Pattern METHOD_NAME_PATTERN = Pattern.compile("^[_a-zA-Z][_a-zA-Z0-9]*$");
+-    private static final Pattern FIELD_NAME_PATTERN  = Pattern.compile("^[_a-zA-Z][_a-zA-Z0-9]*$");
+-
+     public static PainlessLookup buildFromWhitelists(List<Whitelist> whitelists) {
+         PainlessLookupBuilder painlessLookupBuilder = new PainlessLookupBuilder();
+         String origin = "internal error";
+@@ -195,7 +191,7 @@ public final class PainlessLookupBuilder {
+             throw new IllegalArgumentException("cannot add array type [" + canonicalClassName + "] as a class");
+         }
+
+-        if (CLASS_NAME_PATTERN.matcher(canonicalClassName).matches() == false) {
++        if (!_isValidName(canonicalClassName, true)) {
+             throw new IllegalArgumentException("invalid class name [" + canonicalClassName + "]");
+         }
+
+@@ -405,7 +401,7 @@ public final class PainlessLookupBuilder {
+
+         String targetCanonicalClassName = typeToCanonicalTypeName(targetClass);
+
+-        if (METHOD_NAME_PATTERN.matcher(methodName).matches() == false) {
++        if (!_isValidName(methodName, false)) {
+             throw new IllegalArgumentException(
+                     "invalid method name [" + methodName + "] for target class [" + targetCanonicalClassName + "].");
+         }
+@@ -556,7 +552,7 @@ public final class PainlessLookupBuilder {
+
+         String targetCanonicalClassName = typeToCanonicalTypeName(targetClass);
+
+-        if (FIELD_NAME_PATTERN.matcher(fieldName).matches() == false) {
++        if (!_isValidName(fieldName, false)) {
+             throw new IllegalArgumentException(
+                     "invalid field name [" + fieldName + "] for target class [" + targetCanonicalClassName + "].");
+         }
+@@ -713,7 +709,7 @@ public final class PainlessLookupBuilder {
+                     "cannot represent multiple java classes with the same name from different class loaders");
+         }
+
+-        if (METHOD_NAME_PATTERN.matcher(methodName).matches() == false) {
++        if (!_isValidName(methodName, false)) {
+             throw new IllegalArgumentException(
+                     "invalid imported method name [" + methodName + "] for target class [" + targetCanonicalClassName + "].");
+         }
+@@ -896,7 +892,7 @@ public final class PainlessLookupBuilder {
+             }
+         }
+
+-        if (METHOD_NAME_PATTERN.matcher(methodName).matches() == false) {
++        if (!_isValidName(methodName, false)) {
+             throw new IllegalArgumentException(
+                     "invalid method name [" + methodName + "] for class binding [" + targetCanonicalClassName + "].");
+         }
+@@ -1133,4 +1129,34 @@ public final class PainlessLookupBuilder {
+             }
+         }
+     }
++
++	private boolean _isValidName(String name, boolean className) {
++		if ((name == null) || (name.length() == 0)) {
++			return false;
++		}
++
++		if (!_isLetterOrUnderLine(name.charAt(0))) {
++			return false;
++		}
++
++		for (int i = 1; i < name.length(); ++i) {
++			char c = name.charAt(i);
++
++			if (!_isLetterOrUnderLine(c) && !(('0' <= c) && (c <= '9')) && !(className && ('.' == c))) {
++				return false;
++			}
++		}
++
++		return true;
++	}
++
++	private boolean _isLetterOrUnderLine(char c) {
++		if (('_' == c) || (('A' <= c) && (c <= 'Z')) || (('a' <= c) && (c <= 'z'))) {
++			return true;
++		}
++		else {
++			return false;
++		}
++	}
+ }
++/* @generated */
+\ No newline at end of file

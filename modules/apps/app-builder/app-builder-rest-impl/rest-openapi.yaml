@@ -50,7 +50,8 @@ components:
             enum: [deploy, undeploy]
             type: string
 info:
-    description: ""
+    description:
+        ""
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -72,7 +73,8 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["App"]
         get:
             operationId: getApp
@@ -92,7 +94,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/App"
-                    description: ""
+                    description:
+                        ""
             tags: ["App"]
         put:
             operationId: putApp
@@ -120,7 +123,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/App"
-                    description: ""
+                    description:
+                        ""
             tags: ["App"]
     "/apps/{appId}/deployment":
         put:
@@ -139,7 +143,8 @@ paths:
                       $ref: "#/components/schemas/DeploymentAction"
             responses:
                 200:
-                    description: "OK"
+                    description:
+                        "OK"
             tags: ["App"]
     "/data-definitions/{dataDefinitionId}/apps":
         get:
@@ -181,7 +186,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/App"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["App"]
         post:
             operationId: postDataDefinitionApp
@@ -209,7 +215,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/App"
-                    description: ""
+                    description:
+                        ""
             tags: ["App"]
     "/sites/{siteId}/apps":
         get:
@@ -251,5 +258,6 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/App"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["App"]

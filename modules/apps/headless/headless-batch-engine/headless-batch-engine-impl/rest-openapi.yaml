@@ -4,46 +4,55 @@ components:
             #@review
             properties:
                 className:
-                    description: The item class name for which data will be processed in batch.
+                    description:
+                        The item class name for which data will be processed in batch.
                     example: com.liferay.headless.delivery.dto.v1_0.BlogPosting
                     type: string
                 endTime:
-                    description: The end time of import task operation.
+                    description:
+                        The end time of import task operation.
                     example: 2019-27-09'T'08:33:33'Z'
                     format: date-time
                     type: string
                 errorMessage:
-                    description: The error message in case of import task's failed execution.
+                    description:
+                        The error message in case of import task's failed execution.
                     example: File import failed
                     type: string
                 executeStatus:
-                    description: The status of import task's execution.
+                    description:
+                        The status of import task's execution.
                     enum: [COMPLETED, FAILED, INITIAL, STARTED]
                     example: INITIALIZED
                     type: string
                 id:
-                    description: The task's ID.
+                    description:
+                        The task's ID.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 operation:
-                    description: The operation of import task.
+                    description:
+                        The operation of import task.
                     enum: [CREATE, DELETE, UPDATE]
                     example: CREATE
                     type: string
                 startTime:
-                    description: The start time of import task operation.
+                    description:
+                        The start time of import task operation.
                     example: 2019-27-09'T'08:23:33'Z'
                     format: date-time
                     type: string
                 version:
-                    description: The version of item class.
+                    description:
+                        The version of item class.
                     example: v1.0
                     type: string
             type: object
 info:
-    description: ""
+    description:
+        ""
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -54,7 +63,8 @@ paths:
     /import-task/{className}/{version}:
         #@review
         delete:
-            description: Uploads a new file for deleting items in batch.
+            description:
+                Uploads a new file for deleting items in batch.
             operationId: deleteImportTask
             parameters:
                 - in: path
@@ -84,10 +94,12 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ImportTask"
-                    description: Async
+                    description:
+                        Async
             tags: ["ImportTask"]
         post:
-            description: Uploads a new file for creating new items in batch.
+            description:
+                Uploads a new file for creating new items in batch.
             operationId: postImportTask
             parameters:
                 - in: path
@@ -122,10 +134,12 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ImportTask"
-                    description: Async
+                    description:
+                        Async
             tags: ["ImportTask"]
         put:
-            description: Uploads a new file for updating items in batch.
+            description:
+                Uploads a new file for updating items in batch.
             operationId: putImportTask
             parameters:
                 - in: path
@@ -160,7 +174,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ImportTask"
-                    description: Async
+                    description:
+                        Async
             tags: ["ImportTask"]
     /import-task/{importTaskId}/:
         #@review
@@ -182,5 +197,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ImportTask"
-                    description: Async
+                    description:
+                        Async
             tags: ["ImportTask"]

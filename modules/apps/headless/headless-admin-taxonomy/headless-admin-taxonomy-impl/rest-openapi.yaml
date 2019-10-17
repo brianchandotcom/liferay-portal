@@ -1,85 +1,105 @@
 components:
     schemas:
         AssetType:
-            description: Represents the asset type associated with a `TaxonomyCategory`.
+            description:
+                Represents the asset type associated with a `TaxonomyCategory`.
             properties:
                 required:
-                    description: A flag that marks if this type is required.
+                    description:
+                        A flag that marks if this type is required.
                     type: boolean
                 subtype:
-                    description: The asset's subtype.
+                    description:
+                        The asset's subtype.
                     type: string
                 type:
-                    description: The asset's type (e.g., `BlogPosting`, `Document`, etc.).
+                    description:
+                        The asset's type (e.g., `BlogPosting`, `Document`, etc.).
                     type: string
             type: object
         Creator:
-            description: Represents the user who created the content. Properties follow the [creator](https://schema.org/creator) specification.
+            description:
+                Represents the user who created the content. Properties follow the [creator](https://schema.org/creator) specification.
             properties:
                 additionalName:
-                    description: An additional name for the user. This can be used for a middle name.
+                    description:
+                        An additional name for the user. This can be used for a middle name.
                     readOnly: true
                     type: string
                 familyName:
-                    description: The user's surname (last name).
+                    description:
+                        The user's surname (last name).
                     readOnly: true
                     type: string
                 givenName:
-                    description: The user's first name.
+                    description:
+                        The user's first name.
                     readOnly: true
                     type: string
                 id:
-                    description: The user's ID.
+                    description:
+                        The user's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 image:
-                    description: A relative URL to the user's profile image.
+                    description:
+                        A relative URL to the user's profile image.
                     format: uri
                     readOnly: true
                     type: string
                 name:
-                    description: The user's full name.
+                    description:
+                        The user's full name.
                     readOnly: true
                     type: string
                 profileURL:
-                    description: A relative URL to the user's profile.
+                    description:
+                        A relative URL to the user's profile.
                     format: uri
                     readOnly: true
                     type: string
             type: object
         Keyword:
-            description: Represents a keyword that describes content. Properties follow the [keywords](https://schema.org/keywords) specification.
+            description:
+                Represents a keyword that describes content. Properties follow the [keywords](https://schema.org/keywords) specification.
             properties:
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
-                    description: The keyword's creator.
+                    description:
+                        The keyword's creator.
                     readOnly: true
                 dateCreated:
-                    description: The keyword's creation date.
+                    description:
+                        The keyword's creation date.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
-                    description: The keyword's most recent modification date.
+                    description:
+                        The keyword's most recent modification date.
                     format: date-time
                     readOnly: true
                     type: string
                 id:
-                    description: The keyword's ID.
+                    description:
+                        The keyword's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 keywordUsageCount:
-                    description: The number of times this keyword has been used with other assets.
+                    description:
+                        The number of times this keyword has been used with other assets.
                     readOnly: true
                     type: integer
                 name:
-                    description: The keyword's name.
+                    description:
+                        The keyword's name.
                     type: string
                 siteId:
-                    description: The ID of the site to which this keyword is scoped.
+                    description:
+                        The ID of the site to which this keyword is scoped.
                     format: int64
                     readOnly: true
                     type: integer
@@ -87,10 +107,12 @@ components:
                 - name
             type: object
         TaxonomyCategory:
-            description: Represents a category, which is a hierarchical classification that can be associated with particular asset types. Properties follow the [category](https://schema.org/category) specification.
+            description:
+                Represents a category, which is a hierarchical classification that can be associated with particular asset types. Properties follow the [category](https://schema.org/category) specification.
             properties:
                 availableLanguages:
-                    description: A list of languages the category has a translation for.
+                    description:
+                        A list of languages the category has a translation for.
                     items:
                         type: string
                     readOnly: true
@@ -98,35 +120,43 @@ components:
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
-                    description: The category's creator.
+                    description:
+                        The category's creator.
                     readOnly: true
                 dateCreated:
-                    description: The category's creation date.
+                    description:
+                        The category's creation date.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
-                    description: The category's most recent modification date.
+                    description:
+                        The category's most recent modification date.
                     format: date-time
                     readOnly: true
                     type: string
                 description:
-                    description: The category's text description.
+                    description:
+                        The category's text description.
                     type: string
                 id:
-                    description: The category's ID.
+                    description:
+                        The category's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 name:
-                    description: The category's name.
+                    description:
+                        The category's name.
                     type: string
                 numberOfTaxonomyCategories:
-                    description: The number of times this category has been used in other assets.
+                    description:
+                        The number of times this category has been used in other assets.
                     readOnly: true
                     type: integer
                 parentTaxonomyCategory:
-                    description: The category's parent category, if it exists.
+                    description:
+                        The category's parent category, if it exists.
                     properties:
                         id:
                             format: int64
@@ -136,7 +166,8 @@ components:
                     readOnly: true
                     type: object
                 parentTaxonomyVocabulary:
-                    description: The parent category's `TaxonomyVocabulary`, if such a parent category exists.
+                    description:
+                        The parent category's `TaxonomyVocabulary`, if such a parent category exists.
                     properties:
                         id:
                             format: int64
@@ -146,7 +177,8 @@ components:
                     readOnly: true
                     type: object
                 viewableBy:
-                    description: A write-only property that specifies the category's default permissions.
+                    description:
+                        A write-only property that specifies the category's default permissions.
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
@@ -154,15 +186,18 @@ components:
                 - name
             type: object
         TaxonomyVocabulary:
-            description: Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification, sorting, etc.).
+            description:
+                Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification, sorting, etc.).
             properties:
                 assetTypes:
-                    description: A list of asset types that can be associated with this vocabulary.
+                    description:
+                        A list of asset types that can be associated with this vocabulary.
                     items:
                         $ref: "#/components/schemas/AssetType"
                     type: array
                 availableLanguages:
-                    description: A list of languages the vocabulary has a translation for.
+                    description:
+                        A list of languages the vocabulary has a translation for.
                     items:
                         type: string
                     readOnly: true
@@ -170,40 +205,49 @@ components:
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
-                    description: The vocabulary's creator.
+                    description:
+                        The vocabulary's creator.
                     readOnly: true
                 dateCreated:
-                    description: The vocabulary's creation date.
+                    description:
+                        The vocabulary's creation date.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
-                    description: The vocabulary's most recent modification date.
+                    description:
+                        The vocabulary's most recent modification date.
                     format: date-time
                     readOnly: true
                     type: string
                 description:
-                    description: The vocabulary's text description.
+                    description:
+                        The vocabulary's text description.
                     type: string
                 id:
-                    description: The vocabulary's ID.
+                    description:
+                        The vocabulary's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 name:
-                    description: The vocabulary's name.
+                    description:
+                        The vocabulary's name.
                     type: string
                 numberOfTaxonomyCategories:
-                    description: The number of categories that directly depend on this vocabulary.
+                    description:
+                        The number of categories that directly depend on this vocabulary.
                     readOnly: true
                     type: integer
                 siteId:
-                    description: The ID of the site to which this vocabulary is scoped.
+                    description:
+                        The ID of the site to which this vocabulary is scoped.
                     format: int64
                     readOnly: true
                     type: integer
                 viewableBy:
-                    description: A write-only property that specifies the vocabulary's default permissions.
+                    description:
+                        A write-only property that specifies the vocabulary's default permissions.
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
@@ -211,7 +255,8 @@ components:
                 - name
             type: object
 info:
-    description: ""
+    description:
+        ""
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -221,7 +266,8 @@ openapi: 3.0.1
 paths:
     "/keywords/{keywordId}":
         delete:
-            description: Deletes the keyword and returns a 204 if the operation succeeds.
+            description:
+                Deletes the keyword and returns a 204 if the operation succeeds.
             operationId: deleteKeyword
             parameters:
                 - in: path
@@ -234,10 +280,12 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["Keyword"]
         get:
-            description: Retrieves a keyword.
+            description:
+                Retrieves a keyword.
             operationId: getKeyword
             parameters:
                 - in: path
@@ -255,10 +303,12 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Keyword"
-                    description: ""
+                    description:
+                        ""
             tags: ["Keyword"]
         put:
-            description: Replaces the keyword with the information sent in the request body. Any missing fields are deleted, unless required.
+            description:
+                Replaces the keyword with the information sent in the request body. Any missing fields are deleted, unless required.
             operationId: putKeyword
             parameters:
                 - in: path
@@ -284,11 +334,13 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Keyword"
-                    description: ""
+                    description:
+                        ""
             tags: ["Keyword"]
     "/sites/{siteId}/keywords":
         get:
-            description: Retrieves a Site's keywords. Results can be paginated, filtered, searched, and sorted.
+            description:
+                Retrieves a Site's keywords. Results can be paginated, filtered, searched, and sorted.
             operationId: getSiteKeywordsPage
             parameters:
                 - in: path
@@ -330,10 +382,12 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Keyword"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["Keyword"]
         post:
-            description: Inserts a new keyword in a Site.
+            description:
+                Inserts a new keyword in a Site.
             operationId: postSiteKeyword
             parameters:
                 - in: path
@@ -359,11 +413,13 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Keyword"
-                    description: ""
+                    description:
+                        ""
             tags: ["Keyword"]
     "/sites/{siteId}/taxonomy-vocabularies":
         get:
-            description: Retrieves a Site's taxonomy vocabularies. Results can be paginated, filtered, searched, and sorted.
+            description:
+                Retrieves a Site's taxonomy vocabularies. Results can be paginated, filtered, searched, and sorted.
             operationId: getSiteTaxonomyVocabulariesPage
             parameters:
                 - in: path
@@ -405,10 +461,12 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/TaxonomyVocabulary"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyVocabulary"]
         post:
-            description: Inserts a new taxonomy vocabulary in a Site.
+            description:
+                Inserts a new taxonomy vocabulary in a Site.
             operationId: postSiteTaxonomyVocabulary
             parameters:
                 - in: path
@@ -434,11 +492,13 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/TaxonomyVocabulary"
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyVocabulary"]
     "/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories":
         get:
-            description: Retrieves a taxonomy category's child taxonomy categories. Results can be paginated, filtered, searched, and sorted.
+            description:
+                Retrieves a taxonomy category's child taxonomy categories. Results can be paginated, filtered, searched, and sorted.
             operationId: getTaxonomyCategoryTaxonomyCategoriesPage
             parameters:
                 - in: path
@@ -480,10 +540,12 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/TaxonomyCategory"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyCategory"]
         post:
-            description: Inserts a new child taxonomy category.
+            description:
+                Inserts a new child taxonomy category.
             operationId: postTaxonomyCategoryTaxonomyCategory
             parameters:
                 - in: path
@@ -509,11 +571,13 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/TaxonomyCategory"
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyCategory"]
     "/taxonomy-categories/{taxonomyCategoryId}":
         delete:
-            description: Deletes the taxonomy category and returns a 204 if the operation succeeds.
+            description:
+                Deletes the taxonomy category and returns a 204 if the operation succeeds.
             operationId: deleteTaxonomyCategory
             parameters:
                 - in: path
@@ -526,10 +590,12 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyCategory"]
         get:
-            description: Retrieves a taxonomy category.
+            description:
+                Retrieves a taxonomy category.
             operationId: getTaxonomyCategory
             parameters:
                 - in: path
@@ -547,10 +613,12 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/TaxonomyCategory"
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyCategory"]
         patch:
-            description: Updates only the fields received in the request body. Other fields are left untouched.
+            description:
+                Updates only the fields received in the request body. Other fields are left untouched.
             operationId: patchTaxonomyCategory
             parameters:
                 - in: path
@@ -576,10 +644,12 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/TaxonomyCategory"
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyCategory"]
         put:
-            description: Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted unless they are required.
+            description:
+                Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted unless they are required.
             operationId: putTaxonomyCategory
             parameters:
                 - in: path
@@ -605,11 +675,13 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/TaxonomyCategory"
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyCategory"]
     "/taxonomy-vocabularies/{taxonomyVocabularyId}":
         delete:
-            description: Deletes the taxonomy vocabulary and returns a 204 if the operation succeeds.
+            description:
+                Deletes the taxonomy vocabulary and returns a 204 if the operation succeeds.
             operationId: deleteTaxonomyVocabulary
             parameters:
                 - in: path
@@ -622,10 +694,12 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyVocabulary"]
         get:
-            description: Retrieves a taxonomy vocabulary.
+            description:
+                Retrieves a taxonomy vocabulary.
             operationId: getTaxonomyVocabulary
             parameters:
                 - in: path
@@ -643,10 +717,12 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/TaxonomyVocabulary"
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyVocabulary"]
         patch:
-            description: Updates only the fields received in the request body. Any other fields are left untouched.
+            description:
+                Updates only the fields received in the request body. Any other fields are left untouched.
             operationId: patchTaxonomyVocabulary
             parameters:
                 - in: path
@@ -672,10 +748,12 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/TaxonomyVocabulary"
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyVocabulary"]
         put:
-            description: Replaces the taxonomy vocabulary with the information sent in the request body. Any missing fields are deleted unless they are required.
+            description:
+                Replaces the taxonomy vocabulary with the information sent in the request body. Any missing fields are deleted unless they are required.
             operationId: putTaxonomyVocabulary
             parameters:
                 - in: path
@@ -701,11 +779,13 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/TaxonomyVocabulary"
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyVocabulary"]
     "/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories":
         get:
-            description: Retrieves a vocabulary's taxonomy categories. Results can be paginated, filtered, searched, and sorted.
+            description:
+                Retrieves a vocabulary's taxonomy categories. Results can be paginated, filtered, searched, and sorted.
             operationId: getTaxonomyVocabularyTaxonomyCategoriesPage
             parameters:
                 - in: path
@@ -747,10 +827,12 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/TaxonomyCategory"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyCategory"]
         post:
-            description: Inserts a new taxonomy category in a taxonomy vocabulary.
+            description:
+                Inserts a new taxonomy category in a taxonomy vocabulary.
             operationId: postTaxonomyVocabularyTaxonomyCategory
             parameters:
                 - in: path
@@ -776,5 +858,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/TaxonomyCategory"
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyCategory"]

@@ -1,7 +1,8 @@
 components:
     schemas:
         DataDefinition:
-            description: https://www.schema.org/DataDefinition
+            description:
+                https://www.schema.org/DataDefinition
             properties:
                 availableLanguageIds:
                     items:
@@ -254,7 +255,8 @@ components:
                     type: integer
             type: object
         DataRecord:
-            description: https://www.schema.org/DataRecord
+            description:
+                https://www.schema.org/DataRecord
             properties:
                 dataRecordCollectionId:
                     format: int64
@@ -267,7 +269,8 @@ components:
                     format: int64
                     type: integer
         DataRecordCollection:
-            description: https://www.schema.org/DataRecordCollection
+            description:
+                https://www.schema.org/DataRecordCollection
             properties:
                 dataDefinitionId:
                     format: int64
@@ -318,7 +321,8 @@ components:
                     type: boolean
             type: object
 info:
-    description: ""
+    description:
+        ""
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -335,7 +339,8 @@ paths:
                         application/json:
                             schema:
                                 type: string
-                    description: ""
+                    description:
+                        ""
             tags: ["DataDefinition"]
     "/data-definitions/{dataDefinitionId}":
         delete:
@@ -351,7 +356,8 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["DataDefinition"]
         get:
             operationId: getDataDefinition
@@ -371,7 +377,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataDefinition"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataDefinition"]
         put:
             operationId: putDataDefinition
@@ -399,7 +406,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataDefinition"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataDefinition"]
     "/data-definitions/{dataDefinitionId}/data-definition-permissions":
         post:
@@ -424,12 +432,14 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/DataDefinitionPermission"
-                description: ""
+                description:
+                    ""
             responses:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["DataDefinition"]
     "/data-definitions/{dataDefinitionId}/data-layouts":
         get:
@@ -471,7 +481,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataLayout"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["DataLayout"]
         post:
             operationId: postDataDefinitionDataLayout
@@ -499,7 +510,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataLayout"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataLayout"]
     "/data-definitions/{dataDefinitionId}/data-list-views":
         get:
@@ -541,7 +553,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataListView"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["DataListView"]
         post:
             operationId: postDataDefinitionDataListView
@@ -560,7 +573,8 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/DataListView"
-                description: ""
+                description:
+                    ""
             responses:
                 200:
                     content:
@@ -570,7 +584,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataListView"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataListView"]
     "/data-definitions/{dataDefinitionId}/data-record-collections":
         get:
@@ -607,7 +622,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataRecordCollection"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecordCollection"]
         post:
             operationId: postDataDefinitionDataRecordCollection
@@ -635,7 +651,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataRecordCollection"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecordCollection"]
     "/data-definitions/{dataDefinitionId}/data-records":
         get:
@@ -668,7 +685,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataRecord"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecord"]
         post:
             operationId: postDataDefinitionDataRecord
@@ -696,7 +714,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataRecord"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecord"]
     "/data-layouts/{dataLayoutId}":
         delete:
@@ -712,7 +731,8 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["DataLayout"]
         get:
             operationId: getDataLayout
@@ -732,7 +752,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataLayout"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataLayout"]
         put:
             operationId: putDataLayout
@@ -760,7 +781,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataLayout"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataLayout"]
     "/data-layouts/{dataLayoutId}/data-layout-permissions":
         post:
@@ -785,12 +807,14 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/DataLayoutPermission"
-                description: ""
+                description:
+                    ""
             responses:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["DataLayout"]
     "/data-list-views/{dataListViewId}":
         delete:
@@ -806,7 +830,8 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["DataListView"]
         get:
             operationId: getDataListView
@@ -826,7 +851,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataListView"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataListView"]
         put:
             operationId: putDataListView
@@ -854,7 +880,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataListView"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataListView"]
     "/data-record-collections/{dataRecordCollectionId}":
         delete:
@@ -870,7 +897,8 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecordCollection"]
         get:
             operationId: getDataRecordCollection
@@ -890,7 +918,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataRecordCollection"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecordCollection"]
         put:
             operationId: putDataRecordCollection
@@ -918,7 +947,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataRecordCollection"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecordCollection"]
     "/data-record-collections/{dataRecordCollectionId}/data-record-collection-permissions":
         post:
@@ -943,12 +973,14 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/DataRecordCollectionPermission"
-                description: ""
+                description:
+                    ""
             responses:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecordCollection"]
     "/data-record-collections/{dataRecordCollectionId}/data-records":
         get:
@@ -981,7 +1013,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataRecord"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecord"]
         post:
             operationId: postDataRecordCollectionDataRecord
@@ -1009,7 +1042,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataRecord"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecord"]
     "/data-record-collections/{dataRecordCollectionId}/data-records/export":
         get:
@@ -1035,7 +1069,8 @@ paths:
                         application/json:
                             schema:
                                 type: string
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecord"]
     "/data-records/{dataRecordId}":
         delete:
@@ -1051,7 +1086,8 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecord"]
         get:
             operationId: getDataRecord
@@ -1071,7 +1107,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataRecord"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecord"]
         put:
             operationId: putDataRecord
@@ -1099,7 +1136,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataRecord"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecord"]
     "/sites/{siteId}/data-definition-permissions":
         post:
@@ -1128,7 +1166,8 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["DataDefinition"]
     "/sites/{siteId}/data-definitions":
         get:
@@ -1170,7 +1209,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataDefinition"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["DataDefinition"]
         post:
             operationId: postSiteDataDefinition
@@ -1198,7 +1238,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataDefinition"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataDefinition"]
     "/sites/{siteId}/data-definitions/{dataDefinitionKey}":
         get:
@@ -1224,7 +1265,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataDefinition"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataDefinition"]
     "/sites/{siteId}/data-layout-permissions":
         post:
@@ -1253,7 +1295,8 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["DataLayout"]
     "/sites/{siteId}/data-layouts":
         get:
@@ -1295,7 +1338,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataLayout"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["DataLayout"]
     "/sites/{siteId}/data-layouts/{dataLayoutKey}":
         get:
@@ -1321,7 +1365,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataLayout"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataLayout"]
     "/sites/{siteId}/data-record-collection-permissions":
         post:
@@ -1350,7 +1395,8 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecordCollection"]
     "/sites/{siteId}/data-record-collections":
         get:
@@ -1387,7 +1433,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataRecordCollection"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecordCollection"]
     "/sites/{siteId}/data-record-collections/{dataRecordCollectionKey}":
         get:
@@ -1413,5 +1460,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataRecordCollection"
-                    description: ""
+                    description:
+                        ""
             tags: ["DataRecordCollection"]

@@ -18,7 +18,8 @@ components:
                             type: boolean
                     type: object
         GenericError:
-            description: https://www.schema.org/GenericError
+            description:
+                https://www.schema.org/GenericError
             properties:
                 message:
                     type: string
@@ -86,7 +87,8 @@ components:
                     format: int64
                     type: integer
 info:
-    description: ""
+    description:
+        ""
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -114,7 +116,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Selection"
-                    description: ""
+                    description:
+                        ""
             tags: ["Selection"]
     "/keywords/batch":
         patch:
@@ -131,7 +134,8 @@ paths:
                 200:
                     content:
                         {}
-                    description: ""
+                    description:
+                        ""
             tags: ["Keyword"]
         put:
             operationId: putKeywordBatch
@@ -147,7 +151,8 @@ paths:
                 200:
                     content:
                         {}
-                    description: ""
+                    description:
+                        ""
             tags: ["Keyword"]
     "/keywords/common":
         post:
@@ -173,7 +178,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Keyword"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["Keyword"]
     "/sites/{siteId}/taxonomy-vocabularies/common":
         post:
@@ -206,7 +212,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/TaxonomyVocabulary"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyVocabulary"]
     "/status":
         get:
@@ -220,7 +227,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Status"
-                    description: ""
+                    description:
+                        ""
             tags: ["Status"]
     "/taxonomy-categories/batch":
         patch:
@@ -237,7 +245,8 @@ paths:
                 200:
                     content:
                         {}
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyCategory"]
         put:
             operationId: putTaxonomyCategoryBatch
@@ -253,5 +262,6 @@ paths:
                 200:
                     content:
                         {}
-                    description: ""
+                    description:
+                        ""
             tags: ["TaxonomyCategory"]

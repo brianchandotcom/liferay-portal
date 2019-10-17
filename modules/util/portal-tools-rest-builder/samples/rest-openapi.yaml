@@ -1,10 +1,12 @@
 components:
     schemas:
         Document:
-            description: "https://www.schema.org/Document"
+            description:
+                "https://www.schema.org/Document"
             type: object
 info:
-    description: ""
+    description:
+        ""
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

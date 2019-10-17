@@ -67,7 +67,8 @@ components:
                 - status
             type: object
 info:
-    description: ""
+    description:
+        ""
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -88,7 +89,8 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["Experiment"]
     "/experiments/{experimentId}/run":
         post:
@@ -117,7 +119,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ExperimentRun"
-                    description: ""
+                    description:
+                        ""
             tags: ["ExperimentRun"]
     "/experiments/{experimentId}/status":
         post:
@@ -146,5 +149,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Experiment"
-                    description: ""
+                    description:
+                        ""
             tags: ["Status"]

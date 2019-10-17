@@ -215,6 +215,10 @@ public class GetPersonalMenuItemsMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		JSONObject dividerJSONObject = JSONFactoryUtil.createJSONObject();
+
+		dividerJSONObject.put("type", "divider");
+
 		if (themeDisplay.isImpersonated()) {
 			JSONObject impersonationJSONObject = JSONUtil.put(
 				"items",
@@ -228,12 +232,11 @@ public class GetPersonalMenuItemsMVCResourceCommand
 					user.getFullName(),
 					LanguageUtil.get(themeDisplay.getLocale(), "impersonated"))
 			).put(
-				"separator", true
-			).put(
 				"type", "group"
 			);
 
 			jsonArray.put(impersonationJSONObject);
+			jsonArray.put(dividerJSONObject);
 		}
 
 		for (int i = 0; i < groupedPersonalMenuEntries.size(); i++) {
@@ -248,13 +251,13 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			JSONObject jsonObject = JSONUtil.put(
 				"items", personalMenuEntriesJSONArray);
 
-			if (i < (groupedPersonalMenuEntries.size() - 1)) {
-				jsonObject.put("separator", true);
-			}
-
 			jsonObject.put("type", "group");
 
 			jsonArray.put(jsonObject);
+
+			if (i < (groupedPersonalMenuEntries.size() - 1)) {
+				jsonArray.put(dividerJSONObject);
+			}
 		}
 
 		if ((jsonArray.length() > 0) && !themeDisplay.isImpersonated()) {

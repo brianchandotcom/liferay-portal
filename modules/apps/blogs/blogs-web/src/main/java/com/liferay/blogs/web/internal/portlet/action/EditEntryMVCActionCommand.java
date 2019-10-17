@@ -210,11 +210,21 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				return;
 			}
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 			int workflowAction = ParamUtil.getInteger(
 				actionRequest, "workflowAction",
 				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			String portletResource = ParamUtil.getString(
+				actionRequest, "portletResource");
+
+			if (Validator.isNotNull(portletResource) &&
+				(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT)) {
+
+				MultiSessionMessages.add(
+					actionRequest, portletResource + "requestProcessed");
+			}
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if ((entry != null) &&
 				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {

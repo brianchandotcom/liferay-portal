@@ -63,7 +63,9 @@ body {
 		position: relative;
 
 		.panel-notifications-count {
+			display: block;
 			margin: 0;
+			max-width: none;
 			position: absolute;
 			right: calc(100% - 0.7rem);
 			top: -0.4rem;

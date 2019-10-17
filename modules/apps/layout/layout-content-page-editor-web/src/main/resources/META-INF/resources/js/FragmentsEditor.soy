@@ -4,17 +4,10 @@
  * FragmentsEditor
  */
 {template .render}
-	{@param defaultEditorConfigurations: ?}
-	{@param defaultLanguageId: string}
 	{@param fragmentEntryLinks: ?}
-	{@param imageSelectorURL: string}
-	{@param languageId: string}
 	{@param layoutData: ?}
-	{@param portletNamespace: string}
-	{@param? defaultSegmentsExperienceId: string}
 	{@param? hasUpdatePermissions: bool}
 	{@param? id: string}
-	{@param? mappingFieldsURL: string}
 	{@param? store: ?}
 
 	{let $fragmentsEditorClasses kind="text"}
@@ -32,18 +25,9 @@
 		{/call}
 
 		{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkList.render}
-			{param defaultEditorConfigurations: $defaultEditorConfigurations /}
-			{param defaultLanguageId: $defaultLanguageId /}
-			{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
-			{param imageSelectorURL: $imageSelectorURL /}
-			{param languageId: $languageId /}
 			{param layoutData: $layoutData /}
-			{param mappingFieldsURL: $mappingFieldsURL /}
-			{param portletNamespace: $portletNamespace /}
-			{param ref: 'fragmentsEditorRender' /}
 			{param store: $store /}
-			{param translating: $languageId != $defaultLanguageId /}
 		{/call}
 	</div>
 {/template}

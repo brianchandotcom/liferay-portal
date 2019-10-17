@@ -474,6 +474,7 @@ FragmentEntryLink.STATE = {
 const ConnectedFragmentEntryLink = getConnectedComponent(FragmentEntryLink, [
 	'activeItemId',
 	'activeItemType',
+	'defaultEditorConfigurations',
 	'defaultLanguageId',
 	'defaultSegmentsExperienceId',
 	'dropTargetItemId',

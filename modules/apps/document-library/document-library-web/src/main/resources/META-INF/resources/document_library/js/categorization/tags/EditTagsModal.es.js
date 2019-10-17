@@ -224,7 +224,7 @@ const EditTagsModal = ({
 							>
 								<div className="form-text">
 									{Liferay.Language.get(
-										'add-new-categories-or-remove-common-categories'
+										'add-new-tags-or-remove-common-tags'
 									)}
 								</div>
 							</ClayRadio>
@@ -235,7 +235,7 @@ const EditTagsModal = ({
 							>
 								<div className="form-text">
 									{Liferay.Language.get(
-										'these-categories-replace-all-existing-categories'
+										'these-tags-replace-all-existing-tags'
 									)}
 								</div>
 							</ClayRadio>

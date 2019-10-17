@@ -88,6 +88,31 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 			users, searchResponse.getTotalHits());
 	}
 
+	@Override
+	public BaseModelSearchResult<User> searchAccountUsers(
+			long[] accountEntryIds, String keywords, int status, int cur,
+			int delta, String sortField, boolean reverse)
+		throws PortalException {
+
+		SearchResponse searchResponse = _getSearchResponse(
+			accountEntryIds, keywords, status, cur, delta, sortField, reverse);
+
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		List<User> users = TransformUtil.transform(
+			searchHits.getSearchHits(),
+			searchHit -> {
+				Document document = searchHit.getDocument();
+
+				long userId = document.getLong("userId");
+
+				return _userLocalService.getUser(userId);
+			});
+
+		return new BaseModelSearchResult<>(
+			users, searchResponse.getTotalHits());
+	}
+
 	private SearchResponse _getSearchResponse(
 			long accountEntryId, String keywords, int status, int cur,
 			int delta, String sortField, boolean reverse)

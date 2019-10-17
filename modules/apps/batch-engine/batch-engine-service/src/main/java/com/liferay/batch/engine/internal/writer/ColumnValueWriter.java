@@ -14,23 +14,11 @@
 
 package com.liferay.batch.engine.internal.writer;
 
-import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
-import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
-import com.liferay.petra.memory.FinalizeManager;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 
-import java.lang.ref.Reference;
 import java.lang.reflect.Field;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Consumer;
@@ -57,33 +45,7 @@ public class ColumnValueWriter {
 	private Map<String, Object> _getColumnNameValueMap(Object item)
 		throws IllegalAccessException {
 
-		Map<String, Field> fields = _fieldsMap.computeIfAbsent(
-			item.getClass(),
-			clazz -> {
-				Map<String, Field> fieldMap = new HashMap<>();
-
-				for (Field field : clazz.getDeclaredFields()) {
-					Class<?> valueClass = field.getType();
-
-					if (!valueClass.isPrimitive() &&
-						!_objectTypes.contains(valueClass)) {
-
-						continue;
-					}
-
-					field.setAccessible(true);
-
-					String name = field.getName();
-
-					if (name.charAt(0) == CharPool.UNDERLINE) {
-						name = name.substring(1);
-					}
-
-					fieldMap.put(name, field);
-				}
-
-				return fieldMap;
-			});
+		Map<String, Field> fields = ItemClassIndexUtil.index(item.getClass());
 
 		Map<String, Object> columnNameValueMap = new TreeMap<>();
 
@@ -127,17 +89,6 @@ public class ColumnValueWriter {
 
 		return columnNameValueMap;
 	}
-
-	private static final Map<Class<?>, Map<String, Field>> _fieldsMap =
-		new ConcurrentReferenceKeyHashMap<>(
-			new ConcurrentReferenceValueHashMap
-				<Reference<Class<?>>, Map<String, Field>>(
-					FinalizeManager.WEAK_REFERENCE_FACTORY),
-			FinalizeManager.WEAK_REFERENCE_FACTORY);
-	private static final List<Class<?>> _objectTypes = Arrays.asList(
-		Boolean.class, BigDecimal.class, BigInteger.class, Byte.class,
-		Date.class, Double.class, Float.class, Integer.class, Long.class,
-		Map.class, String.class);
 
 	private boolean _firstLineWritten;
 

@@ -48,7 +48,7 @@ setUpProfileDXP {
 		String repositoryPrivateURL = workingDirProperties.getProperty("build.repository.private.url[" + branchName + "]")
 
 		exec {
-			commandLine "git", "rm", "--cached", "working.dir.properties"
+			commandLine "git", "rm", "--force", "working.dir.properties"
 			workingDir = projectDir.parentFile
 		}
 

@@ -1048,6 +1048,36 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		</gradle-execute>
 	</target>
 
+	<target name="setup-profile-portal">
+		<if>
+			<available file="${project.dir}/build.profile-dxp.properties" />
+			<then>
+				<delete file="${project.dir}/build.profile-dxp.properties" />
+			</then>
+		</if>
+
+		<if>
+			<available file="${project.dir}/release.profile-dxp.properties" />
+			<then>
+				<delete file="${project.dir}/release.profile-dxp.properties" />
+			</then>
+		</if>
+
+		<if>
+			<available file="${project.dir}/sql/sql.profile-dxp.properties" />
+			<then>
+				<delete file="${project.dir}/sql/sql.profile-dxp.properties" />
+			</then>
+		</if>
+
+		<if>
+			<available file="${project.dir}/test.profile-dxp.properties" />
+			<then>
+				<delete file="${project.dir}/test.profile-dxp.properties" />
+			</then>
+		</if>
+	</target>
+
 	<target name="setup-sdk">
 		<setup-sdk />
 	</target>

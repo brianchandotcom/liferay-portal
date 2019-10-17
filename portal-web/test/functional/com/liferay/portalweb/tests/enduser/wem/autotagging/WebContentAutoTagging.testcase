@@ -36,10 +36,10 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that a webcontent entry can get autotagged on a staging site and that the tags will be published to live successfully."
+	@description = "This test ensures that a web content can be autotagged on a staging site and that the tags will be published to live successfully."
 	@priority = "4"
-	test AssertAutoTagAfterPublishToLive {
-		property test.name.skip.portal.instance = "WebContentAutoTagging#AssertAutoTagAfterPublishToLive";
+	test AssertAutoTagAfterPublishingToLive {
+		property test.name.skip.portal.instance = "WebContentAutoTagging#AssertAutoTagAfterPublishingToLive";
 
 		Navigator.openSiteURL(siteName = "Test Site Name");
 
@@ -96,8 +96,9 @@ definition {
 		AssertElementPresent(
 			key_tagName = "dxp",
 			locator1 = "WC#SIDEBAR_TAG");
+	}
 
-	@description = "This test ensures that if a user manual adds a tag when adding a webcontent, the entry will not be autotagged."
+	@description = "This test ensures that if a user manually adds a tag when adding a web content, the entry will not be autotagged."
 	@priority = "5"
 	test NoAutoTagForManuallyAddedEntry {
 		property test.name.skip.portal.instance = "WebContentAutoTagging#NoAutoTagForManuallyAddedEntry";

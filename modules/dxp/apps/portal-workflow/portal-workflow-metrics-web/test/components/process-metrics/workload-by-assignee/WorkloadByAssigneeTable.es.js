@@ -10,6 +10,7 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
+import {MockRouter} from '../../../mock/MockRouter.es';
 import React from 'react';
 
 import WorkloadByAssigneeCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/workload-by-assignee/WorkloadByAssigneeCard.es';
@@ -34,7 +35,8 @@ describe('The workload by assignee table should', () => {
 
 	test('Be rendered with "User 1" and "User 2" names when the tab is Total', () => {
 		const {getAllByTestId} = render(
-			<WorkloadByAssigneeCard.Table currentTab="total" items={items} />
+			<WorkloadByAssigneeCard.Table currentTab="total" items={items} />,
+			{wrapper: MockRouter}
 		);
 
 		const assigneeNames = getAllByTestId('assigneeName');
@@ -45,7 +47,8 @@ describe('The workload by assignee table should', () => {
 
 	test('Be rendered with "15" and "10" values when the tab is Total', () => {
 		const {getAllByTestId} = render(
-			<WorkloadByAssigneeCard.Table currentTab="total" items={items} />
+			<WorkloadByAssigneeCard.Table currentTab="total" items={items} />,
+			{wrapper: MockRouter}
 		);
 
 		const taskCountValues = getAllByTestId('taskCountValue');
@@ -57,7 +60,8 @@ describe('The workload by assignee table should', () => {
 
 	test('Be rendered with "10 / 66.67%" and "3 / 30%" values when the tab is On Time', () => {
 		const {getAllByTestId} = render(
-			<WorkloadByAssigneeCard.Table currentTab="onTime" items={items} />
+			<WorkloadByAssigneeCard.Table currentTab="onTime" items={items} />,
+			{wrapper: MockRouter}
 		);
 
 		const taskCountPercentages = getAllByTestId('taskCountPercentage');
@@ -71,7 +75,8 @@ describe('The workload by assignee table should', () => {
 
 	test('Be rendered with "5 / 33.33%" and "7 / 70%" values when the tab is Overdue', () => {
 		const {getAllByTestId} = render(
-			<WorkloadByAssigneeCard.Table currentTab="overdue" items={items} />
+			<WorkloadByAssigneeCard.Table currentTab="overdue" items={items} />,
+			{wrapper: MockRouter}
 		);
 
 		const taskCountPercentages = getAllByTestId('taskCountPercentage');
@@ -85,7 +90,8 @@ describe('The workload by assignee table should', () => {
 
 	test('Be rendered with no rows when items list is empty', () => {
 		const {getAllByTestId} = render(
-			<WorkloadByAssigneeCard.Table currentTab="overdue" />
+			<WorkloadByAssigneeCard.Table currentTab="overdue" />,
+			{wrapper: MockRouter}
 		);
 
 		expect(() => getAllByTestId('assigneeName')).toThrow();

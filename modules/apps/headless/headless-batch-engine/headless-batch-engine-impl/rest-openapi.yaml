@@ -57,6 +57,10 @@ components:
                         The item class name for which data will be processed in batch.
                     example: com.liferay.headless.delivery.dto.v1_0.BlogPosting
                     type: string
+                contentType:
+                    description: The file content type.
+                    example: JSON
+                    type: string
                 endTime:
                     description:
                         The end time of import task operation.

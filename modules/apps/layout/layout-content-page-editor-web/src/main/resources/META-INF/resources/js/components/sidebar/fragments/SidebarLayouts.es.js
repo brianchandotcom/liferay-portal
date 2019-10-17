@@ -12,10 +12,11 @@
  * details.
  */
 
-import Collapse from './../../common/Collapse.es';
 import React, {useEffect} from 'react';
-import SidebarLayoutsDragDrop from './SidebarLayoutsDragDrop.es';
+
 import useDispatch from '../../../store/hooks/useDispatch.es';
+import Collapse from './../../common/Collapse.es';
+import SidebarLayoutsDragDrop from './SidebarLayoutsDragDrop.es';
 
 const layouts = [
 	{

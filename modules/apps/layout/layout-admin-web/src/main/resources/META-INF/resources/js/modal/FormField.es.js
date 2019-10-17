@@ -13,9 +13,9 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import classNames from 'classnames';
 
 const FormField = ({children, error, id, name}) => {
 	const hasError = error != null;

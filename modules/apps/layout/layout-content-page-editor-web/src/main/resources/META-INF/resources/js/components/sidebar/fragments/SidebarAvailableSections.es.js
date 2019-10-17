@@ -13,17 +13,12 @@
  */
 
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import {DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import './FragmentsEditorSidebarCard.es';
-import {
-	FRAGMENTS_EDITOR_ITEM_BORDERS,
-	FRAGMENTS_EDITOR_ITEM_TYPES,
-	FRAGMENTS_EDITOR_ROW_TYPES
-} from '../../../utils/constants';
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
 	CLEAR_DROP_TARGET,
@@ -37,6 +32,11 @@ import {
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {initializeDragDrop} from '../../../utils/FragmentsEditorDragDrop.es';
 import {setDraggingItemPosition} from '../../../utils/FragmentsEditorUpdateUtils.es';
+import {
+	FRAGMENTS_EDITOR_ITEM_BORDERS,
+	FRAGMENTS_EDITOR_ITEM_TYPES,
+	FRAGMENTS_EDITOR_ROW_TYPES
+} from '../../../utils/constants';
 import templates from './SidebarAvailableSections.soy';
 
 /**

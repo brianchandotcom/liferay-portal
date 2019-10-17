@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-layouts-tree-node-radio',
-	function(A) {
+	A => {
 		var TPL_RADIO = '<label><input type="radio"></label>';
 
 		var LayoutsTreeNodeRadio = A.Component.create({

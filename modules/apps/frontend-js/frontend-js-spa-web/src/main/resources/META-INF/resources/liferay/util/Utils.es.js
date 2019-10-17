@@ -47,7 +47,7 @@ class Utils {
 	 */
 
 	static getPortletBoundaryIds(portletIds) {
-		return portletIds.map(function(portletId) {
+		return portletIds.map(portletId => {
 			return Utils.getPortletBoundaryId(portletId);
 		});
 	}
@@ -57,9 +57,7 @@ class Utils {
 	 */
 
 	static resetAllPortlets() {
-		Utils.getPortletBoundaryIds(Liferay.Portlet.list).forEach(function(
-			value
-		) {
+		Utils.getPortletBoundaryIds(Liferay.Portlet.list).forEach(value => {
 			const portlet = document.querySelector('#' + value);
 
 			if (portlet) {
@@ -71,7 +69,7 @@ class Utils {
 
 		Liferay.Portlet.readyCounter = 0;
 
-		Liferay.destroyComponents(function(component, componentConfig) {
+		Liferay.destroyComponents((component, componentConfig) => {
 			return componentConfig.destroyOnNavigate;
 		});
 	}

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-navigation-interaction-touch',
-	function(A) {
+	A => {
 		var ANDROID = A.UA.android;
 
 		var ANDROID_LEGACY = ANDROID && ANDROID < 4.4;
@@ -46,7 +46,7 @@ AUI.add(
 							outsideEvents = outsideEvents[0];
 						}
 
-						handle = menuNew.on(outsideEvents, function() {
+						handle = menuNew.on(outsideEvents, () => {
 							Liferay.fire('hideNavigationMenu', {
 								menu: menuNew
 							});
@@ -84,7 +84,7 @@ AUI.add(
 						if (ANDROID_LEGACY) {
 							navigation.delegate(
 								'click',
-								function(event) {
+								event => {
 									event.preventDefault();
 								},
 								'.lfr-nav-child-toggle'

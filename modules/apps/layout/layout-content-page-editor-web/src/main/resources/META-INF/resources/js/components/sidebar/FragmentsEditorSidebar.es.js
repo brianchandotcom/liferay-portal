@@ -13,12 +13,12 @@
  */
 
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import './FragmentsEditorSidebarContent.es';
-import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {UPDATE_SELECTED_SIDEBAR_PANEL_ID} from '../../actions/actions.es';
+import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import templates from './FragmentsEditorSidebar.soy';
 
 /**

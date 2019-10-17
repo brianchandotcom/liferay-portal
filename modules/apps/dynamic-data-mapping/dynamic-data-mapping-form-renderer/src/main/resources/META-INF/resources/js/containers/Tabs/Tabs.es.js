@@ -14,6 +14,7 @@
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
 import templates from './Tabs.soy.js';
 
 class Tabs extends Component {

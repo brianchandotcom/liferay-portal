@@ -12,16 +12,16 @@
  * details.
  */
 
+import ClayComponent from 'clay-component';
 import {
 	actionItemsValidator,
 	creationMenuItemsValidator,
 	filterItemsValidator,
 	filterLabelsValidator
 } from 'clay-management-toolbar';
-import ClayComponent from 'clay-component';
+import {EventEmitterProxy} from 'metal-events';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {EventEmitterProxy} from 'metal-events';
 
 import templates from './ManagementToolbar.soy';
 

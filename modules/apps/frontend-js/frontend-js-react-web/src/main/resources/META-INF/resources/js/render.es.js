@@ -12,10 +12,9 @@
  * details.
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-
 import {ClayIconSpriteContext} from '@clayui/icon';
+import ReactDOM from 'react-dom';
+import React from 'react';
 
 let counter = 0;
 

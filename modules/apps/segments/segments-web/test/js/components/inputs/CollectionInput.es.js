@@ -13,8 +13,9 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import CollectionInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/CollectionInput.es';
 import React from 'react';
+
+import CollectionInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/CollectionInput.es';
 import {testControlledInput} from '../../utils';
 
 const COLLECTION_KEY_INPUT_TESTID = 'collection-key-input';

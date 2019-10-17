@@ -121,7 +121,7 @@
 		_staticPortlets: {},
 
 		destroyComponents(portletId) {
-			Liferay.destroyComponents(function(_component, componentConfig) {
+			Liferay.destroyComponents((_component, componentConfig) => {
 				return portletId === componentConfig.portletId;
 			});
 		},
@@ -223,7 +223,7 @@
 
 				var nestedPortletOffset = 0;
 
-				nestedPortlets.some(function(nestedPortlet) {
+				nestedPortlets.some(nestedPortlet => {
 					var nestedPortletIndex = columnPortlets.indexOf(
 						nestedPortlet
 					);
@@ -452,7 +452,7 @@
 	Liferay.provide(
 		Portlet,
 		'destroy',
-		function(portlet, options) {
+		(portlet, options) => {
 			portlet = A.one(portlet);
 
 			if (portlet) {
@@ -473,7 +473,7 @@
 	Liferay.provide(
 		Portlet,
 		'minimize',
-		function(portlet, el, options) {
+		(portlet, el, options) => {
 			options = options || {};
 
 			var doAsUserId =
@@ -600,7 +600,7 @@
 						events = ['focus', 'mousemove'];
 					}
 
-					var handle = portlet.on(events, function() {
+					var handle = portlet.on(events, () => {
 						Util.portletTitleEdit({
 							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 							obj: portlet,
@@ -740,7 +740,7 @@
 	Liferay.provide(
 		Portlet,
 		'openWindow',
-		function(options) {
+		options => {
 			var bodyCssClass = options.bodyCssClass;
 			var destroyOnHide = options.destroyOnHide;
 			var namespace = options.namespace;
@@ -793,8 +793,8 @@
 						title: titleHtml,
 						uri
 					},
-					function(dialog) {
-						dialog.once('drag:init', function() {
+					dialog => {
+						dialog.once('drag:init', () => {
 							dialog.dd.addInvalid(
 								'.portlet-configuration-subtitle-text'
 							);
@@ -817,7 +817,7 @@
 	// Backwards compatability
 
 	Portlet.ready = function(fn) {
-		Liferay.on('portletReady', function(event) {
+		Liferay.on('portletReady', event => {
 			fn(event.portletId, event.portlet);
 		});
 	};

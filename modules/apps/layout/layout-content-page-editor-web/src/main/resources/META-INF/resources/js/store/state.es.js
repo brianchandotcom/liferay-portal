@@ -14,13 +14,13 @@
 
 import {Config} from 'metal-state';
 
+import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
+import {getEmptyLayoutData} from '../utils/LayoutDataList.es';
 import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	FRAGMENTS_EDITOR_ROW_TYPES
 } from '../utils/constants';
-import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
-import {getEmptyLayoutData} from '../utils/LayoutDataList.es';
 
 const LayoutDataShape = Config.shapeOf({
 	nextColumnId: Config.number(),

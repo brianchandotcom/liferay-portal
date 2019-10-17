@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-asset-addon-entry-selector',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var NAME = 'assetaddonentryselector';
@@ -174,7 +174,7 @@ AUI.add(
 
 					var entriesContent = instance
 						.get(STR_ASSET_ADDON_ENTRIES)
-						.reduce(function(previousValue, currentValue) {
+						.reduce((previousValue, currentValue) => {
 							currentValue.checked =
 								selectedAssetAddonEntries.indexOf(
 									currentValue.key
@@ -247,7 +247,7 @@ AUI.add(
 						.attr(STR_DATA_KEY);
 
 					selectedAssetAddonEntries = selectedAssetAddonEntries.filter(
-						function(item) {
+						item => {
 							return item !== removedItem;
 						}
 					);
@@ -263,7 +263,7 @@ AUI.add(
 
 					var entriesMap = {};
 
-					val.forEach(function(item) {
+					val.forEach(item => {
 						entriesMap[item.key] = item;
 					});
 
@@ -296,7 +296,7 @@ AUI.add(
 						.all(STR_INPUT)
 						.attr(STR_CHECKED, false);
 
-					selectedAssetAddonEntries.forEach(function(item) {
+					selectedAssetAddonEntries.forEach(item => {
 						selectedAssetAddonEntriesNode.append(
 							Lang.sub(
 								TPL_SUMMARY_ASSET_ADDON_ENTRY,
@@ -321,7 +321,7 @@ AUI.add(
 
 					var selectedAssetAddonEntries = [];
 
-					dialog.bodyNode.all('input:checked').each(function(item) {
+					dialog.bodyNode.all('input:checked').each(item => {
 						selectedAssetAddonEntries.push(item.attr(STR_DATA_KEY));
 					});
 

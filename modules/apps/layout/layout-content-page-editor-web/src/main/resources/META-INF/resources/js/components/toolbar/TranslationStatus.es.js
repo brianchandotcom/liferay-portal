@@ -15,14 +15,14 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {CHANGE_LANGUAGE_ID} from '../../actions/actions.es';
+import getConnectedComponent from '../../store/ConnectedComponent.es';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {
 	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 } from '../../utils/constants';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
-import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './TranslationStatus.soy';
 
 /**

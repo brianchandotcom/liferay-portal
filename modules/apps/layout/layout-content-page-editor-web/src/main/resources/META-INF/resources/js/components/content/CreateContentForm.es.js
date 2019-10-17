@@ -12,9 +12,9 @@
  * details.
  */
 
-import {Config} from 'metal-state';
 import {PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './CreateContentForm.soy';

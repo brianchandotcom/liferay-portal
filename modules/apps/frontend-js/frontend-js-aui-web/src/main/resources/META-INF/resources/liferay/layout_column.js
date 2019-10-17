@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-layout-column',
-	function(A) {
+	A => {
 		var DDM = A.DD.DDM;
 
 		var Layout = Liferay.Layout;

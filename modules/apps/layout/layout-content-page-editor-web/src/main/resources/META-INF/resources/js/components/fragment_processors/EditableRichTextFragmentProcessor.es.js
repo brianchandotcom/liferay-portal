@@ -13,11 +13,12 @@
  */
 
 import {EventHandler} from 'metal-events';
+import {object} from 'metal';
+
 import {
 	FLOATING_TOOLBAR_BUTTONS,
 	CREATE_PROCESSOR_EVENT_TYPES
 } from '../../utils/constants';
-import {object} from 'metal';
 
 const KEY_ENTER = 13;
 

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-upload',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 		var Lang = A.Lang;
 		var UploaderQueue = A.Uploader.Queue;
@@ -354,7 +354,7 @@ AUI.add(
 
 					queue.pauseUpload();
 
-					queue.queuedFiles.forEach(function(item) {
+					queue.queuedFiles.forEach(item => {
 						var li = A.one('#' + item.id);
 
 						if (li && !li.hasClass('upload-complete')) {
@@ -407,7 +407,7 @@ AUI.add(
 							metadataExplanationContainer.show();
 						}
 
-						var files = fileNames.map(function(item) {
+						var files = fileNames.map(item => {
 							var title = item;
 
 							var tempTitle = title;
@@ -460,7 +460,7 @@ AUI.add(
 						Liferay.PropsValues
 							.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
-					return data.filter(function(item) {
+					return data.filter(item => {
 						var id = item.get('id') || A.guid();
 						var name = item.get('name');
 						var size = item.get('size') || 0;
@@ -545,7 +545,7 @@ AUI.add(
 						(target === uploaderBoundingBox ||
 							uploaderBoundingBox.contains(target))
 					) {
-						event.fileList = dragDropFiles.map(function(item) {
+						event.fileList = dragDropFiles.map(item => {
 							return new A.FileHTML5(item);
 						});
 
@@ -680,7 +680,7 @@ AUI.add(
 
 							var file =
 								queue.currentFiles[fileId] ||
-								AArray.find(queue.queuedFiles, function(item) {
+								AArray.find(queue.queuedFiles, item => {
 									return item.id === fileId;
 								});
 
@@ -950,7 +950,7 @@ AUI.add(
 
 					A.on(
 						'available',
-						function() {
+						() => {
 							A.one(fileIdSelector).addClass('file-uploading');
 						},
 						fileIdSelector
@@ -1379,12 +1379,12 @@ AUI.add(
 
 					var uploaderBoundingBox = instance._uploaderBoundingBox;
 
-					var removeCssClassTask = A.debounce(function() {
+					var removeCssClassTask = A.debounce(() => {
 						docElement.removeClass('upload-drop-intent');
 						docElement.removeClass('upload-drop-active');
 					}, 500);
 
-					docElement.on('dragover', function(event) {
+					docElement.on('dragover', event => {
 						var originalEvent = event._event;
 
 						var dataTransfer = originalEvent.dataTransfer;
@@ -1452,7 +1452,7 @@ AUI.add(
 
 						instance._preventRenderHandle = instance.on(
 							'render',
-							function(event) {
+							event => {
 								event.preventDefault();
 							}
 						);

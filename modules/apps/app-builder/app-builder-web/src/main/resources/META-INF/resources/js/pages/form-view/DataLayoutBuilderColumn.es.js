@@ -12,16 +12,17 @@
  * details.
  */
 
-import {useEffect, useCallback, useContext} from 'react';
-import FormViewContext from './FormViewContext.es';
-import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
-import {useDrop} from 'react-dnd';
 import {getIndexes} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import dom from 'metal-dom';
+import {useDrop} from 'react-dnd';
+import {useEffect, useCallback, useContext} from 'react';
+
 import {
 	DRAG_CUSTOM_OBJECT_FIELD,
 	DRAG_FIELD_TYPE
 } from '../../utils/dragTypes.es';
+import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
+import FormViewContext from './FormViewContext.es';
 import {dropCustomObjectField, dropLayoutBuilderField} from './actions.es';
 
 const replaceColumn = node => {

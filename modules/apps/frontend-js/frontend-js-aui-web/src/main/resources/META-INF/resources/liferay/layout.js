@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-layout',
-	function(A) {
+	A => {
 		var Util = Liferay.Util;
 
 		var BODY = A.getBody();
@@ -32,7 +32,7 @@ AUI.add(
 				}
 			},
 
-			_getPortletTitle: A.cached(function(id) {
+			_getPortletTitle: A.cached(id => {
 				var portletBoundary = A.one('#' + id);
 
 				var portletTitle = portletBoundary.one('.portlet-title');
@@ -129,7 +129,7 @@ AUI.add(
 			closeNestedPortlets(portlet) {
 				var nestedPortlets = portlet.all('.portlet-boundary');
 
-				nestedPortlets.each(function(portlet) {
+				nestedPortlets.each(portlet => {
 					Liferay.Portlet.close(portlet, true, {
 						nestedPortlet: true
 					});
@@ -159,7 +159,7 @@ AUI.add(
 					if (!firstPortletStatic || firstPortletStatic == 'end') {
 						referencePortlet = firstPortlet;
 					} else {
-						portlets.each(function(item) {
+						portlets.each(item => {
 							var isStatic = item.isStatic;
 
 							if (
@@ -207,7 +207,7 @@ AUI.add(
 
 				var dropNodes = [];
 
-				A.all(options.dropContainer).each(function(dropContainer) {
+				A.all(options.dropContainer).each(dropContainer => {
 					if (
 						!dropContainer.hasClass(
 							options.disabledDropContainerClass
@@ -379,7 +379,7 @@ AUI.add(
 			updateEmptyColumnsInfo() {
 				var options = Layout.options;
 
-				A.all(options.dropNodes).each(function(item) {
+				A.all(options.dropNodes).each(item => {
 					var columnId = item.get('id');
 
 					Layout.EMPTY_COLUMNS[columnId] = !Layout.hasPortlets(item);
@@ -392,7 +392,7 @@ AUI.add(
 
 				var layoutHandler = Layout.getLayoutHandler();
 
-				portletDropNodes.each(function(item) {
+				portletDropNodes.each(item => {
 					layoutHandler.addDropNode(item);
 				});
 			}
@@ -437,7 +437,7 @@ AUI.add(
 				eventHandles.push(
 					BODY.delegate(
 						'mouseenter',
-						function(event) {
+						event => {
 							event.currentTarget.addClass('focus');
 						},
 						'.portlet'
@@ -447,7 +447,7 @@ AUI.add(
 				eventHandles.push(
 					BODY.delegate(
 						'mouseleave',
-						function(event) {
+						event => {
 							event.currentTarget.removeClass('focus');
 						},
 						'.portlet'
@@ -455,7 +455,7 @@ AUI.add(
 				);
 			}
 
-			A.use('liferay-layout-column', function() {
+			A.use('liferay-layout-column', () => {
 				Layout.ColumnLayout.register();
 
 				Layout.bindDragDropListeners();
@@ -465,7 +465,7 @@ AUI.add(
 				Liferay.after('closePortlet', Layout._afterPortletClose);
 				Liferay.on('closePortlet', Layout._onPortletClose);
 
-				Liferay.on('screenFlip', function() {
+				Liferay.on('screenFlip', () => {
 					if (eventHandles) {
 						new A.EventHandle(eventHandles).detach();
 					}
@@ -480,7 +480,7 @@ AUI.add(
 		Liferay.provide(
 			Layout,
 			'saveLayout',
-			function(options) {
+			options => {
 				var data = {
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 					p_auth: Liferay.authToken,
@@ -507,7 +507,7 @@ AUI.add(
 		Liferay.provide(
 			Layout,
 			'updateOverNestedPortletInfo',
-			function() {
+			() => {
 				var activeDrop = A.DD.DDM.activeDrop;
 				var nestedPortletId = Layout.options.nestedPortletId;
 
@@ -525,13 +525,13 @@ AUI.add(
 		if (LAYOUT_CONFIG) {
 			var layoutContainer = A.one(LAYOUT_CONFIG.container);
 
-			Liferay.once('initLayout', function() {
+			Liferay.once('initLayout', () => {
 				Layout.init();
 			});
 
 			if (layoutContainer) {
 				if (!A.UA.touch) {
-					layoutContainer.once('mousemove', function() {
+					layoutContainer.once('mousemove', () => {
 						Liferay.fire('initLayout');
 					});
 				} else {

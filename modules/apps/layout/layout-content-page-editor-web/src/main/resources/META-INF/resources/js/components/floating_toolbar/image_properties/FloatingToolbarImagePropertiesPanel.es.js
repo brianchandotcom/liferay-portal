@@ -16,18 +16,18 @@ import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarImagePropertiesPanelDelegateTemplate.soy';
-import {
-	EDITABLE_FIELD_CONFIG_KEYS,
-	TARGET_TYPES
-} from '../../../utils/constants';
+import {UPDATE_CONFIG_ATTRIBUTES} from '../../../actions/actions.es';
 import {
 	disableSavingChangesStatusAction,
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from '../../../actions/saveChanges.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
+import {
+	EDITABLE_FIELD_CONFIG_KEYS,
+	TARGET_TYPES
+} from '../../../utils/constants';
 import templates from './FloatingToolbarImagePropertiesPanel.soy';
-import {UPDATE_CONFIG_ATTRIBUTES} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarImagePropertiesPanel

@@ -12,8 +12,8 @@
  * details.
  */
 
-import React, {useEffect, useState} from 'react';
 import {PropTypes} from 'prop-types';
+import React, {useEffect, useState} from 'react';
 
 const MAX_LENGTH_DESCIPTION = 160;
 
@@ -52,7 +52,7 @@ const PreviewSeoContainer = ({
 	const [description, setDescription] = useState('');
 	const [title, setTitle] = useState('');
 
-	const handlerInputChange = ({type, event}) => {
+	const handlerInputChange = ({event, type}) => {
 		const value = event.target && event.target.value;
 		if (typeof value === undefined) {
 			return;
@@ -87,7 +87,7 @@ const PreviewSeoContainer = ({
 		);
 
 		return () => {
-			Object.values(inputs).forEach(({node, listener}) =>
+			Object.values(inputs).forEach(({listener, node}) =>
 				node.removeEventListener('input', listener)
 			);
 		};

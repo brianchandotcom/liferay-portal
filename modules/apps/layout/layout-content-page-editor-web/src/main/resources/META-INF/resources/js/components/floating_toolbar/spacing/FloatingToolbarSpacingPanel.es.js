@@ -17,16 +17,16 @@ import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarSpacingPanelDelegateTemplate.soy';
+import {updateRowColumnsNumberAction} from '../../../actions/updateRowColumnsNumber.es';
+import {updateRowConfigAction} from '../../../actions/updateRowConfig.es';
+import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import {
 	CONFIG_KEYS,
 	CONTAINER_TYPES,
 	NUMBER_OF_COLUMNS_OPTIONS,
 	PADDING_OPTIONS
 } from '../../../utils/rowConstants';
-import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarSpacingPanel.soy';
-import {updateRowColumnsNumberAction} from '../../../actions/updateRowColumnsNumber.es';
-import {updateRowConfigAction} from '../../../actions/updateRowConfig.es';
 
 /**
  * FloatingToolbarSpacingPanel

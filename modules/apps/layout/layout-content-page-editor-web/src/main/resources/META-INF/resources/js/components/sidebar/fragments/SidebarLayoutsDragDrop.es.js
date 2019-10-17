@@ -21,12 +21,12 @@ import {
 	CLEAR_DROP_TARGET,
 	UPDATE_DROP_TARGET
 } from '../../../actions/actions.es';
+import {initializeDragDrop} from '../../../utils/FragmentsEditorDragDrop.es';
+import {setDraggingItemPosition} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../../utils/constants';
-import {initializeDragDrop} from '../../../utils/FragmentsEditorDragDrop.es';
-import {setDraggingItemPosition} from '../../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * SidebarLayoutsDragDrop

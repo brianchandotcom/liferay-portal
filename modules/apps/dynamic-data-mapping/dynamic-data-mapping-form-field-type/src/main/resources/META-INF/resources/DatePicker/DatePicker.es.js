@@ -13,19 +13,23 @@
  */
 
 import '../FieldBase/FieldBase.es';
+
 import './DatePickerRegister.soy.js';
+
 import 'clay-button';
+
 import 'clay-icon';
-import * as Helpers from './Helpers.es';
 import Component from 'metal-component';
 import dom from 'metal-dom';
-import moment from 'moment';
-import Soy from 'metal-soy';
-import templates from './DatePicker.soy.js';
-import vanillaTextMask from 'vanilla-text-mask';
-import {createAutoCorrectedDatePipe} from 'text-mask-addons';
-import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
+import Soy from 'metal-soy';
+import {Config} from 'metal-state';
+import moment from 'moment';
+import {createAutoCorrectedDatePipe} from 'text-mask-addons';
+import vanillaTextMask from 'vanilla-text-mask';
+
+import templates from './DatePicker.soy.js';
+import * as Helpers from './Helpers.es';
 
 /**
  * Metal DatePicker component.

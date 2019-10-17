@@ -26,8 +26,7 @@
 
 function setIn(object, keyPath, value) {
 	const nextKey = keyPath[0];
-	const target =
-		object instanceof Array ? [...object] : Object.assign({}, object);
+	const target = object instanceof Array ? [...object] : {...object};
 
 	let nextValue = value;
 

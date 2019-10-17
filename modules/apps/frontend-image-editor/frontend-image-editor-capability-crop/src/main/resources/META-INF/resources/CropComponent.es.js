@@ -12,11 +12,12 @@
  * details.
  */
 
-import {core} from 'metal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+import {core} from 'metal';
 
 import componentTemplates from './CropComponent.soy';
+
 import './CropControls.soy';
 
 /**

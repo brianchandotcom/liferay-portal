@@ -12,8 +12,8 @@
  * details.
  */
 
-import hash from './utils/hash';
 import middlewares from './middlewares/defaults';
+import hash from './utils/hash';
 
 /**
  * Client used to abstract communication with the Analytics Endpoint. It exposes

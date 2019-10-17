@@ -13,12 +13,13 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayDropdown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+
 import {conjunctionShape} from '../../utils/types.es';
-import ClayDropdown from '@clayui/drop-down';
 
 function Conjunction({
 	className,

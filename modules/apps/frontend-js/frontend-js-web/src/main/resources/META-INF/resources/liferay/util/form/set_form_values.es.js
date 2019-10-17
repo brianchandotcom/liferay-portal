@@ -13,6 +13,7 @@
  */
 
 import {isDef, isObject} from 'metal';
+
 import getFormElement from './get_form_element.es';
 
 /**

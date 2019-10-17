@@ -22,13 +22,11 @@ import React, {
 	useContext,
 	useLayoutEffect
 } from 'react';
-import renderSettingsForm, {
-	getFilteredSettingsContext
-} from './renderSettingsForm.es';
-import {useSidebarContent} from '../../hooks/index.es';
+
+import Button from '../../components/button/Button.es';
 import FieldTypeList from '../../components/field-types/FieldTypeList.es';
 import Sidebar from '../../components/sidebar/Sidebar.es';
-import Button from '../../components/button/Button.es';
+import {useSidebarContent} from '../../hooks/index.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 import FormViewContext from './FormViewContext.es';
@@ -37,6 +35,9 @@ import {
 	EDIT_CUSTOM_OBJECT_FIELD,
 	EVALUATION_ERROR
 } from './actions.es';
+import renderSettingsForm, {
+	getFilteredSettingsContext
+} from './renderSettingsForm.es';
 
 const DefaultSidebarBody = ({keywords}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);

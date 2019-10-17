@@ -12,11 +12,12 @@
  * details.
  */
 
+import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import Component from 'metal-jsx';
+import {Config} from 'metal-state';
+
 import RuleEditor from '../../components/RuleEditor/RuleEditor.es';
 import RuleList from '../../components/RuleList/RuleList.es';
-import {Config} from 'metal-state';
-import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 
 /**
  * Builder.

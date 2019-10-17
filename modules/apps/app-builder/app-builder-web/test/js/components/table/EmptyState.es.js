@@ -14,6 +14,7 @@
 
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
+
 import EmptyState from '../../../../src/main/resources/META-INF/resources/js/components/table/EmptyState.es';
 
 describe('EmptyState', () => {

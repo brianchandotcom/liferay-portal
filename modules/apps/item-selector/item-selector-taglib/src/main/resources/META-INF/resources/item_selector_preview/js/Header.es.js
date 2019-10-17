@@ -15,8 +15,8 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 const Header = ({
 	handleClickClose,

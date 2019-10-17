@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-preview',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var ATTR_DATA_IMAGE_INDEX = 'data-imageIndex';
@@ -330,7 +330,7 @@ AUI.add(
 
 							loadingIndicator.show();
 
-							setTimeout(function() {
+							setTimeout(() => {
 								instance._renderImages(maxIndex);
 							}, 350);
 						}
@@ -563,7 +563,7 @@ AUI.add(
 						'imageListContent'
 					);
 
-					instance._hideLoadingIndicator = A.debounce(function() {
+					instance._hideLoadingIndicator = A.debounce(() => {
 						instance._getLoadingIndicator().hide();
 					}, 250);
 				},

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-workflow-web',
-	function(A) {
+	A => {
 		var WorkflowWeb = {
 			_alert: null,
 

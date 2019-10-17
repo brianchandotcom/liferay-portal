@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-message-util',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 		var LString = Lang.String;
 
@@ -41,7 +41,7 @@ AUI.add(
 						Liferay.Language.get('save-changes'),
 						Liferay.Language.get('do-not-change-the-event'),
 						showNextQuestion,
-						function() {
+						() => {
 							answers.cancel = true;
 
 							showNextQuestion();
@@ -62,19 +62,19 @@ AUI.add(
 				} else {
 					Liferay.RecurrenceUtil.openConfirmationPanel(
 						'update',
-						function() {
+						() => {
 							answers.updateInstance = true;
 
 							showNextQuestion();
 						},
-						function() {
+						() => {
 							answers.allFollowing = true;
 							answers.updateInstance = true;
 
 							showNextQuestion();
 						},
 						showNextQuestion,
-						function() {
+						() => {
 							answers.cancel = true;
 
 							showNextQuestion();
@@ -109,7 +109,7 @@ AUI.add(
 						Liferay.Language.get('save-changes'),
 						Liferay.Language.get('do-not-change-the-event'),
 						showNextQuestion,
-						function() {
+						() => {
 							answers.cancel = true;
 
 							showNextQuestion();

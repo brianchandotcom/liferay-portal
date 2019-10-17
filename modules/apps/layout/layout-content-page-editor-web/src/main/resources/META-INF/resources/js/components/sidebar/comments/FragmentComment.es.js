@@ -12,26 +12,26 @@
  * details.
  */
 
-import classNames from 'classnames';
 import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
 import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
+import useSelector from '../../../store/hooks/useSelector.es';
 import {
 	deleteFragmentEntryLinkComment,
 	editFragmentEntryLinkComment
 } from '../../../utils/FragmentsEditorFetchUtils.es';
-import EditCommentForm from './EditCommentForm.es';
-import {HIGHLIGHTED_COMMENT_ID_KEY} from '../../edit_mode/EditModeWrapper.es';
 import InlineConfirm from '../../common/InlineConfirm.es';
+import UserIcon from '../../common/UserIcon.es';
+import {HIGHLIGHTED_COMMENT_ID_KEY} from '../../edit_mode/EditModeWrapper.es';
+import EditCommentForm from './EditCommentForm.es';
 import ReplyCommentForm from './ReplyCommentForm.es';
 import ResolveButton from './ResolveButton.es';
-import UserIcon from '../../common/UserIcon.es';
-import useSelector from '../../../store/hooks/useSelector.es';
 
 const FragmentComment = props => {
 	const isReply = props.parentCommentId;

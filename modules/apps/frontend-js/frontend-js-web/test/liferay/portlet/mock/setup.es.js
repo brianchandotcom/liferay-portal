@@ -25,4 +25,4 @@ function fetchMock(data) {
 }
 
 global.fetchMock = fetchMock;
-global.portlet = Object.assign({}, portlet);
+global.portlet = {...portlet};

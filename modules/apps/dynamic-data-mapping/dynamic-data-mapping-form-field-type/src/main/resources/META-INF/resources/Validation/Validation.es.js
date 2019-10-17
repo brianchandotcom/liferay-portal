@@ -13,17 +13,24 @@
  */
 
 import '../Checkbox/Checkbox.es';
+
 import '../FieldBase/FieldBase.es';
+
 import '../Numeric/Numeric.es';
+
 import '../Select/Select.es';
+
 import '../Text/Text.es';
+
 import './ValidationRegister.soy.js';
+
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import templates from './Validation.soy.js';
-import VALIDATIONS from '../util/validations.es';
 import {Config} from 'metal-state';
+
 import {subWords} from '../util/strings.es';
+import VALIDATIONS from '../util/validations.es';
+import templates from './Validation.soy.js';
 
 class Validation extends Component {
 	prepareStateForRender(state) {

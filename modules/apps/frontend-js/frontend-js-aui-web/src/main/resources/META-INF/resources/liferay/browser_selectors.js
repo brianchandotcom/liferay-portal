@@ -14,7 +14,7 @@
 
 YUI.add(
 	'liferay-browser-selectors',
-	function(A) {
+	A => {
 		var REGEX_VERSION_DOT = /\./g;
 
 		var YUI3_JS_ENABLED = 'yui3-js-enabled';
@@ -23,7 +23,7 @@ YUI.add(
 			var count = 0;
 
 			return parseFloat(
-				str.replace(REGEX_VERSION_DOT, function() {
+				str.replace(REGEX_VERSION_DOT, () => {
 					return count++ == 1 ? '' : '.';
 				})
 			);

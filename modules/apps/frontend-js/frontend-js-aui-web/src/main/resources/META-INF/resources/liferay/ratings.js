@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-ratings',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var CSS_ICON_STAR = 'icon-star-on';
@@ -74,11 +74,11 @@ AUI.add(
 				return ratingInstance;
 			},
 
-			_registerTask: A.debounce(function() {
-				buffer.forEach(function(item) {
+			_registerTask: A.debounce(() => {
+				buffer.forEach(item => {
 					var handle = item.container.on(
 						EVENT_INTERACTIONS_RENDER,
-						function(event) {
+						event => {
 							handle.detach();
 
 							var config = item.config;
@@ -285,7 +285,7 @@ AUI.add(
 
 					var nodes = instance._ratingStarNode.all('.rating-element');
 
-					nodes.each(function(node, i) {
+					nodes.each((node, i) => {
 						var ratingMessage = '';
 						var ratingScore = '';
 
@@ -448,7 +448,7 @@ AUI.add(
 
 					ratingScore
 						.all(SELECTOR_RATING_ELEMENT)
-						.each(function(item, index) {
+						.each((item, index) => {
 							var fromCssClass = CSS_ICON_STAR;
 							var toCssClass = CSS_ICON_STAR_EMPTY;
 

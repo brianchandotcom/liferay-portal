@@ -12,8 +12,8 @@
  * details.
  */
 
-import classNames from 'classnames';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 

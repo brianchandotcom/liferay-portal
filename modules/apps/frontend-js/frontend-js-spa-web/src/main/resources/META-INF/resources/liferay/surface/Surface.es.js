@@ -12,8 +12,8 @@
  * details.
  */
 
-import core from 'metal';
 import dom from 'metal-dom';
+import core from 'metal';
 import Surface from 'senna/lib/surface/Surface';
 
 /**

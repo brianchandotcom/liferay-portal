@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-recurrence-converter',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var LString = Lang.String;
@@ -76,7 +76,7 @@ AUI.add(
 			_encodeRRule(rrule) {
 				var instance = this;
 
-				var components = A.Object.map(rrule, function(item, index) {
+				var components = A.Object.map(rrule, (item, index) => {
 					return (
 						index.toUpperCase() +
 						STR_EQUALS +

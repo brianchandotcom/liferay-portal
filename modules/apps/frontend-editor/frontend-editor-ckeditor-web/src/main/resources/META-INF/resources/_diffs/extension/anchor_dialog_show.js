@@ -12,7 +12,7 @@
  * details.
  */
 
-ckEditor.on('dialogShow', function(event) {
+ckEditor.on('dialogShow', event => {
 	var dialog = event.data.definition.dialog;
 
 	if (dialog.getName() === 'anchor') {

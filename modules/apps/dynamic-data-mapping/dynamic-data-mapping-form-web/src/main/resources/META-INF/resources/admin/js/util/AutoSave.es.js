@@ -12,13 +12,13 @@
  * details.
  */
 
-import Component from 'metal-jsx';
-import objectHash from 'object-hash';
-import {Config} from 'metal-state';
 import {
 	convertToFormData,
 	makeFetch
 } from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
+import Component from 'metal-jsx';
+import {Config} from 'metal-state';
+import objectHash from 'object-hash';
 
 class AutoSave extends Component {
 	created() {

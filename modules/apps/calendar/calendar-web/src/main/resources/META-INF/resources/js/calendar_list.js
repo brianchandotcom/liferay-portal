@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-list',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
@@ -288,7 +288,7 @@ AUI.add(
 						'showCalendarResourceName'
 					);
 
-					val.forEach(function(item, index) {
+					val.forEach((item, index) => {
 						var calendar = item;
 
 						if (!A.instanceOf(item, Liferay.SchedulerCalendar)) {

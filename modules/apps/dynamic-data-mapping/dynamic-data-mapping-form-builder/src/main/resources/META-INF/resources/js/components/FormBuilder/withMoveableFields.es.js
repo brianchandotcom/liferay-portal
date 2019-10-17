@@ -13,9 +13,10 @@
  */
 
 import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
+import {DragDrop} from 'metal-drag-drop';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
-import {DragDrop} from 'metal-drag-drop';
+
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
 
 const withMoveableFields = ChildComponent => {

@@ -12,7 +12,7 @@
  * details.
  */
 
-CKEDITOR.dialog.add('audio', function(editor) {
+CKEDITOR.dialog.add('audio', editor => {
 	var TPL_SCRIPT =
 		'boundingBox: "#" + mediaId,' + 'oggUrl: "{oggUrl}",' + 'url: "{url}"';
 

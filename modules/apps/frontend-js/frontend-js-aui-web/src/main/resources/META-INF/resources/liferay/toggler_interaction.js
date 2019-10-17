@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-toggler-interaction',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var NAME = 'togglerinteraction';

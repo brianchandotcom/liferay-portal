@@ -14,11 +14,11 @@
 
 import React from 'react';
 
+import useSelector from '../../../store/hooks/useSelector.es';
+import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {FragmentComments} from './FragmentComments.es';
 import {FragmentEntryLinksWithComments} from './FragmentEntryLinksWithComments.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
-import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
-import useSelector from '../../../store/hooks/useSelector.es';
 
 const SidebarComments = () => {
 	const activeItemId = useSelector(state => state.activeItemId);

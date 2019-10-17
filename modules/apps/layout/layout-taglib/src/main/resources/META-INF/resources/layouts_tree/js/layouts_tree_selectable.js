@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-layouts-tree-selectable',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var LABEL_TPL =

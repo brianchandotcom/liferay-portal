@@ -17,15 +17,15 @@
 var assertEmpty = Liferay.Test.assertEmpty;
 var assertSameItems = Liferay.Test.assertSameItems;
 
-describe('Liferay.Search.FacetUtil', function() {
-	before(function(done) {
-		AUI().use('liferay-search-facet-util', function() {
+describe('Liferay.Search.FacetUtil', () => {
+	before(done => {
+		AUI().use('liferay-search-facet-util', () => {
 			done();
 		});
 	});
 
-	describe('.removeURLParameters()', function() {
-		it('removes the parameter whose name is the given key.', function(done) {
+	describe('.removeURLParameters()', () => {
+		it('removes the parameter whose name is the given key.', done => {
 			var parameterArray = ['modified=last-24-hours', 'q=test'];
 
 			var newParameters = Liferay.Search.FacetUtil.removeURLParameters(
@@ -39,7 +39,7 @@ describe('Liferay.Search.FacetUtil', function() {
 			done();
 		});
 
-		it('does NOT remove parameters not matching the given key.', function(done) {
+		it('does NOT remove parameters not matching the given key.', done => {
 			var parameterArray = [
 				'modifiedFrom=2018-01-01',
 				'modifiedTo=2018-01-31',
@@ -57,9 +57,9 @@ describe('Liferay.Search.FacetUtil', function() {
 		});
 	});
 
-	describe('unit', function() {
-		describe('.setURLParameter()', function() {
-			it('adds a missing parameter.', function(done) {
+	describe('unit', () => {
+		describe('.setURLParameter()', () => {
+			it('adds a missing parameter.', done => {
 				var url = Liferay.Search.FacetUtil.setURLParameter(
 					'http://example.com/',
 					'q',
@@ -71,7 +71,7 @@ describe('Liferay.Search.FacetUtil', function() {
 				done();
 			});
 
-			it('updates an existing parameter.', function(done) {
+			it('updates an existing parameter.', done => {
 				var url = Liferay.Search.FacetUtil.setURLParameter(
 					'http://example.com/?q=example',
 					'q',
@@ -83,7 +83,7 @@ describe('Liferay.Search.FacetUtil', function() {
 				done();
 			});
 
-			it('adds a missing parameter with path.', function(done) {
+			it('adds a missing parameter with path.', done => {
 				var url = Liferay.Search.FacetUtil.setURLParameter(
 					'http://example.com/path',
 					'q',
@@ -95,7 +95,7 @@ describe('Liferay.Search.FacetUtil', function() {
 				done();
 			});
 
-			it('updates an existing parameter.', function(done) {
+			it('updates an existing parameter.', done => {
 				var url = Liferay.Search.FacetUtil.setURLParameter(
 					'http://example.com/path?q=example',
 					'q',
@@ -108,8 +108,8 @@ describe('Liferay.Search.FacetUtil', function() {
 			});
 		});
 
-		describe('.setURLParameters()', function() {
-			it('adds new selections.', function(done) {
+		describe('.setURLParameters()', () => {
+			it('adds new selections.', done => {
 				var parameterArray = Liferay.Search.FacetUtil.setURLParameters(
 					'key',
 					['sel1', 'sel2'],
@@ -121,7 +121,7 @@ describe('Liferay.Search.FacetUtil', function() {
 				done();
 			});
 
-			it('removes old selections.', function(done) {
+			it('removes old selections.', done => {
 				var parameterArray = Liferay.Search.FacetUtil.setURLParameters(
 					'key',
 					['sel2', 'sel3'],
@@ -133,7 +133,7 @@ describe('Liferay.Search.FacetUtil', function() {
 				done();
 			});
 
-			it('preserves other selections.', function(done) {
+			it('preserves other selections.', done => {
 				var parameterArray = Liferay.Search.FacetUtil.setURLParameters(
 					'key1',
 					['sel1'],
@@ -146,8 +146,8 @@ describe('Liferay.Search.FacetUtil', function() {
 			});
 		});
 
-		describe('.removeURLParameters()', function() {
-			it('removes given parameter.', function(done) {
+		describe('.removeURLParameters()', () => {
+			it('removes given parameter.', done => {
 				var parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
 					'key',
 					['key=sel1', 'key=sel2']
@@ -158,7 +158,7 @@ describe('Liferay.Search.FacetUtil', function() {
 				done();
 			});
 
-			it('preserves other parameters.', function(done) {
+			it('preserves other parameters.', done => {
 				var parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
 					'key1',
 					['key1=sel1', 'key2=sel2']
@@ -170,7 +170,7 @@ describe('Liferay.Search.FacetUtil', function() {
 				done();
 			});
 
-			it('preserves key-only parameters.', function(done) {
+			it('preserves key-only parameters.', done => {
 				var parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
 					'key',
 					['checked', 'key=value']
@@ -181,7 +181,7 @@ describe('Liferay.Search.FacetUtil', function() {
 				done();
 			});
 
-			it('removes key-only parameters.', function(done) {
+			it('removes key-only parameters.', done => {
 				var parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
 					'checked',
 					['checked', 'key=value']
@@ -193,8 +193,8 @@ describe('Liferay.Search.FacetUtil', function() {
 			});
 		});
 
-		describe('.updateQueryString()', function() {
-			it('removes old selections.', function(done) {
+		describe('.updateQueryString()', () => {
+			it('removes old selections.', done => {
 				var queryString = Liferay.Search.FacetUtil.updateQueryString(
 					'key',
 					['sel2', 'sel3'],
@@ -206,7 +206,7 @@ describe('Liferay.Search.FacetUtil', function() {
 				done();
 			});
 
-			it('adds new selections.', function(done) {
+			it('adds new selections.', done => {
 				var queryString = Liferay.Search.FacetUtil.updateQueryString(
 					'key1',
 					['sel1'],
@@ -218,7 +218,7 @@ describe('Liferay.Search.FacetUtil', function() {
 				done();
 			});
 
-			it('accepts query string without question mark.', function(done) {
+			it('accepts query string without question mark.', done => {
 				var queryString = Liferay.Search.FacetUtil.updateQueryString(
 					'key1',
 					['sel1'],
@@ -232,9 +232,9 @@ describe('Liferay.Search.FacetUtil', function() {
 		});
 	});
 
-	describe('regression', function() {
-		describe('.updateQueryString()', function() {
-			it('does not prefix with ampersand.', function(done) {
+	describe('regression', () => {
+		describe('.updateQueryString()', () => {
+			it('does not prefix with ampersand.', done => {
 				var queryString = Liferay.Search.FacetUtil.updateQueryString(
 					'key',
 					['sel1', 'sel2'],

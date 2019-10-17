@@ -12,10 +12,11 @@
  * details.
  */
 
-import SuccessPage from '../../../../src/main/resources/META-INF/resources/js/components/SuccessPage/SuccessPage.es';
-import SucessPageSettings from '../../__mock__/mockSuccessPage.es';
 import dom from 'metal-dom';
 import JSXComponent from 'metal-jsx';
+
+import SuccessPage from '../../../../src/main/resources/META-INF/resources/js/components/SuccessPage/SuccessPage.es';
+import SucessPageSettings from '../../__mock__/mockSuccessPage.es';
 
 let component;
 let successPageSettings;

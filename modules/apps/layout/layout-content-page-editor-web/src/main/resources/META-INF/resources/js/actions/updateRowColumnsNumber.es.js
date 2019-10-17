@@ -12,20 +12,20 @@
  * details.
  */
 
+import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
+import {
+	getRowFragmentEntryLinkIds,
+	getRowIndex
+} from '../utils/FragmentsEditorGetUtils.es';
+import {setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
+import {MAX_COLUMNS} from '../utils/rowConstants';
+import {UPDATE_ROW_COLUMNS_NUMBER_SUCCESS} from './actions.es';
+import {removeFragmentEntryLinksAction} from './removeFragmentEntryLinks.es';
 import {
 	disableSavingChangesStatusAction,
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from './saveChanges.es';
-import {
-	getRowFragmentEntryLinkIds,
-	getRowIndex
-} from '../utils/FragmentsEditorGetUtils.es';
-import {MAX_COLUMNS} from '../utils/rowConstants';
-import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
-import {setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
-import {UPDATE_ROW_COLUMNS_NUMBER_SUCCESS} from './actions.es';
-import {removeFragmentEntryLinksAction} from './removeFragmentEntryLinks.es';
 
 /**
  * @param {number} numberOfColumns

@@ -12,9 +12,9 @@
  * details.
  */
 
-import State, {Config} from 'metal-state';
-import position from 'metal-position';
 import {DragDrop} from 'metal-drag-drop';
+import position from 'metal-position';
+import State, {Config} from 'metal-state';
 
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
@@ -26,12 +26,12 @@ import {
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from '../../../actions/saveChanges.es';
+import {initializeDragDrop} from '../../../utils/FragmentsEditorDragDrop.es';
+import {setDraggingItemPosition} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../../utils/constants';
-import {initializeDragDrop} from '../../../utils/FragmentsEditorDragDrop.es';
-import {setDraggingItemPosition} from '../../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * SidebarElementsDragDrop

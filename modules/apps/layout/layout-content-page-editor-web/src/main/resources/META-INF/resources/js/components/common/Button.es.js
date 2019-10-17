@@ -17,6 +17,7 @@
 import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import Loader from './Loader.es';
 
 const Button = ({children, loading, ...props}) => (

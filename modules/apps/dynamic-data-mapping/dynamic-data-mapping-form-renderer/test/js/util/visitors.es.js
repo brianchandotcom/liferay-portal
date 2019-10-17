@@ -12,8 +12,8 @@
  * details.
  */
 
-import mockPages from '../__mock__/mockPages.es';
 import {PagesVisitor} from '../../../src/main/resources/META-INF/resources/js/util/visitors.es';
+import mockPages from '../__mock__/mockPages.es';
 
 let visitor;
 

@@ -174,7 +174,7 @@ var generateColorCurve = function(controlPoints) {
 		controlPoints[1][1]
 	);
 
-	controlPoints.slice(2).forEach(function(controlPoint) {
+	controlPoints.slice(2).forEach(controlPoint => {
 		curve.addPoint(controlPoint[0], controlPoint[1]);
 	});
 

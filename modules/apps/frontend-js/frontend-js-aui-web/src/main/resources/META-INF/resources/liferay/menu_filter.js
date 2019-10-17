@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-menu-filter',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var CSS_HIDE = 'hide';
@@ -59,7 +59,7 @@ AUI.add(
 
 					instance._menuItems.addClass(CSS_HIDE);
 
-					event.results.forEach(function(result) {
+					event.results.forEach(result => {
 						result.raw.node.removeClass(CSS_HIDE);
 					});
 				},

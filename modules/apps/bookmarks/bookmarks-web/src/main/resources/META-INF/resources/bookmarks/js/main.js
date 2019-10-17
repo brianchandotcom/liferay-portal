@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-bookmarks',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var Bookmarks = A.Component.create({

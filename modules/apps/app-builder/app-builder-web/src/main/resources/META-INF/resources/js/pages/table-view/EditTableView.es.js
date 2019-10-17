@@ -14,7 +14,7 @@
 
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
-import DropZone from './DropZone.es';
+
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import DragLayer from '../../components/drag-and-drop/DragLayer.es';
 import FieldTypeList from '../../components/field-types/FieldTypeList.es';
@@ -22,6 +22,7 @@ import {Loading} from '../../components/loading/Loading.es';
 import Sidebar from '../../components/sidebar/Sidebar.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import {addItem, getItem, updateItem} from '../../utils/client.es';
+import DropZone from './DropZone.es';
 
 const EditTableView = ({
 	history,
@@ -166,8 +167,8 @@ const EditTableView = ({
 	const {dataDefinitionFields: availableFields} = dataDefinition;
 
 	const {
-		name: {en_US: dataListViewName},
-		fieldNames
+		fieldNames,
+		name: {en_US: dataListViewName}
 	} = dataListView;
 
 	return (

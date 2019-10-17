@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-form-placeholders',
-	function(A) {
+	A => {
 		var ANode = A.Node;
 
 		var CSS_PLACEHOLDER = 'text-placeholder';
@@ -65,7 +65,7 @@ AUI.add(
 							'_pass_placeholder" type="text" />'
 					);
 
-					Liferay.Util.getAttributes(field, function(value, name) {
+					Liferay.Util.getAttributes(field, (value, name) => {
 						var result = false;
 
 						if (!MAP_IGNORE_ATTRS[name]) {
@@ -97,7 +97,7 @@ AUI.add(
 						SELECTOR_PLACEHOLDER_INPUTS
 					);
 
-					placeholderInputs.each(function(item) {
+					placeholderInputs.each(item => {
 						if (item.val() == item.attr(STR_PLACEHOLDER)) {
 							item.val(STR_BLANK);
 						}
@@ -138,7 +138,7 @@ AUI.add(
 
 								passwordField.show();
 
-								setTimeout(function() {
+								setTimeout(() => {
 									Liferay.Util.focusFormField(passwordField);
 								}, 0);
 							}
@@ -209,7 +209,7 @@ AUI.add(
 							SELECTOR_PLACEHOLDER_INPUTS
 						);
 
-						placeholderInputs.each(function(item) {
+						placeholderInputs.each(item => {
 							if (!item.val()) {
 								if (item.attr(STR_TYPE) === STR_PASSWORD) {
 									instance._initializePasswordNode(item);

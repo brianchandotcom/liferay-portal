@@ -12,8 +12,8 @@
  * details.
  */
 
-import State, {Config} from 'metal-state';
 import {buildFragment} from 'metal-dom';
+import State, {Config} from 'metal-state';
 
 import GeoJSONBase from './GeoJSONBase.es';
 import MarkerBase from './MarkerBase.es';

@@ -45,7 +45,7 @@
 	Liferay.provide(
 		LayoutExporter,
 		'all',
-		function(options) {
+		options => {
 			options = options || {};
 
 			var obj = options.obj;
@@ -65,7 +65,7 @@
 	Liferay.provide(
 		LayoutExporter,
 		'details',
-		function(options) {
+		options => {
 			options = options || {};
 
 			var detail = A.one(options.detail);
@@ -90,7 +90,7 @@
 	Liferay.provide(
 		LayoutExporter,
 		'proposeLayout',
-		function(options) {
+		options => {
 			options = options || {};
 
 			var namespace = options.namespace;
@@ -148,7 +148,7 @@
 	Liferay.provide(
 		LayoutExporter,
 		'selected',
-		function(options) {
+		options => {
 			options = options || {};
 
 			var obj = options.obj;

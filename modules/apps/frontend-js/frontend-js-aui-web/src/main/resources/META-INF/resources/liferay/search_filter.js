@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-search-filter',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var SearchImpl = A.Component.create({
@@ -88,7 +88,7 @@ AUI.add(
 
 						var searchData = [];
 
-						nodes.each(function(item) {
+						nodes.each(item => {
 							searchData.push({
 								node: item,
 								search: item.attr(searchDataLocator)

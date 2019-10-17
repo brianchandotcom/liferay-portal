@@ -13,8 +13,9 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import ContributorsBuilder from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/ContributorsBuilder.es';
 import React from 'react';
+
+import ContributorsBuilder from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/ContributorsBuilder.es';
 import {
 	CONJUNCTIONS,
 	SUPPORTED_CONJUNCTIONS,

@@ -12,10 +12,11 @@
  * details.
  */
 
-import classNames from 'classnames';
-import React, {useState, useEffect} from 'react';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
+import classNames from 'classnames';
+import React, {useState, useEffect} from 'react';
+
 import Button from '../button/Button.es';
 
 const Sidebar = React.forwardRef(

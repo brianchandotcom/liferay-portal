@@ -13,9 +13,9 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import React, {useEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {Link, withRouter} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
 
 const CONTROL_MENU_CONTENT = '.control-menu-nav-item-content';
 

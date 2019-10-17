@@ -44,7 +44,7 @@
 				preBlock.appendBogus();
 			}
 
-			setTimeout(function() {
+			setTimeout(() => {
 				editor.fire('saveSnapshot');
 			}, 0);
 		},
@@ -75,7 +75,7 @@
 				CKEDITOR.getUrl(path + 'bbcode_parser.js')
 			];
 
-			CKEDITOR.scriptLoader.load(dependencies, function() {
+			CKEDITOR.scriptLoader.load(dependencies, () => {
 				var bbcodeDataProcessor = CKEDITOR.plugins.get(
 					'bbcode_data_processor'
 				);

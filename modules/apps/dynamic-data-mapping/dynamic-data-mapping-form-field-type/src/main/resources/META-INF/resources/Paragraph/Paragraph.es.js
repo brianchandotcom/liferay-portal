@@ -13,11 +13,14 @@
  */
 
 import '../FieldBase/FieldBase.es';
+
 import './ParagraphRegister.soy.js';
+
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import templates from './Paragraph.soy.js';
 import {Config} from 'metal-state';
+
+import templates from './Paragraph.soy.js';
 
 class Paragraph extends Component {}
 

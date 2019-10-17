@@ -14,21 +14,22 @@
 
 import {useResource} from '@clayui/data-provider';
 import React, {useReducer} from 'react';
+
+import {getURL} from '../../utils/client.es';
 import {ManagementToolbar, SearchBar} from '../management-toolbar/index.es';
 import SearchContext, {
 	reducer
 } from '../management-toolbar/search/SearchContext.es';
 import SearchSubnavigationBar from '../management-toolbar/search/SearchSubnavigationBar.es';
 import TableWithPagination from '../table/TableWithPagination.es';
-import {getURL} from '../../utils/client.es';
 
 export default ({
 	actions,
 	addButton,
 	children,
 	columns,
-	endpoint,
-	emptyState
+	emptyState,
+	endpoint
 }) => {
 	const [state, dispatch] = useReducer(reducer, {
 		isLoading: true,

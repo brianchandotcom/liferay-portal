@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-dd-proxy',
-	function(A) {
+	A => {
 		var body = A.getBody();
 
 		var DDM = A.DD.DDM;

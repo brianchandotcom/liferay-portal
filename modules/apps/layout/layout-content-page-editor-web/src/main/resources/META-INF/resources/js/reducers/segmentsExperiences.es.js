@@ -100,9 +100,7 @@ function _switchLayoutDataList(state, segmentsExperienceId) {
 						segmentedLayout => {
 							return segmentedLayout.segmentsExperienceId ===
 								prevSegmentsExperienceId
-								? Object.assign({}, segmentedLayout, {
-										layoutData: prevLayout
-								  })
+								? {...segmentedLayout, layoutData: prevLayout}
 								: segmentedLayout;
 						}
 					);
@@ -247,9 +245,9 @@ function createSegmentsExperienceReducer(state, action) {
 				return objectResponse;
 			})
 			.then(function _success({
-				segmentsExperience,
+				fragmentEntryLinks,
 				layoutData,
-				fragmentEntryLinks
+				segmentsExperience
 			}) {
 				const {
 					active,
@@ -381,10 +379,9 @@ function deleteSegmentsExperienceReducer(state, action) {
 							segmentsExperienceId
 						].priority;
 
-					const availableSegmentsExperiences = Object.assign(
-						{},
-						nextState.availableSegmentsExperiences
-					);
+					const availableSegmentsExperiences = {
+						...nextState.availableSegmentsExperiences
+					};
 
 					delete availableSegmentsExperiences[segmentsExperienceId];
 

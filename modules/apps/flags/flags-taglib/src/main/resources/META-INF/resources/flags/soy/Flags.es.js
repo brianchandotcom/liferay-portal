@@ -14,6 +14,7 @@
 
 import 'clay-button';
 import {PortletBase, fetch} from 'frontend-js-web';
+
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';

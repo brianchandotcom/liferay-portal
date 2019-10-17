@@ -14,7 +14,7 @@
 
 AUI.add(
 	'document-library-checkin',
-	function(A) {
+	A => {
 		var DocumentLibraryCheckin = {
 			showDialog(namespace, callback) {
 				var contentId = namespace + 'versionDetails';

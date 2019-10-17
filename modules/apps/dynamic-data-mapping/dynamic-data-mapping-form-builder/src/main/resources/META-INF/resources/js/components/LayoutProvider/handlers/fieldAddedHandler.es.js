@@ -14,6 +14,7 @@
 
 import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+
 import {
 	generateInstanceId,
 	getFieldProperties

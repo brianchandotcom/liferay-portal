@@ -181,7 +181,7 @@
 							if (Layout) {
 								instance._dragListener = Layout.getLayoutHandler().on(
 									'drag:start',
-									function() {
+									() => {
 										instance.fire('save');
 									}
 								);
@@ -209,7 +209,7 @@
 		},
 
 		addInputCancel() {
-			A.use('aui-button-search-cancel', function(A) {
+			A.use('aui-button-search-cancel', A => {
 				new A.ButtonSearchCancel({
 					trigger:
 						'input[type=password], input[type=search], input.clearable, input.search-query'
@@ -224,7 +224,7 @@
 				var paramKeys = Object.keys(params);
 
 				params = paramKeys
-					.map(function(key) {
+					.map(key => {
 						return (
 							encodeURIComponent(key) +
 							'=' +
@@ -291,7 +291,7 @@
 
 				var allBoxChecked = $(allBox).prop(STR_CHECKED);
 
-				form.find(selector).each(function(index, item) {
+				form.find(selector).each((index, item) => {
 					item = $(item);
 
 					if (!item.prop('disabled')) {
@@ -331,7 +331,7 @@
 					name = [name];
 				}
 
-				inputs.each(function(index, item) {
+				inputs.each((index, item) => {
 					item = $(item);
 
 					if (
@@ -356,7 +356,7 @@
 			if (document.all && window.event.keyCode == 9) {
 				box.selection = document.selection.createRange();
 
-				setTimeout(function() {
+				setTimeout(() => {
 					Util.processTab(box.id);
 				}, 0);
 			}
@@ -404,12 +404,12 @@
 			inputs.setStyle('opacity', 0.5);
 
 			if (A.UA.gecko) {
-				A.getWin().on('unload', function() {
+				A.getWin().on('unload', () => {
 					inputs.attr('disabled', false);
 				});
 			} else if (A.UA.safari) {
-				A.use('node-event-html5', function(A) {
-					A.getWin().on('pagehide', function() {
+				A.use('node-event-html5', A => {
+					A.getWin().on('pagehide', () => {
 						Util.enableFormButtons(inputs, form);
 					});
 				});
@@ -425,7 +425,7 @@
 				checkDisabled && checkBox.prop(STR_CHECKED)
 			);
 
-			checkBox.on(EVENT_CLICK, function() {
+			checkBox.on(EVENT_CLICK, () => {
 				toggleBox.prop('disabled', !toggleBox.prop('disabled'));
 			});
 		},
@@ -437,7 +437,7 @@
 		},
 
 		escapeCDATA(str) {
-			return str.replace(/<!\[CDATA\[|\]\]>/gi, function(match) {
+			return str.replace(/<!\[CDATA\[|\]\]>/gi, match => {
 				var str = '';
 
 				if (match == ']]>') {
@@ -459,7 +459,7 @@
 
 			el = $(el);
 
-			doc.on('click.focusFormField', function() {
+			doc.on('click.focusFormField', () => {
 				interacting = true;
 
 				doc.off('click.focusFormField');
@@ -582,7 +582,7 @@
 		getGeolocation(success, fallback, options) {
 			if (success && navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(
-					function(position) {
+					position => {
 						success(
 							position.coords.latitude,
 							position.coords.longitude,
@@ -819,7 +819,7 @@
 			return $(form)
 				.find(selector)
 				.toArray()
-				.reduce(function(prev, item) {
+				.reduce((prev, item) => {
 					item = $(item);
 
 					var val = item.val();
@@ -848,7 +848,7 @@
 			return $(select)
 				.find('option')
 				.toArray()
-				.reduce(function(prev, item) {
+				.reduce((prev, item) => {
 					var val = $(item).val();
 
 					if (val) {
@@ -945,7 +945,7 @@
 					selectedItems
 						.get()
 						.reverse()
-						.forEach(function(item) {
+						.forEach(item => {
 							item = $(item);
 
 							var itemIndex = item.prop('index');
@@ -959,7 +959,7 @@
 							}
 						});
 				} else {
-					selectedItems.get().forEach(function(item) {
+					selectedItems.get().forEach(item => {
 						item = $(item);
 
 						var itemIndex = item.prop('index');
@@ -989,18 +989,15 @@
 		},
 
 		savePortletTitle(params) {
-			params = Object.assign(
-				{
-					doAsUserId: 0,
-					plid: 0,
-					portletId: 0,
-					title: '',
-					url:
-						themeDisplay.getPathMain() +
-						'/portal/update_portlet_title'
-				},
-				params
-			);
+			params = {
+				doAsUserId: 0,
+				plid: 0,
+				portletId: 0,
+				title: '',
+				url:
+					themeDisplay.getPathMain() + '/portal/update_portlet_title',
+				...params
+			};
 
 			$.ajax(params.url, {
 				data: {
@@ -1020,7 +1017,7 @@
 
 			var selectorButtons = container.find('.selector-button');
 
-			container.on('click', '.selector-button', function(event) {
+			container.on('click', '.selector-button', event => {
 				var target = $(event.target);
 
 				if (!target.attr('data-prevent-selection')) {
@@ -1048,7 +1045,7 @@
 				}
 			});
 
-			openingLiferay.on('entitySelectionRemoved', function() {
+			openingLiferay.on('entitySelectionRemoved', () => {
 				selectorButtons.prop('disabled', false);
 			});
 		},
@@ -1137,7 +1134,7 @@
 			}
 
 			return string.replace
-				? string.replace(REGEX_SUB, function(match, key) {
+				? string.replace(REGEX_SUB, (match, key) => {
 						return data[key] === undefined ? match : data[key];
 				  })
 				: string;
@@ -1170,7 +1167,7 @@
 
 			toggleBox.toggleClass('hide', !checked);
 
-			checkBox.on(EVENT_CLICK, function() {
+			checkBox.on(EVENT_CLICK, () => {
 				toggleBox.toggleClass('hide');
 
 				if (toggleChildCheckboxes) {
@@ -1191,7 +1188,7 @@
 
 			button = $(button);
 
-			button.each(function(index, item) {
+			button.each((index, item) => {
 				item = $(item);
 
 				item.prop('disabled', state);
@@ -1215,7 +1212,7 @@
 				showBoxes.toggleClass('hide', !radioButton.prop(STR_CHECKED));
 			}
 
-			radioButton.on('change', function() {
+			radioButton.on('change', () => {
 				if (showBoxes) {
 					showBoxes.removeClass('hide');
 				}
@@ -1236,16 +1233,12 @@
 			form,
 			ignoreFieldName
 		) {
-			$(searchContainerId).on(
-				EVENT_CLICK,
-				'input[type=checkbox]',
-				function() {
-					Util.toggleDisabled(
-						buttonId,
-						!Util.listCheckedExcept(form, ignoreFieldName)
-					);
-				}
-			);
+			$(searchContainerId).on(EVENT_CLICK, 'input[type=checkbox]', () => {
+				Util.toggleDisabled(
+					buttonId,
+					!Util.listCheckedExcept(form, ignoreFieldName)
+				);
+			});
 		},
 
 		toggleSelectBox(selectBoxId, value, toggleBoxId) {
@@ -1275,7 +1268,7 @@
 	Liferay.provide(
 		Util,
 		'afterIframeLoaded',
-		function(event) {
+		event => {
 			var nodeInstances = A.Node._instances;
 
 			var docEl = event.doc;
@@ -1328,7 +1321,7 @@
 
 				iframeBody.delegate(
 					EVENT_CLICK,
-					function(event) {
+					event => {
 						dialog.set(
 							'visible',
 							false,
@@ -1349,7 +1342,7 @@
 	Liferay.provide(
 		Util,
 		'openDDMPortlet',
-		function(config, callback) {
+		(config, callback) => {
 			var defaultValues = {
 				eventName: 'selectStructure'
 			};
@@ -1443,7 +1436,7 @@
 				}
 			};
 
-			Util.openWindow(config, function(dialogWindow) {
+			Util.openWindow(config, dialogWindow => {
 				eventHandles.push(
 					dialogWindow.after(
 						['destroy', 'visibleChange'],
@@ -1458,7 +1451,7 @@
 	Liferay.provide(
 		Util,
 		'openDocument',
-		function(webDavUrl, onSuccess, onError) {
+		(webDavUrl, onSuccess, onError) => {
 			if (A.UA.ie) {
 				try {
 					var executor = new A.config.win.ActiveXObject(
@@ -1483,7 +1476,7 @@
 	Liferay.provide(
 		Util,
 		'portletTitleEdit',
-		function(options) {
+		options => {
 			var obj = options.obj;
 
 			if (obj) {
@@ -1492,7 +1485,7 @@
 				if (title && !title.hasClass('not-editable')) {
 					title.addClass('portlet-title-editable');
 
-					title.on(EVENT_CLICK, function(event) {
+					title.on(EVENT_CLICK, event => {
 						var editable = Util._getEditableInstance(title);
 
 						var rendered = editable.get('rendered');
@@ -1534,7 +1527,7 @@
 	Liferay.provide(
 		Util,
 		'editEntity',
-		function(config, callback) {
+		(config, callback) => {
 			var dialog = Util.getWindow(config.id);
 
 			var eventName = config.eventName || config.id;
@@ -1591,7 +1584,7 @@
 					config.dialogIframe || {}
 				);
 
-				Util.openWindow(config, function(dialogWindow) {
+				Util.openWindow(config, dialogWindow => {
 					eventHandles.push(
 						dialogWindow.after(
 							['destroy', 'visibleChange'],
@@ -1609,7 +1602,7 @@
 	Liferay.provide(
 		Util,
 		'selectEntity',
-		function(config, callback) {
+		(config, callback) => {
 			var dialog = Util.getWindow(config.id);
 
 			var eventName = config.eventName || config.id;
@@ -1638,7 +1631,7 @@
 						'.lfr-search-container-wrapper .selector-button'
 					);
 
-					A.some(selectorButtons, function(item) {
+					A.some(selectorButtons, item => {
 						var assetEntryId =
 							item.attr('data-entityid') ||
 							item.attr('data-entityname');
@@ -1684,7 +1677,7 @@
 					}
 				};
 
-				Util.openWindow(config, function(dialogWindow) {
+				Util.openWindow(config, dialogWindow => {
 					eventHandles.push(
 						dialogWindow.after(
 							['destroy', 'visibleChange'],
@@ -1706,7 +1699,7 @@
 	Liferay.provide(
 		Util,
 		'toggleControls',
-		function(node) {
+		node => {
 			var docBody = A.getBody();
 
 			node = node || docBody;
@@ -1730,7 +1723,7 @@
 					enabled: controlsVisible
 				});
 
-				trigger.on('tap', function() {
+				trigger.on('tap', () => {
 					controlsVisible = !controlsVisible;
 
 					var prevState = currentState;
@@ -1781,7 +1774,7 @@
 	Liferay.provide(
 		window,
 		'submitForm',
-		function(form, action, singleSubmit, validate) {
+		(form, action, singleSubmit, validate) => {
 			if (!Util._submitLocked) {
 				if (form.jquery) {
 					form = form[0];
@@ -1805,7 +1798,7 @@
 	Liferay.provide(
 		Util,
 		'_openWindowProvider',
-		function(config, callback) {
+		(config, callback) => {
 			var dialog = Window.getWindow(config);
 
 			if (Lang.isFunction(callback)) {
@@ -1815,7 +1808,7 @@
 		['liferay-util-window']
 	);
 
-	Liferay.after('closeWindow', function(event) {
+	Liferay.after('closeWindow', event => {
 		var id = event.id;
 
 		var dialog = Liferay.Util.getTop().Liferay.Util.Window.getById(id);

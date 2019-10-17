@@ -13,11 +13,12 @@
  */
 
 import 'clay-multi-select';
+
 import 'clay-sticker';
+import {PortletBase} from 'frontend-js-web';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {PortletBase} from 'frontend-js-web';
 
 import templates from './Sharing.soy';
 

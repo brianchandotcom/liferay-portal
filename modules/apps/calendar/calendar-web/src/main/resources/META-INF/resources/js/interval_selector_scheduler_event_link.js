@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-interval-selector-scheduler-event-link',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 
 		var IntervalSelectorSchedulerEventLink = A.Component.create({

@@ -12,10 +12,11 @@
  * details.
  */
 
-import moment from 'moment';
-import React, {useContext} from 'react';
-import {Link} from 'react-router-dom';
 import ClayLabel from '@clayui/label';
+import moment from 'moment';
+import {Link} from 'react-router-dom';
+import React, {useContext} from 'react';
+
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';

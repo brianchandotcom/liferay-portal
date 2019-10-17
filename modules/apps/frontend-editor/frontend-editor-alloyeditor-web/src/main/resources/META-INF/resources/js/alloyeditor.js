@@ -16,7 +16,7 @@
 
 AUI.add(
 	'liferay-alloy-editor',
-	function(A) {
+	A => {
 		var Do = A.Do;
 		var Lang = A.Lang;
 
@@ -235,7 +235,7 @@ AUI.add(
 				},
 
 				_onFocusFix(activeElement, nativeEditor) {
-					setTimeout(function() {
+					setTimeout(() => {
 						nativeEditor.focusManager.blur(true);
 						activeElement.focus();
 					}, 100);
@@ -284,7 +284,7 @@ AUI.add(
 					// LPS-71967
 
 					if (UA.edge && parseInt(UA.edge, 10) >= 14) {
-						A.soon(function() {
+						A.soon(() => {
 							if (
 								document.activeElement &&
 								document.activeElement !== document.body

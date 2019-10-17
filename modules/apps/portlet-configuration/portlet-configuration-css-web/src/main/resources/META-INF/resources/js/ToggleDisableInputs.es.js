@@ -13,8 +13,8 @@
  */
 
 import Component from 'metal-component';
-import core from 'metal';
 import Soy from 'metal-soy';
+import core from 'metal';
 
 import templates from './ToggleDisableInputs.soy';
 

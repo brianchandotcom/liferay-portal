@@ -62,7 +62,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get('select-collection'),
 				uri: this.selectFragmentCollectionURL
 			},
-			function(selectedItem) {
+			selectedItem => {
 				if (selectedItem) {
 					this.one('#fragmentCollectionId').value = selectedItem.id;
 					this.one('#fragmentEntryKeys').value = fragmentEntryKeys;
@@ -72,7 +72,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 						this.copyContributedFragmentEntryURL
 					);
 				}
-			}.bind(this)
+			}
 		);
 	}
 
@@ -112,7 +112,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get('select-collection'),
 				uri: this.selectFragmentCollectionURL
 			},
-			function(selectedItem) {
+			selectedItem => {
 				if (selectedItem) {
 					this.one('#fragmentCollectionId').value = selectedItem.id;
 					this.one('#fragmentEntryIds').value = fragmentEntryIds;
@@ -122,7 +122,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 						targetFragmentEntryURL
 					);
 				}
-			}.bind(this)
+			}
 		);
 	}
 }

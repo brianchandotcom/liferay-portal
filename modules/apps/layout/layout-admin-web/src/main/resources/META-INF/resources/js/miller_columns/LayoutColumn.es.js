@@ -13,13 +13,14 @@
  */
 
 import 'clay-badge';
+
 import 'clay-dropdown';
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
-import LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS from './utils/LayoutColumnItemDropdownItems.es';
 import templates from './LayoutColumn.soy';
+import LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS from './utils/LayoutColumnItemDropdownItems.es';
 
 /**
  * LayoutColumn
@@ -52,14 +53,13 @@ class LayoutColumn extends Component {
 	 * @inheritdoc
 	 */
 	prepareStateForRender(state) {
-		const layoutColumn = this.layoutColumn.map(layoutColumnItem =>
-			Object.assign({}, layoutColumnItem, {
-				dropdownItems: LayoutColumn._getLayoutColumnItemDropDownItems(
-					layoutColumnItem,
-					this.portletNamespace
-				)
-			})
-		);
+		const layoutColumn = this.layoutColumn.map(layoutColumnItem => ({
+			...layoutColumnItem,
+			dropdownItems: LayoutColumn._getLayoutColumnItemDropDownItems(
+				layoutColumnItem,
+				this.portletNamespace
+			)
+		}));
 
 		return Object.assign(state, {
 			layoutColumn

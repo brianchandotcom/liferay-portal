@@ -13,17 +13,18 @@
  */
 
 import 'clay-button';
-import 'clay-dropdown';
 
+import 'clay-dropdown';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import Component from 'metal-component';
 import dom from 'metal-dom';
-import Soy from 'metal-soy';
-import templates from './RuleList.soy.js';
-import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
-import {getFieldProperty} from '../LayoutProvider/util/fields.es';
+import Soy from 'metal-soy';
+import {Config} from 'metal-state';
+
 import {maxPageIndex, pageOptions} from '../../util/pageSupport.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {getFieldProperty} from '../LayoutProvider/util/fields.es';
+import templates from './RuleList.soy.js';
 
 /**
  * RuleList.

@@ -14,6 +14,13 @@
 
 import {fetch} from 'frontend-js-web';
 
+import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
+import {
+	getColumn,
+	getDropRowPosition,
+	getFragmentColumn,
+	getFragmentRowIndex
+} from '../utils/FragmentsEditorGetUtils.es';
 import {
 	add,
 	addRow,
@@ -21,20 +28,12 @@ import {
 	setIn,
 	updateIn
 } from '../utils/FragmentsEditorUpdateUtils.es';
-
 import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	FRAGMENTS_EDITOR_ITEM_TYPES,
 	FRAGMENTS_EDITOR_ROW_TYPES
 } from '../utils/constants';
-import {
-	getColumn,
-	getDropRowPosition,
-	getFragmentColumn,
-	getFragmentRowIndex
-} from '../utils/FragmentsEditorGetUtils.es';
-import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
  * Adds a fragment at the corresponding container in the layout
@@ -469,10 +468,9 @@ function removeFragmentEntryLinkReducer(state, action) {
 			nextState,
 			['fragmentEntryLinks'],
 			fragmentEntryLinks => {
-				const nextFragmentEntryLinks = Object.assign(
-					{},
-					fragmentEntryLinks
-				);
+				const nextFragmentEntryLinks = {
+					...fragmentEntryLinks
+				};
 
 				delete nextFragmentEntryLinks[fragmentEntryLinkId];
 

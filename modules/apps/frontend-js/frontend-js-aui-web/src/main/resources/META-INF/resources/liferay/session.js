@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-session',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var BUFFER_TIME = [];
@@ -123,7 +123,7 @@ AUI.add(
 									location.href = instance.get('redirectUrl');
 								}
 							} else {
-								A.setTimeout(function() {
+								A.setTimeout(() => {
 									instance._expireSession();
 								}, 1000);
 							}
@@ -177,11 +177,7 @@ AUI.add(
 							'sessionStateChange',
 							instance._afterSessionStateChange
 						),
-						A.on('io:complete', function(
-							transactionId,
-							response,
-							args
-						) {
+						A.on('io:complete', (transactionId, response, args) => {
 							if (
 								!args ||
 								(args && args.sessionExtend) ||
@@ -190,7 +186,7 @@ AUI.add(
 								instance.resetInterval();
 							}
 						}),
-						Liferay.once('screenLoad', function() {
+						Liferay.once('screenLoad', () => {
 							instance.destroy();
 						})
 					];
@@ -242,7 +238,7 @@ AUI.add(
 
 					var interval = 1000;
 
-					instance._intervalId = A.setInterval(function() {
+					instance._intervalId = A.setInterval(() => {
 						var timeOffset;
 
 						var timestamp = instance.get('timestamp');
@@ -473,38 +469,41 @@ AUI.add(
 
 					banner.show();
 
-					instance._intervalId = host.registerInterval(function(
-						elapsed,
-						interval,
-						hasWarned,
-						hasExpired,
-						warningMoment
-					) {
-						if (!hasWarned) {
-							instance._uiSetActivated();
-						} else if (!hasExpired) {
-							if (warningMoment) {
-								if (remainingTime <= 0) {
-									remainingTime = warningLength;
+					instance._intervalId = host.registerInterval(
+						(
+							elapsed,
+							interval,
+							hasWarned,
+							hasExpired,
+							warningMoment
+						) => {
+							if (!hasWarned) {
+								instance._uiSetActivated();
+							} else if (!hasExpired) {
+								if (warningMoment) {
+									if (remainingTime <= 0) {
+										remainingTime = warningLength;
+									}
+
+									banner.show();
 								}
 
-								banner.show();
+								elapsed =
+									Math.floor(
+										(Date.now() - timestamp) / 1000
+									) * 1000;
+
+								remainingTime = sessionLength - elapsed;
+
+								instance._uiSetRemainingTime(
+									remainingTime,
+									counterTextNode
+								);
 							}
 
-							elapsed =
-								Math.floor((Date.now() - timestamp) / 1000) *
-								1000;
-
-							remainingTime = sessionLength - elapsed;
-
-							instance._uiSetRemainingTime(
-								remainingTime,
-								counterTextNode
-							);
+							remainingTime -= interval;
 						}
-
-						remainingTime -= interval;
-					});
+					);
 				},
 
 				_destroyBanner() {

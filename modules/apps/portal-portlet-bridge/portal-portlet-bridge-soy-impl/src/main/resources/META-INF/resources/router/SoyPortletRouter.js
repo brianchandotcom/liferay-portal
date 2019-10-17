@@ -13,11 +13,11 @@
  */
 
 import {openToast} from 'frontend-js-web';
-import {RequestScreen, utils} from 'senna';
-import {toRegex} from 'metal-path-parser';
 import dom from 'metal-dom';
+import {toRegex} from 'metal-path-parser';
 import Router from 'metal-router';
 import State from 'metal-state';
+import {RequestScreen, utils} from 'senna';
 
 /**
  * Specific Router implementation on top of metal-router to target the specific
@@ -186,7 +186,7 @@ class SoyPortletRouter extends State {
 	 * @return {Router}
 	 */
 	createRouter_(route, pathFn) {
-		const config = Object.assign({
+		const config = {
 			cacheable: false,
 			element: this.element,
 			fetch: true,
@@ -196,7 +196,7 @@ class SoyPortletRouter extends State {
 				this.matchPath_.bind(this, route.mvcRenderCommandName),
 			portletNamespace: this.portletNamespace,
 			route
-		});
+		};
 
 		try {
 			if (config.path(utils.getCurrentBrowserPath())) {

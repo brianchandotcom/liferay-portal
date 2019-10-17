@@ -12,17 +12,18 @@
  * details.
  */
 
-import React, {useEffect, useState} from 'react';
 import {Route, Switch} from 'react-router-dom';
-import CustomObjectNavigationBar from './CustomObjectNavigationBar.es';
+import React, {useEffect, useState} from 'react';
+
+import ControlMenu from '../../components/control-menu/ControlMenu.es';
+import {getItem} from '../../utils/client.es';
 import EditApp from '../app/EditApp.es';
 import ListApps from '../app/ListApps.es';
 import EditFormView from '../form-view/EditFormView.es';
 import ListFormViews from '../form-view/ListFormViews.es';
 import EditTableView from '../table-view/EditTableView.es';
 import ListTableViews from '../table-view/ListTableViews.es';
-import ControlMenu from '../../components/control-menu/ControlMenu.es';
-import {getItem} from '../../utils/client.es';
+import CustomObjectNavigationBar from './CustomObjectNavigationBar.es';
 
 export default ({
 	match: {

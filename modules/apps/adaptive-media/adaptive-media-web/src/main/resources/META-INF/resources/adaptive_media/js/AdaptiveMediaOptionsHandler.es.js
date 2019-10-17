@@ -12,11 +12,10 @@
  * details.
  */
 
-import core from 'metal';
+import {PortletBase} from 'frontend-js-web';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
-
-import {PortletBase} from 'frontend-js-web';
+import core from 'metal';
 
 /**
  * Enables/disables the actions of the configuration entry's while

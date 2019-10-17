@@ -12,9 +12,9 @@
  * details.
  */
 
+import mockPages from '../../../__mock__/mockPages.es';
 import * as fieldEditedHandler from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/fieldEditedHandler.es';
 import * as focusedFieldUtil from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/focusedField.es';
-import mockPages from '../../../__mock__/mockPages.es';
 
 describe('LayoutProvider/handlers/fieldEditedHandler', () => {
 	describe('handleFieldEdited(state, event)', () => {

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-contacts-center',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 
 		var Lang = A.Lang;
@@ -536,7 +536,7 @@ AUI.add(
 
 						buffer.push(
 							results
-								.map(function(result) {
+								.map(result => {
 									var displayLastNameAnchor = false;
 
 									var nameAnchor;
@@ -1018,7 +1018,7 @@ AUI.add(
 
 					var contacts = data.contacts;
 
-					contacts.map(function(contact) {
+					contacts.map(contact => {
 						instance.addContactResult(contact);
 					});
 				},
@@ -1058,7 +1058,7 @@ AUI.add(
 				deleteContactResults(userIds) {
 					var instance = this;
 
-					userIds.map(function(userId) {
+					userIds.map(userId => {
 						instance.deleteContactResult(userId);
 					});
 				},
@@ -1207,7 +1207,7 @@ AUI.add(
 						} else {
 							instance._clearContactResult();
 
-							contacts.map(function(contact) {
+							contacts.map(contact => {
 								instance.addContactResult(contact);
 							});
 						}

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-portlet-dynamic-data-lists',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 
 		var DateMath = A.DataType.DateMath;
@@ -109,7 +109,7 @@ AUI.add(
 			buildDataTableColumns(columns, locale, structure, editable) {
 				var instance = this;
 
-				columns.forEach(function(item) {
+				columns.forEach(item => {
 					var dataType = item.dataType;
 					var label = item.label;
 					var name = item.name;
@@ -178,13 +178,13 @@ AUI.add(
 						};
 					} else if (type === 'ddm-date') {
 						config.inputFormatter = function(val) {
-							return val.map(function(item) {
+							return val.map(item => {
 								return A.DataType.Date.format(item);
 							});
 						};
 
 						config.outputFormatter = function(val) {
-							return val.map(function(item) {
+							return val.map(item => {
 								var date;
 
 								if (item !== STR_EMPTY) {
@@ -314,7 +314,7 @@ AUI.add(
 							var value = data[name];
 
 							if (isArray(value)) {
-								value.forEach(function(item1) {
+								value.forEach(item1 => {
 									label.push(options[item1]);
 								});
 							}
@@ -386,7 +386,7 @@ AUI.add(
 
 				var structureField;
 
-				AArray.some(fieldsArray, function(item) {
+				AArray.some(fieldsArray, item => {
 					var nestedFieldsArray = item.fields;
 
 					if (item[attributeName] === attributeValue) {
@@ -408,7 +408,7 @@ AUI.add(
 			getCellEditorOptions(options, locale) {
 				var normalized = {};
 
-				options.forEach(function(item) {
+				options.forEach(item => {
 					normalized[item.value] = item.label;
 
 					var localizationMap = item.localizationMap;
@@ -424,7 +424,7 @@ AUI.add(
 			getRecordModel(keys) {
 				var recordModel = {};
 
-				keys.forEach(function(item) {
+				keys.forEach(item => {
 					recordModel[item] = STR_EMPTY;
 				});
 
@@ -526,7 +526,7 @@ AUI.add(
 					);
 
 					if (isArray(item.fields)) {
-						item.fields.forEach(function(item) {
+						item.fields.forEach(item => {
 							instance._normalizeFieldData(
 								item,
 								record,
@@ -545,7 +545,7 @@ AUI.add(
 					var fieldsDisplayValues = [];
 					var normalized = {};
 
-					structure.forEach(function(item) {
+					structure.forEach(item => {
 						instance._normalizeFieldData(
 							item,
 							record,
@@ -640,7 +640,7 @@ AUI.add(
 								recordsetId,
 								recordIndex,
 								fieldsMap,
-								function(json) {
+								json => {
 									if (json.recordId > 0) {
 										record.set('recordId', json.recordId, {
 											silent: true
@@ -694,7 +694,7 @@ AUI.add(
 					var columns = instance.get('columns');
 					var data = instance.get('data');
 
-					var keys = columns.map(function(item) {
+					var keys = columns.map(item => {
 						return item.key;
 					});
 

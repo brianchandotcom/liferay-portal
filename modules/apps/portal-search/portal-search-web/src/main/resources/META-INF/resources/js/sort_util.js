@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-search-sort-util',
-	function() {
+	() => {
 		var SortUtil = {
 			addURLParameter(key, value, parameterArray) {
 				key = encodeURIComponent(key);
@@ -28,7 +28,7 @@ AUI.add(
 			removeURLParameters(key, parameterArray) {
 				key = encodeURIComponent(key);
 
-				var newParameters = parameterArray.filter(function(item) {
+				var newParameters = parameterArray.filter(item => {
 					var itemSplit = item.split('=');
 
 					if (itemSplit && itemSplit[0] === key) {
@@ -47,7 +47,7 @@ AUI.add(
 					parameterArray
 				);
 
-				values.forEach(function(item) {
+				values.forEach(item => {
 					newParameters = SortUtil.addURLParameter(
 						key,
 						item,
@@ -71,7 +71,7 @@ AUI.add(
 					search = search.substr(1);
 				}
 
-				var parameterArray = search.split('&').filter(function(item) {
+				var parameterArray = search.split('&').filter(item => {
 					return item.trim() !== '';
 				});
 

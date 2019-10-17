@@ -12,9 +12,10 @@
  * details.
  */
 
-import React, {useEffect, useRef, useState} from 'react';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import React, {useEffect, useRef, useState} from 'react';
+
 import Button from '../../components/button/Button.es';
 import Popover from '../../components/popover/Popover.es';
 

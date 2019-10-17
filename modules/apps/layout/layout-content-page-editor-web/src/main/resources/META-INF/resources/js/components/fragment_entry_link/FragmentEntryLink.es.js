@@ -17,19 +17,22 @@ import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import '../floating_toolbar/fragment_configuration/FloatingToolbarFragmentConfigurationPanel.es';
+
 import './FragmentEntryLinkContent.es';
+import {
+	MOVE_FRAGMENT_ENTRY_LINK,
+	UPDATE_SELECTED_SIDEBAR_PANEL_ID
+} from '../../actions/actions.es';
+import {duplicateFragmentEntryLinkAction} from '../../actions/duplicateFragmentEntryLink.es';
+import {removeFragmentEntryLinkAction} from '../../actions/removeFragmentEntryLinks.es';
 import {
 	disableSavingChangesStatusAction,
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from '../../actions/saveChanges.es';
-import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
-import templates from './FragmentEntryLink.soy';
-import {
-	MOVE_FRAGMENT_ENTRY_LINK,
-	UPDATE_SELECTED_SIDEBAR_PANEL_ID
-} from '../../actions/actions.es';
+import {updateActiveItemAction} from '../../actions/updateActiveItem.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
+import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import {
 	getFragmentColumn,
 	getFragmentRowIndex,
@@ -40,21 +43,19 @@ import {
 	itemIsInPath
 } from '../../utils/FragmentsEditorGetUtils.es';
 import {
+	moveItem,
+	moveRow,
+	removeItem
+} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {
 	FLOATING_TOOLBAR_BUTTONS,
 	FRAGMENTS_EDITOR_ITEM_TYPES,
 	FRAGMENTS_EDITOR_ROW_TYPES,
 	FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 } from '../../utils/constants';
-import {
-	moveItem,
-	moveRow,
-	removeItem
-} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
-import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
-import {removeFragmentEntryLinkAction} from '../../actions/removeFragmentEntryLinks.es';
-import {duplicateFragmentEntryLinkAction} from '../../actions/duplicateFragmentEntryLink.es';
-import {updateActiveItemAction} from '../../actions/updateActiveItem.es';
+import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
+import templates from './FragmentEntryLink.soy';
 
 /**
  * FragmentEntryLink

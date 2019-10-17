@@ -12,9 +12,10 @@
  * details.
  */
 
-import AnalyticsClient from '../src/analytics';
 import {expect} from 'chai';
 import fetchMock from 'fetch-mock';
+
+import AnalyticsClient from '../src/analytics';
 
 let Analytics;
 let EVENT_ID = 0;
@@ -95,7 +96,7 @@ describe('Analytics Client', () => {
 
 			let fetchCalled = 0;
 
-			fetchMock.mock(/ac-server/gi, function() {
+			fetchMock.mock(/ac-server/gi, () => {
 				fetchCalled += 1;
 
 				return new Promise(resolve => {
@@ -169,7 +170,7 @@ describe('Analytics Client', () => {
 			return Analytics.setIdentity(ANALYTICS_IDENTITY)
 				.then(() => {
 					fetchMock.restore();
-					fetchMock.mock(/identity$/, function() {
+					fetchMock.mock(/identity$/, () => {
 						identityCalled += 1;
 						return '';
 					});
@@ -191,7 +192,7 @@ describe('Analytics Client', () => {
 			return Analytics.setIdentity(ANALYTICS_IDENTITY)
 				.then(() => {
 					fetchMock.restore();
-					fetchMock.mock(/identity$/, function() {
+					fetchMock.mock(/identity$/, () => {
 						identityCalled += 1;
 						return '';
 					});
@@ -210,7 +211,7 @@ describe('Analytics Client', () => {
 				...INITIAL_CONFIG
 			});
 
-			fetchMock.mock(/ac-server/gi, function() {
+			fetchMock.mock(/ac-server/gi, () => {
 				// Send events while flush is in progress
 				sendDummyEvents(Analytics, 7);
 

@@ -14,10 +14,11 @@
 
 import Component from 'metal-component';
 import {Config} from 'metal-state';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
-import getConnectedComponent from '../../store/ConnectedComponent.es';
+
 import {UPDATE_SELECTED_SIDEBAR_PANEL_ID} from '../../actions/actions.es';
 import {updateActiveItemAction} from '../../actions/updateActiveItem.es';
+import getConnectedComponent from '../../store/ConnectedComponent.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 
 const WRAPPER_CLASSES = {
 	default: 'fragment-entry-link-list-wrapper',

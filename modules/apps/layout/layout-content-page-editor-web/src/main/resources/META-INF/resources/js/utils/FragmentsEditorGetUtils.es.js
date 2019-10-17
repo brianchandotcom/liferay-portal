@@ -38,7 +38,7 @@ function deepClone(objectToClone) {
 		if (Array.isArray(cloned)) {
 			cloned = objectToClone.map(arrayItem => deepClone(arrayItem));
 		} else {
-			cloned = Object.assign({}, cloned);
+			cloned = {...cloned};
 
 			Object.keys(cloned).forEach(clonedKey => {
 				cloned[clonedKey] = deepClone(cloned[clonedKey]);

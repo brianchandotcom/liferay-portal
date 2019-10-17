@@ -17,8 +17,8 @@ import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import './SelectFieldDelegateTemplate.soy';
-import templates from './SelectField.soy';
 import {setIn} from '../../../../utils/FragmentsEditorUpdateUtils.es';
+import templates from './SelectField.soy';
 
 /**
  * SelectField

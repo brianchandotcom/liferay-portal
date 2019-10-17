@@ -12,7 +12,7 @@
  * details.
  */
 
-CKEDITOR.dialog.add('video', function(editor) {
+CKEDITOR.dialog.add('video', editor => {
 	var TPL_SCRIPT =
 		'boundingBox: "#" + mediaId,' +
 		'height: {height},' +

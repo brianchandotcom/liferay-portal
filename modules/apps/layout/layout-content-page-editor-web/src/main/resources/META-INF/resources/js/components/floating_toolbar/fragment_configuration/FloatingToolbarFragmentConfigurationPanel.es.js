@@ -13,19 +13,24 @@
  */
 
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import './field_types/ColorPaletteField.es';
+
 import './field_types/CheckboxField.es';
+
 import './field_types/ItemSelectorField.es';
+
 import './field_types/SelectField.es';
+
 import './field_types/TextField.es';
+
 import './FloatingToolbarFragmentConfigurationPanelDelegateTemplate.soy';
+import {updateFragmentConfigurationAction} from '../../../actions/updateEditableValue.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {deleteIn, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarFragmentConfigurationPanel.soy';
-import {updateFragmentConfigurationAction} from '../../../actions/updateEditableValue.es';
 
 /**
  * FloatingToolbarFragmentConfigurationPanel

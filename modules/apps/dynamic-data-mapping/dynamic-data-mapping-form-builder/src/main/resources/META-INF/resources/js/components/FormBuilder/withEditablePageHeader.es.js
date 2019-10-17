@@ -13,11 +13,13 @@
  */
 
 import './EditablePageHeader.soy.js';
+
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
-import {EventHandler} from 'metal-events';
+
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import {sub} from '../../util/strings.es.js';
 
 const withEditablePageHeader = ChildComponent => {

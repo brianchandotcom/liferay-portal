@@ -19,8 +19,8 @@
 		return key;
 	};
 
-	A.use('io-base', function(A) {
-		Language.get = A.cached(function(key, extraParams) {
+	A.use('io-base', A => {
+		Language.get = A.cached((key, extraParams) => {
 			var url =
 				themeDisplay.getPathContext() +
 				'/language/' +

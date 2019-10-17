@@ -12,9 +12,9 @@
  * details.
  */
 
-import core from 'metal';
-import {EventHandler} from 'metal-events';
 import {PortletBase, fetch} from 'frontend-js-web';
+import {EventHandler} from 'metal-events';
+import core from 'metal';
 
 /**
  * MBPortlet handles the actions of replying or editing a

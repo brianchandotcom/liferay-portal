@@ -12,8 +12,8 @@
  * details.
  */
 
-import {debounce} from '../utils/debounce';
 import {DEBOUNCE} from '../utils/constants';
+import {debounce} from '../utils/debounce';
 import {ScrollTracker} from '../utils/scroll';
 
 const applicationId = 'Page';

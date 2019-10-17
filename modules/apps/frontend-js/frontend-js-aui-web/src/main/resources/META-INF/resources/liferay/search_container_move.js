@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-search-container-move',
-	function(A) {
+	A => {
 		var AUA = A.UA;
 
 		var Lang = A.Lang;
@@ -132,14 +132,14 @@ AUI.add(
 					if (dropTargets && themeDisplay.isSignedIn()) {
 						var host = instance.get(STR_HOST);
 
-						dropTargets.forEach(function(target) {
+						dropTargets.forEach(target => {
 							var container =
 								A.one(target.container) ||
 								host.get(STR_CONTENT_BOX);
 
 							var targetNodes = container.all(target.selector);
 
-							targetNodes.each(function(item) {
+							targetNodes.each(item => {
 								item.plug(A.Plugin.Drop, {
 									groups: [host.get('id')]
 								}).drop.on({
@@ -173,7 +173,7 @@ AUI.add(
 							if (target.infoCssClass) {
 								instance._ddHandler.on(
 									['drag:start', 'drag:end'],
-									function(event) {
+									event => {
 										targetNodes.toggleClass(
 											target.infoCssClass,
 											event.type == 'drag:start'

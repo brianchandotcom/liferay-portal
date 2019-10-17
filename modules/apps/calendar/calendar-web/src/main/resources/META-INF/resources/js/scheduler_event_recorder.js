@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-scheduler-event-recorder',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 		var AObject = A.Object;
 		var Lang = A.Lang;
@@ -303,7 +303,7 @@ AUI.add(
 						if (schedulerEvent.isRecurring()) {
 							Liferay.RecurrenceUtil.openConfirmationPanel(
 								'invokeTransition',
-								function() {
+								() => {
 									remoteServices.invokeTransition(
 										schedulerEvent,
 										schedulerEvent.get('instanceIndex'),
@@ -312,7 +312,7 @@ AUI.add(
 										false
 									);
 								},
-								function() {
+								() => {
 									remoteServices.invokeTransition(
 										schedulerEvent,
 										schedulerEvent.get('instanceIndex'),
@@ -321,7 +321,7 @@ AUI.add(
 										true
 									);
 								},
-								function() {
+								() => {
 									remoteServices.invokeTransition(
 										schedulerEvent,
 										schedulerEvent.get('instanceIndex'),
@@ -434,7 +434,7 @@ AUI.add(
 
 					popoverBB.delegate(
 						['change', 'keypress'],
-						function(event) {
+						event => {
 							var schedulerEvent =
 								instance.get('event') || instance;
 
@@ -550,10 +550,10 @@ AUI.add(
 
 								remoteServices.getCalendarBookingInvitees(
 									parentCalendarBookingId,
-									function(data) {
+									data => {
 										var results = AArray.partition(
 											data,
-											function(item) {
+											item => {
 												return (
 													toInt(item.classNameId) ===
 													CalendarUtil.USER_CLASS_NAME_ID
@@ -581,7 +581,7 @@ AUI.add(
 				},
 
 				_syncInviteesContent(contentNode, calendarResources) {
-					var values = calendarResources.map(function(item) {
+					var values = calendarResources.map(item => {
 						return item.name;
 					});
 

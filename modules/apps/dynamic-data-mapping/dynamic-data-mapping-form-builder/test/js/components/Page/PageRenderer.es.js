@@ -13,9 +13,11 @@
  */
 
 import '../../__fixtures__/MockField.es';
-import mockPages from '../../__mock__/mockPages.es';
-import PageRenderer from '../../../src/main/resources/META-INF/resources/js/components/Page/PageRenderer.es';
+
 import {dom as MetalTestUtil} from 'metal-dom';
+
+import PageRenderer from '../../../src/main/resources/META-INF/resources/js/components/Page/PageRenderer.es';
+import mockPages from '../../__mock__/mockPages.es';
 
 const spritemap = 'icons.svg';
 let component;

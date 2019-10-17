@@ -24,7 +24,6 @@ import {
 	isOver,
 	shouldBeNested
 } from './SiteNavigationMenuDOMHandler.es';
-
 import {
 	getChildren,
 	getFromContentElement,

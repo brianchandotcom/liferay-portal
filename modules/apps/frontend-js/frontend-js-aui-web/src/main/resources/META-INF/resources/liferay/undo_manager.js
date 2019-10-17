@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-undo-manager',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var CSS_ACTION_CLEAR = 'lfr-action-clear';
@@ -211,7 +211,7 @@ AUI.add(
 
 					var undoCache = instance._undoCache;
 
-					undoCache.each(function(item, index) {
+					undoCache.each((item, index) => {
 						if (index < limit) {
 							item.handler.call(instance, item.stateData);
 

@@ -13,14 +13,15 @@
  */
 
 import './ImageEditorLoading.es';
-import 'clay-dropdown';
 
-import dom from 'metal-dom';
-import ImageEditorHistoryEntry from './ImageEditorHistoryEntry.es';
-import Soy from 'metal-soy';
-import templates from './ImageEditor.soy';
-import {async, core} from 'metal';
+import 'clay-dropdown';
 import {PortletBase} from 'frontend-js-web';
+import dom from 'metal-dom';
+import Soy from 'metal-soy';
+import {async, core} from 'metal';
+
+import templates from './ImageEditor.soy';
+import ImageEditorHistoryEntry from './ImageEditorHistoryEntry.es';
 
 /**
  * Creates an Image Editor component.

@@ -197,7 +197,7 @@
 
 			boundingBox.on(
 				'hover',
-				function() {
+				() => {
 					hideTooltipTask.cancel();
 
 					obj.once('mouseenter', hideTooltipTask.cancel);

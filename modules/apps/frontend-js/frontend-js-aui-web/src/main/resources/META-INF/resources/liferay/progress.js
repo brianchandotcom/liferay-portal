@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-progress',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var STR_EMPTY = '';
@@ -80,7 +80,7 @@ AUI.add(
 				_onIframeLoad() {
 					var instance = this;
 
-					setTimeout(function() {
+					setTimeout(() => {
 						instance._frame.get('contentWindow.location').reload();
 					}, instance.get(STR_UPDATE_PERIOD));
 				},
@@ -125,7 +125,7 @@ AUI.add(
 
 					instance.get('boundingBox').addClass('lfr-progress-active');
 
-					setTimeout(function() {
+					setTimeout(() => {
 						instance.updateProgress();
 					}, instance.get(STR_UPDATE_PERIOD));
 				},

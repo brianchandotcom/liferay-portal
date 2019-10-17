@@ -12,8 +12,8 @@
  * details.
  */
 
-import {FLOATING_TOOLBAR_BUTTONS} from '../../utils/constants';
 import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
+import {FLOATING_TOOLBAR_BUTTONS} from '../../utils/constants';
 
 /**
  * Do nothing, as LiferayItemSelectorDialog is automatically

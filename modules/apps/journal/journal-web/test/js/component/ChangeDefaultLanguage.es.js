@@ -19,8 +19,8 @@ import {
 	render,
 	waitForElement
 } from '@testing-library/react';
-
 import React from 'react';
+
 import ChangeDefaultLanguage from '../../../src/main/resources/META-INF/resources/js/ChangeDefaultLanguage.es';
 
 const defaultStrings = {
@@ -73,7 +73,7 @@ describe('ChangeDefaultLanguage', () => {
 	});
 
 	it('change default language', async () => {
-		const {getByTitle, getByText} = _renderChangeDefaultLanguageComponent();
+		const {getByText, getByTitle} = _renderChangeDefaultLanguageComponent();
 
 		fireEvent.click(getByTitle('es_ES'));
 

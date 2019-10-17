@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-layout-customization-settings',
-	function(A) {
+	A => {
 		var BODY = A.getBody();
 
 		var BOUNDING_BOX = 'boundingBox';
@@ -48,7 +48,7 @@ AUI.add(
 
 						Liferay.publish('updatedLayout', {
 							defaultFn() {
-								columns.each(function(item) {
+								columns.each(item => {
 									var overlayMask = item.getData(
 										'customizationControls'
 									);
@@ -197,7 +197,7 @@ AUI.add(
 
 					var columns = A.all('.portlet-column');
 
-					columns.each(function(item) {
+					columns.each(item => {
 						var overlayMask = item.getData('customizationControls');
 
 						if (!overlayMask) {
@@ -215,7 +215,7 @@ AUI.add(
 
 					var columns = A.all('.portlet-column');
 
-					columns.each(function(item) {
+					columns.each(item => {
 						var overlayMask = item.getData('customizationControls');
 
 						if (overlayMask) {

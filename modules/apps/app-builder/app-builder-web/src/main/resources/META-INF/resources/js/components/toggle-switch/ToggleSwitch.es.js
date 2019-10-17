@@ -12,8 +12,8 @@
  * details.
  */
 
-import React, {useState} from 'react';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import React, {useState} from 'react';
 
 export default ({checked = false, onChange}) => {
 	const [isChecked, setChecked] = useState(checked);

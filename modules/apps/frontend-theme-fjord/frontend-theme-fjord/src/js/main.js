@@ -12,7 +12,7 @@
  * details.
  */
 
-AUI().ready('liferay-sign-in-modal', function(A) {
+AUI().ready('liferay-sign-in-modal', A => {
 	var BODY = A.getBody();
 
 	var signIn = A.one('#sign-in');
@@ -26,7 +26,7 @@ AUI().ready('liferay-sign-in-modal', function(A) {
 	);
 
 	if (fullScreenToggleIcon) {
-		fullScreenToggleIcon.on('click', function(event) {
+		fullScreenToggleIcon.on('click', event => {
 			BODY.toggleClass(
 				'overflow-hidden',
 				event.currentTarget.hasClass('collapsed')

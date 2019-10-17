@@ -12,11 +12,12 @@
  * details.
  */
 
+import {ClayRadio, ClayRadioGroup} from '@clayui/form';
+import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import moment from 'moment';
 import React, {useContext} from 'react';
-import {ClayRadio, ClayRadioGroup} from '@clayui/form';
-import ClayTable from '@clayui/table';
+
 import {withLoading} from '../../components/loading/Loading.es';
 import {withEmpty} from '../../components/table/EmptyState.es';
 import EditAppContext, {
@@ -26,12 +27,12 @@ import EditAppContext, {
 
 const {Body, Cell, Head, Row} = ClayTable;
 
-const ListItems = ({items, itemType}) => {
+const ListItems = ({itemType, items}) => {
 	const {
+		dispatch,
 		state: {
 			app: {dataLayoutId, dataListViewId}
-		},
-		dispatch
+		}
 	} = useContext(EditAppContext);
 
 	const itemId = itemType === 'DATA_LAYOUT' ? dataLayoutId : dataListViewId;

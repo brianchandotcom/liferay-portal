@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-export-import-management-bar-button',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var ExportImportManagementBarButton = A.Component.create({
@@ -79,7 +79,7 @@ AUI.add(
 					var form = document.getElementById('hrefFm');
 
 					if (form) {
-						selectedRows._nodes.forEach(function(selectedElement) {
+						selectedRows._nodes.forEach(selectedElement => {
 							var node = searchContainerMapping.one(
 								'div[data-rowpk=' + selectedElement.value + ']'
 							);

@@ -12,8 +12,8 @@
  * details.
  */
 
-import handleFieldSetAdded from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/fieldSetAddedHandler.es';
 import mockPages from '../../../__mock__/mockPages.es';
+import handleFieldSetAdded from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/fieldSetAddedHandler.es';
 
 describe('LayoutProvider/handlers/fieldSetAddedHandler', () => {
 	describe('handleFieldSetAdded(props, state, event)', () => {

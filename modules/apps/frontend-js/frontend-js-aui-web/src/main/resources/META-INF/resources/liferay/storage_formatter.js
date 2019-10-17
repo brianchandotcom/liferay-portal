@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-storage-formatter',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var StorageFormatter = function() {};

@@ -13,14 +13,12 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import Conjunction from './Conjunction.es';
-import CriteriaRow from './CriteriaRow.es';
-import DropZone from './DropZone.es';
-import EmptyDropZone from './EmptyDropZone.es';
 import getCN from 'classnames';
-import React, {Component, Fragment} from 'react';
-import {CONJUNCTIONS} from '../../utils/constants.es';
+import {PropTypes} from 'prop-types';
 import {DragSource as dragSource} from 'react-dnd';
+import React, {Component, Fragment} from 'react';
+
+import {CONJUNCTIONS} from '../../utils/constants.es';
 import {DragTypes} from '../../utils/drag-types.es';
 import {
 	generateGroupId,
@@ -29,7 +27,10 @@ import {
 	insertAtIndex,
 	replaceAtIndex
 } from '../../utils/utils.es';
-import {PropTypes} from 'prop-types';
+import Conjunction from './Conjunction.es';
+import CriteriaRow from './CriteriaRow.es';
+import DropZone from './DropZone.es';
+import EmptyDropZone from './EmptyDropZone.es';
 
 /**
  * Passes the required values to the drop target.

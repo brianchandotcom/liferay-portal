@@ -12,8 +12,8 @@
  * details.
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 const Footer = ({currentIndex, title, totalItems}) => (
 	<div className="footer">

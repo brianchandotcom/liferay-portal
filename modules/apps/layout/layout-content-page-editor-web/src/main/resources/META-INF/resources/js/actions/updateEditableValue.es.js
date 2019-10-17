@@ -12,21 +12,21 @@
  * details.
  */
 
-import {
-	disableSavingChangesStatusAction,
-	enableSavingChangesStatusAction,
-	updateLastSaveDateAction
-} from './saveChanges.es';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
+import {getFragmentEntryLinkContent} from '../reducers/fragments.es';
+import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
 import {setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
+import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
 import {
 	UPDATE_EDITABLE_VALUE_ERROR,
 	UPDATE_EDITABLE_VALUE_LOADING,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
 } from './actions.es';
-import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
-import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
-import {getFragmentEntryLinkContent} from '../reducers/fragments.es';
+import {
+	disableSavingChangesStatusAction,
+	enableSavingChangesStatusAction,
+	updateLastSaveDateAction
+} from './saveChanges.es';
 import {updatePageContentsAction} from './updatePageContents.es';
 
 /**
@@ -183,7 +183,7 @@ function updateFragmentEntryLinkContent(
 			state.portletNamespace,
 			segmentsExperienceId
 		).then(response => {
-			const {fragmentEntryLinkId, content} = response;
+			const {content, fragmentEntryLinkId} = response;
 
 			dispatch({
 				fragmentEntryLinkContent: content,

@@ -12,9 +12,10 @@
  * details.
  */
 
-import React from 'react';
-import {DragDropContext as dragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import {DragDropContext as dragDropContext} from 'react-dnd';
+import React from 'react';
+
 import {AppContextProvider} from '../../AppContext.es';
 import EditFormView from './EditFormView.es';
 

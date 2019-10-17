@@ -31,7 +31,7 @@ class EntriesDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get('warning'),
 				uri: itemData.moveEntryURL
 			},
-			function(event) {
+			event => {
 				const selectContainerForm = document.getElementById(
 					`${instance.namespace}selectContainerForm`
 				);

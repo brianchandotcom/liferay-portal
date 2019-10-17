@@ -18,6 +18,7 @@ import {Config} from 'metal-state';
 
 import AceEditor from './AceEditor.es';
 import templates from './SourceEditor.soy';
+
 import './SourceEditorToolbar.es';
 
 /**

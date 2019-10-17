@@ -13,15 +13,17 @@
  */
 
 import '../components/Tooltip/Tooltip.es';
+
 import 'clay-icon';
-import Component from 'metal-component';
 import compose from 'dynamic-data-mapping-form-renderer/js/util/compose.es';
-import Soy from 'metal-soy';
-import templates from './FieldBase.soy.js';
-import withDispatch from '../util/withDispatch.es';
-import withRepetitionControls from './withRepetitionControls.es';
-import {Config} from 'metal-state';
 import {getRepeatedIndex} from 'dynamic-data-mapping-form-renderer/js/util/repeatable.es';
+import Component from 'metal-component';
+import Soy from 'metal-soy';
+import {Config} from 'metal-state';
+
+import withDispatch from '../util/withDispatch.es';
+import templates from './FieldBase.soy.js';
+import withRepetitionControls from './withRepetitionControls.es';
 
 class FieldBase extends Component {
 	prepareStateForRender(state) {

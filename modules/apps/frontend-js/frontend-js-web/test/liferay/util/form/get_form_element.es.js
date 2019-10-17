@@ -15,6 +15,7 @@
 'use strict';
 
 import dom from 'metal-dom';
+
 import getFormElement from '../../../../src/main/resources/META-INF/resources/liferay/util/form/get_form_element.es';
 
 describe('Liferay.Util.getFormElement', () => {

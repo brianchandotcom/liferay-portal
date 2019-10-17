@@ -12,7 +12,7 @@
  * details.
  */
 
-AUI().use('aui', function() {
+AUI().use('aui', () => {
 	Liferay.Test = Liferay.Test || {};
 
 	var includes = function(array, value) {
@@ -24,7 +24,7 @@ AUI().use('aui', function() {
 
 		assert.equal(expected.length, actual.length, message);
 
-		expected.forEach(function(item) {
+		expected.forEach(item => {
 			assert(includes(actual, item), message);
 		});
 	};

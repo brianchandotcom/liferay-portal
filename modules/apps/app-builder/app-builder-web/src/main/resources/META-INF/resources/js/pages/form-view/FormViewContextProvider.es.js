@@ -13,7 +13,9 @@
  */
 
 import React, {useEffect, useReducer} from 'react';
+
 import {getItem} from '../../utils/client.es';
+import DataLayoutBuilderContextProvider from './DataLayoutBuilderContextProvider.es';
 import FormViewContext, {
 	initialState,
 	createReducer
@@ -23,13 +25,12 @@ import {
 	UPDATE_DATA_LAYOUT,
 	UPDATE_IDS
 } from './actions.es';
-import DataLayoutBuilderContextProvider from './DataLayoutBuilderContextProvider.es';
 
 export default ({
+	children,
 	dataDefinitionId,
 	dataLayoutBuilder,
-	dataLayoutId,
-	children
+	dataLayoutId
 }) => {
 	const reducer = createReducer(dataLayoutBuilder);
 	const [state, dispatch] = useReducer(reducer, initialState);

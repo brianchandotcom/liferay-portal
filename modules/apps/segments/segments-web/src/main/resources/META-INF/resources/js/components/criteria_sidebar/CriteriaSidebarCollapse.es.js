@@ -13,14 +13,15 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import CriteriaSidebarItem from './CriteriaSidebarItem.es';
-import dateFns from 'date-fns';
 import getCN from 'classnames';
+import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {jsDatetoYYYYMMDD} from '../../utils/utils.es';
+
 import {PROPERTY_TYPES} from '../../utils/constants.es';
 import {propertyGroupShape} from '../../utils/types.es';
+import {jsDatetoYYYYMMDD} from '../../utils/utils.es';
+import CriteriaSidebarItem from './CriteriaSidebarItem.es';
 
 const INPUT_DATE_FORMAT = 'YYYY-MM-DD';
 

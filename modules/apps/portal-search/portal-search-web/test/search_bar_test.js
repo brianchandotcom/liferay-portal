@@ -30,12 +30,12 @@ function getFormTemplate(keywords, emptySearchEnabled) {
 	return template;
 }
 
-describe('Liferay.Search.SearchBar', function() {
-	describe('.getKeywords', function() {
+describe('Liferay.Search.SearchBar', () => {
+	describe('.getKeywords', () => {
 		it(
 			'returns the keywords',
 			withAlloyUI(
-				function(done, A) {
+				(done, A) => {
 					var form = A.Node.create(getFormTemplate('example'));
 
 					var searchBar = new Liferay.Search.SearchBar(form);
@@ -49,11 +49,11 @@ describe('Liferay.Search.SearchBar', function() {
 		);
 	});
 
-	describe('.isSubmitEnabled', function() {
+	describe('.isSubmitEnabled', () => {
 		it(
 			'is false with no keywords',
 			withAlloyUI(
-				function(done, A) {
+				(done, A) => {
 					var form = A.Node.create(getFormTemplate());
 
 					var searchBar = new Liferay.Search.SearchBar(form);
@@ -72,7 +72,7 @@ describe('Liferay.Search.SearchBar', function() {
 		it(
 			'is true with keywords',
 			withAlloyUI(
-				function(done, A) {
+				(done, A) => {
 					var form = A.Node.create(getFormTemplate('example'));
 
 					var searchBar = new Liferay.Search.SearchBar(form);
@@ -88,7 +88,7 @@ describe('Liferay.Search.SearchBar', function() {
 		it(
 			'is true if no keyword but keyword-free search enabled',
 			withAlloyUI(
-				function(done, A) {
+				(done, A) => {
 					var form = A.Node.create(getFormTemplate('', true));
 
 					var searchBar = new Liferay.Search.SearchBar(form);
@@ -105,11 +105,11 @@ describe('Liferay.Search.SearchBar', function() {
 		);
 	});
 
-	describe.skip('.updateQueryString', function() {
+	describe.skip('.updateQueryString', () => {
 		it(
 			'removes p_p_id, p_p_state, start and add query keyword',
 			withAlloyUI(
-				function(done, A) {
+				(done, A) => {
 					var form = A.Node.create(getFormTemplate('example'));
 
 					var searchBar = new Liferay.Search.SearchBar(form);

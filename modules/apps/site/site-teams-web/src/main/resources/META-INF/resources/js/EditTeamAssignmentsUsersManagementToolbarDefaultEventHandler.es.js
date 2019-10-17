@@ -12,8 +12,8 @@
  * details.
  */
 
-import dom from 'metal-dom';
 import {DefaultEventHandler} from 'frontend-js-web';
+import dom from 'metal-dom';
 
 class EditTeamAssignmentsUsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	selectUser(itemData) {

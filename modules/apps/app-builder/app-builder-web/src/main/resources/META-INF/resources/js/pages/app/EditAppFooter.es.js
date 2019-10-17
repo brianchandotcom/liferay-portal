@@ -14,13 +14,14 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
-import Button from '../../components/button/Button.es';
-import EditAppContext from './EditAppContext.es';
+import React, {useContext, useState} from 'react';
+
 import {AppContext} from '../../AppContext.es';
-import {updateItem, addItem} from '../../utils/client.es';
+import Button from '../../components/button/Button.es';
 import {ToastContext} from '../../components/toast/ToastContext.es';
+import {updateItem, addItem} from '../../utils/client.es';
+import EditAppContext from './EditAppContext.es';
 
 export default withRouter(
 	({

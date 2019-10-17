@@ -12,8 +12,9 @@
  * details.
  */
 
-import Builder from '../../../../src/main/resources/META-INF/resources/js/components/FormBuilder/FormBuilder.es';
 import dom from 'metal-dom';
+
+import Builder from '../../../../src/main/resources/META-INF/resources/js/components/FormBuilder/FormBuilder.es';
 import Pages from '../../__mock__/mockPages.es';
 import SucessPageSettings from '../../__mock__/mockSuccessPage.es';
 

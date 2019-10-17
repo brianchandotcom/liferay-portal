@@ -12,13 +12,12 @@
  * details.
  */
 
-import fetch from './../util/fetch.es';
 import {isDefAndNotNull, isFunction, isObject, isString} from 'metal';
-
 import uuidv1 from 'uuid/v1';
 
+import fetch from './../util/fetch.es';
+import RenderState from './RenderState.es';
 import PortletConstants from './portlet_constants.es';
-
 import {
 	decodeUpdateString,
 	generateActionUrl,
@@ -29,8 +28,6 @@ import {
 	validateParameters,
 	validateState
 } from './portlet_util.es';
-
-import RenderState from './RenderState.es';
 
 /**
  * Flag specifying whether history is to be processed
@@ -90,7 +87,7 @@ class PortletInit {
 	constructor(portletId) {
 		this._portletId = portletId;
 
-		this.constants = Object.assign({}, PortletConstants);
+		this.constants = {...PortletConstants};
 
 		if (!pageRenderState) {
 			pageRenderState = global.portlet.data.pageRenderState;

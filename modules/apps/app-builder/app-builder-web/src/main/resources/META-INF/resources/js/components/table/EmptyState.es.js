@@ -13,6 +13,7 @@
  */
 
 import React from 'react';
+
 import lang from '../../utils/lang.es';
 
 const EmptyState = ({emptyState, keywords = ''}) => {

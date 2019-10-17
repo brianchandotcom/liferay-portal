@@ -16,7 +16,7 @@ import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/F
 
 export const handleResizeRight = (
 	state,
-	{pageIndex, rowIndex, columnIndex},
+	{columnIndex, pageIndex, rowIndex},
 	targetColumn
 ) => {
 	const {pages} = state;

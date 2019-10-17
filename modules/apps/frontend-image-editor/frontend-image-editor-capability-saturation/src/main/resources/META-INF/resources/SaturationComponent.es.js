@@ -13,12 +13,15 @@
  */
 
 import {debounce} from 'frontend-js-web';
+
 import './SaturationSlider.es';
-import {core} from 'metal';
+
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+import {core} from 'metal';
 
 import componentTemplates from './SaturationComponent.soy';
+
 import './SaturationControls.soy';
 
 /**

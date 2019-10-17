@@ -13,10 +13,11 @@
  */
 
 import React from 'react';
-import SegmentEdit from './components/segment_edit/SegmentEdit.es';
-import ThemeContext from './ThemeContext.es';
 
-export default function({props, context}) {
+import ThemeContext from './ThemeContext.es';
+import SegmentEdit from './components/segment_edit/SegmentEdit.es';
+
+export default function({context, props}) {
 	return (
 		<ThemeContext.Provider value={context}>
 			<div className="segments-root">

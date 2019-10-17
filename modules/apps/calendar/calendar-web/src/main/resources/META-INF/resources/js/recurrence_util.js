@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-recurrence-util',
-	function(A) {
+	A => {
 		var STR_DASH = '-';
 
 		Liferay.RecurrenceUtil = {
@@ -44,7 +44,7 @@ AUI.add(
 					})
 				);
 
-				A.each(options, function(option) {
+				A.each(options, option => {
 					var optionRow = A.Lang.sub(
 						instance.RECURRING_EVENT_MODAL_ITEM_TEMPLATE,
 						{
@@ -225,7 +225,7 @@ AUI.add(
 				) {
 					parts.push('on-x');
 
-					var weekdays = recurrence.weekdays.map(function(item) {
+					var weekdays = recurrence.weekdays.map(item => {
 						return instance.WEEKDAY_LABELS[item];
 					});
 

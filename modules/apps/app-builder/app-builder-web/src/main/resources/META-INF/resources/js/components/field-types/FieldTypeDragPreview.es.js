@@ -13,6 +13,7 @@
  */
 
 import React from 'react';
+
 import FieldType from './FieldType.es';
 
 export default props => {

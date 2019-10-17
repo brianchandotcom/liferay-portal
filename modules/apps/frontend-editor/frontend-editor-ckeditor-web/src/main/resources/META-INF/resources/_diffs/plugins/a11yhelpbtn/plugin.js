@@ -24,7 +24,7 @@
 				});
 			}
 
-			editor.on('uiSpace', function(event) {
+			editor.on('uiSpace', event => {
 				var toolbarHTML = event.data.html;
 
 				var a11ybtnIndex = toolbarHTML.indexOf('cke_button__a11ybtn');

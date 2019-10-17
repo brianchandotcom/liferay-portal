@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-staging-processes-export-import',
-	function(A) {
+	A => {
 		var $ = AUI.$;
 
 		var Lang = A.Lang;
@@ -74,7 +74,7 @@ AUI.add(
 					if (form) {
 						form.delegate(
 							STR_CLICK,
-							function(event) {
+							event => {
 								var portletId = event.currentTarget.attr(
 									'data-portletid'
 								);
@@ -104,7 +104,7 @@ AUI.add(
 						function() {
 							var checkBox = $(this);
 
-							checkBox.on(STR_CLICK, function() {
+							checkBox.on(STR_CLICK, () => {
 								if (checkBox.is(':checked')) {
 									var id = checkBox.prop('id');
 
@@ -146,7 +146,7 @@ AUI.add(
 					);
 
 					if (changeToPublicLayoutsButton) {
-						changeToPublicLayoutsButton.on(STR_CLICK, function() {
+						changeToPublicLayoutsButton.on(STR_CLICK, () => {
 							instance._changeLayouts(false);
 						});
 					}
@@ -156,7 +156,7 @@ AUI.add(
 					);
 
 					if (changeToPrivateLayoutsButton) {
-						changeToPrivateLayoutsButton.on(STR_CLICK, function() {
+						changeToPrivateLayoutsButton.on(STR_CLICK, () => {
 							instance._changeLayouts(true);
 						});
 					}
@@ -166,7 +166,7 @@ AUI.add(
 					);
 
 					if (contentOptionsLink) {
-						contentOptionsLink.on(STR_CLICK, function() {
+						contentOptionsLink.on(STR_CLICK, () => {
 							var contentOptionsDialog = instance._getContentOptionsDialog();
 
 							contentOptionsDialog.show();
@@ -176,7 +176,7 @@ AUI.add(
 					var deletionsNode = instance.get('deletionsNode');
 
 					if (deletionsNode) {
-						deletionsNode.on('change', function() {
+						deletionsNode.on('change', () => {
 							instance._refreshDeletions();
 						});
 					}
@@ -186,7 +186,7 @@ AUI.add(
 					);
 
 					if (globalConfigurationLink) {
-						globalConfigurationLink.on(STR_CLICK, function() {
+						globalConfigurationLink.on(STR_CLICK, () => {
 							var globalConfigurationDialog = instance._getGlobalConfigurationDialog();
 
 							globalConfigurationDialog.show();
@@ -196,7 +196,7 @@ AUI.add(
 					var rangeLink = instance.byId('rangeLink');
 
 					if (rangeLink) {
-						rangeLink.on(STR_CLICK, function() {
+						rangeLink.on(STR_CLICK, () => {
 							instance._preventNameRequiredChecking();
 
 							instance._updateDateRange();
@@ -208,7 +208,7 @@ AUI.add(
 					);
 
 					if (scheduledPublishingEventsLink) {
-						scheduledPublishingEventsLink.on(STR_CLICK, function() {
+						scheduledPublishingEventsLink.on(STR_CLICK, () => {
 							var scheduledPublishingEventsDialog = instance._getScheduledPublishingEventsDialog();
 
 							scheduledPublishingEventsDialog.show();
@@ -555,7 +555,7 @@ AUI.add(
 				_initLabels() {
 					var instance = this;
 
-					instance.all('.content-link').each(function(item) {
+					instance.all('.content-link').each(item => {
 						instance._setContentLabels(item.attr('data-portletid'));
 					});
 
@@ -653,11 +653,11 @@ AUI.add(
 					var instance = this;
 
 					if (instance._isChecked('deletionsNode')) {
-						instance.all('.deletions').each(function(item) {
+						instance.all('.deletions').each(item => {
 							item.show();
 						});
 					} else {
-						instance.all('.deletions').each(function(item) {
+						instance.all('.deletions').each(item => {
 							item.hide();
 						});
 					}
@@ -803,14 +803,14 @@ AUI.add(
 				_restoreNodeHiddenState(node, state) {
 					var hiddenList = node.ancestorsByClassName(STR_HIDE);
 
-					hiddenList.each(function(hiddenNode) {
+					hiddenList.each(hiddenNode => {
 						hiddenNode.removeClass(STR_HIDE);
 					});
 
 					hiddenList = state.hiddenList;
 
 					if (hiddenList !== null) {
-						hiddenList.each(function(node) {
+						hiddenList.each(node => {
 							node.addClass(STR_HIDE);
 						});
 					}
@@ -827,7 +827,7 @@ AUI.add(
 						inputNodes = node.getElementsByTagName('input');
 					}
 
-					inputNodes.each(function(node) {
+					inputNodes.each(node => {
 						var id = node.get('id');
 
 						var state = inputStates[id];
@@ -864,7 +864,7 @@ AUI.add(
 
 					var selectedContent = [];
 
-					inputs.each(function(item) {
+					inputs.each(item => {
 						var checked = item.attr(STR_CHECKED);
 
 						if (checked) {
@@ -991,7 +991,7 @@ AUI.add(
 						inputNodes = node.getElementsByTagName('input');
 					}
 
-					inputNodes.each(function(node) {
+					inputNodes.each(node => {
 						var hiddenList = node.ancestorsByClassName(STR_HIDE);
 
 						var id = node.get('id');

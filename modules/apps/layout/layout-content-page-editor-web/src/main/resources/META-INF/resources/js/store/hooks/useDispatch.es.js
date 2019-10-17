@@ -13,6 +13,7 @@
  */
 
 import {useContext} from 'react';
+
 import StoreContext from '../StoreContext.es';
 
 function useDispatch() {

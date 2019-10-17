@@ -12,6 +12,8 @@
  * details.
  */
 
+import {filter as oDataFilterFn} from 'odata-v4-parser';
+
 import {
 	CONJUNCTIONS,
 	FUNCTIONAL_OPERATORS,
@@ -21,7 +23,6 @@ import {
 	RELATIONAL_OPERATORS
 } from './constants.es';
 import {generateGroupId} from './utils.es';
-import {filter as oDataFilterFn} from 'odata-v4-parser';
 
 const EXPRESSION_TYPES = {
 	AND: 'AndExpression',

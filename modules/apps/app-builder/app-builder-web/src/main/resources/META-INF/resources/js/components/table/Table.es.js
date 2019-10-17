@@ -14,6 +14,7 @@
 
 import ClayTable from '@clayui/table';
 import React from 'react';
+
 import DropDown from './DropDown.es';
 
 const {Body, Cell, Head, Row} = ClayTable;

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-product-navigation-control-menu-add-content',
-	function(A) {
+	A => {
 		var ControlMenu = Liferay.ControlMenu;
 
 		var SELECTOR_ADD_CONTENT_ITEM = '.add-content-item';
@@ -50,7 +50,7 @@ AUI.add(
 							instance._refreshContentList,
 							instance
 						),
-						Liferay.once('AddContent:addPortlet', function(event) {
+						Liferay.once('AddContent:addPortlet', event => {
 							instance.addPortlet(event.node, event.options);
 						})
 					);
@@ -94,10 +94,10 @@ AUI.add(
 							method: 'POST'
 						}
 					)
-						.then(function(response) {
+						.then(response => {
 							return response.text();
 						})
-						.then(function(response) {
+						.then(response => {
 							instance._afterSuccess(response);
 						});
 				},

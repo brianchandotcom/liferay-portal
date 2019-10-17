@@ -13,8 +13,8 @@
  */
 
 import MapBase from 'map-common/js/MapBase.es';
-import {Config} from 'metal-state';
 import {toElement} from 'metal-dom';
+import {Config} from 'metal-state';
 
 import OpenStreetMapDialog from './OpenStreetMapDialog.es';
 import OpenStreetMapGeoJSON from './OpenStreetMapGeoJSON.es';
@@ -152,7 +152,9 @@ MapOpenStreetMap.POSITION_MAP = {
  * @type {!Object}
  * @static
  */
-MapOpenStreetMap.STATE = Object.assign({}, MapBase.STATE, {
+MapOpenStreetMap.STATE = {
+	...MapBase.STATE,
+
 	/**
 	 * Url used for fetching map tile information
 	 * @type {string}
@@ -160,7 +162,7 @@ MapOpenStreetMap.STATE = Object.assign({}, MapBase.STATE, {
 	tileURI: Config.string().value(
 		'//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 	)
-});
+};
 
 export default MapOpenStreetMap;
 export {MapOpenStreetMap};

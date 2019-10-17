@@ -26,7 +26,7 @@ Liferay.detach = function() {};
 	Liferay.provide(
 		Liferay,
 		'delegateClick',
-		function(id, fn) {
+		(id, fn) => {
 			var el = DOC.getElementById(id);
 
 			if (!el || el.id != id) {
@@ -62,7 +62,7 @@ Liferay.detach = function() {};
 
 	Liferay._CLICK_EVENTS = CLICK_EVENTS;
 
-	A.use('attribute', 'oop', function(A) {
+	A.use('attribute', 'oop', A => {
 		A.augment(Liferay, A.Attribute, true);
 	});
 })(AUI(), Liferay);

@@ -13,13 +13,15 @@
  */
 
 import '../FieldBase/FieldBase.es';
+
 import './CheckboxMultipleRegister.soy.js';
+
 import 'clay-checkbox';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {setJSONArrayValue} from '../util/setters.es';
 
+import {setJSONArrayValue} from '../util/setters.es';
 import templates from './CheckboxMultiple.soy.js';
 
 /**

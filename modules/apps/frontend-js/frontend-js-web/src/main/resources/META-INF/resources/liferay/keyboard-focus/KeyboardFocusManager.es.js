@@ -14,8 +14,8 @@
 
 'use strict';
 
-import core from 'metal';
 import EventEmitter from 'metal-events';
+import core from 'metal';
 
 /**
  * Listens to keyboard events and uses them to move focus between different

@@ -13,12 +13,13 @@
  */
 
 import React, {useState, useMemo, useEffect} from 'react';
-import Collapse from './../../common/Collapse.es';
-import SearchForm from '../../common/SearchForm.es';
-import SidebarHeader from '../SidebarHeader.es';
-import SidebarWidgetsDragDrop from './SidebarWidgetsDragDrop.es';
+
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import useSelector from '../../../store/hooks/useSelector.es';
+import SearchForm from '../../common/SearchForm.es';
+import SidebarHeader from '../SidebarHeader.es';
+import Collapse from './../../common/Collapse.es';
+import SidebarWidgetsDragDrop from './SidebarWidgetsDragDrop.es';
 import Widget from './Widget.es';
 
 const SidebarWidgets = () => {

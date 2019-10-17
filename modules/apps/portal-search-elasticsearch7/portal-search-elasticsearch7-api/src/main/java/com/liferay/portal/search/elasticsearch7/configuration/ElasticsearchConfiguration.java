@@ -30,6 +30,48 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ElasticsearchConfiguration {
 
 	@Meta.AD(
+		deflt = "false", description = "authentication-enabled-help",
+		name = "authentication-enabled", required = false
+	)
+	public boolean authenticationEnabled();
+
+	@Meta.AD(
+		deflt = "elastic", description = "username-help", name = "username",
+		required = false
+	)
+	public String username();
+
+	@Meta.AD(
+		description = "password-help", name = "password", required = false,
+		type = Meta.Type.Password
+	)
+	public String password();
+
+	@Meta.AD(
+		deflt = "false", description = "http-ssl-enabled-help",
+		name = "http-ssl-enabled", required = false
+	)
+	public boolean httpSSLEnabled();
+
+	@Meta.AD(
+		deflt = "pkcs12", description = "truststore-type-help",
+		name = "truststore-type", required = false
+	)
+	public String truststoreType();
+
+	@Meta.AD(
+		deflt = "/path/to/localhost.p12", description = "truststore-path-help",
+		name = "truststore-path", required = false
+	)
+	public String truststorePath();
+
+	@Meta.AD(
+		description = "truststore-password-help", name = "truststore-password",
+		required = false, type = Meta.Type.Password
+	)
+	public String truststorePassword();
+
+	@Meta.AD(
 		deflt = "LiferayElasticsearchCluster",
 		description = "cluster-name-help", name = "cluster-name",
 		required = false

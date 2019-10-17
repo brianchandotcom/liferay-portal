@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-portlet-dynamic-data-mapping',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
@@ -115,7 +115,7 @@ AUI.add(
 				if (instanceOf(field, A.FormBuilderField)) {
 					var readOnlyAttributes = AArray.map(
 						field.getPropertyModel(),
-						function(item) {
+						item => {
 							return item.attributeName;
 						}
 					);
@@ -349,13 +349,13 @@ AUI.add(
 						if (editor.get('rendered')) {
 							instance._toggleOptionsEditorInputs(editor);
 						} else {
-							editor.after('render', function() {
+							editor.after('render', () => {
 								instance._toggleOptionsEditorInputs(editor);
 							});
 						}
 					}
 
-					editor.after('render', function() {
+					editor.after('render', () => {
 						editor.set('visible', true);
 
 						var boundingBox = editor.get('boundingBox');
@@ -372,7 +372,7 @@ AUI.add(
 					var fields = fieldJSON.fields;
 
 					if (isArray(fields)) {
-						fields.forEach(function(item) {
+						fields.forEach(item => {
 							instance._deserializeField(
 								item,
 								availableLanguageIds
@@ -397,9 +397,7 @@ AUI.add(
 						'editingLocale'
 					);
 
-					LiferayFormBuilder.LOCALIZABLE_FIELD_ATTRS.forEach(function(
-						item
-					) {
+					LiferayFormBuilder.LOCALIZABLE_FIELD_ATTRS.forEach(item => {
 						var localizedValue = fieldJSON[item];
 
 						if (item !== 'options' && localizedValue) {
@@ -416,13 +414,13 @@ AUI.add(
 				) {
 					var instance = this;
 
-					availableLanguageIds.forEach(function(languageId) {
+					availableLanguageIds.forEach(languageId => {
 						fieldJSON.localizationMap =
 							fieldJSON.localizationMap || {};
 						fieldJSON.localizationMap[languageId] = {};
 
 						LiferayFormBuilder.LOCALIZABLE_FIELD_ATTRS.forEach(
-							function(attribute) {
+							attribute => {
 								var attributeMap = fieldJSON[attribute];
 
 								if (attributeMap && attributeMap[languageId]) {
@@ -457,7 +455,7 @@ AUI.add(
 						'editingLocale'
 					);
 
-					fieldJSON.options.forEach(function(item) {
+					fieldJSON.options.forEach(item => {
 						labels = item.label;
 
 						item.label =
@@ -465,7 +463,7 @@ AUI.add(
 
 						item.localizationMap = {};
 
-						availableLanguageIds.forEach(function(languageId) {
+						availableLanguageIds.forEach(languageId => {
 							item.localizationMap[languageId] = {
 								label: labels[languageId]
 							};
@@ -502,7 +500,7 @@ AUI.add(
 
 					var fields = [];
 
-					instance.get('fields').each(function(field) {
+					instance.get('fields').each(field => {
 						fields.push(field.serialize());
 					});
 
@@ -624,7 +622,7 @@ AUI.add(
 								) {
 									var nameModel = instance.propertyList
 										.get('data')
-										.filter(function(item) {
+										.filter(item => {
 											return (
 												item.get('attributeName') ===
 												'name'
@@ -678,10 +676,8 @@ AUI.add(
 
 								if (toolbar && toolbar.children) {
 									toolbar.children = toolbar.children.map(
-										function(children) {
-											children = children.map(function(
-												item
-											) {
+										children => {
+											children = children.map(item => {
 												delete item.icon;
 
 												return item;
@@ -701,13 +697,13 @@ AUI.add(
 				},
 
 				_setAvailableFields(val) {
-					var fields = val.map(function(item) {
+					var fields = val.map(item => {
 						return instanceOf(item, A.PropertyBuilderAvailableField)
 							? item
 							: new A.LiferayAvailableField(item);
 					});
 
-					fields.sort(function(a, b) {
+					fields.sort((a, b) => {
 						return A.ArraySort.compare(
 							a.get('label'),
 							b.get('label')
@@ -760,7 +756,7 @@ AUI.add(
 
 					var methodName = type + 'Invalid';
 
-					instance.eachParentField(field, function(parent) {
+					instance.eachParentField(field, parent => {
 						var parentBB = parent.get('boundingBox');
 
 						parentBB.dd[methodName]('#' + parentBB.attr('id'));
@@ -805,7 +801,7 @@ AUI.add(
 					var newVal = config.newVal;
 					var prevVal = config.prevVal;
 
-					fields._items.forEach(function(field) {
+					fields._items.forEach(field => {
 						var childFields = field.get('fields');
 						var localizationMap = field.get('localizationMap');
 
@@ -893,8 +889,8 @@ AUI.add(
 
 						return (
 							toolbarItems &&
-							toolbarItems.map(function(toolbarItem) {
-								return toolbarItem.map(function(item) {
+							toolbarItems.map(toolbarItem => {
+								return toolbarItem.map(item => {
 									if (item.icon) {
 										item.icon = item.icon
 											.replace('glyphicon glyphicon-', '')
@@ -935,7 +931,7 @@ AUI.add(
 
 					var fields = content.fields;
 
-					fields.forEach(function(fieldJSON) {
+					fields.forEach(fieldJSON => {
 						instance._deserializeField(
 							fieldJSON,
 							availableLanguageIds
@@ -996,7 +992,7 @@ AUI.add(
 						instance.get('translationManager')
 					));
 
-					instance.after('render', function() {
+					instance.after('render', () => {
 						translationManager.render();
 					});
 

@@ -17,7 +17,7 @@ import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import {sub} from '../utils.es';
+import ThemeContext from '../ThemeContext.es';
 import {
 	OTHER_REASON_VALUE,
 	STATUS_ERROR,
@@ -25,7 +25,7 @@ import {
 	STATUS_REPORT,
 	STATUS_SUCCESS
 } from '../constants.es';
-import ThemeContext from '../ThemeContext.es';
+import {sub} from '../utils.es';
 
 const ModalContentForm = ({
 	handleClose,

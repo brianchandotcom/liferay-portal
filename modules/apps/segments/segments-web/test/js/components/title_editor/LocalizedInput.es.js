@@ -13,8 +13,9 @@
  */
 
 import {cleanup, fireEvent, render} from '@testing-library/react';
-import LocalizedInput from '../../../../src/main/resources/META-INF/resources/js/components/title_editor/LocalizedInput.es';
 import React from 'react';
+
+import LocalizedInput from '../../../../src/main/resources/META-INF/resources/js/components/title_editor/LocalizedInput.es';
 
 const LOCALIZED_DROPDOWN_BUTTON = 'localized-dropdown-button';
 

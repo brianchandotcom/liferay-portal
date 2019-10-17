@@ -12,9 +12,9 @@
  * details.
  */
 
-import * as fieldDeletedHandler from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/fieldDeletedHandler.es';
-import * as FormSupport from '../../../src/main/resources/META-INF/resources/js/components/Form/FormSupport.es';
 import mockPages from '../../../__mock__/mockPages.es';
+import * as FormSupport from '../../../src/main/resources/META-INF/resources/js/components/Form/FormSupport.es';
+import * as fieldDeletedHandler from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/fieldDeletedHandler.es';
 import RulesSupport from '../../../src/main/resources/META-INF/resources/js/components/RuleBuilder/RulesSupport.es';
 
 describe('LayoutProvider/handlers/fieldDeletedHandler', () => {

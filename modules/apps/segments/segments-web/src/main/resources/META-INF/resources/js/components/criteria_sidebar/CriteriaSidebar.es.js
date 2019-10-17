@@ -12,11 +12,12 @@
  * details.
  */
 
-import CriteriaSidebarCollapse from './CriteriaSidebarCollapse.es';
-import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar.es';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+
 import {propertyGroupShape} from '../../utils/types.es';
+import CriteriaSidebarCollapse from './CriteriaSidebarCollapse.es';
+import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar.es';
 
 class CriteriaSidebar extends Component {
 	static propTypes = {

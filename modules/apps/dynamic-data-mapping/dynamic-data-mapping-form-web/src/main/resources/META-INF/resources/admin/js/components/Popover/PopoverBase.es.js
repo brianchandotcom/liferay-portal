@@ -12,8 +12,8 @@
  * details.
  */
 
-import Component, {Config} from 'metal-jsx';
 import getCN from 'classnames';
+import Component, {Config} from 'metal-jsx';
 
 const Header = ({children}) => {
 	return <div class="popover-header">{children}</div>;

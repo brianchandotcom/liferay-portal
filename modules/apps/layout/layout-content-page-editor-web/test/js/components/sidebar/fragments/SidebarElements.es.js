@@ -13,12 +13,13 @@
  */
 
 import {cleanup, render, fireEvent} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
+
 import SidebarElements from '../../../../../src/main/resources/META-INF/resources/js/components/sidebar/fragments/SidebarElements.es';
 import StateProvider from '../../../../../src/main/resources/META-INF/resources/js/store/StateProvider.es';
-import Store from '../../../../../src/main/resources/META-INF/resources/js/store/store.es';
 import StoreContext from '../../../../../src/main/resources/META-INF/resources/js/store/StoreContext.es';
-import userEvent from '@testing-library/user-event';
+import Store from '../../../../../src/main/resources/META-INF/resources/js/store/store.es';
 
 import '@testing-library/jest-dom/extend-expect';
 

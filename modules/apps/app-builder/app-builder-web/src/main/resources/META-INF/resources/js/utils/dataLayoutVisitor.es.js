@@ -64,7 +64,7 @@ export function deleteField(dataLayoutPages, fieldName) {
 
 export function getFieldNameFromIndexes(
 	{dataLayoutPages},
-	{columnIndex, pageIndex, rowIndex, fieldIndex = 0}
+	{columnIndex, fieldIndex = 0, pageIndex, rowIndex}
 ) {
 	return dataLayoutPages[pageIndex].dataLayoutRows[rowIndex]
 		.dataLayoutColumns[columnIndex].fieldNames[fieldIndex];

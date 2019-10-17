@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-scheduler',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 		var DateMath = A.DataType.DateMath;
 		var Lang = A.Lang;
@@ -206,7 +206,7 @@ AUI.add(
 
 						var persist = true;
 
-						A.each(changedAttributes, function(_item, index) {
+						A.each(changedAttributes, (_item, index) => {
 							persist = Object.prototype.hasOwnProperty.call(
 								persistentAttrMap,
 								index
@@ -408,21 +408,21 @@ AUI.add(
 					if (schedulerEvent.isRecurring()) {
 						RecurrenceUtil.openConfirmationPanel(
 							'delete',
-							function() {
+							() => {
 								remoteServices.deleteEventInstance(
 									schedulerEvent,
 									false,
 									success
 								);
 							},
-							function() {
+							() => {
 								remoteServices.deleteEventInstance(
 									schedulerEvent,
 									true,
 									success
 								);
 							},
-							function() {
+							() => {
 								remoteServices.deleteEvent(
 									schedulerEvent,
 									success
@@ -465,7 +465,7 @@ AUI.add(
 						event.newSchedulerEvent,
 						false,
 						false,
-						function() {
+						() => {
 							instance.load();
 							instance.get('eventRecorder').hidePopover();
 						}
@@ -510,7 +510,7 @@ AUI.add(
 
 					var currentTimeFn = instance.get('currentTimeFn');
 
-					currentTimeFn(function(time) {
+					currentTimeFn(time => {
 						instance.set('currentTime', time);
 					});
 				},
@@ -520,16 +520,16 @@ AUI.add(
 
 					var currentTime = event.newVal;
 
-					var pastSchedulerEvents = instance.getEvents(function(
-						schedulerEvent
-					) {
-						var endDate = schedulerEvent.get('endDate');
+					var pastSchedulerEvents = instance.getEvents(
+						schedulerEvent => {
+							var endDate = schedulerEvent.get('endDate');
 
-						return endDate.getTime() <= currentTime;
-					},
-					false);
+							return endDate.getTime() <= currentTime;
+						},
+						false
+					);
 
-					A.each(pastSchedulerEvents, function(schedulerEvent) {
+					A.each(pastSchedulerEvents, schedulerEvent => {
 						return schedulerEvent._uiSetPast(true);
 					});
 				},
@@ -602,7 +602,7 @@ AUI.add(
 
 					clearInterval(instance._currentTimeInterval);
 
-					instance.get('views').forEach(function(item) {
+					instance.get('views').forEach(item => {
 						item.destroy();
 					});
 
@@ -615,7 +615,7 @@ AUI.add(
 				getEventsByCalendarBookingId(calendarBookingId) {
 					var instance = this;
 
-					return instance.getEvents(function(schedulerEvent) {
+					return instance.getEvents(schedulerEvent => {
 						return (
 							schedulerEvent.get('calendarBookingId') ===
 							calendarBookingId
@@ -637,7 +637,7 @@ AUI.add(
 					var calendarEvents = {};
 					var events = [];
 
-					calendarBookings.forEach(function(item) {
+					calendarBookings.forEach(item => {
 						var calendarId = item.calendarId;
 
 						if (!calendarEvents[calendarId]) {
@@ -662,7 +662,7 @@ AUI.add(
 
 					A.each(
 						calendarContainer.get('availableCalendars'),
-						function(item, index) {
+						(item, index) => {
 							item.reset(calendarEvents[index], {
 								skipSyncUI: true
 							});
@@ -854,7 +854,7 @@ AUI.add(
 
 					var weeks = DateMath.getWeeksInMonth(date, firstDayOfWeek);
 
-					A.each(instance.tableRows, function(item, index) {
+					A.each(instance.tableRows, (item, index) => {
 						if (index >= weeks) {
 							item.remove();
 						} else if (index < weeks && !item.parentElement) {

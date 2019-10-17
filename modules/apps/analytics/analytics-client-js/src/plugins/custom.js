@@ -12,9 +12,9 @@
  * details.
  */
 
-import {debounce} from '../utils/debounce';
 import {closest, getClosestAssetElement} from '../utils/assets';
 import {DEBOUNCE} from '../utils/constants';
+import {debounce} from '../utils/debounce';
 import {onReady} from '../utils/events.js';
 import {ScrollTracker} from '../utils/scroll';
 

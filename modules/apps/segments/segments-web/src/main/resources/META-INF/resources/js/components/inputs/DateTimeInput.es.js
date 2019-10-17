@@ -15,6 +15,7 @@
 import dateFns from 'date-fns';
 import propTypes from 'prop-types';
 import React from 'react';
+
 import {PROPERTY_TYPES} from '../../utils/constants.es';
 
 const INPUT_DATE_FORMAT = 'YYYY-MM-DD';

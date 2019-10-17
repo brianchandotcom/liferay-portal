@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-product-navigation-control-menu-add-content-drag-drop',
-	function(A) {
+	A => {
 		var DDM = A.DD.DDM;
 
 		var ControlMenu = Liferay.ControlMenu;

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-service-datasource',
-	function(A) {
+	A => {
 		var ServiceDataSource = A.Component.create({
 			EXTENDS: A.DataSource.Local,
 			NAME: 'servicedatasource',

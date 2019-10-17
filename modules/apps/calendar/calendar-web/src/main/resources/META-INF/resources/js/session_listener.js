@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-session-listener',
-	function(A) {
+	A => {
 		var CalendarSessionListener = A.Component.create({
 			ATTRS: {
 				calendars: {
@@ -34,7 +34,7 @@ AUI.add(
 
 					var calendars = instance.get('calendars');
 
-					A.Object.each(calendars, function(calendar) {
+					A.Object.each(calendars, calendar => {
 						var permissions = calendar.get('permissions');
 
 						permissions.DELETE = false;
@@ -49,7 +49,7 @@ AUI.add(
 
 					var scheduler = instance.get('scheduler');
 
-					scheduler.getEvents().forEach(function(event) {
+					scheduler.getEvents().forEach(event => {
 						event.set('disabled', true);
 					});
 				},

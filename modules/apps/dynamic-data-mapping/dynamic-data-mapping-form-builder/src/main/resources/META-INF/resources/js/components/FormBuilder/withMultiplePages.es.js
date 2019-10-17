@@ -13,11 +13,15 @@
  */
 
 import '../SuccessPage/SuccessPagePaginationItem.soy.js';
+
 import '../SuccessPage/SuccessPageRenderer.soy.js';
+
 import '../SuccessPage/SuccessPageWizardItem.soy.js';
-import Component from 'metal-jsx';
+
 import {ClayActionsDropdown} from 'clay-dropdown';
+import Component from 'metal-jsx';
 import {Config} from 'metal-state';
+
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
 import {setValue} from '../../util/i18n.es';
 
@@ -218,7 +222,7 @@ const withMultiplePages = ChildComponent => {
 			dispatch('paginationModeUpdated');
 		}
 
-		_updateSuccessPage({body = '', title = '', enabled}) {
+		_updateSuccessPage({body = '', enabled, title = ''}) {
 			const {dispatch} = this.context;
 			const {editingLanguageId} = this.props;
 			const successPageSettings = {

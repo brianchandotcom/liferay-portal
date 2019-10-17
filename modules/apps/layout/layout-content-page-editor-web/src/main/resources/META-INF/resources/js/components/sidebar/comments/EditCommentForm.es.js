@@ -16,8 +16,8 @@ import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import CommentForm from './CommentForm.es';
 import {editFragmentEntryLinkComment} from '../../../utils/FragmentsEditorFetchUtils.es';
+import CommentForm from './CommentForm.es';
 
 const EditCommentForm = props => {
 	const [editingComment, setEditingComment] = useState(false);

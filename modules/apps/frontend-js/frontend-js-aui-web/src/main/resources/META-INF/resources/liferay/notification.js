@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-notification',
-	function(A) {
+	A => {
 		var Notification = A.Component.create({
 			EXTENDS: Liferay.Alert,
 

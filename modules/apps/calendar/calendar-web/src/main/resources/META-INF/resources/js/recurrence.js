@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-recurrence-dialog',
-	function(A) {
+	A => {
 		var DAYS_OF_WEEK = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
 
 		var FREQUENCY_MONTHLY = 'MONTHLY';
@@ -340,7 +340,7 @@ AUI.add(
 
 					var checkedLimitRadioButton = A.Array.find(
 						instance.get('limitRadioButtons'),
-						function(item) {
+						item => {
 							return item.get('checked');
 						}
 					);
@@ -529,7 +529,7 @@ AUI.add(
 
 					startTimeDayOfWeekInput.val(dayOfWeek);
 
-					daysOfWeekCheckboxes.each(function(item) {
+					daysOfWeekCheckboxes.each(item => {
 						if (item.val() == dayOfWeek) {
 							item.set('checked', true);
 							item.set('disabled', true);
@@ -575,7 +575,7 @@ AUI.add(
 						.get('daysOfWeekCheckboxes')
 						.filter(':not([disabled])');
 
-					dayOfWeekNodes.each(function(node) {
+					dayOfWeekNodes.each(node => {
 						var check = value.indexOf(node.get('value')) > -1;
 
 						node.set('checked', check);
@@ -630,7 +630,7 @@ AUI.add(
 				_setLimitType(value) {
 					var instance = this;
 
-					A.each(instance.get('limitRadioButtons'), function(node) {
+					A.each(instance.get('limitRadioButtons'), node => {
 						if (node.get('value') === value) {
 							node.set('checked', true);
 						}

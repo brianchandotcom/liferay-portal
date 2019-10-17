@@ -36,7 +36,7 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get('select-collection'),
 				uri: itemData.selectFragmentCollectionURL
 			},
-			function(selectedItem) {
+			selectedItem => {
 				if (selectedItem) {
 					this.one('#fragmentCollectionId').value = selectedItem.id;
 					this.one('#fragmentEntryKeys').value =
@@ -47,7 +47,7 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 						itemData.copyContributedFragmentEntryURL
 					);
 				}
-			}.bind(this)
+			}
 		);
 	}
 
@@ -142,7 +142,7 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get('select-collection'),
 				uri: selectFragmentCollectionURL
 			},
-			function(selectedItem) {
+			selectedItem => {
 				if (selectedItem) {
 					this.one('#fragmentCollectionId').value = selectedItem.id;
 					this.one('#fragmentEntryIds').value = fragmentEntryId;
@@ -152,7 +152,7 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 						targetFragmentEntryURL
 					);
 				}
-			}.bind(this)
+			}
 		);
 	}
 

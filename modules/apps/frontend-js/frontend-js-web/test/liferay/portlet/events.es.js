@@ -176,7 +176,7 @@ describe('PortletHub', () => {
 
 		it('throws a TypeError if the type argument is not a string', () => {
 			const testFn = () => {
-				hubA.addEventListener(89, function() {});
+				hubA.addEventListener(89, () => {});
 			};
 
 			expect(testFn).toThrow(TypeError);
@@ -192,7 +192,7 @@ describe('PortletHub', () => {
 
 		it('throws a TypeError if the type is null', () => {
 			const testFn = () => {
-				hubA.addEventListener(null, function() {});
+				hubA.addEventListener(null, () => {});
 			};
 
 			expect(testFn).toThrow(TypeError);
@@ -208,7 +208,7 @@ describe('PortletHub', () => {
 
 		it('throws a TypeError if the type begins with "portlet." but is neither "portlet.onStateChange" or "portlet.onError"', () => {
 			const testFn = () => {
-				hubA.addEventListener('portlet.invalidType', function() {});
+				hubA.addEventListener('portlet.invalidType', () => {});
 			};
 
 			expect(testFn).toThrow(TypeError);
@@ -216,7 +216,7 @@ describe('PortletHub', () => {
 
 		it('does not throw an exception if both parameters are valid', () => {
 			const testFn = () => {
-				return hubA.addEventListener('someEvent', function() {});
+				return hubA.addEventListener('someEvent', () => {});
 			};
 
 			expect(testFn).not.toThrow();
@@ -227,7 +227,7 @@ describe('PortletHub', () => {
 		});
 
 		it('returns a handle to the event handler (an object) when the parameters are valid', () => {
-			const handle = hubA.addEventListener('someEvent', function() {});
+			const handle = hubA.addEventListener('someEvent', () => {});
 
 			expect(handle).not.toBeUndefined();
 
@@ -236,10 +236,7 @@ describe('PortletHub', () => {
 
 		it('allows a listener for event type "portlet.onStateChange" to be added', () => {
 			const testFn = () => {
-				return hubA.addEventListener(
-					'portlet.onStateChange',
-					function() {}
-				);
+				return hubA.addEventListener('portlet.onStateChange', () => {});
 			};
 
 			// expect(testFn).not.toThrow();
@@ -253,7 +250,7 @@ describe('PortletHub', () => {
 
 		it('allows a listener for event type "portlet.onError" to be added', () => {
 			const testFn = () => {
-				return hubA.addEventListener('portlet.onError', function() {});
+				return hubA.addEventListener('portlet.onError', () => {});
 			};
 
 			// expect(testFn).not.toThrow();

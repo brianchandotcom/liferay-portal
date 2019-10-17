@@ -15,9 +15,10 @@
 import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import Button from '../../common/Button.es';
-import InvisibleFieldset from '../../common/InvisibleFieldset.es';
 import Editor from '../../common/Editor.es';
+import InvisibleFieldset from '../../common/InvisibleFieldset.es';
 
 const CommentForm = props => (
 	<form onFocus={props.onFormFocus}>

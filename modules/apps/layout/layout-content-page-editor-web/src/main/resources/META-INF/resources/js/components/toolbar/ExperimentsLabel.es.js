@@ -14,10 +14,11 @@
 
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
+
 import 'clay-label';
 
-import templates from './ExperimentsLabel.soy';
 import statusToLabelDisplayType from '../../utils/ExperimentsStatus.es';
+import templates from './ExperimentsLabel.soy';
 
 /**
  * This component is wrapper of ClayLabel

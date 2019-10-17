@@ -12,10 +12,11 @@
  * details.
  */
 
-import AnalyticsClient from '../../src/analytics';
-import dom from 'metal-dom';
 import {expect} from 'chai';
 import fetchMock from 'fetch-mock';
+import dom from 'metal-dom';
+
+import AnalyticsClient from '../../src/analytics';
 
 const applicationId = 'Blog';
 

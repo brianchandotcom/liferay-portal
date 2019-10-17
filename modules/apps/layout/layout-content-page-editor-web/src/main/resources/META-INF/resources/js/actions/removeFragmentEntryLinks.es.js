@@ -16,11 +16,11 @@ import {
 	removeFragmentEntryLinks,
 	removeExperience
 } from '../utils/FragmentsEditorFetchUtils.es';
-import {REMOVE_FRAGMENT_ENTRY_LINK} from './actions.es';
 import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
+import {REMOVE_FRAGMENT_ENTRY_LINK} from './actions.es';
+import {updatePageContentsAction} from './updatePageContents.es';
 import {updatePageEditorLayoutDataAction} from './updatePageEditorLayoutData.es';
 import {updateWidgetsAction} from './updateWidgets.es';
-import {updatePageContentsAction} from './updatePageContents.es';
 
 /**
  * Removes a list of fragment entry links

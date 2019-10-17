@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-admin',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var INTERVAL_RENDER_IDLE = 60000;
@@ -71,7 +71,7 @@ AUI.add(
 
 					var form = instance.get(STR_FORM);
 
-					var inputsArray = A.Object.map(data, function(value, key) {
+					var inputsArray = A.Object.map(data, (value, key) => {
 						key = MAP_DATA_PARAMS[key] || key;
 
 						var nsKey = instance.ns(key);
@@ -157,26 +157,27 @@ AUI.add(
 									'.index-action-wrapper'
 								);
 
-								currentAdminIndexNodeList.each(function(
-									item,
-									index
-								) {
-									var inProgress = item.one('.progress');
+								currentAdminIndexNodeList.each(
+									(item, index) => {
+										var inProgress = item.one('.progress');
 
-									var responseAdminIndexNode = responseAdminIndexNodeList.item(
-										index
-									);
-
-									if (!inProgress) {
-										inProgress = responseAdminIndexNode.one(
-											'.progress'
+										var responseAdminIndexNode = responseAdminIndexNodeList.item(
+											index
 										);
-									}
 
-									if (inProgress) {
-										item.replace(responseAdminIndexNode);
+										if (!inProgress) {
+											inProgress = responseAdminIndexNode.one(
+												'.progress'
+											);
+										}
+
+										if (inProgress) {
+											item.replace(
+												responseAdminIndexNode
+											);
+										}
 									}
-								});
+								);
 
 								var controlMenuId =
 									'#' + instance.ns('controlMenu');

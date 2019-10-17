@@ -13,11 +13,13 @@
  */
 
 import 'clay-button';
+
 import 'metal';
+
 import 'metal-component';
-import {Config} from 'metal-state';
-import Soy from 'metal-soy';
 import {PortletBase} from 'frontend-js-web';
+import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import templates from './FieldMappings.soy';
 
@@ -71,7 +73,7 @@ class FieldMappings extends PortletBase {
 
 		event.currentTarget.dataset.title = Liferay.Language.get('copied');
 
-		setTimeout(function() {
+		setTimeout(() => {
 			document.execCommand('copy');
 		}, 0);
 	}

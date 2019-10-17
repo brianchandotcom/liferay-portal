@@ -14,12 +14,12 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {addFragment, getFragmentEntryLinkContent} from './fragments.es';
-import {getWidgetPath} from '../utils/FragmentsEditorGetUtils.es';
-import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
-import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
+import {getWidgetPath} from '../utils/FragmentsEditorGetUtils.es';
+import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import editableValuesMigrator from '../utils/fragmentMigrator.es';
+import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
+import {addFragment, getFragmentEntryLinkContent} from './fragments.es';
 
 /**
  * @param {object} state

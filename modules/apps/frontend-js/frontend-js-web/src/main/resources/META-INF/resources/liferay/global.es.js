@@ -12,6 +12,11 @@
  * details.
  */
 
+import escape from 'lodash.escape';
+import groupBy from 'lodash.groupby';
+import isEqual from 'lodash.isequal';
+import unescape from 'lodash.unescape';
+
 import {
 	component,
 	componentReady,
@@ -21,34 +26,28 @@ import {
 	getComponentCache,
 	initComponentCache
 } from './component.es';
-
-import {getSessionValue, setSessionValue} from './util/session.es';
-
+import portlet from './portlet/portlet.es';
+import SideNavigation from './side_navigation.es';
+import getCountries from './util/address/get_countries.es';
+import getRegions from './util/address/get_regions.es';
+import fetch from './util/fetch.es';
+import getFormElement from './util/form/get_form_element.es';
+import objectToFormData from './util/form/object_to_form_data.es';
+import postForm from './util/form/post_form.es';
+import setFormValues from './util/form/set_form_values.es';
+import formatStorage from './util/format_storage.es';
+import formatXML from './util/format_xml.es';
+import getCropRegion from './util/get_crop_region.es';
+import getPortletNamespace from './util/get_portlet_namespace.es';
+import navigate from './util/navigate.es';
+import ns from './util/ns.es';
+import objectToURLSearchParams from './util/object_to_url_search_params.es';
 import createActionURL from './util/portlet_url/create_action_url.es';
 import createPortletURL from './util/portlet_url/create_portlet_url.es';
 import createRenderURL from './util/portlet_url/create_render_url.es';
 import createResourceURL from './util/portlet_url/create_resource_url.es';
-import escape from 'lodash.escape';
-import fetch from './util/fetch.es';
-import formatStorage from './util/format_storage.es';
-import formatXML from './util/format_xml.es';
-import getCountries from './util/address/get_countries.es';
-import getCropRegion from './util/get_crop_region.es';
-import getFormElement from './util/form/get_form_element.es';
-import getPortletNamespace from './util/get_portlet_namespace.es';
-import getRegions from './util/address/get_regions.es';
-import groupBy from 'lodash.groupby';
-import isEqual from 'lodash.isequal';
-import portlet from './portlet/portlet.es';
-import navigate from './util/navigate.es';
-import ns from './util/ns.es';
-import objectToFormData from './util/form/object_to_form_data.es';
-import objectToURLSearchParams from './util/object_to_url_search_params.es';
-import postForm from './util/form/post_form.es';
-import setFormValues from './util/form/set_form_values.es';
-import SideNavigation from './side_navigation.es';
+import {getSessionValue, setSessionValue} from './util/session.es';
 import toCharCode from './util/to_char_code.es';
-import unescape from 'lodash.unescape';
 
 Liferay.component = component;
 Liferay.componentReady = componentReady;

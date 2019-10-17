@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-auto-fields',
-	function(A) {
+	A => {
 		var AObject = A.Object;
 		var Lang = A.Lang;
 
@@ -92,7 +92,7 @@ AUI.add(
 				},
 
 				_clearForm(node) {
-					node.all('input, select, textarea').each(function(item) {
+					node.all('input, select, textarea').each(item => {
 						var tag = item.get('nodeName').toLowerCase();
 
 						var type = item.getAttribute('type');
@@ -116,7 +116,7 @@ AUI.add(
 						}
 					});
 
-					CSS_VALIDATION_HELPER_CLASSES.forEach(function(item) {
+					CSS_VALIDATION_HELPER_CLASSES.forEach(item => {
 						node.all('.' + item).removeClass(item);
 					});
 				},
@@ -190,7 +190,7 @@ AUI.add(
 					}
 
 					node.all('input, select, textarea, span, div').each(
-						function(item) {
+						item => {
 							var inputNodeName = item.attr('nodeName');
 							var inputType = item.attr('type');
 
@@ -244,7 +244,7 @@ AUI.add(
 
 					instance._clearInputsLocalized(node);
 
-					inputsLocalized.each(function(item) {
+					inputsLocalized.each(item => {
 						var inputId = item.attr('id');
 
 						var inputLocalized;
@@ -337,8 +337,8 @@ AUI.add(
 						opacity: 0
 					});
 
-					instance._undoManager.on('clearList', function() {
-						rows.all('.lfr-form-row').each(function(item) {
+					instance._undoManager.on('clearList', () => {
+						rows.all('.lfr-form-row').each(item => {
 							if (instance._isHiddenRow(item)) {
 								A.DD.DDM.getDrag(item).destroy();
 							}
@@ -450,7 +450,7 @@ AUI.add(
 
 						node.hide();
 
-						CSS_VALIDATION_HELPER_CLASSES.forEach(function(item) {
+						CSS_VALIDATION_HELPER_CLASSES.forEach(item => {
 							var disabledClass = item + '-disabled';
 
 							node.all('.' + item).replaceClass(
@@ -470,9 +470,7 @@ AUI.add(
 
 							rules = formValidator.get('rules');
 
-							node.all('input, select, textarea').each(function(
-								item
-							) {
+							node.all('input, select, textarea').each(item => {
 								var name = item.attr('name') || item.attr('id');
 
 								if (rules && rules[name]) {
@@ -487,19 +485,14 @@ AUI.add(
 							});
 						}
 
-						instance._undoManager.add(function() {
+						instance._undoManager.add(() => {
 							if (rules) {
-								AObject.each(deletedRules, function(
-									item,
-									index
-								) {
+								AObject.each(deletedRules, (item, index) => {
 									rules[index] = item;
 								});
 							}
 
-							CSS_VALIDATION_HELPER_CLASSES.forEach(function(
-								item
-							) {
+							CSS_VALIDATION_HELPER_CLASSES.forEach(item => {
 								var disabledClass = item + '-disabled';
 
 								node.all('.' + disabledClass).replaceClass(
@@ -582,7 +575,7 @@ AUI.add(
 
 					contentBox.delegate(
 						'click',
-						function(event) {
+						event => {
 							var link = event.currentTarget;
 
 							var currentRow = link.ancestor('.lfr-form-row');
@@ -598,7 +591,7 @@ AUI.add(
 						'.lfr-autorow-controls .btn:not(:disabled)'
 					);
 
-					baseRows.each(function(item, index) {
+					baseRows.each((item, index) => {
 						var firstChild;
 						var formRow;
 
@@ -628,11 +621,11 @@ AUI.add(
 						instance._makeSortable(config.sortableHandle);
 					}
 
-					Liferay.on('saveAutoFields', function(event) {
+					Liferay.on('saveAutoFields', event => {
 						instance.save(event.form);
 					});
 
-					instance._undoManager.on('clearList', function() {
+					instance._undoManager.on('clearList', () => {
 						contentBox
 							.all('.lfr-form-row')
 							.each(instance._clearHiddenRows, instance);
@@ -648,7 +641,7 @@ AUI.add(
 
 					var contentBox = instance._contentBox;
 
-					contentBox.all('.lfr-form-row').each(function(item) {
+					contentBox.all('.lfr-form-row').each(item => {
 						instance.deleteRow(item);
 					});
 
@@ -682,7 +675,7 @@ AUI.add(
 						serializedData =
 							filter.call(instance, visibleRows) || [];
 					} else {
-						visibleRows.each(function(item) {
+						visibleRows.each(item => {
 							var formField = item.one('input, textarea, select');
 
 							var fieldId = formField.attr('id');

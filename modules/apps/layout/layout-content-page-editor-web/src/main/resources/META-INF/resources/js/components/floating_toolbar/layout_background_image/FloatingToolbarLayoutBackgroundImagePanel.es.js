@@ -13,29 +13,29 @@
  */
 
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import './FloatingToolbarLayoutBackgroundImagePanelDelegateTemplate.soy';
-import {
-	MAPPING_SOURCE_TYPE_IDS,
-	COMPATIBLE_TYPES
-} from '../../../utils/constants';
-import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
-import {
-	getAssetMappingFields,
-	getStructureMappingFields
-} from '../../../utils/FragmentsEditorFetchUtils.es';
+import {ADD_MAPPED_ASSET_ENTRY} from '../../../actions/actions.es';
+import {updateRowConfigAction} from '../../../actions/updateRowConfig.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
-import {getMappingSourceTypes} from '../../../utils/FragmentsEditorGetUtils.es';
 import {
 	openItemSelector,
 	openImageSelector
 } from '../../../utils/FragmentsEditorDialogUtils';
+import {
+	getAssetMappingFields,
+	getStructureMappingFields
+} from '../../../utils/FragmentsEditorFetchUtils.es';
+import {getMappingSourceTypes} from '../../../utils/FragmentsEditorGetUtils.es';
+import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
+import {
+	MAPPING_SOURCE_TYPE_IDS,
+	COMPATIBLE_TYPES
+} from '../../../utils/constants';
 import templates from './FloatingToolbarLayoutBackgroundImagePanel.soy';
-import {ADD_MAPPED_ASSET_ENTRY} from '../../../actions/actions.es';
-import {updateRowConfigAction} from '../../../actions/updateRowConfig.es';
 
 const IMAGE_SOURCE_TYPE_IDS = {
 	content: 'content_mapping',
@@ -406,11 +406,10 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	_selectAssetEntry(assetEntry) {
 		this._selectedAssetEntry = assetEntry;
 
-		this.store.dispatch(
-			Object.assign({}, this._selectedAssetEntry, {
-				type: ADD_MAPPED_ASSET_ENTRY
-			})
-		);
+		this.store.dispatch({
+			...this._selectedAssetEntry,
+			type: ADD_MAPPED_ASSET_ENTRY
+		});
 
 		this._loadFields();
 	}

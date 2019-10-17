@@ -12,9 +12,10 @@
  * details.
  */
 
-import AnalyticsClient from '../../src/analytics';
 import {expect} from 'chai';
 import fetchMock from 'fetch-mock';
+
+import AnalyticsClient from '../../src/analytics';
 
 const applicationId = 'Form';
 

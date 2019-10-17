@@ -12,24 +12,27 @@
  * details.
  */
 
-import Component from 'metal-component';
-import {Config} from 'metal-state';
 import {fetch, navigate} from 'frontend-js-web';
+import Component from 'metal-component';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import './LayoutBreadcrumbs.es';
+
 import './LayoutColumn.es';
+import {setIn} from '../utils/utils.es';
+import templates from './Layout.soy';
 import {
 	DROP_TARGET_BORDERS,
 	DROP_TARGET_ITEM_TYPES,
 	LayoutDragDrop
 } from './utils/LayoutDragDrop.es';
 import {
-	clearFollowingColumns,
-	clearPath,
-	deleteEmptyColumns,
-	setActiveItem
-} from './utils/LayoutUpdateUtils.es';
+	dropIsValid,
+	dropItemInsideColumn,
+	dropItemInsideItem,
+	dropItemNextToItem
+} from './utils/LayoutDropUtils.es';
 import {
 	columnIsItemChild,
 	getColumnActiveItem,
@@ -40,13 +43,11 @@ import {
 	itemIsParent
 } from './utils/LayoutGetUtils.es';
 import {
-	dropIsValid,
-	dropItemInsideColumn,
-	dropItemInsideItem,
-	dropItemNextToItem
-} from './utils/LayoutDropUtils.es';
-import {setIn} from '../utils/utils.es';
-import templates from './Layout.soy';
+	clearFollowingColumns,
+	clearPath,
+	deleteEmptyColumns,
+	setActiveItem
+} from './utils/LayoutUpdateUtils.es';
 
 /**
  * Metal drag

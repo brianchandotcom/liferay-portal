@@ -12,8 +12,8 @@
  * details.
  */
 
-import Notifications from '../../../../src/main/resources/META-INF/resources/admin/js/util/Notifications.es';
 import PreviewButton from '../../../../src/main/resources/META-INF/resources/admin/js/components/PreviewButton/PreviewButton.es';
+import Notifications from '../../../../src/main/resources/META-INF/resources/admin/js/util/Notifications.es';
 
 const previewURL = '/my/form/preview';
 const spritemap = 'spritemap';

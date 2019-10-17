@@ -196,7 +196,7 @@
 					if (!instance._verbatim) {
 						data = data.replace(
 							REGEX_CREOLE_RESERVED_CHARACTERS,
-							function(_match, p1, _offset, _string) {
+							(_match, p1, _offset, _string) => {
 								var res = '';
 
 								if (!instance._endResult.length) {

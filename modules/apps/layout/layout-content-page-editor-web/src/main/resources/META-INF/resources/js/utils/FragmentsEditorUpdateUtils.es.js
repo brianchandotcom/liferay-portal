@@ -14,23 +14,23 @@
 
 import {CLEAR_DROP_TARGET, MOVE_ROW} from '../actions/actions.es';
 import {
-	DEFAULT_COMPONENT_ROW_CONFIG,
-	DEFAULT_SECTION_ROW_CONFIG
-} from './rowConstants';
-import {
 	disableSavingChangesStatusAction,
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from '../actions/saveChanges.es';
 import {
-	FRAGMENTS_EDITOR_DRAGGING_CLASS,
-	FRAGMENTS_EDITOR_ROW_TYPES
-} from './constants';
-import {
 	getTargetBorder,
 	getWidget,
 	getWidgetPath
 } from './FragmentsEditorGetUtils.es';
+import {
+	FRAGMENTS_EDITOR_DRAGGING_CLASS,
+	FRAGMENTS_EDITOR_ROW_TYPES
+} from './constants';
+import {
+	DEFAULT_COMPONENT_ROW_CONFIG,
+	DEFAULT_SECTION_ROW_CONFIG
+} from './rowConstants';
 
 /**
  * Inserts an element in the given position of a given array and returns
@@ -127,17 +127,14 @@ function deleteIn(object, keyPath) {
 	const [lastKey] = keyPath.slice(-1);
 	const newKeyPath = keyPath.slice(0, keyPath.length - 1);
 
-	let newObject =
-		object instanceof Array ? [...object] : Object.assign({}, object);
+	let newObject = object instanceof Array ? [...object] : {...object};
 
 	if (keyPath.length === 1) {
 		delete newObject[lastKey];
 	} else {
 		newObject = updateIn(object, newKeyPath, lastItem => {
 			const newLastItem =
-				lastItem instanceof Array
-					? [...lastItem]
-					: Object.assign({}, lastItem);
+				lastItem instanceof Array ? [...lastItem] : {...lastItem};
 
 			delete newLastItem[lastKey];
 
@@ -158,11 +155,7 @@ function deleteIn(object, keyPath) {
 function moveItem(store, moveItemAction, moveItemPayload) {
 	store
 		.dispatch(enableSavingChangesStatusAction())
-		.dispatch(
-			Object.assign({}, moveItemPayload, {
-				type: moveItemAction
-			})
-		)
+		.dispatch({...moveItemPayload, type: moveItemAction})
 		.dispatch(updateLastSaveDateAction())
 		.dispatch(disableSavingChangesStatusAction())
 		.dispatch({
@@ -286,8 +279,7 @@ function updateIn(object, keyPath, updater, defaultValue) {
 	let target = object;
 
 	if (keyPath.length > 1) {
-		target =
-			target instanceof Array ? [...target] : Object.assign({}, target);
+		target = target instanceof Array ? [...target] : {...target};
 
 		target[nextKey] = updateIn(
 			target[nextKey] || {},
@@ -304,10 +296,7 @@ function updateIn(object, keyPath, updater, defaultValue) {
 		const updatedNextValue = updater(nextValue);
 
 		if (updatedNextValue !== target[nextKey]) {
-			target =
-				target instanceof Array
-					? [...target]
-					: Object.assign({}, target);
+			target = target instanceof Array ? [...target] : {...target};
 
 			target[nextKey] = updatedNextValue;
 		}

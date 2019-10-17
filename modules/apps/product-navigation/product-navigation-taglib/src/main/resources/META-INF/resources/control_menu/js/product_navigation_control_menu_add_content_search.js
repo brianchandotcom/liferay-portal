@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-product-navigation-control-menu-add-content-search',
-	function() {
+	() => {
 		var AddContentSearch = function() {};
 
 		AddContentSearch.prototype = {

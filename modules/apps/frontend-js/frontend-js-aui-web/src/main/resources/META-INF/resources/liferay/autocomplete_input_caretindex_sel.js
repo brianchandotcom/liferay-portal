@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-autocomplete-input-caretindex-sel',
-	function(A) {
+	A => {
 		var DOC = A.config.doc;
 
 		var REGEX_NEW_LINE = /\r\n/g;

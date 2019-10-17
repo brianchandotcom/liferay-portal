@@ -16,7 +16,9 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 
 import 'hello-soy-web/Footer.soy';
+
 import 'hello-soy-web/Header.soy';
+
 import templates from './Navigation.soy';
 
 class Navigation extends Component {}

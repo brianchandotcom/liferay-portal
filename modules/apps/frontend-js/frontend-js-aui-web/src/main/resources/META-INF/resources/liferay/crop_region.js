@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-crop-region',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var CropRegion = function() {};

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'inline-editor-ckeditor',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 		var PositionAlign = A.WidgetPositionAlign;
 
@@ -215,7 +215,7 @@ AUI.add(
 
 					A.one('#' + instance.get(EDITOR_NAME)).delegate(
 						'click',
-						function(event) {
+						event => {
 							if (event.shiftKey) {
 								var clone = event.currentTarget.clone();
 

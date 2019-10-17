@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-document-library',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var WIN = A.config.win;
@@ -171,26 +171,28 @@ AUI.add(
 				_openDocument(event) {
 					var instance = this;
 
-					Liferay.Util.openDocument(event.webDavUrl, null, function(
-						exception
-					) {
-						var errorMessage = Lang.sub(
-							Liferay.Language.get(
-								'cannot-open-the-requested-document-due-to-the-following-reason'
-							),
-							[exception.message]
-						);
+					Liferay.Util.openDocument(
+						event.webDavUrl,
+						null,
+						exception => {
+							var errorMessage = Lang.sub(
+								Liferay.Language.get(
+									'cannot-open-the-requested-document-due-to-the-following-reason'
+								),
+								[exception.message]
+							);
 
-						var openMSOfficeError = instance.ns(
-							'openMSOfficeError'
-						);
+							var openMSOfficeError = instance.ns(
+								'openMSOfficeError'
+							);
 
-						if (openMSOfficeError) {
-							openMSOfficeError.setHTML(errorMessage);
+							if (openMSOfficeError) {
+								openMSOfficeError.setHTML(errorMessage);
 
-							openMSOfficeError.removeClass('hide');
+								openMSOfficeError.removeClass('hide');
+							}
 						}
-					});
+					);
 				},
 
 				_openModalCategories() {
@@ -348,7 +350,7 @@ AUI.add(
 					} else if (action === 'checkin') {
 						Liferay.DocumentLibraryCheckin.showDialog(
 							namespace,
-							function(versionIncrease, changeLog) {
+							(versionIncrease, changeLog) => {
 								var form = instance.get('form').node;
 
 								form.get(namespace + 'changeLog').val(
@@ -393,7 +395,7 @@ AUI.add(
 					if (itemData.action === 'openDocumentTypesSelector') {
 						Liferay.Loader.require(
 							'frontend-js-web/liferay/ItemSelectorDialog.es',
-							function(ItemSelectorDialog) {
+							ItemSelectorDialog => {
 								var itemSelectorDialog = new ItemSelectorDialog.default(
 									{
 										buttonAddLabel: Liferay.Language.get(
@@ -415,7 +417,7 @@ AUI.add(
 
 								itemSelectorDialog.on(
 									'selectedItemChange',
-									function(event) {
+									event => {
 										var selectedItem = event.selectedItem;
 
 										if (selectedItem) {
@@ -537,7 +539,7 @@ AUI.add(
 							title: Lang.sub(dialogTitle, [selectedItems]),
 							uri: instance.get('selectFolderURL')
 						},
-						function(event) {
+						event => {
 							if (parameterName && parameterValue) {
 								instance._moveSingleElement(
 									event.folderid,

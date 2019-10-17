@@ -13,18 +13,24 @@
  */
 
 import '../FieldBase/FieldBase.es';
+
 import '../Text/Text.es';
+
 import './SelectRegister.soy.js';
+
 import 'clay-dropdown';
+
 import 'clay-icon';
+
 import 'clay-label';
 import Component from 'metal-component';
 import dom from 'metal-dom';
-import Soy from 'metal-soy';
-import templates from './Select.soy.js';
-import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
+import Soy from 'metal-soy';
+import {Config} from 'metal-state';
+
 import {setJSONArrayValue} from '../util/setters.es';
+import templates from './Select.soy.js';
 
 class Select extends Component {
 	addValue(value) {
@@ -198,7 +204,7 @@ class Select extends Component {
 		);
 	}
 
-	_handleLabelClosed({target, preventDefault, stopPropagation}) {
+	_handleLabelClosed({preventDefault, stopPropagation, target}) {
 		const {value} = target.data;
 
 		preventDefault();

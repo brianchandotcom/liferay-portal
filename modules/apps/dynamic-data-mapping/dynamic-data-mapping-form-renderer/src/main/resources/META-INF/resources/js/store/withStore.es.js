@@ -13,6 +13,9 @@
  */
 
 import dom from 'metal-dom';
+
+import {evaluate} from '../util/evaluation.es';
+import {PagesVisitor} from '../util/visitors.es';
 import handleActivePageUpdated from './actions/handleActivePageUpdated.es';
 import handleFieldBlurred from './actions/handleFieldBlurred.es';
 import handleFieldEdited from './actions/handleFieldEdited.es';
@@ -23,8 +26,6 @@ import handleFormSubmitted from './actions/handleFormSubmitted.es';
 import handlePaginationItemClicked from './actions/handlePaginationItemClicked.es';
 import handlePaginationNextClicked from './actions/handlePaginationNextClicked.es';
 import handlePaginationPreviousClicked from './actions/handlePaginationPreviousClicked.es';
-import {evaluate} from '../util/evaluation.es';
-import {PagesVisitor} from '../util/visitors.es';
 
 const _handleFieldEdited = function(properties) {
 	const {fieldInstance} = properties;

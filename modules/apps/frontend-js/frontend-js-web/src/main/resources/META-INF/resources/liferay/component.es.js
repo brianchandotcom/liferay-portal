@@ -42,7 +42,7 @@ const _createPromiseWrapper = function(value) {
 	} else {
 		let promiseResolve;
 
-		const promise = new Promise(function(resolve) {
+		const promise = new Promise(resolve => {
 			promiseResolve = resolve;
 		});
 

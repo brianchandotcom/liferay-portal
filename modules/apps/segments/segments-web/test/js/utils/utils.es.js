@@ -12,8 +12,8 @@
  * details.
  */
 
-import * as Utils from '../../../src/main/resources/META-INF/resources/js/utils/utils.es';
 import {CONJUNCTIONS} from '../../../src/main/resources/META-INF/resources/js/utils/constants.es';
+import * as Utils from '../../../src/main/resources/META-INF/resources/js/utils/utils.es';
 import {mockCriteria, mockCriteriaNested} from '../data';
 
 const GROUP_ID = 'group_1';

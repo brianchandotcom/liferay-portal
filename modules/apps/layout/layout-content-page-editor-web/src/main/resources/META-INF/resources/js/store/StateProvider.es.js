@@ -13,8 +13,9 @@
  */
 
 import React, {useContext, useEffect, useState} from 'react';
-import StoreContext from './StoreContext.es';
+
 import StateContext from './StateContext.es';
+import StoreContext from './StoreContext.es';
 
 const StateProvider = props => {
 	const store = useContext(StoreContext);

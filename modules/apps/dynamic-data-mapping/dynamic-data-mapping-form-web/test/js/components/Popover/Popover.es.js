@@ -12,8 +12,9 @@
  * details.
  */
 
-import Popover from '../../../../src/main/resources/META-INF/resources/admin/js/components/Popover/Popover.es';
 import {dom as MetalTestUtil} from 'metal-dom';
+
+import Popover from '../../../../src/main/resources/META-INF/resources/admin/js/components/Popover/Popover.es';
 
 const props = {
 	content: 'This content will be displayed when popover appears',

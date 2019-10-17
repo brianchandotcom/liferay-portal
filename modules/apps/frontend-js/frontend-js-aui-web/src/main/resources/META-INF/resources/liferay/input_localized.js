@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-input-localized',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var STR_BLANK = '';
@@ -145,7 +145,7 @@ AUI.add(
 
 						clearTimeout(instance._animating);
 
-						setTimeout(function() {
+						setTimeout(() => {
 							input.addClass(animateClass);
 
 							if (shouldFocus) {
@@ -153,7 +153,7 @@ AUI.add(
 							}
 						}, 0);
 
-						instance._animating = setTimeout(function() {
+						instance._animating = setTimeout(() => {
 							input.removeClass(animateClass);
 
 							clearTimeout(instance._animating);
@@ -665,10 +665,10 @@ AUI.add(
 
 		Liferay.InputLocalized = InputLocalized;
 
-		Liferay.on('destroyPortlet', function(event) {
+		Liferay.on('destroyPortlet', event => {
 			var portletNamespace = '_' + event.portletId + '_';
 
-			A.Object.each(Liferay.InputLocalized._instances, function(item) {
+			A.Object.each(Liferay.InputLocalized._instances, item => {
 				if (item.get('namespace') === portletNamespace) {
 					item.destroy();
 				}

@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-history',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 		var QueryString = A.QueryString;
 
@@ -41,7 +41,7 @@ AUI.add(
 			VALUE_SEPARATOR: '=',
 
 			prototype: {
-				_parse: A.cached(function(str) {
+				_parse: A.cached(str => {
 					return QueryString.parse(
 						str,
 						History.PAIR_SEPARATOR,

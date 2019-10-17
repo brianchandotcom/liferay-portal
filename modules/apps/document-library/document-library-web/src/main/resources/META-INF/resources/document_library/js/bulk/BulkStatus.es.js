@@ -12,10 +12,10 @@
  * details.
  */
 
-import Component from 'metal-component';
-import {Config} from 'metal-state';
 import {fetch, openToast} from 'frontend-js-web';
+import Component from 'metal-component';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import templates from './BulkStatus.soy';
 

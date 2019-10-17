@@ -12,6 +12,11 @@
  * details.
  */
 
+import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
+import {
+	getDropRowPosition,
+	getRowIndex
+} from '../utils/FragmentsEditorGetUtils.es';
 import {
 	add,
 	addRow,
@@ -20,11 +25,6 @@ import {
 	updateIn,
 	updateWidgets
 } from '../utils/FragmentsEditorUpdateUtils.es';
-import {
-	getDropRowPosition,
-	getRowIndex
-} from '../utils/FragmentsEditorGetUtils.es';
-import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
  * @param {object} state

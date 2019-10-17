@@ -12,7 +12,7 @@
  * details.
  */
 
-CKEDITOR.dialog.add('link', function(editor) {
+CKEDITOR.dialog.add('link', editor => {
 	var LANG_COMMON = editor.lang.common;
 
 	var LANG_LINK = editor.lang.link;
@@ -106,23 +106,23 @@ CKEDITOR.dialog.add('link', function(editor) {
 										'linkAddress'
 									);
 
-									editor.execCommand('linkselector', function(
-										newVal,
-										selectedItem
-									) {
-										if (
-											selectedItem &&
-											selectedItem.title
-										) {
-											urlField.setValue(
+									editor.execCommand(
+										'linkselector',
+										(newVal, selectedItem) => {
+											if (
+												selectedItem &&
 												selectedItem.title
-											);
-										} else {
-											urlField.setValue(
-												location.origin + newVal
-											);
+											) {
+												urlField.setValue(
+													selectedItem.title
+												);
+											} else {
+												urlField.setValue(
+													location.origin + newVal
+												);
+											}
 										}
-									});
+									);
 								},
 								required: true,
 								type: 'button'

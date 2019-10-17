@@ -12,14 +12,15 @@
  * details.
  */
 
-import React from 'react';
-import {DragDropContext as dragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import {DragDropContext as dragDropContext} from 'react-dnd';
 import {Route, HashRouter as Router, Switch} from 'react-router-dom';
+import React from 'react';
+
 import {AppContextProvider} from './AppContext.es';
+import {ToastContextProvider} from './components/toast/ToastContext.es';
 import ListCustomObjects from './pages/custom-object/ListCustomObjects.es';
 import ViewCustomObject from './pages/custom-object/ViewCustomObject.es';
-import {ToastContextProvider} from './components/toast/ToastContext.es';
 
 export default dragDropContext(HTML5Backend)(props => {
 	return (

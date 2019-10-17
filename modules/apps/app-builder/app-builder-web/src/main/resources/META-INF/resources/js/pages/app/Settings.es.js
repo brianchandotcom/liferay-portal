@@ -13,18 +13,19 @@
  */
 
 import React, {useContext} from 'react';
+
+import ToggleSwitch from '../../components/toggle-switch/ToggleSwitch.es';
 import EditAppContext, {
 	ADD_DEPLOYMENT,
 	REMOVE_DEPLOYMENT
 } from './EditAppContext.es';
-import ToggleSwitch from '../../components/toggle-switch/ToggleSwitch.es';
 
 export default ({deploymentType, settings = () => <></>, subtitle, title}) => {
 	const {
+		dispatch,
 		state: {
 			app: {appDeployments}
-		},
-		dispatch
+		}
 	} = useContext(EditAppContext);
 
 	const checked = appDeployments.some(

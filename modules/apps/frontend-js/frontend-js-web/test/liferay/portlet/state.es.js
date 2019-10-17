@@ -12,8 +12,8 @@
  * details.
  */
 
-import PortletConstants from '../../../src/main/resources/META-INF/resources/liferay/portlet/portlet_constants.es';
 import RenderState from '../../../src/main/resources/META-INF/resources/liferay/portlet/RenderState.es';
+import PortletConstants from '../../../src/main/resources/META-INF/resources/liferay/portlet/portlet_constants.es';
 import register from '../../../src/main/resources/META-INF/resources/liferay/portlet/register.es';
 
 describe('PortletHub', () => {

@@ -12,17 +12,17 @@
  * details.
  */
 
-import {Config} from 'metal-state';
 import {PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import getConnectedComponent from '../../store/ConnectedComponent.es';
-import templates from './MapContentForm.soy';
+import {getItemPath} from '../../utils/FragmentsEditorGetUtils.es';
 import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../utils/constants';
-import {getItemPath} from '../../utils/FragmentsEditorGetUtils.es';
+import templates from './MapContentForm.soy';
 
 /**
  * @param {string} html Removes HTML from the given text
@@ -142,7 +142,7 @@ class MapContentForm extends PortletBase {
 			targetElement.dataset.itemFragmentEntryLinkId;
 
 		const newFields = this.fields.map(field => {
-			let newField = Object.assign({}, field);
+			let newField = {...field};
 
 			if (
 				(fieldKey === '-' || field.key !== fieldKey) &&

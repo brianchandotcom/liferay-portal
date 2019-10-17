@@ -12,8 +12,8 @@
  * details.
  */
 
-import {destroy, init} from './EditableRichTextFragmentProcessor.es';
 import {FLOATING_TOOLBAR_BUTTONS} from '../../utils/constants';
+import {destroy, init} from './EditableRichTextFragmentProcessor.es';
 
 /**
  * @param {object} editableValues
@@ -22,7 +22,7 @@ import {FLOATING_TOOLBAR_BUTTONS} from '../../utils/constants';
 function getFloatingToolbarButtons(editableValues) {
 	const buttons = [];
 
-	const linkButton = Object.assign({}, FLOATING_TOOLBAR_BUTTONS.link);
+	const linkButton = {...FLOATING_TOOLBAR_BUTTONS.link};
 
 	if (
 		editableValues.config &&
@@ -45,7 +45,7 @@ function getFloatingToolbarButtons(editableValues) {
 
 	buttons.push(editButton);
 
-	const mapButton = Object.assign({}, FLOATING_TOOLBAR_BUTTONS.map);
+	const mapButton = {...FLOATING_TOOLBAR_BUTTONS.map};
 
 	if (editableValues.fieldId || editableValues.mappedField) {
 		mapButton.cssClass = 'fragments-editor__floating-toolbar--mapped-field';

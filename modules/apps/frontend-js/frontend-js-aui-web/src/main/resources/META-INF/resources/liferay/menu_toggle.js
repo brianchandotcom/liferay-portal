@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-menu-toggle',
-	function(A) {
+	A => {
 		var AEvent = A.Event;
 		var Lang = A.Lang;
 
@@ -97,9 +97,7 @@ AUI.add(
 					var instance = this;
 
 					if (instance._triggerNode) {
-						instance._triggerNode.on(['keyup', 'tap'], function(
-							event
-						) {
+						instance._triggerNode.on(['keyup', 'tap'], event => {
 							if (
 								event.type == 'tap' ||
 								event.isKeyInSet('ENTER', 'SPACE')
@@ -118,7 +116,7 @@ AUI.add(
 
 					var results = [];
 
-					menuItems.each(function(node) {
+					menuItems.each(node => {
 						results.push({
 							name: node
 								.one('.nav-item-label')
@@ -159,7 +157,7 @@ AUI.add(
 				_isContent(target) {
 					var instance = this;
 
-					return instance._content.some(function(item) {
+					return instance._content.some(item => {
 						return item.contains(target);
 					});
 				},
@@ -186,7 +184,7 @@ AUI.add(
 						var inputFilterNode = instance._inputFilterNode;
 
 						if (inputFilterNode) {
-							setTimeout(function() {
+							setTimeout(() => {
 								Liferay.Util.focusFormField(inputFilterNode);
 							}, 0);
 						}
@@ -210,7 +208,7 @@ AUI.add(
 						if (open && !handle) {
 							handle = target.on(
 								instance._getEventOutside(event),
-								function(event) {
+								event => {
 									if (toggleTouch) {
 										toggleTouch = instance._isTouchEvent(
 											event

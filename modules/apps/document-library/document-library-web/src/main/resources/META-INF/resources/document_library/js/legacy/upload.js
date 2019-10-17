@@ -14,7 +14,7 @@
 
 AUI.add(
 	'document-library-upload',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 		var ANode = A.Node;
 		var Lang = A.Lang;
@@ -260,7 +260,7 @@ AUI.add(
 
 					var queue = instance._getUploader().queue;
 
-					files.forEach(function(item) {
+					files.forEach(item => {
 						queue.addToQueueBottom(item);
 					});
 				},
@@ -343,14 +343,12 @@ AUI.add(
 						instance
 					);
 
-					var removeCssClassTask = A.debounce(function() {
+					var removeCssClassTask = A.debounce(() => {
 						docElement.removeClass('upload-drop-intent');
 						docElement.removeClass('upload-drop-active');
 					}, 500);
 
-					var onDragOverHandle = docElement.on('dragover', function(
-						event
-					) {
+					var onDragOverHandle = docElement.on('dragover', event => {
 						var dataTransfer = event._event.dataTransfer;
 
 						if (dataTransfer && dataTransfer.types) {
@@ -385,7 +383,7 @@ AUI.add(
 
 					var onDropHandle = docElement.delegate(
 						'drop',
-						function(event) {
+						event => {
 							var dataTransfer = event._event.dataTransfer;
 
 							if (dataTransfer) {
@@ -406,9 +404,7 @@ AUI.add(
 										dataTransfer.files
 									);
 
-									event.fileList = dragDropFiles.map(function(
-										item
-									) {
+									event.fileList = dragDropFiles.map(item => {
 										return new A.FileHTML5(item);
 									});
 
@@ -423,7 +419,7 @@ AUI.add(
 
 					var entriesDragDelegateHandle = entriesContainer.delegate(
 						['dragleave', 'dragover'],
-						function(event) {
+						event => {
 							var dataTransfer = event._event.dataTransfer;
 
 							var dataTransferTypes = dataTransfer.types;
@@ -455,7 +451,7 @@ AUI.add(
 
 					var entriesClickDelegateHandle = entriesContainer.delegate(
 						'click',
-						function(event) {
+						event => {
 							event.preventDefault();
 						},
 						STR_DOT +
@@ -474,7 +470,7 @@ AUI.add(
 				},
 
 				_combineFileLists(fileList, queuedFiles) {
-					queuedFiles.forEach(function(item) {
+					queuedFiles.forEach(item => {
 						fileList.push(item);
 					});
 				},
@@ -611,26 +607,25 @@ AUI.add(
 						searchContainerNode.attr('id')
 					);
 
-					var columnValues = instance._columnNames.map(function(
-						item,
-						index
-					) {
-						var value = STR_BLANK;
+					var columnValues = instance._columnNames.map(
+						(item, index) => {
+							var value = STR_BLANK;
 
-						if (item == STR_NAME) {
-							value = sub(TPL_ENTRY_ROW_TITLE, [name]);
-						} else if (item == STR_SIZE) {
-							value = Liferay.Util.formatStorage(size);
-						} else if (item == 'downloads') {
-							value = '0';
-						} else if (index === 0) {
-							value = sub(TPL_HIDDEN_CHECK_BOX, [
-								instance.get(STR_HOST).ns('rowIdsFileEntry')
-							]);
+							if (item == STR_NAME) {
+								value = sub(TPL_ENTRY_ROW_TITLE, [name]);
+							} else if (item == STR_SIZE) {
+								value = Liferay.Util.formatStorage(size);
+							} else if (item == 'downloads') {
+								value = '0';
+							} else if (index === 0) {
+								value = sub(TPL_HIDDEN_CHECK_BOX, [
+									instance.get(STR_HOST).ns('rowIdsFileEntry')
+								]);
+							}
+
+							return value;
 						}
-
-						return value;
-					});
+					);
 
 					var row = searchContainer.addRow(columnValues, A.guid());
 
@@ -701,7 +696,7 @@ AUI.add(
 					var fileList = currentUploadData.fileList;
 
 					if (!currentUploadData.folder) {
-						fileList.forEach(function(item) {
+						fileList.forEach(item => {
 							item.overlay.destroy();
 
 							item.progressBar.destroy();
@@ -1049,11 +1044,11 @@ AUI.add(
 
 						var navigationOverlays = instance._getNavigationOverlays();
 
-						uploader.on('uploadstart', function() {
+						uploader.on('uploadstart', () => {
 							AArray.invoke(navigationOverlays, 'show');
 						});
 
-						uploader.after('alluploadscomplete', function() {
+						uploader.after('alluploadscomplete', () => {
 							AArray.invoke(navigationOverlays, 'hide');
 
 							var emptyMessage = instance._getEmptyMessage();
@@ -1427,7 +1422,7 @@ AUI.add(
 					} else {
 						var displayStyle = instance._getDisplayStyle();
 
-						filesPartition.matches.map(function(file) {
+						filesPartition.matches.map(file => {
 							var entryNode = instance._createEntryNode(
 								file.name,
 								file.size,
@@ -1437,7 +1432,7 @@ AUI.add(
 							instance._createUploadStatus(entryNode, file);
 						});
 
-						filesPartition.rejects.map(function(file) {
+						filesPartition.rejects.map(file => {
 							var entryNode = instance._createEntryNode(
 								file.name,
 								file.size,
@@ -1479,7 +1474,7 @@ AUI.add(
 
 					var maxFileSize = instance._maxFileSize;
 
-					return AArray.partition(data, function(item) {
+					return AArray.partition(data, item => {
 						var errorMessage;
 
 						var size = item.get(STR_SIZE) || 0;

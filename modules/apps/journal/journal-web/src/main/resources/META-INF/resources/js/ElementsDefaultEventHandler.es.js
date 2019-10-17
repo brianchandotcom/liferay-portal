@@ -31,7 +31,7 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get('compare-versions'),
 				uri: itemData.compareVersionsURL
 			},
-			function(event) {
+			event => {
 				let uri = itemData.redirectURL;
 
 				uri = Liferay.Util.addParams(

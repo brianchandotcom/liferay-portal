@@ -12,27 +12,28 @@
  * details.
  */
 
-import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import classnames from 'classnames';
 import ClayButton from 'clay-button';
-import ClayModal from 'clay-modal';
-import Component, {Fragment} from 'metal-jsx';
-import dom from 'metal-dom';
-import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
-import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es';
 import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
 import {ClayIcon} from 'clay-icon';
-import {Config} from 'metal-state';
+import ClayModal from 'clay-modal';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
+import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es';
+import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import dom from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import {EventHandler} from 'metal-events';
+import Component, {Fragment} from 'metal-jsx';
+import {Config} from 'metal-state';
+
 import {focusedFieldStructure} from '../../util/config.es';
-import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
+import {selectText} from '../../util/dom.es';
 import {
 	getFieldProperties,
 	normalizeSettingsContextPages
 } from '../../util/fieldSupport.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
-import {selectText} from '../../util/dom.es';
+import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
 
 /**
  * Sidebar is a tooling to mount forms.

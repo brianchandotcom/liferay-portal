@@ -12,9 +12,9 @@
  * details.
  */
 
-import core from 'metal';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
+import core from 'metal';
 
 import PortletBase from './PortletBase.es';
 

@@ -12,10 +12,11 @@
  * details.
  */
 
-import LayoutProvider from '../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/LayoutProvider.es';
-import mockPages from '../../___mock__/mockPages';
 import {JSXComponent} from 'metal-jsx';
+
+import LayoutProvider from '../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/LayoutProvider.es';
 import {PagesVisitor} from '../../../../src/main/resources/META-INF/resources/js/util/visitors.es';
+import mockPages from '../../___mock__/mockPages';
 
 let component;
 let pages = null;

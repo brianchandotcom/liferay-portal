@@ -13,9 +13,11 @@
  */
 
 import './PasswordRegister.soy.js';
+
 import Soy from 'metal-soy';
-import templates from './Password.soy.js';
+
 import Text from '../Text/Text.es';
+import templates from './Password.soy.js';
 
 class Password extends Text {}
 

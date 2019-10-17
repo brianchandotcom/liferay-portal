@@ -17,17 +17,17 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import AddCommentForm from './AddCommentForm.es';
+import {CLEAR_ACTIVE_ITEM} from '../../../actions/actions.es';
 import {deleteFragmentEntryLinkCommentAction} from '../../../actions/deleteFragmentEntryLinkComment.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {updateFragmentEntryLinkCommentAction} from '../../../actions/updateFragmentEntryLinkComment.es';
 import {updateFragmentEntryLinkCommentReplyAction} from '../../../actions/updateFragmentEntryLinkCommentReply.es';
-import FragmentComment from './FragmentComment.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
-import {CLEAR_ACTIVE_ITEM} from '../../../actions/actions.es';
-import SidebarHeader from '../SidebarHeader.es';
-import ResolvedCommentsToggle from './ResolvedCommentsToggle.es';
 import useGetComments from '../../../store/hooks/useGetComments.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
+import SidebarHeader from '../SidebarHeader.es';
+import AddCommentForm from './AddCommentForm.es';
+import FragmentComment from './FragmentComment.es';
+import ResolvedCommentsToggle from './ResolvedCommentsToggle.es';
 
 const FragmentComments = props => {
 	const fragmentEntryLink = props.fragmentEntryLink;

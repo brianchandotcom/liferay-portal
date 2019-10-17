@@ -12,9 +12,9 @@
  * details.
  */
 
-import CriteriaGroup from './CriteriaGroup.es';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+
 import {
 	conjunctionShape,
 	criteriaShape,
@@ -27,6 +27,7 @@ import {
 	replaceAtIndex,
 	sub
 } from '../../utils/utils.es';
+import CriteriaGroup from './CriteriaGroup.es';
 
 class CriteriaBuilder extends Component {
 	static propTypes = {

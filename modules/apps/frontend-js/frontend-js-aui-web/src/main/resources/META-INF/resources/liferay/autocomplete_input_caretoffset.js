@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-autocomplete-input-caretoffset',
-	function(A) {
+	A => {
 		var ANode = A.Node;
 
 		var MIRROR_STYLES = [
@@ -85,7 +85,7 @@ AUI.add(
 
 				var inputMirror = instance._inputMirror;
 
-				MIRROR_STYLES.forEach(function(item) {
+				MIRROR_STYLES.forEach(item => {
 					inputMirror.setStyle(item, inputNode.getStyle(item));
 				});
 			},

@@ -14,8 +14,8 @@
 
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
+import React, {Component} from 'react';
 
 class ClayToggle extends Component {
 	static propTypes = {

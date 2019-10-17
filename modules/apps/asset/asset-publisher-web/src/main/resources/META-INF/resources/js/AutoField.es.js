@@ -18,6 +18,7 @@ import Soy from 'metal-soy';
 import templates from './AutoField.soy';
 
 import 'asset-taglib/asset_categories_selector/AssetCategoriesSelector.es';
+
 import 'asset-taglib/asset_tags_selector/AssetTagsSelector.es';
 
 const DEFAULT_RULE = {

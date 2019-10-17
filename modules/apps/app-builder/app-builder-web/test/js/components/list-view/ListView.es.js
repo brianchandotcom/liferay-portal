@@ -15,8 +15,8 @@
 import {waitForElementToBeRemoved} from '@testing-library/dom';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
-import ListView from '../../../../src/main/resources/META-INF/resources/js/components/list-view/ListView.es';
 
+import ListView from '../../../../src/main/resources/META-INF/resources/js/components/list-view/ListView.es';
 import {
 	ACTIONS,
 	BODY,

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-product-navigation-control-menu-add-base',
-	function(A) {
+	A => {
 		var $ = AUI.$;
 
 		var DDM = A.DD.DDM;
@@ -92,7 +92,7 @@ AUI.add(
 							eventType,
 							$.proxy(instance._focusOnItem, instance)
 						),
-						listGroupPanel.on(eventType, function(event) {
+						listGroupPanel.on(eventType, event => {
 							event.stopPropagation();
 						})
 					);
@@ -101,7 +101,7 @@ AUI.add(
 				_disablePortletEntry(portletId) {
 					var instance = this;
 
-					instance._eachPortletEntry(portletId, function(item) {
+					instance._eachPortletEntry(portletId, item => {
 						item.addClass(CSS_LFR_PORTLET_USED);
 					});
 				},
@@ -115,7 +115,7 @@ AUI.add(
 				_enablePortletEntry(portletId) {
 					var instance = this;
 
-					instance._eachPortletEntry(portletId, function(item) {
+					instance._eachPortletEntry(portletId, item => {
 						item.removeClass(CSS_LFR_PORTLET_USED);
 					});
 				},

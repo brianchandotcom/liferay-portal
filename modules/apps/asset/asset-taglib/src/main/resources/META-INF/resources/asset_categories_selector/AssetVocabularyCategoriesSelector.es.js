@@ -13,13 +13,12 @@
  */
 
 import 'clay-multi-select';
-import {Config} from 'metal-state';
+import {ItemSelectorDialog} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import templates from './AssetVocabularyCategoriesSelector.soy';
-
-import {ItemSelectorDialog} from 'frontend-js-web';
 
 /**
  * Wraps Clay's existing <code>MultiSelect</code> component that offers the user

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-notice',
-	function(A) {
+	A => {
 		var ADOM = A.DOM;
 		var ANode = A.Node;
 		var Do = A.Do;
@@ -166,7 +166,7 @@ AUI.add(
 					var hideText = instance._hideText;
 					var showText = instance._showText;
 
-					toggleButton.on(STR_CLICK, function() {
+					toggleButton.on(STR_CLICK, () => {
 						var text = showText;
 
 						if (visible === 0) {
@@ -212,7 +212,7 @@ AUI.add(
 
 					notice.setXY([left, top]);
 
-					notice.transition(instance._animationConfig, function() {
+					notice.transition(instance._animationConfig, () => {
 						instance._hideHandle = A.later(
 							instance._timeout,
 							notice,
@@ -243,7 +243,7 @@ AUI.add(
 						top: -instance._notice.get('offsetHeight') + STR_PX
 					});
 
-					instance._notice.transition(animationConfig, function() {
+					instance._notice.transition(animationConfig, () => {
 						instance._notice.toggle(false);
 					});
 
@@ -280,7 +280,7 @@ AUI.add(
 					notice.html(content);
 				}
 
-				instance._noticeClass.split(' ').forEach(function(item) {
+				instance._noticeClass.split(' ').forEach(item => {
 					notice.addClass(item);
 				});
 

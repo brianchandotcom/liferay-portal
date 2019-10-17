@@ -18,23 +18,25 @@ import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import './components/fragment_entry_link/FragmentEntryLinkList.es';
+
 import './components/sidebar/FragmentsEditorSidebar.es';
+
 import './components/toolbar/FragmentsEditorToolbar.es';
+import templates from './FragmentsEditor.soy';
 import {
 	CLEAR_ACTIVE_ITEM,
 	CLEAR_HOVERED_ITEM,
 	UPDATE_HOVERED_ITEM
 } from './actions/actions.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from './utils/constants';
-import {getElements} from './utils/FragmentsEditorGetUtils.es';
+import {updateActiveItemAction} from './actions/updateActiveItem.es';
 import {INITIAL_STATE} from './store/state.es';
+import {Store} from './store/store.es';
 import {
 	startListeningWidgetConfigurationChange,
 	stopListeningWidgetConfigurationChange
 } from './utils/FragmentsEditorDialogUtils';
-import {Store} from './store/store.es';
-import templates from './FragmentsEditor.soy';
-import {updateActiveItemAction} from './actions/updateActiveItem.es';
+import {getElements} from './utils/FragmentsEditorGetUtils.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from './utils/constants';
 
 /**
  * @type {string}
@@ -280,32 +282,30 @@ class FragmentsEditor extends Component {
  * @static
  * @type {object}
  */
-FragmentsEditor.STATE = Object.assign(
-	{
-		/**
-		 * @default false
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @review
-		 * @type {boolean}
-		 */
-		_shiftPressed: Config.bool()
-			.internal()
-			.value(false),
+FragmentsEditor.STATE = {
+	/**
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+	_shiftPressed: Config.bool()
+		.internal()
+		.value(false),
 
-		/**
-		 * Store instance
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {Store}
-		 */
-		store: Config.instanceOf(Store)
-	},
-	INITIAL_STATE
-);
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {Store}
+	 */
+	store: Config.instanceOf(Store),
+	...INITIAL_STATE
+};
 
 Soy.register(FragmentsEditor, templates);
 

@@ -16,7 +16,7 @@
 
 AUI.add(
 	'liferay-source-editor',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 		var UA = A.UA;
 

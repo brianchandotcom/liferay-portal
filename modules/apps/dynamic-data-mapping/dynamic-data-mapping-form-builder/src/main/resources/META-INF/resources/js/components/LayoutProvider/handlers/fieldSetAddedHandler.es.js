@@ -12,8 +12,9 @@
  * details.
  */
 
-import {generateFieldName} from '../util/fields.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+
+import {generateFieldName} from '../util/fields.es';
 
 const handleFieldSetAdded = (props, state, event) => {
 	const {fieldSetPages, indexes} = event;

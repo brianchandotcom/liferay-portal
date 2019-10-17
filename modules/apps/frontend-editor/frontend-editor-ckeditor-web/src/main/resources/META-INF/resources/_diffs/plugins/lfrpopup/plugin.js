@@ -17,7 +17,7 @@
 
 	CKEDITOR.plugins.add(pluginName, {
 		init(editor) {
-			AUI().use('querystring-parse', function(A) {
+			AUI().use('querystring-parse', A => {
 				editor.popup = function(url, width, height, options) {
 					var params = A.QueryString.parse(url.split('?')[1]);
 

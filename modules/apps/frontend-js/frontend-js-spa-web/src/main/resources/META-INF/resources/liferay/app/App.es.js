@@ -12,10 +12,10 @@
  * details.
  */
 
-import {App} from 'senna';
 import {openToast} from 'frontend-js-web';
-import core from 'metal';
 import dom from 'metal-dom';
+import core from 'metal';
+import {App} from 'senna';
 
 import LiferaySurface from '../surface/Surface.es';
 import Utils from '../util/Utils.es';
@@ -406,14 +406,10 @@ class LiferayApp extends App {
 	_createNotification(config) {
 		return new Promise(resolve => {
 			resolve(
-				openToast(
-					Object.assign(
-						{
-							type: 'warning'
-						},
-						config
-					)
-				)
+				openToast({
+					type: 'warning',
+					...config
+				})
 			);
 		});
 	}

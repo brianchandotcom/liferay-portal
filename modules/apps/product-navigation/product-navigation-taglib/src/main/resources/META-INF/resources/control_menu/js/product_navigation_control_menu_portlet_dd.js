@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-product-navigation-control-menu-portlet-dd',
-	function(A) {
+	A => {
 		var ControlMenu = Liferay.ControlMenu;
 		var Layout = Liferay.Layout;
 

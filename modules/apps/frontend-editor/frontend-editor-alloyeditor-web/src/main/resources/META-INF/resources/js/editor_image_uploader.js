@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-editor-image-uploader',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var CSS_UPLOADING_IMAGE = 'uploading-image';

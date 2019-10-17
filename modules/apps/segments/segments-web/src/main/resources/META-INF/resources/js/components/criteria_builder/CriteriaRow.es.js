@@ -12,32 +12,33 @@
  * details.
  */
 
-import BooleanInput from '../inputs/BooleanInput.es';
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
 import {ClaySelectWithOption} from '@clayui/form';
-import CollectionInput from '../inputs/CollectionInput.es';
-import DateInput from '../inputs/DateInput.es';
-import DateTimeInput from '../inputs/DateTimeInput.es';
-import DecimalInput from '../inputs/DecimalInput.es';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import IntegerInput from '../inputs/IntegerInput.es';
+import {fetch} from 'frontend-js-web';
+import {PropTypes} from 'prop-types';
+import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 import React, {Component} from 'react';
-import SelectEntityInput from '../inputs/SelectEntityInput.es';
-import StringInput from '../inputs/StringInput.es';
+
 import ThemeContext from '../../ThemeContext.es';
+import {PROPERTY_TYPES} from '../../utils/constants.es';
+import {DragTypes} from '../../utils/drag-types.es';
 import {
 	createNewGroup,
 	dateToInternationalHuman,
 	getSupportedOperatorsFromType,
 	objectToFormData
 } from '../../utils/utils.es';
-import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
-import {DragTypes} from '../../utils/drag-types.es';
-import {fetch} from 'frontend-js-web';
-import {PROPERTY_TYPES} from '../../utils/constants.es';
-import {PropTypes} from 'prop-types';
+import BooleanInput from '../inputs/BooleanInput.es';
+import CollectionInput from '../inputs/CollectionInput.es';
+import DateInput from '../inputs/DateInput.es';
+import DateTimeInput from '../inputs/DateTimeInput.es';
+import DecimalInput from '../inputs/DecimalInput.es';
+import IntegerInput from '../inputs/IntegerInput.es';
+import SelectEntityInput from '../inputs/SelectEntityInput.es';
+import StringInput from '../inputs/StringInput.es';
 
 const acceptedDragTypes = [DragTypes.CRITERIA_ROW, DragTypes.PROPERTY];
 
@@ -220,10 +221,10 @@ class CriteriaRow extends Component {
 	};
 
 	_getReadableCriteriaString = ({
-		propertyLabel,
 		operatorLabel,
-		value,
-		type
+		propertyLabel,
+		type,
+		value
 	}) => {
 		const parsedValue =
 			type === PROPERTY_TYPES.DATE || type === PROPERTY_TYPES.DATE_TIME

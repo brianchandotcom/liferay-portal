@@ -12,12 +12,12 @@
  * details.
  */
 
-import Component, {Config} from 'metal-jsx';
-import core from 'metal';
 import FormBuilder from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
 import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import Component, {Config} from 'metal-jsx';
+import core from 'metal';
 
 /**
  * Data Layout Builder.

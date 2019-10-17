@@ -12,9 +12,10 @@
  * details.
  */
 
-import AnalyticsClient from '../src/analytics';
 import {assert, expect} from 'chai';
 import fetchMock from 'fetch-mock';
+
+import AnalyticsClient from '../src/analytics';
 
 let Analytics;
 
@@ -82,7 +83,7 @@ describe('Analytics MiddleWare Integration', () => {
 			let body = null;
 
 			fetchMock.restore();
-			fetchMock.mock('*', function(url, opts) {
+			fetchMock.mock('*', (url, opts) => {
 				body = JSON.parse(opts.body);
 
 				return 200;

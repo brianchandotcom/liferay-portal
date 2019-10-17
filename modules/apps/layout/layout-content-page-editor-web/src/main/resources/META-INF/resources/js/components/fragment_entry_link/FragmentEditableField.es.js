@@ -12,17 +12,36 @@
  * details.
  */
 
-import {Config} from 'metal-state';
 import {PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import '../floating_toolbar/image_properties/FloatingToolbarImagePropertiesPanel.es';
-import '../floating_toolbar/link/FloatingToolbarLinkPanel.es';
-import '../floating_toolbar/mapping/FloatingToolbarMappingPanel.es';
-import './FragmentEditableFieldTooltip.es';
 
+import '../floating_toolbar/link/FloatingToolbarLinkPanel.es';
+
+import '../floating_toolbar/mapping/FloatingToolbarMappingPanel.es';
+
+import './FragmentEditableFieldTooltip.es';
 import {UPDATE_CONFIG_ATTRIBUTES} from '../../actions/actions.es';
-import debouncedAlert from '../../utils/debouncedAlert.es';
+import {
+	disableSavingChangesStatusAction,
+	enableSavingChangesStatusAction,
+	updateLastSaveDateAction
+} from '../../actions/saveChanges.es';
+import {updateEditableValueContentAction} from '../../actions/updateEditableValue.es';
+import {getConnectedComponent} from '../../store/ConnectedComponent.es';
+import {
+	shouldUpdateOnChangeProperties,
+	shouldUpdatePureComponent
+} from '../../utils/FragmentsEditorComponentUtils.es';
+import {
+	editableIsMapped,
+	editableIsMappedToAssetEntry,
+	editableShouldBeHighlighted,
+	getItemPath
+} from '../../utils/FragmentsEditorGetUtils.es';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {
 	EDITABLE_FIELD_CONFIG_KEYS,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -30,28 +49,11 @@ import {
 	FRAGMENTS_EDITOR_ITEM_TYPES,
 	CREATE_PROCESSOR_EVENT_TYPES
 } from '../../utils/constants';
-import {
-	disableSavingChangesStatusAction,
-	enableSavingChangesStatusAction,
-	updateLastSaveDateAction
-} from '../../actions/saveChanges.es';
-import {
-	editableIsMapped,
-	editableIsMappedToAssetEntry,
-	editableShouldBeHighlighted,
-	getItemPath
-} from '../../utils/FragmentsEditorGetUtils.es';
-import {getConnectedComponent} from '../../store/ConnectedComponent.es';
+import debouncedAlert from '../../utils/debouncedAlert.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
-import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
-import {
-	shouldUpdateOnChangeProperties,
-	shouldUpdatePureComponent
-} from '../../utils/FragmentsEditorComponentUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import templates from './FragmentEditableField.soy';
-import {updateEditableValueContentAction} from '../../actions/updateEditableValue.es';
 
 /**
  * @type {number}

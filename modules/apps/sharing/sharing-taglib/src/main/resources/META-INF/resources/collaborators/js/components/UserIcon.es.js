@@ -14,11 +14,11 @@
 
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import classNames from 'classnames';
 
-const UserIcon = ({fullName = '', portraitURL = '', userId, size = 'lg'}) => {
+const UserIcon = ({fullName = '', portraitURL = '', size = 'lg', userId}) => {
 	const stickerColor = parseInt(userId, 10) % 10;
 
 	return (

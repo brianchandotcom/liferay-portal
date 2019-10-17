@@ -16,6 +16,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 
 import './Footer.soy';
+
 import './Header.soy';
 import templates from './View.soy';
 

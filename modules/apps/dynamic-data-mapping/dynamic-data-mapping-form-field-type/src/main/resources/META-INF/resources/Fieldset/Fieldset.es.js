@@ -13,11 +13,14 @@
  */
 
 import '../FieldBase/FieldBase.es';
+
 import './FieldsetRegister.soy.js';
+
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import templates from './Fieldset.soy.js';
 import {Config} from 'metal-state';
+
+import templates from './Fieldset.soy.js';
 
 class Fieldset extends Component {
 	_handleFieldEdited(event) {

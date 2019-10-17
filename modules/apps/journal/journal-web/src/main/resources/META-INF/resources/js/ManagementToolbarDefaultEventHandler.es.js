@@ -20,7 +20,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		const addArticleURL = this.addArticleURL;
 		const namespace = this.namespace;
 
-		Liferay.on(this.ns('selectAddMenuItem'), function(event) {
+		Liferay.on(this.ns('selectAddMenuItem'), event => {
 			const selectAddMenuItemWindow = Liferay.Util.Window.getById(
 				namespace + 'selectAddMenuItem'
 			);
@@ -115,7 +115,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get('structures'),
 				uri: this.selectEntityURL
 			},
-			function(event) {
+			event => {
 				Liferay.Util.navigate(
 					Liferay.Util.addParams(
 						namespace + 'ddmStructureKey=' + event.ddmstructurekey,

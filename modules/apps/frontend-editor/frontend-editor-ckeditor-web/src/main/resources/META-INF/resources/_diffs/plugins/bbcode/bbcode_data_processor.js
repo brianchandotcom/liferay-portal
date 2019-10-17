@@ -187,20 +187,18 @@
 		},
 
 		_convertRGBToHex(color) {
-			color = color.replace(REGEX_COLOR_RGB, function(
-				_match,
-				red,
-				green,
-				blue
-			) {
-				var b = toHex(blue);
-				var g = toHex(green);
-				var r = toHex(red);
+			color = color.replace(
+				REGEX_COLOR_RGB,
+				(_match, red, green, blue) => {
+					var b = toHex(blue);
+					var g = toHex(green);
+					var r = toHex(red);
 
-				color = '#' + r + g + b;
+					color = '#' + r + g + b;
 
-				return color;
-			});
+					return color;
+				}
+			);
 
 			return color;
 		},

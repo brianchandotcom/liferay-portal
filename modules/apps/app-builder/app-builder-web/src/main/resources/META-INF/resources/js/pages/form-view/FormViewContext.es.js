@@ -12,9 +12,11 @@
  * details.
  */
 
-import {createContext} from 'react';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {createContext} from 'react';
+
 import * as DataLayoutVisistor from '../../utils/dataLayoutVisitor.es';
+import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
 import {
 	ADD_CUSTOM_OBJECT_FIELD,
 	DELETE_DATA_LAYOUT_FIELD,
@@ -28,7 +30,6 @@ import {
 	UPDATE_IDS,
 	UPDATE_PAGES
 } from './actions.es';
-import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
 
 const FormViewContext = createContext();
 
@@ -52,8 +53,8 @@ const initialState = {
 const addCustomObjectField = ({
 	dataDefinition,
 	dataLayoutBuilder,
-	fieldTypes,
-	fieldTypeName
+	fieldTypeName,
+	fieldTypes
 }) => {
 	const fieldType = fieldTypes.find(({name}) => name === fieldTypeName);
 	const dataDefinitionField = dataLayoutBuilder.getDefinitionField(fieldType);

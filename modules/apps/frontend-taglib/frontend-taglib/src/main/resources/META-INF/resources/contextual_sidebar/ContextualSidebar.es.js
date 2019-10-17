@@ -13,9 +13,9 @@
  */
 
 import Component from 'metal-component';
-import {isFunction, isObject} from 'metal';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import {isFunction, isObject} from 'metal';
 
 import templates from './ContextualSidebar.soy';
 
@@ -75,10 +75,11 @@ class ContextualSidebar extends Component {
 	 */
 
 	prepareStateForRender(state) {
-		return Object.assign({}, state, {
+		return {
+			...state,
 			body: Soy.toIncDom(this.body || ''),
 			header: Soy.toIncDom(this.header || '')
-		});
+		};
 	}
 
 	/**

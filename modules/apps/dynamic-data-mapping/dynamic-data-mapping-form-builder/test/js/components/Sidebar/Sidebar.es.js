@@ -13,8 +13,10 @@
  */
 
 import '../../__fixtures__/MockField.es';
-import Sidebar from '../../../src/main/resources/META-INF/resources/js/components/Sidebar/Sidebar.es';
+
 import {dom as MetalTestUtil} from 'metal-dom';
+
+import Sidebar from '../../../src/main/resources/META-INF/resources/js/components/Sidebar/Sidebar.es';
 import {PagesVisitor} from '../../../src/main/resources/META-INF/resources/js/util/visitors.es';
 
 let component;
@@ -508,7 +510,7 @@ describe('Sidebar', () => {
 
 			jest.runAllTimers();
 
-			component.once('focusedFieldUpdated', ({type, settingsContext}) => {
+			component.once('focusedFieldUpdated', ({settingsContext, type}) => {
 				expect(type).toBe('checkbox');
 				expect(getFieldValue(settingsContext.pages, 'type')).toBe(
 					'checkbox'
@@ -568,7 +570,7 @@ describe('Sidebar', () => {
 
 			jest.runAllTimers();
 
-			component.once('focusedFieldUpdated', ({type, settingsContext}) => {
+			component.once('focusedFieldUpdated', ({settingsContext, type}) => {
 				expect(type).toBe('checkbox');
 
 				expect(settingsContext).toMatchSnapshot();

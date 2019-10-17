@@ -12,10 +12,11 @@
  * details.
  */
 
-import React from 'react';
-import DisplayPageModal from './DisplayPageModal.es';
-import ReactDOM from 'react-dom';
 import {ClayIconSpriteContext} from '@clayui/icon';
+import ReactDOM from 'react-dom';
+import React from 'react';
+
+import DisplayPageModal from './DisplayPageModal.es';
 
 let container;
 

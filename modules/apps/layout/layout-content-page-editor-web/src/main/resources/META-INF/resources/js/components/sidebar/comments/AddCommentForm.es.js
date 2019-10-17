@@ -16,10 +16,10 @@ import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {addFragmentEntryLinkComment} from '../../../utils/FragmentsEditorFetchUtils.es';
-import CommentForm from './CommentForm.es';
 import {updateFragmentEntryLinkCommentAction} from '../../../actions/updateFragmentEntryLinkComment.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
+import {addFragmentEntryLinkComment} from '../../../utils/FragmentsEditorFetchUtils.es';
+import CommentForm from './CommentForm.es';
 
 const AddCommentForm = props => {
 	const [addingComment, setAddingComment] = useState(false);

@@ -13,7 +13,10 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React, {
 	useRef,
 	useState,
@@ -22,18 +25,16 @@ import React, {
 	useCallback,
 	useLayoutEffect
 } from 'react';
+
 import Sidebar from '../../components/sidebar/Sidebar.es';
-import classNames from 'classnames';
 import {useKeyDown} from '../../hooks/index.es';
+import isClickOutside from '../../utils/clickOutside.es';
 import CustomObjectFieldsList from './CustomObjectFieldsList.es';
 import FormViewContext from './FormViewContext.es';
-import ClayDropDown, {Align} from '@clayui/drop-down';
 import {
 	ADD_CUSTOM_OBJECT_FIELD,
 	UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
 } from './actions.es';
-import isClickOutside from '../../utils/clickOutside.es';
-import ClayIcon from '@clayui/icon';
 
 const DropDown = () => {
 	const [{fieldTypes}, dispatch] = useContext(FormViewContext);

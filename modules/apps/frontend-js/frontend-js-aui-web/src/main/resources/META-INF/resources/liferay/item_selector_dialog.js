@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-item-selector-dialog',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var Util = Liferay.Util;

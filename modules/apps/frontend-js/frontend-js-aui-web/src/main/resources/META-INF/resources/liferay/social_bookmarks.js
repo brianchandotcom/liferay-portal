@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-social-bookmarks',
-	function(A) {
+	A => {
 		var NAME = 'social-bookmarks';
 
 		var SHARE_WINDOW_HEIGHT = 436;
@@ -106,7 +106,7 @@ AUI.add(
 					if (!SocialBookmarks.registered[id]) {
 						dropdownMenu.delegate(
 							'click',
-							function(event) {
+							event => {
 								event.preventDefault();
 
 								var shareWindowFeatures = [

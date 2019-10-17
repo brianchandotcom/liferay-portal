@@ -17,12 +17,13 @@ import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import '../../../common/InfoItemSelector.es';
+
 import './ItemSelectorFieldDelegateTemplate.soy';
-import templates from './ItemSelectorField.soy';
-import {getAvailableTemplates} from '../../../../utils/FragmentsEditorFetchUtils.es';
 import getConnectedComponent from '../../../../store/ConnectedComponent.es';
 import {openItemSelector} from '../../../../utils/FragmentsEditorDialogUtils';
+import {getAvailableTemplates} from '../../../../utils/FragmentsEditorFetchUtils.es';
 import {setIn} from '../../../../utils/FragmentsEditorUpdateUtils.es';
+import templates from './ItemSelectorField.soy';
 
 /**
  * ItemSelectorField

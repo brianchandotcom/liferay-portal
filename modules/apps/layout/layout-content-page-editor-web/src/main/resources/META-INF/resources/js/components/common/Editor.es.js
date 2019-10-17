@@ -15,6 +15,7 @@
 import {EventHandler} from 'metal-events';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
+
 import useSelector from '../../store/hooks/useSelector.es';
 
 const Editor = props => {

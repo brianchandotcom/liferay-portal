@@ -15,9 +15,9 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
+import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
-import {fetch} from 'frontend-js-web';
 
 import UserIcon from './UserIcon.es';
 
@@ -43,7 +43,7 @@ const Collaborators = ({
 		});
 	}, [classNameId, classPK, collaboratorsResourceURL]);
 
-	const {owner, total, collaborators} = data;
+	const {collaborators, owner, total} = data;
 
 	if (total < 1) {
 		return (

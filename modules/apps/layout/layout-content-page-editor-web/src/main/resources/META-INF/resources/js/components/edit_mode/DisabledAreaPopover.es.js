@@ -12,11 +12,11 @@
  * details.
  */
 
-import {Align} from 'metal-position';
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import {delegate, on} from 'metal-dom';
+import {Align} from 'metal-position';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import templates from './DisabledAreaPopover.soy';
 

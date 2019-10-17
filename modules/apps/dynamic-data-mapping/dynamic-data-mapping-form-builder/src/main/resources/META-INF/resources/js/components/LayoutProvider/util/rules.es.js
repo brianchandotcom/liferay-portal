@@ -12,9 +12,10 @@
  * details.
  */
 
+import {RulesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+
 import Token from '../../../expressions/Token.es';
 import Tokenizer from '../../../expressions/Tokenizer.es';
-import {RulesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
 export const isEqualLengthOptions = (options1, options2) => {
 	return options1.length === options2.length;

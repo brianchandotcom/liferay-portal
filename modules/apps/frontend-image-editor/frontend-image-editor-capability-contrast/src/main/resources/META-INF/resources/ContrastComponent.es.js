@@ -13,12 +13,15 @@
  */
 
 import {debounce} from 'frontend-js-web';
+
 import './ContrastSlider.es/';
-import {core} from 'metal';
+
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+import {core} from 'metal';
 
 import componentTemplates from './ContrastComponent.soy';
+
 import './ContrastControls.soy';
 
 /**

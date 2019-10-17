@@ -13,8 +13,9 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import CriteriaRow from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/CriteriaRow.es';
 import React from 'react';
+
+import CriteriaRow from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/CriteriaRow.es';
 import {PROPERTY_TYPES} from '../../../../src/main/resources/META-INF/resources/js/utils/constants.es';
 
 const connectDnd = jest.fn(el => el);

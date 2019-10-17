@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-address',
-	function() {
+	() => {
 		if (!Liferay.Address) {
 			Liferay.Address = {
 				getCountries(callback) {

@@ -15,16 +15,16 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
 import ClayLabel from '@clayui/label';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import useSelector from '../../../store/hooks/useSelector.es';
 import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../../utils/constants';
-import useSelector from '../../../store/hooks/useSelector.es';
 
 const getEditableValues = (itemId, fragmentEntryLinks) => {
 	const [fragmentEntryLinkId, ...editableNameSplit] = itemId.split('-');

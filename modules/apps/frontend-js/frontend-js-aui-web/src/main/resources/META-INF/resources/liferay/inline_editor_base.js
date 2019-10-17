@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-inline-editor-base',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var isNumber = Lang.isNumber;

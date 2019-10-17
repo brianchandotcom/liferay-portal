@@ -14,16 +14,16 @@
 
 import React from 'react';
 
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
-import {getLayoutDataFragmentEntryLinkIds} from '../../../utils/LayoutDataList.es';
-import {NoCommentsMessage} from './NoCommentsMessage.es';
 import {UPDATE_HOVERED_ITEM} from '../../../actions/actions.es';
+import {updateActiveItemAction} from '../../../actions/updateActiveItem.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import useGetComments from '../../../store/hooks/useGetComments.es';
 import useSelector from '../../../store/hooks/useSelector.es';
-import ResolvedCommentsToggle from './ResolvedCommentsToggle.es';
+import {getLayoutDataFragmentEntryLinkIds} from '../../../utils/LayoutDataList.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import SidebarHeader from '../SidebarHeader.es';
-import {updateActiveItemAction} from '../../../actions/updateActiveItem.es';
+import {NoCommentsMessage} from './NoCommentsMessage.es';
+import ResolvedCommentsToggle from './ResolvedCommentsToggle.es';
 
 const FragmentEntryLinksWithComments = () => {
 	const dispatch = useDispatch();

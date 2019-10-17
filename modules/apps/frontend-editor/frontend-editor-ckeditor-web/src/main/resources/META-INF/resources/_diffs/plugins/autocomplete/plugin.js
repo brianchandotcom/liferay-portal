@@ -17,14 +17,12 @@
 		init(editor) {
 			var instance = this;
 
-			AUI().use('aui-debounce', 'liferay-autocomplete-input', function(
-				A
-			) {
+			AUI().use('aui-debounce', 'liferay-autocomplete-input', A => {
 				var path = instance.path;
 
 				var dependencies = [CKEDITOR.getUrl(path + 'autocomplete.js')];
 
-				CKEDITOR.scriptLoader.load(dependencies, function() {
+				CKEDITOR.scriptLoader.load(dependencies, () => {
 					var liferayAutoCompleteCKEditor = new Liferay.AutoCompleteCKEditor(
 						A.merge(editor.config.autocomplete, {
 							editor,

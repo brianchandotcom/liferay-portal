@@ -12,14 +12,14 @@
  * details.
  */
 
-import middlewares from './middlewares/defaults';
+import uuidv1 from 'uuid/v1';
 
 // Gateway
 
 import Client from './client';
+import middlewares from './middlewares/defaults';
 import defaultPlugins from './plugins/defaults';
 import hash from './utils/hash';
-import uuidv1 from 'uuid/v1';
 
 // Constants
 

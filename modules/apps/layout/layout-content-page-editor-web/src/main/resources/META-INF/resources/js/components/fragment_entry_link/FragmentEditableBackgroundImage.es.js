@@ -14,28 +14,28 @@
 
 import Component from 'metal-component';
 import {Config} from 'metal-state';
+
 import {Store} from '../../store/store.es';
 
 import '../floating_toolbar/fragment_background_image/FloatingToolbarFragmentBackgroundImagePanel.es';
-
-import EditableBackgroundImageProcessor from '../fragment_processors/EditableBackgroundImageProcessor.es';
+import {updateEditableValueContentAction} from '../../actions/updateEditableValue.es';
+import getConnectedComponent from '../../store/ConnectedComponent.es';
+import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
+import {getAssetFieldValue} from '../../utils/FragmentsEditorFetchUtils.es';
 import {
 	editableShouldBeHighlighted,
 	editableIsMapped,
 	editableIsMappedToAssetEntry
 } from '../../utils/FragmentsEditorGetUtils.es';
-import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
-import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import {
 	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 	FLOATING_TOOLBAR_BUTTONS,
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../utils/constants';
-import {getAssetFieldValue} from '../../utils/FragmentsEditorFetchUtils.es';
-import getConnectedComponent from '../../store/ConnectedComponent.es';
-import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
-import {updateEditableValueContentAction} from '../../actions/updateEditableValue.es';
+import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
+import EditableBackgroundImageProcessor from '../fragment_processors/EditableBackgroundImageProcessor.es';
+import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 
 /**
  * FragmentEditableBackgroundImage

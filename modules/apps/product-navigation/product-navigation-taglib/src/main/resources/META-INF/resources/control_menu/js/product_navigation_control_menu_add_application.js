@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-product-navigation-control-menu-add-application',
-	function(A) {
+	A => {
 		var ControlMenu = Liferay.ControlMenu;
 
 		var CSS_LFR_PORTLET_USED = 'lfr-portlet-used';

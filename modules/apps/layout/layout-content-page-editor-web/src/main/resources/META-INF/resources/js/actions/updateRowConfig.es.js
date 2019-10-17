@@ -12,14 +12,14 @@
  * details.
  */
 
-import {updatePageContentsAction} from './updatePageContents.es';
 import {UPDATE_ROW_CONFIG} from './actions.es';
-import {updatePageEditorLayoutDataAction} from './updatePageEditorLayoutData.es';
 import {
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction,
 	disableSavingChangesStatusAction
 } from './saveChanges.es';
+import {updatePageContentsAction} from './updatePageContents.es';
+import {updatePageEditorLayoutDataAction} from './updatePageEditorLayoutData.es';
 
 function updateRowConfigAction(rowId, configContent) {
 	return function(dispatch) {

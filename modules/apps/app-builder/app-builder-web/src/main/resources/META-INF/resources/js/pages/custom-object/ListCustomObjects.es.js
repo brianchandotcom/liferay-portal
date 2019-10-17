@@ -13,17 +13,18 @@
  */
 
 import moment from 'moment';
-import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
-import CustomObjectPopover from './CustomObjectPopover.es';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import ListView from '../../components/list-view/ListView.es';
 import {useKeyDown} from '../../hooks/index.es';
-import {confirmDelete} from '../../utils/client.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import {addItem} from '../../utils/client.es';
+import {confirmDelete} from '../../utils/client.es';
+import CustomObjectPopover from './CustomObjectPopover.es';
 
 const COLUMNS = [
 	{

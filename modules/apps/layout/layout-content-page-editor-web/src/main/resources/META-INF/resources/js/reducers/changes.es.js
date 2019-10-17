@@ -12,11 +12,11 @@
  * details.
  */
 
-import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../actions/actions.es';
+import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * @param {!object} state

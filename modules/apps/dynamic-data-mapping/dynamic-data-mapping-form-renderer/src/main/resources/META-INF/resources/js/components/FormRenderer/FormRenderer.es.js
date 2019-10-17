@@ -13,15 +13,21 @@
  */
 
 import '../../containers/Pagination/Pagination.es';
+
 import '../../containers/PaginationControls/PaginationControls.es';
+
 import '../../containers/Tabs/Tabs.es';
+
 import '../../containers/Wizard/Wizard.es';
+
 import '../PageRenderer/PageRenderer.es';
+
 import 'clay-button';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import templates from './FormRenderer.soy.js';
 import {Config} from 'metal-state';
+
+import templates from './FormRenderer.soy.js';
 
 /**
  * FormRenderer.

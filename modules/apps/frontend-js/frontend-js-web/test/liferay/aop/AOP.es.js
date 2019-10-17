@@ -20,15 +20,15 @@ const addSpy = jest.fn().mockImplementation(() => callOrder.push('addSpy'));
 const spy1 = jest.fn().mockImplementation(() => callOrder.push('spy1'));
 const spy2 = jest.fn().mockImplementation(() => callOrder.push('spy2'));
 
-describe('Ajax', function() {
-	beforeEach(function() {
+describe('Ajax', () => {
+	beforeEach(() => {
 		addSpy.mockClear();
 		spy1.mockClear();
 		spy2.mockClear();
 		callOrder = [];
 	});
 
-	it('calls listener before original method', function() {
+	it('calls listener before original method', () => {
 		const obj = new MyClass();
 
 		AOP.before(spy1, obj, 'add');
@@ -42,7 +42,7 @@ describe('Ajax', function() {
 		expect(retVal).toEqual(3);
 	});
 
-	it('calls listener after original method', function() {
+	it('calls listener after original method', () => {
 		const obj = new MyClass();
 
 		AOP.after(spy1, obj, 'add');
@@ -56,7 +56,7 @@ describe('Ajax', function() {
 		expect(retVal).toEqual(3);
 	});
 
-	it('calls multiple listeners in correct order', function() {
+	it('calls multiple listeners in correct order', () => {
 		const obj = new MyClass();
 
 		AOP.before(spy1, obj, 'add');
@@ -73,7 +73,7 @@ describe('Ajax', function() {
 		expect(retVal).toEqual(3);
 	});
 
-	it('does not call listener if returned handle is removed', function() {
+	it('does not call listener if returned handle is removed', () => {
 		const obj = new MyClass();
 
 		const handle = AOP.before(spy1, obj, 'add');
@@ -91,7 +91,7 @@ describe('Ajax', function() {
 		expect(spy1).toHaveBeenCalledTimes(1);
 	});
 
-	it('only removes listeners that are detached', function() {
+	it('only removes listeners that are detached', () => {
 		const obj = new MyClass();
 
 		const handle1 = AOP.before(spy1, obj, 'add');
@@ -112,11 +112,11 @@ describe('Ajax', function() {
 		expect(spy2).toHaveBeenCalledTimes(2);
 	});
 
-	it('prevents wrapped function from firing when AOP.prevent is returned by listener', function() {
+	it('prevents wrapped function from firing when AOP.prevent is returned by listener', () => {
 		const obj = new MyClass();
 
 		AOP.before(
-			function() {
+			() => {
 				return AOP.prevent();
 			},
 			obj,
@@ -128,11 +128,11 @@ describe('Ajax', function() {
 		expect(addSpy).not.toHaveBeenCalled();
 	});
 
-	it('prevents wrapped function and all further before subscribers from firing when AOP.halt is returned by listener', function() {
+	it('prevents wrapped function and all further before subscribers from firing when AOP.halt is returned by listener', () => {
 		const obj = new MyClass();
 
 		AOP.before(
-			function() {
+			() => {
 				return AOP.halt('new value');
 			},
 			obj,
@@ -147,11 +147,11 @@ describe('Ajax', function() {
 		expect(retVal).toEqual('new value');
 	});
 
-	it('prevents all further after subscribers from firing when AOP.halt is returned by listener', function() {
+	it('prevents all further after subscribers from firing when AOP.halt is returned by listener', () => {
 		const obj = new MyClass();
 
 		AOP.after(
-			function() {
+			() => {
 				return AOP.halt('new value');
 			},
 			obj,
@@ -165,11 +165,11 @@ describe('Ajax', function() {
 		expect(retVal).toEqual('new value');
 	});
 
-	it('modifies return value when AOP.alterReturn is returned by `after` listener', function() {
+	it('modifies return value when AOP.alterReturn is returned by `after` listener', () => {
 		const obj = new MyClass();
 
 		AOP.after(
-			function() {
+			() => {
 				return AOP.alterReturn(AOP.currentRetVal + 1);
 			},
 			obj,
@@ -182,11 +182,11 @@ describe('Ajax', function() {
 		expect(retVal).toEqual(4);
 	});
 
-	it('tracks changes made to return value with subsequent changes made by AOP.alterReturn', function() {
+	it('tracks changes made to return value with subsequent changes made by AOP.alterReturn', () => {
 		const obj = new MyClass();
 
 		AOP.after(
-			function() {
+			() => {
 				expect(AOP.currentRetVal).toEqual(3);
 
 				return AOP.alterReturn(22);
@@ -195,7 +195,7 @@ describe('Ajax', function() {
 			'add'
 		);
 		AOP.after(
-			function() {
+			() => {
 				expect(AOP.currentRetVal).toEqual(22);
 
 				return AOP.alterReturn('now a string');
@@ -204,7 +204,7 @@ describe('Ajax', function() {
 			'add'
 		);
 		AOP.after(
-			function() {
+			() => {
 				expect(AOP.currentRetVal).toEqual('now a string');
 
 				return AOP.alterReturn(AOP.currentRetVal + ':');
@@ -219,11 +219,11 @@ describe('Ajax', function() {
 		expect(retVal).toEqual('now a string:');
 	});
 
-	it('tracks original return value when changes are made by AOP.alterReturn', function() {
+	it('tracks original return value when changes are made by AOP.alterReturn', () => {
 		const obj = new MyClass();
 
 		AOP.after(
-			function() {
+			() => {
 				expect(AOP.currentRetVal).toEqual(3);
 
 				return AOP.alterReturn(22);
@@ -232,7 +232,7 @@ describe('Ajax', function() {
 			'add'
 		);
 		AOP.after(
-			function() {
+			() => {
 				expect(AOP.currentRetVal).toEqual(22);
 
 				return AOP.alterReturn(AOP.originalRetVal);

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-logo-editor',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var LogoEditor = A.Component.create({

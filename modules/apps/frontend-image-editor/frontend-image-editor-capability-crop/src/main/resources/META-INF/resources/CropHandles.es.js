@@ -12,12 +12,12 @@
  * details.
  */
 
-import {async, core} from 'metal';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import {Drag} from 'metal-drag-drop';
 import Position from 'metal-position';
 import Soy from 'metal-soy';
+import {async, core} from 'metal';
 
 import handlesTemplates from './CropHandles.soy';
 

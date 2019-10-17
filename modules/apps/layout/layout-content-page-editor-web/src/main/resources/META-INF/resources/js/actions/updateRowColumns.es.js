@@ -12,18 +12,18 @@
  * details.
  */
 
-import {
-	disableSavingChangesStatusAction,
-	enableSavingChangesStatusAction,
-	updateLastSaveDateAction
-} from './saveChanges.es';
+import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 import {getRowIndex} from '../utils/FragmentsEditorGetUtils.es';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {
 	UPDATE_ROW_COLUMNS_ERROR,
 	UPDATE_ROW_COLUMNS_LOADING
 } from './actions.es';
-import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
+import {
+	disableSavingChangesStatusAction,
+	enableSavingChangesStatusAction,
+	updateLastSaveDateAction
+} from './saveChanges.es';
 
 /**
  * @param {Array} columns

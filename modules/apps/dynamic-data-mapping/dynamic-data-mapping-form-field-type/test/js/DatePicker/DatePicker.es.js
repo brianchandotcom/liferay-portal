@@ -12,8 +12,9 @@
  * details.
  */
 
-import DatePicker from '../../../src/main/resources/META-INF/resources/DatePicker/DatePicker.es';
 import dom from 'metal-dom';
+
+import DatePicker from '../../../src/main/resources/META-INF/resources/DatePicker/DatePicker.es';
 
 let component;
 const spritemap = 'icons.svg';

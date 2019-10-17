@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-tree-view-icons',
-	function(A) {
+	A => {
 		var ICON_DEPRECATED_CLASSES = [
 			'glyphicon',
 			'glyphicon-check',

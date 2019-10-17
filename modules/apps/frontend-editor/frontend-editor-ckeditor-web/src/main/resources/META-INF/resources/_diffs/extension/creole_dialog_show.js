@@ -12,7 +12,7 @@
  * details.
  */
 
-ckEditor.on('dialogShow', function(event) {
+ckEditor.on('dialogShow', event => {
 	var A = AUI();
 
 	var MODIFIED = 'modified';
@@ -54,7 +54,7 @@ ckEditor.on('dialogShow', function(event) {
 
 			cellTypeWrapper.setStyle('width', '100%');
 
-			cellTypeWrapper.all('tr').each(function(item, index) {
+			cellTypeWrapper.all('tr').each((item, index) => {
 				if (index > 0) {
 					item.hide();
 				}

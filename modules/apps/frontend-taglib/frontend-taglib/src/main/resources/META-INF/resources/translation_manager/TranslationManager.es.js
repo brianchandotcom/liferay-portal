@@ -13,6 +13,7 @@
  */
 
 import 'clay-dropdown';
+
 import 'clay-modal';
 import {CompatibilityEventProxy} from 'frontend-js-web';
 import Component from 'metal-component';

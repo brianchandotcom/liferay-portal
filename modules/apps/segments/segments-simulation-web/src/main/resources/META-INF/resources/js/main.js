@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-portlet-segments-simulation',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var SegmentsSimulation = A.Component.create({
@@ -53,7 +53,7 @@ AUI.add(
 							'SimulationMenu:openSimulationPanel',
 							A.bind('_simulateSegmentsEntries', instance)
 						),
-						A.on('beforeunload', function() {
+						A.on('beforeunload', () => {
 							instance._deactivateSimulation();
 						})
 					);

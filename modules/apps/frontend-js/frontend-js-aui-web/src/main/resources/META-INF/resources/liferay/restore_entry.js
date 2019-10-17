@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-restore-entry',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var isString = Lang.isString;
@@ -201,7 +201,7 @@ AUI.add(
 						A.fn('focusFormField', Liferay.Util, newName)
 					);
 
-					newName.on('focus', function() {
+					newName.on('focus', () => {
 						rename.attr('checked', true);
 					});
 				},

@@ -28,8 +28,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -82,7 +80,6 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -532,32 +529,17 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getItemSelectorURL() {
-		PortletURL uploadURL = _liferayPortletResponse.createActionURL();
-
-		uploadURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout/upload_open_graph_image");
-
 		ItemSelectorCriterion imageItemSelectorCriterion =
 			new ImageItemSelectorCriterion();
 
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
 
-		ItemSelectorCriterion itemSelectorCriterion =
-			new UploadItemSelectorCriterion(
-				LayoutAdminPortletKeys.GROUP_PAGES, uploadURL.toString(),
-				LanguageUtil.get(_themeDisplay.getLocale(), "seo"),
-				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
-				new String[] {".gif", ".jpeg", ".jpg", ".png"});
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType());
-
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 			_liferayPortletResponse.getNamespace() +
 				"openGraphImageSelectedItem",
-			imageItemSelectorCriterion, itemSelectorCriterion);
+			imageItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
 	}

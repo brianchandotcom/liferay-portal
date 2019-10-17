@@ -1043,7 +1043,13 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 	</target>
 
 	<target name="setup-profile-dxp">
-		<gradle-execute setupbinariescache="false" task="setUpProfileDXP">
+		<gradle-execute setupbinariescache="false" task="checkoutDXPScript">
+			<arg value="--build-file=${project.dir}/modules/dxp.gradle" />
+		</gradle-execute>
+
+		<ant antfile="build-working-dir.xml" inheritAll="false" target="prepare-profile-dxp-properties" />
+
+		<gradle-execute setupbinariescache="false" task="removeDXPScript">
 			<arg value="--build-file=${project.dir}/modules/dxp.gradle" />
 		</gradle-execute>
 	</target>

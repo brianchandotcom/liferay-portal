@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
@@ -185,7 +186,7 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 
 		searchContext.setAttributes(attributes);
 
-		searchContext.setCompanyId(accountEntry.getCompanyId());
+		searchContext.setCompanyId(CompanyThreadLocal.getCompanyId());
 	}
 
 	@Reference

@@ -72,7 +72,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			layout, portletId, tilesTitle, titleListMergeable,
 			subtitleListMergeable, locale);
 
-		String siteAndCompanyName = _getSiteAndCompanyName(layout, companyName);
+		String siteAndCompanyName = _getPageTitleSuffix(layout, companyName);
 
 		return _html.escape(_merge(layoutTitle, siteAndCompanyName));
 	}
@@ -125,10 +125,10 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	}
 
 	@Override
-	public String getSiteAndCompanyName(Layout layout, String companyName)
+	public String getPageTitleSuffix(Layout layout, String companyName)
 		throws PortalException {
 
-		return _html.escape(_getSiteAndCompanyName(layout, companyName));
+		return _html.escape(_getPageTitleSuffix(layout, companyName));
 	}
 
 	@Override
@@ -206,7 +206,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			_getTitle(layout, titleListMergeable, locale));
 	}
 
-	private String _getSiteAndCompanyName(Layout layout, String companyName)
+	private String _getPageTitleSuffix(Layout layout, String companyName)
 		throws PortalException {
 
 		Group group = layout.getGroup();

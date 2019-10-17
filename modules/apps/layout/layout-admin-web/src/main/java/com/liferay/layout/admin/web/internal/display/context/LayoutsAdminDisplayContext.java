@@ -811,7 +811,7 @@ public class LayoutsAdminDisplayContext {
 		return _layoutsSearchContainer;
 	}
 
-	public String getLayoutTitle() throws PortalException {
+	public String getPageTitle() throws PortalException {
 		String portletId = (String)_httpServletRequest.getAttribute(
 			WebKeys.PORTLET_ID);
 
@@ -923,7 +923,7 @@ public class LayoutsAdminDisplayContext {
 		return orphanPortletsURL.toString();
 	}
 
-	public String getPageTitle() throws PortalException {
+	public String getFullPageTitle() throws PortalException {
 		String portletId = (String)_httpServletRequest.getAttribute(
 			WebKeys.PORTLET_ID);
 
@@ -1233,10 +1233,10 @@ public class LayoutsAdminDisplayContext {
 		return _selPlid;
 	}
 
-	public String getSiteAndCompanyName() throws PortalException {
+	public String getPageTitleSuffix() throws PortalException {
 		Company company = _themeDisplay.getCompany();
 
-		return _layoutSEOLinkManager.getSiteAndCompanyName(
+		return _layoutSEOLinkManager.getPageTitleSuffix(
 			_selLayout, company.getName());
 	}
 

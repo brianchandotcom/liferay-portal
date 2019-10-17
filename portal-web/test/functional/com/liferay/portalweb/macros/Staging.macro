@@ -122,7 +122,12 @@ definition {
 			locator1 = "Message#ERROR",
 			value1 = "Your request failed to complete.");
 
-		AssertElementPresent(locator1 = "Button#PLUS");
+		if ("${browserType}" == "internetexplorer") {
+			AssertElementPresent(locator1 = "Button#PLUS_IE");
+		}
+		else {
+			AssertElementPresent(locator1 = "Button#PLUS");
+		}
 
 		AssertConsoleTextNotPresent(value1 = "Please configure tunneling.servlet.shared.secret");
 

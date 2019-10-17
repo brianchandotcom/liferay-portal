@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author Ivica cardic
@@ -48,7 +48,7 @@ public class JSONBatchEngineTaskItemWriter
 	}
 
 	@Override
-	public void write(List<?> items) throws Exception {
+	public void write(Collection<?> items) throws Exception {
 		_sequenceWriter.writeAll(items);
 	}
 

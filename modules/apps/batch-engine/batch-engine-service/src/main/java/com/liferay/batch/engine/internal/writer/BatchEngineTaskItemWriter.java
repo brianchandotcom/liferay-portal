@@ -16,13 +16,13 @@ package com.liferay.batch.engine.internal.writer;
 
 import java.io.Closeable;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author Ivica cardic
  */
 public interface BatchEngineTaskItemWriter extends Closeable {
 
-	public void write(List<?> items) throws Exception;
+	public void write(Collection<?> items) throws Exception;
 
 }

@@ -51,7 +51,9 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.Content
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentCreationContentPageEditorConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentPageEditorConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -85,6 +87,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -103,6 +106,7 @@ import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.constants.SegmentsWebKeys;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -280,6 +284,8 @@ public class ContentPageEditorDisplayContext {
 			"lookAndFeelURL", _getLookAndFeelURL()
 		).put(
 			"mappedAssetEntries", _getMappedAssetEntriesSoyContexts()
+		).put(
+			"masterPageLayoutData", _getMasterPageLayoutDataJSONObject()
 		).put(
 			"pageContents",
 			ContentUtil.getPageContentsJSONArray(
@@ -780,10 +786,26 @@ public class ContentPageEditorDisplayContext {
 
 		SoyContext soyContexts = SoyContextFactoryUtil.createSoyContext();
 
-		List<FragmentEntryLink> fragmentEntryLinks =
+		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>(
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
 				getGroupId(), PortalUtil.getClassNameId(Layout.class.getName()),
-				themeDisplay.getPlid());
+				themeDisplay.getPlid()));
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			themeDisplay.getPlid());
+
+		if (layout.getMasterLayoutPageTemplateEntryId() > 0) {
+			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchLayoutPageTemplateEntry(
+						layout.getMasterLayoutPageTemplateEntryId());
+
+			fragmentEntryLinks.addAll(
+				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+					getGroupId(),
+					PortalUtil.getClassNameId(Layout.class.getName()),
+					masterLayoutPageTemplateEntry.getPlid()));
+		}
 
 		boolean isolated = themeDisplay.isIsolated();
 
@@ -1055,6 +1077,47 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return mappedAssetEntriesSoyContexts;
+	}
+
+	private JSONObject _getMasterPageLayoutDataJSONObject() {
+		try {
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(
+				themeDisplay.getPlid());
+
+			if (layout.getMasterLayoutPageTemplateEntryId() <= 0) {
+				return null;
+			}
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					getLayoutPageTemplateEntry(
+						layout.getMasterLayoutPageTemplateEntryId());
+
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				LayoutPageTemplateStructureLocalServiceUtil.
+					fetchLayoutPageTemplateStructure(
+						_groupId,
+						PortalUtil.getClassNameId(Layout.class.getName()),
+						layoutPageTemplateEntry.getPlid(), true);
+
+			long[] segmentsExperienceIds = GetterUtil.getLongValues(
+				request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
+				new long[] {SegmentsExperienceConstants.ID_DEFAULT});
+
+			String data = layoutPageTemplateStructure.getData(
+				segmentsExperienceIds);
+
+			if (Validator.isNull(data)) {
+				return null;
+			}
+
+			return JSONFactoryUtil.createJSONObject(data);
+		}
+		catch (Exception e) {
+			_log.error("Unable to get structure JSON array", e);
+
+			return null;
+		}
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {

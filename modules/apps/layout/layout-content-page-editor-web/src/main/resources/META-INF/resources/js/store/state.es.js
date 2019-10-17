@@ -539,6 +539,13 @@ const INITIAL_STATE = {
 	mappingFieldsURL: Config.string().value(''),
 
 	/**
+	 * Master page layout data
+	 * @review
+	 * @type {{structure: Array}}
+	 */
+	masterPageLayoutData: LayoutDataShape,
+
+	/**
 	 * @default []
 	 * @review
 	 * @type {Array<{name: string, status: { label: string, style: string }, title: string, usagesCount: number}>}

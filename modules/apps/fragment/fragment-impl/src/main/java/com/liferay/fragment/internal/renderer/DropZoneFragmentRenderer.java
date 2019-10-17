@@ -109,8 +109,7 @@ public class DropZoneFragmentRenderer implements FragmentRenderer {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.write(
-			"<div data-drop-zone style=\"min-height: 400px;\"></div>");
+		printWriter.write("<div style=\"min-height: 400px;\"></div>");
 	}
 
 	@Reference

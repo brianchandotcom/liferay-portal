@@ -29,6 +29,7 @@
 		<column name="executeStatus" type="String" />
 		<column name="fieldNameMapping" type="Map" />
 		<column name="operation" type="String" />
+		<column name="parameters" type="Map" />
 		<column name="startTime" type="Date" />
 		<column name="version" type="String" />
 

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -87,7 +86,6 @@ public class SearchPermissionCheckerImplTest {
 	protected SearchPermissionCheckerImpl createSearchPermissionChecker() {
 		return new SearchPermissionCheckerImpl() {
 			{
-				classNameLocalService = _classNameLocalService;
 				indexerRegistry = _indexerRegistry;
 				permissionChecker = _permissionChecker;
 				resourcePermissionLocalService =
@@ -133,9 +131,6 @@ public class SearchPermissionCheckerImplTest {
 			_user
 		).getUserId();
 	}
-
-	@Mock
-	private ClassNameLocalService _classNameLocalService;
 
 	@Mock
 	private Indexer _indexer;

@@ -209,6 +209,12 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				user = addUser(actionRequest);
 
 				SessionMessages.add(actionRequest, "userAdded");
+
+				SessionMessages.add(
+					actionRequest,
+					portal.getPortletId(actionRequest) +
+						SessionMessages.
+							KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 			}
 			else if (cmd.equals(Constants.DEACTIVATE) ||
 					 cmd.equals(Constants.DELETE) ||

@@ -14,8 +14,12 @@
 
 package com.liferay.depot.service.impl;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.base.DepotEntryGroupRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,9 +43,30 @@ import org.osgi.service.component.annotations.Component;
 public class DepotEntryGroupRelLocalServiceImpl
 	extends DepotEntryGroupRelLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.depot.service.DepotEntryGroupRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.depot.service.DepotEntryGroupRelLocalServiceUtil</code>.
-	 */
+	public DepotEntryGroupRel addDepotEntryGroupRel(
+		long depotEntryId, long toGroupId) {
+
+		DepotEntryGroupRel depotEntryGroupRel =
+			depotEntryGroupRelPersistence.fetchByD_G(depotEntryId, toGroupId);
+
+		if (depotEntryGroupRel != null) {
+			return depotEntryGroupRel;
+		}
+
+		depotEntryGroupRel = depotEntryGroupRelPersistence.create(
+			counterLocalService.increment());
+
+		depotEntryGroupRel.setDepotEntryId(depotEntryId);
+		depotEntryGroupRel.setToGroupId(toGroupId);
+
+		return depotEntryGroupRelPersistence.update(depotEntryGroupRel);
+	}
+
+	public List<DepotEntryGroupRel> getDepotEntryGroupRels(
+		DepotEntry depotEntry) {
+
+		return depotEntryGroupRelPersistence.findByDepotEntryId(
+			depotEntry.getDepotEntryId());
+	}
+
 }

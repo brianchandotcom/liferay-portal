@@ -48,10 +48,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ImportTask")
+@GraphQLName("ExportTask")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ImportTask")
-public class ImportTask {
+@XmlRootElement(name = "ExportTask")
+public class ExportTask {
 
 	@GraphQLName("ExecuteStatus")
 	public static enum ExecuteStatus {
@@ -88,42 +88,8 @@ public class ImportTask {
 
 	}
 
-	@GraphQLName("Operation")
-	public static enum Operation {
-
-		CREATE("CREATE"), DELETE("DELETE"), UPDATE("UPDATE");
-
-		@JsonCreator
-		public static Operation create(String value) {
-			for (Operation operation : values()) {
-				if (Objects.equals(operation.getValue(), value)) {
-					return operation;
-				}
-			}
-
-			return null;
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Operation(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
 	@Schema(
-		description = "The item class name for which data will be processed in batch."
+		description = "The item class name for which data will be exported in batch."
 	)
 	public String getClassName() {
 		return className;
@@ -303,44 +269,6 @@ public class ImportTask {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema(description = "The operation of import task.")
-	@Valid
-	public Operation getOperation() {
-		return operation;
-	}
-
-	@JsonIgnore
-	public String getOperationAsString() {
-		if (operation == null) {
-			return null;
-		}
-
-		return operation.toString();
-	}
-
-	public void setOperation(Operation operation) {
-		this.operation = operation;
-	}
-
-	@JsonIgnore
-	public void setOperation(
-		UnsafeSupplier<Operation, Exception> operationUnsafeSupplier) {
-
-		try {
-			operation = operationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Operation operation;
-
 	@Schema(description = "The start time of import task operation.")
 	public Date getStartTime() {
 		return startTime;
@@ -403,13 +331,13 @@ public class ImportTask {
 			return true;
 		}
 
-		if (!(object instanceof ImportTask)) {
+		if (!(object instanceof ExportTask)) {
 			return false;
 		}
 
-		ImportTask importTask = (ImportTask)object;
+		ExportTask exportTask = (ExportTask)object;
 
-		return Objects.equals(toString(), importTask.toString());
+		return Objects.equals(toString(), exportTask.toString());
 	}
 
 	@Override
@@ -505,20 +433,6 @@ public class ImportTask {
 			sb.append("\"id\": ");
 
 			sb.append(id);
-		}
-
-		if (operation != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"operation\": ");
-
-			sb.append("\"");
-
-			sb.append(operation);
-
-			sb.append("\"");
 		}
 
 		if (startTime != null) {

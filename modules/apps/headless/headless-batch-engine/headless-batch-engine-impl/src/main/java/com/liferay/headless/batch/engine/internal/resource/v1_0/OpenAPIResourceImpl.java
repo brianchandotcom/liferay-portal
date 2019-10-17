@@ -64,6 +64,8 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(ExportTaskResourceImpl.class);
+
 			add(ImportTaskResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

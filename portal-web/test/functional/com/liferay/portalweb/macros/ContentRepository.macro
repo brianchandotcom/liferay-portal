@@ -1,0 +1,75 @@
+definition {
+
+	macro addRepository {
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${repositoryName}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessageText(successMessage = "Repository was added.");
+
+		if (isSet(repositoryDescription)) {
+			Type(
+				locator1 = "TextArea#DESCRIPTION",
+				value1 = "${repositoryDescription}");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro editRepository {
+		ContentRepositoryNavigator.gotoEdit(repositoryName = "${repositoryName}");
+
+		if (isSet(repositoryNameEdit)) {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "${repositoryNameEdit}");
+		}
+
+		if (isSet(repositoryDescriptionEdit)) {
+			Type(
+				locator1 = "TextArea#DESCRIPTION",
+				value1 = "${repositoryDescriptionEdit}");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro viewSearchResult {
+		if ("${resultCount}" != "1") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+				value1 = "${resultCount} Results for ${searchTerm}");
+		}
+
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+				value1 = "1 Result for ${searchTerm}");
+		}
+
+		for (var repositoryName : list "${includedResults}") {
+			var key_card = "${repositoryName}";
+
+			AssertTextEquals(
+				locator1 = "LexiconCard#CARD_TITLE",
+				value1 = "${repositoryName}");
+		}
+
+		if (isSet(excludedResults)) {
+			for (var repositoryName : list "${excludedResults}") {
+				var key_card = "${repositoryName}";
+
+				AssertElementNotPresent(locator1 = "LexiconCard#CARD_TITLE");
+			}
+		}
+	}
+
+}

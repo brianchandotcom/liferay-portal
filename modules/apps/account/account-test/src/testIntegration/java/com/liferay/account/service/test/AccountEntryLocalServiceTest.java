@@ -14,12 +14,15 @@
 
 package com.liferay.account.service.test;
 
+import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -121,6 +124,42 @@ public class AccountEntryLocalServiceTest {
 				String.valueOf(accountEntry.getAccountEntryId()));
 
 		Assert.assertEquals(1, resourcePermissionsCount);
+	}
+
+	@Test
+	public void testAddAccountEntryWithDomains() throws Exception {
+		String[] domains = {"test1.com", "test.1.com", "test-1.com"};
+
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService, domains);
+
+		_accountEntries.add(accountEntry);
+
+		Assert.assertEquals(
+			StringUtil.merge(ArrayUtil.distinct(domains), ","),
+			accountEntry.getDomains());
+	}
+
+	@Test
+	public void testAddAccountEntryWithInvalidDomains() throws Exception {
+		String[] invalidDomains = {
+			"invalid", ".invalid", "-invalid", "invalid-", "_invalid",
+			"invalid_", "@invalid.com", "invalid#domain", "invalid&domain",
+			"invalid!.com", "invalid$domain.com", "invalid%.com", "*invalid",
+			"invalid*", "invalid.*.com", "invalid+domain", ">", "<"
+		};
+
+		for (String domain : invalidDomains) {
+			try {
+				AccountEntryTestUtil.addAccountEntry(
+					_accountEntryLocalService, new String[] {domain});
+
+				Assert.fail(
+					"Created an account entry with invalid domain " + domain);
+			}
+			catch (AccountEntryDomainsException aede) {
+			}
+		}
 	}
 
 	@Test

@@ -14,11 +14,11 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -94,10 +94,11 @@ public class DeleteFragmentEntryLinkMVCActionCommand
 					PortletIdCodec.encode(portletId, instanceId),
 					themeDisplay.getPlid());
 
-				_assetEntryUsageLocalService.deleteAssetEntryUsages(
-					_portal.getClassNameId(Portlet.class),
-					PortletIdCodec.encode(portletId, instanceId),
-					themeDisplay.getPlid());
+				_layoutClassedModelUsageLocalService.
+					deleteLayoutClassedModelUsages(
+						PortletIdCodec.encode(portletId, instanceId),
+						_portal.getClassNameId(Portlet.class),
+						themeDisplay.getPlid());
 			}
 		}
 
@@ -108,14 +109,15 @@ public class DeleteFragmentEntryLinkMVCActionCommand
 			_portletLocalService.deletePortlet(
 				themeDisplay.getCompanyId(), portletId, themeDisplay.getPlid());
 
-			_assetEntryUsageLocalService.deleteAssetEntryUsages(
-				_portal.getClassNameId(Portlet.class), portletId,
+			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+				portletId, _portal.getClassNameId(Portlet.class),
 				themeDisplay.getPlid());
 		}
 
-		_assetEntryUsageLocalService.deleteAssetEntryUsages(
+		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+			String.valueOf(fragmentEntryLinkId),
 			_portal.getClassNameId(FragmentEntryLink.class),
-			String.valueOf(fragmentEntryLinkId), themeDisplay.getPlid());
+			themeDisplay.getPlid());
 
 		return fragmentEntryLink;
 	}
@@ -159,10 +161,11 @@ public class DeleteFragmentEntryLinkMVCActionCommand
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
+	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 	@Reference
-	private FragmentEntryLinkService _fragmentEntryLinkService;
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private Portal _portal;

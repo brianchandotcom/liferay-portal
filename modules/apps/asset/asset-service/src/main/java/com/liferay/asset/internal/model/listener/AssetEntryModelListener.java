@@ -15,7 +15,7 @@
 package com.liferay.asset.internal.model.listener;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.service.AssetEntryUsageLocalService;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -38,11 +38,12 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 	public void onBeforeRemove(AssetEntry assetEntry)
 		throws ModelListenerException {
 
-		_assetEntryUsageLocalService.deleteAssetEntryUsages(
-			assetEntry.getEntryId());
+		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+			assetEntry.getClassNameId(), assetEntry.getClassPK());
 	}
 
 	@Reference
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 }

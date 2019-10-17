@@ -16,16 +16,16 @@ package com.liferay.layout.internal.util;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.model.AssetEntryUsage;
-import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -193,19 +193,23 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				targetLayout, fragmentEntryLinkMap, serviceContext);
 		}
 
-		_assetEntryUsageLocalService.deleteAssetEntryUsagesByPlid(
-			targetLayout.getPlid());
+		_layoutClassedModelUsageLocalService.
+			deleteLayoutClassedModelUsagesByPlid(targetLayout.getPlid());
 
-		List<AssetEntryUsage> assetEntryUsages =
-			_assetEntryUsageLocalService.getAssetEntryUsagesByPlid(
-				sourceLayout.getPlid());
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesByPlid(sourceLayout.getPlid());
 
-		for (AssetEntryUsage assetEntryUsage : assetEntryUsages) {
-			_assetEntryUsageLocalService.addAssetEntryUsage(
-				assetEntryUsage.getGroupId(), assetEntryUsage.getAssetEntryId(),
-				assetEntryUsage.getContainerType(),
-				assetEntryUsage.getContainerKey(), targetLayout.getPlid(),
-				serviceContext);
+		for (LayoutClassedModelUsage layoutClassedModelUsage :
+				layoutClassedModelUsages) {
+
+			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+				layoutClassedModelUsage.getGroupId(),
+				layoutClassedModelUsage.getClassNameId(),
+				layoutClassedModelUsage.getClassPK(),
+				layoutClassedModelUsage.getContainerKey(),
+				layoutClassedModelUsage.getContainerType(),
+				targetLayout.getPlid(), serviceContext);
 		}
 	}
 
@@ -384,9 +388,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
-
-	@Reference
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
@@ -400,6 +401,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 	@Reference
 	private ImageLocalService _imageLocalService;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

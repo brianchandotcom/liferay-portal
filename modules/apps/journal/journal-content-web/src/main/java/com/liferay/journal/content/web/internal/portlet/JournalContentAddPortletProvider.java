@@ -19,11 +19,11 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.model.AssetEntryUsage;
-import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalContentSearchLocalService;
+import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -97,37 +97,30 @@ public class JournalContentAddPortletProvider
 
 		Layout layout = themeDisplay.getLayout();
 
-		_addAssetEntryUsage(layout, portletId, article);
+		_addLayoutClassedModelUsage(layout, portletId, article);
 
 		_journalContentSearchLocal.updateContentSearch(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			portletId, article.getArticleId(), true);
 	}
 
-	private void _addAssetEntryUsage(
-			Layout layout, String portletId, JournalArticle article)
-		throws PortalException {
+	private void _addLayoutClassedModelUsage(
+		Layout layout, String portletId, JournalArticle article) {
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			_portal.getClassNameId(JournalArticle.class),
-			article.getResourcePrimKey());
+		LayoutClassedModelUsage layoutClassedModelUsage =
+			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
+				_portal.getClassNameId(JournalArticle.class),
+				article.getResourcePrimKey(), portletId,
+				_portal.getClassNameId(Portlet.class), layout.getPlid());
 
-		if (assetEntry == null) {
+		if (layoutClassedModelUsage != null) {
 			return;
 		}
 
-		AssetEntryUsage assetEntryUsage =
-			_assetEntryUsageLocalService.fetchAssetEntryUsage(
-				assetEntry.getEntryId(), _portal.getClassNameId(Portlet.class),
-				portletId, layout.getPlid());
-
-		if (assetEntryUsage != null) {
-			return;
-		}
-
-		_assetEntryUsageLocalService.addAssetEntryUsage(
-			layout.getGroupId(), assetEntry.getEntryId(),
-			_portal.getClassNameId(Portlet.class), portletId, layout.getPlid(),
+		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+			layout.getGroupId(), _portal.getClassNameId(JournalArticle.class),
+			article.getResourcePrimKey(), portletId,
+			_portal.getClassNameId(Portlet.class), layout.getPlid(),
 			ServiceContextThreadLocal.getServiceContext());
 	}
 
@@ -135,10 +128,11 @@ public class JournalContentAddPortletProvider
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
+	private JournalContentSearchLocalService _journalContentSearchLocal;
 
 	@Reference
-	private JournalContentSearchLocalService _journalContentSearchLocal;
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private Portal _portal;

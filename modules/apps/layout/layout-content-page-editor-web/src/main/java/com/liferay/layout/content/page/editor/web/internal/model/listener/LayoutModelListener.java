@@ -14,13 +14,13 @@
 
 package com.liferay.layout.content.page.editor.web.internal.model.listener;
 
-import com.liferay.asset.model.AssetEntryUsage;
-import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -133,18 +133,22 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
 			draftLayout.getLayoutId(), draftLayout.getTypeSettings());
 
-		List<AssetEntryUsage> assetEntryUsages =
-			_assetEntryUsageLocalService.getAssetEntryUsagesByPlid(
-				layoutPageTemplateEntry.getPlid());
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesByPlid(
+					layoutPageTemplateEntry.getPlid());
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		assetEntryUsages.forEach(
-			assetEntryUsage -> _assetEntryUsageLocalService.addAssetEntryUsage(
-				assetEntryUsage.getGroupId(), assetEntryUsage.getAssetEntryId(),
-				assetEntryUsage.getContainerType(),
-				assetEntryUsage.getContainerKey(), layout.getPlid(),
-				serviceContext));
+		layoutClassedModelUsages.forEach(
+			layoutClassedModelUsage ->
+				_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+					layoutClassedModelUsage.getGroupId(),
+					layoutClassedModelUsage.getClassNameId(),
+					layoutClassedModelUsage.getClassPK(),
+					layoutClassedModelUsage.getContainerKey(),
+					layoutClassedModelUsage.getContainerType(),
+					layout.getPlid(), serviceContext));
 
 		return null;
 	}
@@ -188,7 +192,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		LayoutModelListener.class);
 
 	@Reference
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;

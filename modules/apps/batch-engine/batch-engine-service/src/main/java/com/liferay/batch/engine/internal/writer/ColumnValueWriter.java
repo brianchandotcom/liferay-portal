@@ -53,9 +53,7 @@ public class ColumnValueWriter {
 
 		Stream<Map.Entry<String, Object>> stream = entries.stream();
 
-		columnNameValueMap = stream.filter(
-			entry -> _isFieldEligibleForWrite(item, entry.getKey())
-		).flatMap(
+		columnNameValueMap = stream.flatMap(
 			this::_getEntryStreams
 		).collect(
 			Collectors.toMap(
@@ -103,6 +101,14 @@ public class ColumnValueWriter {
 				Map<String, Field> fieldMap = new HashMap<>();
 
 				for (Field field : clazz.getDeclaredFields()) {
+					Class<?> valueClass = field.getType();
+
+					if (!valueClass.isPrimitive() &&
+						!_objectTypes.contains(valueClass)) {
+
+						continue;
+					}
+
 					field.setAccessible(true);
 
 					String name = field.getName();
@@ -161,36 +167,6 @@ public class ColumnValueWriter {
 		}
 
 		return Stream.of(entry);
-	}
-
-	private boolean _isFieldEligibleForWrite(Object item, String name) {
-		Class<?> itemClass = item.getClass();
-
-		Field field = null;
-
-		try {
-			field = itemClass.getDeclaredField(StringPool.UNDERLINE + name);
-		}
-		catch (NoSuchFieldException nfe) {
-			try {
-				itemClass.getDeclaredField(name);
-			}
-			catch (NoSuchFieldException nfe2) {
-				throw new RuntimeException(nfe2);
-			}
-		}
-
-		Class<?> valueClass = field.getType();
-
-		if (valueClass.isPrimitive()) {
-			return true;
-		}
-
-		if (_objectTypes.contains(valueClass)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Map<Class<?>, Map<String, Field>> _fieldsMap =

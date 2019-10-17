@@ -15,4 +15,20 @@
 			includes="junit.jar"
 		/>
 	</path>
+
+	<target name="jar">
+		<copy file="src/com/liferay/portal/kernel/util/ReleaseInfo.java" overwrite="true" tofile="build/temp/ReleaseInfo.java" />
+
+		<replace file="src/com/liferay/portal/kernel/util/ReleaseInfo.java">
+			<replacefilter token="@release.info.build@" value="${release.info.build}" />
+			<replacefilter token="@release.info.date@" value="${release.info.date}" />
+			<replacefilter token="@release.info.name@" value="${release.info.name}" />
+			<replacefilter token="@release.info.version@" value="${release.info.version}" />
+			<replacefilter token="@release.info.version.display.name@" value="${release.info.version.display.name}" />
+		</replace>
+
+		<ant antfile="${project.dir}/build-common-java.xml" dir="${project.dir}/portal-kernel" inheritRefs="true" target="jar" />
+
+		<move file="build/temp/ReleaseInfo.java" tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java" />
+	</target>
 </project>

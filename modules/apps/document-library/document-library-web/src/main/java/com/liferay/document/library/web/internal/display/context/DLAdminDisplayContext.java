@@ -417,8 +417,12 @@ public class DLAdminDisplayContext {
 
 		portletURL.setParameter("curFolder", currentFolder);
 		portletURL.setParameter("deltaFolder", deltaFolder);
-		portletURL.setParameter(
-			"fileEntryTypeId", String.valueOf(fileEntryTypeId));
+
+		if (fileEntryTypeId >= 0) {
+			portletURL.setParameter(
+				"fileEntryTypeId", String.valueOf(fileEntryTypeId));
+		}
+
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 		portletURL.setParameter("navigation", navigation);
 

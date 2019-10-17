@@ -93,15 +93,12 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');
 
-	searchContainer.on(
-		'rowToggled',
-		function(event) {
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>',
-				{
-					data: event.elements.allSelectedElements.getDOMNodes()
-				}
-			);
-		}
-	);
+	searchContainer.on('rowToggled', function(event) {
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>',
+			{
+				data: event.elements.allSelectedElements.getDOMNodes()
+			}
+		);
+	});
 </aui:script>

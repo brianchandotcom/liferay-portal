@@ -309,58 +309,65 @@ if (portletTitleBasedNavigation) {
 			}
 		}
 
-		urlTitleInput.addEventListener(
-			'input',
-			function(event) {
-				event.currentTarget.dataset.customUrl = urlTitleInput.value !== '';
-			}
-		);
+		urlTitleInput.addEventListener('input', function(event) {
+			event.currentTarget.dataset.customUrl = urlTitleInput.value !== '';
+		});
 	</c:if>
 
-	document.getElementById('<portlet:namespace />publishButton')
-		.addEventListener(
-			'click',
-			function() {
-				var workflowActionInput = document.getElementById('<portlet:namespace />workflowAction');
+	document
+		.getElementById('<portlet:namespace />publishButton')
+		.addEventListener('click', function() {
+			var workflowActionInput = document.getElementById(
+				'<portlet:namespace />workflowAction'
+			);
 
-				if (workflowActionInput) {
-					workflowActionInput.value = '<%= WorkflowConstants.ACTION_PUBLISH %>';
-				}
-
-				<c:if test="<%= kbArticle == null %>">
-					var customUrl = urlTitleInput.dataset.customUrl;
-
-					if (customUrl === 'false') {
-						urlTitleInput.value = '';
-					}
-				</c:if>
+			if (workflowActionInput) {
+				workflowActionInput.value =
+					'<%= WorkflowConstants.ACTION_PUBLISH %>';
 			}
-		);
+
+			<c:if test="<%= kbArticle == null %>">
+				var customUrl = urlTitleInput.dataset.customUrl;
+
+				if (customUrl === 'false') {
+					urlTitleInput.value = '';
+				}
+			</c:if>
+		});
 
 	var form = document.getElementById('<portlet:namespace />fm');
 
 	var updateMultipleKBArticleAttachments = function() {
-		var selectedFileNameContainer = document.getElementById('<portlet:namespace />selectedFileNameContainer');
+		var selectedFileNameContainer = document.getElementById(
+			'<portlet:namespace />selectedFileNameContainer'
+		);
 		var buffer = [];
-		var filesChecked = form.querySelectorAll('input[name=<portlet:namespace />selectUploadedFile]:checked');
+		var filesChecked = form.querySelectorAll(
+			'input[name=<portlet:namespace />selectUploadedFile]:checked'
+		);
 
 		for (var i = 0; i < filesChecked.length; i++) {
 			buffer.push(
-				'<input id="<portlet:namespace />selectedFileName' + i + '" name="<portlet:namespace />selectedFileName" type="hidden" value="' + filesChecked[i].value + '" />'
+				'<input id="<portlet:namespace />selectedFileName' +
+					i +
+					'" name="<portlet:namespace />selectedFileName" type="hidden" value="' +
+					filesChecked[i].value +
+					'" />'
 			);
 		}
 
 		selectedFileNameContainer.innerHTML = buffer.join('');
 	};
 
-	form.addEventListener(
-		'submit',
-		function() {
-			document.getElementById('<portlet:namespace />content').value = window.<portlet:namespace />contentEditor.getHTML();
-			document.getElementById('<portlet:namespace />title').value = window.<portlet:namespace />titleEditor.getText();
-			updateMultipleKBArticleAttachments();
-		}
-	);
+	form.addEventListener('submit', function() {
+		document.getElementById(
+			'<portlet:namespace />content'
+		).value = window.<portlet:namespace />contentEditor.getHTML();
+		document.getElementById(
+			'<portlet:namespace />title'
+		).value = window.<portlet:namespace />titleEditor.getText();
+		updateMultipleKBArticleAttachments();
+	});
 </aui:script>
 
 <%!

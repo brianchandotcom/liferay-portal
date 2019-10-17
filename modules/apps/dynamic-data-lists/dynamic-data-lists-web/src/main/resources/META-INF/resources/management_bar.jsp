@@ -39,21 +39,38 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 <aui:script sandbox="<%= true %>">
 	var deleteRecordSets = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+		if (
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
+			)
+		) {
 			var form = document.getElementById('<portlet:namespace />fm');
 
 			if (form) {
-				var searchContainer = form.querySelector('#<portlet:namespace /><%= ddlDisplayContext.getSearchContainerId() %>');
+				var searchContainer = form.querySelector(
+					'#<portlet:namespace /><%= ddlDisplayContext.getSearchContainerId() %>'
+				);
 
 				if (searchContainer) {
 					form.setAttribute('method', 'post');
 
-					var recordSetIds = form.querySelector('#<portlet:namespace />recordSetIds');
+					var recordSetIds = form.querySelector(
+						'#<portlet:namespace />recordSetIds'
+					);
 
 					if (recordSetIds) {
-						recordSetIds.setAttribute('value', Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+						recordSetIds.setAttribute(
+							'value',
+							Liferay.Util.listCheckedExcept(
+								searchContainer,
+								'<portlet:namespace />allRowIds'
+							)
+						);
 
-						submitForm(form, '<portlet:actionURL name="deleteRecordSet"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+						submitForm(
+							form,
+							'<portlet:actionURL name="deleteRecordSet"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>'
+						);
 					}
 				}
 			}
@@ -61,21 +78,18 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	};
 
 	var ACTIONS = {
-		'deleteRecordSets': deleteRecordSets
+		deleteRecordSets: deleteRecordSets
 	};
 
-	Liferay.componentReady('ddlManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
+	Liferay.componentReady('ddlManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('actionItemClicked', function(event) {
+			var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action]();
+			}
+		});
+	});
 </aui:script>

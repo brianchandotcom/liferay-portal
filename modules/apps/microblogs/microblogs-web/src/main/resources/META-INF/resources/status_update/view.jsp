@@ -58,13 +58,10 @@ Group group = themeDisplay.getScopeGroup();
 </c:if>
 
 <aui:script use="aui-base">
-	AUI().ready(
-		function() {
-			Liferay.Microblogs.init(
-				{
-					microblogsEntriesURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/status_update/view.jsp" /></portlet:renderURL>'
-				}
-			);
-		}
-	);
+	AUI().ready(function() {
+		Liferay.Microblogs.init({
+			microblogsEntriesURL:
+				'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/status_update/view.jsp" /></portlet:renderURL>'
+		});
+	});
 </aui:script>

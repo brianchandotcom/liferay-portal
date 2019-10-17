@@ -48,25 +48,21 @@ String resource = workflowDefinitionLinkSearchEntry.getResource();
 </c:choose>
 
 <aui:script require="metal-dom/src/dom">
-
 	var dom = metalDomSrcDom.default;
 
 	var tooltip = document.getElementById('<%= randomNamespace %>tooltip');
 
-	var resourceTooltip = document.getElementById('<%= randomNamespace %>resourceTooltip');
+	var resourceTooltip = document.getElementById(
+		'<%= randomNamespace %>resourceTooltip'
+	);
 
 	if (resourceTooltip) {
-		resourceTooltip.addEventListener(
-			'mouseover',
-			function() {
-				dom.toggleClasses(tooltip,'show');
-			});
+		resourceTooltip.addEventListener('mouseover', function() {
+			dom.toggleClasses(tooltip, 'show');
+		});
 
-		resourceTooltip.addEventListener(
-			'mouseout',
-			function() {
-				dom.toggleClasses(tooltip,'show');
-			});
-
+		resourceTooltip.addEventListener('mouseout', function() {
+			dom.toggleClasses(tooltip, 'show');
+		});
 	}
 </aui:script>

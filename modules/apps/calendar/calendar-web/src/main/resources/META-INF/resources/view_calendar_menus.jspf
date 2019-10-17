@@ -19,140 +19,149 @@ String backURL = PortalUtil.getCurrentURL(request);
 %>
 
 <aui:script use="aui-toggler,calendar,liferay-calendar-simple-color-picker,liferay-calendar-simple-menu,liferay-calendar-util">
-	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
+	var calendarContainer = Liferay.component(
+		'<portlet:namespace />calendarContainer'
+	);
 
 	var remoteServices = Liferay.component('<portlet:namespace />remoteServices');
 
-	window.<portlet:namespace />calendarListsMenu = new Liferay.SimpleMenu(
-		{
-			align: {
-				points: [A.WidgetPositionAlign.TL, A.WidgetPositionAlign.BL]
-			},
-			constrain: true,
-			items: [
-				{
-					caption: '<liferay-ui:message key="add-calendar" />',
-					fn: function(event) {
-						var instance = this;
+	window.<portlet:namespace />calendarListsMenu = new Liferay.SimpleMenu({
+		align: {
+			points: [A.WidgetPositionAlign.TL, A.WidgetPositionAlign.BL]
+		},
+		constrain: true,
+		items: [
+			{
+				caption: '<liferay-ui:message key="add-calendar" />',
+				fn: function(event) {
+					var instance = this;
 
-						var calendarResourceId = instance.calendarResourceId;
+					var calendarResourceId = instance.calendarResourceId;
 
-						if (calendarResourceId) {
-							Liferay.Util.openWindow(
-								{
-									dialog: {
-										after: {
-											destroy: function(event) {
-												remoteServices.getResourceCalendars(
-													calendarResourceId,
-													function(calendars) {
-														var calendarList = window.<portlet:namespace />calendarLists[calendarResourceId];
+					if (calendarResourceId) {
+						Liferay.Util.openWindow({
+							dialog: {
+								after: {
+									destroy: function(event) {
+										remoteServices.getResourceCalendars(
+											calendarResourceId,
+											function(calendars) {
+												var calendarList =
+													window
+														.<portlet:namespace />calendarLists[
+														calendarResourceId
+													];
 
-														calendarList.set('calendars', calendars);
-
-														<portlet:namespace />syncCalendarsMap();
-
-														<portlet:namespace />scheduler.load();
-													}
+												calendarList.set(
+													'calendars',
+													calendars
 												);
+
+												<portlet:namespace />syncCalendarsMap();
+
+												<portlet:namespace />scheduler.load();
 											}
-										},
-										destroyOnHide: true,
-										modal: true
-									},
-									refreshWindow: window,
-									title: '<liferay-ui:message key="add-calendar" />',
+										);
+									}
+								},
+								destroyOnHide: true,
+								modal: true
+							},
+							refreshWindow: window,
+							title: '<liferay-ui:message key="add-calendar" />',
 
-									<portlet:renderURL var="editCalendarURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-										<portlet:param name="mvcPath" value="/edit_calendar.jsp" />
-										<portlet:param name="calendarResourceId" value="{calendarResourceId}" />
-									</portlet:renderURL>
-
-									uri: Liferay.CalendarUtil.fillURLParameters(
-										decodeURIComponent('<%= editCalendarURL %>'),
-										{
-											calendarResourceId: calendarResourceId
-										}
-									)
-								}
-							);
-						}
-					},
-					id: 'add'
-				},
-				{
-					caption: '<liferay-ui:message key="manage-calendars" />',
-					fn: function(event) {
-						var instance = this;
-
-						var calendarResourceId = instance.calendarResourceId;
-
-						if (calendarResourceId) {
-							<portlet:renderURL var="calendarsURL">
-								<portlet:param name="mvcPath" value="/view_calendars.jsp" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:renderURL var="editCalendarURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+								<portlet:param name="mvcPath" value="/edit_calendar.jsp" />
 								<portlet:param name="calendarResourceId" value="{calendarResourceId}" />
 							</portlet:renderURL>
 
-							window.location.href = Liferay.CalendarUtil.fillURLParameters(
-								decodeURIComponent('<%= calendarsURL %>'),
+							uri: Liferay.CalendarUtil.fillURLParameters(
+								decodeURIComponent('<%= editCalendarURL %>'),
 								{
 									calendarResourceId: calendarResourceId
 								}
-							);
-						}
-					},
-					id: 'manage'
+							)
+						});
+					}
 				},
-				{
-					caption: '<liferay-ui:message key="permissions" />',
-					fn: function(event) {
-						var instance = this;
-
-						<liferay-security:permissionsURL
-							modelResource="<%= CalendarConstants.RESOURCE_NAME %>"
-							modelResourceDescription=""
-							resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-							var="permissionsURL"
-							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-						/>
-
-						Liferay.Util.openWindow(
-							{
-								dialog: {
-									destroyOnHide: true,
-									modal: true
-								},
-								dialogIframe: {
-									bodyCssClass: 'dialog-with-footer'
-								},
-								refreshWindow: window,
-								title: '<liferay-ui:message key="permissions" />',
-								uri: decodeURIComponent('<%= permissionsURL %>')
-							}
-						);
-					},
-					id: 'permissions'
-				}
-			],
-			on: {
-				visibleChange: function(event) {
+				id: 'add'
+			},
+			{
+				caption: '<liferay-ui:message key="manage-calendars" />',
+				fn: function(event) {
 					var instance = this;
 
-					var hiddenItems = [];
+					var calendarResourceId = instance.calendarResourceId;
 
-					if (!(instance.calendarResourceId === '<%= groupCalendarResource.getCalendarResourceId() %>') || !<%= CalendarPortletPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>) {
-						hiddenItems.push('permissions');
+					if (calendarResourceId) {
+						<portlet:renderURL var="calendarsURL">
+							<portlet:param name="mvcPath" value="/view_calendars.jsp" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="calendarResourceId" value="{calendarResourceId}" />
+						</portlet:renderURL>
+
+						window.location.href = Liferay.CalendarUtil.fillURLParameters(
+							decodeURIComponent('<%= calendarsURL %>'),
+							{
+								calendarResourceId: calendarResourceId
+							}
+						);
 					}
-
-					instance.set('hiddenItems', hiddenItems);
-				}
+				},
+				id: 'manage'
 			},
-			visible: false,
-			width: 290,
-			zIndex: 500
-		}
-	).render();
+			{
+				caption: '<liferay-ui:message key="permissions" />',
+				fn: function(event) {
+					var instance = this;
+
+					<liferay-security:permissionsURL
+						modelResource="<%= CalendarConstants.RESOURCE_NAME %>"
+						modelResourceDescription=""
+						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
+						var="permissionsURL"
+						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+					/>
+
+					Liferay.Util.openWindow({
+						dialog: {
+							destroyOnHide: true,
+							modal: true
+						},
+						dialogIframe: {
+							bodyCssClass: 'dialog-with-footer'
+						},
+						refreshWindow: window,
+						title: '<liferay-ui:message key="permissions" />',
+						uri: decodeURIComponent('<%= permissionsURL %>')
+					});
+				},
+				id: 'permissions'
+			}
+		],
+		on: {
+			visibleChange: function(event) {
+				var instance = this;
+
+				var hiddenItems = [];
+
+				if (
+					!(
+						instance.calendarResourceId ===
+						'<%= groupCalendarResource.getCalendarResourceId() %>'
+					) ||
+					!<%= CalendarPortletPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>
+				) {
+					hiddenItems.push('permissions');
+				}
+
+				instance.set('hiddenItems', hiddenItems);
+			}
+		},
+		visible: false,
+		width: 290,
+		zIndex: 500
+	}).render();
 
 	window.<portlet:namespace />calendarsMenu = {
 		items: [
@@ -171,27 +180,25 @@ String backURL = PortalUtil.getCurrentURL(request);
 						<portlet:param name="calendarId" value="{calendarId}" />
 					</portlet:renderURL>
 
-					Liferay.Util.openWindow(
-						{
-							dialog: {
-								after: {
-									destroy: function(event) {
-										<portlet:namespace />scheduler.load();
-									}
-								},
-								destroyOnHide: true,
-								modal: true
-							},
-							refreshWindow: window,
-							title: '<liferay-ui:message key="new-calendar-booking" />',
-							uri: Liferay.CalendarUtil.fillURLParameters(
-								decodeURIComponent('<%= addCalendarBookingURL %>'),
-								{
-									calendarId: activeCalendar.get('calendarId')
+					Liferay.Util.openWindow({
+						dialog: {
+							after: {
+								destroy: function(event) {
+									<portlet:namespace />scheduler.load();
 								}
-							)
-						}
-					);
+							},
+							destroyOnHide: true,
+							modal: true
+						},
+						refreshWindow: window,
+						title: '<liferay-ui:message key="new-calendar-booking" />',
+						uri: Liferay.CalendarUtil.fillURLParameters(
+							decodeURIComponent('<%= addCalendarBookingURL %>'),
+							{
+								calendarId: activeCalendar.get('calendarId')
+							}
+						)
+					});
 				},
 				id: 'addEvent'
 			},
@@ -219,55 +226,63 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 					var activeCalendar = calendarList.activeItem;
 
-					Liferay.Util.openWindow(
-						{
-							dialog: {
-								after: {
-									destroy: function(event) {
-										remoteServices.getCalendar(
-											activeCalendar.get('calendarId'),
-											function(calendar) {
-												var activeCalendarId = activeCalendar.get('calendarId');
+					Liferay.Util.openWindow({
+						dialog: {
+							after: {
+								destroy: function(event) {
+									remoteServices.getCalendar(
+										activeCalendar.get('calendarId'),
+										function(calendar) {
+											var activeCalendarId = activeCalendar.get(
+												'calendarId'
+											);
 
-												var calendars = calendarList.get('calendars').map(
-													function(item) {
-														if (activeCalendarId === item.get('calendarId')) {
-															item = calendar;
-														}
-
-														return item;
+											var calendars = calendarList
+												.get('calendars')
+												.map(function(item) {
+													if (
+														activeCalendarId ===
+														item.get('calendarId')
+													) {
+														item = calendar;
 													}
-												);
 
-												calendarList.set('calendars', calendars);
+													return item;
+												});
 
-												<portlet:namespace />syncCalendarsMap();
+											calendarList.set(
+												'calendars',
+												calendars
+											);
 
-												<portlet:namespace />scheduler.load();
-											}
-										);
-									}
-								},
-								destroyOnHide: true,
-								modal: true
-							},
-							refreshWindow: window,
-							title: '<liferay-ui:message key="calendar-settings" />',
+											<portlet:namespace />syncCalendarsMap();
 
-							<portlet:renderURL var="editCalendarURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-								<portlet:param name="mvcPath" value="/edit_calendar.jsp" />
-								<portlet:param name="calendarId" value="{calendarId}" />
-							</portlet:renderURL>
-
-							uri: Liferay.CalendarUtil.fillURLParameters(
-								decodeURIComponent('<%= editCalendarURL %>'),
-								{
-									calendarId: activeCalendar.get('calendarId'),
-									calendarResourceId: activeCalendar.get('calendarResourceId')
+											<portlet:namespace />scheduler.load();
+										}
+									);
 								}
-							)
-						}
-					);
+							},
+							destroyOnHide: true,
+							modal: true
+						},
+						refreshWindow: window,
+						title: '<liferay-ui:message key="calendar-settings" />',
+
+						<portlet:renderURL var="editCalendarURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcPath" value="/edit_calendar.jsp" />
+							<portlet:param name="calendarId" value="{calendarId}" />
+						</portlet:renderURL>
+
+						uri: Liferay.CalendarUtil.fillURLParameters(
+							decodeURIComponent('<%= editCalendarURL %>'),
+							{
+								calendarId: activeCalendar.get('calendarId'),
+								calendarResourceId: activeCalendar.get(
+									'calendarResourceId'
+								)
+							}
+						)
+					});
 				},
 				id: 'settings'
 			},
@@ -280,42 +295,42 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 					var activeCalendar = calendarList.activeItem;
 
-					Liferay.Util.openWindow(
-						{
-							dialog: {
-								after: {
-									destroy: function(event) {
-										<portlet:namespace />scheduler.load();
-									}
-								},
-								destroyOnHide: true,
-								modal: true
-							},
-							dialogIframe: {
-								bodyCssClass: 'dialog-with-footer'
-							},
-							refreshWindow: window,
-							title: '<liferay-ui:message key="permissions" />',
-
-							<liferay-security:permissionsURL
-								modelResource="<%= Calendar.class.getName() %>"
-								modelResourceDescription="{modelResourceDescription}"
-								resourceGroupId="{resourceGroupId}"
-								resourcePrimKey="{resourcePrimKey}"
-								var="permissionsURL"
-								windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-							/>
-
-							uri: Liferay.CalendarUtil.fillURLParameters(
-								decodeURIComponent('<%= permissionsURL %>'),
-								{
-									modelResourceDescription: activeCalendar.get('name'),
-									resourceGroupId: activeCalendar.get('groupId'),
-									resourcePrimKey: activeCalendar.get('calendarId')
+					Liferay.Util.openWindow({
+						dialog: {
+							after: {
+								destroy: function(event) {
+									<portlet:namespace />scheduler.load();
 								}
-							)
-						}
-					);
+							},
+							destroyOnHide: true,
+							modal: true
+						},
+						dialogIframe: {
+							bodyCssClass: 'dialog-with-footer'
+						},
+						refreshWindow: window,
+						title: '<liferay-ui:message key="permissions" />',
+
+						<liferay-security:permissionsURL
+							modelResource="<%= Calendar.class.getName() %>"
+							modelResourceDescription="{modelResourceDescription}"
+							resourceGroupId="{resourceGroupId}"
+							resourcePrimKey="{resourcePrimKey}"
+							var="permissionsURL"
+							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+						/>
+
+						uri: Liferay.CalendarUtil.fillURLParameters(
+							decodeURIComponent('<%= permissionsURL %>'),
+							{
+								modelResourceDescription: activeCalendar.get(
+									'name'
+								),
+								resourceGroupId: activeCalendar.get('groupId'),
+								resourcePrimKey: activeCalendar.get('calendarId')
+							}
+						)
+					});
 				},
 				id: 'permissions'
 			},
@@ -328,8 +343,14 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 					var activeCalendar = calendarList.activeItem;
 
-					if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-						var remoteServices = Liferay.component('<portlet:namespace />remoteServices');
+					if (
+						confirm(
+							'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
+						)
+					) {
+						var remoteServices = Liferay.component(
+							'<portlet:namespace />remoteServices'
+						);
 
 						remoteServices.deleteCalendar(
 							activeCalendar.get('calendarId'),
@@ -343,7 +364,10 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 										<portlet:namespace />scheduler.load();
 
-										Liferay.CalendarMessageUtil.showAlert('#<portlet:namespace />alert', '<liferay-ui:message key="the-calendar-was-deleted-successfully" />');
+										Liferay.CalendarMessageUtil.showAlert(
+											'#<portlet:namespace />alert',
+											'<liferay-ui:message key="the-calendar-was-deleted-successfully" />'
+										);
 									}
 								);
 							}
@@ -404,13 +428,16 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 					var hiddenItems = [];
 
-					if (calendarList !== window.<portlet:namespace />otherCalendarList) {
+					if (
+						calendarList !==
+						window.<portlet:namespace />otherCalendarList
+					) {
 						hiddenItems.push('hide');
 					}
 
 					var defaultCalendar = calendar.get('defaultCalendar');
 
-					if ((permissions.DELETE === false) || (defaultCalendar === true)) {
+					if (permissions.DELETE === false || defaultCalendar === true) {
 						hiddenItems.push('delete');
 					}
 
@@ -432,75 +459,71 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 					<portlet:namespace />colorPicker.set('host', instance);
 
-					<portlet:namespace />colorPicker.setAttrs(
-						{
-							color: calendar.get('color'),
-							visible: true
-						}
+					<portlet:namespace />colorPicker.setAttrs({
+						color: calendar.get('color'),
+						visible: true
+					});
+
+					var colorPickerContainer = instance
+						.get('boundingBox')
+						.one('.calendar-portlet-color-picker');
+
+					colorPickerContainer.append(
+						window.<portlet:namespace />colorPicker.get('boundingBox')
 					);
-
-					var colorPickerContainer = instance.get('boundingBox').one('.calendar-portlet-color-picker');
-
-					colorPickerContainer.append(window.<portlet:namespace />colorPicker.get('boundingBox'));
 				}
 			}
 		},
 		width: 225
 	};
 
-	<portlet:namespace />colorPicker = new Liferay.SimpleColorPicker(
-		{
-			on: {
-				colorChange: function(event) {
-					var instance = this;
+	<portlet:namespace />colorPicker = new Liferay.SimpleColorPicker({
+		on: {
+			colorChange: function(event) {
+				var instance = this;
 
-					var simpleMenu = instance.get('host');
+				var simpleMenu = instance.get('host');
 
-					if (simpleMenu) {
-						var calendarList = simpleMenu.get('host');
+				if (simpleMenu) {
+					var calendarList = simpleMenu.get('host');
 
-						calendarList.activeItem.set(
-							'color',
-							event.newVal,
-							{
-								silent: true
-							}
-						);
+					calendarList.activeItem.set('color', event.newVal, {
+						silent: true
+					});
 
-						simpleMenu.set('visible', false);
-					}
+					simpleMenu.set('visible', false);
 				}
-			},
-			visible: false
-		}
-	).render();
+			}
+		},
+		visible: false
+	}).render();
 
 	A.one('#<portlet:namespace />calendarListContainer').delegate(
 		'click',
 		function(event) {
 			var currentTarget = event.currentTarget;
 
-			window.<portlet:namespace />calendarListsMenu.calendarResourceId = currentTarget.getAttribute('data-calendarResourceId');
-
-			window.<portlet:namespace />calendarListsMenu.setAttrs(
-				{
-					alignNode: currentTarget,
-					toggler: currentTarget,
-					visible: !window.<portlet:namespace />calendarListsMenu.get('visible')
-				}
+			window.<portlet:namespace />calendarListsMenu.calendarResourceId = currentTarget.getAttribute(
+				'data-calendarResourceId'
 			);
+
+			window.<portlet:namespace />calendarListsMenu.setAttrs({
+				alignNode: currentTarget,
+				toggler: currentTarget,
+				visible: !window.<portlet:namespace />calendarListsMenu.get(
+					'visible'
+				)
+			});
 		},
 		'.calendar-resource-arrow'
 	);
 
-	window.<portlet:namespace />toggler = new A.TogglerDelegate(
-		{
-			animated: true,
-			container: '#<portlet:namespace />calendarListContainer',
-			content: '.calendar-portlet-calendar-list',
-			header: '.calendar-portlet-list-header'
-		}
-	);
+	window.<portlet:namespace />toggler = new A.TogglerDelegate({
+		animated: true,
+		container: '#<portlet:namespace />calendarListContainer',
+		content: '.calendar-portlet-calendar-list',
+		header: '.calendar-portlet-list-header'
+	});
 
 	<c:if test="<%= themeDisplay.isSignedIn() %>">
 		var addOtherCalendarInput = A.one('#<portlet:namespace />addOtherCalendar');
@@ -520,33 +543,35 @@ String backURL = PortalUtil.getCurrentURL(request);
 		);
 	</c:if>
 
-	A.one('#<portlet:namespace />columnToggler').on(
-		'click',
-		function(event) {
-			var columnTogglerIconId = '<portlet:namespace />columnTogglerIcon';
-			var columnGrid = A.one('#<portlet:namespace />columnGrid');
-			var columnOptions = A.one('#<portlet:namespace />columnOptions');
-			var columnTogglerIcon = A.one('#' + columnTogglerIconId);
+	A.one('#<portlet:namespace />columnToggler').on('click', function(event) {
+		var columnTogglerIconId = '<portlet:namespace />columnTogglerIcon';
+		var columnGrid = A.one('#<portlet:namespace />columnGrid');
+		var columnOptions = A.one('#<portlet:namespace />columnOptions');
+		var columnTogglerIcon = A.one('#' + columnTogglerIconId);
 
-			Liferay.Util.Session.set('com.liferay.calendar.web_columnOptionsVisible', columnOptions.hasClass('hide'));
+		Liferay.Util.Session.set(
+			'com.liferay.calendar.web_columnOptionsVisible',
+			columnOptions.hasClass('hide')
+		);
 
-			columnGrid.toggleClass('col-md-9').toggleClass('col-md-12');
+		columnGrid.toggleClass('col-md-9').toggleClass('col-md-12');
 
-			columnOptions.toggleClass('hide');
+		columnOptions.toggleClass('hide');
 
-			var newIcon = A.Node.create(
-				Liferay.Util.getLexiconIconTpl(
-					columnTogglerIcon._node.classList.contains('lexicon-icon-caret-left') ?
-					'caret-right' :
-					'caret-left'
+		var newIcon = A.Node.create(
+			Liferay.Util.getLexiconIconTpl(
+				columnTogglerIcon._node.classList.contains(
+					'lexicon-icon-caret-left'
 				)
-			);
+					? 'caret-right'
+					: 'caret-left'
+			)
+		);
 
-			newIcon.attr('id', columnTogglerIconId);
+		newIcon.attr('id', columnTogglerIconId);
 
-			columnTogglerIcon.replace(newIcon);
-		}
-	);
+		columnTogglerIcon.replace(newIcon);
+	});
 
 	window.<portlet:namespace />refreshMiniCalendarSelectedDates = function() {
 		<portlet:namespace />miniCalendar._clearSelection();
@@ -560,8 +585,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 		if (viewName == 'month') {
 			total = A.Date.daysInMonth(viewDate);
-		}
-		else if (viewName == 'week') {
+		} else if (viewName == 'week') {
 			total = 7;
 		}
 
@@ -571,7 +595,10 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 		var todayDate = <portlet:namespace />scheduler.get('todayDate');
 
-		if ((selectedDates.length > 0) && DateMath.between(todayDate, selectedDates[0], selectedDates[total - 1])) {
+		if (
+			selectedDates.length > 0 &&
+			DateMath.between(todayDate, selectedDates[0], selectedDates[total - 1])
+		) {
 			viewDate = todayDate;
 		}
 
@@ -581,9 +608,23 @@ String backURL = PortalUtil.getCurrentURL(request);
 	var DateMath = A.DataType.DateMath;
 
 	window.<portlet:namespace />refreshVisibleCalendarRenderingRules = function() {
-		var miniCalendarStartDate = DateMath.subtract(DateMath.toMidnight(window.<portlet:namespace />miniCalendar.get('date')), DateMath.WEEK, 1);
+		var miniCalendarStartDate = DateMath.subtract(
+			DateMath.toMidnight(
+				window.<portlet:namespace />miniCalendar.get('date')
+			),
+			DateMath.WEEK,
+			1
+		);
 
-		var miniCalendarEndDate = DateMath.add(DateMath.add(window.<portlet:namespace />miniCalendar.get('date'), DateMath.MONTH, 1), DateMath.WEEK, 1);
+		var miniCalendarEndDate = DateMath.add(
+			DateMath.add(
+				window.<portlet:namespace />miniCalendar.get('date'),
+				DateMath.MONTH,
+				1
+			),
+			DateMath.WEEK,
+			1
+		);
 
 		miniCalendarEndDate.setHours(23, 59, 59, 999);
 
@@ -595,49 +636,49 @@ String backURL = PortalUtil.getCurrentURL(request);
 			function(rulesDefinition) {
 				var selectedDates = <portlet:namespace />miniCalendar._getSelectedDatesList();
 
-				window.<portlet:namespace />miniCalendar.set(
-					'customRenderer',
-					{
-						filterFunction: function(date, node, rules) {
-							node.addClass('lfr-busy-day');
+				window.<portlet:namespace />miniCalendar.set('customRenderer', {
+					filterFunction: function(date, node, rules) {
+						node.addClass('lfr-busy-day');
 
-							DateMath.toMidnight(date);
+						DateMath.toMidnight(date);
 
-							var selected = (selectedDates.length > 0) && A.Date.isInRange(date, selectedDates[0], selectedDates[selectedDates.length - 1]);
+						var selected =
+							selectedDates.length > 0 &&
+							A.Date.isInRange(
+								date,
+								selectedDates[0],
+								selectedDates[selectedDates.length - 1]
+							);
 
-							if (A.DataType.DateMath.isToday(date)) {
-								node.addClass('lfr-current-day');
-							}
+						if (A.DataType.DateMath.isToday(date)) {
+							node.addClass('lfr-current-day');
+						}
 
-							node.toggleClass('yui3-calendar-day-selected', selected);
-						},
-						rules: rulesDefinition
-					}
-				);
+						node.toggleClass('yui3-calendar-day-selected', selected);
+					},
+					rules: rulesDefinition
+				});
 
 				<portlet:namespace />miniCalendar.selectDates(selectedDates);
 			}
 		);
 	};
 
-	window.<portlet:namespace />miniCalendar = new A.Calendar(
-		{
-			after: {
-				dateChange: <portlet:namespace />refreshVisibleCalendarRenderingRules,
-				dateClick: function(event) {
-					<portlet:namespace />scheduler.setAttrs(
-						{
-							date: event.date
-						}
-					);
-				}
-			},
-			date: new Date(<%= String.valueOf(date) %>),
-			headerRenderer: '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "b-y")) %>',
-			locale: '<%= themeDisplay.getLocale() %>',
-			'strings.first_weekday': <%= weekStartsOn %>
-		}
-	).render('#<portlet:namespace />miniCalendarContainer');
+	window.<portlet:namespace />miniCalendar = new A.Calendar({
+		after: {
+			dateChange: <portlet:namespace />refreshVisibleCalendarRenderingRules,
+			dateClick: function(event) {
+				<portlet:namespace />scheduler.setAttrs({
+					date: event.date
+				});
+			}
+		},
+		date: new Date(<%= String.valueOf(date) %>),
+		headerRenderer:
+			'<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "b-y")) %>',
+		locale: '<%= themeDisplay.getLocale() %>',
+		'strings.first_weekday': <%= weekStartsOn %>
+	}).render('#<portlet:namespace />miniCalendarContainer');
 
 	<portlet:namespace />scheduler.after(
 		['*:add', '*:change', '*:load', '*:remove', '*:reset'],

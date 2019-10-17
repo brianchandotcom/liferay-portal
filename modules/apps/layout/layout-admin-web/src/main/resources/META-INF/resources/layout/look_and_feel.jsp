@@ -102,6 +102,14 @@ if (selLayout.getMasterLayoutPageTemplateEntryId() > 0) {
 </div>
 
 <aui:script>
-	Liferay.Util.toggleRadio('<portlet:namespace />regularInheritLookAndFeel', '<portlet:namespace />inheritThemeOptions', '<portlet:namespace />themeOptions');
-	Liferay.Util.toggleRadio('<portlet:namespace />regularUniqueLookAndFeel', '<portlet:namespace />themeOptions', '<portlet:namespace />inheritThemeOptions');
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />regularInheritLookAndFeel',
+		'<portlet:namespace />inheritThemeOptions',
+		'<portlet:namespace />themeOptions'
+	);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />regularUniqueLookAndFeel',
+		'<portlet:namespace />themeOptions',
+		'<portlet:namespace />inheritThemeOptions'
+	);
 </aui:script>

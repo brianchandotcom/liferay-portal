@@ -24,13 +24,19 @@
 	<aui:script require="metal-dom/src/dom">
 		let dom = metalDomSrcDom.default;
 
-		var portletWrapper = document.getElementById('p_p_id_<%= portletDisplay.getId() %>_');
+		var portletWrapper = document.getElementById(
+			'p_p_id_<%= portletDisplay.getId() %>_'
+		);
 
 		var portletBoundary = portletWrapper.querySelectorAll('.portlet-boundary');
-		var portletBorderlessContainer = portletWrapper.querySelectorAll('.portlet-borderless-container');
+		var portletBorderlessContainer = portletWrapper.querySelectorAll(
+			'.portlet-borderless-container'
+		);
 
 		if (!portletBoundary.length && !portletBorderlessContainer.length) {
-			var nestedPortletsMsg = portletWrapper.querySelector('#<portlet:namespace />nested-portlets-msg');
+			var nestedPortletsMsg = portletWrapper.querySelector(
+				'#<portlet:namespace />nested-portlets-msg'
+			);
 
 			if (nestedPortletsMsg) {
 				dom.addClasses(nestedPortletsMsg, 'show');

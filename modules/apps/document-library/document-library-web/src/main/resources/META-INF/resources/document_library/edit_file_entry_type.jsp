@@ -168,7 +168,8 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(com.liferay.dynamic.data.mapping.model.DDMStructure.class.getName(), PortletProvider.Action.VIEW), PortletRequest.RENDER_PHASE) %>',
+				basePortletURL:
+					'<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(com.liferay.dynamic.data.mapping.model.DDMStructure.class.getName(), PortletProvider.Action.VIEW), PortletRequest.RENDER_PHASE) %>',
 				classPK: '<%= ddmStructureId %>',
 				dialog: {
 					destroyOnHide: true
@@ -182,14 +183,22 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 				title: '<%= UnicodeLanguageUtil.get(request, "metadata-sets") %>'
 			},
 			function(event) {
-				var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
+				var searchContainer = Liferay.SearchContainer.get(
+					'<portlet:namespace />ddmStructuresSearchContainer'
+				);
 
 				var data = searchContainer.getData(false);
 
 				if (!data.includes(event.ddmstructureid)) {
-					var ddmStructureLink = '<a class="modify-link" data-rowId="' + event.ddmstructureid + '" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
+					var ddmStructureLink =
+						'<a class="modify-link" data-rowId="' +
+						event.ddmstructureid +
+						'" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
 
-					searchContainer.addRow([event.name, ddmStructureLink], event.ddmstructureid);
+					searchContainer.addRow(
+						[event.name, ddmStructureLink],
+						event.ddmstructureid
+					);
 
 					searchContainer.updateDataStore();
 				}
@@ -210,7 +219,9 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 </aui:script>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />ddmStructuresSearchContainer'
+	);
 
 	searchContainer.get('contentBox').delegate(
 		'click',

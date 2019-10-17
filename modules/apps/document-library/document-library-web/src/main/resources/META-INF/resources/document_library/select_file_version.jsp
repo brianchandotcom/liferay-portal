@@ -94,5 +94,8 @@ if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentRe
 </div>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFileVersionFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />selectFileVersionFm',
+		'<%= HtmlUtil.escapeJS(eventName) %>'
+	);
 </aui:script>

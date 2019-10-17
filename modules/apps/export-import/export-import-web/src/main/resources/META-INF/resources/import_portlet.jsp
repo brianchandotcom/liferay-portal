@@ -107,15 +107,15 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, Export
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
 	</liferay-portlet:resourceURL>
 
-	new Liferay.ExportImport(
-		{
-			form: document.<portlet:namespace />fm1,
-			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
-			locale: '<%= locale.toLanguageTag() %>',
-			namespace: '<portlet:namespace />',
-			processesNode: '#importProcesses',
-			processesResourceURL: '<%= HtmlUtil.escapeJS(importProcessesURL.toString()) %>',
-			timeZoneOffset: <%= timeZoneOffset %>
-		}
-	);
+	new Liferay.ExportImport({
+		form: document.<portlet:namespace />fm1,
+		incompleteProcessMessageNode:
+			'#<portlet:namespace />incompleteProcessMessage',
+		locale: '<%= locale.toLanguageTag() %>',
+		namespace: '<portlet:namespace />',
+		processesNode: '#importProcesses',
+		processesResourceURL:
+			'<%= HtmlUtil.escapeJS(importProcessesURL.toString()) %>',
+		timeZoneOffset: <%= timeZoneOffset %>
+	});
 </aui:script>

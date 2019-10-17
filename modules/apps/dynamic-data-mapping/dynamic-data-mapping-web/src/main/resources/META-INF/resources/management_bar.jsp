@@ -35,43 +35,46 @@
 
 <aui:script sandbox="<%= true %>">
 	var deleteStructures = function() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			var searchContainer = document.getElementById('<portlet:namespace />entriesContainer');
+		if (
+			confirm(
+				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
+			)
+		) {
+			var searchContainer = document.getElementById(
+				'<portlet:namespace />entriesContainer'
+			);
 
 			if (searchContainer) {
 				<portlet:actionURL name="deleteStructure" var="deleteStructuresURL">
 					<portlet:param name="mvcPath" value="/view.jsp" />
 				</portlet:actionURL>
 
-				Liferay.Util.postForm(
-					document.<portlet:namespace />fm,
-					{
-						data: {
-							deleteStructureIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
-						},
-						url: '<%= deleteStructuresURL %>'
-					}
-				);
+				Liferay.Util.postForm(document.<portlet:namespace />fm, {
+					data: {
+						deleteStructureIds: Liferay.Util.listCheckedExcept(
+							searchContainer,
+							'<portlet:namespace />allRowIds'
+						)
+					},
+					url: '<%= deleteStructuresURL %>'
+				});
 			}
 		}
 	};
 
 	var ACTIONS = {
-		'deleteStructures': deleteStructures
+		deleteStructures: deleteStructures
 	};
 
-	Liferay.componentReady('ddmStructureManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
+	Liferay.componentReady('ddmStructureManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('actionItemClicked', function(event) {
+			var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action]();
+			}
+		});
+	});
 </aui:script>

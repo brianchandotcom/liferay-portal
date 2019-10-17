@@ -236,10 +236,18 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 	var MAP_DDM_STRUCTURES = {};
 
-	var assetMultipleSelector = document.getElementById('<portlet:namespace />currentClassNameIds');
-	var assetSelector = document.getElementById('<portlet:namespace />anyAssetType');
-	var orderByColumn1 = document.getElementById('<portlet:namespace />orderByColumn1');
-	var orderByColumn2 = document.getElementById('<portlet:namespace />orderByColumn2');
+	var assetMultipleSelector = document.getElementById(
+		'<portlet:namespace />currentClassNameIds'
+	);
+	var assetSelector = document.getElementById(
+		'<portlet:namespace />anyAssetType'
+	);
+	var orderByColumn1 = document.getElementById(
+		'<portlet:namespace />orderByColumn1'
+	);
+	var orderByColumn2 = document.getElementById(
+		'<portlet:namespace />orderByColumn2'
+	);
 	var orderingPanel = document.getElementById('<portlet:namespace />ordering');
 	var sourcePanel = document.querySelector('.source-container');
 
@@ -248,20 +256,29 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		String className = editAssetListDisplayContext.getClassName(curRendererFactory);
 	%>
 
-		Util.toggleSelectBox('<portlet:namespace />anyClassType<%= className %>', 'false', '<portlet:namespace /><%= className %>Boxes');
+		Util.toggleSelectBox(
+			'<portlet:namespace />anyClassType<%= className %>',
+			'false',
+			'<portlet:namespace /><%= className %>Boxes'
+		);
 
-		var <%= className %>Options = document.getElementById('<portlet:namespace /><%= className %>Options');
+		var <%= className %>Options = document.getElementById(
+			'<portlet:namespace /><%= className %>Options'
+		);
 
 		function <portlet:namespace />toggle<%= className %>(removeOrderBySubtype) {
 			var assetOptions = assetMultipleSelector.options;
 
-			var showOptions = ((assetSelector.value == '<%= curRendererFactory.getClassNameId() %>') ||
-				((assetSelector.value == 'false') && (assetOptions.length == 1) && (assetOptions[0].value == '<%= curRendererFactory.getClassNameId() %>')));
+			var showOptions =
+				assetSelector.value == '<%= curRendererFactory.getClassNameId() %>' ||
+				(assetSelector.value == 'false' &&
+					assetOptions.length == 1 &&
+					assetOptions[0].value ==
+						'<%= curRendererFactory.getClassNameId() %>');
 
 			if (showOptions) {
 				<%= className %>Options.classList.remove('hide');
-			}
-			else {
+			} else {
 				<%= className %>Options.classList.add('hide');
 			}
 
@@ -297,7 +314,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		%>
 
 			var optgroupClose = '</optgroup>';
-			var optgroupOpen = '<optgroup class="order-by-subtype" label="<%= HtmlUtil.escape(classType.getName()) %>">';
+			var optgroupOpen =
+				'<optgroup class="order-by-subtype" label="<%= HtmlUtil.escape(classType.getName()) %>">';
 
 			var columnBuffer1 = [optgroupOpen];
 			var columnBuffer2 = [optgroupOpen];
@@ -320,8 +338,12 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 				}
 			%>
 
-				columnBuffer1.push('<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= HtmlUtil.escapeJS(classTypeField.getLabel()) %></option>');
-				columnBuffer2.push('<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= HtmlUtil.escapeJS(classTypeField.getLabel()) %></option>');
+				columnBuffer1.push(
+					'<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= HtmlUtil.escapeJS(classTypeField.getLabel()) %></option>'
+				);
+				columnBuffer2.push(
+					'<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= HtmlUtil.escapeJS(classTypeField.getLabel()) %></option>'
+				);
 
 			<%
 			}
@@ -330,89 +352,108 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 			columnBuffer1.push(optgroupClose);
 			columnBuffer2.push(optgroupClose);
 
-			MAP_DDM_STRUCTURES['<%= className %>_<%= classType.getClassTypeId() %>_optTextOrderByColumn1'] = columnBuffer1.join('');
-			MAP_DDM_STRUCTURES['<%= className %>_<%= classType.getClassTypeId() %>_optTextOrderByColumn2'] = columnBuffer2.join('');
+			MAP_DDM_STRUCTURES[
+				'<%= className %>_<%= classType.getClassTypeId() %>_optTextOrderByColumn1'
+			] = columnBuffer1.join('');
+			MAP_DDM_STRUCTURES[
+				'<%= className %>_<%= classType.getClassTypeId() %>_optTextOrderByColumn2'
+			] = columnBuffer2.join('');
 
 		<%
 		}
 		%>
 
-		var <%= className %>SubtypeSelector = document.getElementById('<portlet:namespace />anyClassType<%= className %>');
+		var <%= className %>SubtypeSelector = document.getElementById(
+			'<portlet:namespace />anyClassType<%= className %>'
+		);
 
 		<c:if test="<%= editAssetListDisplayContext.isShowSubtypeFieldsFilter() %>">
-			function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
+			function <%= className %>toggleSubclassesFields(
+				hideSubtypeFilterEnableWrapper
+			) {
 				var selectedSubtype = <%= className %>SubtypeSelector.value;
 
-				var structureOptions = document.getElementById('<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
+				var structureOptions = document.getElementById(
+					'<portlet:namespace />' + selectedSubtype + '_<%= className %>Options'
+				);
 
 				if (structureOptions) {
 					structureOptions.classList.remove('hide');
 				}
 
-				var subtypeFieldsWrappers = document.querySelectorAll('#<portlet:namespace /><%= className %>subtypeFieldsWrapper, #<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
+				var subtypeFieldsWrappers = document.querySelectorAll(
+					'#<portlet:namespace /><%= className %>subtypeFieldsWrapper, #<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper'
+				);
 
-				Array.prototype.forEach.call(
-					subtypeFieldsWrappers,
-					function(subtypeFieldsWrapper) {
-						if ((selectedSubtype != 'false') && (selectedSubtype != 'true')) {
-							Array.prototype.forEach.call(
-								orderingPanel.querySelectorAll('.order-by-subtype'),
-								function(option) {
-									dom.exitDocument(option);
-								}
-							);
-
-							var optTextOrderByColumn1 = MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn1'];
-
-							if (optTextOrderByColumn1) {
-								dom.append(orderByColumn1, optTextOrderByColumn1);
+				Array.prototype.forEach.call(subtypeFieldsWrappers, function(
+					subtypeFieldsWrapper
+				) {
+					if (selectedSubtype != 'false' && selectedSubtype != 'true') {
+						Array.prototype.forEach.call(
+							orderingPanel.querySelectorAll('.order-by-subtype'),
+							function(option) {
+								dom.exitDocument(option);
 							}
+						);
 
-							var optTextOrderByColumn2 = MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn2'];
+						var optTextOrderByColumn1 =
+							MAP_DDM_STRUCTURES[
+								'<%= className %>_' +
+									selectedSubtype +
+									'_optTextOrderByColumn1'
+							];
 
-							if (optTextOrderByColumn2) {
-								dom.append(orderByColumn2, optTextOrderByColumn2);
-							}
-
-							if (structureOptions) {
-								subtypeFieldsWrapper.classList.remove('hide');
-							}
-							else if (hideSubtypeFilterEnableWrapper) {
-								subtypeFieldsWrapper.classList.add('hide');
-							}
+						if (optTextOrderByColumn1) {
+							dom.append(orderByColumn1, optTextOrderByColumn1);
 						}
-						else if (hideSubtypeFilterEnableWrapper) {
+
+						var optTextOrderByColumn2 =
+							MAP_DDM_STRUCTURES[
+								'<%= className %>_' +
+									selectedSubtype +
+									'_optTextOrderByColumn2'
+							];
+
+						if (optTextOrderByColumn2) {
+							dom.append(orderByColumn2, optTextOrderByColumn2);
+						}
+
+						if (structureOptions) {
+							subtypeFieldsWrapper.classList.remove('hide');
+						} else if (hideSubtypeFilterEnableWrapper) {
 							subtypeFieldsWrapper.classList.add('hide');
 						}
+					} else if (hideSubtypeFilterEnableWrapper) {
+						subtypeFieldsWrapper.classList.add('hide');
 					}
-				);
+				});
 			}
 
 			<%= className %>toggleSubclassesFields(false);
 
-			<%= className %>SubtypeSelector.addEventListener(
-				'change',
-				function(event) {
-					setDDMFields('<%= className %>', '', '', '', '');
+			<%= className %>SubtypeSelector.addEventListener('change', function(event) {
+				setDDMFields('<%= className %>', '', '', '', '');
 
-					var subtypeFieldsFilterEnabledCheckbox = document.getElementById('<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
+				var subtypeFieldsFilterEnabledCheckbox = document.getElementById(
+					'<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>'
+				);
 
-					if (subtypeFieldsFilterEnabledCheckbox) {
-						subtypeFieldsFilterEnabledCheckbox.checked = false;
-					}
-
-					var assetSubtypeFields = sourcePanel.querySelectorAll('.asset-subtypefields');
-
-					Array.prototype.forEach.call(
-						assetSubtypeFields,
-						function(assetSubtypeField) {
-							assetSubtypeField.classList.add('hide');
-						}
-					);
-
-					<%= className %>toggleSubclassesFields(true);
+				if (subtypeFieldsFilterEnabledCheckbox) {
+					subtypeFieldsFilterEnabledCheckbox.checked = false;
 				}
-			);
+
+				var assetSubtypeFields = sourcePanel.querySelectorAll(
+					'.asset-subtypefields'
+				);
+
+				Array.prototype.forEach.call(assetSubtypeFields, function(
+					assetSubtypeField
+				) {
+					assetSubtypeField.classList.add('hide');
+				});
+
+				<%= className %>toggleSubclassesFields(true);
+			});
 		</c:if>
 
 	<%
@@ -436,19 +477,24 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 	<portlet:namespace />toggleSubclasses(false);
 
-	var ddmStructureFieldNameInput = document.getElementById('<portlet:namespace />ddmStructureFieldName');
-	var ddmStructureFieldValueInput = document.getElementById('<portlet:namespace />ddmStructureFieldValue');
+	var ddmStructureFieldNameInput = document.getElementById(
+		'<portlet:namespace />ddmStructureFieldName'
+	);
+	var ddmStructureFieldValueInput = document.getElementById(
+		'<portlet:namespace />ddmStructureFieldValue'
+	);
 
-	if (assetSelector && ddmStructureFieldNameInput && ddmStructureFieldValueInput) {
-		assetSelector.addEventListener(
-			'change',
-			function(event) {
-				ddmStructureFieldNameInput.value = '';
-				ddmStructureFieldValueInput.value = '';
+	if (
+		assetSelector &&
+		ddmStructureFieldNameInput &&
+		ddmStructureFieldValueInput
+	) {
+		assetSelector.addEventListener('change', function(event) {
+			ddmStructureFieldNameInput.value = '';
+			ddmStructureFieldValueInput.value = '';
 
-				<portlet:namespace />toggleSubclasses(true);
-			}
-		);
+			<portlet:namespace />toggleSubclasses(true);
+		});
 	}
 
 	dom.delegate(
@@ -456,76 +502,110 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		'click',
 		'.asset-subtypefields-wrapper-enable label',
 		function(event) {
-			var subtypeFieldsFilterEnabledInput = event.delegateTarget.querySelector('input');
+			var subtypeFieldsFilterEnabledInput = event.delegateTarget.querySelector(
+				'input'
+			);
 
-			var assetSubtypefieldsPopupButtons = document.querySelectorAll('.asset-subtypefields-popup .btn');
+			var assetSubtypefieldsPopupButtons = document.querySelectorAll(
+				'.asset-subtypefields-popup .btn'
+			);
 
 			if (subtypeFieldsFilterEnabledInput) {
 				Array.prototype.forEach.call(
 					assetSubtypefieldsPopupButtons,
 					function(assetSubtypefieldsPopupButton) {
-						Util.toggleDisabled(assetSubtypefieldsPopupButton, !subtypeFieldsFilterEnabledInput.checked);
+						Util.toggleDisabled(
+							assetSubtypefieldsPopupButton,
+							!subtypeFieldsFilterEnabledInput.checked
+						);
 					}
 				);
 			}
 		}
 	);
 
-	Liferay.after(
-		'inputmoveboxes:moveItem',
-		function(event) {
-			if ((event.fromBox.attr('id') == '<portlet:namespace />currentClassNameIds') || (event.toBox.attr('id') == '<portlet:namespace />currentClassNameIds')) {
-				<portlet:namespace />toggleSubclasses();
-			}
+	Liferay.after('inputmoveboxes:moveItem', function(event) {
+		if (
+			event.fromBox.attr('id') ==
+				'<portlet:namespace />currentClassNameIds' ||
+			event.toBox.attr('id') == '<portlet:namespace />currentClassNameIds'
+		) {
+			<portlet:namespace />toggleSubclasses();
 		}
+	});
+
+	var ddmStructureDisplayFieldValueInput = document.getElementById(
+		'<portlet:namespace />ddmStructureDisplayFieldValue'
 	);
 
-	var ddmStructureDisplayFieldValueInput = document.getElementById('<portlet:namespace />ddmStructureDisplayFieldValue');
+	dom.delegate(sourcePanel, 'click', '.asset-subtypefields-popup', function(
+		event
+	) {
+		var delegateTarget = event.delegateTarget;
 
-	dom.delegate(
-		sourcePanel,
-		'click',
-		'.asset-subtypefields-popup',
-		function(event) {
-			var delegateTarget = event.delegateTarget;
+		var btn = delegateTarget.querySelector('.btn');
 
-			var btn = delegateTarget.querySelector('.btn');
+		var uri = btn.dataset.href;
 
-			var uri = btn.dataset.href;
+		uri = Util.addParams(
+			'<portlet:namespace />ddmStructureDisplayFieldValue=' +
+				encodeURIComponent(ddmStructureDisplayFieldValueInput.value),
+			uri
+		);
+		uri = Util.addParams(
+			'<portlet:namespace />ddmStructureFieldName=' +
+				encodeURIComponent(ddmStructureFieldNameInput.value),
+			uri
+		);
+		uri = Util.addParams(
+			'<portlet:namespace />ddmStructureFieldValue=' +
+				encodeURIComponent(ddmStructureFieldValueInput.value),
+			uri
+		);
 
-			uri = Util.addParams('<portlet:namespace />ddmStructureDisplayFieldValue=' + encodeURIComponent(ddmStructureDisplayFieldValueInput.value), uri);
-			uri = Util.addParams('<portlet:namespace />ddmStructureFieldName=' + encodeURIComponent(ddmStructureFieldNameInput.value), uri);
-			uri = Util.addParams('<portlet:namespace />ddmStructureFieldValue=' + encodeURIComponent(ddmStructureFieldValueInput.value), uri);
-
-			Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true
-					},
-					eventName: '<portlet:namespace />selectDDMStructureField',
-					id: '<portlet:namespace />selectDDMStructure' + delegateTarget.id,
-					title: '<liferay-ui:message arguments="structure-field" key="select-x" />',
-					uri: uri
+		Util.selectEntity(
+			{
+				dialog: {
+					constrain: true,
+					modal: true
 				},
-				function(event) {
-					setDDMFields(event.className, event.name, event.value, event.displayValue, event.label + ': ' + event.displayValue);
-				}
-			);
-		}
-	);
+				eventName: '<portlet:namespace />selectDDMStructureField',
+				id: '<portlet:namespace />selectDDMStructure' + delegateTarget.id,
+				title:
+					'<liferay-ui:message arguments="structure-field" key="select-x" />',
+				uri: uri
+			},
+			function(event) {
+				setDDMFields(
+					event.className,
+					event.name,
+					event.value,
+					event.displayValue,
+					event.label + ': ' + event.displayValue
+				);
+			}
+		);
+	});
 
 	function setDDMFields(className, name, value, displayValue, message) {
 		ddmStructureFieldNameInput.value = name;
 		ddmStructureFieldValueInput.value = value;
 		ddmStructureDisplayFieldValueInput.value = displayValue;
 
-		var ddmStructureFieldMessageContainer = document.getElementById('<portlet:namespace />' + className + 'ddmStructureFieldMessage');
+		var ddmStructureFieldMessageContainer = document.getElementById(
+			'<portlet:namespace />' + className + 'ddmStructureFieldMessage'
+		);
 
 		if (ddmStructureFieldMessageContainer) {
-			ddmStructureFieldMessageContainer.innerHTML = Liferay.Util.escape(message);
+			ddmStructureFieldMessageContainer.innerHTML = Liferay.Util.escape(
+				message
+			);
 		}
 	}
 
-	Util.toggleSelectBox('<portlet:namespace />anyAssetType', 'false', '<portlet:namespace />classNamesBoxes');
+	Util.toggleSelectBox(
+		'<portlet:namespace />anyAssetType',
+		'false',
+		'<portlet:namespace />classNamesBoxes'
+	);
 </aui:script>

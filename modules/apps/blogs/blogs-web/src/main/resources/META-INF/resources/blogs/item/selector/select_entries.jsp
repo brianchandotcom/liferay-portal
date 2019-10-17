@@ -163,11 +163,20 @@ BlogEntriesItemSelectorDisplayContext blogEntriesItemSelectorDisplayContext = (B
 		function(event) {
 			<c:choose>
 				<c:when test='<%= Objects.equals(blogEntriesItemSelectorDisplayContext.getDisplayStyle(), "icon") %>'>
-					dom.removeClasses(document.querySelectorAll('.form-check-card.active'), 'active');
-					dom.addClasses(dom.closest(event.delegateTarget, '.form-check-card'), 'active');
+					dom.removeClasses(
+						document.querySelectorAll('.form-check-card.active'),
+						'active'
+					);
+					dom.addClasses(
+						dom.closest(event.delegateTarget, '.form-check-card'),
+						'active'
+					);
 				</c:when>
 				<c:otherwise>
-					dom.removeClasses(document.querySelectorAll('.entries.active'), 'active');
+					dom.removeClasses(
+						document.querySelectorAll('.entries.active'),
+						'active'
+					);
 					dom.addClasses(dom.closest(event.delegateTarget, '.entries'), 'active');
 				</c:otherwise>
 			</c:choose>
@@ -176,7 +185,8 @@ BlogEntriesItemSelectorDisplayContext blogEntriesItemSelectorDisplayContext = (B
 				'<%= blogEntriesItemSelectorDisplayContext.getItemSelectedEventName() %>',
 				{
 					data: {
-						returnType: '<%= InfoItemItemSelectorReturnType.class.getName() %>',
+						returnType:
+							'<%= InfoItemItemSelectorReturnType.class.getName() %>',
 						value: event.delegateTarget.dataset.value
 					}
 				}
@@ -184,12 +194,9 @@ BlogEntriesItemSelectorDisplayContext blogEntriesItemSelectorDisplayContext = (B
 		}
 	);
 
-	Liferay.on(
-		'destroyPortlet',
-		function removeListener() {
-			selectEntryHandler.removeListener();
+	Liferay.on('destroyPortlet', function removeListener() {
+		selectEntryHandler.removeListener();
 
-			Liferay.detach('destroyPortlet', removeListener);
-		}
-	);
+		Liferay.detach('destroyPortlet', removeListener);
+	});
 </aui:script>

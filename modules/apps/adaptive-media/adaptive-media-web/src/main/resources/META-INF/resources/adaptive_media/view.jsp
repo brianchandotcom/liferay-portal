@@ -222,7 +222,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 <aui:script>
 	function <portlet:namespace />adaptRemaining(uuid, backgroundTaskUrl) {
-		var component = Liferay.component('<portlet:namespace />AdaptRemaining' + uuid);
+		var component = Liferay.component(
+			'<portlet:namespace />AdaptRemaining' + uuid
+		);
 
 		component.startProgress(backgroundTaskUrl);
 	}

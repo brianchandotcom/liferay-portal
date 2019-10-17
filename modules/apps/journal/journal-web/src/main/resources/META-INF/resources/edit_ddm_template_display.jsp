@@ -129,49 +129,49 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 	var richEditor;
 
 	<c:if test="<%= journalEditDDMTemplateDisplayContext.isAutocompleteEnabled() %>">
-		var paletteContainer = panelScriptContainer.one('#<portlet:namespace />templatePaletteContainer');
-		var paletteDataContainer = panelScriptContainer.one('#<portlet:namespace />paletteDataContainer');
+		var paletteContainer = panelScriptContainer.one(
+			'#<portlet:namespace />templatePaletteContainer'
+		);
+		var paletteDataContainer = panelScriptContainer.one(
+			'#<portlet:namespace />paletteDataContainer'
+		);
 
 		function createLiveSearch() {
-			var PaletteSearch = A.Component.create(
-				{
-					AUGMENTS: [A.AutoCompleteBase],
+			var PaletteSearch = A.Component.create({
+				AUGMENTS: [A.AutoCompleteBase],
 
-					EXTENDS: A.Base,
+				EXTENDS: A.Base,
 
-					NAME: 'searchpalette',
+				NAME: 'searchpalette',
 
-					prototype: {
-						initializer: function() {
-							var instance = this;
+				prototype: {
+					initializer: function() {
+						var instance = this;
 
-							instance._bindUIACBase();
-							instance._syncUIACBase();
-						}
+						instance._bindUIACBase();
+						instance._syncUIACBase();
 					}
 				}
-			);
+			});
 
 			var getItems = function() {
 				var results = [];
 
-				paletteItems.each(
-					function(item, index) {
-						results.push(
-							{
-								data: item.text().trim(),
-								node: item.ancestor()
-							}
-						);
-					}
-				);
+				paletteItems.each(function(item, index) {
+					results.push({
+						data: item.text().trim(),
+						node: item.ancestor()
+					});
+				});
 
 				return results;
 			};
 
 			var getNoResultsNode = function() {
 				if (!noResultsNode) {
-					noResultsNode = A.Node.create('<div class="alert"><%= UnicodeLanguageUtil.get(request, "there-are-no-results") %></div>');
+					noResultsNode = A.Node.create(
+						'<div class="alert"><%= UnicodeLanguageUtil.get(request, "there-are-no-results") %></div>'
+					);
 				}
 
 				return noResultsNode;
@@ -182,56 +182,44 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 
 			var noResultsNode;
 
-			var paletteSearch = new PaletteSearch(
-				{
-					inputNode: '#<portlet:namespace />paletteSearch',
-					minQueryLength: 0,
-					nodes: '.palette-item-container',
-					resultFilters: 'phraseMatch',
-					resultTextLocator: 'data',
-					source: getItems()
-				}
-			);
+			var paletteSearch = new PaletteSearch({
+				inputNode: '#<portlet:namespace />paletteSearch',
+				minQueryLength: 0,
+				nodes: '.palette-item-container',
+				resultFilters: 'phraseMatch',
+				resultTextLocator: 'data',
+				source: getItems()
+			});
 
-			paletteSearch.on(
-				'results',
-				function(event) {
-					paletteItems.each(
-						function(item, index) {
-							item.ancestor().addClass('hide');
-						}
-					);
+			paletteSearch.on('results', function(event) {
+				paletteItems.each(function(item, index) {
+					item.ancestor().addClass('hide');
+				});
 
-					event.results.forEach(
-						function(item, index) {
-							item.raw.node.removeClass('hide');
-						}
-					);
+				event.results.forEach(function(item, index) {
+					item.raw.node.removeClass('hide');
+				});
 
-					var foundVisibleSection;
+				var foundVisibleSection;
 
-					paletteSectionsNode.each(
-						function(item, index) {
-							var visibleItem = item.one('.palette-item-container:not(.hide)');
+				paletteSectionsNode.each(function(item, index) {
+					var visibleItem = item.one('.palette-item-container:not(.hide)');
 
-							if (visibleItem) {
-								foundVisibleSection = true;
-							}
-
-							item.toggleClass('hide', !visibleItem);
-						}
-					);
-
-					var noResultsNode = getNoResultsNode();
-
-					if (foundVisibleSection) {
-						noResultsNode.remove();
+					if (visibleItem) {
+						foundVisibleSection = true;
 					}
-					else {
-						paletteDataContainer.appendChild(noResultsNode);
-					}
+
+					item.toggleClass('hide', !visibleItem);
+				});
+
+				var noResultsNode = getNoResultsNode();
+
+				if (foundVisibleSection) {
+					noResultsNode.remove();
+				} else {
+					paletteDataContainer.appendChild(noResultsNode);
 				}
-			);
+			});
 		}
 
 		function onPaletteItemChosen(event) {
@@ -250,18 +238,15 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 			var cursorPos;
 			var processed;
 
-			A.Object.each(
-				fragments,
-				function(item, index) {
-					if (processed) {
-						cursorPos = editor.getCursorPosition();
-					}
-
-					processed = true;
-
-					editor.insert(item);
+			A.Object.each(fragments, function(item, index) {
+				if (processed) {
+					cursorPos = editor.getCursorPosition();
 				}
-			);
+
+				processed = true;
+
+				editor.insert(item);
+			});
 
 			if (cursorPos) {
 				editor.moveCursorToPosition(cursorPos);
@@ -279,7 +264,9 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 		return content;
 	}
 
-	var paletteSearchContainer = panelScriptContainer.one('#<portlet:namespace />paletteSearchContainer');
+	var paletteSearchContainer = panelScriptContainer.one(
+		'#<portlet:namespace />paletteSearchContainer'
+	);
 
 	function resizeEditor(event) {
 		var info = event.info;
@@ -288,7 +275,10 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 		richEditor.set('width', info.offsetWidth);
 
 		if (!Util.isPhone()) {
-			paletteDataContainer.setStyle(STR_HEIGHT, info.offsetHeight - paletteSearchContainer.height());
+			paletteDataContainer.setStyle(
+				STR_HEIGHT,
+				info.offsetHeight - paletteSearchContainer.height()
+			);
 		}
 	}
 
@@ -309,26 +299,20 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 		</c:choose>
 
 		if (AutoComplete) {
-			var processor = new AutoComplete(
-				{
-					variables: <%= journalEditDDMTemplateDisplayContext.getAutocompleteJSON() %>
-				}
-			);
+			var processor = new AutoComplete({
+				variables: <%= journalEditDDMTemplateDisplayContext.getAutocompleteJSON() %>
+			});
 
 			if (processor) {
 				richEditor.unplug(ACPlugin);
 
-				richEditor.plug(
-					ACPlugin,
-					{
-						processor: processor,
-						render: true,
-						visible: false,
-						zIndex: 10000
-					}
-				);
-			}
-			else {
+				richEditor.plug(ACPlugin, {
+					processor: processor,
+					render: true,
+					visible: false,
+					zIndex: 10000
+				});
+			} else {
 				richEditor.unplug(ACPlugin);
 			}
 		}
@@ -341,63 +325,57 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 	A.on(
 		'domready',
 		function(event) {
-			richEditor = new A.AceEditor(
-				{
-					boundingBox: editorNode,
-					height: 400,
-					mode: '<%= journalEditDDMTemplateDisplayContext.getEditorMode() %>',
-					width: '100%'
-				}
-			).render();
+			richEditor = new A.AceEditor({
+				boundingBox: editorNode,
+				height: 400,
+				mode: '<%= journalEditDDMTemplateDisplayContext.getEditorMode() %>',
+				width: '100%'
+			}).render();
 
-			new A.Resize(
-				{
-					handles: ['br'],
-					node: editorNode,
-					on: {
-						resize: resizeEditor
-					}
+			new A.Resize({
+				handles: ['br'],
+				node: editorNode,
+				on: {
+					resize: resizeEditor
 				}
-			);
+			});
 
 			if (editorContentElement) {
 				setEditorContent(editorContentElement.val());
 			}
 
-			Liferay.on(
-				'<portlet:namespace />saveTemplate',
-				function(event) {
-					editorContentElement.val(getEditorContent());
-				}
-			);
+			Liferay.on('<portlet:namespace />saveTemplate', function(event) {
+				editorContentElement.val(getEditorContent());
+			});
 
 			setEditorPlugins();
 
 			<c:if test="<%= journalEditDDMTemplateDisplayContext.isAutocompleteEnabled() %>">
-				paletteContainer.delegate('click', onPaletteItemChosen, '.palette-item');
-
-				new A.TogglerDelegate(
-					{
-						animated: true,
-						container: paletteDataContainer,
-						content: '.palette-item-content',
-						header: '.palette-item-header'
-					}
+				paletteContainer.delegate(
+					'click',
+					onPaletteItemChosen,
+					'.palette-item'
 				);
 
-				new A.TooltipDelegate(
-					{
-						align: {
-							points: [A.WidgetPositionAlign.LC, A.WidgetPositionAlign.RC]
-						},
-						duration: 0.5,
-						html: true,
-						position: 'right',
-						trigger: '#<portlet:namespace />templatePaletteContainer .palette-item',
-						visible: false,
-						zIndex: 6
-					}
-				);
+				new A.TogglerDelegate({
+					animated: true,
+					container: paletteDataContainer,
+					content: '.palette-item-content',
+					header: '.palette-item-header'
+				});
+
+				new A.TooltipDelegate({
+					align: {
+						points: [A.WidgetPositionAlign.LC, A.WidgetPositionAlign.RC]
+					},
+					duration: 0.5,
+					html: true,
+					position: 'right',
+					trigger:
+						'#<portlet:namespace />templatePaletteContainer .palette-item',
+					visible: false,
+					zIndex: 6
+				});
 
 				createLiveSearch();
 			</c:if>
@@ -405,29 +383,35 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 		'#<portlet:namespace />richEditor'
 	);
 
-	Liferay.on(
-		'<portlet:namespace />refreshEditor',
-		function(event) {
-			var form = A.one('#<portlet:namespace />fm');
+	Liferay.on('<portlet:namespace />refreshEditor', function(event) {
+		var form = A.one('#<portlet:namespace />fm');
 
-			<portlet:renderURL var="refreshDDMTemplateURL">
-				<portlet:param name="mvcPath" value="/edit_ddm_template.jsp" />
-			</portlet:renderURL>
+		<portlet:renderURL var="refreshDDMTemplateURL">
+			<portlet:param name="mvcPath" value="/edit_ddm_template.jsp" />
+		</portlet:renderURL>
 
-			form.attr('action', '<%= refreshDDMTemplateURL %>');
+		form.attr('action', '<%= refreshDDMTemplateURL %>');
 
-			if (richEditor.getEditor().getSession().getUndoManager().hasUndo()) {
-				Liferay.fire('<portlet:namespace />saveTemplate');
-			}
-			<c:if test="<%= journalEditDDMTemplateDisplayContext.getDDMTemplate() == null %>">
-				else {
-					editorContentElement.val('');
-				}
-			</c:if>
-
-			submitForm(form, null, null, false);
+		if (
+			richEditor
+				.getEditor()
+				.getSession()
+				.getUndoManager()
+				.hasUndo()
+		) {
+			Liferay.fire('<portlet:namespace />saveTemplate');
 		}
-	);
+		<c:if test="<%= journalEditDDMTemplateDisplayContext.getDDMTemplate() == null %>">
+			else {
+				editorContentElement.val('');
+			}
+		</c:if>
 
-	Liferay.Util.toggleBoxes('<portlet:namespace />cacheable', 'cacheableMessageContainer');
+		submitForm(form, null, null, false);
+	});
+
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />cacheable',
+		'cacheableMessageContainer'
+	);
 </aui:script>

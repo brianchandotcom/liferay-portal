@@ -94,16 +94,16 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 		<portlet:param name="searchContainerId" value="<%= searchContainerId %>" />
 	</liferay-portlet:resourceURL>
 
-	var exportImport = new Liferay.ExportImport(
-		{
-			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
-			locale: '<%= locale.toLanguageTag() %>',
-			namespace: '<portlet:namespace />',
-			processesNode: '#importProcessesSearchContainer',
-			processesResourceURL: '<%= HtmlUtil.escapeJS(importProcessesURL.toString()) %>',
-			timeZoneOffset: <%= timeZoneOffset %>
-		}
-	);
+	var exportImport = new Liferay.ExportImport({
+		incompleteProcessMessageNode:
+			'#<portlet:namespace />incompleteProcessMessage',
+		locale: '<%= locale.toLanguageTag() %>',
+		namespace: '<portlet:namespace />',
+		processesNode: '#importProcessesSearchContainer',
+		processesResourceURL:
+			'<%= HtmlUtil.escapeJS(importProcessesURL.toString()) %>',
+		timeZoneOffset: <%= timeZoneOffset %>
+	});
 
 	var destroyInstance = function(event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {

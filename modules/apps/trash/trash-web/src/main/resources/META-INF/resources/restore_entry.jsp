@@ -75,26 +75,26 @@ renderResponse.setTitle(oldName);
 </liferay-frontend:edit-form>
 
 <aui:script>
-	var <portlet:namespace />form = document.getElementById('<portlet:namespace />fm');
+	var <portlet:namespace />form = document.getElementById(
+		'<portlet:namespace />fm'
+	);
 
 	if (<portlet:namespace />form) {
-		var rename = <portlet:namespace />form.querySelector('#<portlet:namespace />rename');
-		var newName = <portlet:namespace />form.querySelector('#<portlet:namespace />newName');
+		var rename = <portlet:namespace />form.querySelector(
+			'#<portlet:namespace />rename'
+		);
+		var newName = <portlet:namespace />form.querySelector(
+			'#<portlet:namespace />newName'
+		);
 
 		if (rename && newName) {
-			rename.addEventListener(
-				'click',
-				function(event) {
-					Liferay.Util.focusFormField(newName);
-				}
-			);
+			rename.addEventListener('click', function(event) {
+				Liferay.Util.focusFormField(newName);
+			});
 
-			newName.addEventListener(
-				'focus',
-				function(event) {
-					rename.checked = true;
-				}
-			);
+			newName.addEventListener('focus', function(event) {
+				rename.checked = true;
+			});
 		}
 	}
 </aui:script>

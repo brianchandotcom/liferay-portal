@@ -83,7 +83,10 @@ if (selLayout != null) {
 		</div>
 
 		<aui:script>
-			Liferay.Util.toggleBoxes('<portlet:namespace /><%= LayoutConstants.CUSTOMIZABLE_LAYOUT %>', '<portlet:namespace />customizationSettingsOptions');
+			Liferay.Util.toggleBoxes(
+				'<portlet:namespace /><%= LayoutConstants.CUSTOMIZABLE_LAYOUT %>',
+				'<portlet:namespace />customizationSettingsOptions'
+			);
 		</aui:script>
 	</c:otherwise>
 </c:choose>

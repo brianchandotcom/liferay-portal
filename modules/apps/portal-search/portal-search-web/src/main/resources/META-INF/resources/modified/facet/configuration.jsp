@@ -91,15 +91,15 @@ JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray()
 </liferay-frontend:edit-form>
 
 <aui:script use="liferay-auto-fields">
-	var autoFields = new Liferay.AutoFields(
-		{
-			contentBox: 'fieldset#<portlet:namespace />rangesId',
-			fieldIndexes: '<portlet:namespace />rangesIndexes',
-			namespace: '<portlet:namespace />'
-		}
-	).render();
+	var autoFields = new Liferay.AutoFields({
+		contentBox: 'fieldset#<portlet:namespace />rangesId',
+		fieldIndexes: '<portlet:namespace />rangesIndexes',
+		namespace: '<portlet:namespace />'
+	}).render();
 </aui:script>
 
 <aui:script use="liferay-search-modified-facet-configuration">
-	new Liferay.Search.ModifiedFacetConfiguration(A.one(document.<portlet:namespace />fm));
+	new Liferay.Search.ModifiedFacetConfiguration(
+		A.one(document.<portlet:namespace />fm)
+	);
 </aui:script>

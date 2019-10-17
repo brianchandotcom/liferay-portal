@@ -28,17 +28,12 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_F
 
 <aui:script>
 	if (window.Analytics) {
-		Analytics.send(
-			'documentPreviewed',
-			'Document',
-			{
-				fileEntryId: '<%= fileEntry.getFileEntryId() %>',
-				groupId: '<%= fileEntry.getGroupId() %>',
-				fileEntryUUID: '<%= fileEntry.getUuid() %>',
-				title: '<%= HtmlUtil.escapeJS(fileEntry.getTitle()) %>',
-				version: '<%= fileEntry.getVersion() %>'
-			}
-		);
-
+		Analytics.send('documentPreviewed', 'Document', {
+			fileEntryId: '<%= fileEntry.getFileEntryId() %>',
+			groupId: '<%= fileEntry.getGroupId() %>',
+			fileEntryUUID: '<%= fileEntry.getUuid() %>',
+			title: '<%= HtmlUtil.escapeJS(fileEntry.getTitle()) %>',
+			version: '<%= fileEntry.getVersion() %>'
+		});
 	}
 </aui:script>

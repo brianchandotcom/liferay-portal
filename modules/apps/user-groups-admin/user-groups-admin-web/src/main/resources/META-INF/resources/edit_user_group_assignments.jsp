@@ -147,51 +147,54 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 	</portlet:renderURL>
 
 	function <portlet:namespace />addUsers(event) {
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-			{
-				eventName: '<portlet:namespace />selectUsers',
-				on: {
-					selectedItemChange: function(event) {
-						var selectedItem = event.newVal;
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+			eventName: '<portlet:namespace />selectUsers',
+			on: {
+				selectedItemChange: function(event) {
+					var selectedItem = event.newVal;
 
-						if (selectedItem) {
-							Liferay.Util.postForm(
-								form,
-								{
-									data: {
-										addUserIds: selectedItem
-									},
-									url: '<portlet:actionURL name="editUserGroupAssignments" />'
-								}
-							);
-						}
+					if (selectedItem) {
+						Liferay.Util.postForm(form, {
+							data: {
+								addUserIds: selectedItem
+							},
+							url:
+								'<portlet:actionURL name="editUserGroupAssignments" />'
+						});
 					}
-				},
-				title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(userGroup.getName()) %>" key="add-users-to-x" />',
-				url: '<%= selectUsersURL %>'
-			}
-		);
+				}
+			},
+			title:
+				'<liferay-ui:message arguments="<%= HtmlUtil.escape(userGroup.getName()) %>" key="add-users-to-x" />',
+			url: '<%= selectUsersURL %>'
+		});
 
 		itemSelectorDialog.open();
 	}
 
 	function <portlet:namespace />removeUsers() {
-		Liferay.Util.postForm(
-			form,
-			{
-				data: {
-					redirect: '<%= portletURL.toString() %>',
-					removeUserIds: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
-				},
-				url: '<portlet:actionURL name="editUserGroupAssignments" />'
-			}
-		);
+		Liferay.Util.postForm(form, {
+			data: {
+				redirect: '<%= portletURL.toString() %>',
+				removeUserIds: Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				)
+			},
+			url: '<portlet:actionURL name="editUserGroupAssignments" />'
+		});
 	}
 
 	Liferay.componentReady('editUserGroupAssignmentsManagementToolbar').then(
 		function(managementToolbar) {
-			managementToolbar.on('actionItemClicked', <portlet:namespace />removeUsers);
-			managementToolbar.on('creationButtonClicked', <portlet:namespace />addUsers);
+			managementToolbar.on(
+				'actionItemClicked',
+				<portlet:namespace />removeUsers
+			);
+			managementToolbar.on(
+				'creationButtonClicked',
+				<portlet:namespace />addUsers
+			);
 		}
 	);
 </aui:script>

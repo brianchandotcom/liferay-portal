@@ -49,7 +49,9 @@ String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKE
 		};
 
 		CKEDITOR.getNextZIndex = function() {
-			return CKEDITOR.dialog._.currentZIndex ? CKEDITOR.dialog._.currentZIndex + 10 : Liferay.zIndex.WINDOW + 10;
+			return CKEDITOR.dialog._.currentZIndex
+				? CKEDITOR.dialog._.currentZIndex + 10
+				: Liferay.zIndex.WINDOW + 10;
 		};
 
 		var ckEditorDisposeResources = false;
@@ -62,7 +64,7 @@ String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKE
 				ckEditorInstances = 0;
 				ckEditorDisposeResources = false;
 			}
-		}
+		};
 
 		Liferay.namespace('EDITORS').ckeditor = {
 			addInstance: function() {
@@ -73,7 +75,7 @@ String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKE
 
 				cleanupCkEditorResources();
 			}
-		}
+		};
 
 		var destroyGlobalCkEditor = function() {
 			ckEditorDisposeResources = true;

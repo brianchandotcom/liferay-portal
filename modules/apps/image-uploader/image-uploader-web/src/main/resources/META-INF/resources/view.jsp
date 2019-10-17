@@ -41,7 +41,10 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 
 		<aui:script>
 			<c:if test="<%= fileEntry != null %>">
-				Liferay.Util.getOpener().<%= HtmlUtil.escapeJS(randomNamespace) %>changeLogo('<%= previewURL %>', '<%= fileEntry.getFileEntryId() %>');
+				Liferay.Util.getOpener().<%= HtmlUtil.escapeJS(randomNamespace) %>changeLogo(
+					'<%= previewURL %>',
+					'<%= fileEntry.getFileEntryId() %>'
+				);
 			</c:if>
 
 			Liferay.Util.getWindow().hide();
@@ -123,19 +126,18 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 
 		<script>
 			(function() {
-				var uploadImageButton = document.getElementById('<portlet:namespace />uploadImage');
+				var uploadImageButton = document.getElementById(
+					'<portlet:namespace />uploadImage'
+				);
 
 				if (uploadImageButton) {
-					uploadImageButton.addEventListener(
-						'keydown',
-						function(event) {
-							event.preventDefault();
+					uploadImageButton.addEventListener('keydown', function(event) {
+						event.preventDefault();
 
-							if (event.key == 'Enter' || event.key == ' ') {
-								uploadImageButton.click();
-							}
+						if (event.key == 'Enter' || event.key == ' ') {
+							uploadImageButton.click();
 						}
-					);
+					});
 				}
 			})();
 		</script>
@@ -151,32 +153,34 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 
 			var imageUploadedInput = A.one('#<portlet:namespace />imageUploaded');
 
-			var logoEditor = new Liferay.LogoEditor(
-				{
-					aspectRatio: <%= aspectRatio %>,
+			var logoEditor = new Liferay.LogoEditor({
+				aspectRatio: <%= aspectRatio %>,
 
-					<%
-					DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-					%>
+				<%
+				DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+				%>
 
-					decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
+				decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 
-					maxFileSize: <%= maxFileSize %>,
-					namespace: '<portlet:namespace />',
-					on: {
-						uploadComplete: A.bind('val', imageUploadedInput, true)
-					},
-					preserveRatio: <%= preserveRatio %>,
-					previewURL: '<%= previewURL %>',
-					uploadURL: '<%= addTempImageURL %>'
-				}
-			);
+				maxFileSize: <%= maxFileSize %>,
+				namespace: '<portlet:namespace />',
+				on: {
+					uploadComplete: A.bind('val', imageUploadedInput, true)
+				},
+				preserveRatio: <%= preserveRatio %>,
+				previewURL: '<%= previewURL %>',
+				uploadURL: '<%= addTempImageURL %>'
+			});
 
 			if (Liferay.Util.getTop() !== A.config.win) {
 				var dialog = Liferay.Util.getWindow();
 
 				if (dialog) {
-					dialog.on(['resize:end', 'resize:resize', 'resize:start'], logoEditor.resize, logoEditor);
+					dialog.on(
+						['resize:end', 'resize:resize', 'resize:start'],
+						logoEditor.resize,
+						logoEditor
+					);
 				}
 			}
 		</aui:script>

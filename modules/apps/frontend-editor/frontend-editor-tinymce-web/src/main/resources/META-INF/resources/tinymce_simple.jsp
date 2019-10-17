@@ -77,9 +77,9 @@ name = HtmlUtil.escapeJS(name);
 
 		if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
 			data = <%= HtmlUtil.escapeJS(namespace + initMethod) %>();
-		}
-		else {
-			data = '<%= (contents != null) ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
+		} else {
+			data =
+				'<%= (contents != null) ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
 		}
 
 		return data;
@@ -132,14 +132,12 @@ name = HtmlUtil.escapeJS(name);
 			}
 		},
 
-		fileBrowserCallback: function(field_name, url, type) {
-		},
+		fileBrowserCallback: function(field_name, url, type) {},
 
 		focus: function() {
 			if (window['<%= name %>'].instanceReady) {
 				tinyMCE.editors['<%= name %>'].focus();
-			}
-			else {
+			} else {
 				window['<%= name %>'].pendingFocus = true;
 			}
 		},
@@ -149,8 +147,7 @@ name = HtmlUtil.escapeJS(name);
 
 			if (!window['<%= name %>'].instanceReady) {
 				data = getInitialContent();
-			}
-			else {
+			} else {
 				data = tinyMCE.editors['<%= name %>'].getBody().innerHTML;
 			}
 
@@ -166,8 +163,7 @@ name = HtmlUtil.escapeJS(name);
 
 			if (!window['<%= name %>'].instanceReady) {
 				data = getInitialContent();
-			}
-			else {
+			} else {
 				var editorBody = tinyMCE.editors['<%= name %>'].getBody();
 
 				data = editorBody.textContent || editorBody.innerText;
@@ -195,12 +191,11 @@ name = HtmlUtil.escapeJS(name);
 
 			<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
 				defaultConfig.setup = function(editor) {
-					editor.on(
-						'keyup',
-						function() {
-							<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getHTML());
-						}
-					);
+					editor.on('keyup', function() {
+						<%= HtmlUtil.escapeJS(onChangeMethod) %>(
+							window['<%= name %>'].getHTML()
+						);
+					});
 				};
 			</c:if>
 
@@ -214,12 +209,18 @@ name = HtmlUtil.escapeJS(name);
 
 			Liferay.namespace('EDITORS').tinymce.addInstance();
 
-			Liferay.on('inputLocalized:localeChanged', this._onLocaleChangedHandler, this)
+			Liferay.on(
+				'inputLocalized:localeChanged',
+				this._onLocaleChangedHandler,
+				this
+			);
 		},
 
 		initInstanceCallback: function() {
 			<c:if test="<%= (contents == null) && Validator.isNotNull(initMethod) %>">
-				window['<%= name %>'].init(<%= HtmlUtil.escapeJS(namespace + initMethod) %>());
+				window['<%= name %>'].init(
+					<%= HtmlUtil.escapeJS(namespace + initMethod) %>()
+				);
 			</c:if>
 
 			var iframe = A.one('#<%= name %>_ifr');
@@ -246,13 +247,9 @@ name = HtmlUtil.escapeJS(name);
 				window['<%= name %>'].focus();
 			}
 
-			Liferay.component(
-				'<%= name %>',
-				window['<%= name %>'],
-				{
-					portletId: '<%= portletId %>'
-				}
-			);
+			Liferay.component('<%= name %>', window['<%= name %>'], {
+				portletId: '<%= portletId %>'
+			});
 		},
 
 		instanceReady: false,
@@ -260,8 +257,7 @@ name = HtmlUtil.escapeJS(name);
 		setHTML: function(value) {
 			if (window['<%= name %>'].instanceReady) {
 				tinyMCE.editors['<%= name %>'].setContent(value);
-			}
-			else {
+			} else {
 				document.getElementById('<%= name %>').innerHTML = value;
 			}
 		},

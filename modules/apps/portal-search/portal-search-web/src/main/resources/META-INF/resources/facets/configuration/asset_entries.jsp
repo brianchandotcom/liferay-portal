@@ -69,20 +69,16 @@ for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getA
 	var currentAssetTypes = Liferay.Util.getFormElement(form, 'currentAssetTypes');
 
 	if (currentAssetTypes) {
-		form.addEventListener(
-			'submit',
-			function(event) {
-				event.preventDefault();
+		form.addEventListener('submit', function(event) {
+			event.preventDefault();
 
-				Liferay.Util.postForm(
-					form,
-					{
-						data: {
-							'<%= assetEntriesSearchFacet.getClassName() + "assetTypes" %>': Liferay.Util.listSelect(currentAssetTypes)
-						}
-					}
-				);
-			}
-		);
+			Liferay.Util.postForm(form, {
+				data: {
+					<%= assetEntriesSearchFacet.getClassName() + "assetTypes" %>: Liferay.Util.listSelect(
+						currentAssetTypes
+					)
+				}
+			});
+		});
 	}
 </script>

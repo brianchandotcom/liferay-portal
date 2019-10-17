@@ -349,17 +349,35 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 				},
 				eventName: '<portlet:namespace />selectDDMStructure',
 				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>'
+				uri:
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>'
 			},
 			function(event) {
-				if (document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value != event.ddmstructurekey) {
-					if (confirm('<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-changes-the-available-templates-and-available-feed-item-content") %>')) {
-						document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value = event.ddmstructurekey;
-						document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value = '';
-						document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value = '';
-						document.<portlet:namespace />fm.<portlet:namespace />contentField.value = '<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>';
+				if (
+					document.<portlet:namespace />fm
+						.<portlet:namespace />ddmStructureKey.value !=
+					event.ddmstructurekey
+				) {
+					if (
+						confirm(
+							'<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-changes-the-available-templates-and-available-feed-item-content") %>'
+						)
+					) {
+						document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value =
+							event.ddmstructurekey;
+						document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value =
+							'';
+						document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value =
+							'';
+						document.<portlet:namespace />fm.<portlet:namespace />contentField.value =
+							'<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>';
 
-						submitForm(document.<portlet:namespace />fm, null, false, false);
+						submitForm(
+							document.<portlet:namespace />fm,
+							null,
+							false,
+							false
+						);
 					}
 				}
 			}
@@ -367,25 +385,37 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 	}
 
 	function <portlet:namespace />removeDDMStructure() {
-		document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value = '';
-		document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value = '';
-		document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value = '';
-		document.<portlet:namespace />fm.<portlet:namespace />contentField.value = '<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>';
+		document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value =
+			'';
+		document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value =
+			'';
+		document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value =
+			'';
+		document.<portlet:namespace />fm.<portlet:namespace />contentField.value =
+			'<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>';
 
 		submitForm(document.<portlet:namespace />fm, null, false, false);
 	}
 
 	function <portlet:namespace />saveFeed() {
-		document.<portlet:namespace />fm['<portlet:namespace />javax-portlet-action'].value = '<%= (feed == null) ? "/journal/add_feed" : "/journal/update_feed" %>';
+		document.<portlet:namespace />fm[
+			'<portlet:namespace />javax-portlet-action'
+		].value =
+			'<%= (feed == null) ? "/journal/add_feed" : "/journal/update_feed" %>';
 
 		<c:if test="<%= feed == null %>">
-			document.<portlet:namespace />fm.<portlet:namespace />feedId.value = document.<portlet:namespace />fm.<portlet:namespace />newFeedId.value;
+			document.<portlet:namespace />fm.<portlet:namespace />feedId.value =
+				document.<portlet:namespace />fm.<portlet:namespace />newFeedId.value;
 		</c:if>
 
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoFeedId', '<portlet:namespace />newFeedId', true);
+	Liferay.Util.disableToggleBoxes(
+		'<portlet:namespace />autoFeedId',
+		'<portlet:namespace />newFeedId',
+		true
+	);
 </aui:script>
 
 <aui:script sandbox="<%= true %>">
@@ -393,35 +423,36 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 	var renderedWebContent = '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>';
 
-	var contentFieldSelector = Liferay.Util.getFormElement(form, 'contentFieldSelector');
+	var contentFieldSelector = Liferay.Util.getFormElement(
+		form,
+		'contentFieldSelector'
+	);
 
 	if (contentFieldSelector) {
-		contentFieldSelector.addEventListener(
-			'change',
-			function() {
-				var contentFieldValue = '';
-				var ddmRendererTemplateKeyValue = '';
+		contentFieldSelector.addEventListener('change', function() {
+			var contentFieldValue = '';
+			var ddmRendererTemplateKeyValue = '';
 
-				var selectedFeedItemOption = contentFieldSelector.options[contentFieldSelector.selectedIndex];
+			var selectedFeedItemOption =
+				contentFieldSelector.options[contentFieldSelector.selectedIndex];
 
-				if (selectedFeedItemOption) {
-					contentFieldValue = selectedFeedItemOption.value || '';
+			if (selectedFeedItemOption) {
+				contentFieldValue = selectedFeedItemOption.value || '';
 
-					if (selectedFeedItemOption.dataset.contentfield === renderedWebContent) {
-						ddmRendererTemplateKeyValue = contentFieldValue;
+				if (
+					selectedFeedItemOption.dataset.contentfield ===
+					renderedWebContent
+				) {
+					ddmRendererTemplateKeyValue = contentFieldValue;
 
-						contentFieldValue = renderedWebContent;
-					}
+					contentFieldValue = renderedWebContent;
 				}
-
-				Liferay.Util.setFormValues(
-					form,
-					{
-						contentField: contentFieldValue,
-						ddmRendererTemplateKey: ddmRendererTemplateKeyValue
-					}
-				);
 			}
-		);
+
+			Liferay.Util.setFormValues(form, {
+				contentField: contentFieldValue,
+				ddmRendererTemplateKey: ddmRendererTemplateKeyValue
+			});
+		});
 	}
 </aui:script>

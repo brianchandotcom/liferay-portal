@@ -91,28 +91,22 @@ double interestPaid = totalPaid - loanAmount;
 
 	parentNode.plug(A.Plugin.ParseContent);
 
-	form.on(
-		'submit',
-		function(event) {
-			var uri = form.getAttribute('action');
+	form.on('submit', function(event) {
+		var uri = form.getAttribute('action');
 
-			A.io.request(
-				uri,
-				{
-					form: {
-						id: form
-					},
-					on: {
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
+		A.io.request(uri, {
+			form: {
+				id: form
+			},
+			on: {
+				success: function(event, id, obj) {
+					var responseData = this.get('responseData');
 
-							parentNode.setContent(responseData);
-						}
-					}
+					parentNode.setContent(responseData);
 				}
-			);
+			}
+		});
 
-			event.halt();
-		}
-	);
+		event.halt();
+	});
 </aui:script>

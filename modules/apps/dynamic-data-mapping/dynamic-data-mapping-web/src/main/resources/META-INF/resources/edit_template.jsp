@@ -189,12 +189,10 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 						}
 					];
 
-					new A.Toolbar(
-						{
-							boundingBox: '#<portlet:namespace />templateHistoryToolbar',
-							children: toolbarChildren
-						}
-					).render();
+					new A.Toolbar({
+						boundingBox: '#<portlet:namespace />templateHistoryToolbar',
+						children: toolbarChildren
+					}).render();
 				</aui:script>
 			</c:if>
 
@@ -372,38 +370,37 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 				'.lfr-ddm-small-image-type'
 			);
 
-			new A.Toggler(
-				{
-					animated: true,
-					content: '#<portlet:namespace />smallImageContainer .lfr-ddm-small-image-content',
-					expanded: <%= smallImage %>,
-					header: '#<portlet:namespace />smallImageContainer .lfr-ddm-small-image-header',
-					on: {
-						animatingChange: function(event) {
-							var instance = this;
+			new A.Toggler({
+				animated: true,
+				content:
+					'#<portlet:namespace />smallImageContainer .lfr-ddm-small-image-content',
+				expanded: <%= smallImage %>,
+				header:
+					'#<portlet:namespace />smallImageContainer .lfr-ddm-small-image-header',
+				on: {
+					animatingChange: function(event) {
+						var instance = this;
 
-							var expanded = !instance.get('expanded');
+						var expanded = !instance.get('expanded');
 
-							A.one('#<portlet:namespace />smallImage').attr('checked', expanded);
+						A.one('#<portlet:namespace />smallImage').attr('checked', expanded);
 
-							if (expanded) {
-								types.each(
-									function(item, index) {
-										if (item.get('checked')) {
-											values.item(index).attr('disabled', false);
-										}
-									}
-								);
-							}
-							else {
-								values.attr('disabled', true);
-							}
+						if (expanded) {
+							types.each(function(item, index) {
+								if (item.get('checked')) {
+									values.item(index).attr('disabled', false);
+								}
+							});
+						} else {
+							values.attr('disabled', true);
 						}
 					}
 				}
-			);
+			});
 
-			selectSmallImageType('<%= ((template != null) && Validator.isNotNull(template.getSmallImageURL())) ? 0 : 1 %>');
+			selectSmallImageType(
+				'<%= ((template != null) && Validator.isNotNull(template.getSmallImageURL())) ? 0 : 1 %>'
+			);
 		</aui:script>
 	</c:if>
 
@@ -412,7 +409,8 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 			function <portlet:namespace />openDDMStructureSelector() {
 				Liferay.Util.openDDMPortlet(
 					{
-						basePortletURL: '<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE) %>',
+						basePortletURL:
+							'<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE) %>',
 						classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 						classPK: 0,
 						eventName: '<portlet:namespace />selectStructure',
@@ -423,8 +421,12 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 						title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
 					},
 					function(event) {
-						if (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid) {
-							document.<portlet:namespace />fm.<portlet:namespace />classPK.value = event.ddmstructureid;
+						if (
+							document.<portlet:namespace />fm.<portlet:namespace />classPK
+								.value != event.ddmstructureid
+						) {
+							document.<portlet:namespace />fm.<portlet:namespace />classPK.value =
+								event.ddmstructureid;
 
 							Liferay.fire('<portlet:namespace />refreshEditor');
 						}
@@ -436,12 +438,9 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 	<aui:button-row>
 		<aui:script>
-			Liferay.after(
-				'<portlet:namespace />saveTemplate',
-				function() {
-					submitForm(document.<portlet:namespace />fm);
-				}
-			);
+			Liferay.after('<portlet:namespace />saveTemplate', function() {
+				submitForm(document.<portlet:namespace />fm);
+			});
 
 			function <portlet:namespace />saveDraftTemplate() {
 				var form = document.<portlet:namespace />fm;
@@ -449,19 +448,17 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 				var statusInput = Liferay.Util.getFormElement(form, 'status');
 
 				if (statusInput) {
-					Liferay.Util.setFormValues(
-						form,
-						{
-							statusInput: <%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %>
-						}
-					);
+					Liferay.Util.setFormValues(form, {
+						statusInput: <%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %>
+					});
 				}
 
 				Liferay.fire('<%= renderResponse.getNamespace() + "saveTemplate" %>');
 			}
 
 			function <portlet:namespace />saveAndContinueTemplate() {
-				document.<portlet:namespace />fm.<portlet:namespace />saveAndContinue.value = '1';
+				document.<portlet:namespace />fm.<portlet:namespace />saveAndContinue.value =
+					'1';
 
 				Liferay.fire('<portlet:namespace />saveTemplate');
 			}
@@ -469,7 +466,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 			var onDestroyPortlet = function(event) {
 				Liferay.detach('destroyPortlet', onDestroyPortlet);
 				Liferay.detach('<portlet:namespace />saveTemplate');
-			}
+			};
 
 			Liferay.on('destroyPortlet', onDestroyPortlet);
 		</aui:script>

@@ -194,26 +194,27 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 </div>
 
 <aui:script use="liferay-export-import-export-import">
-	var exportImport = new Liferay.ExportImport(
-		{
-			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>',
-			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
-			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
-			exportLAR: true,
-			form: document.<portlet:namespace />fm1,
-			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
-			locale: '<%= locale.toLanguageTag() %>',
-			namespace: '<portlet:namespace />',
-			pageTreeId: '<%= treeId %>',
-			rangeAllNode: '#rangeAll',
-			rangeDateRangeNode: '#rangeDateRange',
-			rangeLastNode: '#rangeLast',
-			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
-			setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>',
-			timeZoneOffset: <%= timeZoneOffset %>,
-			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>'
-		}
-	);
+	var exportImport = new Liferay.ExportImport({
+		archivedSetupsNode:
+			'#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>',
+		commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
+		deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
+		exportLAR: true,
+		form: document.<portlet:namespace />fm1,
+		incompleteProcessMessageNode:
+			'#<portlet:namespace />incompleteProcessMessage',
+		locale: '<%= locale.toLanguageTag() %>',
+		namespace: '<portlet:namespace />',
+		pageTreeId: '<%= treeId %>',
+		rangeAllNode: '#rangeAll',
+		rangeDateRangeNode: '#rangeDateRange',
+		rangeLastNode: '#rangeLast',
+		ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
+		setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>',
+		timeZoneOffset: <%= timeZoneOffset %>,
+		userPreferencesNode:
+			'#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>'
+	});
 
 	Liferay.component('<portlet:namespace />ExportImportComponent', exportImport);
 
@@ -221,23 +222,21 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 
 	var form = liferayForm.formNode;
 
-	form.on(
-		'submit',
-		function(event) {
-			event.halt();
+	form.on('submit', function(event) {
+		event.halt();
 
-			var exportImport = Liferay.component('<portlet:namespace />ExportImportComponent');
+		var exportImport = Liferay.component(
+			'<portlet:namespace />ExportImportComponent'
+		);
 
-			var dateChecker = exportImport.getDateRangeChecker();
+		var dateChecker = exportImport.getDateRangeChecker();
 
-			if (dateChecker.validRange) {
-				submitForm(form, form.attr('action'), false);
-			}
-			else {
-				exportImport.showNotification(dateChecker);
-			}
+		if (dateChecker.validRange) {
+			submitForm(form, form.attr('action'), false);
+		} else {
+			exportImport.showNotification(dateChecker);
 		}
-	);
+	});
 
 	var oldFieldRules = liferayForm.get('fieldRules');
 
@@ -259,12 +258,13 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 					if (val.indexOf(blacklistCharJSONArray[i]) !== -1) {
 						return false;
 					}
-				};
+				}
 
 				return true;
 			},
 			custom: true,
-			errorMessage: '<%= LanguageUtil.get(request, "the-following-are-invalid-characters") + HtmlUtil.escapeJS(Arrays.toString(PropsValues.DL_CHAR_BLACKLIST)) %>',
+			errorMessage:
+				'<%= LanguageUtil.get(request, "the-following-are-invalid-characters") + HtmlUtil.escapeJS(Arrays.toString(PropsValues.DL_CHAR_BLACKLIST)) %>',
 			fieldName: '<portlet:namespace />name',
 			validatorName: 'custom_pageTemplateNameValidator'
 		}
@@ -275,16 +275,34 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 	}
 
 	liferayForm.set('fieldRules', fieldRules);
-
 </aui:script>
 
 <aui:script>
-	Liferay.Util.toggleRadio('<portlet:namespace />chooseApplications', '<portlet:namespace />selectApplications', ['<portlet:namespace />showChangeGlobalConfiguration']);
-	Liferay.Util.toggleRadio('<portlet:namespace />allApplications', '<portlet:namespace />showChangeGlobalConfiguration', ['<portlet:namespace />selectApplications']);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />chooseApplications',
+		'<portlet:namespace />selectApplications',
+		['<portlet:namespace />showChangeGlobalConfiguration']
+	);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />allApplications',
+		'<portlet:namespace />showChangeGlobalConfiguration',
+		['<portlet:namespace />selectApplications']
+	);
 
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', ['<portlet:namespace />startEndDate', '<portlet:namespace />rangeLastInputs']);
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeDateRange', '<portlet:namespace />startEndDate', '<portlet:namespace />rangeLastInputs');
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeLast', '<portlet:namespace />rangeLastInputs', ['<portlet:namespace />startEndDate']);
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', [
+		'<portlet:namespace />startEndDate',
+		'<portlet:namespace />rangeLastInputs'
+	]);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />rangeDateRange',
+		'<portlet:namespace />startEndDate',
+		'<portlet:namespace />rangeLastInputs'
+	);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />rangeLast',
+		'<portlet:namespace />rangeLastInputs',
+		['<portlet:namespace />startEndDate']
+	);
 
 	<c:if test="<%= StagingUtil.isChangeTrackingEnabled(company.getCompanyId()) %>">
 		var form = document.<portlet:namespace />fm1;

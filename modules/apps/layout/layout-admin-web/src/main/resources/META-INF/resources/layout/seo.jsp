@@ -194,53 +194,57 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		</div>
 
 		<aui:script use="liferay-item-selector-dialog">
-			var openGraphImageButton = document.getElementById('<portlet:namespace />openGraphImageButton');
+			var openGraphImageButton = document.getElementById(
+				'<portlet:namespace />openGraphImageButton'
+			);
 
 			if (openGraphImageButton) {
-				openGraphImageButton.addEventListener(
-					'click',
-					function(event) {
-						event.preventDefault();
+				openGraphImageButton.addEventListener('click', function(event) {
+					event.preventDefault();
 
-						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-							{
-								eventName: '<portlet:namespace />openGraphImageSelectedItem',
-								on: {
-									selectedItemChange: function(event) {
-										var selectedItem = event.newVal;
+					var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+						eventName: '<portlet:namespace />openGraphImageSelectedItem',
+						on: {
+							selectedItemChange: function(event) {
+								var selectedItem = event.newVal;
 
-										if (selectedItem) {
-												var itemValue = JSON.parse(selectedItem.value);
+								if (selectedItem) {
+									var itemValue = JSON.parse(selectedItem.value);
 
-												var openGraphImageFileEntryId = document.getElementById('<portlet:namespace />openGraphImageFileEntryId');
+									var openGraphImageFileEntryId = document.getElementById(
+										'<portlet:namespace />openGraphImageFileEntryId'
+									);
 
-												if (openGraphImageFileEntryId) {
-													openGraphImageFileEntryId.value = itemValue.fileEntryId;
-												}
+									if (openGraphImageFileEntryId) {
+										openGraphImageFileEntryId.value =
+											itemValue.fileEntryId;
+									}
 
-												var openGraphImageTitle = document.getElementById('<portlet:namespace />openGraphImageTitle');
+									var openGraphImageTitle = document.getElementById(
+										'<portlet:namespace />openGraphImageTitle'
+									);
 
-												if (openGraphImageTitle) {
-													openGraphImageTitle.value = itemValue.url;
-												}
-										}
+									if (openGraphImageTitle) {
+										openGraphImageTitle.value = itemValue.url;
+									}
+								}
+							}.bind(this)
+						},
+						'strings.add': Liferay.Language.get('ok'),
+						title: '<liferay-ui:message key="open-graph-image" />',
+						url: '<%= layoutsAdminDisplayContext.getItemSelectorURL() %>'
+					});
 
-									}.bind(this)
-								},
-								'strings.add': Liferay.Language.get('ok'),
-								title: '<liferay-ui:message key="open-graph-image" />',
-								url: '<%= layoutsAdminDisplayContext.getItemSelectorURL() %>'
-							}
-						);
-
-						itemSelectorDialog.open();
-					}
-				);
+					itemSelectorDialog.open();
+				});
 			}
 		</aui:script>
 	</div>
 </c:if>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />canonicalURLEnabled', '<portlet:namespace />customCanonicalURLSettings');
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />canonicalURLEnabled',
+		'<portlet:namespace />customCanonicalURLSettings'
+	);
 </aui:script>

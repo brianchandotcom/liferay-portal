@@ -103,38 +103,32 @@ refererURL.setParameter("updateLayout", "true");
 <aui:script use="liferay-product-navigation-control-menu-add-application">
 	var ControlMenu = Liferay.ControlMenu;
 
-	var addApplicationCollapse = A.one('#<portlet:namespace />addApplicationCollapse');
+	var addApplicationCollapse = A.one(
+		'#<portlet:namespace />addApplicationCollapse'
+	);
 	var searchApplication = A.one('#<portlet:namespace />searchApplication');
 
 	if (addApplicationCollapse && searchApplication) {
-		var addApplication = new ControlMenu.AddApplication(
-			{
-				focusItem: searchApplication,
-				inputNode: searchApplication,
-				namespace: '<portlet:namespace />',
-				nodeList: A.one('#<portlet:namespace />applicationList'),
-				nodeSelector: '.drag-content-item',
-				panelBody: addApplicationCollapse
-			}
-		);
+		var addApplication = new ControlMenu.AddApplication({
+			focusItem: searchApplication,
+			inputNode: searchApplication,
+			namespace: '<portlet:namespace />',
+			nodeList: A.one('#<portlet:namespace />applicationList'),
+			nodeSelector: '.drag-content-item',
+			panelBody: addApplicationCollapse
+		});
 
 		if (ControlMenu.PortletDragDrop) {
-			addApplication.plug(
-				ControlMenu.PortletDragDrop,
-				{
-					on: {
-						dragEnd: function(event) {
-							addApplication.addPortlet(
-								event.portletNode,
-								{
-									item: event.appendNode
-								}
-							);
-						}
-					},
-					srcNode: '#<portlet:namespace />applicationList'
-				}
-			);
+			addApplication.plug(ControlMenu.PortletDragDrop, {
+				on: {
+					dragEnd: function(event) {
+						addApplication.addPortlet(event.portletNode, {
+							item: event.appendNode
+						});
+					}
+				},
+				srcNode: '#<portlet:namespace />applicationList'
+			});
 		}
 
 		Liferay.component('<portlet:namespace />addApplication', addApplication);

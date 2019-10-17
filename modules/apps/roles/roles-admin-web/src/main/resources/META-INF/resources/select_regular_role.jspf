@@ -88,12 +88,12 @@ SearchContainer roleSearchContainer = SelectRoleManagementToolbarDisplayContext.
 
 	var openingLiferay = Util.getOpener().Liferay;
 
-	openingLiferay.fire(
-		'<%= HtmlUtil.escape(syncEntitiesEventName) %>',
-		{
-			selectors: A.all('.selector-button:disabled')
-		}
-	);
+	openingLiferay.fire('<%= HtmlUtil.escape(syncEntitiesEventName) %>', {
+		selectors: A.all('.selector-button:disabled')
+	});
 
-	Util.selectEntityHandler('#<portlet:namespace />selectRegularRoleFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	Util.selectEntityHandler(
+		'#<portlet:namespace />selectRegularRoleFm',
+		'<%= HtmlUtil.escapeJS(eventName) %>'
+	);
 </aui:script>

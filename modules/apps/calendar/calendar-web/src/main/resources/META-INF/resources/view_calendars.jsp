@@ -131,46 +131,54 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 			var A = AUI();
 
 			if (!<portlet:namespace />importDialog) {
-				var importCalendarContainer = A.one('#<portlet:namespace />importCalendarContainer');
+				var importCalendarContainer = A.one(
+					'#<portlet:namespace />importCalendarContainer'
+				);
 
 				var buttons = [
 					{
 						label: '<liferay-ui:message key="import" />',
 						on: {
 							click: function() {
-								var form = document.getElementById('<portlet:namespace />importFm');
+								var form = document.getElementById(
+									'<portlet:namespace />importFm'
+								);
 
 								Liferay.Util.fetch(url, {
 									body: new FormData(form),
 									method: 'POST'
-								}).then(function(response) {
+								})
+									.then(function(response) {
 										return response.text();
-								}).then(function(data) {
+									})
+									.then(function(data) {
 										var responseData = {};
 
 										try {
 											responseData = JSON.parse(data);
-										}
-										catch (e) {
-										}
+										} catch (e) {}
 
-										var portletErrorMessage = A.one('#<portlet:namespace />portletErrorMessage');
+										var portletErrorMessage = A.one(
+											'#<portlet:namespace />portletErrorMessage'
+										);
 
-										var portletSuccessMessage = A.one('#<portlet:namespace />portletSuccessMessage');
+										var portletSuccessMessage = A.one(
+											'#<portlet:namespace />portletSuccessMessage'
+										);
 
-										var error = responseData && responseData.error;
+										var error =
+											responseData && responseData.error;
 
 										if (error) {
 											portletErrorMessage.show();
 											portletSuccessMessage.hide();
 
 											portletErrorMessage.html(error);
-										}
-										else {
+										} else {
 											portletErrorMessage.hide();
 											portletSuccessMessage.show();
 										}
-								});
+									});
 							}
 						}
 					}
@@ -189,26 +197,28 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 					}
 				];
 
-				<portlet:namespace />importDialog = Liferay.Util.Window.getWindow(
-					{
-						dialog: {
-							bodyContent: importCalendarContainer.html(),
-							modal: true,
-							on: {
-								visibleChange: function(event) {
-									A.one('#<portlet:namespace />importFm').reset();
-									A.one('#<portlet:namespace />portletErrorMessage').hide();
-									A.one('#<portlet:namespace />portletSuccessMessage').hide();
-								}
-							},
-							toolbars: {
-								footer: buttons,
-								header: buttonClose
+				<portlet:namespace />importDialog = Liferay.Util.Window.getWindow({
+					dialog: {
+						bodyContent: importCalendarContainer.html(),
+						modal: true,
+						on: {
+							visibleChange: function(event) {
+								A.one('#<portlet:namespace />importFm').reset();
+								A.one(
+									'#<portlet:namespace />portletErrorMessage'
+								).hide();
+								A.one(
+									'#<portlet:namespace />portletSuccessMessage'
+								).hide();
 							}
 						},
-						title: '<liferay-ui:message key="import" />'
-					}
-				).render();
+						toolbars: {
+							footer: buttons,
+							header: buttonClose
+						}
+					},
+					title: '<liferay-ui:message key="import" />'
+				}).render();
 			}
 
 			<portlet:namespace />importDialog.show();

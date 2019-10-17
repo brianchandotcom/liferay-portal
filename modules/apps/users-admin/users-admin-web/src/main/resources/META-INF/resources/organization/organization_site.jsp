@@ -291,10 +291,21 @@ if (organization != null) {
 					return currentValue != '';
 				}
 
-				Liferay.Util.toggleBoxes('<portlet:namespace />site', '<portlet:namespace />siteTemplates');
+				Liferay.Util.toggleBoxes(
+					'<portlet:namespace />site',
+					'<portlet:namespace />siteTemplates'
+				);
 
-				Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');
-				Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />privateLayoutSetPrototypeIdOptions');
+				Liferay.Util.toggleSelectBox(
+					'<portlet:namespace />publicLayoutSetPrototypeId',
+					<portlet:namespace />isVisible,
+					'<portlet:namespace />publicLayoutSetPrototypeIdOptions'
+				);
+				Liferay.Util.toggleSelectBox(
+					'<portlet:namespace />privateLayoutSetPrototypeId',
+					<portlet:namespace />isVisible,
+					'<portlet:namespace />privateLayoutSetPrototypeIdOptions'
+				);
 			</aui:script>
 		</c:if>
 	</c:when>

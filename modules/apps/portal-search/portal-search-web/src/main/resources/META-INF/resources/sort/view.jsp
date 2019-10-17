@@ -64,23 +64,25 @@ SortDisplayContext sortDisplayContext = (SortDisplayContext)java.util.Objects.re
 </c:choose>
 
 <aui:script use="liferay-search-sort-util">
-AUI().ready(
-	'aui-base',
-	"node",
-	'event',
-	function(A) {
-		A.one("#<portlet:namespace />sortSelection").on(
-			"change",
-			function() {
-				var selections = [];
+AUI().ready('aui-base', 'node', 'event', function(A) {
+	A.one('#<portlet:namespace />sortSelection').on('change', function() {
+		var selections = [];
 
-				var sortSelect = A.one("#<portlet:namespace />sortSelection").get('value');
+		var sortSelect = A.one('#<portlet:namespace />sortSelection').get(
+			'value'
+		);
 
-				selections.push(sortSelect);
+		selections.push(sortSelect);
 
-				var key = A.one("#<portlet:namespace />sort-parameter-name").get('value');
+		var key = A.one('#<portlet:namespace />sort-parameter-name').get(
+			'value'
+		);
 
-				document.location.search = Liferay.Search.SortUtil.updateQueryString(key, selections, document.location.search);
-			});
+		document.location.search = Liferay.Search.SortUtil.updateQueryString(
+			key,
+			selections,
+			document.location.search
+		);
 	});
+});
 </aui:script>

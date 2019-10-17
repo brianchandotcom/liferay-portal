@@ -497,51 +497,52 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 </div>
 
 <aui:script require='<%= npmResolvedPackageName + "/repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser.es as ItemSelectorRepositoryEntryBrowser" %>'>
-	var itemSelector = new ItemSelectorRepositoryEntryBrowser.default(
-		{
-			closeCaption: '<%= UnicodeLanguageUtil.get(request, tabName) %>',
+	var itemSelector = new ItemSelectorRepositoryEntryBrowser.default({
+		closeCaption: '<%= UnicodeLanguageUtil.get(request, tabName) %>',
 
-			<c:if test="<%= uploadURL != null %>">
+		<c:if test="<%= uploadURL != null %>">
 
-				<%
-				String imageEditorPortletId = PortletProviderUtil.getPortletId(Image.class.getName(), PortletProvider.Action.EDIT);
-				%>
+			<%
+			String imageEditorPortletId = PortletProviderUtil.getPortletId(Image.class.getName(), PortletProvider.Action.EDIT);
+			%>
 
-				<c:if test="<%= Validator.isNotNull(imageEditorPortletId) %>">
-					<liferay-portlet:renderURL portletName="<%= imageEditorPortletId %>" var="viewImageEditorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<liferay-portlet:param name="mvcRenderCommandName" value="/image_editor/view" />
-					</liferay-portlet:renderURL>
+			<c:if test="<%= Validator.isNotNull(imageEditorPortletId) %>">
+				<liferay-portlet:renderURL portletName="<%= imageEditorPortletId %>" var="viewImageEditorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<liferay-portlet:param name="mvcRenderCommandName" value="/image_editor/view" />
+				</liferay-portlet:renderURL>
 
-					editItemURL: '<%= viewImageEditorURL.toString() %>',
-				</c:if>
+				editItemURL: '<%= viewImageEditorURL.toString() %>',
 			</c:if>
+		</c:if>
 
-			maxFileSize: '<%= maxFileSize %>',
+		maxFileSize: '<%= maxFileSize %>',
 
-			rootNode: '#<%= randomNamespace %>ItemSelectorContainer',
+		rootNode: '#<%= randomNamespace %>ItemSelectorContainer',
 
-			validExtensions: '<%= ListUtil.isEmpty(extensions) ? "*" : StringUtil.merge(extensions) %>'
+		validExtensions:
+			'<%= ListUtil.isEmpty(extensions) ? "*" : StringUtil.merge(extensions) %>',
 
-			<c:if test="<%= uploadURL != null %>">
+		<c:if test="<%= uploadURL != null %>">
 
-				<%
-				String returnType = ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType);
+			<%
+			String returnType = ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType);
 
-				uploadURL.setParameter("returnType", returnType);
-				%>
+			uploadURL.setParameter("returnType", returnType);
+			%>
 
-				, uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(returnType) %>',
-				uploadItemURL: '<%= uploadURL.toString() %>'
-			</c:if>
-		}
-	);
+			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(returnType) %>',
+			uploadItemURL: '<%= uploadURL.toString() %>'
+		</c:if>
+	});
 
-	itemSelector.on(
-		'selectedItem',
-		function(event) {
-			Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', event);
+	itemSelector.on('selectedItem', function(event) {
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= itemSelectedEventName %>',
+			event
+		);
 
-			Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>AddItem');
-		}
-	);
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= itemSelectedEventName %>AddItem'
+		);
+	});
 </aui:script>

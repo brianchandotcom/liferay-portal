@@ -163,13 +163,11 @@
 </liferay-frontend:edit-form>
 
 <aui:script use="liferay-auto-fields">
-	new Liferay.AutoFields(
-		{
-			contentBox: '#<portlet:namespace />subscriptions',
-			fieldIndexes: '<portlet:namespace />subscriptionIndexes',
-			namespace: '<portlet:namespace />',
-			sortable: true,
-			sortableHandle: '.field-row'
-		}
-	).render();
+	new Liferay.AutoFields({
+		contentBox: '#<portlet:namespace />subscriptions',
+		fieldIndexes: '<portlet:namespace />subscriptionIndexes',
+		namespace: '<portlet:namespace />',
+		sortable: true,
+		sortableHandle: '.field-row'
+	}).render();
 </aui:script>

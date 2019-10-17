@@ -119,26 +119,24 @@ if (organization != null) {
 </div>
 
 <aui:script use="liferay-dynamic-select">
-	new Liferay.DynamicSelect(
-		[
-			{
-				select: '<portlet:namespace />countryId',
-				selectData: Liferay.Address.getCountries,
-				selectDesc: 'nameCurrentValue',
-				selectId: 'countryId',
-				selectSort: '<%= true %>',
-				selectVal: '<%= countryId %>'
-			},
-			{
-				select: '<portlet:namespace />regionId',
-				selectData: Liferay.Address.getRegions,
-				selectDesc: 'name',
-				selectDisableOnEmpty: true,
-				selectId: 'regionId',
-				selectVal: '<%= regionId %>'
-			}
-		]
-	);
+	new Liferay.DynamicSelect([
+		{
+			select: '<portlet:namespace />countryId',
+			selectData: Liferay.Address.getCountries,
+			selectDesc: 'nameCurrentValue',
+			selectId: 'countryId',
+			selectSort: '<%= true %>',
+			selectVal: '<%= countryId %>'
+		},
+		{
+			select: '<portlet:namespace />regionId',
+			selectData: Liferay.Address.getRegions,
+			selectDesc: 'name',
+			selectDisableOnEmpty: true,
+			selectId: 'regionId',
+			selectVal: '<%= regionId %>'
+		}
+	]);
 </aui:script>
 
 <c:if test="<%= organization == null %>">
@@ -146,33 +144,33 @@ if (organization != null) {
 		var typeSelect = document.getElementById('<portlet:namespace />type');
 
 		if (typeSelect) {
-			typeSelect.addEventListener(
-				'change',
-				function(event) {
-					var countryDiv = document.getElementById('<portlet:namespace />countryDiv');
+			typeSelect.addEventListener('change', function(event) {
+				var countryDiv = document.getElementById(
+					'<portlet:namespace />countryDiv'
+				);
 
-					if (countryDiv) {
+				if (countryDiv) {
 
-						<%
-						for (String curType : organizationsTypes) {
-						%>
+					<%
+					for (String curType : organizationsTypes) {
+					%>
 
-							if (event.currentTarget.value === '<%= curType %>') {
-								if (!<%= OrganizationLocalServiceUtil.isCountryEnabled(curType) %>) {
-									countryDiv.classList.add('hide');
-								}
-								else {
-									countryDiv.classList.remove('hide');
-								}
+						if (event.currentTarget.value === '<%= curType %>') {
+							if (
+								!<%= OrganizationLocalServiceUtil.isCountryEnabled(curType) %>
+							) {
+								countryDiv.classList.add('hide');
+							} else {
+								countryDiv.classList.remove('hide');
 							}
-
-						<%
 						}
-						%>
 
+					<%
 					}
+					%>
+
 				}
-			);
+			});
 		}
 	</aui:script>
 </c:if>

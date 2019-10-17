@@ -110,57 +110,53 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script>
-	var selectKBObjectButton = document.getElementById('<portlet:namespace />selectKBObjectButton');
+	var selectKBObjectButton = document.getElementById(
+		'<portlet:namespace />selectKBObjectButton'
+	);
 
 	if (selectKBObjectButton) {
-		selectKBObjectButton.addEventListener(
-			'click',
-			function(event) {
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							destroyOnHide: true,
-							modal: true,
-							width: 680
-						},
-						id: '<portlet:namespace />selectKBObject',
-						title: '<liferay-ui:message key="select-parent" />',
-
-						<liferay-portlet:renderURL var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="mvcPath" value='<%= templatePath + "select_parent.jsp" %>' />
-							<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
-							<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
-							<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
-							<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
-							<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
-							<portlet:param name="priority" value="<%= String.valueOf(priority) %>" />
-							<portlet:param name="status" value="<%= String.valueOf(status) %>" />
-							<portlet:param name="targetStatus" value="<%= String.valueOf(targetStatus) %>" />
-						</liferay-portlet:renderURL>
-
-						uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>'
+		selectKBObjectButton.addEventListener('click', function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						destroyOnHide: true,
+						modal: true,
+						width: 680
 					},
-					function(event) {
-						Liferay.Util.setFormValues(
-							document.<portlet:namespace />fm,
-							{
-								parentPriority: event.priority,
-								parentResourceClassNameId: event.resourceclassnameid
-							}
-						);
+					id: '<portlet:namespace />selectKBObject',
+					title: '<liferay-ui:message key="select-parent" />',
 
-						var folderData = {
-							idString: 'parentResourcePrimKey',
-							idValue: event.resourceprimkey,
-							nameString: 'parentTitle',
-							nameValue: event.title
-						};
+					<liferay-portlet:renderURL var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="mvcPath" value='<%= templatePath + "select_parent.jsp" %>' />
+						<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+						<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
+						<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
+						<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
+						<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
+						<portlet:param name="priority" value="<%= String.valueOf(priority) %>" />
+						<portlet:param name="status" value="<%= String.valueOf(status) %>" />
+						<portlet:param name="targetStatus" value="<%= String.valueOf(targetStatus) %>" />
+					</liferay-portlet:renderURL>
 
-						Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-					}
-				);
-			}
-		);
+					uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>'
+				},
+				function(event) {
+					Liferay.Util.setFormValues(document.<portlet:namespace />fm, {
+						parentPriority: event.priority,
+						parentResourceClassNameId: event.resourceclassnameid
+					});
+
+					var folderData = {
+						idString: 'parentResourcePrimKey',
+						idValue: event.resourceprimkey,
+						nameString: 'parentTitle',
+						nameValue: event.title
+					};
+
+					Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+				}
+			);
+		});
 	}
 </aui:script>

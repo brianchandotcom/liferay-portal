@@ -85,5 +85,8 @@
 </liferay-frontend:edit-form>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />showAssetCount', '<portlet:namespace />assetCountOptions');
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />showAssetCount',
+		'<portlet:namespace />assetCountOptions'
+	);
 </aui:script>

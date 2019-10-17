@@ -210,63 +210,55 @@ while (manageableCalendarsIterator.hasNext()) {
 %>
 
 <aui:script use="liferay-calendar-container,liferay-calendar-remote-services,liferay-component">
-	Liferay.component(
-		'<portlet:namespace />calendarContainer',
-		function() {
-			var calendarContainer = new Liferay.CalendarContainer(
-				{
-					groupCalendarResourceId: <%= groupCalendarResource.getCalendarResourceId() %>,
+	Liferay.component('<portlet:namespace />calendarContainer', function() {
+		var calendarContainer = new Liferay.CalendarContainer({
+			groupCalendarResourceId: <%= groupCalendarResource.getCalendarResourceId() %>,
 
-					<c:if test="<%= userCalendarResource != null %>">
-						userCalendarResourceId: <%= userCalendarResource.getCalendarResourceId() %>,
-					</c:if>
+			<c:if test="<%= userCalendarResource != null %>">
+				userCalendarResourceId: <%= userCalendarResource.getCalendarResourceId() %>,
+			</c:if>
 
-					namespace: '<portlet:namespace />'
-				}
-			);
+			namespace: '<portlet:namespace />'
+		});
 
-			var destroyInstance = function(event) {
-				if (event.portletId === '<%= portletDisplay.getId() %>') {
-					calendarContainer.destroy();
+		var destroyInstance = function(event) {
+			if (event.portletId === '<%= portletDisplay.getId() %>') {
+				calendarContainer.destroy();
 
-					Liferay.component('<portlet:namespace />calendarContainer', null);
-					Liferay.detach('destroyPortlet', destroyInstance);
-				}
-			};
+				Liferay.component('<portlet:namespace />calendarContainer', null);
+				Liferay.detach('destroyPortlet', destroyInstance);
+			}
+		};
 
-			Liferay.on('destroyPortlet', destroyInstance);
+		Liferay.on('destroyPortlet', destroyInstance);
 
-			return calendarContainer;
-		}
-	);
+		return calendarContainer;
+	});
 
-	Liferay.component(
-		'<portlet:namespace />remoteServices',
-		function() {
-			var remoteServices = new Liferay.CalendarRemoteServices(
-				{
-					baseActionURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.ACTION_PHASE) %>',
-					baseResourceURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.RESOURCE_PHASE) %>',
-					invokerURL: themeDisplay.getPathContext() + '/api/jsonws/invoke',
-					namespace: '<portlet:namespace />'
-				}
-			);
+	Liferay.component('<portlet:namespace />remoteServices', function() {
+		var remoteServices = new Liferay.CalendarRemoteServices({
+			baseActionURL:
+				'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.ACTION_PHASE) %>',
+			baseResourceURL:
+				'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.RESOURCE_PHASE) %>',
+			invokerURL: themeDisplay.getPathContext() + '/api/jsonws/invoke',
+			namespace: '<portlet:namespace />'
+		});
 
-			var destroyInstance = function(event) {
-				if (event.portletId === '<%= portletDisplay.getId() %>') {
-					remoteServices.destroy();
+		var destroyInstance = function(event) {
+			if (event.portletId === '<%= portletDisplay.getId() %>') {
+				remoteServices.destroy();
 
-					Liferay.component('<portlet:namespace />remoteServices', null);
+				Liferay.component('<portlet:namespace />remoteServices', null);
 
-					Liferay.detach('destroyPortlet', destroyInstance);
-				}
-			};
+				Liferay.detach('destroyPortlet', destroyInstance);
+			}
+		};
 
-			Liferay.on('destroyPortlet', destroyInstance);
+		Liferay.on('destroyPortlet', destroyInstance);
 
-			return remoteServices;
-		}
-	);
+		return remoteServices;
+	});
 </aui:script>
 
 <liferay-portlet:actionURL name="updateFormCalendarBooking" var="updateFormCalendarBookingURL" />
@@ -557,7 +549,9 @@ while (manageableCalendarsIterator.hasNext()) {
 
 		if (!answers.cancel) {
 			A.one('#<portlet:namespace />allFollowing').val(!!answers.allFollowing);
-			A.one('#<portlet:namespace />updateCalendarBookingInstance').val(!!answers.updateInstance);
+			A.one('#<portlet:namespace />updateCalendarBookingInstance').val(
+				!!answers.updateInstance
+			);
 
 			submitForm(document.<portlet:namespace />fm);
 		}
@@ -570,163 +564,197 @@ while (manageableCalendarsIterator.hasNext()) {
 			var A = AUI();
 
 			<c:if test="<%= invitable %>">
-				var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
+				var calendarContainer = Liferay.component(
+					'<portlet:namespace />calendarContainer'
+				);
 
-				var childCalendarIds = A.Object.keys(calendarContainer.get('availableCalendars'));
+				var childCalendarIds = A.Object.keys(
+					calendarContainer.get('availableCalendars')
+				);
 
 				var calendarId = A.one('#<portlet:namespace />calendarId').val();
 
-				A.Array.remove(childCalendarIds, A.Array.indexOf(childCalendarIds, calendarId));
+				A.Array.remove(
+					childCalendarIds,
+					A.Array.indexOf(childCalendarIds, calendarId)
+				);
 
-				A.one('#<portlet:namespace />childCalendarIds').val(childCalendarIds.join(','));
+				A.one('#<portlet:namespace />childCalendarIds').val(
+					childCalendarIds.join(',')
+				);
 
-				A.one('#<portlet:namespace />reinvitableCalendarIds').val(<portlet:namespace />reinvitableCalendarIds.join(','));
+				A.one('#<portlet:namespace />reinvitableCalendarIds').val(
+					<portlet:namespace />reinvitableCalendarIds.join(',')
+				);
 			</c:if>
 
-			Liferay.CalendarMessageUtil.promptSchedulerEventUpdate(
-				{
-					calendarName: '<%= HtmlUtil.escapeJS(calendar.getName(locale)) %>',
-					hasChild: <%= hasChildCalendarBookings %>,
-					masterBooking: <%= masterBooking %>,
-					recurring: <%= recurring %>,
-					resolver: <portlet:namespace />resolver
-				}
-			);
+			Liferay.CalendarMessageUtil.promptSchedulerEventUpdate({
+				calendarName: '<%= HtmlUtil.escapeJS(calendar.getName(locale)) %>',
+				hasChild: <%= hasChildCalendarBookings %>,
+				masterBooking: <%= masterBooking %>,
+				recurring: <%= recurring %>,
+				resolver: <portlet:namespace />resolver
+			});
 		},
 		['liferay-calendar-message-util', 'json']
 	);
 
-	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />title);
+	Liferay.Util.focusFormField(
+		document.<portlet:namespace />fm.<portlet:namespace />title
+	);
 
 	<%
 	String titleCurrentValue = ParamUtil.getString(request, "titleCurrentValue");
 	%>
 
 	<c:if test="<%= Validator.isNotNull(titleCurrentValue) && ((calendarBooking == null) || !Objects.equals(titleCurrentValue, calendarBooking.getTitle(locale))) %>">
-		document.<portlet:namespace />fm.<portlet:namespace />title.value = '<%= HtmlUtil.escapeJS(titleCurrentValue) %>';
-		document.<portlet:namespace />fm.<portlet:namespace />title_<%= themeDisplay.getLanguageId() %>.value = '<%= HtmlUtil.escapeJS(titleCurrentValue) %>';
+		document.<portlet:namespace />fm.<portlet:namespace />title.value =
+			'<%= HtmlUtil.escapeJS(titleCurrentValue) %>';
+		document.<portlet:namespace />fm.<portlet:namespace />title_<%= themeDisplay.getLanguageId() %>.value =
+			'<%= HtmlUtil.escapeJS(titleCurrentValue) %>';
 	</c:if>
 </aui:script>
 
 <aui:script use="json,liferay-calendar-date-picker-sanitizer,liferay-calendar-interval-selector,liferay-calendar-interval-selector-scheduler-event-link,liferay-calendar-list,liferay-calendar-recurrence-util,liferay-calendar-reminders,liferay-calendar-simple-menu,liferay-calendar-util">
-	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
+	var calendarContainer = Liferay.component(
+		'<portlet:namespace />calendarContainer'
+	);
 
 	var defaultCalendarId = <%= calendarId %>;
 
 	var scheduler = window.<portlet:namespace />scheduler;
 
-	A.one('#<portlet:namespace />saveButton').on(
-		'click',
-		function() {
-			A.one('#<portlet:namespace />workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
-		}
-	);
+	A.one('#<portlet:namespace />saveButton').on('click', function() {
+		A.one('#<portlet:namespace />workflowAction').val(
+			'<%= WorkflowConstants.ACTION_SAVE_DRAFT %>'
+		);
+	});
 
-	A.one('#<portlet:namespace />publishButton').on(
-		'click',
-		function() {
-			A.one('#<portlet:namespace />workflowAction').val('<%= WorkflowConstants.ACTION_PUBLISH %>');
-		}
-	);
+	A.one('#<portlet:namespace />publishButton').on('click', function() {
+		A.one('#<portlet:namespace />workflowAction').val(
+			'<%= WorkflowConstants.ACTION_PUBLISH %>'
+		);
+	});
 
 	var syncCalendarsMap = function() {
-		calendarContainer.syncCalendarsMap(
-			[
-				window.<portlet:namespace />calendarListAccepted,
-				window.<portlet:namespace />calendarListDeclined,
+		calendarContainer.syncCalendarsMap([
+			window.<portlet:namespace />calendarListAccepted,
+			window.<portlet:namespace />calendarListDeclined,
 
-				<c:if test="<%= calendarBooking != null %>">
-					window.<portlet:namespace />calendarListMaybe,
-				</c:if>
+			<c:if test="<%= calendarBooking != null %>">
+				window.<portlet:namespace />calendarListMaybe,
+			</c:if>
 
-				window.<portlet:namespace />calendarListPending
-			]
-		);
+			window.<portlet:namespace />calendarListPending
+		]);
 
-		A.each(
-			calendarContainer.get('availableCalendars'),
-			function(item, index) {
-				item.set('disabled', true);
-			}
-		);
+		A.each(calendarContainer.get('availableCalendars'), function(item, index) {
+			item.set('disabled', true);
+		});
 	};
 
-	var calendarsMenu = calendarContainer.getCalendarsMenu(
-		{
-			content: '#<portlet:namespace />schedulerContainer',
-			defaultCalendarId: defaultCalendarId,
-			header: '#<portlet:namespace />checkAvailability',
-			invitable: <%= invitable %>,
-			scheduler: scheduler
-		}
-	);
+	var calendarsMenu = calendarContainer.getCalendarsMenu({
+		content: '#<portlet:namespace />schedulerContainer',
+		defaultCalendarId: defaultCalendarId,
+		header: '#<portlet:namespace />checkAvailability',
+		invitable: <%= invitable %>,
+		scheduler: scheduler
+	});
 
-	window.<portlet:namespace />calendarListPending = new Liferay.CalendarList(
-		{
-			after: {
-				calendarsChange: function(event) {
-					var instance = this;
+	window.<portlet:namespace />calendarListPending = new Liferay.CalendarList({
+		after: {
+			calendarsChange: function(event) {
+				var instance = this;
 
-					A.one('#<portlet:namespace />pendingCounter').html(event.newVal.length);
+				A.one('#<portlet:namespace />pendingCounter').html(
+					event.newVal.length
+				);
 
-					syncCalendarsMap();
+				syncCalendarsMap();
 
-					scheduler.load();
-				},
-				'scheduler-calendar:visibleChange': syncCalendarsMap
+				scheduler.load();
 			},
-			boundingBox: '#<portlet:namespace />calendarListPending',
-			calendars: <%= pendingCalendarsJSONArray %>,
-			scheduler: <portlet:namespace />scheduler,
-			simpleMenu: calendarsMenu,
-			strings: {
-				emptyMessage: '<liferay-ui:message key="no-pending-invites" />'
-			}
+			'scheduler-calendar:visibleChange': syncCalendarsMap
+		},
+		boundingBox: '#<portlet:namespace />calendarListPending',
+		calendars: <%= pendingCalendarsJSONArray %>,
+		scheduler: <portlet:namespace />scheduler,
+		simpleMenu: calendarsMenu,
+		strings: {
+			emptyMessage: '<liferay-ui:message key="no-pending-invites" />'
 		}
-	).render();
+	}).render();
 
-	window.<portlet:namespace />calendarListAccepted = new Liferay.CalendarList(
-		{
-			after: {
-				calendarsChange: function(event) {
-					var instance = this;
+	window.<portlet:namespace />calendarListAccepted = new Liferay.CalendarList({
+		after: {
+			calendarsChange: function(event) {
+				var instance = this;
 
-					A.one('#<portlet:namespace />acceptedCounter').html(event.newVal.length);
+				A.one('#<portlet:namespace />acceptedCounter').html(
+					event.newVal.length
+				);
 
-					syncCalendarsMap();
+				syncCalendarsMap();
 
-					scheduler.load();
-				},
-				'scheduler-calendar:visibleChange': syncCalendarsMap
+				scheduler.load();
 			},
-			boundingBox: '#<portlet:namespace />calendarListAccepted',
-			calendars: <%= acceptedCalendarsJSONArray %>,
-			scheduler: <portlet:namespace />scheduler,
-			simpleMenu: calendarsMenu,
-			strings: {
-				emptyMessage: '<liferay-ui:message key="no-accepted-invites" />'
-			}
+			'scheduler-calendar:visibleChange': syncCalendarsMap
+		},
+		boundingBox: '#<portlet:namespace />calendarListAccepted',
+		calendars: <%= acceptedCalendarsJSONArray %>,
+		scheduler: <portlet:namespace />scheduler,
+		simpleMenu: calendarsMenu,
+		strings: {
+			emptyMessage: '<liferay-ui:message key="no-accepted-invites" />'
 		}
-	).render();
+	}).render();
 
 	window.<portlet:namespace />reinvitableCalendarIds = [];
 
-	window.<portlet:namespace />calendarListDeclined = new Liferay.CalendarList(
-		{
+	window.<portlet:namespace />calendarListDeclined = new Liferay.CalendarList({
+		after: {
+			calendarRemoved: function(event) {
+				var calendar = event.calendar;
+
+				if (calendar) {
+					var calendarId = calendar.get('calendarId');
+
+					window.<portlet:namespace />reinvitableCalendarIds.push(
+						calendarId
+					);
+				}
+			},
+			calendarsChange: function(event) {
+				var instance = this;
+
+				A.one('#<portlet:namespace />declinedCounter').html(
+					event.newVal.length
+				);
+
+				syncCalendarsMap();
+
+				scheduler.load();
+			},
+			'scheduler-calendar:visibleChange': syncCalendarsMap
+		},
+		boundingBox: '#<portlet:namespace />calendarListDeclined',
+		calendars: <%= declinedCalendarsJSONArray %>,
+		scheduler: <portlet:namespace />scheduler,
+		simpleMenu: calendarsMenu,
+		strings: {
+			emptyMessage: '<liferay-ui:message key="no-declined-invites" />'
+		}
+	}).render();
+
+	<c:if test="<%= calendarBooking != null %>">
+		window.<portlet:namespace />calendarListMaybe = new Liferay.CalendarList({
 			after: {
-				calendarRemoved: function(event) {
-					var calendar = event.calendar;
-
-					if (calendar) {
-						var calendarId = calendar.get('calendarId');
-
-						window.<portlet:namespace />reinvitableCalendarIds.push(calendarId);
-					}
-				},
 				calendarsChange: function(event) {
 					var instance = this;
 
-					A.one('#<portlet:namespace />declinedCounter').html(event.newVal.length);
+					A.one('#<portlet:namespace />maybeCounter').html(
+						event.newVal.length
+					);
 
 					syncCalendarsMap();
 
@@ -734,95 +762,82 @@ while (manageableCalendarsIterator.hasNext()) {
 				},
 				'scheduler-calendar:visibleChange': syncCalendarsMap
 			},
-			boundingBox: '#<portlet:namespace />calendarListDeclined',
-			calendars: <%= declinedCalendarsJSONArray %>,
+			boundingBox: '#<portlet:namespace />calendarListMaybe',
+			calendars: <%= maybeCalendarsJSONArray %>,
 			scheduler: <portlet:namespace />scheduler,
 			simpleMenu: calendarsMenu,
 			strings: {
-				emptyMessage: '<liferay-ui:message key="no-declined-invites" />'
+				emptyMessage: '<liferay-ui:message key="no-outstanding-invites" />'
 			}
-		}
-	).render();
-
-	<c:if test="<%= calendarBooking != null %>">
-		window.<portlet:namespace />calendarListMaybe = new Liferay.CalendarList(
-			{
-				after: {
-					calendarsChange: function(event) {
-						var instance = this;
-
-						A.one('#<portlet:namespace />maybeCounter').html(event.newVal.length);
-
-						syncCalendarsMap();
-
-						scheduler.load();
-					},
-					'scheduler-calendar:visibleChange': syncCalendarsMap
-				},
-				boundingBox: '#<portlet:namespace />calendarListMaybe',
-				calendars: <%= maybeCalendarsJSONArray %>,
-				scheduler: <portlet:namespace />scheduler,
-				simpleMenu: calendarsMenu,
-				strings: {
-					emptyMessage: '<liferay-ui:message key="no-outstanding-invites" />'
-				}
-			}
-		).render();
+		}).render();
 	</c:if>
 
 	syncCalendarsMap();
 
-	new Liferay.DatePickerSanitizer(
-		{
-			datePickers: [
-				Liferay.component('<portlet:namespace />endTimeDatePicker'),
-				Liferay.component('<portlet:namespace />endTimeDatePicker')
-			],
-			defaultDate: new Date(<%= endTimeYear %>, <%= endTimeMonth %>, <%= endTimeDay %>, <%= endTimeHour %>, <%= endTimeMinute %>),
-			maximumDate: new Date(2099, 11, 31, 23, 59, 59, 999),
-			minimumDate: new Date(0)
-		}
-	);
+	new Liferay.DatePickerSanitizer({
+		datePickers: [
+			Liferay.component('<portlet:namespace />endTimeDatePicker'),
+			Liferay.component('<portlet:namespace />endTimeDatePicker')
+		],
+		defaultDate: new Date(
+			<%= endTimeYear %>,
+			<%= endTimeMonth %>,
+			<%= endTimeDay %>,
+			<%= endTimeHour %>,
+			<%= endTimeMinute %>
+		),
+		maximumDate: new Date(2099, 11, 31, 23, 59, 59, 999),
+		minimumDate: new Date(0)
+	});
 
-	var intervalSelector = new Liferay.IntervalSelector(
-		{
-			endDatePicker: Liferay.component('<portlet:namespace />endTimeDatePicker'),
-			endTimePicker: Liferay.component('<portlet:namespace />endTimeTimeTimePicker'),
-			startDatePicker: Liferay.component('<portlet:namespace />startTimeDatePicker'),
-			startTimePicker: Liferay.component('<portlet:namespace />startTimeTimeTimePicker')
-		}
-	);
+	var intervalSelector = new Liferay.IntervalSelector({
+		endDatePicker: Liferay.component('<portlet:namespace />endTimeDatePicker'),
+		endTimePicker: Liferay.component(
+			'<portlet:namespace />endTimeTimeTimePicker'
+		),
+		startDatePicker: Liferay.component(
+			'<portlet:namespace />startTimeDatePicker'
+		),
+		startTimePicker: Liferay.component(
+			'<portlet:namespace />startTimeTimeTimePicker'
+		)
+	});
 
-	var placeholderSchedulerEvent = new Liferay.SchedulerEvent(
-		{
-			borderColor: '#000',
-			borderStyle: 'dashed',
-			borderWidth: '2px',
-			color: '#F8F8F8',
-			content: '',
-			editingEvent: true,
-			endDate: new Date(<%= endTimeYear %>, <%= endTimeMonth %>, <%= endTimeDay %>, <%= endTimeHour %>, <%= endTimeMinute %>),
-			preventDateChange: true,
-			scheduler: scheduler,
-			startDate: new Date(<%= startTimeYear %>, <%= startTimeMonth %>, <%= startTimeDay %>, <%= startTimeHour %>, <%= startTimeMinute %>)
-		}
-	);
+	var placeholderSchedulerEvent = new Liferay.SchedulerEvent({
+		borderColor: '#000',
+		borderStyle: 'dashed',
+		borderWidth: '2px',
+		color: '#F8F8F8',
+		content: '',
+		editingEvent: true,
+		endDate: new Date(
+			<%= endTimeYear %>,
+			<%= endTimeMonth %>,
+			<%= endTimeDay %>,
+			<%= endTimeHour %>,
+			<%= endTimeMinute %>
+		),
+		preventDateChange: true,
+		scheduler: scheduler,
+		startDate: new Date(
+			<%= startTimeYear %>,
+			<%= startTimeMonth %>,
+			<%= startTimeDay %>,
+			<%= startTimeHour %>,
+			<%= startTimeMinute %>
+		)
+	});
 
-	new Liferay.IntervalSelectorSchedulerEventLink(
-		{
-			intervalSelector: intervalSelector,
-			schedulerEvent: placeholderSchedulerEvent
-		}
-	);
+	new Liferay.IntervalSelectorSchedulerEventLink({
+		intervalSelector: intervalSelector,
+		schedulerEvent: placeholderSchedulerEvent
+	});
 
-	scheduler.after(
-		'*:load',
-		function(event) {
-			scheduler.addEvents(placeholderSchedulerEvent);
+	scheduler.after('*:load', function(event) {
+		scheduler.addEvents(placeholderSchedulerEvent);
 
-			scheduler.syncEventsUI();
-		}
-	);
+		scheduler.syncEventsUI();
+	});
 
 	<c:if test="<%= invitable %>">
 		var manageableCalendars = {};
@@ -833,43 +848,47 @@ while (manageableCalendarsIterator.hasNext()) {
 			}
 		);
 
-		A.one('#<portlet:namespace />calendarId').on(
-			'valueChange',
-			function(event) {
-				var calendarId = parseInt(event.target.val(), 10);
+		A.one('#<portlet:namespace />calendarId').on('valueChange', function(event) {
+			var calendarId = parseInt(event.target.val(), 10);
 
-				var calendar = manageableCalendars[calendarId];
+			var calendar = manageableCalendars[calendarId];
 
-				[
-					<portlet:namespace />calendarListAccepted,
-					<portlet:namespace />calendarListDeclined,
+			[
+				<portlet:namespace />calendarListAccepted,
+				<portlet:namespace />calendarListDeclined,
 
-					<c:if test="<%= calendarBooking != null %>">
-						<portlet:namespace />calendarListMaybe,
-					</c:if>
+				<c:if test="<%= calendarBooking != null %>">
+					<portlet:namespace />calendarListMaybe,
+				</c:if>
 
-					<portlet:namespace />calendarListPending
-				].forEach(
-					function(calendarList) {
-						calendarList.remove(calendarList.getCalendar(calendarId));
-						calendarList.remove(calendarList.getCalendar(defaultCalendarId));
-					}
+				<portlet:namespace />calendarListPending
+			].forEach(function(calendarList) {
+				calendarList.remove(calendarList.getCalendar(calendarId));
+				calendarList.remove(calendarList.getCalendar(defaultCalendarId));
+			});
+
+			<portlet:namespace />calendarListPending.add(calendar);
+
+			defaultCalendarId = calendarId;
+
+			if (calendar.hasWorkflowDefinitionLink) {
+				A.one('#<portlet:namespace />approvalProcessAlert').toggleClass(
+					'hide',
+					<%= !approved %>
 				);
-
-				<portlet:namespace />calendarListPending.add(calendar);
-
-				defaultCalendarId = calendarId;
-
-				if (calendar.hasWorkflowDefinitionLink) {
-					A.one('#<portlet:namespace />approvalProcessAlert').toggleClass('hide', <%= !approved %>);
-					A.one('#<portlet:namespace />publishButton').setContent('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "submit-for-publication")) %>');
-				}
-				else {
-					A.one('#<portlet:namespace />approvalProcessAlert').toggleClass('hide', true);
-					A.one('#<portlet:namespace />publishButton').setContent('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "publish")) %>');
-				}
+				A.one('#<portlet:namespace />publishButton').setContent(
+					'<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "submit-for-publication")) %>'
+				);
+			} else {
+				A.one('#<portlet:namespace />approvalProcessAlert').toggleClass(
+					'hide',
+					true
+				);
+				A.one('#<portlet:namespace />publishButton').setContent(
+					'<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "publish")) %>'
+				);
 			}
-		);
+		});
 
 		var inviteResourcesInput = A.one('#<portlet:namespace />inviteResource');
 
@@ -890,8 +909,13 @@ while (manageableCalendarsIterator.hasNext()) {
 		);
 
 		var addToList = function(calendar) {
-			if (calendar.classNameId == <%= ClassNameLocalServiceUtil.getClassNameId(CalendarResource.class) %>) {
-				var remoteServices = Liferay.component('<portlet:namespace />remoteServices');
+			if (
+				calendar.classNameId ==
+				<%= ClassNameLocalServiceUtil.getClassNameId(CalendarResource.class) %>
+			) {
+				var remoteServices = Liferay.component(
+					'<portlet:namespace />remoteServices'
+				);
 
 				remoteServices.hasExclusiveCalendarBooking(
 					calendar.calendarId,
@@ -900,35 +924,31 @@ while (manageableCalendarsIterator.hasNext()) {
 					function(result) {
 						if (result) {
 							<portlet:namespace />calendarListDeclined.add(calendar);
-						}
-						else {
+						} else {
 							<portlet:namespace />calendarListPending.add(calendar);
 						}
 					}
 				);
-			}
-			else {
+			} else {
 				<portlet:namespace />calendarListPending.add(calendar);
 			}
 		};
 	</c:if>
 
-	window.<portlet:namespace />reminders = new Liferay.Reminders(
-		{
-			portletNamespace: '<portlet:namespace />',
-			render: '#<portlet:namespace />reminders',
-			values: [
-				{
-					interval: <%= firstReminder %>,
-					type: '<%= HtmlUtil.escapeJS(firstReminderType) %>'
-				},
-				{
-					interval: <%= secondReminder %>,
-					type: '<%= HtmlUtil.escapeJS(secondReminderType) %>'
-				}
-			]
-		}
-	);
+	window.<portlet:namespace />reminders = new Liferay.Reminders({
+		portletNamespace: '<portlet:namespace />',
+		render: '#<portlet:namespace />reminders',
+		values: [
+			{
+				interval: <%= firstReminder %>,
+				type: '<%= HtmlUtil.escapeJS(firstReminderType) %>'
+			},
+			{
+				interval: <%= secondReminder %>,
+				type: '<%= HtmlUtil.escapeJS(secondReminderType) %>'
+			}
+		]
+	});
 
 	var allDayCheckbox = A.one('#<portlet:namespace />allDay');
 
@@ -938,53 +958,59 @@ while (manageableCalendarsIterator.hasNext()) {
 	defaultEndTimeJCalendar.add(java.util.Calendar.MINUTE, defaultDuration);
 	%>
 
-	var maxLength = Liferay.AUI.getDateFormat().replace(/%[mdY]/gm,'').length + 8;
+	var maxLength = Liferay.AUI.getDateFormat().replace(/%[mdY]/gm, '').length + 8;
 
 	A.one('#<portlet:namespace />endTime').set('maxLength', maxLength);
 	A.one('#<portlet:namespace />startTime').set('maxLength', maxLength);
 
-	allDayCheckbox.after(
-		'click',
-		function() {
-			var endDateContainer = A.one('#<portlet:namespace />endDateContainer');
-			var startDateContainer = A.one('#<portlet:namespace />startDateContainer');
+	allDayCheckbox.after('click', function() {
+		var endDateContainer = A.one('#<portlet:namespace />endDateContainer');
+		var startDateContainer = A.one('#<portlet:namespace />startDateContainer');
 
-			var endTimeHours;
-			var endTimeMinutes;
-			var startTimeHours;
-			var startTimeMinutes;
+		var endTimeHours;
+		var endTimeMinutes;
+		var startTimeHours;
+		var startTimeMinutes;
 
-			var checked = allDayCheckbox.get('checked');
+		var checked = allDayCheckbox.get('checked');
 
-			if (checked) {
-				placeholderSchedulerEvent.set('allDay', true);
+		if (checked) {
+			placeholderSchedulerEvent.set('allDay', true);
 
-				startTimeHours = 0;
-				startTimeMinutes = 0;
-				endTimeHours = 23;
-				endTimeMinutes = 59;
-			}
-			else {
-				placeholderSchedulerEvent.set('allDay', false);
+			startTimeHours = 0;
+			startTimeMinutes = 0;
+			endTimeHours = 23;
+			endTimeMinutes = 59;
+		} else {
+			placeholderSchedulerEvent.set('allDay', false);
 
-				endDateContainer.show();
+			endDateContainer.show();
 
-				startTimeHours = <%= defaultStartTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
-				startTimeMinutes = <%= defaultStartTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
-				endTimeHours = <%= defaultEndTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
-				endTimeMinutes = <%= defaultEndTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
-			}
-
-			updateTimePickersValues(startTimeHours, startTimeMinutes, endTimeHours, endTimeMinutes);
-
-			endDateContainer.toggleClass('allday-class-active', checked);
-			startDateContainer.toggleClass('allday-class-active', checked);
-
-			scheduler.syncEventsUI();
+			startTimeHours = <%= defaultStartTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
+			startTimeMinutes = <%= defaultStartTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
+			endTimeHours = <%= defaultEndTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
+			endTimeMinutes = <%= defaultEndTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
 		}
-	);
 
-	var updateTimePickersValues = function(startTimeHours, startTimeMinutes, endTimeHours, endTimeMinutes) {
+		updateTimePickersValues(
+			startTimeHours,
+			startTimeMinutes,
+			endTimeHours,
+			endTimeMinutes
+		);
+
+		endDateContainer.toggleClass('allday-class-active', checked);
+		startDateContainer.toggleClass('allday-class-active', checked);
+
+		scheduler.syncEventsUI();
+	});
+
+	var updateTimePickersValues = function(
+		startTimeHours,
+		startTimeMinutes,
+		endTimeHours,
+		endTimeMinutes
+	) {
 		var endDatePicker = intervalSelector.get('endDatePicker');
 		var startDatePicker = intervalSelector.get('startDatePicker');
 

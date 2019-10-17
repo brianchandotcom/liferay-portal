@@ -87,15 +87,13 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 
 <aui:script>
 	function <portlet:namespace />updateKBTemplate() {
-		Liferay.Util.postForm(
-			document.<portlet:namespace />fm,
-			{
-				data: {
-					'<%= Constants.CMD %>': '<%= (kbTemplate == null) ? Constants.ADD : Constants.UPDATE %>',
-					title: window.<portlet:namespace />titleEditor.getText(),
-					content: window.<portlet:namespace />contentEditor.getHTML()
-				}
+		Liferay.Util.postForm(document.<portlet:namespace />fm, {
+			data: {
+				<%= Constants.CMD %>:
+					'<%= (kbTemplate == null) ? Constants.ADD : Constants.UPDATE %>',
+				title: window.<portlet:namespace />titleEditor.getText(),
+				content: window.<portlet:namespace />contentEditor.getHTML()
 			}
-		);
+		});
 	}
 </aui:script>

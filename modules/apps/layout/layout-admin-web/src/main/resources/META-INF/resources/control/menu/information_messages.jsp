@@ -106,30 +106,28 @@ data.put("qa-id", "info");
 
 	var DOC = A.getDoc();
 
-	new A.Popover(
-		{
-			align: {
-					node: trigger,
-					points: [A.WidgetPositionAlign.TC, A.WidgetPositionAlign.BC]
-				},
-			bodyContent: A.one('#<%= portletNamespace %>infoContainer'),
-			constrain: true,
-			hideOn: [
-				{
-					eventName: 'key',
-					keyCode: 'esc',
-					node: DOC
-				},
-				{
-					eventName: 'clickoutside',
-					node: DOC
-				}
-			],
-			position: 'bottom',
-			trigger: trigger,
-			visible: false,
-			width: 300,
-			zIndex: Liferay.zIndex.POPOVER
-		}
-	).render();
+	new A.Popover({
+		align: {
+			node: trigger,
+			points: [A.WidgetPositionAlign.TC, A.WidgetPositionAlign.BC]
+		},
+		bodyContent: A.one('#<%= portletNamespace %>infoContainer'),
+		constrain: true,
+		hideOn: [
+			{
+				eventName: 'key',
+				keyCode: 'esc',
+				node: DOC
+			},
+			{
+				eventName: 'clickoutside',
+				node: DOC
+			}
+		],
+		position: 'bottom',
+		trigger: trigger,
+		visible: false,
+		width: 300,
+		zIndex: Liferay.zIndex.POPOVER
+	}).render();
 </aui:script>

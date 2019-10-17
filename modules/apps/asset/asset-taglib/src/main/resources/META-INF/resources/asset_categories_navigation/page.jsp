@@ -94,37 +94,33 @@ if (categoryId > 0) {
 %>
 
 <aui:script use="aui-tree-view">
-	var treeViews = A.all('#<%= namespace %>taglibAssetCategoriesNavigationPanel .lfr-asset-category-list-container');
-
-	treeViews.each(
-		function(item, index, collection) {
-			var assetCategoryList = item.one('.lfr-asset-category-list');
-
-			var treeView = new A.TreeView(
-				{
-					boundingBox: item,
-					contentBox: assetCategoryList,
-					type: 'normal'
-				}
-			).render();
-
-			var selected = assetCategoryList.one('.tree-node .tag-selected');
-
-			if (selected) {
-				var selectedChild = treeView.getNodeByChild(selected);
-
-				selectedChild.expand();
-
-				selectedChild.eachParent(
-					function(node) {
-						if (node instanceof A.TreeNode) {
-							node.expand();
-						}
-					}
-				);
-			}
-		}
+	var treeViews = A.all(
+		'#<%= namespace %>taglibAssetCategoriesNavigationPanel .lfr-asset-category-list-container'
 	);
+
+	treeViews.each(function(item, index, collection) {
+		var assetCategoryList = item.one('.lfr-asset-category-list');
+
+		var treeView = new A.TreeView({
+			boundingBox: item,
+			contentBox: assetCategoryList,
+			type: 'normal'
+		}).render();
+
+		var selected = assetCategoryList.one('.tree-node .tag-selected');
+
+		if (selected) {
+			var selectedChild = treeView.getNodeByChild(selected);
+
+			selectedChild.expand();
+
+			selectedChild.eachParent(function(node) {
+				if (node instanceof A.TreeNode) {
+					node.expand();
+				}
+			});
+		}
+	});
 </aui:script>
 
 <%!

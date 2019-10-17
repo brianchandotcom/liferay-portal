@@ -65,18 +65,13 @@ if (wikiPage != null) {
 	<aui:script use="liferay-util-window">
 		var viewRemovedAttachmentsLink = A.one('#view-removed-attachments-link');
 
-		viewRemovedAttachmentsLink.on(
-			'click',
-			function(event) {
-				Liferay.Util.openWindow(
-					{
-						id: '<portlet:namespace />openRemovedPageAttachments',
-						title: '<%= LanguageUtil.get(request, "removed-attachments") %>',
-						uri: '<%= viewTrashAttachmentsURL %>'
-					}
-				);
-			}
-		);
+		viewRemovedAttachmentsLink.on('click', function(event) {
+			Liferay.Util.openWindow({
+				id: '<portlet:namespace />openRemovedPageAttachments',
+				title: '<%= LanguageUtil.get(request, "removed-attachments") %>',
+				uri: '<%= viewTrashAttachmentsURL %>'
+			});
+		});
 	</aui:script>
 </c:if>
 

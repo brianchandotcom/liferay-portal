@@ -40,39 +40,49 @@ BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContex
 
 <aui:script>
 	var deleteEntries = function() {
-		if (<%= trashHelper.isTrashEnabled(scopeGroupId) %> || confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
+		if (
+			<%= trashHelper.isTrashEnabled(scopeGroupId) %> ||
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />'
+			)
+		) {
 			var form = document.getElementById('<portlet:namespace />fm');
 
 			if (form) {
 				form.setAttribute('method', 'post');
 
-				var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
+				var cmd = form.querySelector(
+					'#<portlet:namespace /><%= Constants.CMD %>'
+				);
 
 				if (cmd) {
-					cmd.setAttribute('value', '<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>');
+					cmd.setAttribute(
+						'value',
+						'<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>'
+					);
 
-					submitForm(form, '<portlet:actionURL name="/bookmarks/edit_entry" />');
+					submitForm(
+						form,
+						'<portlet:actionURL name="/bookmarks/edit_entry" />'
+					);
 				}
 			}
 		}
 	};
 
 	var ACTIONS = {
-		'deleteEntries': deleteEntries
+		deleteEntries: deleteEntries
 	};
 
-	Liferay.componentReady('bookmarksManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
+	Liferay.componentReady('bookmarksManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('actionItemClicked', function(event) {
+			var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action]();
+			}
+		});
+	});
 </aui:script>

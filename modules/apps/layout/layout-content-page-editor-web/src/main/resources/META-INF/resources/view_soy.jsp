@@ -66,29 +66,24 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 	);
 
 	var editModeComponents = {
-		'<%= portletNamespace + "disabledAreaMaskWrapper" %>': DisabledAreaMaskModule.default,
-		'<%= portletNamespace + "editModeWrapper" %>': EditModeWrapperModule.default
+		<%= portletNamespace + "disabledAreaMaskWrapper" %>:
+			DisabledAreaMaskModule.default,
+		<%= portletNamespace + "editModeWrapper" %>: EditModeWrapperModule.default
 	};
 
-	Object.keys(editModeComponents).forEach(
-		function(key) {
-			Liferay.component(
-				key,
-				new editModeComponents[key](
-					{
-						store: store
-					}
-				)
-			);
-		}
-	);
+	Object.keys(editModeComponents).forEach(function(key) {
+		Liferay.component(
+			key,
+			new editModeComponents[key]({
+				store: store
+			})
+		);
+	});
 
 	function handleDestroyPortlet() {
-		Object.keys(editModeComponents).forEach(
-			function(key) {
-				Liferay.destroyComponent(key);
-			}
-		);
+		Object.keys(editModeComponents).forEach(function(key) {
+			Liferay.destroyComponent(key);
+		});
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

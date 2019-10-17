@@ -28,65 +28,57 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 %>
 
 <aui:script use="liferay-calendar-container,liferay-calendar-remote-services,liferay-component">
-	Liferay.component(
-		'<portlet:namespace />calendarContainer',
-		function() {
-			var calendarContainer = new Liferay.CalendarContainer(
-				{
-					groupCalendarResourceId: <%= groupCalendarResource.getCalendarResourceId() %>,
+	Liferay.component('<portlet:namespace />calendarContainer', function() {
+		var calendarContainer = new Liferay.CalendarContainer({
+			groupCalendarResourceId: <%= groupCalendarResource.getCalendarResourceId() %>,
 
-					<c:if test="<%= userCalendarResource != null %>">
-						userCalendarResourceId: <%= userCalendarResource.getCalendarResourceId() %>,
-					</c:if>
+			<c:if test="<%= userCalendarResource != null %>">
+				userCalendarResourceId: <%= userCalendarResource.getCalendarResourceId() %>,
+			</c:if>
 
-					namespace: '<portlet:namespace />'
-				}
-			);
+			namespace: '<portlet:namespace />'
+		});
 
-			var destroyInstance = function(event) {
-				if (event.portletId === '<%= portletDisplay.getId() %>') {
-					calendarContainer.destroy();
+		var destroyInstance = function(event) {
+			if (event.portletId === '<%= portletDisplay.getId() %>') {
+				calendarContainer.destroy();
 
-					Liferay.component('<portlet:namespace />calendarContainer', null);
+				Liferay.component('<portlet:namespace />calendarContainer', null);
 
-					Liferay.detach('destroyPortlet', destroyInstance);
-				}
-			};
+				Liferay.detach('destroyPortlet', destroyInstance);
+			}
+		};
 
-			Liferay.on('destroyPortlet', destroyInstance);
+		Liferay.on('destroyPortlet', destroyInstance);
 
-			return calendarContainer;
-		}
-	);
+		return calendarContainer;
+	});
 
-	Liferay.component(
-		'<portlet:namespace />remoteServices',
-		function() {
-			var remoteServices = new Liferay.CalendarRemoteServices(
-				{
-					baseActionURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.ACTION_PHASE) %>',
-					baseResourceURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.RESOURCE_PHASE) %>',
-					invokerURL: themeDisplay.getPathContext() + '/api/jsonws/invoke',
-					namespace: '<portlet:namespace />',
-					userId: themeDisplay.getUserId()
-				}
-			);
+	Liferay.component('<portlet:namespace />remoteServices', function() {
+		var remoteServices = new Liferay.CalendarRemoteServices({
+			baseActionURL:
+				'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.ACTION_PHASE) %>',
+			baseResourceURL:
+				'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.RESOURCE_PHASE) %>',
+			invokerURL: themeDisplay.getPathContext() + '/api/jsonws/invoke',
+			namespace: '<portlet:namespace />',
+			userId: themeDisplay.getUserId()
+		});
 
-			var destroyInstance = function(event) {
-				if (event.portletId === '<%= portletDisplay.getId() %>') {
-					remoteServices.destroy();
+		var destroyInstance = function(event) {
+			if (event.portletId === '<%= portletDisplay.getId() %>') {
+				remoteServices.destroy();
 
-					Liferay.component('<portlet:namespace />remoteServices', null);
+				Liferay.component('<portlet:namespace />remoteServices', null);
 
-					Liferay.detach('destroyPortlet', destroyInstance);
-				}
-			};
+				Liferay.detach('destroyPortlet', destroyInstance);
+			}
+		};
 
-			Liferay.on('destroyPortlet', destroyInstance);
+		Liferay.on('destroyPortlet', destroyInstance);
 
-			return remoteServices;
-		}
-	);
+		return remoteServices;
+	});
 </aui:script>
 
 <aui:container cssClass="calendar-portlet-column-parent">
@@ -223,7 +215,9 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 <aui:script use="liferay-calendar-list,liferay-calendar-util,liferay-scheduler">
 	Liferay.CalendarUtil.USER_CLASS_NAME_ID = <%= PortalUtil.getClassNameId(User.class) %>;
 
-	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
+	var calendarContainer = Liferay.component(
+		'<portlet:namespace />calendarContainer'
+	);
 
 	var syncCalendarsMap = function() {
 		var calendarLists = [];
@@ -248,138 +242,147 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 	window.<portlet:namespace />calendarLists = {};
 
 	<c:if test="<%= themeDisplay.isSignedIn() || (groupCalendarResource != null) %>">
-		window.<portlet:namespace />myCalendarList = new Liferay.CalendarList(
-			{
-				after: {
-					calendarsChange: syncCalendarsMap,
-					'scheduler-calendar:visibleChange': function(event) {
-						syncCalendarsMap();
+		window.<portlet:namespace />myCalendarList = new Liferay.CalendarList({
+			after: {
+				calendarsChange: syncCalendarsMap,
+				'scheduler-calendar:visibleChange': function(event) {
+					syncCalendarsMap();
 
-						<portlet:namespace />refreshVisibleCalendarRenderingRules();
-					}
-				},
-				boundingBox: '#<portlet:namespace />myCalendarList',
+					<portlet:namespace />refreshVisibleCalendarRenderingRules();
+				}
+			},
+			boundingBox: '#<portlet:namespace />myCalendarList',
 
-				<%
-				updateCalendarsJSONArray(request, userCalendarsJSONArray);
-				%>
+			<%
+			updateCalendarsJSONArray(request, userCalendarsJSONArray);
+			%>
 
-				calendars: <%= userCalendarsJSONArray %>,
-				scheduler: <portlet:namespace />scheduler,
-				showCalendarResourceName: false,
-				simpleMenu: window.<portlet:namespace />calendarsMenu,
-				visible: <%= !displaySchedulerOnly && themeDisplay.isSignedIn() %>
-			}
-		).render();
+			calendars: <%= userCalendarsJSONArray %>,
+			scheduler: <portlet:namespace />scheduler,
+			showCalendarResourceName: false,
+			simpleMenu: window.<portlet:namespace />calendarsMenu,
+			visible: <%= !displaySchedulerOnly && themeDisplay.isSignedIn() %>
+		}).render();
 
 		<c:if test="<%= userCalendarResource != null %>">
-			window.<portlet:namespace />calendarLists['<%= userCalendarResource.getCalendarResourceId() %>'] = window.<portlet:namespace />myCalendarList;
+			window.<portlet:namespace />calendarLists[
+				'<%= userCalendarResource.getCalendarResourceId() %>'
+			] = window.<portlet:namespace />myCalendarList;
 		</c:if>
 	</c:if>
 
 	<c:if test="<%= themeDisplay.isSignedIn() %>">
-		window.<portlet:namespace />otherCalendarList = new Liferay.CalendarList(
-			{
-				after: {
-					calendarsChange: function(event) {
-						syncCalendarsMap();
+		window.<portlet:namespace />otherCalendarList = new Liferay.CalendarList({
+			after: {
+				calendarsChange: function(event) {
+					syncCalendarsMap();
 
-						<portlet:namespace />scheduler.load();
+					<portlet:namespace />scheduler.load();
 
-						var calendarIds = A.Array.invoke(event.newVal, 'get', 'calendarId');
+					var calendarIds = A.Array.invoke(event.newVal, 'get', 'calendarId');
 
-						Liferay.Util.Session.set('com.liferay.calendar.web_otherCalendars', calendarIds.join());
-					},
-					'scheduler-calendar:visibleChange': function(event) {
-						syncCalendarsMap();
-
-						<portlet:namespace />refreshVisibleCalendarRenderingRules();
-					}
+					Liferay.Util.Session.set(
+						'com.liferay.calendar.web_otherCalendars',
+						calendarIds.join()
+					);
 				},
-				boundingBox: '#<portlet:namespace />otherCalendarList',
+				'scheduler-calendar:visibleChange': function(event) {
+					syncCalendarsMap();
 
-				<%
-				updateCalendarsJSONArray(request, otherCalendarsJSONArray);
-				%>
+					<portlet:namespace />refreshVisibleCalendarRenderingRules();
+				}
+			},
+			boundingBox: '#<portlet:namespace />otherCalendarList',
 
-				calendars: <%= otherCalendarsJSONArray %>,
-				scheduler: <portlet:namespace />scheduler,
-				simpleMenu: window.<portlet:namespace />calendarsMenu,
-				visible: <%= !displaySchedulerOnly %>
-			}
-		).render();
+			<%
+			updateCalendarsJSONArray(request, otherCalendarsJSONArray);
+			%>
+
+			calendars: <%= otherCalendarsJSONArray %>,
+			scheduler: <portlet:namespace />scheduler,
+			simpleMenu: window.<portlet:namespace />calendarsMenu,
+			visible: <%= !displaySchedulerOnly %>
+		}).render();
 	</c:if>
 
 	<c:if test="<%= showSiteCalendars %>">
-		window.<portlet:namespace />siteCalendarList = new Liferay.CalendarList(
-			{
-				after: {
-					calendarsChange: syncCalendarsMap,
-					'scheduler-calendar:visibleChange': function(event) {
-						syncCalendarsMap();
+		window.<portlet:namespace />siteCalendarList = new Liferay.CalendarList({
+			after: {
+				calendarsChange: syncCalendarsMap,
+				'scheduler-calendar:visibleChange': function(event) {
+					syncCalendarsMap();
 
-						<portlet:namespace />refreshVisibleCalendarRenderingRules();
-					}
-				},
-				boundingBox: '#<portlet:namespace />siteCalendarList',
+					<portlet:namespace />refreshVisibleCalendarRenderingRules();
+				}
+			},
+			boundingBox: '#<portlet:namespace />siteCalendarList',
 
-				<%
-				updateCalendarsJSONArray(request, groupCalendarsJSONArray);
-				%>
+			<%
+			updateCalendarsJSONArray(request, groupCalendarsJSONArray);
+			%>
 
-				calendars: <%= groupCalendarsJSONArray %>,
-				scheduler: <portlet:namespace />scheduler,
-				showCalendarResourceName: false,
-				simpleMenu: window.<portlet:namespace />calendarsMenu,
-				visible: <%= !displaySchedulerOnly %>
-			}
-		).render();
+			calendars: <%= groupCalendarsJSONArray %>,
+			scheduler: <portlet:namespace />scheduler,
+			showCalendarResourceName: false,
+			simpleMenu: window.<portlet:namespace />calendarsMenu,
+			visible: <%= !displaySchedulerOnly %>
+		}).render();
 
-		window.<portlet:namespace />calendarLists['<%= groupCalendarResource.getCalendarResourceId() %>'] = window.<portlet:namespace />siteCalendarList;
+		window.<portlet:namespace />calendarLists[
+			'<%= groupCalendarResource.getCalendarResourceId() %>'
+		] = window.<portlet:namespace />siteCalendarList;
 	</c:if>
 
 	syncCalendarsMap();
 
-	A.each(
-		calendarContainer.get('availableCalendars'),
-		function(item, index) {
-			item.on(
-				{
-					'visibleChange': function(event) {
-						var instance = this;
+	A.each(calendarContainer.get('availableCalendars'), function(item, index) {
+		item.on({
+			visibleChange: function(event) {
+				var instance = this;
 
-						var calendar = event.currentTarget;
+				var calendar = event.currentTarget;
 
-						Liferay.Util.Session.set('com.liferay.calendar.web_calendar' + calendar.get('calendarId') + 'Visible', event.newVal);
-					}
-				}
-			);
-		}
-	);
+				Liferay.Util.Session.set(
+					'com.liferay.calendar.web_calendar' +
+						calendar.get('calendarId') +
+						'Visible',
+					event.newVal
+				);
+			}
+		});
+	});
 </aui:script>
 
 <aui:script use="aui-base,aui-datatype,liferay-calendar-session-listener">
-	window.<portlet:namespace />refreshSchedulerEventTooltipTitle = function(schedulerEvent) {
-		schedulerEvent.get('node').attr('title', A.Lang.String.unescapeHTML(schedulerEvent.get('content')));
+	window.<portlet:namespace />refreshSchedulerEventTooltipTitle = function(
+		schedulerEvent
+	) {
+		schedulerEvent
+			.get('node')
+			.attr(
+				'title',
+				A.Lang.String.unescapeHTML(schedulerEvent.get('content'))
+			);
 	};
 
-	<portlet:namespace />scheduler.after(
-		['scheduler-events:load'],
-		function(event) {
-			event.currentTarget.eachEvent(<portlet:namespace />refreshSchedulerEventTooltipTitle);
-		}
-	);
+	<portlet:namespace />scheduler.after(['scheduler-events:load'], function(
+		event
+	) {
+		event.currentTarget.eachEvent(
+			<portlet:namespace />refreshSchedulerEventTooltipTitle
+		);
+	});
 
 	<portlet:namespace />scheduler.load();
 
-	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
-
-	new Liferay.CalendarSessionListener(
-		{
-			calendars: calendarContainer.get('availableCalendars'),
-			scheduler: <portlet:namespace />scheduler
-		}
+	var calendarContainer = Liferay.component(
+		'<portlet:namespace />calendarContainer'
 	);
+
+	new Liferay.CalendarSessionListener({
+		calendars: calendarContainer.get('availableCalendars'),
+		scheduler: <portlet:namespace />scheduler
+	});
 </aui:script>
 
 <aui:script>
@@ -411,7 +414,10 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			siteCalendarList.destroy();
 		}
 
-		Liferay.detach('<%= portletDisplay.getId() %>:portletRefreshed', destroyMenus);
+		Liferay.detach(
+			'<%= portletDisplay.getId() %>:portletRefreshed',
+			destroyMenus
+		);
 		Liferay.detach('destroyPortlet', destroyMenus);
 	};
 	Liferay.on('<%= portletDisplay.getId() %>:portletRefreshed', destroyMenus);

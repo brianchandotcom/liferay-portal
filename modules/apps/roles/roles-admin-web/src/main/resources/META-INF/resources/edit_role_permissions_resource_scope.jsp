@@ -78,47 +78,47 @@ List groupNames = (List)objArray[8];
 		/>
 
 		<aui:script sandbox="<%= true %>">
-			var targetNode = document.getElementById('<portlet:namespace /><%= HtmlUtil.escapeJS(targetId) %>');
+			var targetNode = document.getElementById(
+				'<portlet:namespace /><%= HtmlUtil.escapeJS(targetId) %>'
+			);
 
 			if (targetNode) {
-				targetNode.addEventListener(
-					'click',
-					function(event) {
-						var selectedGroupIds = [];
+				targetNode.addEventListener('click', function(event) {
+					var selectedGroupIds = [];
 
-						var selectedGroupIdsNode = document.getElementById('<portlet:namespace />groupIds<%= HtmlUtil.escapeJS(targetId) %>');
+					var selectedGroupIdsNode = document.getElementById(
+						'<portlet:namespace />groupIds<%= HtmlUtil.escapeJS(targetId) %>'
+					);
 
-						if (selectedGroupIdsNode && selectedGroupIdsNode.value) {
-							selectedGroupIds = selectedGroupIdsNode.value.split(',');
-						}
-
-						Liferay.Util.selectEntity(
-							{
-								dialog: {
-									constrain: true,
-									modal: true,
-									width: 600
-								},
-								id: '<portlet:namespace />selectGroup<%= HtmlUtil.escapeJS(targetId) %>',
-								selectedData: selectedGroupIds,
-								title: '<liferay-ui:message arguments="site" key="select-x" />',
-
-								<%
-								PortletURL groupSelectorURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
-
-								groupSelectorURL.setParameter("includeCompany", Boolean.TRUE.toString());
-								groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
-								groupSelectorURL.setParameter("includeUserPersonalSite", Boolean.TRUE.toString());
-								groupSelectorURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectGroup");
-								groupSelectorURL.setParameter("target", target);
-								groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
-								%>
-
-								uri: '<%= groupSelectorURL.toString() %>'
-							}
-						);
+					if (selectedGroupIdsNode && selectedGroupIdsNode.value) {
+						selectedGroupIds = selectedGroupIdsNode.value.split(',');
 					}
-				);
+
+					Liferay.Util.selectEntity({
+						dialog: {
+							constrain: true,
+							modal: true,
+							width: 600
+						},
+						id:
+							'<portlet:namespace />selectGroup<%= HtmlUtil.escapeJS(targetId) %>',
+						selectedData: selectedGroupIds,
+						title: '<liferay-ui:message arguments="site" key="select-x" />',
+
+						<%
+						PortletURL groupSelectorURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
+
+						groupSelectorURL.setParameter("includeCompany", Boolean.TRUE.toString());
+						groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
+						groupSelectorURL.setParameter("includeUserPersonalSite", Boolean.TRUE.toString());
+						groupSelectorURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectGroup");
+						groupSelectorURL.setParameter("target", target);
+						groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
+						%>
+
+						uri: '<%= groupSelectorURL.toString() %>'
+					});
+				});
 			}
 		</aui:script>
 	</c:if>

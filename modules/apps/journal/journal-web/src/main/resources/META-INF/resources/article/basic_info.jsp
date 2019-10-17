@@ -65,7 +65,11 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 		</div>
 
 		<aui:script>
-			Liferay.Util.disableToggleBoxes('<portlet:namespace />autoArticleId', '<portlet:namespace />newArticleId', true);
+			Liferay.Util.disableToggleBoxes(
+				'<portlet:namespace />autoArticleId',
+				'<portlet:namespace />newArticleId',
+				true
+			);
 		</aui:script>
 	</c:when>
 	<c:otherwise>

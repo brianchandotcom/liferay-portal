@@ -32,28 +32,25 @@
 	var sidenavToggle = document.querySelector('[href="#<%= sidenavId %>"]');
 
 	if (!Liferay.SideNavigation.instance(sidenavToggle)) {
-		var sidenavInstance = Liferay.SideNavigation.initialize(
-			sidenavToggle,
-			{
-				position: '<%= position %>',
-				type: '<%= type %>',
-				typeMobile: '<%= typeMobile %>',
-				width: '<%= width %>'
-			}
-		);
+		var sidenavInstance = Liferay.SideNavigation.initialize(sidenavToggle, {
+			position: '<%= position %>',
+			type: '<%= type %>',
+			typeMobile: '<%= typeMobile %>',
+			width: '<%= width %>'
+		});
 
-		sidenavInstance.on(
-			'closed.lexicon.sidenav',
-			function(event) {
-				Liferay.Util.Session.set('com.liferay.info.panel_<%= sidenavId %>', 'closed');
-			}
-		);
+		sidenavInstance.on('closed.lexicon.sidenav', function(event) {
+			Liferay.Util.Session.set(
+				'com.liferay.info.panel_<%= sidenavId %>',
+				'closed'
+			);
+		});
 
-		sidenavInstance.on(
-			'open.lexicon.sidenav',
-			function(event) {
-				Liferay.Util.Session.set('com.liferay.info.panel_<%= sidenavId %>', 'open');
-			}
-		);
+		sidenavInstance.on('open.lexicon.sidenav', function(event) {
+			Liferay.Util.Session.set(
+				'com.liferay.info.panel_<%= sidenavId %>',
+				'open'
+			);
+		});
 	}
 </aui:script>

@@ -143,7 +143,9 @@ boolean ldapAuthEnabled = ldapAuthConfiguration.enabled();
 
 <script>
 	function <portlet:namespace />changeLDAPServerPriority(ldapServerId, action) {
-		var ldapServer = document.querySelector('.ldap-servers tr[data-ldapServerId="' + ldapServerId + '"]');
+		var ldapServer = document.querySelector(
+			'.ldap-servers tr[data-ldapServerId="' + ldapServerId + '"]'
+		);
 
 		if (ldapServer) {
 			var swapLdapServer = ldapServer.nextElementSibling;
@@ -157,8 +159,7 @@ boolean ldapAuthEnabled = ldapAuthConfiguration.enabled();
 
 				if (action === 'raise') {
 					parentNode.insertBefore(ldapServer, swapLdapServer);
-				}
-				else {
+				} else {
 					parentNode.insertBefore(swapLdapServer, ldapServer);
 				}
 			}
@@ -176,22 +177,25 @@ boolean ldapAuthEnabled = ldapAuthConfiguration.enabled();
 	}
 
 	function <portlet:namespace />saveLdap() {
-		var ldapServerIdsNodes = document.querySelectorAll('.ldap-servers .table-data tr');
-
-		var ldapServerIds = Array.prototype.map.call(
-			ldapServerIdsNodes,
-			function(ldapServerIdsNode) {
-				return ldapServerIdsNode.dataset.ldapserverid;
-			}
+		var ldapServerIdsNodes = document.querySelectorAll(
+			'.ldap-servers .table-data tr'
 		);
 
-		Liferay.Util.setFormValues(
-			document.<portlet:namespace />fm,
-			{
-				'ldap--<%= LDAPConstants.AUTH_SERVER_PRIORITY %>--': ldapServerIds.join(',')
-			}
-		);
+		var ldapServerIds = Array.prototype.map.call(ldapServerIdsNodes, function(
+			ldapServerIdsNode
+		) {
+			return ldapServerIdsNode.dataset.ldapserverid;
+		});
+
+		Liferay.Util.setFormValues(document.<portlet:namespace />fm, {
+			'ldap--<%= LDAPConstants.AUTH_SERVER_PRIORITY %>--': ldapServerIds.join(
+				','
+			)
+		});
 	}
 
-	Liferay.Util.toggleBoxes('<portlet:namespace />ldapImportEnabled', '<portlet:namespace />importEnabledSettings');
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />ldapImportEnabled',
+		'<portlet:namespace />importEnabledSettings'
+	);
 </script>

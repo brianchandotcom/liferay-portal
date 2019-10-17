@@ -87,10 +87,15 @@ renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-in
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
-			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
+			var cmd = form.querySelector(
+				'#<portlet:namespace /><%= Constants.CMD %>'
+			);
 
 			if (cmd) {
-				cmd.setAttribute('value', '<%= (selCompany == null) ? Constants.ADD : Constants.UPDATE %>');
+				cmd.setAttribute(
+					'value',
+					'<%= (selCompany == null) ? Constants.ADD : Constants.UPDATE %>'
+				);
 			}
 
 			submitForm(form);

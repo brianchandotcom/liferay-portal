@@ -55,20 +55,17 @@
 		}
 		%>
 
-		Liferay.Util.postForm(
-			document.<portlet:namespace />exportPagesFm,
-			{
-				data: {
-					'<%= Constants.CMD %>': '<%= scheduleCMD %>',
+		Liferay.Util.postForm(document.<portlet:namespace />exportPagesFm, {
+			data: {
+				<%= Constants.CMD %>: '<%= scheduleCMD %>',
 
-					<portlet:renderURL var="scheduledPublicationRedirectURL">
-						<portlet:param name="mvcPath" value="/view.jsp" />
-						<portlet:param name="tabs1" value="scheduled" />
-					</portlet:renderURL>
+				<portlet:renderURL var="scheduledPublicationRedirectURL">
+					<portlet:param name="mvcPath" value="/view.jsp" />
+					<portlet:param name="tabs1" value="scheduled" />
+				</portlet:renderURL>
 
-					redirect: '<%= scheduledPublicationRedirectURL %>'
-				}
+				redirect: '<%= scheduledPublicationRedirectURL %>'
 			}
-		);
+		});
 	}
 </script>

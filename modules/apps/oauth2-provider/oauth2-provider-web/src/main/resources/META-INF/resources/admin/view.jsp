@@ -153,18 +153,23 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 
 <script>
 	function <portlet:namespace />deleteOAuth2Applications() {
-		if (confirm('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries-this-action-revokes-all-authorizations-and-associated-tokens")) %>')) {
+		if (
+			confirm(
+				'<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries-this-action-revokes-all-authorizations-and-associated-tokens")) %>'
+			)
+		) {
 			var form = document.<portlet:namespace />fm;
 
-			Liferay.Util.postForm(
-				form,
-				{
-					data: {
-						oAuth2ApplicationIds: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
-					},
-					url: '<portlet:actionURL name="/admin/delete_oauth2_applications" />'
-				}
-			);
+			Liferay.Util.postForm(form, {
+				data: {
+					oAuth2ApplicationIds: Liferay.Util.listCheckedExcept(
+						form,
+						'<portlet:namespace />allRowIds'
+					)
+				},
+				url:
+					'<portlet:actionURL name="/admin/delete_oauth2_applications" />'
+			});
 		}
 	}
 </script>

@@ -121,15 +121,14 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 						%>
 
 							<script>
-								var allowedAuthorizationTypeCheckbox = document.getElementById('<portlet:namespace /><%= name %>');
+								var allowedAuthorizationTypeCheckbox = document.getElementById(
+									'<portlet:namespace /><%= name %>'
+								);
 
 								if (allowedAuthorizationTypeCheckbox) {
-									allowedAuthorizationTypeCheckbox.addEventListener(
-										'click',
-										function(event) {
-											<portlet:namespace />requiredRedirectURIs();
-										}
-									);
+									allowedAuthorizationTypeCheckbox.addEventListener('click', function(event) {
+										<portlet:namespace />requiredRedirectURIs();
+									});
 								}
 							</script>
 
@@ -168,51 +167,58 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 				</aui:field-wrapper>
 
 				<aui:script use="aui-base,aui-io">
-					var useSignedInUserButton = document.getElementById('<portlet:namespace />useSignedInUserButton');
+					var useSignedInUserButton = document.getElementById(
+						'<portlet:namespace />useSignedInUserButton'
+					);
 
 					if (useSignedInUserButton) {
-
-						useSignedInUserButton.addEventListener(
-							'click',
-							function(event) {
-								A.one('#<portlet:namespace />clientCredentialUserId').val('<%= user.getUserId() %>');
-								A.one('#<portlet:namespace />clientCredentialUserName').val('<%= user.getScreenName() %>');
-							}
-						);
+						useSignedInUserButton.addEventListener('click', function(event) {
+							A.one('#<portlet:namespace />clientCredentialUserId').val(
+								'<%= user.getUserId() %>'
+							);
+							A.one('#<portlet:namespace />clientCredentialUserName').val(
+								'<%= user.getScreenName() %>'
+							);
+						});
 					}
 
-					var selectUserButton = document.getElementById('<portlet:namespace />selectUserButton');
+					var selectUserButton = document.getElementById(
+						'<portlet:namespace />selectUserButton'
+					);
 
 					if (selectUserButton) {
-						selectUserButton.addEventListener(
-							'click',
-							function(event) {
-								Liferay.Util.selectEntity(
-									{
-										dialog: {
-											modal: true,
-											destroyOnHide: true
-										},
-
-										<%
-										SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayContext(request, renderRequest, renderResponse);
-										%>
-
-										eventName: '<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>',
-										id: '<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>',
-
-										title: '<liferay-ui:message key="users" />',
-										uri: '<%= HtmlUtil.escapeJS(String.valueOf(selectUsersDisplayContext.getPortletURL())) %>'
+						selectUserButton.addEventListener('click', function(event) {
+							Liferay.Util.selectEntity(
+								{
+									dialog: {
+										modal: true,
+										destroyOnHide: true
 									},
-									function(event) {
-										A.one('#<portlet:namespace />clientCredentialUserId').val(event.userid);
-										A.one('#<portlet:namespace />clientCredentialUserName').val(event.screenname);
-									}
-								);
-							}
-						);
-					}
 
+									<%
+									SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayContext(request, renderRequest, renderResponse);
+									%>
+
+									eventName:
+										'<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>',
+									id:
+										'<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>',
+
+									title: '<liferay-ui:message key="users" />',
+									uri:
+										'<%= HtmlUtil.escapeJS(String.valueOf(selectUsersDisplayContext.getPortletURL())) %>'
+								},
+								function(event) {
+									A.one('#<portlet:namespace />clientCredentialUserId').val(
+										event.userid
+									);
+									A.one('#<portlet:namespace />clientCredentialUserName').val(
+										event.screenname
+									);
+								}
+							);
+						});
+					}
 				</aui:script>
 			</div>
 		</c:if>

@@ -34,16 +34,21 @@ String taglibOnClick = liferayPortletResponse.getNamespace() + "showProcessSumma
 />
 
 <aui:script>
-	function <portlet:namespace />showProcessSummary(backgroundTaskId, backgroundTaskName, processSummaryURL) {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					destroyOnHide: true
-				},
-				id: '<portlet:namespace />showSummary_' + backgroundTaskId,
-				title: backgroundTaskName,
-				uri: processSummaryURL + '&<portlet:namespace />backgroundTaskId=' + backgroundTaskId
-			}
-		);
+	function <portlet:namespace />showProcessSummary(
+		backgroundTaskId,
+		backgroundTaskName,
+		processSummaryURL
+	) {
+		Liferay.Util.openWindow({
+			dialog: {
+				destroyOnHide: true
+			},
+			id: '<portlet:namespace />showSummary_' + backgroundTaskId,
+			title: backgroundTaskName,
+			uri:
+				processSummaryURL +
+				'&<portlet:namespace />backgroundTaskId=' +
+				backgroundTaskId
+		});
 	}
 </aui:script>

@@ -87,7 +87,10 @@
 			</div>
 
 			<aui:script>
-				Liferay.Util.toggleBoxes('<portlet:namespace />searchableKeyWordOrText', '<portlet:namespace />propertyIndexType');
+				Liferay.Util.toggleBoxes(
+					'<portlet:namespace />searchableKeyWordOrText',
+					'<portlet:namespace />propertyIndexType'
+				);
 			</aui:script>
 		</div>
 
@@ -137,10 +140,10 @@
 
 <script>
 	function populatePrecisionType(precisionTypeElement, numberSize) {
-		var numberSizeOptions = "";
+		var numberSizeOptions = '';
 
 		for (var bit of numberSize) {
-			numberSizeOptions += "<option value=\"" + bit + "\">" + bit + "</option>";
+			numberSizeOptions += '<option value="' + bit + '">' + bit + '</option>';
 		}
 
 		precisionTypeElement.innerHTML = numberSizeOptions;
@@ -151,14 +154,22 @@
 			return;
 		}
 
-		var precisionTypeElement = document.getElementById('<portlet:namespace />precisionTypeSelect');
+		var precisionTypeElement = document.getElementById(
+			'<portlet:namespace />precisionTypeSelect'
+		);
 
 		if (precisionTypeElement) {
 			precisionTypeElement.options.length = 0;
 
-			var numberSize = ['<%= ExpandoColumnConstants.PRECISION_64_BIT %>', '<%= ExpandoColumnConstants.PRECISION_32_BIT %>'];
+			var numberSize = [
+				'<%= ExpandoColumnConstants.PRECISION_64_BIT %>',
+				'<%= ExpandoColumnConstants.PRECISION_32_BIT %>'
+			];
 
-			if (currentSelectedDataType == '<%= ExpandoColumnConstants.DATA_TYPE_INTEGER %>') {
+			if (
+				currentSelectedDataType ==
+				'<%= ExpandoColumnConstants.DATA_TYPE_INTEGER %>'
+			) {
 				numberSize.push('<%= ExpandoColumnConstants.PRECISION_16_BIT %>');
 			}
 

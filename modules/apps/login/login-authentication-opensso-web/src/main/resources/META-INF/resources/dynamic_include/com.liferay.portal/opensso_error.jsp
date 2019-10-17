@@ -41,23 +41,18 @@ String openSSOSubjectScreenName = (String)request.getAttribute(OpenSSOWebKeys.OP
 </liferay-util:buffer>
 
 <script type="text/javascript">
-	AUI().use(
-		'liferay-notification',
-		function(A) {
-			new Liferay.Notification(
-				{
-					closeable: true,
-					delay: {
-						hide: 10000,
-						show: 0
-					},
-					duration: 500,
-					message: '<%= HtmlUtil.escapeJS(msg) %>',
-					render: true,
-					title: '<liferay-ui:message key="warning" />',
-					type: 'warning'
-				}
-			).render('body');
-		}
-	);
+	AUI().use('liferay-notification', function(A) {
+		new Liferay.Notification({
+			closeable: true,
+			delay: {
+				hide: 10000,
+				show: 0
+			},
+			duration: 500,
+			message: '<%= HtmlUtil.escapeJS(msg) %>',
+			render: true,
+			title: '<liferay-ui:message key="warning" />',
+			type: 'warning'
+		}).render('body');
+	});
 </script>

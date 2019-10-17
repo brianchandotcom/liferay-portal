@@ -31,16 +31,17 @@ ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext = (ItemSelec
 </div>
 
 <aui:script use="liferay-item-selector-url">
-	new Liferay.ItemSelectorUrl(
-		{
-			closeCaption: '<%= itemSelectorURLViewDisplayContext.getTitle(locale) %>',
-			namespace: '<portlet:namespace />',
-			on: {
-				selectedItem: function(event) {
-					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectorURLViewDisplayContext.getItemSelectedEventName() %>', event);
-				}
-			},
-			rootNode: '#<portlet:namespace />itemSelectorUrlContainer'
-		}
-	);
+	new Liferay.ItemSelectorUrl({
+		closeCaption: '<%= itemSelectorURLViewDisplayContext.getTitle(locale) %>',
+		namespace: '<portlet:namespace />',
+		on: {
+			selectedItem: function(event) {
+				Liferay.Util.getOpener().Liferay.fire(
+					'<%= itemSelectorURLViewDisplayContext.getItemSelectedEventName() %>',
+					event
+				);
+			}
+		},
+		rootNode: '#<portlet:namespace />itemSelectorUrlContainer'
+	});
 </aui:script>

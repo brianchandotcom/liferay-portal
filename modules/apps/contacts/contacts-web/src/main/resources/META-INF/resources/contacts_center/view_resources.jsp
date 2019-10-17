@@ -58,55 +58,56 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 							<portlet:param name="entryId" value="<%= String.valueOf(entryId) %>" />
 						</portlet:renderURL>
 
-						contactsToolbarChildren.push(
-							{
-								on: {
-									click: function(event) {
-										Liferay.component('contactsCenter').showPopup('<%= UnicodeLanguageUtil.get(request, "update-contact") %>', '<%= viewEntryURL %>');
-									}
-								},
-								icon: 'icon-edit',
-								id: '<portlet:namespace />edit',
-								label: '<%= UnicodeLanguageUtil.get(request, "edit") %>'
-							}
-						);
+						contactsToolbarChildren.push({
+							on: {
+								click: function(event) {
+									Liferay.component('contactsCenter').showPopup(
+										'<%= UnicodeLanguageUtil.get(request, "update-contact") %>',
+										'<%= viewEntryURL %>'
+									);
+								}
+							},
+							icon: 'icon-edit',
+							id: '<portlet:namespace />edit',
+							label: '<%= UnicodeLanguageUtil.get(request, "edit") %>'
+						});
 
-						contactsToolbarChildren.push(
-							{
-								on: {
-									click: function(event) {
-										var confirmMessage = '<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-delete-x-from-your-contacts", entry.getFullName(), false) %>';
+						contactsToolbarChildren.push({
+							on: {
+								click: function(event) {
+									var confirmMessage =
+										'<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-delete-x-from-your-contacts", entry.getFullName(), false) %>';
 
-										if (confirm(confirmMessage)) {
-											var data = new URLSearchParams();
-											data.append('<portlet:namespace />entryId', <%= entryId %>);
+									if (confirm(confirmMessage)) {
+										var data = new URLSearchParams();
+										data.append('<portlet:namespace />entryId', <%= entryId %>);
 
-											Liferay.Util.fetch('<portlet:actionURL name="deleteEntry" />', {
-												body: data,
-												method: 'POST'
-											}).then(function(response) {
+										Liferay.Util.fetch('<portlet:actionURL name="deleteEntry" />', {
+											body: data,
+											method: 'POST'
+										})
+											.then(function(response) {
 												return response.text();
-											}).then(function(data) {
+											})
+											.then(function(data) {
 												location.href = '<%= HtmlUtil.escape(redirect) %>';
-											}).catch(function() {
+											})
+											.catch(function() {
 												Liferay.component('contactsCenter').showMessage(false);
 											});
-										}
 									}
-								},
-								icon: 'icon-remove',
-								id: '<portlet:namespace />delete',
-								label: '<%= UnicodeLanguageUtil.get(request, "delete") %>'
-							}
-						);
+								}
+							},
+							icon: 'icon-remove',
+							id: '<portlet:namespace />delete',
+							label: '<%= UnicodeLanguageUtil.get(request, "delete") %>'
+						});
 
-						new A.Toolbar(
-							{
-								activeState: false,
-								boundingBox: buttonRow,
-								children: contactsToolbarChildren
-							}
-						).render();
+						new A.Toolbar({
+							activeState: false,
+							boundingBox: buttonRow,
+							children: contactsToolbarChildren
+						}).render();
 					</aui:script>
 				</span>
 			</c:if>
@@ -148,26 +149,22 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 
 							var contactsToolbarChildren = [];
 
-							contactsToolbarChildren.push(
-								{
-									icon: 'icon-chevron-sign-left',
-									id: '<portlet:namespace />backSelection',
-									label: '<%= UnicodeLanguageUtil.get(request, "back-to-selection") %>',
-									on: {
-										click: function(event) {
-											Liferay.component('contactsCenter')._setVisibleSelectedUsersView();
-										}
+							contactsToolbarChildren.push({
+								icon: 'icon-chevron-sign-left',
+								id: '<portlet:namespace />backSelection',
+								label: '<%= UnicodeLanguageUtil.get(request, "back-to-selection") %>',
+								on: {
+									click: function(event) {
+										Liferay.component('contactsCenter')._setVisibleSelectedUsersView();
 									}
 								}
-							);
+							});
 
-							new A.Toolbar(
-								{
-									activeState: false,
-									boundingBox: buttonRow,
-									children: contactsToolbarChildren
-								}
-							).render();
+							new A.Toolbar({
+								activeState: false,
+								boundingBox: buttonRow,
+								children: contactsToolbarChildren
+							}).render();
 						</aui:script>
 					</c:when>
 					<c:otherwise>

@@ -151,63 +151,58 @@
 </liferay-frontend:edit-form>
 
 <aui:script require="metal-dom/src/dom as dom">
-	AUI().use(
-		'liferay-item-selector-dialog',
-		function(A) {
-			var delegateHandler = dom.delegate(
-				document.body,
-				'click',
-				'.asset-selector a',
-				function(event) {
-					event.preventDefault();
+	AUI().use('liferay-item-selector-dialog', function(A) {
+		var delegateHandler = dom.delegate(
+			document.body,
+			'click',
+			'.asset-selector a',
+			function(event) {
+				event.preventDefault();
 
-					var delegateTarget = event.delegateTarget;
+				var delegateTarget = event.delegateTarget;
 
-					var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-						{
-							eventName: '<portlet:namespace />selectAsset',
-							id: '<portlet:namespace />selectAsset' + delegateTarget.id,
-							on: {
-								selectedItemChange: function(event) {
-									var selectedItems = event.newVal;
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+					eventName: '<portlet:namespace />selectAsset',
+					id: '<portlet:namespace />selectAsset' + delegateTarget.id,
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItems = event.newVal;
 
-									if (selectedItems) {
-										var assetEntryIds = [];
+							if (selectedItems) {
+								var assetEntryIds = [];
 
-										Array.prototype.forEach.call(
-											selectedItems,
-											function(assetEntry) {
-												assetEntryIds.push(assetEntry.entityid);
-											}
-										);
-
-										Liferay.Util.postForm(
-											document.<portlet:namespace />fm,
-											{
-												data: {
-													assetEntryIds: assetEntryIds.join(',')
-												}
-											}
-										);
+								Array.prototype.forEach.call(
+									selectedItems,
+									function(assetEntry) {
+										assetEntryIds.push(assetEntry.entityid);
 									}
-								}
-							},
-							title: A.Escape.html(delegateTarget.dataset.title),
-							url: delegateTarget.dataset.href
+								);
+
+								Liferay.Util.postForm(
+									document.<portlet:namespace />fm,
+									{
+										data: {
+											assetEntryIds: assetEntryIds.join(',')
+										}
+									}
+								);
+							}
 						}
-					);
+					},
+					title: A.Escape.html(delegateTarget.dataset.title),
+					url: delegateTarget.dataset.href
+				});
 
-					itemSelectorDialog.open();
-				}
-			);
+				itemSelectorDialog.open();
+			}
+		);
 
-			var onDestroyPortlet = function() {
-				delegateHandler.removeListener();
+		var onDestroyPortlet = function() {
+			delegateHandler.removeListener();
 
-				Liferay.detach('destroyPortlet', onDestroyPortlet);
-			};
+			Liferay.detach('destroyPortlet', onDestroyPortlet);
+		};
 
-			Liferay.on('destroyPortlet', onDestroyPortlet);
-		}
-	);
+		Liferay.on('destroyPortlet', onDestroyPortlet);
+	});
 </aui:script>

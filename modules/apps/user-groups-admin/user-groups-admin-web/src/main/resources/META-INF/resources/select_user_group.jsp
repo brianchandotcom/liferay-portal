@@ -100,12 +100,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 
 	var openingLiferay = Util.getOpener().Liferay;
 
-	openingLiferay.fire(
-		'<portlet:namespace />enableRemovedUserGroups',
-		{
-			selectors: A.all('.selector-button:disabled')
-		}
-	);
+	openingLiferay.fire('<portlet:namespace />enableRemovedUserGroups', {
+		selectors: A.all('.selector-button:disabled')
+	});
 
-	Util.selectEntityHandler('#<portlet:namespace />selectUserGroupFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	Util.selectEntityHandler(
+		'#<portlet:namespace />selectUserGroupFm',
+		'<%= HtmlUtil.escapeJS(eventName) %>'
+	);
 </aui:script>

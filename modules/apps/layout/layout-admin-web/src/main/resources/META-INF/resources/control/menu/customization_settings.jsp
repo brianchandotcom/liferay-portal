@@ -92,18 +92,13 @@ data.put("qa-id", "customizations");
 					</li>
 
 					<aui:script use="liferay-layout-customization-settings">
-						var layoutCustomizationSettings = new Liferay.LayoutCustomizationSettings(
-							{
-								namespace: '<%= portletNamespace %>'
-							}
-						);
+						var layoutCustomizationSettings = new Liferay.LayoutCustomizationSettings({
+							namespace: '<%= portletNamespace %>'
+						});
 
-						Liferay.once(
-							'screenLoad',
-							function() {
-								layoutCustomizationSettings.destroy();
-							}
-						);
+						Liferay.once('screenLoad', function() {
+							layoutCustomizationSettings.destroy();
+						});
 					</aui:script>
 				</c:if>
 
@@ -174,27 +169,27 @@ data.put("qa-id", "customizations");
 				</li>
 
 				<aui:script require="metal-dom/src/dom as dom">
-					var closeCustomizationOptions = document.getElementById('<%= portletNamespace %>closeCustomizationOptions');
-					var controlMenu = document.querySelector('#<%= portletNamespace %>customizationBar .control-menu-level-2');
+					var closeCustomizationOptions = document.getElementById(
+						'<%= portletNamespace %>closeCustomizationOptions'
+					);
+					var controlMenu = document.querySelector(
+						'#<%= portletNamespace %>customizationBar .control-menu-level-2'
+					);
 
 					if (closeCustomizationOptions && controlMenu) {
-						closeCustomizationOptions.addEventListener(
-							'click',
-							function(event) {
-								dom.toggleClasses(controlMenu, 'open');
-							}
-						);
+						closeCustomizationOptions.addEventListener('click', function(event) {
+							dom.toggleClasses(controlMenu, 'open');
+						});
 					}
 
-					var customizationButton = document.getElementById('<%= portletNamespace %>customizationButton');
+					var customizationButton = document.getElementById(
+						'<%= portletNamespace %>customizationButton'
+					);
 
 					if (customizationButton && controlMenu) {
-						customizationButton.addEventListener(
-							'click',
-							function(event) {
-								dom.toggleClasses(controlMenu, 'open');
-							}
-						);
+						customizationButton.addEventListener('click', function(event) {
+							dom.toggleClasses(controlMenu, 'open');
+						});
 					}
 				</aui:script>
 			</ul>

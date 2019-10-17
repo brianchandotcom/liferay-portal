@@ -158,28 +158,20 @@ else {
 			<aui:script require="metal-dom/src/dom as dom">
 				var form = document.<portlet:namespace />selectOrganizationRoleFm;
 
-				dom.delegate(
-					form,
-					'click',
-					'.organization-selector-button',
-					function(event) {
-						Liferay.Util.postForm(
-							form,
-							{
-								data: {
-									organizationId: event.delegateTarget.dataset.organizationid
-								},
+				dom.delegate(form, 'click', '.organization-selector-button', function(event) {
+					Liferay.Util.postForm(form, {
+						data: {
+							organizationId: event.delegateTarget.dataset.organizationid
+						},
 
-								<%
-								portletURL.setParameter("resetCur", Boolean.TRUE.toString());
-								portletURL.setParameter("step", "2");
-								%>
+						<%
+						portletURL.setParameter("resetCur", Boolean.TRUE.toString());
+						portletURL.setParameter("step", "2");
+						%>
 
-								url: '<%= portletURL.toString() %>'
-							}
-						);
-					}
-				);
+						url: '<%= portletURL.toString() %>'
+					});
+				});
 			</aui:script>
 		</c:when>
 		<c:when test="<%= step == 2 %>">
@@ -266,12 +258,12 @@ else {
 
 	var openingLiferay = Util.getOpener().Liferay;
 
-	openingLiferay.fire(
-		'<%= HtmlUtil.escape(syncEntitiesEventName) %>',
-		{
-			selectors: A.all('.selector-button')
-		}
-	);
+	openingLiferay.fire('<%= HtmlUtil.escape(syncEntitiesEventName) %>', {
+		selectors: A.all('.selector-button')
+	});
 
-	Util.selectEntityHandler('#<portlet:namespace />selectOrganizationRoleFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	Util.selectEntityHandler(
+		'#<portlet:namespace />selectOrganizationRoleFm',
+		'<%= HtmlUtil.escapeJS(eventName) %>'
+	);
 </aui:script>

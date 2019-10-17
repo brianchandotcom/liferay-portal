@@ -130,7 +130,11 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 	for (PublicRenderParameterConfiguration publicRenderParameterConfiguration : publicRenderParameterConfigurations) {
 	%>
 
-		Liferay.Util.disableToggleBoxes('<portlet:namespace /><%= PublicRenderParameterConfiguration.IGNORE_PREFIX + HtmlUtil.escapeJS(publicRenderParameterConfiguration.getPublicRenderParameterName()) %>', '<portlet:namespace /><%= PublicRenderParameterConfiguration.MAPPING_PREFIX + HtmlUtil.escapeJS(publicRenderParameterConfiguration.getPublicRenderParameterName()) %>', true);
+		Liferay.Util.disableToggleBoxes(
+			'<portlet:namespace /><%= PublicRenderParameterConfiguration.IGNORE_PREFIX + HtmlUtil.escapeJS(publicRenderParameterConfiguration.getPublicRenderParameterName()) %>',
+			'<portlet:namespace /><%= PublicRenderParameterConfiguration.MAPPING_PREFIX + HtmlUtil.escapeJS(publicRenderParameterConfiguration.getPublicRenderParameterName()) %>',
+			true
+		);
 
 	<%
 	}

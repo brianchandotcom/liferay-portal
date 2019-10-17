@@ -112,5 +112,8 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 </aui:form>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectContainerFm', '<%= HtmlUtil.escapeJS(trashContainerModelDisplayContext.getEventName()) %>');
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />selectContainerFm',
+		'<%= HtmlUtil.escapeJS(trashContainerModelDisplayContext.getEventName()) %>'
+	);
 </aui:script>

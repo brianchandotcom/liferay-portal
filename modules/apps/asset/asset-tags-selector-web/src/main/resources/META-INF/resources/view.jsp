@@ -52,31 +52,26 @@
 
 	var selectedTagNames = <%= JSONFactoryUtil.serialize(assetTagsSelectorDisplayContext.getSelectedTagNames()) %>;
 
-	selectedTagNames = selectedTagNames.filter(
-		function(tag) {
-			return searchContainerData.indexOf(tag) === -1;
+	selectedTagNames = selectedTagNames.filter(function(tag) {
+		return searchContainerData.indexOf(tag) === -1;
+	});
+
+	searchContainer.on('rowToggled', function(event) {
+		var items = '';
+
+		var selectedItems = event.elements.allSelectedElements;
+
+		if (selectedItems.size() > 0) {
+			items = selectedTagNames.concat(selectedItems.attr('value')).join(',');
 		}
-	);
 
-	searchContainer.on(
-		'rowToggled',
-		function(event) {
-			var items = '';
-
-			var selectedItems = event.elements.allSelectedElements;
-
-			if (selectedItems.size() > 0) {
-				items = selectedTagNames.concat(selectedItems.attr('value')).join(',');
-			}
-
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(assetTagsSelectorDisplayContext.getEventName()) %>',
-				{
-					data: {
-						items: items
-					}
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= HtmlUtil.escapeJS(assetTagsSelectorDisplayContext.getEventName()) %>',
+			{
+				data: {
+					items: items
 				}
-			);
-		}
-	);
+			}
+		);
+	});
 </aui:script>

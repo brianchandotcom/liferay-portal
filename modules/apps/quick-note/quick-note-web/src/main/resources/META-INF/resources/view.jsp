@@ -50,54 +50,43 @@
 		var quickNotePad = A.one('#<portlet:namespace />pad');
 
 		if (quickNotePad) {
-			quickNotePad.all('.note-color').on(
-				'click',
-				function(event) {
-					var box = event.currentTarget;
+			quickNotePad.all('.note-color').on('click', function(event) {
+				var box = event.currentTarget;
 
-					var bgColor = box.getStyle('backgroundColor');
+				var bgColor = box.getStyle('backgroundColor');
 
-					quickNotePad.setStyle('backgroundColor', bgColor);
+				quickNotePad.setStyle('backgroundColor', bgColor);
 
-					<portlet:actionURL name="save" var="saveURL" />
+				<portlet:actionURL name="save" var="saveURL" />
 
-					A.io.request(
-						'<%= saveURL %>',
-						{
-							data: {
-								<portlet:namespace />color: bgColor
-							}
-						}
-					);
-				}
-			);
+				A.io.request('<%= saveURL %>', {
+					data: {
+						<portlet:namespace />color: bgColor
+					}
+				});
+			});
 		}
 
-		new A.Editable(
-			{
-				inputType: 'textarea',
-				node: '#<portlet:namespace />note',
-				on: {
-					contentTextChange: function(event) {
-						var instance = this;
+		new A.Editable({
+			inputType: 'textarea',
+			node: '#<portlet:namespace />note',
+			on: {
+				contentTextChange: function(event) {
+					var instance = this;
 
-						if (!event.initial) {
-							var newValue = event.newVal.replace(/\n/gi, '<br />');
+					if (!event.initial) {
+						var newValue = event.newVal.replace(/\n/gi, '<br />');
 
-							event.newVal = instance._toText(event.newVal);
+						event.newVal = instance._toText(event.newVal);
 
-							A.io.request(
-								'<%= saveURL %>',
-								{
-									data: {
-										<portlet:namespace />data: newValue
-									}
-								}
-							);
-						}
+						A.io.request('<%= saveURL %>', {
+							data: {
+								<portlet:namespace />data: newValue
+							}
+						});
 					}
 				}
 			}
-		);
+		});
 	</aui:script>
 </c:if>

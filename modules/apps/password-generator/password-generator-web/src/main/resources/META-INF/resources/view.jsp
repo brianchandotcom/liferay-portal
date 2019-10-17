@@ -84,26 +84,18 @@ catch (Exception e) {
 
 	parentNode.plug(A.Plugin.ParseContent);
 
-	form.on(
-		'submit',
-		function(event) {
-			Liferay.Util.fetch(
-				form.getAttribute('action'),
-				{
-					body: new FormData(form.getDOM()),
-					method: 'POST'
-				}
-			).then(
-				function(response) {
-					return response.text();
-				}
-			).then(
-				function(response) {
-					parentNode.setContent(response);
-				}
-			);
+	form.on('submit', function(event) {
+		Liferay.Util.fetch(form.getAttribute('action'), {
+			body: new FormData(form.getDOM()),
+			method: 'POST'
+		})
+			.then(function(response) {
+				return response.text();
+			})
+			.then(function(response) {
+				parentNode.setContent(response);
+			});
 
-			event.halt();
-		}
-	);
+		event.halt();
+	});
 </aui:script>

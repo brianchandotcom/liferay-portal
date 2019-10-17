@@ -73,7 +73,9 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 </c:if>
 
 <aui:script require="metal-dom/src/dom as dom">
-	var redirectField = dom.toElement('input[name="<portlet:namespace />redirect"]');
+	var redirectField = dom.toElement(
+		'input[name="<portlet:namespace />redirect"]'
+	);
 	var tabs1Param = '<portlet:namespace /><%= tabs1Param %>';
 
 	var updateRedirectField = function(event) {
@@ -99,11 +101,9 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 		var tabs1Value = currentURL.searchParams.get(tabs1Param);
 
 		if (tabs1Value) {
-			updateRedirectField(
-				{
-					id: tabs1Value
-				}
-			);
+			updateRedirectField({
+				id: tabs1Value
+			});
 		}
 
 		Liferay.on('showTab', updateRedirectField);

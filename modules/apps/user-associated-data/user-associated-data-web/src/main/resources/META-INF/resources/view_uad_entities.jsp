@@ -201,21 +201,29 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 	}
 
 	function <portlet:namespace/>doMultiple(actionURL, message, hierarchyMessage) {
-		var userOwnedPrimaryKeys = '<%= viewUADEntitiesDisplay.getUserOwnedEntityPKsString() %>';
+		var userOwnedPrimaryKeys =
+			'<%= viewUADEntitiesDisplay.getUserOwnedEntityPKsString() %>';
 
 		var userOwnedPrimaryKeyArray = userOwnedPrimaryKeys.split(',');
 
-		var form = document.getElementById('<portlet:namespace />viewUADEntitiesFm');
+		var form = document.getElementById(
+			'<portlet:namespace />viewUADEntitiesFm'
+		);
 
 		if (form) {
 			<c:choose>
 				<c:when test="<%= Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) %>">
-					var applicationKeys = form.querySelector('#<portlet:namespace />applicationKeys');
+					var applicationKeys = form.querySelector(
+						'#<portlet:namespace />applicationKeys'
+					);
 
 					if (applicationKeys) {
 						applicationKeys.setAttribute(
 							'value',
-							Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
+							Liferay.Util.listCheckedExcept(
+								form,
+								'<portlet:namespace />allRowIds'
+							)
 						);
 					}
 				</c:when>
@@ -226,20 +234,26 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 						String primaryKeysVar = "primaryKeys" + typeClass.getSimpleName();
 					%>
 
-						var <%= primaryKeysVar %> = form.querySelector('#<portlet:namespace />primaryKeys__<%= typeClass.getSimpleName() %>');
+						var <%= primaryKeysVar %> = form.querySelector(
+							'#<portlet:namespace />primaryKeys__<%= typeClass.getSimpleName() %>'
+						);
 
 						if (<%= primaryKeysVar %>) {
-							var primaryKeys = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIds<%= typeClass.getSimpleName() %>');
-
-							<%= primaryKeysVar %>.setAttribute(
-								'value',
-								primaryKeys
+							var primaryKeys = Liferay.Util.listCheckedExcept(
+								form,
+								'<portlet:namespace />allRowIds',
+								'<portlet:namespace />rowIds<%= typeClass.getSimpleName() %>'
 							);
+
+							<%= primaryKeysVar %>.setAttribute('value', primaryKeys);
 
 							var primaryKeyArray = primaryKeys.split(',');
 
 							for (var i = 0; i < primaryKeyArray.length; i++) {
-								if ((primaryKeyArray[i] != '') && !userOwnedPrimaryKeyArray.includes(primaryKeyArray[i])) {
+								if (
+									primaryKeyArray[i] != '' &&
+									!userOwnedPrimaryKeyArray.includes(primaryKeyArray[i])
+								) {
 									message = hierarchyMessage;
 								}
 							}

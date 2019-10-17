@@ -175,54 +175,59 @@ else {
 	</div>
 
 	<aui:script sandbox="<%= true %>">
-		var reminderQueryQuestionSelect = document.getElementById('<portlet:namespace />reminderQueryQuestion');
+		var reminderQueryQuestionSelect = document.getElementById(
+			'<portlet:namespace />reminderQueryQuestion'
+		);
 
 		if (reminderQueryQuestionSelect) {
-			reminderQueryQuestionSelect.addEventListener(
-				'change',
-				function(event) {
-					var customQuestion = event.currentTarget.value === '<%= UsersAdmin.CUSTOM_QUESTION %>';
+			reminderQueryQuestionSelect.addEventListener('change', function(event) {
+				var customQuestion =
+					event.currentTarget.value === '<%= UsersAdmin.CUSTOM_QUESTION %>';
 
-					var focusInput;
+				var focusInput;
 
-					if (customQuestion) {
-						var reminderQueryCustomQuestionInput = document.getElementById('<portlet:namespace />reminderQueryCustomQuestion');
+				if (customQuestion) {
+					var reminderQueryCustomQuestionInput = document.getElementById(
+						'<portlet:namespace />reminderQueryCustomQuestion'
+					);
 
-						if (reminderQueryCustomQuestionInput) {
+					if (reminderQueryCustomQuestionInput) {
 
-							<%
-							for (String question : PropsValues.USERS_REMINDER_QUERIES_QUESTIONS) {
-							%>
+						<%
+						for (String question : PropsValues.USERS_REMINDER_QUERIES_QUESTIONS) {
+						%>
 
-								if (reminderQueryCustomQuestionInput.value === '<%= UnicodeFormatter.toString(question) %>') {
-									reminderQueryCustomQuestionInput.value = '';
-								}
-
-							<%
+							if (
+								reminderQueryCustomQuestionInput.value ===
+								'<%= UnicodeFormatter.toString(question) %>'
+							) {
+								reminderQueryCustomQuestionInput.value = '';
 							}
-							%>
 
-							focusInput = reminderQueryCustomQuestionInput;
+						<%
 						}
-					}
-					else {
-						focusInput = '#<portlet:namespace />reminderQueryAnswer';
-					}
+						%>
 
-					var customQuestionDiv = document.getElementById('<portlet:namespace />customQuestionDiv');
-
-					if (customQuestionDiv) {
-						if (!customQuestion) {
-							customQuestionDiv.classList.add('hide');
-						}
-						else {
-							customQuestionDiv.classList.remove('hide');
-						}
+						focusInput = reminderQueryCustomQuestionInput;
 					}
-
-					Liferay.Util.focusFormField(focusInput);
+				} else {
+					focusInput = '#<portlet:namespace />reminderQueryAnswer';
 				}
-			);
+
+				var customQuestionDiv = document.getElementById(
+					'<portlet:namespace />customQuestionDiv'
+				);
+
+				if (customQuestionDiv) {
+					if (!customQuestion) {
+						customQuestionDiv.classList.add('hide');
+					} else {
+						customQuestionDiv.classList.remove('hide');
+					}
+				}
+
+				Liferay.Util.focusFormField(focusInput);
+			});
 		}
 	</aui:script>
 </c:if>

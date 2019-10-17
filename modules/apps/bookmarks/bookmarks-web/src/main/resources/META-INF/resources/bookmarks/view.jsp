@@ -224,16 +224,15 @@ else {
 %>
 
 <aui:script use="liferay-bookmarks">
-	var bookmarks = new Liferay.Portlet.Bookmarks(
-		{
-			editEntryUrl: '<portlet:actionURL name="/bookmarks/edit_entry" />',
-			form: {
-				method: 'POST',
-				node: A.one(document.<portlet:namespace />fm)
-			},
-			moveEntryUrl: '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/bookmarks/move_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
-			namespace: '<portlet:namespace />',
-			searchContainerId: 'entries'
-		}
-	);
+	var bookmarks = new Liferay.Portlet.Bookmarks({
+		editEntryUrl: '<portlet:actionURL name="/bookmarks/edit_entry" />',
+		form: {
+			method: 'POST',
+			node: A.one(document.<portlet:namespace />fm)
+		},
+		moveEntryUrl:
+			'<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/bookmarks/move_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
+		namespace: '<portlet:namespace />',
+		searchContainerId: 'entries'
+	});
 </aui:script>

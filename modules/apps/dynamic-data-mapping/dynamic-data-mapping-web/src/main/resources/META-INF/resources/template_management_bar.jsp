@@ -39,43 +39,46 @@ boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true)
 
 <aui:script sandbox="<%= true %>">
 	var deleteTemplates = function() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			var searchContainer = document.getElementById('<portlet:namespace />entriesContainer');
+		if (
+			confirm(
+				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
+			)
+		) {
+			var searchContainer = document.getElementById(
+				'<portlet:namespace />entriesContainer'
+			);
 
 			<portlet:actionURL name="deleteTemplate" var="deleteTemplatesURL">
 				<portlet:param name="mvcPath" value="/view_template.jsp" />
 			</portlet:actionURL>
 
 			if (searchContainer) {
-				Liferay.Util.postForm(
-					document.<portlet:namespace />fm,
-					{
-						data: {
-							deleteTemplateIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
-						},
-						url: '<%= deleteTemplatesURL %>'
-					}
-				);
+				Liferay.Util.postForm(document.<portlet:namespace />fm, {
+					data: {
+						deleteTemplateIds: Liferay.Util.listCheckedExcept(
+							searchContainer,
+							'<portlet:namespace />allRowIds'
+						)
+					},
+					url: '<%= deleteTemplatesURL %>'
+				});
 			}
 		}
 	};
 
 	var ACTIONS = {
-		'deleteTemplates': deleteTemplates
+		deleteTemplates: deleteTemplates
 	};
 
-	Liferay.componentReady('ddmTemplateManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-					function(event) {
-						var itemData = event.data.item.data;
+	Liferay.componentReady('ddmTemplateManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('actionItemClicked', function(event) {
+			var itemData = event.data.item.data;
 
-						if (itemData && itemData.action && ACTIONS[itemData.action]) {
-							ACTIONS[itemData.action]();
-						}
-				}
-			);
-		}
-	);
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action]();
+			}
+		});
+	});
 </aui:script>

@@ -267,5 +267,8 @@ else {
 </div>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />fm', '<%= HtmlUtil.escape(eventName) %>');
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />fm',
+		'<%= HtmlUtil.escape(eventName) %>'
+	);
 </aui:script>

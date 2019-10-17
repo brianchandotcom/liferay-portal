@@ -194,32 +194,29 @@
 			var form = document.getElementById('<portlet:namespace /><%= formName %>');
 
 			if (form) {
-				form.addEventListener(
-					'submit',
-					function(event) {
-						<c:if test="<%= Validator.isNotNull(redirect) %>">
-							var redirect = form.querySelector('#<portlet:namespace />redirect');
+				form.addEventListener('submit', function(event) {
+					<c:if test="<%= Validator.isNotNull(redirect) %>">
+						var redirect = form.querySelector('#<portlet:namespace />redirect');
 
-							if (redirect) {
-								var redirectVal = redirect.getAttribute('value');
+						if (redirect) {
+							var redirectVal = redirect.getAttribute('value');
 
-								redirect.setAttribute('value', redirectVal + window.location.hash);
-							}
-						</c:if>
+							redirect.setAttribute('value', redirectVal + window.location.hash);
+						}
+					</c:if>
 
-						submitForm(form);
-					}
-				);
+					submitForm(form);
+				});
 
 				var password = form.querySelector('#<portlet:namespace />password');
 
 				if (password) {
-					password.addEventListener(
-						'keypress',
-						function(event) {
-							Liferay.Util.showCapsLock(event, '<portlet:namespace />passwordCapsLockSpan');
-						}
-					);
+					password.addEventListener('keypress', function(event) {
+						Liferay.Util.showCapsLock(
+							event,
+							'<portlet:namespace />passwordCapsLockSpan'
+						);
+					});
 				}
 			}
 		</aui:script>

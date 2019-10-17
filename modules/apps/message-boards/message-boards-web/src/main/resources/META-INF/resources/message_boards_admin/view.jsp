@@ -103,61 +103,55 @@ if (category != null) {
 	<portlet:actionURL name="/message_boards/edit_entry" var="editEntryURL" />
 
 	var deleteEntries = function() {
-		if (<%= trashHelper.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, trashHelper.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
-			Liferay.Util.postForm(
-				form,
-				{
-					data: {
-						'<%= Constants.CMD %>': '<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>'
-					},
-					url: '<%= editEntryURL %>'
-				}
-			);
+		if (
+			<%= trashHelper.isTrashEnabled(scopeGroupId) %> ||
+			confirm(
+				'<%= UnicodeLanguageUtil.get(request, trashHelper.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>'
+			)
+		) {
+			Liferay.Util.postForm(form, {
+				data: {
+					<%= Constants.CMD %>:
+						'<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>'
+				},
+				url: '<%= editEntryURL %>'
+			});
 		}
 	};
 
 	var lockEntries = function() {
-		Liferay.Util.postForm(
-			form,
-			{
-				data: {
-					'<%= Constants.CMD %>': '<%= Constants.LOCK %>'
-				},
-				url: '<%= editEntryURL %>'
-			}
-		);
+		Liferay.Util.postForm(form, {
+			data: {
+				<%= Constants.CMD %>: '<%= Constants.LOCK %>'
+			},
+			url: '<%= editEntryURL %>'
+		});
 	};
 
 	var unlockEntries = function() {
-		Liferay.Util.postForm(
-			form,
-			{
-				data: {
-					'<%= Constants.CMD %>': '<%= Constants.UNLOCK %>'
-				},
-				url: '<%= editEntryURL %>'
-			}
-		);
+		Liferay.Util.postForm(form, {
+			data: {
+				<%= Constants.CMD %>: '<%= Constants.UNLOCK %>'
+			},
+			url: '<%= editEntryURL %>'
+		});
 	};
 
 	var ACTIONS = {
-		'deleteEntries': deleteEntries,
-		'lockEntries': lockEntries,
-		'unlockEntries': unlockEntries
+		deleteEntries: deleteEntries,
+		lockEntries: lockEntries,
+		unlockEntries: unlockEntries
 	};
 
-	Liferay.componentReady('mbEntriesManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
+	Liferay.componentReady('mbEntriesManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('actionItemClicked', function(event) {
+			var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action]();
+			}
+		});
+	});
 </aui:script>

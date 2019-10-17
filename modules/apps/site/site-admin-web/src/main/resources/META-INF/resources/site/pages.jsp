@@ -251,9 +251,23 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		return currentValue != '';
 	}
 
-	Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');
-	Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />privateLayoutSetPrototypeIdOptions');
+	Liferay.Util.toggleSelectBox(
+		'<portlet:namespace />publicLayoutSetPrototypeId',
+		<portlet:namespace />isVisible,
+		'<portlet:namespace />publicLayoutSetPrototypeIdOptions'
+	);
+	Liferay.Util.toggleSelectBox(
+		'<portlet:namespace />privateLayoutSetPrototypeId',
+		<portlet:namespace />isVisible,
+		'<portlet:namespace />privateLayoutSetPrototypeIdOptions'
+	);
 
-	Liferay.Util.toggleBoxes('<portlet:namespace />publicLayoutSetPrototypeLinkEnabled', '<portlet:namespace />publicLayoutSetPrototypeMergeAlert');
-	Liferay.Util.toggleBoxes('<portlet:namespace />privateLayoutSetPrototypeLinkEnabled', '<portlet:namespace />privateLayoutSetPrototypeMergeAlert');
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />publicLayoutSetPrototypeLinkEnabled',
+		'<portlet:namespace />publicLayoutSetPrototypeMergeAlert'
+	);
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />privateLayoutSetPrototypeLinkEnabled',
+		'<portlet:namespace />privateLayoutSetPrototypeMergeAlert'
+	);
 </aui:script>

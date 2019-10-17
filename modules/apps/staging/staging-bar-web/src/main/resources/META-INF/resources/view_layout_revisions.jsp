@@ -172,62 +172,62 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 </div>
 
 <script>
-	function <portlet:namespace />selectRevision(layoutRevisionId, layoutSetBranchId) {
-		AUI.$.ajax(
-			themeDisplay.getPathMain() + '/portal/update_layout',
-			{
-				data: {
-					cmd: 'select_layout_revision',
-					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-					layoutRevisionId: layoutRevisionId,
-					layoutSetBranchId: layoutSetBranchId,
-					p_auth: Liferay.authToken,
-					p_l_id: themeDisplay.getPlid(),
-					p_v_l_s_g_id: themeDisplay.getSiteGroupId()
-				},
-				success: function(event, id, obj) {
-					var parentWindow = Liferay.Util.getOpener();
+function <portlet:namespace />selectRevision(
+	layoutRevisionId,
+	layoutSetBranchId
+) {
+	AUI.$.ajax(themeDisplay.getPathMain() + '/portal/update_layout', {
+		data: {
+			cmd: 'select_layout_revision',
+			doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+			layoutRevisionId: layoutRevisionId,
+			layoutSetBranchId: layoutSetBranchId,
+			p_auth: Liferay.authToken,
+			p_l_id: themeDisplay.getPlid(),
+			p_v_l_s_g_id: themeDisplay.getSiteGroupId()
+		},
+		success: function(event, id, obj) {
+			var parentWindow = Liferay.Util.getOpener();
 
-					parentWindow.location.reload();
+			parentWindow.location.reload();
+		}
+	});
+}
+
+(function() {
+	var layoutBranchesContainers = document.querySelectorAll(
+		'.layout-variation-container'
+	);
+	var variationsSelector = document.getElementById(
+		'<portlet:namespace />variationsSelector'
+	);
+
+	if (layoutBranchesContainers && variationsSelector) {
+		variationsSelector.addEventListener('change', function() {
+			var variation = variationsSelector.value;
+
+			if (variation === 'all') {
+				Array.prototype.forEach.call(layoutBranchesContainers, function(
+					layoutBranchesContainer
+				) {
+					layoutBranchesContainer.classList.remove('hide');
+				});
+			} else {
+				Array.prototype.forEach.call(layoutBranchesContainers, function(
+					layoutBranchesContainer
+				) {
+					layoutBranchesContainer.classList.add('hide');
+				});
+
+				var variationElement = document.getElementById(
+					'<portlet:namespace />' + variation
+				);
+
+				if (variationElement) {
+					variationElement.classList.remove('hide');
 				}
 			}
-		);
+		});
 	}
-
-	(function() {
-		var layoutBranchesContainers = document.querySelectorAll('.layout-variation-container');
-		var variationsSelector = document.getElementById('<portlet:namespace />variationsSelector');
-
-		if (layoutBranchesContainers && variationsSelector) {
-			variationsSelector.addEventListener(
-				'change',
-				function() {
-					var variation = variationsSelector.value;
-
-					if (variation === 'all') {
-						Array.prototype.forEach.call(
-							layoutBranchesContainers,
-							function(layoutBranchesContainer) {
-								layoutBranchesContainer.classList.remove('hide');
-							}
-						);
-					}
-					else {
-						Array.prototype.forEach.call(
-							layoutBranchesContainers,
-							function(layoutBranchesContainer) {
-								layoutBranchesContainer.classList.add('hide');
-							}
-						);
-
-						var variationElement = document.getElementById('<portlet:namespace />' + variation);
-
-						if (variationElement) {
-							variationElement.classList.remove('hide');
-						}
-					}
-				}
-			);
-		}
 })();
 </script>

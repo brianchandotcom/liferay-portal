@@ -39,20 +39,19 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 
 	<script>
 		(function() {
-			var resetButton = document.getElementById('<%= randomNamespace %>resetButton');
+			var resetButton = document.getElementById(
+				'<%= randomNamespace %>resetButton'
+			);
 
 			if (resetButton) {
-				resetButton.addEventListener(
-					'click',
-					function(event) {
-						<portlet:actionURL name="resetMergeFailCount" var="resetMergeFailCountURL">
-							<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()) %>" />
-							<portlet:param name="redirect" value="<%= redirect %>" />
-						</portlet:actionURL>
+				resetButton.addEventListener('click', function(event) {
+					<portlet:actionURL name="resetMergeFailCount" var="resetMergeFailCountURL">
+						<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()) %>" />
+						<portlet:param name="redirect" value="<%= redirect %>" />
+					</portlet:actionURL>
 
-						submitForm(document.hrefFm, '<%= resetMergeFailCountURL %>');
-					}
-				);
+					submitForm(document.hrefFm, '<%= resetMergeFailCountURL %>');
+				});
 			}
 		})();
 	</script>

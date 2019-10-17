@@ -103,18 +103,23 @@ int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2
 
 <script>
 	function <portlet:namespace />removeAccess() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-remove-access-for-the-selected-entries") %>')) {
+		if (
+			confirm(
+				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-remove-access-for-the-selected-entries") %>'
+			)
+		) {
 			var form = document.<portlet:namespace />fm;
 
-			Liferay.Util.postForm(
-				form,
-				{
-					data: {
-						oAuth2AuthorizationIds: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
-					},
-					url: '<portlet:actionURL name="/connected_applications/revoke_oauth2_authorizations" />'
-				}
-			);
+			Liferay.Util.postForm(form, {
+				data: {
+					oAuth2AuthorizationIds: Liferay.Util.listCheckedExcept(
+						form,
+						'<portlet:namespace />allRowIds'
+					)
+				},
+				url:
+					'<portlet:actionURL name="/connected_applications/revoke_oauth2_authorizations" />'
+			});
 		}
 	}
 </script>

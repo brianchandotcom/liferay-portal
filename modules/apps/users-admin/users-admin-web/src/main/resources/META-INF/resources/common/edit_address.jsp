@@ -121,30 +121,30 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 	</div>
 
 	<aui:script use="liferay-dynamic-select">
-		new Liferay.DynamicSelect(
-			[
-				{
-					select: '<portlet:namespace />addressCountryId',
-					selectData: Liferay.Address.getCountries,
-					selectDesc: 'nameCurrentValue',
-					selectId: 'countryId',
-					selectSort: '<%= true %>',
-					selectVal: '<%= countryId %>'
-				},
-				{
-					select: '<portlet:namespace />addressRegionId',
-					selectData: Liferay.Address.getRegions,
-					selectDesc: 'name',
-					selectId: 'regionId',
-					selectVal: '<%= regionId %>'
-				}
-			]
-		);
+		new Liferay.DynamicSelect([
+			{
+				select: '<portlet:namespace />addressCountryId',
+				selectData: Liferay.Address.getCountries,
+				selectDesc: 'nameCurrentValue',
+				selectId: 'countryId',
+				selectSort: '<%= true %>',
+				selectVal: '<%= countryId %>'
+			},
+			{
+				select: '<portlet:namespace />addressRegionId',
+				selectData: Liferay.Address.getRegions,
+				selectDesc: 'name',
+				selectId: 'regionId',
+				selectVal: '<%= regionId %>'
+			}
+		]);
 	</aui:script>
 </aui:form>
 
 <aui:script use="liferay-form">
-	const addressCountry = document.getElementById('<portlet:namespace />addressCountryId');
+	const addressCountry = document.getElementById(
+		'<portlet:namespace />addressCountryId'
+	);
 
 	function checkCountry(countryId) {
 		Liferay.Service(
@@ -155,8 +155,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 			function(response, err) {
 				if (err) {
 					console.error(err);
-				}
-				else {
+				} else {
 					updateAddressZipRequired(response.zipRequired);
 				}
 			}
@@ -168,22 +167,23 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 
 		if (value > 0) {
 			checkCountry(value);
-		}
-		else {
+		} else {
 			updateAddressZipRequired(false);
 		}
 	}
 
 	function updateAddressZipRequired(required) {
-		const addressZipRequiredWrapper = document.getElementById('<portlet:namespace />addressZipRequiredWrapper');
-		const formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
+		const addressZipRequiredWrapper = document.getElementById(
+			'<portlet:namespace />addressZipRequiredWrapper'
+		);
+		const formValidator = Liferay.Form.get('<portlet:namespace />fm')
+			.formValidator;
 
 		const rules = formValidator._getAttr('rules');
 
 		if (required) {
 			addressZipRequiredWrapper.removeAttribute('hidden');
-		}
-		else {
+		} else {
 			addressZipRequiredWrapper.setAttribute('hidden', true);
 		}
 

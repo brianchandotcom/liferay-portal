@@ -66,29 +66,37 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 
 			var data = {};
 
-			data.<portlet:namespace />casLoginURL = document.<portlet:namespace />fm['<portlet:namespace /><%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE %>loginURL'].value;
-			data.<portlet:namespace />casLogoutURL = document.<portlet:namespace />fm['<portlet:namespace /><%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE %>logoutURL'].value;
-			data.<portlet:namespace />casServerURL = document.<portlet:namespace />fm['<portlet:namespace /><%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE %>serverURL'].value;
-			data.<portlet:namespace />casServiceURL = document.<portlet:namespace />fm['<portlet:namespace /><%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE %>serviceURL'].value;
+			data.<portlet:namespace />casLoginURL =
+				document.<portlet:namespace />fm[
+					'<portlet:namespace /><%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE %>loginURL'
+				].value;
+			data.<portlet:namespace />casLogoutURL =
+				document.<portlet:namespace />fm[
+					'<portlet:namespace /><%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE %>logoutURL'
+				].value;
+			data.<portlet:namespace />casServerURL =
+				document.<portlet:namespace />fm[
+					'<portlet:namespace /><%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE %>serverURL'
+				].value;
+			data.<portlet:namespace />casServiceURL =
+				document.<portlet:namespace />fm[
+					'<portlet:namespace /><%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE %>serviceURL'
+				].value;
 
-			var url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_cas" /></portlet:renderURL>';
+			var url =
+				'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_cas" /></portlet:renderURL>';
 
-			var dialog = Liferay.Util.Window.getWindow(
-				{
-					dialog: {
-						destroyOnHide: true
-					},
-					title: '<%= UnicodeLanguageUtil.get(request, "cas") %>'
-				}
-			);
+			var dialog = Liferay.Util.Window.getWindow({
+				dialog: {
+					destroyOnHide: true
+				},
+				title: '<%= UnicodeLanguageUtil.get(request, "cas") %>'
+			});
 
-			dialog.plug(
-				A.Plugin.IO,
-				{
-					data: data,
-					uri: url
-				}
-			);
+			dialog.plug(A.Plugin.IO, {
+				data: data,
+				uri: url
+			});
 		},
 		['aui-io-plugin-deprecated', 'liferay-util-window']
 	);

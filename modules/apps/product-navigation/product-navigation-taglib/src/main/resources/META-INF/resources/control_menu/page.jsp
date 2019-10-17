@@ -106,29 +106,22 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 	<aui:script use="liferay-product-navigation-control-menu">
 		Liferay.ControlMenu.init('#<portlet:namespace />controlMenu');
 
-		var sidenavToggles = document.querySelectorAll('#<portlet:namespace />ControlMenu [data-toggle="liferay-sidenav"]');
-
-		var sidenavInstances = Array.from(sidenavToggles).map(
-			function(toggle) {
-				return Liferay.SideNavigation.instance(toggle);
-			}
+		var sidenavToggles = document.querySelectorAll(
+			'#<portlet:namespace />ControlMenu [data-toggle="liferay-sidenav"]'
 		);
 
-		sidenavInstances.forEach(
-			function(instance) {
-				instance.on(
-					'openStart.lexicon.sidenav',
-					function(event, source) {
-						sidenavInstances.forEach(
-							function(sidenav) {
-								if (sidenav !== source) {
-									sidenav.hide();
-								}
-							}
-						);
+		var sidenavInstances = Array.from(sidenavToggles).map(function(toggle) {
+			return Liferay.SideNavigation.instance(toggle);
+		});
+
+		sidenavInstances.forEach(function(instance) {
+			instance.on('openStart.lexicon.sidenav', function(event, source) {
+				sidenavInstances.forEach(function(sidenav) {
+					if (sidenav !== source) {
+						sidenav.hide();
 					}
-				);
-			}
-		);
+				});
+			});
+		});
 	</aui:script>
 </c:if>

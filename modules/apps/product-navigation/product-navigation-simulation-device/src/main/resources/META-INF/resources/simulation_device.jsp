@@ -65,49 +65,44 @@
 </div>
 
 <aui:script use="liferay-product-navigation-simulation-device">
-	var simulationDevice = new Liferay.SimulationDevice(
-		{
-			devices: {
-				autosize: {
-					skin: 'autosize'
-				},
-				custom: {
-					height: '#<portlet:namespace />height',
-					resizable: true,
-					width: '#<portlet:namespace />width'
-				},
-				desktop: {
-					height: 1050,
-					selected: true,
-					width: 1300
-				},
-				smartphone: {
-					height: 640,
-					preventTransition: true,
-					rotation: true,
-					skin: 'smartphone',
-					width: 400
-				},
-				tablet: {
-					height: 900,
-					preventTransition: true,
-					rotation: true,
-					skin: 'tablet',
-					width: 760
-				}
+	var simulationDevice = new Liferay.SimulationDevice({
+		devices: {
+			autosize: {
+				skin: 'autosize'
 			},
-			inputHeight: '#<portlet:namespace />height',
-			inputWidth: '#<portlet:namespace />width',
-			namespace: '<portlet:namespace />'
-		}
-	);
+			custom: {
+				height: '#<portlet:namespace />height',
+				resizable: true,
+				width: '#<portlet:namespace />width'
+			},
+			desktop: {
+				height: 1050,
+				selected: true,
+				width: 1300
+			},
+			smartphone: {
+				height: 640,
+				preventTransition: true,
+				rotation: true,
+				skin: 'smartphone',
+				width: 400
+			},
+			tablet: {
+				height: 900,
+				preventTransition: true,
+				rotation: true,
+				skin: 'tablet',
+				width: 760
+			}
+		},
+		inputHeight: '#<portlet:namespace />height',
+		inputWidth: '#<portlet:namespace />width',
+		namespace: '<portlet:namespace />'
+	});
 
-	Liferay.once(
-		'screenLoad',
-		function() {
-			simulationDevice.destroy();
-		}
-	);
+	Liferay.once('screenLoad', function() {
+		simulationDevice.destroy();
+	});
 
 	A.one('.devices').delegate(
 		'click',
@@ -116,12 +111,13 @@
 
 			var dataDevice = currentTarget.attr('data-device');
 
-			var customDeviceContainer = A.one('#<portlet:namespace />customDeviceContainer');
+			var customDeviceContainer = A.one(
+				'#<portlet:namespace />customDeviceContainer'
+			);
 
 			if (dataDevice === 'custom') {
 				customDeviceContainer.show();
-			}
-			else {
+			} else {
 				customDeviceContainer.hide();
 			}
 		},

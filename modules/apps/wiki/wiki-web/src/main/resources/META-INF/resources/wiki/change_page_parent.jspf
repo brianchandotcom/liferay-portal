@@ -119,13 +119,15 @@ childPages.remove(wikiPage);
 
 <aui:script>
 	function <portlet:namespace />changeParent() {
-		document.<portlet:namespace />changeParentFm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHANGE_PARENT %>';
+		document.<portlet:namespace />changeParentFm.<portlet:namespace /><%= Constants.CMD %>.value =
+			'<%= Constants.CHANGE_PARENT %>';
 
 		submitForm(document.<portlet:namespace />changeParentFm);
 	}
 
 	function <portlet:namespace />publishPage() {
-		document.<portlet:namespace />changeParentFm.<portlet:namespace />workflowAction.value = '<%= WorkflowConstants.ACTION_PUBLISH %>';
+		document.<portlet:namespace />changeParentFm.<portlet:namespace />workflowAction.value =
+			'<%= WorkflowConstants.ACTION_PUBLISH %>';
 
 		<portlet:namespace />changeParent();
 	}

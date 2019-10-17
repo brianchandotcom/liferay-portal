@@ -115,9 +115,12 @@ if (!dlFileEntries.isEmpty()) {
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
-			form.action = '<portlet:actionURL name="/server_admin/edit_document_library_extra_settings" />';
+			form.action =
+				'<portlet:actionURL name="/server_admin/edit_document_library_extra_settings" />';
 
-			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
+			var cmd = form.querySelector(
+				'#<portlet:namespace /><%= Constants.CMD %>'
+			);
 
 			if (cmd) {
 				cmd.setAttribute('value', 'convert');

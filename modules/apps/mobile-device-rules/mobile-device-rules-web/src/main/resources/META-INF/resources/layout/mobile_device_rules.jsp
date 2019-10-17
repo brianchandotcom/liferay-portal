@@ -70,6 +70,13 @@ int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupIns
 </div>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />inheritRuleGroupInstances', '<portlet:namespace />inheritRuleGroupInstancesContainer');
-	Liferay.Util.toggleBoxes('<portlet:namespace />inheritRuleGroupInstances', '<portlet:namespace />uniqueRuleGroupInstancesContainer', true);
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />inheritRuleGroupInstances',
+		'<portlet:namespace />inheritRuleGroupInstancesContainer'
+	);
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />inheritRuleGroupInstances',
+		'<portlet:namespace />uniqueRuleGroupInstancesContainer',
+		true
+	);
 </aui:script>

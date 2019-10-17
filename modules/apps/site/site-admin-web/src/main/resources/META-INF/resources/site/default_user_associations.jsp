@@ -154,7 +154,10 @@ for (long defaultTeamId : defaultTeamIds) {
 			function(event) {
 				var link = event.currentTarget;
 
-				searchContainer.deleteRow(link.ancestor('tr'), link.getAttribute('data-rowId'));
+				searchContainer.deleteRow(
+					link.ancestor('tr'),
+					link.getAttribute('data-rowId')
+				);
 			},
 			'.modify-link'
 		);
@@ -163,49 +166,50 @@ for (long defaultTeamId : defaultTeamIds) {
 	var bindSelectLink = function(config) {
 		var searchContainer = config.searchContainer;
 
-		A.one(config.linkId).on(
-			'click',
-			function(event) {
-				var searchContainerData = searchContainer.getData();
+		A.one(config.linkId).on('click', function(event) {
+			var searchContainerData = searchContainer.getData();
 
-				if (!searchContainerData.length) {
-					searchContainerData = [];
-				}
-				else {
-					searchContainerData = searchContainerData.split(',');
-				}
-
-				var ids = A.one(config.inputId).val();
-
-				var uri = Liferay.Util.addParams(config.urlParam + '=' + ids, config.uri);
-
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							destroyOnHide: true,
-							modal: true
-						},
-						id: config.id,
-						selectedData: searchContainerData,
-						title: config.title,
-						uri: uri
-					},
-					function(event) {
-						var entityId = event.entityid;
-
-						var rowColumns = [
-							A.Escape.html(event.entityname),
-							'<a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
-						];
-
-						searchContainer.addRow(rowColumns, entityId);
-
-						searchContainer.updateDataStore();
-					}
-				);
+			if (!searchContainerData.length) {
+				searchContainerData = [];
+			} else {
+				searchContainerData = searchContainerData.split(',');
 			}
-		);
+
+			var ids = A.one(config.inputId).val();
+
+			var uri = Liferay.Util.addParams(
+				config.urlParam + '=' + ids,
+				config.uri
+			);
+
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						destroyOnHide: true,
+						modal: true
+					},
+					id: config.id,
+					selectedData: searchContainerData,
+					title: config.title,
+					uri: uri
+				},
+				function(event) {
+					var entityId = event.entityid;
+
+					var rowColumns = [
+						A.Escape.html(event.entityname),
+						'<a class="modify-link" data-rowId="' +
+							entityId +
+							'" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
+					];
+
+					searchContainer.addRow(rowColumns, entityId);
+
+					searchContainer.updateDataStore();
+				}
+			);
+		});
 	};
 
 	<%
@@ -225,11 +229,14 @@ for (long defaultTeamId : defaultTeamIds) {
 		idAttr: 'roleid',
 		inputId: '#<portlet:namespace />siteRolesSearchContainerPrimaryKeys',
 		linkId: '#<portlet:namespace />selectSiteRoleLink',
-		searchContainer: Liferay.SearchContainer.get('<portlet:namespace />siteRolesSearchContainer'),
+		searchContainer: Liferay.SearchContainer.get(
+			'<portlet:namespace />siteRolesSearchContainer'
+		),
 		title: '<liferay-ui:message arguments="site-role" key="select-x" />',
 		titleAttr: 'roletitle',
 		uri: '<%= selectSiteRoleURL.toString() %>',
-		urlParam: '<%= PortalUtil.getPortletNamespace(selectSiteRolePortletId) %>roleIds'
+		urlParam:
+			'<%= PortalUtil.getPortletNamespace(selectSiteRolePortletId) %>roleIds'
 	};
 
 	bindModifyLink(siteRolesConfig);
@@ -250,11 +257,14 @@ for (long defaultTeamId : defaultTeamIds) {
 		idAttr: 'teamid',
 		inputId: '#<portlet:namespace />teamsSearchContainerPrimaryKeys',
 		linkId: '#<portlet:namespace />selectTeamLink',
-		searchContainer: Liferay.SearchContainer.get('<portlet:namespace />teamsSearchContainer'),
+		searchContainer: Liferay.SearchContainer.get(
+			'<portlet:namespace />teamsSearchContainer'
+		),
 		title: '<liferay-ui:message arguments="team" key="select-x" />',
 		titleAttr: 'teamname',
 		uri: '<%= selectTeamURL.toString() %>',
-		urlParam: '<%= PortalUtil.getPortletNamespace(selectTeamPortletId) %>teamIds'
+		urlParam:
+			'<%= PortalUtil.getPortletNamespace(selectTeamPortletId) %>teamIds'
 	};
 
 	bindModifyLink(teamsConfig);

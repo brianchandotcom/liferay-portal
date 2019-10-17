@@ -192,7 +192,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 
 		<c:if test="<%= Validator.isNotNull(themeSetting.getScript()) %>">
 			<aui:script position="inline">
-				<%= StringUtil.replace(themeSetting.getScript(), "[@NAMESPACE@]", liferayPortletResponse.getNamespace()) %>
+				<%= StringUtil.replace(themeSetting.getScript(), "[@NAMESPACE@]", liferayPortletResponse.getNamespace()) %>;
 			</aui:script>
 		</c:if>
 
@@ -204,7 +204,9 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 
 <c:if test="<%= !colorSchemes.isEmpty() %>">
 	<aui:script use="aui-base,aui-event-key">
-		var colorSchemesContainer = A.one('#<portlet:namespace />colorSchemesContainer');
+		var colorSchemesContainer = A.one(
+			'#<portlet:namespace />colorSchemesContainer'
+		);
 
 		colorSchemesContainer.delegate(
 			['click', 'keydown'],
@@ -214,11 +216,15 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 
 					var currentTarget = event.currentTarget;
 
-					colorSchemesContainer.all('.color-scheme-selector').removeClass('selected');
+					colorSchemesContainer
+						.all('.color-scheme-selector')
+						.removeClass('selected');
 
 					currentTarget.addClass('selected');
 
-					A.one('#<portlet:namespace />regularColorSchemeId').val(currentTarget.attr('data-color-scheme-id'));
+					A.one('#<portlet:namespace />regularColorSchemeId').val(
+						currentTarget.attr('data-color-scheme-id')
+					);
 				}
 			},
 			'.color-scheme-selector'

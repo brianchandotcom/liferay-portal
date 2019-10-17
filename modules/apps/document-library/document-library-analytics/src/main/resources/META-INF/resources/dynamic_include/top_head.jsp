@@ -30,40 +30,36 @@
 			var anchor = event.target;
 			var match = pathnameRegexp.exec(anchor.pathname);
 
-			var fileEntryId = anchor.dataset.analyticsFileEntryId || (anchor.parentElement && anchor.parentElement.dataset.analyticsFileEntryId);
+			var fileEntryId =
+				anchor.dataset.analyticsFileEntryId ||
+				(anchor.parentElement &&
+					anchor.parentElement.dataset.analyticsFileEntryId);
 
 			if (fileEntryId && match) {
 				var getParameterValue = function(parameterName) {
 					var result = null;
 
-					anchor
-						.search
+					anchor.search
 						.substr(1)
-						.split("&")
-						.forEach(
-							function(item) {
-								var tmp = item.split("=");
+						.split('&')
+						.forEach(function(item) {
+							var tmp = item.split('=');
 
-								if (tmp[0] === parameterName) {
-									result = decodeURIComponent(tmp[1]);
-								}
+							if (tmp[0] === parameterName) {
+								result = decodeURIComponent(tmp[1]);
 							}
-						);
+						});
 
 					return result;
-				}
+				};
 
-				Analytics.send(
-					'documentDownloaded',
-					'Document',
-					{
-						groupId: match[1],
-						fileEntryId: fileEntryId,
-						preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
-						title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
-						version: getParameterValue('version')
-					}
-				);
+				Analytics.send('documentDownloaded', 'Document', {
+					groupId: match[1],
+					fileEntryId: fileEntryId,
+					preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
+					title: decodeURIComponent(match[3].replace(/\+/gi, ' ')),
+					version: getParameterValue('version')
+				});
 			}
 		}
 	}
@@ -73,7 +69,7 @@
 	var onDestroyPortlet = function() {
 		document.body.removeEventListener('click', handleDownloadClick);
 		Liferay.detach('destroyPortlet', onDestroyPortlet);
-	}
+	};
 
 	Liferay.on('destroyPortlet', onDestroyPortlet);
 </aui:script>

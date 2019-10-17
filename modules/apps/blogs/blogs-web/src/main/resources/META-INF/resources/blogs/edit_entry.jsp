@@ -474,42 +474,43 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 	}
 
 	<c:if test="<%= (entry != null) && blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>">
-		Liferay.Util.toggleBoxes('<portlet:namespace />sendEmailEntryUpdated', '<portlet:namespace />emailEntryUpdatedCommentWrapper');
+		Liferay.Util.toggleBoxes(
+			'<portlet:namespace />sendEmailEntryUpdated',
+			'<portlet:namespace />emailEntryUpdatedCommentWrapper'
+		);
 	</c:if>
 </aui:script>
 
 <aui:script use="liferay-blogs">
 	var blogs = Liferay.component(
 		'<portlet:namespace />Blogs',
-		new Liferay.Blogs(
-			{
-				constants: {
-					'ACTION_PUBLISH': '<%= WorkflowConstants.ACTION_PUBLISH %>',
-					'ACTION_SAVE_DRAFT': '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
-					'ADD': '<%= Constants.ADD %>',
-					'CMD': '<%= Constants.CMD %>',
-					'STATUS_DRAFT': '<%= WorkflowConstants.STATUS_DRAFT %>',
-					'UPDATE': '<%= Constants.UPDATE %>'
+		new Liferay.Blogs({
+			constants: {
+				ACTION_PUBLISH: '<%= WorkflowConstants.ACTION_PUBLISH %>',
+				ACTION_SAVE_DRAFT: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
+				ADD: '<%= Constants.ADD %>',
+				CMD: '<%= Constants.CMD %>',
+				STATUS_DRAFT: '<%= WorkflowConstants.STATUS_DRAFT %>',
+				UPDATE: '<%= Constants.UPDATE %>'
+			},
+			descriptionLength: '<%= PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH %>',
+			editEntryURL: '<%= editEntryURL %>',
+
+			<c:if test="<%= entry != null %>">
+				entry: {
+					content: '<%= UnicodeFormatter.toString(content) %>',
+					customDescription: <%= customAbstract %>,
+					description: '<%= UnicodeFormatter.toString(description) %>',
+					pending: <%= entry.isPending() %>,
+					status: '<%= entry.getStatus() %>',
+					subtitle: '<%= UnicodeFormatter.toString(subtitle) %>',
+					title: '<%= UnicodeFormatter.toString(title) %>',
+					userId: '<%= entry.getUserId() %>'
 				},
-				descriptionLength: '<%= PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH %>',
-				editEntryURL: '<%= editEntryURL %>',
+			</c:if>
 
-				<c:if test="<%= entry != null %>">
-					entry: {
-						content: '<%= UnicodeFormatter.toString(content) %>',
-						customDescription: <%= customAbstract %>,
-						description: '<%= UnicodeFormatter.toString(description) %>',
-						pending: <%= entry.isPending() %>,
-						status: '<%= entry.getStatus() %>',
-						subtitle: '<%= UnicodeFormatter.toString(subtitle) %>',
-						title: '<%= UnicodeFormatter.toString(title) %>',
-						userId: '<%= entry.getUserId() %>'
-					},
-				</c:if>
-
-				namespace: '<portlet:namespace />'
-			}
-		)
+			namespace: '<portlet:namespace />'
+		})
 	);
 
 	var clearSaveDraftHandle = function(event) {

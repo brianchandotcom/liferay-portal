@@ -63,11 +63,16 @@
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
-			var currentActions = form.querySelector('#<portlet:namespace />current_actions');
+			var currentActions = form.querySelector(
+				'#<portlet:namespace />current_actions'
+			);
 			var symbols = form.querySelector('#<portlet:namespace />symbols');
 
 			if (currentActions && symbols) {
-				symbols.setAttribute('value', Liferay.Util.listSelect(currentActions));
+				symbols.setAttribute(
+					'value',
+					Liferay.Util.listSelect(currentActions)
+				);
 
 				submitForm(form);
 			}

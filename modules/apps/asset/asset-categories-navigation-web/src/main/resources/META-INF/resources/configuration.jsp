@@ -75,15 +75,18 @@
 	function <portlet:namespace />saveConfiguration() {
 		var form = document.<portlet:namespace />fm;
 
-		Liferay.Util.postForm(
-			form,
-			{
-				data: {
-					assetVocabularyIds: Liferay.Util.listSelect(Liferay.Util.getFormElement(form, 'currentAssetVocabularyIds'))
-				}
+		Liferay.Util.postForm(form, {
+			data: {
+				assetVocabularyIds: Liferay.Util.listSelect(
+					Liferay.Util.getFormElement(form, 'currentAssetVocabularyIds')
+				)
 			}
-		);
+		});
 	}
 
-	Liferay.Util.toggleSelectBox('<portlet:namespace />allAssetVocabularies', 'false', '<portlet:namespace />assetVocabulariesBoxes');
+	Liferay.Util.toggleSelectBox(
+		'<portlet:namespace />allAssetVocabularies',
+		'false',
+		'<portlet:namespace />assetVocabulariesBoxes'
+	);
 </aui:script>

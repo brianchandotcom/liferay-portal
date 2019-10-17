@@ -73,42 +73,48 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 			String className = assetPublisherWebUtil.getClassName(curRendererFactory);
 		%>
 
-			Liferay.Util.setFormValues(
-				form,
-				{
-					classTypeIds<%= className %>: Liferay.Util.listSelect(Liferay.Util.getFormElement(form, '<%= className %>currentClassTypeIds'))
-				}
-			);
+			Liferay.Util.setFormValues(form, {
+				classTypeIds<%= className %>: Liferay.Util.listSelect(
+					Liferay.Util.getFormElement(
+						form,
+						'<%= className %>currentClassTypeIds'
+					)
+				)
+			});
 
 		<%
 		}
 		%>
 
-		var currentClassNameIdsSelect = Liferay.Util.getFormElement(form, 'currentClassNameIds');
-		var currentMetadataFieldsInput = Liferay.Util.getFormElement(form, 'currentMetadataFields');
+		var currentClassNameIdsSelect = Liferay.Util.getFormElement(
+			form,
+			'currentClassNameIds'
+		);
+		var currentMetadataFieldsInput = Liferay.Util.getFormElement(
+			form,
+			'currentMetadataFields'
+		);
 
 		if (currentClassNameIdsSelect && currentMetadataFieldsInput) {
-			Liferay.Util.postForm(
-				form,
-				{
-					data: {
-						classNameIds: Liferay.Util.listSelect(currentClassNameIdsSelect),
-						metadataFields: Liferay.Util.listSelect(currentMetadataFieldsInput)
-					}
+			Liferay.Util.postForm(form, {
+				data: {
+					classNameIds: Liferay.Util.listSelect(
+						currentClassNameIdsSelect
+					),
+					metadataFields: Liferay.Util.listSelect(
+						currentMetadataFieldsInput
+					)
 				}
-			);
-		}
-		else if (currentMetadataFieldsInput) {
-			Liferay.Util.postForm(
-				form,
-				{
-					data: {
-						metadataFields: Liferay.Util.listSelect(currentMetadataFieldsInput)
-					}
+			});
+		} else if (currentMetadataFieldsInput) {
+			Liferay.Util.postForm(form, {
+				data: {
+					metadataFields: Liferay.Util.listSelect(
+						currentMetadataFieldsInput
+					)
 				}
-			);
-		}
-		else {
+			});
+		} else {
 			submitForm(form);
 		}
 	}

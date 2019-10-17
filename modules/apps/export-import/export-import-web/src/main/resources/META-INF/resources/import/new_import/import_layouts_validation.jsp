@@ -52,67 +52,69 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 	%>
 
 	<aui:script use="liferay-upload">
-		var liferayUpload = new Liferay.Upload(
-			{
-				boundingBox: '#<portlet:namespace />fileUpload',
+		var liferayUpload = new Liferay.Upload({
+			boundingBox: '#<portlet:namespace />fileUpload',
 
-				<%
-				DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-				%>
+			<%
+			DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+			%>
 
-				decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
+			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 
-				deleteFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="importLayouts"><portlet:param name="mvcRenderCommandName" value="importLayouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
+			deleteFile:
+				'<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="importLayouts"><portlet:param name="mvcRenderCommandName" value="importLayouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
 
-				<%
-				DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
-				%>
+			<%
+			DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
+			%>
 
-				fileDescription: '<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
+			fileDescription:
+				'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
 
-				maxFileSize: '<%= UploadServletRequestConfigurationHelperUtil.getMaxSize() %> B',
-				metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
-				metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
-				multipleFiles: false,
-				namespace: '<portlet:namespace />',
-				'strings.dropFileText': '<liferay-ui:message key="drop-a-lar-file-here-to-import" />',
-				'strings.fileCannotBeSavedText': '<liferay-ui:message key="the-file-x-cannot-be-imported" />',
-				'strings.pendingFileText': '<liferay-ui:message key="this-file-was-previously-uploaded-but-not-actually-imported" />',
-				'strings.uploadsCompleteText': '<liferay-ui:message key="the-file-is-ready-to-be-imported" />',
-				tempFileURL: {
-					method: Liferay.Service.bind('/layout/get-temp-file-names'),
-					params: {
-						folderName: '<%= ExportImportHelper.TEMP_FOLDER_NAME %>',
-						groupId: <%= groupId %>
-					}
-				},
-				uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="importLayouts"><portlet:param name="mvcRenderCommandName" value="importLayouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /><portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />'
-			}
-		);
+			maxFileSize:
+				'<%= UploadServletRequestConfigurationHelperUtil.getMaxSize() %> B',
+			metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
+			metadataExplanationContainer:
+				'#<portlet:namespace />metadataExplanationContainer',
+			multipleFiles: false,
+			namespace: '<portlet:namespace />',
+			'strings.dropFileText':
+				'<liferay-ui:message key="drop-a-lar-file-here-to-import" />',
+			'strings.fileCannotBeSavedText':
+				'<liferay-ui:message key="the-file-x-cannot-be-imported" />',
+			'strings.pendingFileText':
+				'<liferay-ui:message key="this-file-was-previously-uploaded-but-not-actually-imported" />',
+			'strings.uploadsCompleteText':
+				'<liferay-ui:message key="the-file-is-ready-to-be-imported" />',
+			tempFileURL: {
+				method: Liferay.Service.bind('/layout/get-temp-file-names'),
+				params: {
+					folderName: '<%= ExportImportHelper.TEMP_FOLDER_NAME %>',
+					groupId: <%= groupId %>
+				}
+			},
+			uploadFile:
+				'<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="importLayouts"><portlet:param name="mvcRenderCommandName" value="importLayouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /><portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />'
+		});
 
 		var continueButton = A.one('#<portlet:namespace />continueButton');
 
-		liferayUpload._uploader.on(
-			'alluploadscomplete',
-			function(event) {
-				toggleContinueButton();
-			}
-		);
+		liferayUpload._uploader.on('alluploadscomplete', function(event) {
+			toggleContinueButton();
+		});
 
-		Liferay.on(
-			'tempFileRemoved',
-			function(event) {
-				toggleContinueButton();
-			}
-		);
+		Liferay.on('tempFileRemoved', function(event) {
+			toggleContinueButton();
+		});
 
 		function toggleContinueButton() {
-			var uploadedFiles = liferayUpload._fileListContent.all('.upload-file.upload-complete');
+			var uploadedFiles = liferayUpload._fileListContent.all(
+				'.upload-file.upload-complete'
+			);
 
 			if (uploadedFiles.size() == 1) {
 				continueButton.show();
-			}
-			else {
+			} else {
 				continueButton.hide();
 			}
 		}
@@ -123,7 +125,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 			var formElements = form.elements;
 
 			for (var i = 0; i < formElements.length; ++i) {
-			formElements[i].disabled = true;
+				formElements[i].disabled = true;
 			}
 		</c:if>
 	</aui:script>
@@ -132,30 +134,26 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 <aui:script use="aui-base,aui-io-plugin-deprecated,aui-loading-mask-deprecated,io">
 	var form = A.one('#<portlet:namespace />fm1');
 
-	form.on(
-		'submit',
-		function(event) {
-			event.halt();
+	form.on('submit', function(event) {
+		event.halt();
 
-			var exportImportOptions = A.one('#<portlet:namespace />exportImportOptions');
+		var exportImportOptions = A.one(
+			'#<portlet:namespace />exportImportOptions'
+		);
 
-			exportImportOptions.plug(
-				A.Plugin.IO,
-				{
-					form: {
-						id: '<portlet:namespace />fm1'
-					},
+		exportImportOptions.plug(A.Plugin.IO, {
+			form: {
+				id: '<portlet:namespace />fm1'
+			},
 
-					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="importLayouts" var="importPagesURL">
-						<portlet:param name="p_p_isolated" value="<%= Boolean.TRUE.toString() %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-						<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
-					</liferay-portlet:resourceURL>
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="importLayouts" var="importPagesURL">
+				<portlet:param name="p_p_isolated" value="<%= Boolean.TRUE.toString() %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
+			</liferay-portlet:resourceURL>
 
-					uri: '<%= importPagesURL %>'
-				}
-			);
-		}
-	);
+			uri: '<%= importPagesURL %>'
+		});
+	});
 </aui:script>

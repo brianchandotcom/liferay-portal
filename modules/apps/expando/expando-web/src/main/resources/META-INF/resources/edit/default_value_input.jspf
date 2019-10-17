@@ -130,15 +130,16 @@
 		<aui:script require="map-common/js/MapBase.es as MapBase">
 			var geolocationField = {
 				init: function() {
-					Liferay.MapBase.get(
-						"<portlet:namespace /><%= name %>",
-						function(map) {
-							map.on('positionChange', geolocationField.onPositionChange, geolocationField);
-						}
-					);
+					Liferay.MapBase.get('<portlet:namespace /><%= name %>', function(map) {
+						map.on(
+							'positionChange',
+							geolocationField.onPositionChange,
+							geolocationField
+						);
+					});
 				},
 				onPositionChange: function(event) {
-					var inputName = "<portlet:namespace /><%= name %>";
+					var inputName = '<portlet:namespace /><%= name %>';
 					var inputNode = document.querySelector('[name="' + inputName + '"]');
 
 					var location = event.newVal.location;
@@ -146,12 +147,10 @@
 					if (inputNode) {
 						inputNode.setAttribute(
 							'value',
-							JSON.stringify(
-								{
-									latitude: location.lat,
-									longitude: location.lng
-								}
-							)
+							JSON.stringify({
+								latitude: location.lat,
+								longitude: location.lng
+							})
 						);
 					}
 
@@ -204,8 +203,15 @@
 				<aui:input label="make-field-localizable" name="Property--localize-field--" onChange='<%= renderResponse.getNamespace() + "onLocalizeFieldChange(event);" %>' type="checkbox" value="<%= type == ExpandoColumnConstants.STRING_LOCALIZED %>" />
 
 				<aui:script>
-					Liferay.Util.toggleBoxes('<portlet:namespace />localize-field', '<portlet:namespace />textField', true);
-					Liferay.Util.toggleBoxes('<portlet:namespace />localize-field', '<portlet:namespace />textLocalizedField');
+					Liferay.Util.toggleBoxes(
+						'<portlet:namespace />localize-field',
+						'<portlet:namespace />textField',
+						true
+					);
+					Liferay.Util.toggleBoxes(
+						'<portlet:namespace />localize-field',
+						'<portlet:namespace />textLocalizedField'
+					);
 				</aui:script>
 			</div>
 		</c:if>
@@ -219,42 +225,93 @@
 		if (form) {
 			var checked = event.target.checked;
 
-			form.querySelector('#<portlet:namespace />type').value = checked ? '<%= ExpandoColumnConstants.STRING_LOCALIZED %>' : '<%= ExpandoColumnConstants.STRING %>';
+			form.querySelector('#<portlet:namespace />type').value = checked
+				? '<%= ExpandoColumnConstants.STRING_LOCALIZED %>'
+				: '<%= ExpandoColumnConstants.STRING %>';
 		}
 	}
 </aui:script>
 
 <script>
 	function setDataType(selectionType) {
-		var dataTypeElement = document.getElementById('<portlet:namespace />dataType');
+		var dataTypeElement = document.getElementById(
+			'<portlet:namespace />dataType'
+		);
 
 		var currentSelectedDataType = dataTypeElement.value;
 
 		if (currentSelectedDataType) {
-			if (currentSelectedDataType == '<%= ExpandoColumnConstants.DATA_TYPE_TEXT %>') {
-				updateElement(["indexTypeSearchableAsKeyword", "indexTypeSearchableAsKeywordToggleSwitch", "precisionTypeSelect"], "disable");
+			if (
+				currentSelectedDataType ==
+				'<%= ExpandoColumnConstants.DATA_TYPE_TEXT %>'
+			) {
+				updateElement(
+					[
+						'indexTypeSearchableAsKeyword',
+						'indexTypeSearchableAsKeywordToggleSwitch',
+						'precisionTypeSelect'
+					],
+					'disable'
+				);
 
-				updateElement(["indexTypeKeyword", "indexTypeText", "searchableKeyWordOrText"], "enable");
+				updateElement(
+					[
+						'indexTypeKeyword',
+						'indexTypeText',
+						'searchableKeyWordOrText'
+					],
+					'enable'
+				);
 
-				updateElement(["searchableAsKeywordOrText"], "unhide");
+				updateElement(['searchableAsKeywordOrText'], 'unhide');
 
 				if (!selectionType) {
-					updateElement(["textFieldLocalizedCheckbox", "widthAdvancedSetting"], "unhide");
+					updateElement(
+						['textFieldLocalizedCheckbox', 'widthAdvancedSetting'],
+						'unhide'
+					);
 				}
 
-				updateElement(["precisionTypeAdvanced", "searchableAsKeyword"], "hide");
-			}
-			else if ((currentSelectedDataType == '<%= ExpandoColumnConstants.DATA_TYPE_DECIMAL %>') || (currentSelectedDataType == '<%= ExpandoColumnConstants.DATA_TYPE_INTEGER %>')) {
-				updateElement(["indexTypeKeyword", "indexTypeText", "searchableKeyWordOrText"], "disable");
+				updateElement(
+					['precisionTypeAdvanced', 'searchableAsKeyword'],
+					'hide'
+				);
+			} else if (
+				currentSelectedDataType ==
+					'<%= ExpandoColumnConstants.DATA_TYPE_DECIMAL %>' ||
+				currentSelectedDataType ==
+					'<%= ExpandoColumnConstants.DATA_TYPE_INTEGER %>'
+			) {
+				updateElement(
+					[
+						'indexTypeKeyword',
+						'indexTypeText',
+						'searchableKeyWordOrText'
+					],
+					'disable'
+				);
 
-				updateElement(["indexTypeSearchableAsKeyword", "indexTypeSearchableAsKeywordToggleSwitch", "precisionTypeSelect"], "enable");
+				updateElement(
+					[
+						'indexTypeSearchableAsKeyword',
+						'indexTypeSearchableAsKeywordToggleSwitch',
+						'precisionTypeSelect'
+					],
+					'enable'
+				);
 
-				updateElement(["precisionTypeAdvanced", "searchableAsKeyword"], "unhide");
+				updateElement(
+					['precisionTypeAdvanced', 'searchableAsKeyword'],
+					'unhide'
+				);
 
-				updateElement(["searchableAsKeywordOrText"], "hide");
+				updateElement(['searchableAsKeywordOrText'], 'hide');
 
 				if (!selectionType) {
-					updateElement(["textFieldLocalizedCheckbox", "widthAdvancedSetting"], "hide");
+					updateElement(
+						['textFieldLocalizedCheckbox', 'widthAdvancedSetting'],
+						'hide'
+					);
 				}
 
 				setPrecisionType(currentSelectedDataType);
@@ -264,22 +321,21 @@
 
 	function updateElement(formElementIds, action) {
 		for (var formElementId of formElementIds) {
-			var formElement = document.getElementById("<portlet:namespace />" + formElementId);
+			var formElement = document.getElementById(
+				'<portlet:namespace />' + formElementId
+			);
 
 			if (formElement) {
-				if (action == "enable") {
-					formElement.removeAttribute("disabled");
+				if (action == 'enable') {
+					formElement.removeAttribute('disabled');
 
-					formElement.classList.remove("disabled");
-				}
-				else if (action == "disable") {
-					formElement.setAttribute("disabled", "true");
-				}
-				else if (action == "hide") {
-					formElement.classList.add("hide");
-				}
-				else if (action == "unhide") {
-					formElement.classList.remove("hide");
+					formElement.classList.remove('disabled');
+				} else if (action == 'disable') {
+					formElement.setAttribute('disabled', 'true');
+				} else if (action == 'hide') {
+					formElement.classList.add('hide');
+				} else if (action == 'unhide') {
+					formElement.classList.remove('hide');
 				}
 			}
 		}

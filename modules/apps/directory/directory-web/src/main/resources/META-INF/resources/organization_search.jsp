@@ -89,23 +89,23 @@ if (displayTerms.getParentOrganizationId() > 0) {
 </c:if>
 
 <aui:script use="liferay-dynamic-select">
-	new Liferay.DynamicSelect(
-		[
-			{
-				select: '<portlet:namespace /><%= OrganizationDisplayTerms.COUNTRY_ID %>',
-				selectData: Liferay.Address.getCountries,
-				selectDesc: 'nameCurrentValue',
-				selectId: 'countryId',
-				selectSort: '<%= true %>',
-				selectVal: '<%= displayTerms.getCountryId() %>'
-			},
-			{
-				select: '<portlet:namespace /><%= OrganizationDisplayTerms.REGION_ID %>',
-				selectData: Liferay.Address.getRegions,
-				selectDesc: 'name',
-				selectId: 'regionId',
-				selectVal: '<%= displayTerms.getRegionId() %>'
-			}
-		]
-	);
+	new Liferay.DynamicSelect([
+		{
+			select:
+				'<portlet:namespace /><%= OrganizationDisplayTerms.COUNTRY_ID %>',
+			selectData: Liferay.Address.getCountries,
+			selectDesc: 'nameCurrentValue',
+			selectId: 'countryId',
+			selectSort: '<%= true %>',
+			selectVal: '<%= displayTerms.getCountryId() %>'
+		},
+		{
+			select:
+				'<portlet:namespace /><%= OrganizationDisplayTerms.REGION_ID %>',
+			selectData: Liferay.Address.getRegions,
+			selectDesc: 'name',
+			selectId: 'regionId',
+			selectVal: '<%= displayTerms.getRegionId() %>'
+		}
+	]);
 </aui:script>

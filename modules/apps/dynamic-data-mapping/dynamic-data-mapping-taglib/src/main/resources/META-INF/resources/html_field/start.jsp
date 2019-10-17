@@ -47,19 +47,18 @@
 			Liferay.component(
 				'<portlet:namespace /><%= HtmlUtil.escapeJS(fieldsNamespace) %>ddmForm',
 				function() {
-					return new Liferay.DDM.Form(
-						{
-							container: '#<%= randomNamespace %>',
-							ddmFormValuesInput: '#<portlet:namespace /><%= HtmlUtil.getAUICompatibleId(ddmFormValuesInputName) %>',
-							definition: <%= DDMUtil.getDDMFormJSONString(ddmForm) %>,
-							doAsGroupId: <%= scopeGroupId %>,
-							fieldsNamespace: '<%= HtmlUtil.escapeJS(fieldsNamespace) %>',
-							mode: '<%= HtmlUtil.escapeJS(mode) %>',
-							p_l_id: <%= themeDisplay.getPlid() %>,
-							portletNamespace: '<portlet:namespace />',
-							repeatable: <%= repeatable %>
-						}
-					);
+					return new Liferay.DDM.Form({
+						container: '#<%= randomNamespace %>',
+						ddmFormValuesInput:
+							'#<portlet:namespace /><%= HtmlUtil.getAUICompatibleId(ddmFormValuesInputName) %>',
+						definition: <%= DDMUtil.getDDMFormJSONString(ddmForm) %>,
+						doAsGroupId: <%= scopeGroupId %>,
+						fieldsNamespace: '<%= HtmlUtil.escapeJS(fieldsNamespace) %>',
+						mode: '<%= HtmlUtil.escapeJS(mode) %>',
+						p_l_id: <%= themeDisplay.getPlid() %>,
+						portletNamespace: '<portlet:namespace />',
+						repeatable: <%= repeatable %>
+					});
 				}
 			);
 		</aui:script>

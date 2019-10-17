@@ -326,7 +326,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 														</ul>
 
 														<aui:script>
-															Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getRootPortletId() %>', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + portlet.getRootPortletId() %>');
+															Liferay.Util.toggleBoxes(
+																'<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getRootPortletId() %>',
+																'<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + portlet.getRootPortletId() %>'
+															);
 														</aui:script>
 
 													<%
@@ -427,27 +430,34 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 </aui:form>
 
 <aui:script>
-	Liferay.Util.toggleRadio('<portlet:namespace />allApplications', '', ['<portlet:namespace />selectApplications']);
-	Liferay.Util.toggleRadio('<portlet:namespace />chooseApplications', '<portlet:namespace />selectApplications', '');
+	Liferay.Util.toggleRadio('<portlet:namespace />allApplications', '', [
+		'<portlet:namespace />selectApplications'
+	]);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />chooseApplications',
+		'<portlet:namespace />selectApplications',
+		''
+	);
 </aui:script>
 
 <aui:script use="liferay-export-import-export-import">
-	new Liferay.ExportImport(
-		{
-			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>',
-			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
-			deleteMissingLayoutsNode: '#<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>',
-			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
-			form: document.<portlet:namespace />fm1,
-			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>',
-			locale: '<%= locale.toLanguageTag() %>',
-			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>',
-			namespace: '<portlet:namespace />',
-			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
-			setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>',
-			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>',
-			timeZoneOffset: <%= timeZoneOffset %>,
-			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>'
-		}
-	);
+	new Liferay.ExportImport({
+		archivedSetupsNode:
+			'#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>',
+		commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
+		deleteMissingLayoutsNode:
+			'#<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>',
+		deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
+		form: document.<portlet:namespace />fm1,
+		layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>',
+		locale: '<%= locale.toLanguageTag() %>',
+		logoNode: '#<%= PortletDataHandlerKeys.LOGO %>',
+		namespace: '<portlet:namespace />',
+		ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
+		setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>',
+		themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>',
+		timeZoneOffset: <%= timeZoneOffset %>,
+		userPreferencesNode:
+			'#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>'
+	});
 </aui:script>

@@ -23,7 +23,7 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testExceedMaxLineLength() throws Exception {
-		test("ExceedMaxLineLength.testyaml", "> 120", 18);
+		test("ExceedMaxLineLength.testyaml", "> 120", 22);
 	}
 
 	@Test

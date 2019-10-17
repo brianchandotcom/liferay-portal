@@ -5,18 +5,22 @@ components:
             enum: [active, all, production, recent]
             type: string
         ExternalLink:
-            description: Represents a link to an entity in a different domain.
+            description:
+                Represents a link to an entity in a different domain.
             properties:
                 dateCreated:
-                    description: The external link's creation date.
+                    description:
+                        The external link's creation date.
                     format: date-time
                     readOnly: true
                     type: string
                 domain:
-                    description: The external domain.
+                    description:
+                        The external domain.
                     type: string
 info:
-    description: ""
+    description:
+        ""
     title: "Change Tracking REST"
     version: v1.0
 openapi: 3.0.1
@@ -45,7 +49,8 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["Project"]
         put:
             parameters:
@@ -70,7 +75,8 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["Project"]
     "/sites/{siteId}/structured-contents/by-key/{key}":
         get:
@@ -178,5 +184,6 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Entry"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["Entry"]

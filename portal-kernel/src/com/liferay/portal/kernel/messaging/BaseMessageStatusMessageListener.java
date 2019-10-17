@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
 
 /**
  * @author Michael C. Han
@@ -51,13 +50,6 @@ public abstract class BaseMessageStatusMessageListener
 
 			destination.send(message);
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setStatusSender(SingleDestinationMessageSender statusSender) {
 	}
 
 	protected abstract void doReceive(

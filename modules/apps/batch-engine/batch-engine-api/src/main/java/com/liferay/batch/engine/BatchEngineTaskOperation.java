@@ -19,6 +19,6 @@ package com.liferay.batch.engine;
  */
 public enum BatchEngineTaskOperation {
 
-	CREATE, DELETE, UPDATE
+	CREATE, DELETE, READ, UPDATE
 
 }

@@ -26,6 +26,8 @@ definition {
 
 	@priority = "5"
 	test ViewCanonicalURLWithLocalizedFriendlyURL {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page");

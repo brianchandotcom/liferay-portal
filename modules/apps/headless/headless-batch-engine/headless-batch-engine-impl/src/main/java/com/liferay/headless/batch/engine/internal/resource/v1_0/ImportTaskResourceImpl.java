@@ -189,6 +189,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return new ImportTask() {
 			{
 				className = batchEngineTask.getClassName();
+				contentType = batchEngineTask.getContentType();
 				endTime = batchEngineTask.getEndTime();
 				errorMessage = batchEngineTask.getErrorMessage();
 				executeStatus = ImportTask.ExecuteStatus.valueOf(

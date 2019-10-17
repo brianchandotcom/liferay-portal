@@ -60,6 +60,12 @@ const DropDown = () => {
 		}
 	}, [active]);
 
+	const filteredFieldTypes = fieldTypes.filter(
+		({group}) => group === 'basic'
+	);
+
+	filteredFieldTypes.sort(({displayOrder: a}, {displayOrder: b}) => a - b);
+
 	return (
 		<ClayDropDown
 			active={active}
@@ -72,7 +78,7 @@ const DropDown = () => {
 		>
 			<ClayDropDown.ItemList className="custom-object-dropdown-list">
 				{showFieldTypes ? (
-					fieldTypes.map(({icon, label, name}) => (
+					filteredFieldTypes.map(({icon, label, name}) => (
 						<ClayDropDown.Item
 							key={name}
 							onClick={() => onClickFieldType(name)}

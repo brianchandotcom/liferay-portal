@@ -90,30 +90,31 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 			String className = assetListDisplayContext.getClassName(assetRendererFactory);
 		%>
 
-			Liferay.Util.setFormValues(
-				form,
-				{
-					classTypeIds<%= className %>: Liferay.Util.listSelect(Liferay.Util.getFormElement(form, '<%= className %>currentClassTypeIds'))
-				}
-			);
+			Liferay.Util.setFormValues(form, {
+				classTypeIds<%= className %>: Liferay.Util.listSelect(
+					Liferay.Util.getFormElement(
+						form,
+						'<%= className %>currentClassTypeIds'
+					)
+				)
+			});
 
 		<%
 		}
 		%>
 
-		var currentClassNameIdsSelect = Liferay.Util.getFormElement(form, 'currentClassNameIds');
+		var currentClassNameIdsSelect = Liferay.Util.getFormElement(
+			form,
+			'currentClassNameIds'
+		);
 
 		if (currentClassNameIdsSelect) {
-			Liferay.Util.postForm(
-				form,
-				{
-					data: {
-						classNameIds: Liferay.Util.listSelect(currentClassNameIdsSelect)
-					}
+			Liferay.Util.postForm(form, {
+				data: {
+					classNameIds: Liferay.Util.listSelect(currentClassNameIdsSelect)
 				}
-			);
-		}
-		else {
+			});
+		} else {
 			submitForm(form);
 		}
 	}

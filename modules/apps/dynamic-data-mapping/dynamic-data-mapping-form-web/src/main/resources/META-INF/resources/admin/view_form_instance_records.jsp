@@ -122,15 +122,24 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 
 <aui:script sandbox="<%= true %>">
 	var deleteRecords = function() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			var searchContainer = document.getElementById('<portlet:namespace />ddmFormInstanceRecord');
+		if (
+			confirm(
+				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
+			)
+		) {
+			var searchContainer = document.getElementById(
+				'<portlet:namespace />ddmFormInstanceRecord'
+			);
 
 			if (searchContainer) {
 				Liferay.Util.postForm(
 					document.<portlet:namespace />searchContainerForm,
 					{
 						data: {
-							deleteFormInstanceRecordIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
+							deleteFormInstanceRecordIds: Liferay.Util.listCheckedExcept(
+								searchContainer,
+								'<portlet:namespace />allRowIds'
+							)
 						},
 
 						<portlet:actionURL name="deleteFormInstanceRecord" var="deleteFormInstanceRecordURL">
@@ -146,21 +155,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 	};
 
 	var ACTIONS = {
-		'deleteRecords': deleteRecords
+		deleteRecords: deleteRecords
 	};
 
-	Liferay.componentReady('ddmFormInstanceRecordsManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-			['actionItemClicked'],
-				function(event) {
-					var itemData = event.data.item.data;
+	Liferay.componentReady('ddmFormInstanceRecordsManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on(['actionItemClicked'], function(event) {
+			var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action]();
+			}
+		});
+	});
 </aui:script>

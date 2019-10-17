@@ -58,19 +58,23 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 	}
 	%>
 
-	new Liferay.ItemSelectorRepositoryEntryBrowser(
-		{
-			closeCaption: '<%= itemSelectorUploadViewDisplayContext.getTitle(locale) %>',
-			maxFileSize: '<%= itemSelectorUploadViewDisplayContext.getMaxFileSize() %>',
-			on: {
-				selectedItem: function(event) {
-					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectorUploadViewDisplayContext.getItemSelectedEventName() %>', event);
-				}
-			},
-			rootNode: '#itemSelectorUploadContainer',
-			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName()) %>',
-			uploadItemURL: '<%= uploadURL.toString() %>',
-			validExtensions: '<%= ArrayUtil.isEmpty(itemSelectorUploadViewDisplayContext.getExtensions()) ? "*" : StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions()) %>'
-		}
-	);
+	new Liferay.ItemSelectorRepositoryEntryBrowser({
+		closeCaption:
+			'<%= itemSelectorUploadViewDisplayContext.getTitle(locale) %>',
+		maxFileSize: '<%= itemSelectorUploadViewDisplayContext.getMaxFileSize() %>',
+		on: {
+			selectedItem: function(event) {
+				Liferay.Util.getOpener().Liferay.fire(
+					'<%= itemSelectorUploadViewDisplayContext.getItemSelectedEventName() %>',
+					event
+				);
+			}
+		},
+		rootNode: '#itemSelectorUploadContainer',
+		uploadItemReturnType:
+			'<%= HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName()) %>',
+		uploadItemURL: '<%= uploadURL.toString() %>',
+		validExtensions:
+			'<%= ArrayUtil.isEmpty(itemSelectorUploadViewDisplayContext.getExtensions()) ? "*" : StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions()) %>'
+	});
 </aui:script>

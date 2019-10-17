@@ -111,61 +111,59 @@ renderResponse.setTitle(role.getTitle(locale));
 	var form = document.<portlet:namespace />fm;
 
 	var addAssignees = function(event) {
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-			{
-				eventName: '<portlet:namespace />selectAssignees',
-				on: {
-					selectedItemChange: function(event) {
-						var selectedItem = event.newVal;
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+			eventName: '<portlet:namespace />selectAssignees',
+			on: {
+				selectedItemChange: function(event) {
+					var selectedItem = event.newVal;
 
-						if (selectedItem) {
-							var assignmentsRedirect = Liferay.Util.PortletURL.createPortletURL(
-								'<%= portletURL.toString() %>',
-								{
-									'tabs2': selectedItem.type
-								}
-							);
-
-							var data = {
-								redirect: assignmentsRedirect.toString()
-							};
-
-							if (selectedItem.type === 'users') {
-								data.addUserIds = selectedItem.value;
+					if (selectedItem) {
+						var assignmentsRedirect = Liferay.Util.PortletURL.createPortletURL(
+							'<%= portletURL.toString() %>',
+							{
+								tabs2: selectedItem.type
 							}
-							else {
-								data.addGroupIds = selectedItem.value;
-							}
+						);
 
-							Liferay.Util.postForm(
-								form,
-								{
-									data: data,
-									url: '<%= editRoleAssignmentsURL %>'
-								}
-							);
+						var data = {
+							redirect: assignmentsRedirect.toString()
+						};
+
+						if (selectedItem.type === 'users') {
+							data.addUserIds = selectedItem.value;
+						} else {
+							data.addGroupIds = selectedItem.value;
 						}
+
+						Liferay.Util.postForm(form, {
+							data: data,
+							url: '<%= editRoleAssignmentsURL %>'
+						});
 					}
-				},
-				title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(role.getName()) %>" key="add-assignees-to-x" />',
+				}
+			},
+			title:
+				'<liferay-ui:message arguments="<%= HtmlUtil.escape(role.getName()) %>" key="add-assignees-to-x" />',
 
-				<portlet:renderURL var="selectAssigneesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="mvcPath" value="/select_assignees.jsp" />
-					<portlet:param name="tabs2" value="<%= tabs2 %>" />
-					<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
-					<portlet:param name="displayStyle" value="<%= displayStyle %>" />
-				</portlet:renderURL>
+			<portlet:renderURL var="selectAssigneesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcPath" value="/select_assignees.jsp" />
+				<portlet:param name="tabs2" value="<%= tabs2 %>" />
+				<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
+				<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+			</portlet:renderURL>
 
-				url: '<%= selectAssigneesURL %>'
-			}
-		);
+			url: '<%= selectAssigneesURL %>'
+		});
 
 		itemSelectorDialog.open();
-	}
+	};
 
 	<portlet:namespace />unsetRoleAssignments = function() {
 		var assigneeType = '<%= HtmlUtil.escapeJS(tabs2) %>';
-		var ids = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+		var ids = Liferay.Util.listCheckedExcept(
+			form,
+			'<portlet:namespace />allRowIds'
+		);
 
 		var data = {
 			assignmentsRedirect: '<%= portletURL.toString() %>'
@@ -173,23 +171,19 @@ renderResponse.setTitle(role.getTitle(locale));
 
 		if (assigneeType === 'users') {
 			data.removeUserIds = ids;
-		}
-		else {
+		} else {
 			data.removeGroupIds = ids;
 		}
 
-		Liferay.Util.postForm(
-			form,
-			{
-				data: data,
-				url: '<%= editRoleAssignmentsURL %>'
-			}
-		);
+		Liferay.Util.postForm(form, {
+			data: data,
+			url: '<%= editRoleAssignmentsURL %>'
+		});
 	};
 
-	Liferay.componentReady('editRoleAssignmentsManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on('creationButtonClicked', addAssignees);
-		}
-	);
+	Liferay.componentReady('editRoleAssignmentsManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('creationButtonClicked', addAssignees);
+	});
 </aui:script>

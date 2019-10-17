@@ -129,28 +129,20 @@ SearchContainer roleSearchContainer = SelectRoleManagementToolbarDisplayContext.
 			<aui:script require="metal-dom/src/dom as dom">
 				var form = document.<portlet:namespace />selectSiteRoleFm;
 
-				dom.delegate(
-					form,
-					'click',
-					'.group-selector-button',
-					function(event) {
-						Liferay.Util.postForm(
-							form,
-							{
-								data: {
-									groupId: event.delegateTarget.dataset.groupid
-								},
+				dom.delegate(form, 'click', '.group-selector-button', function(event) {
+					Liferay.Util.postForm(form, {
+						data: {
+							groupId: event.delegateTarget.dataset.groupid
+						},
 
-								<%
-								portletURL.setParameter("resetCur", Boolean.TRUE.toString());
-								portletURL.setParameter("step", "2");
-								%>
+						<%
+						portletURL.setParameter("resetCur", Boolean.TRUE.toString());
+						portletURL.setParameter("step", "2");
+						%>
 
-								url: '<%= portletURL.toString() %>'
-							}
-						);
-					}
-				);
+						url: '<%= portletURL.toString() %>'
+					});
+				});
 			</aui:script>
 		</c:when>
 		<c:when test="<%= step == 2 %>">
@@ -244,14 +236,14 @@ SearchContainer roleSearchContainer = SelectRoleManagementToolbarDisplayContext.
 
 				var openingLiferay = Util.getOpener().Liferay;
 
-				openingLiferay.fire(
-					'<%= HtmlUtil.escape(syncEntitiesEventName) %>',
-					{
-						selectors: A.all('.selector-button')
-					}
-				);
+				openingLiferay.fire('<%= HtmlUtil.escape(syncEntitiesEventName) %>', {
+					selectors: A.all('.selector-button')
+				});
 
-				Util.selectEntityHandler('#<portlet:namespace />selectSiteRoleFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+				Util.selectEntityHandler(
+					'#<portlet:namespace />selectSiteRoleFm',
+					'<%= HtmlUtil.escapeJS(eventName) %>'
+				);
 			</aui:script>
 		</c:when>
 	</c:choose>

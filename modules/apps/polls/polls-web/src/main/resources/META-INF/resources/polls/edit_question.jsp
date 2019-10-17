@@ -169,20 +169,28 @@ portletDisplay.setURLBack(redirect);
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
-			var choicesAction = form.querySelector('#<portlet:namespace />choicesAction');
+			var choicesAction = form.querySelector(
+				'#<portlet:namespace />choicesAction'
+			);
 
 			if (choicesAction) {
-				choicesAction.setAttribute('value', "addChoice");
+				choicesAction.setAttribute('value', 'addChoice');
 			}
 
-			var choicesCount = form.querySelector('#<portlet:namespace />choicesCount');
+			var choicesCount = form.querySelector(
+				'#<portlet:namespace />choicesCount'
+			);
 
 			if (choicesCount) {
 				choicesCount.setAttribute('value', '<%= choicesCount + 1 %>');
 			}
 
-			var expirationDate = form.querySelector('#<portlet:namespace />fmexpirationDate');
-			var neverExpire = form.querySelector('#<portlet:namespace />neverExpire');
+			var expirationDate = form.querySelector(
+				'#<portlet:namespace />fmexpirationDate'
+			);
+			var neverExpire = form.querySelector(
+				'#<portlet:namespace />neverExpire'
+			);
 
 			if (expirationDate && neverExpire) {
 				neverExpire.setAttribute('value', expirationDate.checked);
@@ -201,13 +209,17 @@ portletDisplay.setURLBack(redirect);
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
-			var choicesAction = form.querySelector('#<portlet:namespace />choicesAction');
+			var choicesAction = form.querySelector(
+				'#<portlet:namespace />choicesAction'
+			);
 
 			if (choicesAction) {
-				choicesAction.setAttribute('value', "deleteChoice");
+				choicesAction.setAttribute('value', 'deleteChoice');
 			}
 
-			var choicesCount = form.querySelector('#<portlet:namespace />choicesCount');
+			var choicesCount = form.querySelector(
+				'#<portlet:namespace />choicesCount'
+			);
 
 			if (choicesCount) {
 				choicesCount.setAttribute('value', '<%= choicesCount - 1 %>');
@@ -219,8 +231,12 @@ portletDisplay.setURLBack(redirect);
 				choiceName.setAttribute('value', pollName);
 			}
 
-			var expirationDate = form.querySelector('#<portlet:namespace />fmexpirationDate');
-			var neverExpire = form.querySelector('#<portlet:namespace />neverExpire');
+			var expirationDate = form.querySelector(
+				'#<portlet:namespace />fmexpirationDate'
+			);
+			var neverExpire = form.querySelector(
+				'#<portlet:namespace />neverExpire'
+			);
 
 			if (expirationDate && neverExpire) {
 				neverExpire.setAttribute('value', expirationDate.checked);
@@ -239,14 +255,23 @@ portletDisplay.setURLBack(redirect);
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
-			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
+			var cmd = form.querySelector(
+				'#<portlet:namespace /><%= Constants.CMD %>'
+			);
 
 			if (cmd) {
-				cmd.setAttribute('value', '<%= (question == null) ? Constants.ADD : Constants.UPDATE %>');
+				cmd.setAttribute(
+					'value',
+					'<%= (question == null) ? Constants.ADD : Constants.UPDATE %>'
+				);
 			}
 
-			var expirationDate = form.querySelector('#<portlet:namespace />fmexpirationDate');
-			var neverExpire = form.querySelector('#<portlet:namespace />neverExpire');
+			var expirationDate = form.querySelector(
+				'#<portlet:namespace />fmexpirationDate'
+			);
+			var neverExpire = form.querySelector(
+				'#<portlet:namespace />neverExpire'
+			);
 
 			if (expirationDate && neverExpire) {
 				neverExpire.setAttribute('value', expirationDate.checked);

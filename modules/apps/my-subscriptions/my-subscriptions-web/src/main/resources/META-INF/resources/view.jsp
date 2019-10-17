@@ -118,23 +118,21 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 		window,
 		'<portlet:namespace />displayPopup',
 		function(url, title) {
-			Liferay.Util.Window.getWindow(
-				{
-					dialog: {
-						align: {
-							node: null,
-							points: ['tc', 'tc']
-						},
-						constrain2view: true,
-						cssClass: 'portlet-my-subscription',
-						modal: true,
-						resizable: true,
-						width: 950
+			Liferay.Util.Window.getWindow({
+				dialog: {
+					align: {
+						node: null,
+						points: ['tc', 'tc']
 					},
-					title: title,
-					uri: url
-				}
-			);
+					constrain2view: true,
+					cssClass: 'portlet-my-subscription',
+					modal: true,
+					resizable: true,
+					width: 950
+				},
+				title: title,
+				uri: url
+			});
 		},
 		['liferay-util-window']
 	);
@@ -147,10 +145,18 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 		if (form) {
 			form.setAttribute('method', 'post');
 
-			var subscriptionIds = form.querySelector('#<portlet:namespace />subscriptionIds');
+			var subscriptionIds = form.querySelector(
+				'#<portlet:namespace />subscriptionIds'
+			);
 
 			if (subscriptionIds) {
-				subscriptionIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+				subscriptionIds.setAttribute(
+					'value',
+					Liferay.Util.listCheckedExcept(
+						form,
+						'<portlet:namespace />allRowIds'
+					)
+				);
 
 				submitForm(form);
 			}
@@ -158,21 +164,18 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 	};
 
 	var ACTIONS = {
-		'unsubscribe': unsubscribe
+		unsubscribe: unsubscribe
 	};
 
-	Liferay.componentReady('mySubscriptionsManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
+	Liferay.componentReady('mySubscriptionsManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('actionItemClicked', function(event) {
+			var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action]();
+			}
+		});
+	});
 </aui:script>

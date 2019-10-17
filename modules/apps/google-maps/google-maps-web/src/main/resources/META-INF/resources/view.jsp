@@ -86,23 +86,21 @@
 		</aui:form>
 
 		<aui:script use="liferay-google-maps">
-			new Liferay.Portlet.GoogleMaps(
-				{
-					apiKey: '<%= apiKey %>',
-					directionsAddress: '<%= directionsAddress %>',
+			new Liferay.Portlet.GoogleMaps({
+				apiKey: '<%= apiKey %>',
+				directionsAddress: '<%= directionsAddress %>',
 
-					<c:if test="<%= PortalUtil.isSecure(request) %>">
-						googleMapsURL: 'https://maps-api-ssl.google.com/maps/api/js',
-					</c:if>
+				<c:if test="<%= PortalUtil.isSecure(request) %>">
+					googleMapsURL: 'https://maps-api-ssl.google.com/maps/api/js',
+				</c:if>
 
-					languageId: '<%= themeDisplay.getLanguageId() %>',
-					mapAddress: '<%= mapAddress %>',
-					mapInputEnabled: <%= mapInputEnabled %>,
-					namespace: '<portlet:namespace />',
-					portletId: '<%= portletDisplay.getId() %>',
-					showDirectionSteps: <%= showDirectionSteps %>
-				}
-			).render();
+				languageId: '<%= themeDisplay.getLanguageId() %>',
+				mapAddress: '<%= mapAddress %>',
+				mapInputEnabled: <%= mapInputEnabled %>,
+				namespace: '<portlet:namespace />',
+				portletId: '<%= portletDisplay.getId() %>',
+				showDirectionSteps: <%= showDirectionSteps %>
+			}).render();
 		</aui:script>
 	</c:when>
 	<c:otherwise>

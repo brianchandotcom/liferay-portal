@@ -154,8 +154,23 @@ String htmlAttributes =
 </liferay-frontend:edit-form>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />auth', '<portlet:namespace />authenticationOptions');
-	Liferay.Util.toggleBoxes('<portlet:namespace />resizeAutomatically', '<portlet:namespace />displaySettings', true);
-	Liferay.Util.toggleSelectBox('<portlet:namespace />authType', 'form', '<portlet:namespace />formAuthOptions');
-	Liferay.Util.toggleSelectBox('<portlet:namespace />authType', 'basic', '<portlet:namespace />basicAuthOptions');
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />auth',
+		'<portlet:namespace />authenticationOptions'
+	);
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />resizeAutomatically',
+		'<portlet:namespace />displaySettings',
+		true
+	);
+	Liferay.Util.toggleSelectBox(
+		'<portlet:namespace />authType',
+		'form',
+		'<portlet:namespace />formAuthOptions'
+	);
+	Liferay.Util.toggleSelectBox(
+		'<portlet:namespace />authType',
+		'basic',
+		'<portlet:namespace />basicAuthOptions'
+	);
 </aui:script>

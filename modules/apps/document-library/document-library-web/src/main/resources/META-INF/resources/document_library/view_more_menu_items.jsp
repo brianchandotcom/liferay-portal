@@ -87,7 +87,9 @@ DLViewMoreMenuItemsDisplayContext dlViewMoreMenuItemsDisplayContext = new DLView
 			Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escapeJS(dlViewMoreMenuItemsDisplayContext.getEventName()) %>',
 				{
-					fileEntryTypeId: event.currentTarget.attr('data-fileEntryTypeId')
+					fileEntryTypeId: event.currentTarget.attr(
+						'data-fileEntryTypeId'
+					)
 				}
 			);
 

@@ -66,17 +66,16 @@ FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new Fragme
 </aui:form>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />fragmentCollections');
-
-	searchContainer.on(
-		'rowToggled',
-		function(event) {
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(fragmentCollectionsDisplayContext.getEventName()) %>',
-				{
-					data: event.elements.allSelectedElements.getDOMNodes()
-				}
-			);
-		}
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />fragmentCollections'
 	);
+
+	searchContainer.on('rowToggled', function(event) {
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= HtmlUtil.escapeJS(fragmentCollectionsDisplayContext.getEventName()) %>',
+			{
+				data: event.elements.allSelectedElements.getDOMNodes()
+			}
+		);
+	});
 </aui:script>

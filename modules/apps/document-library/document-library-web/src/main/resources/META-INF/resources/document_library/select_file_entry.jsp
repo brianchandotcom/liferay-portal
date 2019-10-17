@@ -133,5 +133,8 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 </div>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFileEntryFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />selectFileEntryFm',
+		'<%= HtmlUtil.escapeJS(eventName) %>'
+	);
 </aui:script>

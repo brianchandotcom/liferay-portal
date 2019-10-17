@@ -50,55 +50,36 @@
 			iframe.setAttribute('height', <%= youTubeDisplayContext.getHeight() %>);
 			iframe.setAttribute('width', displayContextWidth);
 		}
-	};
+	}
 
 	Liferay.provide(
 		window,
 		'<portlet:namespace />addDragAndDropListener',
 		function() {
 			if (!Liferay.Layout) {
-				setTimeout(
-					function() {
-						<portlet:namespace />addDragAndDropListener();
-					},
-					5000
-				);
-			}
-			else {
-				Liferay.Layout.on(
-					['drag:end', 'drag:start'],
-					function() {
-						AUI().debounce(
-							<portlet:namespace />resizeIFrame(),
-							500
-						)
-					}
-				);
+				setTimeout(function() {
+					<portlet:namespace />addDragAndDropListener();
+				}, 5000);
+			} else {
+				Liferay.Layout.on(['drag:end', 'drag:start'], function() {
+					AUI().debounce(<portlet:namespace />resizeIFrame(), 500);
+				});
 			}
 		},
 		['aui-debounce']
 	);
 
-	Liferay.on(
-		'allPortletsReady',
-		function() {
-			<portlet:namespace />addDragAndDropListener();
-		}
-	);
+	Liferay.on('allPortletsReady', function() {
+		<portlet:namespace />addDragAndDropListener();
+	});
 
-	Liferay.on(
-		'portletReady',
-		function() {
-			<portlet:namespace />resizeIFrame();
-		}
-	);
+	Liferay.on('portletReady', function() {
+		<portlet:namespace />resizeIFrame();
+	});
 </aui:script>
 
 <aui:script use="event">
-	A.on(
-		'windowresize',
-		function() {
-			<portlet:namespace />resizeIFrame();
-		}
-	);
+	A.on('windowresize', function() {
+		<portlet:namespace />resizeIFrame();
+	});
 </aui:script>

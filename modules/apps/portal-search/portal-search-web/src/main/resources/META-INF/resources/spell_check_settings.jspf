@@ -59,7 +59,16 @@
 </div>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />collatedSpellCheckResultEnabled', '<portlet:namespace />collatedSpellCheckResultOptionsContainer');
-	Liferay.Util.toggleBoxes('<portlet:namespace />queryIndexingEnabled', '<portlet:namespace />queryIndexingOptionsContainer');
-	Liferay.Util.toggleBoxes('<portlet:namespace />querySuggestionsEnabled', '<portlet:namespace />querySuggestionsOptionsContainer');
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />collatedSpellCheckResultEnabled',
+		'<portlet:namespace />collatedSpellCheckResultOptionsContainer'
+	);
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />queryIndexingEnabled',
+		'<portlet:namespace />queryIndexingOptionsContainer'
+	);
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />querySuggestionsEnabled',
+		'<portlet:namespace />querySuggestionsOptionsContainer'
+	);
 </aui:script>

@@ -56,5 +56,8 @@ SelectFragmentCollectionManagementToolbarDisplayContext selectFragmentCollection
 </aui:form>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFragmentCollectionFm', '<%= HtmlUtil.escapeJS(selectFragmentCollectionDisplayContext.getEventName()) %>');
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />selectFragmentCollectionFm',
+		'<%= HtmlUtil.escapeJS(selectFragmentCollectionDisplayContext.getEventName()) %>'
+	);
 </aui:script>

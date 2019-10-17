@@ -44,14 +44,12 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 	var plugins = [];
 
 	<c:if test="<%= selectableTree %>">
-		plugins.push(
-			{
-				cfg: {
-					default: <%= defaultStateChecked %>
-				},
-				fn: A.Plugin.LayoutsTreeSelectable
-			}
-		);
+		plugins.push({
+			cfg: {
+				default: <%= defaultStateChecked %>
+			},
+			fn: A.Plugin.LayoutsTreeSelectable
+		});
 	</c:if>
 
 	<c:if test="<%= checkContentDisplayPage %>">
@@ -59,15 +57,13 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 	</c:if>
 
 	<c:if test="<%= saveState %>">
-		plugins.push(
-			{
-				cfg: {
-					checkedNodes: <%= checkedNodes %>,
-					rootNodeExpanded: <%= GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.frontend.js.web_" + treeId + "RootNode", null), true) %>
-				},
-				fn: A.Plugin.LayoutsTreeState
-			}
-		);
+		plugins.push({
+			cfg: {
+				checkedNodes: <%= checkedNodes %>,
+				rootNodeExpanded: <%= GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.frontend.js.web_" + treeId + "RootNode", null), true) %>
+			},
+			fn: A.Plugin.LayoutsTreeState
+		});
 	</c:if>
 
 	var TreeViewType = Liferay.LayoutsTree;
@@ -76,66 +72,58 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 		TreeViewType = Liferay.LayoutsTreeDD;
 	</c:if>
 
-	var treeview = new TreeViewType(
-		{
-			boundingBox: '#<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output',
-			incomplete: <%= incomplete %>,
+	var treeview = new TreeViewType({
+		boundingBox: '#<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output',
+		incomplete: <%= incomplete %>,
 
-			<%
-			long[] openNodes = StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId), 0L);
-			%>
+		<%
+		long[] openNodes = StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId), 0L);
+		%>
 
-			layouts: <%= LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true, treeId, layoutSetBranch) %>,
+		layouts: <%= LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true, treeId, layoutSetBranch) %>,
 
-			<c:if test="<%= Validator.isNotNull(linkTemplate) %>">
-				linkTemplate: '<%= HtmlUtil.escapeJS(linkTemplate) %>',
+		<c:if test="<%= Validator.isNotNull(linkTemplate) %>">
+			linkTemplate: '<%= HtmlUtil.escapeJS(linkTemplate) %>',
+		</c:if>
+
+		<c:if test="<%= draggableTree %>">
+			lazyLoad: false,
+		</c:if>
+
+		maxChildren: <%= PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN %>,
+		on: {
+			'*:select': function(event) {
+				Liferay.fire('<%= namespace + treeId %>:selectedNode', {
+					selectedNode: event.target
+				});
+			}
+		},
+		plugins: plugins,
+		root: {
+			defaultParentLayoutId: <%= LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>,
+			expand: <%= expandFirstNode %>,
+			groupId: <%= groupId %>,
+			label: '<%= HtmlUtil.escapeJS(rootNodeName) %>',
+
+			<c:if test="<%= Validator.isNotNull(rootLinkTemplate) %>">
+				linkTemplate: '<%= HtmlUtil.escapeJS(rootLinkTemplate) %>',
 			</c:if>
 
-			<c:if test="<%= draggableTree %>">
-				lazyLoad: false,
-			</c:if>
+			privateLayout: <%= privateLayout %>
+		},
 
-			maxChildren: <%= PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN %>,
-			on: {
-				'*:select': function(event) {
-					Liferay.fire(
-						'<%= namespace + treeId %>:selectedNode',
-						{
-							selectedNode: event.target
-						}
-					);
-				}
-			},
-			plugins: plugins,
-			root: {
-				defaultParentLayoutId: <%= LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>,
-				expand: <%= expandFirstNode %>,
-				groupId: <%= groupId %>,
-				label: '<%= HtmlUtil.escapeJS(rootNodeName) %>',
+		<c:if test="<%= selPlid != null %>">
+			selPlid: '<%= selPlid %>',
+		</c:if>
 
-				<c:if test="<%= Validator.isNotNull(rootLinkTemplate) %>">
-					linkTemplate: '<%= HtmlUtil.escapeJS(rootLinkTemplate) %>',
-				</c:if>
-
-				privateLayout: <%= privateLayout %>
-			},
-
-			<c:if test="<%= selPlid != null %>">
-				selPlid: '<%= selPlid %>',
-			</c:if>
-
-			urls: <%= portletURLsJSONArray.toString() %>
-		}
-	).render();
+		urls: <%= portletURLsJSONArray.toString() %>
+	}).render();
 
 	Liferay.component('<%= namespace + treeId %>', treeview);
 
-	Liferay.once(
-		'screenLoad',
-		function() {
-			treeview.destroy();
-		}
-	);
+	Liferay.once('screenLoad', function() {
+		treeview.destroy();
+	});
 </aui:script>
 
 <div class="lfr-tree" data-treeid="<%= HtmlUtil.escapeAttribute(treeId) %>" id="<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output"></div>

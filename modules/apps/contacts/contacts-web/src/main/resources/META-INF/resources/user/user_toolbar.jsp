@@ -164,21 +164,19 @@ else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), us
 			function(event) {
 				event.preventDefault();
 
-				Liferay.Util.fetch(event.currentTarget.getAttribute('href')).then(
-					function(response) {
+				Liferay.Util.fetch(event.currentTarget.getAttribute('href'))
+					.then(function(response) {
 						return response.text();
-					}
-				).then(
-					function(data) {
-						var contactProfile = A.one('.contacts-portlet .contacts-container');
+					})
+					.then(function(data) {
+						var contactProfile = A.one(
+							'.contacts-portlet .contacts-container'
+						);
 
 						if (!contactProfile.io) {
-							contactProfile.plug(
-								A.Plugin.IO,
-								{
-									autoLoad: false
-								}
-							);
+							contactProfile.plug(A.Plugin.IO, {
+								autoLoad: false
+							});
 						}
 
 						<liferay-portlet:renderURL var="viewSummaryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
@@ -188,8 +186,7 @@ else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), us
 
 						contactProfile.io.set('uri', '<%= viewSummaryURL %>');
 						contactProfile.io.start();
-					}
-				);
+					});
 			},
 			'.action a'
 		);

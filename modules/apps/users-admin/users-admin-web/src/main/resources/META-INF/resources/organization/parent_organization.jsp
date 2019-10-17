@@ -179,12 +179,24 @@ if (parentOrganization != null) {
 
 <aui:script use="liferay-search-container">
 	function <portlet:namespace />createURL(href, value, onclick) {
-		return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
+		return (
+			'<a href="' +
+			href +
+			'"' +
+			(onclick ? ' onclick="' + onclick + '" ' : '') +
+			'>' +
+			value +
+			'</a>'
+		);
 	}
 
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />parentOrganizationSearchContainer');
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />parentOrganizationSearchContainer'
+	);
 
-	var selectOrganizationLink = A.one('#<portlet:namespace />selectOrganizationLink');
+	var selectOrganizationLink = A.one(
+		'#<portlet:namespace />selectOrganizationLink'
+	);
 
 	var selectOrganizationLinkText = selectOrganizationLink.one('.taglib-text');
 
@@ -197,44 +209,56 @@ if (parentOrganization != null) {
 
 				searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
 
-				selectOrganizationLinkText.text('<liferay-ui:message key="select" />');
+				selectOrganizationLinkText.text(
+					'<liferay-ui:message key="select" />'
+				);
 			},
 			'.modify-link'
 		);
 
-		selectOrganizationLink.on(
-			'click',
-			function(event) {
-				var searchContainerData = searchContainer.getData();
+		selectOrganizationLink.on('click', function(event) {
+			var searchContainerData = searchContainer.getData();
 
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							modal: true
-						},
-						id: '<portlet:namespace />selectOrganization',
-						selectedData: [searchContainerData],
-						title: '<liferay-ui:message arguments="parent-organization" key="select-x" />',
-						uri: '<%= selectOrganizationRenderURL %>'
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						modal: true
 					},
-					function(event) {
-						var rowColumns = [];
+					id: '<portlet:namespace />selectOrganization',
+					selectedData: [searchContainerData],
+					title:
+						'<liferay-ui:message arguments="parent-organization" key="select-x" />',
+					uri: '<%= selectOrganizationRenderURL %>'
+				},
+				function(event) {
+					var rowColumns = [];
 
-						var href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=' + event.entityid;
+					var href =
+						'<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=' +
+						event.entityid;
 
-						rowColumns.push(<portlet:namespace />createURL(href, event.entityname));
-						rowColumns.push(<portlet:namespace />createURL(href, event.type));
-						rowColumns.push('<a class="modify-link" data-rowId="' + event.entityid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
+					rowColumns.push(
+						<portlet:namespace />createURL(href, event.entityname)
+					);
+					rowColumns.push(
+						<portlet:namespace />createURL(href, event.type)
+					);
+					rowColumns.push(
+						'<a class="modify-link" data-rowId="' +
+							event.entityid +
+							'" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>'
+					);
 
-						searchContainer.deleteRow(1, searchContainer.getData());
-						searchContainer.addRow(rowColumns, event.entityid);
-						searchContainer.updateDataStore(event.entityid);
+					searchContainer.deleteRow(1, searchContainer.getData());
+					searchContainer.addRow(rowColumns, event.entityid);
+					searchContainer.updateDataStore(event.entityid);
 
-						selectOrganizationLinkText.text('<liferay-ui:message key="change" />');
-					}
-				);
-			}
-		);
+					selectOrganizationLinkText.text(
+						'<liferay-ui:message key="change" />'
+					);
+				}
+			);
+		});
 	}
 </aui:script>

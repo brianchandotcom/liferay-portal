@@ -59,18 +59,14 @@ if (Validator.isNotNull(className) && (classPK > 0)) {
 
 <c:if test="<%= (assetRenderer != null) && PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE) %>">
 	<aui:script use="aui-base">
-		Liferay.fire(
-			'AddContent:addPortlet',
-			{
-				node: A.one('.portlet-item')
-			}
-		);
+		Liferay.fire('AddContent:addPortlet', {
+			node: A.one('.portlet-item')
+		});
 
-		Liferay.once(
-			'updatedLayout',
-			function() {
-				Liferay.Util.navigate('<%= PortalUtil.getLayoutFullURL(layout, themeDisplay) %>');
-			}
-		);
+		Liferay.once('updatedLayout', function() {
+			Liferay.Util.navigate(
+				'<%= PortalUtil.getLayoutFullURL(layout, themeDisplay) %>'
+			);
+		});
 	</aui:script>
 </c:if>

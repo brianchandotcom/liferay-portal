@@ -37,26 +37,22 @@ String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANA
 		a.onload = c;
 		m.parentNode.insertBefore(a, m);
 	})('https://analytics-js-cdn.liferay.com', function() {
-		var config = <%= analyticsClientConfig %>
+		var config = <%= analyticsClientConfig %>;
 
 		Analytics.create(config);
 
-		Analytics.registerMiddleware(
-			function(request) {
-				request.context.canonicalUrl = themeDisplay.getCanonicalURL();
-				request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+		Analytics.registerMiddleware(function(request) {
+			request.context.canonicalUrl = themeDisplay.getCanonicalURL();
+			request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
 
-				return request;
-			}
-		);
+			return request;
+		});
 
 		if (themeDisplay.isSignedIn()) {
-			Analytics.setIdentity(
-				{
-					email: themeDisplay.getUserEmailAddress(),
-					name: themeDisplay.getUserName()
-				}
-			);
+			Analytics.setIdentity({
+				email: themeDisplay.getUserEmailAddress(),
+				name: themeDisplay.getUserName()
+			});
 		}
 
 		runMiddlewares();
@@ -64,38 +60,31 @@ String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANA
 		Analytics.send('pageViewed', 'Page');
 
 		<c:if test="<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED)) %>">
-			Liferay.on(
-				'endNavigate',
-				function(event) {
-					Analytics.dispose();
+			Liferay.on('endNavigate', function(event) {
+				Analytics.dispose();
 
-					if (!themeDisplay.isControlPanel()) {
-						Analytics.create(config);
+				if (!themeDisplay.isControlPanel()) {
+					Analytics.create(config);
 
-						Analytics.registerMiddleware(
-							function(request) {
-								request.context.canonicalUrl = themeDisplay.getCanonicalURL();
-								request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+					Analytics.registerMiddleware(function(request) {
+						request.context.canonicalUrl = themeDisplay.getCanonicalURL();
+						request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
 
-								return request;
-							}
-						);
+						return request;
+					});
 
-						if (themeDisplay.isSignedIn()) {
-							Analytics.setIdentity(
-								{
-									email: themeDisplay.getUserEmailAddress(),
-									name: themeDisplay.getUserName()
-								}
-							);
-						}
-
-						runMiddlewares();
-
-						Analytics.send('pageViewed', 'Page', {'page': event.path});
+					if (themeDisplay.isSignedIn()) {
+						Analytics.setIdentity({
+							email: themeDisplay.getUserEmailAddress(),
+							name: themeDisplay.getUserName()
+						});
 					}
+
+					runMiddlewares();
+
+					Analytics.send('pageViewed', 'Page', {page: event.path});
 				}
-			);
+			});
 		</c:if>
 	});
 </script>

@@ -15,42 +15,43 @@
 --%>
 
 <aui:script require="metal-dom/src/dom as dom">
-	dom.delegate(
-		document.body,
-		'click',
-		'.compare-to-link > a',
-		function(event) {
-			var currentTarget = event.delegateTarget;
+	dom.delegate(document.body, 'click', '.compare-to-link > a', function(event) {
+		var currentTarget = event.delegateTarget;
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
-					},
-					eventName: '<portlet:namespace />selectVersionFm',
-					id: '<portlet:namespace />compareVersions' + currentTarget.id,
-					title: '<liferay-ui:message key="compare-versions" />',
-					uri: currentTarget.dataset.uri
+		Liferay.Util.selectEntity(
+			{
+				dialog: {
+					constrain: true,
+					destroyOnHide: true,
+					modal: true
 				},
-				function(event) {
-					<portlet:renderURL var="compareVersionURL">
-						<portlet:param name="mvcRenderCommandName" value="/wiki/compare_versions" />
-						<portlet:param name="backURL" value="<%= currentURL %>" />
-						<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-						<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-						<portlet:param name="type" value="html" />
-					</portlet:renderURL>
+				eventName: '<portlet:namespace />selectVersionFm',
+				id: '<portlet:namespace />compareVersions' + currentTarget.id,
+				title: '<liferay-ui:message key="compare-versions" />',
+				uri: currentTarget.dataset.uri
+			},
+			function(event) {
+				<portlet:renderURL var="compareVersionURL">
+					<portlet:param name="mvcRenderCommandName" value="/wiki/compare_versions" />
+					<portlet:param name="backURL" value="<%= currentURL %>" />
+					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
+					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+					<portlet:param name="type" value="html" />
+				</portlet:renderURL>
 
-					var uri = '<%= compareVersionURL %>';
+				var uri = '<%= compareVersionURL %>';
 
-					uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + event.sourceversion, uri);
-					uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + event.targetversion, uri);
+				uri = Liferay.Util.addParams(
+					'<portlet:namespace />sourceVersion=' + event.sourceversion,
+					uri
+				);
+				uri = Liferay.Util.addParams(
+					'<portlet:namespace />targetVersion=' + event.targetversion,
+					uri
+				);
 
-					location.href = uri;
-				}
-			);
-		}
-	);
+				location.href = uri;
+			}
+		);
+	});
 </aui:script>

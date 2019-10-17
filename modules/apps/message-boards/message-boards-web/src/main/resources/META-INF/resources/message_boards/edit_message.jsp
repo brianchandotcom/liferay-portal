@@ -456,35 +456,34 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script require='<%= npmResolvedPackageName + "/message_boards/js/MBPortlet.es as MBPortlet" %>'>
-	new MBPortlet.default(
-		{
-			constants: {
-				'ACTION_PUBLISH': '<%= WorkflowConstants.ACTION_PUBLISH %>',
-				'ACTION_SAVE_DRAFT': '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
-				'CMD': '<%= Constants.CMD %>'
-			},
-			currentAction: '<%= (message == null) ? Constants.ADD : Constants.UPDATE %>',
+	new MBPortlet.default({
+		constants: {
+			ACTION_PUBLISH: '<%= WorkflowConstants.ACTION_PUBLISH %>',
+			ACTION_SAVE_DRAFT: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
+			CMD: '<%= Constants.CMD %>'
+		},
+		currentAction:
+			'<%= (message == null) ? Constants.ADD : Constants.UPDATE %>',
 
-			<c:if test="<%= message != null %>">
-				<portlet:resourceURL id="/message_boards/get_attachments" var="getAttachmentsURL">
-					<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-				</portlet:resourceURL>
+		<c:if test="<%= message != null %>">
+			<portlet:resourceURL id="/message_boards/get_attachments" var="getAttachmentsURL">
+				<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+			</portlet:resourceURL>
 
-				getAttachmentsURL: '<%= getAttachmentsURL %>',
-			</c:if>
+			getAttachmentsURL: '<%= getAttachmentsURL %>',
+		</c:if>
 
-			namespace: '<portlet:namespace />',
-			rootNode: '#<portlet:namespace />mbEditPageContainer'
+		namespace: '<portlet:namespace />',
+		rootNode: '#<portlet:namespace />mbEditPageContainer',
 
-			<c:if test="<%= message != null %>">
-				<portlet:renderURL var="viewTrashAttachmentsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="mvcRenderCommandName" value="/message_boards/view_deleted_message_attachments" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-				</portlet:renderURL>
+		<c:if test="<%= message != null %>">
+			<portlet:renderURL var="viewTrashAttachmentsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcRenderCommandName" value="/message_boards/view_deleted_message_attachments" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+			</portlet:renderURL>
 
-				, viewTrashAttachmentsURL: '<%= viewTrashAttachmentsURL %>'
-			</c:if>
-		}
-	);
+			viewTrashAttachmentsURL: '<%= viewTrashAttachmentsURL %>'
+		</c:if>
+	});
 </aui:script>

@@ -63,7 +63,11 @@
 			%>
 
 			<aui:script>
-				Liferay.Util.toggleRadio('<%= namespace %><%= mapProvider.getKey() %>Enabled', '<%= namespace %><%= mapProvider.getKey() %>Options', [<%= sb.toString() %>]);
+				Liferay.Util.toggleRadio(
+					'<%= namespace %><%= mapProvider.getKey() %>Enabled',
+					'<%= namespace %><%= mapProvider.getKey() %>Options',
+					[<%= sb.toString() %>]
+				);
 			</aui:script>
 
 		<%

@@ -109,42 +109,43 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 			p_p_lifecycle.value = '1';
 		}
 
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-role") %>')) {
-			Liferay.Util.postForm(
-				form,
-				{
-					data: {
-						deleteRoleIds: deleteRoleIds
-					},
+		if (
+			confirm(
+				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-role") %>'
+			)
+		) {
+			Liferay.Util.postForm(form, {
+				data: {
+					deleteRoleIds: deleteRoleIds
+				},
 
-					<portlet:actionURL name="deleteRoles" var="deleteRolesURL">
-						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-					</portlet:actionURL>
+				<portlet:actionURL name="deleteRoles" var="deleteRolesURL">
+					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+				</portlet:actionURL>
 
-					url: '<%= deleteRolesURL %>'
-				}
-			);
+				url: '<%= deleteRolesURL %>'
+			});
 		}
 	};
 
 	var ACTIONS = {
-		'deleteRoles': deleteRoles
+		deleteRoles: deleteRoles
 	};
 
-	Liferay.componentReady('viewRolesManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
+	Liferay.componentReady('viewRolesManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('actionItemClicked', function(event) {
+			var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action](
-							Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds')
-						);
-					}
-				}
-			);
-		}
-	);
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action](
+					Liferay.Util.listCheckedExcept(
+						document.<portlet:namespace />fm,
+						'<portlet:namespace />allRowIds'
+					)
+				);
+			}
+		});
+	});
 </aui:script>

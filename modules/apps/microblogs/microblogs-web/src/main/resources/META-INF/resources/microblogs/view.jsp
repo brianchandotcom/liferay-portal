@@ -167,39 +167,45 @@ portletURL.setParameter("tabs1", tabs1);
 </div>
 
 <aui:script use="aui-base,aui-io-deprecated">
-	AUI().ready(
-		function() {
-			Liferay.Microblogs.init(
-				{
-					baseActionURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.ACTION_PHASE) %>',
-					microblogsEntriesURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/microblogs/view.jsp" /><portlet:param name="tabs1" value="timeline" /></portlet:renderURL>'
-				}
-			);
+	AUI().ready(function() {
+		Liferay.Microblogs.init({
+			baseActionURL:
+				'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.ACTION_PHASE) %>',
+			microblogsEntriesURL:
+				'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/microblogs/view.jsp" /><portlet:param name="tabs1" value="timeline" /></portlet:renderURL>'
+		});
 
-			Liferay.Microblogs.updateViewCount(<%= parentMicroblogsEntryId %>);
-		}
+		Liferay.Microblogs.updateViewCount(<%= parentMicroblogsEntryId %>);
+	});
+
+	var microblogsContainer = A.one(
+		'#p_p_id<portlet:namespace /> .microblogs-container'
 	);
 
-	var microblogsContainer = A.one('#p_p_id<portlet:namespace /> .microblogs-container');
-
 	var showComments = function(microblogsEntryId) {
-		var uri = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/microblogs/view_comments.jsp" /></portlet:renderURL>';
+		var uri =
+			'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/microblogs/view_comments.jsp" /></portlet:renderURL>';
 
-		uri = Liferay.Util.addParams('<portlet:namespace />parentMicroblogsEntryId=' + microblogsEntryId, uri) || uri;
+		uri =
+			Liferay.Util.addParams(
+				'<portlet:namespace />parentMicroblogsEntryId=' + microblogsEntryId,
+				uri
+			) || uri;
 
-		var commentsContainer = A.one('#<portlet:namespace />commentsContainer' + microblogsEntryId);
+		var commentsContainer = A.one(
+			'#<portlet:namespace />commentsContainer' + microblogsEntryId
+		);
 
-		var commentsContainerContent = commentsContainer.one('.comments-container-content');
+		var commentsContainerContent = commentsContainer.one(
+			'.comments-container-content'
+		);
 
 		if (!commentsContainerContent) {
 			if (!commentsContainer.io) {
-				commentsContainer.plug(
-					A.Plugin.IO,
-					{
-						autoLoad: false,
-						method: 'POST'
-					}
-				);
+				commentsContainer.plug(A.Plugin.IO, {
+					autoLoad: false,
+					method: 'POST'
+				});
 			}
 
 			commentsContainer.io.set('uri', uri);
@@ -207,17 +213,21 @@ portletURL.setParameter("tabs1", tabs1);
 			commentsContainer.io.start();
 		}
 
-		var microblogsEntry = microblogsContainer.one('#<portlet:namespace />microblogsEntry' + microblogsEntryId);
+		var microblogsEntry = microblogsContainer.one(
+			'#<portlet:namespace />microblogsEntry' + microblogsEntryId
+		);
 
 		microblogsEntry.toggleClass('show-comments');
-	}
+	};
 
 	microblogsContainer.delegate(
 		'click',
 		function(event) {
 			event.preventDefault();
 
-			showComments(event.currentTarget.getAttribute('data-microblogsEntryId'));
+			showComments(
+				event.currentTarget.getAttribute('data-microblogsEntryId')
+			);
 		},
 		'.microblogs-entry .comment a'
 	);
@@ -229,29 +239,31 @@ portletURL.setParameter("tabs1", tabs1);
 
 			var uri = event.currentTarget.getAttribute('href');
 
-			var microblogsEntryId = event.currentTarget.getAttribute('data-microblogsEntryId');
+			var microblogsEntryId = event.currentTarget.getAttribute(
+				'data-microblogsEntryId'
+			);
 
-			var microblogsEntry = A.one('#<portlet:namespace />microblogsEntry' + microblogsEntryId);
+			var microblogsEntry = A.one(
+				'#<portlet:namespace />microblogsEntry' + microblogsEntryId
+			);
 
 			var editContainer = microblogsEntry.one('.edit-container');
 
-			var editForm = editContainer.one('#<portlet:namespace />fm' + microblogsEntryId);
+			var editForm = editContainer.one(
+				'#<portlet:namespace />fm' + microblogsEntryId
+			);
 
 			if (!editForm) {
 				if (!editContainer.io) {
-					editContainer.plug(
-						A.Plugin.IO,
-						{
-							autoLoad: false,
-							method: 'GET'
-						}
-					);
+					editContainer.plug(A.Plugin.IO, {
+						autoLoad: false,
+						method: 'GET'
+					});
 				}
 
 				editContainer.io.set('uri', uri);
 				editContainer.io.start();
-			}
-			else {
+			} else {
 				editForm.toggle();
 			}
 
@@ -268,15 +280,17 @@ portletURL.setParameter("tabs1", tabs1);
 			event.preventDefault();
 
 			if (confirm('Are you sure you want to delete this post?')) {
-				Liferay.Util.fetch(
-					event.currentTarget.getAttribute('href'),
-					{
-						method: 'POST'
-					}
-				).then(function() {
-					var updateContainer = A.one('#p_p_id<portlet:namespace /> .portlet-body');
+				Liferay.Util.fetch(event.currentTarget.getAttribute('href'), {
+					method: 'POST'
+				}).then(function() {
+					var updateContainer = A.one(
+						'#p_p_id<portlet:namespace /> .portlet-body'
+					);
 
-					Liferay.Microblogs.updateMicroblogsList('<%= microblogsEntriesURL %>', updateContainer);
+					Liferay.Microblogs.updateMicroblogsList(
+						'<%= microblogsEntriesURL %>',
+						updateContainer
+					);
 				});
 			}
 		},

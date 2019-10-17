@@ -241,303 +241,278 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				window,
 				'<%= namespace + randomNamespace %>0ReplyOnChange',
 				function(html) {
-					Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton0', html.trim() === '');
-				}
-			);
-
-			var form = document['<%= namespace + HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>'];
-
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>afterLogin',
-				function(emailAddress, anonymousAccount) {
-					Util.setFormValues(
-						form,
-						{
-							emailAddress: emailAddress
-						}
+					Util.toggleDisabled(
+						'#<%= namespace + randomNamespace %>postReplyButton0',
+						html.trim() === ''
 					);
-
-					<%= namespace %>sendMessage(form, !anonymousAccount);
 				}
 			);
 
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>deleteMessage',
-				function(i) {
-					var commentIdElement = Util.getFormElement(form, 'commentId' + i);
+			var form =
+				document[
+					'<%= namespace + HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>'
+				];
 
-					if (commentIdElement) {
-						Util.setFormValues(
-							form,
-							{
-								commentId: commentIdElement.value,
-								'<%= randomNamespace + Constants.CMD %>': '<%= Constants.DELETE %>'
-							}
-						);
+			Liferay.provide(window, '<%= randomNamespace %>afterLogin', function(
+				emailAddress,
+				anonymousAccount
+			) {
+				Util.setFormValues(form, {
+					emailAddress: emailAddress
+				});
 
-						<%= namespace %>sendMessage(form);
-					}
+				<%= namespace %>sendMessage(form, !anonymousAccount);
+			});
+
+			Liferay.provide(window, '<%= randomNamespace %>deleteMessage', function(i) {
+				var commentIdElement = Util.getFormElement(form, 'commentId' + i);
+
+				if (commentIdElement) {
+					Util.setFormValues(form, {
+						commentId: commentIdElement.value,
+						<%= randomNamespace + Constants.CMD %>: '<%= Constants.DELETE %>'
+					});
+
+					<%= namespace %>sendMessage(form);
 				}
-			);
+			});
 
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>hideEl',
-				function(elementId) {
-					var element = document.getElementById(elementId);
+			Liferay.provide(window, '<%= randomNamespace %>hideEl', function(elementId) {
+				var element = document.getElementById(elementId);
 
-					if (element) {
-						element.style.display = 'none';
-					}
+				if (element) {
+					element.style.display = 'none';
 				}
-			);
+			});
 
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>hideEditor',
-				function(editorName, formId) {
-					var editor = window['<%= namespace %>' + editorName];
+			Liferay.provide(window, '<%= randomNamespace %>hideEditor', function(
+				editorName,
+				formId
+			) {
+				var editor = window['<%= namespace %>' + editorName];
 
-					if (editor) {
-						editor.destroy();
-					}
-
-					<%= randomNamespace %>hideEl(formId);
+				if (editor) {
+					editor.destroy();
 				}
-			);
 
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>postReply',
-				function(i) {
-					var editorInstance = window['<%= namespace + randomNamespace %>postReplyBody' + i];
+				<%= randomNamespace %>hideEl(formId);
+			});
 
-					var parentCommentIdElement = Util.getFormElement(form, 'parentCommentId' + i);
+			Liferay.provide(window, '<%= randomNamespace %>postReply', function(i) {
+				var editorInstance =
+					window['<%= namespace + randomNamespace %>postReplyBody' + i];
 
-					if (parentCommentIdElement) {
-						Util.setFormValues(
-							form,
-							{
-								body: editorInstance.getHTML(),
-								parentCommentId: parentCommentIdElement.value,
-								'<%= randomNamespace + Constants.CMD %>': '<%= Constants.ADD %>'
-							}
-						);
-					}
+				var parentCommentIdElement = Util.getFormElement(
+					form,
+					'parentCommentId' + i
+				);
 
-					if (!themeDisplay.isSignedIn()) {
-						window.namespace = '<%= namespace %>';
-						window.randomNamespace = '<%= randomNamespace %>';
-
-						Util.openWindow(
-							{
-								dialog: {
-									height: 450,
-									width: 560
-								},
-								id: '<%= namespace %>signInDialog',
-								title: '<%= UnicodeLanguageUtil.get(resourceBundle, "sign-in") %>',
-								uri: '<%= loginURL.toString() %>'
-							}
-						);
-					}
-					else {
-						<%= namespace %>sendMessage(form);
-
-						editorInstance.dispose();
-					}
+				if (parentCommentIdElement) {
+					Util.setFormValues(form, {
+						body: editorInstance.getHTML(),
+						parentCommentId: parentCommentIdElement.value,
+						<%= randomNamespace + Constants.CMD %>: '<%= Constants.ADD %>'
+					});
 				}
-			);
 
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>scrollIntoView',
-				function(commentId) {
-					document.getElementById('<%= randomNamespace %>messageScroll' + commentId).scrollIntoView();
+				if (!themeDisplay.isSignedIn()) {
+					window.namespace = '<%= namespace %>';
+					window.randomNamespace = '<%= randomNamespace %>';
+
+					Util.openWindow({
+						dialog: {
+							height: 450,
+							width: 560
+						},
+						id: '<%= namespace %>signInDialog',
+						title: '<%= UnicodeLanguageUtil.get(resourceBundle, "sign-in") %>',
+						uri: '<%= loginURL.toString() %>'
+					});
+				} else {
+					<%= namespace %>sendMessage(form);
+
+					editorInstance.dispose();
 				}
-			);
+			});
 
-			Liferay.provide(
-				window,
-				'<%= namespace %>sendMessage',
-				function(form, refreshPage) {
-					var commentButtons = form.querySelectorAll('.btn-comment');
+			Liferay.provide(window, '<%= randomNamespace %>scrollIntoView', function(
+				commentId
+			) {
+				document
+					.getElementById('<%= randomNamespace %>messageScroll' + commentId)
+					.scrollIntoView();
+			});
 
-					Util.toggleDisabled(commentButtons, true);
+			Liferay.provide(window, '<%= namespace %>sendMessage', function(
+				form,
+				refreshPage
+			) {
+				var commentButtons = form.querySelectorAll('.btn-comment');
 
-					var formData = new FormData(form);
+				Util.toggleDisabled(commentButtons, true);
 
-					formData.append('doAsUserId', themeDisplay.getDoAsUserIdEncoded());
+				var formData = new FormData(form);
 
-					Liferay.Util.fetch(
-						form.action,
-						{
-							body: formData,
-							method: 'POST'
+				formData.append('doAsUserId', themeDisplay.getDoAsUserIdEncoded());
+
+				Liferay.Util.fetch(form.action, {
+					body: formData,
+					method: 'POST'
+				})
+					.then(function(response) {
+						var promise;
+
+						var contentType = response.headers.get('content-type');
+
+						if (contentType && contentType.indexOf('application/json') !== -1) {
+							promise = response.json();
+						} else {
+							promise = response.text();
 						}
-					).then(
-						function(response) {
-							var promise;
 
-							var contentType = response.headers.get('content-type');
+						return promise;
+					})
+					.then(function(response) {
+						var exception = response.exception;
 
-							if (contentType && contentType.indexOf('application/json') !== -1) {
-								promise = response.json();
-							}
-							else {
-								promise = response.text();
-							}
-
-							return promise;
-						}
-					).then(
-						function(response) {
-							var exception = response.exception;
-
-							if (!exception) {
-								Liferay.onceAfter(
-									'<%= portletDisplay.getId() %>:messagePosted',
-									function(event) {
-										<%= randomNamespace %>onMessagePosted(response, refreshPage);
-									}
-								);
-
-								Liferay.fire('<%= portletDisplay.getId() %>:messagePosted', response);
-							}
-							else {
-								var errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>';
-
-								if (exception.indexOf('DiscussionMaxCommentsException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "maximum-number-of-comments-has-been-reached") %>';
-								}
-								else if (exception.indexOf('MessageBodyException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "please-enter-a-valid-message") %>';
-								}
-								else if (exception.indexOf('NoSuchMessageException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "the-message-could-not-be-found") %>';
-								}
-								else if (exception.indexOf('PrincipalException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "you-do-not-have-the-required-permissions") %>';
-								}
-								else if (exception.indexOf('RequiredMessageException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "you-cannot-delete-a-root-message-that-has-more-than-one-immediate-reply") %>';
-								}
-
-								<%= randomNamespace %>showStatusMessage(
-									{
-										id: '<%= randomNamespace %>',
-										message: errorKey,
-										title: '<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
-										type: 'danger'
-									}
-								);
-							}
-
-							Util.toggleDisabled(commentButtons, false);
-						}
-					).catch(
-						function() {
-							<%= randomNamespace %>showStatusMessage(
-								{
-									id: '<%= randomNamespace %>',
-									message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-									title: '<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
-									type: 'danger'
+						if (!exception) {
+							Liferay.onceAfter(
+								'<%= portletDisplay.getId() %>:messagePosted',
+								function(event) {
+									<%= randomNamespace %>onMessagePosted(
+										response,
+										refreshPage
+									);
 								}
 							);
 
-							Util.toggleDisabled(commentButtons, false);
+							Liferay.fire(
+								'<%= portletDisplay.getId() %>:messagePosted',
+								response
+							);
+						} else {
+							var errorKey =
+								'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>';
+
+							if (exception.indexOf('DiscussionMaxCommentsException') > -1) {
+								errorKey =
+									'<%= UnicodeLanguageUtil.get(resourceBundle, "maximum-number-of-comments-has-been-reached") %>';
+							} else if (exception.indexOf('MessageBodyException') > -1) {
+								errorKey =
+									'<%= UnicodeLanguageUtil.get(resourceBundle, "please-enter-a-valid-message") %>';
+							} else if (exception.indexOf('NoSuchMessageException') > -1) {
+								errorKey =
+									'<%= UnicodeLanguageUtil.get(resourceBundle, "the-message-could-not-be-found") %>';
+							} else if (exception.indexOf('PrincipalException') > -1) {
+								errorKey =
+									'<%= UnicodeLanguageUtil.get(resourceBundle, "you-do-not-have-the-required-permissions") %>';
+							} else if (exception.indexOf('RequiredMessageException') > -1) {
+								errorKey =
+									'<%= UnicodeLanguageUtil.get(resourceBundle, "you-cannot-delete-a-root-message-that-has-more-than-one-immediate-reply") %>';
+							}
+
+							<%= randomNamespace %>showStatusMessage({
+								id: '<%= randomNamespace %>',
+								message: errorKey,
+								title:
+									'<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
+								type: 'danger'
+							});
 						}
-					);
+
+						Util.toggleDisabled(commentButtons, false);
+					})
+					.catch(function() {
+						<%= randomNamespace %>showStatusMessage({
+							id: '<%= randomNamespace %>',
+							message:
+								'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
+							title:
+								'<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
+							type: 'danger'
+						});
+
+						Util.toggleDisabled(commentButtons, false);
+					});
+			});
+
+			Liferay.provide(window, '<%= randomNamespace %>showEl', function(elementId) {
+				var element = document.getElementById(elementId);
+
+				if (element) {
+					element.style.display = '';
 				}
-			);
+			});
 
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>showEl',
-				function(elementId) {
-					var element = document.getElementById(elementId);
+			Liferay.provide(window, '<%= randomNamespace %>showEditor', function(
+				formId,
+				options
+			) {
+				if (!window['<%= namespace %>' + options.name]) {
 
-					if (element) {
-						element.style.display = '';
+					<%
+					String editorURL = GetterUtil.getString(request.getAttribute("liferay-comment:discussion:editorURL"));
+
+					editorURL = HttpUtil.addParameter(editorURL, "namespace", namespace);
+					%>
+
+					Liferay.Util.fetch('<%= editorURL %>', {
+						body: Util.objectToFormData(Util.ns('<%= namespace %>', options)),
+						method: 'POST'
+					})
+						.then(function(response) {
+							return response.text();
+						})
+						.then(function(response) {
+							var editorWrapper = document.querySelector(
+								'#' + formId + ' .editor-wrapper'
+							);
+
+							if (editorWrapper) {
+								editorWrapper.innerHTML = response;
+
+								domAll.globalEval.runScriptsInElement(editorWrapper);
+							}
+
+							Util.toggleDisabled(
+								'#' + options.name.replace('Body', 'Button'),
+								options.contents === ''
+							);
+
+							<%= randomNamespace %>showEl(formId);
+						})
+						.catch(function() {
+							<%= randomNamespace %>showStatusMessage({
+								id: '<%= randomNamespace %>',
+								message:
+									'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
+								type: 'danger'
+							});
+						});
+				}
+			});
+
+			Liferay.provide(window, '<%= randomNamespace %>showPostReplyEditor', function(
+				index
+			) {
+				<%= randomNamespace %>showEditor(
+					'<%= namespace + randomNamespace %>' + 'postReplyForm' + index,
+					{
+						name: '<%= randomNamespace %>' + 'postReplyBody' + index,
+						onChangeMethod: '<%= randomNamespace %>' + index + 'ReplyOnChange',
+						placeholder: 'type-your-comment-here'
 					}
-				}
-			);
+				);
 
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>showEditor',
-				function(formId, options) {
-					if (!window['<%= namespace %>' + options.name]) {
+				<%= randomNamespace %>hideEditor(
+					'<%= randomNamespace %>' + 'editReplyBody' + index,
+					'<%= namespace + randomNamespace %>' + 'editForm' + index
+				);
 
-						<%
-						String editorURL = GetterUtil.getString(request.getAttribute("liferay-comment:discussion:editorURL"));
-
-						editorURL = HttpUtil.addParameter(editorURL, "namespace", namespace);
-						%>
-
-						Liferay.Util.fetch(
-							'<%= editorURL %>',
-							{
-								body: Util.objectToFormData(Util.ns('<%= namespace %>', options)),
-								method: 'POST'
-							}
-						).then(
-							function(response) {
-								return response.text();
-							}
-						).then(
-							function(response) {
-								var editorWrapper = document.querySelector('#' + formId + ' .editor-wrapper');
-
-								if (editorWrapper) {
-									editorWrapper.innerHTML = response;
-
-									domAll.globalEval.runScriptsInElement(editorWrapper);
-								}
-
-								Util.toggleDisabled('#' + options.name.replace('Body', 'Button'), options.contents === '');
-
-								<%= randomNamespace %>showEl(formId);
-							}
-						).catch(
-							function() {
-								<%= randomNamespace %>showStatusMessage(
-									{
-										id: '<%= randomNamespace %>',
-										message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-										type: 'danger'
-									}
-								);
-							}
-						);
-					}
-				}
-			);
-
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>showPostReplyEditor',
-				function(index) {
-					<%= randomNamespace %>showEditor(
-						'<%= namespace + randomNamespace %>' + 'postReplyForm' + index,
-						{
-							name: '<%= randomNamespace %>' + 'postReplyBody' + index,
-							onChangeMethod: '<%= randomNamespace %>' + index + 'ReplyOnChange',
-							placeholder: 'type-your-comment-here'
-						}
-					);
-
-					<%= randomNamespace %>hideEditor(
-						'<%= randomNamespace %>' + 'editReplyBody' + index,
-						'<%= namespace + randomNamespace %>' + 'editForm' + index
-					);
-
-					<%= randomNamespace %>showEl('<%= namespace + randomNamespace %>' + 'discussionMessage' + index);
-				}
-			);
+				<%= randomNamespace %>showEl(
+					'<%= namespace + randomNamespace %>' + 'discussionMessage' + index
+				);
+			});
 
 			window.<%= randomNamespace %>showStatusMessage = Liferay.lazyLoad(
 				'frontend-js-web/liferay/toast/commands/OpenToast.es',
@@ -546,83 +521,75 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				}
 			);
 
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>showEditReplyEditor',
-				function(index) {
-					var discussionId = '<%= namespace + randomNamespace %>' + 'discussionMessage' + index;
+			Liferay.provide(window, '<%= randomNamespace %>showEditReplyEditor', function(
+				index
+			) {
+				var discussionId =
+					'<%= namespace + randomNamespace %>' + 'discussionMessage' + index;
 
-					var discussionIdElement = document.getElementById(discussionId);
+				var discussionIdElement = document.getElementById(discussionId);
 
-					if (discussionIdElement) {
-						<%= randomNamespace %>showEditor(
-							'<%= namespace + randomNamespace %>' + 'editForm' + index,
-							{
-								contents: discussionIdElement.innerHTML,
-								name: '<%= randomNamespace %>' + 'editReplyBody' + index,
-								onChangeMethod: '<%= randomNamespace %>' + index + 'EditOnChange'
-							}
-						);
-
-						<%= randomNamespace %>hideEditor(
-							'<%= randomNamespace %>' + 'postReplyBody' + index,
-							'<%= namespace + randomNamespace %>' + 'postReplyForm' + index
-						);
-
-						<%= randomNamespace %>hideEl(discussionId);
-					}
-				}
-			);
-
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>subscribeToComments',
-				function(subscribe) {
-					Util.setFormValues(
-						form,
+				if (discussionIdElement) {
+					<%= randomNamespace %>showEditor(
+						'<%= namespace + randomNamespace %>' + 'editForm' + index,
 						{
-							'<%= randomNamespace %>className': '<%= discussionTaglibHelper.getSubscriptionClassName() %>',
-							'<%= randomNamespace + Constants.CMD %>': subscribe ? '<%= Constants.SUBSCRIBE_TO_COMMENTS %>' : '<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>'
+							contents: discussionIdElement.innerHTML,
+							name: '<%= randomNamespace %>' + 'editReplyBody' + index,
+							onChangeMethod:
+								'<%= randomNamespace %>' + index + 'EditOnChange'
 						}
 					);
 
-					<%= namespace %>sendMessage(form);
+					<%= randomNamespace %>hideEditor(
+						'<%= randomNamespace %>' + 'postReplyBody' + index,
+						'<%= namespace + randomNamespace %>' + 'postReplyForm' + index
+					);
+
+					<%= randomNamespace %>hideEl(discussionId);
 				}
-			);
+			});
 
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>updateMessage',
-				function(i, pending) {
-					var editorInstance = window['<%= namespace + randomNamespace %>editReplyBody' + i];
+			Liferay.provide(window, '<%= randomNamespace %>subscribeToComments', function(
+				subscribe
+			) {
+				Util.setFormValues(form, {
+					<%= randomNamespace %>className:
+						'<%= discussionTaglibHelper.getSubscriptionClassName() %>',
+					<%= randomNamespace + Constants.CMD %>: subscribe
+						? '<%= Constants.SUBSCRIBE_TO_COMMENTS %>'
+						: '<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>'
+				});
 
-					var commentIdElement = Util.getFormElement(form, 'commentId' + i);
+				<%= namespace %>sendMessage(form);
+			});
 
-					if (commentIdElement) {
-						if (pending) {
-							Util.setFormValues(
-								form,
-								{
-									workflowAction: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>'
-								}
-							);
-						}
+			Liferay.provide(window, '<%= randomNamespace %>updateMessage', function(
+				i,
+				pending
+			) {
+				var editorInstance =
+					window['<%= namespace + randomNamespace %>editReplyBody' + i];
 
-						Util.setFormValues(
-							form,
-							{
-								body: editorInstance.getHTML(),
-								commentId: commentIdElement.value,
-								'<%= randomNamespace + Constants.CMD %>': '<%= Constants.UPDATE %>'
-							}
-						);
+				var commentIdElement = Util.getFormElement(form, 'commentId' + i);
 
-						<%= namespace %>sendMessage(form);
+				if (commentIdElement) {
+					if (pending) {
+						Util.setFormValues(form, {
+							workflowAction: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>'
+						});
 					}
 
-					editorInstance.dispose();
+					Util.setFormValues(form, {
+						body: editorInstance.getHTML(),
+						commentId: commentIdElement.value,
+						<%= randomNamespace + Constants.CMD %>: '<%= Constants.UPDATE %>'
+					});
+
+					<%= namespace %>sendMessage(form);
 				}
-			);
+
+				editorInstance.dispose();
+			});
 
 			<%
 			String messageId = ParamUtil.getString(request, "messageId");
@@ -632,164 +599,158 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				<%= randomNamespace %>scrollIntoView(<%= messageId %>);
 			</c:if>
 
-			var moreCommentsTrigger = document.getElementById('<%= namespace %>moreCommentsTrigger');
+			var moreCommentsTrigger = document.getElementById(
+				'<%= namespace %>moreCommentsTrigger'
+			);
 
 			var indexElement = Util.getFormElement(form, 'index');
 			var rootIndexPageElement = Util.getFormElement(form, 'rootIndexPage');
 
 			if (moreCommentsTrigger && indexElement && rootIndexPageElement) {
-				moreCommentsTrigger.addEventListener(
-					'click',
-					function(event) {
-						var data = Util.ns(
-							'<%= namespace %>',
-							{
-								className: '<%= discussionTaglibHelper.getClassName() %>',
-								classPK: '<%= discussionTaglibHelper.getClassPK() %>',
-								hideControls: '<%= discussionTaglibHelper.isHideControls() %>',
-								index: indexElement.value,
-								randomNamespace: '<%= randomNamespace %>',
-								ratingsEnabled: '<%= discussionTaglibHelper.isRatingsEnabled() %>',
-								rootIndexPage: rootIndexPageElement.value,
-								userId: '<%= discussionTaglibHelper.getUserId() %>'
-							}
-						);
+				moreCommentsTrigger.addEventListener('click', function(event) {
+					var data = Util.ns('<%= namespace %>', {
+						className: '<%= discussionTaglibHelper.getClassName() %>',
+						classPK: '<%= discussionTaglibHelper.getClassPK() %>',
+						hideControls: '<%= discussionTaglibHelper.isHideControls() %>',
+						index: indexElement.value,
+						randomNamespace: '<%= randomNamespace %>',
+						ratingsEnabled: '<%= discussionTaglibHelper.isRatingsEnabled() %>',
+						rootIndexPage: rootIndexPageElement.value,
+						userId: '<%= discussionTaglibHelper.getUserId() %>'
+					});
 
-						<%
-						String paginationURL = HttpUtil.addParameter(discussionTaglibHelper.getPaginationURL(), "namespace", namespace);
+					<%
+					String paginationURL = HttpUtil.addParameter(discussionTaglibHelper.getPaginationURL(), "namespace", namespace);
 
-						paginationURL = HttpUtil.addParameter(paginationURL, "skipEditorLoading", "true");
-						%>
+					paginationURL = HttpUtil.addParameter(paginationURL, "skipEditorLoading", "true");
+					%>
 
-						Liferay.Util.fetch(
-							'<%= paginationURL %>',
-							{
-								body: Util.objectToFormData(data),
-								method: 'POST'
-							}
-						).then(
-							function(response) {
-								return response.text();
-							}
-						).then(
-							function(response) {
-								var moreCommentsContainer = document.getElementById('<%= namespace %>moreCommentsContainer');
+					Liferay.Util.fetch('<%= paginationURL %>', {
+						body: Util.objectToFormData(data),
+						method: 'POST'
+					})
+						.then(function(response) {
+							return response.text();
+						})
+						.then(function(response) {
+							var moreCommentsContainer = document.getElementById(
+								'<%= namespace %>moreCommentsContainer'
+							);
 
-								if (moreCommentsContainer) {
-									moreCommentsContainer.insertAdjacentHTML('beforebegin', response);
+							if (moreCommentsContainer) {
+								moreCommentsContainer.insertAdjacentHTML(
+									'beforebegin',
+									response
+								);
 
-									domAll.globalEval.runScriptsInElement(moreCommentsContainer.parentElement);
-								}
-							}
-						).catch(
-							function() {
-								<%= randomNamespace %>showStatusMessage(
-									{
-										id: '<%= randomNamespace %>',
-										message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-										title: '<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
-										type: 'danger'
-									}
+								domAll.globalEval.runScriptsInElement(
+									moreCommentsContainer.parentElement
 								);
 							}
-						);
-					}
-				);
+						})
+						.catch(function() {
+							<%= randomNamespace %>showStatusMessage({
+								id: '<%= randomNamespace %>',
+								message:
+									'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
+								title:
+									'<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
+								type: 'danger'
+							});
+						});
+				});
 			}
 		</aui:script>
 
 		<aui:script use="aui-popover,event-outside">
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>onMessagePosted',
-				function(response, refreshPage) {
-					Liferay.onceAfter(
-						'<%= portletDisplay.getId() %>:portletRefreshed',
-						function(event) {
-							var randomNamespaceNodes = document.querySelectorAll('input[id^="<%= namespace %>randomNamespace"]');
+			Liferay.provide(window, '<%= randomNamespace %>onMessagePosted', function(
+				response,
+				refreshPage
+			) {
+				Liferay.onceAfter(
+					'<%= portletDisplay.getId() %>:portletRefreshed',
+					function(event) {
+						var randomNamespaceNodes = document.querySelectorAll(
+							'input[id^="<%= namespace %>randomNamespace"]'
+						);
 
-							Array.prototype.forEach.call(
-								randomNamespaceNodes,
-								function(node, index) {
-									var randomId = node.value;
+						Array.prototype.forEach.call(randomNamespaceNodes, function(
+							node,
+							index
+						) {
+							var randomId = node.value;
 
-									if (index === 0) {
-										<%= randomNamespace %>showStatusMessage(
-											{
-												id: randomId,
-												message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-completed-successfully") %>',
-												title: '<%= UnicodeLanguageUtil.get(resourceBundle, "success") %>',
-												type: 'success'
-											}
-										);
-									}
+							if (index === 0) {
+								<%= randomNamespace %>showStatusMessage({
+									id: randomId,
+									message:
+										'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-completed-successfully") %>',
+									title:
+										'<%= UnicodeLanguageUtil.get(resourceBundle, "success") %>',
+									type: 'success'
+								});
+							}
 
-									var currentMessageSelector = randomId + 'message_' + response.commentId;
+							var currentMessageSelector =
+								randomId + 'message_' + response.commentId;
 
-									var targetNode = document.getElementById(currentMessageSelector);
-
-									if (targetNode) {
-										location.hash = '#' + currentMessageSelector;
-									}
-								}
+							var targetNode = document.getElementById(
+								currentMessageSelector
 							);
-						}
+
+							if (targetNode) {
+								location.hash = '#' + currentMessageSelector;
+							}
+						});
+					}
+				);
+
+				if (!!response.commentId) {
+					var messageTextNode = document.querySelector(
+						'input[name^="<%= namespace %>body"]'
 					);
 
-					if (!!response.commentId) {
-						var messageTextNode = document.querySelector('input[name^="<%= namespace %>body"]');
-
-						if (messageTextNode) {
-							Liferay.fire(
-								'messagePosted',
-								{
-									className: '<%= discussionTaglibHelper.getClassName() %>',
-									classPK: '<%= discussionTaglibHelper.getClassPK() %>',
-									commentId: response.commentId,
-									text: messageTextNode.value
-								}
-							);
-						}
-					}
-
-					if (refreshPage) {
-						window.location.reload();
-					}
-					else {
-						var portletNodeId = '#p_p_id_<%= portletDisplay.getId() %>_';
-
-						var portletNode = A.one(portletNodeId);
-
-						Liferay.Portlet.refresh(
-							portletNodeId,
-							A.merge(
-								Liferay.Util.ns(
-									'<%= namespace %>',
-									{
-										className: '<%= discussionTaglibHelper.getClassName() %>',
-										classPK: '<%= discussionTaglibHelper.getClassPK() %>',
-										skipEditorLoading: true
-									}
-								),
-								portletNode.refreshURLData || {}
-							)
-						);
+					if (messageTextNode) {
+						Liferay.fire('messagePosted', {
+							className: '<%= discussionTaglibHelper.getClassName() %>',
+							classPK: '<%= discussionTaglibHelper.getClassPK() %>',
+							commentId: response.commentId,
+							text: messageTextNode.value
+						});
 					}
 				}
-			);
+
+				if (refreshPage) {
+					window.location.reload();
+				} else {
+					var portletNodeId = '#p_p_id_<%= portletDisplay.getId() %>_';
+
+					var portletNode = A.one(portletNodeId);
+
+					Liferay.Portlet.refresh(
+						portletNodeId,
+						A.merge(
+							Liferay.Util.ns('<%= namespace %>', {
+								className: '<%= discussionTaglibHelper.getClassName() %>',
+								classPK: '<%= discussionTaglibHelper.getClassPK() %>',
+								skipEditorLoading: true
+							}),
+							portletNode.refreshURLData || {}
+						)
+					);
+				}
+			});
 
 			var discussionContainer = A.one('#<%= namespace %>discussionContainer');
 
-			var popover = new A.Popover(
-				{
-					constrain: true,
-					cssClass: 'lfr-discussion-reply',
-					position: 'top',
-					visible: false,
-					width: 400,
-					zIndex: Liferay.zIndex.OVERLAY
-				}
-			).render(discussionContainer);
+			var popover = new A.Popover({
+				constrain: true,
+				cssClass: 'lfr-discussion-reply',
+				position: 'top',
+				visible: false,
+				width: 400,
+				zIndex: Liferay.zIndex.OVERLAY
+			}).render(discussionContainer);
 
 			var handle;
 

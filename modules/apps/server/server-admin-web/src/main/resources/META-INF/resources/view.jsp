@@ -51,13 +51,11 @@ portletURL.setParameter("tabs2", tabs2);
 </portlet:renderURL>
 
 <aui:script use="liferay-admin">
-	new Liferay.Portlet.Admin(
-		{
-			form: document.<portlet:namespace />fm,
-			namespace: '<portlet:namespace />',
-			redirectUrl: '<%= redirectURL %>',
-			submitButton: '.save-server-button',
-			url: '<portlet:actionURL name="/server_admin/edit_server" />'
-		}
-	);
+	new Liferay.Portlet.Admin({
+		form: document.<portlet:namespace />fm,
+		namespace: '<portlet:namespace />',
+		redirectUrl: '<%= redirectURL %>',
+		submitButton: '.save-server-button',
+		url: '<portlet:actionURL name="/server_admin/edit_server" />'
+	});
 </aui:script>

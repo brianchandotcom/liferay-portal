@@ -19,23 +19,19 @@
 <aui:script sandbox="<%= true %>">
 	var onVote = function(event) {
 		if (window.Analytics) {
-			Analytics.send(
-				'VOTE',
-				'Ratings',
-				{
-					className: event.className,
-					classPK: event.classPK,
-					ratingType: event.ratingType,
-					score: event.score
-				}
-			);
+			Analytics.send('VOTE', 'Ratings', {
+				className: event.className,
+				classPK: event.classPK,
+				ratingType: event.ratingType,
+				score: event.score
+			});
 		}
-	}
+	};
 
 	var onDestroyPortlet = function() {
 		Liferay.detach('ratings:vote', onVote);
 		Liferay.detach('destroyPortlet', onDestroyPortlet);
-	}
+	};
 
 	Liferay.on('ratings:vote', onVote);
 	Liferay.on('destroyPortlet', onDestroyPortlet);

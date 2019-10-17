@@ -123,5 +123,8 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 </aui:form>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectThemeFm', '<%= HtmlUtil.escapeJS(selectThemeDisplayContext.getEventName()) %>');
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />selectThemeFm',
+		'<%= HtmlUtil.escapeJS(selectThemeDisplayContext.getEventName()) %>'
+	);
 </aui:script>

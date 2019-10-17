@@ -139,12 +139,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 
 	var openingLiferay = Util.getOpener().Liferay;
 
-	openingLiferay.fire(
-		'<portlet:namespace />enableRemovedOrganizations',
-		{
-			selectors: A.all('.selector-button:disabled')
-		}
-	);
+	openingLiferay.fire('<portlet:namespace />enableRemovedOrganizations', {
+		selectors: A.all('.selector-button:disabled')
+	});
 
-	Util.selectEntityHandler('#<portlet:namespace />selectOrganizationFm', '<%= HtmlUtil.escapeJS(eventName) %>', <%= selUser != null %>);
+	Util.selectEntityHandler(
+		'#<portlet:namespace />selectOrganizationFm',
+		'<%= HtmlUtil.escapeJS(eventName) %>',
+		<%= selUser != null %>
+	);
 </aui:script>

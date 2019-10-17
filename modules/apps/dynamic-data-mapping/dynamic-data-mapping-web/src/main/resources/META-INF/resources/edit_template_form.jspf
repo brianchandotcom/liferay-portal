@@ -38,44 +38,43 @@ String fieldsJSONArrayString = fieldsJSONArray.toString();
 		var modeInput = document.getElementById('<portlet:namespace />mode');
 
 		if (modeInput) {
-			modeInput.addEventListener(
-				'change',
-				function(event) {
-					<portlet:namespace />toggleMode(formBuilder, event.target.value);
-				}
-			);
+			modeInput.addEventListener('change', function(event) {
+				<portlet:namespace />toggleMode(formBuilder, event.target.value);
+			});
 		}
 	}
 
-	Liferay.on(
-		'<portlet:namespace />formBuilderLoaded',
-		function(event) {
-			var formBuilder = event.formBuilder;
+	Liferay.on('<portlet:namespace />formBuilderLoaded', function(event) {
+		var formBuilder = event.formBuilder;
 
-			<portlet:namespace />attachValueChange(formBuilder);
+		<portlet:namespace />attachValueChange(formBuilder);
 
-			<portlet:namespace />toggleMode(formBuilder, '<%= HtmlUtil.escape(mode) %>');
-		}
-	);
+		<portlet:namespace />toggleMode(
+			formBuilder,
+			'<%= HtmlUtil.escape(mode) %>'
+		);
+	});
 
-	function <portlet:namespace />setFieldsHiddenAttributes(formBuilder, mode, item, index) {
+	function <portlet:namespace />setFieldsHiddenAttributes(
+		formBuilder,
+		mode,
+		item,
+		index
+	) {
 		var hiddenAttributesMap = formBuilder.MAP_HIDDEN_FIELD_ATTRS;
-		var hiddenAttributes = hiddenAttributesMap[item.get('type')] || hiddenAttributesMap.DEFAULT;
+		var hiddenAttributes =
+			hiddenAttributesMap[item.get('type')] || hiddenAttributesMap.DEFAULT;
 		var without = function(array) {
 			var elems = Array.from(arguments).slice(1);
 
-				elems.forEach(
-					function(value) {
-						array = array.filter(
-							function(elem) {
-								return elem != value;
-							}
-						);
-					}
-				);
+			elems.forEach(function(value) {
+				array = array.filter(function(elem) {
+					return elem != value;
+				});
+			});
 
 			return array;
-		}
+		};
 
 		if (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>') {
 			hiddenAttributes = without(hiddenAttributes, 'readOnly');
@@ -85,22 +84,32 @@ String fieldsJSONArrayString = fieldsJSONArray.toString();
 	}
 
 	function <portlet:namespace />toggleMode(formBuilder, mode) {
-		var modeEdit = (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
+		var modeEdit = mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>';
 
 		formBuilder.set('allowRemoveRequiredFields', modeEdit);
 
-		var setFieldsHiddenAttributes = <portlet:namespace />setFieldsHiddenAttributes.bind(this, formBuilder, mode)
+		var setFieldsHiddenAttributes = <portlet:namespace />setFieldsHiddenAttributes.bind(
+			this,
+			formBuilder,
+			mode
+		);
 		formBuilder.get('fields')._items.forEach(setFieldsHiddenAttributes);
 		formBuilder.get('availableFields').forEach(setFieldsHiddenAttributes);
 
 		var editingField = formBuilder.editingField;
 
 		if (editingField) {
-			formBuilder.propertyList.set('data', formBuilder.getFieldProperties(editingField, true));
+			formBuilder.propertyList.set(
+				'data',
+				formBuilder.getFieldProperties(editingField, true)
+			);
 		}
 	}
 
-	window['<%= HtmlUtil.escapeJS(namespace) %>getAvailableFields'] = function(A, FormBuilder) {
+	window['<%= HtmlUtil.escapeJS(namespace) %>getAvailableFields'] = function(
+		A,
+		FormBuilder
+	) {
 
 		<%
 		JSONArray structureJSONArray = _getFormTemplateFieldsJSONArray(structure, structure.getDefinition());
@@ -108,11 +117,9 @@ String fieldsJSONArrayString = fieldsJSONArray.toString();
 
 		var availableFields = <%= structureJSONArray.toString() %>;
 
-		availableFields.forEach(
-			function(item, index) {
-				item.iconClass = FormBuilder.DEFAULT_ICON_CLASS;
-			}
-		);
+		availableFields.forEach(function(item, index) {
+			item.iconClass = FormBuilder.DEFAULT_ICON_CLASS;
+		});
 
 		return availableFields.concat(FormBuilder.AVAILABLE_FIELDS.DDM_TEMPLATE);
 	};

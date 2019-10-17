@@ -129,15 +129,15 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 </liferay-frontend:edit-form>
 
 <aui:script use="liferay-auto-fields">
-	var autoFields = new Liferay.AutoFields(
-		{
-			contentBox: '#<portlet:namespace />categoryPropertiesId',
-			fieldIndexes: '<portlet:namespace />categoryPropertiesIndexes',
-			namespace: '<portlet:namespace />'
-		}
-	).render();
+	var autoFields = new Liferay.AutoFields({
+		contentBox: '#<portlet:namespace />categoryPropertiesId',
+		fieldIndexes: '<portlet:namespace />categoryPropertiesIndexes',
+		namespace: '<portlet:namespace />'
+	}).render();
 
-	var categoryPropertiesTrigger = A.one('#<portlet:namespace />categoryPropertiesId');
+	var categoryPropertiesTrigger = A.one(
+		'#<portlet:namespace />categoryPropertiesId'
+	);
 
 	if (categoryPropertiesTrigger) {
 		categoryPropertiesTrigger.setData('autoFieldsInstance', autoFields);

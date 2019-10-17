@@ -117,28 +117,36 @@ int defaultSpeed = 3000;
 
 	function <portlet:namespace />play() {
 		if (<portlet:namespace />timeout == 0) {
-			<portlet:namespace />timeout = setInterval(<portlet:namespace />showNext, <portlet:namespace />speed);
+			<portlet:namespace />timeout = setInterval(
+				<portlet:namespace />showNext,
+				<portlet:namespace />speed
+			);
 		}
 	}
 
 	function <portlet:namespace />showNext() {
 		<portlet:namespace />imgArrayPos++;
 
-		if (<portlet:namespace />imgArrayPos == <portlet:namespace />imgArray.length) {
+		if (
+			<portlet:namespace />imgArrayPos == <portlet:namespace />imgArray.length
+		) {
 			<portlet:namespace />imgArrayPos = 0;
 		}
 
-		document.images.<portlet:namespace />slideShow.src = <portlet:namespace />imgArray[<portlet:namespace />imgArrayPos];
+		document.images.<portlet:namespace />slideShow.src =
+			<portlet:namespace />imgArray[<portlet:namespace />imgArrayPos];
 	}
 
 	function <portlet:namespace />showPrevious() {
 		<portlet:namespace />imgArrayPos--;
 
 		if (<portlet:namespace />imgArrayPos < 0) {
-			<portlet:namespace />imgArrayPos = <portlet:namespace />imgArray.length - 1;
+			<portlet:namespace />imgArrayPos =
+				<portlet:namespace />imgArray.length - 1;
 		}
 
-		document.images.<portlet:namespace />slideShow.src = <portlet:namespace />imgArray[<portlet:namespace />imgArrayPos];
+		document.images.<portlet:namespace />slideShow.src =
+			<portlet:namespace />imgArray[<portlet:namespace />imgArrayPos];
 	}
 
 	<portlet:namespace />play();

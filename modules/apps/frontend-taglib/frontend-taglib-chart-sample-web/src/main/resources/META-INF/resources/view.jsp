@@ -168,58 +168,55 @@
 </div>
 
 <aui:script>
-	Liferay.componentReady('polling-interval-line-chart').then(
-		function(chart) {
-			chart.data = function() {
-				return Promise.resolve(
-					[
-						{
-							data: [Math.random() * 100, Math.random() * 100, Math.random() * 100],
-							id: 'data1'
-						},
-						{
-							data: [Math.random() * 100, Math.random() * 100, Math.random() * 100],
-							id: 'data2'
-						}
-					]
-				);
-			};
-		}
-	);
-
-	Liferay.componentReady('predictive-chart').then(
-		function(chart) {
-			var oldData = chart.data.slice();
-
-			setTimeout(
-				function() {
-					var newData = {
-						data: [
-							[230, 230, 230],
-							[20, 20, 20],
-							[120, 120, 120],
-							[450, 450, 450],
-							[70, 70, 70],
-							[280, 280, 280],
-							[60, 60, 60],
-							[140, 140, 140],
-							[220, 245, 305],
-							[240, 275, 295],
-							[200, 235, 325],
-							[110, 145, 235]
-						],
-						id: 'data3'
-					};
-
-					chart.data = new Promise(
-						function(resolve, reject) {
-							oldData.push(newData);
-							resolve(oldData);
-						}
-					);
+	Liferay.componentReady('polling-interval-line-chart').then(function(chart) {
+		chart.data = function() {
+			return Promise.resolve([
+				{
+					data: [
+						Math.random() * 100,
+						Math.random() * 100,
+						Math.random() * 100
+					],
+					id: 'data1'
 				},
-				4000
-			);
-		}
-	);
+				{
+					data: [
+						Math.random() * 100,
+						Math.random() * 100,
+						Math.random() * 100
+					],
+					id: 'data2'
+				}
+			]);
+		};
+	});
+
+	Liferay.componentReady('predictive-chart').then(function(chart) {
+		var oldData = chart.data.slice();
+
+		setTimeout(function() {
+			var newData = {
+				data: [
+					[230, 230, 230],
+					[20, 20, 20],
+					[120, 120, 120],
+					[450, 450, 450],
+					[70, 70, 70],
+					[280, 280, 280],
+					[60, 60, 60],
+					[140, 140, 140],
+					[220, 245, 305],
+					[240, 275, 295],
+					[200, 235, 325],
+					[110, 145, 235]
+				],
+				id: 'data3'
+			};
+
+			chart.data = new Promise(function(resolve, reject) {
+				oldData.push(newData);
+				resolve(oldData);
+			});
+		}, 4000);
+	});
 </aui:script>

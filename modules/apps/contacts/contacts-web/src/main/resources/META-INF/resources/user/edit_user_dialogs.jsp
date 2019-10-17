@@ -92,65 +92,66 @@ if (extension) {
 <aui:script position="inline" use="aui-base">
 	var form = A.one('#<%= portletNamespace %>dialogForm');
 
-	form.on(
-		'submit',
-		function(event) {
-			event.halt(true);
+	form.on('submit', function(event) {
+		event.halt(true);
 
-			Liferay.fire(
-				'saveAutoFields',
-				{
-					form: form
+		Liferay.fire('saveAutoFields', {
+			form: form
+		});
+
+		var uri;
+
+		<c:choose>
+			<c:when test="<%= extension %>">
+
+				<%
+				Group controlPanelGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
+
+				long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true);
+				%>
+
+				uri =
+					'<liferay-portlet:actionURL name="updateFieldGroup" plid="<%= controlPanelPlid %>" portletName="<%= PortletKeys.MY_ACCOUNT %>" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="mvcActionCommand" value="/users_admin/edit_user" /></liferay-portlet:actionURL>';
+			</c:when>
+			<c:otherwise>
+				uri =
+					'<liferay-portlet:actionURL name="updateFieldGroup" windowState="<%= LiferayWindowState.NORMAL.toString() %>" />';
+			</c:otherwise>
+		</c:choose>
+
+		var formData = new FormData(form.getDOMNode());
+
+		Liferay.Util.fetch(uri, {
+			body: formData,
+			method: 'POST'
+		})
+			.then(function(response) {
+				return response.json();
+			})
+			.then(function(data) {
+				if (!data.success) {
+					var message = A.one('#<%= portletNamespace %>errorMessage');
+
+					if (message) {
+						message.html(
+							'<span class="alert alert-danger">' +
+								data.message +
+								'</span>'
+						);
+					}
+				} else {
+					Liferay.Util.getWindow('<portlet:namespace />Dialog').hide();
+
+					var redirect = data.redirect;
+
+					if (redirect) {
+						var topWindow = Liferay.Util.getTop();
+
+						topWindow.location.href = redirect;
+					}
 				}
-			);
-
-			var uri;
-
-			<c:choose>
-				<c:when test="<%= extension %>">
-
-					<%
-					Group controlPanelGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
-
-					long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true);
-					%>
-
-					uri = '<liferay-portlet:actionURL name="updateFieldGroup" plid="<%= controlPanelPlid %>" portletName="<%= PortletKeys.MY_ACCOUNT %>" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="mvcActionCommand" value="/users_admin/edit_user" /></liferay-portlet:actionURL>';
-				</c:when>
-				<c:otherwise>
-					uri = '<liferay-portlet:actionURL name="updateFieldGroup" windowState="<%= LiferayWindowState.NORMAL.toString() %>" />';
-				</c:otherwise>
-			</c:choose>
-
-			var formData = new FormData(form.getDOMNode());
-
-			Liferay.Util.fetch(uri, {
-				body: formData,
-				method: 'POST'
-			}).then(function(response) {
-					return response.json();
-			}).then(function(data) {
-					if (!data.success) {
-						var message = A.one('#<%= portletNamespace %>errorMessage');
-
-						if (message) {
-							message.html('<span class="alert alert-danger">' + data.message + '</span>');
-						}
-					}
-					else {
-						Liferay.Util.getWindow('<portlet:namespace />Dialog').hide();
-
-						var redirect = data.redirect;
-
-						if (redirect) {
-							var topWindow = Liferay.Util.getTop();
-
-							topWindow.location.href = redirect;
-						}
-					}
 			});
-		}
-	);
+	});
 </aui:script>
 
 <aui:script use="liferay-auto-fields">

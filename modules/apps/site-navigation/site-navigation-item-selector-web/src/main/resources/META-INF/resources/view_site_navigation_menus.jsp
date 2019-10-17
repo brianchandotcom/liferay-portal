@@ -101,5 +101,8 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 </aui:form>
 
 <aui:script use="aui-base">
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectSiteNavigationMenuFm', '<%= HtmlUtil.escapeJS(siteNavigationMenuItemSelectorViewDisplayContext.getItemSelectedEventName()) %>');
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />selectSiteNavigationMenuFm',
+		'<%= HtmlUtil.escapeJS(siteNavigationMenuItemSelectorViewDisplayContext.getItemSelectedEventName()) %>'
+	);
 </aui:script>

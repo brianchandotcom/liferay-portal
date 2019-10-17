@@ -41,14 +41,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "process-details"));
 		<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTaskId) %>" />
 	</liferay-portlet:resourceURL>
 
-	new Liferay.ExportImport(
-		{
-			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
-			locale: '<%= locale.toLanguageTag() %>',
-			namespace: '<portlet:namespace />',
-			processesNode: '#exportImportProcessContainer',
-			processesResourceURL: '<%= HtmlUtil.escapeJS(exportImportProcessURL) %>',
-			timeZoneOffset: <%= timeZoneOffset %>
-		}
-	);
+	new Liferay.ExportImport({
+		incompleteProcessMessageNode:
+			'#<portlet:namespace />incompleteProcessMessage',
+		locale: '<%= locale.toLanguageTag() %>',
+		namespace: '<portlet:namespace />',
+		processesNode: '#exportImportProcessContainer',
+		processesResourceURL: '<%= HtmlUtil.escapeJS(exportImportProcessURL) %>',
+		timeZoneOffset: <%= timeZoneOffset %>
+	});
 </aui:script>

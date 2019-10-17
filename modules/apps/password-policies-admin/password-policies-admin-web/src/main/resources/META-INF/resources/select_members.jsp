@@ -85,26 +85,27 @@ SearchContainer searchContainer = editPasswordPolicyAssignmentsManagementToolbar
 </aui:form>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />' + 'passwordPolicyMembers');
-
-	searchContainer.on(
-		'rowToggled',
-		function(event) {
-			var selectedItems = event.elements.allSelectedElements;
-
-			var result = {};
-
-			if (selectedItems.size()) {
-				result = {
-					data: {
-						item: selectedItems.attr('value').join(','),
-						memberType: '<%= HtmlUtil.escapeJS(tabs2) %>'
-					}
-				};
-			}
-
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(eventName) %>', result);
-		}
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />' + 'passwordPolicyMembers'
 	);
+
+	searchContainer.on('rowToggled', function(event) {
+		var selectedItems = event.elements.allSelectedElements;
+
+		var result = {};
+
+		if (selectedItems.size()) {
+			result = {
+				data: {
+					item: selectedItems.attr('value').join(','),
+					memberType: '<%= HtmlUtil.escapeJS(tabs2) %>'
+				}
+			};
+		}
+
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= HtmlUtil.escapeJS(eventName) %>',
+			result
+		);
+	});
 </aui:script>

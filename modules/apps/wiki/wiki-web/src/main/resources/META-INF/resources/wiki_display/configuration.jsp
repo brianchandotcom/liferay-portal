@@ -106,33 +106,33 @@ boolean nodeInGroup = false;
 
 				<script>
 					var nodeIdSelect = document.getElementById('<portlet:namespace />nodeId');
-					var pageSelectorContainer = document.getElementById('<portlet:namespace />pageSelectorContainer');
+					var pageSelectorContainer = document.getElementById(
+						'<portlet:namespace />pageSelectorContainer'
+					);
 
 					if (nodeIdSelect) {
 						var nodeId = nodeIdSelect.value;
 
-						nodeIdSelect.addEventListener(
-							'change',
-							function() {
-								if (pageSelectorContainer) {
-									if (nodeIdSelect.value === nodeId) {
-										pageSelectorContainer.classList.remove('hide');
-									}
-									else {
-										pageSelectorContainer.classList.add('hide');
-									}
-								}
-
-								if (nodeIdSelect.value && nodeIdSelect.value !== nodeId) {
-									var configurationRenderURL = Liferay.PortletURL.createURL('<%= configurationRenderURL %>');
-
-									configurationRenderURL.setParameter('nodeId', nodeIdSelect.value);
-
-									document.<portlet:namespace />fm.action = configurationRenderURL;
-									document.<portlet:namespace />fm.submit();
+						nodeIdSelect.addEventListener('change', function() {
+							if (pageSelectorContainer) {
+								if (nodeIdSelect.value === nodeId) {
+									pageSelectorContainer.classList.remove('hide');
+								} else {
+									pageSelectorContainer.classList.add('hide');
 								}
 							}
-						);
+
+							if (nodeIdSelect.value && nodeIdSelect.value !== nodeId) {
+								var configurationRenderURL = Liferay.PortletURL.createURL(
+									'<%= configurationRenderURL %>'
+								);
+
+								configurationRenderURL.setParameter('nodeId', nodeIdSelect.value);
+
+								document.<portlet:namespace />fm.action = configurationRenderURL;
+								document.<portlet:namespace />fm.submit();
+							}
+						});
 					}
 				</script>
 			</liferay-frontend:fieldset>

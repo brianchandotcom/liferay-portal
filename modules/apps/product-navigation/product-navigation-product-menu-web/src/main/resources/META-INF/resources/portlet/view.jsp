@@ -57,71 +57,85 @@ String panelName = GetterUtil.getString(request.getAttribute(ProductNavigationPr
 </div>
 
 <aui:script use="aui-base">
-	var sidenavToggle = document.getElementById('<portlet:namespace />sidenavToggleId');
-	var pagesTreeSidenavToggle = document.getElementById('<portlet:namespace />pagesTreeSidenavToggleId');
+	var sidenavToggle = document.getElementById(
+		'<portlet:namespace />sidenavToggleId'
+	);
+	var pagesTreeSidenavToggle = document.getElementById(
+		'<portlet:namespace />pagesTreeSidenavToggleId'
+	);
 
 	if (sidenavToggle) {
 		var sidenavInstance = Liferay.SideNavigation.initialize(sidenavToggle);
 
-		Liferay.once(
-			'screenLoad',
-			function() {
-				Liferay.SideNavigation.destroy(sidenavToggle);
-				Liferay.SideNavigation.destroy(pagesTreeSidenavToggle);
-			}
-		);
+		Liferay.once('screenLoad', function() {
+			Liferay.SideNavigation.destroy(sidenavToggle);
+			Liferay.SideNavigation.destroy(pagesTreeSidenavToggle);
+		});
 
-		sidenavInstance.on(
-			'closed.lexicon.sidenav',
-			function(event) {
-				Liferay.Util.Session.set('com.liferay.product.navigation.product.menu.web_productMenuState', 'closed');
-			}
-		);
+		sidenavInstance.on('closed.lexicon.sidenav', function(event) {
+			Liferay.Util.Session.set(
+				'com.liferay.product.navigation.product.menu.web_productMenuState',
+				'closed'
+			);
+		});
 
-		sidenavInstance.on(
-			'open.lexicon.sidenav',
-			function(event) {
-				Liferay.Util.Session.set('com.liferay.product.navigation.product.menu.web_productMenuState', 'open');
-			}
-		);
+		sidenavInstance.on('open.lexicon.sidenav', function(event) {
+			Liferay.Util.Session.set(
+				'com.liferay.product.navigation.product.menu.web_productMenuState',
+				'open'
+			);
+		});
 	}
 
 	if (pagesTreeSidenavToggle) {
-		var pagesTreeSidenavInstance = Liferay.SideNavigation.initialize(pagesTreeSidenavToggle);
+		var pagesTreeSidenavInstance = Liferay.SideNavigation.initialize(
+			pagesTreeSidenavToggle
+		);
 
 		if (sidenavInstance) {
-			sidenavInstance.on(
-				'open.lexicon.sidenav',
-				function(event) {
-					if (Liferay.Util.Session.set('com.liferay.product.navigation.product.menu.web_pagesTreeState') === 'open') {
-						pagesTreeSidenavInstance.hideSimpleSidenav();
-						Liferay.Util.Session.set('com.liferay.product.navigation.product.menu.web_pagesTreeState', 'closed');
-					}
+			sidenavInstance.on('open.lexicon.sidenav', function(event) {
+				if (
+					Liferay.Util.Session.set(
+						'com.liferay.product.navigation.product.menu.web_pagesTreeState'
+					) === 'open'
+				) {
+					pagesTreeSidenavInstance.hideSimpleSidenav();
+					Liferay.Util.Session.set(
+						'com.liferay.product.navigation.product.menu.web_pagesTreeState',
+						'closed'
+					);
 				}
-			);
+			});
 		}
 
-		pagesTreeSidenavInstance.on(
-			'closed.lexicon.sidenav',
-			function(event) {
-				Liferay.Util.Session.set('com.liferay.product.navigation.product.menu.web_pagesTreeState', 'closed');
-			}
-		);
+		pagesTreeSidenavInstance.on('closed.lexicon.sidenav', function(event) {
+			Liferay.Util.Session.set(
+				'com.liferay.product.navigation.product.menu.web_pagesTreeState',
+				'closed'
+			);
+		});
 
-		pagesTreeSidenavInstance.on(
-			'open.lexicon.sidenav',
-			function(event) {
-				Liferay.Util.Session.set('com.liferay.product.navigation.product.menu.web_pagesTreeState', 'open');
+		pagesTreeSidenavInstance.on('open.lexicon.sidenav', function(event) {
+			Liferay.Util.Session.set(
+				'com.liferay.product.navigation.product.menu.web_pagesTreeState',
+				'open'
+			);
 
-				if (Liferay.Util.Session.set('com.liferay.product.navigation.product.menu.web_productMenuState') === 'open') {
-					sidenavInstance.hideSimpleSidenav();
-					Liferay.Util.Session.set('com.liferay.product.navigation.product.menu.web_productMenuState', 'closed');
-				}
+			if (
+				Liferay.Util.Session.set(
+					'com.liferay.product.navigation.product.menu.web_productMenuState'
+				) === 'open'
+			) {
+				sidenavInstance.hideSimpleSidenav();
+				Liferay.Util.Session.set(
+					'com.liferay.product.navigation.product.menu.web_productMenuState',
+					'closed'
+				);
 			}
-		);
+		});
 	}
 
-	if (Liferay.Util.isPhone() && (document.body.classList.contains('open'))) {
+	if (Liferay.Util.isPhone() && document.body.classList.contains('open')) {
 		Liferay.SideNavigation.hide(sidenavToggle);
 		Liferay.SideNavigation.hide(pagesTreeSidenavToggle);
 	}

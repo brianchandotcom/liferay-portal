@@ -40,46 +40,50 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 </div>
 
 <script>
-	var assetListEntryId = document.getElementById('<portlet:namespace />assetListEntryId');
-	var assetListTitle = document.getElementById('<portlet:namespace />assetListTitle');
+	var assetListEntryId = document.getElementById(
+		'<portlet:namespace />assetListEntryId'
+	);
+	var assetListTitle = document.getElementById(
+		'<portlet:namespace />assetListTitle'
+	);
 
-	var selectAssetListButton = document.getElementById('<portlet:namespace />selectAssetListButton');
+	var selectAssetListButton = document.getElementById(
+		'<portlet:namespace />selectAssetListButton'
+	);
 
 	if (selectAssetListButton) {
-		selectAssetListButton.addEventListener(
-			'click',
-			function(event) {
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
+		selectAssetListButton.addEventListener('click', function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
 						constrain: true,
 						destroyOnHide: true
 					},
-						eventName: '<%= assetPublisherDisplayContext.getSelectAssetListEventName() %>',
-						id: '<portlet:namespace />selectAssetList',
-						title: '<liferay-ui:message key="select-content-set" />',
-						uri: '<%= assetPublisherDisplayContext.getAssetListSelectorURL() %>'
-					},
-					function(event) {
-						assetListEntryId.value = event.assetlistentryid;
+					eventName:
+						'<%= assetPublisherDisplayContext.getSelectAssetListEventName() %>',
+					id: '<portlet:namespace />selectAssetList',
+					title: '<liferay-ui:message key="select-content-set" />',
+					uri:
+						'<%= assetPublisherDisplayContext.getAssetListSelectorURL() %>'
+				},
+				function(event) {
+					assetListEntryId.value = event.assetlistentryid;
 
-						assetListTitle.innerHTML = event.assetlistentrytitle;
-					}
-				);
-			}
-		);
+					assetListTitle.innerHTML = event.assetlistentrytitle;
+				}
+			);
+		});
 	}
 
-	var clearAssetListButton = document.getElementById('<portlet:namespace />clearAssetListButton');
+	var clearAssetListButton = document.getElementById(
+		'<portlet:namespace />clearAssetListButton'
+	);
 
 	if (clearAssetListButton) {
-		clearAssetListButton.addEventListener(
-			'click',
-			function(event) {
-				assetListTitle.innerHTML = '<liferay-ui:message key="none" />';
+		clearAssetListButton.addEventListener('click', function(event) {
+			assetListTitle.innerHTML = '<liferay-ui:message key="none" />';
 
-				assetListEntryId.value = '';
-			}
-		);
+			assetListEntryId.value = '';
+		});
 	}
 </script>

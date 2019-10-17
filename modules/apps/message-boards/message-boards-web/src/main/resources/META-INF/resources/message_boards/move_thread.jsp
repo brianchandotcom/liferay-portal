@@ -115,64 +115,61 @@ if (portletTitleBasedNavigation) {
 	var form = document.<portlet:namespace />fm;
 
 	function <portlet:namespace />moveThread() {
-		Liferay.Util.postForm(
-			form,
-			{
-				data: {
-					body: <portlet:namespace />getHTML()
-				}
+		Liferay.Util.postForm(form, {
+			data: {
+				body: <portlet:namespace />getHTML()
 			}
-		);
+		});
 	}
 
 	function <portlet:namespace />toggleExplanationPost() {
-		var addExplanationPostButton = document.getElementById('<portlet:namespace />addExplanationPost');
-		var explanationPost = document.getElementById('<portlet:namespace />explanationPost');
+		var addExplanationPostButton = document.getElementById(
+			'<portlet:namespace />addExplanationPost'
+		);
+		var explanationPost = document.getElementById(
+			'<portlet:namespace />explanationPost'
+		);
 
 		if (addExplanationPostButton && explanationPost) {
 			if (addExplanationPostButton.checked) {
 				explanationPost.classList.remove('hide');
-			}
-			else {
+			} else {
 				explanationPost.classList.add('hide');
 			}
 		}
 	}
 
-	var selectCategoryButton = document.getElementById('<portlet:namespace />selectCategoryButton');
+	var selectCategoryButton = document.getElementById(
+		'<portlet:namespace />selectCategoryButton'
+	);
 
 	if (selectCategoryButton) {
-		selectCategoryButton.addEventListener(
-			'click',
-			function(event) {
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							modal: true,
-							width: 680
-						},
-						id: '<portlet:namespace />selectCategory',
-						title: '<liferay-ui:message arguments="category" key="select-x" />',
-
-						<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="mvcRenderCommandName" value="/message_boards/select_category" />
-							<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" />
-						</portlet:renderURL>
-
-						uri: '<%= selectCategoryURL %>'
+		selectCategoryButton.addEventListener('click', function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						modal: true,
+						width: 680
 					},
-					function(event) {
-						Liferay.Util.setFormValues(
-							form,
-							{
-								categoryName: Liferay.Util.unescape(event.name),
-								mbCategoryId: event.categoryid
-							}
-						);
-					}
-				);
-			}
-		);
+					id: '<portlet:namespace />selectCategory',
+					title:
+						'<liferay-ui:message arguments="category" key="select-x" />',
+
+					<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/select_category" />
+						<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" />
+					</portlet:renderURL>
+
+					uri: '<%= selectCategoryURL %>'
+				},
+				function(event) {
+					Liferay.Util.setFormValues(form, {
+						categoryName: Liferay.Util.unescape(event.name),
+						mbCategoryId: event.categoryid
+					});
+				}
+			);
+		});
 	}
 </script>

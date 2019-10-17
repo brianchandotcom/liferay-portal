@@ -92,7 +92,14 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 		outputKey="social_bookmarks"
 	>
 		<aui:script>
-			function socialBookmarks_handleItemClick(event, className, classPK, type, postURL, url) {
+			function socialBookmarks_handleItemClick(
+				event,
+				className,
+				classPK,
+				type,
+				postURL,
+				url
+			) {
 				var SHARE_WINDOW_HEIGHT = 436;
 				var SHARE_WINDOW_WIDTH = 626;
 
@@ -110,15 +117,12 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 
 				window.open(postURL, null, shareWindowFeatures.join()).focus();
 
-				Liferay.fire(
-					'socialBookmarks:share',
-					{
-						className: className,
-						classPK: classPK,
-						type: type,
-						url: url
-					}
-				);
+				Liferay.fire('socialBookmarks:share', {
+					className: className,
+					classPK: classPK,
+					type: type,
+					url: url
+				});
 
 				return false;
 			}
@@ -126,26 +130,23 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 	</liferay-util:html-bottom>
 
 	<aui:script sandbox="<%= true %>">
-		Liferay.componentReady('<%= dropdownMenuComponentId %>').then(
-			function(dropdownMenu) {
-				dropdownMenu.on(
-					['itemClicked'],
-					function(event) {
-						event.preventDefault();
+		Liferay.componentReady('<%= dropdownMenuComponentId %>').then(function(
+			dropdownMenu
+		) {
+			dropdownMenu.on(['itemClicked'], function(event) {
+				event.preventDefault();
 
-						var data = event.data.item.data;
+				var data = event.data.item.data;
 
-						socialBookmarks_handleItemClick(
-							event,
-							data.className,
-							parseInt(data.classPK),
-							data.type,
-							data.postURL,
-							data.url
-						);
-					}
+				socialBookmarks_handleItemClick(
+					event,
+					data.className,
+					parseInt(data.classPK),
+					data.type,
+					data.postURL,
+					data.url
 				);
-			}
-		);
+			});
+		});
 	</aui:script>
 </div>

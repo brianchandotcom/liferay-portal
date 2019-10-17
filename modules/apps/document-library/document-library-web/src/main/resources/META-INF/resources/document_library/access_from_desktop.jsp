@@ -74,32 +74,27 @@ else {
 	var webdavAction = A.one('.<%= randomNamespace %>-webdav-action');
 
 	if (webdavAction) {
-		webdavAction.on(
-			'click',
-			function(event) {
-				event.preventDefault();
+		webdavAction.on('click', function(event) {
+			event.preventDefault();
 
-				var webdavDialog = Liferay.Util.Window.getWindow(
-					{
-						dialog: {
-							bodyContent: A.one('#<%= randomNamespace %>webDav').html(),
-							destroyOnHide: true
-						},
-						title: '<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>'
-					}
-				);
+			var webdavDialog = Liferay.Util.Window.getWindow({
+				dialog: {
+					bodyContent: A.one('#<%= randomNamespace %>webDav').html(),
+					destroyOnHide: true
+				},
+				title:
+					'<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>'
+			});
 
-				webdavDialog.after(
-					'render',
-					function(event) {
-						var webdavURLInput = webdavDialog.get('boundingBox').one('#<portlet:namespace />webDavURL');
+			webdavDialog.after('render', function(event) {
+				var webdavURLInput = webdavDialog
+					.get('boundingBox')
+					.one('#<portlet:namespace />webDavURL');
 
-						webdavURLInput.focus();
-					}
-				);
+				webdavURLInput.focus();
+			});
 
-				webdavDialog.render();
-			}
-		);
+			webdavDialog.render();
+		});
 	}
 </aui:script>

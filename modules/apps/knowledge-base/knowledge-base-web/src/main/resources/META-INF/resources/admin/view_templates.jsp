@@ -114,35 +114,44 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 
 <aui:script>
 	var deleteKBTemplates = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-templates" />')) {
+		if (
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-templates" />'
+			)
+		) {
 			var form = document.querySelector('#<portlet:namespace />fm');
 
 			if (form) {
 				form.setAttribute('method', 'post');
 
-				form.querySelector('#<portlet:namespace />kbTemplateIds').value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+				form.querySelector(
+					'#<portlet:namespace />kbTemplateIds'
+				).value = Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				);
 
-				submitForm(form, '<liferay-portlet:actionURL name="deleteKBTemplates"><portlet:param name="mvcPath" value="/admin/view_templates.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>');
+				submitForm(
+					form,
+					'<liferay-portlet:actionURL name="deleteKBTemplates"><portlet:param name="mvcPath" value="/admin/view_templates.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>'
+				);
 			}
 		}
-	}
-
-	var ACTIONS = {
-		'deleteKBTemplates': deleteKBTemplates
 	};
 
-	Liferay.componentReady('kbTemplatesManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
+	var ACTIONS = {
+		deleteKBTemplates: deleteKBTemplates
+	};
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
+	Liferay.componentReady('kbTemplatesManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('actionItemClicked', function(event) {
+			var itemData = event.data.item.data;
+
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action]();
+			}
+		});
+	});
 </aui:script>

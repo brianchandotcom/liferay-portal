@@ -59,8 +59,14 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 		'click',
 		'.layout-page-template-entry',
 		function(event) {
-			dom.removeClasses(document.querySelectorAll('.form-check-card.active'), 'active');
-			dom.addClasses(dom.closest(event.delegateTarget, '.form-check-card'), 'active');
+			dom.removeClasses(
+				document.querySelectorAll('.form-check-card.active'),
+				'active'
+			);
+			dom.addClasses(
+				dom.closest(event.delegateTarget, '.form-check-card'),
+				'active'
+			);
 
 			Liferay.Util.getOpener().Liferay.fire(
 				'<%= assetDisplayPagesItemSelectorViewDisplayContext.getItemSelectedEventName() %>',

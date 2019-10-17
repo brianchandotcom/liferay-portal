@@ -120,23 +120,25 @@ renderResponse.setTitle(title);
 
 <aui:script sandbox="<%= true %>">
 	var typeNode = document.getElementById('<portlet:namespace />type');
-	var typeSettingsContainer = document.getElementById('<portlet:namespace />typeSettings');
+	var typeSettingsContainer = document.getElementById(
+		'<portlet:namespace />typeSettings'
+	);
 
 	if (typeNode && typeSettingsContainer) {
 		var loadTypeFields = function() {
 			Liferay.Util.fetch(
-				'<%= editorURL %>' + '&<portlet:namespace />type=' + typeNode.value + '&<portlet:namespace />type=' + <%= ruleId %>
+				'<%= editorURL %>' +
+					'&<portlet:namespace />type=' +
+					typeNode.value +
+					'&<portlet:namespace />type=' +
+					<%= ruleId %>
 			)
-			.then(
-				function(response) {
+				.then(function(response) {
 					return response.text();
-				}
-			)
-			.then(
-				function(response) {
+				})
+				.then(function(response) {
 					typeSettingsContainer.innerHTML = response;
-				}
-			);
+				});
 		};
 
 		<c:choose>

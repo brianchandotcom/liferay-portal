@@ -88,31 +88,62 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 <aui:script>
 	function <portlet:namespace />removeGroup(pos, target) {
-		var selectedGroupIds = document.<portlet:namespace />fm['<portlet:namespace />groupIds' + target].value.split(',');
-		var selectedGroupNames = document.<portlet:namespace />fm['<portlet:namespace />groupNames' + target].value.split('@@');
+		var selectedGroupIds = document.<portlet:namespace />fm[
+			'<portlet:namespace />groupIds' + target
+		].value.split(',');
+		var selectedGroupNames = document.<portlet:namespace />fm[
+			'<portlet:namespace />groupNames' + target
+		].value.split('@@');
 
 		selectedGroupIds.splice(pos, 1);
 		selectedGroupNames.splice(pos, 1);
 
-		<portlet:namespace />updateGroups(selectedGroupIds, selectedGroupNames, target);
+		<portlet:namespace />updateGroups(
+			selectedGroupIds,
+			selectedGroupNames,
+			target
+		);
 	}
 
-	function <portlet:namespace />selectOrganization(organizationId, groupId, name, type, target) {
+	function <portlet:namespace />selectOrganization(
+		organizationId,
+		groupId,
+		name,
+		type,
+		target
+	) {
 		<portlet:namespace />selectGroup(groupId, name, target);
 	}
 
-	function <portlet:namespace />updateGroups(selectedGroupIds, selectedGroupNames, target) {
-		document.<portlet:namespace />fm['<portlet:namespace />groupIds' + target].value = selectedGroupIds.join(',');
-		document.<portlet:namespace />fm['<portlet:namespace />groupNames' + target].value = selectedGroupNames.join('@@');
+	function <portlet:namespace />updateGroups(
+		selectedGroupIds,
+		selectedGroupNames,
+		target
+	) {
+		document.<portlet:namespace />fm[
+			'<portlet:namespace />groupIds' + target
+		].value = selectedGroupIds.join(',');
+		document.<portlet:namespace />fm[
+			'<portlet:namespace />groupNames' + target
+		].value = selectedGroupNames.join('@@');
 
-		var nameEl = document.getElementById('<portlet:namespace />groupHTML' + target);
+		var nameEl = document.getElementById(
+			'<portlet:namespace />groupHTML' + target
+		);
 
 		var groupsHTML = '';
 
 		for (var i = 0; i < selectedGroupIds.length; i++) {
 			var name = selectedGroupNames[i];
 
-			groupsHTML += '<span class="lfr-token"><span class="lfr-token-text">' + name + '</span><a class="icon icon-remove lfr-token-close" href="javascript:<portlet:namespace />removeGroup(' + i + ', \'' + target + '\' );"></a></span>';
+			groupsHTML +=
+				'<span class="lfr-token"><span class="lfr-token-text">' +
+				name +
+				'</span><a class="icon icon-remove lfr-token-close" href="javascript:<portlet:namespace />removeGroup(' +
+				i +
+				", '" +
+				target +
+				'\' );"></a></span>';
 		}
 
 		if (groupsHTML == '') {
@@ -126,137 +157,133 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 <aui:script use="aui-loading-mask-deprecated,aui-parse-content,aui-toggler,autocomplete-base,autocomplete-filters,liferay-notification">
 	var AParseContent = A.Plugin.ParseContent;
 
-	var permissionNavigationDataContainer = A.one('#<portlet:namespace />permissionNavigationDataContainer');
+	var permissionNavigationDataContainer = A.one(
+		'#<portlet:namespace />permissionNavigationDataContainer'
+	);
 
 	var togglerDelegate;
 
 	function createLiveSearch() {
 		var instance = this;
 
-		var PermissionNavigationSearch = A.Component.create(
-			{
-				AUGMENTS: [A.AutoCompleteBase],
+		var PermissionNavigationSearch = A.Component.create({
+			AUGMENTS: [A.AutoCompleteBase],
 
-				EXTENDS: A.Base,
+			EXTENDS: A.Base,
 
-				NAME: 'searchpermissioNnavigation',
+			NAME: 'searchpermissioNnavigation',
 
-				prototype: {
-					initializer: function() {
-						var instance = this;
+			prototype: {
+				initializer: function() {
+					var instance = this;
 
-						instance._bindUIACBase();
-						instance._syncUIACBase();
-					}
+					instance._bindUIACBase();
+					instance._syncUIACBase();
 				}
 			}
-		);
+		});
 
 		var getItems = function() {
 			var results = [];
 
-			permissionNavigationItems.each(
-				function(item, index, collection) {
-					results.push(
-						{
-							data: item.text().trim(),
-							node: item
-						}
-					);
-				}
-			);
+			permissionNavigationItems.each(function(item, index, collection) {
+				results.push({
+					data: item.text().trim(),
+					node: item
+				});
+			});
 
 			return results;
 		};
 
 		var getNoResultsNode = function() {
 			if (!noResultsNode) {
-				noResultsNode = A.Node.create('<div class="alert"><liferay-ui:message key="there-are-no-results" /></div>');
+				noResultsNode = A.Node.create(
+					'<div class="alert"><liferay-ui:message key="there-are-no-results" /></div>'
+				);
 			}
 
 			return noResultsNode;
 		};
 
-		var permissionNavigationItems = permissionNavigationDataContainer.all('.permission-navigation-item-container');
+		var permissionNavigationItems = permissionNavigationDataContainer.all(
+			'.permission-navigation-item-container'
+		);
 
-		var permissionNavigationSectionsNode = permissionNavigationDataContainer.all('.permission-navigation-section');
+		var permissionNavigationSectionsNode = permissionNavigationDataContainer.all(
+			'.permission-navigation-section'
+		);
 
 		var noResultsNode;
 
-		var permissionNavigationSearch = new PermissionNavigationSearch(
-			{
-				inputNode: '#<portlet:namespace />permissionNavigationSearch',
-				minQueryLength: 0,
-				nodes: '.permission-navigation-item-container',
-				resultFilters: 'subWordMatch',
-				resultTextLocator: 'data',
-				source: getItems()
-			}
-		);
+		var permissionNavigationSearch = new PermissionNavigationSearch({
+			inputNode: '#<portlet:namespace />permissionNavigationSearch',
+			minQueryLength: 0,
+			nodes: '.permission-navigation-item-container',
+			resultFilters: 'subWordMatch',
+			resultTextLocator: 'data',
+			source: getItems()
+		});
 
-		permissionNavigationSearch.on(
-			'query',
-			function(event) {
-				if (event.query) {
-					togglerDelegate.expandAll();
-				}
-				else {
-					togglerDelegate.collapseAll();
-				}
+		permissionNavigationSearch.on('query', function(event) {
+			if (event.query) {
+				togglerDelegate.expandAll();
+			} else {
+				togglerDelegate.collapseAll();
 			}
-		);
+		});
 
-		permissionNavigationSearch.on(
-			'results',
-			function(event) {
-				permissionNavigationItems.each(
-					function(item, index, collection) {
-						item.addClass('hide');
-					}
+		permissionNavigationSearch.on('results', function(event) {
+			permissionNavigationItems.each(function(item, index, collection) {
+				item.addClass('hide');
+			});
+
+			event.results.forEach(function(item, index) {
+				item.raw.node.removeClass('hide');
+			});
+
+			var foundVisibleSection;
+
+			permissionNavigationSectionsNode.each(function(
+				item,
+				index,
+				collection
+			) {
+				var action = 'addClass';
+
+				var visibleItem = item.one(
+					'.permission-navigation-item-container:not(.hide)'
 				);
 
-				event.results.forEach(
-					function(item, index) {
-						item.raw.node.removeClass('hide');
-					}
-				);
+				if (visibleItem) {
+					action = 'removeClass';
 
-				var foundVisibleSection;
-
-				permissionNavigationSectionsNode.each(
-					function(item, index, collection) {
-						var action = 'addClass';
-
-						var visibleItem = item.one('.permission-navigation-item-container:not(.hide)');
-
-						if (visibleItem) {
-							action = 'removeClass';
-
-							foundVisibleSection = true;
-						}
-
-						item[action]('hide');
-					}
-				);
-
-				var noResultsNode = getNoResultsNode();
-
-				if (foundVisibleSection) {
-					noResultsNode.remove();
+					foundVisibleSection = true;
 				}
-				else {
-					permissionNavigationDataContainer.appendChild(noResultsNode);
-				}
+
+				item[action]('hide');
+			});
+
+			var noResultsNode = getNoResultsNode();
+
+			if (foundVisibleSection) {
+				noResultsNode.remove();
+			} else {
+				permissionNavigationDataContainer.appendChild(noResultsNode);
 			}
-		);
+		});
 	}
 
 	var originalSelectedValues = [];
 
 	function processNavigationLinks() {
-		var permissionContainerNode = A.one('#<portlet:namespace />permissionContainer');
+		var permissionContainerNode = A.one(
+			'#<portlet:namespace />permissionContainer'
+		);
 
-		var permissionContentContainerNode = permissionContainerNode.one('#<portlet:namespace />permissionContentContainer');
+		var permissionContentContainerNode = permissionContainerNode.one(
+			'#<portlet:namespace />permissionContentContainer'
+		);
 
 		permissionContainerNode.delegate(
 			'click',
@@ -273,20 +300,19 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 				permissionContentContainerNode.unplug(AParseContent);
 
-				Liferay.Util.fetch(href).then(
-					function(response) {
+				Liferay.Util.fetch(href)
+					.then(function(response) {
 						if (response.status === 401) {
 							window.location.reload();
-						}
-						else if (response.ok) {
+						} else if (response.ok) {
 							return response.text();
+						} else {
+							throw new Error(
+								'<liferay-ui:message key="sorry,-we-were-not-able-to-access-the-server" />'
+							);
 						}
-						else {
-							throw new Error('<liferay-ui:message key="sorry,-we-were-not-able-to-access-the-server" />');
-						}
-					}
-				).then(
-					function(response) {
+					})
+					.then(function(response) {
 						permissionContentContainerNode.loadingmask.hide();
 
 						permissionContentContainerNode.unplug(A.LoadingMask);
@@ -297,71 +323,72 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 						permissionContentContainerNode.setContent(response);
 
-						var checkedNodes = permissionContentContainerNode.all(':checked');
+						var checkedNodes = permissionContentContainerNode.all(
+							':checked'
+						);
 
 						originalSelectedValues = checkedNodes.val();
 
-						A.all('.permission-navigation-link').removeClass('active')
+						A.all('.permission-navigation-link').removeClass('active');
 
 						event.currentTarget.addClass('active');
-					}
-				).catch(
-					function(error) {
+					})
+					.catch(function(error) {
 						permissionContentContainerNode.loadingmask.hide();
 
-						permissionContentContainerNode.unplug(A.LoadingMask)
+						permissionContentContainerNode.unplug(A.LoadingMask);
 
-						new Liferay.Notification(
-							{
-								closeable: true,
-								delay: {
-									hide: 0,
-									show: 0
-								},
-								duration: 500,
-								message: error.message,
-								render: true,
-								title: '<liferay-ui:message key="warning" />',
-								type: 'warning'
-							}
-						);
-					}
-				);
+						new Liferay.Notification({
+							closeable: true,
+							delay: {
+								hide: 0,
+								show: 0
+							},
+							duration: 500,
+							message: error.message,
+							render: true,
+							title: '<liferay-ui:message key="warning" />',
+							type: 'warning'
+						});
+					});
 			},
 			'.permission-navigation-link'
 		);
 	}
 
 	function processTargetCheckboxes() {
-		var permissionContainerNode = A.one('#<portlet:namespace />permissionContainer');
+		var permissionContainerNode = A.one(
+			'#<portlet:namespace />permissionContainer'
+		);
 
 		permissionContainerNode.delegate(
 			'change',
 			function(event) {
-				var unselectedTargetsNode = permissionContainerNode.one('#<portlet:namespace />unselectedTargets');
+				var unselectedTargetsNode = permissionContainerNode.one(
+					'#<portlet:namespace />unselectedTargets'
+				);
 
 				var unselectedTargets = unselectedTargetsNode.val().split(',');
 
 				var form = A.one(document.<portlet:namespace />fm);
 
-				form.all('input[type=checkbox]').each(
-					function(item, index) {
-						var checkbox = A.one(item);
+				form.all('input[type=checkbox]').each(function(item, index) {
+					var checkbox = A.one(item);
 
-						var value = checkbox.val();
+					var value = checkbox.val();
 
-						if (checkbox.get('checked')) {
-							var unselectedTargetIndex = unselectedTargets.indexOf(value);
+					if (checkbox.get('checked')) {
+						var unselectedTargetIndex = unselectedTargets.indexOf(
+							value
+						);
 
-							if (unselectedTargetIndex != -1) {
-								unselectedTargets.splice(unselectedTargetIndex, 1);
-							}
+						if (unselectedTargetIndex != -1) {
+							unselectedTargets.splice(unselectedTargetIndex, 1);
 						}
-						else if (originalSelectedValues.indexOf(value) != -1) {
-							unselectedTargets.push(value);
-						}
+					} else if (originalSelectedValues.indexOf(value) != -1) {
+						unselectedTargets.push(value);
 					}
-				);
+				});
 
 				unselectedTargetsNode.val(unselectedTargets.join(','));
 			},
@@ -369,64 +396,69 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		);
 	}
 
-	Liferay.on(
-		'<portlet:namespace />selectGroup',
-		function(event) {
-			var selectedGroupIds = [];
+	Liferay.on('<portlet:namespace />selectGroup', function(event) {
+		var selectedGroupIds = [];
 
-			var selectedGroupIdsField = document.<portlet:namespace />fm['<portlet:namespace />groupIds' + event.grouptarget].value;
+		var selectedGroupIdsField =
+			document.<portlet:namespace />fm[
+				'<portlet:namespace />groupIds' + event.grouptarget
+			].value;
 
-			if (selectedGroupIdsField) {
-				selectedGroupIds = selectedGroupIdsField.split(',');
-			}
-
-			var selectedGroupNames = [];
-			var selectedGroupNamesField = document.<portlet:namespace />fm['<portlet:namespace />groupNames' + event.grouptarget].value;
-
-			if (selectedGroupNamesField) {
-				selectedGroupNames = selectedGroupNamesField.split('@@');
-			}
-
-			if (selectedGroupIds.indexOf(event.entityid) == -1) {
-				selectedGroupIds.push(event.entityid);
-				selectedGroupNames.push(event.entityname);
-			}
-
-			<portlet:namespace />updateGroups(selectedGroupIds, selectedGroupNames, event.grouptarget);
+		if (selectedGroupIdsField) {
+			selectedGroupIds = selectedGroupIdsField.split(',');
 		}
-	);
 
-	A.on(
-		'domready',
-		function(event) {
-			togglerDelegate = new A.TogglerDelegate(
-				{
-					container: <portlet:namespace />permissionNavigationDataContainer,
-					content: '.permission-navigation-item-content',
-					header: '.permission-navigation-item-header'
-				}
-			);
+		var selectedGroupNames = [];
+		var selectedGroupNamesField =
+			document.<portlet:namespace />fm[
+				'<portlet:namespace />groupNames' + event.grouptarget
+			].value;
 
-			createLiveSearch();
-			processNavigationLinks();
-			processTargetCheckboxes();
+		if (selectedGroupNamesField) {
+			selectedGroupNames = selectedGroupNamesField.split('@@');
 		}
-	);
+
+		if (selectedGroupIds.indexOf(event.entityid) == -1) {
+			selectedGroupIds.push(event.entityid);
+			selectedGroupNames.push(event.entityname);
+		}
+
+		<portlet:namespace />updateGroups(
+			selectedGroupIds,
+			selectedGroupNames,
+			event.grouptarget
+		);
+	});
+
+	A.on('domready', function(event) {
+		togglerDelegate = new A.TogglerDelegate({
+			container: <portlet:namespace />permissionNavigationDataContainer,
+			content: '.permission-navigation-item-content',
+			header: '.permission-navigation-item-header'
+		});
+
+		createLiveSearch();
+		processNavigationLinks();
+		processTargetCheckboxes();
+	});
 </aui:script>
 
 <aui:script>
 	function <portlet:namespace />updateActions() {
 		var form = document.<portlet:namespace />fm;
 
-		Liferay.Util.postForm(
-			form,
-			{
-				data: {
-					redirect: '<%= HtmlUtil.escapeJS(portletURL.toString()) %>',
-					selectedTargets: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'),
-					unselectedTargets: Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds')
-				}
+		Liferay.Util.postForm(form, {
+			data: {
+				redirect: '<%= HtmlUtil.escapeJS(portletURL.toString()) %>',
+				selectedTargets: Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				),
+				unselectedTargets: Liferay.Util.listUncheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				)
 			}
-		);
+		});
 	}
 </aui:script>

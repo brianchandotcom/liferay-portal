@@ -100,25 +100,23 @@
 				</div>
 
 				<aui:script use="liferay-dynamic-select">
-					new Liferay.DynamicSelect(
-						[
-							{
-								select: '<portlet:namespace />addressCountryId<%= addressesIndex %>',
-								selectData: Liferay.Address.getCountries,
-								selectDesc: 'nameCurrentValue',
-								selectId: 'countryId',
-								selectSort: '<%= true %>',
-								selectVal: '<%= countryId %>'
-							},
-							{
-								select: '<portlet:namespace />addressRegionId<%= addressesIndex %>',
-								selectData: Liferay.Address.getRegions,
-								selectDesc: 'name',
-								selectId: 'regionId',
-								selectVal: '<%= regionId %>'
-							}
-						]
-					);
+					new Liferay.DynamicSelect([
+						{
+							select: '<portlet:namespace />addressCountryId<%= addressesIndex %>',
+							selectData: Liferay.Address.getCountries,
+							selectDesc: 'nameCurrentValue',
+							selectId: 'countryId',
+							selectSort: '<%= true %>',
+							selectVal: '<%= countryId %>'
+						},
+						{
+							select: '<portlet:namespace />addressRegionId<%= addressesIndex %>',
+							selectData: Liferay.Address.getRegions,
+							selectDesc: 'name',
+							selectId: 'regionId',
+							selectVal: '<%= regionId %>'
+						}
+					]);
 				</aui:script>
 
 			<%
@@ -129,45 +127,43 @@
 		</aui:fieldset>
 
 		<aui:script use="liferay-auto-fields,liferay-dynamic-select">
-			new Liferay.AutoFields(
-				{
-					contentBox: '#<portlet:namespace />addresses',
-					fieldIndexes: '<portlet:namespace />addressesIndexes',
-					namespace: '<portlet:namespace />',
-					on: {
-						'clone': function(event) {
-							var guid = event.guid;
-							var row = event.row;
+			new Liferay.AutoFields({
+				contentBox: '#<portlet:namespace />addresses',
+				fieldIndexes: '<portlet:namespace />addressesIndexes',
+				namespace: '<portlet:namespace />',
+				on: {
+					clone: function(event) {
+						var guid = event.guid;
+						var row = event.row;
 
-							var dynamicSelects = row.one('select[data-componentType=dynamic_select]');
+						var dynamicSelects = row.one(
+							'select[data-componentType=dynamic_select]'
+						);
 
-							if (dynamicSelects) {
-								dynamicSelects.detach('change');
-							}
-
-							new Liferay.DynamicSelect(
-								[
-									{
-										select: '<portlet:namespace />addressCountryId' + guid,
-										selectData: Liferay.Address.getCountries,
-										selectDesc: 'nameCurrentValue',
-										selectId: 'countryId',
-										selectSort: '<%= true %>',
-										selectVal: '0'
-									},
-									{
-										select: '<portlet:namespace />addressRegionId' + guid,
-										selectData: Liferay.Address.getRegions,
-										selectDesc: 'name',
-										selectId: 'regionId',
-										selectVal: '0'
-									}
-								]
-							);
+						if (dynamicSelects) {
+							dynamicSelects.detach('change');
 						}
+
+						new Liferay.DynamicSelect([
+							{
+								select: '<portlet:namespace />addressCountryId' + guid,
+								selectData: Liferay.Address.getCountries,
+								selectDesc: 'nameCurrentValue',
+								selectId: 'countryId',
+								selectSort: '<%= true %>',
+								selectVal: '0'
+							},
+							{
+								select: '<portlet:namespace />addressRegionId' + guid,
+								selectData: Liferay.Address.getRegions,
+								selectDesc: 'name',
+								selectId: 'regionId',
+								selectVal: '0'
+							}
+						]);
 					}
 				}
-			).render();
+			}).render();
 		</aui:script>
 	</c:when>
 	<c:otherwise>

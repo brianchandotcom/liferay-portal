@@ -34,5 +34,8 @@ SearchFacet searchFacet = (SearchFacet)request.getAttribute("facet_configuration
 </aui:fieldset>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>displayFacet', '<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>Options');
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>displayFacet',
+		'<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>Options'
+	);
 </aui:script>

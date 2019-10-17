@@ -61,30 +61,30 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 </liferay-portlet:actionURL>
 
 <aui:script use="liferay-portlet-url,liferay-upload">
-	var uploader = new Liferay.Upload(
-		{
-			boundingBox: '#<portlet:namespace />fileUpload',
+	var uploader = new Liferay.Upload({
+		boundingBox: '#<portlet:namespace />fileUpload',
 
-			<%
-			DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-			%>
+		<%
+		DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+		%>
 
-			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
-			deleteFile: '<%= deleteURL.toString() %>',
-			fallback: '#<portlet:namespace />fallback',
-			fileDescription: '<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
-			maxFileSize: '<%= dlConfiguration.fileMaxSize() %> ',
-			namespace: '<portlet:namespace />',
-			rootElement: '#<portlet:namespace />uploaderContainer',
-			tempFileURL: {
-				method: Liferay.Service.bind('/wiki.wikipage/get-temp-file-names'),
-				params: {
-					nodeId: <%= node.getNodeId() %>,
-					folderName: '<%= WikiConstants.TEMP_FOLDER_NAME %>'
-				}
-			},
-			tempRandomSuffix: '<%= TempFileEntryUtil.TEMP_RANDOM_SUFFIX %>',
-			uploadFile: '<liferay-portlet:actionURL name="/wiki/edit_page_attachment"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>'
-		}
-	);
+		decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
+		deleteFile: '<%= deleteURL.toString() %>',
+		fallback: '#<portlet:namespace />fallback',
+		fileDescription:
+			'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
+		maxFileSize: '<%= dlConfiguration.fileMaxSize() %> ',
+		namespace: '<portlet:namespace />',
+		rootElement: '#<portlet:namespace />uploaderContainer',
+		tempFileURL: {
+			method: Liferay.Service.bind('/wiki.wikipage/get-temp-file-names'),
+			params: {
+				nodeId: <%= node.getNodeId() %>,
+				folderName: '<%= WikiConstants.TEMP_FOLDER_NAME %>'
+			}
+		},
+		tempRandomSuffix: '<%= TempFileEntryUtil.TEMP_RANDOM_SUFFIX %>',
+		uploadFile:
+			'<liferay-portlet:actionURL name="/wiki/edit_page_attachment"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>'
+	});
 </aui:script>

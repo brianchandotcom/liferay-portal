@@ -165,7 +165,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 </div>
 
 <aui:script require="metal-dom/src/all/dom as dom">
-	const layoutPageTemplateEntries = document.getElementById('<portlet:namespace />layoutPageTemplateEntries');
+	const layoutPageTemplateEntries = document.getElementById(
+		'<portlet:namespace />layoutPageTemplateEntries'
+	);
 
 	const addLayoutActionOptionQueryClickHandler = dom.delegate(
 		layoutPageTemplateEntries,
@@ -174,22 +176,20 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		function(event) {
 			const actionElement = event.delegateTarget;
 
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						destroyOnHide: true,
-						height: 480,
-						resizable: false,
-						width: 640
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
-					},
-					id: '<portlet:namespace />addLayoutDialog',
-					title: '<liferay-ui:message key="add-page" />',
-					uri: actionElement.dataset.addLayoutUrl
-				}
-			);
+			Liferay.Util.openWindow({
+				dialog: {
+					destroyOnHide: true,
+					height: 480,
+					resizable: false,
+					width: 640
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
+				id: '<portlet:namespace />addLayoutDialog',
+				title: '<liferay-ui:message key="add-page" />',
+				uri: actionElement.dataset.addLayoutUrl
+			});
 		}
 	);
 

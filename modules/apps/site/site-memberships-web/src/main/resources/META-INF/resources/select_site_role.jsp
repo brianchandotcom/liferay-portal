@@ -107,5 +107,8 @@ SelectSiteRolesDisplayContext selectSiteRolesDisplayContext = new SelectSiteRole
 </aui:form>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />fm', '<%= HtmlUtil.escapeJS(selectSiteRolesDisplayContext.getEventName()) %>');
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />fm',
+		'<%= HtmlUtil.escapeJS(selectSiteRolesDisplayContext.getEventName()) %>'
+	);
 </aui:script>

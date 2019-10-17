@@ -42,19 +42,16 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 		var resetButton = document.getElementById('<%= randomNamespace %>resetButton');
 
 		if (resetButton) {
-			resetButton.addEventListener(
-				'click',
-				function(event) {
-					<portlet:actionURL name="resetMergeFailCountAndMerge" var="portletURL">
-						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()) %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-						<portlet:param name="privateLayoutSet" value="<%= String.valueOf(layoutSet.isPrivateLayout()) %>" />
-					</portlet:actionURL>
+			resetButton.addEventListener('click', function(event) {
+				<portlet:actionURL name="resetMergeFailCountAndMerge" var="portletURL">
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()) %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+					<portlet:param name="privateLayoutSet" value="<%= String.valueOf(layoutSet.isPrivateLayout()) %>" />
+				</portlet:actionURL>
 
-					submitForm(document.hrefFm, '<%= portletURL.toString() %>');
-				}
-			);
+				submitForm(document.hrefFm, '<%= portletURL.toString() %>');
+			});
 		}
 	</script>
 </c:if>

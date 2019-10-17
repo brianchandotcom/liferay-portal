@@ -398,19 +398,18 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script require='<%= npmResolvedPackageName + "/wiki/js/WikiPortlet.es as WikiPortletJs" %>'>
-	new WikiPortletJs.default(
-		{
-			constants: {
-				'ACTION_PUBLISH': '<%= WorkflowConstants.ACTION_PUBLISH %>',
-				'ACTION_SAVE_DRAFT': '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
-				'CMD': '<%= Constants.CMD %>'
-			},
-			currentAction: '<%= ((wikiPage == null) || wikiPage.isNew()) ? Constants.ADD : Constants.UPDATE %>',
-			namespace: '<portlet:namespace />',
-			renderUrl: '<%= editPageRenderURL %>',
-			rootNode: '#<portlet:namespace />wikiEditPageContainer'
-		}
-	);
+	new WikiPortletJs.default({
+		constants: {
+			ACTION_PUBLISH: '<%= WorkflowConstants.ACTION_PUBLISH %>',
+			ACTION_SAVE_DRAFT: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
+			CMD: '<%= Constants.CMD %>'
+		},
+		currentAction:
+			'<%= ((wikiPage == null) || wikiPage.isNew()) ? Constants.ADD : Constants.UPDATE %>',
+		namespace: '<portlet:namespace />',
+		renderUrl: '<%= editPageRenderURL %>',
+		rootNode: '#<portlet:namespace />wikiEditPageContainer'
+	});
 </aui:script>
 
 <%

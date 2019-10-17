@@ -47,14 +47,15 @@
 </aui:fieldset>
 
 <aui:script use="aui-base">
-	var usePortalTimeZoneCheckbox = A.one('#<portlet:namespace />usePortalTimeZone');
+	var usePortalTimeZoneCheckbox = A.one(
+		'#<portlet:namespace />usePortalTimeZone'
+	);
 
 	if (usePortalTimeZoneCheckbox) {
-		usePortalTimeZoneCheckbox.on(
-			'change',
-			function(event) {
-				document.<portlet:namespace />fm.<portlet:namespace />timeZoneId.disabled = usePortalTimeZoneCheckbox.attr('checked');
-			}
-		);
+		usePortalTimeZoneCheckbox.on('change', function(event) {
+			document.<portlet:namespace />fm.<portlet:namespace />timeZoneId.disabled = usePortalTimeZoneCheckbox.attr(
+				'checked'
+			);
+		});
 	}
 </aui:script>

@@ -90,16 +90,20 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 	var data = [];
 
 	for (var i = 0; i < categories.length; i++) {
-		data.push(
-			{
-				category: categories[i],
-				values: values[i]
-			}
-		);
+		data.push({
+			category: categories[i],
+			values: values[i]
+		});
 	}
 
 	var tooltip = {
-		markerLabelFunction: function(categoryItem, valueItem, itemIndex, series, seriesIndex) {
+		markerLabelFunction: function(
+			categoryItem,
+			valueItem,
+			itemIndex,
+			series,
+			seriesIndex
+		) {
 			return valueItem.value;
 		},
 
@@ -113,7 +117,9 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 		}
 	};
 
-	var chartContainer = A.one('#groupStatisticsChart<%= displayActivityCounterNameIndex %>');
+	var chartContainer = A.one(
+		'#groupStatisticsChart<%= displayActivityCounterNameIndex %>'
+	);
 
 	var getContainerWidth = function(container) {
 		return container.width() * 0.7;
@@ -123,46 +129,48 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 
 	chartContainer.setStyle('height', containerWidth);
 
-	var chart = new A.Chart(
-		{
-			dataProvider: data,
-			height: containerWidth,
-			seriesCollection: [
-				{
-					categoryKey: 'category',
-					styles: {
-						border: {
-							alpha: 0.8,
-							colors: new Array(9).join('#333,').split(','),
-							weight: 1
-						},
-						fill: {
-							colors: ['<%= StringUtil.merge(_BACKGROUND_COLORS, "', '") %>']
-						}
+	var chart = new A.Chart({
+		dataProvider: data,
+		height: containerWidth,
+		seriesCollection: [
+			{
+				categoryKey: 'category',
+				styles: {
+					border: {
+						alpha: 0.8,
+						colors: new Array(9).join('#333,').split(','),
+						weight: 1
 					},
-					valueKey: 'values'
-				}
-			],
-			tooltip: tooltip,
-			type: 'pie',
-			width: containerWidth
-		}
-	).render(chartContainer);
-
-	Liferay.after(
-		['portletMoved', 'liferaypanel:collapse'],
-		function(event) {
-			var width = getContainerWidth(chartContainer);
-
-			if (width && (event.type == 'portletMoved' && event.portletId == '<%= portletDisplay.getId() %>') ||
-				(event.type == 'liferaypanel:collapse' && event.panelId == 'groupStatisticsPanel<%= displayActivityCounterNameIndex %>')) {
-
-				chart.set('width', width);
-
-				chartContainer.setStyle('height', width);
+					fill: {
+						colors: [
+							'<%= StringUtil.merge(_BACKGROUND_COLORS, "', '") %>'
+						]
+					}
+				},
+				valueKey: 'values'
 			}
+		],
+		tooltip: tooltip,
+		type: 'pie',
+		width: containerWidth
+	}).render(chartContainer);
+
+	Liferay.after(['portletMoved', 'liferaypanel:collapse'], function(event) {
+		var width = getContainerWidth(chartContainer);
+
+		if (
+			(width &&
+				(event.type == 'portletMoved' &&
+					event.portletId == '<%= portletDisplay.getId() %>')) ||
+			(event.type == 'liferaypanel:collapse' &&
+				event.panelId ==
+					'groupStatisticsPanel<%= displayActivityCounterNameIndex %>')
+		) {
+			chart.set('width', width);
+
+			chartContainer.setStyle('height', width);
 		}
-	);
+	});
 </aui:script>
 
 <%!

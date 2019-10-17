@@ -37,7 +37,11 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 </portlet:actionURL>
 
 <aui:script>
-	if (confirm('<%= UnicodeLanguageUtil.get(request, "all-personal-data-associated-with-this-users-applications-has-been-deleted-or-anonymized") %>')) {
+	if (
+		confirm(
+			'<%= UnicodeLanguageUtil.get(request, "all-personal-data-associated-with-this-users-applications-has-been-deleted-or-anonymized") %>'
+		)
+	) {
 		Liferay.Util.navigate('<%= deleteUserURL.toString() %>');
 	}
 </aui:script>

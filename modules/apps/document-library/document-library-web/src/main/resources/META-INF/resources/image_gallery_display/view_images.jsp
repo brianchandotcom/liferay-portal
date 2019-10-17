@@ -173,122 +173,118 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 <aui:script use="aui-image-viewer,aui-image-viewer-media">
 	var viewportRegion = A.getDoc().get('viewportRegion');
 
-	var maxHeight = (viewportRegion.height);
-	var maxWidth = (viewportRegion.width);
+	var maxHeight = viewportRegion.height;
+	var maxWidth = viewportRegion.width;
 
 	var playingMediaIndex = -1;
 
-	var imageViewer = new A.ImageViewer(
-		{
-			after: {
-				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
-					load: function(event) {
-						var instance = this;
+	var imageViewer = new A.ImageViewer({
+		after: {
+			<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+				load: function(event) {
+					var instance = this;
 
-						var currentLink = instance.getCurrentLink();
+					var currentLink = instance.getCurrentLink();
 
-						var thumbnailId = currentLink.attr('thumbnailId');
+					var thumbnailId = currentLink.attr('thumbnailId');
 
-						var actions = instance._actions;
+					var actions = instance._actions;
 
-						if (actions) {
-							var defaultAction = A.one('#<portlet:namespace />buttonsContainer_' + thumbnailId);
+					if (actions) {
+						var defaultAction = A.one(
+							'#<portlet:namespace />buttonsContainer_' + thumbnailId
+						);
 
-							actions.empty();
+						actions.empty();
 
-							var action = defaultAction.clone().show();
+						var action = defaultAction.clone().show();
 
-							actions.append(action);
-						}
+						actions.append(action);
 					}
-				</c:if>
-			},
-			delay: 5000,
-			infoTemplate: '<%= LanguageUtil.format(request, "image-x-of-x", new String[] {"{current}", "{total}"}, false) %>',
-			links: '#<portlet:namespace />imageGalleryAssetInfo .image-link.preview',
-			maxHeight: maxHeight,
-			maxWidth: maxWidth,
-			on: {
-				'currentIndexChange': function() {
-					if (playingMediaIndex != -1) {
-						Liferay.fire('<portlet:namespace />ImageViewer:currentIndexChange');
+				}
+			</c:if>
+		},
+		delay: 5000,
+		infoTemplate:
+			'<%= LanguageUtil.format(request, "image-x-of-x", new String[] {"{current}", "{total}"}, false) %>',
+		links: '#<portlet:namespace />imageGalleryAssetInfo .image-link.preview',
+		maxHeight: maxHeight,
+		maxWidth: maxWidth,
+		on: {
+			currentIndexChange: function() {
+				if (playingMediaIndex != -1) {
+					Liferay.fire(
+						'<portlet:namespace />ImageViewer:currentIndexChange'
+					);
 
-						playingMediaIndex = -1;
+					playingMediaIndex = -1;
+				}
+			},
+			visibleChange: function(event) {
+				if (!event.newVal && playingMediaIndex != -1) {
+					Liferay.fire('<portlet:namespace />ImageViewer:close');
+
+					playingMediaIndex = -1;
+				}
+			}
+		},
+		playingLabel: '(<liferay-ui:message key="playing" />)',
+		plugins: [
+			{
+				cfg: {
+					'providers.liferay': {
+						container:
+							'<iframe frameborder="0" height="{height}" scrolling="no" src="<%= embeddedPlayerURL.toString() %>&<portlet:namespace />thumbnailURL={thumbnailURL}&<portlet:namespace />mp3PreviewURL={mp3PreviewURL}&<portlet:namespace />mp4PreviewURL={mp4PreviewURL}&<portlet:namespace />oggPreviewURL={oggPreviewURL}&<portlet:namespace />ogvPreviewURL={ogvPreviewURL}" width="{width}"></iframe>',
+						matcher: /(.+)&mediaGallery=1/,
+						mediaRegex: /(.+)&mediaGallery=1/,
+						options: A.merge(A.MediaViewerPlugin.DEFAULT_OPTIONS, {
+							mp3PreviewURL: '',
+							mp4PreviewURL: '',
+							oggPreviewURL: '',
+							ogvPreviewURL: '',
+							thumbnailURL: ''
+						})
 					}
 				},
-				'visibleChange': function(event) {
-					if (!event.newVal && playingMediaIndex != -1) {
-						Liferay.fire('<portlet:namespace />ImageViewer:close');
-
-						playingMediaIndex = -1;
-					}
-				}
-			},
-			playingLabel: '(<liferay-ui:message key="playing" />)',
-			plugins: [
-				{
-					cfg: {
-						'providers.liferay': {
-							container: '<iframe frameborder="0" height="{height}" scrolling="no" src="<%= embeddedPlayerURL.toString() %>&<portlet:namespace />thumbnailURL={thumbnailURL}&<portlet:namespace />mp3PreviewURL={mp3PreviewURL}&<portlet:namespace />mp4PreviewURL={mp4PreviewURL}&<portlet:namespace />oggPreviewURL={oggPreviewURL}&<portlet:namespace />ogvPreviewURL={ogvPreviewURL}" width="{width}"></iframe>',
-							matcher: /(.+)&mediaGallery=1/,
-							mediaRegex: /(.+)&mediaGallery=1/,
-							options: A.merge(
-								A.MediaViewerPlugin.DEFAULT_OPTIONS,
-								{
-									'mp3PreviewURL': '',
-									'mp4PreviewURL': '',
-									'oggPreviewURL': '',
-									'ogvPreviewURL': '',
-									'thumbnailURL': ''
-								}
-							)
-						}
-					},
-					fn: A.MediaViewerPlugin
-				}
-			],
-			zIndex: ++Liferay.zIndex.WINDOW
-		}
-	);
+				fn: A.MediaViewerPlugin
+			}
+		],
+		zIndex: ++Liferay.zIndex.WINDOW
+	});
 
 	imageViewer.TPL_CLOSE = imageViewer.TPL_CLOSE.replace(
 		/<\s*span[^>]*>(.*?)<\s*\/\s*span>/,
 		Liferay.Util.getLexiconIconTpl('times', 'icon-monospaced')
 	);
 
-	var TPL_PLAYER_PAUSE = '<span>' + Liferay.Util.getLexiconIconTpl('pause', 'glyphicon') + '</span>';
-	var TPL_PLAYER_PLAY = '<span>' + Liferay.Util.getLexiconIconTpl('play', 'glyphicon') + '</span>';
+	var TPL_PLAYER_PAUSE =
+		'<span>' + Liferay.Util.getLexiconIconTpl('pause', 'glyphicon') + '</span>';
+	var TPL_PLAYER_PLAY =
+		'<span>' + Liferay.Util.getLexiconIconTpl('play', 'glyphicon') + '</span>';
 
 	imageViewer.TPL_PLAYER = TPL_PLAYER_PLAY;
 
 	imageViewer._syncPlaying = function() {
 		if (this.get('playing')) {
 			this._player.setHTML(TPL_PLAYER_PAUSE);
-		}
-		else {
+		} else {
 			this._player.setHTML(TPL_PLAYER_PLAY);
 		}
-	}
+	};
 
 	imageViewer.render();
 
-	Liferay.on(
-		'<portlet:namespace />Video:play',
-		function() {
-			imageViewer.pause();
+	Liferay.on('<portlet:namespace />Video:play', function() {
+		imageViewer.pause();
 
-			playingMediaIndex = this.get('currentIndex');
-		}
-	);
+		playingMediaIndex = this.get('currentIndex');
+	});
 
-	Liferay.on(
-		'<portlet:namespace />Audio:play',
-		function() {
-			imageViewer.pause();
+	Liferay.on('<portlet:namespace />Audio:play', function() {
+		imageViewer.pause();
 
-			playingMediaIndex = this.get('currentIndex');
-		}
-	);
+		playingMediaIndex = this.get('currentIndex');
+	});
 
 	var onClickLinksDefaultFn = imageViewer._onClickLinks;
 
@@ -298,5 +294,8 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 		}
 	};
 
-	imageViewer.set('links', '#<portlet:namespace />imageGalleryAssetInfo .image-link.preview');
+	imageViewer.set(
+		'links',
+		'#<portlet:namespace />imageGalleryAssetInfo .image-link.preview'
+	);
 </aui:script>

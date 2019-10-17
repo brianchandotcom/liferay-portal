@@ -79,26 +79,32 @@
 				%>
 
 				<aui:script use="liferay-social-activity-admin">
-					new Liferay.Portlet.SocialActivity.Admin(
-						{
-							activityDefinitionLanguageKeys: {
-								<%= StringUtil.merge(activityDefinitionLanguageKeys) %>
-							},
-							counterSettings: {
+					new Liferay.Portlet.SocialActivity.Admin({
+						activityDefinitionLanguageKeys: {
+							<%= StringUtil.merge(activityDefinitionLanguageKeys) %>
+						},
+						counterSettings: {
 
-								<%
-								SocialActivityGroupServiceConfiguration socialActivityGroupServiceConfiguration = ConfigurationProviderUtil.getConfiguration(SocialActivityGroupServiceConfiguration.class, new CompanyServiceSettingsLocator(company.getCompanyId(), "com.liferay.social.activity.configuration.SocialActivityGroupServiceConfiguration"));
-								%>
+							<%
+							SocialActivityGroupServiceConfiguration socialActivityGroupServiceConfiguration = ConfigurationProviderUtil.getConfiguration(SocialActivityGroupServiceConfiguration.class, new CompanyServiceSettingsLocator(company.getCompanyId(), "com.liferay.social.activity.configuration.SocialActivityGroupServiceConfiguration"));
+							%>
 
-								contributionIncrements: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.contributionIncrements()) %>],
-								contributionLimitValues: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.contributionLimitValues()) %>],
-								participationIncrements: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.participationIncrements()) %>],
-								participationLimitValues: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.participationLimitValues()) %>]
-							},
-							namespace: '<portlet:namespace />',
-							portletId: '<%= portletDisplay.getId() %>'
-						}
-					);
+							contributionIncrements: [
+								<%= StringUtil.merge(socialActivityGroupServiceConfiguration.contributionIncrements()) %>
+							],
+							contributionLimitValues: [
+								<%= StringUtil.merge(socialActivityGroupServiceConfiguration.contributionLimitValues()) %>
+							],
+							participationIncrements: [
+								<%= StringUtil.merge(socialActivityGroupServiceConfiguration.participationIncrements()) %>
+							],
+							participationLimitValues: [
+								<%= StringUtil.merge(socialActivityGroupServiceConfiguration.participationLimitValues()) %>
+							]
+						},
+						namespace: '<portlet:namespace />',
+						portletId: '<%= portletDisplay.getId() %>'
+					});
 				</aui:script>
 			</aui:form>
 		</div>

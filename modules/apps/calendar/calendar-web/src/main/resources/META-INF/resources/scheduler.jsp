@@ -38,7 +38,9 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 <%@ include file="/event_recorder.jspf" %>
 
 <aui:script use="aui-toggler,json,liferay-calendar-list,liferay-scheduler">
-	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
+	var calendarContainer = Liferay.component(
+		'<portlet:namespace />calendarContainer'
+	);
 
 	var remoteServices = Liferay.component('<portlet:namespace />remoteServices');
 
@@ -48,91 +50,86 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 	};
 
 	<c:if test="<%= !hideDayView %>">
-		window.<portlet:namespace />dayView = new Liferay.SchedulerDayView(
-			{
-				headerViewConfig: {
-					eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
-					strings: showMoreStrings
-				},
-				height: 700,
-				isoTime: <%= useIsoTimeFormat %>,
-				readOnly: <%= readOnly %>,
-				strings: {
-					allDay: '<liferay-ui:message key="all-day" />'
-				}
+		window.<portlet:namespace />dayView = new Liferay.SchedulerDayView({
+			headerViewConfig: {
+				eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
+				strings: showMoreStrings
+			},
+			height: 700,
+			isoTime: <%= useIsoTimeFormat %>,
+			readOnly: <%= readOnly %>,
+			strings: {
+				allDay: '<liferay-ui:message key="all-day" />'
 			}
-		);
+		});
 	</c:if>
 
 	<c:if test="<%= !hideWeekView %>">
-		window.<portlet:namespace />weekView = new Liferay.SchedulerWeekView(
-			{
-				headerViewConfig: {
-					displayDaysInterval: A.DataType.DateMath.WEEK_LENGTH,
-					eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
-					strings: showMoreStrings
-				},
-				height: 700,
-				isoTime: <%= useIsoTimeFormat %>,
-				readOnly: <%= readOnly %>,
-				strings: {
-					allDay: '<liferay-ui:message key="all-day" />'
-				}
+		window.<portlet:namespace />weekView = new Liferay.SchedulerWeekView({
+			headerViewConfig: {
+				displayDaysInterval: A.DataType.DateMath.WEEK_LENGTH,
+				eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
+				strings: showMoreStrings
+			},
+			height: 700,
+			isoTime: <%= useIsoTimeFormat %>,
+			readOnly: <%= readOnly %>,
+			strings: {
+				allDay: '<liferay-ui:message key="all-day" />'
 			}
-		);
+		});
 	</c:if>
 
 	<c:if test="<%= !hideMonthView %>">
-		window.<portlet:namespace />monthView = new Liferay.SchedulerMonthView(
-			{
-				eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
-				height: 'auto',
-				isoTime: <%= useIsoTimeFormat %>,
-				readOnly: <%= readOnly %>,
-				strings: showMoreStrings
-			}
-		);
+		window.<portlet:namespace />monthView = new Liferay.SchedulerMonthView({
+			eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
+			height: 'auto',
+			isoTime: <%= useIsoTimeFormat %>,
+			readOnly: <%= readOnly %>,
+			strings: showMoreStrings
+		});
 	</c:if>
 
 	<c:if test="<%= !hideAgendaView %>">
-		window.<portlet:namespace />agendaView = new Liferay.SchedulerAgendaView(
-			{
-				daysCount: 31,
-				height: 700,
-				isoTime: <%= useIsoTimeFormat %>,
-				readOnly: <%= readOnly %>,
-				strings: {
-					noEvents: '<liferay-ui:message key="no-events" />'
-				}
+		window.<portlet:namespace />agendaView = new Liferay.SchedulerAgendaView({
+			daysCount: 31,
+			height: 700,
+			isoTime: <%= useIsoTimeFormat %>,
+			readOnly: <%= readOnly %>,
+			strings: {
+				noEvents: '<liferay-ui:message key="no-events" />'
 			}
-		);
+		});
 	</c:if>
 
 	<c:if test="<%= !readOnly && (defaultCalendar != null) %>">
 		var width = Math.min(Liferay.Util.getWindowWidth(), 550);
 
-		window.<portlet:namespace />eventRecorder = new Liferay.SchedulerEventRecorder(
-			{
-				bodyTemplate: new A.Template(A.one('#<portlet:namespace />eventRecorderBodyTpl').html()),
-				calendarContainer: calendarContainer,
-				calendarId: <%= defaultCalendar.getCalendarId() %>,
-				color: '<%= ColorUtil.toHexString(defaultCalendar.getColor()) %>',
-				duration: <%= defaultDuration %>,
-				editCalendarBookingURL: '<%= HtmlUtil.escapeJS(editCalendarBookingURL) %>',
-				headerTemplate: new A.Template(A.one('#<portlet:namespace />eventRecorderHeaderTpl').html()),
-				permissionsCalendarBookingURL: '<%= HtmlUtil.escapeJS(permissionsCalendarBookingURL) %>',
-				popover: {
-					width: width
-				},
-				portletNamespace: '<portlet:namespace />',
-				remoteServices: remoteServices,
-				showHeader: <%= showSchedulerHeader %>,
-				strings: {
-					'description-hint': '<liferay-ui:message key="description-hint" />'
-				},
-				viewCalendarBookingURL: '<%= HtmlUtil.escapeJS(viewCalendarBookingURL) %>'
-			}
-		);
+		window.<portlet:namespace />eventRecorder = new Liferay.SchedulerEventRecorder({
+			bodyTemplate: new A.Template(
+				A.one('#<portlet:namespace />eventRecorderBodyTpl').html()
+			),
+			calendarContainer: calendarContainer,
+			calendarId: <%= defaultCalendar.getCalendarId() %>,
+			color: '<%= ColorUtil.toHexString(defaultCalendar.getColor()) %>',
+			duration: <%= defaultDuration %>,
+			editCalendarBookingURL: '<%= HtmlUtil.escapeJS(editCalendarBookingURL) %>',
+			headerTemplate: new A.Template(
+				A.one('#<portlet:namespace />eventRecorderHeaderTpl').html()
+			),
+			permissionsCalendarBookingURL:
+				'<%= HtmlUtil.escapeJS(permissionsCalendarBookingURL) %>',
+			popover: {
+				width: width
+			},
+			portletNamespace: '<portlet:namespace />',
+			remoteServices: remoteServices,
+			showHeader: <%= showSchedulerHeader %>,
+			strings: {
+				'description-hint': '<liferay-ui:message key="description-hint" />'
+			},
+			viewCalendarBookingURL: '<%= HtmlUtil.escapeJS(viewCalendarBookingURL) %>'
+		});
 	</c:if>
 
 	var views = [];
@@ -153,74 +150,80 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		views.push(window.<portlet:namespace />agendaView);
 	</c:if>
 
-	window.<portlet:namespace />scheduler = new Liferay.Scheduler(
-		{
-			activeView: window['<portlet:namespace /><%= HtmlUtil.escapeJS(activeView) %>View'],
-			boundingBox: '#<portlet:namespace />scheduler',
-			calendarContainer: calendarContainer,
+	window.<portlet:namespace />scheduler = new Liferay.Scheduler({
+		activeView:
+			window['<portlet:namespace /><%= HtmlUtil.escapeJS(activeView) %>View'],
+		boundingBox: '#<portlet:namespace />scheduler',
+		calendarContainer: calendarContainer,
 
-			<%
-			java.util.Calendar nowJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
+		<%
+		java.util.Calendar nowJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
 
-			int nowYear = nowJCalendar.get(java.util.Calendar.YEAR);
-			int nowMonth = nowJCalendar.get(java.util.Calendar.MONTH);
-			int nowDay = nowJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
-			int nowHour = nowJCalendar.get(java.util.Calendar.HOUR_OF_DAY);
-			int nowMinute = nowJCalendar.get(java.util.Calendar.MINUTE);
-			%>
+		int nowYear = nowJCalendar.get(java.util.Calendar.YEAR);
+		int nowMonth = nowJCalendar.get(java.util.Calendar.MONTH);
+		int nowDay = nowJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
+		int nowHour = nowJCalendar.get(java.util.Calendar.HOUR_OF_DAY);
+		int nowMinute = nowJCalendar.get(java.util.Calendar.MINUTE);
+		%>
 
-			currentTime: new Date(<%= nowYear %>, <%= nowMonth %>, <%= nowDay %>, <%= nowHour %>, <%= nowMinute %>),
-			currentTimeFn: A.bind(remoteServices.getCurrentTime, remoteServices),
+		currentTime: new Date(
+			<%= nowYear %>,
+			<%= nowMonth %>,
+			<%= nowDay %>,
+			<%= nowHour %>,
+			<%= nowMinute %>
+		),
+		currentTimeFn: A.bind(remoteServices.getCurrentTime, remoteServices),
 
-			<%
-			java.util.Calendar dateJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
+		<%
+		java.util.Calendar dateJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
 
-			dateJCalendar.setTimeInMillis(date);
+		dateJCalendar.setTimeInMillis(date);
 
-			int dateYear = dateJCalendar.get(java.util.Calendar.YEAR);
-			int dateMonth = dateJCalendar.get(java.util.Calendar.MONTH);
-			int dateDay = dateJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
-			%>
+		int dateYear = dateJCalendar.get(java.util.Calendar.YEAR);
+		int dateMonth = dateJCalendar.get(java.util.Calendar.MONTH);
+		int dateDay = dateJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
+		%>
 
-			date: new Date(<%= dateYear %>, <%= dateMonth %>, <%= dateDay %>),
+		date: new Date(<%= dateYear %>, <%= dateMonth %>, <%= dateDay %>),
 
-			<c:if test="<%= !themeDisplay.isSignedIn() || ((defaultCalendar != null) && !CalendarPermission.contains(themeDisplay.getPermissionChecker(), defaultCalendar, CalendarActionKeys.MANAGE_BOOKINGS)) %>">
-				disabled: true,
-			</c:if>
+		<c:if test="<%= !themeDisplay.isSignedIn() || ((defaultCalendar != null) && !CalendarPermission.contains(themeDisplay.getPermissionChecker(), defaultCalendar, CalendarActionKeys.MANAGE_BOOKINGS)) %>">
+			disabled: true,
+		</c:if>
 
-			eventRecorder: window.<portlet:namespace />eventRecorder,
-			eventsPerPage: <%= eventsPerPage %>,
-			filterCalendarBookings: window['<%= HtmlUtil.escapeJS(filterCalendarBookings) %>'],
-			firstDayOfWeek: <%= weekStartsOn %>,
-			items: A.Object.values(calendarContainer.get('availableCalendars')),
-			maxDaysDisplayed: <%= maxDaysDisplayed %>,
-			portletNamespace: '<portlet:namespace />',
-			preventPersistence: <%= preventPersistence %>,
-			remoteServices: remoteServices,
-			render: true,
-			showAddEventBtn: <%= showAddEventBtn %>,
-			showHeader: <%= showSchedulerHeader %>,
-			strings: {
-				agenda: '<liferay-ui:message key="agenda" />',
-				day: '<liferay-ui:message key="day" />',
-				month: '<liferay-ui:message key="month" />',
-				today: '<liferay-ui:message key="today" />',
-				week: '<liferay-ui:message key="week" />',
-				year: '<liferay-ui:message key="year" />'
-			},
+		eventRecorder: window.<portlet:namespace />eventRecorder,
+		eventsPerPage: <%= eventsPerPage %>,
+		filterCalendarBookings:
+			window['<%= HtmlUtil.escapeJS(filterCalendarBookings) %>'],
+		firstDayOfWeek: <%= weekStartsOn %>,
+		items: A.Object.values(calendarContainer.get('availableCalendars')),
+		maxDaysDisplayed: <%= maxDaysDisplayed %>,
+		portletNamespace: '<portlet:namespace />',
+		preventPersistence: <%= preventPersistence %>,
+		remoteServices: remoteServices,
+		render: true,
+		showAddEventBtn: <%= showAddEventBtn %>,
+		showHeader: <%= showSchedulerHeader %>,
+		strings: {
+			agenda: '<liferay-ui:message key="agenda" />',
+			day: '<liferay-ui:message key="day" />',
+			month: '<liferay-ui:message key="month" />',
+			today: '<liferay-ui:message key="today" />',
+			week: '<liferay-ui:message key="week" />',
+			year: '<liferay-ui:message key="year" />'
+		},
 
-			<%
-			java.util.Calendar todayJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
+		<%
+		java.util.Calendar todayJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
 
-			int todayYear = todayJCalendar.get(java.util.Calendar.YEAR);
-			int todayMonth = todayJCalendar.get(java.util.Calendar.MONTH);
-			int todayDay = todayJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
-			%>
+		int todayYear = todayJCalendar.get(java.util.Calendar.YEAR);
+		int todayMonth = todayJCalendar.get(java.util.Calendar.MONTH);
+		int todayDay = todayJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
+		%>
 
-			todayDate: new Date(<%= todayYear %>, <%= todayMonth %>, <%= todayDay %>),
-			views: views
-		}
-	);
+		todayDate: new Date(<%= todayYear %>, <%= todayMonth %>, <%= todayDay %>),
+		views: views
+	});
 
 	var destroySchedulers = function(event) {
 		if (event.portletId === '<%= portletDisplay.getId() %>') {

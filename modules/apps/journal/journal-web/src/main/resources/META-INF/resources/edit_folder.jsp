@@ -150,49 +150,49 @@ renderResponse.setTitle(title);
 						<aui:button name="selectFolderButton" value="select" />
 
 						<aui:script use="liferay-item-selector-dialog">
-							var selectFolderButton = document.getElementById('<portlet:namespace />selectFolderButton');
+							var selectFolderButton = document.getElementById(
+								'<portlet:namespace />selectFolderButton'
+							);
 
 							if (selectFolderButton) {
-								selectFolderButton.addEventListener(
-									'click',
-									function(event) {
-										event.preventDefault();
+								selectFolderButton.addEventListener('click', function(event) {
+									event.preventDefault();
 
-										var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-											{
-												eventName: '<portlet:namespace />selectFolder',
-												on: {
-													selectedItemChange: function(event) {
-														var selectedItem = event.newVal;
+									var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+										eventName: '<portlet:namespace />selectFolder',
+										on: {
+											selectedItemChange: function(event) {
+												var selectedItem = event.newVal;
 
-														if (selectedItem) {
-															var folderData = {
-																idString: 'parentFolderId',
-																idValue: selectedItem.folderId,
-																nameString: 'parentFolderName',
-																nameValue: selectedItem.folderName
-															};
+												if (selectedItem) {
+													var folderData = {
+														idString: 'parentFolderId',
+														idValue: selectedItem.folderId,
+														nameString: 'parentFolderName',
+														nameValue: selectedItem.folderName
+													};
 
-															Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-														}
-													}
-												},
-												'strings.add': '<liferay-ui:message key="done" />',
-												title: '<liferay-ui:message arguments="folder" key="select-x" />',
-
-												<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-													<portlet:param name="mvcPath" value="/select_folder.jsp" />
-													<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-													<portlet:param name="parentFolderId" value="<%= String.valueOf(parentFolderId) %>" />
-												</portlet:renderURL>
-
-												url: '<%= selectFolderURL.toString() %>'
+													Liferay.Util.selectFolder(
+														folderData,
+														'<portlet:namespace />'
+													);
+												}
 											}
-										);
+										},
+										'strings.add': '<liferay-ui:message key="done" />',
+										title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
-										itemSelectorDialog.open();
-									}
-								);
+										<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+											<portlet:param name="mvcPath" value="/select_folder.jsp" />
+											<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+											<portlet:param name="parentFolderId" value="<%= String.valueOf(parentFolderId) %>" />
+										</portlet:renderURL>
+
+										url: '<%= selectFolderURL.toString() %>'
+									});
+
+									itemSelectorDialog.open();
+								});
 							}
 						</aui:script>
 
@@ -387,45 +387,60 @@ renderResponse.setTitle(title);
 </liferay-util:buffer>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />ddmStructuresSearchContainer'
+	);
 
-	var selectDDMStructureButton = document.getElementById('<portlet:namespace />selectDDMStructure');
+	var selectDDMStructureButton = document.getElementById(
+		'<portlet:namespace />selectDDMStructure'
+	);
 
 	if (selectDDMStructureButton) {
-		selectDDMStructureButton.addEventListener(
-			'click',
-			function(event) {
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							modal: true
-						},
-						eventName: '<portlet:namespace />selectDDMStructure',
-						title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>'
+		selectDDMStructureButton.addEventListener('click', function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						modal: true
 					},
-					function(event) {
-						var ddmStructureLink = '<a class="modify-link" data-rowId="' + event.ddmstructureid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
+					eventName: '<portlet:namespace />selectDDMStructure',
+					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
+					uri:
+						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>'
+				},
+				function(event) {
+					var ddmStructureLink =
+						'<a class="modify-link" data-rowId="' +
+						event.ddmstructureid +
+						'" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
 
-						<c:choose>
-							<c:when test="<%= workflowEnabled %>">
-								var workflowDefinitions = '<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
+					<c:choose>
+						<c:when test="<%= workflowEnabled %>">
+							var workflowDefinitions =
+								'<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
 
-								workflowDefinitions = workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE/g, 'workflowDefinition' + event.ddmstructureid);
+							workflowDefinitions = workflowDefinitions.replace(
+								/LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE/g,
+								'workflowDefinition' + event.ddmstructureid
+							);
 
-								searchContainer.addRow([event.name, workflowDefinitions, ddmStructureLink], event.ddmstructureid);
-							</c:when>
-							<c:otherwise>
-								searchContainer.addRow([event.name, ddmStructureLink], event.ddmstructureid);
-							</c:otherwise>
-						</c:choose>
+							searchContainer.addRow(
+								[event.name, workflowDefinitions, ddmStructureLink],
+								event.ddmstructureid
+							);
+						</c:when>
+						<c:otherwise>
+							searchContainer.addRow(
+								[event.name, ddmStructureLink],
+								event.ddmstructureid
+							);
+						</c:otherwise>
+					</c:choose>
 
-						searchContainer.updateDataStore();
-					}
-				);
-			}
-		);
+					searchContainer.updateDataStore();
+				}
+			);
+		});
 	}
 
 	searchContainer.get('contentBox').delegate(
@@ -442,10 +457,21 @@ renderResponse.setTitle(title);
 </aui:script>
 
 <aui:script>
-	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeInherit', '', ['<portlet:namespace />restrictionTypeDefinedDiv', '<portlet:namespace />restrictionTypeWorkflowDiv']);
-	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeDefined', '<portlet:namespace />restrictionTypeDefinedDiv', '<portlet:namespace />restrictionTypeWorkflowDiv');
+	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeInherit', '', [
+		'<portlet:namespace />restrictionTypeDefinedDiv',
+		'<portlet:namespace />restrictionTypeWorkflowDiv'
+	]);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />restrictionTypeDefined',
+		'<portlet:namespace />restrictionTypeDefinedDiv',
+		'<portlet:namespace />restrictionTypeWorkflowDiv'
+	);
 
 	<c:if test="<%= !rootFolder %>">
-		Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeWorkflow', '<portlet:namespace />restrictionTypeWorkflowDiv', '<portlet:namespace />restrictionTypeDefinedDiv');
+		Liferay.Util.toggleRadio(
+			'<portlet:namespace />restrictionTypeWorkflow',
+			'<portlet:namespace />restrictionTypeWorkflowDiv',
+			'<portlet:namespace />restrictionTypeDefinedDiv'
+		);
 	</c:if>
 </aui:script>

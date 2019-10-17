@@ -132,7 +132,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 			var columnIds = form.querySelector('#<portlet:namespace />columnIds');
 
 			if (columnIds) {
-				var checkedIds = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+				var checkedIds = Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				);
 
 				columnIds.setAttribute('value', checkedIds);
 

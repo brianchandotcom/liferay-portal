@@ -74,34 +74,39 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 </c:if>
 
 <aui:script require="metal-dom/src/dom as dom">
-	var displayStyleSelect = document.getElementById('<portlet:namespace />displayStyle');
+	var displayStyleSelect = document.getElementById(
+		'<portlet:namespace />displayStyle'
+	);
 
 	function showHiddenFields() {
 		var displayStyle = displayStyleSelect.value;
 
 		var hiddenFields = document.querySelectorAll('.hidden-field');
 
-		Array.prototype.forEach.call(
-			hiddenFields,
-			function(field) {
-				var fieldContainer = dom.closest(field, '.form-group');
+		Array.prototype.forEach.call(hiddenFields, function(field) {
+			var fieldContainer = dom.closest(field, '.form-group');
 
-				if (fieldContainer) {
-					var fieldClassList = field.classList;
-					var fieldContainerClassList = fieldContainer.classList;
+			if (fieldContainer) {
+				var fieldClassList = field.classList;
+				var fieldContainerClassList = fieldContainer.classList;
 
-					if (displayStyle === 'full-content' && (fieldClassList.contains('show-asset-title') || fieldClassList.contains('show-context-link') || fieldClassList.contains('show-extra-info'))) {
-						fieldContainerClassList.remove('hide');
-					}
-					else if (displayStyle === 'abstracts' && fieldClassList.contains('abstract-length')) {
-						fieldContainerClassList.remove('hide');
-					}
-					else {
-						fieldContainerClassList.add('hide');
-					}
+				if (
+					displayStyle === 'full-content' &&
+					(fieldClassList.contains('show-asset-title') ||
+						fieldClassList.contains('show-context-link') ||
+						fieldClassList.contains('show-extra-info'))
+				) {
+					fieldContainerClassList.remove('hide');
+				} else if (
+					displayStyle === 'abstracts' &&
+					fieldClassList.contains('abstract-length')
+				) {
+					fieldContainerClassList.remove('hide');
+				} else {
+					fieldContainerClassList.add('hide');
 				}
 			}
-		);
+		});
 	}
 
 	showHiddenFields();

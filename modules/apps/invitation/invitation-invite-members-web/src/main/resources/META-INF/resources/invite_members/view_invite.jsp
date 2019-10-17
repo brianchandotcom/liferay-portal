@@ -130,17 +130,15 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 </div>
 
 <aui:script use="liferay-portlet-invite-members">
-	var portletInviteMembers = new Liferay.Portlet.InviteMembers(
-		{
-			availableUsersURL: '<portlet:resourceURL id="getAvailableUsers" />',
-			form: {
-				method: 'POST',
-				node: '#<portlet:namespace />fm'
-			},
-			namespace: '<portlet:namespace />',
-			rootNode: '#<portlet:namespace />inviteMembersContainer'
-		}
-	);
+	var portletInviteMembers = new Liferay.Portlet.InviteMembers({
+		availableUsersURL: '<portlet:resourceURL id="getAvailableUsers" />',
+		form: {
+			method: 'POST',
+			node: '#<portlet:namespace />fm'
+		},
+		namespace: '<portlet:namespace />',
+		rootNode: '#<portlet:namespace />inviteMembersContainer'
+	});
 
 	var destroyInstance = function(event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {

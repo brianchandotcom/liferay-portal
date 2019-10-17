@@ -59,7 +59,10 @@ long accountId = ParamUtil.getLong(request, "accountId");
 
 	<aui:script>
 		function <portlet:namespace />onIOFailure(event, id, obj) {
-			Liferay.Mail.setStatus('error', '<liferay-ui:message key="unable-to-connect-with-mail-server" />');
+			Liferay.Mail.setStatus(
+				'error',
+				'<liferay-ui:message key="unable-to-connect-with-mail-server" />'
+			);
 		}
 
 		function <portlet:namespace />onIOSuccess(event, id, obj) {
@@ -79,28 +82,28 @@ long accountId = ParamUtil.getLong(request, "accountId");
 			function(event) {
 				var A = AUI();
 
-				Liferay.Mail.setStatus('info', '<liferay-ui:message key="adding-folder" />', true);
-
-				var displayName = A.one('#<portlet:namespace />displayName').get('value');
-
-				A.io.request(
-					themeDisplay.getLayoutURL() + '/-/mail/add_folder',
-					{
-						data: Liferay.Util.ns(
-							'<portlet:namespace />',
-							{
-								accountId: <%= accountId %>,
-								displayName: displayName
-							}
-						),
-						dataType: 'JSON',
-						method: 'POST',
-						on: {
-							failure: <portlet:namespace />onIOFailure,
-							success: <portlet:namespace />onIOSuccess
-						}
-					}
+				Liferay.Mail.setStatus(
+					'info',
+					'<liferay-ui:message key="adding-folder" />',
+					true
 				);
+
+				var displayName = A.one('#<portlet:namespace />displayName').get(
+					'value'
+				);
+
+				A.io.request(themeDisplay.getLayoutURL() + '/-/mail/add_folder', {
+					data: Liferay.Util.ns('<portlet:namespace />', {
+						accountId: <%= accountId %>,
+						displayName: displayName
+					}),
+					dataType: 'JSON',
+					method: 'POST',
+					on: {
+						failure: <portlet:namespace />onIOFailure,
+						success: <portlet:namespace />onIOSuccess
+					}
+				});
 			},
 			['aui-io-deprecated']
 		);
@@ -111,29 +114,31 @@ long accountId = ParamUtil.getLong(request, "accountId");
 			function(id) {
 				var A = AUI();
 
-				if (!confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this-folder" />')) {
+				if (
+					!confirm(
+						'<liferay-ui:message key="are-you-sure-you-want-to-delete-this-folder" />'
+					)
+				) {
 					return;
 				}
 
-				Liferay.Mail.setStatus('info', '<liferay-ui:message key="deleting-folder" />', true);
-
-				A.io.request(
-					themeDisplay.getLayoutURL() + '/-/mail/delete_folder',
-					{
-						data: Liferay.Util.ns(
-							'<portlet:namespace />',
-							{
-								folderId: id
-							}
-						),
-						dataType: 'JSON',
-						method: 'POST',
-						on: {
-							failure: <portlet:namespace />onIOFailure,
-							success: <portlet:namespace />onIOSuccess
-						}
-					}
+				Liferay.Mail.setStatus(
+					'info',
+					'<liferay-ui:message key="deleting-folder" />',
+					true
 				);
+
+				A.io.request(themeDisplay.getLayoutURL() + '/-/mail/delete_folder', {
+					data: Liferay.Util.ns('<portlet:namespace />', {
+						folderId: id
+					}),
+					dataType: 'JSON',
+					method: 'POST',
+					on: {
+						failure: <portlet:namespace />onIOFailure,
+						success: <portlet:namespace />onIOSuccess
+					}
+				});
 			},
 			['aui-io-deprecated']
 		);
@@ -144,29 +149,23 @@ long accountId = ParamUtil.getLong(request, "accountId");
 			function(id) {
 				var A = AUI();
 
-				Liferay.Util.Window.getWindow(
-					{
-						dialog: {
-							centered: true,
-							cssClass: 'mail-dialog',
-							destroyOnClose: true,
-							modal: true,
-							width: 600
-						},
-						title: '<liferay-ui:message key="rename-folder" />'
-					}
-				).plug(
-					A.Plugin.IO,
-					{
-						data: Liferay.Util.ns(
-							'<portlet:namespace />',
-							{
-								folderId: id
-							}
-						),
+				Liferay.Util.Window.getWindow({
+					dialog: {
+						centered: true,
+						cssClass: 'mail-dialog',
+						destroyOnClose: true,
+						modal: true,
+						width: 600
+					},
+					title: '<liferay-ui:message key="rename-folder" />'
+				})
+					.plug(A.Plugin.IO, {
+						data: Liferay.Util.ns('<portlet:namespace />', {
+							folderId: id
+						}),
 						uri: themeDisplay.getLayoutURL() + '/-/mail/edit_folder'
-					}
-				).render();
+					})
+					.render();
 			},
 			['aui-io-deprecated', 'liferay-util-window']
 		);

@@ -42,30 +42,35 @@ int trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettings, reque
 </div>
 
 <script>
-	var trashEnabledCheckbox = document.getElementById('<portlet:namespace />trashEnabled');
+	var trashEnabledCheckbox = document.getElementById(
+		'<portlet:namespace />trashEnabled'
+	);
 
 	if (trashEnabledCheckbox) {
 		var trashEnabledDefault = trashEnabledCheckbox.checked;
 
-		trashEnabledCheckbox.addEventListener(
-			'change',
-			function(event) {
-				var trashEnabled = trashEnabledCheckbox.checked;
+		trashEnabledCheckbox.addEventListener('change', function(event) {
+			var trashEnabled = trashEnabledCheckbox.checked;
 
-				if (!trashEnabled && trashEnabledDefault) {
-					if (!confirm('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "disabling-the-recycle-bin-prevents-the-restoring-of-content-that-has-been-moved-to-the-recycle-bin")) %>')) {
-						trashEnabledCheckbox.checked = true;
+			if (!trashEnabled && trashEnabledDefault) {
+				if (
+					!confirm(
+						'<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "disabling-the-recycle-bin-prevents-the-restoring-of-content-that-has-been-moved-to-the-recycle-bin")) %>'
+					)
+				) {
+					trashEnabledCheckbox.checked = true;
 
-						trashEnabled = true;
-					}
-				}
-
-				var trashEntriesMaxAge = document.getElementById('<portlet:namespace />trashEntriesMaxAge');
-
-				if (trashEntriesMaxAge) {
-					Liferay.Util.toggleDisabled(trashEntriesMaxAge, !trashEnabled);
+					trashEnabled = true;
 				}
 			}
-		);
+
+			var trashEntriesMaxAge = document.getElementById(
+				'<portlet:namespace />trashEntriesMaxAge'
+			);
+
+			if (trashEntriesMaxAge) {
+				Liferay.Util.toggleDisabled(trashEntriesMaxAge, !trashEnabled);
+			}
+		});
 	}
 </script>

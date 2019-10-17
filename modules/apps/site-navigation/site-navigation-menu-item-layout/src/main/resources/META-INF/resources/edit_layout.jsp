@@ -88,48 +88,40 @@ if (selLayout != null) {
 	var layoutUuid = A.one('#<portlet:namespace />layoutUuid');
 	var privateLayout = A.one('#<portlet:namespace />privateLayout');
 
-	A.one('#<portlet:namespace />chooseLayout').on(
-		'click',
-		function(event) {
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<%= eventName %>',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
+	A.one('#<portlet:namespace />chooseLayout').on('click', function(event) {
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+			eventName: '<%= eventName %>',
+			on: {
+				selectedItemChange: function(event) {
+					var selectedItem = event.newVal;
 
-							if (selectedItem) {
-								groupId.val(selectedItem.groupId);
+					if (selectedItem) {
+						groupId.val(selectedItem.groupId);
 
-								layoutUuid.val(selectedItem.id);
+						layoutUuid.val(selectedItem.id);
 
-								privateLayout.val(selectedItem.privateLayout);
+						privateLayout.val(selectedItem.privateLayout);
 
-								layoutNameInput.html(selectedItem.name);
-								layoutNameInput.simulate('change');
+						layoutNameInput.html(selectedItem.name);
+						layoutNameInput.simulate('change');
 
-								layoutItemRemove.removeClass('hide');
-							}
-						}
-					},
-					'strings.add': '<liferay-ui:message key="done" />',
-					title: '<liferay-ui:message key="select-layout" />',
-					url: '<%= itemSelectorURL.toString() %>'
+						layoutItemRemove.removeClass('hide');
+					}
 				}
-			);
+			},
+			'strings.add': '<liferay-ui:message key="done" />',
+			title: '<liferay-ui:message key="select-layout" />',
+			url: '<%= itemSelectorURL.toString() %>'
+		});
 
-			itemSelectorDialog.open();
-		}
-	);
+		itemSelectorDialog.open();
+	});
 
-	layoutItemRemove.on(
-		'click',
-		function(event) {
-			layoutNameInput.html('<liferay-ui:message key="none" />');
+	layoutItemRemove.on('click', function(event) {
+		layoutNameInput.html('<liferay-ui:message key="none" />');
 
-			layoutUuid.val('');
+		layoutUuid.val('');
 
-			layoutItemRemove.addClass('hide');
-		}
-	);
+		layoutItemRemove.addClass('hide');
+	});
 </aui:script>

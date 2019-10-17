@@ -94,13 +94,10 @@
 
 <script>
 	function <portlet:namespace />searchKeywords(newKeywords) {
-		Liferay.Util.postForm(
-			document.<portlet:namespace />fm,
-			{
-				data: {
-					keywords: newKeywords
-				}
+		Liferay.Util.postForm(document.<portlet:namespace />fm, {
+			data: {
+				keywords: newKeywords
 			}
-		);
+		});
 	}
 </script>

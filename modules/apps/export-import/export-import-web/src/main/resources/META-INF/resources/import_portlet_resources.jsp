@@ -144,7 +144,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 										</ul>
 
 										<aui:script>
-											Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>', '<portlet:namespace />showChangeConfiguration<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
+											Liferay.Util.toggleBoxes(
+												'<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>',
+												'<portlet:namespace />showChangeConfiguration<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>'
+											);
 										</aui:script>
 									</li>
 								</ul>
@@ -255,7 +258,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 											</ul>
 
 											<aui:script>
-												Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
+												Liferay.Util.toggleBoxes(
+													'<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>',
+													'<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>'
+												);
 											</aui:script>
 
 										<%
@@ -352,15 +358,13 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 </aui:form>
 
 <aui:script use="liferay-export-import-export-import">
-	new Liferay.ExportImport(
-		{
-			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
-			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
-			form: document.<portlet:namespace />fm1,
-			locale: '<%= locale.toLanguageTag() %>',
-			namespace: '<portlet:namespace />',
-			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
-			timeZoneOffset: <%= timeZoneOffset %>
-		}
-	);
+	new Liferay.ExportImport({
+		commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
+		deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
+		form: document.<portlet:namespace />fm1,
+		locale: '<%= locale.toLanguageTag() %>',
+		namespace: '<portlet:namespace />',
+		ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
+		timeZoneOffset: <%= timeZoneOffset %>
+	});
 </aui:script>

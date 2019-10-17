@@ -151,73 +151,74 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 </aui:form>
 
 <aui:script require="metal-dom/src/dom as dom">
-	AUI().use(
-		'liferay-item-selector-dialog',
-		function(A) {
-			var deleteCollections = function() {
-				var layoutPageTemplateCollectionsFm = document.<portlet:namespace />layoutPageTemplateCollectionsFm;
+	AUI().use('liferay-item-selector-dialog', function(A) {
+		var deleteCollections = function() {
+			var layoutPageTemplateCollectionsFm =
+				document.<portlet:namespace />layoutPageTemplateCollectionsFm;
 
-				if (layoutPageTemplateCollectionsFm) {
-					var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-						{
-							eventName: '<portlet:namespace />selectCollections',
-							on: {
-								selectedItemChange: function(event) {
-									var selectedItems = event.newVal;
+			if (layoutPageTemplateCollectionsFm) {
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+					eventName: '<portlet:namespace />selectCollections',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItems = event.newVal;
 
-									if (selectedItems) {
-										if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
-											Array.prototype.forEach.call(
-												selectedItems,
-												function(item, index) {
-													dom.append(layoutPageTemplateCollectionsFm, item);
-												}
+							if (selectedItems) {
+								if (
+									confirm(
+										'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />'
+									)
+								) {
+									Array.prototype.forEach.call(
+										selectedItems,
+										function(item, index) {
+											dom.append(
+												layoutPageTemplateCollectionsFm,
+												item
 											);
-
-											<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/layout_page_template/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
-												<portlet:param name="redirect" value="<%= currentURL %>" />
-											</liferay-portlet:actionURL>
-
-											submitForm(layoutPageTemplateCollectionsFm, '<%= deleteLayoutPageTemplateCollectionURL %>');
 										}
-									}
+									);
+
+									<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/layout_page_template/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
+										<portlet:param name="redirect" value="<%= currentURL %>" />
+									</liferay-portlet:actionURL>
+
+									submitForm(
+										layoutPageTemplateCollectionsFm,
+										'<%= deleteLayoutPageTemplateCollectionURL %>'
+									);
 								}
-							},
-							'strings.add': '<liferay-ui:message key="delete" />',
-							title: '<liferay-ui:message key="delete-collection" />',
-							url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/layout_page_template/select_layout_page_template_collections" /></portlet:renderURL>'
-						}
-					);
-
-					itemSelectorDialog.open();
-				}
-			};
-
-			var ACTIONS = {
-				'deleteCollections': deleteCollections
-			};
-
-			Liferay.componentReady('actionsComponent').then(
-				function(actionsComponent) {
-					actionsComponent.on(
-						['click', 'itemClicked'],
-						function(event, facade) {
-							var itemData;
-
-							if (event.data && event.data.item) {
-								itemData = event.data.item.data;
-							}
-							else if (!event.data && facade && facade.target) {
-								itemData = facade.target.data;
-							}
-
-							if (itemData && itemData.action && ACTIONS[itemData.action]) {
-								ACTIONS[itemData.action]();
 							}
 						}
-					);
+					},
+					'strings.add': '<liferay-ui:message key="delete" />',
+					title: '<liferay-ui:message key="delete-collection" />',
+					url:
+						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/layout_page_template/select_layout_page_template_collections" /></portlet:renderURL>'
+				});
+
+				itemSelectorDialog.open();
+			}
+		};
+
+		var ACTIONS = {
+			deleteCollections: deleteCollections
+		};
+
+		Liferay.componentReady('actionsComponent').then(function(actionsComponent) {
+			actionsComponent.on(['click', 'itemClicked'], function(event, facade) {
+				var itemData;
+
+				if (event.data && event.data.item) {
+					itemData = event.data.item.data;
+				} else if (!event.data && facade && facade.target) {
+					itemData = facade.target.data;
 				}
-			);
-		}
-	);
+
+				if (itemData && itemData.action && ACTIONS[itemData.action]) {
+					ACTIONS[itemData.action]();
+				}
+			});
+		});
+	});
 </aui:script>

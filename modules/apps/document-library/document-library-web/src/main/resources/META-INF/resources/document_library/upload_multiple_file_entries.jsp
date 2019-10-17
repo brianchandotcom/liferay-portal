@@ -63,34 +63,36 @@ if (portletTitleBasedNavigation) {
 						</aui:form>
 
 						<aui:script use="liferay-upload">
-							new Liferay.Upload(
-								{
-									boundingBox: '#<portlet:namespace />fileUpload',
+							new Liferay.Upload({
+								boundingBox: '#<portlet:namespace />fileUpload',
 
-									<%
-									DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-									%>
+								<%
+								DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+								%>
 
-									decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
+								decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 
-									deleteFile: '<liferay-portlet:actionURL name="/document_library/upload_multiple_file_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>',
-									fileDescription: '<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
-									maxFileSize: '<%= dlConfiguration.fileMaxSize() %> B',
-									metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
-									metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
-									namespace: '<portlet:namespace />',
-									tempFileURL: {
-										method: Liferay.Service.bind('/dlapp/get-temp-file-names'),
-										params: {
-											folderId: <%= folderId %>,
-											folderName: '<%= EditFileEntryMVCActionCommand.TEMP_FOLDER_NAME %>',
-											groupId: <%= scopeGroupId %>
-										}
-									},
-									tempRandomSuffix: '<%= TempFileEntryUtil.TEMP_RANDOM_SUFFIX %>',
-									uploadFile: '<liferay-portlet:actionURL name="/document_library/upload_multiple_file_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>'
-								}
-							);
+								deleteFile:
+									'<liferay-portlet:actionURL name="/document_library/upload_multiple_file_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>',
+								fileDescription:
+									'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
+								maxFileSize: '<%= dlConfiguration.fileMaxSize() %> B',
+								metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
+								metadataExplanationContainer:
+									'#<portlet:namespace />metadataExplanationContainer',
+								namespace: '<portlet:namespace />',
+								tempFileURL: {
+									method: Liferay.Service.bind('/dlapp/get-temp-file-names'),
+									params: {
+										folderId: <%= folderId %>,
+										folderName: '<%= EditFileEntryMVCActionCommand.TEMP_FOLDER_NAME %>',
+										groupId: <%= scopeGroupId %>
+									}
+								},
+								tempRandomSuffix: '<%= TempFileEntryUtil.TEMP_RANDOM_SUFFIX %>',
+								uploadFile:
+									'<liferay-portlet:actionURL name="/document_library/upload_multiple_file_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>'
+							});
 						</aui:script>
 					</aui:col>
 
@@ -112,13 +114,22 @@ if (portletTitleBasedNavigation) {
 								function() {
 									var Lang = A.Lang;
 
-									var commonFileMetadataContainer = A.one('#<portlet:namespace />commonFileMetadataContainer');
-									var selectedFileNameContainer = A.one('#<portlet:namespace />selectedFileNameContainer');
-									var ddmFormFieldNamespaces = A.all('#<portlet:namespace />ddmFormFieldNamespace').val();
+									var commonFileMetadataContainer = A.one(
+										'#<portlet:namespace />commonFileMetadataContainer'
+									);
+									var selectedFileNameContainer = A.one(
+										'#<portlet:namespace />selectedFileNameContainer'
+									);
+									var ddmFormFieldNamespaces = A.all(
+										'#<portlet:namespace />ddmFormFieldNamespace'
+									).val();
 
-									var inputTpl = '<input id="<portlet:namespace />selectedFileName{0}" name="<portlet:namespace />selectedFileName" type="hidden" value="{1}" />';
+									var inputTpl =
+										'<input id="<portlet:namespace />selectedFileName{0}" name="<portlet:namespace />selectedFileName" type="hidden" value="{1}" />';
 
-									var values = A.all('input[name=<portlet:namespace />selectUploadedFile]:checked').val();
+									var values = A.all(
+										'input[name=<portlet:namespace />selectUploadedFile]:checked'
+									).val();
 
 									var buffer = [];
 									var dataBuffer = [];
@@ -140,105 +151,115 @@ if (portletTitleBasedNavigation) {
 									for (var i = 0; i < ddmFormFieldNamespaces.length; i++) {
 										var ddmFormFieldNamespace = ddmFormFieldNamespaces[i];
 
-										var ddmForm = Liferay.component('<portlet:namespace />' + ddmFormFieldNamespace + 'ddmForm');
+										var ddmForm = Liferay.component(
+											'<portlet:namespace />' + ddmFormFieldNamespace + 'ddmForm'
+										);
 
 										ddmForm.updateDDMFormInputValue();
 									}
 
-									Liferay.Util.fetch(
-										document.<portlet:namespace />fm2.action,
-										{
-											body: new FormData(document.<portlet:namespace />fm2),
-											method: 'POST'
-										}
-									)
-										.then(
-											function(response) {
-												return response.json();
-											}
-										)
-										.then(
-											function(response) {
-												var itemFailed = false;
+									Liferay.Util.fetch(document.<portlet:namespace />fm2.action, {
+										body: new FormData(document.<portlet:namespace />fm2),
+										method: 'POST'
+									})
+										.then(function(response) {
+											return response.json();
+										})
+										.then(function(response) {
+											var itemFailed = false;
 
-												for (var i = 0; i < response.length; i++) {
-													var item = response[i];
+											for (var i = 0; i < response.length; i++) {
+												var item = response[i];
 
-													var checkBox = A.one('input[data-fileName="' + item.originalFileName + '"]');
+												var checkBox = A.one(
+													'input[data-fileName="' + item.originalFileName + '"]'
+												);
 
-													var li = checkBox.ancestor();
+												var li = checkBox.ancestor();
 
-													checkBox.remove(true);
+												checkBox.remove(true);
 
-													li.removeClass('selectable').removeClass('selected');
+												li.removeClass('selectable').removeClass('selected');
 
-													var cssClass = null;
-													var childHTML = null;
+												var cssClass = null;
+												var childHTML = null;
 
-													if (item.added) {
-														cssClass = 'file-saved';
+												if (item.added) {
+													cssClass = 'file-saved';
 
-														var originalFileName = item.originalFileName;
+													var originalFileName = item.originalFileName;
 
-														var pos = originalFileName.indexOf('<%= TempFileEntryUtil.TEMP_RANDOM_SUFFIX %>');
+													var pos = originalFileName.indexOf(
+														'<%= TempFileEntryUtil.TEMP_RANDOM_SUFFIX %>'
+													);
 
-														if (pos != -1) {
-															originalFileName = originalFileName.substr(0, pos);
-														}
-
-														if (originalFileName === item.fileName) {
-															childHTML = '<span class="card-bottom success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %></span>';
-														}
-														else {
-															childHTML = '<span class="card-bottom success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %> (' + item.fileName + ')</span>';
-														}
-													}
-													else {
-														cssClass = 'upload-error';
-
-														childHTML = '<span class="card-bottom error-message">' + item.errorMessage + '</span>';
-
-														itemFailed = true;
+													if (pos != -1) {
+														originalFileName = originalFileName.substr(0, pos);
 													}
 
-													li.addClass(cssClass);
-													li.append(childHTML);
+													if (originalFileName === item.fileName) {
+														childHTML =
+															'<span class="card-bottom success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %></span>';
+													} else {
+														childHTML =
+															'<span class="card-bottom success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %> (' +
+															item.fileName +
+															')</span>';
+													}
+												} else {
+													cssClass = 'upload-error';
+
+													childHTML =
+														'<span class="card-bottom error-message">' +
+														item.errorMessage +
+														'</span>';
+
+													itemFailed = true;
 												}
 
-												<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/document_library/upload_multiple_file_entries" var="uploadMultipleFileEntries">
-													<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-													<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-												</liferay-portlet:resourceURL>
-
-												if (commonFileMetadataContainer.io) {
-													commonFileMetadataContainer.io.start();
-												}
-												else {
-													commonFileMetadataContainer.load('<%= uploadMultipleFileEntries %>');
-												}
-
-												Liferay.fire('filesSaved');
-
-												commonFileMetadataContainer.unplug(A.LoadingMask);
-
-												if (!itemFailed) {
-													location.href = '<%= HtmlUtil.escapeJS(redirect) %>';
-												}
+												li.addClass(cssClass);
+												li.append(childHTML);
 											}
-										)
-										.catch(
-											function(error) {
-												var selectedItems = A.all('#<portlet:namespace />fileUpload li.selected');
 
-												selectedItems.removeClass('selectable').removeClass('selected').addClass('upload-error');
+											<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/document_library/upload_multiple_file_entries" var="uploadMultipleFileEntries">
+												<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+												<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+											</liferay-portlet:resourceURL>
 
-												selectedItems.append('<span class="card-bottom error-message"><%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-deleting-the-file") %></span>');
-
-												selectedItems.all('input').remove(true);
-
-												commonFileMetadataContainer.loadingmask.hide();
+											if (commonFileMetadataContainer.io) {
+												commonFileMetadataContainer.io.start();
+											} else {
+												commonFileMetadataContainer.load(
+													'<%= uploadMultipleFileEntries %>'
+												);
 											}
-										);
+
+											Liferay.fire('filesSaved');
+
+											commonFileMetadataContainer.unplug(A.LoadingMask);
+
+											if (!itemFailed) {
+												location.href = '<%= HtmlUtil.escapeJS(redirect) %>';
+											}
+										})
+										.catch(function(error) {
+											var selectedItems = A.all(
+												'#<portlet:namespace />fileUpload li.selected'
+											);
+
+											selectedItems
+												.removeClass('selectable')
+												.removeClass('selected')
+												.addClass('upload-error');
+
+											selectedItems.append(
+												'<span class="card-bottom error-message"><%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-deleting-the-file") %></span>'
+											);
+
+											selectedItems.all('input').remove(true);
+
+											commonFileMetadataContainer.loadingmask.hide();
+										});
 								},
 								['aui-base']
 							);

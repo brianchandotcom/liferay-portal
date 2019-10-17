@@ -46,36 +46,53 @@
 	};
 
 	Liferay.RecurrenceUtil.RECURRENCE_SUMMARIES = {
-		'daily': '<liferay-ui:message key="daily" />',
+		daily: '<liferay-ui:message key="daily" />',
 		'daily-until-x-x-x': '<liferay-ui:message key="daily-until-x-x-x" />',
 		'daily-x-times': '<liferay-ui:message key="daily-x-times" />',
 		'every-mon-wed-fri': '<liferay-ui:message key="every-mon-wed-fri" />',
 		'every-tues-thurs': '<liferay-ui:message key="every-tues-thurs" />',
 		'every-x-days': '<liferay-ui:message key="every-x-days" />',
-		'every-x-days-until-x-x-x': '<liferay-ui:message key="every-x-days-until-x-x-x" />',
+		'every-x-days-until-x-x-x':
+			'<liferay-ui:message key="every-x-days-until-x-x-x" />',
 		'every-x-days-x-times': '<liferay-ui:message key="every-x-days-x-times" />',
 		'every-x-months': '<liferay-ui:message key="every-x-months" />',
-		'every-x-months-on-x-x': '<liferay-ui:message key="every-x-months-on-x-x" />',
-		'every-x-months-on-x-x-until-x-x-x': '<liferay-ui:message key="every-x-months-on-x-x-until-x-x-x" />',
-		'every-x-months-on-x-x-x-times': '<liferay-ui:message key="every-x-months-on-x-x-x-times" />',
-		'every-x-months-until-x-x-x': '<liferay-ui:message key="every-x-months-until-x-x-x" />',
-		'every-x-months-x-times': '<liferay-ui:message key="every-x-months-x-times" />',
+		'every-x-months-on-x-x':
+			'<liferay-ui:message key="every-x-months-on-x-x" />',
+		'every-x-months-on-x-x-until-x-x-x':
+			'<liferay-ui:message key="every-x-months-on-x-x-until-x-x-x" />',
+		'every-x-months-on-x-x-x-times':
+			'<liferay-ui:message key="every-x-months-on-x-x-x-times" />',
+		'every-x-months-until-x-x-x':
+			'<liferay-ui:message key="every-x-months-until-x-x-x" />',
+		'every-x-months-x-times':
+			'<liferay-ui:message key="every-x-months-x-times" />',
 		'every-x-weeks': '<liferay-ui:message key="every-x-weeks" />',
 		'every-x-weeks-on-x': '<liferay-ui:message key="every-x-weeks-on-x" />',
-		'every-x-weeks-on-x-until-x-x-x': '<liferay-ui:message key="every-x-weeks-on-x-until-x-x-x" />',
-		'every-x-weeks-on-x-x-times': '<liferay-ui:message key="every-x-weeks-on-x-x-times" />',
-		'every-x-weeks-until-x-x-x': '<liferay-ui:message key="every-x-weeks-until-x-x-x" />',
-		'every-x-weeks-x-times': '<liferay-ui:message key="every-x-weeks-x-times" />',
+		'every-x-weeks-on-x-until-x-x-x':
+			'<liferay-ui:message key="every-x-weeks-on-x-until-x-x-x" />',
+		'every-x-weeks-on-x-x-times':
+			'<liferay-ui:message key="every-x-weeks-on-x-x-times" />',
+		'every-x-weeks-until-x-x-x':
+			'<liferay-ui:message key="every-x-weeks-until-x-x-x" />',
+		'every-x-weeks-x-times':
+			'<liferay-ui:message key="every-x-weeks-x-times" />',
 		'every-x-years': '<liferay-ui:message key="every-x-years" />',
-		'every-x-years-on-x-x-of-x': '<liferay-ui:message key="every-x-years-on-x-x-of-x" />',
-		'every-x-years-on-x-x-of-x-until-x-x-x': '<liferay-ui:message key="every-x-years-on-x-x-of-x-until-x-x-x" />',
-		'every-x-years-on-x-x-of-x-x-times': '<liferay-ui:message key="every-x-years-on-x-x-of-x-x-times" />',
-		'every-x-years-until-x-x-x': '<liferay-ui:message key="every-x-years-until-x-x-x" />',
-		'every-x-years-x-times': '<liferay-ui:message key="every-x-years-x-times" />',
-		'monthly': '<liferay-ui:message key="monthly" />',
+		'every-x-years-on-x-x-of-x':
+			'<liferay-ui:message key="every-x-years-on-x-x-of-x" />',
+		'every-x-years-on-x-x-of-x-until-x-x-x':
+			'<liferay-ui:message key="every-x-years-on-x-x-of-x-until-x-x-x" />',
+		'every-x-years-on-x-x-of-x-x-times':
+			'<liferay-ui:message key="every-x-years-on-x-x-of-x-x-times" />',
+		'every-x-years-until-x-x-x':
+			'<liferay-ui:message key="every-x-years-until-x-x-x" />',
+		'every-x-years-x-times':
+			'<liferay-ui:message key="every-x-years-x-times" />',
+		monthly: '<liferay-ui:message key="monthly" />',
 		'monthly-on-x-x': '<liferay-ui:message key="monthly-on-x-x" />',
-		'monthly-on-x-x-until-x-x-x': '<liferay-ui:message key="monthly-on-x-x-until-x-x-x" />',
-		'monthly-on-x-x-x-times': '<liferay-ui:message key="monthly-on-x-x-x-times" />',
+		'monthly-on-x-x-until-x-x-x':
+			'<liferay-ui:message key="monthly-on-x-x-until-x-x-x" />',
+		'monthly-on-x-x-x-times':
+			'<liferay-ui:message key="monthly-on-x-x-x-times" />',
 		'monthly-until-x-x-x': '<liferay-ui:message key="monthly-until-x-x-x" />',
 		'monthly-x-times': '<liferay-ui:message key="monthly-x-times" />',
 		'position.first': '<liferay-ui:message key="position.first" />',
@@ -83,19 +100,23 @@
 		'position.last': '<liferay-ui:message key="position.last" />',
 		'position.second': '<liferay-ui:message key="position.second" />',
 		'position.third': '<liferay-ui:message key="position.third" />',
-		'weekly': '<liferay-ui:message key="weekly" />',
+		weekly: '<liferay-ui:message key="weekly" />',
 		'weekly-on-x': '<liferay-ui:message key="weekly-on-x" />',
-		'weekly-on-x-until-x-x-x': '<liferay-ui:message key="weekly-on-x-until-x-x-x" />',
+		'weekly-on-x-until-x-x-x':
+			'<liferay-ui:message key="weekly-on-x-until-x-x-x" />',
 		'weekly-on-x-x-times': '<liferay-ui:message key="weekly-on-x-x-times" />',
 		'weekly-until-x-x-x': '<liferay-ui:message key="weekly-until-x-x-x" />',
 		'weekly-x-times': '<liferay-ui:message key="weekly-x-times" />',
-		'yearly': '<liferay-ui:message key="yearly" />',
+		yearly: '<liferay-ui:message key="yearly" />',
 		'yearly-on-x-x-of-x': '<liferay-ui:message key="yearly-on-x-x-of-x" />',
-		'yearly-on-x-x-of-x-until-x-x-x': '<liferay-ui:message key="yearly-on-x-x-of-x-until-x-x-x" />',
-		'yearly-on-x-x-of-x-x-times': '<liferay-ui:message key="yearly-on-x-x-of-x-x-times" />',
+		'yearly-on-x-x-of-x-until-x-x-x':
+			'<liferay-ui:message key="yearly-on-x-x-of-x-until-x-x-x" />',
+		'yearly-on-x-x-of-x-x-times':
+			'<liferay-ui:message key="yearly-on-x-x-of-x-x-times" />',
 		'yearly-until-x-x-x': '<liferay-ui:message key="yearly-until-x-x-x" />',
 		'yearly-x-times': '<liferay-ui:message key="yearly-x-times" />',
-		'you-are-about-to-make-changes-that-will-only-affect-your-calendar-x': '<liferay-ui:message key="you-are-about-to-make-changes-that-will-only-affect-your-calendar-x" />'
+		'you-are-about-to-make-changes-that-will-only-affect-your-calendar-x':
+			'<liferay-ui:message key="you-are-about-to-make-changes-that-will-only-affect-your-calendar-x" />'
 	};
 
 	Liferay.RecurrenceUtil.WEEKDAY_LABELS = {

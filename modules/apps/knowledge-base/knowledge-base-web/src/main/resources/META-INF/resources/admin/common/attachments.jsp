@@ -84,54 +84,59 @@ if (kbArticle != null) {
 </div>
 
 <aui:script use="liferay-upload">
-	new Liferay.Upload(
-		{
-			boundingBox: '#<portlet:namespace />fileUpload',
-			deleteFile: '<liferay-portlet:actionURL name="deleteTempAttachment"><portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" /></liferay-portlet:actionURL>',
+	new Liferay.Upload({
+		boundingBox: '#<portlet:namespace />fileUpload',
+		deleteFile:
+			'<liferay-portlet:actionURL name="deleteTempAttachment"><portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" /></liferay-portlet:actionURL>',
 
-			<%
-			DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
-			%>
+		<%
+		DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
+		%>
 
-			fileDescription: '<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
-			maxFileSize: '<%= dlConfiguration.fileMaxSize() %> B',
-			metadataContainer: '#<portlet:namespace />selectedFileNameMetadataContainer',
-			metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
-			namespace: '<portlet:namespace />',
-			tempFileURL: {
-				method: Liferay.Service.bind('/kb.kbarticle/get-temp-attachment-names'),
-				params: {
-					groupId: <%= scopeGroupId %>,
-					tempFolderName: '<%= KBWebKeys.TEMP_FOLDER_NAME %>'
-				}
-			},
-			uploadFile: '<liferay-portlet:actionURL name="addTempAttachment"><portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" /></liferay-portlet:actionURL>'
-		}
-	);
+		fileDescription:
+			'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
+		maxFileSize: '<%= dlConfiguration.fileMaxSize() %> B',
+		metadataContainer:
+			'#<portlet:namespace />selectedFileNameMetadataContainer',
+		metadataExplanationContainer:
+			'#<portlet:namespace />metadataExplanationContainer',
+		namespace: '<portlet:namespace />',
+		tempFileURL: {
+			method: Liferay.Service.bind('/kb.kbarticle/get-temp-attachment-names'),
+			params: {
+				groupId: <%= scopeGroupId %>,
+				tempFolderName: '<%= KBWebKeys.TEMP_FOLDER_NAME %>'
+			}
+		},
+		uploadFile:
+			'<liferay-portlet:actionURL name="addTempAttachment"><portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" /></liferay-portlet:actionURL>'
+	});
 </aui:script>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />deleteFileEntry',
-		function(fileEntryId) {
-			var removeFileEntryIdsInput = document.getElementById('<portlet:namespace />removeFileEntryIds');
+	Liferay.provide(window, '<portlet:namespace />deleteFileEntry', function(
+		fileEntryId
+	) {
+		var removeFileEntryIdsInput = document.getElementById(
+			'<portlet:namespace />removeFileEntryIds'
+		);
 
-			var fileEntries = removeFileEntryIdsInput.value;
+		var fileEntries = removeFileEntryIdsInput.value;
 
-			if (fileEntries.length) {
-				fileEntries += ',';
-			}
-
-			fileEntries += fileEntryId;
-
-			removeFileEntryIdsInput.value = fileEntries;
-
-			var fileEntryIdWrapper = document.getElementById('<portlet:namespace />fileEntryIdWrapper' + fileEntryId);
-
-			if (fileEntryIdWrapper) {
-				fileEntryIdWrapper.hide();
-			}
+		if (fileEntries.length) {
+			fileEntries += ',';
 		}
-	);
+
+		fileEntries += fileEntryId;
+
+		removeFileEntryIdsInput.value = fileEntries;
+
+		var fileEntryIdWrapper = document.getElementById(
+			'<portlet:namespace />fileEntryIdWrapper' + fileEntryId
+		);
+
+		if (fileEntryIdWrapper) {
+			fileEntryIdWrapper.hide();
+		}
+	});
 </aui:script>

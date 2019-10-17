@@ -148,7 +148,9 @@ String searchURL = HttpUtil.removeParameter(searchBaseURL.toString(), liferayPor
 <aui:script use="liferay-search-container">
 	var Util = Liferay.Util;
 
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />wikiPagesSearchContainer');
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />wikiPagesSearchContainer'
+	);
 
 	var searchContainerContentBox = searchContainer.get('contentBox');
 

@@ -97,91 +97,88 @@ Hits hits = searchDisplayContext.getHits();
 </aui:row>
 
 <aui:script require="metal-dom/src/dom as dom">
-	var facetNavigation = document.getElementById('<portlet:namespace />facetNavigation');
+	var facetNavigation = document.getElementById(
+		'<portlet:namespace />facetNavigation'
+	);
 
 	if (facetNavigation) {
-		dom.delegate(
-			facetNavigation,
-			'click',
-			'.facet-value a',
-			function(event) {
-				event.preventDefault();
+		dom.delegate(facetNavigation, 'click', '.facet-value a', function(event) {
+			event.preventDefault();
 
-				var target = event.delegateTarget;
+			var target = event.delegateTarget;
 
-				if (!target.classList.contains('active')) {
-					target.classList.add('active');
+			if (!target.classList.contains('active')) {
+				target.classList.add('active');
 
-					var searchFacet = dom.closest(target, '.search-facet');
+				var searchFacet = dom.closest(target, '.search-facet');
 
-					var facetValueSiblings = Array.prototype.filter.call(
-						target.parentNode.children,
-						function(child) {
-							return child !== target;
-						}
-					);
-
-					facetValueSiblings.forEach(
-						function(facet) {
-							facet.classList.remove('active');
-						}
-					);
-
-					var form = document.<portlet:namespace />fm;
-
-					var field = Liferay.Util.getFormElement(form, searchFacet.dataset.facetfieldname);
-
-					if (field) {
-						field.value = target.dataset.value;
-
-						var fieldSelection = Liferay.Util.getFormElement(form, searchFacet.dataset.facetfieldname + 'selection');
-
-						if (fieldSelection) {
-							fieldSelection.value = target.dataset.selection;
-						}
-
-						Liferay.Util.postForm(
-							form,
-							{
-								data: {
-									'<%= SearchContainer.DEFAULT_CUR_PARAM %>': 1
-								}
-							}
-						)
-					}
-				}
-			}
-		);
-	}
-
-	var searchResultsContainer = document.getElementById('<portlet:namespace />search');
-
-	if (searchResultsContainer) {
-		dom.delegate(
-			searchResultsContainer,
-			'click',
-			'.expand-details',
-			function(event) {
-				var target = event.delegateTarget;
-
-				var targetSiblings = Array.prototype.filter.call(
+				var facetValueSiblings = Array.prototype.filter.call(
 					target.parentNode.children,
 					function(child) {
-						return child !== target && child.classList.contains('table-details');
+						return child !== target;
 					}
 				);
 
-				targetSiblings.forEach(
-					function(sibling) {
-						if (sibling.classList.contains('hide')) {
-							sibling.classList.remove('hide');
-						}
-						else {
-							sibling.classList.add('hide');
-						}
-					}
+				facetValueSiblings.forEach(function(facet) {
+					facet.classList.remove('active');
+				});
+
+				var form = document.<portlet:namespace />fm;
+
+				var field = Liferay.Util.getFormElement(
+					form,
+					searchFacet.dataset.facetfieldname
 				);
+
+				if (field) {
+					field.value = target.dataset.value;
+
+					var fieldSelection = Liferay.Util.getFormElement(
+						form,
+						searchFacet.dataset.facetfieldname + 'selection'
+					);
+
+					if (fieldSelection) {
+						fieldSelection.value = target.dataset.selection;
+					}
+
+					Liferay.Util.postForm(form, {
+						data: {
+							<%= SearchContainer.DEFAULT_CUR_PARAM %>: 1
+						}
+					});
+				}
 			}
-		);
+		});
+	}
+
+	var searchResultsContainer = document.getElementById(
+		'<portlet:namespace />search'
+	);
+
+	if (searchResultsContainer) {
+		dom.delegate(searchResultsContainer, 'click', '.expand-details', function(
+			event
+		) {
+			var target = event.delegateTarget;
+
+			var targetSiblings = Array.prototype.filter.call(
+				target.parentNode.children,
+				function(child) {
+					return (
+						child !== target &&
+						child.classList.contains('table-details')
+					);
+				}
+			);
+
+			targetSiblings.forEach(function(sibling) {
+				if (sibling.classList.contains('hide')) {
+					sibling.classList.remove('hide');
+				} else {
+					sibling.classList.add('hide');
+				}
+			});
+		});
 	}
 </aui:script>

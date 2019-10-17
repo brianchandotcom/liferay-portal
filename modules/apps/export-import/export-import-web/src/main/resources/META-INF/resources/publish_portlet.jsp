@@ -112,64 +112,96 @@ if (!GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(
 					<portlet:param name="portletResource" value="<%= portletResource %>" />
 				</liferay-portlet:resourceURL>
 
-				var exportImport = new Liferay.ExportImport(
-					{
-						commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
-						deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
-						form: document.<portlet:namespace />fm1,
-						incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
-						locale: '<%= locale.toLanguageTag() %>',
-						namespace: '<portlet:namespace />',
-						processesNode: '#publishProcesses',
-						processesResourceURL: '<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>',
-						rangeAllNode: '#rangeAll',
-						rangeDateRangeNode: '#rangeDateRange',
-						rangeLastNode: '#rangeLast',
-						rangeLastPublishNode: '#rangeLastPublish',
-						ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
-						timeZoneOffset: <%= timeZoneOffset %>
-					}
-				);
+				var exportImport = new Liferay.ExportImport({
+					commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
+					deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
+					form: document.<portlet:namespace />fm1,
+					incompleteProcessMessageNode:
+						'#<portlet:namespace />incompleteProcessMessage',
+					locale: '<%= locale.toLanguageTag() %>',
+					namespace: '<portlet:namespace />',
+					processesNode: '#publishProcesses',
+					processesResourceURL:
+						'<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>',
+					rangeAllNode: '#rangeAll',
+					rangeDateRangeNode: '#rangeDateRange',
+					rangeLastNode: '#rangeLast',
+					rangeLastPublishNode: '#rangeLastPublish',
+					ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
+					timeZoneOffset: <%= timeZoneOffset %>
+				});
 
 				Liferay.component('<portlet:namespace />ExportImportComponent', exportImport);
 			</aui:script>
 
 			<aui:script>
 				function <portlet:namespace />copyFromLive() {
-					var exportImport = Liferay.component('<portlet:namespace />ExportImportComponent');
+					var exportImport = Liferay.component(
+						'<portlet:namespace />ExportImportComponent'
+					);
 
 					var dateChecker = exportImport.getDateRangeChecker();
 
-					if (dateChecker.validRange && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-copy-from-live-and-update-the-existing-staging-widget-information") %>')) {
-						document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = 'copy_from_live';
+					if (
+						dateChecker.validRange &&
+						confirm(
+							'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-copy-from-live-and-update-the-existing-staging-widget-information") %>'
+						)
+					) {
+						document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value =
+							'copy_from_live';
 
 						submitForm(document.<portlet:namespace />fm1);
-					}
-					else if (!dateChecker.validRange) {
+					} else if (!dateChecker.validRange) {
 						exportImport.showNotification(dateChecker);
 					}
 				}
 
 				function <portlet:namespace />publishToLive() {
-					var exportImport = Liferay.component('<portlet:namespace />ExportImportComponent');
+					var exportImport = Liferay.component(
+						'<portlet:namespace />ExportImportComponent'
+					);
 
 					var dateChecker = exportImport.getDateRangeChecker();
 
-					if (dateChecker.validRange && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-publish-to-live-and-update-the-existing-application-data") %>')) {
+					if (
+						dateChecker.validRange &&
+						confirm(
+							'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-publish-to-live-and-update-the-existing-application-data") %>'
+						)
+					) {
 						submitForm(document.<portlet:namespace />fm1);
-					}
-					else if (!dateChecker.validRange) {
+					} else if (!dateChecker.validRange) {
 						exportImport.showNotification(dateChecker);
 					}
 				}
 
-				Liferay.Util.toggleRadio('<portlet:namespace />portletMetaDataFilter', '<portlet:namespace />portletMetaDataList');
-				Liferay.Util.toggleRadio('<portlet:namespace />portletMetaDataAll', '', ['<portlet:namespace />portletMetaDataList']);
+				Liferay.Util.toggleRadio(
+					'<portlet:namespace />portletMetaDataFilter',
+					'<portlet:namespace />portletMetaDataList'
+				);
+				Liferay.Util.toggleRadio('<portlet:namespace />portletMetaDataAll', '', [
+					'<portlet:namespace />portletMetaDataList'
+				]);
 
-				Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', ['<portlet:namespace />startEndDate', '<portlet:namespace />rangeLastInputs']);
-				Liferay.Util.toggleRadio('<portlet:namespace />rangeDateRange', '<portlet:namespace />startEndDate', '<portlet:namespace />rangeLastInputs');
-				Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish', '', ['<portlet:namespace />startEndDate', '<portlet:namespace />rangeLastInputs']);
-				Liferay.Util.toggleRadio('<portlet:namespace />rangeLast', '<portlet:namespace />rangeLastInputs', ['<portlet:namespace />startEndDate']);
+				Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', [
+					'<portlet:namespace />startEndDate',
+					'<portlet:namespace />rangeLastInputs'
+				]);
+				Liferay.Util.toggleRadio(
+					'<portlet:namespace />rangeDateRange',
+					'<portlet:namespace />startEndDate',
+					'<portlet:namespace />rangeLastInputs'
+				);
+				Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish', '', [
+					'<portlet:namespace />startEndDate',
+					'<portlet:namespace />rangeLastInputs'
+				]);
+				Liferay.Util.toggleRadio(
+					'<portlet:namespace />rangeLast',
+					'<portlet:namespace />rangeLastInputs',
+					['<portlet:namespace />startEndDate']
+				);
 			</aui:script>
 		</c:when>
 	</c:choose>

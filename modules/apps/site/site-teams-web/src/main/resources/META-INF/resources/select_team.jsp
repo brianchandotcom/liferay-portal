@@ -113,5 +113,8 @@ SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext
 </aui:form>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectTeamFm', '<%= HtmlUtil.escapeJS(selectTeamDisplayContext.getEventName()) %>');
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />selectTeamFm',
+		'<%= HtmlUtil.escapeJS(selectTeamDisplayContext.getEventName()) %>'
+	);
 </aui:script>

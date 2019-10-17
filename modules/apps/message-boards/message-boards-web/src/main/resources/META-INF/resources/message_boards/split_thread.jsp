@@ -144,21 +144,29 @@ if (portletTitleBasedNavigation) {
 		var nameEl = document.getElementById('<portlet:namespace />categoryName');
 
 		if (categoryId == 0) {
-			nameEl.href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/message_boards/view" /></portlet:renderURL>';
-		}
-		else {
-			nameEl.href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + categoryId;
+			nameEl.href =
+				'<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/message_boards/view" /></portlet:renderURL>';
+		} else {
+			nameEl.href =
+				'<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' +
+				categoryId;
 		}
 
 		nameEl.innerHTML = categoryName + '&nbsp;';
 	}
 
 	function <portlet:namespace />toggleExplanationPost() {
-		if (document.getElementById('<portlet:namespace />addExplanationPost').checked) {
-			document.getElementById('<portlet:namespace />explanationPost').style.display = '';
-		}
-		else {
-			document.getElementById('<portlet:namespace />explanationPost').style.display = 'none';
+		if (
+			document.getElementById('<portlet:namespace />addExplanationPost')
+				.checked
+		) {
+			document.getElementById(
+				'<portlet:namespace />explanationPost'
+			).style.display = '';
+		} else {
+			document.getElementById(
+				'<portlet:namespace />explanationPost'
+			).style.display = 'none';
 		}
 	}
 </aui:script>

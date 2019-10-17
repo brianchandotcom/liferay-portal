@@ -327,7 +327,11 @@ fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-i
 
 							<aui:script>
 								function <portlet:namespace />printPage_<%= id %>() {
-									window.open('<%= printAssetURL %>', '', 'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640');
+									window.open(
+										'<%= printAssetURL %>',
+										'',
+										'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640'
+									);
 								}
 							</aui:script>
 						</c:otherwise>

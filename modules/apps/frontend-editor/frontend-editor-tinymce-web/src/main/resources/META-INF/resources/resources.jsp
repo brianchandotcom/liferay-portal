@@ -43,7 +43,7 @@ String editorName = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUT
 				tinymceInstances = 0;
 				disposeResources = false;
 			}
-		}
+		};
 
 		Liferay.namespace('EDITORS').tinymce = {
 			addInstance: function() {
@@ -54,7 +54,7 @@ String editorName = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUT
 
 				cleanupGlobals();
 			}
-		}
+		};
 
 		var destroyGlobalEditors = function() {
 			disposeResources = true;

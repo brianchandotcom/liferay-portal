@@ -35,13 +35,30 @@ String randomNamespace = (String)row.getParameter("randomNamespace");
 <button class="btn btn-secondary btn-sm" id="<%= randomNamespace %>editButton" type="button"><%= LanguageUtil.get(request, "edit") %></button>
 
 <aui:script use="liferay-workflow-web">
-	var saveWorkflowDefinitionLink = A.rbind('saveWorkflowDefinitionLink', Liferay.WorkflowWeb, '<%= randomNamespace %>');
+	var saveWorkflowDefinitionLink = A.rbind(
+		'saveWorkflowDefinitionLink',
+		Liferay.WorkflowWeb,
+		'<%= randomNamespace %>'
+	);
 
-	Liferay.delegateClick('<%= randomNamespace %>saveButton', saveWorkflowDefinitionLink);
+	Liferay.delegateClick(
+		'<%= randomNamespace %>saveButton',
+		saveWorkflowDefinitionLink
+	);
 
-	var toggleDefinitionLinkEditionMode = A.rbind('toggleDefinitionLinkEditionMode', Liferay.WorkflowWeb, '<%= randomNamespace %>');
+	var toggleDefinitionLinkEditionMode = A.rbind(
+		'toggleDefinitionLinkEditionMode',
+		Liferay.WorkflowWeb,
+		'<%= randomNamespace %>'
+	);
 
-	Liferay.delegateClick('<%= randomNamespace %>editButton', toggleDefinitionLinkEditionMode);
+	Liferay.delegateClick(
+		'<%= randomNamespace %>editButton',
+		toggleDefinitionLinkEditionMode
+	);
 
-	Liferay.delegateClick('<%= randomNamespace %>cancelButton', toggleDefinitionLinkEditionMode);
+	Liferay.delegateClick(
+		'<%= randomNamespace %>cancelButton',
+		toggleDefinitionLinkEditionMode
+	);
 </aui:script>

@@ -162,7 +162,9 @@ String notificationTemplateSubject = BeanPropertiesUtil.getString(calendarNotifi
 
 <aui:script>
 	function <portlet:namespace />updateCalendarNotificationTemplate() {
-		var notificationTemplateContentBody = document.getElementById('<portlet:namespace />body');
+		var notificationTemplateContentBody = document.getElementById(
+			'<portlet:namespace />body'
+		);
 
 		if (notificationTemplateContentBody) {
 			notificationTemplateContentBody.value = window.<portlet:namespace />editor.getHTML();

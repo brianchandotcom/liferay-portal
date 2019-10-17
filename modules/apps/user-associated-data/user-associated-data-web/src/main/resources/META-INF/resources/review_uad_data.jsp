@@ -219,50 +219,52 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 </portlet:renderURL>
 
 <aui:script require="metal-dom/src/dom as dom">
-
 	const baseURL = '<%= reviewUADDataURL %>';
 
 	const clickListeners = [];
 
 	const registerClickHandler = function(element, clickHandlerFn) {
-		clickListeners.push(dom.delegate(element, 'click', 'input', clickHandlerFn));
+		clickListeners.push(
+			dom.delegate(element, 'click', 'input', clickHandlerFn)
+		);
 	};
 
-	registerClickHandler(
-		<portlet:namespace />applicationPanelBody,
-		function(event) {
-			const url = new URL(baseURL, window.location.origin);
+	registerClickHandler(<portlet:namespace />applicationPanelBody, function(
+		event
+	) {
+		const url = new URL(baseURL, window.location.origin);
 
-			url.searchParams.set('<portlet:namespace />applicationKey', event.target.value);
+		url.searchParams.set(
+			'<portlet:namespace />applicationKey',
+			event.target.value
+		);
 
-			Liferay.Util.navigate(url.toString());
-		}
-	);
+		Liferay.Util.navigate(url.toString());
+	});
 
 	<c:if test="<%= !Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) %>">
-		registerClickHandler(
-			<portlet:namespace />entitiesTypePanelBody,
-			function(event) {
-				const url = new URL(baseURL, window.location.origin);
-
-				url.searchParams.set('<portlet:namespace />uadRegistryKey', event.target.value);
-
-				Liferay.Util.navigate(url.toString());
-			}
-		);
-	</c:if>
-
-	registerClickHandler(
-		<portlet:namespace />scopePanelBody,
-		function(event) {
+		registerClickHandler(<portlet:namespace />entitiesTypePanelBody, function(
+			event
+		) {
 			const url = new URL(baseURL, window.location.origin);
 
-			url.searchParams.set('<portlet:namespace />applicationKey', '');
-			url.searchParams.set('<portlet:namespace />scope', event.target.value);
+			url.searchParams.set(
+				'<portlet:namespace />uadRegistryKey',
+				event.target.value
+			);
 
 			Liferay.Util.navigate(url.toString());
-		}
-	);
+		});
+	</c:if>
+
+	registerClickHandler(<portlet:namespace />scopePanelBody, function(event) {
+		const url = new URL(baseURL, window.location.origin);
+
+		url.searchParams.set('<portlet:namespace />applicationKey', '');
+		url.searchParams.set('<portlet:namespace />scope', event.target.value);
+
+		Liferay.Util.navigate(url.toString());
+	});
 
 	function handleDestroyPortlet() {
 		for (let i = 0; i < clickListeners.length; i++) {

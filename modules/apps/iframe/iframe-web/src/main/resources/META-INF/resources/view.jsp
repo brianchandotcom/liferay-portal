@@ -51,9 +51,13 @@
 					if (hash) {
 						var src = '';
 
-						var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
+						var baseSrc =
+							'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 
-						if (!(/^https?\:\/\//.test(hash)) || !A.Lang.String.startsWith(hash, baseSrc)) {
+						if (
+							!/^https?\:\/\//.test(hash) ||
+							!A.Lang.String.startsWith(hash, baseSrc)
+						) {
 							src = A.QueryString.unescape(hash);
 						}
 
@@ -79,22 +83,28 @@
 
 					url = iframe.contentWindow.document.location.href;
 
-					iframe.contentWindow.Liferay.on('endNavigate', <portlet:namespace />monitorIframe);
-				}
-				catch (e) {
+					iframe.contentWindow.Liferay.on(
+						'endNavigate',
+						<portlet:namespace />monitorIframe
+					);
+				} catch (e) {
 					return true;
 				}
 
-				var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
-				var iframeSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>';
+				var baseSrc =
+					'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
+				var iframeSrc =
+					'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>';
 				var hasBaseSrc = A.Lang.String.startsWith(url, baseSrc);
 
 				if (hasBaseSrc) {
 					url = url.substring(baseSrc.length);
 
 					<portlet:namespace />updateHash(url);
-				}
-				else if (!(url == iframeSrc || url == (iframeSrc + '/')) && !hasBaseSrc) {
+				} else if (
+					!(url == iframeSrc || url == iframeSrc + '/') &&
+					!hasBaseSrc
+				) {
 					<portlet:namespace />updateHash(url);
 				}
 			},
@@ -115,7 +125,9 @@
 
 				hash = A.QueryString.stringify(hashObj);
 
-				var maximize = A.one('#p_p_id<portlet:namespace /> .portlet-maximize-icon a');
+				var maximize = A.one(
+					'#p_p_id<portlet:namespace /> .portlet-maximize-icon a'
+				);
 
 				if (maximize) {
 					var maximizeUrl = maximize.attr('href');
@@ -148,33 +160,32 @@
 	var iframe = A.one('#<portlet:namespace />iframe');
 
 	if (iframe) {
-		iframe.set('src', '<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>');
-
-		iframe.plug(
-			A.Plugin.AutosizeIframe,
-			{
-				monitorHeight: <%= iFramePortletInstanceConfiguration.resizeAutomatically() %>
-			}
+		iframe.set(
+			'src',
+			'<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>'
 		);
 
-		iframe.on(
-			'load',
-			function() {
-				var height = A.Plugin.AutosizeIframe.getContentHeight(iframe);
+		iframe.plug(A.Plugin.AutosizeIframe, {
+			monitorHeight: <%= iFramePortletInstanceConfiguration.resizeAutomatically() %>
+		});
 
-				if (height == null) {
-					height = '<%= HtmlUtil.escapeJS(iFramePortletInstanceConfiguration.heightNormal()) %>';
+		iframe.on('load', function() {
+			var height = A.Plugin.AutosizeIframe.getContentHeight(iframe);
 
-					if (themeDisplay.isStateMaximized()) {
-						height = '<%= HtmlUtil.escapeJS(iFramePortletInstanceConfiguration.heightMaximized()) %>';
-					}
+			if (height == null) {
+				height =
+					'<%= HtmlUtil.escapeJS(iFramePortletInstanceConfiguration.heightNormal()) %>';
 
-					iframe.setStyle('height', height);
-
-					iframe.autosizeiframe.set('monitorHeight', false);
+				if (themeDisplay.isStateMaximized()) {
+					height =
+						'<%= HtmlUtil.escapeJS(iFramePortletInstanceConfiguration.heightMaximized()) %>';
 				}
+
+				iframe.setStyle('height', height);
+
+				iframe.autosizeiframe.set('monitorHeight', false);
 			}
-		);
+		});
 	}
 </aui:script>
 
@@ -182,7 +193,13 @@
 	<aui:script>
 		const headers = new Headers();
 
-		headers.append('Authorization', 'Basic ' + btoa('<%= iFramePortletInstanceConfiguration.basicUserName() %>:<%= iFramePortletInstanceConfiguration.basicPassword() %>'))
+		headers.append(
+			'Authorization',
+			'Basic ' +
+				btoa(
+					'<%= iFramePortletInstanceConfiguration.basicUserName() %>:<%= iFramePortletInstanceConfiguration.basicPassword() %>'
+				)
+		);
 
 		Liferay.Util.fetch(
 			'<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>',

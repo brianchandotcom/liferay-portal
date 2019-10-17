@@ -45,17 +45,18 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-trash:emp
 	var <%= namespace %>empty = document.getElementById('<%= namespace %>empty');
 
 	if (<%= namespace %>empty) {
-		<%= namespace %>empty.addEventListener(
-			'click',
-			function(event) {
-				if (confirm('<%= UnicodeLanguageUtil.get(request, confirmMessage) %>')) {
-					var form = document.getElementById('<portlet:namespace />emptyForm');
+		<%= namespace %>empty.addEventListener('click', function(event) {
+			if (
+				confirm('<%= UnicodeLanguageUtil.get(request, confirmMessage) %>')
+			) {
+				var form = document.getElementById(
+					'<portlet:namespace />emptyForm'
+				);
 
-					if (form) {
-						submitForm(form);
-					}
+				if (form) {
+					submitForm(form);
 				}
 			}
-		);
+		});
 	}
 </aui:script>

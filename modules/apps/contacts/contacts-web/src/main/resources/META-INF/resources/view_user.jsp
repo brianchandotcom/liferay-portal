@@ -361,7 +361,7 @@ request.setAttribute("view_user.jsp-user", user2);
 
 					var tagName = node.get('tagName');
 
-					if (!tagName || (tagName.toLowerCase() != 'a')) {
+					if (!tagName || tagName.toLowerCase() != 'a') {
 						<portlet:namespace />openDialog(event);
 					}
 				},
@@ -371,35 +371,44 @@ request.setAttribute("view_user.jsp-user", user2);
 			var <portlet:namespace />openDialog = function(event) {
 				var node = event.currentTarget;
 
-				var uri = '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/user/edit_user_dialogs.jsp" /></portlet:renderURL>';
+				var uri =
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/user/edit_user_dialogs.jsp" /></portlet:renderURL>';
 
 				if (node.getAttribute('data-sectionId')) {
-					uri = Liferay.Util.addParams('<portlet:namespace />curSectionId=' + node.getAttribute('data-sectionId'), uri) || uri;
+					uri =
+						Liferay.Util.addParams(
+							'<portlet:namespace />curSectionId=' +
+								node.getAttribute('data-sectionId'),
+							uri
+						) || uri;
 				}
 
 				if (node.getAttribute('data-extension')) {
-					uri = Liferay.Util.addParams('<portlet:namespace />extension=' + node.getAttribute('data-extension'), uri) || uri;
+					uri =
+						Liferay.Util.addParams(
+							'<portlet:namespace />extension=' +
+								node.getAttribute('data-extension'),
+							uri
+						) || uri;
 				}
 
-				var dialog = Liferay.Util.Window.getWindow(
-					{
-						dialog: {
-							align: {
-								node: null,
-								points: ['tc', 'tc']
-							},
-							constrain2view: true,
-							cssClass: 'profile-dialog',
-							destroyOnClose: true,
-							modal: true,
-							resizable: false,
-							width: 800
+				var dialog = Liferay.Util.Window.getWindow({
+					dialog: {
+						align: {
+							node: null,
+							points: ['tc', 'tc']
 						},
-						id: '<portlet:namespace />Dialog',
-						title: node.getAttribute('data-title'),
-						uri: uri
-					}
-				)
+						constrain2view: true,
+						cssClass: 'profile-dialog',
+						destroyOnClose: true,
+						modal: true,
+						resizable: false,
+						width: 800
+					},
+					id: '<portlet:namespace />Dialog',
+					title: node.getAttribute('data-title'),
+					uri: uri
+				});
 			};
 	</aui:script>
 </c:if>

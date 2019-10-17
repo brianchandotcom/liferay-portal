@@ -381,18 +381,17 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 />
 
 <aui:script use="liferay-journal-navigation">
-	var journalNavigation = new Liferay.Portlet.JournalNavigation(
-		{
-			editEntryUrl: '<portlet:actionURL />',
-			form: {
-				method: 'POST',
-				node: A.one(document.<portlet:namespace />fm)
-			},
-			moveEntryUrl: '<portlet:renderURL><portlet:param name="mvcPath" value="/move_entries.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
-			namespace: '<portlet:namespace />',
-			searchContainerId: 'articles'
-		}
-	);
+	var journalNavigation = new Liferay.Portlet.JournalNavigation({
+		editEntryUrl: '<portlet:actionURL />',
+		form: {
+			method: 'POST',
+			node: A.one(document.<portlet:namespace />fm)
+		},
+		moveEntryUrl:
+			'<portlet:renderURL><portlet:param name="mvcPath" value="/move_entries.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
+		namespace: '<portlet:namespace />',
+		searchContainerId: 'articles'
+	});
 
 	var clearJournalNavigationHandles = function(event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {

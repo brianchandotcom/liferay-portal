@@ -159,7 +159,10 @@ portletURL.setParameter("portletResource", portletResource);
 												</ul>
 
 												<aui:script>
-													Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>', '<portlet:namespace />showChangeConfiguration<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
+													Liferay.Util.toggleBoxes(
+														'<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>',
+														'<portlet:namespace />showChangeConfiguration<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>'
+													);
 												</aui:script>
 											</li>
 										</ul>
@@ -405,7 +408,10 @@ portletURL.setParameter("portletResource", portletResource);
 															</ul>
 
 															<aui:script>
-																Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
+																Liferay.Util.toggleBoxes(
+																	'<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>',
+																	'<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>'
+																);
 															</aui:script>
 
 														<%
@@ -465,58 +471,57 @@ portletURL.setParameter("portletResource", portletResource);
 		</aui:form>
 
 		<aui:script use="aui-base">
-			var liferayForm = Liferay.Form.get('<portlet:namespace />fm1');
+		var liferayForm = Liferay.Form.get('<portlet:namespace />fm1');
 
-			var form = liferayForm.formNode;
+		var form = liferayForm.formNode;
 
-			form.on(
-				'submit',
-				function(event) {
-					event.halt();
+		form.on('submit', function(event) {
+			event.halt();
 
-					var exportImport = Liferay.component('<portlet:namespace />ExportImportComponent');
-
-					var dateChecker = exportImport.getDateRangeChecker();
-
-					if (dateChecker.validRange) {
-						submitForm(form, form.attr('action'), false);
-					}
-					else {
-						exportImport.showNotification(dateChecker);
-					}
-				}
+			var exportImport = Liferay.component(
+				'<portlet:namespace />ExportImportComponent'
 			);
 
-			var oldFieldRules = liferayForm.get('fieldRules');
+			var dateChecker = exportImport.getDateRangeChecker();
 
-			var fieldRules = [
-				{
-					body: function(val, fieldNode, ruleValue) {
+			if (dateChecker.validRange) {
+				submitForm(form, form.attr('action'), false);
+			} else {
+				exportImport.showNotification(dateChecker);
+			}
+		});
 
-						<%
-						JSONArray blacklistCharJSONArray = JSONFactoryUtil.createJSONArray();
+		var oldFieldRules = liferayForm.get('fieldRules');
 
-						for (String s : PropsValues.DL_CHAR_BLACKLIST) {
-							blacklistCharJSONArray.put(s);
+		var fieldRules = [
+			{
+				body: function(val, fieldNode, ruleValue) {
+
+					<%
+					JSONArray blacklistCharJSONArray = JSONFactoryUtil.createJSONArray();
+
+					for (String s : PropsValues.DL_CHAR_BLACKLIST) {
+						blacklistCharJSONArray.put(s);
+					}
+					%>
+
+					var blacklistCharJSONArray = <%= blacklistCharJSONArray.toJSONString() %>;
+
+					for (var i = 0; i < blacklistCharJSONArray.length; i++) {
+						if (val.indexOf(blacklistCharJSONArray[i]) !== -1) {
+							return false;
 						}
-						%>
+					}
 
-						var blacklistCharJSONArray = <%= blacklistCharJSONArray.toJSONString() %>;
-
-						for (var i = 0; i < blacklistCharJSONArray.length; i++) {
-							if (val.indexOf(blacklistCharJSONArray[i]) !== -1) {
-								return false;
-							}
-						};
-
-						return true;
-					},
-					custom: true,
-					errorMessage: '<%= LanguageUtil.get(request, "the-following-are-invalid-characters") + HtmlUtil.escapeJS(Arrays.toString(PropsValues.DL_CHAR_BLACKLIST)) %>',
-					fieldName: '<portlet:namespace />exportFileName',
-					validatorName: 'custom_exportFileNameValidator'
-				}
-			];
+					return true;
+				},
+				custom: true,
+				errorMessage:
+					'<%= LanguageUtil.get(request, "the-following-are-invalid-characters") + HtmlUtil.escapeJS(Arrays.toString(PropsValues.DL_CHAR_BLACKLIST)) %>',
+				fieldName: '<portlet:namespace />exportFileName',
+				validatorName: 'custom_exportFileNameValidator'
+			}
+		];
 
 		if (oldFieldRules) {
 			fieldRules = fieldRules.concat(oldFieldRules);
@@ -542,48 +547,56 @@ portletURL.setParameter("portletResource", portletResource);
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
 	</liferay-portlet:resourceURL>
 
-	var exportImport = new Liferay.ExportImport(
-		{
-			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
-			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
-			form: document.<portlet:namespace />fm1,
-			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
-			locale: '<%= locale.toLanguageTag() %>',
-			namespace: '<portlet:namespace />',
-			processesNode: '#exportProcesses',
-			processesResourceURL: '<%= HtmlUtil.escapeJS(exportProcessesURL.toString()) %>',
-			rangeAllNode: '#rangeAll',
-			rangeDateRangeNode: '#rangeDateRange',
-			rangeLastNode: '#rangeLast',
-			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
-			timeZoneOffset: <%= timeZoneOffset %>
-		}
-	);
+	var exportImport = new Liferay.ExportImport({
+		commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
+		deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
+		form: document.<portlet:namespace />fm1,
+		incompleteProcessMessageNode:
+			'#<portlet:namespace />incompleteProcessMessage',
+		locale: '<%= locale.toLanguageTag() %>',
+		namespace: '<portlet:namespace />',
+		processesNode: '#exportProcesses',
+		processesResourceURL:
+			'<%= HtmlUtil.escapeJS(exportProcessesURL.toString()) %>',
+		rangeAllNode: '#rangeAll',
+		rangeDateRangeNode: '#rangeDateRange',
+		rangeLastNode: '#rangeLast',
+		ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
+		timeZoneOffset: <%= timeZoneOffset %>
+	});
 
 	Liferay.component('<portlet:namespace />ExportImportComponent', exportImport);
 
-	Liferay.once(
-		'destroyPortlet',
-		function() {
-			exportImport.destroy();
-		}
-	);
+	Liferay.once('destroyPortlet', function() {
+		exportImport.destroy();
+	});
 </aui:script>
 
 <aui:script>
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', ['<portlet:namespace />startEndDate', '<portlet:namespace />rangeLastInputs']);
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeDateRange', '<portlet:namespace />startEndDate', '<portlet:namespace />rangeLastInputs');
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeLast', '<portlet:namespace />rangeLastInputs', ['<portlet:namespace />startEndDate']);
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', [
+		'<portlet:namespace />startEndDate',
+		'<portlet:namespace />rangeLastInputs'
+	]);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />rangeDateRange',
+		'<portlet:namespace />startEndDate',
+		'<portlet:namespace />rangeLastInputs'
+	);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />rangeLast',
+		'<portlet:namespace />rangeLastInputs',
+		['<portlet:namespace />startEndDate']
+	);
 
 	<c:if test="<%= StagingUtil.isChangeTrackingEnabled(company.getCompanyId()) %>">
-	var form = document.<portlet:namespace />fm1;
+		var form = document.<portlet:namespace />fm1;
 
-	if (form) {
-		var formElements = form.elements;
+		if (form) {
+			var formElements = form.elements;
 
-		for (var i = 0; i < formElements.length; ++i) {
-			formElements[i].disabled = true;
+			for (var i = 0; i < formElements.length; ++i) {
+				formElements[i].disabled = true;
+			}
 		}
-	}
 	</c:if>
 </aui:script>

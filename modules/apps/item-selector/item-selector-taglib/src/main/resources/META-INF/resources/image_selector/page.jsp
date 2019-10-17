@@ -141,30 +141,25 @@ if (!draggableImage.equals("none")) {
 %>
 
 <aui:script use="<%= modules %>">
-	var imageSelector = new Liferay.ImageSelector(
-		{
-			errorNode: '#<%= randomNamespace + "errorAlert" %>',
-			fileEntryImageNode: '#<%= randomNamespace %>image',
-			itemSelectorEventName: '<%= itemSelectorEventName %>',
-			itemSelectorURL: '<%= itemSelectorURL %>',
-			maxFileSize: <%= maxFileSize %>,
-			namespace: '<%= randomNamespace %>',
-			paramName: '<portlet:namespace /><%= paramName %>',
-			rootNode: '#<%= randomNamespace %>taglibImageSelector',
-			uploadURL: '<%= uploadURL %>',
-			validExtensions: '<%= validExtensions %>'
-		}
-	);
+	var imageSelector = new Liferay.ImageSelector({
+		errorNode: '#<%= randomNamespace + "errorAlert" %>',
+		fileEntryImageNode: '#<%= randomNamespace %>image',
+		itemSelectorEventName: '<%= itemSelectorEventName %>',
+		itemSelectorURL: '<%= itemSelectorURL %>',
+		maxFileSize: <%= maxFileSize %>,
+		namespace: '<%= randomNamespace %>',
+		paramName: '<portlet:namespace /><%= paramName %>',
+		rootNode: '#<%= randomNamespace %>taglibImageSelector',
+		uploadURL: '<%= uploadURL %>',
+		validExtensions: '<%= validExtensions %>'
+	});
 
 	<c:if test='<%= !draggableImage.equals("none") %>'>
-		imageSelector.plug(
-			Liferay.CoverCropper,
-			{
-				direction: '<%= draggableImage %>',
-				imageContainerSelector: '.image-wrapper',
-				imageSelector: '#<%= randomNamespace %>image'
-			}
-		);
+		imageSelector.plug(Liferay.CoverCropper, {
+			direction: '<%= draggableImage %>',
+			imageContainerSelector: '.image-wrapper',
+			imageSelector: '#<%= randomNamespace %>image'
+		});
 	</c:if>
 
 	var destroyInstance = function(event) {

@@ -52,11 +52,9 @@ viewURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 <aui:script use="liferay-marketplace-messenger">
 	var frame = document.getElementById('<portlet:namespace />frame');
 
-	Liferay.MarketplaceMessenger.init(
-		{
-			targetFrame: frame
-		}
-	);
+	Liferay.MarketplaceMessenger.init({
+		targetFrame: frame
+	});
 
 	Liferay.MarketplaceMessenger.receiveMessage(
 		function(event) {
@@ -71,24 +69,27 @@ viewURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 					if (response.width) {
 						frame.style.width = response.width + 'px';
 					}
-				}
-				else if (response.cmd == 'scrollTo' || response.cmd == 'init') {
+				} else if (response.cmd == 'scrollTo' || response.cmd == 'init') {
 					var scrollX = response.scrollX || 0;
 					var scrollY = response.scrollY || 0;
 
 					window.scrollTo(scrollX, scrollY);
-				}
-				else if (response.cmd == 'goto') {
+				} else if (response.cmd == 'goto') {
 					var url = '<%= themeDisplay.getURLControlPanel() %>';
 
 					if (response.panel == 'purchased') {
-						url = '<liferay-portlet:renderURL doAsGroupId="<%= themeDisplay.getScopeGroupId() %>" portletName="<%= MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED %>" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>" />';
-					}
-					else if (response.panel == 'store') {
-						url = '<liferay-portlet:renderURL doAsGroupId="<%= themeDisplay.getScopeGroupId() %>" portletName="<%= MarketplaceStorePortletKeys.MARKETPLACE_STORE %>" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>" />';
+						url =
+							'<liferay-portlet:renderURL doAsGroupId="<%= themeDisplay.getScopeGroupId() %>" portletName="<%= MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED %>" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>" />';
+					} else if (response.panel == 'store') {
+						url =
+							'<liferay-portlet:renderURL doAsGroupId="<%= themeDisplay.getScopeGroupId() %>" portletName="<%= MarketplaceStorePortletKeys.MARKETPLACE_STORE %>" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>" />';
 
 						if (response.appEntryId) {
-							url = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(MarketplaceStorePortletKeys.MARKETPLACE_STORE) %>appEntryId=' + response.appEntryId, url);
+							url = Liferay.Util.addParams(
+								'<%= PortalUtil.getPortletNamespace(MarketplaceStorePortletKeys.MARKETPLACE_STORE) %>appEntryId=' +
+									response.appEntryId,
+								url
+							);
 						}
 					}
 

@@ -235,15 +235,13 @@ else {
 <aui:script position="inline" use="liferay-staging-version">
 	var stagingBar = Liferay.StagingBar;
 
-	stagingBar.init(
-		{
-			layoutRevisionStatusURL: '<%= layoutRevisionStatusURL %>',
-			markAsReadyForPublicationURL: '<%= markAsReadyForPublicationURL %>',
-			namespace: '<portlet:namespace />',
-			portletId: '<%= portletDisplay.getId() %>',
-			viewHistoryURL: '<%= viewHistoryURL %>'
-		}
-	);
+	stagingBar.init({
+		layoutRevisionStatusURL: '<%= layoutRevisionStatusURL %>',
+		markAsReadyForPublicationURL: '<%= markAsReadyForPublicationURL %>',
+		namespace: '<portlet:namespace />',
+		portletId: '<%= portletDisplay.getId() %>',
+		viewHistoryURL: '<%= viewHistoryURL %>'
+	});
 </aui:script>
 
 <liferay-util:buffer
@@ -260,61 +258,56 @@ else {
 
 <aui:script>
 	function <portlet:namespace />openPageVariationsDialog() {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					after: {
-						destroy: function(event) {
-							window.location.reload();
-						}
-					},
-					destroyOnHide: true
+		Liferay.Util.openWindow({
+			dialog: {
+				after: {
+					destroy: function(event) {
+						window.location.reload();
+					}
 				},
-				id: 'pagesVariationsDialog',
-				title: '<liferay-ui:message arguments="<%= pageVariationsHelpIcon %>" key="page-variations-x" />',
+				destroyOnHide: true
+			},
+			id: 'pagesVariationsDialog',
+			title:
+				'<liferay-ui:message arguments="<%= pageVariationsHelpIcon %>" key="page-variations-x" />',
 
-				<liferay-portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="mvcRenderCommandName" value="viewLayoutBranches" />
-					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
-				</liferay-portlet:renderURL>
+			<liferay-portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcRenderCommandName" value="viewLayoutBranches" />
+				<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
+			</liferay-portlet:renderURL>
 
-				uri: '<%= HtmlUtil.escapeJS(layoutBranchesURL) %>'
-			}
-		);
+			uri: '<%= HtmlUtil.escapeJS(layoutBranchesURL) %>'
+		});
 	}
 
 	function <portlet:namespace />openSitePagesVariationsDialog() {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					after: {
-						destroy: function(event) {
-							window.location.reload();
-						}
-					},
-					destroyOnHide: true
+		Liferay.Util.openWindow({
+			dialog: {
+				after: {
+					destroy: function(event) {
+						window.location.reload();
+					}
 				},
-				id: 'sitePagesVariationDialog',
-				title: '<liferay-ui:message arguments="<%= sitePagesVariationsHelpIcon %>" key="site-pages-variation-x" />',
+				destroyOnHide: true
+			},
+			id: 'sitePagesVariationDialog',
+			title:
+				'<liferay-ui:message arguments="<%= sitePagesVariationsHelpIcon %>" key="site-pages-variation-x" />',
 
-				<liferay-portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="mvcRenderCommandName" value="viewLayoutSetBranches" />
-				</liferay-portlet:renderURL>
+			<liferay-portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcRenderCommandName" value="viewLayoutSetBranches" />
+			</liferay-portlet:renderURL>
 
-				uri: '<%= HtmlUtil.escapeJS(layoutSetBranchesURL) %>'
-			}
-		);
+			uri: '<%= HtmlUtil.escapeJS(layoutSetBranchesURL) %>'
+		});
 	}
 
 	function <portlet:namespace />submitLayoutRevision(publishURL) {
-		Liferay.fire(
-			'<portlet:namespace />submit',
-			{
-				currentURL: '<%= currentURL %>',
-				incomplete: <%= layoutRevision.isIncomplete() %>,
-				publishURL: publishURL
-			}
-		);
+		Liferay.fire('<portlet:namespace />submit', {
+			currentURL: '<%= currentURL %>',
+			incomplete: <%= layoutRevision.isIncomplete() %>,
+			publishURL: publishURL
+		});
 
 		Liferay.Util.toggleDisabled('#<portlet:namespace />readyToggle', true);
 	}

@@ -39,36 +39,40 @@ Folder folder = FolderLocalServiceUtil.getFolder(folderId);
 
 	var form = A.one('#<portlet:namespace />dialogFm');
 
-	form.on(
-		'submit',
-		function(event) {
-			event.preventDefault();
+	form.on('submit', function(event) {
+		event.preventDefault();
 
-			Liferay.Mail.setStatus('info', '<liferay-ui:message key="updating-folder" />', true);
+		Liferay.Mail.setStatus(
+			'info',
+			'<liferay-ui:message key="updating-folder" />',
+			true
+		);
 
-			A.io.request(
-				themeDisplay.getLayoutURL() + '/-/mail/rename_folder',
-				{
-					dataType: 'JSON',
-					form: {
-						id: form.getDOMNode()
-					},
-					on: {
-						failure: function(event, id, obj) {
-							Liferay.Mail.setStatus('error', '<liferay-ui:message key="unable-to-connect-with-mail-server" />');
-						},
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
+		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/rename_folder', {
+			dataType: 'JSON',
+			form: {
+				id: form.getDOMNode()
+			},
+			on: {
+				failure: function(event, id, obj) {
+					Liferay.Mail.setStatus(
+						'error',
+						'<liferay-ui:message key="unable-to-connect-with-mail-server" />'
+					);
+				},
+				success: function(event, id, obj) {
+					var responseData = this.get('responseData');
 
-							Liferay.Mail.setStatus(responseData.status, responseData.message);
+					Liferay.Mail.setStatus(
+						responseData.status,
+						responseData.message
+					);
 
-							if (responseData.status == 'success') {
-								Liferay.Mail.loadFolders(Liferay.Mail.accountId);
-							}
-						}
+					if (responseData.status == 'success') {
+						Liferay.Mail.loadFolders(Liferay.Mail.accountId);
 					}
 				}
-			);
-		}
-	);
+			}
+		});
+	});
 </aui:script>

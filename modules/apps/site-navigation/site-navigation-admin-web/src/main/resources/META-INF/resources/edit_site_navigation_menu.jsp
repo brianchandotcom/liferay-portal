@@ -106,20 +106,17 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 		'click',
 		'*[data-type="add-button"] .dropdown-item',
 		function(event) {
-			Liferay.Util.openInDialog(
-				event,
-				{
-					dialog: {
-						destroyOnHide: true
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
-					},
-					id: '<portlet:namespace/>addMenuItem',
-					title: event.delegateTarget.title || event.delegateTarget.innerText,
-					uri: event.delegateTarget.href
-				}
-			);
+			Liferay.Util.openInDialog(event, {
+				dialog: {
+					destroyOnHide: true
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
+				id: '<portlet:namespace/>addMenuItem',
+				title: event.delegateTarget.title || event.delegateTarget.innerText,
+				uri: event.delegateTarget.href
+			});
 		}
 	);
 
@@ -130,11 +127,17 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			addMenuItemClickHandler = null;
 		}
 
-		Liferay.detach('<%= portletDisplay.getId() %>:portletRefreshed', destroyAddMenuItemClickHandler);
+		Liferay.detach(
+			'<%= portletDisplay.getId() %>:portletRefreshed',
+			destroyAddMenuItemClickHandler
+		);
 		Liferay.detach('destroyPortlet', destroyAddMenuItemClickHandler);
 	};
 
-	Liferay.on('<%= portletDisplay.getId() %>:portletRefreshed', destroyAddMenuItemClickHandler);
+	Liferay.on(
+		'<%= portletDisplay.getId() %>:portletRefreshed',
+		destroyAddMenuItemClickHandler
+	);
 	Liferay.on('destroyPortlet', destroyAddMenuItemClickHandler);
 </aui:script>
 
@@ -177,13 +180,14 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 		}
 
 		if (saveChanges) {
-			const sidebarForm = document.querySelector('#<portlet:namespace />sidebarBody form');
+			const sidebarForm = document.querySelector(
+				'#<portlet:namespace />sidebarBody form'
+			);
 
 			if (sidebarForm) {
 				sidebarForm.submit();
 			}
-		}
-		else {
+		} else {
 			if (sidebarHeaderButtonClickEventListener) {
 				sidebarHeaderButtonClickEventListener.removeListener();
 				sidebarHeaderButtonClickEventListener = null;
@@ -218,7 +222,8 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 			'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/edit_site_navigation_menu_item.jsp" /></portlet:renderURL>',
 			{
 				redirect: '<%= currentURL %>',
-				siteNavigationMenuItemId: siteNavigationMenuItem.dataset.siteNavigationMenuItemId
+				siteNavigationMenuItemId:
+					siteNavigationMenuItem.dataset.siteNavigationMenuItemId
 			}
 		);
 	};
@@ -236,7 +241,10 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 		siteNavigationMenuItemRemoveButtonKeyupHandler = null;
 		showSiteNavigationMenuSettingsButtonClickHandler = null;
 
-		Liferay.detach('<%= portletDisplay.getId() %>:portletRefreshed', handlePortletDestroy);
+		Liferay.detach(
+			'<%= portletDisplay.getId() %>:portletRefreshed',
+			handlePortletDestroy
+		);
 		Liferay.detach('destroyPortlet', handlePortletDestroy);
 	};
 
@@ -254,7 +262,8 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 			'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/site_navigation_menu_settings.jsp" /></portlet:renderURL>',
 			{
 				redirect: '<%= currentURL %>',
-				siteNavigationMenuId: '<%= siteNavigationAdminDisplayContext.getSiteNavigationMenuId() %>'
+				siteNavigationMenuId:
+					'<%= siteNavigationAdminDisplayContext.getSiteNavigationMenuId() %>'
 			}
 		);
 	};
@@ -281,24 +290,24 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 	};
 
 	var openSidebar = function(title, url, data) {
-		sidebar.body = '<div id="<portlet:namespace />sidebarBody"><div class="loading-animation"></div></div>';
-		sidebar.header = '<div class="autofit-row sidebar-section"><div class="autofit-col autofit-col-expand"><h4 class="component-title"><span class="text-truncate-inline"><span class="text-truncate">' + title + '</span></span></h4></div><div class="autofit-col"><button class="btn btn-monospaced btn-unstyled" id="<portlet:namespace />sidebarHeaderButton" type="button"><span class="icon-monospaced"><aui:icon image="times" markupView="lexicon" /></span></button></div></div>';
+		sidebar.body =
+			'<div id="<portlet:namespace />sidebarBody"><div class="loading-animation"></div></div>';
+		sidebar.header =
+			'<div class="autofit-row sidebar-section"><div class="autofit-col autofit-col-expand"><h4 class="component-title"><span class="text-truncate-inline"><span class="text-truncate">' +
+			title +
+			'</span></span></h4></div><div class="autofit-col"><button class="btn btn-monospaced btn-unstyled" id="<portlet:namespace />sidebarHeaderButton" type="button"><span class="icon-monospaced"><aui:icon image="times" markupView="lexicon" /></span></button></div></div>';
 		sidebar.visible = true;
 
-		Liferay.Util.fetch(
-			url,
-			{
-				body: objectToFormDataModule.default(
-					Liferay.Util.ns('<portlet:namespace />', data)
-				),
-				method: 'POST'
-			}
-		).then(
-			function(response) {
+		Liferay.Util.fetch(url, {
+			body: objectToFormDataModule.default(
+				Liferay.Util.ns('<portlet:namespace />', data)
+			),
+			method: 'POST'
+		})
+			.then(function(response) {
 				return response.text();
-			}
-		).then(
-			function(responseContent) {
+			})
+			.then(function(responseContent) {
 				const sidebarBody = document.getElementById(
 					'<portlet:namespace />sidebarBody'
 				);
@@ -326,55 +335,51 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 						handleSidebarCloseButtonClick
 					);
 				}
-			}
-		);
+			});
 	};
 
 	<c:if test="<%= siteNavigationAdminDisplayContext.hasUpdatePermission() %>">
-		Liferay.componentReady(
-			'<portlet:namespace />sidebar'
-		)
-		.then(
-			function(_sidebar) {
-				sidebar = _sidebar;
+		Liferay.componentReady('<portlet:namespace />sidebar').then(function(_sidebar) {
+			sidebar = _sidebar;
 
-				sidebar.on('hide', closeSidebar);
+			sidebar.on('hide', closeSidebar);
 
-				siteNavigationMenuEditor = new siteNavigationMenuEditorModule.default(
-					{
-						editSiteNavigationMenuItemParentURL: '<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
-						namespace: '<portlet:namespace />'
-					}
-				);
+			siteNavigationMenuEditor = new siteNavigationMenuEditorModule.default({
+				editSiteNavigationMenuItemParentURL:
+					'<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
+				namespace: '<portlet:namespace />'
+			});
 
-				siteNavigationMenuEditor.on(
-					'selectedMenuItemChanged',
-					handleSelectedMenuItemChanged
-				);
+			siteNavigationMenuEditor.on(
+				'selectedMenuItemChanged',
+				handleSelectedMenuItemChanged
+			);
 
-				siteNavigationMenuItemRemoveButtonClickHandler = dom.delegate(
-					document.body,
-					'click',
-					'.site-navigation-menu-item__remove-icon',
-					handleSiteNavigationMenuItemRemoveIconClick
-				);
+			siteNavigationMenuItemRemoveButtonClickHandler = dom.delegate(
+				document.body,
+				'click',
+				'.site-navigation-menu-item__remove-icon',
+				handleSiteNavigationMenuItemRemoveIconClick
+			);
 
-				siteNavigationMenuItemRemoveButtonKeyupHandler = dom.delegate(
-					document.body,
-					'keyup',
-					'.site-navigation-menu-item__remove-icon',
-					handleSiteNavigationMenuItemRemoveIconKeyup
-				);
+			siteNavigationMenuItemRemoveButtonKeyupHandler = dom.delegate(
+				document.body,
+				'keyup',
+				'.site-navigation-menu-item__remove-icon',
+				handleSiteNavigationMenuItemRemoveIconKeyup
+			);
 
-				showSiteNavigationMenuSettingsButtonClickHandler = dom.on(
-					'#<portlet:namespace />showSiteNavigationMenuSettings',
-					'click',
-					handleShowSiteNavigationMenuSettingsButtonClick
-				);
+			showSiteNavigationMenuSettingsButtonClickHandler = dom.on(
+				'#<portlet:namespace />showSiteNavigationMenuSettings',
+				'click',
+				handleShowSiteNavigationMenuSettingsButtonClick
+			);
 
-				Liferay.on('<%= portletDisplay.getId() %>:portletRefreshed', handlePortletDestroy);
-				Liferay.on('destroyPortlet', handlePortletDestroy);
-			}
-		);
+			Liferay.on(
+				'<%= portletDisplay.getId() %>:portletRefreshed',
+				handlePortletDestroy
+			);
+			Liferay.on('destroyPortlet', handlePortletDestroy);
+		});
 	</c:if>
 </aui:script>

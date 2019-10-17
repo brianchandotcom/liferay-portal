@@ -192,14 +192,12 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 </aui:form>
 
 <aui:script use="liferay-admin">
-	new Liferay.Portlet.Admin(
-		{
-			form: document.<portlet:namespace />fm,
-			indexActionsPanel: '#adminSearchAdminIndexActionsPanel',
-			namespace: '<portlet:namespace />',
-			redirectUrl: '<%= redirectURL %>',
-			submitButton: '.save-server-button',
-			url: '<portlet:actionURL name="/search_admin/edit" />'
-		}
-	);
+	new Liferay.Portlet.Admin({
+		form: document.<portlet:namespace />fm,
+		indexActionsPanel: '#adminSearchAdminIndexActionsPanel',
+		namespace: '<portlet:namespace />',
+		redirectUrl: '<%= redirectURL %>',
+		submitButton: '.save-server-button',
+		url: '<portlet:actionURL name="/search_admin/edit" />'
+	});
 </aui:script>

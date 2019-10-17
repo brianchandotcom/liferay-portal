@@ -90,19 +90,17 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 			function(event) {
 				var delegateTarget = event.delegateTarget;
 
-				Liferay.Util.openWindow(
-					{
-						dialog: {
-							destroyOnHide: true,
-							modal: true
-						},
-						dialogIframe: {
-							bodyCssClass: 'dialog-with-footer article-preview'
-						},
-						title: '<liferay-ui:message key="preview" />',
-						uri: delegateTarget.getAttribute('data-href')
-					}
-				);
+				Liferay.Util.openWindow({
+					dialog: {
+						destroyOnHide: true,
+						modal: true
+					},
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer article-preview'
+					},
+					title: '<liferay-ui:message key="preview" />',
+					uri: delegateTarget.getAttribute('data-href')
+				});
 			}
 		);
 

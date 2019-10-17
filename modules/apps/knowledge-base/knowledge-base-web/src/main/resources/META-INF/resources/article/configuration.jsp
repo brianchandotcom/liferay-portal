@@ -103,12 +103,14 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 </liferay-frontend:edit-form>
 
 <aui:script>
-	var <portlet:namespace />form = document.getElementById('<portlet:namespace />fm');
+	var <portlet:namespace />form = document.getElementById(
+		'<portlet:namespace />fm'
+	);
 
 	if (<portlet:namespace />form) {
-		document.getElementById('<portlet:namespace />selectKBArticleButton').addEventListener(
-			'click',
-			function(event) {
+		document
+			.getElementById('<portlet:namespace />selectKBArticleButton')
+			.addEventListener('click', function(event) {
 				Liferay.Util.selectEntity(
 					{
 						dialog: {
@@ -139,10 +141,12 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 							nameValue: event.title
 						};
 
-						Liferay.Util.selectFolder(kbArticleData, '<portlet:namespace />');
+						Liferay.Util.selectFolder(
+							kbArticleData,
+							'<portlet:namespace />'
+						);
 					}
 				);
-			}
-		);
+			});
 	}
 </aui:script>

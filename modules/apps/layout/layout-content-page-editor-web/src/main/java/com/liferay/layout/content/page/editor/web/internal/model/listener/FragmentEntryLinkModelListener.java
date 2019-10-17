@@ -14,15 +14,15 @@
 
 package com.liferay.layout.content.page.editor.web.internal.model.listener;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.model.AssetEntryUsage;
-import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
+import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -57,9 +57,9 @@ public class FragmentEntryLinkModelListener
 	public void onAfterRemove(FragmentEntryLink fragmentEntryLink)
 		throws ModelListenerException {
 
-		_assetEntryUsageLocalService.deleteAssetEntryUsages(
-			_portal.getClassNameId(FragmentEntryLink.class),
+		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+			_portal.getClassNameId(FragmentEntryLink.class),
 			fragmentEntryLink.getClassPK());
 
 		try {
@@ -78,7 +78,7 @@ public class FragmentEntryLinkModelListener
 	public void onAfterUpdate(FragmentEntryLink fragmentEntryLink)
 		throws ModelListenerException {
 
-		_updateAssetEntryUsage(fragmentEntryLink);
+		_updateLayoutClassedModelUsage(fragmentEntryLink);
 
 		_updateDDMTemplateLink(fragmentEntryLink);
 	}
@@ -126,42 +126,6 @@ public class FragmentEntryLinkModelListener
 					className.getClassNameId(),
 					fragmentEntryLink.getFragmentEntryLinkId());
 			}
-		}
-	}
-
-	private void _updateAssetEntryUsage(FragmentEntryLink fragmentEntryLink) {
-		_assetEntryUsageLocalService.deleteAssetEntryUsages(
-			_portal.getClassNameId(FragmentEntryLink.class),
-			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-			fragmentEntryLink.getClassPK());
-
-		Set<AssetEntry> assetEntries =
-			ContentUtil.getFragmentEntryLinkMappedAssetEntries(
-				fragmentEntryLink);
-
-		for (AssetEntry assetEntry : assetEntries) {
-			AssetEntryUsage assetEntryUsage =
-				_assetEntryUsageLocalService.fetchAssetEntryUsage(
-					assetEntry.getEntryId(),
-					_portal.getClassNameId(FragmentEntryLink.class),
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-					fragmentEntryLink.getClassPK());
-
-			if (assetEntryUsage != null) {
-				continue;
-			}
-
-			ServiceContext serviceContext = Optional.ofNullable(
-				ServiceContextThreadLocal.getServiceContext()
-			).orElse(
-				new ServiceContext()
-			);
-
-			_assetEntryUsageLocalService.addAssetEntryUsage(
-				fragmentEntryLink.getGroupId(), assetEntry.getEntryId(),
-				_portal.getClassNameId(FragmentEntryLink.class),
-				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-				fragmentEntryLink.getClassPK(), serviceContext);
 		}
 	}
 
@@ -248,8 +212,50 @@ public class FragmentEntryLinkModelListener
 			ddmTemplate.getTemplateId());
 	}
 
-	@Reference
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
+	private void _updateLayoutClassedModelUsage(
+		FragmentEntryLink fragmentEntryLink) {
+
+		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+			_portal.getClassNameId(FragmentEntryLink.class),
+			fragmentEntryLink.getClassPK());
+
+		Set<InfoDisplayObjectProvider> infoDisplayObjectProviders =
+			ContentUtil.getFragmentEntryLinkMappedInfoDisplayObjectProviders(
+				fragmentEntryLink);
+
+		for (InfoDisplayObjectProvider infoDisplayObjectProvider :
+				infoDisplayObjectProviders) {
+
+			LayoutClassedModelUsage layoutClassedModelUsage =
+				_layoutClassedModelUsageLocalService.
+					fetchLayoutClassedModelUsage(
+						infoDisplayObjectProvider.getClassNameId(),
+						infoDisplayObjectProvider.getClassPK(),
+						String.valueOf(
+							fragmentEntryLink.getFragmentEntryLinkId()),
+						_portal.getClassNameId(FragmentEntryLink.class),
+						fragmentEntryLink.getClassPK());
+
+			if (layoutClassedModelUsage != null) {
+				continue;
+			}
+
+			ServiceContext serviceContext = Optional.ofNullable(
+				ServiceContextThreadLocal.getServiceContext()
+			).orElse(
+				new ServiceContext()
+			);
+
+			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+				fragmentEntryLink.getGroupId(),
+				infoDisplayObjectProvider.getClassNameId(),
+				infoDisplayObjectProvider.getClassPK(),
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+				_portal.getClassNameId(FragmentEntryLink.class),
+				fragmentEntryLink.getClassPK(), serviceContext);
+		}
+	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
@@ -262,6 +268,10 @@ public class FragmentEntryLinkModelListener
 
 	@Reference
 	private DDMTemplateManager _ddmTemplateManager;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private Portal _portal;

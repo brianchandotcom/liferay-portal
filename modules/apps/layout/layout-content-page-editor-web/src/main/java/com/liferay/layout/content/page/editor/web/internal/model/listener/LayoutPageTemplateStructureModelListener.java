@@ -14,8 +14,8 @@
 
 package com.liferay.layout.content.page.editor.web.internal.model.listener;
 
-import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -36,15 +36,16 @@ public class LayoutPageTemplateStructureModelListener
 			LayoutPageTemplateStructure layoutPageTemplateStructure)
 		throws ModelListenerException {
 
-		_assetEntryUsageLocalService.deleteAssetEntryUsages(
-			_portal.getClassNameId(LayoutPageTemplateStructure.class),
+		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 			String.valueOf(
 				layoutPageTemplateStructure.getLayoutPageTemplateStructureId()),
+			_portal.getClassNameId(LayoutPageTemplateStructure.class),
 			layoutPageTemplateStructure.getClassPK());
 	}
 
 	@Reference
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private Portal _portal;

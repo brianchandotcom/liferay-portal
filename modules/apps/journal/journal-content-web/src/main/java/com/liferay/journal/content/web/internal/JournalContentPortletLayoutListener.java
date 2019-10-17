@@ -14,10 +14,6 @@
 
 package com.liferay.journal.content.web.internal;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.model.AssetEntryUsage;
-import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -25,6 +21,8 @@ import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
+import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -88,7 +86,7 @@ public class JournalContentPortletLayoutListener
 				return;
 			}
 
-			_addAssetEntryUsage(layout, portletId, article);
+			_addLayoutClassedModelUsage(layout, portletId, article);
 
 			_journalContentSearchLocalService.updateContentSearch(
 				layout.getGroupId(), layout.isPrivateLayout(),
@@ -128,8 +126,8 @@ public class JournalContentPortletLayoutListener
 				return;
 			}
 
-			_assetEntryUsageLocalService.deleteAssetEntryUsages(
-				_portal.getClassNameId(Portlet.class), portletId, plid);
+			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+				portletId, _portal.getClassNameId(Portlet.class), plid);
 
 			_journalContentSearchLocalService.deleteArticleContentSearch(
 				layout.getGroupId(), layout.isPrivateLayout(),
@@ -162,8 +160,8 @@ public class JournalContentPortletLayoutListener
 		try {
 			Layout layout = _layoutLocalService.getLayout(plid);
 
-			_assetEntryUsageLocalService.deleteAssetEntryUsages(
-				_portal.getClassNameId(Portlet.class), portletId, plid);
+			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+				portletId, _portal.getClassNameId(Portlet.class), plid);
 
 			_journalContentSearchLocalService.deleteArticleContentSearch(
 				layout.getGroupId(), layout.isPrivateLayout(),
@@ -172,7 +170,7 @@ public class JournalContentPortletLayoutListener
 			JournalArticle article = _getArticle(layout, portletId);
 
 			if (article != null) {
-				_addAssetEntryUsage(layout, portletId, article);
+				_addLayoutClassedModelUsage(layout, portletId, article);
 
 				_journalContentSearchLocalService.updateContentSearch(
 					layout.getGroupId(), layout.isPrivateLayout(),
@@ -278,29 +276,23 @@ public class JournalContentPortletLayoutListener
 		return portletIds;
 	}
 
-	private void _addAssetEntryUsage(
+	private void _addLayoutClassedModelUsage(
 		Layout layout, String portletId, JournalArticle article) {
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			_portal.getClassNameId(JournalArticle.class),
-			article.getResourcePrimKey());
+		LayoutClassedModelUsage layoutClassedModelUsage =
+			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
+				_portal.getClassNameId(JournalArticle.class),
+				article.getResourcePrimKey(), portletId,
+				_portal.getClassNameId(Portlet.class), layout.getPlid());
 
-		if (assetEntry == null) {
+		if (layoutClassedModelUsage != null) {
 			return;
 		}
 
-		AssetEntryUsage assetEntryUsage =
-			_assetEntryUsageLocalService.fetchAssetEntryUsage(
-				assetEntry.getEntryId(), _portal.getClassNameId(Portlet.class),
-				portletId, layout.getPlid());
-
-		if (assetEntryUsage != null) {
-			return;
-		}
-
-		_assetEntryUsageLocalService.addAssetEntryUsage(
-			layout.getGroupId(), assetEntry.getEntryId(),
-			_portal.getClassNameId(Portlet.class), portletId, layout.getPlid(),
+		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+			layout.getGroupId(), _portal.getClassNameId(JournalArticle.class),
+			article.getResourcePrimKey(), portletId,
+			_portal.getClassNameId(Portlet.class), layout.getPlid(),
 			ServiceContextThreadLocal.getServiceContext());
 	}
 
@@ -334,12 +326,6 @@ public class JournalContentPortletLayoutListener
 		JournalContentPortletLayoutListener.class);
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
-
-	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
@@ -350,6 +336,10 @@ public class JournalContentPortletLayoutListener
 
 	@Reference
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

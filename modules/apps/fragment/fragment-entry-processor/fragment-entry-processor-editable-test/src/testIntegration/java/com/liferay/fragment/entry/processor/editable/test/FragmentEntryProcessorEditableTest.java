@@ -15,9 +15,7 @@
 package com.liferay.fragment.entry.processor.editable.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
@@ -31,6 +29,7 @@ import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -178,20 +177,22 @@ public class FragmentEntryProcessorEditableTest {
 		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId(), editableValues);
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			_portal.getClassNameId(JournalArticle.class),
-			journalArticle.getResourcePrimKey());
-
-		int count = _assetEntryUsageLocalService.getAssetEntryUsagesCount(
-			assetEntry.getEntryId());
+		int count =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesCount(
+					_portal.getClassNameId(JournalArticle.class),
+					journalArticle.getResourcePrimKey());
 
 		Assert.assertEquals(1, count);
 
 		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLink);
 
-		count = _assetEntryUsageLocalService.getAssetEntryUsagesCount(
-			assetEntry.getEntryId());
+		count =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesCount(
+					_portal.getClassNameId(JournalArticle.class),
+					journalArticle.getResourcePrimKey());
 
 		Assert.assertEquals(0, count);
 	}
@@ -444,9 +445,6 @@ public class FragmentEntryProcessorEditableTest {
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
-
-	@Inject
 	private FragmentCollectionService _fragmentCollectionService;
 
 	@Inject
@@ -460,6 +458,10 @@ public class FragmentEntryProcessorEditableTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 	private Locale _originalSiteDefaultLocale;
 	private Locale _originalThemeDisplayDefaultLocale;

@@ -14,13 +14,13 @@
 
 package com.liferay.layout.content.page.editor.web.internal.model.listener;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.model.AssetEntryUsage;
-import com.liferay.asset.service.AssetEntryUsageLocalService;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
+import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -57,29 +57,33 @@ public class LayoutPageTemplateStructureRelModelListener
 			return;
 		}
 
-		_assetEntryUsageLocalService.deleteAssetEntryUsages(
-			_portal.getClassNameId(LayoutPageTemplateStructure.class),
+		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 			String.valueOf(
 				layoutPageTemplateStructure.getLayoutPageTemplateStructureId()),
+			_portal.getClassNameId(LayoutPageTemplateStructure.class),
 			layoutPageTemplateStructure.getClassPK());
 
 		try {
-			Set<AssetEntry> assetEntries =
-				ContentUtil.getLayoutMappedAssetEntries(
+			Set<InfoDisplayObjectProvider> infoDisplayObjectProviders =
+				ContentUtil.getLayoutMappedInfoDisplayObjectProviders(
 					layoutPageTemplateStructureRel.getData());
 
-			for (AssetEntry assetEntry : assetEntries) {
-				AssetEntryUsage assetEntryUsage =
-					_assetEntryUsageLocalService.fetchAssetEntryUsage(
-						assetEntry.getEntryId(),
-						_portal.getClassNameId(
-							LayoutPageTemplateStructure.class),
-						String.valueOf(
-							layoutPageTemplateStructure.
-								getLayoutPageTemplateStructureId()),
-						layoutPageTemplateStructure.getClassPK());
+			for (InfoDisplayObjectProvider infoDisplayObjectProvider :
+					infoDisplayObjectProviders) {
 
-				if (assetEntryUsage != null) {
+				LayoutClassedModelUsage layoutClassedModelUsage =
+					_layoutClassedModelUsageLocalService.
+						fetchLayoutClassedModelUsage(
+							infoDisplayObjectProvider.getClassNameId(),
+							infoDisplayObjectProvider.getClassPK(),
+							String.valueOf(
+								layoutPageTemplateStructure.
+									getLayoutPageTemplateStructureId()),
+							_portal.getClassNameId(
+								LayoutPageTemplateStructure.class),
+							layoutPageTemplateStructure.getClassPK());
+
+				if (layoutClassedModelUsage != null) {
 					continue;
 				}
 
@@ -89,13 +93,14 @@ public class LayoutPageTemplateStructureRelModelListener
 					new ServiceContext()
 				);
 
-				_assetEntryUsageLocalService.addAssetEntryUsage(
+				_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 					layoutPageTemplateStructure.getGroupId(),
-					assetEntry.getEntryId(),
-					_portal.getClassNameId(LayoutPageTemplateStructure.class),
+					infoDisplayObjectProvider.getClassNameId(),
+					infoDisplayObjectProvider.getClassPK(),
 					String.valueOf(
 						layoutPageTemplateStructure.
 							getLayoutPageTemplateStructureId()),
+					_portal.getClassNameId(LayoutPageTemplateStructure.class),
 					layoutPageTemplateStructure.getClassPK(), serviceContext);
 			}
 		}
@@ -105,7 +110,8 @@ public class LayoutPageTemplateStructureRelModelListener
 	}
 
 	@Reference
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

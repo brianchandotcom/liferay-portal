@@ -20,8 +20,8 @@ import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
-import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -103,7 +103,7 @@ public class AssetPublisherPortletLayoutListener
 				_assetPublisherWebUtil.getSubscriptionClassPK(
 					ownerId, ownerType, plid, portletId));
 
-			_removeAssetEntryUsages(layout, portletId);
+			_removeInfoItemUsages(layout, portletId);
 
 			_removeAssetListEntryUsage(plid, portletId);
 		}
@@ -136,16 +136,16 @@ public class AssetPublisherPortletLayoutListener
 			_addAssetListEntryUsage(assetListEntryId, plid, portletId);
 		}
 		else if (Objects.equals(selectionStyle, "manual")) {
-			_removeAssetEntryUsages(layout, portletId);
+			_removeInfoItemUsages(layout, portletId);
 
-			_addAssetEntryUsages(plid, portletId, portletPreferences);
+			_addInfoItemUsages(plid, portletId, portletPreferences);
 		}
 		else {
 			_removeAssetListEntryUsage(plid, portletId);
 		}
 
 		if (!Objects.equals(selectionStyle, "manual")) {
-			_removeAssetEntryUsages(layout, portletId);
+			_removeInfoItemUsages(layout, portletId);
 		}
 	}
 
@@ -162,41 +162,6 @@ public class AssetPublisherPortletLayoutListener
 			typeSettingsProperties.setProperty(
 				LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID,
 				StringPool.BLANK);
-		}
-	}
-
-	private void _addAssetEntryUsages(
-			long plid, String portletId,
-			javax.portlet.PortletPreferences portletPreferences)
-		throws PortletLayoutListenerException {
-
-		try {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-			PortletRequest portletRequest =
-				serviceContext.getLiferayPortletRequest();
-
-			long[] groupIds = _assetPublisherHelper.getGroupIds(
-				portletPreferences, themeDisplay.getScopeGroupId(),
-				themeDisplay.getLayout());
-
-			List<AssetEntry> assetEntries =
-				_assetPublisherHelper.getAssetEntries(
-					portletRequest, portletPreferences,
-					themeDisplay.getPermissionChecker(), groupIds, false, true);
-
-			for (AssetEntry assetEntry : assetEntries) {
-				_assetEntryUsageLocalService.addAssetEntryUsage(
-					themeDisplay.getScopeGroupId(), assetEntry.getEntryId(),
-					_portal.getClassNameId(Portlet.class), portletId, plid,
-					serviceContext);
-			}
-		}
-		catch (Exception e) {
-			throw new PortletLayoutListenerException(e);
 		}
 	}
 
@@ -230,9 +195,40 @@ public class AssetPublisherPortletLayoutListener
 		}
 	}
 
-	private void _removeAssetEntryUsages(Layout layout, String portletId) {
-		_assetEntryUsageLocalService.deleteAssetEntryUsages(
-			_portal.getClassNameId(Portlet.class), portletId, layout.getPlid());
+	private void _addInfoItemUsages(
+			long plid, String portletId,
+			javax.portlet.PortletPreferences portletPreferences)
+		throws PortletLayoutListenerException {
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			PortletRequest portletRequest =
+				serviceContext.getLiferayPortletRequest();
+
+			long[] groupIds = _assetPublisherHelper.getGroupIds(
+				portletPreferences, themeDisplay.getScopeGroupId(),
+				themeDisplay.getLayout());
+
+			List<AssetEntry> assetEntries =
+				_assetPublisherHelper.getAssetEntries(
+					portletRequest, portletPreferences,
+					themeDisplay.getPermissionChecker(), groupIds, false, true);
+
+			for (AssetEntry assetEntry : assetEntries) {
+				_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+					themeDisplay.getScopeGroupId(), assetEntry.getClassNameId(),
+					assetEntry.getClassPK(), portletId,
+					_portal.getClassNameId(Portlet.class), plid,
+					serviceContext);
+			}
+		}
+		catch (Exception e) {
+			throw new PortletLayoutListenerException(e);
+		}
 	}
 
 	private void _removeAssetListEntryUsage(long plid, String portletId) {
@@ -246,11 +242,13 @@ public class AssetPublisherPortletLayoutListener
 		}
 	}
 
+	private void _removeInfoItemUsages(Layout layout, String portletId) {
+		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+			portletId, _portal.getClassNameId(Portlet.class), layout.getPlid());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherPortletLayoutListener.class);
-
-	@Reference
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
 
 	@Reference
 	private AssetListEntryUsageLocalService _assetListEntryUsageLocalService;
@@ -263,6 +261,10 @@ public class AssetPublisherPortletLayoutListener
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

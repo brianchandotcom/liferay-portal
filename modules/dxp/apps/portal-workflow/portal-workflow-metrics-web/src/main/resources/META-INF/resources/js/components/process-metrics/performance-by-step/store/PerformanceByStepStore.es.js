@@ -10,24 +10,42 @@
  * distribution rights of the Software.
  */
 
+import {AppContext} from '../../../AppContext.es';
 import React, {createContext, useContext, useEffect, useState} from 'react';
 
-import {AppContext} from '../../../AppContext.es';
-
-const usePerformanceData = (page, pageSize, processId, search, sort) => {
+const usePerformanceData = (
+	page,
+	pageSize,
+	processId,
+	search,
+	sort,
+	timeRange
+) => {
 	const {client} = useContext(AppContext);
 	const [items, setItems] = useState([]);
 	const [totalCount, setTotalCount] = useState(0);
 
-	const fetchData = (page, pageSize, processId, search, sort) => {
+	const fetchData = (page, pageSize, processId, search, sort, timeRange) => {
 		const params = {
 			page,
 			pageSize,
 			sort: decodeURIComponent(sort)
 		};
 
+		const isValidDate = date => date && !isNaN(date);
+
 		if (typeof search === 'string' && search) {
 			params.key = decodeURIComponent(search);
+		}
+
+		if (
+			timeRange &&
+			isValidDate(timeRange.dateEnd) &&
+			isValidDate(timeRange.dateStart)
+		) {
+			const {dateEnd, dateStart} = timeRange;
+			params.dateEnd = dateEnd.toISOString();
+			params.dateStart = dateStart.toISOString();
 		}
 
 		client.get(`/processes/${processId}/tasks`, {params}).then(({data}) => {
@@ -38,8 +56,8 @@ const usePerformanceData = (page, pageSize, processId, search, sort) => {
 
 	useEffect(() => {
 		if (page && pageSize && processId && sort)
-			fetchData(page, pageSize, processId, search, sort);
-	}, [page, pageSize, processId, search, sort]);
+			fetchData(page, pageSize, processId, search, sort, timeRange);
+	}, [page, pageSize, processId, search, sort, timeRange]);
 
 	return {
 		items,
@@ -55,11 +73,19 @@ const PerformanceDataProvider = ({
 	pageSize,
 	processId,
 	search,
-	sort
+	sort,
+	timeRange
 }) => {
 	return (
 		<PerformanceDataContext.Provider
-			value={usePerformanceData(page, pageSize, processId, search, sort)}
+			value={usePerformanceData(
+				page,
+				pageSize,
+				processId,
+				search,
+				sort,
+				timeRange
+			)}
 		>
 			{children}
 		</PerformanceDataContext.Provider>

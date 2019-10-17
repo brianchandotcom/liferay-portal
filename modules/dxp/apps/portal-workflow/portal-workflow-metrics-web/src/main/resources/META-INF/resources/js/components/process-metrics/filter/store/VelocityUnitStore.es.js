@@ -14,42 +14,20 @@ import moment from 'moment';
 import React, {createContext, useContext, useEffect, useState} from 'react';
 
 import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents.es';
+import {
+	velocityUnitConstants,
+	getVelocityUnits,
+	getDefaultVelocityUnit
+} from '../../../../shared/components/filter/util/filterUtil.es';
 import {compareArrays} from '../../../../shared/util/array.es';
-import {usePrevious} from '../../../../shared/util/hooks.es';
 import {TimeRangeContext} from './TimeRangeStore.es';
-
-const velocityUnitConstants = {
-	days: 'Days',
-	hours: 'Hours',
-	months: 'Months',
-	weeks: 'Weeks',
-	years: 'Years'
-};
+import {usePrevious} from '../../../../shared/util/hooks.es';
 
 const useVelocityUnit = velocityUnitKeys => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
 	const [velocityUnits, setVelocityUnits] = useState([]);
 
 	const timeRange = getSelectedTimeRange();
-
-	const fetchData = timeRange => {
-		const {dateEnd, dateStart} = timeRange;
-
-		const daysDiff = moment
-			.utc(dateEnd)
-			.diff(moment.utc(dateStart), 'days');
-
-		const velocityUnits = (
-			Object.keys(velocityUnitsMap)
-				.filter(key => daysDiff < key)
-				.map(key => velocityUnitsMap[key])[0] || [asDefault(yearsUnit)]
-		).map(unit => ({
-			...unit,
-			active: velocityUnitKeys.includes(unit.key)
-		}));
-
-		setVelocityUnits(velocityUnits);
-	};
 
 	const defaultVelocityUnit = getDefaultVelocityUnit(velocityUnits);
 
@@ -74,7 +52,7 @@ const useVelocityUnit = velocityUnitKeys => {
 
 	useEffect(() => {
 		if (timeRange) {
-			fetchData(timeRange);
+			setVelocityUnits(getVelocityUnits(timeRange, velocityUnitKeys));
 		}
 	}, [timeRange]);
 
@@ -93,57 +71,6 @@ const useVelocityUnit = velocityUnitKeys => {
 		getSelectedVelocityUnit,
 		velocityUnits
 	};
-};
-
-const asDefault = velocityUnit => {
-	return {
-		...velocityUnit,
-		active: true,
-		defaultVelocityUnit: true
-	};
-};
-
-const getDefaultVelocityUnit = velocityUnits => {
-	const defaultVelocityUnits = velocityUnits.filter(
-		velocityUnit => velocityUnit.defaultVelocityUnit
-	);
-
-	return defaultVelocityUnits.length ? defaultVelocityUnits[0] : null;
-};
-
-const daysUnit = {
-	key: velocityUnitConstants.days,
-	name: Liferay.Language.get('inst-day')
-};
-
-const hoursUnit = {
-	key: velocityUnitConstants.hours,
-	name: Liferay.Language.get('inst-hour')
-};
-
-const monthsUnit = {
-	key: velocityUnitConstants.months,
-	name: Liferay.Language.get('inst-month')
-};
-
-const weeksUnit = {
-	key: velocityUnitConstants.weeks,
-	name: Liferay.Language.get('inst-week')
-};
-
-const yearsUnit = {
-	key: velocityUnitConstants.years,
-	name: Liferay.Language.get('inst-year')
-};
-
-const velocityUnitsMap = {
-	1: [asDefault(hoursUnit)],
-	7: [asDefault(daysUnit)],
-	30: [asDefault(daysUnit), weeksUnit],
-	90: [daysUnit, asDefault(weeksUnit), monthsUnit],
-	180: [weeksUnit, asDefault(monthsUnit)],
-	366: [weeksUnit, asDefault(monthsUnit)],
-	730: [asDefault(monthsUnit), yearsUnit]
 };
 
 const VelocityUnitContext = createContext(null);

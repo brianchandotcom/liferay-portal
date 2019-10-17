@@ -10,6 +10,7 @@
  */
 
 import pathToRegexp from 'path-to-regexp';
+import moment from '../../../util/moment.es';
 
 import {parse, stringify} from '../../router/queryString.es';
 
@@ -120,3 +121,69 @@ export function verifySelectedItems(filter, filtersParam) {
 
 	return filter;
 }
+
+const asDefault = velocityUnit => {
+	return {
+		...velocityUnit,
+		active: true,
+		defaultVelocityUnit: true
+	};
+};
+
+export const daysUnit = {
+	key: 'Days',
+	name: Liferay.Language.get('inst-day')
+};
+
+export const hoursUnit = {
+	key: 'Hours',
+	name: Liferay.Language.get('inst-hour')
+};
+
+export const monthsUnit = {
+	key: 'Months',
+	name: Liferay.Language.get('inst-month')
+};
+
+export const weeksUnit = {
+	key: 'Weeks',
+	name: Liferay.Language.get('inst-week')
+};
+
+export const yearsUnit = {
+	key: 'Years',
+	name: Liferay.Language.get('inst-year')
+};
+
+export const velocityUnitsMap = {
+	1: [asDefault(hoursUnit)],
+	7: [asDefault(daysUnit)],
+	30: [asDefault(daysUnit), weeksUnit],
+	90: [daysUnit, asDefault(weeksUnit), monthsUnit],
+	180: [weeksUnit, asDefault(monthsUnit)],
+	366: [weeksUnit, asDefault(monthsUnit)],
+	730: [asDefault(monthsUnit), yearsUnit]
+};
+
+export const getVelocityUnits = (timeRange, velocityUnitKeys) => {
+	const {dateEnd, dateStart} = timeRange;
+
+	const daysDiff = moment.utc(dateEnd).diff(moment.utc(dateStart), 'days');
+
+	return (
+		Object.keys(velocityUnitsMap)
+			.filter(key => daysDiff < key)
+			.map(key => velocityUnitsMap[key])[0] || [asDefault(yearsUnit)]
+	).map(unit => ({
+		...unit,
+		active: velocityUnitKeys.includes(unit.key)
+	}));
+};
+
+export const getDefaultVelocityUnit = velocityUnits => {
+	const defaultVelocityUnits = velocityUnits.filter(
+		velocityUnit => velocityUnit.defaultVelocityUnit
+	);
+
+	return defaultVelocityUnits.length ? defaultVelocityUnits[0] : null;
+};

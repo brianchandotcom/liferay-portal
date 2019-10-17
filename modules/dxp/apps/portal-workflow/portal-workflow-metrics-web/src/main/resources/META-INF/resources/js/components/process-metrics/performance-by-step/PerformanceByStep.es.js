@@ -9,7 +9,12 @@
  * distribution rights of the Software.
  */
 
+import {
+	PerformanceDataContext,
+	PerformanceDataProvider
+} from './store/PerformanceByStepStore.es';
 import React, {useContext} from 'react';
+import {formatDuration} from '../../../shared/util/duration.es';
 
 import ListHeadItem from '../../../shared/components/list/ListHeadItem.es';
 import PaginationBar from '../../../shared/components/pagination/PaginationBar.es';
@@ -17,25 +22,45 @@ import Search from '../../../shared/components/pagination/Search.es';
 import {formatDuration} from '../../../shared/util/duration.es';
 import {getFormattedPercentage} from '../../../shared/util/util.es';
 import {
-	PerformanceDataContext,
-	PerformanceDataProvider
-} from './store/PerformanceByStepStore.es';
+	TimeRangeContext,
+	TimeRangeProvider
+} from '../filter/store/TimeRangeStore.es';
+import {TimeRangeFilter} from '../filter/TimeRangeFilter.es';
+import Request from '../../../shared/components/request/Request.es';
 
 function PerformanceByStep({page, pageSize, processId, search, sort}) {
 	return (
-		<PerformanceDataProvider
-			page={page}
-			pageSize={pageSize}
-			processId={processId}
-			search={search}
-			sort={sort}
-		>
-			<PerformanceByStep.Body
-				page={page}
-				pageSize={pageSize}
+		<Request>
+			<TimeRangeProvider
+				previousKeys={['30']}
 				search={search}
-			/>
-		</PerformanceDataProvider>
+				timeRangeKeys={[]}
+			>
+				<TimeRangeContext.Consumer>
+					{({getSelectedTimeRange}) => (
+						<PerformanceDataProvider
+							page={page}
+							pageSize={pageSize}
+							processId={processId}
+							search={search}
+							sort={sort}
+							timeRange={getSelectedTimeRange() || {}}
+						>
+							<Request.Error />
+
+							<Request.Loading />
+
+							<Request.Success>
+								<PerformanceByStep.Body
+									page={page}
+									pageSize={pageSize}
+								/>
+							</Request.Success>
+						</PerformanceDataProvider>
+					)}
+				</TimeRangeContext.Consumer>
+			</TimeRangeProvider>
+		</Request>
 	);
 }
 
@@ -49,6 +74,13 @@ const Body = ({page, pageSize}) => {
 					<div className="navbar-form navbar-form-autofit">
 						<Search disabled={false} />
 					</div>
+
+					<TimeRangeFilter
+						filterKey="timeRange"
+						hideControl={true}
+						position="right"
+						showFilterName={false}
+					/>
 				</div>
 			</nav>
 

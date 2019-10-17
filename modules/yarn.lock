@@ -1103,6 +1103,19 @@
     classnames "^2.2.6"
     moment "^2.22.2"
 
+"@clayui/drop-down@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.0.1.tgz#a7b19ce555cff9d3bd2a02423d6ea651305c3b14"
+  integrity sha512-+CLTIAk2A3UnUBx6vFplC8lM85GPseyH+I3QulE9TwQ498Y5kegR08sR+n+Peh1dkTLI1tnE1tfjzQiSs27Sog==
+  dependencies:
+    "@clayui/button" "^3.0.1"
+    "@clayui/form" "^3.1.0"
+    "@clayui/icon" "^3.0.1"
+    "@clayui/shared" "^3.0.2"
+    classnames "^2.2.6"
+    metal-position "^2.1.2"
+    warning "^4.0.3"
+
 "@clayui/drop-down@3.1.0", "@clayui/drop-down@^3.0.1":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.1.0.tgz#666e78ab5d2ecfa5afd8728007b91273ff6d8e9a"

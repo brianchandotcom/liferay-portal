@@ -85,58 +85,6 @@
 	}
 </aui:script>
 
-<aui:script require="clay-tooltip/src/ClayTooltip as ClayTooltip">
-	if (!Liferay.Data.LFR_PORTAL_CLAY_TOOLTIP) {
-		Liferay.Data.LFR_PORTAL_CLAY_TOOLTIP = ClayTooltip.default.init(
-			{
-				selectors: [
-					'.manage-collaborators-dialog .lexicon-icon[data-title]:not(.lfr-portal-tooltip)',
-					'.manage-collaborators-dialog .lexicon-icon[title]:not(.lfr-portal-tooltip)',
-					'.management-bar [data-title]:not(.lfr-portal-tooltip)',
-					'.management-bar [title]:not(.lfr-portal-tooltip)',
-					'.preview-toolbar-container [data-title]:not(.lfr-portal-tooltip)',
-					'.preview-toolbar-container [title]:not(.lfr-portal-tooltip)',
-					'.progress-container[data-title]',
-					'.source-editor__fixed-text__help[data-title]',
-					'.taglib-discussion [data-title]:not(.lfr-portal-tooltip)',
-					'.taglib-discussion [title]:not(.lfr-portal-tooltip):not([title=""])',
-					'.upper-tbar [data-title]:not(.lfr-portal-tooltip)',
-					'.upper-tbar [title]:not(.lfr-portal-tooltip)'
-				]
-			}
-		);
-	}
-</aui:script>
-
-<aui:script use="aui-tooltip">
-	if (!Liferay.Data.LFR_PORTAL_TOOLTIP) {
-		var triggerShowEvent = ['mouseenter', 'MSPointerDown', 'touchstart'];
-
-		if (A.UA.ios) {
-			triggerShowEvent = ['touchstart'];
-		}
-
-		Liferay.Data.LFR_PORTAL_TOOLTIP = new A.TooltipDelegate(
-			{
-				constrain: true,
-				opacity: 1,
-				trigger: '.lfr-portal-tooltip',
-				triggerHideEvent: ['click', 'mouseleave', 'MSPointerUp', 'touchend'],
-				triggerShowEvent: triggerShowEvent,
-				visible: false,
-				zIndex: Liferay.zIndex.TOOLTIP
-			}
-		);
-
-		Liferay.on(
-			'beforeNavigate',
-			function(event) {
-				Liferay.Data.LFR_PORTAL_TOOLTIP.getTooltip().hide();
-			}
-		);
-	}
-</aui:script>
-
 <%
 Group group = null;
 

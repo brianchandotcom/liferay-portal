@@ -11,4 +11,10 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 	</model>
+	<model name="com.liferay.depot.model.DepotEntryGroupRel">
+		<field name="mvccVersion" type="long" />
+		<field name="depotEntryGroupRelId" type="long" />
+		<field name="depotEntryId" type="long" />
+		<field name="toGroupId" type="long" />
+	</model>
 </model-hints>

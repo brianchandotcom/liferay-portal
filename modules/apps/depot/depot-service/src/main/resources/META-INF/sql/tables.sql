@@ -8,3 +8,10 @@ create table DepotEntry (
 	createDate DATE null,
 	modifiedDate DATE null
 );
+
+create table DepotEntryGroupRel (
+	mvccVersion LONG default 0 not null,
+	depotEntryGroupRelId LONG not null primary key,
+	depotEntryId LONG,
+	toGroupId LONG
+);

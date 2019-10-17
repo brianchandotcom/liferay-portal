@@ -695,6 +695,12 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		if ("${rangeAll}" == "true") {
+			Click(locator1 = "Radio#CHOOSE_CONTENT_ALL_CHANGE");
+
+			Click(locator1 = "Link#REFRESH_COUNTS");
+		}
+
 		if ("${remoteStaging}" == "true") {
 			AssertClickNoError(
 				locator1 = "Staging#STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON",

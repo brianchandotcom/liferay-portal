@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHOOSE_CONTENT_ALL_CHANGE</td>
+	<td>//input[contains(@id,'rangeAll')]//following-sibling::span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHOOSE_CONTENT_DATE_RANGE_CHANGE</td>
 	<td>//input[contains(@id,'rangeDateRange')]//following-sibling::span</td>
 	<td></td>

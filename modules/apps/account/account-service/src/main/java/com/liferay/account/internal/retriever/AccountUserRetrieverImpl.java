@@ -14,7 +14,7 @@
 
 package com.liferay.account.internal.retriever;
 
-import com.liferay.account.model.AccountEntry;
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
@@ -69,23 +69,9 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 			int delta, String sortField, boolean reverse)
 		throws PortalException {
 
-		SearchResponse searchResponse = _getSearchResponse(
-			accountEntryId, keywords, status, cur, delta, sortField, reverse);
-
-		SearchHits searchHits = searchResponse.getSearchHits();
-
-		List<User> users = TransformUtil.transform(
-			searchHits.getSearchHits(),
-			searchHit -> {
-				Document document = searchHit.getDocument();
-
-				long userId = document.getLong("userId");
-
-				return _userLocalService.getUser(userId);
-			});
-
-		return new BaseModelSearchResult<>(
-			users, searchResponse.getTotalHits());
+		return searchAccountUsers(
+			new long[] {accountEntryId}, keywords, status, cur, delta,
+			sortField, reverse);
 	}
 
 	@Override
@@ -114,21 +100,24 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 	}
 
 	private SearchResponse _getSearchResponse(
-			long accountEntryId, String keywords, int status, int cur,
+			long[] accountEntryIds, String keywords, int status, int cur,
 			int delta, String sortField, boolean reverse)
 		throws PortalException {
 
-		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
-			accountEntryId);
-
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder();
+
+		for (long accountEntryId : accountEntryIds) {
+			if (accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) {
+				_accountEntryLocalService.getAccountEntry(accountEntryId);
+			}
+		}
 
 		searchRequestBuilder.entryClassNames(
 			User.class.getName()
 		).withSearchContext(
 			searchContext -> _populateSearchContext(
-				searchContext, accountEntry, keywords, status)
+				searchContext, accountEntryIds, keywords, status)
 		).emptySearchEnabled(
 			true
 		).highlightEnabled(
@@ -163,7 +152,7 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 	}
 
 	private void _populateSearchContext(
-		SearchContext searchContext, AccountEntry accountEntry, String keywords,
+		SearchContext searchContext, long[] accountEntryIds, String keywords,
 		int status) {
 
 		boolean andSearch = false;
@@ -179,8 +168,7 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
-		attributes.put(
-			"accountEntryIds", new long[] {accountEntry.getAccountEntryId()});
+		attributes.put("accountEntryIds", accountEntryIds);
 		attributes.put("city", keywords);
 		attributes.put("country", keywords);
 		attributes.put("emailAddress", keywords);

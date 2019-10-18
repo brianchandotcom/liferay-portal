@@ -16,11 +16,13 @@ package com.liferay.batch.engine.internal.reader;
 
 import java.io.Closeable;
 
+import java.util.Map;
+
 /**
  * @author Ivica Cardic
  */
 public interface BatchEngineTaskItemReader extends Closeable {
 
-	public Object read() throws Exception;
+	public Map<String, Object> read() throws Exception;
 
 }

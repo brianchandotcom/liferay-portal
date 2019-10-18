@@ -367,9 +367,9 @@ class FloatingToolbarMappingPanel extends PortletBase {
 				this._getFragmentEntryProcessor(),
 				this.item.editableId,
 				{
-					classNameId: '',
-					classPK: '',
-					fieldId: ''
+					classNameId: null,
+					classPK: null,
+					fieldId: null
 				}
 			)
 		);

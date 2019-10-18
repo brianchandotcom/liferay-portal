@@ -42,6 +42,7 @@ import {
 	getItemPath
 } from '../../utils/FragmentsEditorGetUtils.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {isNullOrUndefined} from '../../utils/isNullOrUndefined.es';
 import {
 	EDITABLE_FIELD_CONFIG_KEYS,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -125,8 +126,12 @@ class FragmentEditableField extends PortletBase {
 		const mapped = editableIsMapped(this.editableValues);
 
 		const value = mapped
-			? this._mappedFieldValue || this.editableValues.defaultValue
-			: translatedValue || this.editableValues.defaultValue;
+			? isNullOrUndefined(this._mappedFieldValue)
+				? this.editableValues.defaultValue
+				: this._mappedFieldValue
+			: isNullOrUndefined(translatedValue)
+			? this.editableValues.defaultValue
+			: translatedValue;
 
 		const processor =
 			FragmentProcessors[this.type] || FragmentProcessors.fallback;
@@ -535,7 +540,7 @@ class FragmentEditableField extends PortletBase {
 				.then(response => {
 					const {fieldValue} = response;
 
-					if (fieldValue) {
+					if (!isNullOrUndefined(fieldValue)) {
 						if (
 							this.type === 'image' &&
 							typeof fieldValue.url === 'string'

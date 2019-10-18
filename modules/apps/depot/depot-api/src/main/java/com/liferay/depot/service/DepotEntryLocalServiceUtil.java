@@ -351,13 +351,17 @@ public class DepotEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.depot.model.DepotEntry updateDepotEntry(
-			long depotEntryId, java.util.Map<java.util.Locale, String> nameMap,
+			long depotEntryId,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				formTypeSettingsProperties,
+			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateDepotEntry(
-			depotEntryId, nameMap, descriptionMap, serviceContext);
+			depotEntryId, formTypeSettingsProperties, nameMap, descriptionMap,
+			serviceContext);
 	}
 
 	public static DepotEntryLocalService getService() {

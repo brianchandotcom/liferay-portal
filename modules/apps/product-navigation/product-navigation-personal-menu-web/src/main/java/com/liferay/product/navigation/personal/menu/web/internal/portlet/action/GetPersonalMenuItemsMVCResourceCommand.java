@@ -215,9 +215,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject dividerJSONObject = JSONFactoryUtil.createJSONObject();
-
-		dividerJSONObject.put("type", "divider");
+		JSONObject dividerJSONObject = JSONUtil.put("type", "divider");
 
 		if (themeDisplay.isImpersonated()) {
 			JSONObject impersonationJSONObject = JSONUtil.put(
@@ -236,28 +234,30 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			);
 
 			jsonArray.put(impersonationJSONObject);
-			jsonArray.put(dividerJSONObject);
 		}
 
-		for (int i = 0; i < groupedPersonalMenuEntries.size(); i++) {
+		for (List<PersonalMenuEntry> groupedPersonalMenuEntry :
+				groupedPersonalMenuEntries) {
+
 			JSONArray personalMenuEntriesJSONArray =
 				_getPersonalMenuEntriesJSONArray(
-					portletRequest, groupedPersonalMenuEntries.get(i));
+					portletRequest, groupedPersonalMenuEntry);
 
 			if (personalMenuEntriesJSONArray.length() == 0) {
 				continue;
 			}
 
-			JSONObject jsonObject = JSONUtil.put(
-				"items", personalMenuEntriesJSONArray);
-
-			jsonObject.put("type", "group");
-
-			jsonArray.put(jsonObject);
-
-			if (i < (groupedPersonalMenuEntries.size() - 1)) {
+			if (jsonArray.length() > 0) {
 				jsonArray.put(dividerJSONObject);
 			}
+
+			JSONObject jsonObject = JSONUtil.put(
+				"items", personalMenuEntriesJSONArray
+			).put(
+				"type", "group"
+			);
+
+			jsonArray.put(jsonObject);
 		}
 
 		if ((jsonArray.length() > 0) && !themeDisplay.isImpersonated()) {

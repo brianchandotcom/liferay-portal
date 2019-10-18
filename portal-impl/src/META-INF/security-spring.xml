@@ -72,6 +72,20 @@
 		<property name="resourceActions" ref="com.liferay.portal.kernel.security.permission.ResourceActions" />
 	</bean>
 	<bean class="com.liferay.portal.security.permission.UserBagFactoryImpl" id="com.liferay.portal.kernel.security.permission.UserBagFactory" />
+	<bean class="com.liferay.portal.security.pwd.CompositePasswordEncryptor" id="com.liferay.portal.kernel.security.pwd.PasswordEncryptor">
+		<property name="defaultPasswordEncryptor">
+			<bean class="com.liferay.portal.security.pwd.DefaultPasswordEncryptor" />
+		</property>
+		<property name="passwordEncryptors">
+			<util:list>
+				<bean class="com.liferay.portal.security.pwd.BCryptPasswordEncryptor" />
+				<bean class="com.liferay.portal.security.pwd.CryptPasswordEncryptor" />
+				<bean class="com.liferay.portal.security.pwd.NullPasswordEncryptor" />
+				<bean class="com.liferay.portal.security.pwd.PBKDF2PasswordEncryptor" />
+				<bean class="com.liferay.portal.security.pwd.SSHAPasswordEncryptor" />
+			</util:list>
+		</property>
+	</bean>
 	<bean class="com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil" id="com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil">
 		<property name="passwordEncryptor" ref="com.liferay.portal.kernel.security.pwd.PasswordEncryptor" />
 	</bean>
@@ -118,19 +132,5 @@
 	<bean class="com.liferay.portal.security.auth.StrutsPortletAuthTokenWhitelist" id="com.liferay.portal.security.auth.StrutsPortletAuthTokenWhitelist" />
 	<bean class="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" id="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" />
 	<bean class="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" id="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" />
-	<bean class="com.liferay.portal.security.pwd.CompositePasswordEncryptor" id="com.liferay.portal.kernel.security.pwd.PasswordEncryptor">
-		<property name="defaultPasswordEncryptor">
-			<bean class="com.liferay.portal.security.pwd.DefaultPasswordEncryptor" />
-		</property>
-		<property name="passwordEncryptors">
-			<util:list>
-				<bean class="com.liferay.portal.security.pwd.BCryptPasswordEncryptor" />
-				<bean class="com.liferay.portal.security.pwd.CryptPasswordEncryptor" />
-				<bean class="com.liferay.portal.security.pwd.NullPasswordEncryptor" />
-				<bean class="com.liferay.portal.security.pwd.PBKDF2PasswordEncryptor" />
-				<bean class="com.liferay.portal.security.pwd.SSHAPasswordEncryptor" />
-			</util:list>
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.security.pwd.PasswordPolicyToolkit" id="com.liferay.portal.security.pwd.PasswordPolicyToolkit" />
 </beans>

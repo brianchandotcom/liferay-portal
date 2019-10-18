@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.pwd;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
@@ -214,8 +216,14 @@ public class CompositePasswordEncryptorTest {
 
 		testEncrypt(algorithm);
 
-		testEncrypt(
-			plainPassword, "{" + prependedAlgorithm + "}" + encryptedPassword);
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(CharPool.OPEN_CURLY_BRACE);
+		sb.append(prependedAlgorithm);
+		sb.append(CharPool.CLOSE_CURLY_BRACE);
+		sb.append(encryptedPassword);
+
+		testEncrypt(plainPassword, sb.toString());
 
 		testLegacyEncrypt(algorithm, plainPassword, encryptedPassword);
 	}

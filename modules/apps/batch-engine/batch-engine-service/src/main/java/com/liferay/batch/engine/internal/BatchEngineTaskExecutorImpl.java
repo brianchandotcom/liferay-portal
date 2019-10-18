@@ -21,6 +21,7 @@ import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegat
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegateFactory;
 import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReader;
 import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReaderFactory;
+import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReaderUtil;
 import com.liferay.batch.engine.model.BatchEngineTask;
 import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
 import com.liferay.petra.string.StringPool;
@@ -68,14 +69,13 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
 		_batchEngineTaskItemReaderFactory =
 			new BatchEngineTaskItemReaderFactory(
-				_batchEngineTaskMethodServiceRegistry,
 				GetterUtil.getString(
 					batchEngineTaskConfiguration.csvFileColumnDelimiter(),
 					StringPool.COMMA));
 
 		_batchEngineTaskItemResourceDelegateFactory =
 			new BatchEngineTaskItemResourceDelegateFactory(
-				_batchEngineTaskMethodServiceRegistry, _companyLocalService,
+				_batchEngineTaskMethodRegistry, _companyLocalService,
 				_userLocalService);
 	}
 
@@ -154,14 +154,24 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
 			List<Object> items = new ArrayList<>();
 
-			Object item = null;
+			Class<?> itemClass = _batchEngineTaskMethodRegistry.getItemClass(
+				batchEngineTask.getClassName());
 
-			while ((item = batchEngineTaskItemReader.read()) != null) {
+			Map<String, Object> fieldNameValueMap = null;
+
+			while ((fieldNameValueMap = batchEngineTaskItemReader.read()) !=
+						null) {
+
 				if (Thread.interrupted()) {
 					throw new InterruptedException();
 				}
 
-				items.add(item);
+				items.add(
+					BatchEngineTaskItemReaderUtil.convertValue(
+						itemClass,
+						BatchEngineTaskItemReaderUtil.mapFieldNames(
+							batchEngineTask.getFieldNameMappingMap(),
+							fieldNameValueMap)));
 
 				if (items.size() == batchEngineTask.getBatchSize()) {
 					_commitItems(
@@ -199,7 +209,7 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
 
 	@Reference
-	private BatchEngineTaskMethodRegistry _batchEngineTaskMethodServiceRegistry;
+	private BatchEngineTaskMethodRegistry _batchEngineTaskMethodRegistry;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

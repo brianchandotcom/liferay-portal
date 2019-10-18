@@ -21,7 +21,7 @@ import {segmentsExperiment} from '../fixtures.es';
 describe('SegmentsExperimentsClickGoal', () => {
 	afterEach(cleanup);
 
-	it('renders when goal value is "click"', () => {
+	it('Renders when goal value is click', () => {
 		const experiment = {
 			...segmentsExperiment,
 			goal: {
@@ -36,5 +36,5 @@ describe('SegmentsExperimentsClickGoal', () => {
 		expect(asFragment().children.length).not.toBe(0);
 	});
 
-	test.todo('actually make the one above a meaningful test');
+	test.todo('Actually make the one above a meaningful test');
 });

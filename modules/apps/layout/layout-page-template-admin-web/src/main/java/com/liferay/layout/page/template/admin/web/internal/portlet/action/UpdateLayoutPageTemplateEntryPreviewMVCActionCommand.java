@@ -107,6 +107,8 @@ public class UpdateLayoutPageTemplateEntryPreviewMVCActionCommand
 			layoutPageTemplateEntryId, fileEntry.getFileEntryId());
 
 		TempFileEntryUtil.deleteTempFileEntry(tempFileEntry.getFileEntryId());
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference

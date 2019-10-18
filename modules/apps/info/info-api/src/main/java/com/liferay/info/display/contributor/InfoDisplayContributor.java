@@ -56,6 +56,13 @@ public interface InfoDisplayContributor<T> {
 			long classTypeId, Locale locale)
 		throws PortalException;
 
+	public default Set<InfoDisplayField> getInfoDisplayFields(
+			T t, Locale locale)
+		throws PortalException {
+
+		return getInfoDisplayFields(0, locale);
+	}
+
 	public Map<String, Object> getInfoDisplayFieldsValues(T t, Locale locale)
 		throws PortalException;
 

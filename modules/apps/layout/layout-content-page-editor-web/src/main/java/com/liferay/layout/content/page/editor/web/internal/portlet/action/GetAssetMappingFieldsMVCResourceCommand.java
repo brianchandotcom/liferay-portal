@@ -14,11 +14,11 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayField;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -75,10 +75,10 @@ public class GetAssetMappingFieldsMVCResourceCommand
 
 		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			classNameId, classPK);
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
+			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
 
-		if (assetEntry == null) {
+		if (infoDisplayObjectProvider == null) {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONFactoryUtil.createJSONArray());
@@ -93,7 +93,8 @@ public class GetAssetMappingFieldsMVCResourceCommand
 
 		Set<InfoDisplayField> infoDisplayFields =
 			infoDisplayContributor.getInfoDisplayFields(
-				assetEntry.getClassTypeId(), themeDisplay.getLocale());
+				infoDisplayObjectProvider.getDisplayObject(),
+				themeDisplay.getLocale());
 
 		for (InfoDisplayField infoDisplayField : infoDisplayFields) {
 			JSONObject jsonObject = JSONUtil.put(

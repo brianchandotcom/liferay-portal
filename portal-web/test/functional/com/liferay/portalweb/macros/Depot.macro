@@ -1,20 +1,20 @@
 definition {
 
-	macro addRepository {
+	macro addDepot {
 		Click(locator1 = "Button#PLUS");
 
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = "${repositoryName}");
+			value1 = "${depotName}");
 
 		Button.clickSave();
 
 		Alert.viewSuccessMessageText(successMessage = "Repository was added.");
 
-		if (isSet(repositoryDescription)) {
+		if (isSet(depotDescription)) {
 			Type(
 				locator1 = "TextArea#DESCRIPTION",
-				value1 = "${repositoryDescription}");
+				value1 = "${depotDescription}");
 		}
 
 		Button.clickSave();
@@ -22,19 +22,19 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editRepository {
-		ContentRepositoryNavigator.gotoEdit(repositoryName = "${repositoryName}");
+	macro editDepot {
+		DepotNavigator.gotoEdit(depotName = "${depotName}");
 
-		if (isSet(repositoryNameEdit)) {
+		if (isSet(depotNameEdit)) {
 			Type(
 				locator1 = "TextInput#NAME",
-				value1 = "${repositoryNameEdit}");
+				value1 = "${depotNameEdit}");
 		}
 
-		if (isSet(repositoryDescriptionEdit)) {
+		if (isSet(depotDescriptionEdit)) {
 			Type(
 				locator1 = "TextArea#DESCRIPTION",
-				value1 = "${repositoryDescriptionEdit}");
+				value1 = "${depotDescriptionEdit}");
 		}
 
 		Button.clickSave();
@@ -55,17 +55,17 @@ definition {
 				value1 = "1 Result for ${searchTerm}");
 		}
 
-		for (var repositoryName : list "${includedResults}") {
-			var key_card = "${repositoryName}";
+		for (var depotName : list "${includedResults}") {
+			var key_card = "${depotName}";
 
 			AssertTextEquals(
 				locator1 = "LexiconCard#CARD_TITLE",
-				value1 = "${repositoryName}");
+				value1 = "${depotName}");
 		}
 
 		if (isSet(excludedResults)) {
-			for (var repositoryName : list "${excludedResults}") {
-				var key_card = "${repositoryName}";
+			for (var depotName : list "${excludedResults}") {
+				var key_card = "${depotName}";
 
 				AssertElementNotPresent(locator1 = "LexiconCard#CARD_TITLE");
 			}

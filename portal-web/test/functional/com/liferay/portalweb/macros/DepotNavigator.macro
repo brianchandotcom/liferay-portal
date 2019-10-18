@@ -1,0 +1,28 @@
+definition {
+
+	macro gotoDepot {
+		var key_card = "${depotName}";
+
+		Click(
+			locator1 = "LexiconCard#CARD_TITLE",
+			value1 = "${depotName}");
+
+		AssertTextEquals(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "Documents and Media");
+	}
+
+	macro gotoEdit {
+		var key_card = "${depotName}";
+
+		Click(
+			locator1 = "LexiconCard#CARD_ELLIPSIS",
+			value1 = "${depotName}");
+
+		AssertClick(
+			key_menuItem = "Edit",
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			value1 = "Edit");
+	}
+
+}

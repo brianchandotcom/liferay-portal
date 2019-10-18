@@ -242,8 +242,6 @@ definition {
 
 			AssertElementPresent(locator1 = "CalendarAgendaView#SCHEDULER_VIEW_AGENDA");
 		}
-
-		Pause(locator1 = "3000");
 	}
 
 }

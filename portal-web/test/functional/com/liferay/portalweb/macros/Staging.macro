@@ -122,6 +122,8 @@ definition {
 			locator1 = "Message#ERROR",
 			value1 = "Your request failed to complete.");
 
+		var browserType = PropsUtil.get("browser.type");
+
 		if ("${browserType}" == "internetexplorer") {
 			AssertElementPresent(locator1 = "Button#PLUS_IE");
 		}

@@ -25,7 +25,7 @@
 			{param store: $store /}
 		{/call}
 
-		{if $masterPageLayoutData}
+		{if $masterPageLayoutData and $masterPageLayoutData.structure and (length($masterPageLayoutData.structure) > 0)}
 			{call com.liferay.layout.content.page.editor.web.MasterFragmentEntryLinkList.render}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
 				{param layoutData: $layoutData /}

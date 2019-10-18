@@ -24,4 +24,7 @@ expect "Please enter your portal directory in application server directory" {
 
 set timeout 900
 
-expect "Checking to see if all upgrades have completed... done"
+expect {
+    "Checking to see if all upgrades have completed... done" {send_user "PASS"}
+    timeout {send_user "FAILED";exit 2}
+}

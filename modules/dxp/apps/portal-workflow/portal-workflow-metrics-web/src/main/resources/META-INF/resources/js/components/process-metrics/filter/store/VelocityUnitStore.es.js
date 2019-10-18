@@ -12,13 +12,12 @@
 
 import moment from 'moment';
 import React, {createContext, useContext, useEffect, useState} from 'react';
-
-import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents.es';
 import {
 	velocityUnitConstants,
 	getVelocityUnits,
 	getDefaultVelocityUnit
 } from '../../../../shared/components/filter/util/filterUtil.es';
+import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents.es';
 import {compareArrays} from '../../../../shared/util/array.es';
 import {TimeRangeContext} from './TimeRangeStore.es';
 import {usePrevious} from '../../../../shared/util/hooks.es';

@@ -14,19 +14,17 @@ import {
 	PerformanceDataProvider
 } from './store/PerformanceByStepStore.es';
 import React, {useContext} from 'react';
-import {formatDuration} from '../../../shared/util/duration.es';
-
-import ListHeadItem from '../../../shared/components/list/ListHeadItem.es';
-import PaginationBar from '../../../shared/components/pagination/PaginationBar.es';
-import Search from '../../../shared/components/pagination/Search.es';
-import {formatDuration} from '../../../shared/util/duration.es';
-import {getFormattedPercentage} from '../../../shared/util/util.es';
 import {
 	TimeRangeContext,
 	TimeRangeProvider
 } from '../filter/store/TimeRangeStore.es';
-import {TimeRangeFilter} from '../filter/TimeRangeFilter.es';
+import {formatDuration} from '../../../shared/util/duration.es';
+
+import ListHeadItem from '../../../shared/components/list/ListHeadItem.es';
+import PaginationBar from '../../../shared/components/pagination/PaginationBar.es';
 import Request from '../../../shared/components/request/Request.es';
+import Search from '../../../shared/components/pagination/Search.es';
+import {TimeRangeFilter} from '../filter/TimeRangeFilter.es';
 
 function PerformanceByStep({page, pageSize, processId, search, sort}) {
 	return (

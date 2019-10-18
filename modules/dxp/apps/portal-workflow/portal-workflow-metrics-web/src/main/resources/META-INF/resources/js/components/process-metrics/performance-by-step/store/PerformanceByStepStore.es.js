@@ -10,8 +10,8 @@
  * distribution rights of the Software.
  */
 
-import {AppContext} from '../../../AppContext.es';
 import React, {createContext, useContext, useEffect, useState} from 'react';
+import {AppContext} from '../../../AppContext.es';
 
 const usePerformanceData = (
 	page,
@@ -32,11 +32,11 @@ const usePerformanceData = (
 			sort: decodeURIComponent(sort)
 		};
 
-		const isValidDate = date => date && !isNaN(date);
-
 		if (typeof search === 'string' && search) {
 			params.key = decodeURIComponent(search);
 		}
+
+		const isValidDate = date => date && !isNaN(date);
 
 		if (
 			timeRange &&

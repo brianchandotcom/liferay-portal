@@ -9,11 +9,6 @@
  * distribution rights of the Software.
  */
 
-import {act, renderHook} from '@testing-library/react-hooks';
-import {create} from 'react-test-renderer';
-import React, {useContext} from 'react';
-
-import {TimeRangeContext} from '../../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/TimeRangeStore.es';
 import {
 	daysUnit,
 	hoursUnit,
@@ -26,6 +21,10 @@ import {
 	VelocityUnitProvider,
 	VelocityUnitContext
 } from '../../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/VelocityUnitStore.es';
+import {act, renderHook} from '@testing-library/react-hooks';
+import React, {useContext} from 'react';
+import {create} from 'react-test-renderer';
+import {TimeRangeContext} from '../../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/TimeRangeStore.es';
 
 describe('The default Velocity Unit should', () => {
 	test('Be "Inst/Hour" when the time range is less than 1 day', async () => {

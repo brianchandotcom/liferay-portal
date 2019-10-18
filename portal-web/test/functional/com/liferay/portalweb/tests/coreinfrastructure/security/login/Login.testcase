@@ -10,6 +10,45 @@ definition {
 	}
 
 	@priority = "5"
+	test CASSSOSmoke {
+		property cas.enabled = "true";
+		property dummy.socket.proxy.disabled = "true";
+		property test.name.skip.portal.instance = "Login#CASSSOSmoke";
+
+		User.firstLoginPG();
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileContent = FileUtil.read("${liferayHome}/tomcat-9.0.17/bin/cas.log");
+
+		if (contains("${fileContent}", "org.jasig.cas")) {
+			echo("CAS server started.");
+		}
+		else {
+			fail("FAIL! CAS server didn't start.");
+		}
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "CAS Server",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.editConfigurationAuthenticationCAS();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.editConfigurationAuthenticationGeneral(authenticationMethod = "By Screen Name");
+
+		User.logoutPG();
+
+		User.loginUserWithCASEnabledPG(
+			userPassword = "test",
+			userScreenName = "test");
+	}
+
+	@priority = "5"
 	test DefaultPortalLandingPage {
 		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPage";
 

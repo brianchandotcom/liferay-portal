@@ -1,20 +1,14 @@
-require 'compass'
 require 'pathname'
 require 'sass/plugin'
 
 class SASSWrapper
 	def initialize()
-		Compass.add_project_configuration
-
-		@load_paths = Compass.configuration.sass_load_paths
 	end
 
-	def process(inputFileName, includePath, sassCachePath, debug=false, outputFileName, precision, generateSourceMap, sourceMapFileName)
+	def process(inputFileName, includePath, sassCachePath, debug = false, outputFileName, precision, generateSourceMap, sourceMapFileName)
 		Sass::Script::Number.precision = precision
 
 		load_paths = includePath.split(File::PATH_SEPARATOR)
-
-		load_paths += @load_paths
 
 		if generateSourceMap
 			inputFilePath = Pathname.new(inputFileName)
@@ -44,7 +38,7 @@ class SASSWrapper
 					:css_path => outputFileName,
 					:sourcemap_path => sourceMapFileName
 				})
-			
+
 			return css, sourceMap
 		else
 			engine = Sass::Engine.for_file(

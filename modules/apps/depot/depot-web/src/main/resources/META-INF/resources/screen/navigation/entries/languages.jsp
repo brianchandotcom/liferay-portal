@@ -24,7 +24,7 @@ Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
 
 <liferay-frontend:fieldset
 	collapsible="true"
-	label='<%= LanguageUtil.get(request, "language") %>'
+	label='<%= LanguageUtil.get(request, "languages") %>'
 >
 
 	<%

@@ -1,0 +1,20 @@
+.display-list {
+	.list-group .list-group-item {
+		background-color: transparent;
+		border-left-width: 0;
+		border-radius: 0;
+		border-right-width: 0;
+		padding-left: 0;
+		padding-right: 0;
+
+		.list-group-subtext,
+		.list-group-text {
+			font-size: 12px;
+			line-height: 18px;
+		}
+
+		.related-results-metadata + .related-results-description {
+			margin-top: 8px;
+		}
+	}
+}

@@ -52,7 +52,7 @@ export {default as PortletBase} from './liferay/PortletBase.es';
 // Modal API
 
 export {
-	openSimpleInputModal
+	default as openSimpleInputModal
 } from './liferay/modal/commands/OpenSimpleInputModal.es';
 
 // PortletURL API

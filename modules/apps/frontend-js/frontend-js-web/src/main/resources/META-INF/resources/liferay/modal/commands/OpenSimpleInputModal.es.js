@@ -12,9 +12,29 @@
  * details.
  */
 
-import {SimpleInputModal} from '../components/SimpleInputModal.es';
-import React from 'react';
 import {render} from 'frontend-js-react-web';
+import {unmountComponentAtNode} from 'react-dom';
+import React from 'react';
+
+import SimpleInputModal from '../components/SimpleInputModal.es';
+
+const DEFAULT_MODAL_CONTAINER_ID = 'modalContainer';
+
+const DEFAULT_RENDER_DATA = {
+	portletId: 'UNKNOWN_PORTLET_ID'
+};
+
+const getDefaultModalContainer = () => {
+	let container = document.getElementById(DEFAULT_MODAL_CONTAINER_ID);
+
+	if (!container) {
+		container = document.createElement('div');
+		container.id = DEFAULT_MODAL_CONTAINER_ID;
+		document.body.appendChild(container);
+	}
+
+	return container;
+};
 
 /**
  * Function that implements the SimpleInputModal pattern, which allows
@@ -23,38 +43,39 @@ import {render} from 'frontend-js-react-web';
  * @review
  */
 
-let container;
+function openSimpleInputModal(
+	data,
+	containerId,
+	renderData = DEFAULT_RENDER_DATA
+) {
+	const container =
+		document.getElementById(containerId) || getDefaultModalContainer();
 
-function openSimpleInputModal(data) {
-	container = document.createElement('div');
+	unmountComponentAtNode(container);
 
-	document.body.appendChild(container);
+	const closeModal = () => {
+		unmountComponentAtNode(container);
+	};
 
-	render(renderComponent, data, container);
-}
-
-function cleanUp() {
-	if (container) {
-		document.body.removeChild(container);
-
-		container = null;
-	}
-}
-
-function renderComponent(data) {
-	return (
+	const SimpleInputModalComponent = () => (
 		<SimpleInputModal
-			cleanUp={cleanUp}
+			closeModal={closeModal}
 			dialogTitle={data.dialogTitle}
 			formSubmitURL={data.formSubmitURL}
 			idFieldName={data.idFieldName}
 			idFieldValue={data.idFieldValue}
 			initialVisible="true"
-			mainFieldName={data.mainFieldName}
 			mainFieldLabel={data.mainFieldLabel}
+			mainFieldName={data.mainFieldName}
 			namespace={data.namespace}
 			placeholder={data.placeholder}
 		/>
+	);
+
+	render(
+		SimpleInputModalComponent,
+		Object.assign(data, renderData),
+		container
 	);
 }
 

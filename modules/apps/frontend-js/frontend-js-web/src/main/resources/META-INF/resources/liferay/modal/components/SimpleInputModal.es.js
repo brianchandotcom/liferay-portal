@@ -12,24 +12,24 @@
  * details.
  */
 
-import {fetch, navigate} from 'frontend-js-web';
-import React, {useState} from 'react';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
+import {fetch, navigate} from 'frontend-js-web';
+import React, {useState} from 'react';
 
 /**
  * Manipulates small amounts of data with a form shown inside a modal.
  */
 const SimpleInputModal = ({
-	cleanUp,
+	closeModal,
 	dialogTitle,
 	formSubmitURL,
 	idFieldName,
 	idFieldValue,
 	initialVisible,
-	mainFieldName,
 	mainFieldLabel,
+	mainFieldName,
 	namespace,
 	placeholder
 }) => {
@@ -64,7 +64,7 @@ const SimpleInputModal = ({
 		onClose: () => {
 			setVisible(false);
 
-			Liferay.once('destroyPortlet', cleanUp);
+			closeModal();
 		}
 	});
 
@@ -142,4 +142,4 @@ const SimpleInputModal = ({
 	);
 };
 
-export {SimpleInputModal};
+export default SimpleInputModal;

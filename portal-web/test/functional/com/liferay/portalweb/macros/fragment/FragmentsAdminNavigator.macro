@@ -1,13 +1,20 @@
 definition {
 
 	macro gotoAddCollection {
-		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_PLUS")) {
-			Click(locator1 = "NavNested#NAV_NESTED_PLUS");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "internetexplorer") {
+			Click(locator1 = "Button#PLUS_IE");
 		}
 		else {
-			Button.click(button = "New");
+			if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_PLUS")) {
+				Click(locator1 = "NavNested#NAV_NESTED_PLUS");
+			}
+			else {
+				Button.click(button = "New");
 
-			MenuItem.click(menuItem = "Collection");
+				MenuItem.click(menuItem = "Collection");
+			}
 		}
 	}
 

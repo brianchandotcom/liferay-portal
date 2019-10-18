@@ -140,7 +140,7 @@ public class LayoutsAdminDisplayContext {
 				LayoutAdminWebKeys.LAYOUT_COPY_HELPER);
 		_layoutConverterRegistry =
 			(LayoutConverterRegistry)_liferayPortletRequest.getAttribute(
-				LayoutAdminWebKeys.LAYOUT_TEMPLATE_CONVERTER_REGISTRY);
+				LayoutAdminWebKeys.LAYOUT_CONVERTER_REGISTRY);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

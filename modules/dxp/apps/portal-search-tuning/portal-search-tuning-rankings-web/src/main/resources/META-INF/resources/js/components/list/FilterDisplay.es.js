@@ -10,6 +10,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {ClayResultsBar} from '@clayui/management-toolbar';
 import {PropTypes} from 'prop-types';
 import React, {Component} from 'react';
 
@@ -26,40 +27,30 @@ class FilterDisplay extends Component {
 		const {onClear, searchBarTerm, totalResultsCount} = this.props;
 
 		return (
-			<nav className="subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down">
-				<div className="container-fluid container-fluid-max-xl">
-					<ul className="tbar-nav tbar-nav-wrap">
-						<li className="tbar-item tbar-item-expand">
-							<div className="tbar-section">
-								<span className="component-text text-truncate-inline">
-									<span className="text-truncate">
-										{sub(
-											Liferay.Language.get(
-												'x-results-for-x'
-											),
-											[totalResultsCount, searchBarTerm]
-										)}
-									</span>
-								</span>
-							</div>
-						</li>
+			<ClayResultsBar title={Liferay.Language.get('filter')}>
+				<ClayResultsBar.Item expand>
+					<span className="component-text text-truncate-inline">
+						<span className="text-truncate">
+							{sub(Liferay.Language.get('x-results-for-x'), [
+								totalResultsCount,
+								searchBarTerm
+							])}
+						</span>
+					</span>
+				</ClayResultsBar.Item>
 
-						<li className="tbar=item">
-							<div className="tbar-section">
-								<ClayButton
-									className="btn-outline-borderless"
-									displayType="unstyled"
-									onClick={onClear}
-									small
-									title={Liferay.Language.get('clear')}
-								>
-									{Liferay.Language.get('clear')}
-								</ClayButton>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</nav>
+				<ClayResultsBar.Item>
+					<ClayButton
+						className="component-link tbar-link"
+						displayType="unstyled"
+						onClick={onClear}
+						small
+						title={Liferay.Language.get('clear')}
+					>
+						{Liferay.Language.get('clear')}
+					</ClayButton>
+				</ClayResultsBar.Item>
+			</ClayResultsBar>
 		);
 	}
 }

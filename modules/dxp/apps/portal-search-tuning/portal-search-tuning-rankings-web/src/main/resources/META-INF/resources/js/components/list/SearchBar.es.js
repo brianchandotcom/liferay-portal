@@ -12,6 +12,7 @@
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayManagementToolbar from '@clayui/management-toolbar';
 import getCN from 'classnames';
 import {PropTypes} from 'prop-types';
 import React, {Component} from 'react';
@@ -117,157 +118,151 @@ class SearchBar extends Component {
 		} = this.props;
 
 		const classManagementBar = getCN(
-			'management-bar',
 			this._hasSelectedIds()
 				? 'management-bar-primary'
-				: 'management-bar-light',
-			'navbar',
-			'navbar-expand-md'
+				: 'management-bar-light'
+		);
+
+		const classNavBarForm = getCN(
+			'navbar-form',
+			'navbar-form-autofit',
+			'navbar-overlay'
 		);
 
 		return (
 			<div className="search-bar-root">
-				<nav className={classManagementBar}>
-					<div className="container-fluid container-fluid-max-xl">
-						<div className="navbar-form navbar-form-autofit navbar-overlay">
-							<ul className="navbar-nav">
-								<li className="nav-item">
-									<ClayCheckbox
-										aria-label={Liferay.Language.get(
-											'select-all'
-										)}
-										checked={this._hasSelectedIds()}
-										disabled={!resultIds.length}
-										indeterminate={
-											selectedIds.length > 0 &&
-											selectedIds.length !==
-												resultIds.length
-										}
-										onChange={this._handleAllCheckbox}
-									/>
-								</li>
-							</ul>
+				<ClayManagementToolbar className={classManagementBar}>
+					<div className={classNavBarForm}>
+						<ClayManagementToolbar.ItemList>
+							<ClayManagementToolbar.Item>
+								<ClayCheckbox
+									aria-label={Liferay.Language.get(
+										'select-all'
+									)}
+									checked={this._hasSelectedIds()}
+									disabled={!resultIds.length}
+									indeterminate={
+										selectedIds.length > 0 &&
+										selectedIds.length !== resultIds.length
+									}
+									onChange={this._handleAllCheckbox}
+								/>
+							</ClayManagementToolbar.Item>
+						</ClayManagementToolbar.ItemList>
 
-							{this._hasSelectedIds() && (
-								<>
-									<ul className="navbar-nav navbar-nav-expand">
-										<li className="nav-item">
-											<span className="navbar-text">
-												{getPluralMessage(
-													Liferay.Language.get(
-														'x-item-selected'
-													),
-													Liferay.Language.get(
-														'x-items-selected'
-													),
-													selectedIds.length
-												)}
-											</span>
-										</li>
-									</ul>
+						{this._hasSelectedIds() && (
+							<>
+								<ClayManagementToolbar.ItemList expand>
+									<ClayManagementToolbar.Item>
+										<span className="navbar-text">
+											{getPluralMessage(
+												Liferay.Language.get(
+													'x-item-selected'
+												),
+												Liferay.Language.get(
+													'x-items-selected'
+												),
+												selectedIds.length
+											)}
+										</span>
+									</ClayManagementToolbar.Item>
+								</ClayManagementToolbar.ItemList>
 
-									<ul className="navbar-nav">
-										<li className="nav-item">
-											<div className="nav-link nav-link-monospaced">
-												<ClayButton
-													className="btn-outline-borderless component-action"
-													displayType="secondary"
-													onClick={
-														this._handleClickHide
-													}
-													title={
+								<ClayManagementToolbar.ItemList>
+									<ClayManagementToolbar.Item>
+										<div className="nav-link nav-link-monospaced">
+											<ClayButton
+												className="btn-outline-borderless component-action"
+												displayType="secondary"
+												onClick={this._handleClickHide}
+												title={
+													this._isAnyHidden()
+														? Liferay.Language.get(
+																'show-result'
+														  )
+														: Liferay.Language.get(
+																'hide-result'
+														  )
+												}
+											>
+												<ClayIcon
+													symbol={
 														this._isAnyHidden()
-															? Liferay.Language.get(
-																	'show-result'
-															  )
-															: Liferay.Language.get(
-																	'hide-result'
-															  )
-													}
-												>
-													<ClayIcon
-														symbol={
-															this._isAnyHidden()
-																? 'view'
-																: 'hidden'
-														}
-													/>
-												</ClayButton>
-											</div>
-										</li>
-
-										<li className="nav-item">
-											<div className="nav-link nav-link-monospaced">
-												<ClayButton
-													className="btn-outline-borderless component-action"
-													displayType="secondary"
-													onClick={
-														this._handleClickPin
-													}
-													title={
-														this._isAnyUnpinned()
-															? Liferay.Language.get(
-																	'pin-result'
-															  )
-															: Liferay.Language.get(
-																	'unpin-result'
-															  )
-													}
-												>
-													{this._isAnyUnpinned() ? (
-														<ClayIcon
-															key="PIN"
-															symbol="pin"
-														/>
-													) : (
-														<ClayIcon
-															key="UNPIN"
-															symbol="unpin"
-														/>
-													)}
-												</ClayButton>
-											</div>
-										</li>
-
-										<li className="nav-item">
-											<div className="nav-link nav-link-monospaced">
-												<ItemDropdown
-													hidden={this._isAnyHidden()}
-													itemCount={
-														selectedIds.length
-													}
-													onClickHide={
-														this._handleClickHide
-													}
-													onClickPin={
-														this._handleClickPin
-													}
-													pinned={
-														!this._isAnyUnpinned()
+															? 'view'
+															: 'hidden'
 													}
 												/>
-											</div>
-										</li>
-									</ul>
-								</>
-							)}
+											</ClayButton>
+										</div>
+									</ClayManagementToolbar.Item>
 
-							{!this._hasSelectedIds() && (
-								<>
-									<ul className="navbar-nav navbar-nav-expand">
-										{!!resultIds.length && (
-											<li className="nav-item">
-												<span className="navbar-text">
-													{Liferay.Language.get(
-														'select-items'
-													)}
-												</span>
-											</li>
-										)}
-									</ul>
+									<ClayManagementToolbar.Item>
+										<div className="nav-link nav-link-monospaced">
+											<ClayButton
+												className="btn-outline-borderless component-action"
+												displayType="secondary"
+												onClick={this._handleClickPin}
+												title={
+													this._isAnyUnpinned()
+														? Liferay.Language.get(
+																'pin-result'
+														  )
+														: Liferay.Language.get(
+																'unpin-result'
+														  )
+												}
+											>
+												{this._isAnyUnpinned() ? (
+													<ClayIcon
+														key="PIN"
+														symbol="pin"
+													/>
+												) : (
+													<ClayIcon
+														key="UNPIN"
+														symbol="unpin"
+													/>
+												)}
+											</ClayButton>
+										</div>
+									</ClayManagementToolbar.Item>
 
-									{onAddResultSubmit && (
-										<ul className="navbar-nav">
+									<ClayManagementToolbar.Item>
+										<div className="nav-link nav-link-monospaced">
+											<ItemDropdown
+												hidden={this._isAnyHidden()}
+												itemCount={selectedIds.length}
+												onClickHide={
+													this._handleClickHide
+												}
+												onClickPin={
+													this._handleClickPin
+												}
+												pinned={!this._isAnyUnpinned()}
+											/>
+										</div>
+									</ClayManagementToolbar.Item>
+								</ClayManagementToolbar.ItemList>
+							</>
+						)}
+
+						{!this._hasSelectedIds() && (
+							<>
+								<ClayManagementToolbar.ItemList expand>
+									{!!resultIds.length && (
+										<ClayManagementToolbar.Item>
+											<span className="component-text navbar-text">
+												{Liferay.Language.get(
+													'select-items'
+												)}
+											</span>
+										</ClayManagementToolbar.Item>
+									)}
+								</ClayManagementToolbar.ItemList>
+
+								{onAddResultSubmit && (
+									<ClayManagementToolbar.ItemList>
+										<ClayManagementToolbar.Item>
 											<AddResult
 												fetchDocumentsSearchUrl={
 													fetchDocumentsSearchUrl
@@ -276,13 +271,13 @@ class SearchBar extends Component {
 													onAddResultSubmit
 												}
 											/>
-										</ul>
-									)}
-								</>
-							)}
-						</div>
+										</ClayManagementToolbar.Item>
+									</ClayManagementToolbar.ItemList>
+								)}
+							</>
+						)}
 					</div>
-				</nav>
+				</ClayManagementToolbar>
 			</div>
 		);
 	}

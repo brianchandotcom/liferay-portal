@@ -10,7 +10,9 @@
  */
 
 import ClayButton from '@clayui/button';
+import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayManagementToolbar from '@clayui/management-toolbar';
 import {PropTypes} from 'prop-types';
 import React, {Component} from 'react';
 
@@ -41,36 +43,32 @@ class FilterInput extends Component {
 		const {disableSearch, onSubmit, searchBarTerm} = this.props;
 
 		return (
-			<div className="navbar-nav navbar-nav-expand">
-				<div className="container-fluid container-fluid-max-xl">
-					<div className="input-group">
-						<div className="input-group-item">
-							<input
-								aria-label={Liferay.Language.get('search')}
-								className="form-control input-group-inset input-group-inset-after"
-								disabled={disableSearch}
-								onChange={this._handleChange}
-								onKeyDown={this._handleKeyDown}
-								placeholder={Liferay.Language.get(
-									'contains-text'
-								)}
-								type="text"
-								value={searchBarTerm}
-							/>
+			<ClayManagementToolbar.Search>
+				<ClayInput.Group>
+					<ClayInput.GroupItem>
+						<ClayInput
+							aria-label={Liferay.Language.get('search')}
+							className="form-control input-group-inset input-group-inset-after"
+							disabled={disableSearch}
+							onChange={this._handleChange}
+							onKeyDown={this._handleKeyDown}
+							placeholder={Liferay.Language.get('contains-text')}
+							type="text"
+							value={searchBarTerm}
+						/>
 
-							<div className="input-group-inset-item input-group-inset-item-after">
-								<ClayButton
-									displayType="unstyled"
-									onClick={onSubmit}
-									title={Liferay.Language.get('search-icon')}
-								>
-									<ClayIcon symbol="search" />
-								</ClayButton>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+						<ClayInput.GroupInsetItem after tag="span">
+							<ClayButton
+								displayType="unstyled"
+								onClick={onSubmit}
+								title={Liferay.Language.get('search-icon')}
+							>
+								<ClayIcon symbol="search" />
+							</ClayButton>
+						</ClayInput.GroupInsetItem>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
+			</ClayManagementToolbar.Search>
 		);
 	}
 }

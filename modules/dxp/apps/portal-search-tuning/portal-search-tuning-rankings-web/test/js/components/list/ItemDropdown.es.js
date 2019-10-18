@@ -168,7 +168,7 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		fireEvent.click(getByTitle('toggle-dropdown'));
+		fireEvent.click(getByTitle('actions'));
 
 		expect(getByText('pin-result')).not.toBeNull();
 		expect(getByText('hide-result')).not.toBeNull();

@@ -68,7 +68,7 @@ class ItemDropdown extends Component {
 						aria-expanded="false"
 						aria-haspopup="true"
 						className="btn-outline-borderless component-action"
-						title={Liferay.Language.get('toggle-dropdown')}
+						title={Liferay.Language.get('actions')}
 					>
 						<ClayIcon symbol="ellipsis-v" />
 					</ClayButton>

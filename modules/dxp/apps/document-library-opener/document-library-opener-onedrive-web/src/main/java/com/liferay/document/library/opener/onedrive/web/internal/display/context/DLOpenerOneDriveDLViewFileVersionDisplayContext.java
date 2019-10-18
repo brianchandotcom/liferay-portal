@@ -40,7 +40,9 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BaseUIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptUIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -51,6 +53,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.UUID;
@@ -132,6 +135,33 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 			_createEditInOffice365MenuItem(Constants.CHECKOUT));
 
 		return menu;
+	}
+
+	@Override
+	public List<ToolbarItem> getToolbarItems() throws PortalException {
+		if (!isActionsVisible() ||
+			!DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
+				fileVersion.getMimeType()) ||
+			!_dlOpenerOneDriveManager.isConfigured(
+				fileVersion.getCompanyId()) ||
+			!_fileEntryModelResourcePermission.contains(
+				_permissionChecker, fileVersion.getFileEntry(),
+				ActionKeys.UPDATE)) {
+
+			return super.getToolbarItems();
+		}
+
+		List<ToolbarItem> toolbarItems = super.getToolbarItems();
+
+		if (_isCheckedOutInOneDrive()) {
+			FileEntry fileEntry = fileVersion.getFileEntry();
+
+			if (fileEntry.hasLock()) {
+				_updateCancelCheckoutAndCheckinToolbarItems(toolbarItems);
+			}
+		}
+
+		return toolbarItems;
 	}
 
 	/**
@@ -337,6 +367,54 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 					urlMenuItem.setMethod(HttpMethods.POST);
 					urlMenuItem.setURL(_getCancelCheckOutURL());
 				}
+			}
+		}
+	}
+
+	private void _updateCancelCheckoutAndCheckinToolbarItems(
+			List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		ListIterator<ToolbarItem> listIterator = toolbarItems.listIterator();
+
+		while (listIterator.hasNext()) {
+			ToolbarItem toolbarItem = listIterator.next();
+
+			if (DLUIItemKeys.CHECKIN.equals(toolbarItem.getKey())) {
+				if (toolbarItem instanceof JavaScriptUIItem) {
+					JavaScriptUIItem javaScriptUIItem =
+						(JavaScriptUIItem)toolbarItem;
+
+					if (_isCheckingInNewFile()) {
+						javaScriptUIItem.setOnClick(
+							StringBundler.concat(
+								"window.location.href = '", _getCheckInURL(),
+								"'"));
+					}
+					else {
+						javaScriptUIItem.setOnClick(
+							StringBundler.concat(
+								_getNamespace(), "showVersionDetailsDialog('",
+								_getCheckInURL(), "');"));
+					}
+				}
+			}
+			else if (DLUIItemKeys.CANCEL_CHECKOUT.equals(
+						toolbarItem.getKey())) {
+
+				listIterator.remove();
+
+				URLToolbarItem urlToolbarItem = new URLToolbarItem();
+
+				urlToolbarItem.setData(
+					Collections.singletonMap("senna-off", "true"));
+				urlToolbarItem.setKey(DLUIItemKeys.CANCEL_CHECKOUT);
+				urlToolbarItem.setLabel(
+					LanguageUtil.get(
+						_resourceBundle, "cancel-checkout[document]"));
+				urlToolbarItem.setURL(_getCancelCheckOutURL());
+
+				listIterator.add(urlToolbarItem);
 			}
 		}
 	}

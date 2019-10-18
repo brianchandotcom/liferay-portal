@@ -16,6 +16,8 @@ import PortletBase from './PortletBase.es';
 
 class DefaultEventHandler extends PortletBase {
 	callAction(event) {
+		event.preventDefault();
+
 		var itemData = event.data.item.data;
 
 		if (itemData && itemData.action && this[itemData.action]) {

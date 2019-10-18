@@ -14,7 +14,10 @@
 
 package com.liferay.document.library.content.service;
 
+import com.liferay.document.library.content.model.DLContent;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link DLContentLocalService}.
@@ -38,7 +41,7 @@ public class DLContentLocalServiceWrapper
 	 * Never modify or reference this interface directly. Always use {@link DLContentLocalServiceUtil} to access the document library content local service. Add custom service methods to <code>com.liferay.document.library.content.service.impl.DLContentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Override
-	public com.liferay.document.library.content.model.DLContent addContent(
+	public DLContent addContent(
 		long companyId, long repositoryId, String path, String version,
 		byte[] bytes) {
 
@@ -47,7 +50,7 @@ public class DLContentLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.content.model.DLContent addContent(
+	public DLContent addContent(
 		long companyId, long repositoryId, String path, String version,
 		java.io.InputStream inputStream, long size) {
 
@@ -62,9 +65,7 @@ public class DLContentLocalServiceWrapper
 	 * @return the document library content that was added
 	 */
 	@Override
-	public com.liferay.document.library.content.model.DLContent addDLContent(
-		com.liferay.document.library.content.model.DLContent dlContent) {
-
+	public DLContent addDLContent(DLContent dlContent) {
 		return _dlContentLocalService.addDLContent(dlContent);
 	}
 
@@ -75,9 +76,7 @@ public class DLContentLocalServiceWrapper
 	 * @return the new document library content
 	 */
 	@Override
-	public com.liferay.document.library.content.model.DLContent createDLContent(
-		long contentId) {
-
+	public DLContent createDLContent(long contentId) {
 		return _dlContentLocalService.createDLContent(contentId);
 	}
 
@@ -110,9 +109,7 @@ public class DLContentLocalServiceWrapper
 	 * @return the document library content that was removed
 	 */
 	@Override
-	public com.liferay.document.library.content.model.DLContent deleteDLContent(
-		com.liferay.document.library.content.model.DLContent dlContent) {
-
+	public DLContent deleteDLContent(DLContent dlContent) {
 		return _dlContentLocalService.deleteDLContent(dlContent);
 	}
 
@@ -124,8 +121,7 @@ public class DLContentLocalServiceWrapper
 	 * @throws PortalException if a document library content with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.document.library.content.model.DLContent deleteDLContent(
-			long contentId)
+	public DLContent deleteDLContent(long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlContentLocalService.deleteDLContent(contentId);
@@ -233,9 +229,7 @@ public class DLContentLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.content.model.DLContent fetchDLContent(
-		long contentId) {
-
+	public DLContent fetchDLContent(long contentId) {
 		return _dlContentLocalService.fetchDLContent(contentId);
 	}
 
@@ -247,8 +241,7 @@ public class DLContentLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.content.model.DLContent getContent(
-			long companyId, long repositoryId, String path)
+	public DLContent getContent(long companyId, long repositoryId, String path)
 		throws com.liferay.document.library.content.exception.
 			NoSuchContentException {
 
@@ -256,7 +249,7 @@ public class DLContentLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.content.model.DLContent getContent(
+	public DLContent getContent(
 			long companyId, long repositoryId, String path, String version)
 		throws com.liferay.document.library.content.exception.
 			NoSuchContentException {
@@ -266,24 +259,23 @@ public class DLContentLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.document.library.content.model.DLContent>
-		getContents(long companyId, long repositoryId) {
+	public java.util.List<DLContent> getContents(
+		long companyId, long repositoryId) {
 
 		return _dlContentLocalService.getContents(companyId, repositoryId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.document.library.content.model.DLContent>
-		getContents(long companyId, long repositoryId, String path) {
+	public java.util.List<DLContent> getContents(
+		long companyId, long repositoryId, String path) {
 
 		return _dlContentLocalService.getContents(
 			companyId, repositoryId, path);
 	}
 
 	@Override
-	public java.util.List<com.liferay.document.library.content.model.DLContent>
-		getContentsByDirectory(
-			long companyId, long repositoryId, String dirName) {
+	public java.util.List<DLContent> getContentsByDirectory(
+		long companyId, long repositoryId, String dirName) {
 
 		return _dlContentLocalService.getContentsByDirectory(
 			companyId, repositoryId, dirName);
@@ -304,8 +296,7 @@ public class DLContentLocalServiceWrapper
 	 * @throws PortalException if a document library content with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.document.library.content.model.DLContent getDLContent(
-			long contentId)
+	public DLContent getDLContent(long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlContentLocalService.getDLContent(contentId);
@@ -323,9 +314,7 @@ public class DLContentLocalServiceWrapper
 	 * @return the range of document library contents
 	 */
 	@Override
-	public java.util.List<com.liferay.document.library.content.model.DLContent>
-		getDLContents(int start, int end) {
-
+	public java.util.List<DLContent> getDLContents(int start, int end) {
 		return _dlContentLocalService.getDLContents(start, end);
 	}
 
@@ -379,9 +368,7 @@ public class DLContentLocalServiceWrapper
 	 * @return the document library content that was updated
 	 */
 	@Override
-	public com.liferay.document.library.content.model.DLContent updateDLContent(
-		com.liferay.document.library.content.model.DLContent dlContent) {
-
+	public DLContent updateDLContent(DLContent dlContent) {
 		return _dlContentLocalService.updateDLContent(dlContent);
 	}
 
@@ -392,6 +379,25 @@ public class DLContentLocalServiceWrapper
 
 		_dlContentLocalService.updateDLContent(
 			companyId, oldRepositoryId, newRepositoryId, oldPath, newPath);
+	}
+
+	@Override
+	public CTPersistence<DLContent> getCTPersistence() {
+		return _dlContentLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<DLContent> getModelClass() {
+		return _dlContentLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<DLContent>, R, E> updateUnsafeFunction)
+		throws E {
+
+		return _dlContentLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

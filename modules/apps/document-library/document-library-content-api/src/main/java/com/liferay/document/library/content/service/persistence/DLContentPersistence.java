@@ -17,6 +17,7 @@ package com.liferay.document.library.content.service.persistence;
 import com.liferay.document.library.content.exception.NoSuchContentException;
 import com.liferay.document.library.content.model.DLContent;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,13 +33,158 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface DLContentPersistence extends BasePersistence<DLContent> {
+public interface DLContentPersistence
+	extends BasePersistence<DLContent>, CTPersistence<DLContent> {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLContentUtil} to access the document library content persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+
+	/**
+	 * Returns all the document library contents where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching document library contents
+	 */
+	@Override
+	public java.util.List<DLContent> findByCTCollectionId(long ctCollectionId);
+
+	/**
+	 * Returns a range of all the document library contents where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLContentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of document library contents
+	 * @param end the upper bound of the range of document library contents (not inclusive)
+	 * @return the range of matching document library contents
+	 */
+	public java.util.List<DLContent> findByCTCollectionId(
+		long ctCollectionId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the document library contents where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLContentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of document library contents
+	 * @param end the upper bound of the range of document library contents (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library contents
+	 */
+	public java.util.List<DLContent> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLContent>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the document library contents where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLContentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of document library contents
+	 * @param end the upper bound of the range of document library contents (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching document library contents
+	 */
+	public java.util.List<DLContent> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLContent>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first document library content in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library content
+	 * @throws NoSuchContentException if a matching document library content could not be found
+	 */
+	public DLContent findByCTCollectionId_First(
+			long ctCollectionId,
+			com.liferay.portal.kernel.util.OrderByComparator<DLContent>
+				orderByComparator)
+		throws NoSuchContentException;
+
+	/**
+	 * Returns the first document library content in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library content, or <code>null</code> if a matching document library content could not be found
+	 */
+	public DLContent fetchByCTCollectionId_First(
+		long ctCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<DLContent>
+			orderByComparator);
+
+	/**
+	 * Returns the last document library content in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library content
+	 * @throws NoSuchContentException if a matching document library content could not be found
+	 */
+	public DLContent findByCTCollectionId_Last(
+			long ctCollectionId,
+			com.liferay.portal.kernel.util.OrderByComparator<DLContent>
+				orderByComparator)
+		throws NoSuchContentException;
+
+	/**
+	 * Returns the last document library content in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library content, or <code>null</code> if a matching document library content could not be found
+	 */
+	public DLContent fetchByCTCollectionId_Last(
+		long ctCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<DLContent>
+			orderByComparator);
+
+	/**
+	 * Returns the document library contents before and after the current document library content in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param contentId the primary key of the current document library content
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library content
+	 * @throws NoSuchContentException if a document library content with the primary key could not be found
+	 */
+	public DLContent[] findByCTCollectionId_PrevAndNext(
+			long contentId, long ctCollectionId,
+			com.liferay.portal.kernel.util.OrderByComparator<DLContent>
+				orderByComparator)
+		throws NoSuchContentException;
+
+	/**
+	 * Removes all the document library contents where ctCollectionId = &#63; from the database.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 */
+	public void removeByCTCollectionId(long ctCollectionId);
+
+	/**
+	 * Returns the number of document library contents where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the number of matching document library contents
+	 */
+	public int countByCTCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns all the document library contents where companyId = &#63; and repositoryId = &#63;.

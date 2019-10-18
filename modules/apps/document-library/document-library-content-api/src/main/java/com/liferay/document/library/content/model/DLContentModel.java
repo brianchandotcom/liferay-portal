@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.sql.Blob;
 
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLContentModel
-	extends BaseModel<DLContent>, MVCCModel, ShardedModel {
+	extends BaseModel<DLContent>, CTModel<DLContent>, MVCCModel, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -49,6 +50,7 @@ public interface DLContentModel
 	 *
 	 * @return the primary key of this document library content
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -56,6 +58,7 @@ public interface DLContentModel
 	 *
 	 * @param primaryKey the primary key of this document library content
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -73,6 +76,22 @@ public interface DLContentModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this document library content.
+	 *
+	 * @return the ct collection ID of this document library content
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this document library content.
+	 *
+	 * @param ctCollectionId the ct collection ID of this document library content
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the content ID of this document library content.

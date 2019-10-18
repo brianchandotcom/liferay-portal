@@ -21,6 +21,8 @@ import java.sql.Blob;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -44,6 +46,7 @@ public class DLContentWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("contentId", getContentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -62,6 +65,12 @@ public class DLContentWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long contentId = (Long)attributes.get("contentId");
@@ -131,6 +140,16 @@ public class DLContentWrapper
 	@Override
 	public long getContentId() {
 		return model.getContentId();
+	}
+
+	/**
+	 * Returns the ct collection ID of this document library content.
+	 *
+	 * @return the ct collection ID of this document library content
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -244,6 +263,16 @@ public class DLContentWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this document library content.
+	 *
+	 * @param ctCollectionId the ct collection ID of this document library content
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the data of this document library content.
 	 *
 	 * @param data the data of this document library content
@@ -321,6 +350,20 @@ public class DLContentWrapper
 	@Override
 	public void setVersion(String version) {
 		model.setVersion(version);
+	}
+
+	@Override
+	public Map<String, Function<DLContent, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<DLContent, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

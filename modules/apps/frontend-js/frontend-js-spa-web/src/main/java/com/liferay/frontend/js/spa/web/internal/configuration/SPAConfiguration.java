@@ -36,14 +36,14 @@ public @interface SPAConfiguration {
 	public long cacheExpirationTime();
 
 	@Meta.AD(
-		deflt = "false",
+		deflt = "true",
 		description = "disable-in-internet-explorer-description",
 		name = "disable-in-internet-explorer", required = false
 	)
 	public boolean disableInInternetExplorer();
 
 	@Meta.AD(
-		deflt = "false",
+		deflt = "true",
 		description = "disable-in-internet-explorer-11-description",
 		name = "disable-in-internet-explorer-11", required = false
 	)

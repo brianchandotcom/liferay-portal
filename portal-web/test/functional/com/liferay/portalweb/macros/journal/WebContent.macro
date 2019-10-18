@@ -519,6 +519,12 @@ definition {
 			}
 		}
 
+		if (isSet(webContentImageDescription)) {
+			FormFields.editTextAlt(
+				fieldName = "Image",
+				fieldValue = "${webContentImageDescription}");
+		}
+
 		if (isSet(webContentImageUnderDocumentsAndMedia)) {
 			Click(locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT");
 

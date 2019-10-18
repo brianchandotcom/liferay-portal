@@ -26,7 +26,6 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -48,24 +47,6 @@ public class ColumnValueWriter {
 		throws IllegalAccessException {
 
 		Map<String, Object> columnNameValueMap = _getColumnNameValueMap(item);
-
-		Set<Map.Entry<String, Object>> entries = columnNameValueMap.entrySet();
-
-		Stream<Map.Entry<String, Object>> stream = entries.stream();
-
-		columnNameValueMap = stream.flatMap(
-			this::_getEntryStreams
-		).collect(
-			Collectors.toMap(
-				Map.Entry::getKey,
-				entry -> {
-					if (entry.getValue() == null) {
-						return StringPool.BLANK;
-					}
-
-					return entry.getValue();
-				})
-		);
 
 		List<String> columnNames = new ArrayList<>(columnNameValueMap.keySet());
 
@@ -126,47 +107,44 @@ public class ColumnValueWriter {
 		Map<String, Object> columnNameValueMap = new HashMap<>();
 
 		for (Map.Entry<String, Field> entry : fields.entrySet()) {
+			String key = entry.getKey();
+
 			Field field = entry.getValue();
 
-			columnNameValueMap.put(entry.getKey(), field.get(item));
+			Object value = field.get(item);
+
+			if (value instanceof Map) {
+				Map<String, Object> valueMap = (Map<String, Object>)value;
+
+				if (valueMap.isEmpty()) {
+					continue;
+				}
+
+				key = key.concat(StringPool.UNDERLINE);
+
+				for (Map.Entry<String, Object> valueEntry :
+						valueMap.entrySet()) {
+
+					Object innerValue = valueEntry.getValue();
+
+					if (innerValue == null) {
+						innerValue = StringPool.BLANK;
+					}
+
+					columnNameValueMap.put(
+						key.concat(valueEntry.getKey()), innerValue);
+				}
+			}
+			else {
+				if (value == null) {
+					value = StringPool.BLANK;
+				}
+
+				columnNameValueMap.put(key, value);
+			}
 		}
 
 		return columnNameValueMap;
-	}
-
-	private String _getEntryKey(String entryKey, String entryValueEntryKey) {
-		return entryKey + StringPool.UNDERLINE + entryValueEntryKey;
-	}
-
-	private Stream<Map.Entry<String, Object>> _getEntryStreams(
-		Map.Entry<String, Object> entry) {
-
-		Object value = entry.getValue();
-
-		if (value instanceof Map) {
-			@SuppressWarnings("unchecked")
-			Map<String, Object> entryValueMap = (Map)value;
-
-			@SuppressWarnings("unchecked")
-			AbstractMap.SimpleImmutableEntry<String, Object>[]
-				entryValueEntries =
-					new AbstractMap.SimpleImmutableEntry[entryValueMap.size()];
-
-			int index = 0;
-
-			for (Map.Entry<String, Object> entryValueEntry :
-					entryValueMap.entrySet()) {
-
-				entryValueEntries[index++] =
-					new AbstractMap.SimpleImmutableEntry<>(
-						_getEntryKey(entry.getKey(), entryValueEntry.getKey()),
-						entryValueEntry.getValue());
-			}
-
-			return Stream.of(entryValueEntries);
-		}
-
-		return Stream.of(entry);
 	}
 
 	private static final Map<Class<?>, Map<String, Field>> _fieldsMap =

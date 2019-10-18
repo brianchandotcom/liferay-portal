@@ -10859,10 +10859,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</and>
 			<then>
 				<if>
-					<resourcecontains
-						resource="${app.server.tomcat.dir}/bin/setenv${file.suffix.bat}"
-						substring="${dummy.socket.proxy}"
-					/>
+					<and>
+						<not>
+							<equals arg1="${dummy.socket.proxy}" arg2="" />
+						</not>
+						<resourcecontains
+							resource="${app.server.tomcat.dir}/bin/setenv${file.suffix.bat}"
+							substring="${dummy.socket.proxy}"
+						/>
+					</and>
 					<then>
 						<replace
 							file="${app.server.tomcat.dir}/bin/setenv${file.suffix.bat}"
@@ -10875,10 +10880,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 				<get-database-socks-non-proxy-hosts />
 
 				<if>
-					<resourcecontains
-						resource="${app.server.tomcat.dir}/bin/setenv${file.suffix.bat}"
-						substring="${database.socks.non.proxy.hosts}"
-					/>
+					<and>
+						<not>
+							<equals arg1="${database.socks.non.proxy.hosts}" arg2="" />
+						</not>
+						<resourcecontains
+							resource="${app.server.tomcat.dir}/bin/setenv${file.suffix.bat}"
+							substring="${database.socks.non.proxy.hosts}"
+						/>
+					</and>
 					<then>
 						<replace
 							file="${app.server.tomcat.dir}/bin/setenv${file.suffix.bat}"

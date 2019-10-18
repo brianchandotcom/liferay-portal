@@ -59,4 +59,3 @@ function renderComponent(data) {
 }
 
 export {openSimpleInputModal};
-export default openSimpleInputModal;

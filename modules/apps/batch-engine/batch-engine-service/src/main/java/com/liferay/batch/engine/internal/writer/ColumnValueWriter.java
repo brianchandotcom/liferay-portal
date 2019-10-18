@@ -33,10 +33,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Ivica cardic
@@ -58,17 +55,11 @@ public class ColumnValueWriter {
 			_firstLineWritten = true;
 		}
 
-		Set<Map.Entry<String, Object>> entrySet = columnNameValueMap.entrySet();
+		List<Object> values = new ArrayList<>();
 
-		Stream<Map.Entry<String, Object>> entryStream = entrySet.stream();
-
-		List<Object> values = entryStream.sorted(
-			Comparator.comparing(Map.Entry::getKey)
-		).map(
-			Map.Entry::getValue
-		).collect(
-			Collectors.toList()
-		);
+		for (String columnName : columnNames) {
+			values.add(columnNameValueMap.get(columnName));
+		}
 
 		consumer.accept(values);
 	}

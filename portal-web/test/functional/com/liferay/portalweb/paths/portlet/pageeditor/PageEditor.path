@@ -136,17 +136,17 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
-	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//a[normalize-space()='${key_collectionName}']</td>
+	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//a[normalize-space()='${key_collectionName}'] | //div[contains(@class,'fragments-editor-sidebar-section')]//button[normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//a[contains(@class,'collapsed')][normalize-space()='${key_collectionName}']</td>
+	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//a[contains(@class,'collapsed')][normalize-space()='${key_collectionName}'] | //button[@aria-expanded='false'][normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//a[@aria-expanded='true'][normalize-space()='${key_collectionName}']</td>
+	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//a[@aria-expanded='true'][normalize-space()='${key_collectionName}'] | //button[@aria-expanded='true'][normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>

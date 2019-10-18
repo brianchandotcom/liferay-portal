@@ -231,14 +231,6 @@ public class IconTag extends IncludeTag {
 		_useDialog = false;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected Map<String, Object> getData() {
-		return _getData();
-	}
-
 	protected String getId() {
 		if (Validator.isNotNull(_id)) {
 			return _id;
@@ -356,34 +348,6 @@ public class IconTag extends IncludeTag {
 		}
 
 		return _url;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected String getSrc() {
-		HttpServletRequest httpServletRequest = getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return _getSrc(themeDisplay);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected String getSrcHover() {
-		HttpServletRequest httpServletRequest = getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return _getSrcHover(themeDisplay);
 	}
 
 	protected String getUrl() {

@@ -152,9 +152,18 @@ definition {
 	}
 
 	macro openEntryMenu {
-		Click.waitForMenuToggleJSClick(
-			key_rowEntry = "${rowEntry}",
-			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "internetexplorer") {
+			Click.waitForMenuToggleJSClick(
+				key_rowEntry = "${rowEntry}",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_IE");
+		}
+		else {
+			Click.waitForMenuToggleJSClick(
+				key_rowEntry = "${rowEntry}",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+		}
 	}
 
 	macro selectEntry {

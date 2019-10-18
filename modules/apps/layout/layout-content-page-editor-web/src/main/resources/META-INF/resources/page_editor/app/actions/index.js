@@ -25,7 +25,4 @@ export {default as unloadReducer} from './unloadReducer';
  * Action types.
  */
 
-// TODO: once LPS-103009 lands, change this to:
-// `export * as TYPES from './types';`
-import * as TYPES from './types';
-export {TYPES};
+export * as TYPES from './types';

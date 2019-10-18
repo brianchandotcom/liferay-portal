@@ -58,17 +58,17 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 
 	@SuppressWarnings("unchecked")
 	private void _write(DateFormat dateFormat, List<?> values) {
-		for (int i = 0; i < values.size(); i++) {
-			Object value = values.get(i);
+		_unsyncPrintWriter.write(
+			StringUtil.merge(
+				values,
+				value -> {
+					if (value instanceof Date) {
+						return dateFormat.format(value);
+					}
 
-			if (value instanceof Date) {
-				List<Object> objects = (List<Object>)values;
-
-				objects.set(i, dateFormat.format(value));
-			}
-		}
-
-		_unsyncPrintWriter.write(StringUtil.merge(values, _delimiter));
+					return String.valueOf(value);
+				},
+				_delimiter));
 
 		_unsyncPrintWriter.write(StringPool.NEW_LINE);
 	}

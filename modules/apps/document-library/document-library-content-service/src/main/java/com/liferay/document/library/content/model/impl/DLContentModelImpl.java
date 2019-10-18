@@ -66,11 +66,11 @@ public class DLContentModelImpl
 	public static final String TABLE_NAME = "DLContent";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"contentId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"repositoryId", Types.BIGINT}, {"path_", Types.VARCHAR},
-		{"version", Types.VARCHAR}, {"data_", Types.BLOB},
-		{"size_", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"contentId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"repositoryId", Types.BIGINT},
+		{"path_", Types.VARCHAR}, {"version", Types.VARCHAR},
+		{"data_", Types.BLOB}, {"size_", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -78,6 +78,7 @@ public class DLContentModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("contentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -89,7 +90,7 @@ public class DLContentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLContent (mvccVersion LONG default 0 not null,contentId LONG not null primary key,groupId LONG,companyId LONG,repositoryId LONG,path_ VARCHAR(255) null,version VARCHAR(75) null,data_ BLOB,size_ LONG)";
+		"create table DLContent (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,contentId LONG not null,groupId LONG,companyId LONG,repositoryId LONG,path_ VARCHAR(255) null,version VARCHAR(75) null,data_ BLOB,size_ LONG,primary key (contentId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DLContent";
 
@@ -107,11 +108,13 @@ public class DLContentModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long PATH_COLUMN_BITMASK = 2L;
+	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 2L;
 
-	public static final long REPOSITORYID_COLUMN_BITMASK = 4L;
+	public static final long PATH_COLUMN_BITMASK = 4L;
 
-	public static final long VERSION_COLUMN_BITMASK = 8L;
+	public static final long REPOSITORYID_COLUMN_BITMASK = 8L;
+
+	public static final long VERSION_COLUMN_BITMASK = 16L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -249,6 +252,11 @@ public class DLContentModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<DLContent, Long>)DLContent::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", DLContent::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<DLContent, Long>)DLContent::setCtCollectionId);
 		attributeGetterFunctions.put("contentId", DLContent::getContentId);
 		attributeSetterBiConsumers.put(
 			"contentId", (BiConsumer<DLContent, Long>)DLContent::setContentId);
@@ -290,6 +298,28 @@ public class DLContentModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCtCollectionId) {
+			_setOriginalCtCollectionId = true;
+
+			_originalCtCollectionId = _ctCollectionId;
+		}
+
+		_ctCollectionId = ctCollectionId;
+	}
+
+	public long getOriginalCtCollectionId() {
+		return _originalCtCollectionId;
 	}
 
 	@Override
@@ -483,6 +513,7 @@ public class DLContentModelImpl
 		DLContentImpl dlContentImpl = new DLContentImpl();
 
 		dlContentImpl.setMvccVersion(getMvccVersion());
+		dlContentImpl.setCtCollectionId(getCtCollectionId());
 		dlContentImpl.setContentId(getContentId());
 		dlContentImpl.setGroupId(getGroupId());
 		dlContentImpl.setCompanyId(getCompanyId());
@@ -552,6 +583,11 @@ public class DLContentModelImpl
 	public void resetOriginalValues() {
 		DLContentModelImpl dlContentModelImpl = this;
 
+		dlContentModelImpl._originalCtCollectionId =
+			dlContentModelImpl._ctCollectionId;
+
+		dlContentModelImpl._setOriginalCtCollectionId = false;
+
 		dlContentModelImpl._originalCompanyId = dlContentModelImpl._companyId;
 
 		dlContentModelImpl._setOriginalCompanyId = false;
@@ -575,6 +611,8 @@ public class DLContentModelImpl
 		DLContentCacheModel dlContentCacheModel = new DLContentCacheModel();
 
 		dlContentCacheModel.mvccVersion = getMvccVersion();
+
+		dlContentCacheModel.ctCollectionId = getCtCollectionId();
 
 		dlContentCacheModel.contentId = getContentId();
 
@@ -607,10 +645,12 @@ public class DLContentModelImpl
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
+		sb.append(", ctCollectionId=");
+		sb.append(getCtCollectionId());
 		sb.append(", contentId=");
 		sb.append(getContentId());
 		sb.append(", groupId=");
@@ -632,7 +672,7 @@ public class DLContentModelImpl
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.document.library.content.model.DLContent");
@@ -641,6 +681,10 @@ public class DLContentModelImpl
 		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ctCollectionId</column-name><column-value><![CDATA[");
+		sb.append(getCtCollectionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>contentId</column-name><column-value><![CDATA[");
@@ -687,6 +731,9 @@ public class DLContentModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
+	private long _originalCtCollectionId;
+	private boolean _setOriginalCtCollectionId;
 	private long _contentId;
 	private long _groupId;
 	private long _companyId;

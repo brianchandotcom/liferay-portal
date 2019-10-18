@@ -30,6 +30,11 @@ public abstract class BaseConnectionProvider
 	implements ConnectionProvider<LiferayConnection> {
 
 	@Override
+	public void disconnect(LiferayConnection liferayConnection) {
+		liferayConnection.invalidate();
+	}
+
+	@Override
 	public ConnectionValidationResult validate(
 		LiferayConnection liferayConnection) {
 

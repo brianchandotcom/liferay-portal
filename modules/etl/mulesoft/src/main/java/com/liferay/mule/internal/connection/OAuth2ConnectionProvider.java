@@ -43,10 +43,6 @@ public class OAuth2ConnectionProvider extends BaseConnectionProvider {
 			_oAuth2AuthenticationConfig.getConsumerSecret());
 	}
 
-	@Override
-	public void disconnect(LiferayConnection liferayConnection) {
-	}
-
 	@Inject
 	private HttpService _httpService;
 

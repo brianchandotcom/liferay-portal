@@ -43,11 +43,6 @@ public class BasicConnectionProvider extends BaseConnectionProvider {
 			_basicAuthenticationConfig.getPassword());
 	}
 
-	@Override
-	public void disconnect(LiferayConnection liferayConnection) {
-		liferayConnection.invalidate();
-	}
-
 	@ParameterGroup(name = "Connection config")
 	@Placement(order = 1)
 	private BasicAuthenticationConfig _basicAuthenticationConfig;

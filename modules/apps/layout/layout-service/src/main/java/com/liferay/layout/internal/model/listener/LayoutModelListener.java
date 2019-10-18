@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.asset.internal.model.listener;
+package com.liferay.layout.internal.model.listener;
 
-import com.liferay.asset.service.AssetEntryUsageLocalService;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
@@ -31,11 +31,12 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
-		_assetEntryUsageLocalService.deleteAssetEntryUsagesByPlid(
-			layout.getPlid());
+		_layoutClassedModelUsageLocalService.
+			deleteLayoutClassedModelUsagesByPlid(layout.getPlid());
 	}
 
 	@Reference
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 }

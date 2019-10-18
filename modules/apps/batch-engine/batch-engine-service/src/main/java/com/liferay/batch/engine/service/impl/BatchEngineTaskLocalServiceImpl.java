@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -38,7 +39,8 @@ public class BatchEngineTaskLocalServiceImpl
 	public BatchEngineTask addBatchEngineTask(
 		long companyId, long userId, long batchSize, String callbackURL,
 		String className, byte[] content, String contentType,
-		String executeStatus, String operation, String version) {
+		String executeStatus, Map<String, String> fieldNameMappingMap,
+		String operation, String version) {
 
 		BatchEngineTask batchEngineTask = batchEngineTaskPersistence.create(
 			counterLocalService.increment(BatchEngineTask.class.getName()));
@@ -53,6 +55,7 @@ public class BatchEngineTaskLocalServiceImpl
 				new UnsyncByteArrayInputStream(content), content.length));
 		batchEngineTask.setContentType(contentType);
 		batchEngineTask.setExecuteStatus(executeStatus);
+		batchEngineTask.setFieldNameMappingMap(fieldNameMappingMap);
 		batchEngineTask.setOperation(operation);
 		batchEngineTask.setVersion(version);
 

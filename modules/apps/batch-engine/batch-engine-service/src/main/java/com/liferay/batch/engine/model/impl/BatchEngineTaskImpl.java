@@ -14,12 +14,61 @@
 
 package com.liferay.batch.engine.model.impl;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Shuyang Zhou
  */
 public class BatchEngineTaskImpl extends BatchEngineTaskBaseImpl {
 
 	public BatchEngineTaskImpl() {
+	}
+
+	@Override
+	public Map<String, String> getFieldNameMappingMap() {
+		if (Validator.isNull(getFieldNameMapping())) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, String> fieldNameMappingMap = new HashMap<>();
+
+		String[] fieldNameMappings = StringUtil.split(
+			getFieldNameMapping(), ',');
+
+		for (String fieldNameMapping : fieldNameMappings) {
+			String[] fieldNames = StringUtil.split(fieldNameMapping, '=');
+
+			fieldNameMappingMap.put(fieldNames[0], fieldNames[1]);
+		}
+
+		return fieldNameMappingMap;
+	}
+
+	@Override
+	public void setFieldNameMappingMap(
+		Map<String, String> fieldNameMappingMap) {
+
+		StringBundler sb = new StringBundler();
+
+		for (Map.Entry<String, String> entry : fieldNameMappingMap.entrySet()) {
+			sb.append(entry.getKey());
+			sb.append(StringPool.EQUAL);
+			sb.append(entry.getValue());
+			sb.append(StringPool.COMMA);
+		}
+
+		if (sb.length() > 0) {
+			sb.setIndex(sb.length() - 1);
+
+			setFieldNameMapping(sb.toString());
+		}
 	}
 
 }

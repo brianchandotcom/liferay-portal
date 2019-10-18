@@ -1801,14 +1801,14 @@ definition {
 		if (IsTextEqual.isPartialText(locator1 = "//body", value1 = "&quot;number&quot; : &quot;7")) {
 			AntCommand(
 				locator1 = "build-test-elasticsearch7.xml",
-				value1 = "add-boston-dataset-index");
+				value1 = "add-boston-dataset-index -Dbackup.index=boston311 -Delasticsearch.port=9201");
 		}
 		else {
 			Navigator.openSpecificURL(url = "http://localhost:9200");
 
 			AntCommand(
 				locator1 = "build-test-elasticsearch6.xml",
-				value1 = "add-boston-dataset-index");
+				value1 = "add-boston-dataset-index -Dbackup.index=boston311 -Delasticsearch.port=9200");
 		}
 
 		Navigator.openURL();

@@ -92,7 +92,7 @@ public class DeleteFolderPortletConfigurationIcon
 
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
-			if (folder.isMountPoint()) {
+			if (folder.isMountPoint() || folder.isRoot()) {
 				portletURL.setParameter(
 					ActionRequest.ACTION_NAME,
 					"/document_library/edit_repository");
@@ -106,7 +106,7 @@ public class DeleteFolderPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			if (folder.isMountPoint() ||
+			if (folder.isMountPoint() || folder.isRoot() ||
 				!_dlTrashUtil.isTrashEnabled(
 					themeDisplay.getScopeGroupId(), folder.getRepositoryId())) {
 

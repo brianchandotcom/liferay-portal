@@ -93,7 +93,7 @@ public class EditFolderPortletConfigurationIcon
 				portletURL.setParameter("rootFolder", Boolean.TRUE.toString());
 			}
 			else {
-				if (folder.isMountPoint()) {
+				if (folder.isMountPoint() || folder.isRoot()) {
 					portletURL.setParameter(
 						"mvcRenderCommandName",
 						"/document_library/edit_repository");

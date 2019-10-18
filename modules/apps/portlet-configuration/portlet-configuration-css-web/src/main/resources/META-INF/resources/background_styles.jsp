@@ -16,45 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<div>
-
-	<%
-	String color = portletConfigurationCSSPortletDisplayContext.getBackgroundColor();
-	String label = LanguageUtil.get(request, "background-color");
-	String name = renderResponse.getNamespace() + "backgroundColor";
-
-	Map<String, Object> data = new HashMap<>();
-
-	data.put("color", color);
-	data.put("label", label);
-	data.put("name", name);
-	%>
-
-	<div class="form-group">
-		<input name="<%= name %>" type="hidden" value="#<%= color %>" />
-
-		<div class="clay-color-picker">
-			<label><%= label %></label>
-
-			<div class="clay-color input-group">
-				<div class="input-group-item input-group-item-shrink input-group-prepend">
-					<div class="input-group-text">
-						<button class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; height: 28px; width: 28px;" title="<%= color %>" type="button" />
-					</div>
-				</div>
-
-				<div class="input-group-append input-group-item">
-					<input class="form-control input-group-inset input-group-inset-before" type="text" />
-
-					<label class="input-group-inset-item input-group-inset-item-before"><%= color %></label>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<react:component
-		data="<%= data %>"
-		module="js/ColorPickerInput.es"
-		servletContext="<%= application %>"
-	/>
-</div>
+<liferay-util:include page="/color_picker_input.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="color" value="<%= portletConfigurationCSSPortletDisplayContext.getBackgroundColor() %>" />
+	<liferay-util:param name="label" value='<%= LanguageUtil.get(request, "background-color") %>' />
+	<liferay-util:param name="name" value='<%= renderResponse.getNamespace() + "backgroundColor" %>' />
+</liferay-util:include>

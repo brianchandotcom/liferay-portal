@@ -17,12 +17,8 @@ package com.liferay.info.service.impl;
 import com.liferay.info.constants.InfoItemUsageConstants;
 import com.liferay.info.model.InfoItemUsage;
 import com.liferay.info.service.base.InfoItemUsageLocalServiceBaseImpl;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -30,7 +26,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -49,13 +44,14 @@ public class InfoItemUsageLocalServiceImpl
 
 		return addInfoItemUsage(
 			groupId, classNameId, classPK, 0, StringPool.BLANK, 0,
-			serviceContext);
+			InfoItemUsageConstants.TYPE_DEFAULT, serviceContext);
 	}
 
 	@Override
 	public InfoItemUsage addInfoItemUsage(
 		long groupId, long classNameId, long classPK, long containerType,
-		String containerKey, long plid, ServiceContext serviceContext) {
+		String containerKey, long plid, int type,
+		ServiceContext serviceContext) {
 
 		long infoItemUsageId = counterLocalService.increment();
 
@@ -71,7 +67,7 @@ public class InfoItemUsageLocalServiceImpl
 		infoItemUsage.setContainerType(containerType);
 		infoItemUsage.setContainerKey(containerKey);
 		infoItemUsage.setPlid(plid);
-		infoItemUsage.setType(_getType(plid));
+		infoItemUsage.setType(type);
 
 		return infoItemUsagePersistence.update(infoItemUsage);
 	}
@@ -163,37 +159,5 @@ public class InfoItemUsageLocalServiceImpl
 
 		return false;
 	}
-
-	private int _getType(long plid) {
-		if (plid <= 0) {
-			return InfoItemUsageConstants.TYPE_DEFAULT;
-		}
-
-		Layout layout = layoutLocalService.fetchLayout(plid);
-
-		if ((layout.getClassNameId() > 0) && (layout.getClassPK() > 0)) {
-			plid = layout.getClassPK();
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(plid);
-
-		if (layoutPageTemplateEntry == null) {
-			return InfoItemUsageConstants.TYPE_LAYOUT;
-		}
-
-		if (layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
-
-			return InfoItemUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE;
-		}
-
-		return InfoItemUsageConstants.TYPE_PAGE_TEMPLATE;
-	}
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 }

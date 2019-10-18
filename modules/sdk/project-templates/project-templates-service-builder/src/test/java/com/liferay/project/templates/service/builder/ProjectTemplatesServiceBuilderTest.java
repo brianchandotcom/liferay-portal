@@ -119,11 +119,11 @@ public class ProjectTemplatesServiceBuilderTest
 
 		testContains(
 			gradleProjectDir, name + "-api/build.gradle",
-			"biz.aQute.bnd.annotation\", version: \"3.5.0",
+			"biz.aQute.bnd.annotation\", version: \"4.3.0",
 			DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 		testContains(
 			gradleProjectDir, name + "-service/build.gradle",
-			"biz.aQute.bnd.annotation\", version: \"3.5.0",
+			"biz.aQute.bnd.annotation\", version: \"4.3.0",
 			"com.liferay.portal.spring.extender\", version: \"2.0.0",
 			DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0");
 
@@ -156,11 +156,11 @@ public class ProjectTemplatesServiceBuilderTest
 
 		testContains(
 			gradleProjectDir, name + "-api/build.gradle",
-			"biz.aQute.bnd.annotation\", version: \"3.5.0",
+			"biz.aQute.bnd.annotation\", version: \"4.3.0",
 			DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 		testContains(
 			gradleProjectDir, name + "-service/build.gradle",
-			"biz.aQute.bnd.annotation\", version: \"3.5.0",
+			"biz.aQute.bnd.annotation\", version: \"4.3.0",
 			"com.liferay.portal.spring.extender.api\", version: \"3.0.0",
 			DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 

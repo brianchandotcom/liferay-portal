@@ -35,51 +35,48 @@ String fullName = namespace + HtmlUtil.escapeJS(name);
 %>
 
 <aui:script use="liferay-form">
-	Liferay.Form.register(
-		{
-			id: '<%= fullName %>'
+	var config = {
+		id: '<%= fullName %>',
+		validateOnBlur: <%= validateOnBlur %>
+	};
 
-			<c:if test="<%= validatorTagsMap != null %>">
-				, fieldRules: [
+	<c:if test="<%= validatorTagsMap != null %>">
+		config.fieldRules = [];
 
-					<%
-					int i = 0;
+		<%
+		int i = 0;
 
-					for (Map.Entry<String, List<ValidatorTag>> entry : validatorTagsMap.entrySet()) {
-						String fieldName = entry.getKey();
-						List<ValidatorTag> validatorTags = entry.getValue();
+		for (Map.Entry<String, List<ValidatorTag>> entry : validatorTagsMap.entrySet()) {
+			String fieldName = entry.getKey();
+			List<ValidatorTag> validatorTags = entry.getValue();
 
-						for (ValidatorTag validatorTag : validatorTags) {
-					%>
+			for (ValidatorTag validatorTag : validatorTags) {
+		%>
 
-							<%= (i != 0) ? StringPool.COMMA : StringPool.BLANK %>
+				config.fieldRules.push({
+					body: <%= validatorTag.getBody() %>,
+					custom: <%= validatorTag.isCustom() %>,
+					errorMessage:
+						'<%= UnicodeLanguageUtil.get(resourceBundle, validatorTag.getErrorMessage()) %>',
+					fieldName: '<%= namespace + HtmlUtil.escapeJS(fieldName) %>',
+					validatorName: '<%= validatorTag.getName() %>'
+				});
 
-							{
-								body: <%= validatorTag.getBody() %>,
-								custom: <%= validatorTag.isCustom() %>,
-								errorMessage: '<%= UnicodeLanguageUtil.get(resourceBundle, validatorTag.getErrorMessage()) %>',
-								fieldName: '<%= namespace + HtmlUtil.escapeJS(fieldName) %>',
-								validatorName: '<%= validatorTag.getName() %>'
-							}
-
-					<%
-							i++;
-						}
-					}
-					%>
-
-				]
-			</c:if>
-
-			<c:if test="<%= Validator.isNotNull(onSubmit) %>">
-				, onSubmit: function(event) {
-					<%= onSubmit %>
-				}
-			</c:if>
-
-			, validateOnBlur: <%= validateOnBlur %>
+		<%
+				i++;
+			}
 		}
-	);
+		%>
+
+	</c:if>
+
+	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
+		config.onSubmit = function(event) {
+			<%= onSubmit %>;
+		};
+	</c:if>
+
+	Liferay.Form.register(config);
 
 	var onDestroyPortlet = function(event) {
 		if (event.portletId === '<%= portletDisplay.getId() %>') {
@@ -93,10 +90,7 @@ String fullName = namespace + HtmlUtil.escapeJS(name);
 		A.all('#<%= fullName %> .input-container').removeAttribute('disabled');
 	</c:if>
 
-	Liferay.fire(
-		'<portlet:namespace />formReady',
-		{
-			formName: '<%= fullName %>'
-		}
-	);
+	Liferay.fire('<portlet:namespace />formReady', {
+		formName: '<%= fullName %>'
+	});
 </aui:script>

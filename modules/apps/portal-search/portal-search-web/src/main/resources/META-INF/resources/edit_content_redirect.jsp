@@ -33,20 +33,19 @@ redirect = PortalUtil.escapeRedirect(redirect);
 %>
 
 <aui:script>
-	Liferay.fire(
-		'closeWindow',
-		{
-			id: '<portlet:namespace />editAsset',
-			portletAjaxable: true,
+	var data = {
+		id: '<portlet:namespace />editAsset',
+		portletAjaxable: true
+	};
 
-			<c:choose>
-				<c:when test="<%= redirect != null %>">
-					redirect: '<%= HtmlUtil.escapeJS(redirect) %>'
-				</c:when>
-				<c:otherwise>
-					refresh: '<%= portletDisplay.getId() %>'
-				</c:otherwise>
-			</c:choose>
-		}
-	);
+	<c:choose>
+		<c:when test="<%= redirect != null %>">
+			data.redirect = '<%= HtmlUtil.escapeJS(redirect) %>';
+		</c:when>
+		<c:otherwise>
+			data.refresh = '<%= portletDisplay.getId() %>';
+		</c:otherwise>
+	</c:choose>
+
+	Liferay.fire('closeWindow', data);
 </aui:script>

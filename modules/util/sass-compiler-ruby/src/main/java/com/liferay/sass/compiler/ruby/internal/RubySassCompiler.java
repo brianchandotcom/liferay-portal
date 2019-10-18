@@ -77,18 +77,12 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 		List<String> loadPaths = new ArrayList<>();
 
-		loadPaths.add("META-INF/jruby.home/lib/ruby/site_ruby/1.8");
-		loadPaths.add("META-INF/jruby.home/lib/ruby/site_ruby/shared");
-		loadPaths.add("META-INF/jruby.home/lib/ruby/1.8");
-		loadPaths.add("gems/chunky_png-1.3.11/lib");
-		loadPaths.add("gems/compass-1.0.3/lib");
-		loadPaths.add("gems/compass-core-1.0.3/lib");
-		loadPaths.add("gems/compass-import-once-1.0.5/lib");
+		loadPaths.add("META-INF/jruby.home/lib/ruby/stdlib");
 		loadPaths.add("gems/ffi-1.11.1-java/lib");
-		loadPaths.add("gems/multi_json-1.13.1/lib");
 		loadPaths.add("gems/rb-fsevent-0.10.3/lib");
 		loadPaths.add("gems/rb-inotify-0.10.0/lib");
-		loadPaths.add("gems/sass-3.4.25/lib");
+		loadPaths.add("gems/sass-3.5.5/lib");
+		loadPaths.add("gems/sass-listen-4.0.0/lib");
 
 		rubyInstanceConfig.setLoadPaths(loadPaths);
 

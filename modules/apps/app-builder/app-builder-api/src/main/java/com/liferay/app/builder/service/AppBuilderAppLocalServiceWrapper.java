@@ -99,6 +99,13 @@ public class AppBuilderAppLocalServiceWrapper
 		return _appBuilderAppLocalService.deleteAppBuilderApp(appBuilderAppId);
 	}
 
+	@Override
+	public void deleteAppBuilderApps(long ddmStructureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_appBuilderAppLocalService.deleteAppBuilderApps(ddmStructureId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

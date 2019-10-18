@@ -100,6 +100,12 @@ public class AppBuilderAppLocalServiceUtil {
 		return getService().deleteAppBuilderApp(appBuilderAppId);
 	}
 
+	public static void deleteAppBuilderApps(long ddmStructureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteAppBuilderApps(ddmStructureId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

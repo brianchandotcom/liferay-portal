@@ -110,6 +110,9 @@ public interface AppBuilderAppLocalService
 	public AppBuilderApp deleteAppBuilderApp(long appBuilderAppId)
 		throws PortalException;
 
+	public void deleteAppBuilderApps(long ddmStructureId)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

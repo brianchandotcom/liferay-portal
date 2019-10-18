@@ -43,7 +43,7 @@ PreviewSeo.propTypes = {
 	url: PropTypes.string
 };
 
-const PreviewSeoContainer = ({portletNamespace, titleSuffix, targets}) => {
+const PreviewSeoContainer = ({portletNamespace, targets, titleSuffix}) => {
 	const [description, setDescription] = useState('');
 	const [title, setTitle] = useState('');
 	const [url, setUrl] = useState('');
@@ -70,6 +70,7 @@ const PreviewSeoContainer = ({portletNamespace, titleSuffix, targets}) => {
 
 		const handleInputChange = ({event, type, usePlaceholderAsFallback}) => {
 			const target = event.target;
+
 			if (!target) {
 				return;
 			}

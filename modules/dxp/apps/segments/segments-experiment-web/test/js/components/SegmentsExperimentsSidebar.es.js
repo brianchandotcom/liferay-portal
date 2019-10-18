@@ -526,6 +526,28 @@ describe('Experiment History Tab', () => {
 describe('No Winner Declared', () => {
 	afterEach(cleanup);
 
+	it('Experiment has basic no winner declared elements', () => {
+		const {getByText, getAllByText} = renderApp({
+			initialSegmentsExperiences: segmentsExperiences,
+			initialSegmentsExperiment: {
+				...segmentsExperiment,
+				editable: false,
+				status: {
+					label: 'No Winner Declared',
+					value: STATUS_FINISHED_NO_WINNER
+				}
+			},
+			initialSegmentsVariants: segmentsVariants,
+			winnerSegmentsVariantId: ''
+		});
+
+		getByText('discard-test');
+		getByText('No Winner Declared');
+		const allPublishButtons = getAllByText('publish');
+
+		expect(allPublishButtons.length).toBe(segmentsVariants.length - 1);
+	});
+
 	it('Variant publish action button when confirming in no winner declared status', async () => {
 		/**
 		 * The user accepts the confirmation message

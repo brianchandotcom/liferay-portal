@@ -18,13 +18,19 @@ import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.base.DepotEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -48,7 +54,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validateNameMap(nameMap);
+		_validateNameMap(nameMap, LocaleUtil.getDefault());
 
 		DepotEntry depotEntry = depotEntryPersistence.create(
 			counterLocalService.increment());
@@ -73,15 +79,51 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 	@Override
 	public DepotEntry updateDepotEntry(
-			long depotEntryId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+			long depotEntryId, UnicodeProperties formTypeSettingsProperties,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validateNameMap(nameMap);
+		_validateNameMap(nameMap, LocaleUtil.fromLanguageId(
+			formTypeSettingsProperties.getProperty("languageId")));
 
 		DepotEntry depotEntry = getDepotEntry(depotEntryId);
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
+
+		UnicodeProperties typeSettingsProperties =
+			group.getTypeSettingsProperties();
+
+		boolean inheritLocales = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("inheritLocales"));
+
+		if (formTypeSettingsProperties.containsKey("inheritLocales")) {
+			inheritLocales = GetterUtil.getBoolean(
+				formTypeSettingsProperties.getProperty("inheritLocales"));
+		}
+
+		if (inheritLocales) {
+			formTypeSettingsProperties.setProperty(
+				PropsKeys.LOCALES,
+				StringUtil.merge(
+					LocaleUtil.toLanguageIds(
+						LanguageUtil.getAvailableLocales())));
+		}
+
+		if (formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) &&
+			Validator.isNull(
+				formTypeSettingsProperties.getProperty(PropsKeys.LOCALES))) {
+
+			throw new LocaleException(
+				LocaleException.TYPE_DEFAULT,
+				"Must have at least one valid locale for site " +
+					depotEntry.getGroupId());
+		}
+
+		typeSettingsProperties.putAll(formTypeSettingsProperties);
+
+		group = _groupLocalService.updateGroup(
+			group.getGroupId(), typeSettingsProperties.toString());
 
 		_groupLocalService.updateGroup(
 			depotEntry.getGroupId(), group.getParentGroupId(), nameMap,
@@ -92,11 +134,12 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		return depotEntryPersistence.update(depotEntry);
 	}
 
-	private void _validateNameMap(Map<Locale, String> nameMap)
+	private void _validateNameMap(
+			Map<Locale, String> nameMap, Locale defaultLocale)
 		throws DepotEntryNameException {
 
 		if (MapUtil.isEmpty(nameMap) ||
-			Validator.isNull(nameMap.get(LocaleUtil.getDefault()))) {
+			Validator.isNull(nameMap.get(defaultLocale))) {
 
 			throw new DepotEntryNameException();
 		}

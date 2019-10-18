@@ -2636,11 +2636,19 @@ definition {
 
 	macro viewUserLocale {
 		var localizedSignIn = "${localizedSignIn}";
+		var key_dropdownItem = "${dropdownItem}";
 
 		if (isSet(localizedSignIn)) {
 			AssertTextEquals(
 				locator1 = "UserBar#USER_SIGN_IN",
 				value1 = "${localizedSignIn}");
+		}
+		if (isSet(dropdownItem)) {
+			UserBar.gotoDropdown();
+
+			AssertTextEquals(
+				locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM",
+				value1 = "${dropdownItem}");
 		}
 	}
 

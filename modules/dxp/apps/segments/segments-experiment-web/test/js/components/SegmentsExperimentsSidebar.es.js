@@ -340,44 +340,6 @@ describe('Review and Run test', () => {
 	});
 });
 
-describe('Click Target Selection', () => {
-	test.todo(
-		'Set Click Target section appears when draft test has goal set to click'
-	);
-
-	test.todo(
-		'All clickable elements highlighted when the user clicks on Set Target Button'
-	);
-
-	test.todo(
-		'A tooltip Click Element to Set as Click Target for your Goal appears when the user clicks on Set Target Button'
-	);
-
-	test.todo('Selectable as target elements show tooltips on hover');
-
-	test.todo(
-		'When the user Set Element as Click Target, then The element is set as the Click Target and the id of the element as a link'
-	);
-
-	test.todo(
-		'Cancel selection click target element proccess when clickign out of selection zone'
-	);
-
-	test.todo(
-		'When hovering over to invalid click target elements, the mouse is displayed in not-allowed mode'
-	);
-
-	test.todo(
-		'The user can edit a selected click target in a draft experiment'
-	);
-
-	test.todo('The user can remove a selected click target in a draft element');
-
-	test.todo(
-		'The user clicks in the UI reference to the selected click target element, the page scrolls to make it visible'
-	);
-});
-
 describe('Experiment History Tab', () => {
 	afterEach(cleanup);
 

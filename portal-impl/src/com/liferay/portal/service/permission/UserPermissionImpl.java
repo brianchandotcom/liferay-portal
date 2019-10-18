@@ -170,12 +170,7 @@ public class UserPermissionImpl
 						// Organization administrators can only manage normal
 						// users
 
-						if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-								permissionChecker.getUserId(),
-								curOrganization.getGroupId(),
-								RoleConstants.ORGANIZATION_ADMINISTRATOR,
-								true) &&
-							!UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+						if (!UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 								user.getUserId(), organization.getGroupId(),
 								RoleConstants.ORGANIZATION_ADMINISTRATOR,
 								true) &&

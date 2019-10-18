@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.Serializable;
 
@@ -298,8 +299,9 @@ public interface DepotEntryLocalService
 	public DepotEntry updateDepotEntry(DepotEntry depotEntry);
 
 	public DepotEntry updateDepotEntry(
-			long depotEntryId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+			long depotEntryId, UnicodeProperties formTypeSettingsProperties,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 }

@@ -50,9 +50,7 @@ public class DEDataDefinitionFieldLinkLocalServiceImpl
 	}
 
 	@Override
-	public void deleteDEDataDefinitionFieldLinksByDDMStructureId(
-		long ddmStructureId) {
-
+	public void deleteDEDataDefinitionFieldLinks(long ddmStructureId) {
 		deDataDefinitionFieldLinkPersistence.removeByDDMStructureId(
 			ddmStructureId);
 	}

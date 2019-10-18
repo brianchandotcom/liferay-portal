@@ -109,11 +109,10 @@ public class DataDefinitionResourceImpl
 		_ddlRecordSetLocalService.deleteDDMStructureRecordSets(
 			dataDefinitionId);
 
-		_deDataDefinitionFieldLinkLocalService.
-			deleteDEDataDefinitionFieldLinksByDDMStructureId(dataDefinitionId);
-
-		_deDataListViewLocalService.deleteDEDataListViewsByDDMStructureId(
+		_deDataDefinitionFieldLinkLocalService.deleteDEDataDefinitionFieldLinks(
 			dataDefinitionId);
+
+		_deDataListViewLocalService.deleteDEDataListViews(dataDefinitionId);
 
 		List<DDMStructureVersion> ddmStructureVersions =
 			_ddmStructureVersionLocalService.getStructureVersions(

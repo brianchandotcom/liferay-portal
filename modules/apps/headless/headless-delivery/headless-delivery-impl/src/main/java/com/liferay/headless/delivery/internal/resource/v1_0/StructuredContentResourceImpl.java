@@ -154,6 +154,9 @@ public class StructuredContentResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			contentStructureId);
+
 		return _getStructuredContentsPage(
 			booleanQuery -> {
 				if (contentStructureId != null) {
@@ -168,7 +171,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			null, search, filter, pagination, sorts);
+			ddmStructure.getGroupId(), search, filter, pagination, sorts);
 	}
 
 	@Override

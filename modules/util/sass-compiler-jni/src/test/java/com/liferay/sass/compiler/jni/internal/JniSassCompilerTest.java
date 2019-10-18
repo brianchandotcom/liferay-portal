@@ -76,7 +76,8 @@ public class JniSassCompilerTest {
 
 			Assert.assertNotNull("Testing: " + fileName, actualOutput);
 
-			String expectedOutputFileName = fileName.replace("scss", "css");
+			String expectedOutputFileName =
+				"expected" + File.separator + fileName.replace("scss", "css");
 
 			File expectedOutputFile = new File(
 				clayCssDir, expectedOutputFileName);

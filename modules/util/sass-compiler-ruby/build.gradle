@@ -10,5 +10,10 @@ liferayOSGi {
 }
 
 processTestResources {
+	dependsOn ":util:sass-compiler-jni:downloadClay"
 	dependsOn ":util:sass-compiler-jni:downloadSassSpec"
+}
+
+test {
+	jvmArgs '-Xss4096k'
 }

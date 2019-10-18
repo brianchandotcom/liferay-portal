@@ -43,7 +43,48 @@ public class RubySassCompilerTest {
 	}
 
 	@Test
-	public void testCompileFile() throws Exception {
+	public void testCompileFileClayCss() throws Exception {
+		try (SassCompiler sassCompiler = new RubySassCompiler()) {
+			File clayCssDir = new File(
+				"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+					"/compiler/jni/internal/dependencies/clay-css");
+
+			for (File inputFile : clayCssDir.listFiles()) {
+				if (inputFile.isDirectory()) {
+					continue;
+				}
+
+				String fileName = inputFile.getName();
+
+				if (fileName.startsWith("_") || !fileName.endsWith("scss")) {
+					continue;
+				}
+
+				String actualOutput = sassCompiler.compileFile(
+					inputFile.getCanonicalPath(), "", true);
+
+				Assert.assertNotNull("Testing: " + fileName, actualOutput);
+
+				String expectedOutputFileName =
+					"expected" + File.separator +
+						fileName.replace("scss", "css");
+
+				File expectedOutputFile = new File(
+					clayCssDir, expectedOutputFileName);
+
+				if (expectedOutputFile.exists()) {
+					String expectedOutput = read(expectedOutputFile.toPath());
+
+					Assert.assertEquals(
+						"Testing: " + fileName, stripNewLines(expectedOutput),
+						stripNewLines(actualOutput));
+				}
+			}
+		}
+	}
+
+	@Test
+	public void testCompileFileSassSpec() throws Exception {
 		SassCompiler sassCompiler = new RubySassCompiler();
 
 		File sassSpecDir = new File(

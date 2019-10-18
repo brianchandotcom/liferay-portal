@@ -44,39 +44,42 @@ public class JSassCompilerTest {
 
 	@Test
 	public void testCompileFileClayCss() throws Exception {
-		SassCompiler sassCompiler = new JSassCompiler();
+		try (SassCompiler sassCompiler = new JSassCompiler()) {
 
-		File clayCssDir = new File(
-			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
-				"/compiler/jni/internal/dependencies/clay-css");
+			File clayCssDir = new File(
+				"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+					"/compiler/jni/internal/dependencies/clay-css");
 
-		for (File inputFile : clayCssDir.listFiles()) {
-			if (inputFile.isDirectory()) {
-				continue;
-			}
+			for (File inputFile : clayCssDir.listFiles()) {
+				if (inputFile.isDirectory()) {
+					continue;
+				}
 
-			String fileName = inputFile.getName();
+				String fileName = inputFile.getName();
 
-			if (fileName.startsWith("_") || !fileName.endsWith("scss")) {
-				continue;
-			}
+				if (fileName.startsWith("_") || !fileName.endsWith("scss")) {
+					continue;
+				}
 
-			String actualOutput = sassCompiler.compileFile(
-				inputFile.getCanonicalPath(), "", true);
+				String actualOutput = sassCompiler.compileFile(
+					inputFile.getCanonicalPath(), "", true);
 
-			Assert.assertNotNull("Testing: " + fileName, actualOutput);
+				Assert.assertNotNull("Testing: " + fileName, actualOutput);
 
-			String expectedOutputFileName = fileName.replace("scss", "css");
+				String expectedOutputFileName =
+					"expected" + File.separator
+						+ fileName.replace("scss", "css");
 
-			File expectedOutputFile = new File(
-				clayCssDir, expectedOutputFileName);
+				File expectedOutputFile = new File(
+					clayCssDir, expectedOutputFileName);
 
-			if (expectedOutputFile.exists()) {
-				String expectedOutput = read(expectedOutputFile.toPath());
+				if (expectedOutputFile.exists()) {
+					String expectedOutput = read(expectedOutputFile.toPath());
 
-				Assert.assertEquals(
-					"Testing: " + fileName, stripNewLines(expectedOutput),
-					stripNewLines(actualOutput));
+					Assert.assertEquals(
+						"Testing: " + fileName, stripNewLines(expectedOutput),
+						stripNewLines(actualOutput));
+				}
 			}
 		}
 	}

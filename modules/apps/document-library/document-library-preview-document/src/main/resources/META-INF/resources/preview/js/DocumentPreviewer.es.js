@@ -251,7 +251,7 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 					<ClayButton
 						className="btn-floating-bar"
 						disabled={previousPageDisabled}
-						monospaced={true}
+						monospaced
 						onClick={() => {
 							goToPage(currentPage - 1);
 						}}
@@ -262,7 +262,7 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 					<ClayButton
 						className="btn-floating-bar"
 						disabled={nextPageDisabled}
-						monospaced={true}
+						monospaced
 						onClick={() => {
 							goToPage(currentPage + 1);
 						}}
@@ -273,7 +273,7 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 					<div className="separator-floating-bar"></div>
 					<ClayButton
 						className="btn-floating-bar"
-						monospaced={true}
+						monospaced
 						onClick={() => {
 							setExpanded(!expanded);
 						}}

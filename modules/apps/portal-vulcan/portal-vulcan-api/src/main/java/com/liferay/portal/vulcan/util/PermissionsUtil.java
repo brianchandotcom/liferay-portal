@@ -21,16 +21,14 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Javier Gamarra
@@ -76,9 +74,13 @@ public class PermissionsUtil {
 					isOAuth2AuthVerified() ||
 				 scopeChecker.checkScope(httpMethodName))) {
 
-				UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
+				UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
+
+				List<String> matchedURIs = uriInfo.getMatchedURIs();
 
 				String uri = uriBuilder.path(
+					matchedURIs.get(matchedURIs.size() - 1)
+				).path(
 					clazz.getSuperclass(), methodName
 				).toTemplate();
 

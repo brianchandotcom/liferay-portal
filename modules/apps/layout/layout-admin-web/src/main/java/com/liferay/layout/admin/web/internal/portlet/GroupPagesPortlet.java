@@ -163,10 +163,10 @@ public class GroupPagesPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.ITEM_SELECTOR, _itemSelector);
 			renderRequest.setAttribute(
-				LayoutAdminWebKeys.LAYOUT_COPY_HELPER, _layoutCopyHelper);
-			renderRequest.setAttribute(
-				LayoutAdminWebKeys.LAYOUT_TEMPLATE_CONVERTER_REGISTRY,
+				LayoutAdminWebKeys.LAYOUT_CONVERTER_REGISTRY,
 				_layoutConverterRegistry);
+			renderRequest.setAttribute(
+				LayoutAdminWebKeys.LAYOUT_COPY_HELPER, _layoutCopyHelper);
 
 			super.doDispatch(renderRequest, renderResponse);
 		}

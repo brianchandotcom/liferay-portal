@@ -21,9 +21,9 @@ public class LayoutAdminWebKeys {
 
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
-	public static final String LAYOUT_COPY_HELPER = "LAYOUT_COPY_HELPER";
+	public static final String LAYOUT_CONVERTER_REGISTRY =
+		"LAYOUT_CONVERTER_REGISTRY";
 
-	public static final String LAYOUT_TEMPLATE_CONVERTER_REGISTRY =
-		"LAYOUT_TEMPLATE_CONVERTER_REGISTRY";
+	public static final String LAYOUT_COPY_HELPER = "LAYOUT_COPY_HELPER";
 
 }

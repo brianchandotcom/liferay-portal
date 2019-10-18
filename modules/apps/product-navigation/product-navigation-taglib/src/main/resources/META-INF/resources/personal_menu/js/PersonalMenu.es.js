@@ -13,18 +13,16 @@
  */
 
 import ClayButton from '@clayui/button';
-import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {createRef, useState} from 'react';
-
-const preloadPromise = createRef();
+import React, {useState, useRef} from 'react';
 
 function PersonalMenu({itemsURL}) {
-	const [active, setActive] = useState(false);
 	const [items, setItems] = useState([]);
+	const preloadPromise = useRef();
 
 	function preloadItems() {
 		if (!preloadPromise.current) {
@@ -32,26 +30,16 @@ function PersonalMenu({itemsURL}) {
 				.then(response => response.json())
 				.then(items => setItems(items));
 		}
-
-		return preloadPromise.current;
-	}
-
-	function toggleActive(newVal) {
-		preloadItems().then(setActive(newVal));
 	}
 
 	return (
 		<ClayDropDownWithItems
-			active={active}
-			alignmentPosition={Align.BottomRight}
 			items={items}
-			onActiveChange={toggleActive}
 			trigger={
 				<ClayButton
 					displayType="unstyled"
 					onFocus={preloadItems}
 					onMouseOver={preloadItems}
-					symbol="user"
 				>
 					<ClaySticker
 						className="user-icon-color-4"

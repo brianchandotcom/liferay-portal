@@ -1,1 +1,0 @@
-insert into Counter (name, currentId) values ('com.liferay.counter.kernel.model.Counter', 20000);

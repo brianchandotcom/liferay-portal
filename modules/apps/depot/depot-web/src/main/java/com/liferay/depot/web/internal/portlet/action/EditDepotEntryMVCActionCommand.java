@@ -86,7 +86,6 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DepotEntry.class.getName(), actionRequest);
 
-		//languages
 		UnicodeProperties formTypeSettingsProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
@@ -137,6 +136,7 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (LocaleException le) {
 			SessionErrors.add(actionRequest, le.getClass(), le);
+
 			RenderURL editDepotEntryRenderURL =
 				DepotEntryURLUtil.getEditDepotEntryRenderURL(
 					depotEntryId,

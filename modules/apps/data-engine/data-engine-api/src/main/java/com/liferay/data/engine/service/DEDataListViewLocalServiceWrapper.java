@@ -102,9 +102,8 @@ public class DEDataListViewLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteDEDataListViewsByDDMStructureId(long ddmStructureId) {
-		_deDataListViewLocalService.deleteDEDataListViewsByDDMStructureId(
-			ddmStructureId);
+	public void deleteDEDataListViews(long ddmStructureId) {
+		_deDataListViewLocalService.deleteDEDataListViews(ddmStructureId);
 	}
 
 	/**

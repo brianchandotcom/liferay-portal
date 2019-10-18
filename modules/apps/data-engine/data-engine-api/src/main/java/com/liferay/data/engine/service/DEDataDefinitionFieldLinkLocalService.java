@@ -107,8 +107,7 @@ public interface DEDataDefinitionFieldLinkLocalService
 			long deDataDefinitionFieldLinkId)
 		throws PortalException;
 
-	public void deleteDEDataDefinitionFieldLinksByDDMStructureId(
-		long ddmStructureId);
+	public void deleteDEDataDefinitionFieldLinks(long ddmStructureId);
 
 	/**
 	 * @throws PortalException

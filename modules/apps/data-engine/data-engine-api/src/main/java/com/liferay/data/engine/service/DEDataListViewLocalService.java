@@ -110,7 +110,7 @@ public interface DEDataListViewLocalService
 	public DEDataListView deleteDEDataListView(long deDataListViewId)
 		throws PortalException;
 
-	public void deleteDEDataListViewsByDDMStructureId(long ddmStructureId);
+	public void deleteDEDataListViews(long ddmStructureId);
 
 	/**
 	 * @throws PortalException

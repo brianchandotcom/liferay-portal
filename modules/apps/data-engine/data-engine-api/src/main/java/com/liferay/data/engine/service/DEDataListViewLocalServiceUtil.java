@@ -102,10 +102,8 @@ public class DEDataListViewLocalServiceUtil {
 		return getService().deleteDEDataListView(deDataListViewId);
 	}
 
-	public static void deleteDEDataListViewsByDDMStructureId(
-		long ddmStructureId) {
-
-		getService().deleteDEDataListViewsByDDMStructureId(ddmStructureId);
+	public static void deleteDEDataListViews(long ddmStructureId) {
+		getService().deleteDEDataListViews(ddmStructureId);
 	}
 
 	/**

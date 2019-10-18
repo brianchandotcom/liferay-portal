@@ -109,11 +109,9 @@ public class DEDataDefinitionFieldLinkLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteDEDataDefinitionFieldLinksByDDMStructureId(
-		long ddmStructureId) {
-
-		_deDataDefinitionFieldLinkLocalService.
-			deleteDEDataDefinitionFieldLinksByDDMStructureId(ddmStructureId);
+	public void deleteDEDataDefinitionFieldLinks(long ddmStructureId) {
+		_deDataDefinitionFieldLinkLocalService.deleteDEDataDefinitionFieldLinks(
+			ddmStructureId);
 	}
 
 	/**

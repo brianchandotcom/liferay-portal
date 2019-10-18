@@ -105,11 +105,8 @@ public class DEDataDefinitionFieldLinkLocalServiceUtil {
 			deDataDefinitionFieldLinkId);
 	}
 
-	public static void deleteDEDataDefinitionFieldLinksByDDMStructureId(
-		long ddmStructureId) {
-
-		getService().deleteDEDataDefinitionFieldLinksByDDMStructureId(
-			ddmStructureId);
+	public static void deleteDEDataDefinitionFieldLinks(long ddmStructureId) {
+		getService().deleteDEDataDefinitionFieldLinks(ddmStructureId);
 	}
 
 	/**

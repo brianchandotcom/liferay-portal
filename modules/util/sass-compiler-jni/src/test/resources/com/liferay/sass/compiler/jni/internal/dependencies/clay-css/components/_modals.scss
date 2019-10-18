@@ -27,9 +27,9 @@
 	color: $modal-body-color;
 
 	&.inline-scroller {
+		-webkit-overflow-scrolling: touch;
 		overflow: auto;
 		padding: $modal-inner-padding;
-		-webkit-overflow-scrolling: touch;
 	}
 }
 

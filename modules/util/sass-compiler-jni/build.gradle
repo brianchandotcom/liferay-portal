@@ -168,6 +168,7 @@ liferayOSGi {
 }
 
 processTestResources {
+	dependsOn downloadClay
 	dependsOn downloadSassSpec
 }
 

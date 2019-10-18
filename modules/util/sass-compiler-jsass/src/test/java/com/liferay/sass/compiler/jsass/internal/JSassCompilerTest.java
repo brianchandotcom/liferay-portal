@@ -18,6 +18,7 @@ import com.liferay.sass.compiler.SassCompiler;
 
 import java.io.File;
 
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -44,6 +45,45 @@ public class JSassCompilerTest {
 
 	@Test
 	public void testCompileFileClayCss() throws Exception {
+		SassCompiler sassCompiler = new JSassCompiler();
+
+		File clayCssDir = new File(
+			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+				"/compiler/jni/internal/dependencies/clay-css");
+
+		for (File inputFile : clayCssDir.listFiles()) {
+			if (inputFile.isDirectory()) {
+				continue;
+			}
+
+			String fileName = inputFile.getName();
+
+			if (fileName.startsWith("_") || !fileName.endsWith("scss")) {
+				continue;
+			}
+
+			String actualOutput = sassCompiler.compileFile(
+				inputFile.getCanonicalPath(), "", true);
+
+			Assert.assertNotNull("Testing: " + fileName, actualOutput);
+
+			String expectedOutputFileName = fileName.replace("scss", "css");
+
+			File expectedOutputFile = new File(
+				clayCssDir, expectedOutputFileName);
+
+			if (expectedOutputFile.exists()) {
+				String expectedOutput = read(expectedOutputFile.toPath());
+
+				Assert.assertEquals(
+					"Testing: " + fileName, stripNewLines(expectedOutput),
+					stripNewLines(actualOutput));
+			}
+		}
+	}
+
+	@Test
+	public void testCompileFileSassSpec() throws Exception {
 		try (SassCompiler sassCompiler = new JSassCompiler()) {
 			File sassSpecDir = new File(
 				"../sass-compiler-jni/src/test/resources/com/liferay/sass" +

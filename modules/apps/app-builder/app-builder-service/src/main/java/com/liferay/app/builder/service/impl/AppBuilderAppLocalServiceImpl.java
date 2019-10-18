@@ -90,6 +90,17 @@ public class AppBuilderAppLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAppBuilderApps(long ddmStructureId)
+		throws PortalException {
+
+		List<AppBuilderApp> appBuilderApps = getAppBuilderApps(ddmStructureId);
+
+		for (AppBuilderApp appBuilderApp : appBuilderApps) {
+			deleteAppBuilderApp(appBuilderApp.getAppBuilderAppId());
+		}
+	}
+
+	@Override
 	public List<Long> getAppBuilderAppIds(int status, String type) {
 		return appBuilderAppFinder.findByS_T(status, type);
 	}

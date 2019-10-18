@@ -14,16 +14,14 @@
 
 package com.liferay.app.builder.internal.model.listener;
 
-import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,19 +37,11 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 		throws ModelListenerException {
 
 		try {
-			List<AppBuilderApp> appBuilderApps =
-				_appBuilderAppLocalService.getAppBuilderApps(
-					ddmStructure.getStructureId());
-
-			for (AppBuilderApp appBuilderApp : appBuilderApps) {
-				_appBuilderAppLocalService.deleteAppBuilderApp(
-					appBuilderApp.getAppBuilderAppId());
-			}
+			_appBuilderAppLocalService.deleteAppBuilderApps(
+				ddmStructure.getStructureId());
 		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
+		catch (PortalException pe) {
+			_log.error("Unable to delete app builder apps", pe);
 		}
 	}
 

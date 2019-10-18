@@ -93,9 +93,7 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
 			formTypeSettingsProperties.getProperty("languageId"));
 
-		if (!group.isGuest()) {
-			_validateDefaultLocaleGroupName(nameMap, defaultLocale);
-		}
+		_validateDefaultLocaleGroupName(nameMap, defaultLocale);
 
 		_depotEntryLocalService.updateDepotEntry(
 			depotEntryId, nameMap, descriptionMap, serviceContext);

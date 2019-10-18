@@ -28,39 +28,14 @@ Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
 >
 
 	<%
-	UnicodeProperties typeSettingsProperties = null;
-
-	if (group != null) {
-		typeSettingsProperties = group.getTypeSettingsProperties();
-	}
-	else {
-		typeSettingsProperties = new UnicodeProperties();
-	}
+	UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
 
 	boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getProperty(GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES), true);
-
-	LayoutSet publicLayoutSet = group.getPublicLayoutSet();
-	LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
-
-	boolean readOnlyLocaleInput = false;
-
-	if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayoutSetPrototypeLinkEnabled())
-		//&& !siteAdminConfiguration.enableCustomLanguagesWithTemplatePropagation()
-	) {
-
-		readOnlyLocaleInput = true;
-	}
 	%>
 
-	<c:if test="<%= readOnlyLocaleInput %>">
-		<p class="text-muted">
-			<liferay-ui:message key="the-language-settings-cannot-be-edited-while-propagation-of-changes-from-the-repository-template-is-enabled" />
-		</p>
-	</c:if>
+	<aui:input checked="<%= inheritLocales %>" id="<%= GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES %>" label="use-the-default-language-options" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= true %>" />
 
-	<aui:input checked="<%= inheritLocales %>" id="<%= GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES %>" label="use-the-default-language-options" name="TypeSettingsProperties--inheritLocales--" readonly="<%= readOnlyLocaleInput %>" type="radio" value="<%= true %>" />
-
-	<aui:input checked="<%= !inheritLocales %>" id="customLocales" label="define-a-custom-default-language-and-additional-available-languages-for-this-repository" name="TypeSettingsProperties--inheritLocales--" readonly="<%= readOnlyLocaleInput %>" type="radio" value="<%= false %>" />
+	<aui:input checked="<%= !inheritLocales %>" id="customLocales" label="define-a-custom-default-language-and-additional-available-languages-for-this-repository" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= false %>" />
 
 	<aui:fieldset id='<%= renderResponse.getNamespace() + "inheritLocalesFieldset" %>'>
 		<aui:fieldset cssClass="default-language">
@@ -110,7 +85,7 @@ Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
 		<aui:fieldset cssClass="default-language">
 			<h4 class="text-default"><liferay-ui:message key="default-language" /></h4>
 
-			<aui:select label="" name="TypeSettingsProperties--languageId--" readonly="<%= readOnlyLocaleInput %>" title="language">
+			<aui:select label="" name="TypeSettingsProperties--languageId--" title="language">
 
 				<%
 				Locale defaultLocale = PortalUtil.getSiteDefaultLocale(group.getGroupId());
@@ -251,7 +226,7 @@ Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
 					render: true
 				});
 
-				if (!defaultLanguageName && <%= !group.isGuest() %>) {
+				if (!defaultLanguageName) {
 					new A.Alert({
 						bodyContent:
 							'<liferay-ui:message key="repository-name-will-display-a-generic-text-until-a-translation-is-added" />',

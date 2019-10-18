@@ -211,7 +211,7 @@
 <!--LDAP_SERVERS_TABLE-->
 <tr>
 	<td>LDAP_SERVERS_TABLE_EDIT</td>
-	<td>//tr[contains(.,'${key_LDAPServerName}')]/td[3]//span[.='Edit']/preceding-sibling::span/*[name()='svg']</td>
+	<td>//tr[contains(.,'${key_LDAPServerName}')]/td[3]//span[.='Edit']/preceding-sibling::span</td>
 	<td></td>
 </tr>
 <tr>

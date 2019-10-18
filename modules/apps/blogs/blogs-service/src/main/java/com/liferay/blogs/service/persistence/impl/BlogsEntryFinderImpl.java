@@ -254,37 +254,6 @@ public class BlogsEntryFinderImpl
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<BlogsEntry> findByNoAssets() {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), FIND_BY_NO_ASSETS);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addEntity("BlogsEntry", BlogsEntryImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(_portal.getClassNameId(BlogsEntry.class));
-
-			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
 	protected String getOrganizationIds(List<Long> organizationIds) {
 		if (organizationIds.isEmpty()) {
 			return StringPool.BLANK;

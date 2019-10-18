@@ -82,7 +82,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -224,51 +223,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, title, StringPool.BLANK, StringPool.BLANK, content,
 			new Date(), true, true, new String[0], StringPool.BLANK, null, null,
 			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(long,
-	 *             String, String, String, String, int, int, int, int, int,
-	 *             boolean, boolean, String[], String, ImageSelector,
-	 *             ImageSelector, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public BlogsEntry addEntry(
-			long userId, String title, String description, String content,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
-			boolean allowTrackbacks, String[] trackbacks, boolean smallImage,
-			String smallImageURL, String smallImageFileName,
-			InputStream smallImageInputStream, ServiceContext serviceContext)
-		throws PortalException {
-
-		ImageSelector smallImageImageSelector = null;
-
-		if (smallImage) {
-			if (Validator.isNotNull(smallImageFileName) &&
-				(smallImageInputStream != null)) {
-
-				try {
-					smallImageImageSelector = new ImageSelector(
-						FileUtil.getBytes(smallImageInputStream),
-						smallImageFileName,
-						MimeTypesUtil.getContentType(smallImageFileName), null);
-				}
-				catch (IOException ioe) {
-					_log.error("Unable to create image selector", ioe);
-				}
-			}
-			else if (Validator.isNotNull(smallImageURL)) {
-				smallImageImageSelector = new ImageSelector(smallImageURL);
-			}
-		}
-
-		return blogsEntryLocalService.addEntry(
-			userId, title, StringPool.BLANK, description, content,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			StringPool.BLANK, null, smallImageImageSelector, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -953,15 +907,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			groupId, userId, displayDate, queryDefinition.getStatus());
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<BlogsEntry> getNoAssetEntries() {
-		return blogsEntryFinder.findByNoAssets();
-	}
-
 	@Override
 	public List<BlogsEntry> getOrganizationEntries(
 		long organizationId, Date displayDate,
@@ -1157,55 +1102,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			content, entry.getDisplayDate(), entry.isAllowPingbacks(),
 			entry.isAllowTrackbacks(), StringUtil.split(entry.getTrackbacks()),
 			StringPool.BLANK, null, null, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateEntry(long,
-	 *             long, String, String, String, String, int, int, int, int,
-	 *             int, boolean, boolean, String[], String, ImageSelector,
-	 *             ImageSelector, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public BlogsEntry updateEntry(
-			long userId, long entryId, String title, String description,
-			String content, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, boolean smallImage, String smallImageURL,
-			String smallImageFileName, InputStream smallImageInputStream,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		ImageSelector smallImageImageSelector = null;
-
-		if (smallImage) {
-			if (Validator.isNotNull(smallImageFileName) &&
-				(smallImageInputStream != null)) {
-
-				try {
-					smallImageImageSelector = new ImageSelector(
-						FileUtil.getBytes(smallImageInputStream),
-						smallImageFileName,
-						MimeTypesUtil.getContentType(smallImageFileName), null);
-				}
-				catch (IOException ioe) {
-					_log.error("Unable to create image selector", ioe);
-				}
-			}
-			else if (Validator.isNotNull(smallImageURL)) {
-				smallImageImageSelector = new ImageSelector(smallImageURL);
-			}
-		}
-		else {
-			smallImageImageSelector = new ImageSelector();
-		}
-
-		return blogsEntryLocalService.updateEntry(
-			userId, entryId, title, StringPool.BLANK, description, content,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			StringPool.BLANK, null, smallImageImageSelector, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1466,21 +1362,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			guestPermissions);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateStatus(long,
-	 *             long, int, ServiceContext, Map)}
-	 */
-	@Deprecated
-	@Override
-	public BlogsEntry updateStatus(
-			long userId, long entryId, int status,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return updateStatus(
-			userId, entryId, status, serviceContext, new HashMap<>());
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry updateStatus(
@@ -1697,20 +1578,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return doAddFolder(userId, groupId, _COVER_IMAGE_FOLDER_NAME);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void addDiscussion(BlogsEntry entry, long userId, long groupId)
-		throws PortalException {
-
-		if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {
-			_commentManager.addDiscussion(
-				userId, groupId, BlogsEntry.class.getName(), entry.getEntryId(),
-				entry.getUserName());
-		}
-	}
-
 	protected long addProcessedImageFileEntry(
 			long userId, long groupId, long entryId, long folderId,
 			String title, String mimeType, byte[] bytes)
@@ -1852,17 +1719,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		return serviceContext.getLayoutFullURL();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected String getUniqueUrlTitle(
-		long entryId, long groupId, String title) {
-
-		return _getUniqueUrlTitle(
-			blogsEntryPersistence.fetchByPrimaryKey(entryId));
 	}
 
 	protected void notifySubscribers(
@@ -2282,17 +2138,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 						smallImageFileEntryId);
 			}
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #validate(String,
-	 *             String, String, int)}
-	 */
-	@Deprecated
-	protected void validate(String title, String urlTitle, String content)
-		throws PortalException {
-
-		validate(title, urlTitle, content, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	protected void validate(

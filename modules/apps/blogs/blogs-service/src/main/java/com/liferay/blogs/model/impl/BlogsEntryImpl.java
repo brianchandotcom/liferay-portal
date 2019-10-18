@@ -18,10 +18,8 @@ import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
@@ -50,43 +48,6 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 		return DLURLHelperUtil.getPreviewURL(
 			fileEntry, fileEntry.getFileVersion(), themeDisplay,
 			StringPool.BLANK);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getSmallImageURL(ThemeDisplay)}
-	 */
-	@Deprecated
-	@Override
-	public String getEntryImageURL(ThemeDisplay themeDisplay) {
-		if (!isSmallImage()) {
-			return null;
-		}
-
-		if (Validator.isNotNull(getSmallImageURL())) {
-			return getSmallImageURL();
-		}
-
-		return StringBundler.concat(
-			themeDisplay.getPathImage(), "/blogs/entry?img_id=",
-			getSmallImageId(), "&t=",
-			WebServerServletTokenUtil.getToken(getSmallImageId()));
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getSmallImageType() throws PortalException {
-		if ((_smallImageType == null) && isSmallImage()) {
-			Image smallImage = ImageLocalServiceUtil.getImage(
-				getSmallImageId());
-
-			_smallImageType = smallImage.getType();
-		}
-
-		return _smallImageType;
 	}
 
 	@Override

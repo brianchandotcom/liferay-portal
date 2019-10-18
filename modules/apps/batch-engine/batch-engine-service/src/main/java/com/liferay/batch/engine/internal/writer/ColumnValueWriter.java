@@ -26,14 +26,13 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Consumer;
 
 /**
@@ -46,23 +45,13 @@ public class ColumnValueWriter {
 
 		Map<String, Object> columnNameValueMap = _getColumnNameValueMap(item);
 
-		List<String> columnNames = new ArrayList<>(columnNameValueMap.keySet());
-
-		columnNames.sort(Comparator.naturalOrder());
-
 		if (!_firstLineWritten) {
-			consumer.accept(columnNames);
+			consumer.accept(columnNameValueMap.keySet());
 
 			_firstLineWritten = true;
 		}
 
-		List<Object> values = new ArrayList<>();
-
-		for (String columnName : columnNames) {
-			values.add(columnNameValueMap.get(columnName));
-		}
-
-		consumer.accept(values);
+		consumer.accept(columnNameValueMap.values());
 	}
 
 	private Map<String, Object> _getColumnNameValueMap(Object item)
@@ -96,7 +85,7 @@ public class ColumnValueWriter {
 				return fieldMap;
 			});
 
-		Map<String, Object> columnNameValueMap = new HashMap<>();
+		Map<String, Object> columnNameValueMap = new TreeMap<>();
 
 		for (Map.Entry<String, Field> entry : fields.entrySet()) {
 			String key = entry.getKey();

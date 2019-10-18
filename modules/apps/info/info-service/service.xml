@@ -54,9 +54,5 @@
 			<finder-column name="containerKey" />
 			<finder-column name="plid" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="Layout" package-path="com.liferay.portal" />
 	</entity>
 </service-builder>

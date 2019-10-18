@@ -40,7 +40,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -79,8 +79,8 @@ public class UserModelListener extends BaseModelListener<User> {
 
 			actionableDynamicQuery.performActions();
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (PortalException pe) {
+			throw new ModelListenerException(pe);
 		}
 	}
 
@@ -101,8 +101,7 @@ public class UserModelListener extends BaseModelListener<User> {
 				}
 			});
 
-		Collection<KaleoTaskAssignment> kaleoTaskAssignments =
-			new ArrayList<>();
+		List<KaleoTaskAssignment> kaleoTaskAssignments = new ArrayList<>();
 
 		for (KaleoTaskAssignment kaleoTaskAssignment :
 				kaleoTask.getKaleoTaskAssignments()) {

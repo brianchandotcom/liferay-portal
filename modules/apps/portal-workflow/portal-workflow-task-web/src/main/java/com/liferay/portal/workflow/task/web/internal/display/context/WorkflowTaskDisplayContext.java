@@ -208,16 +208,14 @@ public class WorkflowTaskDisplayContext {
 		return "x-assigned-the-task-to-herself";
 	}
 
-	public Object getAssignedTheTaskToMessageArguments(WorkflowLog workflowLog)
-		throws PortalException {
-
-		String actorName = _getActorName(workflowLog);
+	public Object getAssignedTheTaskToMessageArguments(
+		WorkflowLog workflowLog) {
 
 		return new Object[] {
 			HtmlUtil.escape(
 				PortalUtil.getUserName(
 					workflowLog.getAuditUserId(), StringPool.BLANK)),
-			HtmlUtil.escape(actorName)
+			HtmlUtil.escape(_getActorName(workflowLog))
 		};
 	}
 
@@ -466,13 +464,10 @@ public class WorkflowTaskDisplayContext {
 		return sb.toString();
 	}
 
-	public Object getTaskCompletionMessageArguments(WorkflowLog workflowLog)
-		throws PortalException {
-
-		String actorName = _getActorName(workflowLog);
-
+	public Object getTaskCompletionMessageArguments(WorkflowLog workflowLog) {
 		return new Object[] {
-			HtmlUtil.escape(actorName), HtmlUtil.escape(workflowLog.getState())
+			HtmlUtil.escape(_getActorName(workflowLog)),
+			HtmlUtil.escape(workflowLog.getState())
 		};
 	}
 
@@ -487,24 +482,17 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public String getTaskInitiallyAssignedMessageArguments(
-			WorkflowLog workflowLog)
-		throws PortalException {
+		WorkflowLog workflowLog) {
 
-		String actorName = _getActorName(workflowLog);
-
-		return HtmlUtil.escape(actorName);
+		return HtmlUtil.escape(_getActorName(workflowLog));
 	}
 
 	public String getTaskName(WorkflowTask workflowTask) {
 		return HtmlUtil.escape(workflowTask.getName());
 	}
 
-	public Object getTaskUpdateMessageArguments(WorkflowLog workflowLog)
-		throws PortalException {
-
-		String actorName = _getActorName(workflowLog);
-
-		return HtmlUtil.escape(actorName);
+	public Object getTaskUpdateMessageArguments(WorkflowLog workflowLog) {
+		return HtmlUtil.escape(_getActorName(workflowLog));
 	}
 
 	public int getTotalItems() throws PortalException {
@@ -521,13 +509,9 @@ public class WorkflowTaskDisplayContext {
 		return HtmlUtil.escape(transitionName);
 	}
 
-	public Object getTransitionMessageArguments(WorkflowLog workflowLog)
-		throws PortalException {
-
-		String actorName = _getActorName(workflowLog);
-
+	public Object getTransitionMessageArguments(WorkflowLog workflowLog) {
 		return new Object[] {
-			HtmlUtil.escape(actorName),
+			HtmlUtil.escape(_getActorName(workflowLog)),
 			HtmlUtil.escape(workflowLog.getPreviousState()),
 			HtmlUtil.escape(workflowLog.getState())
 		};
@@ -744,13 +728,16 @@ public class WorkflowTaskDisplayContext {
 		return showEditURL;
 	}
 
-	private String _getActorName(WorkflowLog workflowLog)
-		throws PortalException {
-
+	private String _getActorName(WorkflowLog workflowLog) {
 		if (workflowLog.getRoleId() != 0) {
 			Role role = _getRole(workflowLog.getRoleId());
 
-			return role.getDescriptiveName();
+			if (role == null) {
+				return String.valueOf(workflowLog.getRoleId());
+			}
+
+			return role.getTitle(
+				LanguageUtil.getLanguageId(_httpServletRequest));
 		}
 		else if (workflowLog.getUserId() != 0) {
 			User user = _getUser(workflowLog.getUserId());
@@ -911,11 +898,11 @@ public class WorkflowTaskDisplayContext {
 		return portletURL;
 	}
 
-	private Role _getRole(long roleId) throws PortalException {
+	private Role _getRole(long roleId) {
 		Role role = _roles.get(roleId);
 
 		if (role == null) {
-			role = RoleLocalServiceUtil.getRole(roleId);
+			role = RoleLocalServiceUtil.fetchRole(roleId);
 
 			_roles.put(roleId, role);
 		}
@@ -944,7 +931,7 @@ public class WorkflowTaskDisplayContext {
 			_liferayPortletRequest, "tabs1", "assigned-to-me");
 	}
 
-	private User _getUser(long userId) throws PortalException {
+	private User _getUser(long userId) {
 		User user = _users.get(userId);
 
 		if (user == null) {

@@ -17,7 +17,11 @@ package com.liferay.mentions.web.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.mentions.constants.MentionsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
@@ -26,12 +30,16 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.Portlet;
 
@@ -68,23 +76,152 @@ public class MentionsPortletTest {
 	}
 
 	@Test
-	public void testServletResponse() throws Exception {
+	public void testServletResponseWithoutQuery() throws Exception {
+		_users.add(UserTestUtil.addUser("example", _group.getGroupId()));
+
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
 		MockResourceResponse mockResourceResponse = new MockResourceResponse();
 
 		mvcPortlet.serveResource(
-			_getMockLiferayResourceRequest(), mockResourceResponse);
+			_getMockLiferayResourceRequest(null), mockResourceResponse);
 
-		HttpServletResponse httpServletResponse =
-			mockResourceResponse.getHttpServletResponse();
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockResourceResponse.getHttpServletResponse();
 
 		Assert.assertEquals(
 			ContentTypes.APPLICATION_JSON,
-			httpServletResponse.getContentType());
+			mockHttpServletResponse.getContentType());
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			mockHttpServletResponse.getContentAsString());
+
+		Assert.assertEquals(1, jsonArray.length());
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals("example", jsonObject.getString("screenName"));
 	}
 
-	private MockLiferayResourceRequest _getMockLiferayResourceRequest()
+	@Test
+	public void testServletResponseWithQueryWithFullScreenName()
+		throws Exception {
+
+		_users.add(UserTestUtil.addUser("example", _group.getGroupId()));
+
+		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
+
+		MockResourceResponse mockResourceResponse = new MockResourceResponse();
+
+		mvcPortlet.serveResource(
+			_getMockLiferayResourceRequest("example"), mockResourceResponse);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockResourceResponse.getHttpServletResponse();
+
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_JSON,
+			mockHttpServletResponse.getContentType());
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			mockHttpServletResponse.getContentAsString());
+
+		Assert.assertEquals(1, jsonArray.length());
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals("example", jsonObject.getString("screenName"));
+	}
+
+	@Test
+	public void testServletResponseWithQueryWithPartialScreenName()
+		throws Exception {
+
+		_users.add(UserTestUtil.addUser("example", _group.getGroupId()));
+
+		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
+
+		MockResourceResponse mockResourceResponse = new MockResourceResponse();
+
+		mvcPortlet.serveResource(
+			_getMockLiferayResourceRequest("exa"), mockResourceResponse);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockResourceResponse.getHttpServletResponse();
+
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_JSON,
+			mockHttpServletResponse.getContentType());
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			mockHttpServletResponse.getContentAsString());
+
+		Assert.assertEquals(1, jsonArray.length());
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals("example", jsonObject.getString("screenName"));
+	}
+
+	@Test
+	public void testServletResponseWithQueryWithWildard() throws Exception {
+		_users.add(UserTestUtil.addUser("example", _group.getGroupId()));
+
+		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
+
+		MockResourceResponse mockResourceResponse = new MockResourceResponse();
+
+		mvcPortlet.serveResource(
+			_getMockLiferayResourceRequest("*"), mockResourceResponse);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockResourceResponse.getHttpServletResponse();
+
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_JSON,
+			mockHttpServletResponse.getContentType());
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			mockHttpServletResponse.getContentAsString());
+
+		Assert.assertEquals(1, jsonArray.length());
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals("example", jsonObject.getString("screenName"));
+	}
+
+	@Test
+	public void testServletResponseWithQueryWithWildcardAndNoResults()
+		throws Exception {
+
+		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
+
+		MockResourceResponse mockResourceResponse = new MockResourceResponse();
+
+		mvcPortlet.serveResource(
+			_getMockLiferayResourceRequest("*"), mockResourceResponse);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockResourceResponse.getHttpServletResponse();
+
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_JSON,
+			mockHttpServletResponse.getContentType());
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			mockHttpServletResponse.getContentAsString());
+
+		Assert.assertEquals(0, jsonArray.length());
+	}
+
+	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
+			String query)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
@@ -93,6 +230,10 @@ public class MentionsPortletTest {
 			themeDisplay);
 
 		mockResourceRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		if (query != null) {
+			mockResourceRequest.setParameter("query", query);
+		}
 
 		return mockResourceRequest;
 	}
@@ -116,6 +257,9 @@ public class MentionsPortletTest {
 
 	@Inject(filter = "javax.portlet.name=" + MentionsPortletKeys.MENTIONS)
 	private Portlet _portlet;
+
+	@DeleteAfterTestRun
+	private final List<User> _users = new ArrayList<>();
 
 	private static class MockResourceRequest
 		extends MockLiferayResourceRequest {

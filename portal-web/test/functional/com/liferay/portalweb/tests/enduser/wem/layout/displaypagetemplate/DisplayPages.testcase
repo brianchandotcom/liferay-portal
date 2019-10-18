@@ -40,7 +40,7 @@ definition {
 		}
 	}
 
-	@description = "User can add a display page."
+	@description = "User can rename a display page and add a display page."
 	@priority = "3"
 	test AddBlankDisplayPage {
 		task ("Rename the display page") {
@@ -322,22 +322,6 @@ definition {
 				key_fragmentClass = "body",
 				key_position = "3",
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
-		}
-	}
-
-	@description = "User can rename display pages."
-	@priority = "4"
-	test RenameDisplayPage {
-		task ("Rename the display page") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.renameDisplayPage(
-				displayPageName = "Display Page Name",
-				newDisplayPageName = "Display Page Name New");
-		}
-
-		task ("Assert the display page was renamed") {
-			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name New");
 		}
 	}
 

@@ -167,8 +167,8 @@ public class UserPermissionImpl
 							return true;
 						}
 
-						// Organization administrators can only manage normal
-						// users
+						// Organization administrators and those with "Manage
+						// Users" permission can only manage normal users
 
 						if (!UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 								user.getUserId(), organization.getGroupId(),

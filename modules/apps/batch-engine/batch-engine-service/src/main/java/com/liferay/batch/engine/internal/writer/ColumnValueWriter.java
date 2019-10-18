@@ -28,6 +28,7 @@ import java.math.BigInteger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,7 +41,7 @@ import java.util.function.Consumer;
  */
 public class ColumnValueWriter {
 
-	public void write(Object item, Consumer<List<?>> consumer)
+	public void write(Object item, Consumer<Collection<?>> consumer)
 		throws IllegalAccessException {
 
 		Map<String, Object> columnNameValueMap = _getColumnNameValueMap(item);

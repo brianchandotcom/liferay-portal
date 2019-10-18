@@ -17,6 +17,7 @@ package com.liferay.batch.engine.internal.writer;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 		}
 	}
 
-	private void _write(List<?> values) {
+	private void _write(Collection<?> values) {
 		Row row = _sheet.createRow(_rowNum++);
 
 		int column = 0;

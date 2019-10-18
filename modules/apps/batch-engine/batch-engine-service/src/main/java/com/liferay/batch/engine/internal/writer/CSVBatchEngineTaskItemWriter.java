@@ -24,6 +24,7 @@ import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void _write(DateFormat dateFormat, List<?> values) {
+	private void _write(DateFormat dateFormat, Collection<?> values) {
 		_unsyncPrintWriter.write(
 			StringUtil.merge(
 				values,

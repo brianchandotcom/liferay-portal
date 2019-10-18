@@ -33,9 +33,21 @@ definition {
 
 		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
 
-		Type(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS",
-			value1 = "${fragmentComment}");
+		if (isSet(mentionsUserScreenName)) {
+			var key_mentionsUserScreenName = "${mentionsUserScreenName}";
+
+			Type.sendKeys(
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS",
+				value1 = "${fragmentComment} @${mentionsUserScreenName}");
+
+			Click.clickNoMouseOver(locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
+		}
+
+		else {
+			Type(
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS",
+				value1 = "${fragmentComment}");
+		}
 
 		Button.clickComment();
 
@@ -654,6 +666,17 @@ definition {
 					key_fragmentComment = "${fragmentComment}",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY_HIGHLIGHTED",
 					value1 = "${fragmentComment}");
+			}
+
+			else if (isSet(mentionsUserScreenName)) {
+				AssertTextEquals(
+					key_fragmentComment = "${fragmentComment}",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY",
+					value1 = "${fragmentComment}@${mentionsUserScreenName}");
+
+				Mentions.viewMentionTagLink(
+					mentionsUserFullName = "${mentionsUserFullName}",
+					mentionsUserScreenName = "${mentionsUserScreenName}");
 			}
 
 			else {

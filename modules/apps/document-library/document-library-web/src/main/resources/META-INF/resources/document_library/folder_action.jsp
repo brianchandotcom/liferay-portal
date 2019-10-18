@@ -296,7 +296,7 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			<liferay-util:include page="/document_library/access_from_desktop.jsp" servletContext="<%= application %>" />
 		</c:if>
 
-		<c:if test="<%= showPermissionsURL %>">
+		<c:if test="<%= showPermissionsURL && !(folder.isMountPoint() || (RepositoryUtil.isExternalRepository(repositoryId) && folder.isRoot())) %>">
 			<liferay-security:permissionsURL
 				modelResource="<%= modelResource %>"
 				modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"

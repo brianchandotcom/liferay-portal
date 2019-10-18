@@ -1788,7 +1788,7 @@ definition {
 
 		Type(
 			locator1 = "CAS#PASSWORD_FIELD",
-			value1 = "${userScreenName}");
+			value1 = "${userPassword}");
 
 		AssertClick(
 			locator1 = "CAS#LOGIN_BUTTON",

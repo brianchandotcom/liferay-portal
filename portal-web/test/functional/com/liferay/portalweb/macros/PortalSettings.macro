@@ -261,19 +261,23 @@ definition {
 
 		FormFields.editText(
 			fieldName = "loginURL",
-			fieldValue = "${casLoginURL}");
+			fieldValue = "http://localhost:8080/cas-web/login");
 
 		FormFields.editText(
 			fieldName = "logoutURL",
-			fieldValue = "${casLogoutURL}");
+			fieldValue = "http://localhost:8080/cas-web/logout");
 
 		FormFields.editText(
-			fieldName = "ServerURL",
-			fieldValue = "${casServerURL}");
+			fieldName = "serverName",
+			fieldValue = "http://localhost:8080");
 
-		FormFields.editTextMultiline(
+		FormFields.editText(
+			fieldName = "serverURL",
+			fieldValue = "http://localhost:8080/cas-web");
+
+		FormFields.editText(
 			fieldName = "serviceURL",
-			fieldValue = "${casServiceURL}");
+			fieldValue = "http://localhost:8080/c/portal/login");
 
 		Click.waitForMenuToggleJSClick(locator1 = "PortalSettingsAuthentication#VERTICAL_ELLIPSIS");
 

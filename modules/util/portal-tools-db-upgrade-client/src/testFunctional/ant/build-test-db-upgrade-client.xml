@@ -324,6 +324,15 @@
 			expect.file="check-upgrade-properties-app-db-set.expect"
 		/>
 
+		<fail message="Exception thrown, failing.">
+			<condition>
+				<resourcecontains
+					resource="${db.upgrade.client.log}"
+					substring="Exception"
+				/>
+			</condition>
+		</fail>
+
 		<clean-database-upgrade-client />
 	</target>
 
@@ -338,6 +347,15 @@
 			expect.file="check-upgrade-properties-app-ext-set.expect"
 		/>
 
+		<fail message="Exception thrown, failing.">
+			<condition>
+				<resourcecontains
+					resource="${db.upgrade.client.log}"
+					substring="Exception"
+				/>
+			</condition>
+		</fail>
+
 		<clean-database-upgrade-client />
 	</target>
 
@@ -351,6 +369,15 @@
 			file.suffix.bat="${file.suffix.bat}"
 			expect.file="check-upgrade-properties-db-ext-set.expect"
 		/>
+
+		<fail message="Exception thrown, failing.">
+			<condition>
+				<resourcecontains
+					resource="${db.upgrade.client.log}"
+					substring="Exception"
+				/>
+			</condition>
+		</fail>
 
 		<clean-database-upgrade-client />
 	</target>
@@ -369,6 +396,15 @@
 			file.suffix.bat="${file.suffix.bat}"
 			expect.file="check-upgrade-properties-none-set.expect"
 		/>
+
+		<fail message="Exception thrown, failing.">
+			<condition>
+				<resourcecontains
+					resource="${db.upgrade.client.log}"
+					substring="Exception"
+				/>
+			</condition>
+		</fail>
 
 		<clean-database-upgrade-client />
 	</target>

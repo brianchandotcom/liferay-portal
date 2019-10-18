@@ -76,9 +76,13 @@ public class PermissionsUtil {
 					isOAuth2AuthVerified() ||
 				 scopeChecker.checkScope(httpMethodName))) {
 
-				UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
+				UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
+
+				List<String> matchedURIs = uriInfo.getMatchedURIs();
 
 				String uri = uriBuilder.path(
+					matchedURIs.get(matchedURIs.size() - 1)
+				).path(
 					clazz.getSuperclass(), methodName
 				).toTemplate();
 

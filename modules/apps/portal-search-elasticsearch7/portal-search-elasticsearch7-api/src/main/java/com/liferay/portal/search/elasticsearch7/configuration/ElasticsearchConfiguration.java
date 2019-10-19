@@ -146,6 +146,12 @@ public interface ElasticsearchConfiguration {
 	public boolean bootstrapMlockAll();
 
 	@Meta.AD(
+		deflt = "9201", description = "embedded-http-port-help",
+		name = "embedded-http-port", required = false
+	)
+	public int embeddedHttpPort();
+
+	@Meta.AD(
 		deflt = "9300-9400",
 		description = "discovery-zen-ping-unicast-hosts-port-help",
 		name = "discovery-zen-ping-unicast-hosts-port", required = false
@@ -157,12 +163,6 @@ public interface ElasticsearchConfiguration {
 		required = false
 	)
 	public String networkHost();
-
-	@Meta.AD(
-		deflt = "9201", description = "embedded-http-port-help",
-		name = "embedded-http-port", required = false
-	)
-	public int embeddedHttpPort();
 
 	@Meta.AD(
 		deflt = "", description = "network-bind-host-help",
@@ -183,6 +183,12 @@ public interface ElasticsearchConfiguration {
 	public String transportTcpPort();
 
 	@Meta.AD(
+		description = "additional-configurations-help",
+		name = "additional-configurations", required = false
+	)
+	public String additionalConfigurations();
+
+	@Meta.AD(
 		deflt = "true", description = "http-cors-enabled-help",
 		name = "http-cors-enabled", required = false
 	)
@@ -200,11 +206,5 @@ public interface ElasticsearchConfiguration {
 		name = "http-cors-configurations", required = false
 	)
 	public String httpCORSConfigurations();
-
-	@Meta.AD(
-		description = "additional-configurations-help",
-		name = "additional-configurations", required = false
-	)
-	public String additionalConfigurations();
 
 }

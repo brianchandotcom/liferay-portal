@@ -43,6 +43,42 @@ public interface ElasticsearchConfiguration {
 	public String[] networkHostAddresses();
 
 	@Meta.AD(
+		deflt = "liferay-", description = "index-name-prefix-help",
+		name = "index-name-prefix", required = false
+	)
+	public String indexNamePrefix();
+
+	@Meta.AD(
+		deflt = "", description = "number-of-index-replicas-help",
+		name = "number-of-index-replicas", required = false
+	)
+	public String indexNumberOfReplicas();
+
+	@Meta.AD(
+		deflt = "", description = "number-of-index-shards-help",
+		name = "number-of-index-shards", required = false
+	)
+	public String indexNumberOfShards();
+
+	@Meta.AD(
+		description = "additional-index-configurations-help",
+		name = "additional-index-configurations", required = false
+	)
+	public String additionalIndexConfigurations();
+
+	@Meta.AD(
+		description = "additional-type-mappings-help",
+		name = "additional-type-mappings", required = false
+	)
+	public String additionalTypeMappings();
+
+	@Meta.AD(
+		description = "override-type-mappings-help",
+		name = "override-type-mappings", required = false
+	)
+	public String overrideTypeMappings();
+
+	@Meta.AD(
 		deflt = "false", description = "authentication-enabled-help",
 		name = "authentication-enabled", required = false
 	)
@@ -90,24 +126,6 @@ public interface ElasticsearchConfiguration {
 		required = false
 	)
 	public String clusterName();
-
-	@Meta.AD(
-		deflt = "liferay-", description = "index-name-prefix-help",
-		name = "index-name-prefix", required = false
-	)
-	public String indexNamePrefix();
-
-	@Meta.AD(
-		deflt = "", description = "number-of-index-replicas-help",
-		name = "number-of-index-replicas", required = false
-	)
-	public String indexNumberOfReplicas();
-
-	@Meta.AD(
-		deflt = "", description = "number-of-index-shards-help",
-		name = "number-of-index-shards", required = false
-	)
-	public String indexNumberOfShards();
 
 	@Meta.AD(
 		deflt = "false", description = "bootstrap-mlockall-help",
@@ -188,23 +206,5 @@ public interface ElasticsearchConfiguration {
 		name = "additional-configurations", required = false
 	)
 	public String additionalConfigurations();
-
-	@Meta.AD(
-		description = "additional-index-configurations-help",
-		name = "additional-index-configurations", required = false
-	)
-	public String additionalIndexConfigurations();
-
-	@Meta.AD(
-		description = "additional-type-mappings-help",
-		name = "additional-type-mappings", required = false
-	)
-	public String additionalTypeMappings();
-
-	@Meta.AD(
-		description = "override-type-mappings-help",
-		name = "override-type-mappings", required = false
-	)
-	public String overrideTypeMappings();
 
 }

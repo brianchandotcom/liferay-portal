@@ -121,6 +121,18 @@ public interface ElasticsearchConfiguration {
 	public String truststorePassword();
 
 	@Meta.AD(
+		deflt = "true", description = "log-exceptions-only-help",
+		name = "log-exceptions-only", required = false
+	)
+	public boolean logExceptionsOnly();
+
+	@Meta.AD(
+		deflt = "ERROR", description = "rest-client-logger-level-help",
+		name = "rest-client-logger-level", required = false
+	)
+	public String restClientLoggerLevel();
+
+	@Meta.AD(
 		deflt = "LiferayElasticsearchCluster",
 		description = "cluster-name-help", name = "cluster-name",
 		required = false
@@ -132,18 +144,6 @@ public interface ElasticsearchConfiguration {
 		name = "bootstrap-mlockall", required = false
 	)
 	public boolean bootstrapMlockAll();
-
-	@Meta.AD(
-		deflt = "true", description = "log-exceptions-only-help",
-		name = "log-exceptions-only", required = false
-	)
-	public boolean logExceptionsOnly();
-
-	@Meta.AD(
-		deflt = "ERROR", description = "rest-client-logger-level-help",
-		name = "rest-client-logger-level", required = false
-	)
-	public String restClientLoggerLevel();
 
 	@Meta.AD(
 		deflt = "9300-9400",

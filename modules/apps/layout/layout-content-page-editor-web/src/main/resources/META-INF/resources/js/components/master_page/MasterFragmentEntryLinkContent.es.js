@@ -12,12 +12,13 @@
  * details.
  */
 
-import {globalEval} from 'metal-dom';
 import Component from 'metal-component';
+import {globalEval} from 'metal-dom';
 import Soy from 'metal-soy';
-import templates from './MasterFragmentEntryLinkContent.soy';
 import {Config} from 'metal-state';
 import {isFunction, isObject} from 'metal';
+
+import templates from './MasterFragmentEntryLinkContent.soy';
 
 class MasterFragmentEntryLinkContent extends Component {
 	rendered() {

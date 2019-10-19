@@ -14,14 +14,17 @@
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import templates from './MasterFragmentEntryLinkListRow.soy';
+
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import templates from './MasterFragmentEntryLinkListRow.soy';
 
 import './MasterFragmentEntryLinkContent.es';
-import {editableIsMappedToAssetEntry} from '../../utils/FragmentsEditorGetUtils.es';
-import {getAssetFieldValue} from '../../utils/FragmentsEditorFetchUtils.es';
+
 import {Config} from 'metal-state';
+
 import getConnectedComponent from '../../store/ConnectedComponent.es';
+import {getAssetFieldValue} from '../../utils/FragmentsEditorFetchUtils.es';
+import {editableIsMappedToAssetEntry} from '../../utils/FragmentsEditorGetUtils.es';
 
 class MasterFragmentEntryLinkListRow extends Component {
 	prepareStateForRender(state) {

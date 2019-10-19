@@ -121,12 +121,6 @@ public interface ElasticsearchConfiguration {
 	public String restClientLoggerLevel();
 
 	@Meta.AD(
-		deflt = "5", description = "retry-on-conflict-help",
-		name = "retry-on-conflict", required = false
-	)
-	public int retryOnConflict();
-
-	@Meta.AD(
 		deflt = "9300-9400",
 		description = "discovery-zen-ping-unicast-hosts-port-help",
 		name = "discovery-zen-ping-unicast-hosts-port", required = false
@@ -169,38 +163,6 @@ public interface ElasticsearchConfiguration {
 		name = "network-host-addresses", required = false
 	)
 	public String[] networkHostAddresses();
-
-	@Meta.AD(
-		deflt = "localhost:9300", description = "transport-addresses-help",
-		name = "transport-addresses", required = false
-	)
-	public String[] transportAddresses();
-
-	@Meta.AD(
-		deflt = "true", description = "client-transport-sniff-help",
-		name = "client-transport-sniff", required = false
-	)
-	public boolean clientTransportSniff();
-
-	@Meta.AD(
-		deflt = "false",
-		description = "client-transport-ignore-cluster-name-help",
-		name = "client-transport-ignore-cluster-name", required = false
-	)
-	public boolean clientTransportIgnoreClusterName();
-
-	@Meta.AD(
-		deflt = "", description = "client-transport-ping-timeout-help",
-		name = "client-transport-ping-timeout", required = false
-	)
-	public String clientTransportPingTimeout();
-
-	@Meta.AD(
-		deflt = "",
-		description = "client-transport-nodes-sampler-interval-help",
-		name = "client-transport-nodes-sampler-interval", required = false
-	)
-	public String clientTransportNodesSamplerInterval();
 
 	@Meta.AD(
 		deflt = "true", description = "http-cors-enabled-help",

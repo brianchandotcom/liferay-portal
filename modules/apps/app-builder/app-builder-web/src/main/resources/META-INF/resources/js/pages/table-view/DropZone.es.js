@@ -13,8 +13,8 @@
  */
 
 import classNames from 'classnames';
-import React, {useRef} from 'react';
 import {useDrop} from 'react-dnd';
+import React, {useRef} from 'react';
 
 import Button from '../../components/button/Button.es';
 import Table from '../../components/table/Table.es';

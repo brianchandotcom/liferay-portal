@@ -14,12 +14,13 @@
 
 import {createPortal} from 'react-dom';
 import React, {useState, useContext} from 'react';
+
+import {AppContext} from '../../AppContext.es';
 import {ControlMenuBase} from '../../components/control-menu/ControlMenu.es';
 import CustomObjectSidebar from './CustomObjectSidebar.es';
 import DataLayoutBuilderDragAndDrop from './DataLayoutBuilderDragAndDrop.es';
 import DataLayoutBuilderSidebar from './DataLayoutBuilderSidebar.es';
 import FormViewContextProvider from './FormViewContextProvider.es';
-import {AppContext} from '../../AppContext.es';
 import FormViewUpperToolbar from './FormViewUpperToolbar.es';
 
 const parseProps = ({dataDefinitionId, dataLayoutId, ...props}) => ({
@@ -28,7 +29,7 @@ const parseProps = ({dataDefinitionId, dataLayoutId, ...props}) => ({
 	dataLayoutId: Number(dataLayoutId)
 });
 
-const FormViewControlMenu = ({dataLayoutId, backURL}) => {
+const FormViewControlMenu = ({backURL, dataLayoutId}) => {
 	let title = Liferay.Language.get('new-form-view');
 
 	if (dataLayoutId > 0) {

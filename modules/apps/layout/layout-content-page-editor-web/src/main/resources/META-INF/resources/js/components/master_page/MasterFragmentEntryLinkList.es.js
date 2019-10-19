@@ -14,9 +14,10 @@
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import templates from './MasterFragmentEntryLinkList.soy';
+
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
+import templates from './MasterFragmentEntryLinkList.soy';
 
 import './MasterFragmentEntryLinkListRow.es';
 

@@ -4586,6 +4586,47 @@ paths:
                     description:
                         ""
             tags: ["MessageBoardSection"]
+    "/message-board-threads/ranked":
+        get:
+            operationId: getMessageBoardThreadsRankedPage
+            parameters:
+                - in: query
+                  name: dateCreated
+                  schema:
+                      format: date-time
+                      type: string
+                - in: query
+                  name: dateModified
+                  schema:
+                      format: date-time
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardThread"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardThread"
+                                type: array
+                    description: ""
+            tags: ["MessageBoardThread"]
     "/message-board-threads/{messageBoardThreadId}":
         delete:
             description:

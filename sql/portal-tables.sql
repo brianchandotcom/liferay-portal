@@ -941,6 +941,8 @@ create table RatingsEntry (
 create table RatingsStats (
 	statsId LONG not null primary key,
 	companyId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
 	totalEntries INTEGER,

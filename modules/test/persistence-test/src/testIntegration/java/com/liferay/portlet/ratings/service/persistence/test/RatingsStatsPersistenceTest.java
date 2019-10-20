@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -124,6 +125,10 @@ public class RatingsStatsPersistenceTest {
 
 		newRatingsStats.setCompanyId(RandomTestUtil.nextLong());
 
+		newRatingsStats.setCreateDate(RandomTestUtil.nextDate());
+
+		newRatingsStats.setModifiedDate(RandomTestUtil.nextDate());
+
 		newRatingsStats.setClassNameId(RandomTestUtil.nextLong());
 
 		newRatingsStats.setClassPK(RandomTestUtil.nextLong());
@@ -144,6 +149,12 @@ public class RatingsStatsPersistenceTest {
 		Assert.assertEquals(
 			existingRatingsStats.getCompanyId(),
 			newRatingsStats.getCompanyId());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingRatingsStats.getCreateDate()),
+			Time.getShortTimestamp(newRatingsStats.getCreateDate()));
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingRatingsStats.getModifiedDate()),
+			Time.getShortTimestamp(newRatingsStats.getModifiedDate()));
 		Assert.assertEquals(
 			existingRatingsStats.getClassNameId(),
 			newRatingsStats.getClassNameId());
@@ -200,9 +211,9 @@ public class RatingsStatsPersistenceTest {
 
 	protected OrderByComparator<RatingsStats> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"RatingsStats", "statsId", true, "companyId", true, "classNameId",
-			true, "classPK", true, "totalEntries", true, "totalScore", true,
-			"averageScore", true);
+			"RatingsStats", "statsId", true, "companyId", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+			"totalEntries", true, "totalScore", true, "averageScore", true);
 	}
 
 	@Test
@@ -440,6 +451,10 @@ public class RatingsStatsPersistenceTest {
 		RatingsStats ratingsStats = _persistence.create(pk);
 
 		ratingsStats.setCompanyId(RandomTestUtil.nextLong());
+
+		ratingsStats.setCreateDate(RandomTestUtil.nextDate());
+
+		ratingsStats.setModifiedDate(RandomTestUtil.nextDate());
 
 		ratingsStats.setClassNameId(RandomTestUtil.nextLong());
 

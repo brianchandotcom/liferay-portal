@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing RatingsStats in entity cache.
  *
@@ -60,12 +62,16 @@ public class RatingsStatsCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{statsId=");
 		sb.append(statsId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -87,6 +93,21 @@ public class RatingsStatsCacheModel
 
 		ratingsStatsImpl.setStatsId(statsId);
 		ratingsStatsImpl.setCompanyId(companyId);
+
+		if (createDate == Long.MIN_VALUE) {
+			ratingsStatsImpl.setCreateDate(null);
+		}
+		else {
+			ratingsStatsImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			ratingsStatsImpl.setModifiedDate(null);
+		}
+		else {
+			ratingsStatsImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		ratingsStatsImpl.setClassNameId(classNameId);
 		ratingsStatsImpl.setClassPK(classPK);
 		ratingsStatsImpl.setTotalEntries(totalEntries);
@@ -103,6 +124,8 @@ public class RatingsStatsCacheModel
 		statsId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 
 		classNameId = objectInput.readLong();
 
@@ -120,6 +143,8 @@ public class RatingsStatsCacheModel
 		objectOutput.writeLong(statsId);
 
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(classNameId);
 
@@ -134,6 +159,8 @@ public class RatingsStatsCacheModel
 
 	public long statsId;
 	public long companyId;
+	public long createDate;
+	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
 	public int totalEntries;

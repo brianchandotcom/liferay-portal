@@ -17,6 +17,7 @@ package com.liferay.ratings.kernel.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +33,8 @@ public class RatingsStatsSoap implements Serializable {
 
 		soapModel.setStatsId(model.getStatsId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setTotalEntries(model.getTotalEntries());
@@ -106,6 +109,22 @@ public class RatingsStatsSoap implements Serializable {
 		_companyId = companyId;
 	}
 
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -148,6 +167,8 @@ public class RatingsStatsSoap implements Serializable {
 
 	private long _statsId;
 	private long _companyId;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
 	private int _totalEntries;

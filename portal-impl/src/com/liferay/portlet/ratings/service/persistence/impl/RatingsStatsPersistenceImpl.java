@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -43,6 +45,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -926,6 +929,30 @@ public class RatingsStatsPersistenceImpl
 
 		RatingsStatsModelImpl ratingsStatsModelImpl =
 			(RatingsStatsModelImpl)ratingsStats;
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (ratingsStats.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				ratingsStats.setCreateDate(now);
+			}
+			else {
+				ratingsStats.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!ratingsStatsModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				ratingsStats.setModifiedDate(now);
+			}
+			else {
+				ratingsStats.setModifiedDate(
+					serviceContext.getModifiedDate(now));
+			}
+		}
 
 		Session session = null;
 

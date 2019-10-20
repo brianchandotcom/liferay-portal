@@ -29,18 +29,18 @@ public class StringPrintStream extends PrintStream {
 	}
 
 	public StringPrintStream(
-		ByteArrayOutputStream outputStream, Charset charset) {
+		ByteArrayOutputStream byteArrayOutputStream, Charset charset) {
 
-		super(outputStream);
+		super(byteArrayOutputStream);
 
-		_outputStream = outputStream;
+		_byteArrayOutputStream = byteArrayOutputStream;
 	}
 
 	@Override
 	public String toString() {
-		return new String(_outputStream.toByteArray());
+		return new String(_byteArrayOutputStream.toByteArray());
 	}
 
-	private ByteArrayOutputStream _outputStream;
+	private ByteArrayOutputStream _byteArrayOutputStream;
 
 }

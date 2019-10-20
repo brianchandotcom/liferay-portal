@@ -37,6 +37,7 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Types;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -66,6 +67,7 @@ public class RatingsStatsModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"statsId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
 		{"totalEntries", Types.INTEGER}, {"totalScore", Types.DOUBLE},
 		{"averageScore", Types.DOUBLE}
@@ -77,6 +79,8 @@ public class RatingsStatsModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("statsId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("totalEntries", Types.INTEGER);
@@ -85,7 +89,7 @@ public class RatingsStatsModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RatingsStats (statsId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE)";
+		"create table RatingsStats (statsId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table RatingsStats";
 
@@ -259,6 +263,15 @@ public class RatingsStatsModelImpl
 		attributeSetterBiConsumers.put(
 			"companyId",
 			(BiConsumer<RatingsStats, Long>)RatingsStats::setCompanyId);
+		attributeGetterFunctions.put("createDate", RatingsStats::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<RatingsStats, Date>)RatingsStats::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", RatingsStats::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<RatingsStats, Date>)RatingsStats::setModifiedDate);
 		attributeGetterFunctions.put(
 			"classNameId", RatingsStats::getClassNameId);
 		attributeSetterBiConsumers.put(
@@ -307,6 +320,32 @@ public class RatingsStatsModelImpl
 	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
+		_modifiedDate = modifiedDate;
 	}
 
 	@Override
@@ -441,6 +480,8 @@ public class RatingsStatsModelImpl
 
 		ratingsStatsImpl.setStatsId(getStatsId());
 		ratingsStatsImpl.setCompanyId(getCompanyId());
+		ratingsStatsImpl.setCreateDate(getCreateDate());
+		ratingsStatsImpl.setModifiedDate(getModifiedDate());
 		ratingsStatsImpl.setClassNameId(getClassNameId());
 		ratingsStatsImpl.setClassPK(getClassPK());
 		ratingsStatsImpl.setTotalEntries(getTotalEntries());
@@ -508,6 +549,8 @@ public class RatingsStatsModelImpl
 	public void resetOriginalValues() {
 		RatingsStatsModelImpl ratingsStatsModelImpl = this;
 
+		ratingsStatsModelImpl._setModifiedDate = false;
+
 		ratingsStatsModelImpl._originalClassNameId =
 			ratingsStatsModelImpl._classNameId;
 
@@ -528,6 +571,24 @@ public class RatingsStatsModelImpl
 		ratingsStatsCacheModel.statsId = getStatsId();
 
 		ratingsStatsCacheModel.companyId = getCompanyId();
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			ratingsStatsCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			ratingsStatsCacheModel.createDate = Long.MIN_VALUE;
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			ratingsStatsCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			ratingsStatsCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
 
 		ratingsStatsCacheModel.classNameId = getClassNameId();
 
@@ -614,6 +675,9 @@ public class RatingsStatsModelImpl
 
 	private long _statsId;
 	private long _companyId;
+	private Date _createDate;
+	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

@@ -274,6 +274,7 @@ public class GraphQLServletExtender {
 
 		_defaultTypeFunction.register(new DateTypeFunction());
 		_defaultTypeFunction.register(new ObjectTypeFunction());
+		_defaultTypeFunction.register(new MapTypeFunction());
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -1154,6 +1155,7 @@ public class GraphQLServletExtender {
 	}
 
 	private static final GraphQLScalarType _dateGraphQLScalarType;
+	private static final GraphQLType _mapScalarType;
 	private static final GraphQLScalarType _objectGraphQLScalarType;
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
@@ -1290,6 +1292,37 @@ public class GraphQLServletExtender {
 
 					throw new CoercingSerializeException(
 						"Unable to parse " + value);
+				}
+
+				@Override
+				public Object parseValue(Object value)
+					throws CoercingParseValueException {
+
+					return value;
+				}
+
+				@Override
+				public Object serialize(Object value)
+					throws CoercingSerializeException {
+
+					return value;
+				}
+
+			}
+		).build();
+
+		_mapScalarType = objectBuilder.name(
+			"Map"
+		).description(
+			"Any kind of object supported by a Map"
+		).coercing(
+			new Coercing<Object, Object>() {
+
+				@Override
+				public Object parseLiteral(Object value)
+					throws CoercingParseLiteralException {
+
+					return value;
 				}
 
 				@Override
@@ -1598,6 +1631,29 @@ public class GraphQLServletExtender {
 
 	}
 
+	private static class MapTypeFunction implements TypeFunction {
+
+		@Override
+		public GraphQLType buildType(
+			boolean input, Class<?> clazz, AnnotatedType annotatedType,
+			ProcessingElementsContainer processingElementsContainer) {
+
+			return _mapScalarType;
+		}
+
+		@Override
+		public boolean canBuildType(
+			Class<?> clazz, AnnotatedType annotatedType) {
+
+			if (clazz == Map.class) {
+				return true;
+			}
+
+			return false;
+		}
+
+	}
+
 	private static class NodeDataFetcher implements DataFetcher<Object> {
 
 		@Override
@@ -1669,8 +1725,8 @@ public class GraphQLServletExtender {
 		public boolean canBuildType(
 			Class<?> clazz, AnnotatedType annotatedType) {
 
-			if ((clazz == Map.class) || (clazz == MultipartBody.class) ||
-				(clazz == Object.class) || (clazz == Response.class)) {
+			if ((clazz == MultipartBody.class) || (clazz == Object.class) ||
+				(clazz == Response.class)) {
 
 				return true;
 			}

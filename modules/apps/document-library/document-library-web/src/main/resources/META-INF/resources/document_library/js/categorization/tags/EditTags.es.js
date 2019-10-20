@@ -12,11 +12,11 @@
  * details.
  */
 
+import {useModal} from '@clayui/modal';
 import React, {useState} from 'react';
 
 import EditTagsContext from './EditTagsContext.es';
 import EditTagsModal from './EditTagsModal.es';
-import {useModal} from '@clayui/modal';
 
 function EditTags(props) {
 	const [fileEntires, setFileEntries] = useState();

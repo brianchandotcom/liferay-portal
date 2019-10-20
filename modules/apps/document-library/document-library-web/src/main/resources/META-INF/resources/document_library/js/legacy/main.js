@@ -237,7 +237,7 @@ AUI.add(
 
 					Liferay.componentReady(
 						instance.NS + 'EditTagsComponent'
-					).then(function(editTagsComponent) {
+					).then(editTagsComponent => {
 						var bulkSelection =
 							instance._searchContainer.select &&
 							instance._searchContainer.select.get(

@@ -38,7 +38,7 @@ function AssetTagsSelector({
 	selectedItems = [],
 	showSelectButton
 }) {
-	const {resource, refetch} = useResource({
+	const {refetch, resource} = useResource({
 		fetchOptions: {
 			body: Liferay.Util.objectToFormData({
 				cmd: JSON.stringify({

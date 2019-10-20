@@ -33,6 +33,7 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -317,11 +318,15 @@ public class Query {
 	public class KeywordPage {
 
 		public KeywordPage(Page keywordPage) {
+			actions = keywordPage.getActions();
 			items = keywordPage.getItems();
 			page = keywordPage.getPage();
 			pageSize = keywordPage.getPageSize();
 			totalCount = keywordPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<Keyword> items;
@@ -341,11 +346,15 @@ public class Query {
 	public class TaxonomyCategoryPage {
 
 		public TaxonomyCategoryPage(Page taxonomyCategoryPage) {
+			actions = taxonomyCategoryPage.getActions();
 			items = taxonomyCategoryPage.getItems();
 			page = taxonomyCategoryPage.getPage();
 			pageSize = taxonomyCategoryPage.getPageSize();
 			totalCount = taxonomyCategoryPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<TaxonomyCategory> items;
@@ -365,11 +374,15 @@ public class Query {
 	public class TaxonomyVocabularyPage {
 
 		public TaxonomyVocabularyPage(Page taxonomyVocabularyPage) {
+			actions = taxonomyVocabularyPage.getActions();
 			items = taxonomyVocabularyPage.getItems();
 			page = taxonomyVocabularyPage.getPage();
 			pageSize = taxonomyVocabularyPage.getPageSize();
 			totalCount = taxonomyVocabularyPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<TaxonomyVocabulary> items;

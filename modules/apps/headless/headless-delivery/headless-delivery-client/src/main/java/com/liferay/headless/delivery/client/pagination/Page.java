@@ -16,13 +16,14 @@ package com.liferay.headless.delivery.client.pagination;
 
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
-import javax.annotation.Generated;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.annotation.Generated;
 
 /**
  * @author Javier Gamarra

@@ -17,12 +17,13 @@ import ClayButton from '@clayui/button';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
-import EditTagsContext from './EditTagsContext.es';
-import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {fetch} from 'frontend-js-web';
 import {AssetTagsSelector} from 'asset-taglib';
 import {useIsMounted} from 'frontend-js-react-web';
+import {fetch} from 'frontend-js-web';
+import PropTypes from 'prop-types';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
+
+import EditTagsContext from './EditTagsContext.es';
 
 const URL_SELECTION = '/bulk/v1.0/bulk-selection',
 	URL_TAGS = '/bulk/v1.0/keywords/common',

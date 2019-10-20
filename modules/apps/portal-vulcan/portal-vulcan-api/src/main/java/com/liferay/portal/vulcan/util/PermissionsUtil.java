@@ -80,8 +80,14 @@ public class PermissionsUtil {
 
 				List<String> matchedURIs = uriInfo.getMatchedURIs();
 
+				String version = "";
+
+				if (!matchedURIs.isEmpty()) {
+					version = matchedURIs.get(matchedURIs.size() - 1);
+				}
+
 				String uri = uriBuilder.path(
-					matchedURIs.get(matchedURIs.size() - 1)
+					version
 				).path(
 					clazz.getSuperclass(), methodName
 				).toTemplate();

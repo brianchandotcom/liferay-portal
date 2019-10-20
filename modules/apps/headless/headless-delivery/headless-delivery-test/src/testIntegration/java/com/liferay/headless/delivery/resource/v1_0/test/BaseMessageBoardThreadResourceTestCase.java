@@ -569,6 +569,206 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
+	public void testGetMessageBoardThreadsRankedPage() throws Exception {
+		Page<MessageBoardThread> page =
+			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
+				RandomTestUtil.nextDate(), RandomTestUtil.nextDate(),
+				Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		MessageBoardThread messageBoardThread1 =
+			testGetMessageBoardThreadsRankedPage_addMessageBoardThread(
+				randomMessageBoardThread());
+
+		MessageBoardThread messageBoardThread2 =
+			testGetMessageBoardThreadsRankedPage_addMessageBoardThread(
+				randomMessageBoardThread());
+
+		page = messageBoardThreadResource.getMessageBoardThreadsRankedPage(
+			null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(messageBoardThread1, messageBoardThread2),
+			(List<MessageBoardThread>)page.getItems());
+		assertValid(page);
+
+		messageBoardThreadResource.deleteMessageBoardThread(
+			messageBoardThread1.getId());
+
+		messageBoardThreadResource.deleteMessageBoardThread(
+			messageBoardThread2.getId());
+	}
+
+	@Test
+	public void testGetMessageBoardThreadsRankedPageWithPagination()
+		throws Exception {
+
+		MessageBoardThread messageBoardThread1 =
+			testGetMessageBoardThreadsRankedPage_addMessageBoardThread(
+				randomMessageBoardThread());
+
+		MessageBoardThread messageBoardThread2 =
+			testGetMessageBoardThreadsRankedPage_addMessageBoardThread(
+				randomMessageBoardThread());
+
+		MessageBoardThread messageBoardThread3 =
+			testGetMessageBoardThreadsRankedPage_addMessageBoardThread(
+				randomMessageBoardThread());
+
+		Page<MessageBoardThread> page1 =
+			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
+				null, null, Pagination.of(1, 2), null);
+
+		List<MessageBoardThread> messageBoardThreads1 =
+			(List<MessageBoardThread>)page1.getItems();
+
+		Assert.assertEquals(
+			messageBoardThreads1.toString(), 2, messageBoardThreads1.size());
+
+		Page<MessageBoardThread> page2 =
+			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
+				null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<MessageBoardThread> messageBoardThreads2 =
+			(List<MessageBoardThread>)page2.getItems();
+
+		Assert.assertEquals(
+			messageBoardThreads2.toString(), 1, messageBoardThreads2.size());
+
+		Page<MessageBoardThread> page3 =
+			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
+				null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				messageBoardThread1, messageBoardThread2, messageBoardThread3),
+			(List<MessageBoardThread>)page3.getItems());
+	}
+
+	@Test
+	public void testGetMessageBoardThreadsRankedPageWithSortDateTime()
+		throws Exception {
+
+		testGetMessageBoardThreadsRankedPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, messageBoardThread1, messageBoardThread2) -> {
+				BeanUtils.setProperty(
+					messageBoardThread1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetMessageBoardThreadsRankedPageWithSortInteger()
+		throws Exception {
+
+		testGetMessageBoardThreadsRankedPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, messageBoardThread1, messageBoardThread2) -> {
+				BeanUtils.setProperty(
+					messageBoardThread1, entityField.getName(), 0);
+				BeanUtils.setProperty(
+					messageBoardThread2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetMessageBoardThreadsRankedPageWithSortString()
+		throws Exception {
+
+		testGetMessageBoardThreadsRankedPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, messageBoardThread1, messageBoardThread2) -> {
+				Class<?> clazz = messageBoardThread1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						messageBoardThread1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						messageBoardThread2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						messageBoardThread1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						messageBoardThread2, entityField.getName(), "Bbb");
+				}
+			});
+	}
+
+	protected void testGetMessageBoardThreadsRankedPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, MessageBoardThread, MessageBoardThread, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		MessageBoardThread messageBoardThread1 = randomMessageBoardThread();
+		MessageBoardThread messageBoardThread2 = randomMessageBoardThread();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, messageBoardThread1, messageBoardThread2);
+		}
+
+		messageBoardThread1 =
+			testGetMessageBoardThreadsRankedPage_addMessageBoardThread(
+				messageBoardThread1);
+
+		messageBoardThread2 =
+			testGetMessageBoardThreadsRankedPage_addMessageBoardThread(
+				messageBoardThread2);
+
+		for (EntityField entityField : entityFields) {
+			Page<MessageBoardThread> ascPage =
+				messageBoardThreadResource.getMessageBoardThreadsRankedPage(
+					null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(messageBoardThread1, messageBoardThread2),
+				(List<MessageBoardThread>)ascPage.getItems());
+
+			Page<MessageBoardThread> descPage =
+				messageBoardThreadResource.getMessageBoardThreadsRankedPage(
+					null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(messageBoardThread2, messageBoardThread1),
+				(List<MessageBoardThread>)descPage.getItems());
+		}
+	}
+
+	protected MessageBoardThread
+			testGetMessageBoardThreadsRankedPage_addMessageBoardThread(
+				MessageBoardThread messageBoardThread)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteMessageBoardThread() throws Exception {
 		MessageBoardThread messageBoardThread =
 			testDeleteMessageBoardThread_addMessageBoardThread();

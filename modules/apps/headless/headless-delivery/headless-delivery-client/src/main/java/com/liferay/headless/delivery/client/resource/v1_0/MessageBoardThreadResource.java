@@ -20,6 +20,9 @@ import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.serdes.v1_0.MessageBoardThreadSerDes;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -59,6 +62,17 @@ public interface MessageBoardThreadResource {
 			postMessageBoardSectionMessageBoardThreadHttpResponse(
 				Long messageBoardSectionId,
 				MessageBoardThread messageBoardThread)
+		throws Exception;
+
+	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
+			java.util.Date dateCreated, java.util.Date dateModified,
+			Pagination pagination, String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getMessageBoardThreadsRankedPageHttpResponse(
+				java.util.Date dateCreated, java.util.Date dateModified,
+				Pagination pagination, String sortString)
 		throws Exception;
 
 	public void deleteMessageBoardThread(Long messageBoardThreadId)
@@ -363,6 +377,89 @@ public interface MessageBoardThreadResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}/message-board-threads",
 				messageBoardSectionId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
+				java.util.Date dateCreated, java.util.Date dateModified,
+				Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getMessageBoardThreadsRankedPageHttpResponse(
+					dateCreated, dateModified, pagination, sortString);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, MessageBoardThreadSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getMessageBoardThreadsRankedPageHttpResponse(
+					java.util.Date dateCreated, java.util.Date dateModified,
+					Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+			if (dateCreated != null) {
+				httpInvoker.parameter(
+					"dateCreated", liferayToJSONDateFormat.format(dateCreated));
+			}
+
+			if (dateModified != null) {
+				httpInvoker.parameter(
+					"dateModified",
+					liferayToJSONDateFormat.format(dateModified));
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-delivery/v1.0/message-board-threads/ranked");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

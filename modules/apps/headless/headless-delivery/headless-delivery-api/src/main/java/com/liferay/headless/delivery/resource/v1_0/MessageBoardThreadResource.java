@@ -24,6 +24,8 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Date;
+
 import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +55,11 @@ public interface MessageBoardThreadResource {
 
 	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
 			Long messageBoardSectionId, MessageBoardThread messageBoardThread)
+		throws Exception;
+
+	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
+			Date dateCreated, Date dateModified, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public void deleteMessageBoardThread(Long messageBoardThreadId)

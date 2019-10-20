@@ -13,8 +13,9 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import DocumentPreviewer from '../src/main/resources/META-INF/resources/preview/js/DocumentPreviewer.es';
 import React from 'react';
+
+import DocumentPreviewer from '../src/main/resources/META-INF/resources/preview/js/DocumentPreviewer.es';
 
 describe('document-library-preview-document', () => {
 	afterEach(cleanup);

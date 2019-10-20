@@ -46,6 +46,10 @@ import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -53,6 +57,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -64,6 +69,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -73,6 +79,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -167,6 +174,23 @@ public class MessageBoardThreadResourceImpl
 			messageBoardThreadId);
 
 		return spiRatingResource.getRating(mbThread.getRootMessageId());
+	}
+
+	@Override
+	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
+		Date dateCreated, Date dateModified, Pagination pagination,
+		Sort[] sorts) {
+
+		DynamicQuery dynamicQuery = _getDynamicQuery(
+			dateCreated, dateModified, pagination, sorts);
+
+		return Page.of(
+			transform(
+				_ratingsStatsLocalService.dynamicQuery(dynamicQuery),
+				(RatingsStats ratingsStats) -> _toMessageBoardThread(
+					_mbMessageService.getMessage(ratingsStats.getClassPK()))),
+			pagination,
+			_ratingsStatsLocalService.dynamicQueryCount(dynamicQuery));
 	}
 
 	@Override
@@ -311,6 +335,58 @@ public class MessageBoardThreadResourceImpl
 		_updateQuestion(mbMessage, messageBoardThread);
 
 		return _toMessageBoardThread(mbMessage);
+	}
+
+	private DynamicQuery _getDynamicQuery(
+		Date dateCreated, Date dateModified, Pagination pagination,
+		Sort[] sorts) {
+
+		DynamicQuery dynamicQuery = _ratingsStatsLocalService.dynamicQuery();
+
+		ClassName className = _classNameLocalService.getClassName(
+			MBMessage.class.getName());
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"classNameId", className.getClassNameId()));
+
+		if (dateCreated != null) {
+			dynamicQuery.add(
+				RestrictionsFactoryUtil.gt("createDate", dateCreated));
+		}
+
+		if (dateModified != null) {
+			dynamicQuery.add(
+				RestrictionsFactoryUtil.gt("modifiedDate", dateCreated));
+		}
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.sqlRestriction(
+				"EXISTS (SELECT 1 FROM MBMessage where this_.classPK = " +
+					"messageId and parentMessageId = 0)"));
+
+		dynamicQuery.setLimit(
+			pagination.getStartPosition(), pagination.getEndPosition());
+
+		if (sorts == null) {
+			dynamicQuery.addOrder(OrderFactoryUtil.desc("totalScore"));
+		}
+		else {
+			for (Sort sort : sorts) {
+				String fieldName = sort.getFieldName();
+
+				fieldName = StringUtil.replace(fieldName, "_sortable", "");
+
+				if (sort.isReverse()) {
+					dynamicQuery.addOrder(OrderFactoryUtil.desc(fieldName));
+				}
+				else {
+					dynamicQuery.addOrder(OrderFactoryUtil.asc(fieldName));
+				}
+			}
+		}
+
+		return dynamicQuery;
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
@@ -487,6 +563,9 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

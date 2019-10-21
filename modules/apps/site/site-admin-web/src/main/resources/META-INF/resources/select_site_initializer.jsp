@@ -66,6 +66,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 				var data = event.delegateTarget.dataset;
 
 				modalCommands.openSimpleInputModal({
+					checkboxFieldLabel:
+						'<liferay-ui:message key="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" />',
+					checkboxFieldName: data.checkboxFieldName,
+					checkboxFieldValue: false,
 					dialogTitle: '<liferay-ui:message key="add-site" />',
 					formSubmitURL: data.addSiteUrl,
 					idFieldName: 'layoutSetPrototypeId',

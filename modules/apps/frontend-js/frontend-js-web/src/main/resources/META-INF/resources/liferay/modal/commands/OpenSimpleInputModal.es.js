@@ -59,6 +59,9 @@ function openSimpleInputModal(
 
 	const SimpleInputModalComponent = () => (
 		<SimpleInputModal
+			checkboxFieldLabel={data.checkboxFieldLabel}
+			checkboxFieldName={data.checkboxFieldName}
+			checkboxFieldValue={data.checkboxFieldValue}
 			closeModal={closeModal}
 			dialogTitle={data.dialogTitle}
 			formSubmitURL={data.formSubmitURL}

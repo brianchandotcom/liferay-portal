@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {fetch, navigate} from 'frontend-js-web';
@@ -22,6 +23,9 @@ import React, {useState} from 'react';
  * Manipulates small amounts of data with a form shown inside a modal.
  */
 const SimpleInputModal = ({
+	checkboxFieldLabel,
+	checkboxFieldName,
+	checkboxFieldValue,
 	closeModal,
 	dialogTitle,
 	formSubmitURL,
@@ -35,7 +39,8 @@ const SimpleInputModal = ({
 }) => {
 	const [loadingResponse, setLoadingResponse] = useState(false);
 	const [visible, setVisible] = useState(initialVisible);
-	const [value, setValue] = useState('');
+	const [inputValue, setInputValue] = useState('');
+	const [isChecked, setChecked] = useState(checkboxFieldValue);
 
 	const _handleSubmit = event => {
 		event.preventDefault();
@@ -54,6 +59,9 @@ const SimpleInputModal = ({
 					setLoadingResponse(false);
 				} else {
 					navigate(responseContent.redirectURL);
+					setVisible(false);
+
+					closeModal();
 				}
 			});
 
@@ -98,12 +106,28 @@ const SimpleInputModal = ({
 							disabled={loadingResponse}
 							id={`${namespace}${mainFieldName}`}
 							name={`${namespace}${mainFieldName}`}
-							onChange={event => setValue(event.target.value)}
+							onChange={event =>
+								setInputValue(event.target.value)
+							}
 							placeholder={placeholder}
 							required
 							type="text"
-							value={value}
+							value={inputValue}
 						/>
+
+						{checkboxFieldName && checkboxFieldLabel && (
+							<div className="form-check">
+								<ClayCheckbox
+									checked={isChecked}
+									disabled={loadingResponse}
+									label={checkboxFieldLabel}
+									name={`${namespace}${checkboxFieldName}`}
+									onChange={() =>
+										setChecked(isChecked => !isChecked)
+									}
+								/>
+							</div>
+						)}
 					</ClayModal.Body>
 
 					<ClayModal.Footer

@@ -440,7 +440,7 @@ public class FolderActionDisplayContext {
 		return portletURL.toString();
 	}
 
-	public boolean hasViewPermission() throws PortalException {
+	private boolean _hasViewPermission() throws PortalException {
 		return DLFolderPermission.contains(
 			_dlRequestHelper.getPermissionChecker(),
 			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
@@ -452,7 +452,7 @@ public class FolderActionDisplayContext {
 
 		Folder folder = getFolder();
 
-		if (hasViewPermission() && portletDisplay.isWebDAVEnabled() &&
+		if (_hasViewPermission() && portletDisplay.isWebDAVEnabled() &&
 			((folder == null) ||
 			 (folder.getRepositoryId() ==
 				 _dlRequestHelper.getScopeGroupId()))) {
@@ -536,9 +536,7 @@ public class FolderActionDisplayContext {
 		return false;
 	}
 
-	public boolean isDeleteExpiredTemporaryFileEntriesActionVisible()
-		throws PortalException {
-
+	public boolean isDeleteExpiredTemporaryFileEntriesActionVisible() {
 		Folder folder = getFolder();
 
 		if ((folder != null) && folder.isMountPoint() &&
@@ -569,9 +567,9 @@ public class FolderActionDisplayContext {
 	public boolean isDownloadFolderActionVisible() throws PortalException {
 		Folder folder = getFolder();
 
-		if (hasViewPermission() &&
+		if (_hasViewPermission() &&
 			((folder != null) ||
-			 !RepositoryUtil.isExternalRepository(folder.getRepositoryId()))) {
+			 !RepositoryUtil.isExternalRepository(_getFolderId()))) {
 
 			return true;
 		}
@@ -635,7 +633,7 @@ public class FolderActionDisplayContext {
 	public boolean isPermissionsActionVisible() throws PortalException {
 		Folder folder = getFolder();
 
-		if (isShowPermissionsURL() &&
+		if (_hasPermissionsPermission() &&
 			!(folder.isMountPoint() ||
 			  (RepositoryUtil.isExternalRepository(getRepositoryId()) &&
 			   folder.isRoot()))) {
@@ -690,7 +688,7 @@ public class FolderActionDisplayContext {
 		return false;
 	}
 
-	public boolean isShowPermissionsURL() throws PortalException {
+	private boolean _hasPermissionsPermission() throws PortalException {
 		Folder folder = getFolder();
 
 		if (folder != null) {
@@ -747,7 +745,7 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 
-		if (!hasViewPermission()) {
+		if (!_hasViewPermission()) {
 			return false;
 		}
 
@@ -834,7 +832,7 @@ public class FolderActionDisplayContext {
 		return portletURL.toString();
 	}
 
-	private boolean _isWorkflowEnabled() throws PortalException {
+	private boolean _isWorkflowEnabled() {
 		if (!WorkflowEngineManagerUtil.isDeployed()) {
 			return false;
 		}

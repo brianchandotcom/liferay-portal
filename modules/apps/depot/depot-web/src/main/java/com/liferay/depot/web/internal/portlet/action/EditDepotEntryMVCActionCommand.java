@@ -23,17 +23,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-
-import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -62,28 +57,22 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		long depotEntryId = ParamUtil.getLong(actionRequest, "depotEntryId");
 
-		UnicodeProperties formTypeSettingsProperties =
-			PropertiesParamUtil.getProperties(
-				actionRequest, "TypeSettingsProperties--");
-
 		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
 			depotEntryId);
 
 		Group group = _groupService.getGroup(depotEntry.getGroupId());
 
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "name", group.getNameMap());
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "description", group.getDescriptionMap());
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DepotEntry.class.getName(), actionRequest);
-
 		try {
 			_depotEntryLocalService.updateDepotEntry(
-				depotEntryId, formTypeSettingsProperties, nameMap,
-				descriptionMap, serviceContext);
+				depotEntryId,
+				PropertiesParamUtil.getProperties(
+					actionRequest, "TypeSettingsProperties--"),
+				LocalizationUtil.getLocalizationMap(
+					actionRequest, "name", group.getNameMap()),
+				LocalizationUtil.getLocalizationMap(
+					actionRequest, "description", group.getDescriptionMap()),
+				ServiceContextFactory.getInstance(
+					DepotEntry.class.getName(), actionRequest));
 		}
 		catch (PortalException pe) {
 			SessionErrors.add(actionRequest, pe.getClass(), pe);

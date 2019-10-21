@@ -17,7 +17,7 @@ package com.liferay.portal.workflow.metrics.sla.processor;
 /**
  * @author Rafael Praxedes
  */
-public enum WorkfowMetricsSLAStatus {
+public enum WorkflowMetricsSLAStatus {
 
 	COMPLETED, EXPIRED, NEW, PAUSED, RUNNING, STOPPED
 

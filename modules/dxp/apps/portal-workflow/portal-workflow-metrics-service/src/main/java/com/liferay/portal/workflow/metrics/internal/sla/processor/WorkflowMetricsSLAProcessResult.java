@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.sla.processor;
 
-import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.time.LocalDateTime;
 
@@ -58,14 +58,14 @@ public class WorkflowMetricsSLAProcessResult {
 		return _slaDefinitionId;
 	}
 
+	public WorkflowMetricsSLAStatus getWorkflowMetricsSLAStatus() {
+		return _workflowMetricsSLAStatus;
+	}
+
 	public List<WorkflowMetricsSLATaskResult>
 		getWorkflowMetricsSLATaskResults() {
 
 		return _workflowMetricsSLATaskResults;
-	}
-
-	public WorkfowMetricsSLAStatus getWorkfowMetricsSLAStatus() {
-		return _workfowMetricsSLAStatus;
 	}
 
 	public boolean isOnTime() {
@@ -110,16 +110,16 @@ public class WorkflowMetricsSLAProcessResult {
 		_slaDefinitionId = slaDefinitionId;
 	}
 
+	public void setWorkflowMetricsSLAStatus(
+		WorkflowMetricsSLAStatus workflowMetricsSLAStatus) {
+
+		_workflowMetricsSLAStatus = workflowMetricsSLAStatus;
+	}
+
 	public void setWorkflowMetricsSLATaskResults(
 		List<WorkflowMetricsSLATaskResult> workflowMetricsSLATaskResults) {
 
 		_workflowMetricsSLATaskResults = workflowMetricsSLATaskResults;
-	}
-
-	public void setWorkfowMetricsSLAStatus(
-		WorkfowMetricsSLAStatus workfowMetricsSLAStatus) {
-
-		_workfowMetricsSLAStatus = workfowMetricsSLAStatus;
 	}
 
 	private long _companyId;
@@ -131,8 +131,8 @@ public class WorkflowMetricsSLAProcessResult {
 	private long _processId;
 	private long _remainingTime;
 	private long _slaDefinitionId;
+	private WorkflowMetricsSLAStatus _workflowMetricsSLAStatus;
 	private List<WorkflowMetricsSLATaskResult> _workflowMetricsSLATaskResults =
 		Collections.emptyList();
-	private WorkfowMetricsSLAStatus _workfowMetricsSLAStatus;
 
 }

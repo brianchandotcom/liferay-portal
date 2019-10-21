@@ -44,7 +44,7 @@ import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalService;
-import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.sql.Timestamp;
 
@@ -114,7 +114,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		document.addKeyword(
 			"status",
 			String.valueOf(
-				workflowMetricsSLAProcessResult.getWorkfowMetricsSLAStatus()));
+				workflowMetricsSLAProcessResult.getWorkflowMetricsSLAStatus()));
 
 		return document;
 	}
@@ -347,8 +347,8 @@ public class SLAProcessResultWorkflowMetricsIndexer
 						optional.ifPresent(
 							workflowMetricsSLAProcessResult -> {
 								workflowMetricsSLAProcessResult.
-									setWorkfowMetricsSLAStatus(
-										WorkfowMetricsSLAStatus.COMPLETED);
+									setWorkflowMetricsSLAStatus(
+										WorkflowMetricsSLAStatus.COMPLETED);
 
 								bulkDocumentRequest.addBulkableDocumentRequest(
 									new IndexDocumentRequest(

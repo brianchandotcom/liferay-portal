@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.sla.processor;
 
-import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.time.LocalDateTime;
 
@@ -27,17 +27,17 @@ import java.util.Stack;
 public class WorkflowMetricsSLAStopwatch {
 
 	public WorkflowMetricsSLAStopwatch(
-		WorkfowMetricsSLAStatus workfowMetricsSLAStatus) {
+		WorkflowMetricsSLAStatus workflowMetricsSLAStatus) {
 
-		_workfowMetricsSLAStatus = workfowMetricsSLAStatus;
+		_workflowMetricsSLAStatus = workflowMetricsSLAStatus;
 	}
 
 	public List<WorkflowMetricsSLAProcessor.TaskInterval> getTaskIntervals() {
 		return _taskIntervals;
 	}
 
-	public WorkfowMetricsSLAStatus getWorkfowMetricsSLAStatus() {
-		return _workfowMetricsSLAStatus;
+	public WorkflowMetricsSLAStatus getWorkflowMetricsSLAStatus() {
+		return _workflowMetricsSLAStatus;
 	}
 
 	public boolean isEmpty() {
@@ -45,7 +45,7 @@ public class WorkflowMetricsSLAStopwatch {
 	}
 
 	public boolean isRunning() {
-		if (_workfowMetricsSLAStatus == WorkfowMetricsSLAStatus.RUNNING) {
+		if (_workflowMetricsSLAStatus == WorkflowMetricsSLAStatus.RUNNING) {
 			return true;
 		}
 
@@ -53,7 +53,7 @@ public class WorkflowMetricsSLAStopwatch {
 	}
 
 	public boolean isStopped() {
-		if (_workfowMetricsSLAStatus == WorkfowMetricsSLAStatus.STOPPED) {
+		if (_workflowMetricsSLAStatus == WorkflowMetricsSLAStatus.STOPPED) {
 			return true;
 		}
 
@@ -72,7 +72,7 @@ public class WorkflowMetricsSLAStopwatch {
 			taskInterval.setEndLocalDateTime(endLocalDateTime);
 		}
 
-		_workfowMetricsSLAStatus = WorkfowMetricsSLAStatus.PAUSED;
+		_workflowMetricsSLAStatus = WorkflowMetricsSLAStatus.PAUSED;
 	}
 
 	public void run(LocalDateTime startLocalDateTime) {
@@ -92,7 +92,7 @@ public class WorkflowMetricsSLAStopwatch {
 
 		_taskIntervals.push(taskInterval);
 
-		_workfowMetricsSLAStatus = WorkfowMetricsSLAStatus.RUNNING;
+		_workflowMetricsSLAStatus = WorkflowMetricsSLAStatus.RUNNING;
 	}
 
 	public void stop(LocalDateTime endLocalDateTime) {
@@ -107,11 +107,11 @@ public class WorkflowMetricsSLAStopwatch {
 			taskInterval.setEndLocalDateTime(endLocalDateTime);
 		}
 
-		_workfowMetricsSLAStatus = WorkfowMetricsSLAStatus.STOPPED;
+		_workflowMetricsSLAStatus = WorkflowMetricsSLAStatus.STOPPED;
 	}
 
 	private final Stack<WorkflowMetricsSLAProcessor.TaskInterval>
 		_taskIntervals = new Stack<>();
-	private WorkfowMetricsSLAStatus _workfowMetricsSLAStatus;
+	private WorkflowMetricsSLAStatus _workflowMetricsSLAStatus;
 
 }

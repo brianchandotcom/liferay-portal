@@ -57,7 +57,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
 import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.AssigneeUserEntityModel;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeUserResource;
-import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -177,8 +177,8 @@ public class AssigneeUserResourceImpl
 
 		booleanQuery.addMustNotQueryClauses(
 			_queries.term("instanceId", 0),
-			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
-			_queries.term("status", WorkfowMetricsSLAStatus.EXPIRED));
+			_queries.term("status", WorkflowMetricsSLAStatus.COMPLETED),
+			_queries.term("status", WorkflowMetricsSLAStatus.EXPIRED));
 
 		if (taskKeys.length > 0) {
 			booleanQuery.addMustQueryClauses(

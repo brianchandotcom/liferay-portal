@@ -87,7 +87,7 @@ public class MentionsPortlet extends MVCPortlet {
 			}
 
 			JSONArray jsonArray = _getJSONArray(
-				_portal.getHttpServletRequest(resourceRequest));
+				themeDisplay, ParamUtil.getString(resourceRequest, "query"));
 
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(resourceResponse);
@@ -102,7 +102,7 @@ public class MentionsPortlet extends MVCPortlet {
 		}
 	}
 
-	private JSONArray _getJSONArray(HttpServletRequest httpServletRequest)
+	private JSONArray _getJSONArray(ThemeDisplay themeDisplay, String query)
 		throws PortalException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();

@@ -19,12 +19,9 @@ import com.liferay.multi.factor.authentication.checker.visitor.BaseMFACheckerVis
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Carlos Sierra Andrés
  */
-@ProviderType
 public class IsHeadlessVerifiedMFACheckerVisitor extends BaseMFACheckerVisitor {
 
 	public IsHeadlessVerifiedMFACheckerVisitor(

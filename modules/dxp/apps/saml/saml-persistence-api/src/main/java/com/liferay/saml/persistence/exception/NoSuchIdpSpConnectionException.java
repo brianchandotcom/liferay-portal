@@ -16,12 +16,9 @@ package com.liferay.saml.persistence.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Mika Koivisto
  */
-@ProviderType
 public class NoSuchIdpSpConnectionException extends NoSuchModelException {
 
 	public NoSuchIdpSpConnectionException() {

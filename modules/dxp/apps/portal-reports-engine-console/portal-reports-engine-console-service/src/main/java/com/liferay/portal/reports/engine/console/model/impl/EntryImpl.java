@@ -23,13 +23,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.reports.engine.console.service.permission.ReportsActionKeys;
 import com.liferay.portal.reports.engine.constants.ReportsEngineDestinationNames;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Gavin Wan
  */
-@ProviderType
 public class EntryImpl extends EntryBaseImpl {
 
 	public EntryImpl() {

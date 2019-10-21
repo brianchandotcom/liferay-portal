@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,22 +11,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.depot.web.internal.constants;
 
-<%
-DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT_ENTRY);
-%>
+/**
+ * @author Alejandro Tardín
+ */
+public class DepotScreenNavigationEntryConstants {
 
-<liferay-frontend:screen-navigation
-	containerCssClass="col-lg-8"
-	containerWrapperCssClass="container-fluid container-fluid-max-xl container-form-lg"
-	context="<%= depotEntry %>"
-	headerContainerCssClass=""
-	inverted="<%= true %>"
-	key="<%= DepotScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_DEPOT %>"
-	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
-	navCssClass="col-lg-3"
-	portletURL="<%= currentURLObj %>"
-/>
+	public static final String CATEGORY_KEY_GENERAL = "general";
+
+	public static final String ENTRY_KEY_GENERAL = "general";
+
+	public static final String SCREEN_NAVIGATION_KEY_DEPOT = "edit.depot.form";
+
+}

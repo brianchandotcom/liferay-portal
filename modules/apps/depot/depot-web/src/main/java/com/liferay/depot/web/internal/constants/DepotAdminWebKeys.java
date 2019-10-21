@@ -19,6 +19,8 @@ package com.liferay.depot.web.internal.constants;
  */
 public class DepotAdminWebKeys {
 
+	public static final String ACTION_COMMAND_NAME = "ACTION_COMMAND_NAME";
+
 	public static final String DEPOT_ADMIN_GROUP_SEARCH_PROVIDER =
 		"DEPOT_ADMIN_GROUP_SEARCH_PROVIDER";
 
@@ -29,5 +31,11 @@ public class DepotAdminWebKeys {
 
 	public static final String DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER =
 		"DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER";
+
+	public static final String FORM_LABEL = "FORM_LABEL";
+
+	public static final String JSP_PATH = "JSP_PATH";
+
+	public static final String SHOW_CONTROLS = "SHOW_CONTROLS";
 
 }

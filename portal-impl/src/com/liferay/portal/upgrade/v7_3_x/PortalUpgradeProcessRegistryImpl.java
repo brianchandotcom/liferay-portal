@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 import com.liferay.portal.upgrade.v7_3_x.util.LayoutTable;
+import com.liferay.portal.upgrade.v7_3_x.util.ResourcePermissionTable;
 
 import java.util.TreeMap;
 
@@ -42,6 +43,10 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(6, 0, 3), new UpgradeCTModel(LayoutTable.class));
 
 		upgradeProcesses.put(new Version(6, 0, 4), new UpgradeAssetCategory());
+
+		upgradeProcesses.put(
+			new Version(6, 0, 5),
+			new UpgradeCTModel(ResourcePermissionTable.class));
 	}
 
 }

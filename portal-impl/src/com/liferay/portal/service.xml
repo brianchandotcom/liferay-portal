@@ -2168,7 +2168,7 @@
 		<reference entity="Company" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="ResourcePermission" remote-service="true">
+	<entity change-tracking-enabled="true" local-service="true" name="ResourcePermission" remote-service="true">
 
 		<!-- PK fields -->
 

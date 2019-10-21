@@ -157,12 +157,8 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 						PortalUtil.getClassNameId(Layout.class.getName()),
 						_plid, true);
 
-			long[] segmentsExperienceIds = GetterUtil.getLongValues(
-				request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
-				new long[] {SegmentsExperienceConstants.ID_DEFAULT});
-
 			String data = layoutPageTemplateStructure.getData(
-				segmentsExperienceIds);
+				_getSegmentsExperienceIds());
 
 			if (Validator.isNull(data)) {
 				return null;

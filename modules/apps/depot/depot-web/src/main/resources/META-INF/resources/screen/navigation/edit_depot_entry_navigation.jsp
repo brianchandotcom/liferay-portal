@@ -18,6 +18,7 @@
 
 <%
 String actionCommandName = (String)request.getAttribute(DepotAdminWebKeys.ACTION_COMMAND_NAME);
+String formDescription = (String)request.getAttribute(DepotAdminWebKeys.FORM_DESCRIPTION);
 String formLabel = (String)request.getAttribute(DepotAdminWebKeys.FORM_LABEL);
 String jspPath = (String)request.getAttribute(DepotAdminWebKeys.JSP_PATH);
 
@@ -45,6 +46,10 @@ renderResponse.setTitle(HtmlUtil.escape(group.getDescriptiveName(locale)));
 	<div class="sheet sheet-lg">
 		<div class="sheet-header">
 			<h2 class="sheet-title"><%= formLabel %></h2>
+
+			<c:if test="<%= Validator.isNotNull(formDescription) %>">
+				<p><%= formDescription %></p>
+			</c:if>
 		</div>
 
 		<div class="sheet-section">

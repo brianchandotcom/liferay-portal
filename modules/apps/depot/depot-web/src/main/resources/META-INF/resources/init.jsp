@@ -26,17 +26,33 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.depot.model.DepotEntry" %><%@
+page import="com.liferay.depot.model.DepotEntryGroupRel" %><%@
+page import="com.liferay.depot.service.DepotEntryGroupRelLocalServiceUtil" %><%@
 page import="com.liferay.depot.web.internal.constants.DepotAdminWebKeys" %><%@
 page import="com.liferay.depot.web.internal.constants.DepotPortletKeys" %><%@
 page import="com.liferay.depot.web.internal.constants.DepotScreenNavigationEntryConstants" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.servlet.taglib.clay.DepotEntryVerticalCard" %><%@
+page import="com.liferay.depot.web.internal.util.DepotEntryURLUtil" %><%@
+page import="com.liferay.item.selector.ItemSelector" %><%@
+page import="com.liferay.item.selector.ItemSelectorCriterion" %><%@
+page import="com.liferay.item.selector.criteria.URLItemSelectorReturnType" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
+page import="com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %>
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion" %>
+
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
+
+<%@ page import="javax.portlet.ActionURL" %><%@
+page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

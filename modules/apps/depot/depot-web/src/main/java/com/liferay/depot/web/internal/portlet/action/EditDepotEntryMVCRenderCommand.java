@@ -18,6 +18,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -54,6 +55,9 @@ public class EditDepotEntryMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				DepotAdminWebKeys.DEPOT_ENTRY, depotEntry);
 
+			renderRequest.setAttribute(
+				DepotAdminWebKeys.ITEM_SELECTOR, _itemSelector);
+
 			return "/edit_depot_entry.jsp";
 		}
 		catch (PortalException pe) {
@@ -63,5 +67,8 @@ public class EditDepotEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

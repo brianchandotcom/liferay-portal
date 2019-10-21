@@ -32,7 +32,11 @@ public class DepotAdminWebKeys {
 	public static final String DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER =
 		"DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER";
 
+	public static final String FORM_DESCRIPTION = "FORM_DESCRIPTION";
+
 	public static final String FORM_LABEL = "FORM_LABEL";
+
+	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
 	public static final String JSP_PATH = "JSP_PATH";
 

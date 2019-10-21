@@ -69,6 +69,9 @@ public abstract class BaseDepotScreenNavigationEntry
 		httpServletRequest.setAttribute(
 			DepotAdminWebKeys.ACTION_COMMAND_NAME, getActionCommandName());
 		httpServletRequest.setAttribute(
+			DepotAdminWebKeys.FORM_DESCRIPTION,
+			getDescription(httpServletRequest.getLocale()));
+		httpServletRequest.setAttribute(
 			DepotAdminWebKeys.FORM_LABEL,
 			getLabel(httpServletRequest.getLocale()));
 		httpServletRequest.setAttribute(
@@ -79,6 +82,10 @@ public abstract class BaseDepotScreenNavigationEntry
 		jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
 			"/screen/navigation/edit_depot_entry_navigation.jsp");
+	}
+
+	protected String getDescription(Locale locale) {
+		return null;
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {

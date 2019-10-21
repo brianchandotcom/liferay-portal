@@ -1,0 +1,110 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.main.component.name = "Content Page Review";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Import test fragments from dependencies folder") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
+		}
+
+		task ("Enable Content Page Comments at the instance level") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Content Page Editor",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.enableCheckbox(fieldName = "Comments Enabled");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Add second user") {
+			JSONUser.addUser(
+				userEmailAddress = "user2@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "user2");
+
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.editPasswordCP(
+				password = "password",
+				userEmailAddress = "user2@liferay.com",
+				userScreenName = "user2");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This case ensures that the user can mention the other user in a comment."
+	@priority = "5"
+	test ViewCommentMentionedUser {
+		property test.name.skip.portal.instance = "MentionsContentPageReview#ViewCommentMentionedUser";
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "user2");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addComment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentComment = "Comment by Test",
+			fragmentName = "Title",
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "user2",
+			position = "1");
+
+		PageEditor.viewComment(
+			fragmentComment = "Comment by Test ",
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "user2");
+	}
+
+}

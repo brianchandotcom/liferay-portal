@@ -11,7 +11,7 @@
 
 import {act, renderHook} from '@testing-library/react-hooks';
 import {create} from 'react-test-renderer';
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 
 import {TimeRangeContext} from '../../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/TimeRangeStore.es';
 import {
@@ -213,13 +213,15 @@ describe('The velocity unit store should', () => {
 });
 
 test('The velocity unit provider should be rendered', () => {
+	const timeRange = {
+		dateEnd: new Date(2018, 2, 1),
+		dateStart: new Date(2018, 0, 1)
+	};
+
 	const {root, unmount} = create(
 		<TimeRangeContext.Provider
 			value={{
-				getSelectedTimeRange: () => ({
-					dateEnd: new Date(2018, 2, 1),
-					dateStart: new Date(2018, 0, 1)
-				})
+				getSelectedTimeRange: () => timeRange
 			}}
 		>
 			<VelocityUnitProvider
@@ -241,15 +243,19 @@ test('The velocity unit provider should be rendered', () => {
 	unmount();
 });
 
-const mockTimeRangeContext = (dateEnd, dateStart) => ({children}) => (
-	<TimeRangeContext.Provider
-		value={{
-			getSelectedTimeRange: () => ({dateEnd, dateStart})
-		}}
-	>
-		{children}
-	</TimeRangeContext.Provider>
-);
+const mockTimeRangeContext = (dateEnd, dateStart) => ({children}) => {
+	const timeRange = useMemo(() => ({dateEnd, dateStart}), []);
+
+	return (
+		<TimeRangeContext.Provider
+			value={{
+				getSelectedTimeRange: () => timeRange
+			}}
+		>
+			{children}
+		</TimeRangeContext.Provider>
+	);
+};
 
 const MockVelocityUnitConsumer = () => {
 	const {velocityUnits} = useContext(VelocityUnitContext);

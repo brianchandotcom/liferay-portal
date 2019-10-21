@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-templates',
-	function(A) {
+	A => {
 		var Template = A.Template;
 
 		var TPL_SELECT_MULTIPLE = [

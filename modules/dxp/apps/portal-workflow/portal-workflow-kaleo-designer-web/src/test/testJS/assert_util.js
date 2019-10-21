@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-AUI().use('aui', function(A) {
+AUI().use('aui', A => {
 	Liferay.Test = Liferay.Test || {};
 
 	var assertIsValue = function(value, message) {

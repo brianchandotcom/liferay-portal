@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-nodes',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 		var DiagramBuilder = A.DiagramBuilder;
 		var Lang = A.Lang;
@@ -412,7 +412,7 @@ AUI.add(
 
 					var strings = instance.getStrings();
 
-					scriptLanguages.forEach(function(item) {
+					scriptLanguages.forEach(item => {
 						if (item) {
 							scriptLanguageOptions[item] = strings[item];
 						}
@@ -422,10 +422,8 @@ AUI.add(
 				},
 
 				getScriptLanguages(scriptLanguages) {
-					KaleoDesignerRemoteServices.getScriptLanguages(function(
-						data
-					) {
-						AArray.each(data, function(item) {
+					KaleoDesignerRemoteServices.getScriptLanguages(data => {
+						AArray.each(data, item => {
 							if (item) {
 								scriptLanguages.push(item.scriptLanguage);
 							}

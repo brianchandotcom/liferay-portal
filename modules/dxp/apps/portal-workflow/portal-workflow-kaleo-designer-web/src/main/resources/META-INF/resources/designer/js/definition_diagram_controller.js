@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-definition-diagram-controller',
-	function() {
+	() => {
 		var XMLDefinition = Liferay.KaleoDesignerXMLDefinition;
 
 		var jsonParse = Liferay.KaleoDesignerUtils.jsonParse;
@@ -49,9 +49,9 @@ AUI.add(
 
 				var connectors = [];
 
-				instance.definition.forEachField(function(tagName, fieldData) {
-					fieldData.results.forEach(function(item1) {
-						item1.transitions.forEach(function(item2) {
+				instance.definition.forEachField((tagName, fieldData) => {
+					fieldData.results.forEach(item1 => {
+						item1.transitions.forEach(item2 => {
 							connectors.push({
 								connector: {
 									default: item2.default,
@@ -72,8 +72,8 @@ AUI.add(
 
 				var fields = [];
 
-				instance.definition.forEachField(function(tagName, fieldData) {
-					fieldData.results.forEach(function(item) {
+				instance.definition.forEachField((tagName, fieldData) => {
+					fieldData.results.forEach(item => {
 						var type = tagName;
 
 						if (item.initial) {

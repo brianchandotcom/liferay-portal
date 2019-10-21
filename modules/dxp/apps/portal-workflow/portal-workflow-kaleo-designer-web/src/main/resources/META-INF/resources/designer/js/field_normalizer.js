@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-field-normalizer',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 		var AObject = A.Object;
 		var Lang = A.Lang;
@@ -35,10 +35,8 @@ AUI.add(
 		];
 
 		var populateRole = function(assignments) {
-			KaleoDesignerRemoteServices.getRole(assignments.roleId, function(
-				data
-			) {
-				AArray.each(data, function(item) {
+			KaleoDesignerRemoteServices.getRole(assignments.roleId, data => {
+				AArray.each(data, item => {
 					if (item) {
 						var index = assignments.roleId.indexOf(item.roleId);
 
@@ -52,8 +50,8 @@ AUI.add(
 			if (isValue(assignments.userId)) {
 				KaleoDesignerRemoteServices.getUser(
 					assignments.userId,
-					function(data) {
-						AArray.each(data, function(item) {
+					data => {
+						AArray.each(data, item => {
 							if (item) {
 								var index = assignments.userId.indexOf(
 									item.userId
@@ -86,8 +84,8 @@ AUI.add(
 
 				data = data || {};
 
-				data.forEach(function(item1, index1) {
-					A.each(item1, function(item2, index2) {
+				data.forEach((item1, index1) => {
+					A.each(item1, (item2, index2) => {
 						if (isValue(item2)) {
 							if (index2 === 'script') {
 								item2 = Lang.trim(item2);
@@ -105,7 +103,7 @@ AUI.add(
 				var assignments = {};
 
 				if (data && data.length) {
-					COL_TYPES_ASSIGNMENT.forEach(function(item1) {
+					COL_TYPES_ASSIGNMENT.forEach(item1 => {
 						var value = data[0][item1];
 
 						if (!isValue(value)) {
@@ -114,9 +112,9 @@ AUI.add(
 
 						var assignmentValue = AArray(value);
 
-						assignmentValue.forEach(function(item2, index2) {
+						assignmentValue.forEach((item2, index2) => {
 							if (isObject(item2)) {
-								A.each(item2, function(item3, index3) {
+								A.each(item2, (item3, index3) => {
 									_put(assignments, index3, item3, index2);
 								});
 							} else {
@@ -128,7 +126,7 @@ AUI.add(
 
 						if (
 							item1 !== 'receptionType' &&
-							AArray.some(assignmentValue, function(item2) {
+							AArray.some(assignmentValue, item2 => {
 								var valid = isValue(item2);
 
 								if (
@@ -165,8 +163,8 @@ AUI.add(
 
 				data = data || {};
 
-				data.forEach(function(item1, index1) {
-					A.each(item1, function(item2, index2) {
+				data.forEach((item1, index1) => {
+					A.each(item1, (item2, index2) => {
 						if (isValue(item2)) {
 							_put(delays, index2, item2, index1);
 						}
@@ -181,8 +179,8 @@ AUI.add(
 
 				data = data || {};
 
-				data.forEach(function(item1, index1) {
-					A.each(item1, function(item2, index2) {
+				data.forEach((item1, index1) => {
+					A.each(item1, (item2, index2) => {
 						if (isValue(item2)) {
 							if (index2 === 'recipients') {
 								if (item2[0] && item2[0].receptionType) {
@@ -211,8 +209,8 @@ AUI.add(
 
 				data = data || {};
 
-				data.forEach(function(item1, index1) {
-					A.each(item1, function(item2, index2) {
+				data.forEach((item1, index1) => {
+					A.each(item1, (item2, index2) => {
 						if (isValue(item2)) {
 							if (index2 === 'delay' || index2 === 'recurrence') {
 								return;

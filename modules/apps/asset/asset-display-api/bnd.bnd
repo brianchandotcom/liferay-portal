@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Asset Display API
-Bundle-SymbolicName: com.liferay.asset.display.api
-Bundle-Version: 3.0.0
-Export-Package:\
-	com.liferay.asset.display.contributor,\
-	com.liferay.asset.display.contributor.constants,\
-	com.liferay.asset.display.contributor.util

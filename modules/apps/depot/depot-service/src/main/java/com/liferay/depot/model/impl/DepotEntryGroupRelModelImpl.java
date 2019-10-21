@@ -64,7 +64,8 @@ public class DepotEntryGroupRelModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"depotEntryGroupRelId", Types.BIGINT},
-		{"depotEntryId", Types.BIGINT}, {"toGroupId", Types.BIGINT}
+		{"companyId", Types.BIGINT}, {"depotEntryId", Types.BIGINT},
+		{"toGroupId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -73,12 +74,13 @@ public class DepotEntryGroupRelModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("depotEntryGroupRelId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("depotEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("toGroupId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,depotEntryGroupRelId LONG not null primary key,depotEntryId LONG,toGroupId LONG)";
+		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,depotEntryGroupRelId LONG not null primary key,companyId LONG,depotEntryId LONG,toGroupId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table DepotEntryGroupRel";
 
@@ -250,6 +252,12 @@ public class DepotEntryGroupRelModelImpl
 			(BiConsumer<DepotEntryGroupRel, Long>)
 				DepotEntryGroupRel::setDepotEntryGroupRelId);
 		attributeGetterFunctions.put(
+			"companyId", DepotEntryGroupRel::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<DepotEntryGroupRel, Long>)
+				DepotEntryGroupRel::setCompanyId);
+		attributeGetterFunctions.put(
 			"depotEntryId", DepotEntryGroupRel::getDepotEntryId);
 		attributeSetterBiConsumers.put(
 			"depotEntryId",
@@ -286,6 +294,16 @@ public class DepotEntryGroupRelModelImpl
 	@Override
 	public void setDepotEntryGroupRelId(long depotEntryGroupRelId) {
 		_depotEntryGroupRelId = depotEntryGroupRelId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -339,7 +357,8 @@ public class DepotEntryGroupRelModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, DepotEntryGroupRel.class.getName(), getPrimaryKey());
+			getCompanyId(), DepotEntryGroupRel.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -372,6 +391,7 @@ public class DepotEntryGroupRelModelImpl
 		depotEntryGroupRelImpl.setMvccVersion(getMvccVersion());
 		depotEntryGroupRelImpl.setDepotEntryGroupRelId(
 			getDepotEntryGroupRelId());
+		depotEntryGroupRelImpl.setCompanyId(getCompanyId());
 		depotEntryGroupRelImpl.setDepotEntryId(getDepotEntryId());
 		depotEntryGroupRelImpl.setToGroupId(getToGroupId());
 
@@ -459,6 +479,8 @@ public class DepotEntryGroupRelModelImpl
 		depotEntryGroupRelCacheModel.depotEntryGroupRelId =
 			getDepotEntryGroupRelId();
 
+		depotEntryGroupRelCacheModel.companyId = getCompanyId();
+
 		depotEntryGroupRelCacheModel.depotEntryId = getDepotEntryId();
 
 		depotEntryGroupRelCacheModel.toGroupId = getToGroupId();
@@ -541,6 +563,7 @@ public class DepotEntryGroupRelModelImpl
 
 	private long _mvccVersion;
 	private long _depotEntryGroupRelId;
+	private long _companyId;
 	private long _depotEntryId;
 	private long _originalDepotEntryId;
 	private boolean _setOriginalDepotEntryId;

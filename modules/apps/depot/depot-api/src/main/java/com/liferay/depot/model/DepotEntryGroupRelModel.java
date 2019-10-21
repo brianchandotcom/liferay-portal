@@ -16,6 +16,7 @@ package com.liferay.depot.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DepotEntryGroupRelModel
-	extends BaseModel<DepotEntryGroupRel>, MVCCModel {
+	extends BaseModel<DepotEntryGroupRel>, MVCCModel, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -83,6 +84,22 @@ public interface DepotEntryGroupRelModel
 	 * @param depotEntryGroupRelId the depot entry group rel ID of this depot entry group rel
 	 */
 	public void setDepotEntryGroupRelId(long depotEntryGroupRelId);
+
+	/**
+	 * Returns the company ID of this depot entry group rel.
+	 *
+	 * @return the company ID of this depot entry group rel
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this depot entry group rel.
+	 *
+	 * @param companyId the company ID of this depot entry group rel
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the depot entry ID of this depot entry group rel.

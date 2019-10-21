@@ -64,7 +64,7 @@ public class SyncDLFileVersionDiffModelImpl
 	public static final String TABLE_NAME = "SyncDLFileVersionDiff";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"syncDLFileVersionDiffId", Types.BIGINT},
+		{"syncDLFileVersionDiffId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"fileEntryId", Types.BIGINT}, {"sourceFileVersionId", Types.BIGINT},
 		{"targetFileVersionId", Types.BIGINT},
 		{"dataFileEntryId", Types.BIGINT}, {"size_", Types.BIGINT},
@@ -76,6 +76,7 @@ public class SyncDLFileVersionDiffModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("syncDLFileVersionDiffId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("sourceFileVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("targetFileVersionId", Types.BIGINT);
@@ -85,7 +86,7 @@ public class SyncDLFileVersionDiffModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SyncDLFileVersionDiff (syncDLFileVersionDiffId LONG not null primary key,fileEntryId LONG,sourceFileVersionId LONG,targetFileVersionId LONG,dataFileEntryId LONG,size_ LONG,expirationDate DATE null)";
+		"create table SyncDLFileVersionDiff (syncDLFileVersionDiffId LONG not null primary key,companyId LONG,fileEntryId LONG,sourceFileVersionId LONG,targetFileVersionId LONG,dataFileEntryId LONG,size_ LONG,expirationDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SyncDLFileVersionDiff";
@@ -258,6 +259,12 @@ public class SyncDLFileVersionDiffModelImpl
 			(BiConsumer<SyncDLFileVersionDiff, Long>)
 				SyncDLFileVersionDiff::setSyncDLFileVersionDiffId);
 		attributeGetterFunctions.put(
+			"companyId", SyncDLFileVersionDiff::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<SyncDLFileVersionDiff, Long>)
+				SyncDLFileVersionDiff::setCompanyId);
+		attributeGetterFunctions.put(
 			"fileEntryId", SyncDLFileVersionDiff::getFileEntryId);
 		attributeSetterBiConsumers.put(
 			"fileEntryId",
@@ -309,6 +316,16 @@ public class SyncDLFileVersionDiffModelImpl
 	@Override
 	public void setSyncDLFileVersionDiffId(long syncDLFileVersionDiffId) {
 		_syncDLFileVersionDiffId = syncDLFileVersionDiffId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -424,7 +441,8 @@ public class SyncDLFileVersionDiffModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, SyncDLFileVersionDiff.class.getName(), getPrimaryKey());
+			getCompanyId(), SyncDLFileVersionDiff.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -456,6 +474,7 @@ public class SyncDLFileVersionDiffModelImpl
 
 		syncDLFileVersionDiffImpl.setSyncDLFileVersionDiffId(
 			getSyncDLFileVersionDiffId());
+		syncDLFileVersionDiffImpl.setCompanyId(getCompanyId());
 		syncDLFileVersionDiffImpl.setFileEntryId(getFileEntryId());
 		syncDLFileVersionDiffImpl.setSourceFileVersionId(
 			getSourceFileVersionId());
@@ -555,6 +574,8 @@ public class SyncDLFileVersionDiffModelImpl
 
 		syncDLFileVersionDiffCacheModel.syncDLFileVersionDiffId =
 			getSyncDLFileVersionDiffId();
+
+		syncDLFileVersionDiffCacheModel.companyId = getCompanyId();
 
 		syncDLFileVersionDiffCacheModel.fileEntryId = getFileEntryId();
 
@@ -657,6 +678,7 @@ public class SyncDLFileVersionDiffModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _syncDLFileVersionDiffId;
+	private long _companyId;
 	private long _fileEntryId;
 	private long _originalFileEntryId;
 	private boolean _setOriginalFileEntryId;

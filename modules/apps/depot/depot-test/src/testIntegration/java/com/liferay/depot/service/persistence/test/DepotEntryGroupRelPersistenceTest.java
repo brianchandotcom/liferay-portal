@@ -125,6 +125,8 @@ public class DepotEntryGroupRelPersistenceTest {
 
 		newDepotEntryGroupRel.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDepotEntryGroupRel.setCompanyId(RandomTestUtil.nextLong());
+
 		newDepotEntryGroupRel.setDepotEntryId(RandomTestUtil.nextLong());
 
 		newDepotEntryGroupRel.setToGroupId(RandomTestUtil.nextLong());
@@ -141,6 +143,9 @@ public class DepotEntryGroupRelPersistenceTest {
 		Assert.assertEquals(
 			existingDepotEntryGroupRel.getDepotEntryGroupRelId(),
 			newDepotEntryGroupRel.getDepotEntryGroupRelId());
+		Assert.assertEquals(
+			existingDepotEntryGroupRel.getCompanyId(),
+			newDepotEntryGroupRel.getCompanyId());
 		Assert.assertEquals(
 			existingDepotEntryGroupRel.getDepotEntryId(),
 			newDepotEntryGroupRel.getDepotEntryId());
@@ -198,7 +203,7 @@ public class DepotEntryGroupRelPersistenceTest {
 	protected OrderByComparator<DepotEntryGroupRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"DepotEntryGroupRel", "mvccVersion", true, "depotEntryGroupRelId",
-			true, "depotEntryId", true, "toGroupId", true);
+			true, "companyId", true, "depotEntryId", true, "toGroupId", true);
 	}
 
 	@Test
@@ -452,6 +457,8 @@ public class DepotEntryGroupRelPersistenceTest {
 		DepotEntryGroupRel depotEntryGroupRel = _persistence.create(pk);
 
 		depotEntryGroupRel.setMvccVersion(RandomTestUtil.nextLong());
+
+		depotEntryGroupRel.setCompanyId(RandomTestUtil.nextLong());
 
 		depotEntryGroupRel.setDepotEntryId(RandomTestUtil.nextLong());
 

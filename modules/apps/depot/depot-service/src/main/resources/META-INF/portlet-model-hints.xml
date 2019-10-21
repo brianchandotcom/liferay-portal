@@ -14,6 +14,7 @@
 	<model name="com.liferay.depot.model.DepotEntryGroupRel">
 		<field name="mvccVersion" type="long" />
 		<field name="depotEntryGroupRelId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="depotEntryId" type="long" />
 		<field name="toGroupId" type="long" />
 	</model>

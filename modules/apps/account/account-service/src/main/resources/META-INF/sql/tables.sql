@@ -17,6 +17,7 @@ create table AccountEntry (
 create table AccountEntryUserRel (
 	mvccVersion LONG default 0 not null,
 	accountEntryUserRelId LONG not null primary key,
+	companyId LONG,
 	accountEntryId LONG,
 	accountUserId LONG
 );

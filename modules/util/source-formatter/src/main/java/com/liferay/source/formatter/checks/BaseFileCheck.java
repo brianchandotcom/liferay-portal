@@ -23,9 +23,11 @@ import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.util.Iterator;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -259,17 +261,17 @@ public abstract class BaseFileCheck
 			}
 		}
 		else {
-			File releaseInfoJavaFile = new File(
-				getPortalDir(), _PORTAL_KERNEL_RELEASE_INFO_JAVA_FILE_NAME);
+			File releasePropertiesFile = new File(
+				getPortalDir(), _RELEASE_PROPERTIES_FILE_NAME);
 
-			if (releaseInfoJavaFile.exists()) {
-				String content = FileUtil.read(releaseInfoJavaFile);
+			if (releasePropertiesFile.exists()) {
+				Properties properties = new Properties();
 
-				Matcher matcher =
-					_portalKernelReleaseInfoVersionPattern.matcher(content);
+				properties.load(new FileInputStream(releasePropertiesFile));
 
-				if (matcher.find()) {
-					_publicPortalVersion = StringUtil.trim(matcher.group(1));
+				if (properties.containsKey("release.info.version")) {
+					_publicPortalVersion = properties.getProperty(
+						"release.info.version");
 				}
 			}
 		}
@@ -277,11 +279,9 @@ public abstract class BaseFileCheck
 		return _publicPortalVersion;
 	}
 
-	private static final String _PORTAL_KERNEL_RELEASE_INFO_JAVA_FILE_NAME =
-		"portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java";
+	private static final String _RELEASE_PROPERTIES_FILE_NAME =
+		"release.properties";
 
-	private static final Pattern _portalKernelReleaseInfoVersionPattern =
-		Pattern.compile("private static final String _VERSION = \"(.*)\";");
 	private static final Pattern _portalVersionPattern = Pattern.compile(
 		"(\\w+\\.\\w+)\\.\\w+");
 	private static final Pattern _privateBranchNamePattern = Pattern.compile(

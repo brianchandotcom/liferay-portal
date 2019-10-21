@@ -16,8 +16,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -136,17 +135,17 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 	}
 
 	protected static class NestedFieldServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, List<String>> {
+		implements ServiceTrackerCustomizer<Object, List<FactoryKey>> {
 
 		@Override
-		public List<String> addingService(
+		public List<FactoryKey> addingService(
 			ServiceReference<Object> serviceReference) {
 
 			Object resource = _bundleContext.getService(serviceReference);
 
 			Class<?> resourceClass = resource.getClass();
 
-			List<String> keys = null;
+			List<FactoryKey> factoryKeys = null;
 
 			for (Method resourceMethod : resourceClass.getDeclaredMethods()) {
 				NestedField nestedField = resourceMethod.getAnnotation(
@@ -158,41 +157,42 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 				Class<?> parentClass = nestedField.parentClass();
 
-				String key = StringBundler.concat(
-					nestedField.value(), StringPool.POUND,
-					parentClass.getName(), StringPool.POUND,
-					_getResourceVersion(resourceClass.getSuperclass()));
+				FactoryKey factoryKey = new FactoryKey(
+					nestedField.value(), parentClass,
+					_getAPIVersion(resourceClass.getSuperclass()));
 
 				ServiceObjects<Object> serviceObjects =
 					_bundleContext.getServiceObjects(serviceReference);
 
 				_unsafeTriFunctions.put(
-					key,
+					factoryKey,
 					(fieldName, item, nestedFieldsContext) ->
 						_getNestedFieldValue(
 							fieldName, item, resourceMethod,
 							nestedFieldsContext, serviceObjects));
 
-				if (keys == null) {
-					keys = new ArrayList<>();
+				if (factoryKeys == null) {
+					factoryKeys = new ArrayList<>();
 				}
 
-				keys.add(key);
+				factoryKeys.add(factoryKey);
 			}
 
-			return keys;
+			return factoryKeys;
 		}
 
 		@Override
 		public void modifiedService(
-			ServiceReference<Object> serviceReference, List<String> keys) {
+			ServiceReference<Object> serviceReference,
+			List<FactoryKey> factoryKeys) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<Object> serviceReference, List<String> keys) {
+			ServiceReference<Object> serviceReference,
+			List<FactoryKey> factoryKeys) {
 
-			keys.forEach(_unsafeTriFunctions::remove);
+			factoryKeys.forEach(_unsafeTriFunctions::remove);
 
 			_bundleContext.ungetService(serviceReference);
 		}
@@ -218,6 +218,22 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			}
 
 			return _objectMapper.convertValue(value, type);
+		}
+
+		private String _getAPIVersion(Class<?> resourceBaseClass) {
+			Annotation[] annotations = resourceBaseClass.getAnnotations();
+
+			for (Annotation annotation : annotations) {
+				if (annotation instanceof Path) {
+					Path path = (Path)annotation;
+
+					String resourceVersion = path.value();
+
+					return resourceVersion.substring(1);
+				}
+			}
+
+			return null;
 		}
 
 		private Parameter[] _getClassMethodParameters(
@@ -461,22 +477,6 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			return parameter;
 		}
 
-		private String _getResourceVersion(Class<?> resourceBaseClass) {
-			Annotation[] annotations = resourceBaseClass.getAnnotations();
-
-			for (Annotation annotation : annotations) {
-				if (annotation instanceof Path) {
-					Path path = (Path)annotation;
-
-					String resourceVersion = path.value();
-
-					return resourceVersion.substring(1);
-				}
-			}
-
-			return null;
-		}
-
 		private void _resetNestedAwareMessage(Message message) {
 			NestedFieldsHttpServletRequestWrapper
 				nestedFieldsHttpServletRequestWrapper =
@@ -525,7 +525,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 		private final BundleContext _bundleContext;
 		private final Map
-			<String,
+			<FactoryKey,
 			 UnsafeTriFunction<String, Object, NestedFieldsContext, Object>>
 				_unsafeTriFunctions = new ConcurrentHashMap<>();
 
@@ -613,14 +613,14 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		};
 
 		for (Class<?> parentClass : parentClasses) {
-			String key = StringBundler.concat(
-				fieldName, StringPool.POUND, parentClass.getName(),
-				StringPool.POUND, nestedFieldsContext.getResourceVersion());
+			FactoryKey factoryKey = new FactoryKey(
+				fieldName, parentClass,
+				nestedFieldsContext.getResourceVersion());
 
 			UnsafeTriFunction<String, Object, NestedFieldsContext, Object>
 				unsafeTriFunction =
 					_nestedFieldServiceTrackerCustomizer._unsafeTriFunctions.
-						get(key);
+						get(factoryKey);
 
 			if (unsafeTriFunction != null) {
 				return unsafeTriFunction;
@@ -694,6 +694,47 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 	private final NestedFieldServiceTrackerCustomizer
 		_nestedFieldServiceTrackerCustomizer;
-	private final ServiceTracker<Object, List<String>> _serviceTracker;
+	private final ServiceTracker<Object, List<FactoryKey>> _serviceTracker;
+
+	private static class FactoryKey {
+
+		@Override
+		public boolean equals(Object obj) {
+			FactoryKey factoryKey = (FactoryKey)obj;
+
+			if (Objects.equals(factoryKey._resourceVersion, _resourceVersion) &&
+				Objects.equals(factoryKey._nestedFieldName, _nestedFieldName) &&
+				(factoryKey._parentClass == _parentClass)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = HashUtil.hash(0, _nestedFieldName);
+
+			hashCode = HashUtil.hash(hashCode, _parentClass);
+			hashCode = HashUtil.hash(hashCode, _resourceVersion);
+
+			return hashCode;
+		}
+
+		private FactoryKey(
+			String nestedFieldName, Class<?> parentClass,
+			String resourceVersion) {
+
+			_nestedFieldName = nestedFieldName;
+			_parentClass = parentClass;
+			_resourceVersion = resourceVersion;
+		}
+
+		private final String _nestedFieldName;
+		private final Class<?> _parentClass;
+		private final String _resourceVersion;
+
+	}
 
 }

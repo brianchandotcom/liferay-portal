@@ -113,9 +113,8 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		}
 
 		if (!formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) ||
-			(formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) &&
-			 Validator.isNull(
-				 formTypeSettingsProperties.getProperty(PropsKeys.LOCALES)))) {
+			Validator.isNull(
+				formTypeSettingsProperties.getProperty(PropsKeys.LOCALES))) {
 
 			throw new LocaleException(
 				LocaleException.TYPE_DEFAULT,

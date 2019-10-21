@@ -76,10 +76,12 @@ public class ResourcePermissionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", resourcePermissionId=");
 		sb.append(resourcePermissionId);
 		sb.append(", companyId=");
@@ -111,6 +113,7 @@ public class ResourcePermissionCacheModel
 			new ResourcePermissionImpl();
 
 		resourcePermissionImpl.setMvccVersion(mvccVersion);
+		resourcePermissionImpl.setCtCollectionId(ctCollectionId);
 		resourcePermissionImpl.setResourcePermissionId(resourcePermissionId);
 		resourcePermissionImpl.setCompanyId(companyId);
 
@@ -145,6 +148,8 @@ public class ResourcePermissionCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		resourcePermissionId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -167,6 +172,8 @@ public class ResourcePermissionCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(resourcePermissionId);
 
@@ -200,6 +207,7 @@ public class ResourcePermissionCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long resourcePermissionId;
 	public long companyId;
 	public String name;

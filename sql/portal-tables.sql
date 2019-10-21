@@ -1048,7 +1048,8 @@ create table ResourceAction (
 
 create table ResourcePermission (
 	mvccVersion LONG default 0 not null,
-	resourcePermissionId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	resourcePermissionId LONG not null,
 	companyId LONG,
 	name VARCHAR(255) null,
 	scope INTEGER,
@@ -1057,7 +1058,8 @@ create table ResourcePermission (
 	roleId LONG,
 	ownerId LONG,
 	actionIds LONG,
-	viewActionId BOOLEAN
+	viewActionId BOOLEAN,
+	primary key (resourcePermissionId, ctCollectionId)
 );
 
 create table Role_ (

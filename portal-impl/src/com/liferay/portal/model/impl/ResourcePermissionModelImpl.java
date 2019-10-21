@@ -69,12 +69,12 @@ public class ResourcePermissionModelImpl
 	public static final String TABLE_NAME = "ResourcePermission";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"resourcePermissionId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"scope", Types.INTEGER}, {"primKey", Types.VARCHAR},
-		{"primKeyId", Types.BIGINT}, {"roleId", Types.BIGINT},
-		{"ownerId", Types.BIGINT}, {"actionIds", Types.BIGINT},
-		{"viewActionId", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"resourcePermissionId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"scope", Types.INTEGER},
+		{"primKey", Types.VARCHAR}, {"primKeyId", Types.BIGINT},
+		{"roleId", Types.BIGINT}, {"ownerId", Types.BIGINT},
+		{"actionIds", Types.BIGINT}, {"viewActionId", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -82,6 +82,7 @@ public class ResourcePermissionModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resourcePermissionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
@@ -95,7 +96,7 @@ public class ResourcePermissionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ResourcePermission (mvccVersion LONG default 0 not null,resourcePermissionId LONG not null primary key,companyId LONG,name VARCHAR(255) null,scope INTEGER,primKey VARCHAR(255) null,primKeyId LONG,roleId LONG,ownerId LONG,actionIds LONG,viewActionId BOOLEAN)";
+		"create table ResourcePermission (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,resourcePermissionId LONG not null,companyId LONG,name VARCHAR(255) null,scope INTEGER,primKey VARCHAR(255) null,primKeyId LONG,roleId LONG,ownerId LONG,actionIds LONG,viewActionId BOOLEAN,primary key (resourcePermissionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table ResourcePermission";
 
@@ -128,19 +129,21 @@ public class ResourcePermissionModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 2L;
 
-	public static final long PRIMKEY_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
 
-	public static final long PRIMKEYID_COLUMN_BITMASK = 8L;
+	public static final long PRIMKEY_COLUMN_BITMASK = 8L;
 
-	public static final long ROLEID_COLUMN_BITMASK = 16L;
+	public static final long PRIMKEYID_COLUMN_BITMASK = 16L;
 
-	public static final long SCOPE_COLUMN_BITMASK = 32L;
+	public static final long ROLEID_COLUMN_BITMASK = 32L;
 
-	public static final long VIEWACTIONID_COLUMN_BITMASK = 64L;
+	public static final long SCOPE_COLUMN_BITMASK = 64L;
 
-	public static final long RESOURCEPERMISSIONID_COLUMN_BITMASK = 128L;
+	public static final long VIEWACTIONID_COLUMN_BITMASK = 128L;
+
+	public static final long RESOURCEPERMISSIONID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -156,6 +159,7 @@ public class ResourcePermissionModelImpl
 		ResourcePermission model = new ResourcePermissionImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setResourcePermissionId(soapModel.getResourcePermissionId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setName(soapModel.getName());
@@ -332,6 +336,12 @@ public class ResourcePermissionModelImpl
 			(BiConsumer<ResourcePermission, Long>)
 				ResourcePermission::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", ResourcePermission::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<ResourcePermission, Long>)
+				ResourcePermission::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"resourcePermissionId",
 			ResourcePermission::getResourcePermissionId);
 		attributeSetterBiConsumers.put(
@@ -403,6 +413,29 @@ public class ResourcePermissionModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCtCollectionId) {
+			_setOriginalCtCollectionId = true;
+
+			_originalCtCollectionId = _ctCollectionId;
+		}
+
+		_ctCollectionId = ctCollectionId;
+	}
+
+	public long getOriginalCtCollectionId() {
+		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -650,6 +683,7 @@ public class ResourcePermissionModelImpl
 			new ResourcePermissionImpl();
 
 		resourcePermissionImpl.setMvccVersion(getMvccVersion());
+		resourcePermissionImpl.setCtCollectionId(getCtCollectionId());
 		resourcePermissionImpl.setResourcePermissionId(
 			getResourcePermissionId());
 		resourcePermissionImpl.setCompanyId(getCompanyId());
@@ -723,6 +757,11 @@ public class ResourcePermissionModelImpl
 	public void resetOriginalValues() {
 		ResourcePermissionModelImpl resourcePermissionModelImpl = this;
 
+		resourcePermissionModelImpl._originalCtCollectionId =
+			resourcePermissionModelImpl._ctCollectionId;
+
+		resourcePermissionModelImpl._setOriginalCtCollectionId = false;
+
 		resourcePermissionModelImpl._originalCompanyId =
 			resourcePermissionModelImpl._companyId;
 
@@ -763,6 +802,8 @@ public class ResourcePermissionModelImpl
 			new ResourcePermissionCacheModel();
 
 		resourcePermissionCacheModel.mvccVersion = getMvccVersion();
+
+		resourcePermissionCacheModel.ctCollectionId = getCtCollectionId();
 
 		resourcePermissionCacheModel.resourcePermissionId =
 			getResourcePermissionId();
@@ -871,6 +912,9 @@ public class ResourcePermissionModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
+	private long _originalCtCollectionId;
+	private boolean _setOriginalCtCollectionId;
 	private long _resourcePermissionId;
 	private long _companyId;
 	private long _originalCompanyId;

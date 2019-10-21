@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ResourcePermissionModel
-	extends BaseModel<ResourcePermission>, MVCCModel, ShardedModel {
+	extends BaseModel<ResourcePermission>, CTModel<ResourcePermission>,
+			MVCCModel, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -44,6 +46,7 @@ public interface ResourcePermissionModel
 	 *
 	 * @return the primary key of this resource permission
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -51,6 +54,7 @@ public interface ResourcePermissionModel
 	 *
 	 * @param primaryKey the primary key of this resource permission
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -68,6 +72,22 @@ public interface ResourcePermissionModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this resource permission.
+	 *
+	 * @return the ct collection ID of this resource permission
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this resource permission.
+	 *
+	 * @param ctCollectionId the ct collection ID of this resource permission
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the resource permission ID of this resource permission.

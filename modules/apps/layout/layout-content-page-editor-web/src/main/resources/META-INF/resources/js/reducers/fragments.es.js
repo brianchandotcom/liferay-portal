@@ -463,6 +463,20 @@ function removeFragmentEntryLinkReducer(state, action) {
 		)
 	);
 
+	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
+
+	if (fragmentEntryLink.fragmentEntryKey.startsWith('drop-zone')) {
+		nextState = updateIn(
+			nextState,
+			['layoutData'],
+			layoutData => ({
+				...layoutData,
+				hasDropZone: false
+			}),
+			{}
+		);
+	}
+
 	if (!action.fragmentEntryLinkIsUsedInOtherExperience) {
 		nextState = updateIn(
 			nextState,
@@ -670,18 +684,25 @@ function _addFragmentToColumn(
 	const columnIndex = row.columns.indexOf(column);
 	const rowIndex = structure.indexOf(row);
 
-	const newLayoutData = updateIn(
+	const isDropZone =
+		fragmentEntryLink.fragmentEntryKey &&
+		fragmentEntryLink.fragmentEntryKey.startsWith('drop-zone');
+
+	let newLayoutData = updateIn(
 		layoutData,
 		['structure', rowIndex, 'columns', columnIndex],
 		column => ({
 			...column,
 			config: {
-				isDropZone:
-					fragmentEntryLink.fragmentEntryKey &&
-					fragmentEntryLink.fragmentEntryKey.startsWith('drop-zone')
+				isDropZone
 			}
 		})
 	);
+
+	newLayoutData = {
+		...newLayoutData,
+		hasDropZone: isDropZone
+	};
 
 	return updateIn(
 		newLayoutData,

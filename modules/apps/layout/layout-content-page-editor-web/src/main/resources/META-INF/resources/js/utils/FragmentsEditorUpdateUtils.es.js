@@ -88,19 +88,19 @@ function addRow(
 			? DEFAULT_SECTION_ROW_CONFIG
 			: DEFAULT_COMPONENT_ROW_CONFIG;
 
+	const isDropZone = fragmentEntryLinks.some(
+		fragmentEntryLink =>
+			fragmentEntryLink.fragmentEntryKey &&
+			fragmentEntryLink.fragmentEntryKey.startsWith('drop-zone')
+	);
+
 	const nextStructure = add(
 		layoutData.structure,
 		{
 			columns,
 			config: {
 				...defaultConfig,
-				isDropZone: fragmentEntryLinks.some(
-					fragmentEntryLink =>
-						fragmentEntryLink.fragmentEntryKey &&
-						fragmentEntryLink.fragmentEntryKey.startsWith(
-							'drop-zone'
-						)
-				)
+				isDropZone
 			},
 			rowId: `${nextRowId}`,
 			type
@@ -112,6 +112,11 @@ function addRow(
 
 	nextData = setIn(nextData, ['structure'], nextStructure);
 	nextData = setIn(nextData, ['nextRowId'], nextRowId + 1);
+
+	nextData = {
+		...nextData,
+		hasDropZone: isDropZone
+	};
 
 	return nextData;
 }

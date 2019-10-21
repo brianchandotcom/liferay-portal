@@ -45,6 +45,7 @@ public class AppBuilderAppDeploymentWrapper
 
 		attributes.put(
 			"appBuilderAppDeploymentId", getAppBuilderAppDeploymentId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("appBuilderAppId", getAppBuilderAppId());
 		attributes.put("settings", getSettings());
 		attributes.put("type", getType());
@@ -59,6 +60,12 @@ public class AppBuilderAppDeploymentWrapper
 
 		if (appBuilderAppDeploymentId != null) {
 			setAppBuilderAppDeploymentId(appBuilderAppDeploymentId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long appBuilderAppId = (Long)attributes.get("appBuilderAppId");
@@ -98,6 +105,16 @@ public class AppBuilderAppDeploymentWrapper
 	@Override
 	public long getAppBuilderAppId() {
 		return model.getAppBuilderAppId();
+	}
+
+	/**
+	 * Returns the company ID of this app builder app deployment.
+	 *
+	 * @return the company ID of this app builder app deployment
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -158,6 +175,16 @@ public class AppBuilderAppDeploymentWrapper
 	@Override
 	public void setAppBuilderAppId(long appBuilderAppId) {
 		model.setAppBuilderAppId(appBuilderAppId);
+	}
+
+	/**
+	 * Sets the company ID of this app builder app deployment.
+	 *
+	 * @param companyId the company ID of this app builder app deployment
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
 	}
 
 	/**

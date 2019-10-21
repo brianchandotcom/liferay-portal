@@ -76,12 +76,14 @@ public class DepotEntryGroupRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", depotEntryGroupRelId=");
 		sb.append(depotEntryGroupRelId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", depotEntryId=");
 		sb.append(depotEntryId);
 		sb.append(", toGroupId=");
@@ -98,6 +100,7 @@ public class DepotEntryGroupRelCacheModel
 
 		depotEntryGroupRelImpl.setMvccVersion(mvccVersion);
 		depotEntryGroupRelImpl.setDepotEntryGroupRelId(depotEntryGroupRelId);
+		depotEntryGroupRelImpl.setCompanyId(companyId);
 		depotEntryGroupRelImpl.setDepotEntryId(depotEntryId);
 		depotEntryGroupRelImpl.setToGroupId(toGroupId);
 
@@ -112,6 +115,8 @@ public class DepotEntryGroupRelCacheModel
 
 		depotEntryGroupRelId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		depotEntryId = objectInput.readLong();
 
 		toGroupId = objectInput.readLong();
@@ -123,6 +128,8 @@ public class DepotEntryGroupRelCacheModel
 
 		objectOutput.writeLong(depotEntryGroupRelId);
 
+		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(depotEntryId);
 
 		objectOutput.writeLong(toGroupId);
@@ -130,6 +137,7 @@ public class DepotEntryGroupRelCacheModel
 
 	public long mvccVersion;
 	public long depotEntryGroupRelId;
+	public long companyId;
 	public long depotEntryId;
 	public long toGroupId;
 

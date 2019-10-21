@@ -2,6 +2,7 @@ create table DEDataDefinitionFieldLink (
 	uuid_ VARCHAR(75) null,
 	deDataDefinitionFieldLinkId LONG not null primary key,
 	groupId LONG,
+	companyId LONG,
 	classNameId LONG,
 	classPK LONG,
 	ddmStructureId LONG,

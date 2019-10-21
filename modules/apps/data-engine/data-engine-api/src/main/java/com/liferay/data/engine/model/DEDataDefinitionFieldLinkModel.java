@@ -17,6 +17,7 @@ package com.liferay.data.engine.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DEDataDefinitionFieldLinkModel
-	extends AttachedModel, BaseModel<DEDataDefinitionFieldLink> {
+	extends AttachedModel, BaseModel<DEDataDefinitionFieldLink>, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -98,6 +99,22 @@ public interface DEDataDefinitionFieldLinkModel
 	 * @param groupId the group ID of this de data definition field link
 	 */
 	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this de data definition field link.
+	 *
+	 * @return the company ID of this de data definition field link
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this de data definition field link.
+	 *
+	 * @param companyId the company ID of this de data definition field link
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the fully qualified class name of this de data definition field link.

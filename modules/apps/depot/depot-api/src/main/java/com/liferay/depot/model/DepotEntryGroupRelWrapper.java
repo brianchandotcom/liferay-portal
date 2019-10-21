@@ -43,6 +43,7 @@ public class DepotEntryGroupRelWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("depotEntryGroupRelId", getDepotEntryGroupRelId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("depotEntryId", getDepotEntryId());
 		attributes.put("toGroupId", getToGroupId());
 
@@ -64,6 +65,12 @@ public class DepotEntryGroupRelWrapper
 			setDepotEntryGroupRelId(depotEntryGroupRelId);
 		}
 
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long depotEntryId = (Long)attributes.get("depotEntryId");
 
 		if (depotEntryId != null) {
@@ -75,6 +82,16 @@ public class DepotEntryGroupRelWrapper
 		if (toGroupId != null) {
 			setToGroupId(toGroupId);
 		}
+	}
+
+	/**
+	 * Returns the company ID of this depot entry group rel.
+	 *
+	 * @return the company ID of this depot entry group rel
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -135,6 +152,16 @@ public class DepotEntryGroupRelWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the company ID of this depot entry group rel.
+	 *
+	 * @param companyId the company ID of this depot entry group rel
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
 	}
 
 	/**

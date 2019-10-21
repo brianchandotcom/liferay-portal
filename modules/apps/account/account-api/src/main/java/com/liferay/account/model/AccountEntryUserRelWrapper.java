@@ -43,6 +43,7 @@ public class AccountEntryUserRelWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("accountEntryUserRelId", getAccountEntryUserRelId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("accountEntryId", getAccountEntryId());
 		attributes.put("accountUserId", getAccountUserId());
 
@@ -62,6 +63,12 @@ public class AccountEntryUserRelWrapper
 
 		if (accountEntryUserRelId != null) {
 			setAccountEntryUserRelId(accountEntryUserRelId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long accountEntryId = (Long)attributes.get("accountEntryId");
@@ -115,6 +122,16 @@ public class AccountEntryUserRelWrapper
 	@Override
 	public String getAccountUserUuid() {
 		return model.getAccountUserUuid();
+	}
+
+	/**
+	 * Returns the company ID of this account entry user rel.
+	 *
+	 * @return the company ID of this account entry user rel
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -185,6 +202,16 @@ public class AccountEntryUserRelWrapper
 	@Override
 	public void setAccountUserUuid(String accountUserUuid) {
 		model.setAccountUserUuid(accountUserUuid);
+	}
+
+	/**
+	 * Sets the company ID of this account entry user rel.
+	 *
+	 * @param companyId the company ID of this account entry user rel
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
 	}
 
 	/**

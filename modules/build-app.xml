@@ -298,7 +298,7 @@
 		</condition>
 
 		<condition else="Liferay CE" property="liferay.releng.app.title.prefix" value="Liferay">
-			<istrue value="${current.branch.private}" />
+			<equals arg1="${build.profile}" arg2="dxp" />
 		</condition>
 	</target>
 

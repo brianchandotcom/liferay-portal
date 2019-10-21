@@ -416,6 +416,7 @@
 	<target if="artifact.legacy" name="get-artifact-properties-legacy">
 		<basename file="${basedir}" property="artifact.name" />
 
+		<property file="${ant.file}/../../release.profile-dxp.properties" />
 		<property file="${ant.file}/../../release.properties" />
 
 		<property file="docroot/WEB-INF/liferay-plugin-package.properties" />

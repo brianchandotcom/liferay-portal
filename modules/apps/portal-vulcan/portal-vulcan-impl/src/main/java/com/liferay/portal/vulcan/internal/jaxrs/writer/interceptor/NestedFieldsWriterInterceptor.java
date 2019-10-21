@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -23,7 +25,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.internal.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.internal.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.internal.fields.servlet.NestedFieldsHttpServletRequestWrapper;
-import com.liferay.portal.vulcan.internal.param.converter.DateParamConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.io.IOException;
@@ -34,16 +35,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
-import java.math.BigDecimal;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -222,50 +217,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 				return null;
 			}
 
-			if (type == BigDecimal.class) {
-				return new BigDecimal(value);
-			}
-			else if (type == Boolean.class) {
-				return Boolean.valueOf(value);
-			}
-			else if (type == Byte.class) {
-				return Byte.valueOf(value);
-			}
-			else if (type == Character.class) {
-				return value.charAt(0);
-			}
-			else if (type == Date.class) {
-				return _dateParamConverter.fromString(value);
-			}
-			else if (type == Double.class) {
-				return Double.valueOf(value);
-			}
-			else if (type == Float.class) {
-				return Float.valueOf(value);
-			}
-			else if (type == Integer.class) {
-				return Integer.valueOf(value);
-			}
-			else if (type == LocalDate.class) {
-				return LocalDate.parse(value);
-			}
-			else if (type == LocalDateTime.class) {
-				return LocalDateTime.parse(value);
-			}
-			else if (type == Long.class) {
-				return Long.valueOf(value);
-			}
-			else if (type == Short.class) {
-				return Short.valueOf(value);
-			}
-			else if (type == String.class) {
-				return value;
-			}
-			else {
-				throw new IllegalArgumentException(
-					String.format(
-						"value %s cannot be converted to %s", value, type));
-			}
+			return _objectMapper.convertValue(value, type);
 		}
 
 		private Parameter[] _getClassMethodParameters(
@@ -569,9 +521,9 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			}
 		}
 
+		private static final ObjectMapper _objectMapper = new ObjectMapper();
+
 		private final BundleContext _bundleContext;
-		private final DateParamConverter _dateParamConverter =
-			new DateParamConverter();
 		private final Map
 			<String,
 			 UnsafeTriFunction<String, Object, NestedFieldsContext, Object>>

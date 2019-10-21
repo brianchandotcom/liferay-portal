@@ -231,8 +231,18 @@ public class DepotEntryLocalServiceTest {
 			StringPool.BLANK, group.getDescription(LocaleUtil.getDefault()));
 	}
 
+	@Test(expected = DepotEntryNameException.class)
+	public void testUpdateDepotEntryNoName() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry("name", "description");
+
+		_depotEntryLocalService.updateDepotEntry(
+			depotEntry.getDepotEntryId(), new UnicodeProperties(),
+			new HashMap<>(), new HashMap<>(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	@Test(expected = LocaleException.class)
-	public void testUpdateDepotEntryNoMandatoryTypeSettingProperties()
+	public void testUpdateDepotEntryRequiresValidTypeSettingProperties()
 		throws Exception {
 
 		DepotEntry depotEntry = _addDepotEntry("name", "description");
@@ -251,16 +261,6 @@ public class DepotEntryLocalServiceTest {
 					put(LocaleUtil.fromLanguageId("es_ES"), "descripcion");
 				}
 			},
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	@Test(expected = DepotEntryNameException.class)
-	public void testUpdateDepotEntryNoName() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry("name", "description");
-
-		_depotEntryLocalService.updateDepotEntry(
-			depotEntry.getDepotEntryId(), new UnicodeProperties(),
-			new HashMap<>(), new HashMap<>(),
 			ServiceContextTestUtil.getServiceContext());
 	}
 

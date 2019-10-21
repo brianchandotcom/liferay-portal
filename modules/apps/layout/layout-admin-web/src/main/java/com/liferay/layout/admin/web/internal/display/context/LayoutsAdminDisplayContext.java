@@ -34,6 +34,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
+import com.liferay.layout.seo.kernel.LayoutSEOLink;
+import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
@@ -53,6 +55,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -81,6 +84,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -104,6 +108,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -119,10 +124,12 @@ public class LayoutsAdminDisplayContext {
 
 	public LayoutsAdminDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		LayoutSEOLinkManager layoutSEOLinkManager) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_layoutSEOLinkManager = layoutSEOLinkManager;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
@@ -292,6 +299,23 @@ public class LayoutsAdminDisplayContext {
 				selLayout.getName(_themeDisplay.getLocale())));
 
 		return breadcrumbEntriesJSONArray;
+	}
+
+	public String getCanonicalLayoutURL() throws PortalException {
+		String completeURL = getViewLayoutURL(_selLayout);
+
+		String canonicalURL = PortalUtil.getCanonicalURL(
+			completeURL, _themeDisplay, _selLayout, false, false);
+
+		Map<Locale, String> alternateURLs = PortalUtil.getAlternateURLs(
+			canonicalURL, _themeDisplay, _selLayout);
+
+		LayoutSEOLink canonicalLayoutSEOLink =
+			_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
+				_selLayout, _themeDisplay.getLocale(), canonicalURL,
+				alternateURLs);
+
+		return canonicalLayoutSEOLink.getHref();
 	}
 
 	public String getConfigureLayoutURL(Layout layout) {
@@ -510,6 +534,25 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return 0;
+	}
+
+	public String getFullPageTitle() throws PortalException {
+		String portletId = (String)_httpServletRequest.getAttribute(
+			WebKeys.PORTLET_ID);
+
+		ListMergeable<String> titleListMergeable =
+			(ListMergeable<String>)_httpServletRequest.getAttribute(
+				WebKeys.PAGE_TITLE);
+		ListMergeable<String> subtitleListMergeable =
+			(ListMergeable<String>)_httpServletRequest.getAttribute(
+				WebKeys.PAGE_SUBTITLE);
+
+		Company company = _themeDisplay.getCompany();
+
+		return _layoutSEOLinkManager.getFullPageTitle(
+			_selLayout, portletId, _themeDisplay.getTilesTitle(),
+			titleListMergeable, subtitleListMergeable, company.getName(),
+			_themeDisplay.getLocale());
 	}
 
 	public Group getGroup() {
@@ -816,6 +859,30 @@ public class LayoutsAdminDisplayContext {
 			"selPlid", String.valueOf(layout.getPlid()));
 
 		return orphanPortletsURL.toString();
+	}
+
+	public String getPageTitle() throws PortalException {
+		String portletId = (String)_httpServletRequest.getAttribute(
+			WebKeys.PORTLET_ID);
+
+		ListMergeable<String> titleListMergeable =
+			(ListMergeable<String>)_httpServletRequest.getAttribute(
+				WebKeys.PAGE_TITLE);
+		ListMergeable<String> subtitleListMergeable =
+			(ListMergeable<String>)_httpServletRequest.getAttribute(
+				WebKeys.PAGE_SUBTITLE);
+
+		return _layoutSEOLinkManager.getPageTitle(
+			_selLayout, portletId, _themeDisplay.getTilesTitle(),
+			titleListMergeable, subtitleListMergeable,
+			_themeDisplay.getLocale());
+	}
+
+	public String getPageTitleSuffix() throws PortalException {
+		Company company = _themeDisplay.getCompany();
+
+		return _layoutSEOLinkManager.getPageTitleSuffix(
+			_selLayout, company.getName());
 	}
 
 	public long getParentLayoutId() {
@@ -1803,6 +1870,7 @@ public class LayoutsAdminDisplayContext {
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
+	private final LayoutSEOLinkManager _layoutSEOLinkManager;
 	private SearchContainer _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

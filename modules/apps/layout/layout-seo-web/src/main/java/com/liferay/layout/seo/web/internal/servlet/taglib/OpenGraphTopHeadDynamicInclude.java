@@ -25,12 +25,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -121,7 +119,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 							"og:site_name", group.getDescriptiveName()));
 					printWriter.println(
 						_getOpenGraphTag(
-							"og:title", _getTitle(httpServletRequest)));
+							"og:title", _getTitleTag(httpServletRequest)));
 					printWriter.println(
 						_getOpenGraphTag("og:url", layoutSEOLink.getHref()));
 				}
@@ -174,7 +172,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		return sb.toString();
 	}
 
-	private String _getTitle(HttpServletRequest httpServletRequest)
+	private String _getTitleTag(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -183,69 +181,21 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		Layout layout = themeDisplay.getLayout();
 
-		String title = layout.getHTMLTitle(themeDisplay.getLanguageId());
-
-		Group group = layout.getGroup();
-
 		String portletId = (String)httpServletRequest.getAttribute(
 			WebKeys.PORTLET_ID);
 
-		if (Validator.isNotNull(portletId) && layout.isSystem() &&
-			!layout.isTypeControlPanel() &&
-			StringUtil.equals(layout.getFriendlyURL(), "/manage")) {
-
-			title = _portal.getPortletTitle(
-				portletId, themeDisplay.getLocale());
-		}
-		else if (Validator.isNotNull(themeDisplay.getTilesTitle())) {
-			title = _language.get(
-				themeDisplay.getLocale(), themeDisplay.getTilesTitle());
-		}
-		else {
-			if (group.isLayoutPrototype()) {
-				title = group.getDescriptiveName(themeDisplay.getLocale());
-			}
-			else {
-				if (Validator.isNotNull(
-						httpServletRequest.getAttribute(WebKeys.PAGE_TITLE))) {
-
-					ListMergeable<String> titleListMergeable =
-						(ListMergeable<String>)httpServletRequest.getAttribute(
-							WebKeys.PAGE_TITLE);
-
-					title = titleListMergeable.mergeToString(StringPool.SPACE);
-				}
-
-				if (Validator.isNotNull(
-						httpServletRequest.getAttribute(
-							WebKeys.PAGE_SUBTITLE))) {
-
-					ListMergeable<String> titleListMergeable =
-						(ListMergeable<String>)httpServletRequest.getAttribute(
-							WebKeys.PAGE_SUBTITLE);
-
-					title =
-						titleListMergeable.mergeToString(StringPool.SPACE) +
-							" - " + title;
-				}
-			}
-
-			if (HtmlUtil.getHtml() != null) {
-				title = HtmlUtil.escape(title);
-			}
-		}
+		ListMergeable<String> titleListMergeable =
+			(ListMergeable<String>)httpServletRequest.getAttribute(
+				WebKeys.PAGE_TITLE);
+		ListMergeable<String> subtitleListMergeable =
+			(ListMergeable<String>)httpServletRequest.getAttribute(
+				WebKeys.PAGE_SUBTITLE);
 
 		Company company = themeDisplay.getCompany();
-		String siteName = HtmlUtil.escape(group.getDescriptiveName());
 
-		if (Validator.isNotNull(title) &&
-			!StringUtil.equals(company.getName(), siteName) &&
-			!group.isLayoutPrototype()) {
-
-			title = title + " - " + siteName;
-		}
-
-		return title + " - " + company.getName();
+		return _layoutSEOLinkManager.getFullPageTitle(
+			layout, portletId, themeDisplay.getTilesTitle(), titleListMergeable,
+			subtitleListMergeable, company.getName(), themeDisplay.getLocale());
 	}
 
 	@Reference

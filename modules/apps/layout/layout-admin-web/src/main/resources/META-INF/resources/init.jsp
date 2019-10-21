@@ -72,6 +72,7 @@ page import="com.liferay.portal.kernel.exception.RequiredLayoutException" %><%@
 page import="com.liferay.portal.kernel.exception.SitemapChangeFrequencyException" %><%@
 page import="com.liferay.portal.kernel.exception.SitemapIncludeException" %><%@
 page import="com.liferay.portal.kernel.exception.SitemapPagePriorityException" %><%@
+page import="com.liferay.portal.kernel.json.JSONUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
@@ -158,7 +159,7 @@ page import="javax.portlet.PortletURL" %>
 <portlet:defineObjects />
 
 <%
-LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(liferayPortletRequest, liferayPortletResponse);
+LayoutsAdminDisplayContext layoutsAdminDisplayContext = (LayoutsAdminDisplayContext)request.getAttribute(LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT);
 
 portletDisplay.setShowExportImportIcon(false);
 %>

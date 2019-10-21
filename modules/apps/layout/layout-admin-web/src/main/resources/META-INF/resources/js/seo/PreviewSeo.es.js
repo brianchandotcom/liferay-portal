@@ -19,96 +19,118 @@ const MAX_LENGTH_DESCIPTION = 160;
 
 const PreviewSeo = ({
 	description = '',
-	suffixTitle = '',
 	title = '',
+	titleSuffix = '',
 	url = ''
 }) => (
 	<div className="preview-seo preview-seo-serp">
 		<div className="preview-seo-title text-truncate">
 			{title}
-			{suffixTitle && ` - ${suffixTitle}`}
+			{titleSuffix && ` - ${titleSuffix}`}
 		</div>
 		<div className="preview-seo-url text-truncate">{url}</div>
 		<div className="preview-seo-description">
-			{description > MAX_LENGTH_DESCIPTION
+			{description.length < MAX_LENGTH_DESCIPTION
 				? description
-				: `${description.slice(0, MAX_LENGTH_DESCIPTION)} \u2026`}
+				: `${description.slice(0, MAX_LENGTH_DESCIPTION)}\u2026`}
 		</div>
 	</div>
 );
 PreviewSeo.propTypes = {
 	description: PropTypes.string,
-	suffixTitle: PropTypes.string,
 	title: PropTypes.string,
+	titleSuffix: PropTypes.string,
 	url: PropTypes.string
 };
 
-const PreviewSeoContainer = ({
-	portletNamespace,
-	suffixTitle,
-	targetsIds,
-	url
-}) => {
+const PreviewSeoContainer = ({portletNamespace, targets, titleSuffix}) => {
 	const [description, setDescription] = useState('');
 	const [title, setTitle] = useState('');
-
-	const handlerInputChange = ({event, type}) => {
-		const value = event.target && event.target.value;
-		if (typeof value === undefined) {
-			return;
-		}
-
-		if (type === 'description') {
-			setDescription(value);
-		} else if (type === 'title') {
-			setTitle(value);
-		}
-	};
+	const [url, setUrl] = useState('');
 
 	useEffect(() => {
-		const inputs = Object.entries(targetsIds).reduce(
-			(memo, [key, targetId]) => {
-				const listener = event => {
-					handlerInputChange({event, type: key});
-				};
+		const setPreviewState = ({
+			placeholder = '',
+			type,
+			usePlaceholderAsFallback,
+			value
+		}) => {
+			if (value === '' && usePlaceholderAsFallback) {
+				value = placeholder;
+			}
 
-				const node = document.getElementById(
-					`_${portletNamespace}_${targetId}`
-				);
+			if (type === 'description') {
+				setDescription(value);
+			} else if (type === 'title') {
+				setTitle(value);
+			} else if (type === 'canonicalURL') {
+				setUrl(value);
+			}
+		};
 
-				node.addEventListener('input', listener);
-				node.dispatchEvent(new Event('input'));
+		const handleInputChange = ({event, type, usePlaceholderAsFallback}) => {
+			const target = event.target;
 
-				memo[key] = {listener, node};
+			if (!target) {
+				return;
+			}
 
-				return memo;
-			},
-			{}
-		);
+			setPreviewState({
+				placeholder: target.placeholder,
+				type,
+				usePlaceholderAsFallback,
+				value: target.value
+			});
+		};
+
+		const inputs = targets.map(({id, type, usePlaceholderAsFallback}) => {
+			const listener = event => {
+				handleInputChange({
+					event,
+					type,
+					usePlaceholderAsFallback
+				});
+			};
+
+			const node = document.getElementById(`_${portletNamespace}_${id}`);
+
+			node.addEventListener('input', listener);
+
+			setPreviewState({
+				placeholder: node.placeholder,
+				type,
+				usePlaceholderAsFallback,
+				value: node.value
+			});
+
+			return {listener, node};
+		});
 
 		return () => {
-			Object.values(inputs).forEach(({listener, node}) =>
+			inputs.forEach(({listener, node}) =>
 				node.removeEventListener('input', listener)
 			);
 		};
-	}, [portletNamespace, targetsIds]);
+	}, [portletNamespace, targets]);
 
 	return (
 		<PreviewSeo
 			description={description}
-			suffixTitle={suffixTitle}
 			title={title}
+			titleSuffix={titleSuffix}
 			url={url}
 		/>
 	);
 };
 
 PreviewSeoContainer.propTypes = {
-	targetsIds: PropTypes.shape({
-		description: PropTypes.string.isRequired,
-		title: PropTypes.string.isRequired
-	}).isRequired,
-	url: PropTypes.string.isRequired
+	targets: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string.isRequired,
+			type: PropTypes.string.isRequired,
+			usePlaceholderAsFallback: PropTypes.bool
+		})
+	).isRequired
 };
 
 export default PreviewSeoContainer;

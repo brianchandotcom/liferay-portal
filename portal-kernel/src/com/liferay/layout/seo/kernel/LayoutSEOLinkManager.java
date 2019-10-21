@@ -16,6 +16,7 @@ package com.liferay.layout.seo.kernel;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.util.ListMergeable;
 
 import java.util.List;
 import java.util.Locale;
@@ -34,10 +35,35 @@ public interface LayoutSEOLinkManager {
 		throw new UnsupportedOperationException();
 	}
 
+	public default String getFullPageTitle(
+			Layout layout, String portletId, String tilesTitle,
+			ListMergeable<String> titleListMergeable,
+			ListMergeable<String> subtitleListMergeable, String companyName,
+			Locale locale)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
 		throws PortalException;
+
+	public default String getPageTitle(
+			Layout layout, String portletId, String tilesTitle,
+			ListMergeable<String> titleListMergeable,
+			ListMergeable<String> subtitleListMergeable, Locale locale)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public default String getPageTitleSuffix(Layout layout, String companyName)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public default boolean isOpenGraphEnabled(Layout layout)
 		throws PortalException {

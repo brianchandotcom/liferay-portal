@@ -66,10 +66,12 @@ public class SharepointOAuth2TokenEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{sharepointOAuth2TokenEntryId=");
 		sb.append(sharepointOAuth2TokenEntryId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -96,6 +98,7 @@ public class SharepointOAuth2TokenEntryCacheModel
 
 		sharepointOAuth2TokenEntryImpl.setSharepointOAuth2TokenEntryId(
 			sharepointOAuth2TokenEntryId);
+		sharepointOAuth2TokenEntryImpl.setCompanyId(companyId);
 		sharepointOAuth2TokenEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -151,6 +154,8 @@ public class SharepointOAuth2TokenEntryCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		sharepointOAuth2TokenEntryId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -163,6 +168,8 @@ public class SharepointOAuth2TokenEntryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(sharepointOAuth2TokenEntryId);
+
+		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(userId);
 
@@ -200,6 +207,7 @@ public class SharepointOAuth2TokenEntryCacheModel
 	}
 
 	public long sharepointOAuth2TokenEntryId;
+	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

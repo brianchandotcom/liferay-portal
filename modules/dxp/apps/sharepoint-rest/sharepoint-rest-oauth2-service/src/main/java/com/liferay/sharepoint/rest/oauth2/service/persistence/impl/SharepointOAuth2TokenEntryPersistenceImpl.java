@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -1029,6 +1030,9 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 
 		sharepointOAuth2TokenEntry.setNew(true);
 		sharepointOAuth2TokenEntry.setPrimaryKey(sharepointOAuth2TokenEntryId);
+
+		sharepointOAuth2TokenEntry.setCompanyId(
+			CompanyThreadLocal.getCompanyId());
 
 		return sharepointOAuth2TokenEntry;
 	}

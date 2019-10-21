@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -1006,6 +1007,8 @@ public class KaleoProcessLinkPersistenceImpl
 
 		kaleoProcessLink.setNew(true);
 		kaleoProcessLink.setPrimaryKey(kaleoProcessLinkId);
+
+		kaleoProcessLink.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return kaleoProcessLink;
 	}

@@ -42,6 +42,7 @@ public class KaleoProcessLinkWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("kaleoProcessLinkId", getKaleoProcessLinkId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("kaleoProcessId", getKaleoProcessId());
 		attributes.put("workflowTaskName", getWorkflowTaskName());
 		attributes.put("DDMTemplateId", getDDMTemplateId());
@@ -55,6 +56,12 @@ public class KaleoProcessLinkWrapper
 
 		if (kaleoProcessLinkId != null) {
 			setKaleoProcessLinkId(kaleoProcessLinkId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long kaleoProcessId = (Long)attributes.get("kaleoProcessId");
@@ -74,6 +81,16 @@ public class KaleoProcessLinkWrapper
 		if (DDMTemplateId != null) {
 			setDDMTemplateId(DDMTemplateId);
 		}
+	}
+
+	/**
+	 * Returns the company ID of this kaleo process link.
+	 *
+	 * @return the company ID of this kaleo process link
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -141,6 +158,16 @@ public class KaleoProcessLinkWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the company ID of this kaleo process link.
+	 *
+	 * @param companyId the company ID of this kaleo process link
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
 	}
 
 	/**

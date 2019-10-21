@@ -36,6 +36,7 @@ public class SharepointOAuth2TokenEntrySoap implements Serializable {
 
 		soapModel.setSharepointOAuth2TokenEntryId(
 			model.getSharepointOAuth2TokenEntryId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -116,6 +117,14 @@ public class SharepointOAuth2TokenEntrySoap implements Serializable {
 		_sharepointOAuth2TokenEntryId = sharepointOAuth2TokenEntryId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getUserId() {
 		return _userId;
 	}
@@ -173,6 +182,7 @@ public class SharepointOAuth2TokenEntrySoap implements Serializable {
 	}
 
 	private long _sharepointOAuth2TokenEntryId;
+	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

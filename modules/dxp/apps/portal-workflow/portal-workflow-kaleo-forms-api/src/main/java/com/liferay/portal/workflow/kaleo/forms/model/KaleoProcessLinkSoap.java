@@ -31,6 +31,7 @@ public class KaleoProcessLinkSoap implements Serializable {
 		KaleoProcessLinkSoap soapModel = new KaleoProcessLinkSoap();
 
 		soapModel.setKaleoProcessLinkId(model.getKaleoProcessLinkId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setKaleoProcessId(model.getKaleoProcessId());
 		soapModel.setWorkflowTaskName(model.getWorkflowTaskName());
 		soapModel.setDDMTemplateId(model.getDDMTemplateId());
@@ -103,6 +104,14 @@ public class KaleoProcessLinkSoap implements Serializable {
 		_kaleoProcessLinkId = kaleoProcessLinkId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getKaleoProcessId() {
 		return _kaleoProcessId;
 	}
@@ -128,6 +137,7 @@ public class KaleoProcessLinkSoap implements Serializable {
 	}
 
 	private long _kaleoProcessLinkId;
+	private long _companyId;
 	private long _kaleoProcessId;
 	private String _workflowTaskName;
 	private long _DDMTemplateId;

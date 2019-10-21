@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.forms.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface KaleoProcessLinkModel extends BaseModel<KaleoProcessLink> {
+public interface KaleoProcessLinkModel
+	extends BaseModel<KaleoProcessLink>, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -66,6 +68,22 @@ public interface KaleoProcessLinkModel extends BaseModel<KaleoProcessLink> {
 	 * @param kaleoProcessLinkId the kaleo process link ID of this kaleo process link
 	 */
 	public void setKaleoProcessLinkId(long kaleoProcessLinkId);
+
+	/**
+	 * Returns the company ID of this kaleo process link.
+	 *
+	 * @return the company ID of this kaleo process link
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this kaleo process link.
+	 *
+	 * @param companyId the company ID of this kaleo process link
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the kaleo process ID of this kaleo process link.

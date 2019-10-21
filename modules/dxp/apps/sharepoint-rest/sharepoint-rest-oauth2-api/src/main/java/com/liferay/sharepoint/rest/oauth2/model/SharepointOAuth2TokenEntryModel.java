@@ -16,6 +16,7 @@ package com.liferay.sharepoint.rest.oauth2.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
 
@@ -34,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SharepointOAuth2TokenEntryModel
-	extends BaseModel<SharepointOAuth2TokenEntry> {
+	extends BaseModel<SharepointOAuth2TokenEntry>, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -70,6 +71,22 @@ public interface SharepointOAuth2TokenEntryModel
 	 */
 	public void setSharepointOAuth2TokenEntryId(
 		long sharepointOAuth2TokenEntryId);
+
+	/**
+	 * Returns the company ID of this sharepoint o auth2 token entry.
+	 *
+	 * @return the company ID of this sharepoint o auth2 token entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this sharepoint o auth2 token entry.
+	 *
+	 * @param companyId the company ID of this sharepoint o auth2 token entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this sharepoint o auth2 token entry.

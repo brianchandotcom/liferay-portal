@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry">
 		<field name="sharepointOAuth2TokenEntryId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />

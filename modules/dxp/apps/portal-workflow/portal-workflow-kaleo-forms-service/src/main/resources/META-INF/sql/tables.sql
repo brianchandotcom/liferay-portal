@@ -15,6 +15,7 @@ create table KaleoProcess (
 
 create table KaleoProcessLink (
 	kaleoProcessLinkId LONG not null primary key,
+	companyId LONG,
 	kaleoProcessId LONG,
 	workflowTaskName VARCHAR(75) null,
 	DDMTemplateId LONG

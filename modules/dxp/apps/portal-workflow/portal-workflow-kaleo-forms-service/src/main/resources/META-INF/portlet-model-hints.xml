@@ -17,6 +17,7 @@
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink">
 		<field name="kaleoProcessLinkId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="kaleoProcessId" type="long" />
 		<field name="workflowTaskName" type="String" />
 		<field name="DDMTemplateId" type="long" />

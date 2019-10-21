@@ -19,7 +19,8 @@ import {getEmptyLayoutData} from '../utils/LayoutDataList.es';
 import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
-	FRAGMENTS_EDITOR_ROW_TYPES
+	FRAGMENTS_EDITOR_ROW_TYPES,
+	PAGE_TYPES
 } from '../utils/constants';
 
 const LayoutDataShape = Config.shapeOf({
@@ -561,6 +562,12 @@ const INITIAL_STATE = {
 			usagesCount: Config.number()
 		})
 	).value([]),
+
+	/**
+	 * @review
+	 * @type {number}
+	 */
+	pageType: Config.oneOf(Object.values(PAGE_TYPES)),
 
 	/**
 	 * Portlet namespace needed for prefixing form inputs

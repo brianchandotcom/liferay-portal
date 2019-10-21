@@ -242,6 +242,15 @@ export const MAPPING_SOURCE_TYPE_IDS = {
 };
 
 /**
+ * Available page types
+ */
+export const PAGE_TYPES = {
+	content: '0',
+	display: '1',
+	master: '3'
+};
+
+/**
  * Available attributes for target config key
  */
 export const TARGET_TYPES = [

@@ -50,6 +50,7 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.Content
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentCreationContentPageEditorConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentPageEditorConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -288,6 +289,8 @@ public class ContentPageEditorDisplayContext {
 			"pageContents",
 			ContentUtil.getPageContentsJSONArray(
 				themeDisplay.getPlid(), themeDisplay.getURLCurrent(), request)
+		).put(
+			"pageType", String.valueOf(_getPageType())
 		).put(
 			"portletNamespace", getPortletNamespace()
 		).put(
@@ -1104,6 +1107,26 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return null;
+	}
+
+	private int _getPageType() {
+		Layout layout = themeDisplay.getLayout();
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+		}
+
+		if (layoutPageTemplateEntry == null) {
+			return LayoutPageTemplateEntryTypeConstants.TYPE_BASIC;
+		}
+
+		return layoutPageTemplateEntry.getType();
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {

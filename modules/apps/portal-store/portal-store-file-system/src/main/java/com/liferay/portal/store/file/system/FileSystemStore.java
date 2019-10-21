@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -185,8 +184,7 @@ public class FileSystemStore implements Store {
 
 	@Override
 	public String[] getFileVersions(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName) {
 
 		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
 

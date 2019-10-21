@@ -148,8 +148,7 @@ public class SafeFileNameStore implements Store {
 
 	@Override
 	public String[] getFileVersions(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName) {
 
 		Set<String> versionSet = new HashSet<>();
 

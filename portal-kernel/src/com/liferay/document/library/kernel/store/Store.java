@@ -114,8 +114,7 @@ public interface Store {
 		throws PortalException;
 
 	public String[] getFileVersions(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException;
+		long companyId, long repositoryId, String fileName);
 
 	/**
 	 * Returns <code>true</code> if the file exists.

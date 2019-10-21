@@ -12,32 +12,39 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.service.impl;
+package com.liferay.change.tracking.store.internal;
 
+import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.store.model.CTSContent;
+import com.liferay.change.tracking.store.service.CTSContentLocalService;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.osgi.util.ComponentUtil;
 import com.liferay.portal.change.tracking.store.CTStoreFactory;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 
-import org.osgi.service.component.ComponentContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = {})
-public class OAuth2ApplicationLocalServiceImplEnabler {
+@Component(service = CTStoreFactory.class)
+public class CTStoreFactoryImpl implements CTStoreFactory {
 
-	@Activate
-	protected void activate(ComponentContext componentContext) {
-		ComponentUtil.enableComponents(
-			Store.class, "(store.type=" + PropsValues.DL_STORE_IMPL + ")",
-			componentContext, OAuth2ApplicationLocalServiceImpl.class);
+	@Override
+	public Store createCTStore(Store store, String storeType) {
+		return new CTStore(
+			_ctEntryLocalService,
+			_classNameLocalService.getClassNameId(CTSContent.class),
+			_ctsContentLocalService, store, storeType);
 	}
 
 	@Reference
-	private CTStoreFactory _ctStoreFactory;
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
+
+	@Reference
+	private CTSContentLocalService _ctsContentLocalService;
 
 }

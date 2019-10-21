@@ -234,8 +234,7 @@ public class S3Store implements Store {
 
 	@Override
 	public String[] getFileVersions(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName) {
 
 		String key = _s3KeyTransformer.getFileKey(
 			companyId, repositoryId, fileName);

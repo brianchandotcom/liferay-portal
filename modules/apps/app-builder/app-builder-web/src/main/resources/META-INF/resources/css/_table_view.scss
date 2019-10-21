@@ -23,6 +23,49 @@
 		}
 	}
 
+	.column-overlay {
+		border: 1px solid #0b5fff;
+		pointer-events: none;
+		position: absolute;
+
+		&.selected {
+			border-width: 2px;
+
+			header {
+				left: -2px;
+				top: -28px;
+			}
+		}
+
+		header {
+			background-color: #0b5fff;
+			border: 2px solid #0b5fff;
+			border-radius: 4px 4px 0 0;
+			color: white;
+			left: -1px;
+			line-height: 20px;
+			padding: 0 8px;
+			pointer-events: all;
+			position: absolute;
+			top: -27px;
+			z-index: 50;
+
+			.btn {
+				color: white;
+				height: 20px;
+				line-height: 12px;
+				padding: 0;
+				width: 20px;
+			}
+
+			label {
+				color: white;
+				margin-bottom: 0;
+				margin-right: 5px;
+			}
+		}
+	}
+
 	.empty-drop-zone {
 		background: #f7f8f9;
 		border: 2px dashed #a7a9bc;

@@ -1523,6 +1523,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					if (!projectPath.startsWith(":apps:") &&
 						!projectPath.startsWith(":core:") &&
+						!projectPath.startsWith(":dxp:apps:") &&
+						!projectPath.startsWith(":dxp:core:") &&
 						!projectPath.startsWith(":private:apps:") &&
 						!projectPath.startsWith(":private:core:")) {
 

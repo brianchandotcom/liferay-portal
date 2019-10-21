@@ -536,6 +536,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		String projectPath = project.getPath();
 
 		if (projectPath.startsWith(":apps:") ||
+			projectPath.startsWith(":dxp:apps:") ||
+			projectPath.startsWith(":dxp:util:") ||
 			projectPath.startsWith(":private:apps:") ||
 			projectPath.startsWith(":private:util:") ||
 			projectPath.startsWith(":util:")) {
@@ -626,7 +628,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		String projectPath = project.getPath();
 
-		if (projectPath.startsWith(":private:")) {
+		if (projectPath.startsWith(":dxp:") ||
+			projectPath.startsWith(":private:")) {
+
 			privateModule = true;
 		}
 

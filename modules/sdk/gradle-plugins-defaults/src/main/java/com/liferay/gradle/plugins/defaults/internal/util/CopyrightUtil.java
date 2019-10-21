@@ -70,7 +70,9 @@ public class CopyrightUtil {
 				if (properties.containsKey("project.path.prefix")) {
 					String s = properties.getProperty("project.path.prefix");
 
-					if (s.startsWith(":private:apps")) {
+					if (s.startsWith(":dxp:apps") ||
+						s.startsWith(":private:apps")) {
+
 						return true;
 					}
 

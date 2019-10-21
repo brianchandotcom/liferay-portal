@@ -5,4 +5,5 @@ Export-Package:\
 	com.liferay.mentions.configuration,\
 	com.liferay.mentions.constants,\
 	com.liferay.mentions.matcher,\
+	com.liferay.mentions.strategy,\
 	com.liferay.mentions.util

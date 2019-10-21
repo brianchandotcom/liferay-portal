@@ -40,6 +40,7 @@ public class JSONPackageJSONBNDVersionCheck extends BaseFileCheck {
 
 		if (!absolutePath.endsWith("/package.json") ||
 			(!absolutePath.contains("/modules/apps/") &&
+			 !absolutePath.contains("/modules/dxp/apps/") &&
 			 !absolutePath.contains("/modules/private/apps/"))) {
 
 			return content;

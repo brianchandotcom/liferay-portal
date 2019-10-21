@@ -39,6 +39,7 @@ public class GradleTestDependencyVersionCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		if (!absolutePath.contains("/modules/apps/") &&
+			!absolutePath.contains("/modules/dxp/apps/") &&
 			!absolutePath.contains("/modules/private/apps/")) {
 
 			return content;

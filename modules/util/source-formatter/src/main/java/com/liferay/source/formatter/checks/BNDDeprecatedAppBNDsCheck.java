@@ -24,12 +24,11 @@ public class BNDDeprecatedAppBNDsCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		if (absolutePath.endsWith("/app.bnd") &&
-			(absolutePath.contains("modules/apps/deprecated") ||
-			 absolutePath.contains("modules/private/apps/deprecated"))) {
+			absolutePath.contains("modules/apps/archived")) {
 
 			addMessage(
 				fileName,
-				"Module in 'deprecated' directory should not have 'app.bnd'");
+				"Module in 'archived' directory should not have 'app.bnd'");
 		}
 
 		return content;

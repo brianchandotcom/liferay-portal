@@ -1,7 +1,7 @@
 buildscript {
 	dependencies {
 		classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "4.3.0"
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.workspace", version: "2.1.10"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.workspace", version: "2.1.11"
 	}
 
 	repositories {

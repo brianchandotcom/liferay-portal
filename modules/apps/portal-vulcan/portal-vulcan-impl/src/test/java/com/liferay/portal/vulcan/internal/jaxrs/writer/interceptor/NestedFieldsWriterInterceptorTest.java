@@ -710,8 +710,15 @@ public class NestedFieldsWriterInterceptorTest {
 
 				return (ContextProvider<T>)new PaginationContextProvider();
 			}
+			else if (Objects.equals(
+						contextType.getTypeName(),
+						ThemeDisplay.class.getName())) {
 
-			return (ContextProvider<T>)new ThemeDisplayContextProvider();
+				return (ContextProvider<T>)new ThemeDisplayContextProvider();
+			}
+			else {
+				return null;
+			}
 		}
 
 		@Override

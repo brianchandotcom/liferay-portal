@@ -189,14 +189,14 @@ class DatePicker extends Component {
 
 			this.emit('fieldFocused', {
 				fieldInstance: this,
-				originalEvent: event
+				originalEvent: window.event
 			});
 		} else {
 			this._eventHandler.removeAllListeners();
 
 			this.emit('fieldBlurred', {
 				fieldInstance: this,
-				originalEvent: event
+				originalEvent: window.event
 			});
 		}
 	}

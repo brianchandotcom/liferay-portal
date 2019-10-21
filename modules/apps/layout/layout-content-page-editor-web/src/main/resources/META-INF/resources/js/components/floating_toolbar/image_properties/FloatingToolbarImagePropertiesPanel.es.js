@@ -59,7 +59,7 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 */
 	_handleAltTextInputChange() {
 		this._updateFragmentConfig({
-			[EDITABLE_FIELD_CONFIG_KEYS.alt]: event.delegateTarget.value
+			[EDITABLE_FIELD_CONFIG_KEYS.alt]: window.event.delegateTarget.value
 		});
 	}
 

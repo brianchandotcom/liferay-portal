@@ -111,7 +111,7 @@ class TranslationManager extends Component {
 		const {availableLocales} = this;
 		const {localeId} = delegateTarget.dataset;
 
-		event.stopPropagation();
+		window.event.stopPropagation();
 
 		this.refs.deleteModal.events = {
 			clickButton: ({target}) => {

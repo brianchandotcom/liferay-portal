@@ -10,7 +10,7 @@
  */
 
 import {act, renderHook} from '@testing-library/react-hooks';
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {create} from 'react-test-renderer';
 
 import {TimeRangeContext} from '../../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/TimeRangeStore.es';
@@ -21,7 +21,7 @@ import {
 	VelocityUnitContext
 } from '../../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/VelocityUnitStore.es';
 
-describe.skip('The default Velocity Unit should', () => {
+describe('The default Velocity Unit should', () => {
 	test('Be "Inst/Hour" when the time range is less than 1 day', async () => {
 		const wrapper = mockTimeRangeContext(
 			new Date(2018, 0, 1, 12),
@@ -108,7 +108,7 @@ describe.skip('The default Velocity Unit should', () => {
 	});
 });
 
-describe.skip('When the time range is less than 90 days, the selected Velocity Unit should', () => {
+describe('When the time range is less than 90 days, the selected Velocity Unit should', () => {
 	let wrapper;
 
 	beforeEach(() => {
@@ -162,7 +162,7 @@ describe.skip('When the time range is less than 90 days, the selected Velocity U
 	});
 });
 
-describe.skip('The velocity unit store should', () => {
+describe('The velocity unit store should', () => {
 	let renderer;
 
 	beforeEach(() => {
@@ -212,14 +212,16 @@ describe.skip('The velocity unit store should', () => {
 	});
 });
 
-test.skip('The velocity unit provider should be rendered', () => {
+test('The velocity unit provider should be rendered', () => {
+	const timeRange = {
+		dateEnd: new Date(2018, 2, 1),
+		dateStart: new Date(2018, 0, 1)
+	};
+
 	const {root, unmount} = create(
 		<TimeRangeContext.Provider
 			value={{
-				getSelectedTimeRange: () => ({
-					dateEnd: new Date(2018, 2, 1),
-					dateStart: new Date(2018, 0, 1)
-				})
+				getSelectedTimeRange: () => timeRange
 			}}
 		>
 			<VelocityUnitProvider
@@ -241,15 +243,19 @@ test.skip('The velocity unit provider should be rendered', () => {
 	unmount();
 });
 
-const mockTimeRangeContext = (dateEnd, dateStart) => ({children}) => (
-	<TimeRangeContext.Provider
-		value={{
-			getSelectedTimeRange: () => ({dateEnd, dateStart})
-		}}
-	>
-		{children}
-	</TimeRangeContext.Provider>
-);
+const mockTimeRangeContext = (dateEnd, dateStart) => ({children}) => {
+	const timeRange = useMemo(() => ({dateEnd, dateStart}), []);
+
+	return (
+		<TimeRangeContext.Provider
+			value={{
+				getSelectedTimeRange: () => timeRange
+			}}
+		>
+			{children}
+		</TimeRangeContext.Provider>
+	);
+};
 
 const MockVelocityUnitConsumer = () => {
 	const {velocityUnits} = useContext(VelocityUnitContext);

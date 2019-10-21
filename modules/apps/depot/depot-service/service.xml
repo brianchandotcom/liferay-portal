@@ -26,6 +26,10 @@
 
 		<column name="depotEntryGroupRelId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="depotEntryId" type="long" />

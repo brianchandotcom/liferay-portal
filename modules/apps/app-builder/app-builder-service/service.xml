@@ -57,6 +57,10 @@
 
 		<column name="appBuilderAppDeploymentId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="appBuilderAppId" type="long" />

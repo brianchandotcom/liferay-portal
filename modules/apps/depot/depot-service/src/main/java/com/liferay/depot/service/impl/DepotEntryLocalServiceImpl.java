@@ -93,11 +93,11 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties currentTypeSettingsProperties =
 			group.getTypeSettingsProperties();
 
 		boolean inheritLocales = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("inheritLocales"));
+			currentTypeSettingsProperties.getProperty("inheritLocales"));
 
 		if (formTypeSettingsProperties.containsKey("inheritLocales")) {
 			inheritLocales = GetterUtil.getBoolean(
@@ -122,10 +122,10 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 					depotEntry.getGroupId());
 		}
 
-		typeSettingsProperties.putAll(formTypeSettingsProperties);
+		currentTypeSettingsProperties.putAll(formTypeSettingsProperties);
 
 		group = _groupLocalService.updateGroup(
-			group.getGroupId(), typeSettingsProperties.toString());
+			group.getGroupId(), currentTypeSettingsProperties.toString());
 
 		_groupLocalService.updateGroup(
 			depotEntry.getGroupId(), group.getParentGroupId(), nameMap,

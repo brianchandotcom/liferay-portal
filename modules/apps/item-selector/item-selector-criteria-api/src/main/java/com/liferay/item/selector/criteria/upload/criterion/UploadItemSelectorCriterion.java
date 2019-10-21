@@ -25,41 +25,6 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 	public UploadItemSelectorCriterion() {
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #UploadItemSelectorCriterion(String, String, String)}
-	 */
-	@Deprecated
-	public UploadItemSelectorCriterion(String url, String repositoryName) {
-		this(
-			null, url, repositoryName,
-			UploadServletRequestConfigurationHelperUtil.getMaxSize());
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #UploadItemSelectorCriterion(String, String, String, long)}
-	 */
-	@Deprecated
-	public UploadItemSelectorCriterion(
-		String url, String repositoryName, long maxFileSize) {
-
-		this(null, url, repositoryName, maxFileSize);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #UploadItemSelectorCriterion(String, String, String, long,
-	 *             String[])}
-	 */
-	@Deprecated
-	public UploadItemSelectorCriterion(
-		String url, String repositoryName, long maxFileSize,
-		String[] extensions) {
-
-		this(null, url, repositoryName, maxFileSize, extensions);
-	}
-
 	public UploadItemSelectorCriterion(
 		String portletId, String url, String repositoryName) {
 

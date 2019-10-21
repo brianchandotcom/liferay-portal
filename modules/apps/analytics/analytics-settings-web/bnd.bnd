@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Analytics Settings Web
+Bundle-SymbolicName: com.liferay.analytics.settings.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /analytics-settings-web
+-liferay-aggregate-resource-bundles: com.liferay.portal.settings.lang

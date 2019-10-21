@@ -504,7 +504,12 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					public List getTestUtilModules() {
 						List appBndFiles = findFiles(new File(projectDir, "modules/apps"), ".+/app.bnd");
 
+						File dxpAppsDir = new File(projectDir, "modules/dxp/apps");
 						File privateAppsDir = new File(projectDir, "modules/private/apps");
+
+						if (dxpAppsDir.exists()) {
+							appBndFiles.addAll(findFiles(dxpAppsDir, ".+/app.bnd"));
+						}
 
 						if (privateAppsDir.exists()) {
 							appBndFiles.addAll(findFiles(privateAppsDir, ".+/app.bnd"));

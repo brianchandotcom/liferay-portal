@@ -15,8 +15,8 @@
 package com.liferay.app.builder.internal.upgrade;
 
 import com.liferay.app.builder.internal.upgrade.v2_0_0.UpgradeCompanyId;
-
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

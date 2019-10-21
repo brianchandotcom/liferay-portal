@@ -1226,39 +1226,39 @@ war.path=${app.server.portal.dir}/</echo>
 	</macrodef>
 
 	<macrodef name="install-patch-dependencies">
-		<attribute name="hotfix.file.zip.url" />
+		<attribute name="patch.file.zip.url" />
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
 
 		<sequential>
 			<local name="patch.requirements" />
 
-			<get-patch-requirements patch.file.zip.url="@{hotfix.file.zip.url}" />
+			<get-patch-requirements patch.file.zip.url="@{patch.file.zip.url}" />
 
 			<if>
 				<not>
 					<equals arg1="${patch.requirements}" arg2="" />
 				</not>
 				<then>
-					<local name="hotfix.build.version" />
-					<local name="hotfix.portal.version" />
+					<local name="patch.build.version" />
+					<local name="patch.portal.version" />
 
 					<propertyregex
-						input="@{hotfix.file.zip.url}"
-						property="hotfix.build.version"
-						regexp=".+/hotfix/liferay-hotfix-\d+-(\d)(\d)(\d\d).zip"
-						replace="\1\2\3"
+						input="@{patch.file.zip.url}"
+						property="patch.build.version"
+						regexp=".+\/liferay-(hotfix|.*security)-.+-(\d)(\d)(\d\d).zip"
+						replace="\2\3\4"
 					/>
 
 					<propertyregex
-						input="@{hotfix.file.zip.url}"
-						property="hotfix.portal.version"
-						regexp=".+/hotfix/liferay-hotfix-\d+-(\d)(\d)(\d\d).zip"
-						replace="\1.\2.\3"
+						input="@{patch.file.zip.url}"
+						property="patch.portal.version"
+						regexp=".+\/liferay-(hotfix|.*security)-.+-(\d)(\d)(\d\d).zip"
+						replace="\2.\3.\4"
 					/>
 
 					<mirrors-get
 						dest="@{patching.tool.dir}/patches"
-						src="http://files.liferay.com/private/ee/fix-packs/${hotfix.portal.version}/dxp/liferay-fix-pack-${patch.requirements}-${hotfix.build.version}.zip"
+						src="http://files.liferay.com/private/ee/fix-packs/${patch.portal.version}/dxp/liferay-fix-pack-${patch.requirements}-${patch.build.version}.zip"
 					/>
 				</then>
 			</if>
@@ -6560,9 +6560,12 @@ go</echo>
 		</condition>
 
 		<if>
-			<contains string="${patch.file.zip.url}" substring="hotfix" />
+			<or>
+				<contains string="${patch.file.zip.url}" substring="hotfix" />
+				<contains string="${patch.file.zip.url}" substring="security" />
+			</or>
 			<then>
-				<install-patch-dependencies hotfix.file.zip.url="${patch.file.zip.url}" />
+				<install-patch-dependencies patch.file.zip.url="${patch.file.zip.url}" />
 			</then>
 		</if>
 

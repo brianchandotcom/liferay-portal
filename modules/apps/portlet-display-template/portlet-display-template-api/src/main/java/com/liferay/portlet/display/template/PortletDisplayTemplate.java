@@ -37,12 +37,6 @@ public interface PortletDisplayTemplate {
 
 	public String getDDMTemplateKey(String displayStyle);
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public String getDDMTemplateUuid(String displayStyle);
-
 	public DDMTemplate getDefaultPortletDisplayTemplateDDMTemplate(
 		long groupId, long classNameId);
 
@@ -54,13 +48,6 @@ public interface PortletDisplayTemplate {
 	public DDMTemplate getPortletDisplayTemplateDDMTemplate(
 		long groupId, long classNameId, String displayStyle,
 		boolean useDefault);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public long getPortletDisplayTemplateDDMTemplateId(
-		long groupId, String displayStyle);
 
 	public List<TemplateHandler> getPortletDisplayTemplateHandlers();
 

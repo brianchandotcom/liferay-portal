@@ -167,15 +167,6 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		return displayStyle.substring(DISPLAY_STYLE_PREFIX.length());
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public String getDDMTemplateUuid(String displayStyle) {
-		return getDDMTemplateKey(displayStyle);
-	}
-
 	@Override
 	public DDMTemplate getDefaultPortletDisplayTemplateDDMTemplate(
 		long groupId, long classNameId) {
@@ -232,29 +223,6 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		}
 
 		return portletDisplayDDMTemplate;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public long getPortletDisplayTemplateDDMTemplateId(
-		long groupId, String displayStyle) {
-
-		long portletDisplayDDMTemplateId = 0;
-
-		if (displayStyle.startsWith(DISPLAY_STYLE_PREFIX)) {
-			DDMTemplate portletDisplayDDMTemplate = fetchDDMTemplate(
-				getDDMTemplateGroupId(groupId), displayStyle);
-
-			if (portletDisplayDDMTemplate != null) {
-				portletDisplayDDMTemplateId =
-					portletDisplayDDMTemplate.getTemplateId();
-			}
-		}
-
-		return portletDisplayDDMTemplateId;
 	}
 
 	@Override

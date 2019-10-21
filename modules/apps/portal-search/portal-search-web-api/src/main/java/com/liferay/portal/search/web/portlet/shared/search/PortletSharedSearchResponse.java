@@ -41,12 +41,6 @@ public interface PortletSharedSearchResponse {
 	public SearchResponse getFederatedSearchResponse(
 		Optional<String> federatedSearchKeyOptional);
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public String[] getHighlights();
-
 	public Optional<String> getKeywordsOptional();
 
 	public int getPaginationDelta();
@@ -61,14 +55,6 @@ public interface PortletSharedSearchResponse {
 
 	public Optional<PortletPreferences> getPortletPreferences(
 		RenderRequest renderRequest);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getSearchResponse()} and {@link
-	 *             SearchResponse#getRequestString()}
-	 */
-	@Deprecated
-	public String getQueryString();
 
 	public List<String> getRelatedQueriesSuggestions();
 

@@ -59,16 +59,6 @@ public class IndexerRequestBuffer {
 		return indexerRequestBuffers.remove(indexerRequestBuffers.size() - 1);
 	}
 
-	/**
-	 * @param      indexerRequest
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #add(IndexerRequest,
-	 *             IndexerRequestBufferOverflowHandler, int)}
-	 */
-	@Deprecated
-	public void add(IndexerRequest indexerRequest) {
-		_indexerRequests.put(indexerRequest, indexerRequest);
-	}
-
 	public void add(
 		IndexerRequest indexerRequest,
 		IndexerRequestBufferOverflowHandler indexerRequestBufferOverflowHandler,

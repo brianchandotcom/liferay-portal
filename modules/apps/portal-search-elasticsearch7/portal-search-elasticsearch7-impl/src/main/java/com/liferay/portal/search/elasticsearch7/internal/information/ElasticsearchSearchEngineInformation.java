@@ -101,26 +101,6 @@ public class ElasticsearchSearchEngineInformation
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public String getStatusString() {
-		StringBundler sb = new StringBundler(8);
-
-		sb.append("Vendor: ");
-		sb.append(getVendorString());
-		sb.append(StringPool.COMMA_AND_SPACE);
-		sb.append("Client Version: ");
-		sb.append(getClientVersionString());
-		sb.append(StringPool.COMMA_AND_SPACE);
-		sb.append("Nodes: ");
-		sb.append(getNodesString());
-
-		return sb.toString();
-	}
-
 	@Override
 	public String getVendorString() {
 		ElasticsearchConnection elasticsearchConnection =

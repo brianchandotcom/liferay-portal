@@ -38,12 +38,4 @@ public interface IndexWriterHelperConfiguration {
 	)
 	public boolean indexCommitImmediately();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             IndexStatusManagerConfiguration#indexReadOnly}
-	 */
-	@Deprecated
-	@Meta.AD(deflt = "false", name = "index-read-only", required = false)
-	public boolean indexReadOnly();
-
 }

@@ -35,26 +35,11 @@ public interface SearchResponse {
 
 	public Facet getFacet(String fieldName);
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public String[] getHighlights();
-
 	public Optional<String> getKeywordsOptional();
 
 	public int getPaginationDelta();
 
 	public int getPaginationStart();
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getSearchResponse()} and {@link
-	 *             com.liferay.portal.search.searcher.SearchResponse#getRequestString(
-	 *             )}
-	 */
-	@Deprecated
-	public String getQueryString();
 
 	public List<String> getRelatedQueriesSuggestions();
 

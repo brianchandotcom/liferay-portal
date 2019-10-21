@@ -69,11 +69,6 @@ public class PortletSharedSearchResponseImpl
 	}
 
 	@Override
-	public String[] getHighlights() {
-		return null;
-	}
-
-	@Override
 	public Optional<String> getKeywordsOptional() {
 		return _searchResponseImpl.getKeywordsOptional();
 	}
@@ -108,11 +103,6 @@ public class PortletSharedSearchResponseImpl
 		RenderRequest renderRequest) {
 
 		return Optional.ofNullable(renderRequest.getPreferences());
-	}
-
-	@Override
-	public String getQueryString() {
-		return _searchResponseImpl.getQueryString();
 	}
 
 	@Override

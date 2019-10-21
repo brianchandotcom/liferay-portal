@@ -32,16 +32,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SearchPermissionCheckerConfiguration {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Meta.AD(
-		deflt = "true", description = "include-inherited-permissions-help",
-		name = "include-inherited-permissions", required = false
-	)
-	public boolean includeInheritedPermissions();
-
 	@Meta.AD(
 		deflt = "250", description = "permission-terms-limit-help",
 		name = "permission-terms-limit", required = false

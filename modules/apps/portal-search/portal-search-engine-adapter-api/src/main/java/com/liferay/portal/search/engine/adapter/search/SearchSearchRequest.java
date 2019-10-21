@@ -15,7 +15,6 @@
 package com.liferay.portal.search.engine.adapter.search;
 
 import com.liferay.portal.kernel.search.GroupBy;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.highlight.Highlight;
@@ -88,15 +87,6 @@ public class SearchSearchRequest
 
 	public String getPreference() {
 		return _preference;
-	}
-
-	/**
-	 * @return
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public QueryConfig getQueryConfig() {
-		throw new UnsupportedOperationException();
 	}
 
 	public Boolean getScoreEnabled() {

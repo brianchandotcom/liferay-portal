@@ -84,8 +84,10 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validateNameMap(nameMap, LocaleUtil.fromLanguageId(
-			formTypeSettingsProperties.getProperty("languageId")));
+		_validateNameMap(
+			nameMap,
+			LocaleUtil.fromLanguageId(
+				formTypeSettingsProperties.getProperty("languageId")));
 
 		DepotEntry depotEntry = getDepotEntry(depotEntryId);
 
@@ -110,9 +112,10 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 						LanguageUtil.getAvailableLocales())));
 		}
 
-		if (formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) &&
-			Validator.isNull(
-				formTypeSettingsProperties.getProperty(PropsKeys.LOCALES))) {
+		if (!formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) ||
+			(formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) &&
+			 Validator.isNull(
+				 formTypeSettingsProperties.getProperty(PropsKeys.LOCALES)))) {
 
 			throw new LocaleException(
 				LocaleException.TYPE_DEFAULT,

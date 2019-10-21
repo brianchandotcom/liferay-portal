@@ -156,12 +156,12 @@ class Select extends Component {
 		if (newVal) {
 			this.emit('fieldFocused', {
 				fieldInstance: this,
-				originalEvent: event
+				originalEvent: window.event
 			});
 		} else {
 			this.emit('fieldBlurred', {
 				fieldInstance: this,
-				originalEvent: event
+				originalEvent: window.event
 			});
 		}
 

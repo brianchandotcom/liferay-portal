@@ -53,8 +53,8 @@ class Radio extends Component {
 	_handleFieldBlurred() {
 		this.emit('fieldBlurred', {
 			fieldInstance: this,
-			originalEvent: event,
-			value: event.target.value
+			originalEvent: window.event,
+			value: window.event.target.value
 		});
 	}
 

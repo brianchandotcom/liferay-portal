@@ -23,8 +23,8 @@ export default (callback, targetKeyCode, element = window) => {
 
 	useEffect(() => {
 		const handler = () => {
-			if (event.keyCode === targetKeyCode) {
-				callbackRef.current(event);
+			if (window.event.keyCode === targetKeyCode) {
+				callbackRef.current(window.event);
 			}
 		};
 

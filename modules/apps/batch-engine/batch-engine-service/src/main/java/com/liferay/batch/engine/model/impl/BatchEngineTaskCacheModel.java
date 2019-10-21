@@ -24,8 +24,10 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * The cache model class for representing BatchEngineTask in entity cache.
@@ -196,12 +198,7 @@ public class BatchEngineTaskCacheModel
 			batchEngineTaskImpl.setExecuteStatus(executeStatus);
 		}
 
-		if (fieldNameMapping == null) {
-			batchEngineTaskImpl.setFieldNameMapping("");
-		}
-		else {
-			batchEngineTaskImpl.setFieldNameMapping(fieldNameMapping);
-		}
+		batchEngineTaskImpl.setFieldNameMapping(fieldNameMapping);
 
 		if (operation == null) {
 			batchEngineTaskImpl.setOperation("");
@@ -230,7 +227,9 @@ public class BatchEngineTaskCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -249,7 +248,7 @@ public class BatchEngineTaskCacheModel
 		endTime = objectInput.readLong();
 		errorMessage = objectInput.readUTF();
 		executeStatus = objectInput.readUTF();
-		fieldNameMapping = objectInput.readUTF();
+		fieldNameMapping = (Map<String, Serializable>)objectInput.readObject();
 		operation = objectInput.readUTF();
 		startTime = objectInput.readLong();
 		version = objectInput.readUTF();
@@ -313,12 +312,7 @@ public class BatchEngineTaskCacheModel
 			objectOutput.writeUTF(executeStatus);
 		}
 
-		if (fieldNameMapping == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(fieldNameMapping);
-		}
+		objectOutput.writeObject(fieldNameMapping);
 
 		if (operation == null) {
 			objectOutput.writeUTF("");
@@ -351,7 +345,7 @@ public class BatchEngineTaskCacheModel
 	public long endTime;
 	public String errorMessage;
 	public String executeStatus;
-	public String fieldNameMapping;
+	public Map<String, Serializable> fieldNameMapping;
 	public String operation;
 	public long startTime;
 	public String version;

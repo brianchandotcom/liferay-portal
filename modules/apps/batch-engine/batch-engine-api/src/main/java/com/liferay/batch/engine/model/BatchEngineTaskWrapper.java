@@ -18,6 +18,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
+import java.io.Serializable;
+
 import java.sql.Blob;
 
 import java.util.Date;
@@ -160,7 +162,8 @@ public class BatchEngineTaskWrapper
 			setExecuteStatus(executeStatus);
 		}
 
-		String fieldNameMapping = (String)attributes.get("fieldNameMapping");
+		Map<String, Serializable> fieldNameMapping =
+			(Map<String, Serializable>)attributes.get("fieldNameMapping");
 
 		if (fieldNameMapping != null) {
 			setFieldNameMapping(fieldNameMapping);
@@ -301,13 +304,8 @@ public class BatchEngineTaskWrapper
 	 * @return the field name mapping of this batch engine task
 	 */
 	@Override
-	public String getFieldNameMapping() {
+	public Map<String, Serializable> getFieldNameMapping() {
 		return model.getFieldNameMapping();
-	}
-
-	@Override
-	public Map<String, String> getFieldNameMappingMap() {
-		return model.getFieldNameMappingMap();
 	}
 
 	/**
@@ -526,15 +524,10 @@ public class BatchEngineTaskWrapper
 	 * @param fieldNameMapping the field name mapping of this batch engine task
 	 */
 	@Override
-	public void setFieldNameMapping(String fieldNameMapping) {
+	public void setFieldNameMapping(
+		Map<String, Serializable> fieldNameMapping) {
+
 		model.setFieldNameMapping(fieldNameMapping);
-	}
-
-	@Override
-	public void setFieldNameMappingMap(
-		Map<String, String> fieldNameMappingMap) {
-
-		model.setFieldNameMappingMap(fieldNameMappingMap);
 	}
 
 	/**

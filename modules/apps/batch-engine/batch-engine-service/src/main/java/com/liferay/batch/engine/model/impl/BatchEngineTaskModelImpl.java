@@ -79,7 +79,7 @@ public class BatchEngineTaskModelImpl
 		{"callbackURL", Types.VARCHAR}, {"className", Types.VARCHAR},
 		{"content", Types.BLOB}, {"contentType", Types.VARCHAR},
 		{"endTime", Types.TIMESTAMP}, {"errorMessage", Types.VARCHAR},
-		{"executeStatus", Types.VARCHAR}, {"fieldNameMapping", Types.VARCHAR},
+		{"executeStatus", Types.VARCHAR}, {"fieldNameMapping", Types.CLOB},
 		{"operation", Types.VARCHAR}, {"startTime", Types.TIMESTAMP},
 		{"version", Types.VARCHAR}
 	};
@@ -103,14 +103,14 @@ public class BatchEngineTaskModelImpl
 		TABLE_COLUMNS_MAP.put("endTime", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("errorMessage", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("executeStatus", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("fieldNameMapping", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("fieldNameMapping", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("operation", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("startTime", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchEngineTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineTaskId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,batchSize LONG,callbackURL VARCHAR(75) null,className VARCHAR(75) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage VARCHAR(75) null,executeStatus VARCHAR(75) null,fieldNameMapping VARCHAR(75) null,operation VARCHAR(75) null,startTime DATE null,version VARCHAR(75) null)";
+		"create table BatchEngineTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineTaskId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,batchSize LONG,callbackURL VARCHAR(75) null,className VARCHAR(75) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage VARCHAR(75) null,executeStatus VARCHAR(75) null,fieldNameMapping TEXT null,operation VARCHAR(75) null,startTime DATE null,version VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table BatchEngineTask";
 
@@ -349,7 +349,7 @@ public class BatchEngineTaskModelImpl
 			"fieldNameMapping", BatchEngineTask::getFieldNameMapping);
 		attributeSetterBiConsumers.put(
 			"fieldNameMapping",
-			(BiConsumer<BatchEngineTask, String>)
+			(BiConsumer<BatchEngineTask, Map<String, Serializable>>)
 				BatchEngineTask::setFieldNameMapping);
 		attributeGetterFunctions.put(
 			"operation", BatchEngineTask::getOperation);
@@ -629,17 +629,14 @@ public class BatchEngineTaskModelImpl
 	}
 
 	@Override
-	public String getFieldNameMapping() {
-		if (_fieldNameMapping == null) {
-			return "";
-		}
-		else {
-			return _fieldNameMapping;
-		}
+	public Map<String, Serializable> getFieldNameMapping() {
+		return _fieldNameMapping;
 	}
 
 	@Override
-	public void setFieldNameMapping(String fieldNameMapping) {
+	public void setFieldNameMapping(
+		Map<String, Serializable> fieldNameMapping) {
+
 		_fieldNameMapping = fieldNameMapping;
 	}
 
@@ -914,12 +911,6 @@ public class BatchEngineTaskModelImpl
 
 		batchEngineTaskCacheModel.fieldNameMapping = getFieldNameMapping();
 
-		String fieldNameMapping = batchEngineTaskCacheModel.fieldNameMapping;
-
-		if ((fieldNameMapping != null) && (fieldNameMapping.length() == 0)) {
-			batchEngineTaskCacheModel.fieldNameMapping = null;
-		}
-
 		batchEngineTaskCacheModel.operation = getOperation();
 
 		String operation = batchEngineTaskCacheModel.operation;
@@ -1109,7 +1100,7 @@ public class BatchEngineTaskModelImpl
 	private String _errorMessage;
 	private String _executeStatus;
 	private String _originalExecuteStatus;
-	private String _fieldNameMapping;
+	private Map<String, Serializable> _fieldNameMapping;
 	private String _operation;
 	private Date _startTime;
 	private String _version;

@@ -14,7 +14,7 @@ create table BatchEngineTask (
 	endTime DATE null,
 	errorMessage VARCHAR(75) null,
 	executeStatus VARCHAR(75) null,
-	fieldNameMapping VARCHAR(75) null,
+	fieldNameMapping TEXT null,
 	operation VARCHAR(75) null,
 	startTime DATE null,
 	version VARCHAR(75) null

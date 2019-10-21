@@ -11,6 +11,10 @@ definition {
 
 		Alert.viewSuccessMessageText(successMessage = "Repository was added.");
 
+		AssertTextEquals(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "${depotName}");
+
 		if (isSet(depotDescription)) {
 			Type(
 				locator1 = "TextArea#DESCRIPTION",

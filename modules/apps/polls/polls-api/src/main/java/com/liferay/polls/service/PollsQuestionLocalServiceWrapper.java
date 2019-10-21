@@ -84,21 +84,6 @@ public class PollsQuestionLocalServiceWrapper
 			questionId, modelPermissions);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addQuestionResources(long, ModelPermissions)}
-	 */
-	@Deprecated
-	@Override
-	public void addQuestionResources(
-			long questionId, String[] groupPermissions,
-			String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_pollsQuestionLocalService.addQuestionResources(
-			questionId, groupPermissions, guestPermissions);
-	}
-
 	@Override
 	public void addQuestionResources(
 			com.liferay.polls.model.PollsQuestion question,
@@ -118,21 +103,6 @@ public class PollsQuestionLocalServiceWrapper
 
 		_pollsQuestionLocalService.addQuestionResources(
 			question, modelPermissions);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addQuestionResources(PollsQuestion, ModelPermissions)}
-	 */
-	@Deprecated
-	@Override
-	public void addQuestionResources(
-			com.liferay.polls.model.PollsQuestion question,
-			String[] groupPermissions, String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_pollsQuestionLocalService.addQuestionResources(
-			question, groupPermissions, guestPermissions);
 	}
 
 	/**

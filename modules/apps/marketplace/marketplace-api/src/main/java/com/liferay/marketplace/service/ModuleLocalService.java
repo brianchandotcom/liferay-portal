@@ -60,17 +60,6 @@ public interface ModuleLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ModuleLocalServiceUtil} to access the module local service. Add custom service methods to <code>com.liferay.marketplace.service.impl.ModuleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #addModule(long,
-	 String, String, String)}
-	 */
-	@Deprecated
-	public Module addModule(
-			long userId, long appId, String bundleSymbolicName,
-			String bundleVersion, String contextName)
-		throws PortalException;
-
 	public Module addModule(
 			long appId, String bundleSymbolicName, String bundleVersion,
 			String contextName)

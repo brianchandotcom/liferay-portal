@@ -39,19 +39,10 @@ public class ModuleLocalServiceUtil {
 	 */
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #addModule(long,
-	 String, String, String)}
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link ModuleLocalServiceUtil} to access the module local service. Add custom service methods to <code>com.liferay.marketplace.service.impl.ModuleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Deprecated
-	public static com.liferay.marketplace.model.Module addModule(
-			long userId, long appId, String bundleSymbolicName,
-			String bundleVersion, String contextName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addModule(
-			userId, appId, bundleSymbolicName, bundleVersion, contextName);
-	}
-
 	public static com.liferay.marketplace.model.Module addModule(
 			long appId, String bundleSymbolicName, String bundleVersion,
 			String contextName)

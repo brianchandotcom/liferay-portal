@@ -48,23 +48,6 @@ public class RuleGroupInstancePriorityComparator
 		return INSTANCE_DESCENDING;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #INSTANCE_ASCENDING}
-	 */
-	@Deprecated
-	public RuleGroupInstancePriorityComparator() {
-		this(Boolean.TRUE);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getInstance(boolean)}
-	 */
-	@Deprecated
-	public RuleGroupInstancePriorityComparator(boolean ascending) {
-		_ascending = ascending;
-	}
-
 	@Override
 	public int compare(
 		MDRRuleGroupInstance ruleGroupInstance1,

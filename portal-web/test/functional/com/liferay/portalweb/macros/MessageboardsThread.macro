@@ -654,6 +654,8 @@ definition {
 				value1 = "Reply");
 		}
 
+		AssertElementPresent.pauseAssertVisible(locator1 = "MessageBoardsThread#THREAD_REPLY_EDITOR");
+
 		Type.typeEditor(
 			locator1 = "MessageBoardsThread#THREAD_REPLY_EDITOR",
 			value1 = "${threadReplyBody}");

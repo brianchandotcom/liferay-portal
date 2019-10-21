@@ -51,7 +51,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.ProcessEntityModel;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
-import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -285,17 +285,17 @@ public class ProcessResourceImpl
 
 			shouldBooleanQuery.addShouldQueryClauses(
 				_queries.term("slaDefinitionId", 0),
-				_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
+				_queries.term("status", WorkflowMetricsSLAStatus.COMPLETED));
 
 			booleanQuery.addMustQueryClauses(shouldBooleanQuery);
 		}
 		else {
 			booleanQuery.addMustNotQueryClauses(
-				_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
+				_queries.term("status", WorkflowMetricsSLAStatus.COMPLETED));
 		}
 
 		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkfowMetricsSLAStatus.EXPIRED));
+			_queries.term("status", WorkflowMetricsSLAStatus.EXPIRED));
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),

@@ -600,7 +600,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 * @return the primary key of the workflow instance link
 	 * @throws Exception if an exception occurred
 	 */
-	protected long getDDLRecordWorkfowInstanceLinkId(
+	protected long getDDLRecordWorkflowInstanceLinkId(
 			long companyId, long groupId, long ddlRecordId)
 		throws Exception {
 

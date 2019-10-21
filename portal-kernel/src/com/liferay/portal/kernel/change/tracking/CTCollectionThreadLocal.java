@@ -27,6 +27,14 @@ public class CTCollectionThreadLocal {
 		return _ctCollectionId.get();
 	}
 
+	public static boolean isProductionMode() {
+		if (_ctCollectionId.get() == 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static void removeCTCollectionId() {
 		_ctCollectionId.remove();
 	}

@@ -4152,7 +4152,7 @@ log.sanitizer.enabled=false</echo>
 	<target name="js-unit-private-jdk8">
 		<run-batch-test>
 			<test-action>
-				<gradle-execute dir="modules/private" task="packageRunTest">
+				<gradle-execute dir="modules/dxp" task="packageRunTest">
 					<arg value="--continue" />
 					<arg value="--parallel" />
 					<arg value="-DpackageRunTest.ignore.failures=true" />

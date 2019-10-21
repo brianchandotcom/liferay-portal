@@ -81,7 +81,7 @@ public class FolderActionDisplayContext {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_file_shortcut");
-		portletURL.setParameter("redirect", _getRedirect());
+		portletURL.setParameter("redirect", _dlRequestHelper.getCurrentURL());
 		portletURL.setParameter(
 			"repositoryId", String.valueOf(_getRepositoryId()));
 		portletURL.setParameter("folderId", String.valueOf(_getFolderId()));
@@ -99,7 +99,7 @@ public class FolderActionDisplayContext {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_folder");
-		portletURL.setParameter("redirect", _getRedirect());
+		portletURL.setParameter("redirect", _dlRequestHelper.getCurrentURL());
 		portletURL.setParameter(
 			"repositoryId", String.valueOf(_getRepositoryId()));
 		portletURL.setParameter(
@@ -117,7 +117,7 @@ public class FolderActionDisplayContext {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_file_entry");
-		portletURL.setParameter("redirect", _getRedirect());
+		portletURL.setParameter("redirect", _dlRequestHelper.getCurrentURL());
 		portletURL.setParameter(
 			"repositoryId", String.valueOf(_getRepositoryId()));
 		portletURL.setParameter("folderId", String.valueOf(_getFolderId()));
@@ -134,8 +134,8 @@ public class FolderActionDisplayContext {
 		portletURL.setParameter(
 			"mvcRenderCommandName",
 			"/document_library/upload_multiple_file_entries");
-		portletURL.setParameter("redirect", _getRedirect());
-		portletURL.setParameter("backURL", _getRedirect());
+		portletURL.setParameter("redirect", _dlRequestHelper.getCurrentURL());
+		portletURL.setParameter("backURL", _dlRequestHelper.getCurrentURL());
 		portletURL.setParameter(
 			"repositoryId", String.valueOf(_getRepositoryId()));
 		portletURL.setParameter("folderId", String.valueOf(_getFolderId()));
@@ -153,7 +153,7 @@ public class FolderActionDisplayContext {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_repository");
-		portletURL.setParameter("redirect", _getRedirect());
+		portletURL.setParameter("redirect", _dlRequestHelper.getCurrentURL());
 		portletURL.setParameter("folderId", String.valueOf(_getFolderId()));
 
 		return portletURL.toString();
@@ -169,7 +169,7 @@ public class FolderActionDisplayContext {
 			ActionRequest.ACTION_NAME, "/document_library/edit_folder");
 		portletURL.setParameter(
 			Constants.CMD, "deleteExpiredTemporaryFileEntries");
-		portletURL.setParameter("redirect", _getRedirect());
+		portletURL.setParameter("redirect", _dlRequestHelper.getCurrentURL());
 		portletURL.setParameter(
 			"repositoryId", String.valueOf(_getRepositoryId()));
 
@@ -234,7 +234,8 @@ public class FolderActionDisplayContext {
 
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/document_library/edit_folder");
-			portletURL.setParameter("redirect", _getRedirect());
+			portletURL.setParameter("redirect",
+				_dlRequestHelper.getCurrentURL());
 			portletURL.setParameter("folderId", String.valueOf(_getFolderId()));
 			portletURL.setParameter(
 				"repositoryId", String.valueOf(_getRepositoryId()));
@@ -253,7 +254,8 @@ public class FolderActionDisplayContext {
 
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/document_library/edit_folder");
-			portletURL.setParameter("redirect", _getRedirect());
+			portletURL.setParameter("redirect",
+				_dlRequestHelper.getCurrentURL());
 			portletURL.setParameter("folderId", String.valueOf(_getFolderId()));
 			portletURL.setParameter(
 				"repositoryId", String.valueOf(_getRepositoryId()));
@@ -270,7 +272,7 @@ public class FolderActionDisplayContext {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_repository");
-		portletURL.setParameter("redirect", _getRedirect());
+		portletURL.setParameter("redirect", _dlRequestHelper.getCurrentURL());
 		portletURL.setParameter("folderId", String.valueOf(_getFolderId()));
 		portletURL.setParameter(
 			"repositoryId", String.valueOf(_getRepositoryId()));
@@ -338,7 +340,7 @@ public class FolderActionDisplayContext {
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/document_library/publish_folder");
-		portletURL.setParameter("backURL", _getRedirect());
+		portletURL.setParameter("backURL", _dlRequestHelper.getCurrentURL());
 		portletURL.setParameter("folderId", String.valueOf(_getFolderId()));
 
 		return portletURL.toString();
@@ -368,10 +370,6 @@ public class FolderActionDisplayContext {
 		}
 
 		return _randomNamespace;
-	}
-
-	private String _getRedirect() {
-		return _dlRequestHelper.getCurrentURL();
 	}
 
 	private long _getRepositoryId() {
@@ -786,7 +784,7 @@ public class FolderActionDisplayContext {
 
 	private String _getParentFolderURL() {
 		if (!_isView() && !_isFolderSelected()) {
-			return _getRedirect();
+			return _dlRequestHelper.getCurrentURL();
 		}
 
 		String portletName = _dlRequestHelper.getPortletName();

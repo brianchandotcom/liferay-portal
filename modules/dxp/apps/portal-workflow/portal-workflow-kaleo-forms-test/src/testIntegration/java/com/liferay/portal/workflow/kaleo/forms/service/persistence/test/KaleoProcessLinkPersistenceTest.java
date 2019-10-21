@@ -124,6 +124,8 @@ public class KaleoProcessLinkPersistenceTest {
 
 		KaleoProcessLink newKaleoProcessLink = _persistence.create(pk);
 
+		newKaleoProcessLink.setCompanyId(RandomTestUtil.nextLong());
+
 		newKaleoProcessLink.setKaleoProcessId(RandomTestUtil.nextLong());
 
 		newKaleoProcessLink.setWorkflowTaskName(RandomTestUtil.randomString());
@@ -138,6 +140,9 @@ public class KaleoProcessLinkPersistenceTest {
 		Assert.assertEquals(
 			existingKaleoProcessLink.getKaleoProcessLinkId(),
 			newKaleoProcessLink.getKaleoProcessLinkId());
+		Assert.assertEquals(
+			existingKaleoProcessLink.getCompanyId(),
+			newKaleoProcessLink.getCompanyId());
 		Assert.assertEquals(
 			existingKaleoProcessLink.getKaleoProcessId(),
 			newKaleoProcessLink.getKaleoProcessId());
@@ -190,8 +195,9 @@ public class KaleoProcessLinkPersistenceTest {
 
 	protected OrderByComparator<KaleoProcessLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KaleoProcessLink", "kaleoProcessLinkId", true, "kaleoProcessId",
-			true, "workflowTaskName", true, "DDMTemplateId", true);
+			"KaleoProcessLink", "kaleoProcessLinkId", true, "companyId", true,
+			"kaleoProcessId", true, "workflowTaskName", true, "DDMTemplateId",
+			true);
 	}
 
 	@Test
@@ -437,6 +443,8 @@ public class KaleoProcessLinkPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		KaleoProcessLink kaleoProcessLink = _persistence.create(pk);
+
+		kaleoProcessLink.setCompanyId(RandomTestUtil.nextLong());
 
 		kaleoProcessLink.setKaleoProcessId(RandomTestUtil.nextLong());
 

@@ -41,6 +41,10 @@
 
 		<column name="syncDLFileVersionDiffId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="fileEntryId" type="long" />

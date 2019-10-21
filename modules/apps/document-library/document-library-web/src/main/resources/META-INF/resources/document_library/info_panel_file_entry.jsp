@@ -98,7 +98,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 							<div class="autofit-col autofit-col-expand">
 								<div class="component-title h4 username">
 									<c:if test="<%= owner != null %>">
-										<a href="<%= owner.isDefaultUser() ? StringPool.BLANK : owner.getDisplayURL(themeDisplay) %>"><%= owner.getFullName() %></a>
+										<a href="<%= owner.isDefaultUser() ? StringPool.BLANK : owner.getDisplayURL(themeDisplay) %>"><%= HtmlUtil.escape(owner.getFullName()) %></a>
 									</c:if>
 								</div>
 

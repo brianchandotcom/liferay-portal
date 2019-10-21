@@ -71,6 +71,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test AddUserandSuborganizationAfterUpgrade625 {
 		property data.archive.type = "data-archive-admin-org-with-user";
@@ -107,6 +108,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test AddUserandSuborganizationAfterUpgrade621015 {
 		property data.archive.type = "data-archive-admin-org-with-user";
@@ -116,6 +118,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test AddUserandSuborganizationAfterUpgrade621021 {
 		property data.archive.type = "data-archive-admin-org-with-user";

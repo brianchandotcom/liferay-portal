@@ -19,6 +19,8 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -75,6 +77,8 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 					DepotEntry.class.getName(), actionRequest));
 		}
 		catch (PortalException pe) {
+			_log.error(pe, pe);
+
 			SessionErrors.add(actionRequest, pe.getClass(), pe);
 
 			RenderURL editDepotEntryRenderURL =
@@ -88,6 +92,9 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 				editDepotEntryRenderURL.toString());
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditDepotEntryMVCActionCommand.class);
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

@@ -32,7 +32,8 @@ import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	FRAGMENTS_EDITOR_ITEM_TYPES,
-	FRAGMENTS_EDITOR_ROW_TYPES
+	FRAGMENTS_EDITOR_ROW_TYPES,
+	PAGE_TYPES
 } from '../utils/constants';
 
 /**
@@ -225,6 +226,13 @@ function addFragmentEntryLinkReducer(state, action) {
 		let fragmentEntryLink = null;
 		let nextData = null;
 		let nextState = state;
+
+		if (
+			state.pageType === PAGE_TYPES.master &&
+			state.layoutData.hasDropZone
+		) {
+			resolve(nextState);
+		}
 
 		_addFragmentEntryLink(
 			nextState.addFragmentEntryLinkURL,

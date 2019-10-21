@@ -5,6 +5,6 @@ Import-Package:\
 	com.liferay.portal.workflow.kaleo.forms.util.comparator,\
 	\
 	*
-Liferay-Require-SchemaVersion: 2.0.0
+Liferay-Require-SchemaVersion: 3.0.0
 Liferay-Service: true
 -dsannotations-options: inherit

@@ -4080,7 +4080,7 @@ log.sanitizer.enabled=false</echo>
 					<path>
 						<dirset
 							dir="modules"
-							excludes="private/**,node_modules/**,**/node_modules/**,${base.dir}/**/test/stories/**"
+							excludes="dxp/**,node_modules/**,**/node_modules/**,${base.dir}/**/test/stories/**"
 							includes="**/test"
 						/>
 					</path>

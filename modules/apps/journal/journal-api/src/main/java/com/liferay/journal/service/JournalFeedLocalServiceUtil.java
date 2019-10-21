@@ -78,19 +78,6 @@ public class JournalFeedLocalServiceUtil {
 		getService().addFeedResources(feed, modelPermissions);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addFeedResources(JournalFeed, ModelPermissions)}
-	 */
-	@Deprecated
-	public static void addFeedResources(
-			com.liferay.journal.model.JournalFeed feed,
-			String[] groupPermissions, String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().addFeedResources(feed, groupPermissions, guestPermissions);
-	}
-
 	public static void addFeedResources(
 			long feedId, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -98,19 +85,6 @@ public class JournalFeedLocalServiceUtil {
 
 		getService().addFeedResources(
 			feedId, addGroupPermissions, addGuestPermissions);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addFeedResources(JournalFeed, ModelPermissions)}
-	 */
-	@Deprecated
-	public static void addFeedResources(
-			long feedId, String[] groupPermissions, String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().addFeedResources(
-			feedId, groupPermissions, guestPermissions);
 	}
 
 	/**

@@ -164,51 +164,6 @@ public class LayoutPageTemplateEntryServiceUtil {
 			uuid, groupId);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static int getLayoutPageTemplateCollectionsCount(
-		long groupId, long layoutPageTemplateCollectionId) {
-
-		return getService().getLayoutPageTemplateCollectionsCount(
-			groupId, layoutPageTemplateCollectionId);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static int getLayoutPageTemplateCollectionsCount(
-		long groupId, long layoutPageTemplateCollectionId, int status) {
-
-		return getService().getLayoutPageTemplateCollectionsCount(
-			groupId, layoutPageTemplateCollectionId, status);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static int getLayoutPageTemplateCollectionsCount(
-		long groupId, long layoutPageTemplateCollectionId, String name) {
-
-		return getService().getLayoutPageTemplateCollectionsCount(
-			groupId, layoutPageTemplateCollectionId, name);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static int getLayoutPageTemplateCollectionsCount(
-		long groupId, long layoutPageTemplateCollectionId, String name,
-		int status) {
-
-		return getService().getLayoutPageTemplateCollectionsCount(
-			groupId, layoutPageTemplateCollectionId, name, status);
-	}
-
 	public static java.util.List
 		<com.liferay.layout.page.template.model.LayoutPageTemplateEntry>
 			getLayoutPageTemplateEntries(

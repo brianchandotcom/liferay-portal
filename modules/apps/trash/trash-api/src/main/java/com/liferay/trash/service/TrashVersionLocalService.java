@@ -181,15 +181,6 @@ public interface TrashVersionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TrashVersion fetchTrashVersion(long versionId);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #fetchVersion(String, long)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashVersion fetchVersion(
-		long entryId, String className, long classPK);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TrashVersion fetchVersion(String className, long classPK);
 

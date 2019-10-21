@@ -588,28 +588,6 @@ public interface JournalArticleService extends BaseService {
 		throws PortalException;
 
 	/**
-	 * Returns the web content from the web content article matching the group,
-	 * article ID, and version.
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param articleId the primary key of the web content article
-	 * @param version the web content article's version
-	 * @param languageId the primary key of the language translation to get
-	 * @param themeDisplay the theme display
-	 * @return the matching web content
-	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getArticleContent(long, String, double, String,
-	 PortletRequestModel, ThemeDisplay)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String getArticleContent(
-			long groupId, String articleId, double version, String languageId,
-			ThemeDisplay themeDisplay)
-		throws PortalException;
-
-	/**
 	 * Returns the latest web content from the web content article matching the
 	 * group and article ID.
 	 *
@@ -626,72 +604,6 @@ public interface JournalArticleService extends BaseService {
 			long groupId, String articleId, String languageId,
 			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
 		throws PortalException;
-
-	/**
-	 * Returns the latest web content from the web content article matching the
-	 * group and article ID.
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param articleId the primary key of the web content article
-	 * @param languageId the primary key of the language translation to get
-	 * @param themeDisplay the theme display
-	 * @return the matching web content
-	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getArticleContent(long, String, String, PortletRequestModel,
-	 ThemeDisplay)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String getArticleContent(
-			long groupId, String articleId, String languageId,
-			ThemeDisplay themeDisplay)
-		throws PortalException;
-
-	/**
-	 * Returns all the web content articles matching the group and folder.
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param folderId the primary key of the web content article folder
-	 * @return the matching web content articles
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getArticles(long
-	 groupId, long folderId, Locale locale)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalArticle> getArticles(long groupId, long folderId);
-
-	/**
-	 * Returns an ordered range of all the web content articles matching the
-	 * group and folder.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param folderId the primary key of the web content article folder
-	 * @param start the lower bound of the range of web content articles to
-	 return
-	 * @param end the upper bound of the range of web content articles to
-	 return (not inclusive)
-	 * @param obc the comparator to order the web content articles
-	 * @return the matching web content articles
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getArticles(long
-	 groupId, long folderId, Locale locale, int start, int end,
-	 OrderByComparator obc)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalArticle> getArticles(
-		long groupId, long folderId, int start, int end,
-		OrderByComparator<JournalArticle> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getArticles(
@@ -1284,22 +1196,6 @@ public interface JournalArticleService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
-
-	/**
-	 * Moves all versions of the web content article matching the group and
-	 * article ID to the folder.
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param articleId the primary key of the web content article
-	 * @param newFolderId the primary key of the web content article's new
-	 folder
-	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #moveArticle(long, String, long, ServiceContext)}
-	 */
-	@Deprecated
-	public void moveArticle(long groupId, String articleId, long newFolderId)
-		throws PortalException;
 
 	/**
 	 * Moves all versions of the web content article matching the group and

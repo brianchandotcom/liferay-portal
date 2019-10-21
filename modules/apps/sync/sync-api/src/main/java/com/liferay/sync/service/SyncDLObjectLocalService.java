@@ -61,25 +61,6 @@ public interface SyncDLObjectLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SyncDLObjectLocalServiceUtil} to access the sync dl object local service. Add custom service methods to <code>com.liferay.sync.service.impl.SyncDLObjectLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addSyncDLObject(long, long, String, long, long, long,
-	 String, String, String, String, String, String, String,
-	 String, long, long, String, String, String, Date, long,
-	 String, String, long, String)}
-	 */
-	@Deprecated
-	public SyncDLObject addSyncDLObject(
-			long companyId, long userId, String userName, long modifiedTime,
-			long repositoryId, long parentFolderId, String treePath,
-			String name, String extension, String mimeType, String description,
-			String changeLog, String extraSettings, String version,
-			long versionId, long size, String checksum, String event,
-			Date lockExpirationDate, long lockUserId, String lockUserName,
-			String type, long typePK, String typeUuid)
-		throws PortalException;
-
 	public SyncDLObject addSyncDLObject(
 			long companyId, long userId, String userName, long modifiedTime,
 			long repositoryId, long parentFolderId, String treePath,

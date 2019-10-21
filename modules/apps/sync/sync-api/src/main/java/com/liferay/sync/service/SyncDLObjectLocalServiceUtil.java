@@ -39,31 +39,10 @@ public class SyncDLObjectLocalServiceUtil {
 	 */
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addSyncDLObject(long, long, String, long, long, long,
-	 String, String, String, String, String, String, String,
-	 String, long, long, String, String, String, Date, long,
-	 String, String, long, String)}
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link SyncDLObjectLocalServiceUtil} to access the sync dl object local service. Add custom service methods to <code>com.liferay.sync.service.impl.SyncDLObjectLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Deprecated
-	public static com.liferay.sync.model.SyncDLObject addSyncDLObject(
-			long companyId, long userId, String userName, long modifiedTime,
-			long repositoryId, long parentFolderId, String treePath,
-			String name, String extension, String mimeType, String description,
-			String changeLog, String extraSettings, String version,
-			long versionId, long size, String checksum, String event,
-			java.util.Date lockExpirationDate, long lockUserId,
-			String lockUserName, String type, long typePK, String typeUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addSyncDLObject(
-			companyId, userId, userName, modifiedTime, repositoryId,
-			parentFolderId, treePath, name, extension, mimeType, description,
-			changeLog, extraSettings, version, versionId, size, checksum, event,
-			lockExpirationDate, lockUserId, lockUserName, type, typePK,
-			typeUuid);
-	}
-
 	public static com.liferay.sync.model.SyncDLObject addSyncDLObject(
 			long companyId, long userId, String userName, long modifiedTime,
 			long repositoryId, long parentFolderId, String treePath,

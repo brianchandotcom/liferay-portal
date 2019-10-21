@@ -217,18 +217,6 @@ public class JournalFolderServiceWrapper
 		return _journalFolderService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getSubfolderIds(List, long, long, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void getSubfolderIds(
-		java.util.List<Long> folderIds, long groupId, long folderId) {
-
-		_journalFolderService.getSubfolderIds(folderIds, groupId, folderId);
-	}
-
 	@Override
 	public void getSubfolderIds(
 		java.util.List<Long> folderIds, long groupId, long folderId,

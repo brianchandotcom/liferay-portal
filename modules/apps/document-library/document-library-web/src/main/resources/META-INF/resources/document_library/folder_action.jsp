@@ -27,10 +27,10 @@ if (folder != null) {
 	folderId = folder.getFolderId();
 }
 
-DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
+long repositoryId = folderActionDisplayContext.getRepositoryId();
 %>
 
-<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+<c:if test="<%= folderActionDisplayContext.isShowActions() %>">
 	<liferay-ui:icon-menu
 		direction="left-side"
 		icon="<%= StringPool.BLANK %>"
@@ -38,12 +38,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 		message='<%= LanguageUtil.get(request, "actions") %>'
 		showWhenSingleIcon="<%= true %>"
 	>
-
-		<%
-		boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
-		%>
-
-		<c:if test="<%= hasViewPermission && ((folder == null) || !RepositoryUtil.isExternalRepository(folder.getRepositoryId())) %>">
+		<c:if test="<%= folderActionDisplayContext.isDownloadFolderActionVisible() %>">
 			<portlet:resourceURL id="/document_library/download_folder" var="downloadURL">
 				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 				<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -58,12 +53,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 		<c:choose>
 			<c:when test="<%= folder != null %>">
-
-				<%
-				boolean hasUpdatePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE);
-				%>
-
-				<c:if test="<%= hasUpdatePermission %>">
+				<c:if test="<%= folderActionDisplayContext.hasUpdatePermission() %>">
 					<c:choose>
 						<c:when test="<%= !folder.isMountPoint() && !folder.isRoot() %>">
 
@@ -100,14 +90,14 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					</c:choose>
 				</c:if>
 
-				<c:if test="<%= hasUpdatePermission && !(folder.isMountPoint() || (RepositoryUtil.isExternalRepository(repositoryId) && folder.isRoot())) %>">
+				<c:if test="<%= folderActionDisplayContext.isMoveFolderActionVisible() %>">
 					<liferay-ui:icon
 						message="move"
 						url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "move(1, 'rowIdsFolder', " + folderId + ");" %>'
 					/>
 				</c:if>
 
-				<c:if test="<%= folder.isMountPoint() && folder.isRepositoryCapabilityProvided(TemporaryFileEntriesCapability.class) %>">
+				<c:if test="<%= folderActionDisplayContext.isDeleteExpiredTemporaryFileEntriesActionVisible() %>">
 					<portlet:actionURL name="/document_library/edit_folder" var="deleteExpiredTemporaryFileEntriesURL">
 						<portlet:param name="<%= Constants.CMD %>" value="deleteExpiredTemporaryFileEntries" />
 						<portlet:param name="redirect" value="<%= folderActionDisplayContext.getRedirect() %>" />
@@ -121,12 +111,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				</c:if>
 			</c:when>
 			<c:otherwise>
-
-				<%
-				boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null);
-				%>
-
-				<c:if test="<%= workflowEnabled && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>">
+				<c:if test="<%= folderActionDisplayContext.isEditFolderActionVisible() %>">
 					<portlet:renderURL var="editURL">
 						<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
 						<portlet:param name="redirect" value="<%= folderActionDisplayContext.getRedirect() %>" />
@@ -141,7 +126,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					/>
 				</c:if>
 
-				<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
+				<c:if test="<%= folderActionDisplayContext.isAddFolderActionVisible() %>">
 					<portlet:renderURL var="addFolderURL">
 						<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
 						<portlet:param name="redirect" value="<%= folderActionDisplayContext.getRedirect() %>" />
@@ -156,7 +141,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					/>
 				</c:if>
 
-				<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY) %>">
+				<c:if test="<%= folderActionDisplayContext.isAddRepositoryActionVisible() %>">
 					<portlet:renderURL var="addRepositoryURL">
 						<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
 						<portlet:param name="redirect" value="<%= folderActionDisplayContext.getRedirect() %>" />
@@ -172,7 +157,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 		</c:choose>
 
 		<c:if test="<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
-			<c:if test="<%= ((folder == null) || !folder.isMountPoint()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
+			<c:if test="<%= folderActionDisplayContext.isAddMediaActionVisible() %>">
 				<portlet:renderURL var="editFileEntryURL">
 					<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
 					<portlet:param name="redirect" value="<%= folderActionDisplayContext.getRedirect() %>" />
@@ -185,7 +170,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					url="<%= editFileEntryURL %>"
 				/>
 
-				<c:if test="<%= (folder == null) || folder.isSupportsMultipleUpload() %>">
+				<c:if test="<%= folderActionDisplayContext.isMultipleUploadSupported() %>">
 					<portlet:renderURL var="addMultipleFileEntriesURL">
 						<portlet:param name="mvcRenderCommandName" value="/document_library/upload_multiple_file_entries" />
 						<portlet:param name="redirect" value="<%= folderActionDisplayContext.getRedirect() %>" />
@@ -202,7 +187,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				</c:if>
 			</c:if>
 
-			<c:if test="<%= hasViewPermission && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, folderActionDisplayContext.getStatus()) > 0) %>">
+			<c:if test="<%= folderActionDisplayContext.isViewSlideShowActionVisible() %>">
 				<liferay-ui:icon
 					cssClass='<%= folderActionDisplayContext.getRandomNamespace() + "-slide-show" %>'
 					message="view-slide-show"
@@ -210,7 +195,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				/>
 			</c:if>
 
-			<c:if test="<%= ((folder == null) || (!folder.isMountPoint() && folder.isSupportsShortcuts())) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
+			<c:if test="<%= folderActionDisplayContext.isAddFileShortcutActionVisible() %>">
 				<portlet:renderURL var="editFileShortcutURL">
 					<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
 					<portlet:param name="redirect" value="<%= folderActionDisplayContext.getRedirect() %>" />
@@ -225,11 +210,11 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 			</c:if>
 		</c:if>
 
-		<c:if test="<%= hasViewPermission && portletDisplay.isWebDAVEnabled() && ((folder == null) || (folder.getRepositoryId() == scopeGroupId)) %>">
+		<c:if test="<%= folderActionDisplayContext.isAccessFromDesktopActionVisible() %>">
 			<liferay-util:include page="/document_library/access_from_desktop.jsp" servletContext="<%= application %>" />
 		</c:if>
 
-		<c:if test="<%= folderActionDisplayContext.isShowPermissionsURL() && !(folder.isMountPoint() || (RepositoryUtil.isExternalRepository(repositoryId) && folder.isRoot())) %>">
+		<c:if test="<%= folderActionDisplayContext.isPermissionsActionVisible() %>">
 			<liferay-security:permissionsURL
 				modelResource="<%= folderActionDisplayContext.getModelResource() %>"
 				modelResourceDescription="<%= HtmlUtil.escape(folderActionDisplayContext.getModelResourceDescription()) %>"
@@ -246,7 +231,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 			/>
 		</c:if>
 
-		<c:if test="<%= (folder != null) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.DELETE) %>">
+		<c:if test="<%= folderActionDisplayContext.isDeleteFolderActionVisible() %>">
 
 			<%
 			String mvcRenderCommandName = "/image_gallery_display/view";
@@ -306,14 +291,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 			</c:choose>
 		</c:if>
 
-		<%
-		boolean documentLibraryAdmin = portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
-		boolean hasExportImportPortletInfoPermission = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
-		boolean inStagingGroup = stagingGroupHelper.isStagingGroup(scopeGroupId);
-		boolean portletStaged = stagingGroupHelper.isStagedPortlet(scopeGroupId, DLPortletKeys.DOCUMENT_LIBRARY);
-		%>
-
-		<c:if test="<%= (folder != null) && documentLibraryAdmin && hasExportImportPortletInfoPermission && inStagingGroup && portletStaged %>">
+		<c:if test="<%= folderActionDisplayContext.isPublishFolderActionVisible() %>">
 			<portlet:actionURL name="/document_library/publish_folder" var="publishFolderURL">
 				<portlet:param name="backURL" value="<%= folderActionDisplayContext.getRedirect() %>" />
 				<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />

@@ -30,9 +30,7 @@ page import="com.liferay.portal.kernel.lock.Lock" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.repository.capabilities.TrashCapability" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
-page import="com.liferay.portal.util.RepositoryUtil" %><%@
-page import="com.liferay.staging.StagingGroupHelper" %><%@
-page import="com.liferay.staging.StagingGroupHelperUtil" %>
+page import="com.liferay.portal.util.RepositoryUtil" %>
 
 <%@ page import="java.util.Objects" %>
 
@@ -58,8 +56,6 @@ String rootFolderName = dlAdminDisplayContext.getRootFolderName();
 
 boolean showComments = ParamUtil.getBoolean(request, "showComments", true);
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
-
-StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
 %>
 
 <%@ include file="/document_library/init-ext.jsp" %>

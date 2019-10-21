@@ -20,6 +20,7 @@ import com.liferay.depot.service.base.DepotEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -84,20 +85,20 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		DepotEntry depotEntry = getDepotEntry(depotEntryId);
+
+		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
+
 		_validateNameMap(
 			nameMap,
 			LocaleUtil.fromLanguageId(
 				formTypeSettingsProperties.getProperty("languageId")));
 
-		DepotEntry depotEntry = getDepotEntry(depotEntryId);
-
-		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
-
-		UnicodeProperties currentTypeSettingsProperties =
+	    UnicodeProperties currentTypeSettingsProperties =
 			group.getTypeSettingsProperties();
 
 		boolean inheritLocales = GetterUtil.getBoolean(
-			currentTypeSettingsProperties.getProperty("inheritLocales"));
+			currentTypeSettingsProperties.getProperty("inheritLocales"), true);
 
 		if (formTypeSettingsProperties.containsKey("inheritLocales")) {
 			inheritLocales = GetterUtil.getBoolean(
@@ -112,26 +113,20 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 						LanguageUtil.getAvailableLocales())));
 		}
 
-		if (!formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) ||
-			Validator.isNull(
-				formTypeSettingsProperties.getProperty(PropsKeys.LOCALES))) {
-
-			throw new LocaleException(
-				LocaleException.TYPE_DEFAULT,
-				"Must have at least one valid locale for site " +
-					depotEntry.getGroupId());
-		}
+		_validateTypeSettingsProperties(
+			currentTypeSettingsProperties, depotEntry,
+			formTypeSettingsProperties);
 
 		currentTypeSettingsProperties.putAll(formTypeSettingsProperties);
 
 		group = _groupLocalService.updateGroup(
-			group.getGroupId(), currentTypeSettingsProperties.toString());
-
-		_groupLocalService.updateGroup(
 			depotEntry.getGroupId(), group.getParentGroupId(), nameMap,
 			descriptionMap, group.getType(), group.isManualMembership(),
 			group.getMembershipRestriction(), group.getFriendlyURL(),
 			group.isInheritContent(), group.isActive(), serviceContext);
+
+		_groupLocalService.updateGroup(
+			group.getGroupId(), formTypeSettingsProperties.toString());
 
 		return depotEntryPersistence.update(depotEntry);
 	}
@@ -147,7 +142,40 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		}
 	}
 
+	private void _validateTypeSettingsProperties(
+			UnicodeProperties currentTypeSettingsProperties,
+			DepotEntry depotEntry, UnicodeProperties formTypeSettingsProperties)
+		throws LocaleException {
+
+		if (formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) &&
+			Validator.isNull(
+				formTypeSettingsProperties.getProperty(PropsKeys.LOCALES))) {
+
+			throw new LocaleException(
+				LocaleException.TYPE_DEFAULT,
+				"Must have at least one valid locale for repository " +
+					depotEntry.getGroupId());
+		}
+
+		if ((!formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) ||
+			 Validator.isNull(
+				 formTypeSettingsProperties.getProperty(PropsKeys.LOCALES))) &&
+			(!currentTypeSettingsProperties.containsKey(PropsKeys.LOCALES) ||
+			 Validator.isNull(
+				 currentTypeSettingsProperties.getProperty(
+					 PropsKeys.LOCALES)))) {
+
+			throw new LocaleException(
+				LocaleException.TYPE_DEFAULT,
+				"Must have at least one valid locale for repository " +
+					depotEntry.getGroupId());
+		}
+	}
+
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 }

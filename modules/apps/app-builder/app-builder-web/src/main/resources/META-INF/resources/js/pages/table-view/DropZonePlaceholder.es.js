@@ -13,8 +13,8 @@
  */
 
 import classNames from 'classnames';
-import {useDrop} from 'react-dnd';
 import React, {useLayoutEffect, useState} from 'react';
+import {useDrop} from 'react-dnd';
 
 import {getColumnNode, getColumns} from './utils.es';
 

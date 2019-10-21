@@ -12,8 +12,8 @@
  * details.
  */
 
-import {createPortal} from 'react-dom';
 import React, {useState, useContext} from 'react';
+import {createPortal} from 'react-dom';
 
 import {AppContext} from '../../AppContext.es';
 import {ControlMenuBase} from '../../components/control-menu/ControlMenu.es';

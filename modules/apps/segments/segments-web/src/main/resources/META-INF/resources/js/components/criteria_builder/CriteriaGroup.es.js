@@ -15,8 +15,8 @@
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import {PropTypes} from 'prop-types';
-import {DragSource as dragSource} from 'react-dnd';
 import React, {Component, Fragment} from 'react';
+import {DragSource as dragSource} from 'react-dnd';
 
 import {CONJUNCTIONS} from '../../utils/constants.es';
 import {DragTypes} from '../../utils/drag-types.es';

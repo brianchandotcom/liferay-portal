@@ -15,8 +15,8 @@
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {Component} from 'metal-component';
 import Soy from 'metal-soy';
-import ReactDOM from 'react-dom';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import {getConnectedComponent} from './ConnectedComponent.es';
 import StateProvider from './StateProvider.es';

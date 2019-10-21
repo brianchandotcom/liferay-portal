@@ -14,8 +14,8 @@
 
 import ClayAlert from '@clayui/alert';
 import {render} from 'frontend-js-react-web';
-import {unmountComponentAtNode} from 'react-dom';
 import React from 'react';
+import {unmountComponentAtNode} from 'react-dom';
 
 const DEFAULT_ALERT_CONTAINER_ID = 'alertContainer';
 

@@ -19,8 +19,8 @@ import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import {fetch} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
-import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 import React, {Component} from 'react';
+import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 
 import ThemeContext from '../../ThemeContext.es';
 import {PROPERTY_TYPES} from '../../utils/constants.es';
@@ -234,7 +234,7 @@ class CriteriaRow extends Component {
 		return (
 			<span>
 				<b className="mr-1 text-dark">{propertyLabel}</b>
-				<span className="operator mr-1">{operatorLabel}</span>
+				<span className="mr-1 operator">{operatorLabel}</span>
 				<b>{parsedValue}</b>
 			</span>
 		);
@@ -348,7 +348,7 @@ class CriteriaRow extends Component {
 
 		return (
 			<ClayAlert
-				className="bg-transparent p-1 mt-1 border-0"
+				className="bg-transparent border-0 mt-1 p-1"
 				displayType="danger"
 				title={Liferay.Language.get('error')}
 			>
@@ -393,7 +393,7 @@ class CriteriaRow extends Component {
 				</span>
 
 				<ClaySelectWithOption
-					className="criterion-input operator-input form-control"
+					className="criterion-input form-control operator-input"
 					disabled={disabledInput}
 					onChange={this._handleInputChange('operatorName')}
 					options={filteredSupportedOperators.map(

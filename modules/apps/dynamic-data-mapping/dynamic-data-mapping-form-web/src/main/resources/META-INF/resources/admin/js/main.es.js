@@ -30,11 +30,11 @@ import {
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 import compose from 'dynamic-data-mapping-form-renderer/js/util/compose.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import core from 'metal';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
-import core from 'metal';
 
 import PreviewButton from './components/PreviewButton/PreviewButton.es';
 import PublishButton from './components/PublishButton/PublishButton.es';

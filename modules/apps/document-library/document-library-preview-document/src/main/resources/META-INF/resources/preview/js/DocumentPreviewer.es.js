@@ -234,7 +234,7 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 						{showPageInput && (
 							<div className="floating-bar-input-wrapper">
 								<input
-									className="form-control form-control-sm floating-bar-input"
+									className="floating-bar-input form-control form-control-sm"
 									max={totalPages}
 									min="1"
 									onBlur={handleBlurPageInput}

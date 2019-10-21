@@ -12,8 +12,8 @@
  * details.
  */
 
-import {EventHandler} from 'metal-events';
 import {object} from 'metal';
+import {EventHandler} from 'metal-events';
 
 import {
 	FLOATING_TOOLBAR_BUTTONS,

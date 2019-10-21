@@ -12,8 +12,8 @@
  * details.
  */
 
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import {AOP} from 'frontend-js-web';
+import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import {delegate, on} from 'metal-dom';
 import {EventHandler} from 'metal-events';
 

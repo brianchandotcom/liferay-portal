@@ -84,10 +84,10 @@ export default ({
 			<Loading isLoading={isLoading}>
 				<EditAppContext.Provider value={{dispatch, state}}>
 					<div className="container-fluid container-fluid-max-lg mt-4">
-						<div className="card card-root shadowless-card mb-0">
+						<div className="card card-root mb-0 shadowless-card">
 							<EditAppHeader />
 
-							<div className="card-body shadowless-card-body p-0">
+							<div className="card-body p-0 shadowless-card-body">
 								<div className="autofit-row">
 									<div className="col-md-12">
 										<MultiStepNav

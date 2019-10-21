@@ -13,8 +13,8 @@
  */
 
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 
 import Carousel from './Carousel.es';
 import Footer from './Footer.es';

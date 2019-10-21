@@ -12,8 +12,8 @@
  * details.
  */
 
-import globals from 'senna/lib/globals/globals';
 import {HtmlScreen} from 'senna';
+import globals from 'senna/lib/globals/globals';
 
 /**
  * EventScreen

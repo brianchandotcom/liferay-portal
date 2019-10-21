@@ -12,9 +12,9 @@
  * details.
  */
 
+import core from 'metal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import core from 'metal';
 
 import KeyboardFocusManager from './../../keyboard-focus/KeyboardFocusManager.es';
 import templates from './Treeview.soy';

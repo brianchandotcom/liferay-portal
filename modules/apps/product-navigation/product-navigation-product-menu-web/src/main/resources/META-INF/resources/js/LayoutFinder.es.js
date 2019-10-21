@@ -180,11 +180,11 @@ function LayoutFinder(props) {
 			)}
 
 			{loading && (
-				<ClayLoadingIndicator className="mt-3 mb-0" light small />
+				<ClayLoadingIndicator className="mb-0 mt-3" light small />
 			)}
 
 			{totalCount === 0 && !loading && keywords.length > 1 && (
-				<div className="text-center mt-3">
+				<div className="mt-3 text-center">
 					{Liferay.Language.get('page-not-found')}
 				</div>
 			)}

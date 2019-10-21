@@ -13,8 +13,8 @@
  */
 
 import classNames from 'classnames';
-import {useDrop} from 'react-dnd';
 import React, {useLayoutEffect, useRef, useState} from 'react';
+import {useDrop} from 'react-dnd';
 
 import Table from '../../components/table/Table.es';
 import {DRAG_FIELD_TYPE} from '../../utils/dragTypes.es';
@@ -91,7 +91,7 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 					key: label,
 					value: (
 						<div className="container p-0">
-							<div className="row align-items-center">
+							<div className="align-items-center row">
 								<div className="col">{label}</div>
 							</div>
 						</div>

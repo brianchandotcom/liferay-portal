@@ -37,13 +37,13 @@ export default ({endpoint, title, ...restProps}) => {
 
 	return (
 		<>
-			<div className="autofit-row pl-4 pr-4 mb-4">
+			<div className="autofit-row mb-4 pl-4 pr-4">
 				<div className="autofit-col-expand">
 					<h2>{title}</h2>
 				</div>
 			</div>
 
-			<div className="autofit-row pl-4 pr-4 mb-4">
+			<div className="autofit-row mb-4 pl-4 pr-4">
 				<div className="autofit-col-expand">
 					<div className="input-group">
 						<div className="input-group-item">

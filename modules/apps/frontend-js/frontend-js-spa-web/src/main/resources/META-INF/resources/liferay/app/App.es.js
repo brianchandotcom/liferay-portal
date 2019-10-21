@@ -13,8 +13,8 @@
  */
 
 import {openToast} from 'frontend-js-web';
-import dom from 'metal-dom';
 import core from 'metal';
+import dom from 'metal-dom';
 import {App} from 'senna';
 
 import LiferaySurface from '../surface/Surface.es';

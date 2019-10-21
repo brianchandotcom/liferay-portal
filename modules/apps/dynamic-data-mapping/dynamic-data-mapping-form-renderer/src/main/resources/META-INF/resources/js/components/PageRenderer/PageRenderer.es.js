@@ -25,10 +25,10 @@ import 'clay-button';
 import 'clay-dropdown';
 
 import 'clay-modal';
+import core from 'metal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import core from 'metal';
 
 import * as FormSupport from '../FormRenderer/FormSupport.es';
 import templates from './PageRenderer.soy.js';

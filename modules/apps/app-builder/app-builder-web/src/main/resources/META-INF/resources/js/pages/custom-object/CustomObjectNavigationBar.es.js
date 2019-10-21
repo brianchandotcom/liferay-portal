@@ -13,8 +13,8 @@
  */
 
 import ClayNavigationBar from '@clayui/navigation-bar';
-import {NavLink, withRouter} from 'react-router-dom';
 import React from 'react';
+import {NavLink, withRouter} from 'react-router-dom';
 
 const {Item} = ClayNavigationBar;
 

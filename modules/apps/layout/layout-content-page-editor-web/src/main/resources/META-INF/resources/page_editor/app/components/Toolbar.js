@@ -14,8 +14,8 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {useIsMounted} from 'frontend-js-react-web';
-import ReactDOM from 'react-dom';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
@@ -105,7 +105,7 @@ function ToolbarBody() {
 	const {languageIcon} = availableLanguages[defaultLanguageId];
 
 	return (
-		<div className="page-editor-toolbar container-fluid container-fluid-max-xl">
+		<div className="container-fluid container-fluid-max-xl page-editor-toolbar">
 			<ul className="navbar-nav">
 				{toolbarPlugins.map(
 					({loadingPlaceholder, pluginEntryPoint}) => {

@@ -16,9 +16,9 @@ import 'clay-dropdown';
 
 import 'clay-modal';
 import {CompatibilityEventProxy} from 'frontend-js-web';
+import {core} from 'metal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {core} from 'metal';
 
 import templates from './TranslationManager.soy';
 

@@ -37,7 +37,7 @@ export default function PageEditor() {
 	);
 }
 
-function Body({layoutData, fragmentEntryLinks}) {
+function Body({fragmentEntryLinks, layoutData}) {
 	return layoutData.structure.map((row, index) => {
 		return (
 			<Row

@@ -12,11 +12,11 @@
  * details.
  */
 
+import {isFunction, isObject} from 'metal';
 import Component from 'metal-component';
 import {closest, globalEval} from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {isFunction, isObject} from 'metal';
 
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {shouldUpdateOnChangeProperties} from '../../utils/FragmentsEditorComponentUtils.es';

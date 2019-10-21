@@ -14,10 +14,10 @@
 
 'use strict';
 
-import {match} from 'metal-dom';
 import {async} from 'metal';
-import globals from 'senna/lib/globals/globals';
+import {match} from 'metal-dom';
 import {utils, version} from 'senna';
+import globals from 'senna/lib/globals/globals';
 
 import App from './app/App.es';
 import ActionURLScreen from './screen/ActionURLScreen.es';

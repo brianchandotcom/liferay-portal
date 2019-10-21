@@ -16,8 +16,8 @@ import FormBuilder from 'dynamic-data-mapping-form-builder/js/components/FormBui
 import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
-import Component, {Config} from 'metal-jsx';
 import core from 'metal';
+import Component, {Config} from 'metal-jsx';
 
 /**
  * Data Layout Builder.

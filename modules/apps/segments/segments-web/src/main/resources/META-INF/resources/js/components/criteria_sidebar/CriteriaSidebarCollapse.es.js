@@ -97,7 +97,7 @@ class CriteriaSidebarCollapse extends Component {
 			: properties;
 
 		return (
-			<ul className="sidebar-collapse-groups list-unstyled">
+			<ul className="list-unstyled sidebar-collapse-groups">
 				{propertyGroups.map(propertyGroup => {
 					const active = propertyGroup.propertyKey === propertyKey;
 
@@ -121,7 +121,7 @@ class CriteriaSidebarCollapse extends Component {
 								className="sidebar-collapse-header-root"
 								onClick={this._handleClick(key, active)}
 							>
-								<a className="sidebar-collapse-header d-flex justify-content-between">
+								<a className="d-flex justify-content-between sidebar-collapse-header">
 									{propertyGroup.name}
 									<span className="collapse-icon">
 										<ClayIcon

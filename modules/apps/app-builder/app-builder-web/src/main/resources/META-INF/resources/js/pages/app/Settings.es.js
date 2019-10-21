@@ -34,7 +34,7 @@ export default ({deploymentType, settings = () => <></>, subtitle, title}) => {
 
 	return (
 		<>
-			<div className="autofit-row pl-4 pr-4 mb-3">
+			<div className="autofit-row mb-3 pl-4 pr-4">
 				<div className="autofit-col-expand">
 					<section className="autofit-section">
 						<h3>{title}</h3>

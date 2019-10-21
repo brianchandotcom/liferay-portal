@@ -13,10 +13,10 @@
  */
 
 import {fetch} from 'frontend-js-web';
+import {isObject} from 'metal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {isObject} from 'metal';
 
 import templates from './DiffVersionComparator.soy';
 

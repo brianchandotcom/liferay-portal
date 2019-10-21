@@ -50,7 +50,7 @@ const ListItems = ({itemType, items}) => {
 	};
 
 	return (
-		<table className="table table-responsive table-autofit table-hover table-heading-nowrap table-nowrap">
+		<table className="table table-autofit table-heading-nowrap table-hover table-nowrap table-responsive">
 			<Head>
 				<Row>
 					<Cell expanded={true} headingCell>

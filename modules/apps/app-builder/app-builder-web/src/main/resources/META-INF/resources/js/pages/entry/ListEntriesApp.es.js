@@ -12,8 +12,8 @@
  * details.
  */
 
-import {Route, HashRouter as Router, Switch} from 'react-router-dom';
 import React from 'react';
+import {Route, HashRouter as Router, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from '../../AppContext.es';
 import ListEntries from './ListEntries.es';

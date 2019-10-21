@@ -109,7 +109,7 @@ class LocalizedDropdown extends React.Component {
 				</button>
 
 				{open && (
-					<ul className="dropdown-menu d-block" role="menu">
+					<ul className="d-block dropdown-menu" role="menu">
 						{availableLanguages.map(entry => {
 							const {hasValue, key} = entry;
 
@@ -125,7 +125,7 @@ class LocalizedDropdown extends React.Component {
 									role="presentation"
 								>
 									<span
-										className="dropdown-item palette-item lfr-icon-item taglib-icon"
+										className="dropdown-item lfr-icon-item palette-item taglib-icon"
 										role="menuitem"
 										tabIndex="0"
 										target="_self"
@@ -140,7 +140,7 @@ class LocalizedDropdown extends React.Component {
 										<span className="taglib-text-icon">
 											{keyLangToLanguageTag(key, false)}
 											{defaultLang === key && (
-												<span className="ml-1 label label-info">
+												<span className="label label-info ml-1">
 													{Liferay.Language.get(
 														'default-value'
 													)}
@@ -148,13 +148,13 @@ class LocalizedDropdown extends React.Component {
 											)}
 											{defaultLang !== key &&
 												(hasValue ? (
-													<span className="ml-1 label label-success">
+													<span className="label label-success ml-1">
 														{Liferay.Language.get(
 															'translated'
 														)}
 													</span>
 												) : (
-													<span className="ml-1 label label-warning">
+													<span className="label label-warning ml-1">
 														{Liferay.Language.get(
 															'untranslated'
 														)}

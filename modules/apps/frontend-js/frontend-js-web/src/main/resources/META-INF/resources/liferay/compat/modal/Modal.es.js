@@ -12,11 +12,11 @@
  * details.
  */
 
+import core from 'metal';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import Soy from 'metal-soy';
-import core from 'metal';
 
 import templates from './Modal.soy';
 

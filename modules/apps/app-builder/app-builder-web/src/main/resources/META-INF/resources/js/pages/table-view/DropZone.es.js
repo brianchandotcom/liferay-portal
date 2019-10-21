@@ -13,8 +13,8 @@
  */
 
 import classNames from 'classnames';
-import {useDrop} from 'react-dnd';
 import React from 'react';
+import {useDrop} from 'react-dnd';
 
 import Button from '../../components/button/Button.es';
 import Table from '../../components/table/Table.es';
@@ -76,7 +76,7 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 				key: label,
 				value: (
 					<div className="container p-0">
-						<div className="row align-items-center">
+						<div className="align-items-center row">
 							<div className="col">{label}</div>
 							<div className="col-md-auto">
 								<Button

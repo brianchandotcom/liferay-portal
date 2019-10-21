@@ -17,11 +17,11 @@ import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import * as Actions from '../actions/index';
-import {ConfigContext} from '../config/index';
-import usePlugins from '../../core/hooks/usePlugins';
 import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
+import usePlugins from '../../core/hooks/usePlugins';
+import * as Actions from '../actions/index';
+import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 import UnsafeHTML from './UnsafeHTML';
@@ -105,7 +105,7 @@ function ToolbarBody() {
 	const {languageIcon} = availableLanguages[defaultLanguageId];
 
 	return (
-		<div className="page-editor-toolbar container-fluid container-fluid-max-xl">
+		<div className="container-fluid container-fluid-max-xl page-editor-toolbar">
 			<ul className="navbar-nav">
 				{toolbarPlugins.map(
 					({loadingPlaceholder, pluginEntryPoint}) => {

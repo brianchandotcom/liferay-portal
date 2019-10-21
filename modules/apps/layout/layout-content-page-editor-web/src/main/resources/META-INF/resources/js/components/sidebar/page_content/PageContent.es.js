@@ -95,15 +95,15 @@ const PageContent = props => {
 				FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem
 			}
 		>
-			<div className="d-flex py-3 pl-3 pr-2">
+			<div className="d-flex pl-3 pr-2 py-3">
 				<div className="autofit-col autofit-col-expand">
 					<strong className="list-group-title text-truncate">
 						{props.title}
 					</strong>
 
-					<span className="text-secondary small">{props.name}</span>
+					<span className="small text-secondary">{props.name}</span>
 
-					<span className="text-secondary small">
+					<span className="small text-secondary">
 						{props.usagesCount === 1
 							? Liferay.Language.get('used-in-1-page')
 							: Liferay.Util.sub(
@@ -130,7 +130,7 @@ const PageContent = props => {
 						onActiveChange={setActive}
 						trigger={
 							<ClayButton
-								className="text-secondary btn-monospaced btn-sm"
+								className="btn-monospaced btn-sm text-secondary"
 								displayType="unstyled"
 							>
 								<ClayIcon symbol="ellipsis-v" />

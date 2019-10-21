@@ -14,8 +14,8 @@
 
 import 'clay-progress-bar';
 import {PortletBase, fetch} from 'frontend-js-web';
-import Soy from 'metal-soy';
 import core from 'metal';
+import Soy from 'metal-soy';
 
 import templates from './AdaptiveMediaProgress.soy';
 

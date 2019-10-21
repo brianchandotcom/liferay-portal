@@ -12,10 +12,10 @@
  * details.
  */
 
-import HTML5Backend from 'react-dnd-html5-backend';
-import {DragDropContext as dragDropContext} from 'react-dnd';
-import {Route, HashRouter as Router, Switch} from 'react-router-dom';
 import React from 'react';
+import {DragDropContext as dragDropContext} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import {Route, HashRouter as Router, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from './AppContext.es';
 import {ToastContextProvider} from './components/toast/ToastContext.es';

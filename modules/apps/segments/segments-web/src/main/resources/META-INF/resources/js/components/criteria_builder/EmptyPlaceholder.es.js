@@ -18,7 +18,7 @@ import {sub} from '../../utils/utils.es';
 
 export default function EmptyPlaceholder() {
 	return (
-		<div className="taglib-empty-result-message mb-0 p-5 rounded empty-contributors">
+		<div className="empty-contributors mb-0 p-5 rounded taglib-empty-result-message">
 			<div className="taglib-empty-result-message-header" />
 			<div className="sheet-text text-center">
 				<h1 className="mb-3 mt-4">

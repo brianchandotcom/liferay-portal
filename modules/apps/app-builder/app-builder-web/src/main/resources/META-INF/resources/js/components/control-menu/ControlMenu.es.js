@@ -13,9 +13,9 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import React, {useEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {Link, withRouter} from 'react-router-dom';
-import React, {useEffect, useState} from 'react';
 
 const CONTROL_MENU_CONTENT = '.control-menu-nav-item-content';
 
@@ -79,7 +79,7 @@ export default withRouter(({backURL, match: {url}, title, tooltip}) => {
 			{tooltip && (
 				<Portal containerSelector={CONTROL_MENU_CONTENT}>
 					<span
-						className="taglib-icon-help lfr-portal-tooltip"
+						className="lfr-portal-tooltip taglib-icon-help"
 						data-title={tooltip}
 					>
 						<ClayIcon symbol="question-circle-full" />

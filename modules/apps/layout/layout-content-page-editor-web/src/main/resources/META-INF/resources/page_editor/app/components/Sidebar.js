@@ -19,9 +19,9 @@ import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
 
-import usePlugins from '../../core/hooks/usePlugins';
 import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
+import usePlugins from '../../core/hooks/usePlugins';
 import useStateSafe from '../../core/hooks/useStateSafe';
 import * as Actions from '../actions/index';
 import {ConfigContext} from '../config/index';

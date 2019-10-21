@@ -41,7 +41,7 @@ const layouts = [
 
 const SidebarLayoutCard = props => (
 	<div
-		className="card card-interactive card-interactive-secondary selector-button fragments-editor-sidebar-section__card fragments-editor__drag-source fragments-editor__drag-source--sidebar-layout"
+		className="card card-interactive card-interactive-secondary fragments-editor-sidebar-section__card fragments-editor__drag-source fragments-editor__drag-source--sidebar-layout selector-button"
 		data-drag-source-label={Liferay.Language.get('layout')}
 		data-layout-index={props.layoutIndex}
 		label={Liferay.Util.sub(

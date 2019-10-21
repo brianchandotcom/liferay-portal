@@ -38,7 +38,7 @@ export default () => {
 
 	return (
 		<>
-			<div className="card-header align-items-center d-flex justify-content-between bg-transparent">
+			<div className="align-items-center bg-transparent card-header d-flex justify-content-between">
 				<UpperToolbarInput
 					onInput={onAppNameChange}
 					placeholder={Liferay.Language.get('untitled-app')}

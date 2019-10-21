@@ -12,10 +12,10 @@
  * details.
  */
 
+import {isFunction, isObject} from 'metal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {isFunction, isObject} from 'metal';
 
 import templates from './ContextualSidebar.soy';
 

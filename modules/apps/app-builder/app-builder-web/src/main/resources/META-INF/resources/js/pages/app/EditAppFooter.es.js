@@ -14,8 +14,8 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import {withRouter} from 'react-router-dom';
 import React, {useContext, useState} from 'react';
+import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
@@ -106,7 +106,7 @@ export default withRouter(
 		};
 
 		return (
-			<div className="card-footer bg-transparent">
+			<div className="bg-transparent card-footer">
 				<div className="autofit-row">
 					<div className="col-md-4">
 						<Button displayType="secondary" onClick={onCancel}>

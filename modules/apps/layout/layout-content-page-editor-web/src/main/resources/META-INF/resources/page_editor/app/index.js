@@ -14,11 +14,11 @@
 
 import React from 'react';
 
+import useThunk from '../core/hooks/useThunk';
 import App from './components/App';
 import {ConfigContext, getConfig} from './config/index';
-import useThunk from '../core/hooks/useThunk';
-import {StoreContext, getInitialState} from './store/index';
 import {DispatchContext, reducer} from './reducers/index';
+import {StoreContext, getInitialState} from './store/index';
 
 const {useReducer} = React;
 

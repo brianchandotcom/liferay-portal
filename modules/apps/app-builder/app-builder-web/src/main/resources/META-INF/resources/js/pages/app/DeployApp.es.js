@@ -20,7 +20,7 @@ import WidgetSettings from './WidgetSettings.es';
 
 const Divider = () => {
 	return (
-		<div className="autofit-row pl-2 pr-2 mb-4">
+		<div className="autofit-row mb-4 pl-2 pr-2">
 			<div className="col-md-12">
 				<h4 className="card-divider"></h4>
 			</div>
@@ -31,7 +31,7 @@ const Divider = () => {
 export default () => {
 	return (
 		<>
-			<div className="autofit-row pl-4 pr-4 mb-4">
+			<div className="autofit-row mb-4 pl-4 pr-4">
 				<div className="autofit-col-expand">
 					<h2>{`${Liferay.Language.get('deploy-as')}...`}</h2>
 				</div>

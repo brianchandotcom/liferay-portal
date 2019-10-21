@@ -12,8 +12,8 @@
  * details.
  */
 
-import {createPortal} from 'react-dom';
 import React, {useState} from 'react';
+import {createPortal} from 'react-dom';
 
 import CustomObjectSidebar from './CustomObjectSidebar.es';
 import DataLayoutBuilderDragAndDrop from './DataLayoutBuilderDragAndDrop.es';

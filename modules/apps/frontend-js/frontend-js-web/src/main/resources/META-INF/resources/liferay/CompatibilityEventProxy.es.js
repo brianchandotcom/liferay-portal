@@ -12,8 +12,8 @@
  * details.
  */
 
-import State from 'metal-state';
 import {core} from 'metal';
+import State from 'metal-state';
 
 /**
  * Adds compatibility for YUI events, re-emitting events according to YUI naming

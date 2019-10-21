@@ -15,9 +15,9 @@
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
-import {getEmptyImage} from 'react-dnd-html5-backend';
-import {useDrag} from 'react-dnd';
 import React, {useEffect} from 'react';
+import {useDrag} from 'react-dnd';
+import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {DRAG_FIELD_TYPE} from '../../utils/dragTypes.es';
 import FieldTypeDragPreview from './FieldTypeDragPreview.es';

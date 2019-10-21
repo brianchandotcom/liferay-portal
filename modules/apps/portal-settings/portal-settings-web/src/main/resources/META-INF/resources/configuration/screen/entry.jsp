@@ -83,16 +83,22 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 
 		<liferay-util:include page="<%= portalSettingsConfigurationScreenContributor.getJspPath() %>" servletContext="<%= portalSettingsConfigurationScreenContributor.getServletContext() %>" />
 
-		<div class="sheet-footer">
-			<div class="btn-group">
-				<div class="btn-group-item">
-					<aui:button type="submit" value="save" />
-				</div>
+		<c:if test="<%= portalSettingsConfigurationScreenContributor.isCancelButtonVisible() || portalSettingsConfigurationScreenContributor.isSaveButtonVisible() %>">
+			<div class="sheet-footer">
+				<div class="btn-group">
+					<c:if test="<%= portalSettingsConfigurationScreenContributor.isSaveButtonVisible() %>">
+						<div class="btn-group-item">
+							<aui:button type="submit" value="save" />
+						</div>
+					</c:if>
 
-				<div class="btn-group-item">
-					<aui:button href="<%= redirect %>" name="cancel" type="cancel" />
+					<c:if test="<%= portalSettingsConfigurationScreenContributor.isCancelButtonVisible() %>">
+						<div class="btn-group-item">
+							<aui:button href="<%= redirect %>" name="cancel" type="cancel" />
+						</div>
+					</c:if>
 				</div>
 			</div>
-		</div>
+		</c:if>
 	</aui:form>
 </div>

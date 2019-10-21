@@ -56,6 +56,14 @@ public interface PortalSettingsConfigurationScreenContributor {
 		return null;
 	}
 
+	public default boolean isCancelButtonVisible() {
+		return true;
+	}
+
+	public default boolean isSaveButtonVisible() {
+		return true;
+	}
+
 	public default boolean isVisible() {
 		return true;
 	}

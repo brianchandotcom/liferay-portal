@@ -121,7 +121,6 @@ page import="com.liferay.document.library.web.internal.search.EntriesMover" %><%
 page import="com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission" %><%@
 page import="com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryTypePermission" %><%@
 page import="com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission" %><%@
-page import="com.liferay.document.library.web.internal.security.permission.resource.DLPermission" %><%@
 page import="com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings" %><%@
 page import="com.liferay.document.library.web.internal.util.DLBreadcrumbUtil" %><%@
 page import="com.liferay.document.library.web.internal.util.DLSubscriptionUtil" %><%@

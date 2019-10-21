@@ -1511,6 +1511,6 @@ public class UsersAdminImpl implements UsersAdmin {
 		return userGroupRoles;
 	}
 
-	private Log _log = LogFactoryUtil.getLog(UsersAdminImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(UsersAdminImpl.class);
 
 }

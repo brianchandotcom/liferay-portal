@@ -35,8 +35,8 @@ public class RequiredRoleException extends PortalException {
 		super(cause);
 	}
 
-	public static final class RequiredAdminRoleException extends
-		RequiredRoleException {
+	public static final class RequiredAdminRoleException
+		extends RequiredRoleException {
 
 		public RequiredAdminRoleException() {
 		}
@@ -52,10 +52,11 @@ public class RequiredRoleException extends PortalException {
 		public RequiredAdminRoleException(Throwable cause) {
 			super(cause);
 		}
+
 	}
 
-	public static final class RequiredUserRoleException extends
-		RequiredRoleException {
+	public static final class RequiredUserRoleException
+		extends RequiredRoleException {
 
 		public RequiredUserRoleException() {
 		}
@@ -71,7 +72,7 @@ public class RequiredRoleException extends PortalException {
 		public RequiredUserRoleException(Throwable cause) {
 			super(cause);
 		}
-	}
 
+	}
 
 }

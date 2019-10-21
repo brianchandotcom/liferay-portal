@@ -34,6 +34,7 @@ public class AccountEntryUserRelSoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setAccountEntryUserRelId(model.getAccountEntryUserRelId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setAccountEntryId(model.getAccountEntryId());
 		soapModel.setAccountUserId(model.getAccountUserId());
 
@@ -114,6 +115,14 @@ public class AccountEntryUserRelSoap implements Serializable {
 		_accountEntryUserRelId = accountEntryUserRelId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getAccountEntryId() {
 		return _accountEntryId;
 	}
@@ -132,6 +141,7 @@ public class AccountEntryUserRelSoap implements Serializable {
 
 	private long _mvccVersion;
 	private long _accountEntryUserRelId;
+	private long _companyId;
 	private long _accountEntryId;
 	private long _accountUserId;
 

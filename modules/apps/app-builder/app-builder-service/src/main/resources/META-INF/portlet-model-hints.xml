@@ -18,6 +18,7 @@
 	</model>
 	<model name="com.liferay.app.builder.model.AppBuilderAppDeployment">
 		<field name="appBuilderAppDeploymentId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="appBuilderAppId" type="long" />
 		<field name="settings" type="String">
 			<hint-collection name="CLOB" />

@@ -72,7 +72,8 @@ public class AccountEntryUserRelModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"accountEntryUserRelId", Types.BIGINT},
-		{"accountEntryId", Types.BIGINT}, {"accountUserId", Types.BIGINT}
+		{"companyId", Types.BIGINT}, {"accountEntryId", Types.BIGINT},
+		{"accountUserId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -81,12 +82,13 @@ public class AccountEntryUserRelModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountEntryUserRelId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountUserId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountEntryUserRel (mvccVersion LONG default 0 not null,accountEntryUserRelId LONG not null primary key,accountEntryId LONG,accountUserId LONG)";
+		"create table AccountEntryUserRel (mvccVersion LONG default 0 not null,accountEntryUserRelId LONG not null primary key,companyId LONG,accountEntryId LONG,accountUserId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AccountEntryUserRel";
@@ -134,6 +136,7 @@ public class AccountEntryUserRelModelImpl
 
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setAccountEntryUserRelId(soapModel.getAccountEntryUserRelId());
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setAccountEntryId(soapModel.getAccountEntryId());
 		model.setAccountUserId(soapModel.getAccountUserId());
 
@@ -305,6 +308,12 @@ public class AccountEntryUserRelModelImpl
 			(BiConsumer<AccountEntryUserRel, Long>)
 				AccountEntryUserRel::setAccountEntryUserRelId);
 		attributeGetterFunctions.put(
+			"companyId", AccountEntryUserRel::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<AccountEntryUserRel, Long>)
+				AccountEntryUserRel::setCompanyId);
+		attributeGetterFunctions.put(
 			"accountEntryId", AccountEntryUserRel::getAccountEntryId);
 		attributeSetterBiConsumers.put(
 			"accountEntryId",
@@ -343,6 +352,17 @@ public class AccountEntryUserRelModelImpl
 	@Override
 	public void setAccountEntryUserRelId(long accountEntryUserRelId) {
 		_accountEntryUserRelId = accountEntryUserRelId;
+	}
+
+	@JSON
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@JSON
@@ -414,7 +434,8 @@ public class AccountEntryUserRelModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, AccountEntryUserRel.class.getName(), getPrimaryKey());
+			getCompanyId(), AccountEntryUserRel.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -447,6 +468,7 @@ public class AccountEntryUserRelModelImpl
 		accountEntryUserRelImpl.setMvccVersion(getMvccVersion());
 		accountEntryUserRelImpl.setAccountEntryUserRelId(
 			getAccountEntryUserRelId());
+		accountEntryUserRelImpl.setCompanyId(getCompanyId());
 		accountEntryUserRelImpl.setAccountEntryId(getAccountEntryId());
 		accountEntryUserRelImpl.setAccountUserId(getAccountUserId());
 
@@ -534,6 +556,8 @@ public class AccountEntryUserRelModelImpl
 		accountEntryUserRelCacheModel.accountEntryUserRelId =
 			getAccountEntryUserRelId();
 
+		accountEntryUserRelCacheModel.companyId = getCompanyId();
+
 		accountEntryUserRelCacheModel.accountEntryId = getAccountEntryId();
 
 		accountEntryUserRelCacheModel.accountUserId = getAccountUserId();
@@ -616,6 +640,7 @@ public class AccountEntryUserRelModelImpl
 
 	private long _mvccVersion;
 	private long _accountEntryUserRelId;
+	private long _companyId;
 	private long _accountEntryId;
 	private long _originalAccountEntryId;
 	private boolean _setOriginalAccountEntryId;

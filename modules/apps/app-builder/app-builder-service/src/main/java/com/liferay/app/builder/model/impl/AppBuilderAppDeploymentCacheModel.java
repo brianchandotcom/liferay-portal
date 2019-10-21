@@ -62,10 +62,12 @@ public class AppBuilderAppDeploymentCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{appBuilderAppDeploymentId=");
 		sb.append(appBuilderAppDeploymentId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", appBuilderAppId=");
 		sb.append(appBuilderAppId);
 		sb.append(", settings=");
@@ -84,6 +86,7 @@ public class AppBuilderAppDeploymentCacheModel
 
 		appBuilderAppDeploymentImpl.setAppBuilderAppDeploymentId(
 			appBuilderAppDeploymentId);
+		appBuilderAppDeploymentImpl.setCompanyId(companyId);
 		appBuilderAppDeploymentImpl.setAppBuilderAppId(appBuilderAppId);
 
 		if (settings == null) {
@@ -109,6 +112,8 @@ public class AppBuilderAppDeploymentCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		appBuilderAppDeploymentId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		appBuilderAppId = objectInput.readLong();
 		settings = objectInput.readUTF();
 		type = objectInput.readUTF();
@@ -117,6 +122,8 @@ public class AppBuilderAppDeploymentCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(appBuilderAppDeploymentId);
+
+		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(appBuilderAppId);
 
@@ -136,6 +143,7 @@ public class AppBuilderAppDeploymentCacheModel
 	}
 
 	public long appBuilderAppDeploymentId;
+	public long companyId;
 	public long appBuilderAppId;
 	public String settings;
 	public String type;

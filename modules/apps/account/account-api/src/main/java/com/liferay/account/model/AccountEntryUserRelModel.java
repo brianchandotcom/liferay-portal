@@ -16,6 +16,7 @@ package com.liferay.account.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AccountEntryUserRelModel
-	extends BaseModel<AccountEntryUserRel>, MVCCModel {
+	extends BaseModel<AccountEntryUserRel>, MVCCModel, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -83,6 +84,22 @@ public interface AccountEntryUserRelModel
 	 * @param accountEntryUserRelId the account entry user rel ID of this account entry user rel
 	 */
 	public void setAccountEntryUserRelId(long accountEntryUserRelId);
+
+	/**
+	 * Returns the company ID of this account entry user rel.
+	 *
+	 * @return the company ID of this account entry user rel
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this account entry user rel.
+	 *
+	 * @param companyId the company ID of this account entry user rel
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the account entry ID of this account entry user rel.

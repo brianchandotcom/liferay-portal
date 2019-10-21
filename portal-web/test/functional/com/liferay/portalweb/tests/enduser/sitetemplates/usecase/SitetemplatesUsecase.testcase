@@ -55,6 +55,11 @@ definition {
 			menuItem = "Manage",
 			rowEntry = "Site Template Name");
 
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Page Templates");
+
 		NavItem.gotoPageTemplates();
 
 		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
@@ -80,6 +85,11 @@ definition {
 			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Page Templates");
 
 		NavItem.gotoPageTemplates();
 

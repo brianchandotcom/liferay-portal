@@ -16,14 +16,17 @@ package com.liferay.roles.admin.internal.segments.entry;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.roles.admin.segments.entry.RoleSegmentsEntryRetriever;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,10 +51,23 @@ public class RoleSegmentsEntryRetrieverImpl
 
 		params.put("roleIds", new long[] {roleId});
 
+		Sort sort = null;
+
+		if (sortField.equals("name")) {
+			Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+			String sortFieldName = Field.getSortableFieldName(
+				"localized_name_".concat(locale.getLanguage()));
+
+			sort = new Sort(sortFieldName, Sort.STRING_TYPE, reverse);
+		}
+		else {
+			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, reverse);
+		}
+
 		return _segmentsEntryLocalService.searchSegmentsEntries(
 			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
-			keywords, true, params, cur, cur + delta,
-			new Sort(sortField, reverse));
+			keywords, true, params, cur, cur + delta, sort);
 	}
 
 	@Reference

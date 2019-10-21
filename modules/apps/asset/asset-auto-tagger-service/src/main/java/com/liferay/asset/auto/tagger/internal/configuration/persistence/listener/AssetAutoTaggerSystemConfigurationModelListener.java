@@ -14,12 +14,10 @@
 
 package com.liferay.asset.auto.tagger.internal.configuration.persistence.listener;
 
-import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
-import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
-import com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerCompanyConfiguration;
+import com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerSystemConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -27,55 +25,36 @@ import java.util.Dictionary;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
+ * @author Katie Nesterovich
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerCompanyConfiguration",
-		"model.class.name=com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerCompanyConfiguration.scoped"
-	},
+	property = "model.class.name=com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerSystemConfiguration",
 	service = ConfigurationModelListener.class
 )
-public class AssetAutoTaggerCompanyConfigurationModelListener
+public class AssetAutoTaggerSystemConfigurationModelListener
 	implements ConfigurationModelListener {
 
 	@Override
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 
-		int maximumNumberOfTagsPerAsset = GetterUtil.getInteger(
-			properties.get("maximumNumberOfTagsPerAsset"));
+		AssetAutoTaggerSystemConfiguration assetAutoTaggerSystemConfiguration =
+			ConfigurableUtil.createConfigurable(
+				AssetAutoTaggerSystemConfiguration.class, properties);
 
-		AssetAutoTaggerConfiguration systemAssetAutoTaggerConfiguration =
-			_assetAutoTaggerConfigurationFactory.
-				getSystemAssetAutoTaggerConfiguration();
-
-		int systemMaximumNumberOfTagsPerAsset =
-			systemAssetAutoTaggerConfiguration.getMaximumNumberOfTagsPerAsset();
+		int maximumNumberOfTagsPerAsset =
+			assetAutoTaggerSystemConfiguration.maximumNumberOfTagsPerAsset();
 
 		if (maximumNumberOfTagsPerAsset < 0) {
 			throw new ConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
 					_getResourceBundle(),
 					"maximum-number-of-tags-per-asset-cannot-be-negative"),
-				AssetAutoTaggerCompanyConfiguration.class, getClass(),
-				properties);
-		}
-
-		if ((systemMaximumNumberOfTagsPerAsset != 0) &&
-			((maximumNumberOfTagsPerAsset == 0) ||
-			 (systemMaximumNumberOfTagsPerAsset <
-				 maximumNumberOfTagsPerAsset))) {
-
-			throw new ConfigurationModelListenerException(
-				ResourceBundleUtil.getString(
-					_getResourceBundle(),
-					"maximum-number-of-tags-per-asset-invalid"),
-				AssetAutoTaggerCompanyConfiguration.class, getClass(),
+				AssetAutoTaggerSystemConfiguration.class, getClass(),
 				properties);
 		}
 	}
@@ -84,9 +63,5 @@ public class AssetAutoTaggerCompanyConfigurationModelListener
 		return ResourceBundleUtil.getBundle(
 			LocaleThreadLocal.getThemeDisplayLocale(), getClass());
 	}
-
-	@Reference
-	private AssetAutoTaggerConfigurationFactory
-		_assetAutoTaggerConfigurationFactory;
 
 }

@@ -475,7 +475,7 @@ public class DLAdminManagementToolbarDisplayContext {
 							String label = String.format(
 								"%s: %s",
 								LanguageUtil.get(_httpServletRequest, "owner"),
-								user.getFullName());
+								HtmlUtil.escape(user.getFullName()));
 
 							labelItem.setLabel(label);
 						});

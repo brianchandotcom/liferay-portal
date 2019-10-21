@@ -16,6 +16,7 @@ import {getFragmentEntryLinkContent} from '../reducers/fragments.es';
 import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
 import {setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
+import {isNullOrUndefined} from '../utils/isNullOrUndefined.es';
 import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
 import {
 	UPDATE_EDITABLE_VALUE_ERROR,
@@ -28,7 +29,6 @@ import {
 	updateLastSaveDateAction
 } from './saveChanges.es';
 import {updatePageContentsAction} from './updatePageContents.es';
-import {isNullOrUndefined} from '../utils/isNullOrUndefined.es';
 
 /**
  * Sets the editable value content.

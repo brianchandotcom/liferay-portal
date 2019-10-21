@@ -42,7 +42,6 @@ import {
 	getItemPath
 } from '../../utils/FragmentsEditorGetUtils.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
-import {isNullOrUndefined} from '../../utils/isNullOrUndefined.es';
 import {
 	EDITABLE_FIELD_CONFIG_KEYS,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -51,6 +50,7 @@ import {
 	CREATE_PROCESSOR_EVENT_TYPES
 } from '../../utils/constants';
 import debouncedAlert from '../../utils/debouncedAlert.es';
+import {isNullOrUndefined} from '../../utils/isNullOrUndefined.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';

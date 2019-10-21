@@ -242,33 +242,6 @@ public class NavigationMenuTag extends IncludeTag {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected List<NavItem> getMenuItems() {
-		try {
-			return _getMenuNavItems(request, new ArrayList<NavItem>());
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return new ArrayList<>();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
-		throws Exception {
-
-		return NavItemUtil.getNavItems(
-			request, _rootItemType, _rootItemLevel, _rootItemId,
-			branchNavItems);
-	}
-
 	@Override
 	protected String getPage() {
 		return _PAGE;

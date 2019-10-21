@@ -220,18 +220,6 @@ public class NavigationTag extends IncludeTag {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
-		throws Exception {
-
-		return NavItemUtil.getNavItems(
-			request, _rootLayoutType, _rootLayoutLevel, _rootLayoutUuid,
-			branchNavItems);
-	}
-
 	@Override
 	protected String getPage() {
 		return _PAGE;

@@ -1523,6 +1523,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					if (!projectPath.startsWith(":apps:") &&
 						!projectPath.startsWith(":core:") &&
+						!projectPath.startsWith(":dxp:apps:") &&
+						!projectPath.startsWith(":dxp:core:") &&
 						!projectPath.startsWith(":private:apps:") &&
 						!projectPath.startsWith(":private:core:")) {
 
@@ -2064,6 +2066,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		String projectPath = project.getPath();
 
 		if (projectPath.startsWith(":apps:") ||
+			projectPath.startsWith(":dxp:apps:") ||
 			projectPath.startsWith(":private:apps:")) {
 
 			String exportPackage = GradleUtil.toString(
@@ -2381,6 +2384,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		if (projectPath.startsWith(":apps:") ||
 			projectPath.startsWith(":core:") ||
+			projectPath.startsWith(":dxp:apps:") ||
+			projectPath.startsWith(":dxp:core:") ||
 			projectPath.startsWith(":private:apps:") ||
 			projectPath.startsWith(":private:core:")) {
 

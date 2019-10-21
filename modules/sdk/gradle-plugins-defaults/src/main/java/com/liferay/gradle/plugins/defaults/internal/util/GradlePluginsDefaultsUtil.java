@@ -217,7 +217,7 @@ public class GradlePluginsDefaultsUtil {
 	public static boolean isPrivateProject(Project project) {
 		String path = project.getPath();
 
-		if (path.startsWith(":private:")) {
+		if (path.startsWith(":dxp:") || path.startsWith(":private:")) {
 			return true;
 		}
 

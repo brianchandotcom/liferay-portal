@@ -12,8 +12,10 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import {ClaySelect} from '@clayui/form';
+import React, {useContext, useEffect, useState} from 'react';
 
+import {getItem} from '../../utils/client.es';
 import EditAppContext, {UPDATE_SETTINGS} from './EditAppContext.es';
 
 const SCOPES = [
@@ -38,6 +40,14 @@ export default () => {
 			app: {appDeployments}
 		}
 	} = useContext(EditAppContext);
+
+	const [sites, setSites] = useState([]);
+
+	useEffect(() => {
+		getItem('/o/headless-admin-user/v1.0/my-user-account/sites').then(
+			({items: sites = []}) => setSites(sites)
+		);
+	}, []);
 
 	const onScopeChange = event => {
 		const scope = event.target.value;
@@ -83,16 +93,23 @@ export default () => {
 						<label htmlFor="site">
 							{Liferay.Language.get('site')}
 						</label>
-						<select
-							className="form-control"
-							disabled={true}
+
+						<ClaySelect
+							aria-label={Liferay.Language.get('select-site')}
 							id="site"
-							value={1}
 						>
-							<option value={1}>
+							<option key={0} value={0}>
 								{Liferay.Language.get('all-sites')}
 							</option>
-						</select>
+
+							{sites.map(({id, name}) => (
+								<ClaySelect.Option
+									key={id}
+									label={name}
+									value={id}
+								/>
+							))}
+						</ClaySelect>
 					</div>
 				</div>
 			)}

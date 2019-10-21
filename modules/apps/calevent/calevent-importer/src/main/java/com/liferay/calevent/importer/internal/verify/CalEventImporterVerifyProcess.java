@@ -226,7 +226,8 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		_assetEntryLocalService.updateAssetEntry(assetEntry);
 
 		_viewCountEntryLocalService.incrementViewCount(
-			companyId, AssetEntry.class, entryId, viewCount);
+			companyId, _classNameLocalService.getClassNameId(AssetEntry.class),
+			entryId, viewCount);
 	}
 
 	private void _addAssetLink(

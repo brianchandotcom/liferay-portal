@@ -17,10 +17,10 @@ if (System.getenv("JENKINS_HOME")) {
 
 checkoutDXPScript {
 	doLast {
-		logger.lifecycle "git clone --branch=master-private --depth=1 --no-checkout --no-tags --single-branch {} {}", gitRepositoryURL, gitRepositoryDir.name
+		logger.lifecycle "git clone --branch=master-private --depth=1 --no-checkout --single-branch {} {}", gitRepositoryURL, gitRepositoryDir.name
 
 		exec {
-			commandLine "git", "clone", "--branch=master-private", "--depth=1", "--no-checkout", "--no-tags", "--single-branch", gitRepositoryURL, gitRepositoryDir.name
+			commandLine "git", "clone", "--branch=master-private", "--depth=1", "--no-checkout", "--single-branch", gitRepositoryURL, gitRepositoryDir.name
 			workingDir = projectDir.parentFile
 		}
 

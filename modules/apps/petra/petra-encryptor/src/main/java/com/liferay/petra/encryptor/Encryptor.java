@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Digester;
-import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -124,24 +123,6 @@ public class Encryptor {
 		return new SecretKeySpec(bytes, Encryptor.KEY_ALGORITHM);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             DigesterUtil#digest(String)}
-	 */
-	@Deprecated
-	public static String digest(String text) {
-		return DigesterUtil.digest(text);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             DigesterUtil#digest(String, String...)}
-	 */
-	@Deprecated
-	public static String digest(String algorithm, String text) {
-		return DigesterUtil.digest(algorithm, text);
-	}
-
 	public static String encrypt(Key key, String plainText)
 		throws EncryptorException {
 
@@ -217,14 +198,6 @@ public class Encryptor {
 		catch (Exception e) {
 			throw new EncryptorException(e);
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Provider getProvider() {
-		return _provider;
 	}
 
 	public static String serializeKey(Key key) {

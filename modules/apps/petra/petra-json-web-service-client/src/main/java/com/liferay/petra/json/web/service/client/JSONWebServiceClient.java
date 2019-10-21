@@ -54,23 +54,6 @@ public interface JSONWebServiceClient {
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException;
 
-	/**
-	 * @param      url
-	 * @param      parameters
-	 * @param      headers
-	 * @return
-	 * @throws     JSONWebServiceInvocationException
-	 * @throws     JSONWebServiceTransportException
-	 * @deprecated As of Judson (7.1.x), use {@link #doDelete(String, List,
-	 *             List)}
-	 */
-	@Deprecated
-	public String doDelete(
-			String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceTransportException;
-
 	public String doDelete(String url, String... parametersArray)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException;
@@ -125,26 +108,6 @@ public interface JSONWebServiceClient {
 			   JSONWebServiceSerializeException,
 			   JSONWebServiceTransportException;
 
-	/**
-	 * @param      clazz
-	 * @param      url
-	 * @param      parameters
-	 * @param      headers
-	 * @return
-	 * @throws     JSONWebServiceInvocationException
-	 * @throws     JSONWebServiceSerializeException
-	 * @throws     JSONWebServiceTransportException
-	 * @deprecated As of Judson (7.1.x), use {@link #doGetToList(Class, String,
-	 *             List, List)}
-	 */
-	@Deprecated
-	public <V, T> List<V> doGetToList(
-			Class<T> clazz, String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException,
-			   JSONWebServiceTransportException;
-
 	public <V, T> List<V> doGetToList(
 			Class<T> clazz, String url, String... parametersArray)
 		throws JSONWebServiceInvocationException,
@@ -177,22 +140,6 @@ public interface JSONWebServiceClient {
 	 */
 	@Deprecated
 	public String doPost(String url, Map<String, String> parameters)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceTransportException;
-
-	/**
-	 * @param      url
-	 * @param      parameters
-	 * @param      headers
-	 * @return
-	 * @throws     JSONWebServiceInvocationException
-	 * @throws     JSONWebServiceTransportException
-	 * @deprecated As of Judson (7.1.x), use {@link #doPost(String, List, List)}
-	 */
-	@Deprecated
-	public String doPost(
-			String url, Map<String, String> parameters,
-			Map<String, String> headers)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException;
 
@@ -233,26 +180,6 @@ public interface JSONWebServiceClient {
 	public <T> T doPostToObject(
 			Class<T> clazz, String url, List<NameValuePair> parameters,
 			List<NameValuePair> headers)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException,
-			   JSONWebServiceTransportException;
-
-	/**
-	 * @param      clazz
-	 * @param      url
-	 * @param      parameters
-	 * @param      headers
-	 * @return
-	 * @throws     JSONWebServiceInvocationException
-	 * @throws     JSONWebServiceSerializeException
-	 * @throws     JSONWebServiceTransportException
-	 * @deprecated As of Judson (7.1.x), use {@link #doPostToObject(Class,
-	 *             String, List, List)}
-	 */
-	@Deprecated
-	public <T> T doPostToObject(
-			Class<T> clazz, String url, Map<String, String> parameters,
-			Map<String, String> headers)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceSerializeException,
 			   JSONWebServiceTransportException;
@@ -333,26 +260,6 @@ public interface JSONWebServiceClient {
 	@Deprecated
 	public <T> T doPutToObject(
 			Class<T> clazz, String url, Map<String, String> parameters)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException,
-			   JSONWebServiceTransportException;
-
-	/**
-	 * @param      clazz
-	 * @param      url
-	 * @param      parameters
-	 * @param      headers
-	 * @return
-	 * @throws     JSONWebServiceInvocationException
-	 * @throws     JSONWebServiceSerializeException
-	 * @throws     JSONWebServiceTransportException
-	 * @deprecated As of Judson (7.1.x), use {@link #doPutToObject(Class,
-	 *             String, List, List)}
-	 */
-	@Deprecated
-	public <T> T doPutToObject(
-			Class<T> clazz, String url, Map<String, String> parameters,
-			Map<String, String> headers)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceSerializeException,
 			   JSONWebServiceTransportException;

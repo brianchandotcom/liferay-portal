@@ -225,17 +225,6 @@ public abstract class BaseJSONWebServiceClientImpl
 	}
 
 	@Override
-	public String doDelete(
-			String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceTransportException {
-
-		return doDelete(
-			url, toNameValuePairs(parameters), toNameValuePairs(headers));
-	}
-
-	@Override
 	public String doDelete(String url, String... parametersArray)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException {
@@ -345,19 +334,6 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	@Override
 	public <V, T> List<V> doGetToList(
-			Class<T> clazz, String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException,
-			   JSONWebServiceTransportException {
-
-		return doGetToList(
-			clazz, url, toNameValuePairs(parameters),
-			toNameValuePairs(headers));
-	}
-
-	@Override
-	public <V, T> List<V> doGetToList(
 			Class<T> clazz, String url, String... parametersArray)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceSerializeException,
@@ -429,17 +405,6 @@ public abstract class BaseJSONWebServiceClientImpl
 		return doPost(
 			url, toNameValuePairs(parameters),
 			Collections.<NameValuePair>emptyList());
-	}
-
-	@Override
-	public String doPost(
-			String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceTransportException {
-
-		return doPost(
-			url, toNameValuePairs(parameters), toNameValuePairs(headers));
 	}
 
 	@Override
@@ -524,19 +489,6 @@ public abstract class BaseJSONWebServiceClientImpl
 		catch (IOException ioe) {
 			throw _getJSONWebServiceSerializeException(json, clazz);
 		}
-	}
-
-	@Override
-	public <T> T doPostToObject(
-			Class<T> clazz, String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException,
-			   JSONWebServiceTransportException {
-
-		return doPostToObject(
-			clazz, url, toNameValuePairs(parameters),
-			toNameValuePairs(headers));
 	}
 
 	@Override
@@ -666,28 +618,6 @@ public abstract class BaseJSONWebServiceClientImpl
 		return doPutToObject(
 			clazz, url, toNameValuePairs(parameters),
 			Collections.<NameValuePair>emptyList());
-	}
-
-	@Override
-	public <T> T doPutToObject(
-			Class<T> clazz, String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException,
-			   JSONWebServiceTransportException {
-
-		String json = doPut(url, parameters, headers);
-
-		if (json == null) {
-			return null;
-		}
-
-		try {
-			return _objectMapper.readValue(json, clazz);
-		}
-		catch (IOException ioe) {
-			throw _getJSONWebServiceSerializeException(json, clazz);
-		}
 	}
 
 	@Override

@@ -180,7 +180,7 @@ public class FolderActionDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			_dlRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createActionURL();
 
 		Folder folder = _getFolder();
 
@@ -496,8 +496,8 @@ public class FolderActionDisplayContext {
 		Folder folder = _getFolder();
 
 		if (_hasViewPermission() &&
-			((folder != null) ||
-			 !RepositoryUtil.isExternalRepository(_getFolderId()))) {
+			((folder != null) &&
+			 !RepositoryUtil.isExternalRepository(_getRepositoryId()))) {
 
 			return true;
 		}
@@ -547,13 +547,17 @@ public class FolderActionDisplayContext {
 	}
 
 	public boolean isPermissionsActionVisible() throws PortalException {
+		if (!_hasPermissionsPermission()) {
+			return false;
+		}
+
 		Folder folder = _getFolder();
 
-		if (_hasPermissionsPermission() &&
-			!(folder.isMountPoint() ||
-			  (RepositoryUtil.isExternalRepository(_getRepositoryId()) &&
-			   folder.isRoot()))) {
+		if (folder == null) {
+			return true;
+		}
 
+		if (!folder.isMountPoint() && !folder.isRoot()){
 			return true;
 		}
 
@@ -699,7 +703,8 @@ public class FolderActionDisplayContext {
 
 			Folder folder = _getFolder();
 
-			if ((folder != null) &&
+			if ((folder != null) && !folder.isMountPoint() &&
+				!folder.isRoot() &&
 				(folder.getParentFolderId() !=
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
@@ -799,6 +804,13 @@ public class FolderActionDisplayContext {
 	private boolean _isView() {
 		if (_view != null) {
 			return _view;
+		}
+
+		Folder folder = (Folder)_httpServletRequest.getAttribute(
+			"info_panel.jsp-folder");
+
+		if ((folder != null) && (folder.getFolderId() == _getFolderId())) {
+			return true;
 		}
 
 		ResultRow row = (ResultRow)_httpServletRequest.getAttribute(

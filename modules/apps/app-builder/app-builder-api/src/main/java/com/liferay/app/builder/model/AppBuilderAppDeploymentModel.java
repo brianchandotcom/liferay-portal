@@ -16,6 +16,7 @@ package com.liferay.app.builder.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AppBuilderAppDeploymentModel
-	extends BaseModel<AppBuilderAppDeployment> {
+	extends BaseModel<AppBuilderAppDeployment>, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -67,6 +68,22 @@ public interface AppBuilderAppDeploymentModel
 	 * @param appBuilderAppDeploymentId the app builder app deployment ID of this app builder app deployment
 	 */
 	public void setAppBuilderAppDeploymentId(long appBuilderAppDeploymentId);
+
+	/**
+	 * Returns the company ID of this app builder app deployment.
+	 *
+	 * @return the company ID of this app builder app deployment
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this app builder app deployment.
+	 *
+	 * @param companyId the company ID of this app builder app deployment
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the app builder app ID of this app builder app deployment.

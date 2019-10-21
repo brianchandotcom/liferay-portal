@@ -331,6 +331,42 @@ public abstract class DEDataDefinitionFieldLinkLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns all the de data definition field links matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the de data definition field links
+	 * @param companyId the primary key of the company
+	 * @return the matching de data definition field links, or an empty list if no matches were found
+	 */
+	@Override
+	public List<DEDataDefinitionFieldLink>
+		getDEDataDefinitionFieldLinksByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return deDataDefinitionFieldLinkPersistence.findByUuid_C(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of de data definition field links matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the de data definition field links
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of de data definition field links
+	 * @param end the upper bound of the range of de data definition field links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching de data definition field links, or an empty list if no matches were found
+	 */
+	@Override
+	public List<DEDataDefinitionFieldLink>
+		getDEDataDefinitionFieldLinksByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator) {
+
+		return deDataDefinitionFieldLinkPersistence.findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns the de data definition field link matching the UUID and group.
 	 *
 	 * @param uuid the de data definition field link's UUID

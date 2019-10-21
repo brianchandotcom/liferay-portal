@@ -48,6 +48,7 @@ public class DEDataDefinitionFieldLinkWrapper
 		attributes.put(
 			"deDataDefinitionFieldLinkId", getDeDataDefinitionFieldLinkId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("ddmStructureId", getDdmStructureId());
@@ -75,6 +76,12 @@ public class DEDataDefinitionFieldLinkWrapper
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -130,6 +137,16 @@ public class DEDataDefinitionFieldLinkWrapper
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
+	}
+
+	/**
+	 * Returns the company ID of this de data definition field link.
+	 *
+	 * @return the company ID of this de data definition field link
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -225,6 +242,16 @@ public class DEDataDefinitionFieldLinkWrapper
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
+	}
+
+	/**
+	 * Sets the company ID of this de data definition field link.
+	 *
+	 * @param companyId the company ID of this de data definition field link
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
 	}
 
 	/**

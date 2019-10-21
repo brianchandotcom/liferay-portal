@@ -67,9 +67,9 @@ public class DEDataDefinitionFieldLinkModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"uuid_", Types.VARCHAR}, {"deDataDefinitionFieldLinkId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"ddmStructureId", Types.BIGINT},
-		{"fieldName", Types.VARCHAR}
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"ddmStructureId", Types.BIGINT}, {"fieldName", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -79,6 +79,7 @@ public class DEDataDefinitionFieldLinkModelImpl
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("deDataDefinitionFieldLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ddmStructureId", Types.BIGINT);
@@ -86,7 +87,7 @@ public class DEDataDefinitionFieldLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DEDataDefinitionFieldLink (uuid_ VARCHAR(75) null,deDataDefinitionFieldLinkId LONG not null primary key,groupId LONG,classNameId LONG,classPK LONG,ddmStructureId LONG,fieldName VARCHAR(75) null)";
+		"create table DEDataDefinitionFieldLink (uuid_ VARCHAR(75) null,deDataDefinitionFieldLinkId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,classPK LONG,ddmStructureId LONG,fieldName VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DEDataDefinitionFieldLink";
@@ -107,15 +108,17 @@ public class DEDataDefinitionFieldLinkModelImpl
 
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 
-	public static final long DDMSTRUCTUREID_COLUMN_BITMASK = 4L;
+	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
-	public static final long FIELDNAME_COLUMN_BITMASK = 8L;
+	public static final long DDMSTRUCTUREID_COLUMN_BITMASK = 8L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long FIELDNAME_COLUMN_BITMASK = 16L;
 
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long GROUPID_COLUMN_BITMASK = 32L;
 
-	public static final long DEDATADEFINITIONFIELDLINKID_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
+
+	public static final long DEDATADEFINITIONFIELDLINKID_COLUMN_BITMASK = 128L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -277,6 +280,12 @@ public class DEDataDefinitionFieldLinkModelImpl
 			(BiConsumer<DEDataDefinitionFieldLink, Long>)
 				DEDataDefinitionFieldLink::setGroupId);
 		attributeGetterFunctions.put(
+			"companyId", DEDataDefinitionFieldLink::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<DEDataDefinitionFieldLink, Long>)
+				DEDataDefinitionFieldLink::setCompanyId);
+		attributeGetterFunctions.put(
 			"classNameId", DEDataDefinitionFieldLink::getClassNameId);
 		attributeSetterBiConsumers.put(
 			"classNameId",
@@ -364,6 +373,28 @@ public class DEDataDefinitionFieldLinkModelImpl
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -484,7 +515,8 @@ public class DEDataDefinitionFieldLinkModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, DEDataDefinitionFieldLink.class.getName(), getPrimaryKey());
+			getCompanyId(), DEDataDefinitionFieldLink.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -518,6 +550,7 @@ public class DEDataDefinitionFieldLinkModelImpl
 		deDataDefinitionFieldLinkImpl.setDeDataDefinitionFieldLinkId(
 			getDeDataDefinitionFieldLinkId());
 		deDataDefinitionFieldLinkImpl.setGroupId(getGroupId());
+		deDataDefinitionFieldLinkImpl.setCompanyId(getCompanyId());
 		deDataDefinitionFieldLinkImpl.setClassNameId(getClassNameId());
 		deDataDefinitionFieldLinkImpl.setClassPK(getClassPK());
 		deDataDefinitionFieldLinkImpl.setDdmStructureId(getDdmStructureId());
@@ -594,6 +627,11 @@ public class DEDataDefinitionFieldLinkModelImpl
 
 		deDataDefinitionFieldLinkModelImpl._setOriginalGroupId = false;
 
+		deDataDefinitionFieldLinkModelImpl._originalCompanyId =
+			deDataDefinitionFieldLinkModelImpl._companyId;
+
+		deDataDefinitionFieldLinkModelImpl._setOriginalCompanyId = false;
+
 		deDataDefinitionFieldLinkModelImpl._originalClassNameId =
 			deDataDefinitionFieldLinkModelImpl._classNameId;
 
@@ -633,6 +671,8 @@ public class DEDataDefinitionFieldLinkModelImpl
 			getDeDataDefinitionFieldLinkId();
 
 		deDataDefinitionFieldLinkCacheModel.groupId = getGroupId();
+
+		deDataDefinitionFieldLinkCacheModel.companyId = getCompanyId();
 
 		deDataDefinitionFieldLinkCacheModel.classNameId = getClassNameId();
 
@@ -735,6 +775,9 @@ public class DEDataDefinitionFieldLinkModelImpl
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

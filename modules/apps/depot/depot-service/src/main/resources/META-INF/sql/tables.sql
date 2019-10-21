@@ -12,6 +12,7 @@ create table DepotEntry (
 create table DepotEntryGroupRel (
 	mvccVersion LONG default 0 not null,
 	depotEntryGroupRelId LONG not null primary key,
+	companyId LONG,
 	depotEntryId LONG,
 	toGroupId LONG
 );

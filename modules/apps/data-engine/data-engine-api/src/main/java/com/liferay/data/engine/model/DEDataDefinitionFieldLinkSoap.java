@@ -37,6 +37,7 @@ public class DEDataDefinitionFieldLinkSoap implements Serializable {
 		soapModel.setDeDataDefinitionFieldLinkId(
 			model.getDeDataDefinitionFieldLinkId());
 		soapModel.setGroupId(model.getGroupId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setDdmStructureId(model.getDdmStructureId());
@@ -130,6 +131,14 @@ public class DEDataDefinitionFieldLinkSoap implements Serializable {
 		_groupId = groupId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -165,6 +174,7 @@ public class DEDataDefinitionFieldLinkSoap implements Serializable {
 	private String _uuid;
 	private long _deDataDefinitionFieldLinkId;
 	private long _groupId;
+	private long _companyId;
 	private long _classNameId;
 	private long _classPK;
 	private long _ddmStructureId;

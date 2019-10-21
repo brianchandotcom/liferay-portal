@@ -76,12 +76,14 @@ public class AccountEntryUserRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", accountEntryUserRelId=");
 		sb.append(accountEntryUserRelId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", accountEntryId=");
 		sb.append(accountEntryId);
 		sb.append(", accountUserId=");
@@ -98,6 +100,7 @@ public class AccountEntryUserRelCacheModel
 
 		accountEntryUserRelImpl.setMvccVersion(mvccVersion);
 		accountEntryUserRelImpl.setAccountEntryUserRelId(accountEntryUserRelId);
+		accountEntryUserRelImpl.setCompanyId(companyId);
 		accountEntryUserRelImpl.setAccountEntryId(accountEntryId);
 		accountEntryUserRelImpl.setAccountUserId(accountUserId);
 
@@ -112,6 +115,8 @@ public class AccountEntryUserRelCacheModel
 
 		accountEntryUserRelId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		accountEntryId = objectInput.readLong();
 
 		accountUserId = objectInput.readLong();
@@ -123,6 +128,8 @@ public class AccountEntryUserRelCacheModel
 
 		objectOutput.writeLong(accountEntryUserRelId);
 
+		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(accountEntryId);
 
 		objectOutput.writeLong(accountUserId);
@@ -130,6 +137,7 @@ public class AccountEntryUserRelCacheModel
 
 	public long mvccVersion;
 	public long accountEntryUserRelId;
+	public long companyId;
 	public long accountEntryId;
 	public long accountUserId;
 

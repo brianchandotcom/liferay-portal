@@ -65,8 +65,8 @@ public class AppBuilderAppDeploymentModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"appBuilderAppDeploymentId", Types.BIGINT},
-		{"appBuilderAppId", Types.BIGINT}, {"settings_", Types.CLOB},
-		{"type_", Types.VARCHAR}
+		{"companyId", Types.BIGINT}, {"appBuilderAppId", Types.BIGINT},
+		{"settings_", Types.CLOB}, {"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -74,13 +74,14 @@ public class AppBuilderAppDeploymentModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("appBuilderAppDeploymentId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("appBuilderAppId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("settings_", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AppBuilderAppDeployment (appBuilderAppDeploymentId LONG not null primary key,appBuilderAppId LONG,settings_ TEXT null,type_ VARCHAR(75) null)";
+		"create table AppBuilderAppDeployment (appBuilderAppDeploymentId LONG not null primary key,companyId LONG,appBuilderAppId LONG,settings_ TEXT null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AppBuilderAppDeployment";
@@ -250,6 +251,12 @@ public class AppBuilderAppDeploymentModelImpl
 			(BiConsumer<AppBuilderAppDeployment, Long>)
 				AppBuilderAppDeployment::setAppBuilderAppDeploymentId);
 		attributeGetterFunctions.put(
+			"companyId", AppBuilderAppDeployment::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<AppBuilderAppDeployment, Long>)
+				AppBuilderAppDeployment::setCompanyId);
+		attributeGetterFunctions.put(
 			"appBuilderAppId", AppBuilderAppDeployment::getAppBuilderAppId);
 		attributeSetterBiConsumers.put(
 			"appBuilderAppId",
@@ -281,6 +288,16 @@ public class AppBuilderAppDeploymentModelImpl
 	@Override
 	public void setAppBuilderAppDeploymentId(long appBuilderAppDeploymentId) {
 		_appBuilderAppDeploymentId = appBuilderAppDeploymentId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -352,7 +369,8 @@ public class AppBuilderAppDeploymentModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, AppBuilderAppDeployment.class.getName(), getPrimaryKey());
+			getCompanyId(), AppBuilderAppDeployment.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -384,6 +402,7 @@ public class AppBuilderAppDeploymentModelImpl
 
 		appBuilderAppDeploymentImpl.setAppBuilderAppDeploymentId(
 			getAppBuilderAppDeploymentId());
+		appBuilderAppDeploymentImpl.setCompanyId(getCompanyId());
 		appBuilderAppDeploymentImpl.setAppBuilderAppId(getAppBuilderAppId());
 		appBuilderAppDeploymentImpl.setSettings(getSettings());
 		appBuilderAppDeploymentImpl.setType(getType());
@@ -469,6 +488,8 @@ public class AppBuilderAppDeploymentModelImpl
 
 		appBuilderAppDeploymentCacheModel.appBuilderAppDeploymentId =
 			getAppBuilderAppDeploymentId();
+
+		appBuilderAppDeploymentCacheModel.companyId = getCompanyId();
 
 		appBuilderAppDeploymentCacheModel.appBuilderAppId =
 			getAppBuilderAppId();
@@ -570,6 +591,7 @@ public class AppBuilderAppDeploymentModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _appBuilderAppDeploymentId;
+	private long _companyId;
 	private long _appBuilderAppId;
 	private long _originalAppBuilderAppId;
 	private boolean _setOriginalAppBuilderAppId;

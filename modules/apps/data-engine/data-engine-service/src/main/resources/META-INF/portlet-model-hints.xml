@@ -5,6 +5,7 @@
 		<field name="uuid" type="String" />
 		<field name="deDataDefinitionFieldLinkId" type="long" />
 		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="ddmStructureId" type="long" />

@@ -64,7 +64,7 @@ public class DEDataDefinitionFieldLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -72,6 +72,8 @@ public class DEDataDefinitionFieldLinkCacheModel
 		sb.append(deDataDefinitionFieldLinkId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -100,6 +102,7 @@ public class DEDataDefinitionFieldLinkCacheModel
 		deDataDefinitionFieldLinkImpl.setDeDataDefinitionFieldLinkId(
 			deDataDefinitionFieldLinkId);
 		deDataDefinitionFieldLinkImpl.setGroupId(groupId);
+		deDataDefinitionFieldLinkImpl.setCompanyId(companyId);
 		deDataDefinitionFieldLinkImpl.setClassNameId(classNameId);
 		deDataDefinitionFieldLinkImpl.setClassPK(classPK);
 		deDataDefinitionFieldLinkImpl.setDdmStructureId(ddmStructureId);
@@ -124,6 +127,8 @@ public class DEDataDefinitionFieldLinkCacheModel
 
 		groupId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
@@ -145,6 +150,8 @@ public class DEDataDefinitionFieldLinkCacheModel
 
 		objectOutput.writeLong(groupId);
 
+		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
@@ -162,6 +169,7 @@ public class DEDataDefinitionFieldLinkCacheModel
 	public String uuid;
 	public long deDataDefinitionFieldLinkId;
 	public long groupId;
+	public long companyId;
 	public long classNameId;
 	public long classPK;
 	public long ddmStructureId;

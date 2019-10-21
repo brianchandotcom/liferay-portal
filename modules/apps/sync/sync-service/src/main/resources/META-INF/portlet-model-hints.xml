@@ -17,6 +17,7 @@
 	</model>
 	<model name="com.liferay.sync.model.SyncDLFileVersionDiff">
 		<field name="syncDLFileVersionDiffId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="fileEntryId" type="long" />
 		<field name="sourceFileVersionId" type="long" />
 		<field name="targetFileVersionId" type="long" />

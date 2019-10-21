@@ -127,6 +127,8 @@ public class SyncDLFileVersionDiffPersistenceTest {
 		SyncDLFileVersionDiff newSyncDLFileVersionDiff = _persistence.create(
 			pk);
 
+		newSyncDLFileVersionDiff.setCompanyId(RandomTestUtil.nextLong());
+
 		newSyncDLFileVersionDiff.setFileEntryId(RandomTestUtil.nextLong());
 
 		newSyncDLFileVersionDiff.setSourceFileVersionId(
@@ -151,6 +153,9 @@ public class SyncDLFileVersionDiffPersistenceTest {
 		Assert.assertEquals(
 			existingSyncDLFileVersionDiff.getSyncDLFileVersionDiffId(),
 			newSyncDLFileVersionDiff.getSyncDLFileVersionDiffId());
+		Assert.assertEquals(
+			existingSyncDLFileVersionDiff.getCompanyId(),
+			newSyncDLFileVersionDiff.getCompanyId());
 		Assert.assertEquals(
 			existingSyncDLFileVersionDiff.getFileEntryId(),
 			newSyncDLFileVersionDiff.getFileEntryId());
@@ -225,7 +230,7 @@ public class SyncDLFileVersionDiffPersistenceTest {
 	protected OrderByComparator<SyncDLFileVersionDiff> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"SyncDLFileVersionDiff", "syncDLFileVersionDiffId", true,
-			"fileEntryId", true, "sourceFileVersionId", true,
+			"companyId", true, "fileEntryId", true, "sourceFileVersionId", true,
 			"targetFileVersionId", true, "dataFileEntryId", true, "size", true,
 			"expirationDate", true);
 	}
@@ -502,6 +507,8 @@ public class SyncDLFileVersionDiffPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		SyncDLFileVersionDiff syncDLFileVersionDiff = _persistence.create(pk);
+
+		syncDLFileVersionDiff.setCompanyId(RandomTestUtil.nextLong());
 
 		syncDLFileVersionDiff.setFileEntryId(RandomTestUtil.nextLong());
 

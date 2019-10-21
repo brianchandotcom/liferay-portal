@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1582,6 +1583,8 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 		syncDLFileVersionDiff.setNew(true);
 		syncDLFileVersionDiff.setPrimaryKey(syncDLFileVersionDiffId);
+
+		syncDLFileVersionDiff.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return syncDLFileVersionDiff;
 	}

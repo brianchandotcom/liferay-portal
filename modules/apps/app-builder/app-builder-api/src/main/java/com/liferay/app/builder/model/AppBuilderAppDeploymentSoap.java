@@ -35,6 +35,7 @@ public class AppBuilderAppDeploymentSoap implements Serializable {
 
 		soapModel.setAppBuilderAppDeploymentId(
 			model.getAppBuilderAppDeploymentId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setAppBuilderAppId(model.getAppBuilderAppId());
 		soapModel.setSettings(model.getSettings());
 		soapModel.setType(model.getType());
@@ -109,6 +110,14 @@ public class AppBuilderAppDeploymentSoap implements Serializable {
 		_appBuilderAppDeploymentId = appBuilderAppDeploymentId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getAppBuilderAppId() {
 		return _appBuilderAppId;
 	}
@@ -134,6 +143,7 @@ public class AppBuilderAppDeploymentSoap implements Serializable {
 	}
 
 	private long _appBuilderAppDeploymentId;
+	private long _companyId;
 	private long _appBuilderAppId;
 	private String _settings;
 	private String _type;

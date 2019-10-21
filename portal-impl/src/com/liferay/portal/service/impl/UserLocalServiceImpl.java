@@ -4035,10 +4035,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		rolePersistence.removeUsers(roleId, users);
 
-		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			User.class);
-
-		indexer.reindex(users);
+		reindex(users);
 	}
 
 	/**
@@ -4051,23 +4048,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public void unsetRoleUsers(long roleId, long[] userIds)
 		throws PortalException {
 
-		Role role = rolePersistence.findByPrimaryKey(roleId);
+		List<User> users = new ArrayList<>(userIds.length);
 
-		String roleName = role.getName();
+		for (Long userId : userIds) {
+			User user = userLocalService.fetchUser(userId);
 
-		if ((roleName.equals(RoleConstants.ADMINISTRATOR) &&
-			 (getRoleUsersCount(role.getRoleId()) <= 1))) {
-
-			throw new RequiredRoleException.RequiredAdminRoleException();
+			users.add(user);
 		}
 
-		if (roleName.equals(RoleConstants.USER)) {
-			throw new RequiredRoleException.RequiredUserRoleException();
-		}
-
-		rolePersistence.removeUsers(roleId, userIds);
-
-		reindex(userIds);
+		unsetRoleUsers(roleId, users);
 	}
 
 	/**

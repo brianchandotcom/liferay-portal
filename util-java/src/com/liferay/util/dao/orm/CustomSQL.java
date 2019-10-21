@@ -830,14 +830,6 @@ public class CustomSQL {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #_read(ClassLoader,
-	 *             String, Map)}
-	 */
-	@Deprecated
-	protected void read(ClassLoader classLoader, String source) {
-	}
-
 	protected String transform(String sql) {
 		sql = PortalUtil.transformCustomSQL(sql);
 

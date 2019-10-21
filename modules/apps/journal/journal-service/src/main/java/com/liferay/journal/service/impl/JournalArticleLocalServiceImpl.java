@@ -106,6 +106,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -9017,22 +9018,6 @@ public class JournalArticleLocalServiceImpl
 	@Reference
 	protected FriendlyURLEntryLocalService friendlyURLEntryLocalService;
 
-	private FileEntry _addArticleAttachmentFileEntry(
-			JournalArticle article, long folderId, FileEntry fileEntry)
-		throws PortalException {
-
-		String fileEntryName = DLUtil.getUniqueFileName(
-			fileEntry.getGroupId(), fileEntry.getFolderId(),
-			fileEntry.getFileName());
-
-		return PortletFileRepositoryUtil.addPortletFileEntry(
-			article.getGroupId(), fileEntry.getUserId(),
-			JournalArticle.class.getName(), article.getResourcePrimKey(),
-			JournalConstants.SERVICE_NAME, folderId,
-			fileEntry.getContentStream(), fileEntryName,
-			fileEntry.getMimeType(), false);
-	}
-
 	private List<JournalArticleLocalization> _addArticleLocalizedFields(
 		long companyId, long articlePK, Map<Locale, String> titleMap,
 		Map<Locale, String> descriptionMap) {
@@ -9217,12 +9202,24 @@ public class JournalArticleLocalServiceImpl
 	private String _replaceTempImages(JournalArticle article, String content)
 		throws PortalException {
 
-		Folder folder = article.addImagesFolder();
-
 		return _attachmentContentUpdater.updateContent(
 			content, ContentTypes.TEXT_HTML,
-			fileEntry -> _addArticleAttachmentFileEntry(
-				article, folder.getFolderId(), fileEntry));
+			fileEntry -> {
+				String fileEntryName = DLUtil.getUniqueFileName(
+					fileEntry.getGroupId(), fileEntry.getFolderId(),
+					fileEntry.getFileName());
+
+				Folder folder = article.addImagesFolder();
+
+				_portletFileRepository.addPortletFileEntry(
+					article.getGroupId(), fileEntry.getUserId(),
+					JournalArticle.class.getName(),
+					article.getResourcePrimKey(), JournalConstants.SERVICE_NAME,
+					folder.getFolderId(), fileEntry.getContentStream(),
+					fileEntryName, fileEntry.getMimeType(), false);
+
+				return null;
+			});
 	}
 
 	private List<JournalArticleLocalization> _updateArticleLocalizedFields(
@@ -9301,6 +9298,9 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	private Date _previousCheckDate;
 

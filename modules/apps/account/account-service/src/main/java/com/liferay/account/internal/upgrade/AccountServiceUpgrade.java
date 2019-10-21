@@ -12,28 +12,25 @@
  * details.
  */
 
-package com.liferay.data.engine.internal.upgrade;
+package com.liferay.account.internal.upgrade;
 
-import com.liferay.data.engine.internal.upgrade.v1_0_0.UpgradeSchema;
-import com.liferay.data.engine.internal.upgrade.v2_0_0.UpgradeCompanyId;
+import com.liferay.account.internal.upgrade.v2_0_0.UpgradeCompanyId;
+
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jeyvison Nascimento
+ * @author Alberto Chaparro
  */
 @Component(
 	immediate = true,
-	service = {DEServiceUpgrade.class, UpgradeStepRegistrator.class}
+	service = {AccountServiceUpgrade.class, UpgradeStepRegistrator.class}
 )
-public class DEServiceUpgrade implements UpgradeStepRegistrator {
+public class AccountServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public void register(Registry registry) {
-		registry.register("1.0.0", "1.1.0", new UpgradeSchema());
-
-		registry.register("1.1.0", "2.0.0", new UpgradeCompanyId());
+	public void register(UpgradeStepRegistrator.Registry registry) {
+		registry.register("1.0.0", "2.0.0", new UpgradeCompanyId());
 	}
 
 }

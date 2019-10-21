@@ -51,6 +51,10 @@
 
 		<column name="kaleoProcessLinkId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="kaleoProcessId" type="long" />

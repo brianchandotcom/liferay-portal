@@ -69,9 +69,9 @@ public class SharepointOAuth2TokenEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"sharepointOAuth2TokenEntryId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"accessToken", Types.CLOB},
-		{"configurationPid", Types.VARCHAR},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"accessToken", Types.CLOB}, {"configurationPid", Types.VARCHAR},
 		{"expirationDate", Types.TIMESTAMP}, {"refreshToken", Types.CLOB}
 	};
 
@@ -80,6 +80,7 @@ public class SharepointOAuth2TokenEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("sharepointOAuth2TokenEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -90,7 +91,7 @@ public class SharepointOAuth2TokenEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SharepointOAuth2TokenEntry (sharepointOAuth2TokenEntryId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,accessToken TEXT null,configurationPid VARCHAR(75) null,expirationDate DATE null,refreshToken TEXT null)";
+		"create table SharepointOAuth2TokenEntry (sharepointOAuth2TokenEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,accessToken TEXT null,configurationPid VARCHAR(75) null,expirationDate DATE null,refreshToken TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SharepointOAuth2TokenEntry";
@@ -262,6 +263,12 @@ public class SharepointOAuth2TokenEntryModelImpl
 			(BiConsumer<SharepointOAuth2TokenEntry, Long>)
 				SharepointOAuth2TokenEntry::setSharepointOAuth2TokenEntryId);
 		attributeGetterFunctions.put(
+			"companyId", SharepointOAuth2TokenEntry::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<SharepointOAuth2TokenEntry, Long>)
+				SharepointOAuth2TokenEntry::setCompanyId);
+		attributeGetterFunctions.put(
 			"userId", SharepointOAuth2TokenEntry::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
@@ -321,6 +328,16 @@ public class SharepointOAuth2TokenEntryModelImpl
 		long sharepointOAuth2TokenEntryId) {
 
 		_sharepointOAuth2TokenEntryId = sharepointOAuth2TokenEntryId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -458,7 +475,8 @@ public class SharepointOAuth2TokenEntryModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, SharepointOAuth2TokenEntry.class.getName(), getPrimaryKey());
+			getCompanyId(), SharepointOAuth2TokenEntry.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -490,6 +508,7 @@ public class SharepointOAuth2TokenEntryModelImpl
 
 		sharepointOAuth2TokenEntryImpl.setSharepointOAuth2TokenEntryId(
 			getSharepointOAuth2TokenEntryId());
+		sharepointOAuth2TokenEntryImpl.setCompanyId(getCompanyId());
 		sharepointOAuth2TokenEntryImpl.setUserId(getUserId());
 		sharepointOAuth2TokenEntryImpl.setUserName(getUserName());
 		sharepointOAuth2TokenEntryImpl.setCreateDate(getCreateDate());
@@ -583,6 +602,8 @@ public class SharepointOAuth2TokenEntryModelImpl
 
 		sharepointOAuth2TokenEntryCacheModel.sharepointOAuth2TokenEntryId =
 			getSharepointOAuth2TokenEntryId();
+
+		sharepointOAuth2TokenEntryCacheModel.companyId = getCompanyId();
 
 		sharepointOAuth2TokenEntryCacheModel.userId = getUserId();
 
@@ -724,6 +745,7 @@ public class SharepointOAuth2TokenEntryModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _sharepointOAuth2TokenEntryId;
+	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

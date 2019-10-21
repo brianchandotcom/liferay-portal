@@ -63,8 +63,9 @@ public class KaleoProcessLinkModelImpl
 	public static final String TABLE_NAME = "KaleoProcessLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"kaleoProcessLinkId", Types.BIGINT}, {"kaleoProcessId", Types.BIGINT},
-		{"workflowTaskName", Types.VARCHAR}, {"DDMTemplateId", Types.BIGINT}
+		{"kaleoProcessLinkId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"kaleoProcessId", Types.BIGINT}, {"workflowTaskName", Types.VARCHAR},
+		{"DDMTemplateId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -72,13 +73,14 @@ public class KaleoProcessLinkModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("kaleoProcessLinkId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoProcessId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("workflowTaskName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMTemplateId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoProcessLink (kaleoProcessLinkId LONG not null primary key,kaleoProcessId LONG,workflowTaskName VARCHAR(75) null,DDMTemplateId LONG)";
+		"create table KaleoProcessLink (kaleoProcessLinkId LONG not null primary key,companyId LONG,kaleoProcessId LONG,workflowTaskName VARCHAR(75) null,DDMTemplateId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoProcessLink";
 
@@ -242,6 +244,11 @@ public class KaleoProcessLinkModelImpl
 			(BiConsumer<KaleoProcessLink, Long>)
 				KaleoProcessLink::setKaleoProcessLinkId);
 		attributeGetterFunctions.put(
+			"companyId", KaleoProcessLink::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<KaleoProcessLink, Long>)KaleoProcessLink::setCompanyId);
+		attributeGetterFunctions.put(
 			"kaleoProcessId", KaleoProcessLink::getKaleoProcessId);
 		attributeSetterBiConsumers.put(
 			"kaleoProcessId",
@@ -274,6 +281,16 @@ public class KaleoProcessLinkModelImpl
 	@Override
 	public void setKaleoProcessLinkId(long kaleoProcessLinkId) {
 		_kaleoProcessLinkId = kaleoProcessLinkId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -340,7 +357,7 @@ public class KaleoProcessLinkModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, KaleoProcessLink.class.getName(), getPrimaryKey());
+			getCompanyId(), KaleoProcessLink.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -370,6 +387,7 @@ public class KaleoProcessLinkModelImpl
 		KaleoProcessLinkImpl kaleoProcessLinkImpl = new KaleoProcessLinkImpl();
 
 		kaleoProcessLinkImpl.setKaleoProcessLinkId(getKaleoProcessLinkId());
+		kaleoProcessLinkImpl.setCompanyId(getCompanyId());
 		kaleoProcessLinkImpl.setKaleoProcessId(getKaleoProcessId());
 		kaleoProcessLinkImpl.setWorkflowTaskName(getWorkflowTaskName());
 		kaleoProcessLinkImpl.setDDMTemplateId(getDDMTemplateId());
@@ -452,6 +470,8 @@ public class KaleoProcessLinkModelImpl
 			new KaleoProcessLinkCacheModel();
 
 		kaleoProcessLinkCacheModel.kaleoProcessLinkId = getKaleoProcessLinkId();
+
+		kaleoProcessLinkCacheModel.companyId = getCompanyId();
 
 		kaleoProcessLinkCacheModel.kaleoProcessId = getKaleoProcessId();
 
@@ -542,6 +562,7 @@ public class KaleoProcessLinkModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _kaleoProcessLinkId;
+	private long _companyId;
 	private long _kaleoProcessId;
 	private long _originalKaleoProcessId;
 	private boolean _setOriginalKaleoProcessId;

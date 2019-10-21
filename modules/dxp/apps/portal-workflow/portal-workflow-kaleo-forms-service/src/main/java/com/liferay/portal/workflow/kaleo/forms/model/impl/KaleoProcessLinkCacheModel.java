@@ -62,10 +62,12 @@ public class KaleoProcessLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{kaleoProcessLinkId=");
 		sb.append(kaleoProcessLinkId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", kaleoProcessId=");
 		sb.append(kaleoProcessId);
 		sb.append(", workflowTaskName=");
@@ -82,6 +84,7 @@ public class KaleoProcessLinkCacheModel
 		KaleoProcessLinkImpl kaleoProcessLinkImpl = new KaleoProcessLinkImpl();
 
 		kaleoProcessLinkImpl.setKaleoProcessLinkId(kaleoProcessLinkId);
+		kaleoProcessLinkImpl.setCompanyId(companyId);
 		kaleoProcessLinkImpl.setKaleoProcessId(kaleoProcessId);
 
 		if (workflowTaskName == null) {
@@ -102,6 +105,8 @@ public class KaleoProcessLinkCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoProcessLinkId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		kaleoProcessId = objectInput.readLong();
 		workflowTaskName = objectInput.readUTF();
 
@@ -111,6 +116,8 @@ public class KaleoProcessLinkCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(kaleoProcessLinkId);
+
+		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(kaleoProcessId);
 
@@ -125,6 +132,7 @@ public class KaleoProcessLinkCacheModel
 	}
 
 	public long kaleoProcessLinkId;
+	public long companyId;
 	public long kaleoProcessId;
 	public String workflowTaskName;
 	public long DDMTemplateId;

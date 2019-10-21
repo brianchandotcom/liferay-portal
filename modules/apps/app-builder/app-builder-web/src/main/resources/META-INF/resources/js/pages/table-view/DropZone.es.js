@@ -14,11 +14,12 @@
 
 import classNames from 'classnames';
 import {useDrop} from 'react-dnd';
-import React, {useRef} from 'react';
+import React, {useLayoutEffect, useRef, useState} from 'react';
 
-import Button from '../../components/button/Button.es';
 import Table from '../../components/table/Table.es';
 import {DRAG_FIELD_TYPE} from '../../utils/dragTypes.es';
+import ColumnOverlay from './ColumnOverlay.es';
+import DropZonePlaceholder from './DropZonePlaceholder.es';
 
 const generateItems = (columns, rows = 10) => {
 	const items = [];
@@ -39,82 +40,6 @@ const generateItem = columns =>
 		{}
 	);
 
-const getColumnNode = (container, index) => {
-	return container.querySelector(
-		`table tbody > tr:first-of-type > td:nth-of-type(${index + 1})`
-	);
-};
-
-const getPlaceholderLeft = (container, index) => {
-	switch (index) {
-		case 0: {
-			return getColumnNode(container, index).offsetLeft;
-		}
-		case 1: {
-			const columnNode = getColumnNode(container, index);
-			const previousColumnNode = getColumnNode(container, index - 1);
-
-			return columnNode.offsetLeft - previousColumnNode.offsetWidth / 2;
-		}
-		default: {
-			return getColumnNode(container, index - 1).offsetLeft;
-		}
-	}
-};
-
-const getPlaceholderWidth = (container, index, total) => {
-	switch (index) {
-		case 0: {
-			return getColumnNode(container, index).offsetWidth / 2;
-		}
-		case 1: {
-			return getColumnNode(container, index - 1).offsetWidth / 2;
-		}
-		case total - 1: {
-			return getColumnNode(container, index - 1).offsetWidth;
-		}
-		default: {
-			return getColumnNode(container, index).offsetWidth;
-		}
-	}
-};
-
-const getPlaceholderDropZoneStyle = (container, index, total) => {
-	return {
-		height: container.offsetHeight,
-		left: getPlaceholderLeft(container, index),
-		position: 'absolute',
-		top: container.offsetTop,
-		width: getPlaceholderWidth(container, index, total)
-	};
-};
-
-const PlaceholderDropZone = ({container, index, onAddFieldName, total}) => {
-	const [{canDrop, overTarget}, drop] = useDrop({
-		accept: 'fieldType',
-		collect: monitor => ({
-			canDrop: monitor.canDrop(),
-			overTarget: monitor.isOver()
-		}),
-		drop: ({data: {name}}) => {
-			onAddFieldName(name, index);
-		}
-	});
-
-	return (
-		<div
-			className={classNames({
-				'column-drop-zone-left': overTarget && index === 0,
-				'column-drop-zone-right': overTarget && index > 0,
-				invisible: !canDrop,
-				'target-over': overTarget
-			})}
-			ref={drop}
-			style={getPlaceholderDropZoneStyle(container, index, total)}
-		></div>
-	);
-};
-
 const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 	const [{canDrop, overTarget}, drop] = useDrop({
 		accept: DRAG_FIELD_TYPE,
@@ -127,9 +52,17 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 		}
 	});
 
+	const [container, setContainer] = useState();
 	const containerRef = useRef();
+	const empty = fields.length === 0;
 
-	if (fields.length == 0) {
+	useLayoutEffect(() => {
+		if (containerRef.current) {
+			setContainer(containerRef.current);
+		}
+	}, [empty]);
+
+	if (empty) {
 		return (
 			<div className="p-4 sheet">
 				<div className="empty-drop-zone-header"></div>
@@ -150,31 +83,16 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 		);
 	}
 
-	const columnPlaceholders = [];
-
-	for (let i = 0; i < fields.length + 1; i++) {
-		columnPlaceholders.push(fields[i] ? fields[i].name : 'last');
-	}
-
 	return (
 		<div ref={containerRef}>
 			<Table
 				actions={[]}
-				columns={fields.map(({label: {en_US: label}, name}) => ({
+				columns={fields.map(({label: {en_US: label}}) => ({
 					key: label,
 					value: (
 						<div className="container p-0">
 							<div className="row align-items-center">
 								<div className="col">{label}</div>
-								<div className="col-md-auto">
-									<Button
-										borderless
-										displayType="secondary"
-										onClick={() => onRemoveFieldName(name)}
-										symbol="trash"
-										tooltip={Liferay.Language.get('remove')}
-									/>
-								</div>
 							</div>
 						</div>
 					)
@@ -183,16 +101,21 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 				ref={drop}
 			/>
 
-			{containerRef.current &&
-				columnPlaceholders.map((key, index) => (
-					<PlaceholderDropZone
-						container={containerRef.current}
-						index={index}
-						key={key}
+			{container && (
+				<>
+					<DropZonePlaceholder
+						container={container}
+						fields={fields}
 						onAddFieldName={onAddFieldName}
-						total={columnPlaceholders.length}
 					/>
-				))}
+
+					<ColumnOverlay
+						container={container}
+						fields={fields}
+						onRemoveFieldName={onRemoveFieldName}
+					/>
+				</>
+			)}
 		</div>
 	);
 };

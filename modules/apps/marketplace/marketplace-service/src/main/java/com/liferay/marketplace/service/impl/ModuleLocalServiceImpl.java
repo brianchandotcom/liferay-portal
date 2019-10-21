@@ -36,20 +36,6 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ModuleLocalServiceImpl extends ModuleLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #addModule(long,
-	 *             String, String, String)}
-	 */
-	@Deprecated
-	@Override
-	public Module addModule(
-			long userId, long appId, String bundleSymbolicName,
-			String bundleVersion, String contextName)
-		throws PortalException {
-
-		return addModule(appId, bundleSymbolicName, bundleVersion, contextName);
-	}
-
 	@Override
 	public Module addModule(
 			long appId, String bundleSymbolicName, String bundleVersion,

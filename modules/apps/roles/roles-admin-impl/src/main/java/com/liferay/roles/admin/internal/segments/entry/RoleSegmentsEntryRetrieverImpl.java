@@ -53,7 +53,7 @@ public class RoleSegmentsEntryRetrieverImpl
 
 		Sort sort = null;
 
-		if (sortField.equals("name")) {
+		if ((sortField != null) && sortField.equals("name")) {
 			Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
 			String sortFieldName = Field.getSortableFieldName(

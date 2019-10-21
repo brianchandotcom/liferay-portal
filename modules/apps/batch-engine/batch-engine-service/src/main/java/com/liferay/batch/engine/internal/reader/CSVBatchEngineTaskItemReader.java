@@ -80,7 +80,7 @@ public class CSVBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 				fieldNameValueMap.put(fieldName, value);
 			}
 			else {
-				BatchEngineTaskItemReaderUtil.handleLocalizationField(
+				BatchEngineTaskItemReaderUtil.handleMapField(
 					fieldName, fieldNameValueMap, lastDelimiterIndex, value);
 			}
 		}

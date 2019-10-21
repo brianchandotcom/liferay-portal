@@ -58,24 +58,24 @@ public class BatchEngineTaskItemReaderUtil {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static void handleLocalizationField(
-		String columnName, Map<String, Object> fieldNameValueMap,
+	public static void handleMapField(
+		String fieldName, Map<String, Object> fieldNameValueMap,
 		int lastDelimiterIndex, String value) {
 
-		String languageId = columnName.substring(lastDelimiterIndex + 1);
+		String key = fieldName.substring(lastDelimiterIndex + 1);
 
-		columnName = columnName.substring(0, lastDelimiterIndex);
+		fieldName = fieldName.substring(0, lastDelimiterIndex);
 
-		Map<String, String> localizationMap =
-			(Map<String, String>)fieldNameValueMap.get(columnName);
+		Map<String, String> valueMap =
+			(Map<String, String>)fieldNameValueMap.get(fieldName);
 
-		if (localizationMap == null) {
-			localizationMap = new HashMap<>();
+		if (valueMap == null) {
+			valueMap = new HashMap<>();
 
-			fieldNameValueMap.put(columnName, localizationMap);
+			fieldNameValueMap.put(fieldName, valueMap);
 		}
 
-		localizationMap.put(languageId, value);
+		valueMap.put(key, value);
 	}
 
 	public static Map<String, Object> mapFieldNames(

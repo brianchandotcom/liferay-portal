@@ -210,7 +210,7 @@ lockDependencyVersion {
 		List<String> buildGradleExcludes = ["**/build/", "**/classes/", "**/node_modules/"]
 
 		if (dependencyName in ["com.liferay.portal.impl", "com.liferay.portal.kernel"]) {
-			buildGradleExcludes = buildGradleExcludes + ["core/portal-bootstrap/", "core/slim-runtime/"]
+			buildGradleExcludes = buildGradleExcludes + ["core/portal-bootstrap/"]
 		}
 
 		FileTree buildGradleFileTree = fileTree(dir: projectDir, excludes: buildGradleExcludes, includes: ["apps/**/build.gradle", "core/**/build.gradle"])
@@ -577,7 +577,7 @@ prepareMajorIncrement {
 
 			String content = buildGradleFile.getText("UTF-8")
 
-			List<String> markerFileNames = [".lfrbuild-ci", ".lfrbuild-portal", ".lfrbuild-slim"]
+			List<String> markerFileNames = [".lfrbuild-ci", ".lfrbuild-portal"]
 
 			markerFileNames = markerFileNames.findAll {
 				_exists(dir, it)

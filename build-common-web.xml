@@ -87,19 +87,6 @@
 						</copy>
 					</then>
 					<elseif>
-						<and>
-							<available file="docroot" type="dir" />
-							<equals arg1="${build.profile}" arg2="slim" />
-						</and>
-						<then>
-							<copy
-								file="docroot/WEB-INF/slim-runtime-web.xml"
-								preservelastmodified="true"
-								tofile="${war.file.dest}/WEB-INF/web.xml"
-							/>
-						</then>
-					</elseif>
-					<elseif>
 						<available file="docroot" type="dir" />
 						<then>
 							<copy

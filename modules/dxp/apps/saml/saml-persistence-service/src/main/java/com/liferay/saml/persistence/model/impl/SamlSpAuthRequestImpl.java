@@ -14,12 +14,9 @@
 
 package com.liferay.saml.persistence.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Mika Koivisto
  */
-@ProviderType
 public class SamlSpAuthRequestImpl extends SamlSpAuthRequestBaseImpl {
 
 	public SamlSpAuthRequestImpl() {

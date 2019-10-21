@@ -28,12 +28,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Carlos Sierra Andrés
  */
-@ProviderType
 public class WaitingForVerifyMFACheckerVisitor
 	implements MFACheckerVisitor<List<BrowserMFAChecker>> {
 

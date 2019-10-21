@@ -17,12 +17,9 @@ package com.liferay.vldap.server.internal.util;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Jonathan McCann
  */
-@ProviderType
 public class PortletProps {
 
 	public static String get(String key) {

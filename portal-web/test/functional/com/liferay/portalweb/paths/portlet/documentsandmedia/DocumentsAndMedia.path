@@ -268,6 +268,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIDEBAR_MENU_ITEM</td>
+	<td>//div[contains(@class,'lfr-icon-menu-open')]//*[normalize-space(text())='${key_menuItem}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

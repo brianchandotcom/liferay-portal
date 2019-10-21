@@ -306,7 +306,31 @@ definition {
 
 		DMRepository.viewBreadcrumb(dmRepositoryName = "Sharepoint Repository Name");
 
+		DMDocument.expandInfo();
+
+		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+		AssertElementNotPresent(
+			key_menuItem = "Download",
+			locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
+		AssertElementNotPresent(
+			key_menuItem = "Move",
+			locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
+		AssertElementPresent(
+			key_menuItem = "Delete",
+			locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
+		AssertElementPresent(
+			key_menuItem = "Edit",
+			locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
 		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		MenuItem.viewNotPresent(menuItem = "Download");
+		MenuItem.viewNotPresent(menuItem = "Move");
+		MenuItem.viewPresent(menuItem = "Delete");
+		MenuItem.viewPresent(menuItem = "Edit");
 
 		MenuItem.click(menuItem = "Edit");
 

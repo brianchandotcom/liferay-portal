@@ -159,20 +159,12 @@ public class NodeExtension {
 				}
 
 				if (!FileUtil.exists(project, "package-lock.json")) {
-					File dir = project.getProjectDir();
+					File projectDir = project.getProjectDir();
 
-					while (true) {
-						File[] files = FileUtil.getFiles(dir, "yarn-", ".js");
+					File file = NodePluginUtil.getYarnScriptFile(projectDir);
 
-						if ((files != null) && (files.length > 0)) {
-							return files[0];
-						}
-
-						dir = dir.getParentFile();
-
-						if (dir == null) {
-							break;
-						}
+					if (file != null) {
+						return file;
 					}
 				}
 

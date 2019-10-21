@@ -170,7 +170,8 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 					BatchEngineTaskItemReaderUtil.convertValue(
 						itemClass,
 						BatchEngineTaskItemReaderUtil.mapFieldNames(
-							batchEngineTask.getFieldNameMappingMap(),
+							(Map<String, String>)
+								(Map)batchEngineTask.getFieldNameMapping(),
 							fieldNameValueMap)));
 
 				if (items.size() == batchEngineTask.getBatchSize()) {

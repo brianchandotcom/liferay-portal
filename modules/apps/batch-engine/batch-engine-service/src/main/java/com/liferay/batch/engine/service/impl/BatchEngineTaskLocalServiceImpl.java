@@ -20,6 +20,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 
+import java.io.Serializable;
+
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +38,7 @@ public class BatchEngineTaskLocalServiceImpl
 	extends BatchEngineTaskLocalServiceBaseImpl {
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public BatchEngineTask addBatchEngineTask(
 		long companyId, long userId, long batchSize, String callbackURL,
 		String className, byte[] content, String contentType,
@@ -55,7 +58,8 @@ public class BatchEngineTaskLocalServiceImpl
 				new UnsyncByteArrayInputStream(content), content.length));
 		batchEngineTask.setContentType(contentType);
 		batchEngineTask.setExecuteStatus(executeStatus);
-		batchEngineTask.setFieldNameMappingMap(fieldNameMappingMap);
+		batchEngineTask.setFieldNameMapping(
+			(Map<String, Serializable>)(Map)fieldNameMappingMap);
 		batchEngineTask.setOperation(operation);
 		batchEngineTask.setVersion(version);
 

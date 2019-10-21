@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Distributed;
-import com.liferay.portal.kernel.resiliency.spi.agent.annotation.MatchType;
 
 /**
  * @author Brian Wing Shun Chan
@@ -117,12 +116,6 @@ public interface WebKeys {
 
 	public static final String CTX = "CTX";
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String CTX_PATH = "CTX_PATH";
-
 	public static final String CURRENT_COMPLETE_URL = "CURRENT_COMPLETE_URL";
 
 	public static final String CURRENT_PORTLET_URL = "CURRENT_PORTLET_URL";
@@ -204,14 +197,6 @@ public interface WebKeys {
 		"FORM_NAVIGATOR_SECTION_SHOW_";
 
 	public static final String FORWARD_URL = "FORWARD_URL";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.taglib.util.FriendlyURLUtil.getFriendlyURL(
-	 *             HttpServletRequest, javax.servlet.jsp.PageContext)}
-	 */
-	@Deprecated
-	public static final String FRIENDLY_URL = "FRIENDLY_URL";
 
 	public static final String FTL_VARIABLES = "FTL_VARIABLES";
 
@@ -533,48 +518,6 @@ public interface WebKeys {
 	public static final String PORTLET_SESSION_ATTRIBUTES =
 		"PORTLET_SESSION_ATTRIBUTES_";
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String PORTLET_STRUTS_ACTION = "PORTLET_STRUTS_ACTION";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String PORTLET_STRUTS_ATTRIBUTES =
-		"PORTLET_STRUTS_ATTRIBUTES";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String PORTLET_STRUTS_EXCEPTION =
-		"PORTLET_STRUTS_EXCEPTION";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String PORTLET_STRUTS_EXECUTE =
-		"PORTLET_STRUTS_EXECUTE";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Distributed(direction = Direction.DUPLEX, matchType = MatchType.POSTFIX)
-	public static final String PORTLET_STRUTS_FORWARD =
-		"PORTLET_STRUTS_FORWARD";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String PORTLET_STRUTS_PROCESSOR =
-		"PORTLET_STRUTS_PROCESSOR";
-
 	public static final String PREVIOUS_LAYOUT_PLID = "PREVIOUS_LAYOUT_PLID";
 
 	public static final String PRIVATE_LAYOUT = "PRIVATE_LAYOUT";
@@ -625,13 +568,6 @@ public interface WebKeys {
 	public static final String ROLE = "ROLE";
 
 	public static final String SEARCH_CONTAINER = "SEARCH_CONTAINER";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String SEARCH_CONTAINER_REFERENCE =
-		"LIFERAY_SHARED_SEARCH_CONTAINER_REFERENCE";
 
 	public static final String SEARCH_CONTAINER_RESULT_ROW =
 		"SEARCH_CONTAINER_RESULT_ROW";
@@ -739,13 +675,6 @@ public interface WebKeys {
 
 	public static final String STARTUP_FINISHED = "STARTUP_FINISHED";
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String STRUTS_BRIDGES_ATTRIBUTES =
-		"STRUTS_BRIDGES_ATTRIBUTES";
-
 	public static final String SUBJECT = "SUBJECT";
 
 	public static final String TAB_INDEX = "TAB_INDEX";
@@ -808,12 +737,6 @@ public interface WebKeys {
 	public static final String USER_ID = "USER_ID";
 
 	public static final String USER_PASSWORD = "USER_PASSWORD";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String USER_UUID = "USER_UUID";
 
 	public static final String USERS_NOTIFIED = "USERS_NOTIFIED";
 

@@ -190,14 +190,6 @@ public class UnicodeProperties extends HashMap<String, String> {
 		return sb.toString();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected int getToStringLength() {
-		return -1;
-	}
-
 	private static String _decode(String value) {
 		return StringUtil.replace(
 			value, _SAFE_NEWLINE_CHARACTER, StringPool.NEW_LINE);

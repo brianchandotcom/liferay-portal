@@ -14,11 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.lang.reflect.Field;
 
 /**
  * @author Brian Wing Shun Chan
@@ -68,41 +65,8 @@ public class ServerDetector {
 
 	public static final String WILDFLY_ID = "wildfly";
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static ServerDetector getInstance() {
-		return new ServerDetector();
-	}
-
 	public static String getServerId() {
 		return StringUtil.toLowerCase(_serverType.toString());
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void init(String serverId) {
-		ServerType serverType = null;
-
-		try {
-			serverType = ServerType.valueOf(StringUtil.toUpperCase(serverId));
-		}
-		catch (IllegalArgumentException iae) {
-			serverType = _detectServerType();
-		}
-
-		try {
-			Field field = ReflectionUtil.getDeclaredField(
-				ServerDetector.class, "_serverType");
-
-			field.set(null, serverType);
-		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
-		}
 	}
 
 	/**
@@ -190,14 +154,6 @@ public class ServerDetector {
 		return _SUPPORTS_COMET;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static boolean isSupportsHotDeploy() {
-		return true;
-	}
-
 	public static boolean isTomcat() {
 		if (_serverType == ServerType.TOMCAT) {
 			return true;
@@ -228,13 +184,6 @@ public class ServerDetector {
 		}
 
 		return false;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void setSupportsHotDeploy(boolean supportsHotDeploy) {
 	}
 
 	private static boolean _detect(String className) {

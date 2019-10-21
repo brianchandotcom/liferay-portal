@@ -810,16 +810,6 @@ public class SubscriptionSender implements Serializable {
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
-	protected String replaceContent(String content, Locale locale)
-		throws Exception {
-
-		return replaceContent(content, locale, true);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
 	protected String replaceContent(
 			String content, Locale locale, boolean escape)
 		throws Exception {

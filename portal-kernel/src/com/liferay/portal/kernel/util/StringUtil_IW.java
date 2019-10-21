@@ -110,14 +110,6 @@ public class StringUtil_IW {
 		return StringUtil.equalsIgnoreCase(s1, s2);
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	public java.lang.String extract(java.lang.String s, char[] chars) {
-		return StringUtil.extract(s, chars);
-	}
-
 	public java.lang.String extractChars(java.lang.String s) {
 		return StringUtil.extractChars(s);
 	}
@@ -326,14 +318,6 @@ public class StringUtil_IW {
 		return StringUtil.randomId();
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	public java.lang.String randomize(java.lang.String s) {
-		return StringUtil.randomize(s);
-	}
-
 	public java.lang.String randomString() {
 		return StringUtil.randomString();
 	}
@@ -498,22 +482,6 @@ public class StringUtil_IW {
 		return StringUtil.replaceWithStringBundler(s, begin, end, values);
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	public java.lang.String reverse(java.lang.String s) {
-		return StringUtil.reverse(s);
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	public java.lang.String safePath(java.lang.String path) {
-		return StringUtil.safePath(path);
-	}
-
 	public java.lang.String shorten(java.lang.String s) {
 		return StringUtil.shorten(s);
 	}
@@ -608,22 +576,6 @@ public class StringUtil_IW {
 
 	public int startsWithWeight(java.lang.String s1, java.lang.String s2) {
 		return StringUtil.startsWithWeight(s1, s2);
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	public java.lang.String strip(java.lang.String s, char remove) {
-		return StringUtil.strip(s, remove);
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	public java.lang.String strip(java.lang.String s, char[] remove) {
-		return StringUtil.strip(s, remove);
 	}
 
 	public java.lang.String stripBetween(java.lang.String s,
@@ -721,37 +673,12 @@ public class StringUtil_IW {
 		return StringUtil.upperCaseFirstLetter(s);
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	public java.lang.String valueOf(java.lang.Object obj) {
-		return StringUtil.valueOf(obj);
-	}
-
 	public boolean wildcardMatches(java.lang.String s,
 		java.lang.String wildcard, char singleWildcardCharacter,
 		char multipleWildcardCharacter, char escapeWildcardCharacter,
 		boolean caseSensitive) {
 		return StringUtil.wildcardMatches(s, wildcard, singleWildcardCharacter,
 			multipleWildcardCharacter, escapeWildcardCharacter, caseSensitive);
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	public java.lang.String wrap(java.lang.String text) {
-		return StringUtil.wrap(text);
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	public java.lang.String wrap(java.lang.String text, int width,
-		java.lang.String lineSeparator) {
-		return StringUtil.wrap(text, width, lineSeparator);
 	}
 
 	private StringUtil_IW() {

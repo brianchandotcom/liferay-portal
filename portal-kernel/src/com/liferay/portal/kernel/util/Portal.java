@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.model.LayoutQueryStringComposite;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -671,15 +670,6 @@ public interface Portal {
 			String displayType)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getFacebookURL(
-			Portlet portlet, String facebookCanvasPageURL,
-			ThemeDisplay themeDisplay)
-		throws PortalException;
-
 	public String getFirstPageLayoutTypes(
 		HttpServletRequest httpServletRequest);
 
@@ -704,58 +694,6 @@ public interface Portal {
 		throws PortalException;
 
 	public int[] getGroupFriendlyURLIndex(String requestURI);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String[] getGroupPermissions(HttpServletRequest httpServletRequest);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String[] getGroupPermissions(
-		HttpServletRequest httpServletRequest, String className);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String[] getGroupPermissions(PortletRequest portletRequest);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String[] getGroupPermissions(
-		PortletRequest portletRequest, String className);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String[] getGuestPermissions(HttpServletRequest httpServletRequest);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String[] getGuestPermissions(
-		HttpServletRequest httpServletRequest, String className);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String[] getGuestPermissions(PortletRequest portletRequest);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String[] getGuestPermissions(
-		PortletRequest portletRequest, String className);
 
 	public String getHomeURL(HttpServletRequest httpServletRequest)
 		throws PortalException;
@@ -798,17 +736,6 @@ public interface Portal {
 		throws PortalException;
 
 	public String getLayoutFriendlyURL(ThemeDisplay themeDisplay)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getLayoutFriendlyURLSeparatorComposite(long, boolean,
-	 *             String, Map<String, String[]>, Map<String, Object>)}
-	 */
-	@Deprecated
-	public LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
-			long groupId, boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException;
 
 	public LayoutFriendlyURLSeparatorComposite
@@ -1072,25 +999,6 @@ public interface Portal {
 
 	public long[] getSharedContentSiteGroupIds(
 			long companyId, long groupId, long userId)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getSiteAdminURL(ThemeDisplay, String, Map)}
-	 */
-	@Deprecated
-	public String getSiteAdminURL(
-			Company company, Group group, String ppid,
-			Map<String, String[]> params)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getSiteAdminURL(ThemeDisplay, String, Map)}
-	 */
-	@Deprecated
-	public String getSiteAdminURL(
-			Group group, String ppid, Map<String, String[]> params)
 		throws PortalException;
 
 	public String getSiteAdminURL(

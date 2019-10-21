@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.security.RandomUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -587,40 +586,6 @@ public class StringUtil {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Returns the substring of each character instance in string <code>s</code>
-	 * that is found in the character array <code>chars</code>. The substring of
-	 * characters returned maintain their original order.
-	 *
-	 * @param      s the string from which to extract characters
-	 * @param      chars the characters to extract from the string
-	 * @return     the substring of each character instance in string
-	 *             <code>s</code> that is found in the character array
-	 *             <code>chars</code>, or an empty string if the given string is
-	 *             <code>null</code>
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String extract(String s, char[] chars) {
-		if (s == null) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		for (char c1 : s.toCharArray()) {
-			for (char c2 : chars) {
-				if (c1 == c2) {
-					sb.append(c1);
-
-					break;
-				}
-			}
-		}
-
-		return sb.toString();
 	}
 
 	/**
@@ -2177,21 +2142,6 @@ public class StringUtil {
 	}
 
 	/**
-	 * Pseudorandomly permutes the characters of the string.
-	 *
-	 * @param      s the string whose characters are to be randomized
-	 * @return     a string of the same length as the string whose characters
-	 *             represent a pseudorandom permutation of the characters of the
-	 *             string
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             RandomUtil#shuffle(String)}
-	 */
-	@Deprecated
-	public static String randomize(String s) {
-		return RandomUtil.shuffle(s);
-	}
-
-	/**
 	 * Returns a randomized string of eight characters consisting of lower case
 	 * letters, upper case letters, and single-digit whole numbers.
 	 *
@@ -3260,55 +3210,6 @@ public class StringUtil {
 	}
 
 	/**
-	 * Reverses the order of the characters of the string.
-	 *
-	 * @param      s the original string
-	 * @return     a string representing the original string with characters in
-	 *             reverse order
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String reverse(String s) {
-		if (s == null) {
-			return null;
-		}
-
-		char[] chars = s.toCharArray();
-
-		char[] reverse = new char[chars.length];
-
-		for (int i = 0; i < chars.length; i++) {
-			reverse[i] = chars[chars.length - i - 1];
-		}
-
-		return new String(reverse);
-	}
-
-	/**
-	 * Replaces all double slashes of the string with single slashes.
-	 *
-	 * <p>
-	 * Example:
-	 * </p>
-	 *
-	 * <p>
-	 * <pre>
-	 * <code>
-	 * safePath("http://www.liferay.com") returns "http:/www.liferay.com"
-	 * </code>
-	 * </pre></p>
-	 *
-	 * @param      path the original string
-	 * @return     a string representing the original string with all double
-	 *             slashes replaced with single slashes
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String safePath(String path) {
-		return replace(path, StringPool.DOUBLE_SLASH, StringPool.SLASH);
-	}
-
-	/**
 	 * Returns a string representing the original string appended with suffix
 	 * "..." and then shortened to 20 characters.
 	 *
@@ -3991,35 +3892,6 @@ public class StringUtil {
 		}
 
 		return i;
-	}
-
-	/**
-	 * Returns a string representing the string <code>s</code> with all
-	 * occurrences of the specified character removed.
-	 *
-	 * <p>
-	 * Example:
-	 * </p>
-	 *
-	 * <p>
-	 * <pre>
-	 * <code>
-	 * strip("Mississipi", 'i') returns "Mssssp"
-	 * </code>
-	 * </pre></p>
-	 *
-	 * @param      s the string from which to strip all occurrences of the
-	 *             character
-	 * @param      remove the character to strip from the string
-	 * @return     a string representing the string <code>s</code> with all
-	 *             occurrences of the specified character removed, or
-	 *             <code>null</code> if <code>s</code> is <code>null</code>
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #removeChar(String,
-	 *             char)}
-	 */
-	@Deprecated
-	public static String strip(String s, char remove) {
-		return removeChar(s, remove);
 	}
 
 	/**
@@ -5013,99 +4885,6 @@ public class StringUtil {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Wraps the text when it exceeds the <code>80</code> column width limit,
-	 * using a {@link StringPool#NEW_LINE} to break each wrapped line.
-	 *
-	 * @param      text the text to wrap
-	 * @return     the wrapped text following the column width limit, or
-	 *             <code>null</code> if the text is <code>null</code>
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String wrap(String text) {
-		return wrap(text, 80, StringPool.NEW_LINE);
-	}
-
-	/**
-	 * Wraps the text when it exceeds the column width limit, using the line
-	 * separator to break each wrapped line.
-	 *
-	 * @param      text the text to wrap
-	 * @param      width the column width limit for the text
-	 * @param      lineSeparator the string to use in breaking each wrapped line
-	 * @return     the wrapped text and line separators, following the column
-	 *             width limit, or <code>null</code> if the text is
-	 *             <code>null</code>
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String wrap(String text, int width, String lineSeparator) {
-		if (text == null) {
-			return null;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		for (String line : splitLines(text)) {
-			if (line.isEmpty()) {
-				sb.append(lineSeparator);
-
-				continue;
-			}
-
-			int lineLength = 0;
-
-			for (String token : split(line, CharPool.SPACE)) {
-				if ((lineLength + token.length() + 1) > width) {
-					if (lineLength > 0) {
-						sb.append(lineSeparator);
-					}
-
-					if (token.length() > width) {
-						int pos = token.indexOf(CharPool.OPEN_PARENTHESIS);
-
-						if (pos != -1) {
-							sb.append(token.substring(0, pos + 1));
-							sb.append(lineSeparator);
-
-							token = token.substring(pos + 1);
-
-							sb.append(token);
-
-							lineLength = token.length();
-						}
-						else {
-							sb.append(token);
-
-							lineLength = token.length();
-						}
-					}
-					else {
-						sb.append(token);
-
-						lineLength = token.length();
-					}
-				}
-				else {
-					if (lineLength > 0) {
-						sb.append(StringPool.SPACE);
-
-						lineLength++;
-					}
-
-					sb.append(token);
-
-					lineLength += token.length();
-				}
-			}
-
-			sb.append(lineSeparator);
-		}
-
-		return sb.toString();
 	}
 
 	protected static final char[] HEX_DIGITS = {

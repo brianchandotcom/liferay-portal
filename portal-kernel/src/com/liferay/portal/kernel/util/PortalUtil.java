@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.model.LayoutQueryStringComposite;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -930,19 +929,6 @@ public class PortalUtil {
 			uploadPortletRequest, name, type, displayType);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getFacebookURL(
-			Portlet portlet, String facebookCanvasPageURL,
-			ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return getPortal().getFacebookURL(
-			portlet, facebookCanvasPageURL, themeDisplay);
-	}
-
 	public static String getFirstPageLayoutTypes(
 		HttpServletRequest httpServletRequest) {
 
@@ -992,82 +978,6 @@ public class PortalUtil {
 
 	public static int[] getGroupFriendlyURLIndex(String requestURI) {
 		return getPortal().getGroupFriendlyURLIndex(requestURI);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String[] getGroupPermissions(
-		HttpServletRequest httpServletRequest) {
-
-		return getPortal().getGroupPermissions(httpServletRequest);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String[] getGroupPermissions(
-		HttpServletRequest httpServletRequest, String className) {
-
-		return getPortal().getGroupPermissions(httpServletRequest, className);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String[] getGroupPermissions(PortletRequest portletRequest) {
-		return getPortal().getGroupPermissions(portletRequest);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String[] getGroupPermissions(
-		PortletRequest portletRequest, String className) {
-
-		return getPortal().getGroupPermissions(portletRequest, className);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String[] getGuestPermissions(
-		HttpServletRequest httpServletRequest) {
-
-		return getPortal().getGuestPermissions(httpServletRequest);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String[] getGuestPermissions(
-		HttpServletRequest httpServletRequest, String className) {
-
-		return getPortal().getGuestPermissions(httpServletRequest, className);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String[] getGuestPermissions(PortletRequest portletRequest) {
-		return getPortal().getGuestPermissions(portletRequest);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String[] getGuestPermissions(
-		PortletRequest portletRequest, String className) {
-
-		return getPortal().getGuestPermissions(portletRequest, className);
 	}
 
 	public static String getHomeURL(HttpServletRequest httpServletRequest)
@@ -1153,21 +1063,6 @@ public class PortalUtil {
 		throws PortalException {
 
 		return getPortal().getLayoutFriendlyURL(themeDisplay);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getLayoutFriendlyURLSeparatorComposite(long, boolean,
-	 *             String, Map<String, String[]>, Map<String, Object>)}
-	 */
-	@Deprecated
-	public static LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
-			long groupId, boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
-		throws PortalException {
-
-		return getPortal().getLayoutFriendlyURLComposite(
-			groupId, privateLayout, friendlyURL, params, requestContext);
 	}
 
 	public static LayoutFriendlyURLSeparatorComposite
@@ -1713,31 +1608,6 @@ public class PortalUtil {
 
 		return getPortal().getSharedContentSiteGroupIds(
 			companyId, groupId, userId);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getSiteAdminURL(ThemeDisplay, String, Map)}
-	 */
-	@Deprecated
-	public static String getSiteAdminURL(
-			Company company, Group group, String ppid,
-			Map<String, String[]> params)
-		throws PortalException {
-
-		return getPortal().getSiteAdminURL(company, group, ppid, params);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getSiteAdminURL(ThemeDisplay, String, Map)}
-	 */
-	@Deprecated
-	public static String getSiteAdminURL(
-			Group group, String ppid, Map<String, String[]> params)
-		throws PortalException {
-
-		return getPortal().getSiteAdminURL(group, ppid, params);
 	}
 
 	public static String getSiteAdminURL(

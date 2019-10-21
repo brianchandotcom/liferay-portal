@@ -436,149 +436,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CALENDAR_PUBLISH_TO_LIVE_BY_DEFAULT));
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static boolean CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean CAPTCHA_CHECK_PORTAL_SEND_PASSWORD =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.CAPTCHA_CHECK_PORTAL_SEND_PASSWORD));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean
-		CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_CATEGORY =
-			GetterUtil.getBoolean(
-				PropsUtil.get(
-					PropsKeys.
-						CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_CATEGORY));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean
-		CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE =
-			GetterUtil.getBoolean(
-				PropsUtil.get(
-					PropsKeys.
-						CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String CAPTCHA_ENGINE_IMPL = PropsUtil.get(
-		PropsKeys.CAPTCHA_ENGINE_IMPL);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE =
-		PropsUtil.get(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC =
-		PropsUtil.get(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String CAPTCHA_ENGINE_RECAPTCHA_URL_NOSCRIPT =
-		PropsUtil.get(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_URL_NOSCRIPT);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String CAPTCHA_ENGINE_RECAPTCHA_URL_SCRIPT =
-		PropsUtil.get(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_URL_SCRIPT);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String CAPTCHA_ENGINE_RECAPTCHA_URL_VERIFY =
-		PropsUtil.get(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_URL_VERIFY);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String[]
-		CAPTCHA_ENGINE_SIMPLECAPTCHA_BACKGROUND_PRODUCERS = PropsUtil.getArray(
-			PropsKeys.CAPTCHA_ENGINE_SIMPLECAPTCHA_BACKGROUND_PRODUCERS);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String[] CAPTCHA_ENGINE_SIMPLECAPTCHA_GIMPY_RENDERERS =
-		PropsUtil.getArray(
-			PropsKeys.CAPTCHA_ENGINE_SIMPLECAPTCHA_GIMPY_RENDERERS);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final int CAPTCHA_ENGINE_SIMPLECAPTCHA_HEIGHT =
-		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.CAPTCHA_ENGINE_SIMPLECAPTCHA_HEIGHT));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String[] CAPTCHA_ENGINE_SIMPLECAPTCHA_NOISE_PRODUCERS =
-		PropsUtil.getArray(
-			PropsKeys.CAPTCHA_ENGINE_SIMPLECAPTCHA_NOISE_PRODUCERS);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String[] CAPTCHA_ENGINE_SIMPLECAPTCHA_TEXT_PRODUCERS =
-		PropsUtil.getArray(
-			PropsKeys.CAPTCHA_ENGINE_SIMPLECAPTCHA_TEXT_PRODUCERS);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final int CAPTCHA_ENGINE_SIMPLECAPTCHA_WIDTH =
-		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.CAPTCHA_ENGINE_SIMPLECAPTCHA_WIDTH));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String[] CAPTCHA_ENGINE_SIMPLECAPTCHA_WORD_RENDERERS =
-		PropsUtil.getArray(
-			PropsKeys.CAPTCHA_ENGINE_SIMPLECAPTCHA_WORD_RENDERERS);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final int CAPTCHA_MAX_CHALLENGES = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.CAPTCHA_MAX_CHALLENGES));
-
 	public static final boolean CAS_AUTH_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.CAS_AUTH_ENABLED));
 
@@ -874,14 +731,6 @@ public class PropsValues {
 	public static final boolean DISCUSSION_SUBSCRIBE = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.DISCUSSION_SUBSCRIBE));
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean DISCUSSION_SUBSCRIBE_BY_DEFAULT =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.DISCUSSION_SUBSCRIBE_BY_DEFAULT));
-
 	public static final String[] DL_CHAR_BLACKLIST = PropsUtil.getArray(
 		PropsKeys.DL_CHAR_BLACKLIST);
 
@@ -996,15 +845,6 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH));
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final long DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE =
-		GetterUtil.getLong(
-			PropsUtil.get(
-				PropsKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE));
-
 	public static final String[]
 		DL_FILE_ENTRY_RAW_METADATA_PROCESSOR_EXCLUDED_MIME_TYPES =
 			PropsUtil.getArray(
@@ -1061,13 +901,6 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.DL_FILE_ENTRY_VERSION_POLICY));
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String[] DL_FILE_EXTENSIONS = PropsUtil.getArray(
-		PropsKeys.DL_FILE_EXTENSIONS);
-
 	public static final boolean DL_FILE_EXTENSIONS_STRICT_CHECK =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.DL_FILE_EXTENSIONS_STRICT_CHECK));
@@ -1077,27 +910,6 @@ public class PropsValues {
 
 	public static final int DL_FILE_INDEXING_MAX_SIZE = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.DL_FILE_INDEXING_MAX_SIZE));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final long DL_FILE_MAX_SIZE = GetterUtil.getLong(
-		PropsUtil.get(PropsKeys.DL_FILE_MAX_SIZE));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean DL_FILE_RANK_ENABLED = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.DL_FILE_RANK_ENABLED));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final int DL_FILE_RANK_MAX_SIZE = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.DL_FILE_RANK_MAX_SIZE));
 
 	public static final boolean DL_FOLDER_ICON_CHECK_COUNT =
 		GetterUtil.getBoolean(
@@ -1231,40 +1043,6 @@ public class PropsValues {
 				PropsUtil.get(
 					PropsKeys.
 						FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_ORGANIZATION_STATUS));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_BIRTHDAY}
-	 */
-	@Deprecated
-	public static boolean
-		FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY =
-			GetterUtil.getBoolean(
-				PropsUtil.get(
-					PropsKeys.
-						FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE}
-	 */
-	@Deprecated
-	public static boolean FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_MALE =
-		GetterUtil.getBoolean(
-			PropsUtil.get(
-				PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_MALE));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_ORGANIZATION_STATUS}
-	 */
-	@Deprecated
-	public static boolean
-		FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_ORGANIZATION_STATUS =
-			GetterUtil.getBoolean(
-				PropsUtil.get(
-					PropsKeys.
-						FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_ORGANIZATION_STATUS));
 
 	public static final String[] GLOBAL_SHUTDOWN_EVENTS = PropsUtil.getArray(
 		PropsKeys.GLOBAL_SHUTDOWN_EVENTS);
@@ -1524,17 +1302,6 @@ public class PropsValues {
 			PropsUtil.get(PropsKeys.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN));
 
 	public static final boolean LAYOUT_PARALLEL_RENDER_ENABLE = false;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean
-		LAYOUT_PARALLEL_RENDER_THREAD_POOL_ALLOW_CORE_THREAD_TIMEOUT =
-			GetterUtil.getBoolean(
-				PropsUtil.get(
-					PropsKeys.
-						LAYOUT_PARALLEL_RENDER_THREAD_POOL_ALLOW_CORE_THREAD_TIMEOUT));
 
 	public static final int
 		LAYOUT_PARALLEL_RENDER_THREAD_POOL_CORE_THREAD_COUNT =
@@ -1809,20 +1576,6 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.MESSAGE_BOARDS_RSS_ABSTRACT_LENGTH));
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String MICROSOFT_TRANSLATOR_CLIENT_ID = PropsUtil.get(
-		PropsKeys.MICROSOFT_TRANSLATOR_CLIENT_ID);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String MICROSOFT_TRANSLATOR_CLIENT_SECRET =
-		PropsUtil.get(PropsKeys.MICROSOFT_TRANSLATOR_CLIENT_SECRET);
-
 	public static final String[] MIME_TYPES_CONTENT_DISPOSITION_INLINE =
 		PropsUtil.getArray(PropsKeys.MIME_TYPES_CONTENT_DISPOSITION_INLINE);
 
@@ -1836,29 +1589,12 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.MINIFIER_INLINE_CONTENT_CACHE_ENABLED));
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #MINIFIER_INLINE_CONTENT_CACHE_ENABLED}
-	 */
-	@Deprecated
-	public static final int MINIFIER_INLINE_CONTENT_CACHE_SIZE =
-		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.MINIFIER_INLINE_CONTENT_CACHE_SIZE));
-
 	public static final String[] MINIFIER_INLINE_CONTENT_CACHE_SKIP_CSS =
 		PropsUtil.getArray(PropsKeys.MINIFIER_INLINE_CONTENT_CACHE_SKIP_CSS);
 
 	public static final String[] MINIFIER_INLINE_CONTENT_CACHE_SKIP_JAVASCRIPT =
 		PropsUtil.getArray(
 			PropsKeys.MINIFIER_INLINE_CONTENT_CACHE_SKIP_JAVASCRIPT);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement, as
-	 *             minifiers have been extracted as OSGi components
-	 */
-	@Deprecated
-	public static final String MINIFIER_JAVASCRIPT_IMPL = GetterUtil.getString(
-		PropsUtil.get(PropsKeys.MINIFIER_JAVASCRIPT_IMPL));
 
 	public static final boolean MOBILE_DEVICE_RULES_PUBLISH_TO_LIVE_BY_DEFAULT =
 		GetterUtil.getBoolean(
@@ -1914,13 +1650,6 @@ public class PropsValues {
 			PropsUtil.get(
 				PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES));
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String[] MODULE_FRAMEWORK_INITIAL_BUNDLES =
-		PropsUtil.getArray(PropsKeys.MODULE_FRAMEWORK_INITIAL_BUNDLES);
-
 	public static final String MODULE_FRAMEWORK_MARKETPLACE_DIR = PropsUtil.get(
 		PropsKeys.MODULE_FRAMEWORK_MARKETPLACE_DIR);
 
@@ -1929,15 +1658,6 @@ public class PropsValues {
 
 	public static final String MODULE_FRAMEWORK_PORTAL_DIR = PropsUtil.get(
 		PropsKeys.MODULE_FRAMEWORK_PORTAL_DIR);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean MODULE_FRAMEWORK_REGISTER_LIFERAY_SERVICES =
-		GetterUtil.getBoolean(
-			PropsUtil.get(
-				PropsKeys.MODULE_FRAMEWORK_REGISTER_LIFERAY_SERVICES));
 
 	public static final String MODULE_FRAMEWORK_RESOLVER_REVISION_BATCH_SIZE =
 		PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_RESOLVER_REVISION_BATCH_SIZE);
@@ -2096,36 +1816,6 @@ public class PropsValues {
 	public static final String OPEN_SSO_SERVICE_URL = PropsUtil.get(
 		PropsKeys.OPEN_SSO_SERVICE_URL);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean OPENOFFICE_CACHE_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.OPENOFFICE_CACHE_ENABLED));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean OPENOFFICE_SERVER_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.OPENOFFICE_SERVER_ENABLED));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String OPENOFFICE_SERVER_HOST = PropsUtil.get(
-		PropsKeys.OPENOFFICE_SERVER_HOST);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final int OPENOFFICE_SERVER_PORT = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.OPENOFFICE_SERVER_PORT));
-
 	public static final boolean ORGANIZATIONS_ASSIGNMENT_STRICT =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.ORGANIZATIONS_ASSIGNMENT_STRICT));
@@ -2137,14 +1827,6 @@ public class PropsValues {
 	public static final boolean ORGANIZATIONS_SEARCH_WITH_INDEX =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.ORGANIZATIONS_SEARCH_WITH_INDEX));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             OrganizationLocalService#getOrganizationTypes()}
-	 */
-	@Deprecated
-	public static String[] ORGANIZATIONS_TYPES = PropsUtil.getArray(
-		PropsKeys.ORGANIZATIONS_TYPES);
 
 	public static final boolean
 		PASSWORDS_DEFAULT_POLICY_ALLOW_DICTIONARY_WORDS = GetterUtil.getBoolean(
@@ -2320,25 +2002,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(
 				PropsKeys.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean PERMISSIONS_INLINE_SQL_CHECK_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.PERMISSIONS_INLINE_SQL_CHECK_ENABLED));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final int
-		PERMISSIONS_INLINE_SQL_RESOURCE_BLOCK_QUERY_THRESHOLD =
-			GetterUtil.getInteger(
-				PropsUtil.get(
-					PropsKeys.
-						PERMISSIONS_INLINE_SQL_RESOURCE_BLOCK_QUERY_THRESHOLD));
 
 	public static final boolean PERMISSIONS_OBJECT_BLOCKING_CACHE =
 		GetterUtil.getBoolean(
@@ -2890,13 +2553,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE));
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String[] SETUP_DATABASE_TYPES = PropsUtil.getArray(
-		PropsKeys.SETUP_DATABASE_TYPES);
-
 	public static final boolean SETUP_WIZARD_ADD_SAMPLE_DATA =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SETUP_WIZARD_ADD_SAMPLE_DATA));
@@ -2987,13 +2643,6 @@ public class PropsValues {
 	public static final String[] SPRING_INFRASTRUCTURE_CONFIGS =
 		PropsUtil.getArray(PropsKeys.SPRING_INFRASTRUCTURE_CONFIGS);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String[] SPRING_PORTLET_CONFIGS = PropsUtil.getArray(
-		PropsKeys.SPRING_PORTLET_CONFIGS);
-
 	public static final boolean SPRITE_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.SPRITE_ENABLED));
 
@@ -3071,20 +2720,6 @@ public class PropsValues {
 	public static String[] STRIP_MIME_TYPES = PropsUtil.getArray(
 		PropsKeys.STRIP_MIME_TYPES);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String STRUTS_PORTLET_IGNORED_PARAMETERS_REGEXP =
-		PropsUtil.get(PropsKeys.STRUTS_PORTLET_IGNORED_PARAMETERS_REGEXP);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String STRUTS_PORTLET_REQUEST_PROCESSOR = PropsUtil.get(
-		PropsKeys.STRUTS_PORTLET_REQUEST_PROCESSOR);
-
 	public static boolean TERMS_OF_USE_REQUIRED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.TERMS_OF_USE_REQUIRED));
 
@@ -3146,13 +2781,6 @@ public class PropsValues {
 	public static int TRANSACTION_ISOLATION_PORTAL = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.TRANSACTION_ISOLATION_PORTAL));
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String TRANSACTION_MANAGER_IMPL = PropsUtil.get(
-		PropsKeys.TRANSACTION_MANAGER_IMPL);
-
 	public static final boolean TRANSLATIONS_DISABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.TRANSLATIONS_DISABLED));
 
@@ -3187,14 +2815,6 @@ public class PropsValues {
 	public static final boolean UPGRADE_DATABASE_TRANSACTIONS_DISABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.UPGRADE_DATABASE_TRANSACTIONS_DISABLED));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final long UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE =
-		GetterUtil.getLong(
-			PropsUtil.get(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE));
 
 	public static boolean USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE =
 		GetterUtil.getBoolean(
@@ -3237,35 +2857,6 @@ public class PropsValues {
 
 	public static final String[] USERS_EXPORT_CSV_FIELDS = PropsUtil.getArray(
 		PropsKeys.USERS_EXPORT_CSV_FIELDS);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean USERS_IMAGE_CHECK_TOKEN = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.USERS_IMAGE_CHECK_TOKEN));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean USERS_IMAGE_DEFAULT_USE_INITIALS =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.USERS_IMAGE_DEFAULT_USE_INITIALS));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static int USERS_IMAGE_MAX_HEIGHT = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.USERS_IMAGE_MAX_HEIGHT));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static int USERS_IMAGE_MAX_WIDTH = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.USERS_IMAGE_MAX_WIDTH));
 
 	public static final String[] USERS_LIST_VIEWS = PropsUtil.getArray(
 		PropsKeys.USERS_LIST_VIEWS);
@@ -3447,50 +3038,6 @@ public class PropsValues {
 	public static final int YUI_COMPRESSOR_CSS_LINE_BREAK =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.YUI_COMPRESSOR_CSS_LINE_BREAK));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement, as
-	 *             minifiers have been extracted as OSGi components
-	 */
-	@Deprecated
-	public static final boolean YUI_COMPRESSOR_JS_DISABLE_OPTIMIZATIONS =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.YUI_COMPRESSOR_JS_DISABLE_OPTIMIZATIONS));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement, as
-	 *             minifiers have been extracted as OSGi components
-	 */
-	@Deprecated
-	public static final int YUI_COMPRESSOR_JS_LINE_BREAK =
-		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.YUI_COMPRESSOR_JS_LINE_BREAK));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement, as
-	 *             minifiers have been extracted as OSGi components
-	 */
-	@Deprecated
-	public static final boolean YUI_COMPRESSOR_JS_MUNGE = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.YUI_COMPRESSOR_JS_MUNGE));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement, as
-	 *             minifiers have been extracted as OSGi components
-	 */
-	@Deprecated
-	public static final boolean YUI_COMPRESSOR_JS_PRESERVE_ALL_SEMICOLONS =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.YUI_COMPRESSOR_JS_PRESERVE_ALL_SEMICOLONS));
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement, as
-	 *             minifiers have been extracted as OSGi components
-	 */
-	@Deprecated
-	public static final boolean YUI_COMPRESSOR_JS_VERBOSE =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.YUI_COMPRESSOR_JS_VERBOSE));
 
 	public static final String ZIP_FILE_NAME_ENCODING = GetterUtil.getString(
 		PropsUtil.get(PropsKeys.ZIP_FILE_NAME_ENCODING));

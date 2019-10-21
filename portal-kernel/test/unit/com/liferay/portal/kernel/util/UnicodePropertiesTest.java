@@ -74,13 +74,6 @@ public class UnicodePropertiesTest {
 	}
 
 	@Test
-	public void testGetToStringLength() {
-		UnicodeProperties unicodeProperties = new UnicodeProperties();
-
-		Assert.assertEquals(-1, unicodeProperties.getToStringLength());
-	}
-
-	@Test
 	public void testIsSafe() {
 		UnicodeProperties unicodeProperties1 = new UnicodeProperties();
 

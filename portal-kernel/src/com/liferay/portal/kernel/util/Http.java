@@ -82,13 +82,6 @@ public interface Http {
 	@Deprecated
 	public String encodeURL(String url);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             URLCodec#encodeURL(String, boolean)}
-	 */
-	@Deprecated
-	public String encodeURL(String url, boolean escapeSpaces);
-
 	public String fixPath(String path);
 
 	public String fixPath(String path, boolean leading, boolean trailing);
@@ -178,12 +171,6 @@ public interface Http {
 	public String setParameter(String url, String name, String value);
 
 	public String shortenURL(String url);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #shortenURL(String)}
-	 */
-	@Deprecated
-	public String shortenURL(String url, int count);
 
 	public byte[] URLtoByteArray(Http.Options options) throws IOException;
 

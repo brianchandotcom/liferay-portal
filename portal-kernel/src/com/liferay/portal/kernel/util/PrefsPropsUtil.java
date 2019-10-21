@@ -33,29 +33,6 @@ public class PrefsPropsUtil {
 		return getPrefsProps().getBoolean(companyId, name, defaultValue);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getBoolean(PortletPreferences, String)}
-	 */
-	@Deprecated
-	public static boolean getBoolean(
-		PortletPreferences preferences, long companyId, String name) {
-
-		return getBoolean(preferences, name);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getBoolean(PortletPreferences, String, boolean)}
-	 */
-	@Deprecated
-	public static boolean getBoolean(
-		PortletPreferences preferences, long companyId, String name,
-		boolean defaultValue) {
-
-		return getBoolean(preferences, name, defaultValue);
-	}
-
 	public static boolean getBoolean(
 		PortletPreferences preferences, String name) {
 
@@ -80,17 +57,6 @@ public class PrefsPropsUtil {
 		return getPrefsProps().getContent(companyId, name);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getContent(PortletPreferences, String)}
-	 */
-	@Deprecated
-	public static String getContent(
-		PortletPreferences preferences, long companyId, String name) {
-
-		return getContent(preferences, name);
-	}
-
 	public static String getContent(
 		PortletPreferences preferences, String name) {
 
@@ -109,29 +75,6 @@ public class PrefsPropsUtil {
 		long companyId, String name, double defaultValue) {
 
 		return getPrefsProps().getDouble(companyId, name, defaultValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getDouble(PortletPreferences, String)}
-	 */
-	@Deprecated
-	public static double getDouble(
-		PortletPreferences preferences, long companyId, String name) {
-
-		return getDouble(preferences, name);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getDouble(PortletPreferences, String, double)}
-	 */
-	@Deprecated
-	public static double getDouble(
-		PortletPreferences preferences, long companyId, String name,
-		double defaultValue) {
-
-		return getDouble(preferences, name, defaultValue);
 	}
 
 	public static double getDouble(
@@ -164,29 +107,6 @@ public class PrefsPropsUtil {
 		return getPrefsProps().getInteger(companyId, name, defaultValue);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getInteger(PortletPreferences, String)}
-	 */
-	@Deprecated
-	public static int getInteger(
-		PortletPreferences preferences, long companyId, String name) {
-
-		return getInteger(preferences, name);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getInteger(PortletPreferences, String, int)}
-	 */
-	@Deprecated
-	public static int getInteger(
-		PortletPreferences preferences, long companyId, String name,
-		int defaultValue) {
-
-		return getInteger(preferences, name, defaultValue);
-	}
-
 	public static int getInteger(PortletPreferences preferences, String name) {
 		return getPrefsProps().getInteger(preferences, name);
 	}
@@ -211,29 +131,6 @@ public class PrefsPropsUtil {
 
 	public static long getLong(long companyId, String name, long defaultValue) {
 		return getPrefsProps().getLong(companyId, name, defaultValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getLong(PortletPreferences, String)}
-	 */
-	@Deprecated
-	public static long getLong(
-		PortletPreferences preferences, long companyId, String name) {
-
-		return getLong(preferences, name);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getLong(PortletPreferences, String, long)}
-	 */
-	@Deprecated
-	public static long getLong(
-		PortletPreferences preferences, long companyId, String name,
-		long defaultValue) {
-
-		return getLong(preferences, name, defaultValue);
 	}
 
 	public static long getLong(PortletPreferences preferences, String name) {
@@ -276,18 +173,6 @@ public class PrefsPropsUtil {
 		return _prefsProps;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getProperties(PortletPreferences, String, boolean)}
-	 */
-	@Deprecated
-	public static Properties getProperties(
-		PortletPreferences preferences, long companyId, String prefix,
-		boolean removePrefix) {
-
-		return getProperties(preferences, prefix, removePrefix);
-	}
-
 	public static Properties getProperties(
 		PortletPreferences preferences, String prefix, boolean removePrefix) {
 
@@ -308,29 +193,6 @@ public class PrefsPropsUtil {
 		long companyId, String name, short defaultValue) {
 
 		return getPrefsProps().getShort(companyId, name, defaultValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getShort(PortletPreferences, String)}
-	 */
-	@Deprecated
-	public static short getShort(
-		PortletPreferences preferences, long companyId, String name) {
-
-		return getShort(preferences, name);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getShort(PortletPreferences, String, short)}
-	 */
-	@Deprecated
-	public static short getShort(
-		PortletPreferences preferences, long companyId, String name,
-		short defaultValue) {
-
-		return getShort(preferences, name, defaultValue);
 	}
 
 	public static short getShort(PortletPreferences preferences, String name) {
@@ -359,89 +221,6 @@ public class PrefsPropsUtil {
 		long companyId, String name, String defaultValue) {
 
 		return getPrefsProps().getString(companyId, name, defaultValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getString(PortletPreferences, String)}
-	 */
-	@Deprecated
-	public static String getString(
-		PortletPreferences preferences, long companyId, String name) {
-
-		return getString(preferences, name);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getString(PortletPreferences, String, boolean)}
-	 */
-	@Deprecated
-	public static String getString(
-		PortletPreferences preferences, long companyId, String name,
-		boolean defaultValue) {
-
-		return getString(preferences, name, defaultValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getString(PortletPreferences, String, double)}
-	 */
-	@Deprecated
-	public static String getString(
-		PortletPreferences preferences, long companyId, String name,
-		double defaultValue) {
-
-		return getString(preferences, name, defaultValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getString(PortletPreferences, String, int)}
-	 */
-	@Deprecated
-	public static String getString(
-		PortletPreferences preferences, long companyId, String name,
-		int defaultValue) {
-
-		return getString(preferences, name, defaultValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getString(PortletPreferences, String, long)}
-	 */
-	@Deprecated
-	public static String getString(
-		PortletPreferences preferences, long companyId, String name,
-		long defaultValue) {
-
-		return getString(preferences, name, defaultValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getString(PortletPreferences, String, short)}
-	 */
-	@Deprecated
-	public static String getString(
-		PortletPreferences preferences, long companyId, String name,
-		short defaultValue) {
-
-		return getString(preferences, name, defaultValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getString(PortletPreferences, String, String)}
-	 */
-	@Deprecated
-	public static String getString(
-		PortletPreferences preferences, long companyId, String name,
-		String defaultValue) {
-
-		return getString(preferences, name, defaultValue);
 	}
 
 	public static String getString(
@@ -505,31 +284,6 @@ public class PrefsPropsUtil {
 
 		return getPrefsProps().getStringArray(
 			companyId, name, delimiter, defaultValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getStringArray(PortletPreferences, String, String)}
-	 */
-	@Deprecated
-	public static String[] getStringArray(
-		PortletPreferences preferences, long companyId, String name,
-		String delimiter) {
-
-		return getStringArray(preferences, name, delimiter);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getStringArray(PortletPreferences, String, String,
-	 *             String[])}
-	 */
-	@Deprecated
-	public static String[] getStringArray(
-		PortletPreferences preferences, long companyId, String name,
-		String delimiter, String[] defaultValue) {
-
-		return getStringArray(preferences, name, delimiter, defaultValue);
 	}
 
 	public static String[] getStringArray(

@@ -40,15 +40,6 @@ public class MethodParameter {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #MethodParameter(ClassLoader, String, String, Class)}
-	 */
-	@Deprecated
-	public MethodParameter(String name, String signatures, Class<?> type) {
-		this(_getContextClassLoader(), name, signatures, type);
-	}
-
 	public Class<?>[] getGenericTypes() {
 		return _genericTypes;
 	}
@@ -59,12 +50,6 @@ public class MethodParameter {
 
 	public Class<?> getType() {
 		return _type;
-	}
-
-	private static ClassLoader _getContextClassLoader() {
-		Thread currentThread = Thread.currentThread();
-
-		return currentThread.getContextClassLoader();
 	}
 
 	private String _getClassName(String signature) {

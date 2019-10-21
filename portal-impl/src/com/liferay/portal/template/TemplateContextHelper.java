@@ -979,16 +979,6 @@ public class TemplateContextHelper {
 			return _http.encodeURL(url);
 		}
 
-		/**
-		 * @deprecated As of Judson (7.1.x), replaced by {@link
-		 *             URLCodec#encodeURL(String, boolean)}
-		 */
-		@Deprecated
-		@Override
-		public String encodeURL(String url, boolean escapeSpaces) {
-			return _http.encodeURL(url, escapeSpaces);
-		}
-
 		@Override
 		public String fixPath(String path) {
 			return _http.fixPath(path);
@@ -1213,16 +1203,6 @@ public class TemplateContextHelper {
 		@Override
 		public String shortenURL(String url) {
 			return _http.shortenURL(url);
-		}
-
-		/**
-		 * @deprecated As of Judson (7.1.x), replaced by {@link
-		 *             #shortenURL(String)}
-		 */
-		@Deprecated
-		@Override
-		public String shortenURL(String url, int count) {
-			return _http.shortenURL(url, count);
 		}
 
 		@Override

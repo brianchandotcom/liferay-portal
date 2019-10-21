@@ -41,28 +41,8 @@ public class Base64 {
 		return _encode(raw, 0, raw.length, false);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String encode(byte[] raw, int offset, int length) {
-		return _encode(raw, offset, length, false);
-	}
-
 	public static String encodeToURL(byte[] raw) {
 		return _encode(raw, 0, raw.length, true);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             ##decodeFromURL(String)}
-	 */
-	@Deprecated
-	public static String fromURLSafe(String base64) {
-		return StringUtil.replace(
-			base64,
-			new char[] {CharPool.MINUS, CharPool.STAR, CharPool.UNDERLINE},
-			new char[] {CharPool.PLUS, CharPool.EQUAL, CharPool.SLASH});
 	}
 
 	public static String objectToString(Object o) {
@@ -93,51 +73,6 @@ public class Base64 {
 
 	public static Object stringToObjectSilent(String s) {
 		return _stringToObject(s, null, true);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Object stringToObjectSilent(
-		String s, ClassLoader classLoader) {
-
-		return _stringToObject(s, classLoader, true);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #encodeToURL(byte[])}
-	 */
-	@Deprecated
-	public static String toURLSafe(String base64) {
-		return StringUtil.replace(
-			base64, new char[] {CharPool.PLUS, CharPool.EQUAL, CharPool.SLASH},
-			new char[] {CharPool.MINUS, CharPool.STAR, CharPool.UNDERLINE});
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected static char[] encodeBlock(byte[] raw, int offset, int lastIndex) {
-		return _encodeBlock(raw, offset, lastIndex, false);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected static char getChar(int sixbit) {
-		return _getChar(sixbit, false);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected static int getValue(char c) {
-		return _getValue(c, false);
 	}
 
 	private static byte[] _decode(String base64, boolean url) {

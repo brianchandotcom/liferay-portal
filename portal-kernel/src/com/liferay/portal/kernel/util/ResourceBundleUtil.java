@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UTF8Control;
 import com.liferay.registry.Registry;
@@ -23,13 +21,9 @@ import com.liferay.registry.RegistryUtil;
 
 import java.text.MessageFormat;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -119,18 +113,6 @@ public class ResourceBundleUtil {
 		return new ClassResourceBundleLoader(baseName, classLoader);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getString(ResourceBundle, String, Object...)}
-	 */
-	@Deprecated
-	public static String getString(
-		ResourceBundle resourceBundle, Locale locale, String key,
-		Object[] arguments) {
-
-		return getString(resourceBundle, key, arguments);
-	}
-
 	public static String getString(ResourceBundle resourceBundle, String key) {
 		if (!resourceBundle.containsKey(key)) {
 			return null;
@@ -167,56 +149,6 @@ public class ResourceBundleUtil {
 		return value;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void loadResourceBundles(
-		Map<String, ResourceBundle> resourceBundles, Locale locale,
-		ResourceBundleLoader resourceBundleLoader) {
-
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		loadResourceBundles(resourceBundles, languageId, resourceBundleLoader);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void loadResourceBundles(
-		Map<String, ResourceBundle> resourceBundles, String languageId,
-		ResourceBundleLoader resourceBundleLoader) {
-
-		Deque<ResourceBundle> currentResourceBundles = new LinkedList<>();
-
-		for (String currentLanguageId : _getLanguageIds(languageId)) {
-			ResourceBundle resourceBundle =
-				resourceBundleLoader.loadResourceBundle(currentLanguageId);
-
-			if (resourceBundle != null) {
-				currentResourceBundles.addFirst(resourceBundle);
-			}
-			else if (currentResourceBundles.isEmpty()) {
-				continue;
-			}
-
-			if (currentResourceBundles.size() == 1) {
-				resourceBundles.put(
-					currentLanguageId, currentResourceBundles.peek());
-			}
-			else {
-				int size = currentResourceBundles.size();
-
-				resourceBundles.put(
-					currentLanguageId,
-					new AggregateResourceBundle(
-						currentResourceBundles.toArray(
-							new ResourceBundle[size])));
-			}
-		}
-	}
-
 	private static ResourceBundle _getBundle(
 		String baseName, Locale locale, ClassLoader classLoader,
 		String symbolicName) {
@@ -244,24 +176,6 @@ public class ResourceBundleUtil {
 		}
 
 		return resourceBundleLoader.loadResourceBundle(locale);
-	}
-
-	private static List<String> _getLanguageIds(String languageId) {
-		List<String> languageIds = new ArrayList<>();
-
-		languageIds.add(StringPool.BLANK);
-
-		int index = 0;
-
-		while ((index = languageId.indexOf(CharPool.UNDERLINE, index + 1)) !=
-					-1) {
-
-			languageIds.add(languageId.substring(0, index));
-		}
-
-		languageIds.add(languageId);
-
-		return languageIds;
 	}
 
 }

@@ -23,23 +23,6 @@ import java.io.PrintWriter;
  */
 public class StackTraceUtil {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getCallerKey() {
-		Exception e = new Exception();
-
-		StackTraceElement[] stackTraceElements = e.getStackTrace();
-
-		StackTraceElement stackTraceElement = stackTraceElements[1];
-
-		return StringBundler.concat(
-			stackTraceElement.getClassName(), "#",
-			stackTraceElement.getMethodName(), "#",
-			String.valueOf(stackTraceElement.getLineNumber()));
-	}
-
 	public static String getStackTrace(Throwable t) {
 		String stackTrace = null;
 

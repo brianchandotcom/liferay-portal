@@ -374,17 +374,7 @@ public class HttpImpl implements Http {
 	@Deprecated
 	@Override
 	public String encodeURL(String url) {
-		return encodeURL(url, false);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             URLCodec#encodeURL(String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public String encodeURL(String url, boolean escapeSpaces) {
-		return URLCodec.encodeURL(url, StringPool.UTF8, escapeSpaces);
+		return URLCodec.encodeURL(url, StringPool.UTF8, false);
 	}
 
 	@Override
@@ -1163,15 +1153,6 @@ public class HttpImpl implements Http {
 		return _shortenURL(
 			url, 0, StringPool.QUESTION, StringPool.AMPERSAND,
 			StringPool.EQUAL);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #shortenURL(String)}
-	 */
-	@Deprecated
-	@Override
-	public String shortenURL(String url, int count) {
-		return shortenURL(url);
 	}
 
 	@Override

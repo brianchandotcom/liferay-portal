@@ -22,14 +22,6 @@ import java.util.regex.Pattern;
  */
 public class FriendlyURLNormalizerUtil {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static FriendlyURLNormalizer getFriendlyURLNormalizer() {
-		return _friendlyURLNormalizer;
-	}
-
 	public static String normalize(String friendlyURL) {
 		return _friendlyURLNormalizer.normalize(friendlyURL);
 	}

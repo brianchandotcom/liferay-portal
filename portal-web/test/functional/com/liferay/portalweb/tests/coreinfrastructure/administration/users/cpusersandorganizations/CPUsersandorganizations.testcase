@@ -612,7 +612,7 @@ definition {
 		Navigator.openURL();
 
 		JSONUser.addUser(
-			userEmailAddress = "user'ea@liferay.com",
+			userEmailAddress = "user%27ea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
@@ -650,7 +650,7 @@ definition {
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userEmailAddress = "user'ea@liferay.com");
+			userEmailAddress = "user%27ea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "user'ea@liferay.com",

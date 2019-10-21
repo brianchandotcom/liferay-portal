@@ -16,6 +16,7 @@ create table AppBuilderApp (
 
 create table AppBuilderAppDeployment (
 	appBuilderAppDeploymentId LONG not null primary key,
+	companyId LONG,
 	appBuilderAppId LONG,
 	settings_ TEXT null,
 	type_ VARCHAR(75) null

@@ -34,11 +34,14 @@ checkoutDXPScript {
 			commandLine "git", "checkout", "refs/heads/" + gitBranchName, "--", "build-working-dir.xml", "working.dir.properties"
 			workingDir = gitRepositoryDir
 		}
+
+		ant.move(file: new File(gitRepositoryDir, "build-working-dir.xml"), todir: projectDir.parentFile)
+		ant.move(file: new File(gitRepositoryDir, "working.dir.properties"), todir: projectDir.parentFile)
 	}
 }
 
 removeDXPScript {
 	doLast {
-		delete gitRepositoryDir
+		delete gitRepositoryDir, new File(projectDir.parentFile, "build-working-dir.xml"), new File(projectDir.parentFile, "working.dir.properties")
 	}
 }

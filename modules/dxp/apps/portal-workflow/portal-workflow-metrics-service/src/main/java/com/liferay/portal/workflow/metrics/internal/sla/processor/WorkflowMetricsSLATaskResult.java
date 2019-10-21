@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.sla.processor;
 
-import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.time.LocalDateTime;
 
@@ -63,8 +63,8 @@ public class WorkflowMetricsSLATaskResult {
 		return _tokenId;
 	}
 
-	public WorkfowMetricsSLAStatus getWorkfowMetricsSLAStatus() {
-		return _workfowMetricsSLAStatus;
+	public WorkflowMetricsSLAStatus getWorkflowMetricsSLAStatus() {
+		return _workflowMetricsSLAStatus;
 	}
 
 	public boolean isBreached() {
@@ -127,10 +127,10 @@ public class WorkflowMetricsSLATaskResult {
 		_tokenId = tokenId;
 	}
 
-	public void setWorkfowMetricsSLAStatus(
-		WorkfowMetricsSLAStatus workfowMetricsSLAStatus) {
+	public void setWorkflowMetricsSLAStatus(
+		WorkflowMetricsSLAStatus workflowMetricsSLAStatus) {
 
-		_workfowMetricsSLAStatus = workfowMetricsSLAStatus;
+		_workflowMetricsSLAStatus = workflowMetricsSLAStatus;
 	}
 
 	private Long _assigneeId;
@@ -145,6 +145,6 @@ public class WorkflowMetricsSLATaskResult {
 	private long _taskId;
 	private String _taskName;
 	private long _tokenId;
-	private WorkfowMetricsSLAStatus _workfowMetricsSLAStatus;
+	private WorkflowMetricsSLAStatus _workflowMetricsSLAStatus;
 
 }

@@ -16,12 +16,9 @@ package com.liferay.saml.runtime.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Mika Koivisto
  */
-@ProviderType
 public class UnsupportedBindingException extends PortalException {
 
 	public UnsupportedBindingException() {

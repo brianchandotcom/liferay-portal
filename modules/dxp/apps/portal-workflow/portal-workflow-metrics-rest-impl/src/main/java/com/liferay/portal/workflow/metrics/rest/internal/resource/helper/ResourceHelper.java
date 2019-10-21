@@ -38,7 +38,7 @@ import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.io.IOException;
 
@@ -92,7 +92,7 @@ public class ResourceHelper {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		return booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkfowMetricsSLAStatus.NEW));
+			_queries.term("status", WorkflowMetricsSLAStatus.NEW));
 	}
 
 	public ScriptedMetricAggregation createOnTimeScriptedMetricAggregation() {

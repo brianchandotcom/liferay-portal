@@ -42,7 +42,7 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarTracker;
-import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -80,22 +80,22 @@ public class WorkflowMetricsSLAProcessor {
 
 		long elapsedTime = 0;
 		LocalDateTime lastCheckLocalDateTime = null;
-		WorkfowMetricsSLAStatus workfowMetricsSLAStatus =
-			WorkfowMetricsSLAStatus.NEW;
+		WorkflowMetricsSLAStatus workflowMetricsSLAStatus =
+			WorkflowMetricsSLAStatus.NEW;
 
 		if (lastWorkflowMetricsSLAProcessResult != null) {
 			elapsedTime = lastWorkflowMetricsSLAProcessResult.getElapsedTime();
 
 			lastCheckLocalDateTime =
 				lastWorkflowMetricsSLAProcessResult.getLastCheckLocalDateTime();
-			workfowMetricsSLAStatus =
+			workflowMetricsSLAStatus =
 				lastWorkflowMetricsSLAProcessResult.
-					getWorkfowMetricsSLAStatus();
+					getWorkflowMetricsSLAStatus();
 
 			if (lastCheckLocalDateTime.isAfter(nowLocalDateTime) ||
 				Objects.equals(
-					workfowMetricsSLAStatus,
-					WorkfowMetricsSLAStatus.COMPLETED)) {
+					workflowMetricsSLAStatus,
+					WorkflowMetricsSLAStatus.COMPLETED)) {
 
 				return Optional.empty();
 			}
@@ -110,7 +110,7 @@ public class WorkflowMetricsSLAProcessor {
 			_createWorkflowMetricsSLAStopwatch(
 				documents, createLocalDateTime, lastCheckLocalDateTime,
 				startNodeId, workflowMetricsSLADefinitionVersion,
-				workfowMetricsSLAStatus);
+				workflowMetricsSLAStatus);
 
 		if (!workflowMetricsSLAStopwatch.isEmpty()) {
 			List<TaskInterval> taskIntervals = _toTaskIntervals(
@@ -123,15 +123,15 @@ public class WorkflowMetricsSLAProcessor {
 					workflowMetricsSLACalendar, workflowMetricsSLAStopwatch);
 			}
 
-			workfowMetricsSLAStatus =
-				workflowMetricsSLAStopwatch.getWorkfowMetricsSLAStatus();
+			workflowMetricsSLAStatus =
+				workflowMetricsSLAStopwatch.getWorkflowMetricsSLAStatus();
 		}
 
 		return Optional.of(
 			_createWorkflowMetricsSLAProcessResult(
 				companyId, documents, elapsedTime, instanceId, nowLocalDateTime,
 				workflowMetricsSLACalendar, workflowMetricsSLADefinitionVersion,
-				workfowMetricsSLAStatus));
+				workflowMetricsSLAStatus));
 	}
 
 	protected WorkflowMetricsSLAProcessResult
@@ -199,8 +199,8 @@ public class WorkflowMetricsSLAProcessor {
 					setSLADefinitionId(
 						workflowMetricsSLADefinitionVersion.
 							getWorkflowMetricsSLADefinitionId());
-					setWorkfowMetricsSLAStatus(
-						WorkfowMetricsSLAStatus.valueOf(
+					setWorkflowMetricsSLAStatus(
+						WorkflowMetricsSLAStatus.valueOf(
 							document.getString("status")));
 				}
 			}
@@ -400,7 +400,7 @@ public class WorkflowMetricsSLAProcessor {
 			WorkflowMetricsSLACalendar workflowMetricsSLACalendar,
 			WorkflowMetricsSLADefinitionVersion
 				workflowMetricsSLADefinitionVersion,
-			WorkfowMetricsSLAStatus workfowMetricsSLAStatus) {
+			WorkflowMetricsSLAStatus workflowMetricsSLAStatus) {
 
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
 			new WorkflowMetricsSLAProcessResult() {
@@ -428,7 +428,7 @@ public class WorkflowMetricsSLAProcessor {
 					setSLADefinitionId(
 						workflowMetricsSLADefinitionVersion.
 							getWorkflowMetricsSLADefinitionId());
-					setWorkfowMetricsSLAStatus(workfowMetricsSLAStatus);
+					setWorkflowMetricsSLAStatus(workflowMetricsSLAStatus);
 				}
 			};
 
@@ -443,13 +443,13 @@ public class WorkflowMetricsSLAProcessor {
 		List<Document> documents, LocalDateTime createDateLocalDateTime,
 		LocalDateTime lastCheckLocalDateTime, long startNodeId,
 		WorkflowMetricsSLADefinitionVersion workflowMetricsSLADefinitionVersion,
-		WorkfowMetricsSLAStatus workfowMetricsSLAStatus) {
+		WorkflowMetricsSLAStatus workflowMetricsSLAStatus) {
 
 		WorkflowMetricsSLAStopwatch workflowMetricsSLAStopwatch =
-			new WorkflowMetricsSLAStopwatch(workfowMetricsSLAStatus);
+			new WorkflowMetricsSLAStopwatch(workflowMetricsSLAStatus);
 
 		if (Objects.equals(
-				workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.STOPPED)) {
+				workflowMetricsSLAStatus, WorkflowMetricsSLAStatus.STOPPED)) {
 
 			return workflowMetricsSLAStopwatch;
 		}
@@ -459,7 +459,7 @@ public class WorkflowMetricsSLAProcessor {
 				workflowMetricsSLADefinitionVersion.getStartNodeKeys()));
 
 		if (!Objects.equals(
-				workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.NEW)) {
+				workflowMetricsSLAStatus, WorkflowMetricsSLAStatus.NEW)) {
 
 			workflowMetricsSLAStopwatch.run(lastCheckLocalDateTime);
 		}
@@ -563,8 +563,8 @@ public class WorkflowMetricsSLAProcessor {
 				setTaskId(document.getLong("taskId"));
 				setTaskName(document.getString("taskName"));
 				setTokenId(document.getLong("tokenId"));
-				setWorkfowMetricsSLAStatus(
-					_getWorkfowMetricsSLAStatus(
+				setWorkflowMetricsSLAStatus(
+					_getWorkflowMetricsSLAStatus(
 						document, workflowMetricsSLAProcessResult));
 			}
 		};
@@ -624,22 +624,22 @@ public class WorkflowMetricsSLAProcessor {
 		return map;
 	}
 
-	private WorkfowMetricsSLAStatus _getWorkfowMetricsSLAStatus(
+	private WorkflowMetricsSLAStatus _getWorkflowMetricsSLAStatus(
 		Document document,
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
 
 		if (Objects.equals(
-				workflowMetricsSLAProcessResult.getWorkfowMetricsSLAStatus(),
-				WorkfowMetricsSLAStatus.NEW)) {
+				workflowMetricsSLAProcessResult.getWorkflowMetricsSLAStatus(),
+				WorkflowMetricsSLAStatus.NEW)) {
 
-			return WorkfowMetricsSLAStatus.NEW;
+			return WorkflowMetricsSLAStatus.NEW;
 		}
 
 		if (GetterUtil.getBoolean(document.getBoolean("completed"))) {
-			return WorkfowMetricsSLAStatus.COMPLETED;
+			return WorkflowMetricsSLAStatus.COMPLETED;
 		}
 
-		return WorkfowMetricsSLAStatus.RUNNING;
+		return WorkflowMetricsSLAStatus.RUNNING;
 	}
 
 	private TaskInterval _toTaskInterval(

@@ -27,7 +27,7 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
-import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.util.List;
 import java.util.function.Function;
@@ -56,8 +56,8 @@ public abstract class BaseSLAWorkflowMetricsIndexer
 		BooleanQuery booleanQuery = queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(
-			queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
-			queries.term("status", WorkfowMetricsSLAStatus.STOPPED));
+			queries.term("status", WorkflowMetricsSLAStatus.COMPLETED),
+			queries.term("status", WorkflowMetricsSLAStatus.STOPPED));
 
 		_deleteDocuments(
 			booleanQuery.addMustQueryClauses(
@@ -73,7 +73,7 @@ public abstract class BaseSLAWorkflowMetricsIndexer
 			document -> new DocumentImpl() {
 				{
 					addKeyword(
-						"status", WorkfowMetricsSLAStatus.EXPIRED.toString());
+						"status", WorkflowMetricsSLAStatus.EXPIRED.toString());
 					addKeyword(Field.UID, document.getString(Field.UID));
 				}
 			},

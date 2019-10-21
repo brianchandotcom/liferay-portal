@@ -115,7 +115,7 @@ public class SLATaskResultWorkflowMetricsIndexer
 		document.addKeyword(
 			"status",
 			String.valueOf(
-				workflowMetricsSLATaskResult.getWorkfowMetricsSLAStatus()));
+				workflowMetricsSLATaskResult.getWorkflowMetricsSLAStatus()));
 		document.addKeyword("taskId", workflowMetricsSLATaskResult.getTaskId());
 		document.addKeyword(
 			"taskName", workflowMetricsSLATaskResult.getTaskName());

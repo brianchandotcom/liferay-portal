@@ -17,12 +17,9 @@ package com.liferay.multi.factor.authentication.checker.setup.visitor;
 import com.liferay.multi.factor.authentication.checker.setup.MFACheckerSetup;
 import com.liferay.multi.factor.authentication.checker.visitor.BaseMFACheckerVisitor;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Carlos Sierra Andrés
  */
-@ProviderType
 public class IsUserSetupCompleteMFACheckerVisitor
 	extends BaseMFACheckerVisitor {
 

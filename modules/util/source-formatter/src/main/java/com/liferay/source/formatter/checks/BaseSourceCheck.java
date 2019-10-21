@@ -615,7 +615,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected boolean isModulesApp(String absolutePath, boolean privateOnly) {
-		if (absolutePath.contains("/modules/private/apps/") ||
+		if (absolutePath.contains("/modules/dxp/apps") ||
+			absolutePath.contains("/modules/private/apps/") ||
 			(!privateOnly && absolutePath.contains("/modules/apps/"))) {
 
 			return true;

@@ -45,6 +45,7 @@ public class GradleVersionCheck extends BaseFileCheck {
 				fileName, content, name, version, matcher.start());
 
 			if ((isSubrepository() || absolutePath.contains("/modules/apps/") ||
+				 absolutePath.contains("/modules/dxp/apps/") ||
 				 absolutePath.contains("/modules/private/apps/")) &&
 				!_isTestUtilModule(absolutePath)) {
 

@@ -62,7 +62,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
-import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.text.DateFormat;
 
@@ -646,13 +646,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private SLAResult.Status _getSLAResultStatus(String status) {
-		if (Objects.equals(status, WorkfowMetricsSLAStatus.COMPLETED.name()) ||
-			Objects.equals(status, WorkfowMetricsSLAStatus.STOPPED.name())) {
+		if (Objects.equals(status, WorkflowMetricsSLAStatus.COMPLETED.name()) ||
+			Objects.equals(status, WorkflowMetricsSLAStatus.STOPPED.name())) {
 
 			return SLAResult.Status.STOPPED;
 		}
 		else if (Objects.equals(
-					status, WorkfowMetricsSLAStatus.PAUSED.name())) {
+					status, WorkflowMetricsSLAStatus.PAUSED.name())) {
 
 			return SLAResult.Status.PAUSED;
 		}

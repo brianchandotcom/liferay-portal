@@ -69,7 +69,8 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 				String value = array[1];
 
 				if ((portalImplLanguageProperties != null) &&
-					!absolutePath.contains("/private/apps/")) {
+					!absolutePath.contains("/modules/dxp/apps/") &&
+					!absolutePath.contains("/modules/private/apps/")) {
 
 					String portalImplValue =
 						portalImplLanguageProperties.getProperty(key);

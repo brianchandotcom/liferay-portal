@@ -542,7 +542,7 @@
 			</throws>
 		</method>
 		<method>
-			<name>getDDLRecordWorkfowInstanceLinkId</name>
+			<name>getDDLRecordWorkflowInstanceLinkId</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
@@ -1094,7 +1094,7 @@
 			</throws>
 		</method>
 		<method>
-			<name>getDDLRecordWorkfowInstanceLinkId</name>
+			<name>getDDLRecordWorkflowInstanceLinkId</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>

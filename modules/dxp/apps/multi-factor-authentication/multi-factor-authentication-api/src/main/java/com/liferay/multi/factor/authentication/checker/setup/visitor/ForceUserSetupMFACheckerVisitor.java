@@ -22,12 +22,9 @@ import com.liferay.multi.factor.authentication.checker.visitor.BaseMFACheckerVis
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Carlos Sierra Andrés
  */
-@ProviderType
 public class ForceUserSetupMFACheckerVisitor extends BaseMFACheckerVisitor {
 
 	public ForceUserSetupMFACheckerVisitor(long userId) {

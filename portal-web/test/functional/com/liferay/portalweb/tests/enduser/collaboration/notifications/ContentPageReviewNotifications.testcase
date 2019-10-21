@@ -215,57 +215,6 @@ definition {
 			fromNotifications = "true");
 	}
 
-	@description = "This case ensures a user who is mentioned in a comment will receive notifications."
-	@priority = "4"
-	test ViewCommentMentioned {
-		property test.name.skip.portal.instance = "ContentPageReviewNotifications#ViewCommentMentioned";
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Title");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-		ContentPages.clickPencil();
-
-		PageEditor.addComment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "header",
-			fragmentComment = "Comment by Test",
-			fragmentName = "Title",
-			mentionsUserFullName = "userfn userln",
-			mentionsUserScreenName = "user2",
-			position = "1");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "user2@liferay.com");
-
-		Notifications.viewBadgeCount(
-			activePanel = "Notifications",
-			notificationCount = "1");
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewComment(
-			contentBody = "Comment by Test @user2",
-			mentioned = "true",
-			user = "Test Test");
-
-		Notifications.navigateToContent(contentBody = "Comment by Test @user2");
-
-		PageEditor.viewComment(
-			fragmentComment = "Comment by Test ",
-			mentionsUserFullName = "My Site",
-			mentionsUserScreenName = "user2");
-	}
-
 	@description = "This case ensures that a user is notified when a reply is added to their comment."
 	@priority = "5"
 	test ViewCommentReply {
@@ -328,6 +277,57 @@ definition {
 		PageEditor.viewCommentReply(
 			commentReply = "Reply from User 2",
 			user = "userfn userln");
+	}
+
+	@description = "This case ensures a user who is mentioned in a comment will receive notifications."
+	@priority = "4"
+	test ViewMentionFromComment {
+		property test.name.skip.portal.instance = "ContentPageReviewNotifications#ViewMentionFromComment";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addComment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentComment = "Comment by Test",
+			fragmentName = "Title",
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "user2",
+			position = "1");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user2@liferay.com");
+
+		Notifications.viewBadgeCount(
+			activePanel = "Notifications",
+			notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewComment(
+			contentBody = "Comment by Test @user2",
+			mentioned = "true",
+			user = "Test Test");
+
+		Notifications.navigateToContent(contentBody = "Comment by Test @user2");
+
+		PageEditor.viewComment(
+			fragmentComment = "Comment by Test ",
+			mentionsUserFullName = "My Site",
+			mentionsUserScreenName = "user2");
 	}
 
 }

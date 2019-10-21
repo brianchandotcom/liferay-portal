@@ -14,15 +14,19 @@
 
 package com.liferay.layout.taglib.servlet.taglib;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -126,6 +130,18 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			_getStructureJSONArray());
 	}
 
+	private JSONArray _getDefaultStructureJSONArray() {
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"columns",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"config", JSONUtil.put("isDropZone", true)
+					).put(
+						"size", 12
+					))));
+	}
+
 	private long _getPreviewClassPK() {
 		if (!_showPreview) {
 			return 0;
@@ -150,18 +166,29 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 
 	private JSONArray _getStructureJSONArray() {
 		try {
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(_plid);
+
+			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchLayoutPageTemplateEntry(
+						layout.getMasterLayoutPageTemplateEntryId());
+
+			if (masterLayoutPageTemplateEntry == null) {
+				return _getDefaultStructureJSONArray();
+			}
+
+			LayoutPageTemplateStructure masterLayoutPageTemplateStructure =
 				LayoutPageTemplateStructureLocalServiceUtil.
 					fetchLayoutPageTemplateStructure(
-						_groupId,
-						PortalUtil.getClassNameId(Layout.class.getName()),
-						_plid, true);
+						masterLayoutPageTemplateEntry.getGroupId(),
+						PortalUtil.getClassNameId(Layout.class),
+						masterLayoutPageTemplateEntry.getPlid());
 
-			String data = layoutPageTemplateStructure.getData(
-				_getSegmentsExperienceIds());
+			String data = masterLayoutPageTemplateStructure.getData(
+				SegmentsExperienceConstants.ID_DEFAULT);
 
 			if (Validator.isNull(data)) {
-				return null;
+				return _getDefaultStructureJSONArray();
 			}
 
 			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);

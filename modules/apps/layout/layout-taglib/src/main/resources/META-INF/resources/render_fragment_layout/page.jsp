@@ -26,6 +26,8 @@ JSONArray structureJSONArray = (JSONArray)request.getAttribute("liferay-layout:r
 		<%
 		try {
 			request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
+
+			request.setAttribute("render_layout_data_structure.jsp-structureJSONArray", structureJSONArray);
 		%>
 
 			<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />

@@ -112,17 +112,22 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 						LanguageUtil.getAvailableLocales())));
 		}
 
-		if (!formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) ||
-			Validator.isNull(
+		if (formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) &&
+			Validator.isNotNull(
 				formTypeSettingsProperties.getProperty(PropsKeys.LOCALES))) {
+
+			currentTypeSettingsProperties.putAll(formTypeSettingsProperties);
+		}
+
+		if (!currentTypeSettingsProperties.containsKey(PropsKeys.LOCALES) ||
+			Validator.isNull(
+				currentTypeSettingsProperties.getProperty(PropsKeys.LOCALES))) {
 
 			throw new LocaleException(
 				LocaleException.TYPE_DEFAULT,
 				"Must have at least one valid locale for site " +
 					depotEntry.getGroupId());
 		}
-
-		currentTypeSettingsProperties.putAll(formTypeSettingsProperties);
 
 		group = _groupLocalService.updateGroup(
 			group.getGroupId(), currentTypeSettingsProperties.toString());

@@ -18,8 +18,6 @@
 
 <%
 FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayContext(request, dlTrashUtil);
-
-Folder folder = folderActionDisplayContext.getFolder();
 %>
 
 <c:if test="<%= folderActionDisplayContext.isShowActions() %>">
@@ -38,83 +36,69 @@ Folder folder = folderActionDisplayContext.getFolder();
 			/>
 		</c:if>
 
-		<c:choose>
-			<c:when test="<%= folder != null %>">
-				<c:if test="<%= folderActionDisplayContext.hasUpdatePermission() %>">
-					<liferay-ui:icon
-						message="edit"
-						url="<%= folderActionDisplayContext.getEditFolderURL() %>"
-					/>
-				</c:if>
+		<c:if test="<%= folderActionDisplayContext.isEditFolderActionVisible() %>">
+			<liferay-ui:icon
+				message="edit"
+				url="<%= folderActionDisplayContext.getEditFolderURL() %>"
+			/>
+		</c:if>
 
-				<c:if test="<%= folderActionDisplayContext.isMoveFolderActionVisible() %>">
-					<liferay-ui:icon
-						message="move"
-						url="<%= folderActionDisplayContext.getMoveFolderURL() %>"
-					/>
-				</c:if>
+		<c:if test="<%= folderActionDisplayContext.isMoveFolderActionVisible() %>">
+			<liferay-ui:icon
+				message="move"
+				url="<%= folderActionDisplayContext.getMoveFolderURL() %>"
+			/>
+		</c:if>
 
-				<c:if test="<%= folderActionDisplayContext.isDeleteExpiredTemporaryFileEntriesActionVisible() %>">
-					<liferay-ui:icon
-						message="delete-expired-temporary-files"
-						url="<%= folderActionDisplayContext.getDeleteExpiredTemporaryFileEntriesURL() %>"
-					/>
-				</c:if>
-			</c:when>
-			<c:otherwise>
-				<c:if test="<%= folderActionDisplayContext.isEditFolderActionVisible() %>">
-					<liferay-ui:icon
-						message="edit"
-						url="<%= folderActionDisplayContext.getEditFolderURL() %>"
-					/>
-				</c:if>
+		<c:if test="<%= folderActionDisplayContext.isDeleteExpiredTemporaryFileEntriesActionVisible() %>">
+			<liferay-ui:icon
+				message="delete-expired-temporary-files"
+				url="<%= folderActionDisplayContext.getDeleteExpiredTemporaryFileEntriesURL() %>"
+			/>
+		</c:if>
 
-				<c:if test="<%= folderActionDisplayContext.isAddFolderActionVisible() %>">
-					<liferay-ui:icon
-						message="add-folder"
-						url="<%= folderActionDisplayContext.getAddFolderURL() %>"
-					/>
-				</c:if>
+		<c:if test="<%= folderActionDisplayContext.isAddFolderActionVisible() %>">
+			<liferay-ui:icon
+				message="add-folder"
+				url="<%= folderActionDisplayContext.getAddFolderURL() %>"
+			/>
+		</c:if>
 
-				<c:if test="<%= folderActionDisplayContext.isAddRepositoryActionVisible() %>">
-					<liferay-ui:icon
-						message="add-repository"
-						url="<%= folderActionDisplayContext.getAddRepositoryURL() %>"
-					/>
-				</c:if>
-			</c:otherwise>
-		</c:choose>
+		<c:if test="<%= folderActionDisplayContext.isAddRepositoryActionVisible() %>">
+			<liferay-ui:icon
+				message="add-repository"
+				url="<%= folderActionDisplayContext.getAddRepositoryURL() %>"
+			/>
+		</c:if>
 
-		<c:if test="<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
-			<c:if test="<%= folderActionDisplayContext.isAddMediaActionVisible() %>">
+		<c:if test="<%= folderActionDisplayContext.isAddMediaActionVisible() %>">
+			<liferay-ui:icon
+				message="add-file-entry"
+				url="<%= folderActionDisplayContext.getAddMediaURL() %>"
+			/>
+
+			<c:if test="<%= folderActionDisplayContext.isMultipleUploadSupported() %>">
 				<liferay-ui:icon
-					message="add-file-entry"
-					url="<%= folderActionDisplayContext.getAddMediaURL() %>"
-				/>
-
-				<c:if test="<%= folderActionDisplayContext.isMultipleUploadSupported() %>">
-					<liferay-ui:icon
-						cssClass="hide upload-multiple-documents"
-						message='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
-						url="<%= folderActionDisplayContext.getAddMultipleMediaURL() %>"
-					/>
-				</c:if>
-			</c:if>
-
-			<c:if test="<%= folderActionDisplayContext.isViewSlideShowActionVisible() %>">
-				<liferay-ui:icon
-					cssClass='<%= folderActionDisplayContext.getRandomNamespace() + "-slide-show" %>'
-					message="view-slide-show"
-					url="javascript:;"
+					cssClass="hide upload-multiple-documents"
+					message="multiple-media"
+					url="<%= folderActionDisplayContext.getAddMultipleMediaURL() %>"
 				/>
 			</c:if>
+		</c:if>
 
-			<c:if test="<%= folderActionDisplayContext.isAddFileShortcutActionVisible() %>">
-				<liferay-ui:icon
-					message="add-shortcut"
-					url="<%= folderActionDisplayContext.getAddFileShortcutURL() %>"
-				/>
-			</c:if>
+		<c:if test="<%= folderActionDisplayContext.isViewSlideShowActionVisible() %>">
+			<liferay-ui:icon
+				cssClass='<%= folderActionDisplayContext.getRandomNamespace() + "-slide-show" %>'
+				message="view-slide-show"
+				url="javascript:;"
+			/>
+		</c:if>
+
+		<c:if test="<%= folderActionDisplayContext.isAddFileShortcutActionVisible() %>">
+			<liferay-ui:icon
+				message="add-shortcut"
+				url="<%= folderActionDisplayContext.getAddFileShortcutURL() %>"
+			/>
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isAccessFromDesktopActionVisible() %>">

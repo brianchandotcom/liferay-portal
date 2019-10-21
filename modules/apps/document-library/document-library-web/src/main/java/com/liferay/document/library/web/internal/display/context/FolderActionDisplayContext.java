@@ -440,13 +440,6 @@ public class FolderActionDisplayContext {
 		return portletURL.toString();
 	}
 
-	public boolean hasUpdatePermission() throws PortalException {
-		return DLFolderPermission.contains(
-			_dlRequestHelper.getPermissionChecker(),
-			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-			ActionKeys.UPDATE);
-	}
-
 	public boolean hasViewPermission() throws PortalException {
 		return DLFolderPermission.contains(
 			_dlRequestHelper.getPermissionChecker(),
@@ -471,6 +464,12 @@ public class FolderActionDisplayContext {
 	}
 
 	public boolean isAddFileShortcutActionVisible() throws PortalException {
+		String portletName = _dlRequestHelper.getPortletName();
+
+		if (!portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+			return false;
+		}
+
 		Folder folder = getFolder();
 
 		if (((folder == null) ||
@@ -487,11 +486,9 @@ public class FolderActionDisplayContext {
 	}
 
 	public boolean isAddFolderActionVisible() throws PortalException {
-		Folder folder = getFolder();
-
 		if (DLFolderPermission.contains(
 				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), folder.getFolderId(),
+				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
 				ActionKeys.ADD_FOLDER)) {
 
 			return true;
@@ -501,12 +498,18 @@ public class FolderActionDisplayContext {
 	}
 
 	public boolean isAddMediaActionVisible() throws PortalException {
+		String portletName = _dlRequestHelper.getPortletName();
+
+		if (!portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+			return false;
+		}
+
 		Folder folder = getFolder();
 
 		if (((folder == null) || !folder.isMountPoint()) &&
 			DLFolderPermission.contains(
 				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), folder.getFolderId(),
+				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
 				ActionKeys.ADD_DOCUMENT)) {
 
 			return true;
@@ -516,6 +519,12 @@ public class FolderActionDisplayContext {
 	}
 
 	public boolean isAddRepositoryActionVisible() throws PortalException {
+		Folder folder = getFolder();
+
+		if (folder != null) {
+			return false;
+		}
+
 		if (DLFolderPermission.contains(
 				_dlRequestHelper.getPermissionChecker(),
 				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
@@ -532,7 +541,7 @@ public class FolderActionDisplayContext {
 
 		Folder folder = getFolder();
 
-		if (folder.isMountPoint() &&
+		if ((folder != null) && folder.isMountPoint() &&
 			folder.isRepositoryCapabilityProvided(
 				TemporaryFileEntriesCapability.class)) {
 
@@ -598,7 +607,11 @@ public class FolderActionDisplayContext {
 	public boolean isMoveFolderActionVisible() throws PortalException {
 		Folder folder = getFolder();
 
-		if (hasUpdatePermission() &&
+		if (DLFolderPermission.contains(
+				_dlRequestHelper.getPermissionChecker(),
+				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+				ActionKeys.UPDATE) &&
+			(folder != null) &&
 			!(folder.isMountPoint() ||
 			  (RepositoryUtil.isExternalRepository(getRepositoryId()) &&
 			   folder.isRoot()))) {
@@ -728,6 +741,12 @@ public class FolderActionDisplayContext {
 	}
 
 	public boolean isViewSlideShowActionVisible() throws PortalException {
+		String portletName = _dlRequestHelper.getPortletName();
+
+		if (!portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+			return false;
+		}
+
 		if (!hasViewPermission()) {
 			return false;
 		}

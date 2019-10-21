@@ -17,21 +17,15 @@ if (System.getenv("JENKINS_HOME")) {
 
 checkoutDXPScript {
 	doLast {
-		String gitBranchName = GradleUtil.getProperty(project, "git.working.branch.name", (String)null)
-
-		if (!gitBranchName.endsWith("-private")) {
-			gitBranchName = gitBranchName + "-private"
-		}
-
-		logger.lifecycle "git clone --branch={} --depth=1 --no-checkout --no-tags --single-branch {} {}", gitBranchName, gitRepositoryURL, gitRepositoryDir.name
+		logger.lifecycle "git clone --branch=master-private --depth=1 --no-checkout --no-tags --single-branch {} {}", gitRepositoryURL, gitRepositoryDir.name
 
 		exec {
-			commandLine "git", "clone", "--branch=" + gitBranchName, "--depth=1", "--no-checkout", "--no-tags", "--single-branch", gitRepositoryURL, gitRepositoryDir.name
+			commandLine "git", "clone", "--branch=master-private", "--depth=1", "--no-checkout", "--no-tags", "--single-branch", gitRepositoryURL, gitRepositoryDir.name
 			workingDir = projectDir.parentFile
 		}
 
 		exec {
-			commandLine "git", "checkout", "refs/heads/" + gitBranchName, "--", "build-working-dir.xml", "working.dir.properties"
+			commandLine "git", "checkout", "refs/heads/master-private", "--", "build-working-dir.xml", "working.dir.properties"
 			workingDir = gitRepositoryDir
 		}
 

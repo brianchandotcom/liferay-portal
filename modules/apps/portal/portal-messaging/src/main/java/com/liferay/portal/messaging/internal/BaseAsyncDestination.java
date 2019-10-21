@@ -208,14 +208,6 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected RejectedExecutionHandler createRejectionExecutionHandler() {
-		return _createRejectionExecutionHandler();
-	}
-
 	protected abstract void dispatch(
 		Set<MessageListener> messageListeners, Message message);
 

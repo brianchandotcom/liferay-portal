@@ -47,6 +47,7 @@ public class SharepointOAuth2TokenEntryWrapper
 
 		attributes.put(
 			"sharepointOAuth2TokenEntryId", getSharepointOAuth2TokenEntryId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -65,6 +66,12 @@ public class SharepointOAuth2TokenEntryWrapper
 
 		if (sharepointOAuth2TokenEntryId != null) {
 			setSharepointOAuth2TokenEntryId(sharepointOAuth2TokenEntryId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -118,6 +125,16 @@ public class SharepointOAuth2TokenEntryWrapper
 	@Override
 	public String getAccessToken() {
 		return model.getAccessToken();
+	}
+
+	/**
+	 * Returns the company ID of this sharepoint o auth2 token entry.
+	 *
+	 * @return the company ID of this sharepoint o auth2 token entry
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -228,6 +245,16 @@ public class SharepointOAuth2TokenEntryWrapper
 	@Override
 	public void setAccessToken(String accessToken) {
 		model.setAccessToken(accessToken);
+	}
+
+	/**
+	 * Sets the company ID of this sharepoint o auth2 token entry.
+	 *
+	 * @param companyId the company ID of this sharepoint o auth2 token entry
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
 	}
 
 	/**

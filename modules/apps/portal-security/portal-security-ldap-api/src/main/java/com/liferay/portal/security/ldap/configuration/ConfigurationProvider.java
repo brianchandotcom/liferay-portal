@@ -52,15 +52,6 @@ public interface ConfigurationProvider<T> {
 
 	public void registerConfiguration(Configuration configuration);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #unregisterConfiguration(String)}
-	 */
-	@Deprecated
-	public default void unregisterConfiguration(Configuration configuration) {
-		unregisterConfiguration(configuration.getPid());
-	}
-
 	public void unregisterConfiguration(String pid);
 
 	public void updateProperties(

@@ -88,14 +88,6 @@ public interface PortalLDAP {
 			String filter, Attribute attribute)
 		throws Exception;
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public String getNameInNamespace(
-			long ldapServerId, long companyId, Binding binding)
-		throws Exception;
-
 	public Binding getUser(
 			long ldapServerId, long companyId, String screenName,
 			String emailAddress)

@@ -495,40 +495,6 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		return attribute;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public String getNameInNamespace(
-			long ldapServerId, long companyId, Binding binding)
-		throws Exception {
-
-		LDAPServerConfiguration ldapServerConfiguration =
-			_ldapServerConfigurationProvider.getConfiguration(
-				companyId, ldapServerId);
-
-		String baseDN = ldapServerConfiguration.baseDN();
-
-		String name = binding.getName();
-
-		if (name.startsWith(StringPool.QUOTE) &&
-			name.endsWith(StringPool.QUOTE)) {
-
-			name = name.substring(1, name.length() - 1);
-		}
-
-		if (Validator.isNull(baseDN)) {
-			return name;
-		}
-
-		return name.concat(
-			StringPool.COMMA
-		).concat(
-			baseDN
-		);
-	}
-
 	@Override
 	public Binding getUser(
 			long ldapServerId, long companyId, String screenName,

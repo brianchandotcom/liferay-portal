@@ -54,6 +54,10 @@
 
 		<column name="accountEntryUserRelId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="accountEntryId" type="long" />

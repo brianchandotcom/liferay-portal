@@ -162,13 +162,18 @@ public class LayoutCTTest {
 		expectedLogs = {
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.DB2,
-				expectedLog = "Error for batch element",
-				expectedType = ExpectedType.PREFIX
+				expectedLog = "Batch failure.",
+				expectedType = ExpectedType.CONTAINS
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.DB2,
-				expectedLog = "Batch failure.",
+				expectedLog = "DB2 SQL Error: SQLCODE=-803",
 				expectedType = ExpectedType.CONTAINS
+			),
+			@ExpectedLog(
+				expectedDBType = ExpectedDBType.DB2,
+				expectedLog = "Error for batch element",
+				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.HYPERSONIC,

@@ -16,7 +16,11 @@ import {ClaySelect} from '@clayui/form';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {getItem} from '../../utils/client.es';
-import EditAppContext, {UPDATE_SETTINGS} from './EditAppContext.es';
+import EditAppContext, {
+	PRODUCT_MENU,
+	UPDATE_SETTINGS_SCOPE,
+	UPDATE_SETTINGS_SITE_IDS
+} from './EditAppContext.es';
 
 const SCOPES = [
 	{
@@ -53,16 +57,24 @@ export default () => {
 		const scope = event.target.value;
 
 		dispatch({
-			deploymentType: 'productMenu',
-			settings: {scope: scope.split(',')},
-			type: UPDATE_SETTINGS
+			scope: scope.split(','),
+			type: UPDATE_SETTINGS_SCOPE
+		});
+	};
+
+	const onSiteIdsChange = event => {
+		const siteId = event.target.value;
+
+		dispatch({
+			siteIds: [parseInt(siteId, 10)],
+			type: UPDATE_SETTINGS_SITE_IDS
 		});
 	};
 
 	const {
-		settings: {scope}
+		settings: {scope, siteIds = [0]}
 	} = appDeployments.find(
-		appDeployment => appDeployment.type === 'productMenu'
+		appDeployment => appDeployment.type === PRODUCT_MENU
 	);
 
 	return (
@@ -97,6 +109,8 @@ export default () => {
 						<ClaySelect
 							aria-label={Liferay.Language.get('select-site')}
 							id="site"
+							onChange={onSiteIdsChange}
+							value={siteIds[0]}
 						>
 							<option key={0} value={0}>
 								{Liferay.Language.get('all-sites')}

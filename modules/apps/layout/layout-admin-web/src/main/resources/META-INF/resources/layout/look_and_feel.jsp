@@ -86,20 +86,31 @@ else {
 </div>
 
 <%
-LayoutPageTemplateEntry layoutPageTemplateEntry = null;
+LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getPlid());
 
-if (selLayout.getMasterLayoutPlid() > 0) {
-	layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getMasterLayoutPlid());
+if (layoutPageTemplateEntry == null) {
+	layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getClassPK());
 }
 %>
 
-<div class="sheet-section">
-	<h3 class="sheet-subtitle"><liferay-ui:message key="master" /></h3>
+<c:if test="<%= (layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE) %>">
 
-	<p>
-		<b><liferay-ui:message key="master-name" />:</b> <%= (layoutPageTemplateEntry != null) ? layoutPageTemplateEntry.getName() : LanguageUtil.get(request, "blank") %>
-	</p>
-</div>
+	<%
+	LayoutPageTemplateEntry masterLayoutPageTemplateEntry = null;
+
+	if (selLayout.getMasterLayoutPlid() > 0) {
+		masterLayoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getMasterLayoutPlid());
+	}
+	%>
+
+	<div class="sheet-section">
+		<h3 class="sheet-subtitle"><liferay-ui:message key="master" /></h3>
+
+		<p>
+			<b><liferay-ui:message key="master-name" />:</b> <%= (masterLayoutPageTemplateEntry != null) ? masterLayoutPageTemplateEntry.getName() : LanguageUtil.get(request, "blank") %>
+		</p>
+	</div>
+</c:if>
 
 <aui:script>
 	Liferay.Util.toggleRadio(

@@ -8,6 +8,7 @@ buildscript {
 task checkoutDXPScript
 task removeDXPScript
 
+File repositoryDir = new File(projectDir.parentFile, "git-clone-profile-dxp")
 String repositoryURL = "git@github.com:liferay/liferay-portal-ee.git"
 
 if (System.getenv("JENKINS_HOME")) {
@@ -22,35 +23,22 @@ checkoutDXPScript {
 			branchName = branchName + "-private"
 		}
 
-		logger.lifecycle "git fetch --depth=1 --force --no-tags {} {}", repositoryURL, branchName + ":" + branchName
+		logger.lifecycle "git clone --branch={} --depth=1 --no-checkout --no-tags --single-branch {} {}", branchName, repositoryURL, repositoryDir.name
 
 		exec {
-			commandLine "git", "fetch", "--depth=1", "--force", "--no-tags", repositoryURL, branchName + ":" + branchName
+			commandLine "git", "clone", "--branch=" + branchName, "--depth=1", "--no-checkout", "--no-tags", "--single-branch", repositoryURL, repositoryDir.name
 			workingDir = projectDir.parentFile
 		}
 
 		exec {
-			commandLine "git", "tag", "--force", "git-commit-portal-private", branchName
-			workingDir = projectDir.parentFile
-		}
-
-		exec {
-			commandLine "git", "checkout", "refs/tags/git-commit-portal-private", "--", "build-working-dir.xml", "working.dir.properties"
-			workingDir = projectDir.parentFile
-		}
-
-		exec {
-			commandLine "git", "tag", "--delete", "git-commit-portal-private"
-			workingDir = projectDir.parentFile
+			commandLine "git", "checkout", "refs/heads/" + branchName, "--", "build-working-dir.xml", "working.dir.properties"
+			workingDir = repositoryDir
 		}
 	}
 }
 
 removeDXPScript {
 	doLast {
-		exec {
-			commandLine "git", "rm", "--force", "build-working-dir.xml", "working.dir.properties"
-			workingDir = projectDir.parentFile
-		}
+		delete repositoryDir
 	}
 }

@@ -173,7 +173,8 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	public String getDiscardDraftURL() {
-		return getFragmentEntryActionURL("/content_layout/publish_layout");
+		return getFragmentEntryActionURL(
+			"/content_layout/discard_draft_layout");
 	}
 
 	public Map<String, Object> getEditorReactContext() throws Exception {
@@ -366,8 +367,7 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	public String getPublishURL() {
-		return getFragmentEntryActionURL(
-			"/content_layout/discard_draft_layout");
+		return getFragmentEntryActionURL("/content_layout/publish_layout");
 	}
 
 	public boolean isSingleSegmentsExperienceMode() {

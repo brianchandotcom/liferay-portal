@@ -234,8 +234,8 @@ public class FolderActionDisplayContext {
 
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/document_library/edit_folder");
-			portletURL.setParameter("redirect",
-				_dlRequestHelper.getCurrentURL());
+			portletURL.setParameter(
+				"redirect", _dlRequestHelper.getCurrentURL());
 			portletURL.setParameter("folderId", String.valueOf(_getFolderId()));
 			portletURL.setParameter(
 				"repositoryId", String.valueOf(_getRepositoryId()));
@@ -254,8 +254,8 @@ public class FolderActionDisplayContext {
 
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/document_library/edit_folder");
-			portletURL.setParameter("redirect",
-				_dlRequestHelper.getCurrentURL());
+			portletURL.setParameter(
+				"redirect", _dlRequestHelper.getCurrentURL());
 			portletURL.setParameter("folderId", String.valueOf(_getFolderId()));
 			portletURL.setParameter(
 				"repositoryId", String.valueOf(_getRepositoryId()));
@@ -278,27 +278,6 @@ public class FolderActionDisplayContext {
 			"repositoryId", String.valueOf(_getRepositoryId()));
 
 		return portletURL.toString();
-	}
-
-	private Folder _getFolder() {
-		if (_folder != null) {
-			return _folder;
-		}
-
-		ResultRow row = (ResultRow)_httpServletRequest.getAttribute(
-			WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-		if (row == null) {
-			_folder = (Folder)_httpServletRequest.getAttribute(
-				"info_panel.jsp-folder");
-		}
-		else {
-			if (row.getObject() instanceof Folder) {
-				_folder = (Folder)row.getObject();
-			}
-		}
-
-		return _folder;
 	}
 
 	public String getModelResource() {
@@ -372,25 +351,6 @@ public class FolderActionDisplayContext {
 		return _randomNamespace;
 	}
 
-	private long _getRepositoryId() {
-		if (_repositoryId != null) {
-			return _repositoryId;
-		}
-
-		Folder folder = _getFolder();
-
-		if (folder != null) {
-			_repositoryId = folder.getRepositoryId();
-		}
-		else {
-			_repositoryId = GetterUtil.getLong(
-				(String)_httpServletRequest.getAttribute(
-					"view.jsp-repositoryId"));
-		}
-
-		return _repositoryId;
-	}
-
 	public long getResourcePrimKey() {
 		Folder folder = _getFolder();
 
@@ -399,29 +359,6 @@ public class FolderActionDisplayContext {
 		}
 
 		return _dlRequestHelper.getScopeGroupId();
-	}
-
-	private int _getStatus() {
-		if (_status != null) {
-			return _status;
-		}
-
-		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isContentReviewer(
-				_dlRequestHelper.getCompanyId(),
-				_dlRequestHelper.getScopeGroupId())) {
-
-			_status = WorkflowConstants.STATUS_ANY;
-		}
-		else {
-			_status = WorkflowConstants.STATUS_APPROVED;
-		}
-
-		return _status;
 	}
 
 	public String getViewSlideShowURL() throws WindowStateException {
@@ -436,13 +373,6 @@ public class FolderActionDisplayContext {
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
-	}
-
-	private boolean _hasViewPermission() throws PortalException {
-		return DLFolderPermission.contains(
-			_dlRequestHelper.getPermissionChecker(),
-			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-			ActionKeys.VIEW);
 	}
 
 	public boolean isAccessFromDesktopActionVisible() throws PortalException {
@@ -588,18 +518,6 @@ public class FolderActionDisplayContext {
 		return false;
 	}
 
-	private boolean _isFolderSelected() {
-		if (_folderSelected != null) {
-			return _folderSelected;
-		}
-
-		_folderSelected = GetterUtil.getBoolean(
-			(String)_httpServletRequest.getAttribute(
-				"view_entries.jsp-folderSelected"));
-
-		return _folderSelected;
-	}
-
 	public boolean isMoveFolderActionVisible() throws PortalException {
 		Folder folder = _getFolder();
 
@@ -686,20 +604,6 @@ public class FolderActionDisplayContext {
 		return false;
 	}
 
-	private boolean _hasPermissionsPermission() throws PortalException {
-		Folder folder = _getFolder();
-
-		if (folder != null) {
-			return DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(), folder,
-				ActionKeys.PERMISSIONS);
-		}
-
-		return DLPermission.contains(
-			_dlRequestHelper.getPermissionChecker(),
-			_dlRequestHelper.getScopeGroupId(), ActionKeys.PERMISSIONS);
-	}
-
 	public boolean isTrashEnabled() throws PortalException {
 		Folder folder = _getFolder();
 
@@ -712,28 +616,6 @@ public class FolderActionDisplayContext {
 		}
 
 		return false;
-	}
-
-	private boolean _isView() {
-		if (_view != null) {
-			return _view;
-		}
-
-		ResultRow row = (ResultRow)_httpServletRequest.getAttribute(
-			WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-		String portletName = _dlRequestHelper.getPortletName();
-
-		if ((row == null) &&
-			portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
-
-			_view = true;
-		}
-		else {
-			_view = false;
-		}
-
-		return _view;
 	}
 
 	public boolean isViewSlideShowActionVisible() throws PortalException {
@@ -772,6 +654,27 @@ public class FolderActionDisplayContext {
 		return Constants.DELETE;
 	}
 
+	private Folder _getFolder() {
+		if (_folder != null) {
+			return _folder;
+		}
+
+		ResultRow row = (ResultRow)_httpServletRequest.getAttribute(
+			WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+		if (row == null) {
+			_folder = (Folder)_httpServletRequest.getAttribute(
+				"info_panel.jsp-folder");
+		}
+		else {
+			if (row.getObject() instanceof Folder) {
+				_folder = (Folder)row.getObject();
+			}
+		}
+
+		return _folder;
+	}
+
 	private long _getFolderId() {
 		Folder folder = _getFolder();
 
@@ -783,7 +686,7 @@ public class FolderActionDisplayContext {
 	}
 
 	private String _getParentFolderURL() {
-		if (!_isView() && !_isFolderSelected()) {
+		if (!_isView()) {
 			return _dlRequestHelper.getCurrentURL();
 		}
 
@@ -828,6 +731,91 @@ public class FolderActionDisplayContext {
 		}
 
 		return portletURL.toString();
+	}
+
+	private long _getRepositoryId() {
+		if (_repositoryId != null) {
+			return _repositoryId;
+		}
+
+		Folder folder = _getFolder();
+
+		if (folder != null) {
+			_repositoryId = folder.getRepositoryId();
+		}
+		else {
+			_repositoryId = GetterUtil.getLong(
+				(String)_httpServletRequest.getAttribute(
+					"view.jsp-repositoryId"));
+		}
+
+		return _repositoryId;
+	}
+
+	private int _getStatus() {
+		if (_status != null) {
+			return _status;
+		}
+
+		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isContentReviewer(
+				_dlRequestHelper.getCompanyId(),
+				_dlRequestHelper.getScopeGroupId())) {
+
+			_status = WorkflowConstants.STATUS_ANY;
+		}
+		else {
+			_status = WorkflowConstants.STATUS_APPROVED;
+		}
+
+		return _status;
+	}
+
+	private boolean _hasPermissionsPermission() throws PortalException {
+		Folder folder = _getFolder();
+
+		if (folder != null) {
+			return DLFolderPermission.contains(
+				_dlRequestHelper.getPermissionChecker(), folder,
+				ActionKeys.PERMISSIONS);
+		}
+
+		return DLPermission.contains(
+			_dlRequestHelper.getPermissionChecker(),
+			_dlRequestHelper.getScopeGroupId(), ActionKeys.PERMISSIONS);
+	}
+
+	private boolean _hasViewPermission() throws PortalException {
+		return DLFolderPermission.contains(
+			_dlRequestHelper.getPermissionChecker(),
+			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+			ActionKeys.VIEW);
+	}
+
+	private boolean _isView() {
+		if (_view != null) {
+			return _view;
+		}
+
+		ResultRow row = (ResultRow)_httpServletRequest.getAttribute(
+			WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+		String portletName = _dlRequestHelper.getPortletName();
+
+		if ((row == null) &&
+			portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+
+			_view = true;
+		}
+		else {
+			_view = false;
+		}
+
+		return _view;
 	}
 
 	private boolean _isWorkflowEnabled() {

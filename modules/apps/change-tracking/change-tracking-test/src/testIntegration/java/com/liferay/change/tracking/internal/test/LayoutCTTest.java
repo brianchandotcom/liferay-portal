@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
@@ -156,6 +157,42 @@ public class LayoutCTTest {
 
 		Assert.assertEquals(
 			CTConstants.CT_CHANGE_TYPE_MODIFICATION, ctEntry.getChangeType());
+	}
+
+	@Test
+	public void testModifyLayoutWithPagination() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		String description = layout.getDescription();
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			String ctDescription = RandomTestUtil.randomString();
+
+			layout.setDescription(ctDescription);
+
+			layout = _layoutLocalService.updateLayout(layout);
+
+			List<Layout> layouts = _layoutLocalService.getLayouts(
+				_group.getGroupId(), layout.isPrivateLayout(), 0, 2, null);
+
+			Assert.assertEquals(layouts.toString(), 1, layouts.size());
+
+			layout = layouts.get(0);
+
+			Assert.assertEquals(ctDescription, layout.getDescription());
+		}
+
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			_group.getGroupId(), layout.isPrivateLayout(), 0, 2, null);
+
+		Assert.assertEquals(layouts.toString(), 1, layouts.size());
+
+		layout = layouts.get(0);
+
+		Assert.assertEquals(description, layout.getDescription());
 	}
 
 	@ExpectedLogs(

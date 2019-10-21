@@ -653,8 +653,8 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 	private UnsafeTriFunction<String, Object, NestedFieldsContext, Object>
 		_getUnsafeTriFunction(
-			NestedFieldsContext nestedFieldsContext, String fieldName,
-			Class<?> itemClass) {
+			String fieldName, Class<?> itemClass,
+			NestedFieldsContext nestedFieldsContext) {
 
 		Class<?>[] parentClasses = new Class<?>[] {
 			Void.class, itemClass, itemClass.getSuperclass()
@@ -715,7 +715,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 				UnsafeTriFunction<String, Object, NestedFieldsContext, Object>
 					unsafeTriFunction = _getUnsafeTriFunction(
-						nestedFieldsContext, fieldName, itemClass);
+						fieldName, itemClass, nestedFieldsContext);
 
 				if (unsafeTriFunction == null) {
 					continue;

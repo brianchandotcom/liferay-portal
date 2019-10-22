@@ -218,29 +218,6 @@ public class DDLRecordSetLocalServiceImpl
 			recordSet.getRecordSetId(), modelPermissions);
 	}
 
-	/**
-	 * Adds the model resources with the permissions to the record set.
-	 *
-	 * @param      recordSet the record set
-	 * @param      groupPermissions whether to add group permissions
-	 * @param      guestPermissions whether to add guest permissions
-	 * @throws     PortalException if a portal exception occurred
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addRecordSetResources(DDLRecordSet, ModelPermissions)}
-	 */
-	@Deprecated
-	@Override
-	public void addRecordSetResources(
-			DDLRecordSet recordSet, String[] groupPermissions,
-			String[] guestPermissions)
-		throws PortalException {
-
-		resourceLocalService.addModelResources(
-			recordSet.getCompanyId(), recordSet.getGroupId(),
-			recordSet.getUserId(), DDLRecordSet.class.getName(),
-			recordSet.getRecordSetId(), groupPermissions, guestPermissions);
-	}
-
 	@Override
 	public void deleteDDMStructureRecordSets(long ddmStructureId)
 		throws PortalException {

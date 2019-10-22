@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -53,10 +52,6 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.portlet.PortletPreferences;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -66,18 +61,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = DDL.class)
 public class DDLImpl implements DDL {
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	@SuppressWarnings("deprecation")
-	public JSONObject getRecordJSONObject(DDLRecord record) throws Exception {
-		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
-
-		return getRecordJSONObject(record, false, locale);
-	}
 
 	@Override
 	public JSONObject getRecordJSONObject(
@@ -222,40 +205,6 @@ public class DDLImpl implements DDL {
 		return jsonArray;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	@SuppressWarnings("deprecation")
-	public JSONArray getRecordsJSONArray(DDLRecordSet recordSet)
-		throws Exception {
-
-		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
-
-		return getRecordsJSONArray(recordSet.getRecords(), false, locale);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	@SuppressWarnings("deprecation")
-	public JSONArray getRecordsJSONArray(List<DDLRecord> records)
-		throws Exception {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (DDLRecord record : records) {
-			JSONObject jsonObject = getRecordJSONObject(record);
-
-			jsonArray.put(jsonObject);
-		}
-
-		return jsonArray;
-	}
-
 	@Override
 	public JSONArray getRecordsJSONArray(
 			List<DDLRecord> records, boolean latestRecordVersion, Locale locale)
@@ -271,33 +220,6 @@ public class DDLImpl implements DDL {
 		}
 
 		return jsonArray;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isEditable(
-			HttpServletRequest httpServletRequest, String portletId,
-			long groupId)
-		throws Exception {
-
-		return true;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isEditable(
-			PortletPreferences preferences, String portletId, long groupId)
-		throws Exception {
-
-		return true;
 	}
 
 	@Override
@@ -350,21 +272,6 @@ public class DDLImpl implements DDL {
 		}
 
 		return record;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	@SuppressWarnings("deprecation")
-	public DDLRecord updateRecord(
-			long recordId, long recordSetId, boolean mergeFields,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return updateRecord(
-			recordId, recordSetId, mergeFields, true, serviceContext);
 	}
 
 	protected String getDocumentLibraryFieldValue(Object fieldValue) {

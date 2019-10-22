@@ -26,11 +26,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.io.Serializable;
-
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -113,38 +109,6 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a record referencing the record set.
-	 *
-	 * @param      groupId the primary key of the record's group
-	 * @param      recordSetId the primary key of the record set
-	 * @param      displayIndex the index position in which the record is
-	 *             displayed in the spreadsheet view
-	 * @param      fieldsMap the record values. The fieldsMap is a map of field
-	 *             names and its Serializable values.
-	 * @param      serviceContext the service context to be applied. This can
-	 *             set the UUID, guest permissions, and group permissions for
-	 *             the record.
-	 * @return     the record
-	 * @throws     PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #addRecord(long, long, int, DDMFormValues, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DDLRecord addRecord(
-			long groupId, long recordSetId, int displayIndex,
-			Map<String, Serializable> fieldsMap, ServiceContext serviceContext)
-		throws PortalException {
-
-		_ddlRecordSetModelResourcePermission.check(
-			getPermissionChecker(), recordSetId, DDLActionKeys.ADD_RECORD);
-
-		return ddlRecordLocalService.addRecord(
-			getGuestOrUserId(), groupId, recordSetId, displayIndex, fieldsMap,
-			serviceContext);
-	}
-
-	/**
 	 * Deletes the record and its resources.
 	 *
 	 * @param  recordId the primary key of the record to be deleted
@@ -158,34 +122,6 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 			getPermissionChecker(), record.getRecordSetId(), ActionKeys.DELETE);
 
 		ddlRecordLocalService.deleteRecord(record);
-	}
-
-	/**
-	 * Disassociates the locale from the record.
-	 *
-	 * @param      recordId the primary key of the record
-	 * @param      locale the locale of the record values to be removed
-	 * @param      serviceContext the service context to be applied. This can
-	 *             set the record modified date.
-	 * @return     the affected record
-	 * @throws     PortalException
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateRecord(long, boolean, int, DDMFormValues,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DDLRecord deleteRecordLocale(
-			long recordId, Locale locale, ServiceContext serviceContext)
-		throws PortalException {
-
-		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
-
-		_ddlRecordSetModelResourcePermission.check(
-			getPermissionChecker(), record.getRecordSetId(), ActionKeys.UPDATE);
-
-		return ddlRecordLocalService.deleteRecordLocale(
-			recordId, locale, serviceContext);
 	}
 
 	/**
@@ -241,19 +177,6 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 
 		ddlRecordLocalService.revertRecord(
 			getGuestOrUserId(), recordId, version, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #revertRecord(long, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void revertRecordVersion(
-			long recordId, String version, ServiceContext serviceContext)
-		throws PortalException {
-
-		revertRecord(recordId, version, serviceContext);
 	}
 
 	/**
@@ -322,42 +245,6 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		return ddlRecordLocalService.updateRecord(
 			getUserId(), recordId, majorVersion, displayIndex, fields,
 			mergeFields, serviceContext);
-	}
-
-	/**
-	 * Updates a record, replacing its display index and values.
-	 *
-	 * @param      recordId the primary key of the record
-	 * @param      displayIndex the index position in which the record is
-	 *             displayed in the spreadsheet view
-	 * @param      fieldsMap the record values. The fieldsMap is a map of field
-	 *             names and its Serializable values.
-	 * @param      mergeFields whether to merge the new fields with the existing
-	 *             ones; otherwise replace the existing fields
-	 * @param      serviceContext the service context to be applied. This can
-	 *             set the record modified date.
-	 * @return     the record
-	 * @throws     PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateRecord(long, boolean, int, DDMFormValues,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DDLRecord updateRecord(
-			long recordId, int displayIndex,
-			Map<String, Serializable> fieldsMap, boolean mergeFields,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
-
-		_ddlRecordSetModelResourcePermission.check(
-			getPermissionChecker(), record.getRecordSetId(), ActionKeys.UPDATE);
-
-		return ddlRecordLocalService.updateRecord(
-			getUserId(), recordId, displayIndex, fieldsMap, mergeFields,
-			serviceContext);
 	}
 
 	@Reference(

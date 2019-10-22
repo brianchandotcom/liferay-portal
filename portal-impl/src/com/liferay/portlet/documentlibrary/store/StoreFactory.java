@@ -104,10 +104,6 @@ public class StoreFactory {
 		_warned = true;
 	}
 
-	public void destroy() {
-		_storeServiceTrackerMap.close();
-	}
-
 	public Store getStore() {
 		Store store = _storeServiceTrackerMap.getService(
 			PropsValues.DL_STORE_IMPL);

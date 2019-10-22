@@ -1,14 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`document-library-preview-image renders an image previewer 1`] = `
-<div class="preview-file">
-  <div class="preview-file-container preview-file-max-height" ref="imageContainer"><img class="preview-file-image" ref="image" src="image.jpg" style=""></div>
-  <div class="preview-toolbar-container">
-    <div class="btn-group floating-bar" role="group"><button class="btn btn-floating-bar btn-monospaced" aria-label="hr" title="zoom-out" value="out" type="button"><svg class="lexicon-icon lexicon-icon-hr" focusable="false" role="presentation">
-          <use xlink:href="icons.svg#hr"></use>
-        </svg></button><button class="btn btn-floating-bar btn-floating-bar-text" title="real-size" value="real" type="button"><span class="preview-toolbar-label-percent">0%</span></button><button class="btn btn-floating-bar btn-monospaced" aria-label="plus" title="zoom-in" value="in" type="button"><svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
-          <use xlink:href="icons.svg#plus"></use>
-        </svg></button></div>
+<DocumentFragment>
+  <div
+    class="preview-file"
+  >
+    <div
+      class="preview-file-container preview-file-max-height"
+    >
+      <img
+        class="preview-file-image"
+        src="image.jpg"
+      />
+    </div>
+    <div
+      class="preview-toolbar-container"
+    >
+      <div
+        class="floating-bar btn-group"
+        role="group"
+      >
+        <button
+          class="btn-floating-bar btn btn-monospaced btn-primary"
+          title="zoom-out"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-hr"
+            role="presentation"
+          >
+            <use
+              xlink:href="#hr"
+            />
+          </svg>
+        </button>
+        <button
+          class="btn-floating-bar btn-floating-bar-text btn btn-primary"
+          title="zoom-to-fit"
+          type="button"
+        >
+          <span
+            class="preview-toolbar-label-percent"
+          >
+            100%
+          </span>
+        </button>
+        <button
+          class="btn-floating-bar btn btn-monospaced btn-primary"
+          disabled=""
+          title="zoom-in"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-plus"
+            role="presentation"
+          >
+            <use
+              xlink:href="#plus"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
-</div>
+</DocumentFragment>
 `;

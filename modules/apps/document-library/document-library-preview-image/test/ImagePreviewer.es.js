@@ -12,23 +12,19 @@
  * details.
  */
 
+import {cleanup, render} from '@testing-library/react';
+import React from 'react';
+
 import ImagePreviewer from '../src/main/resources/META-INF/resources/preview/js/ImagePreviewer.es';
 
-let component;
-
 describe('document-library-preview-image', () => {
-	afterEach(() => {
-		if (component) {
-			component.dispose();
-		}
-	});
+	afterEach(cleanup);
 
 	it('renders an image previewer', () => {
-		component = new ImagePreviewer({
-			imageURL: 'image.jpg',
-			spritemap: 'icons.svg'
-		});
+		const {asFragment} = render(
+			<ImagePreviewer imageURL="image.jpg" spritemap="icons.svg" />
+		);
 
-		expect(component).toMatchSnapshot();
+		expect(asFragment()).toMatchSnapshot();
 	});
 });

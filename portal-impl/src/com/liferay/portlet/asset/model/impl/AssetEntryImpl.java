@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.model.impl;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
@@ -23,6 +24,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.view.count.ViewCountServiceUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -79,9 +81,12 @@ public class AssetEntryImpl extends AssetEntryBaseImpl {
 		return AssetTagLocalServiceUtil.getEntryTags(getEntryId());
 	}
 
+	@Override
 	public int getViewCount() {
 		return (int)ViewCountServiceUtil.getViewCount(
-			getCompanyId(), getClassNameId(), getClassPK());
+			getCompanyId(),
+			ClassNameLocalServiceUtil.getClassNameId(AssetEntry.class),
+			getPrimaryKey());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AssetEntryImpl.class);

@@ -57,6 +57,12 @@ ViewUsersManagementToolbarDisplayContext viewUsersManagementToolbarDisplayContex
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-small table-cell-minw-150"
+					name="accounts"
+					value="<%= accountUserDisplay.getAccountNames(request) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					name="status"
 				>

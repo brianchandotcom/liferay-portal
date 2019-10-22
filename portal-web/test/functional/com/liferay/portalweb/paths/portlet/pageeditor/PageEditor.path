@@ -304,11 +304,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDITABLE_FIELD_TOOLBAR_MAP_DROPDOWN_ASSET</td>
-	<td>//button[contains(@class,'dropdown-item') and @data-asset-browser-window-title='${key_assetField}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EDITABLE_FIELD_TOOLBAR_MAP_BUTTON</td>
 	<td>//button[@data-title='Map']</td>
 	<td></td>

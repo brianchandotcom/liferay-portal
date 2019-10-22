@@ -77,28 +77,7 @@ public abstract class BaseFragmentCollectionContributor
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(int type, Locale locale) {
-		List<FragmentEntry> fragmentEntries = getFragmentEntries(type);
-
-		Stream<FragmentEntry> stream = fragmentEntries.stream();
-
-		return stream.map(
-			fragmentEntry -> {
-				Map<Locale, String> names = _fragmentEntryNames.getOrDefault(
-					fragmentEntry.getFragmentEntryKey(),
-					Collections.emptyMap());
-
-				fragmentEntry.setName(
-					names.getOrDefault(
-						locale,
-						names.getOrDefault(
-							LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
-							fragmentEntry.getName())));
-
-				return fragmentEntry;
-			}
-		).collect(
-			Collectors.toList()
-		);
+		return _getFragmentEntries(getFragmentEntries(type), locale);
 	}
 
 	@Override
@@ -216,6 +195,31 @@ public abstract class BaseFragmentCollectionContributor
 		_setLocalizedNames(name, names, getResourceBundleLoader());
 
 		return names;
+	}
+
+	private List<FragmentEntry> _getFragmentEntries(
+		List<FragmentEntry> fragmentEntries, Locale locale) {
+
+		Stream<FragmentEntry> stream = fragmentEntries.stream();
+
+		return stream.map(
+			fragmentEntry -> {
+				Map<Locale, String> names = _fragmentEntryNames.getOrDefault(
+					fragmentEntry.getFragmentEntryKey(),
+					Collections.emptyMap());
+
+				fragmentEntry.setName(
+					names.getOrDefault(
+						locale,
+						names.getOrDefault(
+							LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+							fragmentEntry.getName())));
+
+				return fragmentEntry;
+			}
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private FragmentEntry _getFragmentEntry(URL url) throws Exception {

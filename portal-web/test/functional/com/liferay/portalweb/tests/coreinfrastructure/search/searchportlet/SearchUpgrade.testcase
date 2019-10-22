@@ -46,6 +46,15 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewClassicSearchPortletConfigurationArchive713 {
+		property data.archive.type = "data-archive-classic-search-portlet";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.1.3";
+
+		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+	@priority = "5"
 	test ViewClassicSearchPortletConfigurationArchive720 {
 		property data.archive.type = "data-archive-classic-search-portlet";
 		property database.types = "mariadb,mysql,postgresql";
@@ -91,6 +100,15 @@ definition {
 		SystemSettings.saveConfiguration();
 
 		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+	@priority = "5"
+	test ViewSearchPortletsConfigurationArchive713 {
+		property data.archive.type = "data-archive-search-portlets";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.1.3";
+
+		Upgrade.viewSearchPortletsConfiguration();
 	}
 
 	@priority = "5"

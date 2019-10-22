@@ -47,6 +47,19 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewPortalSmokeArchive713 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.upgrades = "false";
+		property portal.version = "7.1.3";
+		property test.assert.warning.exceptions = "true";
+
+		Upgrade.viewUpgrade();
+
+		Upgrade.searchForAssetsAfterUpgrade();
+	}
+
+	@priority = "5"
 	test ViewPortalSmokeArchive720 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";

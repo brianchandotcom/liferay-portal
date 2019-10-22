@@ -47,6 +47,18 @@ definition {
 
 	@ignore = "true"
 	@priority = "5"
+	test ViewPortalConfigurationAfterUpgrade713 {
+		property data.archive.type = "data-archive-portal-settings";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.1.3";
+
+		Upgrade.viewInstanceSettings();
+
+		Upgrade.viewSystemSettings();
+	}
+
+	@ignore = "true"
+	@priority = "5"
 	test ViewPortalConfigurationAfterUpgrade7110 {
 		property data.archive.type = "data-archive-portal-settings";
 		property portal.version = "7.1.10";

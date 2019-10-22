@@ -87,6 +87,7 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 		<div ref={containerRef}>
 			<Table
 				actions={[]}
+				checkable={true}
 				columns={fields.map(({label: {en_US: label}}) => ({
 					key: label,
 					value: (

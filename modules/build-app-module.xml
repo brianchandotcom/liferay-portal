@@ -7,7 +7,7 @@
 	<pathconvert property="portal.releng.module.dir">
 		<filtermapper>
 			<replacestring from="modules${file.separator}apps" to="modules${file.separator}.releng${file.separator}apps" />
-			<replacestring from="modules${file.separator}private${file.separator}apps" to="modules${file.separator}.releng${file.separator}private${file.separator}apps" />
+			<replacestring from="modules${file.separator}dxp${file.separator}apps" to="modules${file.separator}.releng${file.separator}dxp${file.separator}apps" />
 		</filtermapper>
 
 		<path>
@@ -34,7 +34,7 @@
 	</condition>
 
 	<condition property="artifact.private">
-		<contains string="${basedir}" substring="private${file.separator}" />
+		<contains string="${basedir}" substring="dxp${file.separator}" />
 	</condition>
 
 	<loadfile
@@ -124,7 +124,7 @@
 
 		<if>
 			<or>
-				<contains string="${basedir}" substring="private${file.separator}" />
+				<contains string="${basedir}" substring="dxp${file.separator}" />
 				<istrue value="${download.artifact.private.override}" />
 			</or>
 			<then>
@@ -177,7 +177,7 @@
 			<then>
 				<if>
 					<or>
-						<contains string="${basedir}" substring="private${file.separator}" />
+						<contains string="${basedir}" substring="dxp${file.separator}" />
 						<istrue value="${download.artifact.private.override}" />
 					</or>
 					<then>

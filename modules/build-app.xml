@@ -15,6 +15,7 @@
 	<property file="../app.server.${env.HOSTNAME}.properties" />
 	<property file="../app.server.properties" />
 
+	<property file="../build.profile-dxp.properties" />
 	<property file="../build.properties" />
 
 	<property name="portal.lib.dir" value="${app.server.tomcat.lib.portal.dir}" />
@@ -58,7 +59,7 @@
 					dir="${modules.dir}"
 				>
 					<include name="apps/*" />
-					<include name="private/apps/*" />
+					<include name="dxp/apps/*" />
 					<exclude name="${build.exclude.dirs}" />
 					<present targetdir="${modules.dir}">
 						<mapper
@@ -196,7 +197,7 @@
 					dir="${modules.dir}"
 				>
 					<include name="apps/*" />
-					<include name="private/apps/*" />
+					<include name="dxp/apps/*" />
 					<exclude name="${build.exclude.dirs}" />
 					<present targetdir="${modules.dir}">
 						<mapper
@@ -251,7 +252,7 @@
 					dir="${modules.dir}"
 				>
 					<include name="apps/*" />
-					<include name="private/apps/*" />
+					<include name="dxp/apps/*" />
 					<exclude name="${build.exclude.dirs}" />
 				</dirset>
 			</path>
@@ -526,7 +527,7 @@
 				<contains casesensitive="false" ignorewhitespace="true" text="Liferay-Releng-Bundle: true" />
 				<containsregexp casesensitive="false" expression="${liferay.releng.suite.pattern}" multiline="true" />
 				<include name="apps/**/app.bnd" />
-				<include name="private/apps/**/app.bnd" />
+				<include name="dxp/apps/**/app.bnd" />
 				<present targetdir="${modules.dir}/.releng">
 					<mapper
 						from="*app.bnd"
@@ -544,7 +545,7 @@
 			<path>
 				<fileset
 					dir="."
-					includes="apps/*/app.bnd,private/apps/*/app.bnd"
+					includes="apps/*/app.bnd,dxp/apps/*/app.bnd"
 				>
 					<contains casesensitive="false" ignorewhitespace="true" text="Liferay-Releng-Fix-Delivery-Method: core" />
 				</fileset>
@@ -689,22 +690,22 @@
 			</condition>
 		</fail>
 
-		<condition else="${modules.dir}/apps/${app.name}" property="app.dir" value="${modules.dir}/private/apps/${app.name}">
-			<available file="${modules.dir}/private/apps/${app.name}" />
+		<condition else="${modules.dir}/apps/${app.name}" property="app.dir" value="${modules.dir}/dxp/apps/${app.name}">
+			<available file="${modules.dir}/dxp/apps/${app.name}" />
 		</condition>
 
-		<condition else="${modules.dir}/.releng/apps/${app.name}" property="releng.app.dir" value="${modules.dir}/.releng/private/apps/${app.name}">
-			<available file="${modules.dir}/.releng/private/apps/${app.name}" />
+		<condition else="${modules.dir}/.releng/apps/${app.name}" property="releng.app.dir" value="${modules.dir}/.releng/dxp/apps/${app.name}">
+			<available file="${modules.dir}/.releng/dxp/apps/${app.name}" />
 		</condition>
 
 		<condition property="download.app.sources">
 			<or>
 				<and>
-					<available file="${modules.dir}/private/apps/${app.name}" />
+					<available file="${modules.dir}/dxp/apps/${app.name}" />
 					<available file="${app.dir}/.lfrbuild-release-src" />
 				</and>
 				<not>
-					<available file="${modules.dir}/private/apps/${app.name}" />
+					<available file="${modules.dir}/dxp/apps/${app.name}" />
 				</not>
 			</or>
 		</condition>
@@ -725,14 +726,14 @@
 
 					<replacestring from="-dxp" to="" />
 
-					<replacestring from="private${file.separator}" to="" />
+					<replacestring from="dxp${file.separator}" to="" />
 				</filtermapper>
 			</chainedmapper>
 			<path>
 				<dirset
 					dir="${modules.dir}"
 					excludes="**/*-test*"
-					includes="apps/${app.name}/**,private/apps/${app.name}/**"
+					includes="apps/${app.name}/**,dxp/apps/${app.name}/**"
 				>
 					<present targetdir="${modules.dir}">
 						<mapper
@@ -755,7 +756,7 @@
 				<dirset
 					dir="${modules.dir}"
 					excludes="**/*-test*"
-					includes="apps/${app.name}/**,private/apps/${app.name}/**"
+					includes="apps/${app.name}/**,dxp/apps/${app.name}/**"
 				>
 					<present targetdir="${modules.dir}">
 						<mapper
@@ -768,7 +769,7 @@
 				<dirset
 					dir="${modules.dir}"
 					excludes="**/*-test*"
-					includes="private/apps/${app.name}/**"
+					includes="dxp/apps/${app.name}/**"
 				>
 					<present targetdir="${modules.dir}">
 						<mapper
@@ -794,7 +795,7 @@
 				<dirset
 					dir="${modules.dir}"
 					excludes="**/*-test*,${app.module.dirs.excludes}"
-					includes="apps/${app.name}/**,private/apps/${app.name}/**"
+					includes="apps/${app.name}/**,dxp/apps/${app.name}/**"
 				>
 					<present targetdir="${modules.dir}">
 						<mapper
@@ -807,7 +808,7 @@
 				<dirset
 					dir="${modules.dir}"
 					excludes="${app.module.dirs.excludes}"
-					includes="apps/${app.name}/**,private/apps/${app.name}/**"
+					includes="apps/${app.name}/**,dxp/apps/${app.name}/**"
 				>
 					<present targetdir="${modules.dir}">
 						<mapper
@@ -829,7 +830,7 @@
 				<dirset
 					dir="${modules.dir}"
 					excludes="**/*-test*,${app.module.dirs.excludes}"
-					includes="apps/${app.name}/**,private/apps/${app.name}/**"
+					includes="apps/${app.name}/**,dxp/apps/${app.name}/**"
 				>
 					<present targetdir="${modules.dir}">
 						<mapper
@@ -864,7 +865,7 @@
 
 		<property file="${modules.dir}/../build.properties" />
 
-		<for list="${modules.dir}/apps/${app.name}/app.bnd,${modules.dir}/private/apps/${app.name}/app.bnd" param="app.bnd.file">
+		<for list="${modules.dir}/apps/${app.name}/app.bnd,${modules.dir}/dxp/apps/${app.name}/app.bnd" param="app.bnd.file">
 			<sequential>
 				<if>
 					<available file="@{app.bnd.file}" />
@@ -879,7 +880,7 @@
 			<and>
 				<istrue value="${current.branch.private}" />
 				<not>
-					<available file="${modules.dir}/private/apps/${app.name}" />
+					<available file="${modules.dir}/dxp/apps/${app.name}" />
 				</not>
 			</and>
 		</condition>

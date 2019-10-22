@@ -79,3 +79,8 @@ ViewUsersManagementToolbarDisplayContext viewUsersManagementToolbarDisplayContex
 		</liferay-ui:search-container>
 	</aui:form>
 </aui:container>
+
+<liferay-frontend:component
+	componentId="<%= viewUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/UsersManagementToolbarDefaultEventHandler.es"
+/>

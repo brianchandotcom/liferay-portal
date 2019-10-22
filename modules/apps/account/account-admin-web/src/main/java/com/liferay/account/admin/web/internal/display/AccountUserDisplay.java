@@ -14,9 +14,22 @@
 
 package com.liferay.account.admin.web.internal.display;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.service.AccountEntryLocalServiceUtil;
+import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.util.TransformUtil;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Pei-Jung Lan
@@ -29,6 +42,10 @@ public class AccountUserDisplay {
 		}
 
 		return new AccountUserDisplay(user);
+	}
+
+	public String getAccountNames(HttpServletRequest httpServletRequest) {
+		return LanguageUtil.get(httpServletRequest, _accountNames);
 	}
 
 	public String getAccountRoles() {
@@ -60,6 +77,7 @@ public class AccountUserDisplay {
 	}
 
 	private AccountUserDisplay(User user) {
+		_accountNames = _getAccountNames(user);
 		_accountRoles = StringPool.BLANK;
 		_emailAddress = user.getEmailAddress();
 		_jobTitle = user.getJobTitle();
@@ -67,6 +85,37 @@ public class AccountUserDisplay {
 		_statusLabel = _getStatusLabel(user);
 		_statusLabelStyle = _getStatusLabelStyle(user);
 		_userId = user.getUserId();
+	}
+
+	private String _getAccountNames(User user) {
+		List<AccountEntryUserRel> accountEntryUserRelList =
+			AccountEntryUserRelLocalServiceUtil.
+				getAccountEntryUserRelsByAccountUserId(user.getUserId());
+
+		if (!ListUtil.isEmpty(accountEntryUserRelList)) {
+			List<Long> accountEntryIdList = TransformUtil.transform(
+				accountEntryUserRelList,
+				AccountEntryUserRel::getAccountEntryId);
+
+			accountEntryIdList = ListUtil.filter(
+				accountEntryIdList, this::_isDefaultAccountEntryId);
+
+			if (!ListUtil.isEmpty(accountEntryIdList)) {
+				List<AccountEntry> accountEntryList = TransformUtil.transform(
+					accountEntryIdList,
+					AccountEntryLocalServiceUtil::getAccountEntry);
+
+				List<String> accountEntryNameList = TransformUtil.transform(
+					accountEntryList, AccountEntry::getName);
+
+				ListUtil.sort(accountEntryNameList);
+
+				return StringUtil.merge(
+					accountEntryNameList, StringPool.COMMA_AND_SPACE);
+			}
+		}
+
+		return "no-assigned-account";
 	}
 
 	private String _getStatusLabel(User user) {
@@ -97,6 +146,11 @@ public class AccountUserDisplay {
 		return StringPool.BLANK;
 	}
 
+	private Boolean _isDefaultAccountEntryId(long accountEntryId) {
+		return accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT;
+	}
+
+	private final String _accountNames;
 	private final String _accountRoles;
 	private final String _emailAddress;
 	private final String _jobTitle;

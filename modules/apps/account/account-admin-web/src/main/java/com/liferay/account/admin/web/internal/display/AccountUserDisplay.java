@@ -48,6 +48,10 @@ public class AccountUserDisplay {
 		return LanguageUtil.get(httpServletRequest, _accountNames);
 	}
 
+	public String getAccountNamesStyle() {
+		return _accountNamesStyle;
+	}
+
 	public String getAccountRoles() {
 		return _accountRoles;
 	}
@@ -78,6 +82,7 @@ public class AccountUserDisplay {
 
 	private AccountUserDisplay(User user) {
 		_accountNames = _getAccountNames(user);
+		_accountNamesStyle = _getAccountNamesStyle(user);
 		_accountRoles = StringPool.BLANK;
 		_emailAddress = user.getEmailAddress();
 		_jobTitle = user.getJobTitle();
@@ -118,6 +123,16 @@ public class AccountUserDisplay {
 		return "no-assigned-account";
 	}
 
+	private String _getAccountNamesStyle(User user) {
+		String isDefaultAccountEntryID = _getAccountNames(user);
+
+		if (isDefaultAccountEntryID.equals("no-assigned-account")) {
+			return "font-italic text-muted";
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private String _getStatusLabel(User user) {
 		int status = user.getStatus();
 
@@ -151,6 +166,7 @@ public class AccountUserDisplay {
 	}
 
 	private final String _accountNames;
+	private final String _accountNamesStyle;
 	private final String _accountRoles;
 	private final String _emailAddress;
 	private final String _jobTitle;

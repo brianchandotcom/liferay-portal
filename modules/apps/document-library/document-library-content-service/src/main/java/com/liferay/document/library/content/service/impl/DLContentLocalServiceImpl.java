@@ -23,7 +23,6 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -151,11 +150,14 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 	@Override
 	public void deleteContent(
-			long companyId, long repositoryId, String path, String version)
-		throws PortalException {
+		long companyId, long repositoryId, String path, String version) {
 
-		dlContentPersistence.removeByC_R_P_V(
+		DLContent dlContent = dlContentPersistence.fetchByC_R_P_V(
 			companyId, repositoryId, path, version);
+
+		if (dlContent != null) {
+			dlContentPersistence.remove(dlContent);
+		}
 	}
 
 	/**

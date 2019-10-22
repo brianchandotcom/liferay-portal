@@ -153,6 +153,10 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, repositoryId, path, version);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void deleteContents(long companyId, long repositoryId, String path) {
 		dlContentPersistence.removeByC_R_P(companyId, repositoryId, path);
@@ -242,6 +246,10 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void updateDLContent(
 		long companyId, long oldRepositoryId, long newRepositoryId,

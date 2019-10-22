@@ -18,6 +18,7 @@ import aQute.bnd.annotation.component.Component;
 
 import com.google.auto.service.AutoService;
 
+import com.liferay.talend.tliferaybatchfile.TLiferayBatchFileDefinition;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.tliferayinput.TLiferayInputDefinition;
 import com.liferay.talend.tliferayoutput.TLiferayOutputDefinition;
@@ -47,8 +48,9 @@ public class LiferayFamilyDefinition
 
 	public LiferayFamilyDefinition() {
 		super(
-			NAME, new TLiferayConnectionDefinition(),
-			new TLiferayInputDefinition(), new TLiferayOutputDefinition(),
+			NAME, new TLiferayBatchFileDefinition(),
+			new TLiferayConnectionDefinition(), new TLiferayInputDefinition(),
+			new TLiferayOutputDefinition(),
 			new LiferayConnectionEditWizardDefinition(),
 			new LiferaySchemaWizardDefinition(),
 			new LiferayConnectionWizardDefinition());

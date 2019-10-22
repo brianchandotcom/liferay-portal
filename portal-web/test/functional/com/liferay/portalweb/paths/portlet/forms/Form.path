@@ -273,7 +273,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_CLOSE</td>
-	<td>//div[contains(@class,'open') and contains(@class,'form-builder-sidebar')]//a[contains(@class,'close')] | //div[contains(@class,'open') and contains(@class,'sidebar-container')]//a[contains(@class,'sidebar-close')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'form-builder-sidebar')]//a[contains(@class,'close')] | //div[contains(@class,'open') and contains(@class,'sidebar-container')]//a[contains(@class,'sidebar-close')] | //div[contains(@class,'sidebar-container open')]//a[contains(@class,'component-action sidebar-close')]</td>
 	<td></td>
 </tr>
 <tr>

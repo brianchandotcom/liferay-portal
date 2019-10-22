@@ -173,8 +173,13 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 	@Override
 	@Transactional
 	public int getBuildNumberOrCreate() throws PortalException {
+		int buildNumber = _getBuildNumber();
 
-		// Gracefully add version column
+		if (buildNumber > 0) {
+			_testSupportsStringCaseSensitiveQuery();
+
+			return buildNumber;
+		}
 
 		DB db = DBManagerUtil.getDB();
 
@@ -188,46 +193,21 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 			}
 		}
 
-		// Get release build number
-
-		try (Connection con = DataAccess.getConnection();
-			PreparedStatement ps = con.prepareStatement(
-				"select buildNumber from Release_ where releaseId = " +
-					ReleaseConstants.DEFAULT_ID);
-			ResultSet rs = ps.executeQuery()) {
-
-			int buildNumber = 0;
-
-			if (rs.next()) {
-				buildNumber = rs.getInt("buildNumber");
-			}
-			else {
-				buildNumber = _addReleaseInfo();
-			}
-
+		try {
+			db.runSQL("alter table Release_ add state_ INTEGER");
+		}
+		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Build number " + buildNumber);
+				_log.debug(e.getMessage());
 			}
+		}
 
-			// Gracefully add state_ column
+		buildNumber = _getBuildNumber();
 
-			try {
-				db.runSQL("alter table Release_ add state_ INTEGER");
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e.getMessage());
-				}
-			}
-
+		if (buildNumber > 0) {
 			_testSupportsStringCaseSensitiveQuery();
 
 			return buildNumber;
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
-			}
 		}
 
 		// Create tables and populate with default data
@@ -403,6 +383,37 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		}
 
 		return ReleaseInfo.getBuildNumber();
+	}
+
+	private int _getBuildNumber() {
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"select buildNumber, schemaVersion, state_ from Release_ " +
+					"where releaseId = " + ReleaseConstants.DEFAULT_ID);
+			ResultSet rs = ps.executeQuery()) {
+
+			int buildNumber = 0;
+
+			if (rs.next()) {
+				buildNumber = rs.getInt(1);
+			}
+			else {
+				buildNumber = _addReleaseInfo();
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Build number " + buildNumber);
+			}
+
+			return buildNumber;
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e.getMessage(), e);
+			}
+		}
+
+		return 0;
 	}
 
 	private void _testSupportsStringCaseSensitiveQuery() {

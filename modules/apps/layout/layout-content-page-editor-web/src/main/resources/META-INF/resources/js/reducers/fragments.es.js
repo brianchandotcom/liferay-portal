@@ -35,6 +35,7 @@ import {
 	FRAGMENTS_EDITOR_ROW_TYPES,
 	PAGE_TYPES
 } from '../utils/constants';
+import {isDropZone} from '../utils/isDropZone.es';
 
 /**
  * Adds a fragment at the corresponding container in the layout
@@ -473,7 +474,7 @@ function removeFragmentEntryLinkReducer(state, action) {
 
 	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
 
-	if (fragmentEntryLink.fragmentEntryKey.startsWith('drop-zone')) {
+	if (isDropZone(fragmentEntryLink)) {
 		nextState = updateIn(
 			nextState,
 			['layoutData'],
@@ -692,24 +693,20 @@ function _addFragmentToColumn(
 	const columnIndex = row.columns.indexOf(column);
 	const rowIndex = structure.indexOf(row);
 
-	const isDropZone =
-		fragmentEntryLink.fragmentEntryKey &&
-		fragmentEntryLink.fragmentEntryKey.startsWith('drop-zone');
-
 	let newLayoutData = updateIn(
 		layoutData,
 		['structure', rowIndex, 'columns', columnIndex],
 		column => ({
 			...column,
 			config: {
-				isDropZone
+				isDropZone: isDropZone(fragmentEntryLink)
 			}
 		})
 	);
 
 	newLayoutData = {
 		...newLayoutData,
-		hasDropZone: isDropZone
+		hasDropZone: isDropZone(fragmentEntryLink)
 	};
 
 	return updateIn(

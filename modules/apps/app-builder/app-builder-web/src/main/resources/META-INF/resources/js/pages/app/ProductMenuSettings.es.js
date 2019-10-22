@@ -12,7 +12,9 @@
  * details.
  */
 
-import {ClaySelect} from '@clayui/form';
+import ClayDropDown, {Align} from '@clayui/drop-down';
+import {ClayCheckbox} from '@clayui/form';
+import classNames from 'classnames';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {getItem} from '../../utils/client.es';
@@ -21,6 +23,8 @@ import EditAppContext, {
 	UPDATE_SETTINGS_SCOPE,
 	UPDATE_SETTINGS_SITE_IDS
 } from './EditAppContext.es';
+
+const {Item, ItemList} = ClayDropDown;
 
 const SCOPES = [
 	{
@@ -46,6 +50,7 @@ export default () => {
 	} = useContext(EditAppContext);
 
 	const [sites, setSites] = useState([]);
+	const [active, setActive] = useState(false);
 
 	useEffect(() => {
 		getItem('/o/headless-admin-user/v1.0/my-user-account/sites').then(
@@ -106,24 +111,38 @@ export default () => {
 							{Liferay.Language.get('site')}
 						</label>
 
-						<ClaySelect
-							aria-label={Liferay.Language.get('select-site')}
-							id="site"
-							onChange={onSiteIdsChange}
-							value={siteIds[0]}
+						<ClayDropDown
+							active={active}
+							alignmentPosition={Align.BottomLeft}
+							onActiveChange={newVal => setActive(newVal)}
+							trigger={
+								<button
+									aria-label={Liferay.Language.get(
+										'select-site'
+									)}
+									className={classNames(
+										'form-control',
+										'form-control-select',
+										'select-site'
+									)}
+									id="site"
+								>
+									{Liferay.Language.get('all-sites')}
+								</button>
+							}
 						>
-							<option key={0} value={0}>
-								{Liferay.Language.get('all-sites')}
-							</option>
-
-							{sites.map(({id, name}) => (
-								<ClaySelect.Option
-									key={id}
-									label={name}
-									value={id}
-								/>
-							))}
-						</ClaySelect>
+							<ItemList>
+								{sites.map(({id, name}) => (
+									<Item key={id}>
+										<ClayCheckbox
+											checked
+											label={name}
+											onChange={() => {}}
+										/>
+									</Item>
+								))}
+							</ItemList>
+						</ClayDropDown>
 					</div>
 				</div>
 			)}

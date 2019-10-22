@@ -58,18 +58,18 @@ public class CompositePasswordEncryptor
 			PropsValues.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY;
 
 		if (_log.isDebugEnabled() && Validator.isNotNull(legacyAlgorithm)) {
-			String message =
-				"Using legacy detection scheme for algorithm " +
-					legacyAlgorithm + " with current password ";
-
 			if (Validator.isNull(encryptedPassword)) {
-				message += "empty";
+				_log.debug(
+					StringBundler.concat(
+						"Using legacy detection scheme for algorithm ",
+						legacyAlgorithm, " with empty current password"));
 			}
 			else {
-				message += "provided";
+				_log.debug(
+					StringBundler.concat(
+						"Using legacy detection scheme for algorithm ",
+						legacyAlgorithm, " with provided current password"));
 			}
-
-			_log.debug(message);
 		}
 
 		boolean prependAlgorithm = true;
@@ -121,14 +121,9 @@ public class CompositePasswordEncryptor
 				"Generated password with algorithm prefix using " + algorithm);
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(StringPool.OPEN_CURLY_BRACE);
-		sb.append(getAlgorithmName(algorithm));
-		sb.append(StringPool.CLOSE_CURLY_BRACE);
-		sb.append(newEncryptedPassword);
-
-		return sb.toString();
+		return StringBundler.concat(
+			StringPool.OPEN_CURLY_BRACE, getAlgorithmName(algorithm),
+			StringPool.CLOSE_CURLY_BRACE, newEncryptedPassword);
 	}
 
 	@Override

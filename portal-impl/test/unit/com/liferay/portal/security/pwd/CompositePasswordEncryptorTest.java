@@ -216,14 +216,11 @@ public class CompositePasswordEncryptorTest {
 
 		testEncrypt(algorithm);
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(CharPool.OPEN_CURLY_BRACE);
-		sb.append(prependedAlgorithm);
-		sb.append(CharPool.CLOSE_CURLY_BRACE);
-		sb.append(encryptedPassword);
-
-		testEncrypt(plainPassword, sb.toString());
+		testEncrypt(
+			plainPassword,
+			StringBundler.concat(
+				CharPool.OPEN_CURLY_BRACE, prependedAlgorithm,
+				CharPool.CLOSE_CURLY_BRACE, encryptedPassword));
 
 		testLegacyEncrypt(algorithm, plainPassword, encryptedPassword);
 	}

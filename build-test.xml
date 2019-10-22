@@ -9677,8 +9677,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<var name="arg.line" value="" />
 
 							<get-database-property property.name="database.host" />
-							<get-database-property property.name="database.password" />
-							<get-database-property property.name="database.username" />
 
 							<local name="mysql.host" />
 
@@ -9701,9 +9699,13 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								</else>
 							</if>
 
-							<var name="arg.line" unless:blank="${mysql.host}" value="${arg.line} -h ${mysql.host}" />
-							<var name="arg.line" unless:blank="${database.username}" value="${arg.line} -u ${database.username}" />
-							<var name="arg.line" unless:blank="${database.password}" value="${arg.line} -p${database.password}" />
+							<var name="arg.line" unless:blank="${mysql.host}" value="${arg.line} --host=${mysql.host}" />
+
+							<get-database-property property.name="database.password" />
+							<get-database-property property.name="database.username" />
+
+							<var name="arg.line" unless:blank="${database.password}" value="${arg.line} --password=${database.password}" />
+							<var name="arg.line" unless:blank="${database.username}" value="${arg.line} --user=${database.username}" />
 
 							<propertycopy from="${database.type}.executable" name="database.executable" override="true" />
 
@@ -9877,23 +9879,46 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						<param name="sql.file" value="create-bare-mysql.sql" />
 					</antcall>
 
+					<var name="arg.line" value="" />
+
 					<get-database-property property.name="database.host" />
+
+					<local name="mysql.host" />
+
+					<if>
+						<and>
+							<equals arg1="${database.host}" arg2="localhost" />
+							<istrue value="${test.docker.environment}" />
+						</and>
+						<then>
+							<property name="mysql.host" value="127.0.0.1" />
+						</then>
+						<elseif>
+							<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+							<then>
+								<property name="mysql.host" value="${database.host}" />
+							</then>
+						</elseif>
+						<else>
+							<property name="mysql.host" value="" />
+						</else>
+					</if>
+
+					<var name="arg.line" unless:blank="${mysql.host}" value="${arg.line} --host=${mysql.host}" />
+
 					<get-database-property property.name="database.password" />
 					<get-database-property property.name="database.schema" />
 					<get-database-property property.name="database.username" />
 
-					<local name="database.host.arg.line" />
+					<var name="arg.line" unless:blank="${database.password}" value="${arg.line} --password=${database.password}" />
+					<var name="arg.line" unless:blank="${database.schema}" value="${arg.line} --database=${database.schema}" />
+					<var name="arg.line" unless:blank="${database.username}" value="${arg.line} --user=${database.username}" />
 
-					<condition else=" " property="database.host.arg.line" value="--host=${database.host}">
-						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
-					</condition>
-
-					<exec executable="${mysql.executable}" input="${liferay.home}/${database.type}.sql">
-						<arg value="${database.host.arg.line}" />
-						<arg value="--database=${database.schema}" />
-						<arg value="--password=${database.password}" />
-						<arg value="--user=${database.username}" />
-					</exec>
+					<retry retrycount="3" retrydelay="60000">
+						<exec executable="${mysql.executable}" input="${liferay.home}/${database.type}.sql">
+							<arg line="${arg.line}" />
+						</exec>
+					</retry>
 
 					<if>
 						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />

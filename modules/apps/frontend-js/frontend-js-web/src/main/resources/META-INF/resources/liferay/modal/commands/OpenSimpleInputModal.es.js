@@ -42,14 +42,22 @@ const getDefaultModalContainer = () => {
  *
  * @review
  */
+let didEmitDeprecationWarning = false;
 
-function openSimpleInputModal(
-	data,
-	containerId,
-	renderData = DEFAULT_RENDER_DATA
-) {
-	const container =
-		document.getElementById(containerId) || getDefaultModalContainer();
+export function openSimpleInputModal(data) {
+	if (process.env.NODE_ENV === 'development' && !didEmitDeprecationWarning) {
+		console.warn(
+			'The named "openSimpleInput" export is deprecated: use the default export instead'
+		);
+
+		didEmitDeprecationWarning = true;
+	}
+
+	return openSimpleInputModalImplementation.call(null, data);
+}
+
+function openSimpleInputModalImplementation(data) {
+	const container = getDefaultModalContainer();
 
 	unmountComponentAtNode(container);
 
@@ -75,11 +83,7 @@ function openSimpleInputModal(
 		/>
 	);
 
-	render(
-		SimpleInputModalComponent,
-		Object.assign(data, renderData),
-		container
-	);
-}
+	const renderData = DEFAULT_RENDER_DATA;
 
-export {openSimpleInputModal};
+	render(SimpleInputModalComponent, {...data, ...renderData}, container);
+}

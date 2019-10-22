@@ -1183,7 +1183,7 @@ public class ModulesStructureTest {
 				"\" in ", String.valueOf(gradlePropertiesPath)),
 			_getProjectPathPrefix(dirPath), projectPathPrefix);
 
-		if (dxpRepo || privateRepo) {
+		if (!_branchName.startsWith("7.0") && (dxpRepo || privateRepo)) {
 			_testGradleBuildProperty(
 				gradlePropertiesPath,
 				_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_PASSWORD,

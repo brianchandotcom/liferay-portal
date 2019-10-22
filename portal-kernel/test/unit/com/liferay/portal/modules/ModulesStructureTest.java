@@ -814,6 +814,10 @@ public class ModulesStructureTest {
 		return false;
 	}
 
+	private boolean _isInDXPModulesDir(Path dirPath) {
+		return _isInModulesRootDir(dirPath, "dxp");
+	}
+
 	private boolean _isInGitRepoReadOnly(Path dirPath) throws IOException {
 		Path gitRepoPath = _getGitRepoPath(dirPath);
 
@@ -854,10 +858,6 @@ public class ModulesStructureTest {
 		}
 
 		return false;
-	}
-
-	private boolean _isInDXPModulesDir(Path dirPath) {
-		return _isInModulesRootDir(dirPath, "dxp");
 	}
 
 	private boolean _isInPrivateModulesDir(Path dirPath) {

@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserIcon renders 1`] = `
+<DocumentFragment>
+  <span
+    class="sticker sticker-use-icon user-icon-color-0 sticker-circle sticker-secondary sticker-lg"
+  >
+    <span
+      class="sticker-overlay"
+    >
+      <svg
+        class="lexicon-icon lexicon-icon-user"
+        role="presentation"
+      >
+        <use
+          xlink:href="#user"
+        />
+      </svg>
+    </span>
+  </span>
+</DocumentFragment>
+`;

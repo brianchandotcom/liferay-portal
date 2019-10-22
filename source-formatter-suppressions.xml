@@ -23,7 +23,6 @@
 		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/Recurrence\.java" />
 		<suppress checks="JSONNamingCheck" files="portal-impl/src/com/liferay/portal/action/JSONServiceAction\.java" />
 		<suppress checks="JSONNamingCheck" files="portal-kernel/src/com/liferay/portal/kernel/backgroundtask/display/BaseBackgroundTaskDisplay\.java" />
-		<suppress checks="JSONNamingCheck" files="util-java/src/com/liferay/util/Autocomplete\.java" />
 		<suppress checks="JSONUtilCheck" files="portal-impl/test/unit/com/liferay/portal/json/JSONUtilTest\.java" />
 		<suppress checks="MemberNameCheck" files="portal-impl/src/com/liferay/portlet/trash/util/TrashImpl\.java" />
 		<suppress checks="MemberNameCheck" files="portal-impl/test/unit/com/liferay/portal/bean/ConstantsBeanFactoryImplTest\.java" />
@@ -96,7 +95,6 @@
 		<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/util/MimeTypesImpl\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/xml/SAXReaderFactory\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="util-java/src/com/liferay/util/ant/Java2WsddTask\.java" />
-		<suppress checks="JavaXMLSecurityCheck" files="util-java/src/com/liferay/util/xml/Dom4jUtil\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="util-java/src/com/liferay/util/xml/XMLMergerRunner\.java" />
 		<suppress checks="JSPLineBreakCheck" files="portal-web/docroot/html/portal/progress_poller\.jsp" />
 		<suppress checks="JSPStylingCheck" files="portal-web/docroot/html/portal/api/jsonws/action\.jsp" />

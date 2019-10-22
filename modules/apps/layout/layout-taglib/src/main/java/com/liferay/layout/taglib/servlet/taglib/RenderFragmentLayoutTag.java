@@ -170,8 +170,8 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 
 			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 				LayoutPageTemplateEntryLocalServiceUtil.
-					fetchLayoutPageTemplateEntry(
-						layout.getMasterLayoutPageTemplateEntryId());
+					fetchLayoutPageTemplateEntryByPlid(
+						layout.getMasterLayoutPlid());
 
 			if (masterLayoutPageTemplateEntry == null) {
 				return _getDefaultStructureJSONArray();

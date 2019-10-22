@@ -84,8 +84,8 @@ public class AddSimpleLayoutMVCActionCommand
 			actionRequest, "parentLayoutId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String type = ParamUtil.getString(actionRequest, "type");
-		long masterLayoutPageTemplateEntryId = ParamUtil.getLong(
-			actionRequest, "masterLayoutPageTemplateEntryId");
+		long masterLayoutPlid = ParamUtil.getLong(
+			actionRequest, "masterLayoutPlid");
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
@@ -105,8 +105,7 @@ public class AddSimpleLayoutMVCActionCommand
 				groupId, privateLayout, parentLayoutId, nameMap,
 				new HashMap<>(), new HashMap<>(), new HashMap<>(),
 				new HashMap<>(), type, typeSettingsProperties.toString(), false,
-				masterLayoutPageTemplateEntryId, new HashMap<>(),
-				serviceContext);
+				masterLayoutPlid, new HashMap<>(), serviceContext);
 
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();

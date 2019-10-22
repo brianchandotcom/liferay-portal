@@ -202,12 +202,11 @@ public class LayoutsAdminDisplayContext {
 			"layoutPageTemplateEntryId",
 			String.valueOf(layoutPageTemplateEntryId));
 
-		long masterLayoutPageTemplateEntryId = ParamUtil.getLong(
-			_httpServletRequest, "masterLayoutPageTemplateEntryId");
+		long masterLayoutPlid = ParamUtil.getLong(
+			_httpServletRequest, "masterLayoutPlid");
 
 		portletURL.setParameter(
-			"masterLayoutPageTemplateEntryId",
-			String.valueOf(masterLayoutPageTemplateEntryId));
+			"masterLayoutPlid", String.valueOf(masterLayoutPlid));
 
 		if (layoutPageTemplateEntryId > 0) {
 			portletURL.setParameter(
@@ -428,8 +427,8 @@ public class LayoutsAdminDisplayContext {
 				layout.getDescriptionMap(), layout.getKeywordsMap(),
 				layout.getRobotsMap(), layout.getType(),
 				layout.getTypeSettings(), true, true,
-				layout.getMasterLayoutPageTemplateEntryId(),
-				Collections.emptyMap(), serviceContext);
+				layout.getMasterLayoutPlid(), Collections.emptyMap(),
+				serviceContext);
 
 			_layoutCopyHelper.copyLayout(layout, draftLayout);
 		}

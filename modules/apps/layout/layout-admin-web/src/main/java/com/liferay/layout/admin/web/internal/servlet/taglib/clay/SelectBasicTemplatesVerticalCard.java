@@ -74,9 +74,8 @@ public class SelectBasicTemplatesVerticalCard implements VerticalCard {
 
 			addLayoutURL.setParameter("type", LayoutConstants.TYPE_CONTENT);
 			addLayoutURL.setParameter(
-				"masterLayoutPageTemplateEntryId",
-				String.valueOf(
-					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+				"masterLayoutPlid",
+				String.valueOf(_layoutPageTemplateEntry.getPlid()));
 			addLayoutURL.setWindowState(LiferayWindowState.POP_UP);
 
 			data.put("add-layout-url", addLayoutURL.toString());

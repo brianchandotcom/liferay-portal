@@ -88,8 +88,8 @@ else {
 <%
 LayoutPageTemplateEntry layoutPageTemplateEntry = null;
 
-if (selLayout.getMasterLayoutPageTemplateEntryId() > 0) {
-	layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntry(selLayout.getMasterLayoutPageTemplateEntryId());
+if (selLayout.getMasterLayoutPlid() > 0) {
+	layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getMasterLayoutPlid());
 }
 %>
 

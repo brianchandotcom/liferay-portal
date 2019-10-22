@@ -32,8 +32,8 @@ definition {
 
 	@description = "This test covers LPS-89073. It ensures that users can add and remove tags for existing images via Gogo Shell."
 	@priority = "4"
-	test AddAndRemoveAutoTagViaGogoShell {
-		property test.name.skip.portal.instance = "DMAutoTagging#AddAndRemoveAutoTagViaGogoShell";
+	test AddAndRemoveImageAutoTagViaGogoShell {
+		property test.name.skip.portal.instance = "DMAutoTagging#AddAndRemoveImageAutoTagViaGogoShell";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -95,8 +95,8 @@ definition {
 
 	@description = "This test asserts that auto-tags added to an image uploaded on a staged site gets published to Live."
 	@priority = "4"
-	test AssertAutoTagAfterPublishToLive {
-		property test.name.skip.portal.instance = "DMAutoTagging#AssertAutoTagAfterPublishToLive";
+	test AssertImageAutoTagAfterPublishToLive {
+		property test.name.skip.portal.instance = "DMAutoTagging#AssertImageAutoTagAfterPublishToLive";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -163,8 +163,8 @@ definition {
 
 	@description = "This test asserts that no auto-tag is generated when an image is uploaded to a site that has auto-tagging disabled despite the auto-tagging functionality enabled at portal level."
 	@priority = "4"
-	test ConfigureAutoTaggingPerSite {
-		property test.name.skip.portal.instance = "DMAutoTagging#ConfigureAutoTaggingPerSite";
+	test ConfigureImageAutoTaggingPerSite {
+		property test.name.skip.portal.instance = "DMAutoTagging#ConfigureImageAutoTaggingPerSite";
 
 		JSONGroup.addGroup(groupName = "Site AutoTag Enabled");
 
@@ -332,8 +332,8 @@ definition {
 
 	@description = "This test asserts that auto-tags can be deleted."
 	@priority = "4"
-	test RemoveAutoTag {
-		property test.name.skip.portal.instance = "DMAutoTagging#RemoveAutoTag";
+	test RemoveImageAutoTag {
+		property test.name.skip.portal.instance = "DMAutoTagging#RemoveImageAutoTag";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

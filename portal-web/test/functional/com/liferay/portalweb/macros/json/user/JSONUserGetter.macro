@@ -12,7 +12,7 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		return "${curl}"
+		return "${curl}";
 	}
 
 	macro getEmailAddress {

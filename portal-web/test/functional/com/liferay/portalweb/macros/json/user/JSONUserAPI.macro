@@ -157,20 +157,22 @@ definition {
 	macro _getUserIds {
 		var companyId = JSONCompany.getCompanyId();
 
+		var portalURL = JSONCompany.getPortalURL();
+
 		var curl = '''
 			${portalURL}/api/jsonws/user/get-company-users \
 			-u test@liferay.com:test \
-			-d companyId=${companyId}
+			-d companyId=${companyId} \
 			-d <CURL_DATA[start=-1]CURL_DATA> \
 			-d <CURL_DATA[end=-1]CURL_DATA>
 		''';
 
-		var userIds = JSONCurlUtil.get("${curl}", "$..['userId']");
+		var userIds = JSONCurlUtil.post("${curl}", "$..['userId']");
 		var userIds = StringUtil.replace("${userIds}", "[", "");
 		var userIds = StringUtil.replace("${userIds}", "]", "");
 		var userIds = StringUtil.replace("${userIds}", "&quot;", "");
 
-		return "${userIds}"
+		return "${userIds}";
 	}
 
 	macro _updatePassword {

@@ -11,7 +11,8 @@ definition {
 	macro setLocale {
 		if (!(isSet(locale))) {
 			var locale = "";
-		} else {
+		}
+		else {
 			Object.assertValidLocale(locale = "${locale}");
 		}
 

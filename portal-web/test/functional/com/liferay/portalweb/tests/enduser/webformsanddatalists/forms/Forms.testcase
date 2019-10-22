@@ -2220,7 +2220,9 @@ definition {
 				fieldName = "TextField",
 				fieldValue = "${fieldValue}");
 
-			FormPortlet.submit();
+			FormPortlet.clickSubmit();
+
+			Alert.viewSuccessMessage();
 
 			Refresh();
 		}

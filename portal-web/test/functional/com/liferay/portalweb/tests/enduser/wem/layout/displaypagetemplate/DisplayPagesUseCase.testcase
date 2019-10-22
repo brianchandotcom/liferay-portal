@@ -359,8 +359,8 @@ definition {
 			imageFrament = "Image");
 
 		PageEditorMapping.mapEditableFieldToAsset(
-			assetField = "Web Content Article",
-			webContentTitle = "WC WebContent Title");
+			entryTitle = "WC WebContent Title",
+			navItem = "Web Content");
 
 		task ("Assert the image field contains the mapped image.") {
 			PageEditor.clickPublish();

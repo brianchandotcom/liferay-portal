@@ -82,8 +82,8 @@ public class AssetEntryImpl extends AssetEntryBaseImpl {
 	}
 
 	@Override
-	public int getViewCount() {
-		return (int)ViewCountServiceUtil.getViewCount(
+	public long getViewCount() {
+		return ViewCountServiceUtil.getViewCount(
 			getCompanyId(),
 			ClassNameLocalServiceUtil.getClassNameId(AssetEntry.class),
 			getPrimaryKey());

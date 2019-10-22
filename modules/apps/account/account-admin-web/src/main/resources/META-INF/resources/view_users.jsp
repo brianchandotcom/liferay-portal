@@ -57,7 +57,7 @@ ViewUsersManagementToolbarDisplayContext viewUsersManagementToolbarDisplayContex
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand-small table-cell-minw-150"
+					cssClass='<%= "table-cell-expand-small table-cell-minw-150 " + accountUserDisplay.getAccountNamesStyle() %>'
 					name="accounts"
 					value="<%= accountUserDisplay.getAccountNames(request) %>"
 				/>

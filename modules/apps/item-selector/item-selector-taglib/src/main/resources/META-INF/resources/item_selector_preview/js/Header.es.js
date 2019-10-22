@@ -59,9 +59,10 @@ const Header = ({
 				<ClayNavigationBar.Item className="btn-group-item">
 					<ClayButton
 						borderless
-						ref={infoButtonRef}
 						displayType="secondary"
+						id="infoButtonRef"
 						monospaced
+						ref={infoButtonRef}
 					>
 						<ClayIcon symbol="info-panel-open" />
 					</ClayButton>

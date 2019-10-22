@@ -27,7 +27,6 @@ import org.dom4j.DocumentException;
 
 /**
  * @author Leonardo Barros
- * @see    com.liferay.util.xml.XMLUtil
  */
 public class XMLUtil {
 

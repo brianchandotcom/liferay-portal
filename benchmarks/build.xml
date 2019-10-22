@@ -35,6 +35,12 @@
 				dir="${sdk.dir}/dist"
 				includes="com.liferay.subscription.*.jar"
 			/>
+
+			<fileset
+				dir="${sdk.dir}/dist"
+				includes="com.liferay.view.count.*.jar"
+			/>
+
 			<fileset
 				dir="${sdk.dir}/dist"
 				includes="com.liferay.wiki.*.jar"

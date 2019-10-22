@@ -18,17 +18,21 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.service.DLContentLocalService;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 
 import java.util.List;
 
@@ -67,29 +71,69 @@ public class DLContentLocalServiceTest {
 	}
 
 	@Test
-	public void testAddContentByByteArray() throws Exception {
+	public void testAddContentByByteArrayInputStream() throws Exception {
 		String path = RandomTestUtil.randomString();
 
 		DLContent addDLContent = _dlContentLocalService.addContent(
 			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
-			_DATA_VERSION_1);
+			new ByteArrayInputStream(_DATA_VERSION_1));
 
 		DLContent getDLContent = _dlContentLocalService.getContent(
-			_companyId, _repositoryId, path);
+			_companyId, _repositoryId, path, StringPool.BLANK);
 
 		Assert.assertEquals(addDLContent, getDLContent);
 	}
 
 	@Test
-	public void testAddContentByInputStream() throws Exception {
+	public void testAddContentByFileInputStream() throws Exception {
+		String path = RandomTestUtil.randomString();
+
+		File tempFile = FileUtil.createTempFile(_DATA_VERSION_1);
+
+		try {
+			DLContent addDLContent = _dlContentLocalService.addContent(
+				_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
+				new FileInputStream(tempFile));
+
+			DLContent getDLContent = _dlContentLocalService.getContent(
+				_companyId, _repositoryId, path, StringPool.BLANK);
+
+			Assert.assertEquals(addDLContent, getDLContent);
+		}
+		finally {
+			tempFile.delete();
+		}
+	}
+
+	@Test
+	public void testAddContentByKernelUnsyncByteArrayInputStream()
+		throws Exception {
+
 		String path = RandomTestUtil.randomString();
 
 		DLContent addDLContent = _dlContentLocalService.addContent(
 			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
-			new ByteArrayInputStream(_DATA_VERSION_1), 1024);
+			new com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream(
+				_DATA_VERSION_1));
 
 		DLContent getDLContent = _dlContentLocalService.getContent(
-			_companyId, _repositoryId, path);
+			_companyId, _repositoryId, path, StringPool.BLANK);
+
+		Assert.assertEquals(addDLContent, getDLContent);
+	}
+
+	@Test
+	public void testAddContentByPetraUnsyncByteArrayInputStream()
+		throws Exception {
+
+		String path = RandomTestUtil.randomString();
+
+		DLContent addDLContent = _dlContentLocalService.addContent(
+			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+
+		DLContent getDLContent = _dlContentLocalService.getContent(
+			_companyId, _repositoryId, path, StringPool.BLANK);
 
 		Assert.assertEquals(addDLContent, getDLContent);
 	}
@@ -100,7 +144,7 @@ public class DLContentLocalServiceTest {
 
 		_dlContentLocalService.addContent(
 			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
-			_DATA_VERSION_1);
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		Assert.assertTrue(
 			_dlContentLocalService.hasContent(
@@ -115,33 +159,6 @@ public class DLContentLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteContents() throws Exception {
-		String path = RandomTestUtil.randomString();
-
-		_dlContentLocalService.addContent(
-			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
-			_DATA_VERSION_1);
-		_dlContentLocalService.addContent(
-			_companyId, _repositoryId, path, "1.1", _DATA_VERSION_2);
-
-		Assert.assertTrue(
-			_dlContentLocalService.hasContent(
-				_companyId, _repositoryId, path, Store.VERSION_DEFAULT));
-		Assert.assertTrue(
-			_dlContentLocalService.hasContent(
-				_companyId, _repositoryId, path, "1.1"));
-
-		_dlContentLocalService.deleteContents(_companyId, _repositoryId, path);
-
-		Assert.assertFalse(
-			_dlContentLocalService.hasContent(
-				_companyId, _repositoryId, path, Store.VERSION_DEFAULT));
-		Assert.assertFalse(
-			_dlContentLocalService.hasContent(
-				_companyId, _repositoryId, path, "1.1"));
-	}
-
-	@Test
 	public void testDeleteContentsByDirectory() throws Exception {
 		String directory = RandomTestUtil.randomString();
 
@@ -152,11 +169,11 @@ public class DLContentLocalServiceTest {
 
 		_dlContentLocalService.addContent(
 			_companyId, _repositoryId, path1, Store.VERSION_DEFAULT,
-			_DATA_VERSION_1);
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		_dlContentLocalService.addContent(
 			_companyId, _repositoryId, path2, Store.VERSION_DEFAULT,
-			_DATA_VERSION_1);
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		Assert.assertTrue(
 			_dlContentLocalService.hasContent(
@@ -182,18 +199,19 @@ public class DLContentLocalServiceTest {
 
 		DLContent addDLContent1 = _dlContentLocalService.addContent(
 			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
-			_DATA_VERSION_1);
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		DLContent getDLContent1 = _dlContentLocalService.getContent(
-			_companyId, _repositoryId, path);
+			_companyId, _repositoryId, path, StringPool.BLANK);
 
 		Assert.assertEquals(addDLContent1, getDLContent1);
 
 		DLContent addDLContent2 = _dlContentLocalService.addContent(
-			_companyId, _repositoryId, path, "1.1", _DATA_VERSION_2);
+			_companyId, _repositoryId, path, "1.1",
+			new UnsyncByteArrayInputStream(_DATA_VERSION_2));
 
 		DLContent getDLContent2 = _dlContentLocalService.getContent(
-			_companyId, _repositoryId, path);
+			_companyId, _repositoryId, path, StringPool.BLANK);
 
 		Assert.assertEquals(addDLContent2, getDLContent2);
 	}
@@ -202,13 +220,16 @@ public class DLContentLocalServiceTest {
 	public void testGetContentsAll() throws Exception {
 		DLContent dlContent1 = _dlContentLocalService.addContent(
 			_companyId, _repositoryId, RandomTestUtil.randomString(),
-			Store.VERSION_DEFAULT, _DATA_VERSION_1);
+			Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 		DLContent dlContent2 = _dlContentLocalService.addContent(
 			_companyId, _repositoryId, RandomTestUtil.randomString(),
-			Store.VERSION_DEFAULT, _DATA_VERSION_1);
+			Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 		DLContent dlContent3 = _dlContentLocalService.addContent(
 			_companyId, _repositoryId, RandomTestUtil.randomString(),
-			Store.VERSION_DEFAULT, _DATA_VERSION_1);
+			Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		List<DLContent> dlContents = _dlContentLocalService.getContents(
 			_companyId, _repositoryId);
@@ -230,11 +251,11 @@ public class DLContentLocalServiceTest {
 		DLContent dlContent1 = _dlContentLocalService.addContent(
 			_companyId, _repositoryId,
 			path1 + "/" + RandomTestUtil.randomString(), Store.VERSION_DEFAULT,
-			_DATA_VERSION_1);
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 		DLContent dlContent2 = _dlContentLocalService.addContent(
 			_companyId, _repositoryId,
 			path2 + "/" + RandomTestUtil.randomString(), Store.VERSION_DEFAULT,
-			_DATA_VERSION_1);
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		List<DLContent> dlContents =
 			_dlContentLocalService.getContentsByDirectory(
@@ -258,14 +279,16 @@ public class DLContentLocalServiceTest {
 
 		DLContent dlContent1 = _dlContentLocalService.addContent(
 			_companyId, _repositoryId, path1, Store.VERSION_DEFAULT,
-			_DATA_VERSION_1);
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 		DLContent dlContent2 = _dlContentLocalService.addContent(
-			_companyId, _repositoryId, path1, "1.1", _DATA_VERSION_2);
+			_companyId, _repositoryId, path1, "1.1",
+			new UnsyncByteArrayInputStream(_DATA_VERSION_2));
 		DLContent dlContent3 = _dlContentLocalService.addContent(
 			_companyId, _repositoryId, path2, Store.VERSION_DEFAULT,
-			_DATA_VERSION_1);
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 		DLContent dlContent4 = _dlContentLocalService.addContent(
-			_companyId, _repositoryId, path2, "1.1", _DATA_VERSION_2);
+			_companyId, _repositoryId, path2, "1.1",
+			new UnsyncByteArrayInputStream(_DATA_VERSION_2));
 
 		List<DLContent> dlContents1 = _dlContentLocalService.getContents(
 			_companyId, _repositoryId, path1);
@@ -292,7 +315,7 @@ public class DLContentLocalServiceTest {
 
 		DLContent addDLContent1 = _dlContentLocalService.addContent(
 			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
-			_DATA_VERSION_1);
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		DLContent getDLContent1 = _dlContentLocalService.getContent(
 			_companyId, _repositoryId, path, Store.VERSION_DEFAULT);
@@ -300,7 +323,8 @@ public class DLContentLocalServiceTest {
 		assertEquals(addDLContent1, getDLContent1);
 
 		DLContent addDLContent2 = _dlContentLocalService.addContent(
-			_companyId, _repositoryId, path, "1.1", _DATA_VERSION_2);
+			_companyId, _repositoryId, path, "1.1",
+			new UnsyncByteArrayInputStream(_DATA_VERSION_2));
 
 		DLContent getDLContent2 = _dlContentLocalService.getContent(
 			_companyId, _repositoryId, path, "1.1");
@@ -320,7 +344,7 @@ public class DLContentLocalServiceTest {
 
 		_dlContentLocalService.addContent(
 			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
-			_DATA_VERSION_1);
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		Assert.assertTrue(
 			_dlContentLocalService.hasContent(
@@ -333,7 +357,8 @@ public class DLContentLocalServiceTest {
 				_companyId, _repositoryId, path, "1.1"));
 
 		_dlContentLocalService.addContent(
-			_companyId, _repositoryId, path, "1.1", _DATA_VERSION_1);
+			_companyId, _repositoryId, path, "1.1",
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		Assert.assertTrue(
 			_dlContentLocalService.hasContent(
@@ -348,13 +373,13 @@ public class DLContentLocalServiceTest {
 
 		DLContent addDLContent = _dlContentLocalService.addContent(
 			_companyId, _repositoryId, oldPath, Store.VERSION_DEFAULT,
-			_DATA_VERSION_1);
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		_dlContentLocalService.updateDLContent(
 			_companyId, _repositoryId, newRepositoryId, oldPath, newPath);
 
 		DLContent getDLContent = _dlContentLocalService.getContent(
-			_companyId, newRepositoryId, newPath);
+			_companyId, newRepositoryId, newPath, StringPool.BLANK);
 
 		addDLContent.setRepositoryId(newRepositoryId);
 		addDLContent.setPath(newPath);

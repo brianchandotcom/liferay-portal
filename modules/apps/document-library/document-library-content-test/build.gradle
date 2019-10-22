@@ -1,4 +1,6 @@
 dependencies {
 	testIntegrationCompile project(":apps:document-library:document-library-content-api")
+	testIntegrationCompile project(":core:petra:petra-io")
+	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

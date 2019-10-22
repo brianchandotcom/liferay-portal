@@ -139,6 +139,12 @@ definition {
 		MenuItem.clickNoError(menuItem = "${menuItem}");
 	}
 
+	macro gotoFragmentEllipsisMenuItem {
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#FRAGMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "${menuItem}");
+	}
+
 	macro gotoHeaderMenuItem {
 		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 

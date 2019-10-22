@@ -197,9 +197,7 @@ definition {
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterLabelEdit";
 		FormsAdminNavigator.gotoEditField(fieldName = "ChooseYourDestiny");
 
-		Form.editFieldLabelMetal(
-			fieldName = "ChooseYourDestiny",
-			fieldValue = "Edit Label");
+		Form.editFieldLabelMetal(fieldValue = "Edit Label");
 
 		Form.closeSidebar();
 

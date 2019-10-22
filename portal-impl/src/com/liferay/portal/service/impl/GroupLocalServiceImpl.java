@@ -4376,7 +4376,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return friendlyURL;
 		}
 
-		friendlyURL = StringPool.SLASH + getFriendlyURL(friendlyName);
+		String safeFriendlyName = StringUtil.removeChars(
+			friendlyName, CharPool.AMPERSAND, CharPool.APOSTROPHE, CharPool.AT,
+			CharPool.CLOSE_BRACKET, CharPool.CLOSE_PARENTHESIS, CharPool.COLON,
+			CharPool.COMMA, CharPool.DOLLAR, CharPool.EQUAL,
+			CharPool.EXCLAMATION, CharPool.OPEN_BRACKET,
+			CharPool.OPEN_PARENTHESIS, CharPool.PLUS, CharPool.POUND,
+			CharPool.QUESTION, CharPool.SEMICOLON, CharPool.SLASH,
+			CharPool.STAR);
+
+		friendlyURL = StringPool.SLASH + getFriendlyURL(safeFriendlyName);
 
 		return getValidatedFriendlyURL(
 			companyId, groupId, classNameId, classPK, friendlyURL);

@@ -465,9 +465,16 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			return;
 		}
 
+		AssetEntry entry = assetEntryPersistence.fetchByC_C(
+			classNameLocalService.getClassNameId(className), classPK);
+
+		if (entry == null) {
+			return;
+		}
+
 		_viewCountService.incrementViewCount(
-			companyId, classNameLocalService.getClassNameId(className),
-			classPK);
+			companyId, classNameLocalService.getClassNameId(AssetEntry.class),
+			entry.getEntryId());
 	}
 
 	@Override

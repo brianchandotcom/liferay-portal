@@ -856,6 +856,10 @@ public class ModulesStructureTest {
 		return false;
 	}
 
+	private boolean _isInDXPModulesDir(Path dirPath) {
+		return _isInModulesRootDir(dirPath, "dxp");
+	}
+
 	private boolean _isInPrivateModulesDir(Path dirPath) {
 		return _isInModulesRootDir(dirPath, "private");
 	}
@@ -1023,6 +1027,7 @@ public class ModulesStructureTest {
 			return;
 		}
 
+		boolean dxpRepo = _isInDXPModulesDir(dirPath);
 		boolean privateRepo = _isInPrivateModulesDir(dirPath);
 		boolean readOnlyRepo = _isInGitRepoReadOnly(dirPath);
 
@@ -1030,7 +1035,7 @@ public class ModulesStructureTest {
 		Path gradlePropertiesPath = dirPath.resolve("gradle.properties");
 		Path settingsGradlePath = dirPath.resolve("settings.gradle");
 
-		if (!privateRepo && !readOnlyRepo) {
+		if (!dxpRepo && !privateRepo && !readOnlyRepo) {
 			String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
 
 			Assert.assertEquals(
@@ -1102,17 +1107,17 @@ public class ModulesStructureTest {
 			else if (key.equals(_GIT_REPO_GRADLE_PROJECT_PATH_PREFIX_KEY)) {
 				projectPathPrefix = value;
 			}
-			else if (privateRepo &&
+			else if ((dxpRepo || privateRepo) &&
 					 key.equals(_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_PASSWORD)) {
 
 				repositoryPrivatePassword = value;
 			}
-			else if (privateRepo &&
+			else if ((dxpRepo || privateRepo) &&
 					 key.equals(_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_URL)) {
 
 				repositoryPrivateUrl = value;
 			}
-			else if (privateRepo &&
+			else if ((dxpRepo || privateRepo) &&
 					 key.equals(_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_USERNAME)) {
 
 				repositoryPrivateUsername = value;
@@ -1135,7 +1140,7 @@ public class ModulesStructureTest {
 				allowedKeys.add(_GIT_REPO_GRADLE_PROJECT_GROUP_KEY);
 				allowedKeys.add(_GIT_REPO_GRADLE_PROJECT_PATH_PREFIX_KEY);
 
-				if (privateRepo) {
+				if (dxpRepo || privateRepo) {
 					allowedKeys.add(
 						_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_PASSWORD);
 					allowedKeys.add(_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_URL);
@@ -1178,7 +1183,7 @@ public class ModulesStructureTest {
 				"\" in ", String.valueOf(gradlePropertiesPath)),
 			_getProjectPathPrefix(dirPath), projectPathPrefix);
 
-		if (privateRepo) {
+		if (dxpRepo || privateRepo) {
 			_testGradleBuildProperty(
 				gradlePropertiesPath,
 				_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_PASSWORD,
@@ -1199,7 +1204,7 @@ public class ModulesStructureTest {
 					"apply from: \"settings-ext.gradle\"");
 		}
 
-		if (!privateRepo && !readOnlyRepo) {
+		if (!dxpRepo && !privateRepo && !readOnlyRepo) {
 			String settingsGradle = ModulesStructureTestUtil.read(
 				settingsGradlePath);
 
@@ -1495,7 +1500,10 @@ public class ModulesStructureTest {
 
 			sb.append(".releng/");
 
-			if (_isInPrivateModulesDir(dirPath)) {
+			if (_isInDXPModulesDir(dirPath)) {
+				sb.append("dxp/");
+			}
+			else if (_isInPrivateModulesDir(dirPath)) {
 				sb.append("private/");
 			}
 

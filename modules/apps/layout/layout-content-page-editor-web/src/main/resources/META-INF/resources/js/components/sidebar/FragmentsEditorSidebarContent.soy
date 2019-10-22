@@ -23,11 +23,7 @@
 	<div class="fragments-editor-sidebar-content">
 		<div class="fragments-editor-sidebar-section">
 			{if $_selectedSidebarPanel}
-				{if $_selectedSidebarPanel.sidebarPanelId == 'sections'}
-					{call com.liferay.layout.content.page.editor.web.SidebarSectionsPanel.render}
-						{param store: $store /}
-					{/call}
-				{elseif $_selectedSidebarPanel.sidebarPanelId == 'elements'}
+				{if $_selectedSidebarPanel.sidebarPanelId == 'elements'}
 					{call com.liferay.layout.content.page.editor.web.SidebarElementsPanel.render}
 						{param store: $store /}
 					{/call}

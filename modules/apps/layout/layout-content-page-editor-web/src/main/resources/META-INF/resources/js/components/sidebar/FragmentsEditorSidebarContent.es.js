@@ -19,8 +19,6 @@ import './comments/SidebarCommentsPanel.es';
 
 import './fragments/SidebarElementsPanel.es';
 
-import './fragments/SidebarSectionsPanel.es';
-
 import './mapping/SidebarMappingPanel.es';
 
 import './page_content/SidebarPageContentsPanel.es';

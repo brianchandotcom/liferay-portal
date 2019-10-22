@@ -16,16 +16,23 @@ package com.liferay.document.library.content.service.impl;
 
 import com.liferay.document.library.content.exception.NoSuchContentException;
 import com.liferay.document.library.content.model.DLContent;
+import com.liferay.document.library.content.model.DLContentDataBlobModel;
 import com.liferay.document.library.content.service.base.DLContentLocalServiceBaseImpl;
 import com.liferay.document.library.content.util.comparator.DLContentVersionComparator;
+import com.liferay.petra.io.AutoDeleteFileInputStream;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.ByteArrayInputStream;
@@ -35,9 +42,13 @@ import java.io.InputStream;
 
 import java.nio.channels.FileChannel;
 
+import java.sql.Blob;
+
 import java.util.List;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -283,6 +294,29 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		return false;
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public InputStream openContentInputStream(long contentId) {
+		try {
+			DLContentDataBlobModel dlContentDataBlobModel = getDataBlobModel(
+				contentId);
+
+			Blob blob = dlContentDataBlobModel.getDataBlob();
+
+			InputStream inputStream = blob.getBinaryStream();
+
+			if (_useTempFile) {
+				inputStream = new AutoDeleteFileInputStream(
+					_file.createTempFile(inputStream));
+			}
+
+			return inputStream;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
@@ -300,6 +334,19 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			dLContent.setPath(newPath);
 
 			dlContentPersistence.update(dLContent);
+		}
+	}
+
+	@Activate
+	protected void activate() {
+		DB db = DBManagerUtil.getDB();
+
+		if ((db.getDBType() != DBType.DB2) &&
+			(db.getDBType() != DBType.MYSQL) &&
+			(db.getDBType() != DBType.MARIADB) &&
+			(db.getDBType() != DBType.SYBASE)) {
+
+			_useTempFile = true;
 		}
 	}
 
@@ -365,5 +412,10 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLContentLocalServiceImpl.class);
+
+	@Reference
+	private File _file;
+
+	private boolean _useTempFile;
 
 }

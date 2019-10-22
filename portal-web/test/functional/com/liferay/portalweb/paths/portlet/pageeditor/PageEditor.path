@@ -331,7 +331,7 @@
 <!--SECTION_BUILDER-->
 <tr>
 	<td>SECTION_BUILDER_BASIC_COMPONENTS_FRAGMENT</td>
-	<td>//div[contains(@data-item-id,'BASIC_COMPONENT-button') and contains(@data-item-name,'${fragmentName}')]</td>
+	<td>//div[contains(@data-item-name,'${fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>

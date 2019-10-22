@@ -11,10 +11,6 @@ task removeDXPScript
 File gitRepositoryDir = new File(projectDir.parentFile, "git-clone-profile-dxp")
 String gitRepositoryURL = "git@github.com:liferay/liferay-portal-ee.git"
 
-if (System.getenv("JENKINS_HOME")) {
-	gitRepositoryURL = "git@github-dev.liferay.com:liferay/liferay-portal-ee.git"
-}
-
 checkoutDXPScript {
 	doLast {
 		logger.lifecycle "git clone --branch=master-private --depth=1 --no-checkout --single-branch {} {}", gitRepositoryURL, gitRepositoryDir.name

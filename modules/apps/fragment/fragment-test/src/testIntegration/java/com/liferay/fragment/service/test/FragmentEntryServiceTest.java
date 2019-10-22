@@ -147,7 +147,8 @@ public class FragmentEntryServiceTest {
 
 		_fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
+			StringPool.BLANK, StringPool.BLANK, 0,
+			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 	}
 
@@ -178,7 +179,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), null, html, null,
+			StringPool.BLANK, RandomTestUtil.randomString(), null, html, null,
+			StringPool.BLANK, 0, FragmentConstants.TYPE_COMPONENT,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
@@ -196,7 +198,8 @@ public class FragmentEntryServiceTest {
 
 		_fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), null, null, null,
+			StringPool.BLANK, RandomTestUtil.randomString(), null, null, null,
+			StringPool.BLANK, 0, FragmentConstants.TYPE_COMPONENT,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
@@ -208,7 +211,8 @@ public class FragmentEntryServiceTest {
 
 		_fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+			StringPool.BLANK, null, 0, FragmentConstants.TYPE_COMPONENT,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	@Test
@@ -219,8 +223,10 @@ public class FragmentEntryServiceTest {
 
 		_fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), null, "Text only fragment", null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			StringPool.BLANK, RandomTestUtil.randomString(), null,
+			"Text only fragment", null, StringPool.BLANK, 0,
+			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 	}
 
 	@Test
@@ -307,7 +313,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), null, html, null,
+			StringPool.BLANK, RandomTestUtil.randomString(), null, html, null,
+			StringPool.BLANK, 0, FragmentConstants.TYPE_COMPONENT,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
@@ -349,9 +356,9 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), null, html, null,
-			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+			StringPool.BLANK, RandomTestUtil.randomString(), null, html, null,
+			StringPool.BLANK, 0, FragmentConstants.TYPE_COMPONENT,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -372,8 +379,10 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			name, "div {\ncolor: red\n}", "<div>Test</div>", "alert(\"test\")",
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			StringPool.BLANK, name, "div {\ncolor: red\n}", "<div>Test</div>",
+			"alert(\"test\")", StringPool.BLANK, 0,
+			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
 		FragmentEntry copyFragmentEntry =
 			_fragmentEntryService.copyFragmentEntry(
@@ -396,8 +405,10 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			name, "div {\ncolor: red\n}", "<div>Test</div>", "alert(\"test\")",
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			StringPool.BLANK, name, "div {\ncolor: red\n}", "<div>Test</div>",
+			"alert(\"test\")", StringPool.BLANK, 0,
+			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
 		FragmentEntry copyFragmentEntry =
 			_fragmentEntryService.copyFragmentEntry(
@@ -810,7 +821,7 @@ public class FragmentEntryServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		List<FragmentEntry> originalFragmentEntries =
-			_fragmentEntryService.getFragmentEntriesByType(
+			_fragmentEntryService.getFragmentEntriesByTypeAndStatus(
 				_group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				FragmentConstants.TYPE_COMPONENT,
@@ -833,7 +844,7 @@ public class FragmentEntryServiceTest {
 			serviceContext);
 
 		List<FragmentEntry> actualFragmentEntries =
-			_fragmentEntryService.getFragmentEntriesByType(
+			_fragmentEntryService.getFragmentEntriesByTypeAndStatus(
 				_group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				FragmentConstants.TYPE_COMPONENT,
@@ -1238,7 +1249,8 @@ public class FragmentEntryServiceTest {
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
 			"FRAGMENTENTRYKEY", "Fragment Entry Original", null,
-			"<div>Original</div>", null, WorkflowConstants.STATUS_DRAFT,
+			"<div>Original</div>", null, StringPool.BLANK, 0,
+			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_DRAFT,
 			serviceContext);
 
 		fragmentEntry = _fragmentEntryService.updateFragmentEntry(
@@ -1273,7 +1285,8 @@ public class FragmentEntryServiceTest {
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
 			"FRAGMENTENTRYKEY", "Fragment Entry Original", null,
-			"<div>Original</div>", null, WorkflowConstants.STATUS_DRAFT,
+			"<div>Original</div>", null, StringPool.BLANK, 0,
+			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_DRAFT,
 			serviceContext);
 
 		Assert.assertEquals(0, fragmentEntry.getPreviewFileEntryId());

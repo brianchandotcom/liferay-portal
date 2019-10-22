@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.util;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
@@ -56,8 +57,9 @@ public class FragmentEntryTestUtil {
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
-			"<div>TEST</div>", StringPool.BLANK,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			"<div>TEST</div>", StringPool.BLANK, StringPool.BLANK, 0,
+			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 	}
 
 	public static FragmentEntry addFragmentEntry(
@@ -78,7 +80,8 @@ public class FragmentEntryTestUtil {
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
 			TestPropsValues.getUserId(), fragmentCollection.getGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
-			"<div></div>", StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
+			"<div></div>", StringPool.BLANK, StringPool.BLANK, 0,
+			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 	}
 
@@ -105,7 +108,8 @@ public class FragmentEntryTestUtil {
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
-			"<div></div>", StringPool.BLANK, status, serviceContext);
+			"<div></div>", StringPool.BLANK, StringPool.BLANK, 0,
+			FragmentConstants.TYPE_COMPONENT, status, serviceContext);
 	}
 
 	public static FragmentEntry addFragmentEntryByStatus(
@@ -126,7 +130,8 @@ public class FragmentEntryTestUtil {
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
-			"<div></div>", StringPool.BLANK, status, serviceContext);
+			"<div></div>", StringPool.BLANK, StringPool.BLANK, 0,
+			FragmentConstants.TYPE_COMPONENT, status, serviceContext);
 	}
 
 	public static FragmentEntry addFragmentEntryByType(

@@ -24,6 +24,7 @@ import com.liferay.fragment.util.FragmentEntryTestUtil;
 import com.liferay.fragment.util.FragmentTestUtil;
 import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -142,8 +143,8 @@ public class FragmentEntryLocalServiceTest {
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
-				name, css, html, js, previewFileEntryId, status,
-				serviceContext);
+				name, css, html, js, StringPool.BLANK, previewFileEntryId,
+				FragmentConstants.TYPE_COMPONENT, status, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -182,8 +183,8 @@ public class FragmentEntryLocalServiceTest {
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
-				name, css, html, js, previewFileEntryId, type, status,
-				serviceContext);
+				name, css, html, js, StringPool.BLANK, previewFileEntryId, type,
+				status, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -222,7 +223,8 @@ public class FragmentEntryLocalServiceTest {
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
-				name, css, html, js, type, status, serviceContext);
+				name, css, html, js, StringPool.BLANK, 0, type, status,
+				serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -315,8 +317,9 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(), name, css, html,
-				js, status, serviceContext);
+				_fragmentCollection.getFragmentCollectionId(), StringPool.BLANK,
+				name, css, html, js, StringPool.BLANK, 0,
+				FragmentConstants.TYPE_COMPONENT, status, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -347,8 +350,9 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(), name, css, html,
-				js, previewFileEntryId, status, serviceContext);
+				_fragmentCollection.getFragmentCollectionId(), StringPool.BLANK,
+				name, css, html, js, StringPool.BLANK, previewFileEntryId,
+				FragmentConstants.TYPE_COMPONENT, status, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -382,8 +386,9 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(), name, css, html,
-				js, previewFileEntryId, type, status, serviceContext);
+				_fragmentCollection.getFragmentCollectionId(), StringPool.BLANK,
+				name, css, html, js, StringPool.BLANK, previewFileEntryId, type,
+				status, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -417,8 +422,9 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(), name, css, html,
-				js, type, status, serviceContext);
+				_fragmentCollection.getFragmentCollectionId(), StringPool.BLANK,
+				name, css, html, js, StringPool.BLANK, 0, type, status,
+				serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -441,9 +447,10 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(),
+				_fragmentCollection.getFragmentCollectionId(), StringPool.BLANK,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK, 0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry copyFragmentEntry =
@@ -471,9 +478,10 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(),
+				_fragmentCollection.getFragmentCollectionId(), StringPool.BLANK,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK, 0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry copyFragmentEntry =

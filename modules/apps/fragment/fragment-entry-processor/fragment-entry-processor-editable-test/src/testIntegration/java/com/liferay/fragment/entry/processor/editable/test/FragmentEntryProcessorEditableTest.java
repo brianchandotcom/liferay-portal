@@ -156,8 +156,9 @@ public class FragmentEntryProcessorEditableTest {
 				fragmentEntry.getFragmentEntryId(),
 				_portal.getClassNameId(Layout.class), TestPropsValues.getPlid(),
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), StringPool.BLANK, StringPool.BLANK, 0,
-				null, ServiceContextTestUtil.getServiceContext());
+				fragmentEntry.getJs(), StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, 0, null,
+				ServiceContextTestUtil.getServiceContext());
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),

@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredUserException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserFieldException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -1205,6 +1207,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         password; <code>false</code> if the notification email only
 	 *         contains a reset link
 	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public boolean sendPasswordByEmailAddress(
 			long companyId, String emailAddress)
@@ -1233,6 +1236,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         password; <code>false</code> if the notification email only
 	 *         contains a reset link
 	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public boolean sendPasswordByScreenName(long companyId, String screenName)
 		throws PortalException {
@@ -1258,6 +1262,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         password; <code>false</code> if the notification email only
 	 *         contains a reset link
 	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public boolean sendPasswordByUserId(long userId) throws PortalException {
 		return userLocalService.sendPasswordByUserId(userId);

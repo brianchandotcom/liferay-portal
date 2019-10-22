@@ -15,3 +15,51 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+SearchContainer usersDisplaySearchContainer = AccountUserDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
+
+ViewUsersManagementToolbarDisplayContext viewUsersManagementToolbarDisplayContext = new ViewUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, usersDisplaySearchContainer);
+%>
+
+<clay:management-toolbar
+	displayContext="<%= viewUsersManagementToolbarDisplayContext %>"
+/>
+
+<aui:container cssClass="container-fluid container-fluid-max-xl">
+	<aui:form method="post" name="fm">
+		<aui:input name="userId" type="hidden" />
+
+		<liferay-ui:search-container
+			searchContainer="<%= usersDisplaySearchContainer %>"
+		>
+			<liferay-ui:search-container-row
+				className="com.liferay.account.admin.web.internal.display.AccountUserDisplay"
+				keyProperty="userId"
+				modelVar="accountUserDisplay"
+			>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-small table-cell-minw-150"
+					name="name"
+					property="name"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-small table-cell-minw-150"
+					name="email"
+					property="emailAddress"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-small table-cell-minw-150"
+					name="job-title"
+					property="jobTitle"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
+		</liferay-ui:search-container>
+	</aui:form>
+</aui:container>

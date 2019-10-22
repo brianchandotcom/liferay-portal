@@ -20,8 +20,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import {getItem} from '../../utils/client.es';
 import EditAppContext, {
 	PRODUCT_MENU,
-	UPDATE_SETTINGS_SCOPE,
-	UPDATE_SETTINGS_SITE_IDS
+	TOGGLE_SETTINGS_SITE_ID,
+	UPDATE_SETTINGS_SCOPE
 } from './EditAppContext.es';
 
 const {Item, ItemList} = ClayDropDown;
@@ -67,12 +67,10 @@ export default () => {
 		});
 	};
 
-	const onSiteIdsChange = event => {
-		const siteId = event.target.value;
-
+	const onSiteIdsChange = siteId => {
 		dispatch({
-			siteIds: [parseInt(siteId, 10)],
-			type: UPDATE_SETTINGS_SITE_IDS
+			siteId: parseInt(siteId, 10),
+			type: TOGGLE_SETTINGS_SITE_ID
 		});
 	};
 
@@ -133,11 +131,14 @@ export default () => {
 						>
 							<ItemList>
 								{sites.map(({id, name}) => (
-									<Item key={id}>
+									<Item
+										key={id}
+										onClick={() => onSiteIdsChange(id)}
+									>
 										<ClayCheckbox
-											checked
+											checked={siteIds.includes(id)}
 											label={name}
-											onChange={() => {}}
+											onChange={() => onSiteIdsChange(id)}
 										/>
 									</Item>
 								))}

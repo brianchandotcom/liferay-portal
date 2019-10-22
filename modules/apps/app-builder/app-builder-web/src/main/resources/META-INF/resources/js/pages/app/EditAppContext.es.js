@@ -17,12 +17,12 @@ import {createContext} from 'react';
 export const ADD_DEPLOYMENT = 'ADD_DEPLOYMENT';
 export const PRODUCT_MENU = 'productMenu';
 export const REMOVE_DEPLOYMENT = 'REMOVE_DEPLOYMENT';
+export const TOGGLE_SETTINGS_SITE_ID = 'TOGGLE_SETTINGS_SITE_ID';
 export const UPDATE_APP = 'UPDATE_APP';
 export const UPDATE_DATA_LAYOUT_ID = 'UPDATE_DATA_LAYOUT_ID';
 export const UPDATE_DATA_LIST_VIEW_ID = 'UPDATE_DATA_LIST_VIEW_ID';
 export const UPDATE_NAME = 'UPDATE_NAME';
 export const UPDATE_SETTINGS_SCOPE = 'UPDATE_SETTINGS_SCOPE';
-export const UPDATE_SETTINGS_SITE_IDS = 'UPDATE_SETTINGS_SITE_IDS';
 
 const uppdateAppDeployment = (state, appDeploymentType, appDeployment) => ({
 	...state,
@@ -67,6 +67,31 @@ const reducer = (state, action) => {
 					)
 				}
 			};
+		}
+		case TOGGLE_SETTINGS_SITE_ID: {
+			const appDeployment = state.app.appDeployments.find(
+				appDeployment => appDeployment.type === PRODUCT_MENU
+			);
+
+			let {
+				settings: {siteIds}
+			} = appDeployment;
+
+			const {siteId} = action;
+
+			siteIds = siteIds.includes(siteId)
+				? siteIds.filter(id => id != siteId)
+				: siteIds.concat(siteId);
+
+			const newAppDeployment = {
+				...appDeployment,
+				settings: {
+					...appDeployment.settings,
+					siteIds
+				}
+			};
+
+			return uppdateAppDeployment(state, PRODUCT_MENU, newAppDeployment);
 		}
 		case UPDATE_APP: {
 			return {
@@ -116,21 +141,6 @@ const reducer = (state, action) => {
 				settings: {
 					...appDeployment.settings,
 					scope: action.scope
-				}
-			};
-
-			return uppdateAppDeployment(state, PRODUCT_MENU, newAppDeployment);
-		}
-		case UPDATE_SETTINGS_SITE_IDS: {
-			const appDeployment = state.app.appDeployments.find(
-				appDeployment => appDeployment.type === PRODUCT_MENU
-			);
-
-			const newAppDeployment = {
-				...appDeployment,
-				settings: {
-					...appDeployment.settings,
-					siteIds: action.siteIds
 				}
 			};
 

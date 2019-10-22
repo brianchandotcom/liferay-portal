@@ -26,6 +26,31 @@ definition {
 		}
 	}
 
+	@description = "This test makes sure that all files are deleted when user selects all in a depot."
+	@priority = "4"
+	test DeleteMultipleImages {
+		ProductMenu.gotoPortlet(
+			category = "Repositories",
+			panel = "Control Panel",
+			portlet = "Repositories");
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls");
+
+		PortletEntry.selectAll();
+
+		Click(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
+
+		Alert.viewSuccessMessage();
+
+		DMDocument.viewDefaultCP();
+	}
+
 	@description = "This ensures that a depot can be edited."
 	@priority = "5"
 	test EditDepot {
@@ -44,6 +69,43 @@ definition {
 			depotNameEdit = "Edited Test Depot Name");
 
 		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
+	}
+
+	@description = "This test edits the title and description of a document in a depot."
+	@priority = "5"
+	test EditDocument {
+		ProductMenu.gotoPortlet(
+			category = "Repositories",
+			panel = "Control Panel",
+			portlet = "Repositories");
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Repositories",
+			panel = "Control Panel",
+			portlet = "Repositories");
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		DMDocument.viewEditCP(
+			dmDocumentTitleEdit = "DM Document Title Edit",
+			dmDocumentVersionNumber = "1.1");
 	}
 
 	@description = "This ensures that a depot's description can be searched."

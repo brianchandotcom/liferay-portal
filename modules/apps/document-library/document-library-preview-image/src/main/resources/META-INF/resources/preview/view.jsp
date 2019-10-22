@@ -29,10 +29,9 @@ if (status != WorkflowConstants.STATUS_ANY) {
 	previewQueryString += "&status=" + status;
 }
 
-Map<String, Object> context = new HashMap<>();
+Map<String, Object> data = new HashMap<>();
 
-context.put("imageURL", DLURLHelperUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString));
-context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+data.put("imageURL", DLURLHelperUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString));
 %>
 
 <liferay-util:html-top
@@ -41,9 +40,9 @@ context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<soy:component-renderer
-	componentId='<%= renderResponse.getNamespace() + randomNamespace + "previewImage" %>'
-	context="<%= context %>"
-	module="preview/js/ImagePreviewer.es"
-	templateNamespace="com.liferay.document.library.preview.ImagePreviewer.render"
-/>
+<div id="<%= renderResponse.getNamespace() + randomNamespace + "previewImage" %>">
+	<react:component
+		data="<%= data %>"
+		module="preview/js/ImagePreviewer.es"
+	/>
+</div>

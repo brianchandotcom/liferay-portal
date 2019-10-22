@@ -16,7 +16,6 @@ package com.liferay.fragment.service.impl;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.base.FragmentEntryLinkServiceBaseImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -42,29 +41,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FragmentEntryLinkServiceImpl
 	extends FragmentEntryLinkServiceBaseImpl {
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addFragmentEntryLink(long, long, long, long, long, String,
-	 *             String, String, String, String, String, int, String,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntryLink addFragmentEntryLink(
-			long groupId, long originalFragmentEntryLinkId,
-			long fragmentEntryId, long classNameId, long classPK, String css,
-			String html, String js, String editableValues, String namespace,
-			int position, String rendererKey, ServiceContext serviceContext)
-		throws PortalException {
-
-		_checkPermission(groupId, _portal.getClassName(classNameId), classPK);
-
-		return fragmentEntryLinkLocalService.addFragmentEntryLink(
-			getUserId(), groupId, originalFragmentEntryLinkId, fragmentEntryId,
-			classNameId, classPK, css, html, js, StringPool.BLANK,
-			editableValues, namespace, position, rendererKey, serviceContext);
-	}
 
 	@Override
 	public FragmentEntryLink addFragmentEntryLink(

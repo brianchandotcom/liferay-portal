@@ -44,90 +44,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addFragmentEntry(long, long, String, String, long, int, int,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry addFragmentEntry(
-			long groupId, long fragmentCollectionId, String name, int type,
-			int status, ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		return fragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, null, name, 0, type,
-			status, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addFragmentEntry(long, long, String, String, long, int, int,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry addFragmentEntry(
-			long groupId, long fragmentCollectionId, String name, int status,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		return fragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, null, name, 0,
-			FragmentConstants.TYPE_SECTION, status, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addFragmentEntry(long, long, String, String, long, int, int,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry addFragmentEntry(
-			long groupId, long fragmentCollectionId, String fragmentEntryKey,
-			String name, int type, int status, ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		return fragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
-			0, type, status, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addFragmentEntry(long, long, String, String, long, int, int,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry addFragmentEntry(
-			long groupId, long fragmentCollectionId, String fragmentEntryKey,
-			String name, int status, ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		return fragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
-			0, FragmentConstants.TYPE_SECTION, status, serviceContext);
-	}
-
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
@@ -142,93 +58,6 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		return fragmentEntryLocalService.addFragmentEntry(
 			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
 			previewFileEntryId, type, status, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addFragmentEntry(long, long, String, String, String, String,
-	 *             String, String, long, int, int, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry addFragmentEntry(
-			long groupId, long fragmentCollectionId, String name, String css,
-			String html, String js, int type, int status,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		return fragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, name, css, html, js,
-			type, status, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addFragmentEntry(long, long, String, String, String, String,
-	 *             String, String, long, int, int, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry addFragmentEntry(
-			long groupId, long fragmentCollectionId, String name, String css,
-			String html, String js, int status, ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		return fragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, name, css, html, js,
-			status, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addFragmentEntry(long, long, String, String, String, String,
-	 *             String, String, long, int, int, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry addFragmentEntry(
-			long groupId, long fragmentCollectionId, String fragmentEntryKey,
-			String name, String css, String html, String js, int type,
-			int status, ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		return fragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
-			css, html, js, type, status, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addFragmentEntry(long, long, String, String, String, String,
-	 *             String, String, long, int, int, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry addFragmentEntry(
-			long groupId, long fragmentCollectionId, String fragmentEntryKey,
-			String name, String css, String html, String js, int status,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		return fragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
-			css, html, js, status, serviceContext);
 	}
 
 	@Override
@@ -301,89 +130,10 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		return fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getFragmentEntriesCount(Long, Long)}
-	 */
-	@Deprecated
-	@Override
-	public int getFragmentCollectionsCount(
-		long groupId, long fragmentCollectionId) {
-
-		return getFragmentEntriesCount(groupId, fragmentCollectionId);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getFragmentEntriesCount(Long, Long, Integer)}
-	 */
-	@Deprecated
-	@Override
-	public int getFragmentCollectionsCount(
-		long groupId, long fragmentCollectionId, int status) {
-
-		return getFragmentEntriesCountByStatus(
-			groupId, fragmentCollectionId, status);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getFragmentEntriesCount(Long, Long, String)}
-	 */
-	@Deprecated
-	@Override
-	public int getFragmentCollectionsCount(
-		long groupId, long fragmentCollectionId, String name) {
-
-		return getFragmentEntriesCountByName(
-			groupId, fragmentCollectionId,
-			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getFragmentEntriesCount(Long, Long, String, Integer)}
-	 */
-	@Deprecated
-	@Override
-	public int getFragmentCollectionsCount(
-		long groupId, long fragmentCollectionId, String name, int status) {
-
-		return getFragmentEntriesCountByNameAndStatus(
-			groupId, fragmentCollectionId,
-			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], status);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getFragmentEntriesCount(Long, Long, Integer)}
-	 */
-	@Deprecated
-	@Override
-	public int getFragmentCollectionsCountByType(
-		long groupId, long fragmentCollectionId, int type) {
-
-		return getFragmentEntriesCountByType(
-			groupId, fragmentCollectionId, type);
-	}
-
 	@Override
 	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId) {
 		return fragmentEntryLocalService.getFragmentEntries(
 			fragmentCollectionId);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getFragmentEntriesByStatus(Long, Long, Integer)}
-	 */
-	@Deprecated
-	@Override
-	public List<FragmentEntry> getFragmentEntries(
-		long groupId, long fragmentCollectionId, int status) {
-
-		return getFragmentEntriesByStatus(
-			groupId, fragmentCollectionId, status);
 	}
 
 	@Override
@@ -394,21 +144,6 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			groupId, fragmentCollectionId, start, end);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getFragmentEntriesByStatus(Long, Long, Integer, Integer, Integer, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<FragmentEntry> getFragmentEntries(
-		long groupId, long fragmentCollectionId, int status, int start, int end,
-		OrderByComparator<FragmentEntry> orderByComparator) {
-
-		return getFragmentEntriesByStatus(
-			groupId, fragmentCollectionId, status, start, end,
-			orderByComparator);
-	}
-
 	@Override
 	public List<FragmentEntry> getFragmentEntries(
 		long groupId, long fragmentCollectionId, int start, int end,
@@ -416,39 +151,6 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		return fragmentEntryPersistence.findByG_FCI(
 			groupId, fragmentCollectionId, start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getFragmentEntriesByNameAndStatus(Long, Long, String, Integer, Integer, Integer, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<FragmentEntry> getFragmentEntries(
-		long groupId, long fragmentCollectionId, String name, int status,
-		int start, int end,
-		OrderByComparator<FragmentEntry> orderByComparator) {
-
-		return getFragmentEntriesByNameAndStatus(
-			groupId, fragmentCollectionId,
-			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], status,
-			start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getFragmentEntriesByName(Long, Long, String, Integer, Integer, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<FragmentEntry> getFragmentEntries(
-		long groupId, long fragmentCollectionId, String name, int start,
-		int end, OrderByComparator<FragmentEntry> orderByComparator) {
-
-		return getFragmentEntriesByName(
-			groupId, fragmentCollectionId,
-			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], start,
-			end, orderByComparator);
 	}
 
 	@Override
@@ -507,19 +209,6 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		return fragmentEntryPersistence.findByG_FCI_S(
 			groupId, fragmentCollectionId, status, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getFragmentEntriesByTypeAndStatus(Long, Long, Integer, Integer)}
-	 */
-	@Deprecated
-	@Override
-	public List<FragmentEntry> getFragmentEntriesByType(
-		long groupId, long fragmentCollectionId, int type, int status) {
-
-		return getFragmentEntriesByTypeAndStatus(
-			groupId, fragmentCollectionId, type, status);
 	}
 
 	@Override
@@ -679,53 +368,6 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		return fragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntryId, name);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #updateFragmentEntry(long, String, String, String,
-	 *             String, String, int)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, String name, String css, String html,
-			String js, int status)
-		throws PortalException {
-
-		FragmentEntry fragmentEntry =
-			fragmentEntryLocalService.getFragmentEntry(fragmentEntryId);
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), fragmentEntry.getGroupId(),
-			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		return fragmentEntryLocalService.updateFragmentEntry(
-			getUserId(), fragmentEntryId, name, css, html, js, status);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #updateFragmentEntry(long, String, String, String,
-	 *             String, String, long, int)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, String name, String css, String html,
-			String js, long previewFileEntryId, int status)
-		throws PortalException {
-
-		FragmentEntry fragmentEntry =
-			fragmentEntryLocalService.getFragmentEntry(fragmentEntryId);
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), fragmentEntry.getGroupId(),
-			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		return fragmentEntryLocalService.updateFragmentEntry(
-			getUserId(), fragmentEntryId, name, css, html, js,
-			previewFileEntryId, status);
 	}
 
 	@Override

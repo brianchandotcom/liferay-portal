@@ -10,8 +10,8 @@
  */
 
 import pathToRegexp from 'path-to-regexp';
-import {Redirect, withRouter} from 'react-router-dom';
 import React from 'react';
+import {Redirect, withRouter} from 'react-router-dom';
 
 import Icon from '../Icon.es';
 

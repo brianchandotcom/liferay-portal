@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {renderHook} from '@testing-library/react-hooks';
 import {cleanup, render, waitForElement} from '@testing-library/react';
+import {renderHook} from '@testing-library/react-hooks';
 import React, {useContext} from 'react';
 
 import {

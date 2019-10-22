@@ -14,10 +14,10 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import {PropTypes} from 'prop-types';
-import {getEmptyImage} from 'react-dnd-html5-backend';
-import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
-import {findDOMNode} from 'react-dom';
 import React, {PureComponent} from 'react';
+import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
+import {getEmptyImage} from 'react-dnd-html5-backend';
+import {findDOMNode} from 'react-dom';
 
 import {KEY_CODES} from '../../utils/constants.es';
 import DRAG_TYPES from '../../utils/drag-types.es';

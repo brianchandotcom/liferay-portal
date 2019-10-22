@@ -175,8 +175,8 @@ class SLAListCard extends React.Component {
 			<SLAListCardContext.Provider value={this.slaContextState}>
 				<nav className="management-bar management-bar-light navbar navbar-expand-md">
 					<div className="container-fluid container-fluid-max-xl">
-						<ul className="navbar-nav autofit-row">
-							<li className="nav-item autofit-col-expand autofit-float-end">
+						<ul className="autofit-row navbar-nav">
+							<li className="autofit-col-expand autofit-float-end nav-item">
 								<Tooltip
 									message={Liferay.Language.get('new-sla')}
 									position="bottom"

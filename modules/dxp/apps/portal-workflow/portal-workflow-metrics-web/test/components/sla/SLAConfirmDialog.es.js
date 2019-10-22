@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import renderer from 'react-test-renderer';
 import React from 'react';
+import renderer from 'react-test-renderer';
 
 import SLAConfirmDialog from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAConfirmDialog.es';
 import SLAListCard from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAListCard.es';

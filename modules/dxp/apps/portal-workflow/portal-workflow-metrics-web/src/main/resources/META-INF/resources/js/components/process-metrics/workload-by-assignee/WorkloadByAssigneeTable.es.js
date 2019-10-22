@@ -10,13 +10,14 @@
  */
 
 import React, {useContext} from 'react';
-import {AppContext} from '../../AppContext.es';
+
 import {ChildLink} from '../../../shared/components/router/routerWrapper.es';
-import {filterConstants} from '../instance-list/store/InstanceListStore.es';
 import {formatNumber} from '../../../shared/util/numeral.es';
 import {getPercentage} from '../../../shared/util/util.es';
-import {processStatusConstants} from '../filter/store/ProcessStatusStore.es';
+import {AppContext} from '../../AppContext.es';
 import {slaStatusConstants} from '../../process-metrics/filter/store/SLAStatusStore.es';
+import {processStatusConstants} from '../filter/store/ProcessStatusStore.es';
+import {filterConstants} from '../instance-list/store/InstanceListStore.es';
 import WorkloadByAssigneeCard from './WorkloadByAssigneeCard.es';
 
 const Item = ({

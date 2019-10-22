@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import renderer from 'react-test-renderer';
 import React from 'react';
+import renderer from 'react-test-renderer';
 
 import DisplayResult from '../../../../src/main/resources/META-INF/resources/js/shared/components/pagination/DisplayResult.es';
 

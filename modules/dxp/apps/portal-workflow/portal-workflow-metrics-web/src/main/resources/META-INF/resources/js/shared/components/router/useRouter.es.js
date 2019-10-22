@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {__RouterContext as RouterContext} from 'react-router-dom';
 import {useContext} from 'react';
+import {__RouterContext as RouterContext} from 'react-router-dom';
 
 const useRouter = () => {
 	return useContext(RouterContext);

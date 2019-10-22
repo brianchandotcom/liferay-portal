@@ -729,7 +729,7 @@ class ResultRankingsForm extends Component {
 				/>
 
 				<div className="container-fluid container-fluid-max-xl container-form-lg results-rankings-container">
-					<div className="sheet sheet-lg form-section-header">
+					<div className="form-section-header sheet sheet-lg">
 						<label>{Liferay.Language.get('query')}</label>
 
 						<h2 className="sheet-title">{`${searchQuery}`}</h2>
@@ -740,8 +740,8 @@ class ResultRankingsForm extends Component {
 						/>
 					</div>
 
-					<div className="sheet sheet-lg form-section-body">
-						<div className="sheet-text results-title">
+					<div className="form-section-body sheet sheet-lg">
+						<div className="results-title sheet-text">
 							{Liferay.Language.get('results')}
 						</div>
 

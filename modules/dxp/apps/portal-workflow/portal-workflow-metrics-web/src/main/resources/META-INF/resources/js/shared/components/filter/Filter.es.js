@@ -10,8 +10,8 @@
  */
 
 import getClassName from 'classnames';
-import {withRouter} from 'react-router-dom';
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 
 import Icon from '../Icon.es';
 import FilterItem from './FilterItem.es';

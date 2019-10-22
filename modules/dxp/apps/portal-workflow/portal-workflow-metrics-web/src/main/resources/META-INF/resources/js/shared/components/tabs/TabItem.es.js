@@ -10,8 +10,8 @@
  */
 
 import pathToRegexp from 'path-to-regexp';
-import {Link} from 'react-router-dom';
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 export default class TabItem extends React.Component {
 	render() {

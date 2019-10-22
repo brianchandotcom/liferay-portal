@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-dialogs',
-	function(A) {
+	A => {
 		var KaleoDesignerDialogs = {
 			_duplicationDialog: null,
 			_forms: {},

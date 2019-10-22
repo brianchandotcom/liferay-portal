@@ -1,7 +1,18 @@
-import React, {useState, useRef, useEffect} from 'react';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 import ClayIcon from '@clayui/icon';
-import PropTypes from 'prop-types';
 import getCN from 'classnames';
+import PropTypes from 'prop-types';
+import React, {useState, useRef, useEffect} from 'react';
 
 function _isValueValid(value) {
 	const noSpacesValue = value.replace(/\s/g, '');
@@ -39,7 +50,7 @@ function ValidatedInput(props) {
 				<>
 					{label}
 					<ClayIcon
-						className="reference-mark text-warning ml-1"
+						className="ml-1 reference-mark text-warning"
 						symbol="asterisk"
 					/>
 				</>

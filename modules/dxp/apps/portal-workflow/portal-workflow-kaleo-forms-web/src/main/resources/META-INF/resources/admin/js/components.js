@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-forms-components',
-	function(A) {
+	A => {
 		var KeyMap = A.Event.KeyMap;
 
 		var Lang = A.Lang;
@@ -146,7 +146,7 @@ AUI.add(
 
 					var validator = instance.validator;
 
-					validator.eachRule(function(rule, fieldName) {
+					validator.eachRule((rule, fieldName) => {
 						var field = validator.getField(fieldName);
 
 						if (panel.contains(field)) {
@@ -166,7 +166,7 @@ AUI.add(
 
 					instance.validator.resetAllFields();
 
-					tabViewPanels.each(function(item, index) {
+					tabViewPanels.each((item, index) => {
 						if (index <= step - 1) {
 							instance.validatePanel(item);
 
@@ -437,7 +437,7 @@ AUI.add(
 
 					var definition;
 
-					availableDefinitions.forEach(function(item) {
+					availableDefinitions.forEach(item => {
 						if (
 							Lang.toInt(item.definitionId) ===
 							Lang.toInt(definitionId)
@@ -491,7 +491,7 @@ AUI.add(
 
 					var selectedDefinitionId = -1;
 
-					availableDefinitions.forEach(function(item) {
+					availableDefinitions.forEach(item => {
 						if (
 							Lang.toInt(item.definitionId) ===
 							Lang.toInt(definitionId)

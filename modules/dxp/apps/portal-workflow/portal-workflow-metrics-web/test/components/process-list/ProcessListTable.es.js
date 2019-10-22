@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import renderer from 'react-test-renderer';
 import React from 'react';
+import renderer from 'react-test-renderer';
 
 import ProcessListTable from '../../../src/main/resources/META-INF/resources/js/components/process-list/ProcessListTable.es';
 import {MockRouter as Router} from '../../mock/MockRouter.es';

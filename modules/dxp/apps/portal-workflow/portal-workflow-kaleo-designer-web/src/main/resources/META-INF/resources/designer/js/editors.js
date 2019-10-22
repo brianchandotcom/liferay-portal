@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-editors',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 		var getClassName = A.getClassName;
 		var Lang = A.Lang;
@@ -322,12 +322,12 @@ AUI.add(
 
 					instance.addDynamicViews(val);
 
-					A.each(val, function(item1, index1) {
+					A.each(val, (item1, index1) => {
 						var fields = bodyNode.all('[name="' + index1 + '"]');
 
 						item1 = AArray(item1);
 
-						fields.each(function(item2, index2) {
+						fields.each((item2, index2) => {
 							var value = item1[index2];
 
 							if (
@@ -343,7 +343,7 @@ AUI.add(
 								item2.test('select[multiple]') &&
 								Lang.isArray(value)
 							) {
-								value.forEach(function(option) {
+								value.forEach(option => {
 									for (var key in option) {
 										item2
 											.one(
@@ -445,7 +445,7 @@ AUI.add(
 
 					var strings = instance.getStrings();
 
-					scriptLanguages.forEach(function(item) {
+					scriptLanguages.forEach(item => {
 						if (item) {
 							scriptLanguagesJSONArray.push({
 								label: strings[item],
@@ -476,10 +476,8 @@ AUI.add(
 				},
 
 				getScriptLanguages(scriptLanguages) {
-					KaleoDesignerRemoteServices.getScriptLanguages(function(
-						data
-					) {
-						AArray.each(data, function(item) {
+					KaleoDesignerRemoteServices.getScriptLanguages(data => {
+						AArray.each(data, item => {
 							if (item) {
 								scriptLanguages.push(item.scriptLanguage);
 							}
@@ -1677,7 +1675,7 @@ AUI.add(
 
 					var recipients = [];
 
-					instance.getDynamicViews().each(function(item, index) {
+					instance.getDynamicViews().each((item, index) => {
 						var editorContainer = item.one(
 							'.recipients-editor-container'
 						);
@@ -1859,7 +1857,7 @@ AUI.add(
 
 			var recipients = [];
 
-			instance.getDynamicViews().each(function(item, index) {
+			instance.getDynamicViews().each((item, index) => {
 				var editorContainer = item.one('.recipients-editor-container');
 
 				var recipientsEditor = instance.getEmbeddedEditorForm(
@@ -2418,7 +2416,7 @@ AUI.add(
 
 					var dynamicViews = instance.getDynamicViews();
 
-					dynamicViews.each(function(item) {
+					dynamicViews.each(item => {
 						var actionTypeSelect = item.one('.select-action-type');
 
 						var actionType = actionTypeSelect.val();
@@ -2901,8 +2899,8 @@ AUI.add(
 				_splitTimerActions(timerActions) {
 					var splitTimerActions = [];
 
-					A.each(timerActions, function(item1, index1) {
-						item1.forEach(function(item2, index2) {
+					A.each(timerActions, (item1, index1) => {
+						item1.forEach((item2, index2) => {
 							if (!splitTimerActions[index2]) {
 								splitTimerActions[index2] = {};
 							}
@@ -3010,7 +3008,7 @@ AUI.add(
 						'.task-timers-cell-editor-input'
 					);
 
-					taskTimerInputs.each(function(item) {
+					taskTimerInputs.each(item => {
 						if (
 							item.get('type') &&
 							item.get('type') === 'checkbox'
@@ -3023,7 +3021,7 @@ AUI.add(
 
 					var dynamicViews = instance.getDynamicViews();
 
-					dynamicViews.each(function(item1, index1) {
+					dynamicViews.each((item1, index1) => {
 						var delaysEditorContainer = item1.one(
 							'.delays-editor-container'
 						);
@@ -3052,27 +3050,26 @@ AUI.add(
 
 						var timerActionValue = timerActionsEditorForm.getValue();
 
-						timerActionValue.actionType.forEach(function(
-							actionType,
-							index2
-						) {
-							var timerAction =
-								timerActionValue.timerAction[index2];
+						timerActionValue.actionType.forEach(
+							(actionType, index2) => {
+								var timerAction =
+									timerActionValue.timerAction[index2];
 
-							var object;
+								var object;
 
-							if (actionType === 'action') {
-								object = value.timerActions[index1];
-							} else if (actionType === 'notification') {
-								object = value.timerNotifications[index1];
-							} else if (actionType === 'reassignment') {
-								object = value.reassignments[index1];
+								if (actionType === 'action') {
+									object = value.timerActions[index1];
+								} else if (actionType === 'notification') {
+									object = value.timerNotifications[index1];
+								} else if (actionType === 'reassignment') {
+									object = value.reassignments[index1];
+								}
+
+								A.each(timerAction, (value, key) => {
+									instance._put(object, key, value[0]);
+								});
 							}
-
-							A.each(timerAction, function(value, key) {
-								instance._put(object, key, value[0]);
-							});
-						});
+						);
 					});
 
 					return value;
@@ -3170,7 +3167,7 @@ AUI.add(
 						WidgetStdMod.AFTER
 					);
 
-					setTimeout(function() {
+					setTimeout(() => {
 						editor.render(instance.bodyNode);
 					}, 0);
 				},

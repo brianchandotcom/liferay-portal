@@ -16,7 +16,7 @@ import {getFormattedPercentage} from '../../../shared/util/util.es';
 import PerformanceByStepCard from './PerformanceByStepCard.es';
 
 const Table = ({items = []}) => (
-	<div className="mb-3 table-scrollable table-responsive">
+	<div className="mb-3 table-responsive table-scrollable">
 		<table className="table table-autofit table-heading-nowrap table-hover table-list">
 			<thead>
 				<tr>

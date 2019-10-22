@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import renderer from 'react-test-renderer';
 import React from 'react';
+import renderer from 'react-test-renderer';
 
 import SLAListTable from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAListTable.es';
 import {MockRouter as Router} from '../../mock/MockRouter.es';

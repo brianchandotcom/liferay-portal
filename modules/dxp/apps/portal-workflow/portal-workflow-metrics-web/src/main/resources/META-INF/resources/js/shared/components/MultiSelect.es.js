@@ -227,7 +227,7 @@ export default class MultiSelect extends React.Component {
 				onFocus={this.cancelDropList.bind(this)}
 				ref={this.setWrapperRef.bind(this)}
 			>
-				<div className="col-11 p-0 d-flex flex-wrap">
+				<div className="col-11 d-flex flex-wrap p-0">
 					{selectedTags.map((node, index) =>
 						tagRender(node[fieldId], index, node.desc)
 					)}

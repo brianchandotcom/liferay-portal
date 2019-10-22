@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import MaskedInput from 'react-text-mask';
 import React, {useContext, useEffect, useRef} from 'react';
+import MaskedInput from 'react-text-mask';
 
 import Icon from '../../../shared/components/Icon.es';
 import {

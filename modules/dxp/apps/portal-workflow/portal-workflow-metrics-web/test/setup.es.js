@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-const EnzymeAdapter = require('enzyme-adapter-react-16');
 const enzyme = require('enzyme');
+const EnzymeAdapter = require('enzyme-adapter-react-16');
 
 window.AUI = () => ({
 	use: (module, callback) => callback()

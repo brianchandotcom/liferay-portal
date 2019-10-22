@@ -34,16 +34,16 @@ export default class OpenProcessesSummary extends React.Component {
 		};
 
 		return (
-			<div className="row card-panel">
+			<div className="card-panel row">
 				<div className="col-9">
 					<div className="card">
-						<div className="card-header bg-transparent border-secondary card-header-default text-secondary semi-bold">
+						<div className="bg-transparent border-secondary card-header card-header-default semi-bold text-secondary">
 							{Liferay.Language.get('open-processes-summary')}
 						</div>
 
 						<div className="card-body">
 							<div
-								className="row d-flex justify-content-start"
+								className="d-flex justify-content-start row"
 								style={{marginTop: '8px'}}
 							>
 								<SummaryCard

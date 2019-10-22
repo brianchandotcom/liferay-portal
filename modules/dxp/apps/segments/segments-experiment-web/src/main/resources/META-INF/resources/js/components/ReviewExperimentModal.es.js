@@ -1,3 +1,18 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayModal, {useModal} from '@clayui/modal';
+import PropTypes from 'prop-types';
 import React, {
 	useCallback,
 	useContext,
@@ -5,13 +20,12 @@ import React, {
 	useEffect,
 	useRef
 } from 'react';
-import PropTypes from 'prop-types';
-import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-import ClayModal, {useModal} from '@clayui/modal';
-import {SplitPicker} from './SplitPicker/SplitPicker.es';
-import {SliderWithLabel} from './SliderWithLabel.es';
+
+import SegmentsExperimentContext from '../context.es';
+import {StateContext} from '../state/context.es';
 import {SegmentsVariantType} from '../types.es';
+import {SUCCESS_ANIMATION_FILE_NAME} from '../util/contants.es';
+import {useDebounceCallback} from '../util/hooks.es';
 import {
 	INITIAL_CONFIDENCE_LEVEL,
 	MAX_CONFIDENCE_LEVEL,
@@ -19,14 +33,12 @@ import {
 	percentageNumberToIndex
 } from '../util/percentages.es';
 import BusyButton from './BusyButton/BusyButton.es';
-import SegmentsExperimentContext from '../context.es';
-import {StateContext} from '../state/context.es';
-import {useDebounceCallback} from '../util/hooks.es';
-import {SUCCESS_ANIMATION_FILE_NAME} from '../util/contants.es';
+import {SliderWithLabel} from './SliderWithLabel.es';
+import {SplitPicker} from './SplitPicker/SplitPicker.es';
 
 const TIME_ESTIMATION_THROTTLE_TIME_MS = 1000;
 
-function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
+function ReviewExperimentModal({onRun, setVisible, variants, visible}) {
 	const [busy, setBusy] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [estimation, setEstimation] = useState({
@@ -52,7 +64,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 			return {...variant, split};
 		})
 	);
-	const {assetsPath, APIService} = useContext(SegmentsExperimentContext);
+	const {APIService, assetsPath} = useContext(SegmentsExperimentContext);
 	const {experiment} = useContext(StateContext);
 
 	const {observer, onClose} = useModal({
@@ -144,7 +156,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 						</div>
 					) : (
 						<div ref={measureHeight}>
-							<h3 className="sheet-subtitle border-bottom-0 text-secondary">
+							<h3 className="border-bottom-0 sheet-subtitle text-secondary">
 								{Liferay.Language.get('traffic-split')}
 							</h3>
 
@@ -157,7 +169,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 
 							<hr />
 
-							<h3 className="sheet-subtitle border-bottom-0 text-secondary">
+							<h3 className="border-bottom-0 sheet-subtitle text-secondary">
 								{Liferay.Language.get('confidence-level')}
 							</h3>
 

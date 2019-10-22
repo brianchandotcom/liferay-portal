@@ -10,8 +10,8 @@
  */
 
 import 'string.prototype.startswith';
-import ReactDOM from 'react-dom';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import AppComponent from './components/App.es';
 

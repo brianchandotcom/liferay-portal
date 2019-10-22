@@ -30,7 +30,7 @@ class ProcessListItem extends React.Component {
 
 		return (
 			<tr>
-				<td className="table-cell-expand table-cell-minw-200 table-title lfr-title-column">
+				<td className="lfr-title-column table-cell-expand table-cell-minw-200 table-title">
 					<ChildLink to={`/metrics/${id}`}>
 						<span>{title}</span>
 					</ChildLink>

@@ -15,7 +15,6 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
@@ -159,30 +158,16 @@ public class FragmentDisplayContext {
 		contributedFragmentEntriesSearchContainer.setId(
 			"fragmentEntries" + getFragmentCollectionKey());
 
-		List<FragmentEntry> fragmentEntries = null;
-
 		FragmentCollectionContributor fragmentCollectionContributor =
 			_getFragmentCollectionContributor();
 
-		if (isNavigationComponents() || isNavigationSections()) {
-			int type = FragmentConstants.TYPE_SECTION;
+		List<FragmentEntry> fragmentEntries =
+			fragmentCollectionContributor.getFragmentEntries(
+				_themeDisplay.getLocale());
 
-			if (isNavigationComponents()) {
-				type = FragmentConstants.TYPE_COMPONENT;
-			}
-
-			fragmentEntries = fragmentCollectionContributor.getFragmentEntries(
-				type, _themeDisplay.getLocale());
-		}
-		else {
-			fragmentEntries = fragmentCollectionContributor.getFragmentEntries(
-				FragmentConstants.TYPE_SECTION, _themeDisplay.getLocale());
-
-			fragmentEntries.addAll(
-				fragmentCollectionContributor.getFragmentEntries(
-					FragmentConstants.TYPE_COMPONENT,
-					_themeDisplay.getLocale()));
-		}
+		fragmentEntries.addAll(
+			fragmentCollectionContributor.getFragmentEntries(
+				_themeDisplay.getLocale()));
 
 		contributedFragmentEntriesSearchContainer.setResults(
 			ListUtil.subList(
@@ -382,26 +367,7 @@ public class FragmentDisplayContext {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
-		if (isNavigationComponents() || isNavigationSections()) {
-			int type = FragmentConstants.TYPE_SECTION;
-
-			if (isNavigationComponents()) {
-				type = FragmentConstants.TYPE_COMPONENT;
-			}
-
-			fragmentEntries =
-				FragmentEntryServiceUtil.getFragmentEntriesByTypeAndStatus(
-					fragmentCollection.getGroupId(),
-					fragmentCollection.getFragmentCollectionId(), type, status,
-					fragmentEntriesSearchContainer.getStart(),
-					fragmentEntriesSearchContainer.getEnd(), orderByComparator);
-
-			fragmentEntriesCount =
-				FragmentEntryServiceUtil.getFragmentEntriesCountByTypeAndStatus(
-					fragmentCollection.getGroupId(),
-					fragmentCollection.getFragmentCollectionId(), type, status);
-		}
-		else if (isSearch()) {
+		if (isSearch()) {
 			fragmentEntries =
 				FragmentEntryServiceUtil.getFragmentEntriesByNameAndStatus(
 					fragmentCollection.getGroupId(),
@@ -541,22 +507,6 @@ public class FragmentDisplayContext {
 		}
 
 		return _updatePermission;
-	}
-
-	public boolean isNavigationComponents() {
-		if (Objects.equals(getNavigation(), "components")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isNavigationSections() {
-		if (Objects.equals(getNavigation(), "sections")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public boolean isSearch() {

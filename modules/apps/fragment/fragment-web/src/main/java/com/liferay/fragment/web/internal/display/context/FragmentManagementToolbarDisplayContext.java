@@ -15,16 +15,11 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
@@ -54,7 +49,6 @@ public abstract class FragmentManagementToolbarDisplayContext
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 
-		clearResultsURL.setParameter("navigation", StringPool.BLANK);
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
@@ -74,51 +68,6 @@ public abstract class FragmentManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<LabelItem> getFilterLabelItems() {
-		return new LabelItemList() {
-			{
-				if (fragmentDisplayContext.isNavigationSections()) {
-					add(
-						labelItem -> {
-							PortletURL removeLabelURL = PortletURLUtil.clone(
-								currentURLObj, liferayPortletResponse);
-
-							removeLabelURL.setParameter(
-								"navigation", (String)null);
-
-							labelItem.putData(
-								"removeLabelURL", removeLabelURL.toString());
-
-							labelItem.setCloseable(true);
-
-							labelItem.setLabel(
-								LanguageUtil.get(request, "sections"));
-						});
-				}
-
-				if (fragmentDisplayContext.isNavigationComponents()) {
-					add(
-						labelItem -> {
-							PortletURL removeLabelURL = PortletURLUtil.clone(
-								currentURLObj, liferayPortletResponse);
-
-							removeLabelURL.setParameter(
-								"navigation", (String)null);
-
-							labelItem.putData(
-								"removeLabelURL", removeLabelURL.toString());
-
-							labelItem.setCloseable(true);
-
-							labelItem.setLabel(
-								LanguageUtil.get(request, "components"));
-						});
-				}
-			}
-		};
-	}
-
-	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 
@@ -127,11 +76,6 @@ public abstract class FragmentManagementToolbarDisplayContext
 			String.valueOf(fragmentDisplayContext.getFragmentCollectionId()));
 
 		return searchActionURL.toString();
-	}
-
-	@Override
-	protected String[] getNavigationKeys() {
-		return new String[] {"all", "sections", "components"};
 	}
 
 	@Override

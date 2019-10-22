@@ -77,10 +77,7 @@ public abstract class BaseFragmentCollectionContributor
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(int type, Locale locale) {
-		_initialize();
-
-		List<FragmentEntry> fragmentEntries = _fragmentEntries.getOrDefault(
-			type, Collections.emptyList());
+		List<FragmentEntry> fragmentEntries = getFragmentEntries(type);
 
 		Stream<FragmentEntry> stream = fragmentEntries.stream();
 

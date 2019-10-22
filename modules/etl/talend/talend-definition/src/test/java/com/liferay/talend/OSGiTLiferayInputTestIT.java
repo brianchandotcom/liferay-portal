@@ -19,6 +19,7 @@ import static org.ops4j.pax.exam.CoreOptions.linkBundle;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.options;
 
+import com.liferay.talend.tliferaybatchfile.TLiferayBatchFileDefinition;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.tliferayinput.TLiferayInputDefinition;
 import com.liferay.talend.tliferayoutput.TLiferayOutputDefinition;
@@ -72,6 +73,9 @@ public class OSGiTLiferayInputTestIT extends LiferayAbstractComponentTestCase {
 
 	@Test
 	public void testComponentHasBeenRegistered() {
+		assertComponentIsRegistered(
+			TLiferayBatchFileDefinition.class,
+			TLiferayBatchFileDefinition.COMPONENT_NAME);
 		assertComponentIsRegistered(
 			TLiferayConnectionDefinition.class,
 			TLiferayConnectionDefinition.COMPONENT_NAME);

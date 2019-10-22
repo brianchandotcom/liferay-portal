@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Tooltip Should render component with tooltip after mouse over 1`] = `
+exports[`Tooltip renders component with tooltip after mouse over 1`] = `
 <span
   className="workflow-tooltip"
   onMouseLeave={[Function]}
@@ -20,7 +20,7 @@ exports[`Tooltip Should render component with tooltip after mouse over 1`] = `
 </span>
 `;
 
-exports[`Tooltip Should render component with tooltip markup 1`] = `
+exports[`Tooltip renders component with tooltip markup 1`] = `
 <span
   className="workflow-tooltip"
   onMouseLeave={[Function]}
@@ -40,7 +40,7 @@ exports[`Tooltip Should render component with tooltip markup 1`] = `
 </span>
 `;
 
-exports[`Tooltip Should render component with tooltip with bottom position 1`] = `
+exports[`Tooltip renders component with tooltip with bottom position 1`] = `
 <div
   class="tooltip clay-tooltip-bottom workflow-tooltip-bottom show"
   style="width:200px"
@@ -58,7 +58,7 @@ exports[`Tooltip Should render component with tooltip with bottom position 1`] =
 </div>
 `;
 
-exports[`Tooltip Should render component with tooltip with left position 1`] = `
+exports[`Tooltip renders component with tooltip with left position 1`] = `
 <div
   class="tooltip clay-tooltip-right workflow-tooltip-right show"
   style="width:200px"
@@ -76,7 +76,7 @@ exports[`Tooltip Should render component with tooltip with left position 1`] = `
 </div>
 `;
 
-exports[`Tooltip Should render component with tooltip with right position 1`] = `
+exports[`Tooltip renders component with tooltip with right position 1`] = `
 <div
   class="tooltip clay-tooltip-right workflow-tooltip-right show"
   style="width:200px"
@@ -94,7 +94,7 @@ exports[`Tooltip Should render component with tooltip with right position 1`] = 
 </div>
 `;
 
-exports[`Tooltip Should render component with tooltip with top position 1`] = `
+exports[`Tooltip renders component with tooltip with top position 1`] = `
 <div
   class="tooltip clay-tooltip-top workflow-tooltip-top show"
   style="width:200px"
@@ -112,7 +112,7 @@ exports[`Tooltip Should render component with tooltip with top position 1`] = `
 </div>
 `;
 
-exports[`Tooltip Should render component without tooltip after mouse leave 1`] = `
+exports[`Tooltip renders component without tooltip after mouse leave 1`] = `
 <span
   className="workflow-tooltip"
   onMouseLeave={[Function]}
@@ -126,7 +126,7 @@ exports[`Tooltip Should render component without tooltip after mouse leave 1`] =
 </span>
 `;
 
-exports[`Tooltip Should render component without tooltip markup 1`] = `
+exports[`Tooltip renders component without tooltip markup 1`] = `
 <span
   className="workflow-tooltip"
   onMouseLeave={[Function]}

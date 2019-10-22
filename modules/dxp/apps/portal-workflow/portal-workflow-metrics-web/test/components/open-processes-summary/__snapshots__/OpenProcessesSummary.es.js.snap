@@ -2,7 +2,7 @@
 
 exports[`Should render component 1`] = `
 <div
-  className="row card-panel"
+  className="card-panel row"
 >
   <div
     className="col-9"
@@ -11,7 +11,7 @@ exports[`Should render component 1`] = `
       className="card"
     >
       <div
-        className="card-header bg-transparent border-secondary card-header-default text-secondary semi-bold"
+        className="bg-transparent border-secondary card-header card-header-default semi-bold text-secondary"
       >
         open-processes-summary
       </div>
@@ -19,7 +19,7 @@ exports[`Should render component 1`] = `
         className="card-body"
       >
         <div
-          className="row d-flex justify-content-start"
+          className="d-flex justify-content-start row"
           style={
             Object {
               "marginTop": "8px",
@@ -27,7 +27,7 @@ exports[`Should render component 1`] = `
           }
         >
           <div
-            className="summary-card border col-2"
+            className="border col-2 summary-card"
             style={
               Object {
                 "marginLeft": "16px",
@@ -60,7 +60,7 @@ exports[`Should render component 1`] = `
             </div>
           </div>
           <div
-            className="summary-card border col-2"
+            className="border col-2 summary-card"
             style={
               Object {
                 "marginLeft": "16px",
@@ -93,7 +93,7 @@ exports[`Should render component 1`] = `
             </div>
           </div>
           <div
-            className="summary-card border col-2"
+            className="border col-2 summary-card"
             style={
               Object {
                 "marginLeft": "16px",

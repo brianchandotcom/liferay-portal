@@ -234,7 +234,7 @@ exports[`Should display error on alert when receive a server error after submit 
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -302,7 +302,7 @@ exports[`Should display error on alert when receive a server error after submit 
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -390,7 +390,7 @@ exports[`Should display error on alert when receive a server error after submit 
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -963,7 +963,7 @@ exports[`Should display error on field when receive a server error after submit 
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -1031,7 +1031,7 @@ exports[`Should display error on field when receive a server error after submit 
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -1119,7 +1119,7 @@ exports[`Should display error on field when receive a server error after submit 
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -1693,7 +1693,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -1761,7 +1761,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -1849,7 +1849,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -2416,7 +2416,7 @@ exports[`Should redirect to SLA list 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -2484,7 +2484,7 @@ exports[`Should redirect to SLA list 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -2572,7 +2572,7 @@ exports[`Should redirect to SLA list 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -3148,7 +3148,7 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -3216,7 +3216,7 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -3304,7 +3304,7 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -3884,7 +3884,7 @@ exports[`Should render component 1`] = `
                         onFocus={[Function]}
                       >
                         <div
-                          className="col-11 p-0 d-flex flex-wrap"
+                          className="col-11 d-flex flex-wrap p-0"
                         >
                           <input
                             className="form-control-inset"
@@ -3952,7 +3952,7 @@ exports[`Should render component 1`] = `
                         onFocus={[Function]}
                       >
                         <div
-                          className="col-11 p-0 d-flex flex-wrap"
+                          className="col-11 d-flex flex-wrap p-0"
                         >
                           <input
                             className="form-control-inset"
@@ -4040,7 +4040,7 @@ exports[`Should render component 1`] = `
                         onFocus={[Function]}
                       >
                         <div
-                          className="col-11 p-0 d-flex flex-wrap"
+                          className="col-11 d-flex flex-wrap p-0"
                         >
                           <input
                             className="form-control-inset"
@@ -4620,7 +4620,7 @@ exports[`Should render component in edit mode 1`] = `
                         onFocus={[Function]}
                       >
                         <div
-                          className="col-11 p-0 d-flex flex-wrap"
+                          className="col-11 d-flex flex-wrap p-0"
                         >
                           <input
                             className="form-control-inset"
@@ -4688,7 +4688,7 @@ exports[`Should render component in edit mode 1`] = `
                         onFocus={[Function]}
                       >
                         <div
-                          className="col-11 p-0 d-flex flex-wrap"
+                          className="col-11 d-flex flex-wrap p-0"
                         >
                           <input
                             className="form-control-inset"
@@ -4776,7 +4776,7 @@ exports[`Should render component in edit mode 1`] = `
                         onFocus={[Function]}
                       >
                         <div
-                          className="col-11 p-0 d-flex flex-wrap"
+                          className="col-11 d-flex flex-wrap p-0"
                         >
                           <input
                             className="form-control-inset"
@@ -5580,7 +5580,7 @@ exports[`Should test handler erros 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -5648,7 +5648,7 @@ exports[`Should test handler erros 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -5736,7 +5736,7 @@ exports[`Should test handler erros 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -6295,7 +6295,7 @@ exports[`Should test handler erros at start node keys 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -6363,7 +6363,7 @@ exports[`Should test handler erros at start node keys 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -6451,7 +6451,7 @@ exports[`Should test handler erros at start node keys 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -7010,7 +7010,7 @@ exports[`Should test handler no array erros 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -7078,7 +7078,7 @@ exports[`Should test handler no array erros 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -7166,7 +7166,7 @@ exports[`Should test handler no array erros 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -7725,7 +7725,7 @@ exports[`Should test load data callback 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -7793,7 +7793,7 @@ exports[`Should test load data callback 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -7881,7 +7881,7 @@ exports[`Should test load data callback 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -8441,7 +8441,7 @@ exports[`Should update state after input changes 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -8509,7 +8509,7 @@ exports[`Should update state after input changes 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"
@@ -8597,7 +8597,7 @@ exports[`Should update state after input changes 1`] = `
                     onFocus={[Function]}
                   >
                     <div
-                      className="col-11 p-0 d-flex flex-wrap"
+                      className="col-11 d-flex flex-wrap p-0"
                     >
                       <input
                         className="form-control-inset"

@@ -57,7 +57,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
           class="sidebar-collapse"
         >
           <ul
-            class="sidebar-collapse-groups list-unstyled"
+            class="list-unstyled sidebar-collapse-groups"
           >
             <li
               class="sidebar-collapse-user"
@@ -66,7 +66,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                 class="sidebar-collapse-header-root"
               >
                 <a
-                  class="sidebar-collapse-header d-flex justify-content-between"
+                  class="d-flex justify-content-between sidebar-collapse-header"
                 >
                   User
                   <span
@@ -707,7 +707,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                 class="sidebar-collapse-header-root"
               >
                 <a
-                  class="sidebar-collapse-header d-flex justify-content-between"
+                  class="d-flex justify-content-between sidebar-collapse-header"
                 >
                   User Organization
                   <span
@@ -751,7 +751,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                 class="d-flex flex-wrap justify-content-between mb-4"
               >
                 <h2
-                  class="sheet-title mb-2"
+                  class="mb-2 sheet-title"
                 >
                   conditions
                 </h2>
@@ -850,7 +850,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
           class="sidebar-collapse"
         >
           <ul
-            class="sidebar-collapse-groups list-unstyled"
+            class="list-unstyled sidebar-collapse-groups"
           >
             <li
               class="sidebar-collapse-user"
@@ -859,7 +859,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                 class="sidebar-collapse-header-root"
               >
                 <a
-                  class="sidebar-collapse-header d-flex justify-content-between"
+                  class="d-flex justify-content-between sidebar-collapse-header"
                 >
                   User
                   <span
@@ -1500,7 +1500,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                 class="sidebar-collapse-header-root"
               >
                 <a
-                  class="sidebar-collapse-header d-flex justify-content-between"
+                  class="d-flex justify-content-between sidebar-collapse-header"
                 >
                   User Organization
                   <span
@@ -1544,7 +1544,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                 class="d-flex flex-wrap justify-content-between mb-4"
               >
                 <h2
-                  class="sheet-title mb-2"
+                  class="mb-2 sheet-title"
                 >
                   conditions
                 </h2>

@@ -51,7 +51,7 @@ exports[`CriteriaSidebar renders 1`] = `
       class="sidebar-collapse"
     >
       <ul
-        class="sidebar-collapse-groups list-unstyled"
+        class="list-unstyled sidebar-collapse-groups"
       />
     </div>
   </div>

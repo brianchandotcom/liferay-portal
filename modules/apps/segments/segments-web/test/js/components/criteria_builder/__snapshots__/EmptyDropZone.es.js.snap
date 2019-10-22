@@ -23,7 +23,7 @@ exports[`EmptyDropZone renders illustration when empty contributors 1`] = `
   >
     <div>
       <div
-        class="taglib-empty-result-message mb-0 p-5 rounded empty-contributors"
+        class="empty-contributors mb-0 p-5 rounded taglib-empty-result-message"
       >
         <div
           class="taglib-empty-result-message-header"

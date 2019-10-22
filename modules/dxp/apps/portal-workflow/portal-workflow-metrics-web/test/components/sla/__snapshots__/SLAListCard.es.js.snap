@@ -81,10 +81,10 @@ exports[`Should remove a item 1`] = `
             className="container-fluid container-fluid-max-xl"
           >
             <ul
-              className="navbar-nav autofit-row"
+              className="autofit-row navbar-nav"
             >
               <li
-                className="nav-item autofit-col-expand autofit-float-end"
+                className="autofit-col-expand autofit-float-end nav-item"
               >
                 <Tooltip
                   message="new-sla"
@@ -298,10 +298,10 @@ Array [
       className="container-fluid container-fluid-max-xl"
     >
       <ul
-        className="navbar-nav autofit-row"
+        className="autofit-row navbar-nav"
       >
         <li
-          className="nav-item autofit-col-expand autofit-float-end"
+          className="autofit-col-expand autofit-float-end nav-item"
         >
           <span
             className="workflow-tooltip"
@@ -360,10 +360,10 @@ Array [
       className="container-fluid container-fluid-max-xl"
     >
       <ul
-        className="navbar-nav autofit-row"
+        className="autofit-row navbar-nav"
       >
         <li
-          className="nav-item autofit-col-expand autofit-float-end"
+          className="autofit-col-expand autofit-float-end nav-item"
         >
           <span
             className="workflow-tooltip"
@@ -494,10 +494,10 @@ exports[`Should render toast with SLA saved message 1`] = `
             className="container-fluid container-fluid-max-xl"
           >
             <ul
-              className="navbar-nav autofit-row"
+              className="autofit-row navbar-nav"
             >
               <li
-                className="nav-item autofit-col-expand autofit-float-end"
+                className="autofit-col-expand autofit-float-end nav-item"
               >
                 <Tooltip
                   message="new-sla"
@@ -783,10 +783,10 @@ exports[`Should render toast with SLA updated message 1`] = `
             className="container-fluid container-fluid-max-xl"
           >
             <ul
-              className="navbar-nav autofit-row"
+              className="autofit-row navbar-nav"
             >
               <li
-                className="nav-item autofit-col-expand autofit-float-end"
+                className="autofit-col-expand autofit-float-end nav-item"
               >
                 <Tooltip
                   message="new-sla"
@@ -1072,10 +1072,10 @@ exports[`Should test props change 1`] = `
             className="container-fluid container-fluid-max-xl"
           >
             <ul
-              className="navbar-nav autofit-row"
+              className="autofit-row navbar-nav"
             >
               <li
-                className="nav-item autofit-col-expand autofit-float-end"
+                className="autofit-col-expand autofit-float-end nav-item"
               >
                 <Tooltip
                   message="new-sla"

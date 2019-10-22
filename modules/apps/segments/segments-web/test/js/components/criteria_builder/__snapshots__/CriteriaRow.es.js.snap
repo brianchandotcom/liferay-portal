@@ -28,7 +28,7 @@ exports[`CriteriaRow renders 1`] = `
         </b>
       </span>
       <select
-        class="form-control criterion-input operator-input form-control"
+        class="form-control criterion-input form-control operator-input"
       />
       <input
         class="criterion-input form-control"
@@ -95,7 +95,7 @@ exports[`CriteriaRow renders and inform there is an unknown property 1`] = `
         </b>
       </span>
       <select
-        class="form-control criterion-input operator-input form-control"
+        class="form-control criterion-input form-control operator-input"
         disabled=""
       />
       <input
@@ -114,7 +114,7 @@ exports[`CriteriaRow renders and inform there is an unknown property 1`] = `
     </div>
   </div>
   <div
-    class="bg-transparent p-1 mt-1 border-0 alert alert-danger"
+    class="bg-transparent border-0 mt-1 p-1 alert alert-danger"
     role="alert"
   >
     <span

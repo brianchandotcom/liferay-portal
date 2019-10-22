@@ -2,7 +2,7 @@
 
 exports[`Should render component with one item 1`] = `
 <nav
-  className="tbar tbar-inline-xs-down subnav-tbar subnav-tbar-primary"
+  className="subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down"
 >
   <div
     className="container-fluid container-fluid-max-xl"
@@ -51,7 +51,7 @@ exports[`Should render component with one item 1`] = `
 
 exports[`Should render component with one list item 1`] = `
 <nav
-  className="tbar tbar-inline-xs-down subnav-tbar subnav-tbar-primary"
+  className="subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down"
 >
   <div
     className="container-fluid container-fluid-max-xl"

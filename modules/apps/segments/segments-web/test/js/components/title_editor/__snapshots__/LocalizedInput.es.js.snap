@@ -36,14 +36,14 @@ exports[`LocalizedInput rendering with pre-existing value has dropdown with opti
         </span>
       </button>
       <ul
-        class="dropdown-menu d-block"
+        class="d-block dropdown-menu"
         role="menu"
       >
         <li
           role="presentation"
         >
           <span
-            class="dropdown-item palette-item lfr-icon-item taglib-icon"
+            class="dropdown-item lfr-icon-item palette-item taglib-icon"
             role="menuitem"
             tabindex="0"
             target="_self"
@@ -65,7 +65,7 @@ exports[`LocalizedInput rendering with pre-existing value has dropdown with opti
             >
               en-US
               <span
-                class="ml-1 label label-success"
+                class="label label-success ml-1"
               >
                 translated
               </span>
@@ -76,7 +76,7 @@ exports[`LocalizedInput rendering with pre-existing value has dropdown with opti
           role="presentation"
         >
           <span
-            class="dropdown-item palette-item lfr-icon-item taglib-icon"
+            class="dropdown-item lfr-icon-item palette-item taglib-icon"
             role="menuitem"
             tabindex="0"
             target="_self"
@@ -98,7 +98,7 @@ exports[`LocalizedInput rendering with pre-existing value has dropdown with opti
             >
               es-ES
               <span
-                class="ml-1 label label-success"
+                class="label label-success ml-1"
               >
                 translated
               </span>
@@ -111,7 +111,7 @@ exports[`LocalizedInput rendering with pre-existing value has dropdown with opti
       class="input-group-item ml-2"
     >
       <input
-        class="rounded form-control language-value field form-control-inline form-control"
+        class="field form-control form-control-inline language-value rounded"
         data-testid="localized-main-input"
         placeholder=""
         type="text"
@@ -162,7 +162,7 @@ exports[`LocalizedInput rendering with pre-existing value renders 1`] = `
       class="input-group-item ml-2"
     >
       <input
-        class="rounded form-control language-value field form-control-inline form-control"
+        class="field form-control form-control-inline language-value rounded"
         data-testid="localized-main-input"
         placeholder=""
         type="text"
@@ -213,7 +213,7 @@ exports[`LocalizedInput with minimal configuration renders 1`] = `
       class="input-group-item ml-2"
     >
       <input
-        class="rounded form-control language-value field form-control-inline form-control"
+        class="field form-control form-control-inline language-value rounded"
         data-testid="localized-main-input"
         placeholder=""
         type="text"

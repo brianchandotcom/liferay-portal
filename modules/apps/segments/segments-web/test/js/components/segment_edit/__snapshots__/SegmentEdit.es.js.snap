@@ -75,7 +75,7 @@ exports[`SegmentEdit renders 1`] = `
               class="input-group-item ml-2"
             >
               <input
-                class="rounded form-control language-value field form-control-inline form-control"
+                class="field form-control form-control-inline language-value rounded"
                 data-testid="localized-main-input"
                 placeholder="untitled-segment"
                 readonly=""
@@ -174,7 +174,7 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
               class="input-group-item ml-2"
             >
               <input
-                class="rounded form-control language-value field form-control-inline form-control"
+                class="field form-control form-control-inline language-value rounded"
                 data-testid="localized-main-input"
                 placeholder="untitled-segment"
                 readonly=""
@@ -353,7 +353,7 @@ exports[`SegmentEdit renders with given values 1`] = `
               class="input-group-item ml-2"
             >
               <input
-                class="rounded form-control language-value field form-control-inline form-control"
+                class="field form-control form-control-inline language-value rounded"
                 data-testid="localized-main-input"
                 placeholder="untitled-segment"
                 type="text"
@@ -507,7 +507,7 @@ exports[`SegmentEdit renders with given values 1`] = `
               class="sidebar-collapse"
             >
               <ul
-                class="sidebar-collapse-groups list-unstyled"
+                class="list-unstyled sidebar-collapse-groups"
               >
                 <li
                   class="sidebar-collapse-first-test-values-group"
@@ -516,7 +516,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                     class="sidebar-collapse-header-root"
                   >
                     <a
-                      class="sidebar-collapse-header d-flex justify-content-between"
+                      class="d-flex justify-content-between sidebar-collapse-header"
                     >
                       First Test Values Group
                       <span
@@ -595,7 +595,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                     class="d-flex flex-wrap justify-content-between mb-4"
                   >
                     <h2
-                      class="sheet-title mb-2"
+                      class="mb-2 sheet-title"
                     >
                       conditions
                     </h2>
@@ -676,7 +676,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                               </b>
                             </span>
                             <select
-                              class="form-control criterion-input operator-input form-control"
+                              class="form-control criterion-input form-control operator-input"
                             >
                               <option
                                 value="eq"
@@ -845,7 +845,7 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
               class="input-group-item ml-2"
             >
               <input
-                class="rounded form-control language-value field form-control-inline form-control"
+                class="field form-control form-control-inline language-value rounded"
                 data-testid="localized-main-input"
                 placeholder="untitled-segment"
                 readonly=""

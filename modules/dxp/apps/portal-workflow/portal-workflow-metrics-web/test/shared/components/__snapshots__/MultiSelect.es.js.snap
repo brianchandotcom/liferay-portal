@@ -64,7 +64,7 @@ exports[`Should add a tag 1`] = `
     onFocus={[Function]}
   >
     <div
-      className="col-11 p-0 d-flex flex-wrap"
+      className="col-11 d-flex flex-wrap p-0"
     >
       <span
         className="label label-dismissible label-secondary"
@@ -324,7 +324,7 @@ exports[`Should hide the dropdown list 1`] = `
     onFocus={[Function]}
   >
     <div
-      className="col-11 p-0 d-flex flex-wrap"
+      className="col-11 d-flex flex-wrap p-0"
     >
       <span
         className="label label-dismissible label-secondary"
@@ -583,7 +583,7 @@ exports[`Should remove a tag 1`] = `
     onFocus={[Function]}
   >
     <div
-      className="col-11 p-0 d-flex flex-wrap"
+      className="col-11 d-flex flex-wrap p-0"
     >
       <span
         className="label label-dismissible label-secondary"
@@ -842,7 +842,7 @@ exports[`Should search 1`] = `
     onFocus={[Function]}
   >
     <div
-      className="col-11 p-0 d-flex flex-wrap"
+      className="col-11 d-flex flex-wrap p-0"
     >
       <span
         className="label label-dismissible label-secondary"
@@ -1061,7 +1061,7 @@ exports[`Should show the dropdown list 1`] = `
     onFocus={[Function]}
   >
     <div
-      className="col-11 p-0 d-flex flex-wrap"
+      className="col-11 d-flex flex-wrap p-0"
     >
       <span
         className="label label-dismissible label-secondary"
@@ -1280,7 +1280,7 @@ exports[`Should test component render 1`] = `
     onFocus={[Function]}
   >
     <div
-      className="col-11 p-0 d-flex flex-wrap"
+      className="col-11 d-flex flex-wrap p-0"
     >
       <span
         className="label label-dismissible label-secondary"
@@ -1499,7 +1499,7 @@ exports[`Should test keydown press 1`] = `
     onFocus={[Function]}
   >
     <div
-      className="col-11 p-0 d-flex flex-wrap"
+      className="col-11 d-flex flex-wrap p-0"
     >
       <span
         className="label label-dismissible label-secondary"
@@ -1718,7 +1718,7 @@ exports[`Should test keyenter press 1`] = `
     onFocus={[Function]}
   >
     <div
-      className="col-11 p-0 d-flex flex-wrap"
+      className="col-11 d-flex flex-wrap p-0"
     >
       <span
         className="label label-dismissible label-secondary"
@@ -1937,7 +1937,7 @@ exports[`Should test keyup press 1`] = `
     onFocus={[Function]}
   >
     <div
-      className="col-11 p-0 d-flex flex-wrap"
+      className="col-11 d-flex flex-wrap p-0"
     >
       <span
         className="label label-dismissible label-secondary"

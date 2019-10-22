@@ -210,10 +210,10 @@ exports[`Should cancel dialog through SLA List 1`] = `
             className="container-fluid container-fluid-max-xl"
           >
             <ul
-              className="navbar-nav autofit-row"
+              className="autofit-row navbar-nav"
             >
               <li
-                className="nav-item autofit-col-expand autofit-float-end"
+                className="autofit-col-expand autofit-float-end nav-item"
               >
                 <Tooltip
                   message="new-sla"
@@ -499,10 +499,10 @@ exports[`Should cancel dialog through SLA List 2`] = `
             className="container-fluid container-fluid-max-xl"
           >
             <ul
-              className="navbar-nav autofit-row"
+              className="autofit-row navbar-nav"
             >
               <li
-                className="nav-item autofit-col-expand autofit-float-end"
+                className="autofit-col-expand autofit-float-end nav-item"
               >
                 <Tooltip
                   message="new-sla"

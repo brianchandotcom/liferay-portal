@@ -66,10 +66,25 @@ public interface DLContentLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLContentLocalServiceUtil} to access the document library content local service. Add custom service methods to <code>com.liferay.document.library.content.service.impl.DLContentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addContent(long, long, String, String, InputStream))}
+	 */
+	@Deprecated
 	public DLContent addContent(
 		long companyId, long repositoryId, String path, String version,
 		byte[] bytes);
 
+	public DLContent addContent(
+		long companyId, long repositoryId, String path, String version,
+		InputStream inputStream);
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addContent(long, long, String, String, InputStream))}
+	 */
+	@Deprecated
 	public DLContent addContent(
 		long companyId, long repositoryId, String path, String version,
 		InputStream inputStream, long size);
@@ -93,9 +108,12 @@ public interface DLContentLocalService
 	public DLContent createDLContent(long contentId);
 
 	public void deleteContent(
-			long companyId, long repositoryId, String path, String version)
-		throws PortalException;
+		long companyId, long repositoryId, String path, String version);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void deleteContents(long companyId, long repositoryId, String path);
 
 	public void deleteContentsByDirectory(
@@ -199,6 +217,11 @@ public interface DLContentLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getContent(long, long, String, String)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLContent getContent(long companyId, long repositoryId, String path)
 		throws NoSuchContentException;
@@ -208,6 +231,11 @@ public interface DLContentLocalService
 			long companyId, long repositoryId, String path, String version)
 		throws NoSuchContentException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getContentsByDirectory(long, long, String)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLContent> getContents(long companyId, long repositoryId);
 
@@ -273,6 +301,9 @@ public interface DLContentLocalService
 	public boolean hasContent(
 		long companyId, long repositoryId, String path, String version);
 
+	@Transactional(readOnly = true)
+	public InputStream openContentInputStream(long contentId);
+
 	/**
 	 * Updates the document library content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -282,6 +313,10 @@ public interface DLContentLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DLContent updateDLContent(DLContent dlContent);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void updateDLContent(
 		long companyId, long oldRepositoryId, long newRepositoryId,
 		String oldPath, String newPath);

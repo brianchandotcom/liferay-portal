@@ -39,10 +39,10 @@ public class DLContentLocalServiceUtil {
 	 */
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link DLContentLocalServiceUtil} to access the document library content local service. Add custom service methods to <code>com.liferay.document.library.content.service.impl.DLContentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addContent(long, long, String, String, InputStream))}
 	 */
+	@Deprecated
 	public static com.liferay.document.library.content.model.DLContent
 		addContent(
 			long companyId, long repositoryId, String path, String version,
@@ -52,6 +52,20 @@ public class DLContentLocalServiceUtil {
 			companyId, repositoryId, path, version, bytes);
 	}
 
+	public static com.liferay.document.library.content.model.DLContent
+		addContent(
+			long companyId, long repositoryId, String path, String version,
+			java.io.InputStream inputStream) {
+
+		return getService().addContent(
+			companyId, repositoryId, path, version, inputStream);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addContent(long, long, String, String, InputStream))}
+	 */
+	@Deprecated
 	public static com.liferay.document.library.content.model.DLContent
 		addContent(
 			long companyId, long repositoryId, String path, String version,
@@ -87,12 +101,15 @@ public class DLContentLocalServiceUtil {
 	}
 
 	public static void deleteContent(
-			long companyId, long repositoryId, String path, String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long companyId, long repositoryId, String path, String version) {
 
 		getService().deleteContent(companyId, repositoryId, path, version);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void deleteContents(
 		long companyId, long repositoryId, String path) {
 
@@ -241,6 +258,11 @@ public class DLContentLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getContent(long, long, String, String)}
+	 */
+	@Deprecated
 	public static com.liferay.document.library.content.model.DLContent
 			getContent(long companyId, long repositoryId, String path)
 		throws com.liferay.document.library.content.exception.
@@ -258,6 +280,11 @@ public class DLContentLocalServiceUtil {
 		return getService().getContent(companyId, repositoryId, path, version);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getContentsByDirectory(long, long, String)}
+	 */
+	@Deprecated
 	public static java.util.List
 		<com.liferay.document.library.content.model.DLContent> getContents(
 			long companyId, long repositoryId) {
@@ -358,6 +385,10 @@ public class DLContentLocalServiceUtil {
 		return getService().hasContent(companyId, repositoryId, path, version);
 	}
 
+	public static java.io.InputStream openContentInputStream(long contentId) {
+		return getService().openContentInputStream(contentId);
+	}
+
 	/**
 	 * Updates the document library content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -371,6 +402,10 @@ public class DLContentLocalServiceUtil {
 		return getService().updateDLContent(dlContent);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void updateDLContent(
 		long companyId, long oldRepositoryId, long newRepositoryId,
 		String oldPath, String newPath) {

@@ -92,7 +92,9 @@ import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
+import com.liferay.view.count.model.ViewCountEntry;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
+import com.liferay.view.count.service.persistence.ViewCountEntryPK;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -194,7 +196,7 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		Date endDate, Date publishDate, Date expirationDate, String mimeType,
 		String title, String description, String summary, String url,
 		String layoutUuid, int height, int width, double priority,
-		int viewCount) {
+		long viewCount) {
 
 		AssetEntry assetEntry = _assetEntryLocalService.createAssetEntry(
 			entryId);
@@ -225,9 +227,16 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 
 		_assetEntryLocalService.updateAssetEntry(assetEntry);
 
-		_viewCountEntryLocalService.incrementViewCount(
-			companyId, _classNameLocalService.getClassNameId(AssetEntry.class),
-			entryId, viewCount);
+		ViewCountEntry viewCountEntry =
+			_viewCountEntryLocalService.createViewCountEntry(
+				new ViewCountEntryPK(
+					companyId,
+					_classNameLocalService.getClassNameId(AssetEntry.class),
+					entryId));
+
+		viewCountEntry.setViewCount(viewCount);
+
+		_viewCountEntryLocalService.addViewCountEntry(viewCountEntry);
 	}
 
 	private void _addAssetLink(

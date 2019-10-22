@@ -28,8 +28,7 @@ public class UpgradeTableBuilderInvoker {
 		return new UpgradeTableBuilder(
 			_getAbsolutePath(baseDir, upgradeTableBuilderArgs.getBaseDirName()),
 			upgradeTableBuilderArgs.isOsgiModule(),
-			_getAbsolutePath(
-				baseDir, upgradeTableBuilderArgs.getReleaseInfoFileName()),
+			upgradeTableBuilderArgs.getReleaseInfoVersion(),
 			_getAbsolutePath(
 				baseDir, upgradeTableBuilderArgs.getUpgradeTableDirName()));
 	}

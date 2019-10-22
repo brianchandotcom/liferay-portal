@@ -414,20 +414,9 @@ definition {
 			locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_SOURCE_FIELD",
 			value1 = "Content Mapping");
 
-		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_DROPDOWN");
-
-		Click(
-			key_assetField = "${assetField}",
-			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_DROPDOWN_ASSET");
-
-		if (isSet(webContentTitle)) {
-			SelectFrame(locator1 = "IFrame#DIALOG");
-
-			AssertClick(
-				key_webContentTitle = "${webContentTitle}",
-				locator1 = "Link#WEB_CONTENT_ARTICLE",
-				value1 = "${webContentTitle}");
-		}
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "${entryTitle}",
+			navItem = "${navItem}");
 
 		Select(
 			locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",

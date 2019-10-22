@@ -89,7 +89,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
-import com.liferay.portal.kernel.service.view.count.ViewCountServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -113,6 +112,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.view.count.service.ViewCountEntryLocalService;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -162,7 +162,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		ResourceActions resourceActions,
 		ResourceLocalService resourceLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
-		Store store) {
+		Store store, ViewCountEntryLocalService viewCountEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
 		_classNameLocalService = classNameLocalService;
@@ -182,6 +182,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		_resourceLocalService = resourceLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_store = store;
+		_viewCountEntryLocalService = viewCountEntryLocalService;
 
 		_dlFolderModelPermissions = ModelPermissionsFactory.create(
 			_DLFOLDER_GROUP_PERMISSIONS, _DLFOLDER_GUEST_PERMISSIONS);
@@ -1719,6 +1720,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		new HashMap<>();
 	private final Map<Long, Long> _templateResourceClassNameIds =
 		new HashMap<>();
+	private final ViewCountEntryLocalService _viewCountEntryLocalService;
 
 	private static class DateDDMFormFieldValueTransformer
 		implements DDMFormFieldValueTransformer {
@@ -2364,7 +2366,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			_assetEntryLocalService.updateAssetEntry(assetEntry);
 
-			ViewCountServiceUtil.incrementViewCount(
+			_viewCountEntryLocalService.incrementViewCount(
 				companyId,
 				_classNameLocalService.getClassNameId(AssetEntry.class),
 				entryId, viewCount);

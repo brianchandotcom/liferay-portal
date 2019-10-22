@@ -114,6 +114,16 @@ definition {
 		selenium.click();
 	}
 
+	function javaScriptClick {
+		WaitForSPARefresh();
+
+		selenium.javaScriptClick();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 	function mouseDownMouseUp {
 		WaitForSPARefresh();
 

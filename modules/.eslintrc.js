@@ -12,6 +12,8 @@
  * details.
  */
 
+const path = require('path');
+
 /**
  * We use liferay-npm-scripts to perform linting in a controlled way, but we
  * also try to expose its configuration here so it can be picked up by editors.
@@ -33,7 +35,13 @@ config = {
 		MODULE_PATH: true
 	},
 	rules: {
-		'no-empty': ['error', {allowEmptyCatch: true}]
+		'no-empty': ['error', {allowEmptyCatch: true}],
+		'notice/notice': [
+			'error',
+			{
+				templateFile: path.join(__dirname, 'copyright.js')
+			}
+		]
 	}
 };
 

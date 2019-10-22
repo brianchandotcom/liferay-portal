@@ -169,8 +169,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         See {@link UnicodeProperties #fastLoad(String)}.
 	 * @param  hidden whether the layout is hidden
 	 * @param  system whether the layout is of system type
-	 * @param  masterLayoutPageTemplateEntryId the primary key of the master
-	 *         layout page template entry
+	 * @param  masterLayoutPlid the primary key of the master layout
 	 * @param  friendlyURLMap the layout's locales and localized friendly URLs.
 	 *         To see how the URL is normalized when accessed, see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
@@ -199,8 +198,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, String typeSettings,
-			boolean hidden, boolean system,
-			long masterLayoutPageTemplateEntryId,
+			boolean hidden, boolean system, long masterLayoutPlid,
 			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -268,8 +266,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setSystem(system);
 		layout.setFriendlyURL(friendlyURL);
 		layout.setPriority(priority);
-		layout.setMasterLayoutPageTemplateEntryId(
-			masterLayoutPageTemplateEntryId);
+		layout.setMasterLayoutPlid(masterLayoutPlid);
 		layout.setPublishDate(serviceContext.getModifiedDate(now));
 
 		boolean layoutUpdateable = ParamUtil.getBoolean(
@@ -377,8 +374,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				classNameLocalService.getClassNameId(Layout.class),
 				layout.getPlid(), nameMap, titleMap, descriptionMap,
 				keywordsMap, robotsMap, type, typeSettings, true, true,
-				layout.getMasterLayoutPageTemplateEntryId(),
-				Collections.emptyMap(), serviceContext);
+				layout.getMasterLayoutPlid(), Collections.emptyMap(),
+				serviceContext);
 		}
 
 		return layoutLocalService.getLayout(layout.getPlid());
@@ -1646,11 +1643,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<Layout> getLayouts(
-		long groupId, long masterLayoutPageTemplateEntryId) {
-
-		return layoutPersistence.findByG_MLPTEI(
-			groupId, masterLayoutPageTemplateEntryId);
+	public List<Layout> getLayouts(long groupId, long masterLayoutPlid) {
+		return layoutPersistence.findByG_M(groupId, masterLayoutPlid);
 	}
 
 	/**
@@ -1864,11 +1858,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
-	public int getLayoutsCount(
-		long groupId, long masterLayoutPageTemplateEntryId) {
-
-		return layoutPersistence.countByG_MLPTEI(
-			groupId, masterLayoutPageTemplateEntryId);
+	public int getLayoutsCount(long groupId, long masterLayoutPlid) {
+		return layoutPersistence.countByG_M(groupId, masterLayoutPlid);
 	}
 
 	@Override

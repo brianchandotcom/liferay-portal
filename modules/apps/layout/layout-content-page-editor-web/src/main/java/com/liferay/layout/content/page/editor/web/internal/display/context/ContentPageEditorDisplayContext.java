@@ -16,7 +16,6 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.fragment.constants.FragmentActionKeys;
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
@@ -243,8 +242,7 @@ public class ContentPageEditorDisplayContext {
 			getFragmentEntryActionURL(
 				"/content_layout/edit_fragment_entry_link")
 		).put(
-			"elements",
-			_getFragmentCollectionsSoyContexts(FragmentConstants.TYPE_COMPONENT)
+			"elements", _getFragmentCollectionsSoyContexts()
 		).put(
 			"fragmentEntryLinks", _getFragmentEntryLinksSoyContext()
 		).put(
@@ -299,9 +297,6 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"renderFragmentEntryURL",
 			getFragmentEntryActionURL("/content_layout/render_fragment_entry")
-		).put(
-			"sections",
-			_getFragmentCollectionsSoyContexts(FragmentConstants.TYPE_SECTION)
 		).put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
@@ -548,7 +543,7 @@ public class ContentPageEditorDisplayContext {
 		return _defaultConfigurations;
 	}
 
-	private List<SoyContext> _getDynamicFragmentsSoyContexts(int type) {
+	private List<SoyContext> _getDynamicFragmentsSoyContexts() {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
 		Map<String, List<SoyContext>> fragmentCollectionSoyContextsMap =
@@ -557,7 +552,7 @@ public class ContentPageEditorDisplayContext {
 			new HashMap<>();
 
 		List<FragmentRenderer> fragmentRenderers =
-			_fragmentRendererTracker.getFragmentRenderers(type);
+			_fragmentRendererTracker.getFragmentRenderers();
 
 		for (FragmentRenderer fragmentRenderer : fragmentRenderers) {
 			if (!fragmentRenderer.isSelectable(request)) {
@@ -625,9 +620,7 @@ public class ContentPageEditorDisplayContext {
 		return soyContexts;
 	}
 
-	private List<SoyContext> _getFragmentCollectionContributorSoyContexts(
-		int type) {
-
+	private List<SoyContext> _getFragmentCollectionContributorSoyContexts() {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
 		List<FragmentCollectionContributor> fragmentCollectionContributors =
@@ -644,7 +637,7 @@ public class ContentPageEditorDisplayContext {
 
 			List<FragmentEntry> fragmentEntries =
 				fragmentCollectionContributor.getFragmentEntries(
-					type, themeDisplay.getLocale());
+					themeDisplay.getLocale());
 
 			if (ListUtil.isEmpty(fragmentEntries)) {
 				continue;
@@ -669,11 +662,11 @@ public class ContentPageEditorDisplayContext {
 		return soyContexts;
 	}
 
-	private List<SoyContext> _getFragmentCollectionsSoyContexts(int type) {
+	private List<SoyContext> _getFragmentCollectionsSoyContexts() {
 		List<SoyContext> soyContexts =
-			_getFragmentCollectionContributorSoyContexts(type);
+			_getFragmentCollectionContributorSoyContexts();
 
-		soyContexts.addAll(_getDynamicFragmentsSoyContexts(type));
+		soyContexts.addAll(_getDynamicFragmentsSoyContexts());
 
 		long[] groupIds = {themeDisplay.getCompanyGroupId(), getGroupId()};
 
@@ -682,9 +675,9 @@ public class ContentPageEditorDisplayContext {
 
 		for (FragmentCollection fragmentCollection : fragmentCollections) {
 			List<FragmentEntry> fragmentEntries =
-				FragmentEntryServiceUtil.getFragmentEntriesByTypeAndStatus(
+				FragmentEntryServiceUtil.getFragmentEntriesByStatus(
 					fragmentCollection.getGroupId(),
-					fragmentCollection.getFragmentCollectionId(), type,
+					fragmentCollection.getFragmentCollectionId(),
 					WorkflowConstants.STATUS_APPROVED);
 
 			if (ListUtil.isEmpty(fragmentEntries)) {

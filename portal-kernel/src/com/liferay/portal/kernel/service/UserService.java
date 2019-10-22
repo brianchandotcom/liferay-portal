@@ -18,6 +18,7 @@ import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Phone;
@@ -670,6 +671,7 @@ public interface UserService extends BaseService {
 	 password; <code>false</code> if the notification email only
 	 contains a reset link
 	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public boolean sendPasswordByEmailAddress(
 			long companyId, String emailAddress)
 		throws PortalException;
@@ -693,6 +695,7 @@ public interface UserService extends BaseService {
 	 password; <code>false</code> if the notification email only
 	 contains a reset link
 	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public boolean sendPasswordByScreenName(long companyId, String screenName)
 		throws PortalException;
 
@@ -714,6 +717,7 @@ public interface UserService extends BaseService {
 	 password; <code>false</code> if the notification email only
 	 contains a reset link
 	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public boolean sendPasswordByUserId(long userId) throws PortalException;
 
 	/**

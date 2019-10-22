@@ -69,6 +69,21 @@ public abstract class BaseFragmentCollectionContributor
 	implements FragmentCollectionContributor {
 
 	@Override
+	public List<FragmentEntry> getFragmentEntries() {
+		_initialize();
+
+		List<FragmentEntry> fragmentEntries = new ArrayList<>();
+
+		for (Map.Entry<Integer, List<FragmentEntry>> entry :
+				_fragmentEntries.entrySet()) {
+
+			fragmentEntries.addAll(entry.getValue());
+		}
+
+		return fragmentEntries;
+	}
+
+	@Override
 	public List<FragmentEntry> getFragmentEntries(int type) {
 		_initialize();
 
@@ -78,6 +93,13 @@ public abstract class BaseFragmentCollectionContributor
 	@Override
 	public List<FragmentEntry> getFragmentEntries(int type, Locale locale) {
 		return _getFragmentEntries(getFragmentEntries(type), locale);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(Locale locale) {
+		_initialize();
+
+		return _getFragmentEntries(getFragmentEntries(), locale);
 	}
 
 	@Override

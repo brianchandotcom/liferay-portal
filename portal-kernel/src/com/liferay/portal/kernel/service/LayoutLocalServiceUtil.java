@@ -77,8 +77,7 @@ public class LayoutLocalServiceUtil {
 	 See {@link UnicodeProperties #fastLoad(String)}.
 	 * @param hidden whether the layout is hidden
 	 * @param system whether the layout is of system type
-	 * @param masterLayoutPageTemplateEntryId the primary key of the master
-	 layout page template entry
+	 * @param masterLayoutPlid the primary key of the master layout
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
@@ -108,7 +107,7 @@ public class LayoutLocalServiceUtil {
 			java.util.Map<java.util.Locale, String> keywordsMap,
 			java.util.Map<java.util.Locale, String> robotsMap, String type,
 			String typeSettings, boolean hidden, boolean system,
-			long masterLayoutPageTemplateEntryId,
+			long masterLayoutPlid,
 			java.util.Map<java.util.Locale, String> friendlyURLMap,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -116,7 +115,7 @@ public class LayoutLocalServiceUtil {
 		return getService().addLayout(
 			userId, groupId, privateLayout, parentLayoutId, classNameId,
 			classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
-			type, typeSettings, hidden, system, masterLayoutPageTemplateEntryId,
+			type, typeSettings, hidden, system, masterLayoutPlid,
 			friendlyURLMap, serviceContext);
 	}
 
@@ -1116,10 +1115,9 @@ public class LayoutLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Layout>
-		getLayouts(long groupId, long masterLayoutPageTemplateEntryId) {
+		getLayouts(long groupId, long masterLayoutPlid) {
 
-		return getService().getLayouts(
-			groupId, masterLayoutPageTemplateEntryId);
+		return getService().getLayouts(groupId, masterLayoutPlid);
 	}
 
 	/**
@@ -1264,11 +1262,8 @@ public class LayoutLocalServiceUtil {
 		return getService().getLayoutsCount(groupId);
 	}
 
-	public static int getLayoutsCount(
-		long groupId, long masterLayoutPageTemplateEntryId) {
-
-		return getService().getLayoutsCount(
-			groupId, masterLayoutPageTemplateEntryId);
+	public static int getLayoutsCount(long groupId, long masterLayoutPlid) {
+		return getService().getLayoutsCount(groupId, masterLayoutPlid);
 	}
 
 	public static int getLayoutsCount(

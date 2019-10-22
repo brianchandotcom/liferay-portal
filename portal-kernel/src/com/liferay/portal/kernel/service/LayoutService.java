@@ -88,8 +88,7 @@ public interface LayoutService extends BaseService {
 	 #fastLoad(String)}.
 	 * @param hidden whether the layout is hidden
 	 * @param system whether the layout is system
-	 * @param masterLayoutPageTemplateEntryId the primary key of the master
-	 layout page template entry
+	 * @param masterLayoutPlid the primary key of the master layout
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
@@ -109,8 +108,7 @@ public interface LayoutService extends BaseService {
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, String typeSettings,
-			boolean hidden, boolean system,
-			long masterLayoutPageTemplateEntryId,
+			boolean hidden, boolean system, long masterLayoutPlid,
 			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -196,8 +194,7 @@ public interface LayoutService extends BaseService {
 	 See {@link com.liferay.portal.kernel.util.UnicodeProperties
 	 #fastLoad(String)}.
 	 * @param hidden whether the layout is hidden
-	 * @param masterLayoutPageTemplateEntryId the primary key of the master
-	 template
+	 * @param masterLayoutPlid the primary key of the master layout
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
@@ -217,7 +214,7 @@ public interface LayoutService extends BaseService {
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, String typeSettings,
-			boolean hidden, long masterLayoutPageTemplateEntryId,
+			boolean hidden, long masterLayoutPlid,
 			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)
 		throws PortalException;
 

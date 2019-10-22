@@ -72,8 +72,7 @@ public class LayoutLocalServiceWrapper
 	 See {@link UnicodeProperties #fastLoad(String)}.
 	 * @param hidden whether the layout is hidden
 	 * @param system whether the layout is of system type
-	 * @param masterLayoutPageTemplateEntryId the primary key of the master
-	 layout page template entry
+	 * @param masterLayoutPlid the primary key of the master layout
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
@@ -104,7 +103,7 @@ public class LayoutLocalServiceWrapper
 			java.util.Map<java.util.Locale, String> keywordsMap,
 			java.util.Map<java.util.Locale, String> robotsMap, String type,
 			String typeSettings, boolean hidden, boolean system,
-			long masterLayoutPageTemplateEntryId,
+			long masterLayoutPlid,
 			java.util.Map<java.util.Locale, String> friendlyURLMap,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -112,7 +111,7 @@ public class LayoutLocalServiceWrapper
 		return _layoutLocalService.addLayout(
 			userId, groupId, privateLayout, parentLayoutId, classNameId,
 			classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
-			type, typeSettings, hidden, system, masterLayoutPageTemplateEntryId,
+			type, typeSettings, hidden, system, masterLayoutPlid,
 			friendlyURLMap, serviceContext);
 	}
 
@@ -1137,10 +1136,9 @@ public class LayoutLocalServiceWrapper
 
 	@Override
 	public java.util.List<Layout> getLayouts(
-		long groupId, long masterLayoutPageTemplateEntryId) {
+		long groupId, long masterLayoutPlid) {
 
-		return _layoutLocalService.getLayouts(
-			groupId, masterLayoutPageTemplateEntryId);
+		return _layoutLocalService.getLayouts(groupId, masterLayoutPlid);
 	}
 
 	/**
@@ -1297,11 +1295,8 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
-	public int getLayoutsCount(
-		long groupId, long masterLayoutPageTemplateEntryId) {
-
-		return _layoutLocalService.getLayoutsCount(
-			groupId, masterLayoutPageTemplateEntryId);
+	public int getLayoutsCount(long groupId, long masterLayoutPlid) {
+		return _layoutLocalService.getLayoutsCount(groupId, masterLayoutPlid);
 	}
 
 	@Override

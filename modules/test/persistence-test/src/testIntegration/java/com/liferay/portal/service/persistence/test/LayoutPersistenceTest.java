@@ -183,7 +183,7 @@ public class LayoutPersistenceTest {
 
 		newLayout.setPriority(RandomTestUtil.nextInt());
 
-		newLayout.setMasterLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
+		newLayout.setMasterLayoutPlid(RandomTestUtil.nextLong());
 
 		newLayout.setLayoutPrototypeUuid(RandomTestUtil.randomString());
 
@@ -255,8 +255,8 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(
 			existingLayout.getPriority(), newLayout.getPriority());
 		Assert.assertEquals(
-			existingLayout.getMasterLayoutPageTemplateEntryId(),
-			newLayout.getMasterLayoutPageTemplateEntryId());
+			existingLayout.getMasterLayoutPlid(),
+			newLayout.getMasterLayoutPlid());
 		Assert.assertEquals(
 			existingLayout.getLayoutPrototypeUuid(),
 			newLayout.getLayoutPrototypeUuid());
@@ -375,11 +375,11 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_MLPTEI() throws Exception {
-		_persistence.countByG_MLPTEI(
+	public void testCountByG_M() throws Exception {
+		_persistence.countByG_M(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByG_MLPTEI(0L, 0L);
+		_persistence.countByG_M(0L, 0L);
 	}
 
 	@Test
@@ -534,9 +534,8 @@ public class LayoutPersistenceTest {
 			"name", true, "title", true, "description", true, "keywords", true,
 			"robots", true, "type", true, "hidden", true, "system", true,
 			"friendlyURL", true, "iconImageId", true, "themeId", true,
-			"colorSchemeId", true, "priority", true,
-			"masterLayoutPageTemplateEntryId", true, "layoutPrototypeUuid",
-			true, "layoutPrototypeLinkEnabled", true,
+			"colorSchemeId", true, "priority", true, "masterLayoutPlid", true,
+			"layoutPrototypeUuid", true, "layoutPrototypeLinkEnabled", true,
 			"sourcePrototypeLayoutUuid", true, "publishDate", true,
 			"lastPublishDate", true);
 	}
@@ -896,7 +895,7 @@ public class LayoutPersistenceTest {
 
 		layout.setPriority(RandomTestUtil.nextInt());
 
-		layout.setMasterLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
+		layout.setMasterLayoutPlid(RandomTestUtil.nextLong());
 
 		layout.setLayoutPrototypeUuid(RandomTestUtil.randomString());
 

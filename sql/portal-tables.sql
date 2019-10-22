@@ -585,7 +585,7 @@ create table Layout (
 	colorSchemeId VARCHAR(75) null,
 	css TEXT null,
 	priority INTEGER,
-	mLayoutPageTemplateEntryId LONG,
+	masterLayoutPlid LONG,
 	layoutPrototypeUuid VARCHAR(75) null,
 	layoutPrototypeLinkEnabled BOOLEAN,
 	sourcePrototypeLayoutUuid VARCHAR(75) null,

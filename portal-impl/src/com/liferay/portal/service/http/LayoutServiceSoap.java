@@ -94,8 +94,7 @@ public class LayoutServiceSoap {
 	 #fastLoad(String)}.
 	 * @param hidden whether the layout is hidden
 	 * @param system whether the layout is system
-	 * @param masterLayoutPageTemplateEntryId the primary key of the master
-	 layout page template entry
+	 * @param masterLayoutPlid the primary key of the master layout
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
@@ -117,8 +116,7 @@ public class LayoutServiceSoap {
 			String[] descriptionMapValues, String[] keywordsMapLanguageIds,
 			String[] keywordsMapValues, String[] robotsMapLanguageIds,
 			String[] robotsMapValues, String type, String typeSettings,
-			boolean hidden, boolean system,
-			long masterLayoutPageTemplateEntryId,
+			boolean hidden, boolean system, long masterLayoutPlid,
 			String[] friendlyURLMapLanguageIds, String[] friendlyURLMapValues,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -147,8 +145,7 @@ public class LayoutServiceSoap {
 					groupId, privateLayout, parentLayoutId, classNameId,
 					classPK, localeNamesMap, localeTitlesMap, descriptionMap,
 					keywordsMap, robotsMap, type, typeSettings, hidden, system,
-					masterLayoutPageTemplateEntryId, friendlyURLMap,
-					serviceContext);
+					masterLayoutPlid, friendlyURLMap, serviceContext);
 
 			return com.liferay.portal.kernel.model.LayoutSoap.toSoapModel(
 				returnValue);
@@ -281,8 +278,7 @@ public class LayoutServiceSoap {
 	 See {@link com.liferay.portal.kernel.util.UnicodeProperties
 	 #fastLoad(String)}.
 	 * @param hidden whether the layout is hidden
-	 * @param masterLayoutPageTemplateEntryId the primary key of the master
-	 template
+	 * @param masterLayoutPlid the primary key of the master layout
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
@@ -304,8 +300,8 @@ public class LayoutServiceSoap {
 			String[] keywordsMapLanguageIds, String[] keywordsMapValues,
 			String[] robotsMapLanguageIds, String[] robotsMapValues,
 			String type, String typeSettings, boolean hidden,
-			long masterLayoutPageTemplateEntryId,
-			String[] friendlyURLMapLanguageIds, String[] friendlyURLMapValues,
+			long masterLayoutPlid, String[] friendlyURLMapLanguageIds,
+			String[] friendlyURLMapValues,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -332,7 +328,7 @@ public class LayoutServiceSoap {
 				LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, localeNamesMap,
 					localeTitlesMap, descriptionMap, keywordsMap, robotsMap,
-					type, typeSettings, hidden, masterLayoutPageTemplateEntryId,
+					type, typeSettings, hidden, masterLayoutPlid,
 					friendlyURLMap, serviceContext);
 
 			return com.liferay.portal.kernel.model.LayoutSoap.toSoapModel(

@@ -712,7 +712,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="priority" type="int" />
-		<field name="masterLayoutPageTemplateEntryId" type="long" />
+		<field name="masterLayoutPlid" type="long" />
 		<field name="layoutPrototypeUuid" type="String" />
 		<field name="layoutPrototypeLinkEnabled" type="boolean" />
 		<field name="sourcePrototypeLayoutUuid" type="String" />

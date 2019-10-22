@@ -140,8 +140,8 @@ public class LayoutCacheModel
 		sb.append(css);
 		sb.append(", priority=");
 		sb.append(priority);
-		sb.append(", masterLayoutPageTemplateEntryId=");
-		sb.append(masterLayoutPageTemplateEntryId);
+		sb.append(", masterLayoutPlid=");
+		sb.append(masterLayoutPlid);
 		sb.append(", layoutPrototypeUuid=");
 		sb.append(layoutPrototypeUuid);
 		sb.append(", layoutPrototypeLinkEnabled=");
@@ -287,8 +287,7 @@ public class LayoutCacheModel
 		}
 
 		layoutImpl.setPriority(priority);
-		layoutImpl.setMasterLayoutPageTemplateEntryId(
-			masterLayoutPageTemplateEntryId);
+		layoutImpl.setMasterLayoutPlid(masterLayoutPlid);
 
 		if (layoutPrototypeUuid == null) {
 			layoutImpl.setLayoutPrototypeUuid("");
@@ -374,7 +373,7 @@ public class LayoutCacheModel
 
 		priority = objectInput.readInt();
 
-		masterLayoutPageTemplateEntryId = objectInput.readLong();
+		masterLayoutPlid = objectInput.readLong();
 		layoutPrototypeUuid = objectInput.readUTF();
 
 		layoutPrototypeLinkEnabled = objectInput.readBoolean();
@@ -511,7 +510,7 @@ public class LayoutCacheModel
 
 		objectOutput.writeInt(priority);
 
-		objectOutput.writeLong(masterLayoutPageTemplateEntryId);
+		objectOutput.writeLong(masterLayoutPlid);
 
 		if (layoutPrototypeUuid == null) {
 			objectOutput.writeUTF("");
@@ -564,7 +563,7 @@ public class LayoutCacheModel
 	public String colorSchemeId;
 	public String css;
 	public int priority;
-	public long masterLayoutPageTemplateEntryId;
+	public long masterLayoutPlid;
 	public String layoutPrototypeUuid;
 	public boolean layoutPrototypeLinkEnabled;
 	public String sourcePrototypeLayoutUuid;

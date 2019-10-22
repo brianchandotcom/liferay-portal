@@ -65,8 +65,7 @@ public class LayoutServiceUtil {
 	 #fastLoad(String)}.
 	 * @param hidden whether the layout is hidden
 	 * @param system whether the layout is system
-	 * @param masterLayoutPageTemplateEntryId the primary key of the master
-	 layout page template entry
+	 * @param masterLayoutPlid the primary key of the master layout
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
@@ -89,7 +88,7 @@ public class LayoutServiceUtil {
 			java.util.Map<java.util.Locale, String> keywordsMap,
 			java.util.Map<java.util.Locale, String> robotsMap, String type,
 			String typeSettings, boolean hidden, boolean system,
-			long masterLayoutPageTemplateEntryId,
+			long masterLayoutPlid,
 			java.util.Map<java.util.Locale, String> friendlyURLMap,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -97,8 +96,8 @@ public class LayoutServiceUtil {
 		return getService().addLayout(
 			groupId, privateLayout, parentLayoutId, classNameId, classPK,
 			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
-			robotsMap, type, typeSettings, hidden, system,
-			masterLayoutPageTemplateEntryId, friendlyURLMap, serviceContext);
+			robotsMap, type, typeSettings, hidden, system, masterLayoutPlid,
+			friendlyURLMap, serviceContext);
 	}
 
 	/**
@@ -193,8 +192,7 @@ public class LayoutServiceUtil {
 	 See {@link com.liferay.portal.kernel.util.UnicodeProperties
 	 #fastLoad(String)}.
 	 * @param hidden whether the layout is hidden
-	 * @param masterLayoutPageTemplateEntryId the primary key of the master
-	 template
+	 * @param masterLayoutPlid the primary key of the master layout
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
@@ -215,8 +213,7 @@ public class LayoutServiceUtil {
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			java.util.Map<java.util.Locale, String> keywordsMap,
 			java.util.Map<java.util.Locale, String> robotsMap, String type,
-			String typeSettings, boolean hidden,
-			long masterLayoutPageTemplateEntryId,
+			String typeSettings, boolean hidden, long masterLayoutPlid,
 			java.util.Map<java.util.Locale, String> friendlyURLMap,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -224,8 +221,8 @@ public class LayoutServiceUtil {
 		return getService().addLayout(
 			groupId, privateLayout, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, masterLayoutPageTemplateEntryId,
-			friendlyURLMap, serviceContext);
+			typeSettings, hidden, masterLayoutPlid, friendlyURLMap,
+			serviceContext);
 	}
 
 	/**

@@ -60,7 +60,7 @@ public class LayoutServiceHttp {
 			java.util.Map<java.util.Locale, String> keywordsMap,
 			java.util.Map<java.util.Locale, String> robotsMap, String type,
 			String typeSettings, boolean hidden, boolean system,
-			long masterLayoutPageTemplateEntryId,
+			long masterLayoutPlid,
 			java.util.Map<java.util.Locale, String> friendlyURLMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -74,8 +74,7 @@ public class LayoutServiceHttp {
 				methodKey, groupId, privateLayout, parentLayoutId, classNameId,
 				classPK, localeNamesMap, localeTitlesMap, descriptionMap,
 				keywordsMap, robotsMap, type, typeSettings, hidden, system,
-				masterLayoutPageTemplateEntryId, friendlyURLMap,
-				serviceContext);
+				masterLayoutPlid, friendlyURLMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -161,8 +160,7 @@ public class LayoutServiceHttp {
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			java.util.Map<java.util.Locale, String> keywordsMap,
 			java.util.Map<java.util.Locale, String> robotsMap, String type,
-			String typeSettings, boolean hidden,
-			long masterLayoutPageTemplateEntryId,
+			String typeSettings, boolean hidden, long masterLayoutPlid,
 			java.util.Map<java.util.Locale, String> friendlyURLMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -175,9 +173,8 @@ public class LayoutServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, parentLayoutId,
 				localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
-				robotsMap, type, typeSettings, hidden,
-				masterLayoutPageTemplateEntryId, friendlyURLMap,
-				serviceContext);
+				robotsMap, type, typeSettings, hidden, masterLayoutPlid,
+				friendlyURLMap, serviceContext);
 
 			Object returnObj = null;
 

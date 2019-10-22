@@ -74,9 +74,7 @@ public class LayoutWrapper
 		attributes.put("colorSchemeId", getColorSchemeId());
 		attributes.put("css", getCss());
 		attributes.put("priority", getPriority());
-		attributes.put(
-			"masterLayoutPageTemplateEntryId",
-			getMasterLayoutPageTemplateEntryId());
+		attributes.put("masterLayoutPlid", getMasterLayoutPlid());
 		attributes.put("layoutPrototypeUuid", getLayoutPrototypeUuid());
 		attributes.put(
 			"layoutPrototypeLinkEnabled", isLayoutPrototypeLinkEnabled());
@@ -276,11 +274,10 @@ public class LayoutWrapper
 			setPriority(priority);
 		}
 
-		Long masterLayoutPageTemplateEntryId = (Long)attributes.get(
-			"masterLayoutPageTemplateEntryId");
+		Long masterLayoutPlid = (Long)attributes.get("masterLayoutPlid");
 
-		if (masterLayoutPageTemplateEntryId != null) {
-			setMasterLayoutPageTemplateEntryId(masterLayoutPageTemplateEntryId);
+		if (masterLayoutPlid != null) {
+			setMasterLayoutPlid(masterLayoutPlid);
 		}
 
 		String layoutPrototypeUuid = (String)attributes.get(
@@ -883,13 +880,13 @@ public class LayoutWrapper
 	}
 
 	/**
-	 * Returns the master layout page template entry ID of this layout.
+	 * Returns the master layout plid of this layout.
 	 *
-	 * @return the master layout page template entry ID of this layout
+	 * @return the master layout plid of this layout
 	 */
 	@Override
-	public long getMasterLayoutPageTemplateEntryId() {
-		return model.getMasterLayoutPageTemplateEntryId();
+	public long getMasterLayoutPlid() {
+		return model.getMasterLayoutPlid();
 	}
 
 	/**
@@ -1972,16 +1969,13 @@ public class LayoutWrapper
 	}
 
 	/**
-	 * Sets the master layout page template entry ID of this layout.
+	 * Sets the master layout plid of this layout.
 	 *
-	 * @param masterLayoutPageTemplateEntryId the master layout page template entry ID of this layout
+	 * @param masterLayoutPlid the master layout plid of this layout
 	 */
 	@Override
-	public void setMasterLayoutPageTemplateEntryId(
-		long masterLayoutPageTemplateEntryId) {
-
-		model.setMasterLayoutPageTemplateEntryId(
-			masterLayoutPageTemplateEntryId);
+	public void setMasterLayoutPlid(long masterLayoutPlid) {
+		model.setMasterLayoutPlid(masterLayoutPlid);
 	}
 
 	/**

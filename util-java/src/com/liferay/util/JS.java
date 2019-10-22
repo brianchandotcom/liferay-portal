@@ -74,14 +74,6 @@ public class JS {
 		return s;
 	}
 
-	/**
-	 * @deprecated As of Bunyan (6.0.x), replaced by {@link #encodeURIComponent}
-	 */
-	@Deprecated
-	public static String escape(String s) {
-		return encodeURIComponent(s);
-	}
-
 	public static String getSafeName(String name) {
 		if (name == null) {
 			return null;
@@ -133,14 +125,6 @@ public class JS {
 		sb.append(StringPool.CLOSE_BRACKET);
 
 		return sb.toString();
-	}
-
-	/**
-	 * @deprecated As of Bunyan (6.0.x), replaced by {@link #decodeURIComponent}
-	 */
-	@Deprecated
-	public static String unescape(String s) {
-		return decodeURIComponent(s);
 	}
 
 	private static final Pattern _pattern = Pattern.compile("%u[0-9a-fA-F]{4}");

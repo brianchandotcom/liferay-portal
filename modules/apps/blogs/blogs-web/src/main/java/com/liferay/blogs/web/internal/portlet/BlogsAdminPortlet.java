@@ -49,6 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.scopeable=true",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Blogs", "javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.always-send-redirect=true",
 		"javax.portlet.init-param.mvc-command-names-default-views=/blogs/view",
 		"javax.portlet.init-param.portlet-title-based-navigation=true",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",

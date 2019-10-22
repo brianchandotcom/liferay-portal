@@ -18,17 +18,23 @@ import com.liferay.document.library.content.exception.NoSuchContentException;
 import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.service.base.DLContentLocalServiceBaseImpl;
 import com.liferay.document.library.content.util.comparator.DLContentVersionComparator;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.channels.FileChannel;
 
 import java.util.List;
 
@@ -44,6 +50,11 @@ import org.osgi.service.component.annotations.Component;
 )
 public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addContent(long, long, String, String, InputStream))}
+	 */
+	@Deprecated
 	@Override
 	public DLContent addContent(
 		long companyId, long repositoryId, String path, String version,
@@ -73,6 +84,32 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		return dlContent;
 	}
 
+	@Override
+	public DLContent addContent(
+		long companyId, long repositoryId, String path, String version,
+		InputStream inputStream) {
+
+		DLContent dlContent = dlContentPersistence.create(
+			counterLocalService.increment());
+
+		dlContent.setCompanyId(companyId);
+		dlContent.setRepositoryId(repositoryId);
+		dlContent.setPath(path);
+		dlContent.setVersion(version);
+
+		OutputBlob outputBlob = _toOutputBlob(inputStream);
+
+		dlContent.setData(outputBlob);
+		dlContent.setSize(outputBlob.length());
+
+		return dlContentPersistence.update(dlContent);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addContent(long, long, String, String, InputStream))}
+	 */
+	@Deprecated
 	@Override
 	public DLContent addContent(
 		long companyId, long repositoryId, String path, String version,
@@ -218,6 +255,66 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			dLContent.setPath(newPath);
 
 			dlContentPersistence.update(dLContent);
+		}
+	}
+
+	private OutputBlob _toOutputBlob(InputStream inputStream) {
+		if (inputStream instanceof ByteArrayInputStream) {
+			ByteArrayInputStream byteArrayInputStream =
+				(ByteArrayInputStream)inputStream;
+
+			return new OutputBlob(
+				inputStream, byteArrayInputStream.available());
+		}
+
+		if (inputStream instanceof UnsyncByteArrayInputStream) {
+			UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+				(UnsyncByteArrayInputStream)inputStream;
+
+			return new OutputBlob(
+				unsyncByteArrayInputStream,
+				unsyncByteArrayInputStream.available());
+		}
+
+		if (inputStream instanceof
+				com.liferay.portal.kernel.io.unsync.
+					UnsyncByteArrayInputStream) {
+
+			com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream
+				unsyncByteArrayInputStream =
+					(com.liferay.portal.kernel.io.unsync.
+						UnsyncByteArrayInputStream)inputStream;
+
+			return new OutputBlob(
+				inputStream, unsyncByteArrayInputStream.available());
+		}
+
+		if (inputStream instanceof FileInputStream) {
+			FileInputStream fileInputStream = (FileInputStream)inputStream;
+
+			FileChannel fileChannel = fileInputStream.getChannel();
+
+			try {
+				return new OutputBlob(inputStream, fileChannel.size());
+			}
+			catch (IOException ioe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to detect file size from file channel", ioe);
+				}
+			}
+		}
+
+		try {
+			byte[] bytes = StreamUtil.toByteArray(inputStream);
+
+			UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+				new UnsyncByteArrayInputStream(bytes);
+
+			return new OutputBlob(unsyncByteArrayInputStream, bytes.length);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
 		}
 	}
 

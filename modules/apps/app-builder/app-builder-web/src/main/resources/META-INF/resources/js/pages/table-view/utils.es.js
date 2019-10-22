@@ -41,3 +41,12 @@ export const getColumnNode = (container, index) => {
 export const getColumns = container => {
 	return container.querySelectorAll(`table tbody > tr:first-of-type > td`);
 };
+
+export const getFieldTypeLabel = (fieldTypes, fieldType) => {
+	const fieldTypeObject = fieldTypes.find(({name}) => name === fieldType);
+
+	if (fieldTypeObject) {
+		return fieldTypeObject.label;
+	}
+	return fieldType;
+};

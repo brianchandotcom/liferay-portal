@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
+import com.liferay.portal.output.stream.container.constants.OutputStreamContainerConstants;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -188,7 +189,10 @@ public class OutputStreamContainerFactoryTrackerImpl
 				OutputStreamContainerFactory.class,
 				new ConsoleOutputStreamContainerFactory(), dictionary));
 
-		dictionary.put("name", "dummy");
+		dictionary.put(
+			"name",
+			OutputStreamContainerConstants.
+				DUMMY_OUTPUT_STREAM_CONTAINER_FACTORY_NAME);
 		dictionary.put("service.ranking:Integer", "-100");
 
 		_serviceRegistrations.add(

@@ -627,7 +627,7 @@
 		<column name="colorSchemeId" type="String" />
 		<column name="css" type="String" />
 		<column name="priority" type="int" />
-		<column db-name="mLayoutPageTemplateEntryId" name="masterLayoutPageTemplateEntryId" type="long" />
+		<column name="masterLayoutPlid" type="long" />
 		<column name="layoutPrototypeUuid" type="String" />
 		<column name="layoutPrototypeLinkEnabled" type="boolean" />
 		<column name="sourcePrototypeLayoutUuid" type="String" />
@@ -669,9 +669,9 @@
 			<finder-column name="groupId" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_MLPTEI" return-type="Collection" where="system = [$FALSE$]">
+		<finder name="G_M" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />
-			<finder-column name="masterLayoutPageTemplateEntryId" />
+			<finder-column name="masterLayoutPlid" />
 		</finder>
 		<finder name="C_L" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="companyId" />

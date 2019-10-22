@@ -120,6 +120,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.portal.dao.init.DBInitUtil">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.dao.jdbc.DataSourceFactoryImpl">
 		<priority value="INFO" />
 	</category>

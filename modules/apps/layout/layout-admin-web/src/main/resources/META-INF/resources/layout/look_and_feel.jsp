@@ -39,51 +39,53 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
 <aui:input name="devices" type="hidden" value="regular" />
 
-<liferay-util:buffer
-	var="rootNodeNameLink"
->
-	<c:choose>
-		<c:when test="<%= themeDisplay.isStateExclusive() %>">
-			<%= HtmlUtil.escape(rootNodeName) %>
-		</c:when>
-		<c:otherwise>
-			<aui:a href="<%= redirectURL.toString() %>"><%= HtmlUtil.escape(rootNodeName) %></aui:a>
-		</c:otherwise>
-	</c:choose>
-</liferay-util:buffer>
+<c:if test="<%= selLayout.getMasterLayoutPlid() <= 0 %>">
+	<liferay-util:buffer
+		var="rootNodeNameLink"
+	>
+		<c:choose>
+			<c:when test="<%= themeDisplay.isStateExclusive() %>">
+				<%= HtmlUtil.escape(rootNodeName) %>
+			</c:when>
+			<c:otherwise>
+				<aui:a href="<%= redirectURL.toString() %>"><%= HtmlUtil.escape(rootNodeName) %></aui:a>
+			</c:otherwise>
+		</c:choose>
+	</liferay-util:buffer>
 
-<%
-String taglibLabel = null;
+	<%
+	String taglibLabel = null;
 
-if (group.isLayoutPrototype()) {
-	taglibLabel = LanguageUtil.get(request, "use-the-same-look-and-feel-of-the-pages-in-which-this-template-is-used");
-}
-else {
-	taglibLabel = LanguageUtil.format(request, "use-the-same-look-and-feel-of-the-x", rootNodeNameLink, false);
-}
-%>
+	if (group.isLayoutPrototype()) {
+		taglibLabel = LanguageUtil.get(request, "use-the-same-look-and-feel-of-the-pages-in-which-this-template-is-used");
+	}
+	else {
+		taglibLabel = LanguageUtil.format(request, "use-the-same-look-and-feel-of-the-x", rootNodeNameLink, false);
+	}
+	%>
 
-<div class="sheet-section">
-	<h3 class="sheet-subtitle"><liferay-ui:message key="theme" /></h3>
+	<div class="sheet-section">
+		<h3 class="sheet-subtitle"><liferay-ui:message key="theme" /></h3>
 
-	<aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
+		<aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
 
-	<aui:input checked="<%= !selLayout.isInheritLookAndFeel() %>" id="regularUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="regularInheritLookAndFeel" type="radio" value="<%= false %>" />
+		<aui:input checked="<%= !selLayout.isInheritLookAndFeel() %>" id="regularUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="regularInheritLookAndFeel" type="radio" value="<%= false %>" />
 
-	<c:if test="<%= !group.isLayoutPrototype() %>">
-		<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">
-			<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="companyId" value="<%= String.valueOf(group.getCompanyId()) %>" />
-				<liferay-util:param name="editable" value="<%= Boolean.FALSE.toString() %>" />
-				<liferay-util:param name="themeId" value="<%= rootTheme.getThemeId() %>" />
-			</liferay-util:include>
+		<c:if test="<%= !group.isLayoutPrototype() %>">
+			<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">
+				<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="companyId" value="<%= String.valueOf(group.getCompanyId()) %>" />
+					<liferay-util:param name="editable" value="<%= Boolean.FALSE.toString() %>" />
+					<liferay-util:param name="themeId" value="<%= rootTheme.getThemeId() %>" />
+				</liferay-util:include>
+			</div>
+		</c:if>
+
+		<div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
+			<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 		</div>
-	</c:if>
-
-	<div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
-		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 	</div>
-</div>
+</c:if>
 
 <%
 LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getPlid());
@@ -112,15 +114,17 @@ if (layoutPageTemplateEntry == null) {
 	</div>
 </c:if>
 
-<aui:script>
-	Liferay.Util.toggleRadio(
-		'<portlet:namespace />regularInheritLookAndFeel',
-		'<portlet:namespace />inheritThemeOptions',
-		'<portlet:namespace />themeOptions'
-	);
-	Liferay.Util.toggleRadio(
-		'<portlet:namespace />regularUniqueLookAndFeel',
-		'<portlet:namespace />themeOptions',
-		'<portlet:namespace />inheritThemeOptions'
-	);
-</aui:script>
+<c:if test="<%= selLayout.getMasterLayoutPlid() <= 0 %>">
+	<aui:script>
+		Liferay.Util.toggleRadio(
+			'<portlet:namespace />regularInheritLookAndFeel',
+			'<portlet:namespace />inheritThemeOptions',
+			'<portlet:namespace />themeOptions'
+		);
+		Liferay.Util.toggleRadio(
+			'<portlet:namespace />regularUniqueLookAndFeel',
+			'<portlet:namespace />themeOptions',
+			'<portlet:namespace />inheritThemeOptions'
+		);
+	</aui:script>
+</c:if>

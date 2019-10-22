@@ -50,16 +50,6 @@ public class WikiPageResourceLocalServiceImpl
 		return pageResource;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #addPageResource(long, long, String)}
-	 */
-	@Deprecated
-	@Override
-	public WikiPageResource addPageResource(long nodeId, String title) {
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public void deletePageResource(long nodeId, String title)
 		throws PortalException {
@@ -101,23 +91,6 @@ public class WikiPageResourceLocalServiceImpl
 
 		if (pageResource == null) {
 			pageResource = addPageResource(groupId, nodeId, title);
-		}
-
-		return pageResource.getResourcePrimKey();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getPageResourcePrimKey(long, long, String)}
-	 */
-	@Deprecated
-	@Override
-	public long getPageResourcePrimKey(long nodeId, String title) {
-		WikiPageResource pageResource = wikiPageResourcePersistence.fetchByN_T(
-			nodeId, title);
-
-		if (pageResource == null) {
-			pageResource = addPageResource(nodeId, title);
 		}
 
 		return pageResource.getResourcePrimKey();

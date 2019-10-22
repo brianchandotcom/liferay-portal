@@ -169,21 +169,6 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			mimeType);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #addTempFileEntry(long, String, String, InputStream, String)}
-	 */
-	@Deprecated
-	@Override
-	public void addTempPageAttachment(
-			long nodeId, String fileName, String tempFolderName,
-			InputStream inputStream, String mimeType)
-		throws PortalException {
-
-		addTempFileEntry(
-			nodeId, tempFolderName, fileName, inputStream, mimeType);
-	}
-
 	@Override
 	public void changeParent(
 			long nodeId, String title, String newParentTitle,
@@ -391,18 +376,6 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		return exportToRSS(
 			node.getName(), node.getDescription(), type, version, displayStyle,
 			feedURL, entryURL, attachmentURLPrefix, pages, false, null);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getOrphans(WikiNode)}
-	 */
-	@Deprecated
-	@Override
-	public List<WikiPage> getOrphans(long groupId, long nodeId)
-		throws PortalException {
-
-		return getOrphans(wikiNodePersistence.findByPrimaryKey(nodeId));
 	}
 
 	@Override

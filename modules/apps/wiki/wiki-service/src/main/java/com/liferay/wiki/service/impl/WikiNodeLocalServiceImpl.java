@@ -180,21 +180,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		addNodeResources(node, addGroupPermissions, addGuestPermissions);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addNodeResources(WikiNode, ModelPermissions)}
-	 */
-	@Deprecated
-	@Override
-	public void addNodeResources(
-			long nodeId, String[] groupPermissions, String[] guestPermissions)
-		throws PortalException {
-
-		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
-
-		addNodeResources(node, groupPermissions, guestPermissions);
-	}
-
 	@Override
 	public void addNodeResources(
 			WikiNode node, boolean addGroupPermissions,
@@ -215,22 +200,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		resourceLocalService.addModelResources(
 			node.getCompanyId(), node.getGroupId(), node.getUserId(),
 			WikiNode.class.getName(), node.getNodeId(), modelPermissions);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addNodeResources(WikiNode, ModelPermissions)}
-	 */
-	@Deprecated
-	@Override
-	public void addNodeResources(
-			WikiNode node, String[] groupPermissions, String[] guestPermissions)
-		throws PortalException {
-
-		resourceLocalService.addModelResources(
-			node.getCompanyId(), node.getGroupId(), node.getUserId(),
-			WikiNode.class.getName(), node.getNodeId(), groupPermissions,
-			guestPermissions);
 	}
 
 	@Override

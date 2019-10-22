@@ -1,20 +1,24 @@
 components:
     schemas:
         AssigneeUser:
-            description: https://schema.org/AssigneeUser
+            description:
+                https://schema.org/AssigneeUser
             properties:
                 id:
-                    description: The user's ID.
+                    description:
+                        The user's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 image:
-                    description: A relative URL to the user's profile image.
+                    description:
+                        A relative URL to the user's profile image.
                     format: uri
                     readOnly: true
                     type: string
                 name:
-                    description: The user's full name.
+                    description:
+                        The user's full name.
                     readOnly: true
                     type: string
                 onTimeTaskCount:
@@ -28,7 +32,8 @@ components:
                     type: integer
             type: object
         Calendar:
-            description: https://www.schema.org/Calendar
+            description:
+                https://www.schema.org/Calendar
             properties:
                 defaultCalendar:
                     type: boolean
@@ -38,20 +43,24 @@ components:
                     type: string
             type: object
         CreatorUser:
-            description: https://schema.org/CreatorUser
+            description:
+                https://schema.org/CreatorUser
             properties:
                 id:
-                    description: The user's ID.
+                    description:
+                        The user's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 name:
-                    description: The user's full name.
+                    description:
+                        The user's full name.
                     readOnly: true
                     type: string
             type: object
         GenericError:
-            description: https://www.schema.org/GenericError
+            description:
+                https://www.schema.org/GenericError
             properties:
                 fieldName:
                     type: string
@@ -59,7 +68,8 @@ components:
                     type: string
             type: object
         Histogram:
-            description: https://www.schema.org/Histogram
+            description:
+                https://www.schema.org/Histogram
             properties:
                 key:
                     type: string
@@ -68,7 +78,8 @@ components:
                     type: number
             type: object
         Instance:
-            description: https://www.schema.org/Instance
+            description:
+                https://www.schema.org/Instance
             properties:
                 assetTitle:
                     type: string
@@ -108,7 +119,8 @@ components:
                     type: array
             type: object
         Metric:
-            description: https://www.schema.org/Metric
+            description:
+                https://www.schema.org/Metric
             properties:
                 histograms:
                     items:
@@ -122,7 +134,8 @@ components:
                     type: number
             type: object
         Node:
-            description: https://www.schema.org/Node
+            description:
+                https://www.schema.org/Node
             properties:
                 id:
                     format: int64
@@ -137,7 +150,8 @@ components:
                     type: string
             type: object
         NodeKey:
-            description: https://www.schema.org/NodeKey
+            description:
+                https://www.schema.org/NodeKey
             properties:
                 executionType:
                     type: string
@@ -145,7 +159,8 @@ components:
                     type: string
             type: object
         Process:
-            description: https://www.schema.org/Process
+            description:
+                https://www.schema.org/Process
             properties:
                 id:
                     format: int64
@@ -166,20 +181,24 @@ components:
                     type: integer
             type: object
         Role:
-            description: https://www.schema.org/Role
+            description:
+                https://www.schema.org/Role
             properties:
                 id:
-                    description: The role's ID.
+                    description:
+                        The role's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 name:
-                    description: The role's name.
+                    description:
+                        The role's name.
                     readOnly: true
                     type: string
             type: object
         SLA:
-            description: https://www.schema.org/SLA
+            description:
+                https://www.schema.org/SLA
             properties:
                 calendarKey:
                     type: string
@@ -230,7 +249,8 @@ components:
                     type: object
             type: object
         SLAResult:
-            description: https://www.schema.org/SLA
+            description:
+                https://www.schema.org/SLA
             properties:
                 dateOverdue:
                     format: date-time
@@ -250,7 +270,8 @@ components:
                     type: string
             type: object
         Task:
-            description: https://www.schema.org/Task
+            description:
+                https://www.schema.org/Task
             properties:
                 breachedInstanceCount:
                     format: int64
@@ -273,7 +294,8 @@ components:
                     type: integer
             type: object
         TimeRange:
-            description: https://www.schema.org/TimeRange
+            description:
+                https://www.schema.org/TimeRange
             properties:
                 dateEnd:
                     format: date-time
@@ -289,7 +311,8 @@ components:
                     type: string
             type: object
 info:
-    description: ""
+    description:
+        ""
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -313,7 +336,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Calendar"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["Calendar"]
     "/processes":
         get:
@@ -348,7 +372,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Process"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["Process"]
     "/processes/{processId}":
         get:
@@ -383,7 +408,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Process"
-                    description: ""
+                    description:
+                        ""
             tags: ["Process"]
     "/processes/{processId}/assignee-users":
         get:
@@ -437,7 +463,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/AssigneeUser"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["AssigneeUser"]
     "/processes/{processId}/instances":
         get:
@@ -507,7 +534,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Instance"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["Instance"]
     "/processes/{processId}/instances/{instanceId}":
         get:
@@ -534,7 +562,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Instance"
-                    description: ""
+                    description:
+                        ""
             tags: ["Instance"]
     "/processes/{processId}/metric":
         get:
@@ -571,7 +600,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Metric"
-                    description: ""
+                    description:
+                        ""
             tags: ["Metric"]
     "/processes/{processId}/nodes":
         get:
@@ -596,7 +626,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Node"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["Node"]
     "/processes/{processId}/roles":
         get:
@@ -621,7 +652,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Role"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["Role"]
     "/processes/{processId}/slas":
         get:
@@ -659,7 +691,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/SLA"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["SLA"]
         post:
             operationId: postProcessSLA
@@ -687,7 +720,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/SLA"
-                    description: ""
+                    description:
+                        ""
                 400:
                     content:
                         application/json:
@@ -696,7 +730,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/GenericError"
-                    description: ""
+                    description:
+                        ""
             tags: ["SLA"]
     "/processes/{processId}/tasks":
         get:
@@ -751,7 +786,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Task"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["Task"]
     "/processes/{processId}/title":
         get:
@@ -769,7 +805,8 @@ paths:
                         text/plain:
                             schema:
                                 type: string
-                    description: ""
+                    description:
+                        ""
             tags: ["Process"]
     "/slas/{slaId}":
         delete:
@@ -785,7 +822,8 @@ paths:
                 204:
                     content:
                         application/json: {}
-                    description: ""
+                    description:
+                        ""
             tags: ["SLA"]
         get:
             operationId: getSLA
@@ -805,7 +843,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/SLA"
-                    description: ""
+                    description:
+                        ""
             tags: ["SLA"]
         put:
             operationId: putSLA
@@ -833,7 +872,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/SLA"
-                    description: ""
+                    description:
+                        ""
                 400:
                     content:
                         application/json:
@@ -842,7 +882,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/GenericError"
-                    description: ""
+                    description:
+                        ""
             tags: ["SLA"]
     "/time-ranges":
         get:
@@ -860,5 +901,6 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/TimeRange"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["TimeRange"]

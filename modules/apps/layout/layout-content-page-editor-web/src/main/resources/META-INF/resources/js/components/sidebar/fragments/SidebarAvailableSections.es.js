@@ -234,7 +234,7 @@ SidebarAvailableSections.STATE = {
 
 const ConnectedSidebarAvailableSections = getConnectedComponent(
 	SidebarAvailableSections,
-	['layoutData', 'sections', 'spritemap']
+	['layoutData', 'elements', 'spritemap']
 );
 
 Soy.register(ConnectedSidebarAvailableSections, templates);

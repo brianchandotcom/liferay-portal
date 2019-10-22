@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Portal Output Stream Container API
 Bundle-SymbolicName: com.liferay.portal.output.stream.container.api
 Bundle-Version: 4.0.0
-Export-Package: com.liferay.portal.output.stream.container
+Export-Package:\
+	com.liferay.portal.output.stream.container,\
+	com.liferay.portal.output.stream.container.constants

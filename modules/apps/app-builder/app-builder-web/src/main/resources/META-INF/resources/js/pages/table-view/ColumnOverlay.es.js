@@ -15,7 +15,7 @@
 import classNames from 'classnames';
 import {useEventListener} from 'frontend-js-react-web';
 import dom from 'metal-dom';
-import React, {useState} from 'react';
+import React, {useState, useLayoutEffect} from 'react';
 
 import Button from '../../components/button/Button.es';
 import {useKeyDown} from '../../hooks/index.es';
@@ -40,13 +40,26 @@ const Overlay = ({
 	index,
 	name,
 	onRemoveFieldName,
-	selected
+	selected,
+	total
 }) => {
+	const [style, setStyle] = useState({});
+
+	useEventListener(
+		'resize',
+		() => {
+			setStyle(getStyle(container, index));
+		},
+		true,
+		window
+	);
+
+	useLayoutEffect(() => {
+		setStyle(getStyle(container, index));
+	}, [container, index, total]);
+
 	return (
-		<div
-			className={classNames('column-overlay', {selected})}
-			style={getStyle(container, index)}
-		>
+		<div className={classNames('column-overlay', {selected})} style={style}>
 			<header>
 				<label>{fieldType}</label>
 
@@ -145,6 +158,7 @@ export default ({container, fields, onRemoveFieldName}) => {
 					name={name}
 					onRemoveFieldName={onRemoveFieldName}
 					selected={name === selectedFieldName}
+					total={fields.length}
 				/>
 			)
 	);

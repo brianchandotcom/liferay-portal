@@ -14,8 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.clay;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCard;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -39,9 +38,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SelectBasicPagesVerticalCard implements VerticalCard {
+public class SelectBasicTemplatesHorizontalCard implements HorizontalCard {
 
-	public SelectBasicPagesVerticalCard(
+	public SelectBasicTemplatesHorizontalCard(
 		String type, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
@@ -55,8 +54,9 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getDataLink() {
-		Map<String, Object> data = new HashMap<>();
+	@Override
+	public Map<String, String> getData() {
+		Map<String, String> data = new HashMap<>();
 
 		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
@@ -91,30 +91,13 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 	@Override
 	public String getElementClasses() {
 		return "add-layout-action-option card-interactive " +
-			"card-interactive-primary";
+			"card-interactive-primary card-type-template " +
+				"template-card-horizontal";
 	}
 
 	@Override
-	public String getImageSrc() {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(PortalUtil.getPathContext(_httpServletRequest));
-		sb.append("/images/");
-		sb.append(_type);
-		sb.append(".svg");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String getSubtitle() {
-		ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", _themeDisplay.getLocale(),
-			_layoutTypeController.getClass());
-
-		return LanguageUtil.get(
-			_httpServletRequest, layoutTypeResourceBundle,
-			"layout.types." + _type + ".description");
+	public String getIcon() {
+		return "page";
 	}
 
 	@Override

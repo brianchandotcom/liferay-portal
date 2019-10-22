@@ -17,8 +17,11 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -28,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -95,28 +99,28 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 				WorkflowConstants.STATUS_APPROVED);
 	}
 
-	public List<String> getPrimaryTypes() {
-		if (_primaryTypes != null) {
-			return _primaryTypes;
-		}
+	public List<LayoutPageTemplateEntry> getMasterLayoutPageTemplateEntries() {
+		List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries =
+			new ArrayList<>();
 
-		_primaryTypes = ListUtil.filter(
-			ListUtil.fromArray(LayoutTypeControllerTracker.getTypes()),
-			type -> {
-				LayoutTypeController layoutTypeController =
-					LayoutTypeControllerTracker.getLayoutTypeController(type);
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				createLayoutPageTemplateEntry(0);
 
-				return layoutTypeController.isInstanceable() &&
-					   layoutTypeController.isPrimaryType();
-			});
+		layoutPageTemplateEntry.setName(
+			LanguageUtil.get(_httpServletRequest, "blank"));
+		layoutPageTemplateEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-		return _primaryTypes;
-	}
+		masterLayoutPageTemplateEntries.add(layoutPageTemplateEntry);
 
-	public int getPrimaryTypesCount() {
-		List<String> types = getPrimaryTypes();
+		masterLayoutPageTemplateEntries.addAll(
+			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
+				_themeDisplay.getScopeGroupId(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null));
 
-		return types.size();
+		return masterLayoutPageTemplateEntries;
 	}
 
 	public String getRedirect() {
@@ -135,7 +139,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		}
 
 		_selectedTab = ParamUtil.getString(
-			_httpServletRequest, "selectedTab", "basic-pages");
+			_httpServletRequest, "selectedTab", "basic-templates");
 
 		return _selectedTab;
 	}
@@ -152,7 +156,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 					LayoutTypeControllerTracker.getLayoutTypeController(type);
 
 				return layoutTypeController.isInstanceable() &&
-					   !layoutTypeController.isPrimaryType();
+					   !Objects.equals(type, LayoutConstants.TYPE_CONTENT);
 			});
 
 		return _types;
@@ -164,12 +168,12 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		return types.size();
 	}
 
-	public boolean isBasicPages() {
+	public boolean isBasicTemplates() {
 		if (getLayoutPageTemplateCollectionId() != 0) {
 			return false;
 		}
 
-		if (!Objects.equals(getSelectedTab(), "basic-pages")) {
+		if (!Objects.equals(getSelectedTab(), "basic-templates")) {
 			return false;
 		}
 
@@ -198,7 +202,6 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private Long _layoutPageTemplateCollectionId;
-	private List<String> _primaryTypes;
 	private String _redirect;
 	private String _selectedTab;
 	private final ThemeDisplay _themeDisplay;

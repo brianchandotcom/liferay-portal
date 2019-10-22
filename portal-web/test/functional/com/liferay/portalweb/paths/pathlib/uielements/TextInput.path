@@ -309,6 +309,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PASSWORD_1</td>
+	<td>//input[contains(@id,'password1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_2</td>
+	<td>//input[contains(@id,'password2')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PASSWORD_TYPE</td>
 	<td>//input[@type='password']</td>
 	<td></td>
@@ -341,6 +351,11 @@
 <tr>
 	<td>PRIVATE_VIRTUAL_HOST_URL</td>
 	<td>//input[contains(@id,'privateVirtualHost')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDER_QUERY</td>
+	<td>//input[contains(@id,'reminderQueryAnswer')]</td>
 	<td></td>
 </tr>
 <tr>

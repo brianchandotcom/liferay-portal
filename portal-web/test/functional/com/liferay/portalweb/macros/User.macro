@@ -689,14 +689,12 @@ definition {
 	macro answerPasswordReminder {
 		Pause(locator1 = "3000");
 
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#ANSWER")) {
+		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#REMINDER_QUERY")) {
 			Type(
-				locator1 = "TextInput#ANSWER",
+				locator1 = "TextInput#REMINDER_QUERY",
 				value1 = "test");
 
-			Button.clickSave();
-
-			AssertElementNotPresent(locator1 = "Button#SAVE");
+			Click(locator1 = "Button#SUBMIT");
 		}
 	}
 
@@ -2029,35 +2027,35 @@ definition {
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#PASSWORD")) {
 			if ((isSet(syntaxCheckingEnabled)) && ("${syntaxCheckingEnabled}" == "true")) {
 				Type(
-					locator1 = "TextInput#PASSWORD",
+					locator1 = "TextInput#PASSWORD_1",
 					value1 = "${resetPassword}");
 
 				Type(
-					locator1 = "TextInput#ENTER_AGAIN",
+					locator1 = "TextInput#PASSWORD_2",
 					value1 = "${resetPassword}");
 			}
 			else {
 				if ((isSet(setupWizardEnabled)) && ("${setupWizardEnabled}" == "true")) {
 					Type(
-						locator1 = "TextInput#PASSWORD",
+						locator1 = "TextInput#PASSWORD_1",
 						value1 = "test2");
 
 					Type(
-						locator1 = "TextInput#ENTER_AGAIN",
+						locator1 = "TextInput#PASSWORD_2",
 						value1 = "test2");
 				}
 				else {
 					Type(
-						locator1 = "TextInput#PASSWORD",
+						locator1 = "TextInput#PASSWORD_1",
 						value1 = "test");
 
 					Type(
-						locator1 = "TextInput#ENTER_AGAIN",
+						locator1 = "TextInput#PASSWORD_2",
 						value1 = "test");
 				}
 			}
 
-			Button.clickSave();
+			Button.clickSubmitButton();
 
 			AssertElementNotPresent(locator1 = "TextInput#ENTER_AGAIN");
 		}

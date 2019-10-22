@@ -47,8 +47,8 @@ public class BuildUpgradeTableTask extends Task {
 		_upgradeTableBuilderArgs.setOsgiModule(osgiModule);
 	}
 
-	public void setReleaseInfoFileName(String releaseInfoFileName) {
-		_upgradeTableBuilderArgs.setReleaseInfoFileName(releaseInfoFileName);
+	public void setReleaseInfoVersion(String releaseInfoVersion) {
+		_upgradeTableBuilderArgs.setReleaseInfoVersion(releaseInfoVersion);
 	}
 
 	public void setUpgradeTableDirName(String upgradeTableDirName) {

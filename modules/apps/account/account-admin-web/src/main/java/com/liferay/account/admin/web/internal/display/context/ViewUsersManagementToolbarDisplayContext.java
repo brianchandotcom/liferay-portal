@@ -14,10 +14,14 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -25,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
@@ -92,6 +97,19 @@ public class ViewUsersManagementToolbarDisplayContext
 	public List<DropdownItem> getFilterDropdownItems() {
 		DropdownItemList filterDropdownItems = new DropdownItemList() {
 			{
+				List<DropdownItem> filterAccountsDropdownItems =
+					_getFilterAccountsDropdownItems();
+
+				if (filterAccountsDropdownItems != null) {
+					addGroup(
+						dropdownGroupItem -> {
+							dropdownGroupItem.setDropdownItems(
+								_getFilterAccountsDropdownItems());
+							dropdownGroupItem.setLabel(
+								_getFilterAccountsDropdownItemsLabel());
+						});
+				}
+
 				List<DropdownItem> filterNavigationDropdownItems =
 					getFilterNavigationDropdownItems();
 
@@ -125,6 +143,32 @@ public class ViewUsersManagementToolbarDisplayContext
 		}
 
 		return filterDropdownItems;
+	}
+
+	@Override
+	public List<LabelItem> getFilterLabelItems() {
+		return new LabelItemList() {
+			{
+				String accountNavigation = ParamUtil.getString(
+					request, "accountNavigation", "all");
+
+				long[] accountEntryIds = ParamUtil.getLongValues(
+					request, "accountEntryIds");
+
+				if (accountNavigation.equals("accounts")) {
+					for (long accountEntryId : accountEntryIds) {
+						AccountEntry accountEntry =
+							AccountEntryLocalServiceUtil.fetchAccountEntry(
+								accountEntryId);
+
+						add(
+							labelItem -> labelItem.setLabel(
+								LanguageUtil.get(
+									request, accountEntry.getName())));
+					}
+				}
+			}
+		};
 	}
 
 	@Override
@@ -182,6 +226,68 @@ public class ViewUsersManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"first-name", "last-name", "email-address"};
+	}
+
+	private List<DropdownItem> _getFilterAccountsDropdownItems() {
+		final String navigation = ParamUtil.getString(
+			request, "accountNavigation", "all");
+
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(navigation.equals("all"));
+
+						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
+
+						dropdownItem.setHref(
+							PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse),
+							"accountNavigation", "all");
+					});
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(navigation.equals("accounts"));
+
+						PortletURL accountSelectorURL =
+							liferayPortletResponse.createRenderURL();
+
+						accountSelectorURL.setParameter(
+							"mvcPath", "/select_accounts.jsp");
+						accountSelectorURL.setParameter(
+							"accountNavigation", "accounts");
+						accountSelectorURL.setWindowState(
+							LiferayWindowState.POP_UP);
+
+						dropdownItem.putData(
+							"redirectURL", currentURLObj.toString());
+						dropdownItem.putData(
+							"accountSelectorURL",
+							accountSelectorURL.toString());
+						dropdownItem.putData("action", "selectAccount");
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "accounts"));
+					});
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							navigation.equals("no-assigned-account"));
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "no-assigned-account"));
+
+						dropdownItem.setHref(
+							PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse),
+							"accountNavigation", "no-assigned-account");
+					});
+			}
+		};
+	}
+
+	private String _getFilterAccountsDropdownItemsLabel() {
+		return LanguageUtil.get(request, "filter-by-accounts");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

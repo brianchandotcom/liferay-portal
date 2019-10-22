@@ -86,28 +86,6 @@ public class DBInitUtil {
 		}
 	}
 
-	private static boolean _checkDefaultRelease() {
-		try (Connection con = DataAccess.getConnection();
-			PreparedStatement ps = con.prepareStatement(
-				"select buildNumber, schemaVersion, state_ from Release_ " +
-					"where releaseId = " + ReleaseConstants.DEFAULT_ID);
-			ResultSet rs = ps.executeQuery()) {
-
-			if (!rs.next()) {
-				_addReleaseInfo();
-			}
-
-			return true;
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e.getMessage(), e);
-			}
-		}
-
-		return false;
-	}
-
 	private static void _addReleaseInfo() throws Exception {
 		try (Connection con = DataAccess.getConnection();
 			PreparedStatement ps = con.prepareStatement(
@@ -136,6 +114,28 @@ public class DBInitUtil {
 		}
 	}
 
+	private static boolean _checkDefaultRelease() {
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"select buildNumber, schemaVersion, state_ from Release_ " +
+					"where releaseId = " + ReleaseConstants.DEFAULT_ID);
+			ResultSet rs = ps.executeQuery()) {
+
+			if (!rs.next()) {
+				_addReleaseInfo();
+			}
+
+			return true;
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e.getMessage(), e);
+			}
+		}
+
+		return false;
+	}
+
 	private static void _createTablesAndPopulate(DB db) {
 		try {
 			if (_log.isInfoEnabled()) {
@@ -157,6 +157,30 @@ public class DBInitUtil {
 
 			throw new SystemException(e);
 		}
+	}
+
+	private static boolean _hasDefaultReleaseWithTestString(String testString) {
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"select count(*) from Release_ where releaseId = ? and " +
+					"testString = ?")) {
+
+			ps.setLong(1, ReleaseConstants.DEFAULT_ID);
+			ps.setString(2, testString);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next() && (rs.getInt(1) > 0)) {
+					return true;
+				}
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e.getMessage());
+			}
+		}
+
+		return false;
 	}
 
 	private static void _setSupportsStringCaseSensitiveQuery(DB db) {
@@ -198,30 +222,6 @@ public class DBInitUtil {
 		else {
 			db.setSupportsStringCaseSensitiveQuery(true);
 		}
-	}
-
-	private static boolean _hasDefaultReleaseWithTestString(String testString) {
-		try (Connection con = DataAccess.getConnection();
-			PreparedStatement ps = con.prepareStatement(
-				"select count(*) from Release_ where releaseId = ? and " +
-					"testString = ?")) {
-
-			ps.setLong(1, ReleaseConstants.DEFAULT_ID);
-			ps.setString(2, testString);
-
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next() && (rs.getInt(1) > 0)) {
-					return true;
-				}
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
-			}
-		}
-
-		return false;
 	}
 
 	private DBInitUtil() {

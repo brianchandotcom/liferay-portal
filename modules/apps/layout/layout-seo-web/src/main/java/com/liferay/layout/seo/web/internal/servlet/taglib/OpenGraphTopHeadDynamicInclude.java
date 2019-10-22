@@ -14,14 +14,19 @@
 
 package com.liferay.layout.seo.web.internal.servlet.taglib;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -102,8 +107,10 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 					printWriter.println(
 						_getOpenGraphTag(
 							"og:description",
-							layout.getDescription(
-								themeDisplay.getLanguageId())));
+							_getDescriptionTag(layout, themeDisplay)));
+					printWriter.println(
+						_getOpenGraphTag(
+							"og:image", _getImageTag(layout, themeDisplay)));
 					printWriter.println(
 						_getOpenGraphTag(
 							"og:locale", themeDisplay.getLanguageId()));
@@ -125,8 +132,11 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				}
 			}
 		}
-		catch (PortalException pe) {
-			throw new IOException(pe);
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new IOException(e);
 		}
 	}
 
@@ -156,6 +166,44 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		return sb.toString();
 	}
 
+	private String _getDescriptionTag(
+		Layout layout, ThemeDisplay themeDisplay) {
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
+
+		if ((layoutSEOEntry != null) &&
+			layoutSEOEntry.isOpenGraphDescriptionEnabled()) {
+
+			return layoutSEOEntry.getOpenGraphDescription(
+				themeDisplay.getLocale());
+		}
+
+		return layout.getDescription(themeDisplay.getLanguageId());
+	}
+
+	private String _getImageTag(Layout layout, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
+
+		if ((layoutSEOEntry != null) &&
+			(layoutSEOEntry.getOpenGraphImageFileEntryId() > 0)) {
+
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+				layoutSEOEntry.getOpenGraphImageFileEntryId());
+
+			return _dlurlHelper.getImagePreviewURL(fileEntry, themeDisplay);
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private String _getOpenGraphTag(String property, String content) {
 		if (Validator.isNull(content)) {
 			return StringPool.BLANK;
@@ -181,6 +229,17 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		Layout layout = themeDisplay.getLayout();
 
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
+
+		if ((layoutSEOEntry != null) &&
+			layoutSEOEntry.isOpenGraphTitleEnabled()) {
+
+			return layoutSEOEntry.getOpenGraphTitle(themeDisplay.getLocale());
+		}
+
 		String portletId = (String)httpServletRequest.getAttribute(
 			WebKeys.PORTLET_ID);
 
@@ -199,7 +258,16 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
+
+	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	@Reference
 	private LayoutSEOLinkManager _layoutSEOLinkManager;

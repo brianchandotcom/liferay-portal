@@ -221,6 +221,11 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, repositoryId, path, version);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getContentsByDirectory(long, long, String)}
+	 */
+	@Deprecated
 	@Override
 	public List<DLContent> getContents(long companyId, long repositoryId) {
 		return dlContentPersistence.findByC_R(companyId, repositoryId);
@@ -236,6 +241,10 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 	@Override
 	public List<DLContent> getContentsByDirectory(
 		long companyId, long repositoryId, String dirName) {
+
+		if (dirName.isEmpty()) {
+			return dlContentPersistence.findByC_R(companyId, repositoryId);
+		}
 
 		if (!dirName.endsWith(StringPool.SLASH)) {
 			dirName = dirName.concat(StringPool.SLASH);

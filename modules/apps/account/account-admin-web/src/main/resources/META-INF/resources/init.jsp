@@ -33,6 +33,7 @@ page import="com.liferay.account.admin.web.internal.display.AccountDisplay" %><%
 page import="com.liferay.account.admin.web.internal.display.AccountUserDisplay" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountsManagementToolbarDisplayContext" %><%@
+page import="com.liferay.account.admin.web.internal.display.context.ViewUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission" %><%@
 page import="com.liferay.account.exception.AccountEntryDomainsException" %><%@
 page import="com.liferay.account.model.AccountEntry" %><%@

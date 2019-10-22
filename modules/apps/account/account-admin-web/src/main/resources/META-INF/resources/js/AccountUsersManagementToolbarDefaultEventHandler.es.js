@@ -19,7 +19,7 @@ class AccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandl
 		if (
 			confirm(
 				Liferay.Language.get(
-					'are-you-sure-you-want-to-remove-this-user'
+					'are-you-sure-you-want-to-remove-the-selected-users'
 				)
 			)
 		) {

@@ -15,6 +15,7 @@ import ClayMultiSelect from '@clayui/multi-select';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+
 import {PORTAL_TOOLTIP_TRIGGER_CLASS} from '../../utils/constants.es';
 
 /**

@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
+import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
-import React from 'react';
 
 import HeaderTitle from '../../../../src/main/resources/META-INF/resources/js/shared/components/header-controller/HeaderTitle.es';
 

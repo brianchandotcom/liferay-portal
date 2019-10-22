@@ -31,21 +31,17 @@ var XML_NAMESPACE = {
 
 var serializeDefinition;
 
-describe('Liferay.KaleoDesignerXMLDefinitionSerializer', function() {
-	before(function(done) {
-		AUI().use(
-			'liferay-kaleo-designer-xml-definition-serializer',
-			function() {
-				serializeDefinition =
-					Liferay.KaleoDesignerXMLDefinitionSerializer;
+describe('Liferay.KaleoDesignerXMLDefinitionSerializer', () => {
+	before(done => {
+		AUI().use('liferay-kaleo-designer-xml-definition-serializer', () => {
+			serializeDefinition = Liferay.KaleoDesignerXMLDefinitionSerializer;
 
-				done();
-			}
-		);
+			done();
+		});
 	});
 
-	describe('regression', function() {
-		it('test should serialize "receptionType" attribute.', function(done) {
+	describe('regression', () => {
+		it('test should serialize "receptionType" attribute.', done => {
 			var jsonDefinition = {
 				nodes: [
 					{
@@ -77,7 +73,7 @@ describe('Liferay.KaleoDesignerXMLDefinitionSerializer', function() {
 			done();
 		});
 
-		it('test should not serialize "receptionType" attribute if it has no value.', function(done) {
+		it('test should not serialize "receptionType" attribute if it has no value.', done => {
 			var jsonDefinition = {
 				nodes: [
 					{
@@ -109,7 +105,7 @@ describe('Liferay.KaleoDesignerXMLDefinitionSerializer', function() {
 			done();
 		});
 
-		it('test should not serialize "receptionType" attribute if it has an empty string value.', function(done) {
+		it('test should not serialize "receptionType" attribute if it has an empty string value.', done => {
 			var jsonDefinition = {
 				nodes: [
 					{
@@ -141,7 +137,7 @@ describe('Liferay.KaleoDesignerXMLDefinitionSerializer', function() {
 			done();
 		});
 
-		it('test should serialize <user> element if given.', function(done) {
+		it('test should serialize <user> element if given.', done => {
 			var jsonDefinition = {
 				nodes: [
 					{
@@ -176,7 +172,7 @@ describe('Liferay.KaleoDesignerXMLDefinitionSerializer', function() {
 			done();
 		});
 
-		it('test should serialize <user> element even if empty.', function(done) {
+		it('test should serialize <user> element even if empty.', done => {
 			var jsonDefinition = {
 				nodes: [
 					{
@@ -208,7 +204,7 @@ describe('Liferay.KaleoDesignerXMLDefinitionSerializer', function() {
 			done();
 		});
 
-		it('test should serialize <assignment> even when assignment object is empty.', function(done) {
+		it('test should serialize <assignment> even when assignment object is empty.', done => {
 			var jsonDefinition = {
 				nodes: [
 					{

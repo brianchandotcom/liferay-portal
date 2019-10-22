@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 import '@testing-library/jest-dom/extend-expect';
 import {
 	cleanup,
@@ -8,13 +19,7 @@ import {
 	waitForElementToBeRemoved
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import renderApp from '../renderApp.es';
-import {
-	segmentsExperiment,
-	segmentsExperiences,
-	segmentsVariants,
-	DEFAULT_ESTIMATED_DAYS
-} from '../fixtures.es';
+
 import {INITIAL_CONFIDENCE_LEVEL} from '../../../src/main/resources/META-INF/resources/js/util/percentages.es';
 import {
 	STATUS_FINISHED_WINNER,
@@ -23,6 +28,13 @@ import {
 	STATUS_TERMINATED,
 	STATUS_FINISHED_NO_WINNER
 } from '../../../src/main/resources/META-INF/resources/js/util/statuses.es';
+import {
+	segmentsExperiment,
+	segmentsExperiences,
+	segmentsVariants,
+	DEFAULT_ESTIMATED_DAYS
+} from '../fixtures.es';
+import renderApp from '../renderApp.es';
 
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/util/toasts.es',
@@ -50,7 +62,7 @@ describe('SegmentsExperimentsSidebar', () => {
 	});
 
 	it('Renders ab testing panel with experience selected and zero experiments', () => {
-		const {getByText, getByDisplayValue} = renderApp({
+		const {getByDisplayValue, getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences
 		});
 
@@ -61,7 +73,7 @@ describe('SegmentsExperimentsSidebar', () => {
 	});
 
 	it('Renders ab testing panel with experience selected and an experiment', () => {
-		const {getByText, getByDisplayValue} = renderApp({
+		const {getByDisplayValue, getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment
 		});
@@ -156,7 +168,7 @@ describe('Variants', () => {
 	});
 
 	it('Create variant button', async () => {
-		const {APIServiceMocks, getByText, getByLabelText} = renderApp({
+		const {APIServiceMocks, getByLabelText, getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment,
 			initialSegmentsVariants: segmentsVariants,
@@ -208,7 +220,7 @@ describe('Review and Run test', () => {
 	afterEach(cleanup);
 
 	it('Can view review experiment modal', async () => {
-		const {getByText, getByDisplayValue, getAllByDisplayValue} = renderApp({
+		const {getAllByDisplayValue, getByDisplayValue, getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment,
 			initialSegmentsVariants: segmentsVariants
@@ -252,7 +264,7 @@ describe('Review and Run test', () => {
 	});
 
 	it("Can run test that won't be editable", async () => {
-		const {APIServiceMocks, queryAllByLabelText, getByText} = renderApp({
+		const {APIServiceMocks, getByText, queryAllByLabelText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment,
 			initialSegmentsVariants: segmentsVariants
@@ -475,7 +487,7 @@ describe('No Winner Declared', () => {
 	afterEach(cleanup);
 
 	it('Experiment has basic no winner declared elements', () => {
-		const {getByText, getAllByText} = renderApp({
+		const {getAllByText, getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: {
 				...segmentsExperiment,
@@ -576,7 +588,7 @@ describe('Winner declared', () => {
 	afterEach(cleanup);
 
 	it('Experiment has basic winner declared elements', () => {
-		const {getByText, getAllByText} = renderApp({
+		const {getAllByText, getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: {
 				...segmentsExperiment,

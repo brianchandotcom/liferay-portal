@@ -10,8 +10,8 @@
  */
 
 import {act, renderHook} from '@testing-library/react-hooks';
-import {create} from 'react-test-renderer';
 import React, {useContext} from 'react';
+import {create} from 'react-test-renderer';
 
 import {TimeRangeContext} from '../../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/TimeRangeStore.es';
 import {

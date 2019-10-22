@@ -1,9 +1,22 @@
-import React, {useState, useContext} from 'react';
-import PropTypes from 'prop-types';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import {ReviewExperimentModal} from './ReviewExperimentModal.es';
+import PropTypes from 'prop-types';
+import React, {useState, useContext} from 'react';
+
+import SegmentsExperimentsContext from '../context.es';
+import {updateSegmentsExperiment, updateVariants} from '../state/actions.es';
 import {
 	STATUS_COMPLETED,
 	STATUS_DRAFT,
@@ -13,9 +26,8 @@ import {
 	STATUS_RUNNING,
 	STATUS_TERMINATED
 } from '../util/statuses.es';
-import SegmentsExperimentsContext from '../context.es';
-import {updateSegmentsExperiment, updateVariants} from '../state/actions.es';
 import {StateContext, DispatchContext} from './../state/context.es';
+import {ReviewExperimentModal} from './ReviewExperimentModal.es';
 
 function _experimentReady(experiment, variants) {
 	if (variants.length <= 1) return false;
@@ -25,7 +37,7 @@ function _experimentReady(experiment, variants) {
 }
 
 function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
-	const {variants, experiment, viewExperimentURL} = useContext(StateContext);
+	const {experiment, variants, viewExperimentURL} = useContext(StateContext);
 	const dispatch = useContext(DispatchContext);
 
 	const [reviewModalVisible, setReviewModalVisible] = useState(false);
@@ -115,7 +127,7 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 			)}
 			{viewExperimentURL && (
 				<ClayLink
-					className="btn btn-secondary btn-sm w-100 mt-3"
+					className="btn btn-secondary btn-sm mt-3 w-100"
 					displayType="secondary"
 					href={viewExperimentURL}
 					target="_blank"
@@ -127,7 +139,7 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 		</>
 	);
 
-	function _handleRunExperiment({splitVariantsMap, confidenceLevel}) {
+	function _handleRunExperiment({confidenceLevel, splitVariantsMap}) {
 		const body = {
 			confidenceLevel,
 			segmentsExperimentId: experiment.segmentsExperimentId,
@@ -135,7 +147,7 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 			status: STATUS_RUNNING
 		};
 
-		return APIService.runExperiment(body).then(function(response) {
+		return APIService.runExperiment(body).then(response => {
 			const {segmentsExperiment} = response;
 			const updatedVariants = variants.map(variant => ({
 				...variant,

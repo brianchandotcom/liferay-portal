@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-utils',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 		var isArray = Array.isArray;
 
@@ -105,7 +105,7 @@ AUI.add(
 			var data = {};
 
 			if (form) {
-				form.all(':input:not(:button)').each(function(item) {
+				form.all(':input:not(:button)').each(item => {
 					var checked = item.get('checked');
 					var name = item.get('name');
 					var type = item.get('type');
@@ -128,7 +128,7 @@ AUI.add(
 						if (type === 'select-multiple') {
 							value = [];
 
-							item.all('option:selected').each(function(option) {
+							item.all('option:selected').each(option => {
 								value.push({
 									notificationType: option.val()
 								});

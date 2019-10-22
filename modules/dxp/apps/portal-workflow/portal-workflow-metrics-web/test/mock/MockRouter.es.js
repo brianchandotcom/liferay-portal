@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {MemoryRouter as Router} from 'react-router-dom';
 import React from 'react';
+import {MemoryRouter as Router} from 'react-router-dom';
 
 import {AppContext} from '../../src/main/resources/META-INF/resources/js/components/AppContext.es';
 

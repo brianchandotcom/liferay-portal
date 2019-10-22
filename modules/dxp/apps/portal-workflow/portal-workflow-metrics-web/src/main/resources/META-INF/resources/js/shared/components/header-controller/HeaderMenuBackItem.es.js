@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {Link, withRouter} from 'react-router-dom';
 import React from 'react';
+import {Link, withRouter} from 'react-router-dom';
 
 import Icon from '../Icon.es';
 import {parse} from '../router/queryString.es';

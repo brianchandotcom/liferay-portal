@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-forms-admin',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var STEPS_MAP = {
@@ -127,7 +127,7 @@ AUI.add(
 						'translatedLanguages' + Lang.String.capitalize(name)
 					] = translatedLanguages.join();
 
-					translatedLanguages.forEach(function(item) {
+					translatedLanguages.forEach(item => {
 						localizedValuesMap[
 							name + item
 						] = inputLocalized.getValue(item);
@@ -244,13 +244,13 @@ AUI.add(
 					resultsContainer.load(
 						formsURL.toString(),
 						formsSearchContainer,
-						function() {
+						() => {
 							A.each(
 								A.all(
 									formsSearchContainer +
 										' .lfr-icon-menu .dropdown-toggle'
 								),
-								function(item) {
+								item => {
 									Liferay.Menu.register(item.get('id'));
 								}
 							);

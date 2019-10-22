@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-AUI().use('escape', 'aui-lang', function(A) {
+AUI().use('escape', 'aui-lang', A => {
 	var AEscape = A.Escape;
 	var ALang = A.Lang;
 
@@ -170,7 +170,7 @@ AUI().use('escape', 'aui-lang', function(A) {
 
 			reportTags.delegate(
 				'click',
-				function(event) {
+				event => {
 					var currentTarget = event.currentTarget;
 
 					var parameterKey = currentTarget.getData('parameterKey');
@@ -319,21 +319,21 @@ AUI().use('escape', 'aui-lang', function(A) {
 
 			instance._disableAddParameterButton(namespace);
 
-			A.one('.parameters-key').on('valueChange', function() {
+			A.one('.parameters-key').on('valueChange', () => {
 				instance._toggleAddParameterButton(namespace);
 			});
 
-			A.one('.parameters-value').on('valueChange', function() {
+			A.one('.parameters-value').on('valueChange', () => {
 				instance._toggleAddParameterButton(namespace);
 			});
 
-			A.one('.add-parameter .btn').on('click', function() {
+			A.one('.add-parameter .btn').on('click', () => {
 				instance._addParameter(namespace);
 			});
 
 			instance._createRemoveParameterEvent();
 
-			A.one('.remove-existing-report').on('click', function() {
+			A.one('.remove-existing-report').on('click', () => {
 				A.one('.existing-report').setStyle('display', 'none');
 				A.one('.template-report').setStyle('display', 'block');
 				A.one('.cancel-update-template-report').setStyle(
@@ -342,7 +342,7 @@ AUI().use('escape', 'aui-lang', function(A) {
 				);
 			});
 
-			A.one('.cancel-update-template-report').on('click', function() {
+			A.one('.cancel-update-template-report').on('click', () => {
 				A.one('.existing-report').setStyle('display', 'block');
 				A.one('.template-report').setStyle('display', 'none');
 				A.one('.cancel-update-template-report').setStyle(
@@ -351,7 +351,7 @@ AUI().use('escape', 'aui-lang', function(A) {
 				);
 			});
 
-			A.one('.parameters-input-type').on('change', function(event) {
+			A.one('.parameters-input-type').on('change', event => {
 				var currentTarget = event.currentTarget;
 
 				var parametersInputDate = A.one('.parameters-input-date');

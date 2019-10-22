@@ -1,21 +1,33 @@
-import React, {useContext, useState} from 'react';
-import PropTypes from 'prop-types';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import {ClaySelect} from '@clayui/form';
-import ClickGoalPicker from './ClickGoalPicker/ClickGoalPicker.es';
+import ClayTabs from '@clayui/tabs';
+import PropTypes from 'prop-types';
+import React, {useContext, useState} from 'react';
+
+import SegmentsExperimentsContext from '../context.es';
+import {StateContext} from '../state/context.es';
 import {SegmentsExperienceType} from '../types.es';
+import {NO_EXPERIMENT_ILLUSTRATION_FILE_NAME} from '../util/contants.es';
+import {statusToLabelDisplayType, STATUS_DRAFT} from '../util/statuses.es';
+import ClickGoalPicker from './ClickGoalPicker/ClickGoalPicker.es';
+import ExperimentsHistory from './ExperimentsHistory.es';
 import SegmentsExperimentsActions from './SegmentsExperimentsActions.es';
 import SegmentsExperimentsDetails from './SegmentsExperimentsDetails.es';
 import Variants from './Variants/Variants.es';
-import {statusToLabelDisplayType, STATUS_DRAFT} from '../util/statuses.es';
-import {StateContext} from '../state/context.es';
-import SegmentsExperimentsContext from '../context.es';
-import ClayTabs from '@clayui/tabs';
-import ExperimentsHistory from './ExperimentsHistory.es';
-import {NO_EXPERIMENT_ILLUSTRATION_FILE_NAME} from '../util/contants.es';
 
 const TABS_STATES = {
 	ACTIVE: 0,
@@ -98,7 +110,7 @@ function SegmentsExperiments({
 				<ClayTabs.TabPane>
 					{experiment && (
 						<>
-							<div className="d-flex justify-content-between align-items-center">
+							<div className="align-items-center d-flex justify-content-between">
 								<h4 className="mb-0 text-dark text-truncate">
 									{experiment.name}
 								</h4>

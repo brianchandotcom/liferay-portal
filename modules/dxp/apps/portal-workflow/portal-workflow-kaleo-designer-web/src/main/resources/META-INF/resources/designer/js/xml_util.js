@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-xml-util',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 		var LString = Lang.String;
 
@@ -63,7 +63,7 @@ AUI.add(
 					STR_DASH
 				).toLowerCase();
 
-				A.each(attrs, function(item, index) {
+				A.each(attrs, (item, index) => {
 					if (item !== undefined) {
 						BUFFER_ATTR[0] = index;
 						BUFFER_ATTR[2] = item;
@@ -99,7 +99,7 @@ AUI.add(
 					)
 					.split(/\r?\n/g);
 
-				lines.forEach(function(item) {
+				lines.forEach(item => {
 					var indent = 0;
 
 					if (!inCDATA) {

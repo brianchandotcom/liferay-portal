@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {withRouter} from 'react-router-dom';
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 
 import Icon from '../Icon.es';
 import TabItem from './TabItem.es';

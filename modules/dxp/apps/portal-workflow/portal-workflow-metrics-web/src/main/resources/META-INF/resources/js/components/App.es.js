@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {Redirect, Route, HashRouter as Router, Switch} from 'react-router-dom';
 import React from 'react';
+import {Redirect, Route, HashRouter as Router, Switch} from 'react-router-dom';
 
 import HeaderController from '../shared/components/header-controller/HeaderController.es';
 import {withParams} from '../shared/components/router/routerUtil.es';

@@ -10,8 +10,8 @@
  */
 
 import {renderHook} from '@testing-library/react-hooks';
-import {act, create} from 'react-test-renderer';
 import React, {useContext} from 'react';
+import {act, create} from 'react-test-renderer';
 
 import {
 	slaStatusConstants,

@@ -32,7 +32,7 @@ const Header = () => (
 		/>
 
 		<Request.Success>
-			<div className="ml-3 management-bar management-bar-light navbar pl-1">
+			<div className="management-bar management-bar-light ml-3 navbar pl-1">
 				<ul className="navbar-nav">
 					<ProcessStepFilter
 						filterKey="assigneeTaskKeys"

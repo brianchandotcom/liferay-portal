@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-xml-definition-serializer',
-	function(A) {
+	A => {
 		var AArray = A.Array;
 		var AObject = A.Object;
 		var Lang = A.Lang;
@@ -70,7 +70,7 @@ AUI.add(
 				buffer.push(XMLUtil.create('version', version));
 			}
 
-			json.nodes.forEach(function(item) {
+			json.nodes.forEach(item => {
 				var description = item.description;
 				var initial = item.initial;
 				var metadata = item.metadata;
@@ -154,7 +154,7 @@ AUI.add(
 
 				var xmlAction = XMLUtil.createObj(actionNodeName || 'action');
 
-				actions.name.forEach(function(item, index) {
+				actions.name.forEach((item, index) => {
 					buffer.push(xmlAction.open, XMLUtil.create('name', item));
 
 					if (isValidValue(description, index)) {
@@ -222,7 +222,7 @@ AUI.add(
 				buffer.push(xmlAssignments.open);
 
 				if (dataAssignments.address) {
-					dataAssignments.address.forEach(function(item) {
+					dataAssignments.address.forEach(item => {
 						if (isValue(item)) {
 							buffer.push(XMLUtil.create('address', item));
 						}
@@ -256,7 +256,7 @@ AUI.add(
 
 					var xmlRole = XMLUtil.createObj('role');
 
-					dataAssignments.roleType.forEach(function(item, index) {
+					dataAssignments.roleType.forEach((item, index) => {
 						var roleName = dataAssignments.roleName[index];
 
 						if (roleName) {
@@ -280,7 +280,7 @@ AUI.add(
 						'scriptedAssignment'
 					);
 
-					dataAssignments.script.forEach(function(item, index) {
+					dataAssignments.script.forEach((item, index) => {
 						buffer.push(
 							xmlScriptedAssignment.open,
 							XMLUtil.create('script', cdata(item)),
@@ -296,7 +296,7 @@ AUI.add(
 						'scriptedRecipient'
 					);
 
-					dataAssignments.script.forEach(function(item, index) {
+					dataAssignments.script.forEach((item, index) => {
 						buffer.push(
 							xmlScriptedRecipient.open,
 							XMLUtil.create('script', cdata(item)),
@@ -314,7 +314,7 @@ AUI.add(
 					) {
 						var xmlUser = XMLUtil.createObj('user');
 
-						dataAssignments.userId.forEach(function(item, index) {
+						dataAssignments.userId.forEach((item, index) => {
 							buffer.push(xmlUser.open);
 
 							var userContent = null;
@@ -376,7 +376,7 @@ AUI.add(
 					nodeName || 'notification'
 				);
 
-				notifications.name.forEach(function(item, index) {
+				notifications.name.forEach((item, index) => {
 					buffer.push(
 						xmlNotification.open,
 						XMLUtil.create('name', item)
@@ -407,7 +407,7 @@ AUI.add(
 					}
 
 					if (isValidValue(notificationTypes, index)) {
-						notificationTypes[index].forEach(function(item) {
+						notificationTypes[index].forEach(item => {
 							buffer.push(
 								XMLUtil.create(
 									'notificationType',
@@ -466,7 +466,7 @@ AUI.add(
 
 				var xmlTaskTimer = XMLUtil.createObj('task-timer');
 
-				taskTimers.name.forEach(function(item, index) {
+				taskTimers.name.forEach((item, index) => {
 					buffer.push(
 						xmlTaskTimer.open,
 						XMLUtil.create('name', item)
@@ -537,13 +537,13 @@ AUI.add(
 
 				buffer.push(xmlTransitions.open);
 
-				var pickDefault = transitions.some(function(item) {
+				var pickDefault = transitions.some(item => {
 					return item.connector.default === true;
 				});
 
 				pickDefault = !pickDefault;
 
-				transitions.forEach(function(item, index) {
+				transitions.forEach((item, index) => {
 					var defaultValue = item.connector.default;
 
 					if (pickDefault && index === 0) {

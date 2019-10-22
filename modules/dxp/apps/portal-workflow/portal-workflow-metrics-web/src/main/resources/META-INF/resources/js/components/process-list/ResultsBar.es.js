@@ -10,8 +10,8 @@
  */
 
 import pathToRegexp from 'path-to-regexp';
-import {Link, withRouter} from 'react-router-dom';
 import React from 'react';
+import {Link, withRouter} from 'react-router-dom';
 
 import {sub} from '../../shared/util/lang.es';
 
@@ -40,7 +40,7 @@ class ResultsBar extends React.Component {
 		}
 
 		return (
-			<nav className="tbar tbar-inline-xs-down subnav-tbar subnav-tbar-primary">
+			<nav className="subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down">
 				<div className="container-fluid container-fluid-max-xl">
 					<ul className="tbar-nav tbar-nav-wrap">
 						<li className="tbar-item tbar-item-expand">

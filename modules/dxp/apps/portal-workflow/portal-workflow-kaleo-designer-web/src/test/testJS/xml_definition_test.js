@@ -11,18 +11,18 @@
 
 'use strict';
 
-describe('Liferay.KaleoDesignerXMLDefinition', function() {
-	before(function(done) {
-		AUI().use('liferay-kaleo-designer-xml-definition', function() {
+describe('Liferay.KaleoDesignerXMLDefinition', () => {
+	before(done => {
+		AUI().use('liferay-kaleo-designer-xml-definition', () => {
 			done();
 		});
 	});
 
-	describe('unit', function() {
-		describe('.getDefinitionMetadata()', function() {
-			it('test should have name', function(done) {
+	describe('unit', () => {
+		describe('.getDefinitionMetadata()', () => {
+			it('test should have name', done => {
 				Liferay.Test.loadResource('metadata-only-definition.xml').then(
-					function(definition) {
+					definition => {
 						var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
 							{
 								value: definition
@@ -45,17 +45,17 @@ describe('Liferay.KaleoDesignerXMLDefinition', function() {
 		});
 	});
 
-	describe('regression', function() {
-		describe('.forEachField()', function() {
-			it('test should retrieve "receptionType" attribute value', function(done) {
+	describe('regression', () => {
+		describe('.forEachField()', () => {
+			it('test should retrieve "receptionType" attribute value', done => {
 				Liferay.Test.loadResource(
 					'recipients-with-reception-type-bcc-definition.xml'
-				).then(function(definition) {
+				).then(definition => {
 					var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition({
 						value: definition
 					});
 
-					xmlDefinition.forEachField(function(tagName, fieldData) {
+					xmlDefinition.forEachField((tagName, fieldData) => {
 						var result = fieldData.results[0];
 
 						var notification = result.notifications[0];
@@ -69,15 +69,15 @@ describe('Liferay.KaleoDesignerXMLDefinition', function() {
 				});
 			});
 
-			it('test should not have a "receptionType" attribute if not present in definition', function(done) {
+			it('test should not have a "receptionType" attribute if not present in definition', done => {
 				Liferay.Test.loadResource(
 					'recipients-with-no-reception-type-definition.xml'
-				).then(function(definition) {
+				).then(definition => {
 					var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition({
 						value: definition
 					});
 
-					xmlDefinition.forEachField(function(tagName, fieldData) {
+					xmlDefinition.forEachField((tagName, fieldData) => {
 						var result = fieldData.results[0];
 
 						var notification = result.notifications[0];
@@ -91,15 +91,15 @@ describe('Liferay.KaleoDesignerXMLDefinition', function() {
 				});
 			});
 
-			it('test should have "users" as recipient.', function(done) {
+			it('test should have "users" as recipient.', done => {
 				Liferay.Test.loadResource(
 					'recipients-with-user-definition.xml'
-				).then(function(definition) {
+				).then(definition => {
 					var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition({
 						value: definition
 					});
 
-					xmlDefinition.forEachField(function(tagName, fieldData) {
+					xmlDefinition.forEachField((tagName, fieldData) => {
 						var result = fieldData.results[0];
 
 						var notification = result.notifications[0];
@@ -113,15 +113,15 @@ describe('Liferay.KaleoDesignerXMLDefinition', function() {
 				});
 			});
 
-			it('test should have "assignees" as recipient.', function(done) {
+			it('test should have "assignees" as recipient.', done => {
 				Liferay.Test.loadResource(
 					'recipients-with-assignees-definition.xml'
-				).then(function(definition) {
+				).then(definition => {
 					var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition({
 						value: definition
 					});
 
-					xmlDefinition.forEachField(function(tagName, fieldData) {
+					xmlDefinition.forEachField((tagName, fieldData) => {
 						var result = fieldData.results[0];
 
 						var notification = result.notifications[0];

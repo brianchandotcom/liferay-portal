@@ -10,10 +10,10 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import {MockRouter} from '../../../mock/MockRouter.es';
 import React from 'react';
 
 import WorkloadByAssigneeCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/workload-by-assignee/WorkloadByAssigneeCard.es';
+import {MockRouter} from '../../../mock/MockRouter.es';
 
 describe('The workload by assignee table should', () => {
 	const items = [

@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import renderer from 'react-test-renderer';
 import React from 'react';
+import renderer from 'react-test-renderer';
 
 import PaginationBar from '../../../../src/main/resources/META-INF/resources/js/shared/components/pagination/PaginationBar.es';
 import {MockRouter as Router} from '../../../mock/MockRouter.es';

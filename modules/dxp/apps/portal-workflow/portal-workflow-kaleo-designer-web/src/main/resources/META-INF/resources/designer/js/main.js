@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-portlet-kaleo-designer',
-	function(A) {
+	A => {
 		var DiagramBuilder = A.DiagramBuilder;
 		var Lang = A.Lang;
 
@@ -167,10 +167,8 @@ AUI.add(
 
 								if (toolbar && toolbar.children) {
 									toolbar.children = toolbar.children.map(
-										function(children) {
-											children = children.map(function(
-												item
-											) {
+										children => {
+											children = children.map(item => {
 												delete item.icon;
 
 												return item;

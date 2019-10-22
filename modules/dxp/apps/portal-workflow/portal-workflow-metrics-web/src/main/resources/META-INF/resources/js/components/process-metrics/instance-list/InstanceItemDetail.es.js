@@ -219,7 +219,7 @@ function InstanceItemDetail({processId}) {
 						)}
 
 						<a
-							className="btn btn-secondary btn-sm mb-1 font-weight-medium mt-3"
+							className="btn btn-secondary btn-sm font-weight-medium mb-1 mt-3"
 							href={`/group/control_panel/manage/-/workflow_instance/view/${instanceId}`}
 							target="_blank"
 						>

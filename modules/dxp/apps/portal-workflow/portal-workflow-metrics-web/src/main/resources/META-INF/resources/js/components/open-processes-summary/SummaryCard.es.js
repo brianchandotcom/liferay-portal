@@ -21,7 +21,7 @@ export default class SummaryCard extends React.Component {
 
 		return (
 			<div
-				className="summary-card border col-2"
+				className="border col-2 summary-card"
 				style={{marginLeft: '16px'}}
 			>
 				<span className="regular-text semi-bold text-secondary">

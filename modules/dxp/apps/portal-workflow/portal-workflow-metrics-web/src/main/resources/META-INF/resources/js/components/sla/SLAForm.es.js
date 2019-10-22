@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
+import React from 'react';
 import {Redirect} from 'react-router-dom';
 import MaskedInput from 'react-text-mask';
-import React from 'react';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
 import Icon from '../../shared/components/Icon.es';

@@ -9,11 +9,11 @@
  * distribution rights of the Software.
  */
 
-AUI().use('aui-io', function(A) {
+AUI().use('aui-io', A => {
 	Liferay.Test = Liferay.Test || {};
 
 	var loadResource = function(resource) {
-		return new Promise(function(resolve, reject) {
+		return new Promise((resolve, reject) => {
 			A.io.request('/base/src/test/resources/' + resource, {
 				dataType: 'text',
 				on: {

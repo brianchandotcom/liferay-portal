@@ -12,11 +12,12 @@
  * details.
  */
 
+import ClayBadge from '@clayui/badge';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React from 'react';
 
 import {PROPERTY_TYPES} from '../../utils/constants.es';
 import {propertyGroupShape} from '../../utils/types.es';
@@ -56,123 +57,122 @@ function getDefaultValue(property) {
 	return defaultValue;
 }
 
-class CriteriaSidebarCollapse extends Component {
-	static propTypes = {
-		onCollapseClick: PropTypes.func,
-		propertyGroups: PropTypes.arrayOf(propertyGroupShape),
-		propertyKey: PropTypes.string,
-		searchValue: PropTypes.string
-	};
+/**
+ * Filters properties by label
+ */
+function filterProperties(properties, searchValue) {
+	return properties.filter(property => {
+		const propertyLabel = property.label.toLowerCase();
 
-	_filterProperties = searchValue => {
-		const propertyGroup = this.props.propertyGroups.find(
-			propertyGroup =>
-				this.props.propertyKey === propertyGroup.propertyKey
-		);
+		return propertyLabel.indexOf(searchValue.toLowerCase()) !== -1;
+	});
+}
 
-		const properties = propertyGroup ? propertyGroup.properties : [];
+const CriteriaSidebarCollapse = ({
+	onCollapseClick,
+	propertyGroups,
+	propertyKey,
+	searchValue
+}) => {
+	const _handleClick = (key, editing) => () => onCollapseClick(key, editing);
 
-		return properties.filter(property => {
-			const propertyLabel = property.label.toLowerCase();
+	return (
+		<ul className="list-unstyled sidebar-collapse-groups">
+			{propertyGroups.map(propertyGroup => {
+				const key = propertyGroup.propertyKey;
 
-			return propertyLabel.indexOf(searchValue.toLowerCase()) !== -1;
-		});
-	};
+				const active = key === propertyKey;
+				const properties = propertyGroup
+					? propertyGroup.properties
+					: [];
 
-	_handleClick = (key, editing) => () => {
-		this.props.onCollapseClick(key, editing);
-	};
+				const filteredProperties = searchValue
+					? filterProperties(properties, searchValue)
+					: properties;
 
-	render() {
-		const {propertyGroups, propertyKey, searchValue} = this.props;
+				const activeClasses = getCN({
+					active
+				});
 
-		const propertyGroup = propertyGroups.find(
-			propertyGroup => propertyKey === propertyGroup.propertyKey
-		);
+				const propertyListClasses = getCN(
+					'properties-list',
+					activeClasses
+				);
 
-		const properties = propertyGroup ? propertyGroup.properties : [];
-
-		const filteredProperties = searchValue
-			? this._filterProperties(searchValue)
-			: properties;
-
-		return (
-			<ul className="list-unstyled sidebar-collapse-groups">
-				{propertyGroups.map(propertyGroup => {
-					const active = propertyGroup.propertyKey === propertyKey;
-
-					const activeClasses = getCN({
-						active
-					});
-
-					const propertyListClasses = getCN(
-						'properties-list',
-						activeClasses
-					);
-
-					const key = propertyGroup.propertyKey;
-
-					return (
-						<li
-							className={`sidebar-collapse-${propertyGroup.propertyKey}`}
-							key={key}
+				return (
+					<li
+						className={`sidebar-collapse-${propertyGroup.propertyKey}`}
+						key={key}
+					>
+						<div
+							className="sidebar-collapse-header-root"
+							onClick={_handleClick(key, active)}
 						>
-							<div
-								className="sidebar-collapse-header-root"
-								onClick={this._handleClick(key, active)}
-							>
-								<a className="d-flex justify-content-between sidebar-collapse-header">
-									{propertyGroup.name}
-									<span className="collapse-icon">
-										<ClayIcon
-											className={activeClasses}
-											symbol="angle-right"
-										/>
-									</span>
-								</a>
-							</div>
-							<ul className={propertyListClasses}>
-								{active && filteredProperties.length === 0 && (
-									<li className="empty-message">
-										{Liferay.Language.get(
-											'no-results-were-found'
-										)}
-									</li>
+							<a className="d-flex justify-content-between sidebar-collapse-header">
+								{propertyGroup.name}
+
+								{searchValue && (
+									<ClayBadge
+										className="ml-auto mr-2"
+										displayType="secondary"
+										label={filteredProperties.length}
+									/>
 								)}
 
-								{active &&
-									filteredProperties.length > 0 &&
-									filteredProperties.map(
-										({label, name, options, type}) => {
-											const defaultValue = getDefaultValue(
-												{
-													label,
-													name,
-													options,
-													type
-												}
-											);
-
-											return (
-												<CriteriaSidebarItem
-													className={`color--${key}`}
-													defaultValue={defaultValue}
-													key={name}
-													label={label}
-													name={name}
-													propertyKey={key}
-													type={type}
-												/>
-											);
-										}
+								<span className="collapse-icon">
+									<ClayIcon
+										className={activeClasses}
+										symbol="angle-right"
+									/>
+								</span>
+							</a>
+						</div>
+						<ul className={propertyListClasses}>
+							{active && filteredProperties.length === 0 && (
+								<li className="empty-message">
+									{Liferay.Language.get(
+										'no-results-were-found'
 									)}
-							</ul>
-						</li>
-					);
-				})}
-			</ul>
-		);
-	}
-}
+								</li>
+							)}
+
+							{active &&
+								filteredProperties.length > 0 &&
+								filteredProperties.map(
+									({label, name, options, type}) => {
+										const defaultValue = getDefaultValue({
+											label,
+											name,
+											options,
+											type
+										});
+
+										return (
+											<CriteriaSidebarItem
+												className={`color--${key}`}
+												defaultValue={defaultValue}
+												key={name}
+												label={label}
+												name={name}
+												propertyKey={key}
+												type={type}
+											/>
+										);
+									}
+								)}
+						</ul>
+					</li>
+				);
+			})}
+		</ul>
+	);
+};
+
+CriteriaSidebarCollapse.propTypes = {
+	onCollapseClick: PropTypes.func,
+	propertyGroups: PropTypes.arrayOf(propertyGroupShape),
+	propertyKey: PropTypes.string,
+	searchValue: PropTypes.string
+};
 
 export default CriteriaSidebarCollapse;

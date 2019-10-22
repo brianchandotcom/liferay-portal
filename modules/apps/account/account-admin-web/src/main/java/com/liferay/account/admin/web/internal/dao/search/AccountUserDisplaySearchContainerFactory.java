@@ -15,7 +15,10 @@
 package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,10 +27,15 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,6 +46,94 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = {})
 public class AccountUserDisplaySearchContainerFactory {
+
+	public static SearchContainer create(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException {
+
+		String accountNavigation = ParamUtil.getString(
+			liferayPortletRequest, "accountNavigation", "all");
+		String keywords = ParamUtil.getString(
+			liferayPortletRequest, "keywords", null);
+		String navigation = ParamUtil.getString(
+			liferayPortletRequest, "navigation", "active");
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long[] accountEntryIds = null;
+
+		if (accountNavigation.equals("all")) {
+			List<AccountEntry> accountEntries =
+				_accountEntryLocalService.getAccountEntries(
+					themeDisplay.getCompanyId(),
+					WorkflowConstants.STATUS_APPROVED, -1, -1, null);
+
+			if (!ListUtil.isEmpty(accountEntries)) {
+				List<Long> accountEntryIdList = TransformUtil.transform(
+					accountEntries, AccountEntry::getAccountEntryId);
+
+				accountEntryIdList.add(
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
+
+				accountEntryIds = ArrayUtil.toLongArray(accountEntryIdList);
+			}
+			else {
+				accountEntryIds = new long[] {
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
+				};
+			}
+		}
+		else if (accountNavigation.equals("accounts")) {
+			accountEntryIds = ParamUtil.getLongValues(
+				liferayPortletRequest, "accountEntryIds");
+		}
+		else if (accountNavigation.equals("no-assigned-account")) {
+			accountEntryIds = new long[] {
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
+			};
+		}
+
+		SearchContainer accountUserDisplaySearchContainer = new SearchContainer(
+			liferayPortletRequest,
+			PortletURLUtil.getCurrent(
+				liferayPortletRequest, liferayPortletResponse),
+			null, "there-are-no-users-associated-with-this-account");
+
+		accountUserDisplaySearchContainer.setId("accountUsers");
+
+		String orderByCol = ParamUtil.getString(
+			liferayPortletRequest, "orderByCol", "last-name");
+
+		accountUserDisplaySearchContainer.setOrderByCol(orderByCol);
+
+		String orderByType = ParamUtil.getString(
+			liferayPortletRequest, "orderByType", "asc");
+
+		accountUserDisplaySearchContainer.setOrderByType(orderByType);
+
+		accountUserDisplaySearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
+
+		BaseModelSearchResult<User> baseModelSearchResult =
+			_accountUserRetriever.searchAccountUsers(
+				accountEntryIds, keywords, _getStatus(navigation),
+				accountUserDisplaySearchContainer.getStart(),
+				accountUserDisplaySearchContainer.getDelta(),
+				accountUserDisplaySearchContainer.getOrderByCol(),
+				_isReverseOrder(
+					accountUserDisplaySearchContainer.getOrderByType()));
+
+		accountUserDisplaySearchContainer.setResults(
+			TransformUtil.transform(
+				baseModelSearchResult.getBaseModels(), AccountUserDisplay::of));
+		accountUserDisplaySearchContainer.setTotal(
+			baseModelSearchResult.getLength());
+
+		return accountUserDisplaySearchContainer;
+	}
 
 	public static SearchContainer create(
 			long accountEntryId, LiferayPortletRequest liferayPortletRequest,
@@ -96,6 +192,13 @@ public class AccountUserDisplaySearchContainerFactory {
 	}
 
 	@Reference(unbind = "-")
+	protected void setAccountEntryLocalService(
+		AccountEntryLocalService accountEntryLocalService) {
+
+		_accountEntryLocalService = accountEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setAccountUserRetriever(
 		AccountUserRetriever accountUserRetriever) {
 
@@ -118,6 +221,7 @@ public class AccountUserDisplaySearchContainerFactory {
 		return false;
 	}
 
+	private static AccountEntryLocalService _accountEntryLocalService;
 	private static AccountUserRetriever _accountUserRetriever;
 
 }

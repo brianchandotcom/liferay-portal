@@ -1062,7 +1062,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 	</target>
 
 	<target name="setup-profile-portal">
-		<delete>
+		<delete verbose="true">
 			<fileset
 				dir="${project.dir}"
 				includes="*.profile-dxp.properties"

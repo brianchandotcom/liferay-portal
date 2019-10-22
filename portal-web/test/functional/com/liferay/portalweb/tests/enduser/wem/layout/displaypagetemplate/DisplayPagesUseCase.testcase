@@ -428,8 +428,8 @@ definition {
 		PageEditor.addLayoutSection(columnCount = "2");
 
 		PageEditor.editLayoutSectionImage(
-			assetField = "Web Content Article",
-			webContentTitle = "WC WebContent Title");
+			entryTitle = "WC WebContent Title",
+			navItem = "Web Content");
 
 		task ("Assert the layout background field contains the mapped image.") {
 			PageEditor.clickPublish();

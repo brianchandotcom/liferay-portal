@@ -265,6 +265,16 @@ if (layout != null) {
 
 	UnicodeProperties layoutSetSettings = layoutSet.getSettingsProperties();
 
+	UnicodeProperties masterLayoutTypeSettings = new UnicodeProperties();
+
+	if (layout.getMasterLayoutPlid() > 0) {
+		Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(layout.getMasterLayoutPlid());
+
+		if (masterLayout != null) {
+			masterLayoutTypeSettings = masterLayout.getTypeSettingsProperties();
+		}
+	}
+
 	UnicodeProperties layoutTypeSettings = layout.getTypeSettingsProperties();
 	%>
 
@@ -272,6 +282,8 @@ if (layout != null) {
 		// <![CDATA[
 			<c:if test="<%= !layout.isTypeControlPanel() %>">
 				<%= GetterUtil.getString(layoutSetSettings.getProperty("javascript")) %>
+
+				<%= GetterUtil.getString(masterLayoutTypeSettings.getProperty("javascript")) %>
 
 				<%= GetterUtil.getString(layoutTypeSettings.getProperty("javascript")) %>
 			</c:if>

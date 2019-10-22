@@ -21,7 +21,7 @@ import {
 	VelocityUnitContext
 } from '../../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/VelocityUnitStore.es';
 
-describe('The default Velocity Unit should', () => {
+describe.skip('The default Velocity Unit should', () => {
 	test('Be "Inst/Hour" when the time range is less than 1 day', async () => {
 		const wrapper = mockTimeRangeContext(
 			new Date(2018, 0, 1, 12),
@@ -108,7 +108,7 @@ describe('The default Velocity Unit should', () => {
 	});
 });
 
-describe('When the time range is less than 90 days, the selected Velocity Unit should', () => {
+describe.skip('When the time range is less than 90 days, the selected Velocity Unit should', () => {
 	let wrapper;
 
 	beforeEach(() => {
@@ -162,7 +162,7 @@ describe('When the time range is less than 90 days, the selected Velocity Unit s
 	});
 });
 
-describe('The velocity unit store should', () => {
+describe.skip('The velocity unit store should', () => {
 	let renderer;
 
 	beforeEach(() => {
@@ -212,7 +212,7 @@ describe('The velocity unit store should', () => {
 	});
 });
 
-test('The velocity unit provider should be rendered', () => {
+test.skip('The velocity unit provider should be rendered', () => {
 	const {root, unmount} = create(
 		<TimeRangeContext.Provider
 			value={{

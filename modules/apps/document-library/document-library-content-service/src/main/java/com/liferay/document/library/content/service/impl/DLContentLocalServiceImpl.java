@@ -176,6 +176,11 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, repositoryId, dirName);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getContent(long, long, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public DLContent getContent(long companyId, long repositoryId, String path)
 		throws NoSuchContentException {
@@ -199,7 +204,17 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		throws NoSuchContentException {
 
 		if (version.isEmpty()) {
-			return getContent(companyId, repositoryId, path);
+			OrderByComparator<DLContent> orderByComparator =
+				new DLContentVersionComparator();
+
+			List<DLContent> dlContents = dlContentPersistence.findByC_R_P(
+				companyId, repositoryId, path, 0, 1, orderByComparator);
+
+			if ((dlContents == null) || dlContents.isEmpty()) {
+				throw new NoSuchContentException(path);
+			}
+
+			return dlContents.get(0);
 		}
 
 		return dlContentPersistence.findByC_R_P_V(

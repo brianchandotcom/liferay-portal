@@ -42,6 +42,7 @@ public class UpgradePreviewFileEntryId extends UpgradeProcess {
 	protected void doUpgrade() throws UpgradeException {
 		try {
 			_insertRepository();
+			_updateDLFileEntryRepositoryId();
 		}
 		catch (SQLException sqle) {
 			if (_log.isDebugEnabled()) {
@@ -114,6 +115,25 @@ public class UpgradePreviewFileEntryId extends UpgradeProcess {
 			}
 
 			ps.executeBatch();
+		}
+	}
+
+	private void _updateDLFileEntryRepositoryId() throws SQLException {
+		StringBundler sb = new StringBundler(10);
+
+		sb.append("with repositories_lookup as (select r1.repositoryId as ");
+		sb.append("repositoryId1, r2.repositoryId as repositoryId2 from ");
+		sb.append("Repository r1, Repository r2 where r1.portletId = ");
+		sb.append("'com_liferay_layout_admin_web_portlet_GroupPagesPortlet' ");
+		sb.append("and r2.portletId = 'com_liferay_layout_page_template_");
+		sb.append("admin_web_portlet_LayoutPageTemplatesPortlet' and  ");
+		sb.append("r1.groupId = r2.groupId) update DLFileEntry dlfe inner ");
+		sb.append("join repositories_lookup ON dlfe.repositoryId = ");
+		sb.append("repositories_lookup.repositoryId1 SET repositoryId = ");
+		sb.append("repositoryId2");
+
+		try (Statement s = connection.createStatement()) {
+			s.executeQuery(sb.toString());
 		}
 	}
 

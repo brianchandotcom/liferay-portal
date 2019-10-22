@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_WORKFLOW_STATUS</td>
-	<td>//tr/th[contains(.,'${key_fieldFieldLabel}')]/../../../tbody/tr[contains(.,'${key_workflowStatus}')]//strong[contains(.,'${key_workflowStatus}')]</td>
+	<td>//tr/th[contains(.,'${key_fieldFieldLabel}')]/../../../tbody/tr[contains(.,'${key_workflowStatus}')]//strong[contains(.,'${key_workflowStatus}')] | //tbody//strong[contains(.,'${key_workflowStatus}')]</td>
 	<td></td>
 </tr>
 <tr>

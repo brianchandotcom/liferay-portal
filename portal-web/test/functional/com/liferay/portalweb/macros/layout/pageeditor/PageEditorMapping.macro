@@ -21,30 +21,21 @@ definition {
 	}
 
 	macro mapEditableFieldToAsset {
-		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_DROPDOWN");
+		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		NavItem.click(navItem = "${navItem}");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		Click(
-			key_assetField = "${assetField}",
-			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_DROPDOWN_ASSET");
+			key_card = "${entryTitle}",
+			locator1 = "LexiconCard#CARD_TITLE");
 
-		if (isSet(webContentTitle)) {
-			SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrameTop();
 
-			AssertClick(
-				key_webContentTitle = "${webContentTitle}",
-				locator1 = "Link#WEB_CONTENT_ARTICLE",
-				value1 = "${webContentTitle}");
-
-			SelectFrameTop();
-
-			Select(
-				locator1 = "PageEditorEditableLink#FIELD",
-				value1 = "Image");
-		}
-
-		SelectFrame(value1 = "relative=top");
-
-		PageEditor.waitForAutoSave();
+		Button.clickDone();
 	}
 
 	macro mapEditableTextToField {

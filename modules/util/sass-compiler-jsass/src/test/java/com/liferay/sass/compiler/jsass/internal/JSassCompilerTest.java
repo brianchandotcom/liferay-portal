@@ -45,7 +45,6 @@ public class JSassCompilerTest {
 	@Test
 	public void testCompileFileClayCss() throws Exception {
 		try (SassCompiler sassCompiler = new JSassCompiler()) {
-
 			File clayCssDir = new File(
 				"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
 					"/compiler/jni/internal/dependencies/clay-css");
@@ -67,8 +66,8 @@ public class JSassCompilerTest {
 				Assert.assertNotNull("Testing: " + fileName, actualOutput);
 
 				String expectedOutputFileName =
-					"expected" + File.separator
-						+ fileName.replace("scss", "css");
+					"expected" + File.separator +
+						fileName.replace("scss", "css");
 
 				File expectedOutputFile = new File(
 					clayCssDir, expectedOutputFileName);

@@ -225,6 +225,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_VERTICAL_ELLIPSIS</td>
+	<td>//*[contains(@class, 'fragments-editor-sidebar')]//*[contains(@class, 'lexicon-icon-ellipsis-v')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER_VERTICAL_ELLIPSIS</td>
 	<td>//*[@data-qa-id='header']//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>

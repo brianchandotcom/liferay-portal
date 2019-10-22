@@ -55,6 +55,16 @@ ViewUsersManagementToolbarDisplayContext viewUsersManagementToolbarDisplayContex
 					name="job-title"
 					property="jobTitle"
 				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="status"
+				>
+					<clay:label
+						label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountUserDisplay.getStatusLabel()), locale) %>"
+						style="<%= accountUserDisplay.getStatusLabelStyle() %>"
+					/>
+				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator

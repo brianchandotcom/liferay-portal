@@ -16,6 +16,7 @@ package com.liferay.account.admin.web.internal.display;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
  * @author Pei-Jung Lan
@@ -46,6 +47,14 @@ public class AccountUserDisplay {
 		return _name;
 	}
 
+	public String getStatusLabel() {
+		return _statusLabel;
+	}
+
+	public String getStatusLabelStyle() {
+		return _statusLabelStyle;
+	}
+
 	public long getUserId() {
 		return _userId;
 	}
@@ -55,13 +64,45 @@ public class AccountUserDisplay {
 		_emailAddress = user.getEmailAddress();
 		_jobTitle = user.getJobTitle();
 		_name = user.getFullName();
+		_statusLabel = _getStatusLabel(user);
+		_statusLabelStyle = _getStatusLabelStyle(user);
 		_userId = user.getUserId();
+	}
+
+	private String _getStatusLabel(User user) {
+		int status = user.getStatus();
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			return "active";
+		}
+
+		if (status == WorkflowConstants.STATUS_INACTIVE) {
+			return "inactive";
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getStatusLabelStyle(User user) {
+		String status = _getStatusLabel(user);
+
+		if (status.equals("active")) {
+			return "success";
+		}
+
+		if (status.equals("inactive")) {
+			return "secondary";
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private final String _accountRoles;
 	private final String _emailAddress;
 	private final String _jobTitle;
 	private final String _name;
+	private final String _statusLabel;
+	private final String _statusLabelStyle;
 	private final long _userId;
 
 }

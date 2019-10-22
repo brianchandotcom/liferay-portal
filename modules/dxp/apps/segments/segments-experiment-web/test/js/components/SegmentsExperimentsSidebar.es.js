@@ -265,7 +265,7 @@ describe('Run and review test', () => {
 		expect(getEstimatedTime).toHaveBeenCalledTimes(1);
 	});
 
-	test("can run test that won't be editable", async () => {
+	it("can run test that won't be editable", async () => {
 		const {APIServiceMocks, queryAllByLabelText, getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment,
@@ -381,7 +381,7 @@ describe('Click Target selection', () => {
 describe('Experiment history tab', () => {
 	afterEach(cleanup);
 
-	test('test is archived after terminating it', async () => {
+	it('test is archived after terminating it', async () => {
 		window.confirm = jest.fn(() => true);
 
 		const runningExperiment = {
@@ -420,7 +420,7 @@ describe('Experiment history tab', () => {
 		getByText('create-test');
 	});
 
-	test('test is archive after completing it', async () => {
+	it('test is archive after completing it', async () => {
 		const noWinnerDeclaredExperiment = {
 			...segmentsExperiment,
 			editable: false,
@@ -469,7 +469,7 @@ describe('Experiment history tab', () => {
 		await waitForElement(() => getByText(segmentsExperiment.name));
 	});
 
-	test('tests have name, description and status label', async () => {
+	it('tests have name, description and status label', async () => {
 		const experimentHistory = [
 			{
 				...segmentsExperiment,

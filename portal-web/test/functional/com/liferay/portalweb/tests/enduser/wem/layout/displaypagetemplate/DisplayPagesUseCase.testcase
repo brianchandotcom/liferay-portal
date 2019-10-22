@@ -362,6 +362,16 @@ definition {
 			entryTitle = "WC WebContent Title",
 			navItem = "Web Content");
 
+		task ("Select mapping panel field.") {
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Image");
+
+			SelectFrame(value1 = "relative=top");
+
+			PageEditor.waitForAutoSave();
+		}
+
 		task ("Assert the image field contains the mapped image.") {
 			PageEditor.clickPublish();
 

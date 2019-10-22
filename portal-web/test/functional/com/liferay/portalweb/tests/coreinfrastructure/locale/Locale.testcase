@@ -22,6 +22,53 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-52008. User's preferred locales should be prioritized over Friendly URLS."
+	@ignore = "true"
+	@priority = "4"
+	test PreferredLocalePersistsFriendlyURL {
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			widgetName = "Asset Publisher");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+		Site.configureCurrentLanguagesCP(
+			currentSiteLanguages = "Chinese (China),English (United States),Spanish (Spain)",
+			defaultSiteLanguage = "English (United States)");
+
+		JSONUser.addUser(
+			preferredLocale = "zh_CN",
+			userEmailAddress = "test2@liferay.com",
+			userFirstName = "test2",
+			userLastName = "test2",
+			userScreenName = "test2");
+
+		JSONUser.addUserToSite(
+			groupName = "Test Site Name",
+			userEmailAddress = "test2@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test2@liferay.com",
+			userLoginFullName = "test2 test2");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/test-site-name");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+		task ("Assert preferred locale persists by asserting Widget name.") {
+			AssertElementPresent(
+				key_portletName = "资产发布器",
+				locator1 = "Portlet#TITLE");
+		}
+	}
+
 	@priority = "4"
 	test RestrictDefaultLanguage {
 		property custom.properties = "company.default.locale=es_ES";

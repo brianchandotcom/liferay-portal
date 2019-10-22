@@ -61,39 +61,6 @@ import java.rmi.RemoteException;
  */
 public class FragmentEntryLinkServiceSoap {
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addFragmentEntryLink(long, long, long, long, long, String,
-	 String, String, String, String, String, int, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.fragment.model.FragmentEntryLinkSoap
-			addFragmentEntryLink(
-				long groupId, long originalFragmentEntryLinkId,
-				long fragmentEntryId, long classNameId, long classPK,
-				String css, String html, String js, String editableValues,
-				String namespace, int position, String rendererKey,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.fragment.model.FragmentEntryLink returnValue =
-				FragmentEntryLinkServiceUtil.addFragmentEntryLink(
-					groupId, originalFragmentEntryLinkId, fragmentEntryId,
-					classNameId, classPK, css, html, js, editableValues,
-					namespace, position, rendererKey, serviceContext);
-
-			return com.liferay.fragment.model.FragmentEntryLinkSoap.toSoapModel(
-				returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.fragment.model.FragmentEntryLinkSoap
 			addFragmentEntryLink(
 				long groupId, long originalFragmentEntryLinkId,

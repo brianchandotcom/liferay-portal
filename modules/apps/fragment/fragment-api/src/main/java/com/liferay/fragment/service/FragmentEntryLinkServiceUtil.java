@@ -39,27 +39,10 @@ public class FragmentEntryLinkServiceUtil {
 	 */
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addFragmentEntryLink(long, long, long, long, long, String,
-	 String, String, String, String, String, int, String,
-	 ServiceContext)}
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link FragmentEntryLinkServiceUtil} to access the fragment entry link remote service. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentEntryLinkServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Deprecated
-	public static com.liferay.fragment.model.FragmentEntryLink
-			addFragmentEntryLink(
-				long groupId, long originalFragmentEntryLinkId,
-				long fragmentEntryId, long classNameId, long classPK,
-				String css, String html, String js, String editableValues,
-				String namespace, int position, String rendererKey,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addFragmentEntryLink(
-			groupId, originalFragmentEntryLinkId, fragmentEntryId, classNameId,
-			classPK, css, html, js, editableValues, namespace, position,
-			rendererKey, serviceContext);
-	}
-
 	public static com.liferay.fragment.model.FragmentEntryLink
 			addFragmentEntryLink(
 				long groupId, long originalFragmentEntryLinkId,

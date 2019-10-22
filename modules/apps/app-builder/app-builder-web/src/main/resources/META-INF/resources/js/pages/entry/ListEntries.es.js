@@ -64,8 +64,8 @@ const ListEntries = () => {
 			mvcPath: '/edit_entry.jsp'
 		});
 
-	const handleEditItem = () => {
-		Liferay.Util.navigate(getItemURL());
+	const handleEditItem = dataRecordId => {
+		Liferay.Util.navigate(getItemURL(dataRecordId));
 	};
 
 	return (
@@ -73,7 +73,7 @@ const ListEntries = () => {
 			<ListView
 				actions={[
 					{
-						action: item => Promise.resolve(handleEditItem(item)),
+						action: ({id}) => Promise.resolve(handleEditItem(id)),
 						name: Liferay.Language.get('edit')
 					},
 					{

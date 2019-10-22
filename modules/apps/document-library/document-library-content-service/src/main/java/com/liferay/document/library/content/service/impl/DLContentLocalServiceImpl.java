@@ -89,13 +89,18 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		long companyId, long repositoryId, String path, String version,
 		InputStream inputStream) {
 
-		DLContent dlContent = dlContentPersistence.create(
-			counterLocalService.increment());
+		DLContent dlContent = dlContentPersistence.fetchByC_R_P_V(
+			companyId, repositoryId, path, version);
 
-		dlContent.setCompanyId(companyId);
-		dlContent.setRepositoryId(repositoryId);
-		dlContent.setPath(path);
-		dlContent.setVersion(version);
+		if (dlContent == null) {
+			dlContent = dlContentPersistence.create(
+				counterLocalService.increment());
+
+			dlContent.setCompanyId(companyId);
+			dlContent.setRepositoryId(repositoryId);
+			dlContent.setPath(path);
+			dlContent.setVersion(version);
+		}
 
 		OutputBlob outputBlob = _toOutputBlob(inputStream);
 

@@ -66,16 +66,8 @@ public class DBStore implements Store {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream inputStream)
-		throws PortalException {
-
-		if (_dlContentLocalService.hasContent(
-				companyId, repositoryId, fileName, versionLabel)) {
-
-			_dlContentLocalService.deleteContent(
-				companyId, repositoryId, fileName, versionLabel);
-		}
+		long companyId, long repositoryId, String fileName, String versionLabel,
+		InputStream inputStream) {
 
 		long length = -1;
 
@@ -223,8 +215,7 @@ public class DBStore implements Store {
 
 	@Override
 	public String[] getFileVersions(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName) {
 
 		List<DLContent> dlContents = _dlContentLocalService.getContents(
 			companyId, repositoryId, fileName);

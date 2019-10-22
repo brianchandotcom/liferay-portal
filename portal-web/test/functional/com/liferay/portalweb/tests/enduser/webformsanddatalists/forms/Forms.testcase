@@ -4196,11 +4196,11 @@ definition {
 
 		FormFields.editText(
 			fieldName = "label",
-			fieldValue = ",-+!@#$%^*()=_.?/;:{}[]\|");
+			fieldValue = ",-+!@#$%^*()=.?/;:{}[]\|");
 
-		FormFields.viewFieldName(fieldName = "text");
+		FormFields.viewFieldName(fieldName = "TextField");
 
-		FormFields.editFieldName(fieldValue = ",-+!@#$%^*()=_.?/;:{}[]\|");
+		FormFields.editFieldName(fieldValue = ",-+!@#$%^*()=.?/;:{}[]\|");
 
 		Form.closeSidebar();
 

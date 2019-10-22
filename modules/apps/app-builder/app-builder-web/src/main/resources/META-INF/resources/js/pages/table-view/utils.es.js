@@ -29,12 +29,12 @@ export const getColumnIndex = node => {
 
 	const columns = rowNode.querySelectorAll(`:scope > ${columnNode.tagName}`);
 
-	return Array.prototype.indexOf.call(columns, columnNode);
+	return Array.prototype.indexOf.call(columns, columnNode) - 1;
 };
 
 export const getColumnNode = (container, index) => {
 	return container.querySelector(
-		`table tbody > tr:first-of-type > td:nth-of-type(${index + 1})`
+		`table tbody > tr:first-of-type > td:nth-of-type(${index + 2})`
 	);
 };
 

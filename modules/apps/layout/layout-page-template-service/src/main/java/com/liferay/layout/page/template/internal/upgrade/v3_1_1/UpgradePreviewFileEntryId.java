@@ -20,11 +20,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 
@@ -37,11 +39,20 @@ public class UpgradePreviewFileEntryId extends UpgradeProcess {
 	}
 
 	@Override
-	protected void doUpgrade() {
-		_insertRepository();
+	protected void doUpgrade() throws UpgradeException {
+		try {
+			_insertRepository();
+		}
+		catch (SQLException sqle) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(sqle, sqle);
+			}
+
+			throw new UpgradeException(sqle);
+		}
 	}
 
-	private void _insertRepository() {
+	private void _insertRepository() throws SQLException {
 		StringBundler sb1 = new StringBundler(6);
 
 		sb1.append("select mvccVersion, groupId, companyId, userId,  ");
@@ -103,11 +114,6 @@ public class UpgradePreviewFileEntryId extends UpgradeProcess {
 			}
 
 			ps.executeBatch();
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
 		}
 	}
 

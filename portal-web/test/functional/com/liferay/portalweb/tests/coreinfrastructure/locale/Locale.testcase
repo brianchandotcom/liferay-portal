@@ -7,6 +7,8 @@ definition {
 
 	setUp {
 		TestCase.setUpPortalInstance();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
 
 	tearDown {
@@ -16,7 +18,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Site.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
@@ -39,10 +41,7 @@ definition {
 			defaultPortalLanguage = "español (España)",
 			localizationTranslation = "Localización");
 
-		ProductMenu.gotoPortlet(
-			category = "Contenido",
-			panel = "Site Administration",
-			portlet = "Contenido Web");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		LexiconEntry.gotoAddMenuItem(menuItem = "Contenido web básico");
 
@@ -120,33 +119,19 @@ definition {
 	test ViewSiteLanguageWithoutUserPreferredLanguages {
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
 
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Test Page");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings");
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "Spanish (Spain)",
-			defaultSiteLanguage = "Spanish (Spain)",
-			displaySettings = "Display Settings");
+			defaultSiteLanguage = "Spanish (Spain)");
 
 		User.logoutPG();
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		User.viewUserLocale(localizedSignIn = "Acceder");
 	}

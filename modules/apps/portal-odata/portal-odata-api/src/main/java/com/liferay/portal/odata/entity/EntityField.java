@@ -29,50 +29,6 @@ import java.util.function.Function;
 public class EntityField {
 
 	/**
-	 * Creates a new {@code EntityField} with a {@code Function} to convert the
-	 * entity field's name to a filterable/sortable field name for a locale.
-	 *
-	 * @param      name the entity field's name
-	 * @param      type the type
-	 * @param      filterableAndSortableFieldNameFunction the {@code Function}
-	 * @deprecated As of Judson (7.1.x)
-	 * @review
-	 */
-	@Deprecated
-	public EntityField(
-		String name, Type type,
-		Function<Locale, String> filterableAndSortableFieldNameFunction) {
-
-		this(
-			name, type, filterableAndSortableFieldNameFunction,
-			filterableAndSortableFieldNameFunction);
-	}
-
-	/**
-	 * Creates a new {@code EntityField} with a {@code Function} to convert the
-	 * entity field's name to a filterable/sortable field name for a locale.
-	 *
-	 * @param      name the entity field's name
-	 * @param      type the type
-	 * @param      sortableFieldNameFunction the sortable field name {@code
-	 *             Function}
-	 * @param      filterableFieldNameFunction the filterable field name {@code
-	 *             Function}
-	 * @deprecated As of Judson (7.1.x)
-	 * @review
-	 */
-	@Deprecated
-	public EntityField(
-		String name, Type type,
-		Function<Locale, String> sortableFieldNameFunction,
-		Function<Locale, String> filterableFieldNameFunction) {
-
-		this(
-			name, type, sortableFieldNameFunction, filterableFieldNameFunction,
-			fieldValue -> String.valueOf(fieldValue));
-	}
-
-	/**
 	 * Creates a new {@code EntityField} with separate functions for converting
 	 * the entity field's name to a sortable and filterable field name for a
 	 * locale.

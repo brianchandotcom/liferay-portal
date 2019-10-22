@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.view.count.service.ViewCountEntryLocalService;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -119,7 +120,8 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 					_dlFolderLocalService, _expandoRowLocalService,
 					_expandoTableLocalService, _expandoValueLocalService,
 					_resourceActions, _resourceLocalService,
-					_resourcePermissionLocalService, _store),
+					_resourcePermissionLocalService, _store,
+					_viewCountEntryLocalService),
 			new UpgradeLastPublishDate());
 
 		registry.register(
@@ -393,6 +395,9 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference(target = "(dl.store.upgrade=true)")
 	private Store _store;
+
+	@Reference
+	private ViewCountEntryLocalService _viewCountEntryLocalService;
 
 	@Reference(target = "(ddm.form.deserializer.type=xsd)")
 	private DDMFormDeserializer _xsdDDMFormDeserializer;

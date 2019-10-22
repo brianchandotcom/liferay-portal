@@ -41,27 +41,19 @@ public class UpgradeRatingsStats extends UpgradeProcess {
 		try (PreparedStatement ps = connection.prepareStatement(
 				StringBundler.concat(
 					"update RatingsStats set RatingsStats.createDate = ",
-					"(SELECT createDate FROM RatingsEntry WHERE ",
+					"(select min(createDate) FROM RatingsEntry WHERE ",
 					"RatingsStats.classNameId = RatingsEntry.classNameId and ",
-					"RatingsStats.classPK = RatingsEntry.classPK and ",
-					"RatingsEntry.entryId = (SELECT MIN(entryId) from ",
-					"RatingsEntry TEMP_TABLE where RatingsEntry.classNameId = ",
-					"TEMP_TABLE.classNameId and RatingsEntry.classPK = ",
-					"TEMP_TABLE.classPK))"))) {
+					"RatingsStats.classPK = RatingsEntry.classPK)"))) {
 
 			ps.executeUpdate();
 		}
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				StringBundler.concat(
-					"update RatingsStats set RatingsStats.modifiedDate = ",
-					"(SELECT modifiedDate FROM RatingsEntry WHERE ",
+					"update RatingsStats set RatingsStats.createDate = ",
+					"(select max(createDate) FROM RatingsEntry WHERE ",
 					"RatingsStats.classNameId = RatingsEntry.classNameId and ",
-					"RatingsStats.classPK = RatingsEntry.classPK and ",
-					"RatingsEntry.entryId = (SELECT MAX(entryId) from ",
-					"RatingsEntry TEMP_TABLE where RatingsEntry.classNameId = ",
-					"TEMP_TABLE.classNameId and RatingsEntry.classPK = ",
-					"TEMP_TABLE.classPK))"))) {
+					"RatingsStats.classPK = RatingsEntry.classPK)"))) {
 
 			ps.executeUpdate();
 		}

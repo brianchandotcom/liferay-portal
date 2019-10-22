@@ -31,12 +31,18 @@ public interface FragmentCollectionContributor {
 
 	public String getFragmentCollectionKey();
 
+	public List<FragmentEntry> getFragmentEntries();
+
 	public List<FragmentEntry> getFragmentEntries(int type);
 
 	public default List<FragmentEntry> getFragmentEntries(
 		int type, Locale locale) {
 
 		return getFragmentEntries(type);
+	}
+
+	public default List<FragmentEntry> getFragmentEntries(Locale locale) {
+		return getFragmentEntries();
 	}
 
 	public String getName();

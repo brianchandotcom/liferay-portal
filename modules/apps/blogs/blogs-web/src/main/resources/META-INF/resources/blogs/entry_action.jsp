@@ -35,16 +35,20 @@ if (row != null) {
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-		</portlet:renderURL>
+
+		<%
+		PortletURL editEntryURL = PortalUtil.getControlPanelPortletURL(request, themeDisplay.getScopeGroup(), BlogsPortletKeys.BLOGS_ADMIN, 0, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+		editEntryURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
+		editEntryURL.setParameter("redirect", currentURL);
+		editEntryURL.setParameter("portletResource", portletDisplay.getId());
+		editEntryURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
+		%>
 
 		<liferay-ui:icon
 			label="<%= true %>"
 			message="edit"
-			url="<%= editEntryURL %>"
+			url="<%= editEntryURL.toString() %>"
 		/>
 	</c:if>
 

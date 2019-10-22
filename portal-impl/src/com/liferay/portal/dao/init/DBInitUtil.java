@@ -187,11 +187,11 @@ public class DBInitUtil {
 
 			count = _testSupportsStringCaseSensitiveQuery(
 				ReleaseConstants.TEST_STRING);
-		}
 
-		if (count == 0) {
-			throw new SystemException(
-				"Release_ table was not initialized properly");
+			if (count == 0) {
+				throw new SystemException(
+					"Release_ table was not initialized properly");
+			}
 		}
 
 		count = _testSupportsStringCaseSensitiveQuery(

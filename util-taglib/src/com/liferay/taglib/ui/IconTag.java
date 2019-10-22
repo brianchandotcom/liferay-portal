@@ -89,14 +89,6 @@ public class IconTag extends IncludeTag {
 		return _linkCssClass;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getLinkTitle() {
-		return _linkTitle;
-	}
-
 	public String getMarkupView() {
 		return _markupView;
 	}
@@ -165,14 +157,6 @@ public class IconTag extends IncludeTag {
 		_linkCssClass = linkCssClass;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setLinkTitle(String linkTitle) {
-		_linkTitle = linkTitle;
-	}
-
 	public void setLocalizeMessage(boolean localizeMessage) {
 		_localizeMessage = localizeMessage;
 	}
@@ -233,7 +217,6 @@ public class IconTag extends IncludeTag {
 		_label = null;
 		_lang = null;
 		_linkCssClass = null;
-		_linkTitle = null;
 		_localizeMessage = true;
 		_markupView = null;
 		_message = null;
@@ -254,20 +237,6 @@ public class IconTag extends IncludeTag {
 	@Deprecated
 	protected Map<String, Object> getData() {
 		return _getData();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected String getDetails() {
-		HttpServletRequest httpServletRequest = getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return _getDetails(themeDisplay);
 	}
 
 	protected String getId() {
@@ -533,8 +502,6 @@ public class IconTag extends IncludeTag {
 		httpServletRequest.setAttribute("liferay-ui:icon:lang", _lang);
 		httpServletRequest.setAttribute(
 			"liferay-ui:icon:linkCssClass", _linkCssClass);
-		httpServletRequest.setAttribute(
-			"liferay-ui:icon:linkTitle", _linkTitle);
 		httpServletRequest.setAttribute(
 			"liferay-ui:icon:localizeMessage",
 			String.valueOf(_localizeMessage));
@@ -807,7 +774,6 @@ public class IconTag extends IncludeTag {
 	private Boolean _label;
 	private String _lang;
 	private String _linkCssClass;
-	private String _linkTitle;
 	private boolean _localizeMessage = true;
 	private String _markupView;
 	private String _message;

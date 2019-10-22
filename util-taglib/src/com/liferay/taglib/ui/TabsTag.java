@@ -82,16 +82,6 @@ public class TabsTag extends IncludeTag {
 			_tabsValues = null;
 			_type = null;
 			_url = null;
-			_url0 = null;
-			_url1 = null;
-			_url2 = null;
-			_url3 = null;
-			_url4 = null;
-			_url5 = null;
-			_url6 = null;
-			_url7 = null;
-			_url8 = null;
-			_url9 = null;
 			_urls = null;
 			_value = null;
 		}
@@ -134,56 +124,6 @@ public class TabsTag extends IncludeTag {
 
 			httpServletRequest.setAttribute("liferay-ui:tabs:type", _type);
 			httpServletRequest.setAttribute("liferay-ui:tabs:url", _url);
-
-			if ((_urls == null) &&
-				((_url0 != null) || (_url1 != null) || (_url2 != null) ||
-				 (_url3 != null) || (_url4 != null) || (_url5 != null) ||
-				 (_url6 != null) || (_url7 != null) || (_url8 != null) ||
-				 (_url9 != null))) {
-
-				_urls = new String[10];
-
-				if (_url0 != null) {
-					_urls[0] = _url0;
-				}
-
-				if (_url1 != null) {
-					_urls[1] = _url1;
-				}
-
-				if (_url2 != null) {
-					_urls[2] = _url2;
-				}
-
-				if (_url3 != null) {
-					_urls[3] = _url3;
-				}
-
-				if (_url4 != null) {
-					_urls[4] = _url4;
-				}
-
-				if (_url5 != null) {
-					_urls[5] = _url5;
-				}
-
-				if (_url6 != null) {
-					_urls[6] = _url6;
-				}
-
-				if (_url7 != null) {
-					_urls[7] = _url7;
-				}
-
-				if (_url8 != null) {
-					_urls[8] = _url8;
-				}
-
-				if (_url9 != null) {
-					_urls[9] = _url9;
-				}
-			}
-
 			httpServletRequest.setAttribute("liferay-ui:tabs:urls", _urls);
 
 			if ((_value == null) && (_tabsValues.length > 0)) {
@@ -359,96 +299,6 @@ public class TabsTag extends IncludeTag {
 		_url = url;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setUrls(String[])}
-	 */
-	@Deprecated
-	public void setUrl0(String url0) {
-		_url0 = url0;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setUrls(String[])}
-	 */
-	@Deprecated
-	public void setUrl1(String url1) {
-		_url1 = url1;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setUrls(String[])}
-	 */
-	@Deprecated
-	public void setUrl2(String url2) {
-		_url2 = url2;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setUrls(String[])}
-	 */
-	@Deprecated
-	public void setUrl3(String url3) {
-		_url3 = url3;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setUrls(String[])}
-	 */
-	@Deprecated
-	public void setUrl4(String url4) {
-		_url4 = url4;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setUrls(String[])}
-	 */
-	@Deprecated
-	public void setUrl5(String url5) {
-		_url5 = url5;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setUrls(String[])}
-	 */
-	@Deprecated
-	public void setUrl6(String url6) {
-		_url6 = url6;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setUrls(String[])}
-	 */
-	@Deprecated
-	public void setUrl7(String url7) {
-		_url7 = url7;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setUrls(String[])}
-	 */
-	@Deprecated
-	public void setUrl8(String url8) {
-		_url8 = url8;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setUrls(String[])}
-	 */
-	@Deprecated
-	public void setUrl9(String url9) {
-		_url9 = url9;
-	}
-
 	public void setUrls(String[] urls) {
 		_urls = urls;
 	}
@@ -495,16 +345,6 @@ public class TabsTag extends IncludeTag {
 	private String[] _tabsValues;
 	private String _type;
 	private String _url;
-	private String _url0;
-	private String _url1;
-	private String _url2;
-	private String _url3;
-	private String _url4;
-	private String _url5;
-	private String _url6;
-	private String _url7;
-	private String _url8;
-	private String _url9;
 	private String[] _urls;
 	private String _value;
 

@@ -53,13 +53,6 @@ public class UploadProgressTag extends IncludeTag {
 		_message = message;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setRedirect(String redirect) {
-	}
-
 	public void setUpdatePeriod(Integer updatePeriod) {
 		_updatePeriod = updatePeriod;
 	}

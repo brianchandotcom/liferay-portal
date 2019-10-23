@@ -17,8 +17,10 @@ package com.liferay.portal.dao.init;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManager;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.spring.hibernate.DialectDetector;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsUtil;
 
@@ -36,13 +39,28 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javax.sql.DataSource;
+
 /**
  * @author Preston Crary
  */
 public class DBInitUtil {
 
-	public static void init() {
-		DB db = DBManagerUtil.getDB();
+	public static DataSource getDataSource() {
+		return _dataSource;
+	}
+
+	public static void init() throws Exception {
+		_dataSource = DataSourceFactoryUtil.initDataSource(
+			PropsUtil.getProperties("jdbc.default.", true));
+
+		DB db = DBManagerUtil.getDB(
+			DBManagerUtil.getDBType(DialectDetector.getDialect(_dataSource)),
+			_dataSource);
+
+		DBManager dbManager = DBManagerUtil.getDBManager();
+
+		dbManager.setDB(db);
 
 		if (_checkDefaultRelease()) {
 			_setSupportsStringCaseSensitiveQuery(db);
@@ -228,5 +246,7 @@ public class DBInitUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DBInitUtil.class);
+
+	private static DataSource _dataSource;
 
 }

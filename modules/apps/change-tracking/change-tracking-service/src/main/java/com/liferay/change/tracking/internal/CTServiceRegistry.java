@@ -23,7 +23,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 
@@ -103,9 +102,6 @@ public class CTServiceRegistry {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	private ServiceTrackerList<CTEventListener, CTEventListener>
 		_serviceTrackerList;

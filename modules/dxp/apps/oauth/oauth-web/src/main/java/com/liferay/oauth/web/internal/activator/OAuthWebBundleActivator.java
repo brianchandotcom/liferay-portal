@@ -14,16 +14,10 @@
 
 package com.liferay.oauth.web.internal.activator;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
-import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Carlos Sierra Andrés
@@ -32,54 +26,29 @@ public class OAuthWebBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		Filter filter = bundleContext.createFilter(
-			StringBundler.concat(
-				"(&(objectClass=", ModuleServiceLifecycle.class.getName(), ")",
-				ModuleServiceLifecycle.DATABASE_INITIALIZED, ")"));
+		BaseUpgradeWebModuleRelease upgradeWebModuleRelease =
+			new BaseUpgradeWebModuleRelease() {
 
-		_serviceTracker = new ServiceTracker<Object, Object>(
-			bundleContext, filter, null) {
+				@Override
+				protected String getBundleSymbolicName() {
+					return "com.liferay.oauth.web";
+				}
 
-			@Override
-			public Object addingService(ServiceReference<Object> reference) {
-				BaseUpgradeWebModuleRelease upgradeWebModuleRelease =
-					new BaseUpgradeWebModuleRelease() {
-
-						@Override
-						protected String getBundleSymbolicName() {
-							return "com.liferay.oauth.web";
-						}
-
-						@Override
-						protected String[] getPortletIds() {
-							return new String[] {
-								"1_WAR_oauthportlet", "2_WAR_oauthportlet",
-								"3_WAR_oauthportlet"
-							};
-						}
-
+				@Override
+				protected String[] getPortletIds() {
+					return new String[] {
+						"1_WAR_oauthportlet", "2_WAR_oauthportlet",
+						"3_WAR_oauthportlet"
 					};
-
-				try {
-					upgradeWebModuleRelease.upgrade();
-				}
-				catch (UpgradeException ue) {
-					throw new RuntimeException(ue);
 				}
 
-				return null;
-			}
+			};
 
-		};
-
-		_serviceTracker.open();
+		upgradeWebModuleRelease.upgrade();
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) throws Exception {
-		_serviceTracker.close();
+	public void stop(BundleContext bundleContext) {
 	}
-
-	private ServiceTracker<Object, Object> _serviceTracker;
 
 }

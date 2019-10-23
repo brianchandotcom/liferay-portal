@@ -434,7 +434,15 @@ public class DDMFormEvaluatorHelper {
 		Locale locale = value.getDefaultLocale();
 
 		if (value.isLocalized()) {
-			locale = _ddmFormEvaluatorEvaluateRequest.getLocale();
+			DDMForm ddmForm = _ddmFormEvaluatorEvaluateRequest.getDDMForm();
+
+			Set<Locale> availableLocales = ddmForm.getAvailableLocales();
+
+			if (availableLocales.contains(
+					_ddmFormEvaluatorEvaluateRequest.getLocale())) {
+
+				locale = _ddmFormEvaluatorEvaluateRequest.getLocale();
+			}
 		}
 
 		value.addString(locale, String.valueOf(newValue));

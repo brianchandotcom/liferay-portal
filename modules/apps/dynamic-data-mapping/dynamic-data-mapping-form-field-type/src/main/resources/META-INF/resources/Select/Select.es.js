@@ -132,6 +132,7 @@ class Select extends Component {
 	}
 
 	_handleDocumentClicked({target}) {
+		// eslint-disable-next-line react/no-string-refs
 		const {base} = this.refs;
 		const {dropdown} = base.refs;
 

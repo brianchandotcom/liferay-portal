@@ -13,6 +13,7 @@
  */
 
 module.exports = {
+	extends: ['liferay/react'],
 	globals: {
 		AlloyEditor: true
 	}

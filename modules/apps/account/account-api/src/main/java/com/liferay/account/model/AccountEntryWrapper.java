@@ -134,6 +134,16 @@ public class AccountEntryWrapper
 		}
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Group getAccountEntryGroup() {
+		return model.getAccountEntryGroup();
+	}
+
+	@Override
+	public long getAccountEntryGroupId() {
+		return model.getAccountEntryGroupId();
+	}
+
 	/**
 	 * Returns the account entry ID of this account entry.
 	 *

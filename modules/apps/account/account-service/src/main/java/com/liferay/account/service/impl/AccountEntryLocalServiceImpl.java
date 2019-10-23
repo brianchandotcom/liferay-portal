@@ -20,6 +20,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
@@ -102,6 +103,16 @@ public class AccountEntryLocalServiceImpl
 
 		accountEntry = accountEntryPersistence.update(accountEntry);
 
+		// Group
+
+		groupLocalService.addGroup(
+			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			AccountEntry.class.getName(), accountEntryId,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, getLocalizationMap(name),
+			null, GroupConstants.TYPE_SITE_PRIVATE, false,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
+			null);
+
 		// Resources
 
 		resourceLocalService.addResources(
@@ -144,6 +155,10 @@ public class AccountEntryLocalServiceImpl
 		// Account entry
 
 		accountEntry = super.deleteAccountEntry(accountEntry);
+
+		// Group
+
+		groupLocalService.deleteGroup(accountEntry.getAccountEntryGroup());
 
 		// Resources
 

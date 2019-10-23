@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint-disable react/no-string-refs */
+
 import '../Checkbox/Checkbox.es';
 
 import '../FieldBase/FieldBase.es';

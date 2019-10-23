@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint-disable react/no-string-refs */
+
 import '../FieldBase/FieldBase.es';
 
 import './DatePickerRegister.soy.js';

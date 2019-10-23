@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint-disable react/no-string-refs */
+
 import '../FormPortal/FormPortal.es';
 
 import 'clay-icon';

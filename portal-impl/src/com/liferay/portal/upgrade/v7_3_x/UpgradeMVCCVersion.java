@@ -23,6 +23,7 @@ public class UpgradeMVCCVersion
 	@Override
 	protected String[] getModuleTableNames() {
 		return new String[] {
+			"AnnouncementsDelivery", "AnnouncementsEntry", "AnnouncementsFlag",
 			"AssetCategory", "AssetEntry", "AssetLink", "AssetTag",
 			"AssetVocabulary"
 		};

@@ -316,6 +316,8 @@
 	<target name="check-upgrade-properties-app-db-set">
 		<get-database-upgrade-client-paths />
 
+		<prepare-database-upgrade-configuration />
+
 		<delete file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
 
 		<run-expect
@@ -338,6 +340,8 @@
 
 	<target name="check-upgrade-properties-app-ext-set">
 		<get-database-upgrade-client-paths />
+
+		<prepare-database-upgrade-configuration />
 
 		<delete file="${db.upgrade.client.home}/portal-upgrade-database.properties" />
 
@@ -362,6 +366,8 @@
 	<target name="check-upgrade-properties-db-ext-set">
 		<get-database-upgrade-client-paths />
 
+		<prepare-database-upgrade-configuration />
+
 		<delete file="${db.upgrade.client.home}/app-server.properties" />
 
 		<run-expect
@@ -384,6 +390,8 @@
 
 	<target name="check-upgrade-properties-none-set">
 		<get-database-upgrade-client-paths />
+
+		<prepare-database-upgrade-configuration />
 
 		<delete file="${db.upgrade.client.home}/app-server.properties" />
 

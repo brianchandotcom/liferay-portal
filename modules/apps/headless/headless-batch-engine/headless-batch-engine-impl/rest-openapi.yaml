@@ -58,7 +58,8 @@ components:
                     example: com.liferay.headless.delivery.dto.v1_0.BlogPosting
                     type: string
                 contentType:
-                    description: The file content type.
+                    description:
+                        The file content type.
                     example: JSON
                     type: string
                 endTime:

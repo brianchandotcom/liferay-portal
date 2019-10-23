@@ -44,7 +44,9 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
@@ -71,10 +73,13 @@ import com.liferay.registry.RegistryUtil;
 import java.math.BigDecimal;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -802,6 +807,89 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 	}
 
 	@Test
+	public void testUpdateAndCalculateRuleWithRequiredFieldsAndUnavailableLocale()
+		throws Exception {
+
+		Set<Locale> availableLocales = DDMFormTestUtil.createAvailableLocales(
+			LocaleUtil.US);
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			availableLocales, LocaleUtil.US);
+
+		boolean localizable = true;
+
+		boolean repeatable = false;
+
+		boolean required = true;
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"field0", "field0", "numeric", FieldConstants.DOUBLE,
+				localizable, repeatable, required));
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"field1", "field1", "numeric", FieldConstants.DOUBLE,
+				localizable, repeatable, required));
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"field2", "field2", "numeric", FieldConstants.DOUBLE,
+				localizable, repeatable, required));
+
+		ddmForm.addDDMFormRule(
+			new DDMFormRule(
+				"getValue(\"field0\") > 0 && getValue(\"field1\") > 0",
+				"calculate(\"field2\", getValue(\"field0\") * " +
+					"getValue(\"field1\"))"));
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		LocalizedValue value0 = DDMFormValuesTestUtil.createLocalizedValue(
+			"5", LocaleUtil.US);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0", value0));
+
+		LocalizedValue value1 = DDMFormValuesTestUtil.createLocalizedValue(
+			"2", LocaleUtil.US);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field1_instanceId", "field1", value1));
+
+		LocalizedValue value2 = DDMFormValuesTestUtil.createLocalizedValue(
+			"0", LocaleUtil.US);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field2_instanceId", "field2", value2));
+
+		doEvaluate(ddmForm, ddmFormValues, LocaleUtil.BRAZIL);
+
+		List<DDMFormFieldValue> evaluatedDDMFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
+
+		Stream<DDMFormFieldValue> evaluatedDDMFormFieldValuesStream =
+			evaluatedDDMFormFieldValues.stream();
+
+		Optional<DDMFormFieldValue> actualDDMFormFieldValue =
+			evaluatedDDMFormFieldValuesStream.filter(
+				ddmFormFieldValue -> ddmFormFieldValue.getName(
+				).equals(
+					"field2"
+				)
+			).findFirst();
+
+		Value actualValue = actualDDMFormFieldValue.get(
+		).getValue();
+
+		Assert.assertEquals("10", actualValue.getString(LocaleUtil.US));
+	}
+
+	@Test
 	public void testValidationExpression() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 
@@ -1212,9 +1300,16 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			DDMForm ddmForm, DDMFormValues ddmFormValues)
 		throws Exception {
 
+		return doEvaluate(ddmForm, ddmFormValues, LocaleUtil.US);
+	}
+
+	protected DDMFormEvaluatorEvaluateResponse doEvaluate(
+			DDMForm ddmForm, DDMFormValues ddmFormValues, Locale locale)
+		throws Exception {
+
 		DDMFormEvaluatorEvaluateRequest.Builder builder =
 			DDMFormEvaluatorEvaluateRequest.Builder.newBuilder(
-				ddmForm, ddmFormValues, LocaleUtil.US);
+				ddmForm, ddmFormValues, locale);
 
 		builder.withCompanyId(
 			1L

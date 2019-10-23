@@ -657,7 +657,9 @@ public class NodePlugin implements Plugin<Project> {
 
 		File yarnWorkingDir = packageRunBuildTask.getYarnWorkingDir();
 
-		if (_hasLiferayNpmScripts10Dependency(project, yarnWorkingDir)) {
+		if ((yarnWorkingDir != null) &&
+			_hasLiferayNpmScripts10Dependency(project, yarnWorkingDir)) {
+
 			final File destinationDir = new File(
 				project.getBuildDir(), "node/packageRunBuild/resources");
 
@@ -970,12 +972,10 @@ public class NodePlugin implements Plugin<Project> {
 			return true;
 		}
 
-		if (yarnWorkingDir != null) {
-			packageJSONFile = new File(yarnWorkingDir, "package.json");
+		packageJSONFile = new File(yarnWorkingDir, "package.json");
 
-			if (_hasLiferayNpmScripts12Dependency(packageJSONFile)) {
-				return true;
-			}
+		if (_hasLiferayNpmScripts12Dependency(packageJSONFile)) {
+			return true;
 		}
 
 		return false;

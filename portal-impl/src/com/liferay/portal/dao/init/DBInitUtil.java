@@ -14,12 +14,12 @@
 
 package com.liferay.portal.dao.init;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManager;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -62,51 +62,56 @@ public class DBInitUtil {
 
 		dbManager.setDB(db);
 
-		if (_checkDefaultRelease()) {
-			_setSupportsStringCaseSensitiveQuery(db);
+		try (Connection connection = _dataSource.getConnection()) {
+			if (_checkDefaultRelease(connection)) {
+				_setSupportsStringCaseSensitiveQuery(db, connection);
 
-			return;
-		}
-
-		try {
-			db.runSQL(
-				"alter table Release_ add schemaVersion VARCHAR(75) null");
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e.getMessage());
+				return;
 			}
-		}
 
-		try {
-			db.runSQL("alter table Release_ add state_ INTEGER");
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e.getMessage());
+			try {
+				db.runSQL(
+					connection,
+					"alter table Release_ add schemaVersion VARCHAR(75) null");
 			}
-		}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e.getMessage());
+				}
+			}
 
-		if (_checkDefaultRelease()) {
-			_setSupportsStringCaseSensitiveQuery(db);
+			try {
+				db.runSQL(
+					connection, "alter table Release_ add state_ INTEGER");
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e.getMessage());
+				}
+			}
 
-			return;
-		}
+			if (_checkDefaultRelease(connection)) {
+				_setSupportsStringCaseSensitiveQuery(db, connection);
 
-		// Create tables and populate with default data
+				return;
+			}
 
-		if (GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.SCHEMA_RUN_ENABLED))) {
+			// Create tables and populate with default data
 
-			_createTablesAndPopulate(db);
+			if (GetterUtil.getBoolean(
+					PropsUtil.get(PropsKeys.SCHEMA_RUN_ENABLED))) {
 
-			_setSupportsStringCaseSensitiveQuery(db);
+				_createTablesAndPopulate(db, connection);
+
+				_setSupportsStringCaseSensitiveQuery(db, connection);
+			}
 		}
 	}
 
-	private static void _addReleaseInfo() throws Exception {
-		try (Connection con = DataAccess.getConnection();
-			PreparedStatement ps = con.prepareStatement(
+	private static void _addReleaseInfo(Connection connection)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into Release_ (releaseId, createDate, ",
 					"modifiedDate, servletContextName, schemaVersion, ",
@@ -132,15 +137,14 @@ public class DBInitUtil {
 		}
 	}
 
-	private static boolean _checkDefaultRelease() {
-		try (Connection con = DataAccess.getConnection();
-			PreparedStatement ps = con.prepareStatement(
+	private static boolean _checkDefaultRelease(Connection connection) {
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select buildNumber, schemaVersion, state_ from Release_ " +
 					"where releaseId = " + ReleaseConstants.DEFAULT_ID);
 			ResultSet rs = ps.executeQuery()) {
 
 			if (!rs.next()) {
-				_addReleaseInfo();
+				_addReleaseInfo(connection);
 			}
 
 			return true;
@@ -154,32 +158,30 @@ public class DBInitUtil {
 		return false;
 	}
 
-	private static void _createTablesAndPopulate(DB db) {
-		try {
-			if (_log.isInfoEnabled()) {
-				_log.info("Create tables and populate with default data");
-			}
+	private static void _createTablesAndPopulate(DB db, Connection connection)
+		throws Exception {
 
-			db.runSQLTemplate("portal-tables.sql", false);
-			db.runSQLTemplate("portal-data-common.sql", false);
-			db.runSQLTemplate("portal-data-counter.sql", false);
-			db.runSQLTemplate("indexes.sql", false);
-			db.runSQLTemplate("sequences.sql", false);
-
-			_addReleaseInfo();
-
-			StartupHelperUtil.setDbNew(true);
+		if (_log.isInfoEnabled()) {
+			_log.info("Create tables and populate with default data");
 		}
-		catch (Exception e) {
-			_log.error(e, e);
 
-			throw new SystemException(e);
-		}
+		ClassLoader classLoader = DBInitUtil.class.getClassLoader();
+
+		_runSQLTemplate(db, connection, classLoader, "portal-tables.sql");
+		_runSQLTemplate(db, connection, classLoader, "portal-data-common.sql");
+		_runSQLTemplate(db, connection, classLoader, "portal-data-counter.sql");
+		_runSQLTemplate(db, connection, classLoader, "indexes.sql");
+		_runSQLTemplate(db, connection, classLoader, "sequences.sql");
+
+		_addReleaseInfo(connection);
+
+		StartupHelperUtil.setDbNew(true);
 	}
 
-	private static boolean _hasDefaultReleaseWithTestString(String testString) {
-		try (Connection con = DataAccess.getConnection();
-			PreparedStatement ps = con.prepareStatement(
+	private static boolean _hasDefaultReleaseWithTestString(
+		Connection connection, String testString) {
+
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select count(*) from Release_ where releaseId = ? and " +
 					"testString = ?")) {
 
@@ -201,10 +203,27 @@ public class DBInitUtil {
 		return false;
 	}
 
-	private static void _setSupportsStringCaseSensitiveQuery(DB db) {
-		if (!_hasDefaultReleaseWithTestString(ReleaseConstants.TEST_STRING)) {
+	private static void _runSQLTemplate(
+			DB db, Connection connection, ClassLoader classLoader, String path)
+		throws Exception {
+
+		db.runSQLTemplateString(
+			connection,
+			StreamUtil.toString(
+				classLoader.getResourceAsStream(
+					"com/liferay/portal/tools/sql/dependencies/".concat(path))),
+			false, false);
+	}
+
+	private static void _setSupportsStringCaseSensitiveQuery(
+		DB db, Connection connection) {
+
+		if (!_hasDefaultReleaseWithTestString(
+				connection, ReleaseConstants.TEST_STRING)) {
+
 			try {
 				db.runSQL(
+					connection,
 					"alter table Release_ add testString VARCHAR(1024) null");
 			}
 			catch (Exception e) {
@@ -215,6 +234,7 @@ public class DBInitUtil {
 
 			try {
 				db.runSQL(
+					connection,
 					"update Release_ set testString = '" +
 						ReleaseConstants.TEST_STRING + "'");
 			}
@@ -225,7 +245,7 @@ public class DBInitUtil {
 			}
 
 			if (!_hasDefaultReleaseWithTestString(
-					ReleaseConstants.TEST_STRING)) {
+					connection, ReleaseConstants.TEST_STRING)) {
 
 				throw new SystemException(
 					"Release_ table was not initialized properly");
@@ -233,6 +253,7 @@ public class DBInitUtil {
 		}
 
 		if (_hasDefaultReleaseWithTestString(
+				connection,
 				StringUtil.toUpperCase(ReleaseConstants.TEST_STRING))) {
 
 			db.setSupportsStringCaseSensitiveQuery(false);

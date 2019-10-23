@@ -41,10 +41,11 @@ public class RatingsStatsLocalServiceImpl
 
 		Date now = new Date();
 
-		stats.setClassNameId(classNameId);
-		stats.setClassPK(classPK);
 		stats.setCreateDate(now);
 		stats.setModifiedDate(now);
+
+		stats.setClassNameId(classNameId);
+		stats.setClassPK(classPK);
 		stats.setTotalEntries(0);
 		stats.setTotalScore(0.0);
 		stats.setAverageScore(0.0);

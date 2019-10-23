@@ -155,4 +155,18 @@ definition {
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Table View");
 	}
 
+	@description = "Add a Form View"
+	@priority = "5"
+	test AddFormSimpleFormView {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+
+		FormView.addFieldByDragAndDrop(fieldType = "Text Field");
+	}
+
 }

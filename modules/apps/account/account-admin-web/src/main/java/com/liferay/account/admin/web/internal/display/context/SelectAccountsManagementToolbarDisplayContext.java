@@ -14,9 +14,12 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,6 +38,11 @@ public class SelectAccountsManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		return null;
 	}
 
 	@Override

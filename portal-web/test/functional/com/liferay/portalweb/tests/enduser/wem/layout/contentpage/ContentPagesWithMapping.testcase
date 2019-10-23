@@ -82,9 +82,9 @@ definition {
 			id = "link");
 
 		PageEditorEditableLink.mapURLToAsset(
-			assetName = "liferay.com",
-			assetType = "Web Content Article",
-			field = "Title");
+			entryTitle = "liferay.com",
+			field = "Title",
+			navItem = "Web Content");
 
 		PageEditor.clickPublish();
 

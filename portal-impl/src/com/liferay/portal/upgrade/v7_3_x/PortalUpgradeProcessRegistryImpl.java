@@ -43,7 +43,7 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(new Version(6, 0, 4), new UpgradeAssetCategory());
 
-		upgradeProcesses.put(new Version(6, 0, 5), new UpgradeRatingsStats());
+		upgradeProcesses.put(new Version(7, 0, 0), new UpgradeRatingsStats());
 	}
 
 }

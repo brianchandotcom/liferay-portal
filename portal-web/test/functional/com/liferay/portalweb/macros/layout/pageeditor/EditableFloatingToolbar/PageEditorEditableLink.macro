@@ -8,17 +8,21 @@ definition {
 	}
 
 	macro _selectContent {
-		Click(locator1 = "PageEditorEditableLink#ASSET_SELECT_BUTTON");
-
-		Click(
-			assetType = "${assetType}",
-			locator1 = "PageEditorEditableLink#ASSET_SELECTION");
+		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		LexiconEntry.gotoEntry(rowEntry = "${assetName}");
+		NavItem.click(navItem = "${navItem}");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		Click(
+			key_card = "${entryTitle}",
+			locator1 = "LexiconCard#CARD_TITLE");
 
 		SelectFrameTop();
+
+		Button.clickDone();
 	}
 
 	macro _selectField {
@@ -36,13 +40,13 @@ definition {
 	}
 
 	macro mapURLToAsset {
-		Variables.assertDefined(parameterList = "${assetName},${assetType},${field}");
+		Variables.assertDefined(parameterList = "${entryTitle},${field},${navItem}");
 
 		PageEditorEditableLink._gotoFromContentField();
 
 		PageEditorEditableLink._selectContent(
-			assetName = "${assetName}",
-			assetType = "${assetType}");
+			entryTitle = "${entryTitle}",
+			navItem = "${navItem}");
 
 		PageEditorEditableLink._selectField(field = "${field}");
 	}

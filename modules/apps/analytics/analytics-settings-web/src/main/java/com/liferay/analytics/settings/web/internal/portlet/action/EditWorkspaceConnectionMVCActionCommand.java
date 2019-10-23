@@ -15,28 +15,11 @@
 package com.liferay.analytics.settings.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
-import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsDescriptor;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.MutableRenderParameters;
-import javax.portlet.ValidatorException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -51,65 +34,16 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class EditWorkspaceConnectionMVCActionCommand
-	extends BaseMVCActionCommand {
-
-	protected void checkPermissions(ThemeDisplay themeDisplay)
-		throws PrincipalException {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
-			throw new PrincipalException();
-		}
-	}
+	extends BaseAnalyticsMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void storeSettings(
+			ActionRequest actionRequest, ModifiableSettings modifiableSettings)
 		throws Exception {
 
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		String token = ParamUtil.getString(actionRequest, "token");
 
-			checkPermissions(themeDisplay);
-
-			storeSettings(actionRequest, themeDisplay);
-		}
-		catch (PrincipalException pe) {
-			SessionErrors.add(actionRequest, pe.getClass());
-
-			MutableRenderParameters mutableRenderParameters =
-				actionResponse.getRenderParameters();
-
-			mutableRenderParameters.setValue("mvcPath", "/error.jsp");
-		}
-	}
-
-	protected void storeSettings(
-			ActionRequest actionRequest, ThemeDisplay themeDisplay)
-		throws IOException, SettingsException, ValidatorException {
-
-		Settings settings = SettingsFactoryUtil.getSettings(
-			new CompanyServiceSettingsLocator(
-				themeDisplay.getCompanyId(), "com.liferay.analytics"));
-
-		ModifiableSettings modifiableSettings =
-			settings.getModifiableSettings();
-
-		SettingsDescriptor settingsDescriptor =
-			SettingsFactoryUtil.getSettingsDescriptor("com.liferay.analytics");
-
-		for (String name : settingsDescriptor.getAllKeys()) {
-			String value = ParamUtil.getString(actionRequest, name);
-
-			String oldValue = settings.getValue(name, null);
-
-			if (!value.equals(oldValue)) {
-				modifiableSettings.setValue(name, value);
-			}
-		}
+		modifiableSettings.setValue("token", token);
 
 		modifiableSettings.store();
 	}

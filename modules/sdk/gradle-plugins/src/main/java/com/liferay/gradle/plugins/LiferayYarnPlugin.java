@@ -311,13 +311,7 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 			return;
 		}
 
-		Project project = npmInstallTask.getProject();
-
-		File nodeModulesDir = project.file("node_modules");
-
-		if (!nodeModulesDir.exists()) {
-			npmInstallTask.finalizedBy(yarnInstallTask);
-		}
+		npmInstallTask.finalizedBy(yarnInstallTask);
 	}
 
 	private void _configureTasksNpmInstall(

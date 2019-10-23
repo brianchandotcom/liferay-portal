@@ -32,6 +32,7 @@ public class AnnouncementsDeliverySoap implements Serializable {
 
 		AnnouncementsDeliverySoap soapModel = new AnnouncementsDeliverySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setDeliveryId(model.getDeliveryId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -99,6 +100,14 @@ public class AnnouncementsDeliverySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setDeliveryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getDeliveryId() {
@@ -169,6 +178,7 @@ public class AnnouncementsDeliverySoap implements Serializable {
 		_website = website;
 	}
 
+	private long _mvccVersion;
 	private long _deliveryId;
 	private long _companyId;
 	private long _userId;

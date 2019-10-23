@@ -77,21 +77,22 @@ public class AnnouncementsEntryModelImpl
 	public static final String TABLE_NAME = "AnnouncementsEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"entryId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"title", Types.VARCHAR},
-		{"content", Types.CLOB}, {"url", Types.VARCHAR},
-		{"type_", Types.VARCHAR}, {"displayDate", Types.TIMESTAMP},
-		{"expirationDate", Types.TIMESTAMP}, {"priority", Types.INTEGER},
-		{"alert", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"entryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"title", Types.VARCHAR}, {"content", Types.CLOB},
+		{"url", Types.VARCHAR}, {"type_", Types.VARCHAR},
+		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
+		{"priority", Types.INTEGER}, {"alert", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -112,7 +113,7 @@ public class AnnouncementsEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AnnouncementsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,title VARCHAR(75) null,content TEXT null,url STRING null,type_ VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,priority INTEGER,alert BOOLEAN)";
+		"create table AnnouncementsEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,title VARCHAR(75) null,content TEXT null,url STRING null,type_ VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,priority INTEGER,alert BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table AnnouncementsEntry";
 
@@ -172,6 +173,7 @@ public class AnnouncementsEntryModelImpl
 
 		AnnouncementsEntry model = new AnnouncementsEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setEntryId(soapModel.getEntryId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -348,6 +350,12 @@ public class AnnouncementsEntryModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<AnnouncementsEntry, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", AnnouncementsEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<AnnouncementsEntry, Long>)
+				AnnouncementsEntry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", AnnouncementsEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -445,6 +453,17 @@ public class AnnouncementsEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -831,6 +850,7 @@ public class AnnouncementsEntryModelImpl
 		AnnouncementsEntryImpl announcementsEntryImpl =
 			new AnnouncementsEntryImpl();
 
+		announcementsEntryImpl.setMvccVersion(getMvccVersion());
 		announcementsEntryImpl.setUuid(getUuid());
 		announcementsEntryImpl.setEntryId(getEntryId());
 		announcementsEntryImpl.setCompanyId(getCompanyId());
@@ -960,6 +980,8 @@ public class AnnouncementsEntryModelImpl
 	public CacheModel<AnnouncementsEntry> toCacheModel() {
 		AnnouncementsEntryCacheModel announcementsEntryCacheModel =
 			new AnnouncementsEntryCacheModel();
+
+		announcementsEntryCacheModel.mvccVersion = getMvccVersion();
 
 		announcementsEntryCacheModel.uuid = getUuid();
 
@@ -1133,6 +1155,7 @@ public class AnnouncementsEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _entryId;

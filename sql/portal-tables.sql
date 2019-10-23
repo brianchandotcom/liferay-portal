@@ -42,6 +42,7 @@ create table Address (
 );
 
 create table AnnouncementsDelivery (
+	mvccVersion LONG default 0 not null,
 	deliveryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -52,6 +53,7 @@ create table AnnouncementsDelivery (
 );
 
 create table AnnouncementsEntry (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	entryId LONG not null primary key,
 	companyId LONG,
@@ -72,6 +74,7 @@ create table AnnouncementsEntry (
 );
 
 create table AnnouncementsFlag (
+	mvccVersion LONG default 0 not null,
 	flagId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

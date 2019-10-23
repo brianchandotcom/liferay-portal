@@ -126,6 +126,8 @@ public class AnnouncementsDeliveryPersistenceTest {
 		AnnouncementsDelivery newAnnouncementsDelivery = _persistence.create(
 			pk);
 
+		newAnnouncementsDelivery.setMvccVersion(RandomTestUtil.nextLong());
+
 		newAnnouncementsDelivery.setCompanyId(RandomTestUtil.nextLong());
 
 		newAnnouncementsDelivery.setUserId(RandomTestUtil.nextLong());
@@ -145,6 +147,9 @@ public class AnnouncementsDeliveryPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newAnnouncementsDelivery.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingAnnouncementsDelivery.getMvccVersion(),
+			newAnnouncementsDelivery.getMvccVersion());
 		Assert.assertEquals(
 			existingAnnouncementsDelivery.getDeliveryId(),
 			newAnnouncementsDelivery.getDeliveryId());
@@ -219,9 +224,9 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 	protected OrderByComparator<AnnouncementsDelivery> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AnnouncementsDelivery", "deliveryId", true, "companyId", true,
-			"userId", true, "type", true, "email", true, "sms", true, "website",
-			true);
+			"AnnouncementsDelivery", "mvccVersion", true, "deliveryId", true,
+			"companyId", true, "userId", true, "type", true, "email", true,
+			"sms", true, "website", true);
 	}
 
 	@Test
@@ -485,6 +490,8 @@ public class AnnouncementsDeliveryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		AnnouncementsDelivery announcementsDelivery = _persistence.create(pk);
+
+		announcementsDelivery.setMvccVersion(RandomTestUtil.nextLong());
 
 		announcementsDelivery.setCompanyId(RandomTestUtil.nextLong());
 

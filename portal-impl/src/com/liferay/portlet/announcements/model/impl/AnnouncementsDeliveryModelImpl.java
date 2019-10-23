@@ -72,16 +72,17 @@ public class AnnouncementsDeliveryModelImpl
 	public static final String TABLE_NAME = "AnnouncementsDelivery";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"deliveryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"type_", Types.VARCHAR},
-		{"email", Types.BOOLEAN}, {"sms", Types.BOOLEAN},
-		{"website", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"deliveryId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"type_", Types.VARCHAR}, {"email", Types.BOOLEAN},
+		{"sms", Types.BOOLEAN}, {"website", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("deliveryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -92,7 +93,7 @@ public class AnnouncementsDeliveryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AnnouncementsDelivery (deliveryId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,email BOOLEAN,sms BOOLEAN,website BOOLEAN)";
+		"create table AnnouncementsDelivery (mvccVersion LONG default 0 not null,deliveryId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,email BOOLEAN,sms BOOLEAN,website BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AnnouncementsDelivery";
@@ -147,6 +148,7 @@ public class AnnouncementsDeliveryModelImpl
 
 		AnnouncementsDelivery model = new AnnouncementsDeliveryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setDeliveryId(soapModel.getDeliveryId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -316,6 +318,12 @@ public class AnnouncementsDeliveryModelImpl
 					<String, BiConsumer<AnnouncementsDelivery, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", AnnouncementsDelivery::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<AnnouncementsDelivery, Long>)
+				AnnouncementsDelivery::setMvccVersion);
+		attributeGetterFunctions.put(
 			"deliveryId", AnnouncementsDelivery::getDeliveryId);
 		attributeSetterBiConsumers.put(
 			"deliveryId",
@@ -359,6 +367,17 @@ public class AnnouncementsDeliveryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -549,6 +568,7 @@ public class AnnouncementsDeliveryModelImpl
 		AnnouncementsDeliveryImpl announcementsDeliveryImpl =
 			new AnnouncementsDeliveryImpl();
 
+		announcementsDeliveryImpl.setMvccVersion(getMvccVersion());
 		announcementsDeliveryImpl.setDeliveryId(getDeliveryId());
 		announcementsDeliveryImpl.setCompanyId(getCompanyId());
 		announcementsDeliveryImpl.setUserId(getUserId());
@@ -639,6 +659,8 @@ public class AnnouncementsDeliveryModelImpl
 	public CacheModel<AnnouncementsDelivery> toCacheModel() {
 		AnnouncementsDeliveryCacheModel announcementsDeliveryCacheModel =
 			new AnnouncementsDeliveryCacheModel();
+
+		announcementsDeliveryCacheModel.mvccVersion = getMvccVersion();
 
 		announcementsDeliveryCacheModel.deliveryId = getDeliveryId();
 
@@ -735,6 +757,7 @@ public class AnnouncementsDeliveryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _deliveryId;
 	private long _companyId;
 	private long _originalCompanyId;

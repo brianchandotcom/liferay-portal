@@ -15,6 +15,7 @@
 package com.liferay.announcements.kernel.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -34,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AnnouncementsFlagModel
-	extends BaseModel<AnnouncementsFlag>, ShardedModel {
+	extends BaseModel<AnnouncementsFlag>, MVCCModel, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -55,6 +56,22 @@ public interface AnnouncementsFlagModel
 	 * @param primaryKey the primary key of this announcements flag
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this announcements flag.
+	 *
+	 * @return the mvcc version of this announcements flag
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this announcements flag.
+	 *
+	 * @param mvccVersion the mvcc version of this announcements flag
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the flag ID of this announcements flag.

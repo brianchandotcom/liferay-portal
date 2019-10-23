@@ -18,6 +18,7 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class AnnouncementsEntryCacheModel
-	implements CacheModel<AnnouncementsEntry>, Externalizable {
+	implements CacheModel<AnnouncementsEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,9 @@ public class AnnouncementsEntryCacheModel
 		AnnouncementsEntryCacheModel announcementsEntryCacheModel =
 			(AnnouncementsEntryCacheModel)obj;
 
-		if (entryId == announcementsEntryCacheModel.entryId) {
+		if ((entryId == announcementsEntryCacheModel.entryId) &&
+			(mvccVersion == announcementsEntryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class AnnouncementsEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, entryId);
+		int hashCode = HashUtil.hash(0, entryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", entryId=");
 		sb.append(entryId);
@@ -107,6 +124,8 @@ public class AnnouncementsEntryCacheModel
 	public AnnouncementsEntry toEntityModel() {
 		AnnouncementsEntryImpl announcementsEntryImpl =
 			new AnnouncementsEntryImpl();
+
+		announcementsEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			announcementsEntryImpl.setUuid("");
@@ -195,6 +214,7 @@ public class AnnouncementsEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		entryId = objectInput.readLong();
@@ -223,6 +243,8 @@ public class AnnouncementsEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -286,6 +308,7 @@ public class AnnouncementsEntryCacheModel
 		objectOutput.writeBoolean(alert);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long entryId;
 	public long companyId;

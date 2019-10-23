@@ -18,6 +18,7 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class AnnouncementsFlagCacheModel
-	implements CacheModel<AnnouncementsFlag>, Externalizable {
+	implements CacheModel<AnnouncementsFlag>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,9 @@ public class AnnouncementsFlagCacheModel
 		AnnouncementsFlagCacheModel announcementsFlagCacheModel =
 			(AnnouncementsFlagCacheModel)obj;
 
-		if (flagId == announcementsFlagCacheModel.flagId) {
+		if ((flagId == announcementsFlagCacheModel.flagId) &&
+			(mvccVersion == announcementsFlagCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class AnnouncementsFlagCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, flagId);
+		int hashCode = HashUtil.hash(0, flagId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{flagId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", flagId=");
 		sb.append(flagId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -86,6 +103,7 @@ public class AnnouncementsFlagCacheModel
 		AnnouncementsFlagImpl announcementsFlagImpl =
 			new AnnouncementsFlagImpl();
 
+		announcementsFlagImpl.setMvccVersion(mvccVersion);
 		announcementsFlagImpl.setFlagId(flagId);
 		announcementsFlagImpl.setCompanyId(companyId);
 		announcementsFlagImpl.setUserId(userId);
@@ -107,6 +125,8 @@ public class AnnouncementsFlagCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		flagId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -121,6 +141,8 @@ public class AnnouncementsFlagCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(flagId);
 
 		objectOutput.writeLong(companyId);
@@ -133,6 +155,7 @@ public class AnnouncementsFlagCacheModel
 		objectOutput.writeInt(value);
 	}
 
+	public long mvccVersion;
 	public long flagId;
 	public long companyId;
 	public long userId;

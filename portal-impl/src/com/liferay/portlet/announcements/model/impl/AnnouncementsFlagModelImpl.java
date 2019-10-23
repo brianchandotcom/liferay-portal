@@ -73,15 +73,17 @@ public class AnnouncementsFlagModelImpl
 	public static final String TABLE_NAME = "AnnouncementsFlag";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"flagId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
-		{"entryId", Types.BIGINT}, {"value", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"flagId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"createDate", Types.TIMESTAMP}, {"entryId", Types.BIGINT},
+		{"value", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("flagId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -91,7 +93,7 @@ public class AnnouncementsFlagModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AnnouncementsFlag (flagId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,entryId LONG,value INTEGER)";
+		"create table AnnouncementsFlag (mvccVersion LONG default 0 not null,flagId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,entryId LONG,value INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table AnnouncementsFlag";
 
@@ -145,6 +147,7 @@ public class AnnouncementsFlagModelImpl
 
 		AnnouncementsFlag model = new AnnouncementsFlagImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setFlagId(soapModel.getFlagId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -310,6 +313,12 @@ public class AnnouncementsFlagModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<AnnouncementsFlag, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", AnnouncementsFlag::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<AnnouncementsFlag, Long>)
+				AnnouncementsFlag::setMvccVersion);
 		attributeGetterFunctions.put("flagId", AnnouncementsFlag::getFlagId);
 		attributeSetterBiConsumers.put(
 			"flagId",
@@ -344,6 +353,17 @@ public class AnnouncementsFlagModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -515,6 +535,7 @@ public class AnnouncementsFlagModelImpl
 		AnnouncementsFlagImpl announcementsFlagImpl =
 			new AnnouncementsFlagImpl();
 
+		announcementsFlagImpl.setMvccVersion(getMvccVersion());
 		announcementsFlagImpl.setFlagId(getFlagId());
 		announcementsFlagImpl.setCompanyId(getCompanyId());
 		announcementsFlagImpl.setUserId(getUserId());
@@ -624,6 +645,8 @@ public class AnnouncementsFlagModelImpl
 		AnnouncementsFlagCacheModel announcementsFlagCacheModel =
 			new AnnouncementsFlagCacheModel();
 
+		announcementsFlagCacheModel.mvccVersion = getMvccVersion();
+
 		announcementsFlagCacheModel.flagId = getFlagId();
 
 		announcementsFlagCacheModel.companyId = getCompanyId();
@@ -716,6 +739,7 @@ public class AnnouncementsFlagModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _flagId;
 	private long _companyId;
 	private long _originalCompanyId;

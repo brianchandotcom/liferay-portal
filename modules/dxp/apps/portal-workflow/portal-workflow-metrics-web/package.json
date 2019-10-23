@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/charts": "3.0.0",
-		"axios": "0.18.0",
+		"axios": "0.18.1",
 		"classnames": "2.2.6",
 		"clay-charts-react": "2.4.1",
 		"custom-event-polyfill": "1.0.6",

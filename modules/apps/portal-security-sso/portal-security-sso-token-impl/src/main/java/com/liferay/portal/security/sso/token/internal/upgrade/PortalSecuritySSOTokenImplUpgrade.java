@@ -36,6 +36,7 @@ public class PortalSecuritySSOTokenImplUpgrade
 					"TokenConfiguration",
 				"com.liferay.portal.security.sso.token.internal." +
 					"configuration.TokenConfiguration"));
+
 		registry.register(
 			"1.0.0", "2.0.0",
 			_configurationUpgradeStepFactory.createUpgradeStep(

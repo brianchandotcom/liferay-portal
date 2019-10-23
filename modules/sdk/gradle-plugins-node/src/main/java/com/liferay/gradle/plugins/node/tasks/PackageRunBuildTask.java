@@ -19,7 +19,6 @@ import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import java.io.File;
 
 import org.gradle.api.Project;
-import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Optional;
@@ -105,17 +104,18 @@ public class PackageRunBuildTask extends PackageRunTask {
 		return _getExistentYarnFile("package.json");
 	}
 
-	public File getYarnWorkingDir() {
-		return GradleUtil.toFile(getProject(), _yarnWorkingDir);
-	}
-
-	@Input
-	public boolean hasNodeModulesDir() {
-		if (_getExistentFile("node_modules") == null) {
-			return false;
+	@InputDirectory
+	@Optional
+	public File getYarnProjectNodeModulesDir() {
+		if (isUseNpm()) {
+			return null;
 		}
 
-		return true;
+		return _getExistentFile("node_modules");
+	}
+
+	public File getYarnWorkingDir() {
+		return GradleUtil.toFile(getProject(), _yarnWorkingDir);
 	}
 
 	public void setDestinationDir(Object destinationDir) {

@@ -296,6 +296,8 @@ paths:
     /import-task/{importTaskId}/:
         #@review
         get:
+            description:
+                Retrieves the import task.
             operationId: getImportTask
             parameters:
                 - in: path

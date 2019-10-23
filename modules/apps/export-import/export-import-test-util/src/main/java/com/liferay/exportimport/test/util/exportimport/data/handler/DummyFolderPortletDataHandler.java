@@ -24,7 +24,6 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.test.util.constants.DummyFolderPortletKeys;
 import com.liferay.exportimport.test.util.model.DummyFolder;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -154,9 +153,6 @@ public class DummyFolderPortletDataHandler extends BasePortletDataHandler {
 
 		_dummyFolderStagedModelRepository = dummyFolderStagedModelRepository;
 	}
-
-	@Reference(target = ModuleServiceLifecycle.DATABASE_INITIALIZED)
-	protected ModuleServiceLifecycle moduleServiceLifecycle;
 
 	private StagedModelRepository<DummyFolder>
 		_dummyFolderStagedModelRepository;

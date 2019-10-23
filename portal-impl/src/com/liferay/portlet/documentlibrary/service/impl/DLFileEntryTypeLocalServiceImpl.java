@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -61,11 +60,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.dependency.ServiceDependencyListener;
-import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -183,36 +177,12 @@ public class DLFileEntryTypeLocalServiceImpl
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
 
-		ServiceDependencyManager serviceDependencyManager =
-			new ServiceDependencyManager();
-
-		serviceDependencyManager.addServiceDependencyListener(
-			new ServiceDependencyListener() {
-
-				@Override
-				public void dependenciesFulfilled() {
-					try {
-						dlFileEntryTypeLocalService.
-							getBasicDocumentDLFileEntryType();
-					}
-					catch (NoSuchFileEntryTypeException nsfete) {
-						ReflectionUtil.throwException(nsfete);
-					}
-				}
-
-				@Override
-				public void destroy() {
-				}
-
-			});
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		serviceDependencyManager.registerDependencies(
-			new Class<?>[] {ModuleServiceLifecycle.class},
-			new Filter[] {
-				registry.getFilter(ModuleServiceLifecycle.DATABASE_INITIALIZED)
-			});
+		try {
+			dlFileEntryTypeLocalService.getBasicDocumentDLFileEntryType();
+		}
+		catch (NoSuchFileEntryTypeException nsfete) {
+			ReflectionUtil.throwException(nsfete);
+		}
 	}
 
 	@Override

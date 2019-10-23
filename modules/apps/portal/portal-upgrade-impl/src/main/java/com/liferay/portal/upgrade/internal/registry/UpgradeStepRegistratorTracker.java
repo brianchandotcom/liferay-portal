@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -78,9 +77,6 @@ public class UpgradeStepRegistratorTracker {
 	protected void deactivate() {
 		_serviceTracker.close();
 	}
-
-	@Reference(target = ModuleServiceLifecycle.DATABASE_INITIALIZED)
-	protected ModuleServiceLifecycle moduleServiceLifecycle;
 
 	private BundleContext _bundleContext;
 	private ReleaseManagerConfiguration _releaseManagerConfiguration;

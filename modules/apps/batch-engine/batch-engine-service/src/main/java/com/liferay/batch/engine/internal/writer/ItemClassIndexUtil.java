@@ -42,24 +42,28 @@ public class ItemClassIndexUtil {
 			clazz -> {
 				Map<String, Field> fieldMap = new HashMap<>();
 
-				for (Field field : clazz.getDeclaredFields()) {
-					Class<?> valueClass = field.getType();
+				while (clazz != Object.class) {
+					for (Field field : clazz.getDeclaredFields()) {
+						Class<?> valueClass = field.getType();
 
-					if (!valueClass.isPrimitive() &&
-						!_objectTypes.contains(valueClass)) {
+						if (!valueClass.isPrimitive() &&
+							!_objectTypes.contains(valueClass)) {
 
-						continue;
+							continue;
+						}
+
+						field.setAccessible(true);
+
+						String name = field.getName();
+
+						if (name.charAt(0) == CharPool.UNDERLINE) {
+							name = name.substring(1);
+						}
+
+						fieldMap.put(name, field);
 					}
 
-					field.setAccessible(true);
-
-					String name = field.getName();
-
-					if (name.charAt(0) == CharPool.UNDERLINE) {
-						name = name.substring(1);
-					}
-
-					fieldMap.put(name, field);
+					clazz = clazz.getSuperclass();
 				}
 
 				return fieldMap;

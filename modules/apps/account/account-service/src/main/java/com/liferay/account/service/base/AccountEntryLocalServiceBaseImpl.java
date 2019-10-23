@@ -394,6 +394,10 @@ public abstract class AccountEntryLocalServiceBaseImpl
 		counterLocalService;
 
 	@Reference
+	protected com.liferay.portal.kernel.service.GroupLocalService
+		groupLocalService;
+
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 

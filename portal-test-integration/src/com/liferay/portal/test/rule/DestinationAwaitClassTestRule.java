@@ -62,6 +62,11 @@ public class DestinationAwaitClassTestRule
 				destinationName);
 
 			if (destination == null) {
+				if (System.getenv("JENKINS_HOME") != null) {
+					throw new IllegalStateException(
+						destinationName + " is not available");
+				}
+
 				continue;
 			}
 

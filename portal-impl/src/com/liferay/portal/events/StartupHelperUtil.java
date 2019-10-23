@@ -14,11 +14,27 @@
 
 package com.liferay.portal.events;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.verify.VerifyException;
+import com.liferay.portal.verify.VerifyProcessUtil;
 
 import java.sql.Connection;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,87 +43,184 @@ import java.sql.Connection;
  */
 public class StartupHelperUtil {
 
-	public static StartupHelper getStartupHelper() {
-		return _startupHelper;
-	}
-
 	public static boolean isDBNew() {
-		return getStartupHelper().isDBNew();
+		return _dbNew;
 	}
 
 	public static boolean isStartupFinished() {
-		return getStartupHelper().isStartupFinished();
+		return _startupFinished;
 	}
 
 	public static boolean isUpgraded() {
-		return getStartupHelper().isUpgraded();
+		return _upgraded;
 	}
 
 	public static boolean isUpgrading() {
-		return getStartupHelper().isUpgrading();
+		return _upgrading;
 	}
 
 	public static boolean isVerified() {
-		return getStartupHelper().isVerified();
+		return _verified;
 	}
 
 	public static void printPatchLevel() {
-		getStartupHelper().printPatchLevel();
+		if (_log.isInfoEnabled() && !PatcherUtil.hasInconsistentPatchLevels()) {
+			String installedPatches = StringUtil.merge(
+				PatcherUtil.getInstalledPatches(), StringPool.COMMA_AND_SPACE);
+
+			if (Validator.isNull(installedPatches)) {
+				_log.info("There are no patches installed");
+			}
+			else {
+				_log.info(
+					"The following patches are installed: " + installedPatches);
+			}
+		}
 	}
 
 	public static void setDbNew(boolean dbNew) {
-		getStartupHelper().setDbNew(dbNew);
+		_dbNew = dbNew;
 	}
 
 	public static void setDropIndexes(boolean dropIndexes) {
-		getStartupHelper().setDropIndexes(dropIndexes);
+		_dropIndexes = dropIndexes;
 	}
 
 	public static void setStartupFinished(boolean startupFinished) {
-		getStartupHelper().setStartupFinished(startupFinished);
+		_startupFinished = startupFinished;
 	}
 
 	public static void updateIndexes() {
-		getStartupHelper().updateIndexes();
+		updateIndexes(_dropIndexes);
 	}
 
 	public static void updateIndexes(boolean dropIndexes) {
-		getStartupHelper().updateIndexes(dropIndexes);
+		DB db = DBManagerUtil.getDB();
+
+		Connection connection = null;
+
+		try {
+			connection = DataAccess.getConnection();
+
+			updateIndexes(db, connection, dropIndexes);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(connection);
+		}
 	}
 
 	public static void updateIndexes(
 		DB db, Connection connection, boolean dropIndexes) {
 
-		getStartupHelper().updateIndexes(db, connection, dropIndexes);
+		try {
+			Thread currentThread = Thread.currentThread();
+
+			ClassLoader classLoader = currentThread.getContextClassLoader();
+
+			String tablesSQL = StringUtil.read(
+				classLoader,
+				"com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
+
+			String indexesSQL = StringUtil.read(
+				classLoader,
+				"com/liferay/portal/tools/sql/dependencies/indexes.sql");
+
+			db.updateIndexes(connection, tablesSQL, indexesSQL, dropIndexes);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
 	}
 
 	public static void upgradeProcess(int buildNumber) throws UpgradeException {
-		getStartupHelper().upgradeProcess(buildNumber);
+		_upgrading = true;
+
+		try {
+			List<UpgradeProcess> upgradeProcesses =
+				UpgradeProcessUtil.initUpgradeProcesses(
+					PortalClassLoaderUtil.getClassLoader(),
+					_UPGRADE_PROCESS_CLASS_NAMES);
+
+			_upgraded = UpgradeProcessUtil.upgradeProcess(
+				buildNumber, upgradeProcesses);
+		}
+		finally {
+			_upgrading = false;
+		}
 	}
 
 	public static void verifyProcess(boolean verified) throws VerifyException {
-		getStartupHelper().verifyProcess(verified);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #verifyProcess(boolean)}
-	 */
-	@Deprecated
-	public static void verifyProcess(boolean newBuildNumber, boolean verified)
-		throws VerifyException {
-
-		getStartupHelper().verifyProcess(newBuildNumber, verified);
+		_verified = VerifyProcessUtil.verifyProcess(_upgraded, verified);
 	}
 
 	public static void verifyRequiredSchemaVersion() throws Exception {
-		_startupHelper.verifyRequiredSchemaVersion();
+		if (_log.isDebugEnabled()) {
+			_log.debug("Check the portal's required schema version");
+		}
+
+		if (!PortalUpgradeProcess.isInRequiredSchemaVersion(
+				DataAccess.getConnection())) {
+
+			Version currentSchemaVersion =
+				PortalUpgradeProcess.getCurrentSchemaVersion(
+					DataAccess.getConnection());
+
+			Version requiredSchemaVersion =
+				PortalUpgradeProcess.getRequiredSchemaVersion();
+
+			String msg;
+
+			if (currentSchemaVersion.compareTo(requiredSchemaVersion) < 0) {
+				msg =
+					"You must first upgrade the portal to the required " +
+						"schema version " + requiredSchemaVersion;
+			}
+			else {
+				msg =
+					"Current portal schema version " + currentSchemaVersion +
+						" requires a newer version of Liferay";
+			}
+
+			System.out.println(msg);
+
+			throw new RuntimeException(msg);
+		}
+
+		if (!PortalUpgradeProcess.isInLatestSchemaVersion(
+				DataAccess.getConnection())) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Execute the upgrade tool first if you need to upgrade " +
+						"the portal to the latest schema version");
+			}
+		}
 	}
 
-	public void setStartupHelper(StartupHelper startupHelper) {
-		_startupHelper = startupHelper;
-	}
+	private static final String[] _UPGRADE_PROCESS_CLASS_NAMES = {
+		"com.liferay.portal.upgrade.UpgradeProcess_7_0_0",
+		"com.liferay.portal.upgrade.UpgradeProcess_7_0_1",
+		"com.liferay.portal.upgrade.UpgradeProcess_7_0_3",
+		"com.liferay.portal.upgrade.UpgradeProcess_7_0_5",
+		"com.liferay.portal.upgrade.UpgradeProcess_7_0_6",
+		"com.liferay.portal.upgrade.PortalUpgradeProcess"
+	};
 
-	private static StartupHelper _startupHelper;
+	private static final Log _log = LogFactoryUtil.getLog(
+		StartupHelperUtil.class);
+
+	private static boolean _dbNew;
+	private static boolean _dropIndexes;
+	private static boolean _startupFinished;
+	private static boolean _upgraded;
+	private static boolean _upgrading;
+	private static boolean _verified;
 
 }

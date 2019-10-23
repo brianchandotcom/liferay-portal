@@ -63,11 +63,6 @@ public class GradlePluginsDefaultsUtilTest {
 		_testGetBuildProfileFileNames(
 			"portal-pre", true, ".lfrbuild-portal-pre",
 			".lfrbuild-portal-pre-public");
-
-		_testGetBuildProfileFileNames(
-			"slim", false, ".lfrbuild-slim", ".lfrbuild-slim-private");
-		_testGetBuildProfileFileNames(
-			"slim", true, ".lfrbuild-slim", ".lfrbuild-slim-public");
 	}
 
 	private void _testGetBuildProfileFileNames(

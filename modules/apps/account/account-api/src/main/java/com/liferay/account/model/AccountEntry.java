@@ -56,4 +56,8 @@ public interface AccountEntry extends AccountEntryModel, PersistedModel {
 
 		};
 
+	public com.liferay.portal.kernel.model.Group getAccountEntryGroup();
+
+	public long getAccountEntryGroupId();
+
 }

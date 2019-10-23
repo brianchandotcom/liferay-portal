@@ -28,6 +28,11 @@
 	<td>//ul[contains(@class,'nav-nested')]//span[*[name()='svg'][contains(@class,'icon-plus')]]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>NAV_NESTED_PLUS_IE</td>
+	<td>//ul[contains(@class,'nav-nested')]//span[contains(@class,'btn-monospaced')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

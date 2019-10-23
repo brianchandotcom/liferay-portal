@@ -1241,7 +1241,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-beanutils.jar</file-name>
-				<version>1.9.2</version>
+				<version>1.9.4</version>
 				<project-name>Commons Beanutils</project-name>
 				<project-url>http://commons.apache.org/beanutils</project-url>
 				<licenses>

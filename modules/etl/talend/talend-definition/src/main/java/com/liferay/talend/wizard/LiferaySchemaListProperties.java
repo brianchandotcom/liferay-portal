@@ -106,7 +106,7 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 
 		try {
 			Map<String, String> endpointMap = _getEndpointMap(
-				OASConstants.OPERATION_GET, oasSource.getOASJsonObject());
+				oasSource.getOASJsonObject(), OASConstants.OPERATION_GET);
 
 			for (Map.Entry<String, String> entry : endpointMap.entrySet()) {
 				String endpoint = entry.getKey();
@@ -168,7 +168,7 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 		"selectedSchemaNames");
 
 	private Map<String, String> _getEndpointMap(
-		String operation, JsonObject oasJsonObject) {
+		JsonObject oasJsonObject, String operation) {
 
 		Map<String, String> endpointMap = new TreeMap<>();
 
@@ -177,7 +177,7 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 		OASExplorer oasExplorer = new OASExplorer();
 
 		Set<String> endpoints = oasExplorer.getEndpointList(
-			operation, oasJsonObject);
+			oasJsonObject, operation);
 
 		for (String endpoint : endpoints) {
 			endpointMap.put(

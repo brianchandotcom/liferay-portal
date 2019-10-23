@@ -15,6 +15,7 @@
 package com.liferay.talend.resource;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.common.daikon.DaikonUtil;
 import com.liferay.talend.common.oas.OASExplorer;
 import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.oas.constants.OASConstants;
@@ -25,8 +26,6 @@ import com.liferay.talend.source.LiferayOASSource;
 
 import java.net.URI;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import javax.json.JsonObject;
@@ -38,8 +37,6 @@ import org.apache.avro.Schema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.talend.daikon.NamedThing;
-import org.talend.daikon.SimpleNamedThing;
 import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
@@ -83,7 +80,7 @@ public class LiferayInputResourceProperties
 			OASExplorer oasExplorer = new OASExplorer();
 
 			Set<String> endpoints = oasExplorer.getEndpointList(
-				OASConstants.OPERATION_GET, jsonClient.getOASJsonObject());
+				jsonClient.getOASJsonObject(), OASConstants.OPERATION_GET);
 
 			if (endpoints.isEmpty()) {
 				return new ValidationResult(
@@ -91,13 +88,8 @@ public class LiferayInputResourceProperties
 					_i18nMessages.getMessage("error.validation.resources"));
 			}
 
-			List<NamedThing> endpointsNamedThing = new ArrayList<>();
-
-			endpoints.forEach(
-				endpoint -> endpointsNamedThing.add(
-					new SimpleNamedThing(endpoint, endpoint)));
-
-			endpoint.setPossibleNamedThingValues(endpointsNamedThing);
+			endpoint.setPossibleNamedThingValues(
+				DaikonUtil.toNamedThings(endpoints));
 		}
 		catch (Exception e) {
 			return ExceptionUtils.exceptionToValidationResult(e);

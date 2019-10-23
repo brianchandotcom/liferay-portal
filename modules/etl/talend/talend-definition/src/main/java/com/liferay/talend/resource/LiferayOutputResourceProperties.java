@@ -15,6 +15,7 @@
 package com.liferay.talend.resource;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.common.daikon.DaikonUtil;
 import com.liferay.talend.common.oas.OASExplorer;
 import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.oas.constants.OASConstants;
@@ -29,16 +30,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import javax.json.JsonObject;
-
 import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.talend.components.common.SchemaProperties;
-import org.talend.daikon.NamedThing;
-import org.talend.daikon.SimpleNamedThing;
 import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
@@ -115,32 +112,19 @@ public class LiferayOutputResourceProperties
 
 		OASExplorer oasExplorer = new OASExplorer();
 
-		JsonObject oasJsonObject = oasSource.getOASJsonObject();
-
 		try {
 			Set<String> endpoints = oasExplorer.getEndpointList(
-				OASConstants.OPERATION_POST, oasJsonObject);
+				oasSource.getOASJsonObject(), OASConstants.OPERATION_DELETE,
+				OASConstants.OPERATION_PATCH, OASConstants.OPERATION_POST);
 
-			endpoints.addAll(
-				oasExplorer.getEndpointList(
-					OASConstants.OPERATION_PATCH, oasJsonObject));
-			endpoints.addAll(
-				oasExplorer.getEndpointList(
-					OASConstants.OPERATION_DELETE, oasJsonObject));
-
-			List<NamedThing> endpointsNamedThing = new ArrayList<>();
-
-			endpoints.forEach(
-				endpoint -> endpointsNamedThing.add(
-					new SimpleNamedThing(endpoint, endpoint)));
-
-			if (endpointsNamedThing.isEmpty()) {
+			if (endpoints.isEmpty()) {
 				return new ValidationResult(
 					ValidationResult.Result.ERROR,
 					_i18nMessages.getMessage("error.validation.resources"));
 			}
 
-			endpoint.setPossibleNamedThingValues(endpointsNamedThing);
+			endpoint.setPossibleNamedThingValues(
+				DaikonUtil.toNamedThings(endpoints));
 		}
 		catch (Exception e) {
 			return ExceptionUtils.exceptionToValidationResult(e);

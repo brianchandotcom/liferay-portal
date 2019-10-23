@@ -248,7 +248,7 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portal.events.StartupHelper">
+	<category name="com.liferay.portal.events.StartupHelperUtil">
 		<priority value="INFO" />
 	</category>
 

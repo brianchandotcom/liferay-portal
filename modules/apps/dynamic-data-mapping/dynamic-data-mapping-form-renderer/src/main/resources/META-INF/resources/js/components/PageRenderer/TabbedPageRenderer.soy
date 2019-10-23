@@ -67,6 +67,7 @@
 			{param editable: $editable /}
 			{param pageIndex: $pageIndex /}
 			{param row: $row /}
+			{param key: 'row' + index($row) /}
 			{param rowIndex: index($row) /}
 			{param spritemap: $spritemap /}
 		{/call}
@@ -91,7 +92,7 @@
 				{param _handleFieldEdited: $_handleFieldEdited /}
 				{param column: $column /}
 				{param columnIndex: index($column) /}
-				{param key: index($column) /}
+				{param key: 'column' + index($column) /}
 				{param editable: $editable /}
 				{param pageIndex: $pageIndex /}
 				{param rowIndex: $rowIndex /}

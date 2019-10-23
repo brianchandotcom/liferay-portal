@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>FormViewBuilder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">FormViewBuilder</td></tr>
+</thead>
+<tbody>
+
+<!--FIELDS_SIDEBAR-->
+<tr>
+	<td>ADD_FIELD_TYPE</td>
+	<td>//div[@class='autofit-row autofit-row-center field-type']//span[contains(text(),'${key_fieldType}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SIDEBAR_BASIC_TAB</td>
+	<td>//span[contains(text(),'Basic')]</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

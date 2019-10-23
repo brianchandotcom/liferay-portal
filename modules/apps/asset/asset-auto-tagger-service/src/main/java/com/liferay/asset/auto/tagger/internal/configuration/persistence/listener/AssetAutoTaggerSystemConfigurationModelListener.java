@@ -15,9 +15,9 @@
 package com.liferay.asset.auto.tagger.internal.configuration.persistence.listener;
 
 import com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerSystemConfiguration;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -42,12 +42,8 @@ public class AssetAutoTaggerSystemConfigurationModelListener
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 
-		AssetAutoTaggerSystemConfiguration assetAutoTaggerSystemConfiguration =
-			ConfigurableUtil.createConfigurable(
-				AssetAutoTaggerSystemConfiguration.class, properties);
-
-		int maximumNumberOfTagsPerAsset =
-			assetAutoTaggerSystemConfiguration.maximumNumberOfTagsPerAsset();
+		int maximumNumberOfTagsPerAsset = GetterUtil.getInteger(
+			properties.get("maximumNumberOfTagsPerAsset"));
 
 		if (maximumNumberOfTagsPerAsset < 0) {
 			throw new ConfigurationModelListenerException(

@@ -963,24 +963,6 @@ public class NodePlugin implements Plugin<Project> {
 		}
 	}
 
-	private boolean _hasLiferayNpmScripts12Dependency(
-		Project project, File yarnWorkingDir) {
-
-		File packageJSONFile = project.file("package.json");
-
-		if (_hasLiferayNpmScripts12Dependency(packageJSONFile)) {
-			return true;
-		}
-
-		packageJSONFile = new File(yarnWorkingDir, "package.json");
-
-		if (_hasLiferayNpmScripts12Dependency(packageJSONFile)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	@SuppressWarnings("unchecked")
 	private boolean _hasLiferayNpmScripts12Dependency(File packageJSONFile) {
 		if ((packageJSONFile == null) || !packageJSONFile.exists()) {
@@ -1011,6 +993,24 @@ public class NodePlugin implements Plugin<Project> {
 		}
 
 		return true;
+	}
+
+	private boolean _hasLiferayNpmScripts12Dependency(
+		Project project, File yarnWorkingDir) {
+
+		File packageJSONFile = project.file("package.json");
+
+		if (_hasLiferayNpmScripts12Dependency(packageJSONFile)) {
+			return true;
+		}
+
+		packageJSONFile = new File(yarnWorkingDir, "package.json");
+
+		if (_hasLiferayNpmScripts12Dependency(packageJSONFile)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@SuppressWarnings("unchecked")

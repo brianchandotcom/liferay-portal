@@ -225,9 +225,6 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	}
 
 	protected void reindexKBArticles(KBArticle kbArticle) throws Exception {
-
-		// See KBArticlePermission#contains
-
 		List<KBArticle> kbArticles =
 			kbArticleLocalService.getKBArticleAndAllDescendantKBArticles(
 				kbArticle.getResourcePrimKey(),

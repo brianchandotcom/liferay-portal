@@ -279,6 +279,96 @@ definition {
 			user = "userfn userln");
 	}
 
+	@description = "This case ensures the notifaication is updated if the comment is deleted or a user is removed from a mention."
+	@priority = "4"
+	test ViewDeletedMention {
+		property test.name.skip.portal.instance = "ContentPageReviewNotifications#ViewDeletedMention";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addComment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentComment = "Comment by Test",
+			fragmentName = "Title",
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "user2",
+			position = "1");
+
+		PageEditor.deleteComment(fragmentComment = "Comment by Test @user2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user2@liferay.com");
+
+		Notifications.viewBadgeCount(
+			activePanel = "Notifications",
+			notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		AssertTextEquals(
+			locator1 = "Notifications#NOTIFICATIONS_TITLE",
+			value1 = "Notification no longer applies.");
+		AssertTextEquals(
+			key_contentBody = "Notification for Mentions was deleted.",
+			locator1 = "Notifications#NOTIFICATIONS_CONTENT",
+			value1 = "Notification for Mentions was deleted.");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addComment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentComment = "Comment2 by Test",
+			fragmentName = "Title",
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "user2",
+			position = "1");
+
+		PageEditor.editComment(fragmentCommentEdit = "Comment2 by Test and no longer mention user2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user2@liferay.com");
+
+		Notifications.viewBadgeCount(
+			activePanel = "Notifications",
+			notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		AssertTextEquals(
+			locator1 = "Notifications#NOTIFICATIONS_TITLE",
+			value1 = "Notification no longer applies.");
+		AssertTextEquals(
+			key_contentBody = "Notification for Mentions was deleted.",
+			locator1 = "Notifications#NOTIFICATIONS_CONTENT",
+			value1 = "Notification for Mentions was deleted.");
+	}
+
 	@description = "This case ensures a user who is mentioned in a comment will receive notifications."
 	@priority = "4"
 	test ViewMentionFromComment {

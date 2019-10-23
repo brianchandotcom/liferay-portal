@@ -166,7 +166,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 
-		FormView.addFieldByDragAndDrop(fieldType = "Text Field");
+		FormViewBuilder.addFieldByDragAndDrop(fieldType = "Text Field");
 	}
 
 }

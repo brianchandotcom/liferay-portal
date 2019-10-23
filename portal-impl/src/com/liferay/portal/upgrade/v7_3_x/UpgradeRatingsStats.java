@@ -39,24 +39,24 @@ public class UpgradeRatingsStats extends UpgradeProcess {
 		}
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				StringBundler.concat(
-					"update RatingsStats set RatingsStats.createDate = ",
-					"(select min(createDate) FROM RatingsEntry WHERE ",
-					"RatingsStats.classNameId = RatingsEntry.classNameId and ",
-					"RatingsStats.classPK = RatingsEntry.classPK)"))) {
+				_getUpdateSQL("createDate", "min"))) {
 
 			ps.executeUpdate();
 		}
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				StringBundler.concat(
-					"update RatingsStats set RatingsStats.createDate = ",
-					"(select max(createDate) FROM RatingsEntry WHERE ",
-					"RatingsStats.classNameId = RatingsEntry.classNameId and ",
-					"RatingsStats.classPK = RatingsEntry.classPK)"))) {
+				_getUpdateSQL("modifiedDate", "max"))) {
 
 			ps.executeUpdate();
 		}
+	}
+
+	private String _getUpdateSQL(String field, String function) {
+		return StringBundler.concat(
+			"update RatingsStats set RatingsStats.", field, " = (select ",
+			function, "(", field, ") FROM RatingsEntry WHERE ",
+			"RatingsStats.classNameId = RatingsEntry.classNameId and ",
+			"RatingsStats.classPK = RatingsEntry.classPK)");
 	}
 
 }

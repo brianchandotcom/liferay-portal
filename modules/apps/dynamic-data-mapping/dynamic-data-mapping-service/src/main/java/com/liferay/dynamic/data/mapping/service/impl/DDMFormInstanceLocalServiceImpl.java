@@ -186,24 +186,6 @@ public class DDMFormInstanceLocalServiceImpl
 			ddmFormInstance.getFormInstanceId(), modelPermissions);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addFormInstanceResources(DDMFormInstance, ModelPermissions)}
-	 */
-	@Deprecated
-	@Override
-	public void addFormInstanceResources(
-			DDMFormInstance ddmFormInstance, String[] groupPermissions,
-			String[] guestPermissions)
-		throws PortalException {
-
-		resourceLocalService.addModelResources(
-			ddmFormInstance.getCompanyId(), ddmFormInstance.getGroupId(),
-			ddmFormInstance.getUserId(), DDMFormInstance.class.getName(),
-			ddmFormInstance.getFormInstanceId(), groupPermissions,
-			guestPermissions);
-	}
-
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,

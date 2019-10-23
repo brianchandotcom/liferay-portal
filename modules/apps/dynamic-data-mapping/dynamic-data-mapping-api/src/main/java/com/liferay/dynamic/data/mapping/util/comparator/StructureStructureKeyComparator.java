@@ -46,24 +46,6 @@ public class StructureStructureKeyComparator
 		return INSTANCE_DESCENDING;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #INSTANCE_DESCENDING}
-	 */
-	@Deprecated
-	public StructureStructureKeyComparator() {
-		this(false);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getInstance(boolean)}
-	 */
-	@Deprecated
-	public StructureStructureKeyComparator(boolean ascending) {
-		_ascending = ascending;
-	}
-
 	@Override
 	public int compare(DDMStructure structure1, DDMStructure structure2) {
 		String structureKey1 = structure1.getStructureKey();

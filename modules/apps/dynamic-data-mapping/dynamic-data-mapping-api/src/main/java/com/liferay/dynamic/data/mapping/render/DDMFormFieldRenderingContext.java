@@ -118,14 +118,6 @@ public class DDMFormFieldRenderingContext {
 		return MapUtil.getBoolean(_properties, "visible");
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setChildElementsHTML(String childElementsHTML) {
-		_childElementsHTML = childElementsHTML;
-	}
-
 	public void setField(Field field) {
 		Fields fields = new Fields();
 

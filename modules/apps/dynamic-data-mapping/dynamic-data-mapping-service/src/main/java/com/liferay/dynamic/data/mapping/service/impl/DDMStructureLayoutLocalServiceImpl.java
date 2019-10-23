@@ -88,26 +88,6 @@ public class DDMStructureLayoutLocalServiceImpl
 		return ddmStructureLayoutPersistence.update(structureLayout);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addStructureLayout(long, long, long, long, Map, Map, String,
-	 *             String, ServiceContext)}
-	 */
-	@Deprecated
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public DDMStructureLayout addStructureLayout(
-			long userId, long groupId, long structureVersionId,
-			Map<Locale, String> name, Map<Locale, String> description,
-			String definition, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addStructureLayout(
-			userId, groupId, 0L,
-			String.valueOf(counterLocalService.increment()), structureVersionId,
-			name, description, definition, serviceContext);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDMStructureLayout addStructureLayout(

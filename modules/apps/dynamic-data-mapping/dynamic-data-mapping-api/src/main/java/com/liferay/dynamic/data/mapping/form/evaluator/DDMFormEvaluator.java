@@ -23,15 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DDMFormEvaluator {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             DDMFormEvaluator#evaluate(DDMFormEvaluatorEvaluateRequest)}
-	 */
-	@Deprecated
-	public DDMFormEvaluationResult evaluate(
-			DDMFormEvaluatorContext ddmFormEvaluatorContext)
-		throws DDMFormEvaluationException;
-
 	public DDMFormEvaluatorEvaluateResponse evaluate(
 		DDMFormEvaluatorEvaluateRequest ddmFormEvaluatorEvaluateRequest);
 

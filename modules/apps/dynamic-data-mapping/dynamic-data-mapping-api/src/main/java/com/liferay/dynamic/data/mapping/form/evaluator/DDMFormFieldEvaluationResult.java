@@ -15,12 +15,9 @@
 package com.liferay.dynamic.data.mapping.form.evaluator;
 
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -71,17 +68,6 @@ public class DDMFormFieldEvaluationResult {
 		return _name;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@JSON(name = "nestedFields")
-	public List<DDMFormFieldEvaluationResult>
-		getNestedDDMFormFieldEvaluationResults() {
-
-		return _nestedDDMFormFieldEvaluationResults;
-	}
-
 	public <T> T getProperty(String name) {
 		return (T)_properties.get(name);
 	}
@@ -117,18 +103,6 @@ public class DDMFormFieldEvaluationResult {
 		_properties.put("errorMessage", errorMessage);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setNestedDDMFormFieldEvaluationResults(
-		List<DDMFormFieldEvaluationResult>
-			nestedDDMFormFieldEvaluationResults) {
-
-		_nestedDDMFormFieldEvaluationResults =
-			nestedDDMFormFieldEvaluationResults;
-	}
-
 	public void setProperty(String name, Object value) {
 		_properties.put(name, value);
 	}
@@ -155,8 +129,6 @@ public class DDMFormFieldEvaluationResult {
 
 	private final String _instanceId;
 	private final String _name;
-	private List<DDMFormFieldEvaluationResult>
-		_nestedDDMFormFieldEvaluationResults = new ArrayList<>();
 	private final Map<String, Object> _properties = new HashMap<>();
 
 }

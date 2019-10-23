@@ -40,22 +40,6 @@ public class RequiredStructureException extends PortalException {
 	@Deprecated
 	public static final int REFERENCED_TEMPLATE = 3;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public RequiredStructureException(int type) {
-		_type = type;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public int getType() {
-		return _type;
-	}
-
 	public static class MustNotDeleteStructureReferencedByStructureLinks
 		extends RequiredStructureException {
 

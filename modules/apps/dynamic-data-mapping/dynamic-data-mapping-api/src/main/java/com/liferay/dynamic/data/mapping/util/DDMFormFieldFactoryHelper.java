@@ -29,11 +29,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.lang.reflect.Method;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
@@ -48,15 +46,6 @@ public class DDMFormFieldFactoryHelper {
 		_method = method;
 
 		_ddmFormField = method.getAnnotation(DDMFormField.class);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #DDMFormFieldFactoryHelper(DDMFormFactoryHelper, Method)}
-	 */
-	@Deprecated
-	public DDMFormFieldFactoryHelper(Method method) {
-		this(new DDMFormFactoryHelper(method.getDeclaringClass()), method);
 	}
 
 	public com.liferay.dynamic.data.mapping.model.DDMFormField
@@ -101,19 +90,6 @@ public class DDMFormFieldFactoryHelper {
 		}
 
 		return ddmFormField;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             DDMFormFactoryHelper#collectResourceBundles(Class, List,
-	 *             Locale)}
-	 */
-	@Deprecated
-	protected void collectResourceBundles(
-		Class<?> clazz, List<ResourceBundle> resourceBundles, Locale locale) {
-
-		_ddmFormFactoryHelper.collectResourceBundles(
-			clazz, resourceBundles, locale);
 	}
 
 	protected LocalizedValue createLocalizedValue(String property) {
@@ -357,24 +333,6 @@ public class DDMFormFieldFactoryHelper {
 		}
 
 		return localizedValue;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             DDMFormFactoryHelper#getResourceBundle(Locale)}
-	 */
-	@Deprecated
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		return _ddmFormFactoryHelper.getResourceBundle(locale);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             DDMFormFactoryHelper#getResourceBundleBaseName()}
-	 */
-	@Deprecated
-	protected String getResourceBundleBaseName(Class<?> clazz) {
-		return _ddmFormFactoryHelper.getResourceBundleBaseName();
 	}
 
 	protected boolean isDDMFormFieldLocalizable() {

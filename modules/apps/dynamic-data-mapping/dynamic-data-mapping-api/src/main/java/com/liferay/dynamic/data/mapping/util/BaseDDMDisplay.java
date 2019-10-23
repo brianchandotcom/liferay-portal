@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -342,17 +341,6 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return getDefaultViewTemplateTitle(locale);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public String getViewTemplatesTitle(
-		DDMStructure structure, boolean controlPanel, Locale locale) {
-
-		return getViewTemplatesTitle(structure, controlPanel, false, locale);
-	}
-
 	@Override
 	public String getViewTemplatesTitle(DDMStructure structure, Locale locale) {
 		return getViewTemplatesTitle(structure, false, false, locale);
@@ -411,20 +399,6 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
-	public boolean isShowAddStructureButton() {
-		String portletId = getPortletId();
-
-		String ddmStructurePortletId = PortletProviderUtil.getPortletId(
-			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
-
-		if (portletId.equals(ddmStructurePortletId)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public boolean isShowBackURLInTitleBar() {
 		return false;
 	}
@@ -449,56 +423,12 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected ResourceBundle getBaseDDMDisplayResourceBundle(
-		String languageId) {
-
-		Class<?> baseDDMDisplayClazz = BaseDDMDisplay.class;
-
-		return ResourceBundleUtil.getBundle(
-			"content.Language", LocaleUtil.fromLanguageId(languageId),
-			baseDDMDisplayClazz.getClassLoader());
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected ResourceBundle getDDMDisplayResourceBundle(String languageId) {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		ResourceBundleLoader resourceBundleLoader =
-			ResourceBundleLoaderUtil.
-				getResourceBundleLoaderByBundleSymbolicName(
-					bundle.getSymbolicName());
-
-		if (resourceBundleLoader == null) {
-			return null;
-		}
-
-		return resourceBundleLoader.loadResourceBundle(languageId);
-	}
-
 	protected String getDefaultEditTemplateTitle(Locale locale) {
 		return LanguageUtil.get(getResourceBundle(locale), "new-template");
 	}
 
 	protected String getDefaultViewTemplateTitle(Locale locale) {
 		return LanguageUtil.get(locale, "templates");
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected ResourceBundle getPortalResourceBundle(String languageId) {
-		ResourceBundleLoader portalResourceBundleLoader =
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
-
-		return portalResourceBundleLoader.loadResourceBundle(languageId);
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {

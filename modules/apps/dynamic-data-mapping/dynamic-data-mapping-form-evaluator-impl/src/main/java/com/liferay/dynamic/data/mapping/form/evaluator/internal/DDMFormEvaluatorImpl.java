@@ -15,10 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorContext;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
@@ -39,37 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = DDMFormEvaluator.class)
 public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
-
-	@Override
-	public DDMFormEvaluationResult evaluate(
-			DDMFormEvaluatorContext ddmFormEvaluatorContext)
-		throws DDMFormEvaluationException {
-
-		DDMFormEvaluatorEvaluateRequest.Builder builder =
-			DDMFormEvaluatorEvaluateRequest.Builder.newBuilder(
-				ddmFormEvaluatorContext.getDDMForm(),
-				ddmFormEvaluatorContext.getDDMFormValues(),
-				ddmFormEvaluatorContext.getLocale());
-
-		builder.withCompanyId(ddmFormEvaluatorContext.getProperty("companyId"));
-		builder.withGroupId(ddmFormEvaluatorContext.getProperty("groupId"));
-		builder.withUserId(ddmFormEvaluatorContext.getProperty("userId"));
-
-		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
-			evaluate(builder.build());
-
-		DDMFormEvaluationResult ddmFormEvaluationResult =
-			new DDMFormEvaluationResult();
-
-		ddmFormEvaluationResult.setDisabledPagesIndexes(
-			ddmFormEvaluatorEvaluateResponse.getDisabledPagesIndexes());
-		ddmFormEvaluationResult.setDDMFormFieldEvaluationResultsMap(
-			createDDMFormFieldEvaluationResultsMap(
-				ddmFormEvaluatorEvaluateResponse.
-					getDDMFormFieldsPropertyChanges()));
-
-		return ddmFormEvaluationResult;
-	}
 
 	@Override
 	public DDMFormEvaluatorEvaluateResponse evaluate(

@@ -159,14 +159,6 @@ public class DDMFormField implements Serializable {
 		return ddmFormFieldOptions;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public List<DDMFormFieldRule> getDDMFormFieldRules() {
-		return _ddmFormFieldRules;
-	}
-
 	public DDMFormFieldValidation getDDMFormFieldValidation() {
 		Object value = _properties.get("validation");
 
@@ -314,14 +306,6 @@ public class DDMFormField implements Serializable {
 		_properties.put("options", ddmFormFieldOptions);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setDDMFormFieldRules(List<DDMFormFieldRule> ddmFormFieldRules) {
-		_ddmFormFieldRules = ddmFormFieldRules;
-	}
-
 	public void setDDMFormFieldValidation(
 		DDMFormFieldValidation ddmFormFieldValidation) {
 
@@ -412,7 +396,7 @@ public class DDMFormField implements Serializable {
 	}
 
 	private DDMForm _ddmForm;
-	private List<DDMFormFieldRule> _ddmFormFieldRules;
+	private final List<DDMFormFieldRule> _ddmFormFieldRules;
 	private List<DDMFormField> _nestedDDMFormFields;
 	private final Map<String, Object> _properties;
 

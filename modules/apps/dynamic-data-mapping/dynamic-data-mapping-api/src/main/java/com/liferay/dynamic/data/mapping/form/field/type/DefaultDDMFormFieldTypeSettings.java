@@ -132,18 +132,4 @@ public interface DefaultDDMFormFieldTypeSettings
 	)
 	public DDMFormFieldValidation validation();
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@DDMFormField(
-		label = "%field-visibility-expression",
-		properties = {
-			"placeholder=%equals(Country, \"US\")",
-			"tooltip=%write-a-conditional-expression-to-control-whether-this-field-is-displayed"
-		},
-		visibilityExpression = "FALSE"
-	)
-	@Deprecated
-	public String visibilityExpression();
-
 }

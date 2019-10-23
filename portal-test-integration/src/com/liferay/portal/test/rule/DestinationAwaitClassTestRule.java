@@ -58,12 +58,12 @@ public class DestinationAwaitClassTestRule
 		Set<CountDownLatch> endCountdownLatches = new HashSet<>();
 
 		for (String destinationName : _destinationNames) {
-			if (!MessageBusUtil.hasMessageListener(destinationName)) {
-				continue;
-			}
-
 			Destination destination = MessageBusUtil.getDestination(
 				destinationName);
+
+			if (destination == null) {
+				continue;
+			}
 
 			final CountDownLatch startCountDownLatch = new CountDownLatch(1);
 

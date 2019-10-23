@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>TAG</td>
-	<td>//div[contains(@id,'assetTagsSelector')]//span[@id='item-tag'][contains(.,'${key_tagName}')]</td>
+	<td>//div[contains(@id,'assetTagsSelector')]//span[(contains(@class,'label-dismissible'))][contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TAG_REMOVE</td>
-	<td>//span[@id='item-tag'][contains(.,'${key_tagName}')]//button[contains(@class,'close')]</td>
+	<td>//span[(contains(@class,'label-dismissible'))][contains(.,'${key_tagName}')]//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>TAGS_REMOVE_ICON_GENERIC</td>
-	<td>//span[@id='item-tag']//button[contains(@class,'close')]</td>
+	<td>//span[(contains(@class,'label-dismissible'))]//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
@@ -66,7 +65,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -127,8 +125,8 @@ public class AssigneeUserResourceImpl
 			return Page.of(
 				_getAssigneeUsers(
 					GetterUtil.getBoolean(completed), dateEnd, dateStart,
-					_toFieldSort(sorts), processId, taskKeys, userIds,
-					pagination),
+					_toFieldSort(sorts), pagination, processId, taskKeys,
+					userIds),
 				pagination, count);
 		}
 
@@ -176,6 +174,15 @@ public class AssigneeUserResourceImpl
 			slaTaskResultsBooleanQuery, tokensBooleanQuery);
 	}
 
+	private BooleanQuery _createCountFilterBooleanQuery() {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addFilterQueryClauses(
+			_queries.term("_index", "workflow-metrics-tokens"));
+
+		return booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
+	}
+
 	private BooleanQuery _createSLATaskResultsBooleanQuery(
 		boolean completed, Date dateEnd, Date dateStart, long processId,
 		String[] taskKeys, Set<Long> userIds) {
@@ -185,6 +192,9 @@ public class AssigneeUserResourceImpl
 		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", 0));
 
 		if (completed) {
+			booleanQuery.addMustNotQueryClauses(
+				_queries.term("status", WorkflowMetricsSLAStatus.RUNNING));
+
 			if ((dateEnd != null) && (dateStart != null)) {
 				booleanQuery.addMustQueryClauses(
 					_queries.rangeTerm(
@@ -192,19 +202,11 @@ public class AssigneeUserResourceImpl
 						_resourceHelper.formatDate(dateStart),
 						_resourceHelper.formatDate(dateEnd)));
 			}
-
-			booleanQuery.addMustNotQueryClauses(
-				_queries.term("status", WorkflowMetricsSLAStatus.RUNNING));
 		}
 		else {
 			booleanQuery.addMustNotQueryClauses(
 				_queries.term("status", WorkflowMetricsSLAStatus.COMPLETED),
 				_queries.term("status", WorkflowMetricsSLAStatus.EXPIRED));
-		}
-
-		if (!userIds.isEmpty()) {
-			booleanQuery.addMustQueryClauses(
-				_createAssigneeIdTermsQuery(userIds));
 		}
 
 		if (taskKeys.length > 0) {
@@ -213,6 +215,11 @@ public class AssigneeUserResourceImpl
 			termsQuery.addValues(taskKeys);
 
 			booleanQuery.addMustQueryClauses(termsQuery);
+		}
+
+		if (!userIds.isEmpty()) {
+			booleanQuery.addMustQueryClauses(
+				_createAssigneeIdTermsQuery(userIds));
 		}
 
 		return booleanQuery.addMustQueryClauses(
@@ -259,8 +266,8 @@ public class AssigneeUserResourceImpl
 
 	private List<AssigneeUser> _getAssigneeUsers(
 			boolean completed, Date dateEnd, Date dateStart,
-			FieldSort fieldSort, Long processId, String[] taskKeys,
-			Set<Long> userIds, Pagination pagination)
+			FieldSort fieldSort, Pagination pagination, Long processId,
+			String[] taskKeys, Set<Long> userIds)
 		throws Exception {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -268,15 +275,8 @@ public class AssigneeUserResourceImpl
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"assigneeId", "assigneeId");
 
-		BooleanQuery countFilterBooleanQuery = _queries.booleanQuery();
-
-		countFilterBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-tokens"));
-		countFilterBooleanQuery.addMustNotQueryClauses(
-			_queries.term("tokenId", 0));
-
 		FilterAggregation countFilterAggregation = _aggregations.filter(
-			"countFilter", countFilterBooleanQuery);
+			"countFilter", _createCountFilterBooleanQuery());
 
 		countFilterAggregation.addChildrenAggregations(
 			_aggregations.avg("durationTaskAvg", "duration"),
@@ -316,7 +316,7 @@ public class AssigneeUserResourceImpl
 			_createBooleanQuery(
 				completed, dateEnd, dateStart, processId, taskKeys, userIds));
 
-		List<AssigneeUser> assigneeUsers = Stream.of(
+		return Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
 		).map(
 			SearchSearchResponse::getAggregationResultsMap
@@ -337,15 +337,11 @@ public class AssigneeUserResourceImpl
 
 				return assigneeUser;
 			}
+		).limit(
+			pagination.getPageSize()
 		).collect(
 			Collectors.toList()
 		);
-
-		if (assigneeUsers.size() > pagination.getPageSize()) {
-			return assigneeUsers.subList(0, assigneeUsers.size() - 1);
-		}
-
-		return assigneeUsers;
 	}
 
 	private List<AssigneeUser> _getAssigneeUsers(
@@ -404,17 +400,20 @@ public class AssigneeUserResourceImpl
 			_createTokensBooleanQuery(
 				completed, dateEnd, dateStart, processId, taskKeys, userIds));
 
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		Map<String, AggregationResult> aggregationResultsMap =
-			searchSearchResponse.getAggregationResultsMap();
-
-		CardinalityAggregationResult cardinalityAggregationResult =
-			(CardinalityAggregationResult)aggregationResultsMap.get(
-				"assigneeId");
-
-		return cardinalityAggregationResult.getValue();
+		return Stream.of(
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getAggregationResultsMap
+		).map(
+			aggregationResultsMap ->
+				(CardinalityAggregationResult)aggregationResultsMap.get(
+					"assigneeId")
+		).map(
+			CardinalityAggregationResult::getValue
+		).findFirst(
+		).orElseGet(
+			() -> 0L
+		);
 	}
 
 	private Set<Long> _getUserIds(String keywords, Long[] roleIds) {

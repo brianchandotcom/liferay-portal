@@ -111,8 +111,8 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 		Instance instance1 = _workflowMetricsRESTTestHelper.addInstance(
 			testGroup.getCompanyId(), false, _process.getId());
 
-		testGetProcessAssigneeUsersPage_addAssigneeUser(
-			_process.getId(), assigneeUser1, () -> instance1,
+		_addTask(
+			assigneeUser1.getId(), () -> instance1, _process.getId(),
 			new Task() {
 				{
 					durationAvg = 0L;
@@ -124,8 +124,8 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 				}
 			});
 
-		testGetProcessAssigneeUsersPage_addAssigneeUser(
-			_process.getId(), assigneeUser1, () -> instance1,
+		_addTask(
+			assigneeUser1.getId(), () -> instance1, _process.getId(),
 			new Task() {
 				{
 					durationAvg = 0L;
@@ -140,8 +140,8 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 		Instance instance2 = _workflowMetricsRESTTestHelper.addInstance(
 			testGroup.getCompanyId(), false, _process.getId());
 
-		testGetProcessAssigneeUsersPage_addAssigneeUser(
-			_process.getId(), assigneeUser1, () -> instance2,
+		_addTask(
+			assigneeUser1.getId(), () -> instance2, _process.getId(),
 			new Task() {
 				{
 					durationAvg = 0L;
@@ -163,8 +163,8 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 		assigneeUser2.setOverdueTaskCount(1L);
 		assigneeUser2.setTaskCount(2L);
 
-		testGetProcessAssigneeUsersPage_addAssigneeUser(
-			_process.getId(), assigneeUser2, () -> instance1,
+		_addTask(
+			assigneeUser2.getId(), () -> instance1, _process.getId(),
 			new Task() {
 				{
 					durationAvg = 0L;
@@ -176,8 +176,8 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 				}
 			});
 
-		testGetProcessAssigneeUsersPage_addAssigneeUser(
-			_process.getId(), assigneeUser2, () -> instance2,
+		_addTask(
+			assigneeUser2.getId(), () -> instance2, _process.getId(),
 			new Task() {
 				{
 					durationAvg = 0L;
@@ -299,8 +299,8 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 		assigneeUser3.setOverdueTaskCount(0L);
 		assigneeUser3.setTaskCount(1L);
 
-		testGetProcessAssigneeUsersPage_addAssigneeUser(
-			_process.getId(), assigneeUser3, () -> instance1,
+		_addTask(
+			assigneeUser3.getId(), () -> instance1, _process.getId(),
 			new Task() {
 				{
 					durationAvg = 0L;
@@ -322,8 +322,9 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 			Arrays.asList(assigneeUser1, assigneeUser2, assigneeUser3),
 			(List<AssigneeUser>)page.getItems());
 
-		testGetProcessAssigneeUsersPage_addAssigneeUser(
-			_process.getId(), assigneeUser1, () -> instance1, "COMPLETED",
+		_addTask(
+			assigneeUser1.getId(), () -> instance1, _process.getId(),
+			"COMPLETED",
 			new Task() {
 				{
 					durationAvg = 1000L;
@@ -345,8 +346,9 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 				}
 			});
 
-		testGetProcessAssigneeUsersPage_addAssigneeUser(
-			_process.getId(), assigneeUser2, () -> instance1, "COMPLETED",
+		_addTask(
+			assigneeUser2.getId(), () -> instance1, _process.getId(),
+			"COMPLETED",
 			new Task() {
 				{
 					durationAvg = 2000L;
@@ -473,10 +475,11 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 			Long processId, AssigneeUser assigneeUser)
 		throws Exception {
 
-		return testGetProcessAssigneeUsersPage_addAssigneeUser(
-			processId, assigneeUser,
+		_addTask(
+			assigneeUser.getId(),
 			() -> _workflowMetricsRESTTestHelper.addInstance(
 				testGroup.getCompanyId(), false, _process.getId()),
+			processId,
 			new Task() {
 				{
 					durationAvg = assigneeUser.getDurationTaskAvg();
@@ -491,32 +494,8 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 					overdueInstanceCount = assigneeUser.getOverdueTaskCount();
 				}
 			});
-	}
-
-	protected AssigneeUser testGetProcessAssigneeUsersPage_addAssigneeUser(
-			Long processId, AssigneeUser assigneeUser,
-			UnsafeSupplier<Instance, Exception> instanceSupplier, String status,
-			Task... tasks)
-		throws Exception {
-
-		for (Task task : tasks) {
-			_tasks.add(task);
-
-			_workflowMetricsRESTTestHelper.addTask(
-				assigneeUser.getId(), testGroup.getCompanyId(),
-				instanceSupplier, processId, status, task, "1.0");
-		}
 
 		return assigneeUser;
-	}
-
-	protected AssigneeUser testGetProcessAssigneeUsersPage_addAssigneeUser(
-			Long processId, AssigneeUser assigneeUser,
-			UnsafeSupplier<Instance, Exception> instanceSupplier, Task... tasks)
-		throws Exception {
-
-		return testGetProcessAssigneeUsersPage_addAssigneeUser(
-			processId, assigneeUser, instanceSupplier, "RUNNING", tasks);
 	}
 
 	@Override
@@ -532,6 +511,29 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 		_userGroupRoleLocalService.addUserGroupRoles(
 			new long[] {userId}, TestPropsValues.getGroupId(),
 			role.getRoleId());
+	}
+
+	private void _addTask(
+			long assigneeId,
+			UnsafeSupplier<Instance, Exception> instanceSupplier,
+			long processId, String status, Task... tasks)
+		throws Exception {
+
+		for (Task task : tasks) {
+			_tasks.add(
+				_workflowMetricsRESTTestHelper.addTask(
+					assigneeId, testGroup.getCompanyId(), instanceSupplier,
+					processId, status, task, "1.0"));
+		}
+	}
+
+	private void _addTask(
+			long assigneeId,
+			UnsafeSupplier<Instance, Exception> instanceSupplier,
+			long processId, Task... tasks)
+		throws Exception {
+
+		_addTask(assigneeId, instanceSupplier, processId, "RUNNING", tasks);
 	}
 
 	private void _deleteSLATaskResults() throws Exception {

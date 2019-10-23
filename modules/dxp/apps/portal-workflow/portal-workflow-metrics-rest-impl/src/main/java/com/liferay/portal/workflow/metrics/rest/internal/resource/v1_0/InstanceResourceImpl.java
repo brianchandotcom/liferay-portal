@@ -530,9 +530,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			onTimeFilterAggregation, overdueFilterAggregation,
 			taskNameTermsAggregation, _aggregations.topHits("topHits"),
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				ListUtil.toList(assigneeUserIds), dateEnd, dateStart,
-				ListUtil.toList(slaStatuses), ListUtil.toList(statuses),
-				ListUtil.toList(taskKeys)));
+				ListUtil.fromArray(assigneeUserIds), dateEnd, dateStart,
+				ListUtil.fromArray(slaStatuses), ListUtil.fromArray(statuses),
+				ListUtil.fromArray(taskKeys)));
 
 		termsAggregation.addOrders(Order.key(true));
 		termsAggregation.addPipelineAggregations(
@@ -616,9 +616,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		searchSearchRequest.addAggregation(
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				ListUtil.toList(assigneeUserIds), dateEnd, dateStart,
-				ListUtil.toList(slaStatuses), ListUtil.toList(statuses),
-				ListUtil.toList(taskKeys)));
+				ListUtil.fromArray(assigneeUserIds), dateEnd, dateStart,
+				ListUtil.fromArray(slaStatuses), ListUtil.fromArray(statuses),
+				ListUtil.fromArray(taskKeys)));
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",
 			"workflow-metrics-sla-process-results", "workflow-metrics-tokens");

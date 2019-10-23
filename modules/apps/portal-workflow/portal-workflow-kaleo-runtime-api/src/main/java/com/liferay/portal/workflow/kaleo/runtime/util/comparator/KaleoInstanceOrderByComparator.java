@@ -41,6 +41,7 @@ public class KaleoInstanceOrderByComparator
 			orderByComparator, kaleoWorkflowModelConverter, serviceContext);
 	}
 
+	@Override
 	public WorkflowInstance adapt(KaleoInstance kaleoInstance) {
 		try {
 			return _kaleoWorkflowModelConverter.toWorkflowInstance(

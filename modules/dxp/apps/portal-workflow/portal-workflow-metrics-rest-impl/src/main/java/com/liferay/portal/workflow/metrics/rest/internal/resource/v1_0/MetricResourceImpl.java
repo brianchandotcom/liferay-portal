@@ -281,7 +281,7 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 			timeAmount = timeRange / 365.0;
 		}
 
-		return (double)bucket.getDocCount() / timeAmount;
+		return bucket.getDocCount() / timeAmount;
 	}
 
 	@Reference

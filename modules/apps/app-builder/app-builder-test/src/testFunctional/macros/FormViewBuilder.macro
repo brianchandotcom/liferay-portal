@@ -1,0 +1,23 @@
+definition {
+
+    macro addFieldByDragAndDrop () {
+
+        Pause(locator1 = "10000");
+
+        var key_fieldType = "${fieldType}";
+
+        DragAndDrop.javaScriptDragAndDropToObject(
+            locator1 = "FormViewBuilder#ADD_FIELD_TYPE",
+			locator2 = "Form#ADD_FIELD_POSITION",
+			value1 = "${fieldType}");
+
+        AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
+
+    }
+
+
+    macro addFieldByDoubleClick() {
+        DoubleClick(locator1 = "FormViewBuilder#ADD_FIELD_TYPE");
+    }
+
+}

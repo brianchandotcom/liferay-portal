@@ -12,11 +12,11 @@
  * details.
  */
 
+import IncrementalDomRenderer from 'metal-incremental-dom';
+import JSXComponent from 'metal-jsx';
+import Soy from 'metal-soy';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import IncrementalDomRenderer from 'metal-incremental-dom';
-import Soy from 'metal-soy';
-import JSXComponent from 'metal-jsx';
 
 /**
  * The Adapter needs the React component instance to render and the soy template

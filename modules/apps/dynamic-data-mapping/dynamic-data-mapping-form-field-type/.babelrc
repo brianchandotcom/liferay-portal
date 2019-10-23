@@ -1,4 +1,7 @@
 {
+    "presets": [
+        "@babel/preset-react"
+    ],
     "ignore": [
         "**/__tests__/*.js"
     ]

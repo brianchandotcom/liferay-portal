@@ -37,6 +37,7 @@ class Tooltip extends Component {
 	}
 
 	_handleTooltipRendered() {
+		// eslint-disable-next-line react/no-string-refs
 		const {tooltipSource, tooltipTarget} = this.refs;
 		const {element} = tooltipSource;
 		const suggestedPosition = Align.align(

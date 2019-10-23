@@ -82,6 +82,7 @@ class Validation extends Component {
 	}
 
 	_getSelectedValidation() {
+		// eslint-disable-next-line react/no-string-refs
 		let selectedValidationValue = this.refs.selectedValidation.value;
 
 		if (Array.isArray(selectedValidationValue)) {
@@ -149,10 +150,13 @@ class Validation extends Component {
 		} = this;
 		let parameter = '';
 
+		// eslint-disable-next-line react/no-string-refs
 		if (this.refs.parameter) {
+			// eslint-disable-next-line react/no-string-refs
 			parameter = this.refs.parameter.value;
 		}
 
+		// eslint-disable-next-line react/no-string-refs
 		const enableValidation = this.refs.enableValidation.value;
 		let selectedValidation = this._getSelectedValidation();
 
@@ -181,6 +185,7 @@ class Validation extends Component {
 			enableValidation,
 			errorMessage: {
 				...this.value.errorMessage,
+				// eslint-disable-next-line react/no-string-refs
 				[editingLanguageId]: this.refs.errorMessage.value
 			},
 			expression,

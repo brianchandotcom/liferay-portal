@@ -199,6 +199,7 @@ class DatePicker extends Component {
 
 	syncVisible() {
 		if (this.visible) {
+			// eslint-disable-next-line react/no-string-refs
 			const {base} = this.refs;
 			const {inputElement} = base.refs;
 			const dateMask = this._dateFormatValueFn().toLowerCase();
@@ -282,6 +283,7 @@ class DatePicker extends Component {
 	_handleFieldEdited() {
 		let value = Helpers.formatDate(this._daySelected);
 
+		// eslint-disable-next-line react/no-string-refs
 		const {base} = this.refs;
 		const {inputElement} = base.refs;
 

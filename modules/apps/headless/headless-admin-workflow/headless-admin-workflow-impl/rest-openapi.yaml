@@ -197,6 +197,7 @@ components:
                 type:
                     description:
                         The workflow log's type.
+                    enum: [TaskAssign, TaskCompletion, TaskUpdate, Transition]
                     readOnly: true
                     type: string
             type: object
@@ -343,7 +344,48 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/workflow-instance/{workflowInstanceId}/workflow-tasks":
+    "/workflow-instances/{workflowInstanceId}/workflow-logs":
+        get:
+            operationId: getWorkflowInstanceWorkflowLogsPage
+            parameters:
+                - in: path
+                  name: workflowInstanceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: types
+                  schema:
+                      items:
+                          enum: [TaskAssign, TaskCompletion, TaskUpdate, Transition]
+                          type: string
+                      type: array
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowLog"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowLog"
+                                type: array
+                    description:
+                        ""
+            tags: ["WorkflowLog"]
+    "/workflow-instances/{workflowInstanceId}/workflow-tasks":
         get:
             operationId: getWorkflowInstanceWorkflowTasksPage
             parameters:
@@ -932,6 +974,13 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: types
+                  schema:
+                      items:
+                          enum: [TaskAssign, TaskCompletion, TaskUpdate, Transition]
+                          type: string
+                      type: array
                 - in: query
                   name: page
                   schema:

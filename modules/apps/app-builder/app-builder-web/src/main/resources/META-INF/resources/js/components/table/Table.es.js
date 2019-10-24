@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import React from 'react';
 
@@ -19,12 +20,13 @@ import DropDown from './DropDown.es';
 
 const {Body, Cell, Head, Row} = ClayTable;
 
-const Table = ({actions, columns, forwardRef, items}) => {
+const Table = ({actions, checkable, columns, forwardRef, items}) => {
 	return (
 		<div ref={forwardRef}>
 			<ClayTable hover={false}>
 				<Head>
 					<Row>
+						{checkable && <Cell headingCell></Cell>}
 						{columns.map((column, index) => (
 							<Cell
 								className={
@@ -43,6 +45,15 @@ const Table = ({actions, columns, forwardRef, items}) => {
 				<Body>
 					{items.map(item => (
 						<Row data-testid="item" key={item.id}>
+							{checkable && (
+								<Cell>
+									<ClayCheckbox
+										checked={false}
+										disabled={false}
+										indeterminate={false}
+									/>
+								</Cell>
+							)}
 							{columns.map((column, index) => (
 								<Cell
 									className={

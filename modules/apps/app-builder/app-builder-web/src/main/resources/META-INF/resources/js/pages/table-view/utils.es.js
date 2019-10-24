@@ -29,15 +29,24 @@ export const getColumnIndex = node => {
 
 	const columns = rowNode.querySelectorAll(`:scope > ${columnNode.tagName}`);
 
-	return Array.prototype.indexOf.call(columns, columnNode);
+	return Array.prototype.indexOf.call(columns, columnNode) - 1;
 };
 
 export const getColumnNode = (container, index) => {
 	return container.querySelector(
-		`table tbody > tr:first-of-type > td:nth-of-type(${index + 1})`
+		`table tbody > tr:first-of-type > td:nth-of-type(${index + 2})`
 	);
 };
 
 export const getColumns = container => {
 	return container.querySelectorAll(`table tbody > tr:first-of-type > td`);
+};
+
+export const getFieldTypeLabel = (fieldTypes, fieldType) => {
+	const fieldTypeObject = fieldTypes.find(({name}) => name === fieldType);
+
+	if (fieldTypeObject) {
+		return fieldTypeObject.label;
+	}
+	return fieldType;
 };

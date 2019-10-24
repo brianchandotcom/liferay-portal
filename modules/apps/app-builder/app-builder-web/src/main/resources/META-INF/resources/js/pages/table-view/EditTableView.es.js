@@ -13,7 +13,7 @@
  */
 
 import classNames from 'classnames';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import DragLayer from '../../components/drag-and-drop/DragLayer.es';
@@ -23,6 +23,50 @@ import Sidebar from '../../components/sidebar/Sidebar.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import {addItem, getItem, updateItem} from '../../utils/client.es';
 import DropZone from './DropZone.es';
+import EditTableViewContext from './EditTableViewContext.es';
+import EditTableViewContextProvider from './EditTableViewContextProvider.es';
+import {getFieldTypeLabel} from './utils.es';
+
+const TableViewSidebar = ({
+	availableFields,
+	fieldNames,
+	onAddFieldName,
+	onClose
+}) => {
+	const [{fieldTypes}] = useContext(EditTableViewContext);
+
+	const handleSidebarToggle = closed => onClose(closed);
+	const [keywords, setKeywords] = useState('');
+
+	return (
+		<Sidebar onSearch={setKeywords} onToggle={handleSidebarToggle}>
+			<Sidebar.Body>
+				<Sidebar.Tab tabs={[Liferay.Language.get('columns')]} />
+
+				<Sidebar.TabContent>
+					<FieldTypeList
+						fieldTypes={availableFields.map(
+							({fieldType, label: {en_US: label}, name}) => ({
+								description: getFieldTypeLabel(
+									fieldTypes,
+									fieldType
+								),
+								disabled: fieldNames.some(
+									fieldName => fieldName === name
+								),
+								icon: fieldType,
+								label,
+								name
+							})
+						)}
+						keywords={keywords}
+						onDoubleClick={({name}) => onAddFieldName(name)}
+					/>
+				</Sidebar.TabContent>
+			</Sidebar.Body>
+		</Sidebar>
+	);
+};
 
 const EditTableView = ({
 	history,
@@ -43,8 +87,8 @@ const EditTableView = ({
 	});
 
 	const [isSidebarClosed, setSidebarClosed] = useState(false);
-	const handleSidebarToggle = closed => setSidebarClosed(closed);
-	const [keywords, setKeywords] = useState('');
+
+	const onCloseSidebar = closed => setSidebarClosed(closed);
 
 	let title = Liferay.Language.get('new-table-view');
 
@@ -181,92 +225,73 @@ const EditTableView = ({
 	} = dataListView;
 
 	return (
-		<div className="app-builder-table-view">
-			<ControlMenu backURL="../" title={title} />
+		<EditTableViewContextProvider>
+			<div className="app-builder-table-view">
+				<ControlMenu backURL="../" title={title} />
 
-			<Loading isLoading={dataDefinition === null}>
-				<DragLayer />
+				<Loading isLoading={dataDefinition === null}>
+					<DragLayer />
 
-				<form
-					onSubmit={event => {
-						event.preventDefault();
+					<form
+						onSubmit={event => {
+							event.preventDefault();
 
-						handleSubmit();
-					}}
-				>
-					<UpperToolbar>
-						<UpperToolbar.Input
-							onInput={onInput}
-							placeholder={Liferay.Language.get(
-								'untitled-table-view'
-							)}
-							value={dataListViewName}
-						/>
-						<UpperToolbar.Group>
-							<UpperToolbar.Button
-								displayType="secondary"
-								onClick={() => history.goBack()}
-							>
-								{Liferay.Language.get('cancel')}
-							</UpperToolbar.Button>
-
-							<UpperToolbar.Button
-								disabled={dataListViewName.trim() === ''}
-								onClick={handleSubmit}
-							>
-								{Liferay.Language.get('save')}
-							</UpperToolbar.Button>
-						</UpperToolbar.Group>
-					</UpperToolbar>
-				</form>
-
-				<Sidebar onSearch={setKeywords} onToggle={handleSidebarToggle}>
-					<Sidebar.Body>
-						<Sidebar.Tab tabs={[Liferay.Language.get('columns')]} />
-
-						<Sidebar.TabContent>
-							<FieldTypeList
-								fieldTypes={availableFields.map(
-									({
-										fieldType,
-										label: {en_US: label},
-										name
-									}) => ({
-										description: fieldType,
-										disabled: fieldNames.some(
-											fieldName => fieldName === name
-										),
-										icon: fieldType,
-										label,
-										name
-									})
+							handleSubmit();
+						}}
+					>
+						<UpperToolbar>
+							<UpperToolbar.Input
+								onInput={onInput}
+								placeholder={Liferay.Language.get(
+									'untitled-table-view'
 								)}
-								keywords={keywords}
-								onDoubleClick={({name}) => onAddFieldName(name)}
+								value={dataListViewName}
 							/>
-						</Sidebar.TabContent>
-					</Sidebar.Body>
-				</Sidebar>
+							<UpperToolbar.Group>
+								<UpperToolbar.Button
+									displayType="secondary"
+									onClick={() => history.goBack()}
+								>
+									{Liferay.Language.get('cancel')}
+								</UpperToolbar.Button>
 
-				<div
-					className={classNames('app-builder-sidebar-content', {
-						closed: isSidebarClosed
-					})}
-				>
-					<div className="container table-view-container">
-						<DropZone
-							fields={fieldNames.map(fieldName => ({
-								...availableFields.find(
-									({name}) => name === fieldName
-								)
-							}))}
-							onAddFieldName={onAddFieldName}
-							onRemoveFieldName={onRemoveFieldName}
-						/>
+								<UpperToolbar.Button
+									disabled={dataListViewName.trim() === ''}
+									onClick={handleSubmit}
+								>
+									{Liferay.Language.get('save')}
+								</UpperToolbar.Button>
+							</UpperToolbar.Group>
+						</UpperToolbar>
+					</form>
+
+					<TableViewSidebar
+						availableFields={availableFields}
+						fieldNames={fieldNames}
+						onAddFieldName={onAddFieldName}
+						onClose={onCloseSidebar}
+					/>
+
+					<div
+						className={classNames('app-builder-sidebar-content', {
+							closed: isSidebarClosed
+						})}
+					>
+						<div className="container table-view-container">
+							<DropZone
+								fields={fieldNames.map(fieldName => ({
+									...availableFields.find(
+										({name}) => name === fieldName
+									)
+								}))}
+								onAddFieldName={onAddFieldName}
+								onRemoveFieldName={onRemoveFieldName}
+							/>
+						</div>
 					</div>
-				</div>
-			</Loading>
-		</div>
+				</Loading>
+			</div>
+		</EditTableViewContextProvider>
 	);
 };
 

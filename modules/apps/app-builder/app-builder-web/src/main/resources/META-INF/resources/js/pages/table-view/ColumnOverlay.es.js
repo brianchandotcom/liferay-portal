@@ -15,12 +15,13 @@
 import classNames from 'classnames';
 import {useEventListener} from 'frontend-js-react-web';
 import dom from 'metal-dom';
-import React, {useState, useLayoutEffect} from 'react';
+import React, {useContext, useLayoutEffect, useState} from 'react';
 
 import Button from '../../components/button/Button.es';
 import {useKeyDown} from '../../hooks/index.es';
 import isClickOutside from '../../utils/clickOutside.es';
-import {getColumnIndex, getColumnNode} from './utils.es';
+import EditTableViewContext from './EditTableViewContext.es';
+import {getColumnIndex, getColumnNode, getFieldTypeLabel} from './utils.es';
 
 const getStyle = (container, index) => {
 	const columnNode = getColumnNode(container, index);
@@ -43,7 +44,9 @@ const Overlay = ({
 	selected,
 	total
 }) => {
+	const [{fieldTypes}] = useContext(EditTableViewContext);
 	const [style, setStyle] = useState({});
+	const fieldTypeLabel = getFieldTypeLabel(fieldTypes, fieldType);
 
 	useEventListener(
 		'resize',
@@ -61,7 +64,7 @@ const Overlay = ({
 	return (
 		<div className={classNames('column-overlay', {selected})} style={style}>
 			<header>
-				<label>{fieldType}</label>
+				<label>{fieldTypeLabel}</label>
 
 				<Button
 					borderless

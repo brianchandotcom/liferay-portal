@@ -148,6 +148,26 @@
 	<td>//td//span[contains(text(),'${key_workflowProcessName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_NAME</td>
+	<td>//div[contains(@class,'workload-by-assignee-card')]//td[contains(@class,'assignee-name')]//span[contains(text(),'${key_assignee}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TAB</td>
+	<td>//div[contains(@class,'workload-by-assignee-card')]//*[contains(@role,'tablist')]//span[contains(text(),'${key_tabName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TABLE</td>
+	<td>//td[contains(@data-testid,'assigneesCell') and contains(text(),'${key_assignee}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT</td>
+	<td>//div[contains(@class,'workload-by-assignee-card')]//td[contains(@class,'text-right')]//span[contains(text(),'${key_taskCount}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

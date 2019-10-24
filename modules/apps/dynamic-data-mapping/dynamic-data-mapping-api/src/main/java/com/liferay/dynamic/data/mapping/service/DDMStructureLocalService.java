@@ -93,42 +93,6 @@ public interface DDMStructureLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * Adds a structure referencing its parent structure.
-	 *
-	 * @param userId the primary key of the structure's creator/owner
-	 * @param groupId the primary key of the group
-	 * @param parentStructureId the primary key of the parent structure
-	 (optionally {@link
-	 DDMStructureConstants#DEFAULT_PARENT_STRUCTURE_ID})
-	 * @param classNameId the primary key of the class name for the
-	 structure's related model
-	 * @param structureKey the unique string identifying the structure
-	 (optionally <code>null</code>)
-	 * @param nameMap the structure's locales and localized names
-	 * @param descriptionMap the structure's locales and localized
-	 descriptions
-	 * @param definition the structure's XML schema definition
-	 * @param storageType the structure's storage type. It can be "xml" or
-	 "expando". For more information, see {@link StorageType}.
-	 * @param type the structure's type. For more information, see {@link
-	 DDMStructureConstants}.
-	 * @param serviceContext the service context to be applied. Can set the
-	 UUID, creation date, modification date, guest permissions,
-	 and group permissions for the structure.
-	 * @return the structure
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addStructure(long, long, long, long, String, Map, Map,
-	 DDMForm, DDMFormLayout, String, int, ServiceContext)}
-	 */
-	@Deprecated
-	public DDMStructure addStructure(
-			long userId, long groupId, long parentStructureId, long classNameId,
-			String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String definition,
-			String storageType, int type, ServiceContext serviceContext)
-		throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure addStructure(
 			long userId, long groupId, long parentStructureId, long classNameId,
@@ -144,76 +108,12 @@ public interface DDMStructureLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * Adds a structure referencing a default parent structure, using the portal
-	 * property <code>dynamic.data.lists.storage.type</code> storage type and
-	 * default structure type.
-	 *
-	 * @param userId the primary key of the structure's creator/owner
-	 * @param groupId the primary key of the group
-	 * @param classNameId the primary key of the class name for the
-	 structure's related model
-	 * @param nameMap the structure's locales and localized names
-	 * @param descriptionMap the structure's locales and localized
-	 descriptions
-	 * @param definition the structure's XML schema definition
-	 * @param serviceContext the service context to be applied. Can set the
-	 UUID, creation date, modification date, guest permissions,
-	 and group permissions for the structure.
-	 * @return the structure
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addStructure(long, long, long, Map, Map, DDMForm,
-	 DDMFormLayout, ServiceContext)}
-	 */
-	@Deprecated
-	public DDMStructure addStructure(
-			long userId, long groupId, long classNameId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String definition, ServiceContext serviceContext)
-		throws PortalException;
-
 	public DDMStructure addStructure(
 			long userId, long groupId, String parentStructureKey,
 			long classNameId, String structureKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, DDMForm ddmForm,
 			DDMFormLayout ddmFormLayout, String storageType, int type,
 			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * Adds a structure referencing a default parent structure if the parent
-	 * structure is not found.
-	 *
-	 * @param userId the primary key of the structure's creator/owner
-	 * @param groupId the primary key of the group
-	 * @param parentStructureKey the unique string identifying the parent
-	 structure (optionally <code>null</code>)
-	 * @param classNameId the primary key of the class name for the
-	 structure's related model
-	 * @param structureKey the unique string identifying the structure
-	 (optionally <code>null</code>)
-	 * @param nameMap the structure's locales and localized names
-	 * @param descriptionMap the structure's locales and localized
-	 descriptions
-	 * @param definition the structure's XML schema definition
-	 * @param storageType the structure's storage type. It can be "xml" or
-	 "expando". For more information, see {@link StorageType}.
-	 * @param type the structure's type. For more information, see {@link
-	 DDMStructureConstants}.
-	 * @param serviceContext the service context to be applied. Can set the
-	 UUID, creation date, modification date, guest permissions and
-	 group permissions for the structure.
-	 * @return the structure
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addStructure(long, long, String, long, String, Map, Map,
-	 DDMForm, DDMFormLayout, String, int, ServiceContext)}
-	 */
-	@Deprecated
-	public DDMStructure addStructure(
-			long userId, long groupId, String parentStructureKey,
-			long classNameId, String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String definition,
-			String storageType, int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -1114,77 +1014,6 @@ public interface DDMStructureLocalService
 			long userId, long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String definition, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * Updates the structure matching the class name ID, structure key, and
-	 * group, replacing its old parent structure, name map, description map, and
-	 * XSD with new ones.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param parentStructureId the primary key of the new parent structure
-	 * @param classNameId the primary key of the class name for the
-	 structure's related model
-	 * @param structureKey the unique string identifying the structure
-	 * @param nameMap the structure's new locales and localized names
-	 * @param descriptionMap the structure's new locales and localized
-	 description
-	 * @param definition the structure's new XML schema definition
-	 * @param serviceContext the service context to be applied. Can set the
-	 structure's modification date.
-	 * @return the updated structure
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateStructure(long, long, long, long, String, Map, Map,
-	 DDMForm, DDMFormLayout, ServiceContext)}
-	 */
-	@Deprecated
-	public DDMStructure updateStructure(
-			long groupId, long parentStructureId, long classNameId,
-			String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String definition,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * Updates the structure matching the structure ID, replacing its old parent
-	 * structure, name map, description map, and XSD with new ones.
-	 *
-	 * @param structureId the primary key of the structure
-	 * @param parentStructureId the primary key of the new parent structure
-	 * @param nameMap the structure's new locales and localized names
-	 * @param descriptionMap the structure's new locales and localized
-	 descriptions
-	 * @param definition the structure's new XML schema definition
-	 * @param serviceContext the service context to be applied. Can set the
-	 structure's modification date.
-	 * @return the updated structure
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateStructure(long, long, long, Map, Map, DDMForm,
-	 DDMFormLayout, ServiceContext)}
-	 */
-	@Deprecated
-	public DDMStructure updateStructure(
-			long structureId, long parentStructureId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String definition, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * Updates the structure matching the structure ID, replacing its XSD with a
-	 * new one.
-	 *
-	 * @param structureId the primary key of the structure
-	 * @param definition the structure's new XML schema definition
-	 * @param serviceContext the service context to be applied. Can set the
-	 structure's modification date.
-	 * @return the updated structure
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateStructure(long, DDMForm, DDMFormLayout,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public DDMStructure updateXSD(
-			long structureId, String definition, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Override

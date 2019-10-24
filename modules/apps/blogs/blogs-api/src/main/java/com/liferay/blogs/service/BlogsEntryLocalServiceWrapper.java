@@ -100,32 +100,6 @@ public class BlogsEntryLocalServiceWrapper
 			userId, title, content, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(long,
-	 String, String, String, String, int, int, int, int, int,
-	 boolean, boolean, String[], String, ImageSelector,
-	 ImageSelector, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.blogs.model.BlogsEntry addEntry(
-			long userId, String title, String description, String content,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
-			boolean allowTrackbacks, String[] trackbacks, boolean smallImage,
-			String smallImageURL, String smallImageFileName,
-			java.io.InputStream smallImageInputStream,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _blogsEntryLocalService.addEntry(
-			userId, title, description, content, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks, smallImage,
-			smallImageURL, smallImageFileName, smallImageInputStream,
-			serviceContext);
-	}
-
 	@Override
 	public com.liferay.blogs.model.BlogsEntry addEntry(
 			long userId, String title, String subtitle, String description,
@@ -705,17 +679,6 @@ public class BlogsEntryLocalServiceWrapper
 		return _blogsEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsEntry>
-		getNoAssetEntries() {
-
-		return _blogsEntryLocalService.getNoAssetEntries();
-	}
-
 	@Override
 	public java.util.List<com.liferay.blogs.model.BlogsEntry>
 		getOrganizationEntries(
@@ -863,33 +826,6 @@ public class BlogsEntryLocalServiceWrapper
 			userId, entryId, title, content, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateEntry(long,
-	 long, String, String, String, String, int, int, int, int,
-	 int, boolean, boolean, String[], String, ImageSelector,
-	 ImageSelector, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.blogs.model.BlogsEntry updateEntry(
-			long userId, long entryId, String title, String description,
-			String content, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, boolean smallImage, String smallImageURL,
-			String smallImageFileName,
-			java.io.InputStream smallImageInputStream,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _blogsEntryLocalService.updateEntry(
-			userId, entryId, title, description, content, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks, smallImage,
-			smallImageURL, smallImageFileName, smallImageInputStream,
-			serviceContext);
-	}
-
 	@Override
 	public com.liferay.blogs.model.BlogsEntry updateEntry(
 			long userId, long entryId, String title, String subtitle,
@@ -994,21 +930,6 @@ public class BlogsEntryLocalServiceWrapper
 
 		_blogsEntryLocalService.updateEntryResources(
 			entry, groupPermissions, guestPermissions);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateStatus(long,
-	 long, int, ServiceContext, Map)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.blogs.model.BlogsEntry updateStatus(
-			long userId, long entryId, int status,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _blogsEntryLocalService.updateStatus(
-			userId, entryId, status, serviceContext);
 	}
 
 	@Override

@@ -429,16 +429,6 @@ public class BookmarksEntryLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry>
-		getNoAssetEntries() {
-
-		return getService().getNoAssetEntries();
-	}
-
-	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier

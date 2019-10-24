@@ -422,19 +422,6 @@ public interface BookmarksFolderLocalService
 	public BookmarksFolder updateBookmarksFolder(
 		BookmarksFolder bookmarksFolder);
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateFolder(long, long, long, String, String,
-	 ServiceContext)} and {@link #mergeFolders(long, long)}
-	 */
-	@Deprecated
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksFolder updateFolder(
-			long userId, long folderId, long parentFolderId, String name,
-			String description, boolean mergeWithParentFolder,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksFolder updateFolder(
 			long userId, long folderId, long parentFolderId, String name,

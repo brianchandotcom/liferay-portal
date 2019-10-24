@@ -625,24 +625,6 @@ public class BookmarksFolderLocalServiceWrapper
 			bookmarksFolder);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateFolder(long, long, long, String, String,
-	 ServiceContext)} and {@link #mergeFolders(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
-			long userId, long folderId, long parentFolderId, String name,
-			String description, boolean mergeWithParentFolder,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _bookmarksFolderLocalService.updateFolder(
-			userId, folderId, parentFolderId, name, description,
-			mergeWithParentFolder, serviceContext);
-	}
-
 	@Override
 	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
 			long userId, long folderId, long parentFolderId, String name,

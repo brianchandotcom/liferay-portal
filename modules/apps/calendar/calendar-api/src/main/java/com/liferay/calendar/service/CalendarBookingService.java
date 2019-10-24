@@ -79,39 +79,6 @@ public interface CalendarBookingService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addCalendarBooking(long, long[], long, long, Map, Map,
-	 String, long, long, boolean, String, long, String, long,
-	 String, ServiceContext)}
-	 */
-	@Deprecated
-	public CalendarBooking addCalendarBooking(
-			long calendarId, long[] childCalendarIds,
-			long parentCalendarBookingId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String location,
-			int startTimeYear, int startTimeMonth, int startTimeDay,
-			int startTimeHour, int startTimeMinute, int endTimeYear,
-			int endTimeMonth, int endTimeDay, int endTimeHour,
-			int endTimeMinute, String timeZoneId, boolean allDay,
-			String recurrence, long firstReminder, String firstReminderType,
-			long secondReminder, String secondReminderType,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public CalendarBooking addCalendarBooking(
-			long calendarId, long[] childCalendarIds,
-			long parentCalendarBookingId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String location, long startTime,
-			long endTime, boolean allDay, String recurrence, long firstReminder,
-			String firstReminderType, long secondReminder,
-			String secondReminderType, ServiceContext serviceContext)
-		throws PortalException;
-
 	public CalendarBooking deleteCalendarBooking(long calendarBookingId)
 		throws PortalException;
 
@@ -210,16 +177,6 @@ public interface CalendarBookingService extends BaseService {
 			long calendarBookingId, int instanceIndex, int status,
 			boolean updateInstance, boolean allFollowing,
 			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #invokeTransition(long, int, long, boolean, boolean,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public void invokeTransition(
-			long calendarBookingId, int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CalendarBooking invokeTransition(
@@ -359,22 +316,6 @@ public interface CalendarBookingService extends BaseService {
 			String location, long startTime, long endTime, boolean allDay,
 			long firstReminder, String firstReminderType, long secondReminder,
 			String secondReminderType, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #updateRecurringCalendarBooking(long, long, long[], Map, Map,
-	 String, long, long, boolean, long, String, long, String,
-	 ServiceContext)
-	 */
-	@Deprecated
-	public CalendarBooking updateRecurringCalendarBooking(
-			long calendarBookingId, long calendarId, long[] childCalendarIds,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String location, long startTime, long endTime, boolean allDay,
-			String recurrence, long firstReminder, String firstReminderType,
-			long secondReminder, String secondReminderType,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 }

@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.lists.service.http;
 import com.liferay.dynamic.data.lists.service.DDLRecordServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.rmi.RemoteException;
 
@@ -157,42 +156,6 @@ public class DDLRecordServiceSoap {
 	}
 
 	/**
-	 * Disassociates the locale from the record.
-	 *
-	 * @param recordId the primary key of the record
-	 * @param locale the locale of the record values to be removed
-	 * @param serviceContext the service context to be applied. This can
-	 set the record modified date.
-	 * @return the affected record
-	 * @throws PortalException
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateRecord(long, boolean, int, DDMFormValues,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.dynamic.data.lists.model.DDLRecordSoap
-			deleteRecordLocale(
-				long recordId, String locale,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.dynamic.data.lists.model.DDLRecord returnValue =
-				DDLRecordServiceUtil.deleteRecordLocale(
-					recordId, LocaleUtil.fromLanguageId(locale),
-					serviceContext);
-
-			return com.liferay.dynamic.data.lists.model.DDLRecordSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
 	 * Returns the record with the ID.
 	 *
 	 * @param recordId the primary key of the record
@@ -258,27 +221,6 @@ public class DDLRecordServiceSoap {
 
 		try {
 			DDLRecordServiceUtil.revertRecord(
-				recordId, version, serviceContext);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #revertRecord(long, String, ServiceContext)}
-	 */
-	@Deprecated
-	public static void revertRecordVersion(
-			long recordId, String version,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			DDLRecordServiceUtil.revertRecordVersion(
 				recordId, version, serviceContext);
 		}
 		catch (Exception e) {

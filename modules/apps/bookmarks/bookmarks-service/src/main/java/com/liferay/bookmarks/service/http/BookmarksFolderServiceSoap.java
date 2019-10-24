@@ -285,26 +285,6 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getSubfolderIds(List, long, long, boolean)}
-	 */
-	@Deprecated
-	public static void getSubfolderIds(
-			Long[] folderIds, long groupId, long folderId)
-		throws RemoteException {
-
-		try {
-			BookmarksFolderServiceUtil.getSubfolderIds(
-				ListUtil.toList(folderIds), groupId, folderId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void getSubfolderIds(
 			Long[] folderIds, long groupId, long folderId, boolean recurse)
 		throws RemoteException {
@@ -437,34 +417,6 @@ public class BookmarksFolderServiceSoap {
 
 		try {
 			BookmarksFolderServiceUtil.unsubscribeFolder(groupId, folderId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateFolder(long, long, String, String, ServiceContext)}
-	 and {@link #mergeFolders(long, long)}
-	 */
-	@Deprecated
-	public static com.liferay.bookmarks.model.BookmarksFolderSoap updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			boolean mergeWithParentFolder,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.bookmarks.model.BookmarksFolder returnValue =
-				BookmarksFolderServiceUtil.updateFolder(
-					folderId, parentFolderId, name, description,
-					mergeWithParentFolder, serviceContext);
-
-			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(
-				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

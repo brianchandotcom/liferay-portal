@@ -112,16 +112,6 @@ public interface DDMFormInstanceLocalService
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addFormInstanceResources(DDMFormInstance, ModelPermissions)}
-	 */
-	@Deprecated
-	public void addFormInstanceResources(
-			DDMFormInstance ddmFormInstance, String[] groupPermissions,
-			String[] guestPermissions)
-		throws PortalException;
-
-	/**
 	 * Creates a new ddm form instance with the primary key. Does not add the ddm form instance to the database.
 	 *
 	 * @param formInstanceId the primary key for the new ddm form instance

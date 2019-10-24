@@ -105,38 +105,6 @@ public class DDLRecordLocalServiceWrapper
 			userId, groupId, recordSetId, displayIndex, fields, serviceContext);
 	}
 
-	/**
-	 * Adds a record that's based on the fields map and that references the
-	 * record set.
-	 *
-	 * @param userId the primary key of the record's creator/owner
-	 * @param groupId the primary key of the record's group
-	 * @param recordSetId the primary key of the record set
-	 * @param displayIndex the index position in which the record is
-	 displayed in the spreadsheet view
-	 * @param fieldsMap the record values. The fieldsMap is a map of field
-	 names and their serializable values.
-	 * @param serviceContext the service context to be applied. This can
-	 set the UUID, guest permissions, and group permissions for
-	 the record.
-	 * @return the record
-	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addRecord(long, long, int, DDMFormValues, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
-			long userId, long groupId, long recordSetId, int displayIndex,
-			java.util.Map<String, java.io.Serializable> fieldsMap,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddlRecordLocalService.addRecord(
-			userId, groupId, recordSetId, displayIndex, fieldsMap,
-			serviceContext);
-	}
-
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 			long userId, long groupId, long ddmStorageId, long ddlRecordSetId,
@@ -225,30 +193,6 @@ public class DDLRecordLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_ddlRecordLocalService.deleteRecord(recordId);
-	}
-
-	/**
-	 * Disassociates the locale from the record.
-	 *
-	 * @param recordId the primary key of the record
-	 * @param locale the locale of the record values to be removed
-	 * @param serviceContext the service context to be applied. This can
-	 set the record modified date.
-	 * @return the affected record
-	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateRecord(long, boolean, int, DDMFormValues,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecord deleteRecordLocale(
-			long recordId, java.util.Locale locale,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddlRecordLocalService.deleteRecordLocale(
-			recordId, locale, serviceContext);
 	}
 
 	/**
@@ -585,19 +529,6 @@ public class DDLRecordLocalServiceWrapper
 		return _ddlRecordLocalService.getIndexableActionableDynamicQuery();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 DDLRecordVersionLocalService#getLatestRecordVersion(long)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordVersion
-			getLatestRecordVersion(long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddlRecordLocalService.getLatestRecordVersion(recordId);
-	}
-
 	@Override
 	public Long[] getMinAndMaxCompanyRecordIds(
 		long companyId, int status, int scope) {
@@ -758,63 +689,6 @@ public class DDLRecordLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 DDLRecordVersionLocalService#getRecordVersion(
-	 long)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordVersion
-			getRecordVersion(long recordVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddlRecordLocalService.getRecordVersion(recordVersionId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 DDLRecordVersionLocalService#getRecordVersion(
-	 long, String)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordVersion
-			getRecordVersion(long recordId, String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddlRecordLocalService.getRecordVersion(recordId, version);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 DDLRecordVersionLocalService#getRecordVersions(
-	 long, int, int, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion>
-		getRecordVersions(
-			long recordId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.dynamic.data.lists.model.DDLRecordVersion>
-					orderByComparator) {
-
-		return _ddlRecordLocalService.getRecordVersions(
-			recordId, start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 DDLRecordVersionLocalService#getRecordVersionsCount(
-	 long)}
-	 */
-	@Deprecated
-	@Override
-	public int getRecordVersionsCount(long recordId) {
-		return _ddlRecordLocalService.getRecordVersionsCount(recordId);
-	}
-
-	/**
 	 * Reverts the record to the given version.
 	 *
 	 * @param userId the primary key of the user who is reverting the record
@@ -831,21 +705,6 @@ public class DDLRecordLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_ddlRecordLocalService.revertRecord(
-			userId, recordId, version, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #revertRecord(long, long, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void revertRecordVersion(
-			long userId, long recordId, String version,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_ddlRecordLocalService.revertRecordVersion(
 			userId, recordId, version, serviceContext);
 	}
 

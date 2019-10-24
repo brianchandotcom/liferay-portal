@@ -50,6 +50,4 @@ public interface BlogsEntryFinder {
 			com.liferay.portal.kernel.dao.orm.QueryDefinition
 				<com.liferay.blogs.model.BlogsEntry> queryDefinition);
 
-	public java.util.List<com.liferay.blogs.model.BlogsEntry> findByNoAssets();
-
 }

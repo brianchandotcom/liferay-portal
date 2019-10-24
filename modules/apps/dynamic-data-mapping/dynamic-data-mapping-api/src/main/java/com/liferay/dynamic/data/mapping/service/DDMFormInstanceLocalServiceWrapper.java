@@ -122,22 +122,6 @@ public class DDMFormInstanceLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addFormInstanceResources(DDMFormInstance, ModelPermissions)}
-	 */
-	@Deprecated
-	@Override
-	public void addFormInstanceResources(
-			com.liferay.dynamic.data.mapping.model.DDMFormInstance
-				ddmFormInstance,
-			String[] groupPermissions, String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_ddmFormInstanceLocalService.addFormInstanceResources(
-			ddmFormInstance, groupPermissions, guestPermissions);
-	}
-
-	/**
 	 * Creates a new ddm form instance with the primary key. Does not add the ddm form instance to the database.
 	 *
 	 * @param formInstanceId the primary key for the new ddm form instance

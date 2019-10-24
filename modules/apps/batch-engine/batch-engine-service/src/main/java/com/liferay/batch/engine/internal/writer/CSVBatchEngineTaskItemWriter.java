@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,13 +37,15 @@ import java.util.Map;
 public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 
 	public CSVBatchEngineTaskItemWriter(
-		String delimiter, Map<String, Field> fieldMap,
+		String delimiter, Map<String, Field> fieldMap, List<String> fieldNames,
 		OutputStream outputStream) {
 
 		_delimiter = delimiter;
 		_fieldMap = fieldMap;
-		_columnValueWriter = new ColumnValueWriter();
+		_fieldNames = fieldNames;
 		_unsyncPrintWriter = new UnsyncPrintWriter(outputStream);
+
+		_columnValueWriter = new ColumnValueWriter();
 	}
 
 	@Override
@@ -57,12 +60,17 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 
 		for (Object item : items) {
 			_columnValueWriter.write(
-				item, _fieldMap, values -> _write(dateFormat, values));
+				item, _fieldMap, _fieldNames,
+				values -> _write(dateFormat, values));
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	private void _write(DateFormat dateFormat, Collection<?> values) {
+		if (values.isEmpty()) {
+			return;
+		}
+
 		_unsyncPrintWriter.write(
 			StringUtil.merge(
 				values,
@@ -81,6 +89,7 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 	private final ColumnValueWriter _columnValueWriter;
 	private final String _delimiter;
 	private final Map<String, Field> _fieldMap;
+	private final List<String> _fieldNames;
 	private final UnsyncPrintWriter _unsyncPrintWriter;
 
 }

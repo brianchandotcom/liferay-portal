@@ -18,6 +18,12 @@ import com.liferay.batch.engine.BatchEngineTaskContentType;
 
 import java.io.OutputStream;
 
+import java.lang.reflect.Field;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Ivica Cardic
  */
@@ -29,28 +35,40 @@ public class BatchEngineTaskItemWriterFactory {
 
 	public BatchEngineTaskItemWriter create(
 			BatchEngineTaskContentType batchEngineTaskContentType,
-			Class<?> itemClass, OutputStream outputStream)
+			List<String> fieldNames, Class<?> itemClass,
+			OutputStream outputStream)
 		throws Exception {
+
+		if (fieldNames.isEmpty() &&
+			((batchEngineTaskContentType == BatchEngineTaskContentType.CSV) ||
+			 (batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
+			 (batchEngineTaskContentType == BatchEngineTaskContentType.XLSX))) {
+
+			throw new IllegalArgumentException("Field names are not set");
+		}
+
+		Map<String, Field> fieldMap = ItemClassIndexUtil.index(itemClass);
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
 			return new CSVBatchEngineTaskItemWriter(
-				_csvFileColumnDelimiter, ItemClassIndexUtil.index(itemClass),
-				outputStream);
+				_csvFileColumnDelimiter, fieldMap, fieldNames, outputStream);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
-			return new JSONBatchEngineTaskItemWriter(outputStream);
+			return new JSONBatchEngineTaskItemWriter(
+				new ArrayList<>(fieldMap.keySet()), fieldNames, outputStream);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSONL) {
-			return new JSONLBatchEngineTaskItemWriter(outputStream);
+			return new JSONLBatchEngineTaskItemWriter(
+				new ArrayList<>(fieldMap.keySet()), fieldNames, outputStream);
 		}
 
 		if ((batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
 			(batchEngineTaskContentType == BatchEngineTaskContentType.XLSX)) {
 
 			return new XLSBatchEngineTaskItemWriter(
-				ItemClassIndexUtil.index(itemClass), outputStream);
+				fieldMap, fieldNames, outputStream);
 		}
 
 		throw new IllegalArgumentException(

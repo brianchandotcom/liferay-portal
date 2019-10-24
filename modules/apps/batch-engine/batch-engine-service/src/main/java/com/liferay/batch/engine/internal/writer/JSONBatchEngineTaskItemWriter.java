@@ -14,15 +14,14 @@
 
 package com.liferay.batch.engine.internal.writer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SequenceWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Ivica cardic
@@ -30,12 +29,15 @@ import java.util.Collection;
 public class JSONBatchEngineTaskItemWriter
 	implements BatchEngineTaskItemWriter {
 
-	public JSONBatchEngineTaskItemWriter(OutputStream outputStream)
+	public JSONBatchEngineTaskItemWriter(
+			List<String> allFieldNames, List<String> includeFieldNames,
+			OutputStream outputStream)
 		throws IOException {
 
 		_outputStream = outputStream;
 
-		ObjectWriter objectWriter = _objectMapper.writer();
+		ObjectWriter objectWriter = ObjectWriterFactory.getObjectWriter(
+			allFieldNames, includeFieldNames);
 
 		_sequenceWriter = objectWriter.writeValuesAsArray(_outputStream);
 	}
@@ -51,12 +53,6 @@ public class JSONBatchEngineTaskItemWriter
 	public void write(Collection<?> items) throws Exception {
 		_sequenceWriter.writeAll(items);
 	}
-
-	private static final ObjectMapper _objectMapper = new ObjectMapper() {
-		{
-			disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		}
-	};
 
 	private final OutputStream _outputStream;
 	private final SequenceWriter _sequenceWriter;

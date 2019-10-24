@@ -32,6 +32,41 @@ definition {
 	}
 
 	@priority = "5"
+	test LearningToRankSmoke {
+		property osgi.module.configuration.file.names = "com.liferay.portal.search.learning.to.rank.configuration.LearningToRankConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}model=&quot;linearregression&quot;";
+		property remote.elasticsearch.enabled = "true";
+		property remote.elasticsearch.ltr.enabled = "true";
+		property test.name.skip.portal.instance = "Elasticsearch7EE#LearningToRankSmoke";
+
+		AntCommand(
+			locator1 = "build-test-elasticsearch7.xml",
+			value1 = "add-ltr-linear-regression-model -Dbackup.index=.ltrstore -Delasticsearch.port=9200");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		var script = TestCase.getFileContent(fileName = "blogs-ltr-subset.groovy");
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "movies");
+
+		Pagination.viewResults(results = "Showing 1 to 8 of 8 entries.");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER",
+			resultOrder = "8",
+			value1 = "Alaska");
+	}
+
+	@priority = "5"
 	test PortalClusterSmokeTest {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";

@@ -20,18 +20,17 @@
 DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT_ENTRY);
 
 Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
+
+String nameMap = JSONFactoryUtil.looseSerialize(group.getNameMap());
+
+UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
+
+boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getProperty(GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES), true);
+
+String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigationCategoryKey", DepotScreenNavigationEntryConstants.ENTRY_KEY_LANGUAGES);
 %>
 
-<liferay-frontend:fieldset
-	collapsible="true"
-	label='<%= LanguageUtil.get(request, "languages") %>'
->
-
-	<%
-	UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
-
-	boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getProperty(GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES), true);
-	%>
+<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= screenNavigationCategoryKey %>" />
 
 	<aui:input checked="<%= inheritLocales %>" id="<%= GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES %>" label="use-the-default-language-options" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= true %>" />
 
@@ -246,9 +245,8 @@ Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
 
 		var form = document.getElementById('<portlet:namespace />fm');
 
-		form.addEventListener('submit', function() {
-			event.preventDefault();
-			<portlet:namespace />saveGroup();
-		});
-	</aui:script>
-</liferay-frontend:fieldset>
+	form.addEventListener('submit', function() {
+		event.preventDefault();
+		<portlet:namespace />saveGroup();
+	});
+</aui:script>

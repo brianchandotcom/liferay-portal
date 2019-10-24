@@ -227,15 +227,17 @@
 
 				<fail if="upgrade.failed" message="Upgrade has failed to start." />
 
-				<exec executable="/bin/bash" logError="true" output="true">
+				<exec executable="/bin/bash" failonerror="true" logError="true" output="true">
 					<arg value="-c" />
 					<arg value="pkill -1 -f db_upgrade" />
 				</exec>
 
-				<exec executable="/bin/bash" logError="true" output="true">
+				<exec executable="/bin/bash" failonerror="true" logError="true" output="true">
 					<arg value="-c" />
 					<arg value="pkill -1 -f com.liferay.portal.tools.db.upgrade.client.jar" />
 				</exec>
+
+				<echo message="SIGHUP signals sent to db_upgrade script and upgrade client jar." />
 
 				<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.failed">
 					<resourcecontains

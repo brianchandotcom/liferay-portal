@@ -108,6 +108,10 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 			long layoutPageTemplateEntryId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
 			long groupId, String name)

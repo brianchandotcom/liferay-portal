@@ -27,7 +27,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.depot.exception.DepotEntryNameException" %><%@
 page import="com.liferay.depot.model.DepotEntry" %><%@
-	page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.depot.model.DepotEntryGroupRel" %><%@
 page import="com.liferay.depot.service.DepotEntryGroupRelLocalServiceUtil" %><%@
 page import="com.liferay.depot.web.internal.constants.DepotAdminWebKeys" %><%@
@@ -42,6 +41,7 @@ page import="com.liferay.item.selector.ItemSelectorCriterion" %><%@
 page import="com.liferay.item.selector.criteria.URLItemSelectorReturnType" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.exception.LocaleException" %><%@
+page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.GroupConstants" %><%@

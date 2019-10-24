@@ -21,6 +21,7 @@ import java.lang.reflect.Field;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -38,10 +39,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 
 	public XLSBatchEngineTaskItemWriter(
-		Map<String, Field> fieldMap, OutputStream outputStream) {
+		Map<String, Field> fieldMap, List<String> fieldNames,
+		OutputStream outputStream) {
 
 		_fieldMap = fieldMap;
+		_fieldNames = fieldNames;
 		_outputStream = outputStream;
+
 		_columnValueWriter = new ColumnValueWriter();
 
 		_workbook = new XSSFWorkbook();
@@ -61,7 +65,8 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 	@Override
 	public void write(Collection<?> items) throws Exception {
 		for (Object item : items) {
-			_columnValueWriter.write(item, _fieldMap, this::_write);
+			_columnValueWriter.write(
+				item, _fieldMap, _fieldNames, this::_write);
 		}
 	}
 
@@ -103,6 +108,7 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 
 	private final ColumnValueWriter _columnValueWriter;
 	private final Map<String, Field> _fieldMap;
+	private final List<String> _fieldNames;
 	private final OutputStream _outputStream;
 	private int _rowNum;
 	private final Sheet _sheet;

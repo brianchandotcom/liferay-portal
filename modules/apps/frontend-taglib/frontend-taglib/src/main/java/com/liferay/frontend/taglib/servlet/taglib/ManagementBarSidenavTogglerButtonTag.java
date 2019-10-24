@@ -50,13 +50,6 @@ public class ManagementBarSidenavTogglerButtonTag
 		_position = position;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setSidenavId(String sidenavId) {
-	}
-
 	public void setType(String type) {
 		_type = type;
 	}

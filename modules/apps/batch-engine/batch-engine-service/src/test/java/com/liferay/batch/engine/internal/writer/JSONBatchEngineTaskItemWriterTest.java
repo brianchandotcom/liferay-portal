@@ -15,8 +15,13 @@
 package com.liferay.batch.engine.internal.writer;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,11 +34,47 @@ public class JSONBatchEngineTaskItemWriterTest
 
 	@Test
 	public void testWriteRows() throws Exception {
+		_testWriteRows(Collections.emptyList());
+	}
+
+	@Test
+	public void testWriteRowsWithDefinedFieldNames() throws Exception {
+		_testWriteRows(Arrays.asList("createDate", "description", "id"));
+		_testWriteRows(
+			Arrays.asList("createDate", "description", "id", "name"));
+		_testWriteRows(Arrays.asList("createDate", "id", "name"));
+	}
+
+	private String _getExpectedContent(
+		List<String> fieldNames, List<Item> items) {
+
+		StringBundler sb = new StringBundler();
+
+		if (fieldNames.isEmpty()) {
+			fieldNames = jsonFieldNames;
+		}
+
+		sb.append("[");
+
+		for (Item item : items) {
+			sb.append(getItemJSONContent(fieldNames, item));
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append("]");
+
+		return sb.toString();
+	}
+
+	private void _testWriteRows(List<String> fieldNames) throws Exception {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
 		try (JSONBatchEngineTaskItemWriter jsonBatchEngineTaskItemWriter =
 				new JSONBatchEngineTaskItemWriter(
+					new ArrayList<>(fieldMap.keySet()), fieldNames,
 					unsyncByteArrayOutputStream)) {
 
 			for (Item[] items : getItemGroups()) {
@@ -44,7 +85,7 @@ public class JSONBatchEngineTaskItemWriterTest
 		String content = unsyncByteArrayOutputStream.toString();
 
 		Assert.assertEquals(
-			objectMapper.writeValueAsString(getItems()), content);
+			_getExpectedContent(fieldNames, getItems()), content);
 	}
 
 }

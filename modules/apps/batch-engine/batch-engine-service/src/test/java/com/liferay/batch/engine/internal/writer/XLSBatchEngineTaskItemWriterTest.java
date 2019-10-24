@@ -20,7 +20,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -47,17 +49,145 @@ public class XLSBatchEngineTaskItemWriterTest
 
 	@Test
 	public void testWriteRows() throws Exception {
-		Iterator<Row> expectedRowIterator = _getExpectedRowIterator();
+		_testWriteRows(Collections.emptyList());
+	}
 
-		Iterator<Row> actualRowIterator = _getActualRowIterator();
+	@Test
+	public void testWriteRowsWithDefinedFieldNames() throws Exception {
+		_testWriteRows(Arrays.asList("createDate", "description", "id"));
+		_testWriteRows(
+			Arrays.asList(
+				"createDate", "description", "id", "name_en", "name_hr"));
+		_testWriteRows(Arrays.asList("createDate", "id", "name_en"));
+	}
+
+	private byte[] _getExpectedContent(
+			List<String> fieldNames, List<Item> items)
+		throws IOException {
+
+		try (Workbook workbook = new XSSFWorkbook()) {
+			Sheet sheet = workbook.createSheet();
+
+			if (!fieldNames.isEmpty()) {
+				_populateRow(sheet.createRow(0), workbook, fieldNames);
+
+				for (int i = 0; i < items.size(); i++) {
+					Item item = items.get(i);
+
+					Map<String, String> name = item.getName();
+
+					List<Object> values = new ArrayList<>();
+
+					if (fieldNames.contains("createDate")) {
+						values.add(item.getCreateDate());
+					}
+
+					if (fieldNames.contains("description")) {
+						values.add(item.getDescription());
+					}
+
+					if (fieldNames.contains("id")) {
+						values.add(item.getId());
+					}
+
+					if (fieldNames.contains("name_en")) {
+						values.add(name.get("en"));
+					}
+
+					if (fieldNames.contains("name_hr")) {
+						values.add(name.get("hr"));
+					}
+
+					_populateRow(sheet.createRow(i + 1), workbook, values);
+				}
+			}
+
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
+			workbook.write(byteArrayOutputStream);
+
+			return byteArrayOutputStream.toByteArray();
+		}
+	}
+
+	private Iterator<Row> _getExpectedRowIterator(List<String> fieldNames)
+		throws IOException {
+
+		Workbook expectedWorkbook = new XSSFWorkbook(
+			new ByteArrayInputStream(
+				_getExpectedContent(fieldNames, getItems())));
+
+		Sheet expectedSheet = expectedWorkbook.getSheetAt(0);
+
+		return expectedSheet.rowIterator();
+	}
+
+	private void _populateRow(Row row, Workbook workbook, List<?> cellValues) {
+		for (int i = 0; i < cellValues.size(); i++) {
+			Object value = cellValues.get(i);
+
+			Cell cell = row.createCell(i);
+
+			if (value instanceof Boolean) {
+				cell.setCellValue((Boolean)value);
+			}
+			else if (value instanceof Date) {
+				CellStyle cellStyle = workbook.createCellStyle();
+
+				CreationHelper creationHelper = workbook.getCreationHelper();
+
+				DataFormat dataFormat = creationHelper.createDataFormat();
+
+				cellStyle.setDataFormat(
+					dataFormat.getFormat("yyyy-mm-dd hh:mm:ss"));
+
+				cell.setCellStyle(cellStyle);
+
+				cell.setCellValue((Date)value);
+			}
+			else if (value instanceof Number) {
+				Number cellValue = (Number)value;
+
+				cell.setCellValue(cellValue.doubleValue());
+			}
+			else {
+				cell.setCellValue((String)value);
+			}
+		}
+	}
+
+	private void _testWriteRows(List<String> fieldNames) throws Exception {
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		try (XLSBatchEngineTaskItemWriter xlsBatchEngineTaskItemWriter =
+				new XLSBatchEngineTaskItemWriter(
+					fieldMap, fieldNames, unsyncByteArrayOutputStream)) {
+
+			for (Item[] items : getItemGroups()) {
+				xlsBatchEngineTaskItemWriter.write(Arrays.asList(items));
+			}
+		}
+
+		Workbook actualWorkbook = new XSSFWorkbook(
+			new ByteArrayInputStream(
+				unsyncByteArrayOutputStream.toByteArray()));
+
+		Sheet actualSheet = actualWorkbook.getSheetAt(0);
+
+		Iterator<Row> actualRowIterator = actualSheet.rowIterator();
+
+		Iterator<Row> expectedRowIterator = _getExpectedRowIterator(fieldNames);
 
 		while (expectedRowIterator.hasNext()) {
-			Row expectedRow = expectedRowIterator.next();
 			Row actualRow = actualRowIterator.next();
+			Row expectedRow = expectedRowIterator.next();
 
 			for (int i = 0; i < expectedRow.getLastCellNum(); i++) {
-				Cell expectedCell = expectedRow.getCell(i);
 				Cell actualCell = actualRow.getCell(i);
+
+				Cell expectedCell = expectedRow.getCell(i);
 
 				CellType cellType = expectedCell.getCellType();
 
@@ -76,96 +206,6 @@ public class XLSBatchEngineTaskItemWriterTest
 						expectedCell.getStringCellValue(),
 						actualCell.getStringCellValue());
 				}
-			}
-		}
-	}
-
-	private Iterator<Row> _getActualRowIterator() throws Exception {
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		try (XLSBatchEngineTaskItemWriter xlsBatchEngineTaskItemWriter =
-				new XLSBatchEngineTaskItemWriter(unsyncByteArrayOutputStream)) {
-
-			for (Item[] items : getItemGroups()) {
-				xlsBatchEngineTaskItemWriter.write(Arrays.asList(items));
-			}
-		}
-
-		Workbook actualWorkbook = new XSSFWorkbook(
-			new ByteArrayInputStream(
-				unsyncByteArrayOutputStream.toByteArray()));
-
-		Sheet actualSheet = actualWorkbook.getSheetAt(0);
-
-		return actualSheet.rowIterator();
-	}
-
-	private byte[] _getExpectedContent(List<Item> items) throws IOException {
-		try (Workbook workbook = new XSSFWorkbook()) {
-			Sheet sheet = workbook.createSheet();
-
-			_populateRow(sheet.createRow(0), workbook, (Object[])CELL_NAMES);
-
-			for (int i = 0; i < items.size(); i++) {
-				Item item = items.get(i);
-
-				Map<String, String> name = item.getName();
-
-				_populateRow(
-					sheet.createRow(i + 1), workbook, item.getCreateDate(),
-					item.getDescription(), item.getId(), name.get("en"),
-					name.get("hr"));
-			}
-
-			ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
-
-			workbook.write(byteArrayOutputStream);
-
-			return byteArrayOutputStream.toByteArray();
-		}
-	}
-
-	private Iterator<Row> _getExpectedRowIterator() throws IOException {
-		Workbook expectedWorkbook = new XSSFWorkbook(
-			new ByteArrayInputStream(_getExpectedContent(getItems())));
-
-		Sheet expectedSheet = expectedWorkbook.getSheetAt(0);
-
-		return expectedSheet.rowIterator();
-	}
-
-	private void _populateRow(
-		Row row, Workbook workbook, Object... cellValues) {
-
-		for (int i = 0; i < cellValues.length; i++) {
-			Cell cell = row.createCell(i);
-
-			if (cellValues[i] instanceof Boolean) {
-				cell.setCellValue((Boolean)cellValues[i]);
-			}
-			else if (cellValues[i] instanceof Date) {
-				CellStyle cellStyle = workbook.createCellStyle();
-
-				CreationHelper creationHelper = workbook.getCreationHelper();
-
-				DataFormat dataFormat = creationHelper.createDataFormat();
-
-				cellStyle.setDataFormat(
-					dataFormat.getFormat("yyyy-mm-dd hh:mm:ss"));
-
-				cell.setCellStyle(cellStyle);
-
-				cell.setCellValue((Date)cellValues[i]);
-			}
-			else if (cellValues[i] instanceof Number) {
-				Number value = (Number)cellValues[i];
-
-				cell.setCellValue(value.doubleValue());
-			}
-			else {
-				cell.setCellValue((String)cellValues[i]);
 			}
 		}
 	}

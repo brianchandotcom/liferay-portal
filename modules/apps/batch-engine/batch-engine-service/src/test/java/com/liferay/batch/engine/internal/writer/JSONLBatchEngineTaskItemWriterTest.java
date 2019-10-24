@@ -14,13 +14,13 @@
 
 package com.liferay.batch.engine.internal.writer;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -34,11 +34,41 @@ public class JSONLBatchEngineTaskItemWriterTest
 
 	@Test
 	public void testWriteRows() throws Exception {
+		_testWriteRows(Collections.emptyList());
+	}
+
+	@Test
+	public void testWriteRowsWithDefinedFieldNames() throws Exception {
+		_testWriteRows(Arrays.asList("createDate", "description", "id"));
+		_testWriteRows(
+			Arrays.asList("createDate", "description", "id", "name"));
+		_testWriteRows(Arrays.asList("createDate", "id", "name"));
+	}
+
+	private String _getExpectedContent(
+		List<String> fieldNames, List<Item> items) {
+
+		StringBundler sb = new StringBundler();
+
+		if (fieldNames.isEmpty()) {
+			fieldNames = jsonFieldNames;
+		}
+
+		for (Item item : items) {
+			sb.append(getItemJSONContent(fieldNames, item));
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		return sb.toString();
+	}
+
+	private void _testWriteRows(List<String> fieldNames) throws Exception {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
 		try (JSONLBatchEngineTaskItemWriter jsonlBatchEngineTaskItemWriter =
 				new JSONLBatchEngineTaskItemWriter(
+					new ArrayList<>(fieldMap.keySet()), fieldNames,
 					unsyncByteArrayOutputStream)) {
 
 			for (Item[] items : getItemGroups()) {
@@ -48,20 +78,8 @@ public class JSONLBatchEngineTaskItemWriterTest
 
 		String content = unsyncByteArrayOutputStream.toString();
 
-		Assert.assertEquals(_getContent(getItems()), content);
-	}
-
-	private String _getContent(List<Item> items)
-		throws JsonProcessingException {
-
-		StringBundler sb = new StringBundler();
-
-		for (Item item : items) {
-			sb.append(objectMapper.writeValueAsString(item));
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		return sb.toString();
+		Assert.assertEquals(
+			_getExpectedContent(fieldNames, getItems()), content);
 	}
 
 }

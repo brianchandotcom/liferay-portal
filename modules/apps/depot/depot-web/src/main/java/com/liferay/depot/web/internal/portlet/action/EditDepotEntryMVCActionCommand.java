@@ -76,7 +76,11 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
+
 			SessionErrors.add(actionRequest, pe.getClass(), pe);
+
+			actionResponse.sendRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
 		}
 	}
 

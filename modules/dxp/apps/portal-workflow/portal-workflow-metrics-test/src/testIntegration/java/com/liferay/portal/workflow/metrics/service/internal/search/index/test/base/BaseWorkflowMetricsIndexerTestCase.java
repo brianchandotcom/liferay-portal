@@ -110,12 +110,14 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
 
-			_blogsEntry = _blogsEntryLocalService.addEntry(
+			BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 				TestPropsValues.getUserId(), StringUtil.randomString(),
 				StringUtil.randomString(), new Date(),
 				ServiceContextTestUtil.getServiceContext());
 
-			return _blogsEntry;
+			_blogsEntries.add(blogsEntry);
+
+			return blogsEntry;
 		}
 	}
 
@@ -500,7 +502,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	}
 
 	@DeleteAfterTestRun
-	private BlogsEntry _blogsEntry;
+	private final List<BlogsEntry> _blogsEntries = new ArrayList<>();
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;

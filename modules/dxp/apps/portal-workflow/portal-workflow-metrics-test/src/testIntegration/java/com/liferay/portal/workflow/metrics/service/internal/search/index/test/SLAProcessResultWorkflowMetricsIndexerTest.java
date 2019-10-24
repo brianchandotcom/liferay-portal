@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
@@ -31,6 +32,9 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServ
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 import com.liferay.portal.workflow.metrics.service.internal.search.index.test.base.BaseWorkflowMetricsIndexerTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -62,41 +66,61 @@ public class SLAProcessResultWorkflowMetricsIndexerTest
 			"companyId", kaleoDefinition.getCompanyId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId());
 
-		BlogsEntry blogsEntry = addBlogsEntry();
+		List<BlogsEntry> blogsEntries = ListUtil.fromArray(
+			addBlogsEntry(), addBlogsEntry());
 
-		_workflowMetricsSLADefinition =
+		_workflowMetricsSLADefinitions.add(
 			_workflowMetricsSLADefinitionLocalService.
 				addWorkflowMetricsSLADefinition(
 					StringPool.BLANK, StringPool.BLANK, 5000, "Abc",
 					new String[0], kaleoDefinition.getKaleoDefinitionId(),
 					new String[] {getInitialNodeKey(kaleoDefinition)},
 					new String[] {getTerminalNodeKey(kaleoDefinition)},
-					ServiceContextTestUtil.getServiceContext());
+					ServiceContextTestUtil.getServiceContext()));
+		_workflowMetricsSLADefinitions.add(
+			_workflowMetricsSLADefinitionLocalService.
+				addWorkflowMetricsSLADefinition(
+					StringPool.BLANK, StringPool.BLANK, 5000, "Def",
+					new String[0], kaleoDefinition.getKaleoDefinitionId(),
+					new String[] {getInitialNodeKey(kaleoDefinition)},
+					new String[] {getTerminalNodeKey(kaleoDefinition)},
+					ServiceContextTestUtil.getServiceContext()));
 
-		KaleoInstance kaleoInstance = getKaleoInstance(blogsEntry);
+		for (BlogsEntry blogsEntry : blogsEntries) {
+			KaleoInstance kaleoInstance = getKaleoInstance(blogsEntry);
 
-		completeKaleoTaskInstanceToken(kaleoInstance);
+			completeKaleoTaskInstanceToken(kaleoInstance);
 
-		completeKaleoInstance(kaleoInstance);
+			completeKaleoInstance(kaleoInstance);
 
-		retryAssertCount(
-			"workflow-metrics-instances", "WorkflowMetricsInstanceType",
-			"className", kaleoInstance.getClassName(), "classPK",
-			kaleoInstance.getClassPK(), "companyId",
-			kaleoInstance.getCompanyId(), "completed", true, "instanceId",
-			kaleoInstance.getKaleoInstanceId(), "processId",
-			kaleoDefinition.getKaleoDefinitionId());
+			retryAssertCount(
+				"workflow-metrics-instances", "WorkflowMetricsInstanceType",
+				"className", kaleoInstance.getClassName(), "classPK",
+				kaleoInstance.getClassPK(), "companyId",
+				kaleoInstance.getCompanyId(), "completed", true, "instanceId",
+				kaleoInstance.getKaleoInstanceId(), "processId",
+				kaleoDefinition.getKaleoDefinitionId());
+		}
 
 		_workflowMetricsSLAProcessMessageListener.receive(new Message());
 
-		assertReindex(
-			_slaProcessResultWorkflowMetricsIndexer,
-			new String[] {"workflow-metrics-sla-process-results"},
-			new String[] {"WorkflowMetricsSLAProcessResultType"}, "companyId",
-			kaleoDefinition.getCompanyId(), "instanceId",
-			kaleoInstance.getKaleoInstanceId(), "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "slaDefinitionId",
-			_workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
+		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
+				_workflowMetricsSLADefinitions) {
+
+			for (BlogsEntry blogsEntry : blogsEntries) {
+				KaleoInstance kaleoInstance = getKaleoInstance(blogsEntry);
+
+				assertReindex(
+					_slaProcessResultWorkflowMetricsIndexer,
+					new String[] {"workflow-metrics-sla-process-results"},
+					new String[] {"WorkflowMetricsSLAProcessResultType"},
+					"companyId", kaleoDefinition.getCompanyId(), "instanceId",
+					kaleoInstance.getKaleoInstanceId(), "processId",
+					kaleoDefinition.getKaleoDefinitionId(), "slaDefinitionId",
+					workflowMetricsSLADefinition.
+						getWorkflowMetricsSLADefinitionId());
+			}
+		}
 	}
 
 	@Inject
@@ -108,12 +132,13 @@ public class SLAProcessResultWorkflowMetricsIndexerTest
 	)
 	private Indexer<Object> _slaProcessResultWorkflowMetricsIndexer;
 
-	@DeleteAfterTestRun
-	private WorkflowMetricsSLADefinition _workflowMetricsSLADefinition;
-
 	@Inject
 	private WorkflowMetricsSLADefinitionLocalService
 		_workflowMetricsSLADefinitionLocalService;
+
+	@DeleteAfterTestRun
+	private final List<WorkflowMetricsSLADefinition>
+		_workflowMetricsSLADefinitions = new ArrayList<>();
 
 	@Inject(
 		filter = "(&(objectClass=com.liferay.portal.workflow.metrics.internal.messaging.WorkflowMetricsSLAProcessMessageListener))"

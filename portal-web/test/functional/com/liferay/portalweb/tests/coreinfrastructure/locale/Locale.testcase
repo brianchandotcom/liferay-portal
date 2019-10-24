@@ -24,10 +24,10 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-52008. User's preferred locales should be prioritized over Friendly URLS."
+	@description = "This is a use case for LPS-103369."
 	@ignore = "true"
 	@priority = "4"
-	test PreferredLocalePersistsFriendlyURL {
+	test ViewUserPreferredLocalePersistsFriendlyURL {
 		User.firstLoginPG();
 
 		JSONLayout.addPublicLayout(

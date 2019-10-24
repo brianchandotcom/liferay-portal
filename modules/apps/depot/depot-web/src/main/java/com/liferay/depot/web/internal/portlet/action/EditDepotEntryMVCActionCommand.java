@@ -17,7 +17,6 @@ package com.liferay.depot.web.internal.portlet.action;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
-import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.util.PropertiesParamUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.RenderURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -78,18 +76,7 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
-
 			SessionErrors.add(actionRequest, pe.getClass(), pe);
-
-			RenderURL editDepotEntryRenderURL =
-				DepotEntryURLUtil.getEditDepotEntryRenderURL(
-					depotEntryId,
-					ParamUtil.getString(actionRequest, "redirect"),
-					_portal.getLiferayPortletResponse(actionResponse));
-
-			sendRedirect(
-				actionRequest, actionResponse,
-				editDepotEntryRenderURL.toString());
 		}
 	}
 

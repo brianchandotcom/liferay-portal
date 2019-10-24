@@ -34,8 +34,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -257,23 +255,6 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		return null;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getAllDescendantKBArticles(long, long, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<KBArticle> getAllDescendantKBArticles(
-			long resourcePrimKey, int status,
-			OrderByComparator<KBArticle> orderByComparator)
-		throws PortalException {
-
-		return getAllDescendantKBArticles(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID, resourcePrimKey, status,
-			orderByComparator);
-	}
-
 	@Override
 	public List<KBArticle> getAllDescendantKBArticles(
 			long groupId, long resourcePrimKey, int status,
@@ -360,33 +341,6 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		return getAllDescendantKBArticles(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, resourcePrimKey, status,
 			orderByComparator, true);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getKBArticleAndAllDescendantKBArticles(long, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<KBArticle> getKBArticleAndAllDescendants(
-		long groupId, long resourcePrimKey, int status,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		try {
-			return getKBArticleAndAllDescendantKBArticles(
-				resourcePrimKey, status, orderByComparator);
-		}
-		catch (PortalException pe) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return Collections.emptyList();
-		}
 	}
 
 	@Override
@@ -702,33 +656,6 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		return kbArticlePersistence.filterCountByG_S_S(groupId, array, status);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getKBArticles(long,
-	 *             long, int, int, int, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<KBArticle> getSiblingKBArticles(
-		long groupId, long parentResourcePrimKey, int status, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return getKBArticles(
-			groupId, parentResourcePrimKey, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getKBArticlesCount(long, long, int)}
-	 */
-	@Deprecated
-	@Override
-	public int getSiblingKBArticlesCount(
-		long groupId, long parentResourcePrimKey, int status) {
-
-		return getKBArticlesCount(groupId, parentResourcePrimKey, status);
-	}
-
 	@Override
 	public String[] getTempAttachmentNames(long groupId, String tempFolderName)
 		throws PortalException {
@@ -985,23 +912,6 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		return _rssExporter.export(syndFeed);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getAllDescendantKBArticles(long, long, int,
-	 *             OrderByComparator, boolean)}
-	 */
-	@Deprecated
-	protected List<KBArticle> getAllDescendantKBArticles(
-			long resourcePrimKey, int status,
-			OrderByComparator<KBArticle> orderByComparator,
-			boolean includeParentArticle)
-		throws PortalException {
-
-		return getAllDescendantKBArticles(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID, resourcePrimKey, status,
-			orderByComparator, includeParentArticle);
-	}
-
 	protected List<KBArticle> getAllDescendantKBArticles(
 			long groupId, long resourcePrimKey, int status,
 			OrderByComparator<KBArticle> orderByComparator,
@@ -1080,9 +990,6 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	private static final int _INTERVAL = 200;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		KBArticleServiceImpl.class);
 
 	@Reference(
 		target = "(resource.name=" + KBConstants.RESOURCE_NAME_ADMIN + ")"

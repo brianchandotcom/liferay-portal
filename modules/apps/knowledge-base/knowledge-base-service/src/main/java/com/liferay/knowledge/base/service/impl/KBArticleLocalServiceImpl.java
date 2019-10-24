@@ -260,23 +260,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbArticle.getResourcePrimKey(), modelPermissions);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addKBArticleResources(KBArticle, ModelPermissions)}
-	 */
-	@Deprecated
-	@Override
-	public void addKBArticleResources(
-			KBArticle kbArticle, String[] groupPermissions,
-			String[] guestPermissions)
-		throws PortalException {
-
-		resourceLocalService.addModelResources(
-			kbArticle.getCompanyId(), kbArticle.getGroupId(),
-			kbArticle.getUserId(), KBArticle.class.getName(),
-			kbArticle.getResourcePrimKey(), groupPermissions, guestPermissions);
-	}
-
 	@Override
 	public void addKBArticleResources(
 			long kbArticleId, boolean addGroupPermissions,
@@ -288,23 +271,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		addKBArticleResources(
 			kbArticle, addGroupPermissions, addGuestPermissions);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addKBArticleResources(KBArticle, ModelPermissions)}
-	 */
-	@Deprecated
-	@Override
-	public void addKBArticleResources(
-			long kbArticleId, String[] groupPermissions,
-			String[] guestPermissions)
-		throws PortalException {
-
-		KBArticle kbArticle = kbArticlePersistence.findByPrimaryKey(
-			kbArticleId);
-
-		addKBArticleResources(kbArticle, groupPermissions, guestPermissions);
 	}
 
 	@Override
@@ -661,21 +627,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			resourcePrimKey, status, orderByComparator, true);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getKBArticleAndAllDescendantKBArticles(long, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<KBArticle> getKBArticleAndAllDescendants(
-		long resourcePrimKey, int status,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return getKBArticleAndAllDescendantKBArticles(
-			resourcePrimKey, status, orderByComparator);
-	}
-
 	@Override
 	public KBArticle getKBArticleByUrlTitle(
 			long groupId, long kbFolderId, String urlTitle)
@@ -925,33 +876,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		return kbArticlePersistence.countByG_S_S(groupId, array, status);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getKBArticles(long,
-	 *             long, int, int, int, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<KBArticle> getSiblingKBArticles(
-		long groupId, long parentResourcePrimKey, int status, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return getKBArticles(
-			groupId, parentResourcePrimKey, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getKBArticlesCount(long, long, int)}
-	 */
-	@Deprecated
-	@Override
-	public int getSiblingKBArticlesCount(
-		long groupId, long parentResourcePrimKey, int status) {
-
-		return getKBArticlesCount(groupId, parentResourcePrimKey, status);
 	}
 
 	@Override

@@ -60,6 +60,22 @@ definition {
 			PortletEntry.inputDescription(description = "${dmDocumentDescription}");
 		}
 
+		if (isSet(textField)) {
+			var key_fieldName = "Text";
+
+			Type(
+				locator1 = "TextInput#DDM",
+				value1 = "${textField}");
+		}
+
+		if (isSet(numberField)) {
+			var key_fieldName = "Number";
+
+			Type(
+				locator1 = "TextInput#DDM",
+				value1 = "${numberField}");
+		}
+
 		if (isSet(validationError)) {
 			Button.clickPublish();
 

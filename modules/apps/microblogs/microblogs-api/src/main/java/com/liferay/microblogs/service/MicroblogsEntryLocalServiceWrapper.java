@@ -296,47 +296,6 @@ public class MicroblogsEntryLocalServiceWrapper
 		return _microblogsEntryLocalService.getMicroblogsEntries(start, end);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry>
-		getMicroblogsEntries(
-			long creatorClassNameId, int type, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator obc) {
-
-		return _microblogsEntryLocalService.getMicroblogsEntries(
-			creatorClassNameId, type, start, end, obc);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry>
-		getMicroblogsEntries(
-			long creatorClassNameId, long creatorClassPK, int start, int end) {
-
-		return _microblogsEntryLocalService.getMicroblogsEntries(
-			creatorClassNameId, creatorClassPK, start, end);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry>
-		getMicroblogsEntries(
-			long creatorClassNameId, long creatorClassPK, int type, int start,
-			int end) {
-
-		return _microblogsEntryLocalService.getMicroblogsEntries(
-			creatorClassNameId, creatorClassPK, type, start, end);
-	}
-
 	@Override
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry>
 		getMicroblogsEntries(
@@ -379,44 +338,6 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry>
-		getMicroblogsEntries(
-			long creatorClassNameId, long creatorClassPK, String assetTagName,
-			boolean andOperator, int start, int end) {
-
-		return _microblogsEntryLocalService.getMicroblogsEntries(
-			creatorClassNameId, creatorClassPK, assetTagName, andOperator,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry>
-		getMicroblogsEntries(
-			long companyId, long creatorClassNameId, String assetTagName,
-			int start, int end) {
-
-		return _microblogsEntryLocalService.getMicroblogsEntries(
-			companyId, creatorClassNameId, assetTagName, start, end);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry>
-		getMicroblogsEntries(
-			long creatorClassNameId, String assetTagName, int start, int end) {
-
-		return _microblogsEntryLocalService.getMicroblogsEntries(
-			creatorClassNameId, assetTagName, start, end);
-	}
-
-	/**
 	 * Returns the number of microblogs entries.
 	 *
 	 * @return the number of microblogs entries
@@ -424,30 +345,6 @@ public class MicroblogsEntryLocalServiceWrapper
 	@Override
 	public int getMicroblogsEntriesCount() {
 		return _microblogsEntryLocalService.getMicroblogsEntriesCount();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public int getMicroblogsEntriesCount(
-		long creatorClassNameId, long creatorClassPK) {
-
-		return _microblogsEntryLocalService.getMicroblogsEntriesCount(
-			creatorClassNameId, creatorClassPK);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public int getMicroblogsEntriesCount(
-		long creatorClassNameId, long creatorClassPK, int type) {
-
-		return _microblogsEntryLocalService.getMicroblogsEntriesCount(
-			creatorClassNameId, creatorClassPK, type);
 	}
 
 	@Override
@@ -483,31 +380,6 @@ public class MicroblogsEntryLocalServiceWrapper
 
 		return _microblogsEntryLocalService.getMicroblogsEntriesCount(
 			companyId, creatorClassNameId, assetTagName);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public int getMicroblogsEntriesCount(
-		long creatorClassNameId, long creatorClassPK, String assetTagName,
-		boolean andOperator) {
-
-		return _microblogsEntryLocalService.getMicroblogsEntriesCount(
-			creatorClassNameId, creatorClassPK, assetTagName, andOperator);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public int getMicroblogsEntriesCount(
-		long creatorClassNameId, String assetTagName) {
-
-		return _microblogsEntryLocalService.getMicroblogsEntriesCount(
-			creatorClassNameId, assetTagName);
 	}
 
 	/**

@@ -222,32 +222,6 @@ public interface MicroblogsEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getMicroblogsEntries(int start, int end);
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getMicroblogsEntries(
-		long creatorClassNameId, int type, int start, int end,
-		OrderByComparator obc);
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getMicroblogsEntries(
-		long creatorClassNameId, long creatorClassPK, int start, int end);
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getMicroblogsEntries(
-		long creatorClassNameId, long creatorClassPK, int type, int start,
-		int end);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getMicroblogsEntries(
 		long companyId, long creatorClassNameId, int type, int start, int end,
@@ -269,50 +243,12 @@ public interface MicroblogsEntryLocalService
 		String assetTagName, boolean andOperator, int start, int end);
 
 	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getMicroblogsEntries(
-		long creatorClassNameId, long creatorClassPK, String assetTagName,
-		boolean andOperator, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getMicroblogsEntries(
-		long companyId, long creatorClassNameId, String assetTagName, int start,
-		int end);
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getMicroblogsEntries(
-		long creatorClassNameId, String assetTagName, int start, int end);
-
-	/**
 	 * Returns the number of microblogs entries.
 	 *
 	 * @return the number of microblogs entries
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMicroblogsEntriesCount();
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMicroblogsEntriesCount(
-		long creatorClassNameId, long creatorClassPK);
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMicroblogsEntriesCount(
-		long creatorClassNameId, long creatorClassPK, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMicroblogsEntriesCount(
@@ -330,23 +266,6 @@ public interface MicroblogsEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMicroblogsEntriesCount(
 		long companyId, long creatorClassNameId, String assetTagName);
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMicroblogsEntriesCount(
-		long creatorClassNameId, long creatorClassPK, String assetTagName,
-		boolean andOperator);
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMicroblogsEntriesCount(
-		long creatorClassNameId, String assetTagName);
 
 	/**
 	 * Returns the microblogs entry with the primary key.

@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -35,12 +36,86 @@ public class CSVBatchEngineTaskItemWriterTest
 
 	@Test
 	public void testWriteRows() throws Exception {
+		_testWriteRows(Collections.emptyList());
+	}
+
+	@Test
+	public void testWriteRowsWithDefinedFieldNames() throws Exception {
+		_testWriteRows(Arrays.asList("createDate", "description", "id"));
+		_testWriteRows(
+			Arrays.asList(
+				"createDate", "description", "id", "name_en", "name_hr"));
+		_testWriteRows(Arrays.asList("createDate", "id", "name_en"));
+	}
+
+	private String _formatValue(Object value) {
+		if (value == null) {
+			return StringPool.BLANK;
+		}
+
+		if (value instanceof Date) {
+			return dateFormat.format(value);
+		}
+
+		return value.toString();
+	}
+
+	private String _getExpectedContent(
+		List<String> fieldNames, List<Item> items) {
+
+		if (fieldNames.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(StringUtil.merge(fieldNames, StringPool.COMMA));
+		sb.append(StringPool.NEW_LINE);
+
+		for (Item item : items) {
+			if (fieldNames.contains("createDate")) {
+				sb.append(_formatValue(item.getCreateDate()));
+				sb.append(StringPool.COMMA);
+			}
+
+			if (fieldNames.contains("description")) {
+				sb.append(_formatValue(item.getDescription()));
+				sb.append(StringPool.COMMA);
+			}
+
+			if (fieldNames.contains("id")) {
+				sb.append(_formatValue(item.getId()));
+				sb.append(StringPool.COMMA);
+			}
+
+			Map<String, String> name = item.getName();
+
+			if (fieldNames.contains("name_en")) {
+				sb.append(_formatValue(name.get("en")));
+				sb.append(StringPool.COMMA);
+			}
+
+			if (fieldNames.contains("name_hr")) {
+				sb.append(_formatValue(name.get("hr")));
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		return sb.toString();
+	}
+
+	private void _testWriteRows(List<String> fieldNames) throws Exception {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
 		try (CSVBatchEngineTaskItemWriter csvBatchEngineTaskItemWriter =
 				new CSVBatchEngineTaskItemWriter(
-					StringPool.COMMA, unsyncByteArrayOutputStream)) {
+					StringPool.COMMA, fieldMap, fieldNames,
+					unsyncByteArrayOutputStream)) {
 
 			for (Item[] items : getItemGroups()) {
 				csvBatchEngineTaskItemWriter.write(Arrays.asList(items));
@@ -49,43 +124,8 @@ public class CSVBatchEngineTaskItemWriterTest
 
 		String content = unsyncByteArrayOutputStream.toString();
 
-		Assert.assertEquals(_getContent(StringPool.COMMA, getItems()), content);
-	}
-
-	private Object _formatValue(Object value) {
-		if (value == null) {
-			return "";
-		}
-
-		if (value instanceof Date) {
-			return dateFormat.format(value);
-		}
-
-		return value;
-	}
-
-	private String _getContent(String delimiter, List<Item> items) {
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringUtil.merge(CELL_NAMES, delimiter));
-		sb.append(StringPool.NEW_LINE);
-
-		for (Item item : items) {
-			Map<String, String> name = item.getName();
-
-			sb.append(
-				StringUtil.merge(
-					Arrays.asList(
-						_formatValue(item.getCreateDate()),
-						_formatValue(item.getDescription()), item.getId(),
-						_formatValue(name.get("en")),
-						_formatValue(name.get("hr"))),
-					delimiter));
-
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		return sb.toString();
+		Assert.assertEquals(
+			_getExpectedContent(fieldNames, getItems()), content);
 	}
 
 }

@@ -14,13 +14,18 @@
 
 package com.liferay.batch.engine.internal.writer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.annotation.JsonFilter;
+
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+
+import java.lang.reflect.Field;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -53,6 +58,7 @@ public abstract class BaseBatchEngineTaskItemWriterTestCase {
 
 	}
 
+	@JsonFilter("Liferay.Vulcan")
 	public static class Item extends BaseItem {
 
 		public Date getCreateDate() {
@@ -130,6 +136,55 @@ public abstract class BaseBatchEngineTaskItemWriterTestCase {
 		return itemBatches;
 	}
 
+	protected String getItemJSONContent(List<String> fieldNames, Item item) {
+		StringBundler sb = new StringBundler();
+
+		sb.append("{");
+
+		if (fieldNames.contains("createDate")) {
+			sb.append("\"createDate\":");
+			sb.append(_formatJSONValue(item.getCreateDate()));
+			sb.append(StringPool.COMMA);
+		}
+
+		if (fieldNames.contains("description")) {
+			sb.append("\"description\":");
+			sb.append(_formatJSONValue(item.getDescription()));
+			sb.append(StringPool.COMMA);
+		}
+
+		if (fieldNames.contains("id")) {
+			sb.append("\"id\":");
+			sb.append(_formatJSONValue(item.getId()));
+			sb.append(StringPool.COMMA);
+		}
+
+		if (fieldNames.contains("name")) {
+			Map<String, String> name = item.getName();
+
+			sb.append("\"name\":{");
+
+			for (Map.Entry<String, String> entry : name.entrySet()) {
+				sb.append("\"");
+				sb.append(entry.getKey());
+				sb.append("\":");
+				sb.append(_formatJSONValue(entry.getValue()));
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			sb.append("}");
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	protected List<Item> getItems() {
 		List<Item> items = new ArrayList<>();
 
@@ -140,18 +195,31 @@ public abstract class BaseBatchEngineTaskItemWriterTestCase {
 		return items;
 	}
 
-	protected static final String[] CELL_NAMES = {
-		"createDate", "description", "id", "name_en", "name_hr"
-	};
-
+	protected static final List<String> columnFieldNames = Arrays.asList(
+		"createDate", "description", "id", "name_en", "name_hr");
 	protected static final DateFormat dateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-	protected static final ObjectMapper objectMapper = new ObjectMapper() {
-		{
-			disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		}
-	};
+	protected static Map<String, Field> fieldMap = ItemClassIndexUtil.index(
+		Item.class);
+	protected static final List<String> jsonFieldNames = Arrays.asList(
+		"createDate", "description", "id", "name");
 
-	private Date _createDate;
+	private String _formatJSONValue(Object value) {
+		if (value == null) {
+			return "null";
+		}
+
+		if (value instanceof Date) {
+			return "\"" + dateFormat.format(value) + "\"";
+		}
+
+		if (value instanceof String) {
+			return "\"" + value + "\"";
+		}
+
+		return value.toString();
+	}
+
+	private static Date _createDate;
 
 }

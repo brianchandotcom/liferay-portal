@@ -26,8 +26,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
-import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
-import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
+import com.liferay.portal.search.aggregation.bucket.BucketAggregationResult;
+import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
+import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregationResult;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -50,6 +51,7 @@ import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatu
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -117,7 +119,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		Map<Long, LocalDateTime> missingCreateLocalDateTimes =
 			_getMissingCreateLocalDateTimes(
 				workflowMetricsSLADefinition.getCompanyId(),
-				workflowMetricsSLADefinition.getProcessId());
+				workflowMetricsSLADefinition.getProcessId(),
+				workflowMetricsSLADefinitionId);
 
 		missingCreateLocalDateTimes.putAll(createLocalDateTimes);
 
@@ -144,28 +147,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private BooleanQuery _createBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+	private BooleanQuery _createBooleanQuery(
+		long companyId, long processId, long workflowMetricsSLADefinitionId) {
 
-		BooleanQuery instancesBooleanQuery = _queries.booleanQuery();
-
-		instancesBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-instances"));
-		instancesBooleanQuery.addMustQueryClauses(
-			_queries.exists("instanceId"));
-
-		BooleanQuery slaProcessResultsBooleanQuery = _queries.booleanQuery();
-
-		slaProcessResultsBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-sla-process-results"));
-		slaProcessResultsBooleanQuery.addMustNotQueryClauses(
-			_queries.exists("instanceId"));
-
-		return booleanQuery.addShouldQueryClauses(
-			instancesBooleanQuery, slaProcessResultsBooleanQuery);
-	}
-
-	private BooleanQuery _createBooleanQuery(long companyId, long processId) {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		BooleanQuery instancesBooleanQuery = _queries.booleanQuery();
@@ -184,7 +168,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		slaProcessResultsBooleanQuery.addMustQueryClauses(
 			_queries.term("companyId", companyId),
 			_queries.term("deleted", false),
-			_queries.term("processId", processId));
+			_queries.term("processId", processId),
+			_queries.term("slaDefinitionId", workflowMetricsSLADefinitionId));
 
 		return booleanQuery.addShouldQueryClauses(
 			instancesBooleanQuery, slaProcessResultsBooleanQuery);
@@ -266,22 +251,25 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private Map<Long, LocalDateTime> _getMissingCreateLocalDateTimes(
-		long companyId, long processId) {
+		long companyId, long processId, long workflowMetricsSLADefinitionId) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		FilterAggregation filterAggregation = _aggregations.filter(
-			"instanceId", _createBooleanQuery());
+		TermsAggregation termsAggregation = _aggregations.terms(
+			"instanceId", "instanceId");
 
-		filterAggregation.addChildAggregation(_aggregations.topHits("topHits"));
+		termsAggregation.addChildAggregation(_aggregations.topHits("topHits"));
+		termsAggregation.setSize(10000);
 
-		searchSearchRequest.addAggregation(filterAggregation);
+		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",
 			"workflow-metrics-sla-process-results");
 
-		searchSearchRequest.setQuery(_createBooleanQuery(companyId, processId));
+		searchSearchRequest.setQuery(
+			_createBooleanQuery(
+				companyId, processId, workflowMetricsSLADefinitionId));
 
 		return Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
@@ -289,11 +277,17 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			SearchSearchResponse::getAggregationResultsMap
 		).map(
 			aggregationResultsMap ->
-				(FilterAggregationResult)aggregationResultsMap.get("instanceId")
+				(TermsAggregationResult)aggregationResultsMap.get("instanceId")
 		).map(
-			filterAggregationResult ->
-				(TopHitsAggregationResult)
-					filterAggregationResult.getChildAggregationResult("topHits")
+			BucketAggregationResult::getBuckets
+		).flatMap(
+			Collection::stream
+		).filter(
+			bucket -> bucket.getDocCount() == 1
+		).map(
+			bucket ->
+				(TopHitsAggregationResult)bucket.getChildAggregationResult(
+					"topHits")
 		).map(
 			TopHitsAggregationResult::getSearchHits
 		).map(

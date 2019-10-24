@@ -161,7 +161,16 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		User.viewUserLocale(dropdownItem = "我的个人资料");
+		task ("Assert site displays in user's locale by asserting user dropdown menu item") {
+			UserBar.gotoDropdown();
+
+			var dropdownItem = "我的个人资料";
+			var key_dropdownItem = "${dropdownItem}";
+
+			AssertTextEquals(
+				locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM",
+				value1 = "${dropdownItem}");
+		}
 	}
 
 	@priority = "4"
@@ -182,7 +191,11 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Test Site Name");
 
-		User.viewUserLocale(localizedSignIn = "Acceder");
+		task ("Assert site displays in default locale for guest by asserting sign in text") {
+			AssertTextEquals(
+				locator1 = "UserBar#USER_SIGN_IN",
+				value1 = "Acceder");
+		}
 	}
 
 }

@@ -40,4 +40,7 @@ public interface AnalyticsConfiguration {
 	@Meta.AD(name = "siteReportingGrouping", required = false)
 	public String siteReportingGrouping();
 
+	@Meta.AD(name = "syncAllContacts", required = false)
+	public boolean syncAllContacts();
+
 }

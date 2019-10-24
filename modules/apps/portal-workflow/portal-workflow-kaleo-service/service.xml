@@ -103,7 +103,7 @@
 			<finder-column name="kaleoNodeId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="KaleoDefinition" remote-service="true">
+	<entity local-service="true" name="KaleoDefinition" remote-service="false">
 
 		<!-- PK fields -->
 

@@ -30,12 +30,14 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,14 +87,9 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DepotEntry depotEntry = getDepotEntry(depotEntryId);
+ 		DepotEntry depotEntry = getDepotEntry(depotEntryId);
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
-
-		_validateNameMap(
-			nameMap,
-			LocaleUtil.fromLanguageId(
-				formTypeSettingsProperties.getProperty("languageId")));
 
 	    UnicodeProperties currentTypeSettingsProperties =
 			group.getTypeSettingsProperties();
@@ -117,7 +114,14 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			currentTypeSettingsProperties, depotEntry,
 			formTypeSettingsProperties);
 
-		currentTypeSettingsProperties.putAll(formTypeSettingsProperties);
+		if (formTypeSettingsProperties.containsKey(PropsKeys.LOCALES)){
+
+			_fillEmptyLanguajes(
+				nameMap,
+				LocaleUtil.fromLanguageId(
+					formTypeSettingsProperties.getProperty("languageId")));
+			currentTypeSettingsProperties.putAll(formTypeSettingsProperties);
+		}
 
 		group = _groupLocalService.updateGroup(
 			depotEntry.getGroupId(), group.getParentGroupId(), nameMap,
@@ -126,11 +130,21 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			group.isInheritContent(), group.isActive(), serviceContext);
 
 		_groupLocalService.updateGroup(
-			group.getGroupId(), formTypeSettingsProperties.toString());
+			group.getGroupId(), currentTypeSettingsProperties.toString());
 
 		return depotEntryPersistence.update(depotEntry);
 	}
 
+	private void _fillEmptyLanguajes(
+		Map<Locale, String> nameMap, Locale defaultLocale) {
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			defaultLocale, DepotEntryLocalServiceImpl.class);
+
+		if (Validator.isNull(nameMap.get(defaultLocale))) {
+			nameMap.put(defaultLocale, _language.get(resourceBundle, "unnamed-repository"));
+		}
+	}
 	private void _validateNameMap(
 			Map<Locale, String> nameMap, Locale defaultLocale)
 		throws DepotEntryNameException {

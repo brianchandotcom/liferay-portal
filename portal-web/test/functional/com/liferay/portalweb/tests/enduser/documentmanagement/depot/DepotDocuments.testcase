@@ -29,10 +29,7 @@ definition {
 	@description = "This ensures that a folder can be deleted in a depot."
 	@priority = "5"
 	test DeleteFolder {
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
+		DepotNavigator.openDepotAdmin();
 
 		Depot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -52,10 +49,7 @@ definition {
 	@description = "This ensures that a folder can be edited in a depot."
 	@priority = "5"
 	test EditFolder {
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
+		DepotNavigator.openDepotAdmin();
 
 		Depot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -67,10 +61,7 @@ definition {
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
@@ -104,10 +95,7 @@ definition {
 
 		LAR.exportPortlet(larFileName = "DM_Test.lar");
 
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
+		DepotNavigator.openDepotAdmin();
 
 		Depot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -119,10 +107,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
@@ -132,10 +117,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
@@ -147,19 +129,13 @@ definition {
 	@description = "This ensures that a document can be moved to a folder in a depot."
 	@priority = "5"
 	test MoveDocumentToFolder {
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
+		DepotNavigator.openDepotAdmin();
 
 		Depot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
@@ -168,10 +144,7 @@ definition {
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "DM Document Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
@@ -179,10 +152,7 @@ definition {
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 

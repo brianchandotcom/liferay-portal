@@ -18,7 +18,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -72,10 +71,9 @@ public class AccountEntryLocalServiceTest {
 
 		// Group classNameId is for AccountEntry
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			AccountEntry.class);
-
-		Assert.assertEquals(classNameId, group.getClassNameId());
+		Assert.assertEquals(
+			_classNameLocalService.getClassNameId(AccountEntry.class),
+			group.getClassNameId());
 
 		// Group classPK is the accountEntryId
 
@@ -85,12 +83,8 @@ public class AccountEntryLocalServiceTest {
 		// AccountEntry group groupId is the same as the one returned by
 		// getAccountEntryGroupId
 
-		long accountEntryGroupId = accountEntry.getAccountEntryGroupId();
-
-		Assert.assertNotEquals(
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, accountEntryGroupId);
-
-		Assert.assertEquals(group.getGroupId(), accountEntryGroupId);
+		Assert.assertEquals(
+			group.getGroupId(), accountEntry.getAccountEntryGroupId());
 	}
 
 	@Test

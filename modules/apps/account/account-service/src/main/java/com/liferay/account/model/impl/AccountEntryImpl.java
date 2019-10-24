@@ -28,21 +28,16 @@ public class AccountEntryImpl extends AccountEntryBaseImpl {
 	}
 
 	public Group getAccountEntryGroup() {
-		return _getAccountEntryGroup();
+		return GroupLocalServiceUtil.fetchGroup(
+			getCompanyId(),
+			ClassNameLocalServiceUtil.getClassNameId(AccountEntry.class),
+			getAccountEntryId());
 	}
 
 	public long getAccountEntryGroupId() {
-		Group group = _getAccountEntryGroup();
+		Group group = getAccountEntryGroup();
 
 		return group.getGroupId();
 	}
-
-	private Group _getAccountEntryGroup() {
-		return GroupLocalServiceUtil.fetchGroup(
-			getCompanyId(), _accountEntryClassNameId, getAccountEntryId());
-	}
-
-	private long _accountEntryClassNameId =
-		ClassNameLocalServiceUtil.getClassNameId(AccountEntry.class);
 
 }

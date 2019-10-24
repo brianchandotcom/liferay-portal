@@ -53,7 +53,9 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 				<aui:col width="<%= 50 %>">
 					<aui:input label="screen-name" name="screenName" required="<%= true %>" type="text" />
 
-					<aui:input label="email-address" name="emailAddress" required="<%= true %>" type="text" />
+					<aui:input label="email-address" name="emailAddress" required="<%= true %>" type="text">
+						<aui:validator name="email" />
+					</aui:input>
 
 					<liferay-ui:user-name-fields />
 				</aui:col>

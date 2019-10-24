@@ -197,7 +197,7 @@ public class WorkflowLogSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(workflowLog.getType()));
+			sb.append(workflowLog.getType());
 
 			sb.append("\"");
 		}
@@ -397,7 +397,8 @@ public class WorkflowLogSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					workflowLog.setType((String)jsonParserFieldValue);
+					workflowLog.setType(
+						WorkflowLog.Type.create((String)jsonParserFieldValue));
 				}
 			}
 			else {

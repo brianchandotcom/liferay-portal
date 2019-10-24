@@ -68,7 +68,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instance/{workflowInstanceId}/workflow-tasks'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
@@ -79,7 +79,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/workflow-instance/{workflowInstanceId}/workflow-tasks")
+	@Path("/workflow-instances/{workflowInstanceId}/workflow-tasks")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(

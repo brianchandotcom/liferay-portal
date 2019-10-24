@@ -304,7 +304,7 @@ public interface WorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-instance/{workflowInstanceId}/workflow-tasks",
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks",
 				workflowInstanceId);
 
 			httpInvoker.userNameAndPassword(

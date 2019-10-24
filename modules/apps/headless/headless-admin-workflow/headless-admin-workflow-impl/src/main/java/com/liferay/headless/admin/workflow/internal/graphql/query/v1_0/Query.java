@@ -129,6 +129,27 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowInstanceWorkflowLogs(page: ___, pageSize: ___, types: ___, workflowInstanceId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WorkflowLogPage workflowInstanceWorkflowLogs(
+			@GraphQLName("workflowInstanceId") Long workflowInstanceId,
+			@GraphQLName("types") String[] types,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowLogResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowLogResource -> new WorkflowLogPage(
+				workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+					workflowInstanceId, types, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowLog(workflowLogId: ___){auditPerson, commentLog, dateCreated, id, person, previousPerson, previousRole, previousState, role, state, taskId, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -146,11 +167,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTaskWorkflowLogs(page: ___, pageSize: ___, workflowTaskId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTaskWorkflowLogs(page: ___, pageSize: ___, types: ___, workflowTaskId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public WorkflowLogPage workflowTaskWorkflowLogs(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
+			@GraphQLName("types") String[] types,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -160,7 +182,7 @@ public class Query {
 			this::_populateResourceContext,
 			workflowLogResource -> new WorkflowLogPage(
 				workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-					workflowTaskId, Pagination.of(page, pageSize))));
+					workflowTaskId, types, Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -457,6 +479,7 @@ public class Query {
 
 		@GraphQLField
 		public WorkflowLogPage workflowLogs(
+				@GraphQLName("types") String[] types,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 			throws Exception {
@@ -466,7 +489,8 @@ public class Query {
 				Query.this::_populateResourceContext,
 				workflowLogResource -> new WorkflowLogPage(
 					workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-						_workflowTask.getId(), Pagination.of(page, pageSize))));
+						_workflowTask.getId(), types,
+						Pagination.of(page, pageSize))));
 		}
 
 		private WorkflowTask _workflowTask;

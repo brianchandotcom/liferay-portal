@@ -42,10 +42,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WorkflowLogResource {
 
+	public Page<WorkflowLog> getWorkflowInstanceWorkflowLogsPage(
+			Long workflowInstanceId, String[] types, Pagination pagination)
+		throws Exception;
+
 	public WorkflowLog getWorkflowLog(Long workflowLogId) throws Exception;
 
 	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
-			Long workflowTaskId, Pagination pagination)
+			Long workflowTaskId, String[] types, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

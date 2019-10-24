@@ -39,6 +39,15 @@ public interface WorkflowLogResource {
 		return new Builder();
 	}
 
+	public Page<WorkflowLog> getWorkflowInstanceWorkflowLogsPage(
+			Long workflowInstanceId, String[] types, Pagination pagination)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getWorkflowInstanceWorkflowLogsPageHttpResponse(
+				Long workflowInstanceId, String[] types, Pagination pagination)
+		throws Exception;
+
 	public WorkflowLog getWorkflowLog(Long workflowLogId) throws Exception;
 
 	public HttpInvoker.HttpResponse getWorkflowLogHttpResponse(
@@ -46,11 +55,11 @@ public interface WorkflowLogResource {
 		throws Exception;
 
 	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
-			Long workflowTaskId, Pagination pagination)
+			Long workflowTaskId, String[] types, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getWorkflowTaskWorkflowLogsPageHttpResponse(
-			Long workflowTaskId, Pagination pagination)
+			Long workflowTaskId, String[] types, Pagination pagination)
 		throws Exception;
 
 	public static class Builder {
@@ -107,6 +116,77 @@ public interface WorkflowLogResource {
 	}
 
 	public static class WorkflowLogResourceImpl implements WorkflowLogResource {
+
+		public Page<WorkflowLog> getWorkflowInstanceWorkflowLogsPage(
+				Long workflowInstanceId, String[] types, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getWorkflowInstanceWorkflowLogsPageHttpResponse(
+					workflowInstanceId, types, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, WorkflowLogSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getWorkflowInstanceWorkflowLogsPageHttpResponse(
+					Long workflowInstanceId, String[] types,
+					Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (types != null) {
+				for (int i = 0; i < types.length; i++) {
+					httpInvoker.parameter("types", String.valueOf(types[i]));
+				}
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-logs",
+				workflowInstanceId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
 
 		public WorkflowLog getWorkflowLog(Long workflowLogId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = getWorkflowLogHttpResponse(
@@ -170,12 +250,12 @@ public interface WorkflowLogResource {
 		}
 
 		public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
-				Long workflowTaskId, Pagination pagination)
+				Long workflowTaskId, String[] types, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getWorkflowTaskWorkflowLogsPageHttpResponse(
-					workflowTaskId, pagination);
+					workflowTaskId, types, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -190,7 +270,7 @@ public interface WorkflowLogResource {
 
 		public HttpInvoker.HttpResponse
 				getWorkflowTaskWorkflowLogsPageHttpResponse(
-					Long workflowTaskId, Pagination pagination)
+					Long workflowTaskId, String[] types, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -213,6 +293,12 @@ public interface WorkflowLogResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (types != null) {
+				for (int i = 0; i < types.length; i++) {
+					httpInvoker.parameter("types", String.valueOf(types[i]));
+				}
+			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(

@@ -44,6 +44,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -55,6 +56,34 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseWorkflowLogResourceImpl
 	implements WorkflowLogResource {
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-logs'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId"),
+			@Parameter(in = ParameterIn.QUERY, name = "types"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/workflow-instances/{workflowInstanceId}/workflow-logs")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "WorkflowLog")})
+	public Page<WorkflowLog> getWorkflowInstanceWorkflowLogsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("workflowInstanceId")
+				Long workflowInstanceId,
+			@Parameter(hidden = true) @QueryParam("types") String[] types,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
 
 	/**
 	 * Invoke this method with the command line:
@@ -87,6 +116,7 @@ public abstract class BaseWorkflowLogResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "workflowTaskId"),
+			@Parameter(in = ParameterIn.QUERY, name = "types"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -97,6 +127,7 @@ public abstract class BaseWorkflowLogResourceImpl
 	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("workflowTaskId") Long
 				workflowTaskId,
+			@Parameter(hidden = true) @QueryParam("types") String[] types,
 			@Context Pagination pagination)
 		throws Exception {
 

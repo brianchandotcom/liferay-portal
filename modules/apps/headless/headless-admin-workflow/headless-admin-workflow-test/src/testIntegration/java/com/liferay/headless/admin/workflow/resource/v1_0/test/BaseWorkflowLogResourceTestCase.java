@@ -180,7 +180,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		workflowLog.setCommentLog(regex);
 		workflowLog.setPreviousState(regex);
 		workflowLog.setState(regex);
-		workflowLog.setType(regex);
 
 		String json = WorkflowLogSerDes.toJSON(workflowLog);
 
@@ -191,7 +190,126 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		Assert.assertEquals(regex, workflowLog.getCommentLog());
 		Assert.assertEquals(regex, workflowLog.getPreviousState());
 		Assert.assertEquals(regex, workflowLog.getState());
-		Assert.assertEquals(regex, workflowLog.getType());
+	}
+
+	@Test
+	public void testGetWorkflowInstanceWorkflowLogsPage() throws Exception {
+		Page<WorkflowLog> page =
+			workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+				testGetWorkflowInstanceWorkflowLogsPage_getWorkflowInstanceId(),
+				null, Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long workflowInstanceId =
+			testGetWorkflowInstanceWorkflowLogsPage_getWorkflowInstanceId();
+		Long irrelevantWorkflowInstanceId =
+			testGetWorkflowInstanceWorkflowLogsPage_getIrrelevantWorkflowInstanceId();
+
+		if ((irrelevantWorkflowInstanceId != null)) {
+			WorkflowLog irrelevantWorkflowLog =
+				testGetWorkflowInstanceWorkflowLogsPage_addWorkflowLog(
+					irrelevantWorkflowInstanceId,
+					randomIrrelevantWorkflowLog());
+
+			page = workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+				irrelevantWorkflowInstanceId, null, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantWorkflowLog),
+				(List<WorkflowLog>)page.getItems());
+			assertValid(page);
+		}
+
+		WorkflowLog workflowLog1 =
+			testGetWorkflowInstanceWorkflowLogsPage_addWorkflowLog(
+				workflowInstanceId, randomWorkflowLog());
+
+		WorkflowLog workflowLog2 =
+			testGetWorkflowInstanceWorkflowLogsPage_addWorkflowLog(
+				workflowInstanceId, randomWorkflowLog());
+
+		page = workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+			workflowInstanceId, null, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(workflowLog1, workflowLog2),
+			(List<WorkflowLog>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetWorkflowInstanceWorkflowLogsPageWithPagination()
+		throws Exception {
+
+		Long workflowInstanceId =
+			testGetWorkflowInstanceWorkflowLogsPage_getWorkflowInstanceId();
+
+		WorkflowLog workflowLog1 =
+			testGetWorkflowInstanceWorkflowLogsPage_addWorkflowLog(
+				workflowInstanceId, randomWorkflowLog());
+
+		WorkflowLog workflowLog2 =
+			testGetWorkflowInstanceWorkflowLogsPage_addWorkflowLog(
+				workflowInstanceId, randomWorkflowLog());
+
+		WorkflowLog workflowLog3 =
+			testGetWorkflowInstanceWorkflowLogsPage_addWorkflowLog(
+				workflowInstanceId, randomWorkflowLog());
+
+		Page<WorkflowLog> page1 =
+			workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+				workflowInstanceId, null, Pagination.of(1, 2));
+
+		List<WorkflowLog> workflowLogs1 = (List<WorkflowLog>)page1.getItems();
+
+		Assert.assertEquals(workflowLogs1.toString(), 2, workflowLogs1.size());
+
+		Page<WorkflowLog> page2 =
+			workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+				workflowInstanceId, null, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<WorkflowLog> workflowLogs2 = (List<WorkflowLog>)page2.getItems();
+
+		Assert.assertEquals(workflowLogs2.toString(), 1, workflowLogs2.size());
+
+		Page<WorkflowLog> page3 =
+			workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+				workflowInstanceId, null, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(workflowLog1, workflowLog2, workflowLog3),
+			(List<WorkflowLog>)page3.getItems());
+	}
+
+	protected WorkflowLog
+			testGetWorkflowInstanceWorkflowLogsPage_addWorkflowLog(
+				Long workflowInstanceId, WorkflowLog workflowLog)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetWorkflowInstanceWorkflowLogsPage_getWorkflowInstanceId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetWorkflowInstanceWorkflowLogsPage_getIrrelevantWorkflowInstanceId()
+		throws Exception {
+
+		return null;
 	}
 
 	@Test
@@ -241,7 +359,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	public void testGetWorkflowTaskWorkflowLogsPage() throws Exception {
 		Page<WorkflowLog> page =
 			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-				testGetWorkflowTaskWorkflowLogsPage_getWorkflowTaskId(),
+				testGetWorkflowTaskWorkflowLogsPage_getWorkflowTaskId(), null,
 				Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
@@ -257,7 +375,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 					irrelevantWorkflowTaskId, randomIrrelevantWorkflowLog());
 
 			page = workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-				irrelevantWorkflowTaskId, Pagination.of(1, 2));
+				irrelevantWorkflowTaskId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -276,7 +394,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				workflowTaskId, randomWorkflowLog());
 
 		page = workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-			workflowTaskId, Pagination.of(1, 2));
+			workflowTaskId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -307,7 +425,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 		Page<WorkflowLog> page1 =
 			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-				workflowTaskId, Pagination.of(1, 2));
+				workflowTaskId, null, Pagination.of(1, 2));
 
 		List<WorkflowLog> workflowLogs1 = (List<WorkflowLog>)page1.getItems();
 
@@ -315,7 +433,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 		Page<WorkflowLog> page2 =
 			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-				workflowTaskId, Pagination.of(2, 2));
+				workflowTaskId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -325,7 +443,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 		Page<WorkflowLog> page3 =
 			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-				workflowTaskId, Pagination.of(1, 3));
+				workflowTaskId, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(workflowLog1, workflowLog2, workflowLog3),
@@ -771,16 +889,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("type", fieldName)) {
-				if (!Objects.deepEquals(
-						workflowLog.getType(), jsonObject.getString("type"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			throw new IllegalArgumentException(
 				"Invalid field name " + fieldName);
 		}
@@ -930,11 +1038,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		}
 
 		if (entityFieldName.equals("type")) {
-			sb.append("'");
-			sb.append(String.valueOf(workflowLog.getType()));
-			sb.append("'");
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -967,7 +1072,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				previousState = RandomTestUtil.randomString();
 				state = RandomTestUtil.randomString();
 				taskId = RandomTestUtil.randomLong();
-				type = RandomTestUtil.randomString();
 			}
 		};
 	}

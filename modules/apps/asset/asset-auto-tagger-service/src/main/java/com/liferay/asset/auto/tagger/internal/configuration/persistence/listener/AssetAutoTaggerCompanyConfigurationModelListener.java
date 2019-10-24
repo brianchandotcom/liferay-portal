@@ -50,13 +50,6 @@ public class AssetAutoTaggerCompanyConfigurationModelListener
 		int maximumNumberOfTagsPerAsset = GetterUtil.getInteger(
 			properties.get("maximumNumberOfTagsPerAsset"));
 
-		AssetAutoTaggerConfiguration systemAssetAutoTaggerConfiguration =
-			_assetAutoTaggerConfigurationFactory.
-				getSystemAssetAutoTaggerConfiguration();
-
-		int systemMaximumNumberOfTagsPerAsset =
-			systemAssetAutoTaggerConfiguration.getMaximumNumberOfTagsPerAsset();
-
 		if (maximumNumberOfTagsPerAsset < 0) {
 			throw new ConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
@@ -65,6 +58,13 @@ public class AssetAutoTaggerCompanyConfigurationModelListener
 				AssetAutoTaggerCompanyConfiguration.class, getClass(),
 				properties);
 		}
+
+		AssetAutoTaggerConfiguration systemAssetAutoTaggerConfiguration =
+			_assetAutoTaggerConfigurationFactory.
+				getSystemAssetAutoTaggerConfiguration();
+
+		int systemMaximumNumberOfTagsPerAsset =
+			systemAssetAutoTaggerConfiguration.getMaximumNumberOfTagsPerAsset();
 
 		if ((systemMaximumNumberOfTagsPerAsset != 0) &&
 			((maximumNumberOfTagsPerAsset == 0) ||

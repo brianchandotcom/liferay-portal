@@ -148,12 +148,6 @@ public interface JournalArticleFinder {
 				<com.liferay.journal.model.JournalArticle> orderByComparator);
 
 	public java.util.List<com.liferay.journal.model.JournalArticle>
-		filterFindByG_F(
-			long groupId, java.util.List<Long> folderIds,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.journal.model.JournalArticle> queryDefinition);
-
-	public java.util.List<com.liferay.journal.model.JournalArticle>
 		filterFindByG_ST(
 			long groupId, int status,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition

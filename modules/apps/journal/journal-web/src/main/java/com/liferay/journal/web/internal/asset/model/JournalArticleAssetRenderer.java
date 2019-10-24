@@ -665,13 +665,6 @@ public class JournalArticleAssetRenderer
 		return new PortletRequestModel(portletRequest, portletResponse);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void setJournalServiceConfiguration() {
-	}
-
 	private boolean _isShowDisplayPage(long groupId, JournalArticle article)
 		throws PortalException {
 

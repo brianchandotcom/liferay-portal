@@ -415,18 +415,6 @@ public class JournalArticleFinderImpl
 			queryDefinition, true);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), use filterFindByG_F_L instead
-	 */
-	@Deprecated
-	@Override
-	public List<JournalArticle> filterFindByG_F(
-		long groupId, List<Long> folderIds,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_F(groupId, folderIds, queryDefinition, true);
-	}
-
 	@Override
 	public List<JournalArticle> filterFindByG_ST(
 		long groupId, int status,
@@ -772,18 +760,6 @@ public class JournalArticleFinderImpl
 		sb.append("}");
 
 		throw new NoSuchArticleException(sb.toString());
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), use findByG_F_L instead
-	 */
-	@Deprecated
-	@Override
-	public List<JournalArticle> findByG_F(
-		long groupId, List<Long> folderIds,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_F(groupId, folderIds, queryDefinition, false);
 	}
 
 	@Override

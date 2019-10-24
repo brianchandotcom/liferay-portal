@@ -279,18 +279,6 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			groupId, parentFolderId, status);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSubfolderIds(List, long, long, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void getSubfolderIds(
-		List<Long> folderIds, long groupId, long folderId) {
-
-		getSubfolderIds(folderIds, groupId, folderId, true);
-	}
-
 	@Override
 	public void getSubfolderIds(
 		List<Long> folderIds, long groupId, long folderId, boolean recurse) {

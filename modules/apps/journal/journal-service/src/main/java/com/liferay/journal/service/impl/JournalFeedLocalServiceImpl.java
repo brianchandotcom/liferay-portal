@@ -170,23 +170,6 @@ public class JournalFeedLocalServiceImpl
 			JournalFeed.class.getName(), feed.getId(), modelPermissions);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addFeedResources(JournalFeed, ModelPermissions)}
-	 */
-	@Deprecated
-	@Override
-	public void addFeedResources(
-			JournalFeed feed, String[] groupPermissions,
-			String[] guestPermissions)
-		throws PortalException {
-
-		resourceLocalService.addModelResources(
-			feed.getCompanyId(), feed.getGroupId(), feed.getUserId(),
-			JournalFeed.class.getName(), feed.getId(), groupPermissions,
-			guestPermissions);
-	}
-
 	@Override
 	public void addFeedResources(
 			long feedId, boolean addGroupPermissions,
@@ -196,21 +179,6 @@ public class JournalFeedLocalServiceImpl
 		JournalFeed feed = journalFeedPersistence.findByPrimaryKey(feedId);
 
 		addFeedResources(feed, addGroupPermissions, addGuestPermissions);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addFeedResources(JournalFeed, ModelPermissions)}
-	 */
-	@Deprecated
-	@Override
-	public void addFeedResources(
-			long feedId, String[] groupPermissions, String[] guestPermissions)
-		throws PortalException {
-
-		JournalFeed feed = journalFeedPersistence.findByPrimaryKey(feedId);
-
-		addFeedResources(feed, groupPermissions, guestPermissions);
 	}
 
 	@Override

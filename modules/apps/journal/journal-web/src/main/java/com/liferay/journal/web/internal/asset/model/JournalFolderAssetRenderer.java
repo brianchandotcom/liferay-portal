@@ -49,15 +49,6 @@ public class JournalFolderAssetRenderer
 
 	public static final String TYPE = "folder";
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #JournalFolderAssetRenderer(JournalFolder, TrashHelper)}}
-	 */
-	@Deprecated
-	public JournalFolderAssetRenderer(JournalFolder folder) {
-		this(folder, null);
-	}
-
 	public JournalFolderAssetRenderer(
 		JournalFolder folder, TrashHelper trashHelper) {
 

@@ -76,6 +76,7 @@ String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigat
 			</c:when>
 		</c:choose>
 	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= DepotEntryNameException.class %>">
 		<liferay-ui:message key="repository-name-is-required-for-the-default-language" />
 	</liferay-ui:error>
@@ -202,7 +203,6 @@ String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigat
 		const nameMapString = '<%= nameMap %>';
 
 		languageSelectInput.on('change', function(event) {
-
 			const select = event.currentTarget.getDOMNode();
 
 			const selectedOption = select.options[select.selectedIndex];
@@ -216,12 +216,12 @@ String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigat
 			var defaultLanguageName = null;
 
 			if (nameMapString) {
-				try{
+				try {
 					let nameMap = JSON.parse(nameMapString);
-					if(nameMap){
+					if (nameMap) {
 						defaultLanguageName = nameMap[defaultLanguage];
 					}
-				}catch (e) {
+				} catch (e) {
 					console.log(e);
 				}
 			}
@@ -246,7 +246,6 @@ String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigat
 					destroyOnHide: false,
 					render: true
 				});
-
 			}
 		});
 	}

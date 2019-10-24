@@ -12,8 +12,9 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import {ClayCheckbox} from '@clayui/form';
+import {ClayCheckbox, ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -25,7 +26,7 @@ import EditAppContext, {
 	UPDATE_SETTINGS_SCOPE
 } from './EditAppContext.es';
 
-const {Item, ItemList} = ClayDropDown;
+const {Divider, Item, ItemList} = ClayDropDown;
 
 const SCOPES = [
 	{
@@ -52,12 +53,26 @@ export default () => {
 
 	const [sites, setSites] = useState([]);
 	const [active, setActive] = useState(false);
+	const [keywords, setKeywords] = useState('');
+
+	const filteredSites = sites.filter(item => {
+		if (!keywords) {
+			return true;
+		}
+
+		const regex = new RegExp(keywords, 'ig');
+		return regex.test(item.name);
+	});
 
 	useEffect(() => {
 		getItem('/o/headless-admin-user/v1.0/my-user-account/sites').then(
 			({items: sites = []}) => setSites(sites)
 		);
 	}, []);
+
+	const onFilterSites = event => {
+		setKeywords(event.target.value);
+	};
 
 	const onScopeChange = event => {
 		const scope = event.target.value;
@@ -133,6 +148,31 @@ export default () => {
 							}
 						>
 							<ItemList>
+								<Item key={'search'}>
+									<ClayInput.Group>
+										<ClayInput.GroupItem>
+											<ClayInput
+												aria-label={Liferay.Language.get(
+													'search'
+												)}
+												className="input-group-inset input-group-inset-after"
+												onChange={onFilterSites}
+												placeholder={`${Liferay.Language.get(
+													'search'
+												)}...`}
+												type="text"
+												value={keywords}
+											/>
+											<ClayInput.GroupInsetItem after>
+												<ClayButtonWithIcon
+													displayType="unstyled"
+													symbol="search"
+												/>
+											</ClayInput.GroupInsetItem>
+										</ClayInput.GroupItem>
+									</ClayInput.Group>
+								</Item>
+
 								<Item key={ALL_SITES}>
 									<ClayCheckbox
 										checked={siteIds.includes(ALL_SITES)}
@@ -145,7 +185,9 @@ export default () => {
 									/>
 								</Item>
 
-								{sites.map(({id, name}) => (
+								<Divider />
+
+								{filteredSites.map(({id, name}) => (
 									<Item
 										disabled={siteIds.includes(ALL_SITES)}
 										key={id}

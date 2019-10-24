@@ -25,4 +25,8 @@ definition {
 			value1 = "Edit");
 	}
 
+	macro openDepotAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_depot_web_portlet_DepotAdminPortlet");
+	}
+
 }

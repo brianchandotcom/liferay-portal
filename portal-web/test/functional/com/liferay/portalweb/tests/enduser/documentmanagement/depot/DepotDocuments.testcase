@@ -220,4 +220,49 @@ definition {
 			locationFieldName = "true");
 	}
 
+	@description = "This ensures that a document can be auto tagged and can add, remove tags manually in a depot."
+	@priority = "5"
+	test ReplaceAutoTagInDocument {
+		AutoTagging.enableOpenNLP(
+			assetType = "Document",
+			confidenceThreshold = "0.001");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+
+		AutoTagging.assertAutoTagPresent(tagName = "adventures");
+		AutoTagging.assertAutoTagPresent(tagName = "alice");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DMDocument.removeTag(removeTag = "alice");
+
+		AssetCategorization.addTag(tagName = "newtag");
+
+		PortletEntry.publish();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+
+		AutoTagging.assertAutoTagPresent(tagName = "adventures");
+		AutoTagging.assertAutoTagPresent(tagName = "newtag");
+	}
+
 }

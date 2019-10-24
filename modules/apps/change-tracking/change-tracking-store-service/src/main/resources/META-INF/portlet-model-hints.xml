@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.change.tracking.store.model.CTSContent">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="ctsContentId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="repositoryId" type="long" />
+		<field name="path" type="String" />
+		<field name="version" type="String" />
+		<field name="data" type="Blob" />
+		<field name="size" type="long" />
+		<field name="storeType" type="String" />
+	</model>
+</model-hints>

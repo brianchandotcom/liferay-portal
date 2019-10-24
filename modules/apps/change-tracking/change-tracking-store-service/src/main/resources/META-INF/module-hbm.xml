@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.change.tracking.store.model.CTSContent" />
+	<class dynamic-update="true" name="com.liferay.change.tracking.store.model.impl.CTSContentImpl" table="CTSContent">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctsContentId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="repositoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="path_" name="path" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<one-to-one access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" cascade="save-update" class="com.liferay.change.tracking.store.model.CTSContentDataBlobModel" constrained="true" name="dataBlobModel" outer-join="false" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="size_" name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="storeType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class dynamic-update="true" lazy="true" name="com.liferay.change.tracking.store.model.CTSContentDataBlobModel" table="CTSContent">
+		<id column="ctsContentId" name="ctsContentId">
+			<generator class="foreign">
+				<param name="property">com.liferay.change.tracking.store.model.impl.CTSContentImpl</param>
+			</generator>
+		</id>
+		<property column="data_" name="dataBlob" type="blob" />
+	</class>
+</hibernate-mapping>

@@ -501,13 +501,6 @@ public interface MBMessageLocalService
 		String className, long classPK, int status);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getNoAssetMessages();
-
-	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
@@ -535,34 +528,6 @@ public interface MBMessageLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRootDiscussionMessagesCount(
 		String className, long classPK, int status);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getRootDiscussionMessages(String, long, int)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getRootMessages(
-			String className, long classPK, int status)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getRootDiscussionMessages(String, long, int, int, int)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getRootMessages(
-			String className, long classPK, int status, int start, int end)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getRootDiscussionMessagesCount(String, long, int)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRootMessagesCount(String className, long classPK, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String[] getTempAttachmentNames(
@@ -674,18 +639,6 @@ public interface MBMessageLocalService
 			long userId, long messageId, String subject, String body,
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
 			double priority, boolean allowPingbacks,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateMessage(long,
-	 long, String, String, List, double, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	public MBMessage updateMessage(
-			long userId, long messageId, String subject, String body,
-			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
-			List<String> existingFiles, double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException;
 

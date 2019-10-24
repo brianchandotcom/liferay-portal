@@ -134,21 +134,6 @@
 				(currentMessage.modifiedDate > ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.message.boards.service.persistence.MBMessageFinder.findByNoAssets">
-		<![CDATA[
-			SELECT
-				{MBMessage.*}
-			FROM
-				MBMessage
-			LEFT JOIN
-				AssetEntry ON
-					(AssetEntry.classNameId = ?) AND
-					(AssetEntry.classPK = MBMessage.messageId)
-			WHERE
-				(AssetEntry.classPK IS NULL) AND
-				(MBMessage.categoryId != -1)
-		]]>
-	</sql>
 	<sql id="com.liferay.message.boards.service.persistence.MBMessageFinder.findByThreadId">
 		<![CDATA[
 			SELECT
@@ -333,21 +318,6 @@
 				(MBThread.groupId = ?) AND
 				(MBThread.categoryId = ?) AND
 				(Subscription.userId = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.message.boards.service.persistence.MBThreadFinder.findByNoAssets">
-		<![CDATA[
-			SELECT
-				{MBThread.*}
-			FROM
-				MBThread
-			LEFT JOIN
-				AssetEntry ON
-					(AssetEntry.classNameId = ?) AND
-					(AssetEntry.classPK = MBThread.threadId)
-			WHERE
-				(AssetEntry.classPK IS NULL) AND
-				(MBThread.categoryId != -1)
 		]]>
 	</sql>
 	<sql id="com.liferay.message.boards.service.persistence.MBThreadFinder.findByG_U">

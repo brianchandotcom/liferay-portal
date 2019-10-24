@@ -61,9 +61,6 @@ public class MBMessageFinderImpl
 	public static final String COUNT_BY_G_U_MD_C_A_S =
 		MBMessageFinder.class.getName() + ".countByG_U_MD_C_A_S";
 
-	public static final String FIND_BY_NO_ASSETS =
-		MBMessageFinder.class.getName() + ".findByNoAssets";
-
 	public static final String FIND_BY_THREAD_ID =
 		MBMessageFinder.class.getName() + ".findByThreadId";
 
@@ -203,37 +200,6 @@ public class MBMessageFinderImpl
 		return doFindByG_U_MD_C_A_S(
 			groupId, userId, modifiedDate, categoryIds, anonymous, status,
 			start, end, true);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<MBMessage> findByNoAssets() {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), FIND_BY_NO_ASSETS);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addEntity("MBMessage", MBMessageImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(_portal.getClassNameId(MBMessage.class));
-
-			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override

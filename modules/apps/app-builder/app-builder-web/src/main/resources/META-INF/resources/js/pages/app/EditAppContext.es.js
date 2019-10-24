@@ -15,6 +15,7 @@
 import {createContext} from 'react';
 
 export const ADD_DEPLOYMENT = 'ADD_DEPLOYMENT';
+export const ALL_SITES = -1;
 export const PRODUCT_MENU = 'productMenu';
 export const REMOVE_DEPLOYMENT = 'REMOVE_DEPLOYMENT';
 export const TOGGLE_SETTINGS_SITE_ID = 'TOGGLE_SETTINGS_SITE_ID';

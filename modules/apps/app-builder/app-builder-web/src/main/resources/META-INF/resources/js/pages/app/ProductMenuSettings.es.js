@@ -19,6 +19,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {getItem} from '../../utils/client.es';
 import EditAppContext, {
+	ALL_SITES,
 	PRODUCT_MENU,
 	TOGGLE_SETTINGS_SITE_ID,
 	UPDATE_SETTINGS_SCOPE
@@ -132,29 +133,33 @@ export default () => {
 							}
 						>
 							<ItemList>
-								<Item key={'-1'}>
+								<Item key={ALL_SITES}>
 									<ClayCheckbox
-										checked={siteIds.includes(-1)}
+										checked={siteIds.includes(ALL_SITES)}
 										label={Liferay.Language.get(
 											'all-sites'
 										)}
-										onChange={() => onSiteIdsChange('-1')}
+										onChange={() =>
+											onSiteIdsChange(ALL_SITES)
+										}
 									/>
 								</Item>
 
 								{sites.map(({id, name}) => (
 									<Item
-										disabled={siteIds.includes(-1)}
+										disabled={siteIds.includes(ALL_SITES)}
 										key={id}
-										onClick={() => onSiteIdsChange(id)}
 									>
 										<ClayCheckbox
 											checked={
 												siteIds.includes(id) ||
-												siteIds.includes(-1)
+												siteIds.includes(ALL_SITES)
 											}
-											disabled={siteIds.includes(-1)}
+											disabled={siteIds.includes(
+												ALL_SITES
+											)}
 											label={name}
+											onChange={() => onSiteIdsChange(id)}
 										/>
 									</Item>
 								))}

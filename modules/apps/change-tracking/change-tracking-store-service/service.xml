@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.change.tracking.store">
+	<author>Shuyang Zhou</author>
+	<namespace>CTS</namespace>
+	<entity change-tracking-enabled="true" local-service="true" name="CTSContent" remote-service="false" trash-enabled="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="ctsContentId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="repositoryId" type="long" />
+		<column name="path" type="String" />
+		<column name="version" type="String" />
+		<column name="data" type="Blob" />
+		<column name="size" type="long" />
+		<column name="storeType" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="version" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="C_R_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="repositoryId" />
+			<finder-column name="storeType" />
+		</finder>
+		<finder name="C_R_P_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="repositoryId" />
+			<finder-column name="path" />
+			<finder-column name="storeType" />
+		</finder>
+		<finder name="C_R_LikeP_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="repositoryId" />
+			<finder-column comparator="LIKE" name="path" />
+			<finder-column name="storeType" />
+		</finder>
+		<finder name="C_R_P_V_S" return-type="CTSContent" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="repositoryId" />
+			<finder-column name="path" />
+			<finder-column name="version" />
+			<finder-column name="storeType" />
+		</finder>
+	</entity>
+</service-builder>

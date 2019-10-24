@@ -91,10 +91,26 @@ export default () => {
 	};
 
 	const {
-		settings: {scope, siteIds = [0]}
+		settings: {scope, siteIds = []}
 	} = appDeployments.find(
 		appDeployment => appDeployment.type === PRODUCT_MENU
 	);
+
+	const sitesNames = siteIds
+		.map(siteId => {
+			if (siteId === ALL_SITES) {
+				return Liferay.Language.get('all-sites');
+			}
+
+			const site = sites.find(site => site.id === siteId);
+
+			if (site) {
+				return site.name;
+			} else {
+				return '';
+			}
+		})
+		.join(', ');
 
 	return (
 		<div className="autofit-row pl-4 pr-4">
@@ -132,18 +148,21 @@ export default () => {
 							trigger={
 								<button
 									aria-label={Liferay.Language.get(
-										'select-site'
+										'choose-sites'
 									)}
 									className={classNames(
 										'form-control',
 										'form-control-select',
-										'select-site'
+										'select-site',
+										'text-truncate'
 									)}
 									id="site"
 								>
-									{`${Liferay.Language.get(
-										'choose-a-site'
-									)}...`}
+									{sitesNames
+										? sitesNames
+										: `${Liferay.Language.get(
+												'choose-sites'
+										  )}...`}
 								</button>
 							}
 						>
@@ -163,6 +182,7 @@ export default () => {
 												type="text"
 												value={keywords}
 											/>
+
 											<ClayInput.GroupInsetItem after>
 												<ClayButtonWithIcon
 													displayType="unstyled"

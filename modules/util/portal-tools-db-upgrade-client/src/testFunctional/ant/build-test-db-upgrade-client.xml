@@ -211,6 +211,53 @@
 		<clean-database-upgrade-client />
 	</target>
 
+	<target name="check-upgrade-client-sh-disconnect">
+		<get-database-upgrade-client-paths />
+
+		<parallel failonany="true">
+			<exec executable="/bin/bash" spawn="true">
+				<arg value="-c" />
+				<arg value="${db.upgrade.client.home}/db_upgrade${file.suffix.bat}" />
+			</exec>
+
+			<sequential>
+				<waitfor maxwait="30" maxwaitunit="second" timeoutproperty="upgrade.startfailed">
+					<available file="${db.upgrade.client.log}" />
+				</waitfor>
+
+				<fail if="upgrade.failed" message="Upgrade has failed to start." />
+
+				<exec executable="/bin/bash" logError="true" output="true">
+					<arg value="-c" />
+					<arg value="pkill -1 -f db_upgrade" />
+				</exec>
+
+				<exec executable="/bin/bash" logError="true" output="true">
+					<arg value="-c" />
+					<arg value="pkill -1 -f com.liferay.portal.tools.db.upgrade.client.jar" />
+				</exec>
+
+				<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.failed">
+					<resourcecontains
+						resource="${db.upgrade.client.log}"
+						substring="Checking to see if all upgrades have completed... done"
+					/>
+				</waitfor>
+
+				<loadfile
+					property="upgrade.log.contents"
+					srcFile="${db.upgrade.client.log}"
+				/>
+
+				<echo message="${upgrade.log.contents}" />
+
+				<fail if="upgrade.failed" message="Upgrade has failed." />
+			</sequential>
+		</parallel>
+
+		<clean-database-upgrade-client />
+	</target>
+
 	<target name="check-upgrade-client-upgrade-core-only">
 		<antcall target="rebuild-legacy-database">
 			<param name="portal.version" value="6.2.5" />

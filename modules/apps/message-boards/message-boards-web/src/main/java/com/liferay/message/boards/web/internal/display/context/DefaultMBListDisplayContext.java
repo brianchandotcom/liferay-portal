@@ -164,17 +164,6 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 				themeDisplay.getScopeGroupId(), _categoryId, queryDefinition));
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void populateResultsAndTotal(SearchContainer searchContainer)
-		throws PortalException {
-
-		populateThreadsResultsAndTotal(searchContainer);
-	}
-
 	@Override
 	public void populateThreadsResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException {

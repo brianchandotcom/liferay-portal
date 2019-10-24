@@ -74,17 +74,14 @@ const reducer = (state, action) => {
 			);
 
 			let {
-				settings: {siteIds}
+				settings: {siteIds = []}
 			} = appDeployment;
 
 			const {siteId} = action;
 
 			if (siteId === -1) {
-				siteIds = siteIds.includes(siteId)
-					? []
-					: [siteId];	
-			}
-			else {
+				siteIds = siteIds.includes(siteId) ? [] : [siteId];
+			} else {
 				siteIds = siteIds.includes(siteId)
 					? siteIds.filter(id => id != siteId)
 					: siteIds.concat(siteId);

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class AppBuilderAppConstants {
 
-	public static final int DEPLOYED_ALL_SITES = -1;
+	public static final int ALL_SITES = -1;
 
 	public static final int STATUS_DEPLOYED = 0;
 

@@ -1,0 +1,11 @@
+dependencies {
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationCompile project(":apps:change-tracking:change-tracking-api")
+	testIntegrationCompile project(":apps:change-tracking:change-tracking-store-api")
+	testIntegrationCompile project(":core:petra:petra-function")
+	testIntegrationCompile project(":core:petra:petra-io")
+	testIntegrationCompile project(":core:petra:petra-lang")
+	testIntegrationCompile project(":core:petra:petra-reflect")
+	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

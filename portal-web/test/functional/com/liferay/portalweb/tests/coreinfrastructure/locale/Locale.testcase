@@ -72,7 +72,7 @@ definition {
 	}
 
 	@priority = "4"
-	test RestrictDefaultLanguage {
+	test RestrictDefaultLocale {
 		property custom.properties = "company.default.locale=es_ES";
 
 		User.firstLoginPG(
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@priority = "4"
-	test UserPreferredLanguagesConfiguration {
+	test ViewUserPreferredLocale {
 		User.firstLoginPG();
 
 		ProductMenu.gotoPortlet(
@@ -174,7 +174,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ViewSiteLanguageWithoutUserPreferredLanguages {
+	test ViewSiteLocaleWithoutUserPreferredLocale {
 		User.firstLoginPG();
 
 		JSONLayout.addPublicLayout(

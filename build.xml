@@ -1037,6 +1037,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		</condition>
 
 		<ant antfile="build-working-dir.xml" inheritAll="false" target="prepare-profile-dxp-properties">
+			<property name="from.branch.name" value="${git.working.branch.name}" />
 			<property name="git.working.branch.name" value="${git.working.branch.name}" />
 			<property name="to.branch.name" value="${to.branch.name}" />
 		</ant>

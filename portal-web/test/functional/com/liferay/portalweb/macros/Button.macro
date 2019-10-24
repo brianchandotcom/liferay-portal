@@ -80,10 +80,6 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro clickSubmitButton {
-		Click(locator1 = "Button#SUBMIT");
-	}
-
 	macro clickSaveAsDraft {
 		Button.click(button = "Save as Draft");
 	}
@@ -94,6 +90,10 @@ definition {
 
 	macro clickShare {
 		Button.click(button = "Share");
+	}
+
+	macro clickSubmitButton {
+		Click(locator1 = "Button#SUBMIT");
 	}
 
 	macro clickSubmitForPublication {

@@ -24,53 +24,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-103369."
-	@ignore = "true"
-	@priority = "4"
-	test ViewUserPreferredLocalePersistsFriendlyURL {
-		User.firstLoginPG();
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page",
-			widgetName = "Asset Publisher");
-
-		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
-
-		Site.configureCurrentLanguagesCP(
-			currentSiteLanguages = "Chinese (China),English (United States),Spanish (Spain)",
-			defaultSiteLanguage = "English (United States)");
-
-		JSONUser.addUser(
-			preferredLocale = "zh_CN",
-			userEmailAddress = "test2@liferay.com",
-			userFirstName = "test2",
-			userLastName = "test2",
-			userScreenName = "test2");
-
-		JSONUser.addUserToSite(
-			groupName = "Test Site Name",
-			userEmailAddress = "test2@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test2@liferay.com",
-			userLoginFullName = "test2 test2");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/test-site-name");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
-
-		task ("Assert preferred locale persists by asserting Widget name.") {
-			AssertElementPresent(
-				key_portletName = "资产发布器",
-				locator1 = "Portlet#TITLE");
-		}
-	}
-
 	@priority = "4"
 	test RestrictDefaultLocale {
 		property custom.properties = "company.default.locale=es_ES";
@@ -95,6 +48,31 @@ definition {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Contenido web básico");
 
 		PortletEntry.viewLocale(locale = "es-ES");
+	}
+
+	@priority = "4"
+	test ViewSiteLocaleWithoutUserPreferredLocale {
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+		Site.configureCurrentLanguagesCP(
+			currentSiteLanguages = "Spanish (Spain)",
+			defaultSiteLanguage = "Spanish (Spain)");
+
+		User.logoutPG();
+
+		Navigator.openSiteURL(siteName = "Test Site Name");
+
+		task ("Assert site displays in default locale for guest by asserting sign in text") {
+			AssertTextEquals(
+				locator1 = "UserBar#USER_SIGN_IN",
+				value1 = "Acceder");
+		}
 	}
 
 	@priority = "4"
@@ -173,28 +151,50 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-103369."
+	@ignore = "true"
 	@priority = "4"
-	test ViewSiteLocaleWithoutUserPreferredLocale {
+	test ViewUserPreferredLocalePersistsFriendlyURL {
 		User.firstLoginPG();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			widgetName = "Asset Publisher");
+
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
-			currentSiteLanguages = "Spanish (Spain)",
-			defaultSiteLanguage = "Spanish (Spain)");
+			currentSiteLanguages = "Chinese (China),English (United States),Spanish (Spain)",
+			defaultSiteLanguage = "English (United States)");
 
-		User.logoutPG();
+		JSONUser.addUser(
+			preferredLocale = "zh_CN",
+			userEmailAddress = "test2@liferay.com",
+			userFirstName = "test2",
+			userLastName = "test2",
+			userScreenName = "test2");
 
-		Navigator.openSiteURL(siteName = "Test Site Name");
+		JSONUser.addUserToSite(
+			groupName = "Test Site Name",
+			userEmailAddress = "test2@liferay.com");
 
-		task ("Assert site displays in default locale for guest by asserting sign in text") {
-			AssertTextEquals(
-				locator1 = "UserBar#USER_SIGN_IN",
-				value1 = "Acceder");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test2@liferay.com",
+			userLoginFullName = "test2 test2");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/test-site-name");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+		task ("Assert preferred locale persists by asserting Widget name.") {
+			AssertElementPresent(
+				key_portletName = "资产发布器",
+				locator1 = "Portlet#TITLE");
 		}
 	}
 

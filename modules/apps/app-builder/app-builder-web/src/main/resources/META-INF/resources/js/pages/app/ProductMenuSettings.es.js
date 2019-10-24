@@ -125,20 +125,32 @@ export default () => {
 									)}
 									id="site"
 								>
-									{Liferay.Language.get('all-sites')}
+									{`${Liferay.Language.get('choose-a-site')}...`}
 								</button>
 							}
 						>
 							<ItemList>
+								<Item
+									key={"-1"}
+									
+								>
+									<ClayCheckbox
+										checked={siteIds.includes(-1)}
+										label={Liferay.Language.get('all-sites')}
+										onChange={() => onSiteIdsChange("-1")}
+									/>
+								</Item>
+
 								{sites.map(({id, name}) => (
 									<Item
+										disabled={siteIds.includes(-1)}
 										key={id}
 										onClick={() => onSiteIdsChange(id)}
 									>
 										<ClayCheckbox
-											checked={siteIds.includes(id)}
+											checked={siteIds.includes(id) || siteIds.includes(-1)}
+											disabled={siteIds.includes(-1)}
 											label={name}
-											onChange={() => onSiteIdsChange(id)}
 										/>
 									</Item>
 								))}

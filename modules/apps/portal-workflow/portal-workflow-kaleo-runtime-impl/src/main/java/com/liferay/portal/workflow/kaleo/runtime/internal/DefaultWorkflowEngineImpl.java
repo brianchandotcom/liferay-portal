@@ -124,24 +124,6 @@ public class DefaultWorkflowEngineImpl
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #deployWorkflowDefinition(String, String, InputStream,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public WorkflowDefinition deployWorkflowDefinition(
-			String title, InputStream inputStream,
-			ServiceContext serviceContext)
-		throws WorkflowException {
-
-		Definition definition = _workflowModelParser.parse(inputStream);
-
-		return deployWorkflowDefinition(
-			title, definition.getName(), inputStream, serviceContext);
-	}
-
 	@Override
 	public WorkflowDefinition deployWorkflowDefinition(
 			String title, String name, InputStream inputStream,

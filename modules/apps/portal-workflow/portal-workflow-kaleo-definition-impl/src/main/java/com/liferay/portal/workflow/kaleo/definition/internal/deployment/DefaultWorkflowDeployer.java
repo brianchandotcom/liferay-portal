@@ -62,19 +62,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DefaultWorkflowDeployer implements WorkflowDeployer {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #deploy(String,
-	 *             String, Definition, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public WorkflowDefinition deploy(
-			String title, Definition definition, ServiceContext serviceContext)
-		throws PortalException {
-
-		return deploy(title, definition.getName(), definition, serviceContext);
-	}
-
 	@Override
 	public WorkflowDefinition deploy(
 			String title, String name, Definition definition,

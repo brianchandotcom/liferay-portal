@@ -33,7 +33,7 @@
 		groupParams.put("active", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
 
-		List<Group> groups = GroupLocalServiceUtil.search(themeDisplay.getCompanyId(), new long[] {PortalUtil.getClassNameId(Group.class)}, "", groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<Group> groups = GroupServiceUtil.search(themeDisplay.getCompanyId(), new long[] {PortalUtil.getClassNameId(Group.class)}, "", groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		%>
 
 		<liferay-ui:search-container

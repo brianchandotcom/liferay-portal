@@ -32,7 +32,16 @@ definition {
 
 		Pause(locator1 = "1000");
 
-		Alert.closeMessage(messageType = "SUCCESS");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "internetexplorer") {
+			Alert.viewSuccessMessage();
+
+			Pause(locator1 = "10000");
+		}
+		else {
+			Alert.closeMessage(messageType = "SUCCESS");
+		}
 
 		AssertElementNotPresent(locator1 = "Message#SUCCESS");
 

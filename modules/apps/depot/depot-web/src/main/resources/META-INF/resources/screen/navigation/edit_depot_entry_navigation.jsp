@@ -17,7 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "redirect");
+String redirect = ParamUtil.getString(request, "redirect");
+
+String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 String actionCommandName = (String)request.getAttribute(DepotAdminWebKeys.ACTION_COMMAND_NAME);
 String formDescription = (String)request.getAttribute(DepotAdminWebKeys.FORM_DESCRIPTION);
@@ -33,15 +35,22 @@ DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT
 Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
 
 renderResponse.setTitle(HtmlUtil.escape(group.getDescriptiveName(locale)));
+
+String screenNavigationEntryKey = ParamUtil.getString(request, "screenNavigationEntryKey");
 %>
 
 <liferay-ui:success key='<%= DepotPortletKeys.DEPOT_ADMIN + "requestProcessed" %>' message="repository-was-added" />
 
-<portlet:actionURL name="<%= actionCommandName %>" var="actionCommandURL" />
+<portlet:actionURL name="<%= actionCommandName %>" var="actionCommandURL">
+	<portlet:param name="mvcRenderCommandName" value="/depot_entry/edit" />
+</portlet:actionURL>
 
 <aui:form action="<%= actionCommandURL %>" method="post" name="fm">
 	<aui:input name="depotEntryId" type="hidden" value="<%= depotEntry.getDepotEntryId() %>" />
-	<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+
+	<aui:input name="screenNavigationEntryKey" type="hidden" value="<%= screenNavigationEntryKey %>" />
 
 	<div class="sheet sheet-lg">
 		<div class="sheet-header">

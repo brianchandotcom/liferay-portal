@@ -26,6 +26,54 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a document with document type and metadata set can be added in a depot."
+	@priority = "5"
+	test AddDocumentTypeAndMetadata {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.add(
+			dmMetadataSetFieldNames = "Text",
+			metadataSetName = "DM Metadata Set Name");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Number",
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "DM Metadata Set Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document with DM Document Type Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			numberField = "1234",
+			textField = "Text");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewDocumentTypePG(numberValue = "1234");
+
+		DMDocument.viewDocumentTypePG(textContent = "Text");
+	}
+
 	@description = "This ensures that a folder can be deleted in a depot."
 	@priority = "5"
 	test DeleteFolder {

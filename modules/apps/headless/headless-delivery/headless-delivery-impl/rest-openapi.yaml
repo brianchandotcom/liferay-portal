@@ -4625,7 +4625,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/MessageBoardThread"
                                 type: array
-                    description: ""
+                    description:
+                        ""
             tags: ["MessageBoardThread"]
     "/message-board-threads/{messageBoardThreadId}":
         delete:

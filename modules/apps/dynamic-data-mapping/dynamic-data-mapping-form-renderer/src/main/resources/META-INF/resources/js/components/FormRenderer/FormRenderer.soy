@@ -7,7 +7,7 @@
 	{@param? _handleFieldClicked: any}
 	{@param? _handleFieldEdited: any}
 	{@param? _handleFieldFocused: any}
-	{@param? activePage: number}
+	{@param? activePage: int}
 	{@param? editable: bool}
 	{@param? paginationMode: string}
 	{@param? readOnly: bool}
@@ -28,7 +28,9 @@
 	{/let}
 
 	<div class="{$classes}">
-		{foreach $page in $pages}
+		{if $currentPaginationMode == 'tabbed'}
+			{let $page: $pages[$currentPage] /}
+
 			{call PageRenderer.render}
 				{param activePage: $activePage /}
 				{param editable: $editable /}
@@ -38,19 +40,44 @@
 					'fieldEdited': $_handleFieldEdited,
 					'fieldFocused': $_handleFieldFocused
 				] /}
-				{param key: index($page) /}
+				{param key: 'pageRenderer' + $activePage /}
 				{param page: $page /}
-				{param pageIndex: index($page) /}
+				{param pageIndex: $activePage /}
 				{param pages: $pages /}
 				{param paginationMode: $currentPaginationMode /}
 				{param readOnly: $readOnly /}
-				{param ref: 'pageRenderer' + index($page) /}
+				{param ref: 'pageRenderer' + $activePage /}
 				{param showSubmitButton: $showSubmitButton != false /}
 				{param spritemap: $spritemap /}
 				{param strings: $strings /}
 				{param submitLabel: $submitLabel ?: 'submit' /}
 				{param total: $total /}
 			{/call}
-		{/foreach}
+		{else}
+			{foreach $page in $pages}
+				{call PageRenderer.render}
+					{param activePage: $activePage /}
+					{param editable: $editable /}
+					{param events: [
+						'fieldBlurred': $_handleFieldBlurred,
+						'fieldClicked': $_handleFieldClicked,
+						'fieldEdited': $_handleFieldEdited,
+						'fieldFocused': $_handleFieldFocused
+					] /}
+					{param key: index($page) /}
+					{param page: $page /}
+					{param pageIndex: index($page) /}
+					{param pages: $pages /}
+					{param paginationMode: $currentPaginationMode /}
+					{param readOnly: $readOnly /}
+					{param ref: 'pageRenderer' + index($page) /}
+					{param showSubmitButton: $showSubmitButton != false /}
+					{param spritemap: $spritemap /}
+					{param strings: $strings /}
+					{param submitLabel: $submitLabel ?: 'submit' /}
+					{param total: $total /}
+				{/call}
+			{/foreach}
+		{/if}
 	</div>
 {/template}

@@ -17,7 +17,6 @@ package com.liferay.app.builder.internal.model.listener;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -40,8 +39,8 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			_appBuilderAppLocalService.deleteAppBuilderApps(
 				ddmStructure.getStructureId());
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to delete app builder apps", pe);
+		catch (Exception e) {
+			_log.error("Unable to delete app builder apps", e);
 		}
 	}
 

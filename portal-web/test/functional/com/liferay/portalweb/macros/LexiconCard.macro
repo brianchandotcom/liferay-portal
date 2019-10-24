@@ -79,4 +79,14 @@ definition {
 			value1 = "${card}");
 	}
 
+	macro viewMenuItemNotPresent {
+		Click(
+			key_card = "${card}",
+			locator1 = "LexiconCard#CARD_ELLIPSIS");
+
+		AssertElementNotPresent(
+			key_menuItem = "${item}",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+	}
+
 }

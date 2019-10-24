@@ -611,7 +611,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-101230. Global fragments are visible in fragment admin and added ones are visible in Test Site Name site."
+	@description = "This is a test for LPS-101230 and LPS-100540. Global fragments are visible in fragment admin and added ones are visible in Test Site Name site. Global fragments "View Site Usages" option is not available if fragment is not used in any page"
 	@priority = "5"
 	test ViewGlobalFragments {
 		property osgi.module.configuration.file.names = "com.liferay.fragment.web.internal.configuration.FragmentGlobalPanelAppConfiguration.config";
@@ -645,6 +645,12 @@ definition {
 
 		task ("Assert the fragment appears in Fragments Admin") {
 			FragmentsAdmin.viewEntryPresent(entry = "Global Fragment Name");
+		}
+
+		task ("Assert the View Site Usages doesn not display in fragment's kebab menu") {
+			LexiconCard.viewMenuItemNotPresent(
+				card = "Global Fragment Name 1",
+				item = "View Site Usages");
 		}
 
 		task ("Add a section fragment to the fragment collection via JSON") {

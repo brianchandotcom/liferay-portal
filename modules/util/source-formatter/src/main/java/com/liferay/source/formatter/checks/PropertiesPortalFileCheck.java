@@ -118,7 +118,8 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				if (line.matches(
-						StringPool.FOUR_SPACES + "[^# ]+?=[^,]+(,[^,]+)+")) {
+						StringPool.FOUR_SPACES +
+							"[^# ]+?=[^,]+(,[^ ][^,]+)+")) {
 
 					String trimmedLine = StringUtil.trimLeading(line);
 

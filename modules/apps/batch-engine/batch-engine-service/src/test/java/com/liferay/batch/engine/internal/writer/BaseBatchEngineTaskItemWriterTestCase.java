@@ -39,7 +39,21 @@ public abstract class BaseBatchEngineTaskItemWriterTestCase {
 		_createDate = new Date();
 	}
 
-	public static class Item {
+	public static class BaseItem {
+
+		public Long getId() {
+			return _id;
+		}
+
+		public void setId(Long id) {
+			_id = id;
+		}
+
+		private Long _id;
+
+	}
+
+	public static class Item extends BaseItem {
 
 		public Date getCreateDate() {
 			return _createDate;
@@ -47,10 +61,6 @@ public abstract class BaseBatchEngineTaskItemWriterTestCase {
 
 		public String getDescription() {
 			return _description;
-		}
-
-		public Long getId() {
-			return _id;
 		}
 
 		public Map<String, String> getName() {
@@ -65,17 +75,12 @@ public abstract class BaseBatchEngineTaskItemWriterTestCase {
 			_description = description;
 		}
 
-		public void setId(Long id) {
-			_id = id;
-		}
-
 		public void setName(Map<String, String> name) {
 			_name = name;
 		}
 
 		private Date _createDate;
 		private String _description;
-		private Long _id;
 		private Map<String, String> _name;
 
 	}

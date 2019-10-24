@@ -26,7 +26,7 @@ const Table = ({actions, checkable, columns, forwardRef, items}) => {
 			<ClayTable hover={false}>
 				<Head>
 					<Row>
-						{checkable && <Cell> </Cell>}
+						{checkable && <Cell headingCell></Cell>}
 						{columns.map((column, index) => (
 							<Cell
 								className={

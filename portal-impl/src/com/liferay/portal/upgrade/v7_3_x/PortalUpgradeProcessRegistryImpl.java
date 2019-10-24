@@ -14,10 +14,8 @@
 
 package com.liferay.portal.upgrade.v7_3_x;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 import com.liferay.portal.upgrade.v7_3_x.util.LayoutTable;
@@ -51,11 +49,6 @@ public class PortalUpgradeProcessRegistryImpl
 			new UpgradeCTModel(ResourcePermissionTable.class));
 
 		upgradeProcesses.put(new Version(7, 0, 0), new UpgradeRatingsStats());
-
-		upgradeProcesses.put(
-			new Version(7, 0, 1),
-			new UpgradeViewCount(
-				"AssetEntry", AssetEntry.class, "entryId", "viewCount"));
 	}
 
 }

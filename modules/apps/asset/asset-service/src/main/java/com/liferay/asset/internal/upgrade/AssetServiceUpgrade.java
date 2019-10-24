@@ -14,10 +14,14 @@
 
 package com.liferay.asset.internal.upgrade;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.view.count.service.ViewCountEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Preston Crary
@@ -37,6 +41,16 @@ public class AssetServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register(
+			"1.1.0", "1.1.1",
+			new UpgradeViewCount(
+				"AssetEntry", AssetEntry.class, "entryId", "viewCount"));
 	}
+
+	// See LPS-101084. The ViewCount table needs to exist.
+
+	@Reference
+	private ViewCountEntryLocalService _viewCountEntryLocalService;
 
 }

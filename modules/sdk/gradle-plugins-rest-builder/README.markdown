@@ -23,6 +23,10 @@ buildscript {
 }
 
 apply plugin: "com.liferay.portal.tools.rest.builder"
+
+dependencies {
+    restBuilder group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.30"
+}
 ```
 
 The REST Builder plugin automatically applies the [`java`](https://docs.gradle.org/current/userguide/java_plugin.html)

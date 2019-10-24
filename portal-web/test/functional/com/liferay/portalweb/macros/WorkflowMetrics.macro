@@ -250,4 +250,34 @@ definition {
 		}
 	}
 
+	macro viewUserWorkload {
+		var key_assignee = "${assignee}";
+
+		Click(
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME",
+			value1 = "${assignee}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TABLE",
+			value1 = "${assignee}");
+	}
+
+	macro viewWorkloadByAssignee {
+		var key_tabName = "${tabName}";
+		var key_taskCount = "${taskCount}";
+		var key_assignee = "${assignee}";
+
+		Click(
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TAB",
+			value1 = "${tabName}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME",
+			value1 = "${assignee}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT",
+			value1 = "${taskCount}");
+	}
+
 }

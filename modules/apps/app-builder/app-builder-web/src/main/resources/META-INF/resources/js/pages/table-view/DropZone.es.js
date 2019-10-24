@@ -13,8 +13,8 @@
  */
 
 import classNames from 'classnames';
-import React, {useLayoutEffect, useRef, useState} from 'react';
 import {useDrop} from 'react-dnd';
+import React, {useLayoutEffect, useRef, useState} from 'react';
 
 import Table from '../../components/table/Table.es';
 import {DRAG_FIELD_TYPE} from '../../utils/dragTypes.es';

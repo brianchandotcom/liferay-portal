@@ -12,8 +12,8 @@
  * details.
  */
 
-import React from 'react';
 import {useDragLayer} from 'react-dnd';
+import React from 'react';
 
 const layerStyles = {
 	cursor: 'grabbing',

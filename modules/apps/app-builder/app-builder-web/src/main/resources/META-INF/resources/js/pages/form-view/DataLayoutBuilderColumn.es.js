@@ -14,8 +14,8 @@
 
 import {getIndexes} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import dom from 'metal-dom';
-import {useEffect, useCallback, useContext} from 'react';
 import {useDrop} from 'react-dnd';
+import {useEffect, useCallback, useContext} from 'react';
 
 import {
 	DRAG_CUSTOM_OBJECT_FIELD,

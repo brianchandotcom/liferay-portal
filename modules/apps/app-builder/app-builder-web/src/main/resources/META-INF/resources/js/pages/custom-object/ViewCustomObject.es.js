@@ -12,8 +12,8 @@
  * details.
  */
 
-import React, {useEffect, useState} from 'react';
 import {Route, Switch} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
 
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import {getItem} from '../../utils/client.es';

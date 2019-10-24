@@ -25,10 +25,13 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
@@ -57,6 +60,45 @@ public abstract class BaseWorkflowMetricsTestCase {
 		).findFirst(
 		).map(
 			KaleoNode::getKaleoNodeId
+		).map(
+			String::valueOf
+		).orElseGet(
+			() -> StringPool.BLANK
+		);
+	}
+
+	protected String getTaskKey(
+			KaleoDefinition kaleoDefinition, String taskName)
+		throws Exception {
+
+		KaleoDefinitionVersion latestKaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(
+				kaleoDefinition.getCompanyId(), kaleoDefinition.getName());
+
+		List<KaleoNode> kaleoNodes =
+			_kaleoNodeLocalService.getKaleoDefinitionVersionKaleoNodes(
+				latestKaleoDefinitionVersion.getKaleoDefinitionVersionId());
+
+		Stream<KaleoNode> stream = kaleoNodes.stream();
+
+		return stream.filter(
+			kaleoNode -> Objects.equals(kaleoNode.getName(), taskName)
+		).map(
+			kaleoNode -> {
+				try {
+					return _kaleoTaskLocalService.getKaleoNodeKaleoTask(
+						kaleoNode.getKaleoNodeId());
+				}
+				catch (Exception e) {
+				}
+
+				return null;
+			}
+		).filter(
+			Objects::nonNull
+		).findFirst(
+		).map(
+			KaleoTask::getKaleoTaskId
 		).map(
 			String::valueOf
 		).orElseGet(
@@ -157,5 +199,8 @@ public abstract class BaseWorkflowMetricsTestCase {
 
 	@Inject
 	private KaleoNodeLocalService _kaleoNodeLocalService;
+
+	@Inject
+	private KaleoTaskLocalService _kaleoTaskLocalService;
 
 }

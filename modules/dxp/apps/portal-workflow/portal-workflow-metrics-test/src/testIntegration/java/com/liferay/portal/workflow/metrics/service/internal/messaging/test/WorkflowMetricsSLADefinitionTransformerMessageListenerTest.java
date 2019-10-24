@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.test.rule.Inject;
@@ -63,7 +64,7 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListenerTest
 	}
 
 	@Test
-	public void testTransform() throws Exception {
+	public void testTransform1() throws Exception {
 		KaleoDefinition kaleoDefinition =
 			_kaleoDefinitionLocalService.getKaleoDefinition(
 				_workflowDefinition.getName(),
@@ -127,6 +128,75 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListenerTest
 		Assert.assertEquals(
 			getTerminalNodeKey(kaleoDefinition),
 			_workflowMetricsSLADefinition.getStopNodeKeys());
+	}
+
+	@Test
+	public void testTransform2() throws Exception {
+		KaleoDefinition kaleoDefinition =
+			_kaleoDefinitionLocalService.getKaleoDefinition(
+				_workflowDefinition.getName(),
+				ServiceContextTestUtil.getServiceContext());
+
+		retryAssertCount(
+			4, "workflow-metrics-nodes", "WorkflowMetricsNodeType", "companyId",
+			kaleoDefinition.getCompanyId(), "deleted", false, "processId",
+			kaleoDefinition.getKaleoDefinitionId(), "version",
+			kaleoDefinition.getVersion() + ".0");
+		retryAssertCount(
+			"workflow-metrics-processes", "WorkflowMetricsProcessType",
+			"companyId", kaleoDefinition.getCompanyId(), "processId",
+			kaleoDefinition.getKaleoDefinitionId(), "version",
+			kaleoDefinition.getVersion() + ".0");
+
+		_workflowMetricsSLADefinition =
+			_workflowMetricsSLADefinitionLocalService.
+				addWorkflowMetricsSLADefinition(
+					StringPool.BLANK, StringPool.BLANK, 5000, "Abc",
+					new String[0], kaleoDefinition.getKaleoDefinitionId(),
+					new String[] {
+						getTaskKey(kaleoDefinition, "review") + ":enter"
+					},
+					new String[] {getTerminalNodeKey(kaleoDefinition)},
+					ServiceContextTestUtil.getServiceContext());
+
+		_workflowDefinitionManager.deployWorkflowDefinition(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			kaleoDefinition.getTitle(), kaleoDefinition.getName(),
+			WorkflowDefinitionUtil.getBytes(
+				"single-approver-definition-updated.xml"));
+
+		kaleoDefinition = _kaleoDefinitionLocalService.getKaleoDefinition(
+			_workflowDefinition.getName(),
+			ServiceContextTestUtil.getServiceContext());
+
+		retryAssertCount(
+			"workflow-metrics-processes", "WorkflowMetricsProcessType",
+			"companyId", kaleoDefinition.getCompanyId(), "processId",
+			kaleoDefinition.getKaleoDefinitionId(), "version",
+			kaleoDefinition.getVersion() + ".0");
+		retryAssertCount(
+			4, "workflow-metrics-nodes", "WorkflowMetricsNodeType", "companyId",
+			kaleoDefinition.getCompanyId(), "deleted", false, "processId",
+			kaleoDefinition.getKaleoDefinitionId(), "version",
+			kaleoDefinition.getVersion() + ".0");
+
+		_workflowMetricsSLADefinitionTransformerMessageListener.receive(
+			new Message());
+
+		_workflowMetricsSLADefinition =
+			_workflowMetricsSLADefinitionLocalService.
+				getWorkflowMetricsSLADefinition(
+					_workflowMetricsSLADefinition.
+						getWorkflowMetricsSLADefinitionId());
+
+		Assert.assertEquals(
+			kaleoDefinition.getKaleoDefinitionId(),
+			_workflowMetricsSLADefinition.getProcessId());
+		Assert.assertEquals(
+			StringPool.BLANK, _workflowMetricsSLADefinition.getStartNodeKeys());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT,
+			_workflowMetricsSLADefinition.getStatus());
 	}
 
 	@Inject

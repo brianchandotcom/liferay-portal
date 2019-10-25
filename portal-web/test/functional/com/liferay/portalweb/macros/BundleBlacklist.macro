@@ -1,0 +1,25 @@
+definition {
+
+	macro blacklistModuleAndComponentConfiguration {
+		Type(
+			key_label = "${label}",
+			locator1 = "TextArea#ANY_LABELED",
+			value1 = "${symbolicName}");
+
+		SystemSettings.saveConfiguration();
+	}
+
+	macro viewBlacklistModule {
+		ProductMenuHelper.expandPanel(panel = "${panel}");
+
+		ProductMenuHelper.expandCategory(category = "${category}");
+
+		AssertElementNotPresent(
+			key_portlet = "${portlet}",
+			locator1 = "ProductMenu#PORTLET",
+			value1 = "${portlet}");
+
+		AssertConsoleTextPresent(value1 = "${expectedText}");
+	}
+
+}

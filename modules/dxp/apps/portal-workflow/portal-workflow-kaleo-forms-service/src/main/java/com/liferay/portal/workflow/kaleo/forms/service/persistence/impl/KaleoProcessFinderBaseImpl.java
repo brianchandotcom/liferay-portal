@@ -14,22 +14,28 @@
 
 package com.liferay.portal.workflow.kaleo.forms.service.persistence.impl;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessPersistence;
+import com.liferay.portal.workflow.kaleo.forms.service.persistence.impl.constants.KaleoFormsPersistenceConstants;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marcellus Tavares
  * @generated
  */
-public class KaleoProcessFinderBaseImpl
+public abstract class KaleoProcessFinderBaseImpl
 	extends BasePersistenceImpl<KaleoProcess> {
 
 	public KaleoProcessFinderBaseImpl() {
@@ -44,33 +50,49 @@ public class KaleoProcessFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getKaleoProcessPersistence().getBadColumnNames();
+		return kaleoProcessPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the kaleo process persistence.
-	 *
-	 * @return the kaleo process persistence
-	 */
-	public KaleoProcessPersistence getKaleoProcessPersistence() {
-		return kaleoProcessPersistence;
+	@Override
+	@Reference(
+		target = KaleoFormsPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the kaleo process persistence.
-	 *
-	 * @param kaleoProcessPersistence the kaleo process persistence
-	 */
-	public void setKaleoProcessPersistence(
-		KaleoProcessPersistence kaleoProcessPersistence) {
-
-		this.kaleoProcessPersistence = kaleoProcessPersistence;
+	@Override
+	@Reference(
+		target = KaleoFormsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = KaleoProcessPersistence.class)
+	@Override
+	@Reference(
+		target = KaleoFormsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected KaleoProcessPersistence kaleoProcessPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoProcessFinderBaseImpl.class);
+
+	static {
+		try {
+			Class.forName(KaleoFormsPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
 
 }

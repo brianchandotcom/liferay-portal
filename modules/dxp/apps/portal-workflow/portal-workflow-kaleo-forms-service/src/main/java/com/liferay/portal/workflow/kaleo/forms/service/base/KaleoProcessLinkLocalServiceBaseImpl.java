@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.forms.service.base;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -32,13 +32,10 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalService;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessFinder;
@@ -50,6 +47,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the kaleo process link local service.
@@ -64,7 +63,8 @@ import javax.sql.DataSource;
  */
 public abstract class KaleoProcessLinkLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements IdentifiableOSGiService, KaleoProcessLinkLocalService {
+	implements AopService, IdentifiableOSGiService,
+			   KaleoProcessLinkLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -338,246 +338,17 @@ public abstract class KaleoProcessLinkLocalServiceBaseImpl
 		return kaleoProcessLinkPersistence.update(kaleoProcessLink);
 	}
 
-	/**
-	 * Returns the kaleo process local service.
-	 *
-	 * @return the kaleo process local service
-	 */
-	public
-		com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalService
-			getKaleoProcessLocalService() {
-
-		return kaleoProcessLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			KaleoProcessLinkLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the kaleo process local service.
-	 *
-	 * @param kaleoProcessLocalService the kaleo process local service
-	 */
-	public void setKaleoProcessLocalService(
-		com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalService
-			kaleoProcessLocalService) {
-
-		this.kaleoProcessLocalService = kaleoProcessLocalService;
-	}
-
-	/**
-	 * Returns the kaleo process persistence.
-	 *
-	 * @return the kaleo process persistence
-	 */
-	public KaleoProcessPersistence getKaleoProcessPersistence() {
-		return kaleoProcessPersistence;
-	}
-
-	/**
-	 * Sets the kaleo process persistence.
-	 *
-	 * @param kaleoProcessPersistence the kaleo process persistence
-	 */
-	public void setKaleoProcessPersistence(
-		KaleoProcessPersistence kaleoProcessPersistence) {
-
-		this.kaleoProcessPersistence = kaleoProcessPersistence;
-	}
-
-	/**
-	 * Returns the kaleo process finder.
-	 *
-	 * @return the kaleo process finder
-	 */
-	public KaleoProcessFinder getKaleoProcessFinder() {
-		return kaleoProcessFinder;
-	}
-
-	/**
-	 * Sets the kaleo process finder.
-	 *
-	 * @param kaleoProcessFinder the kaleo process finder
-	 */
-	public void setKaleoProcessFinder(KaleoProcessFinder kaleoProcessFinder) {
-		this.kaleoProcessFinder = kaleoProcessFinder;
-	}
-
-	/**
-	 * Returns the kaleo process link local service.
-	 *
-	 * @return the kaleo process link local service
-	 */
-	public KaleoProcessLinkLocalService getKaleoProcessLinkLocalService() {
-		return kaleoProcessLinkLocalService;
-	}
-
-	/**
-	 * Sets the kaleo process link local service.
-	 *
-	 * @param kaleoProcessLinkLocalService the kaleo process link local service
-	 */
-	public void setKaleoProcessLinkLocalService(
-		KaleoProcessLinkLocalService kaleoProcessLinkLocalService) {
-
-		this.kaleoProcessLinkLocalService = kaleoProcessLinkLocalService;
-	}
-
-	/**
-	 * Returns the kaleo process link persistence.
-	 *
-	 * @return the kaleo process link persistence
-	 */
-	public KaleoProcessLinkPersistence getKaleoProcessLinkPersistence() {
-		return kaleoProcessLinkPersistence;
-	}
-
-	/**
-	 * Sets the kaleo process link persistence.
-	 *
-	 * @param kaleoProcessLinkPersistence the kaleo process link persistence
-	 */
-	public void setKaleoProcessLinkPersistence(
-		KaleoProcessLinkPersistence kaleoProcessLinkPersistence) {
-
-		this.kaleoProcessLinkPersistence = kaleoProcessLinkPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-
-		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink",
-			kaleoProcessLinkLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		kaleoProcessLinkLocalService = (KaleoProcessLinkLocalService)aopProxy;
 	}
 
 	/**
@@ -622,57 +393,31 @@ public abstract class KaleoProcessLinkLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalService.class
-	)
-	protected
-		com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalService
-			kaleoProcessLocalService;
-
-	@BeanReference(type = KaleoProcessPersistence.class)
+	@Reference
 	protected KaleoProcessPersistence kaleoProcessPersistence;
 
-	@BeanReference(type = KaleoProcessFinder.class)
+	@Reference
 	protected KaleoProcessFinder kaleoProcessFinder;
 
-	@BeanReference(type = KaleoProcessLinkLocalService.class)
 	protected KaleoProcessLinkLocalService kaleoProcessLinkLocalService;
 
-	@BeanReference(type = KaleoProcessLinkPersistence.class)
+	@Reference
 	protected KaleoProcessLinkPersistence kaleoProcessLinkPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ClassNameLocalService
 		classNameLocalService;
 
-	@ServiceReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
-
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

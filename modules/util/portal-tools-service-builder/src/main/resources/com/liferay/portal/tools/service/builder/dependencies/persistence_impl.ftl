@@ -1816,6 +1816,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	<#if entity.isChangeTrackingEnabled()>
 		@Override
+		public Set<String> getCTIgnoredAttributeNames() {
+			return _ctIgnoredAttributeNames;
+		}
+
+		@Override
 		public List<String[]> getUniqueIndexColumnNames() {
 			return _uniqueIndexColumnNames;
 		}
@@ -1838,9 +1843,16 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			return update(${entity.varName});
 		}
 
+		private static final Set<String> _ctIgnoredAttributeNames = new HashSet<String>();
 		private static final List<String[]> _uniqueIndexColumnNames = new ArrayList<String[]>();
 
 		static {
+			<#list entity.entityColumns as entityColumn>
+				<#if entityColumn.isChangeTrackingIgnore()>
+					_ctIgnoredAttributeNames.add("${entityColumn.name}");
+				</#if>
+			</#list>
+
 			<#list entity.entityFinders as entityFinder>
 				<#if entityFinder.isUnique()>
 					<#assign entityColumns = entityFinder.entityColumns />

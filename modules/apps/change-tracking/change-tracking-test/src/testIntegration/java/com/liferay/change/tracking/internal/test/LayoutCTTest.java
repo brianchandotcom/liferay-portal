@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.ExpectedDBType;
@@ -43,6 +44,7 @@ import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Level;
@@ -418,6 +420,83 @@ public class LayoutCTTest {
 
 		Assert.assertEquals(
 			layout.getFriendlyURL(), productionLayout.getFriendlyURL());
+	}
+
+	@Test
+	public void testPublishModifiedLayoutWithIgnorableChange()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		Date modifiedDate = layout.getModifiedDate();
+
+		modifiedDate = new Date((modifiedDate.getTime() / 1000) * 1000);
+
+		layout.setModifiedDate(modifiedDate);
+
+		layout = _layoutLocalService.updateLayout(layout);
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			layout.setModifiedDate(
+				new Date(modifiedDate.getTime() + Time.HOUR));
+
+			layout = _layoutLocalService.updateLayout(layout);
+		}
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		Layout productionLayout = _layoutLocalService.fetchLayout(
+			layout.getPlid());
+
+		Assert.assertNotNull(productionLayout);
+
+		Assert.assertEquals(modifiedDate, productionLayout.getModifiedDate());
+	}
+
+	@Test
+	public void testPublishModifiedLayoutWithIgnorableConflict()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		Date modifiedDate = layout.getModifiedDate();
+
+		modifiedDate = new Date((modifiedDate.getTime() / 1000) * 1000);
+
+		layout.setModifiedDate(modifiedDate);
+
+		layout = _layoutLocalService.updateLayout(layout);
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			layout.setModifiedDate(modifiedDate);
+
+			layout = _layoutLocalService.updateLayout(layout);
+		}
+
+		layout = _layoutLocalService.getLayout(layout.getPlid());
+
+		modifiedDate = new Date(modifiedDate.getTime() + Time.HOUR);
+
+		layout.setModifiedDate(modifiedDate);
+
+		layout = _layoutLocalService.updateLayout(layout);
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		Layout productionLayout = _layoutLocalService.fetchLayout(
+			layout.getPlid());
+
+		Assert.assertNotNull(productionLayout);
+
+		Assert.assertEquals(modifiedDate, productionLayout.getModifiedDate());
 	}
 
 	@Test

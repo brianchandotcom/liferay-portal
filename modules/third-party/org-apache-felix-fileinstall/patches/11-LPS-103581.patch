@@ -1,0 +1,24 @@
+diff --git a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
+index 2e91eaa..2be583c 100644
+--- a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
++++ b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
+@@ -809,7 +809,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
+     private void initializeCurrentManagedBundles()
+     {
+         Bundle[] bundles = this.context.getBundles();
+-        String watchedDirPath = watchedDirectory.toURI().normalize().getPath();
++        String watchedDirPath = watchedDirectory.toURI().normalize().toString();
+         Map<File, Long> checksums = new HashMap<File, Long>();
+         Pattern filePattern = filter == null || filter.isEmpty() ? null : Pattern.compile(filter);
+         for (Bundle bundle : bundles) {
+@@ -997,7 +997,9 @@ public class DirectoryWatcher extends Thread implements BundleListener
+     {
+ 		Bundle bundle = context.getBundle(bundleLocation);
+ 
+-		if (bundle != null) {
++		if ((bundle != null) &&
++			(Util.loadChecksum(bundle, context) != checksum)) {
++
+ 			bundle.update(is);
+ 
+ 			Util.storeChecksum(bundle, checksum, context);

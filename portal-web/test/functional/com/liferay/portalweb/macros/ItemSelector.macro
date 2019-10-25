@@ -167,14 +167,6 @@ definition {
 		var key_imageFileName = StringUtil.replace("${imageFileName}", " ", "+");
 
 		LexiconCard.clickCard(card = "${imageFileName}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "ItemSelector#CAPTION",
-			value1 = "${imageFileName}");
-
-		SelectFrameTop(value1 = "relative=top");
-
-		Click(locator1 = "Button#ADD");
 	}
 
 	macro uploadFile {
@@ -192,18 +184,6 @@ definition {
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
 			value1 = "${uploadFileName}");
-
-		AssertTextEquals(
-			locator1 = "ItemSelector#FILE_UPLOAD_CAPTION",
-			value1 = "${uploadFileName}");
-
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_MODAL_FOOTER");
-
-		AssertClick(
-			locator1 = "ItemSelector#ADD_BUTTON",
-			value1 = "Add");
-
-		SelectFrameTop(value1 = "relative=top");
 	}
 
 	macro viewBlogImageDetails {

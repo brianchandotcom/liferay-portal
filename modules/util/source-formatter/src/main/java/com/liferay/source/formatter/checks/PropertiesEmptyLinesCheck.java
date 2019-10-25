@@ -71,7 +71,7 @@ public class PropertiesEmptyLinesCheck extends BaseFileCheck {
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
-				content, "\n", "\n\n", matcher.start());
+				content, "\n", "\n\n", matcher.start(1));
 		}
 
 		return content;
@@ -85,6 +85,6 @@ public class PropertiesEmptyLinesCheck extends BaseFileCheck {
 	private static final Pattern _missingEmptyLineBeforeCategoryPattern =
 		Pattern.compile("\n([^\n#]|#[^#]).*\n##\n");
 	private static final Pattern _missingEmptyLineBeforeMultiLinePattern =
-		Pattern.compile("[^#\n\\\\]\n *[^ #\n].*\\\\\n");
+		Pattern.compile("\n *(?![ #]).+(\n(?!\n) *[^#].*=\\\\\n)");
 
 }

@@ -221,7 +221,7 @@ definition {
 	}
 
 	@description = "This ensures that a document in a depot can be auto tagged and have its tag replaced manually."
-	@priority = "5"
+	@priority = "4"
 	test ReplaceAutoTagInDocument {
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -306,7 +306,7 @@ definition {
 	}
 
 	@description = "This ensures that a document can be shared with another user in a depot."
-	@priority = "5"
+	@priority = "4"
 	test ShareDocument {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -73,46 +74,46 @@ public class UserSetDigestTest {
 
 	@Test
 	public void testSetDigestAfterPrerequisites() throws Exception {
-		User user = _userLocalService.createUser(RandomTestUtil.nextLong());
+		_user = _userLocalService.createUser(RandomTestUtil.nextLong());
 
-		user.setScreenName(RandomTestUtil.randomString());
-		user.setEmailAddress(_generateRandomEmailAddress());
+		_user.setScreenName(RandomTestUtil.randomString());
+		_user.setEmailAddress(_generateRandomEmailAddress());
 
-		user.setDigest(user.getDigest(RandomTestUtil.randomString()));
+		_user.setDigest(_user.getDigest(RandomTestUtil.randomString()));
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testSetDigestBeforePrerequisites() throws Exception {
-		User user = _userLocalService.createUser(RandomTestUtil.nextLong());
+		_user = _userLocalService.createUser(RandomTestUtil.nextLong());
 
-		user.setDigest(user.getDigest(RandomTestUtil.randomString()));
+		_user.setDigest(_user.getDigest(RandomTestUtil.randomString()));
 
-		user.setScreenName(RandomTestUtil.randomString());
-		user.setEmailAddress(_generateRandomEmailAddress());
+		_user.setScreenName(RandomTestUtil.randomString());
+		_user.setEmailAddress(_generateRandomEmailAddress());
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testSetEmailAndDigestBeforeScreenName() throws Exception {
-		User user = _userLocalService.createUser(RandomTestUtil.nextLong());
+		_user = _userLocalService.createUser(RandomTestUtil.nextLong());
 
-		user.setEmailAddress(_generateRandomEmailAddress());
+		_user.setEmailAddress(_generateRandomEmailAddress());
 
-		user.setDigest(user.getDigest(RandomTestUtil.randomString()));
+		_user.setDigest(_user.getDigest(RandomTestUtil.randomString()));
 
-		user.setScreenName(RandomTestUtil.randomString());
+		_user.setScreenName(RandomTestUtil.randomString());
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testSetScreenNameAndDigestBeforeEmailAddress()
 		throws Exception {
 
-		User user = _userLocalService.createUser(RandomTestUtil.nextLong());
+		_user = _userLocalService.createUser(RandomTestUtil.nextLong());
 
-		user.setScreenName(RandomTestUtil.randomString());
+		_user.setScreenName(RandomTestUtil.randomString());
 
-		user.setDigest(user.getDigest(RandomTestUtil.randomString()));
+		_user.setDigest(_user.getDigest(RandomTestUtil.randomString()));
 
-		user.setEmailAddress(_generateRandomEmailAddress());
+		_user.setEmailAddress(_generateRandomEmailAddress());
 	}
 
 	private String _generateRandomEmailAddress() {
@@ -168,5 +169,8 @@ public class UserSetDigestTest {
 
 	@Inject
 	private static UserLocalService _userLocalService;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

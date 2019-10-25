@@ -32,8 +32,10 @@ public class OASConstants {
 
 	public static final String OPERATION_POST = "post";
 
+	public static final String PATH_COMPONENTS_SCHEMAS = "components>schemas";
+
 	public static final String PATH_COMPONENTS_SCHEMAS_PATTERN =
-		"components>schemas>SCHEMA_TPL";
+		PATH_COMPONENTS_SCHEMAS + ">SCHEMA_TPL";
 
 	public static final String PATH_ENDPOINT_OPERATION_PARAMETERS_PATTERN =
 		"paths>ENDPOINT_TPL>OPERATION_TPL>parameters";

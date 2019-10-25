@@ -49,6 +49,25 @@ public class OASExplorer {
 		return endpoints;
 	}
 
+	public Set<String> getEntitySchemaNames(JsonObject oasJsonObject) {
+		Set<String> entitySchemaNames = new HashSet<>();
+
+		JsonObject componentSchemaJsonObject =
+			_jsonFinder.getDescendantJsonObject(
+				OASConstants.PATH_COMPONENTS_SCHEMAS, oasJsonObject);
+
+		componentSchemaJsonObject.forEach(
+			(entityName, entityDefinition) -> {
+				if (entityName.startsWith("Page")) {
+					return;
+				}
+
+				entitySchemaNames.add(entityName);
+			});
+
+		return entitySchemaNames;
+	}
+
 	public List<OASParameter> getParameters(
 		String endpoint, String operation, JsonObject oasJsonObject) {
 

@@ -21,4 +21,6 @@ public interface AccountRole {
 
 	public String getName();
 
+	public long getRoleId();
+
 }

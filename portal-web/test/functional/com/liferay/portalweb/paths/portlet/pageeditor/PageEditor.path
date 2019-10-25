@@ -325,7 +325,7 @@
 </tr>
 <!--SECTION_BUILDER-->
 <tr>
-	<td>SECTION_BUILDER_BASIC_COMPONENTS_FRAGMENT</td>
+	<td>SECTION_BUILDER_FRAGMENTS</td>
 	<td>//div[contains(@data-item-name,'${fragmentName}')]</td>
 	<td></td>
 </tr>

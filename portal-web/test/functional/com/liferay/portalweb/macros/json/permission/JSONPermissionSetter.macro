@@ -1,0 +1,55 @@
+definition {
+
+	macro setGroupId {
+		if (!(isSet(groupName))) {
+			var groupName = "Global";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		return "${groupId}";
+	}
+
+	macro setPrimKey {
+		JSONPermissionValidator.validateRoleType(roleType = "${roleType}");
+
+		if ("${roleType}" == "regular") {
+			var primKey = JSONCompany.getCompanyId();
+		}
+		else if (("${roleType}" == "site") || ("${roleType}" == "organization")) {
+			var primKey = "0";
+		}
+
+		return "${primKey}";
+	}
+
+	macro setRoleId {
+		Variables.assertDefined(parameterList = "${roleTitle}");
+
+		var roleId = JSONRoleAPI._getRoleIdByName(name = "${roleTitle}");
+
+		return "${roleId}";
+	}
+
+	macro setRoleType {
+		if (!(isSet(roleType))) {
+			var roleType = "regular";
+		}
+
+		return "${roleType}";
+	}
+
+	macro setScope {
+		JSONPermissionValidator.validateRoleType(roleType = "${roleType}");
+
+		if ("${roleType}" == "regular") {
+			var scope = "1";
+		}
+		else if (("${roleType}" == "site") || ("${roleType}" == "organization")) {
+			var scope = "3";
+		}
+
+		return "${scope}";
+	}
+
+}

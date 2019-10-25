@@ -69,9 +69,9 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewDocumentTypePG(numberValue = "1234");
-
-		DMDocument.viewDocumentTypePG(textContent = "Text");
+		DMDocument.viewDocumentTypePG(
+			numberValue = "1234",
+			textContent = "Text");
 	}
 
 	@description = "This ensures that a folder can be deleted in a depot."

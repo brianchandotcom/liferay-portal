@@ -114,7 +114,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
-		LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 
 		Navigator.gotoNavNested(navNested = "Global Templates");
 
@@ -132,7 +132,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
-		LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 
 		Navigator.gotoNavNested(navNested = "Global Templates");
 

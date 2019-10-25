@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.GhostscriptUtil;
 import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -93,6 +94,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xuggler.XugglerInstallException;
@@ -104,6 +106,7 @@ import com.liferay.portal.util.ShutdownUtil;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -173,6 +176,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (cmd.equals("cacheSingle")) {
 			cacheSingle();
+		}
+		else if (cmd.equals("cleanUpOrphanedPortletPreferencies")) {
+			cleanUpOrphanedPortletPreferencies();
 		}
 		else if (cmd.equals("cleanUpPermissions")) {
 			cleanUpAddToPagePermissions(actionRequest);
@@ -335,6 +341,63 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 					_portletPreferencesLocalService.deletePortletPreferences(
 						portletPreferences);
+				});
+
+			actionableDynamicQuery.setParallel(true);
+
+			actionableDynamicQuery.performActions();
+		}
+		finally {
+			CacheRegistryUtil.setActive(false);
+		}
+	}
+
+	protected void cleanUpOrphanedPortletPreferencies() throws PortalException {
+		CacheRegistryUtil.setActive(true);
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			ActionableDynamicQuery actionableDynamicQuery =
+				_portletPreferencesLocalService.getActionableDynamicQuery();
+
+			actionableDynamicQuery.setPerformActionMethod(
+				(com.liferay.portal.kernel.model.PortletPreferences pref) -> {
+					if ((pref.getOwnerId() !=
+							PortletKeys.PREFS_OWNER_ID_DEFAULT) ||
+						(pref.getOwnerType() !=
+							PortletKeys.PREFS_OWNER_TYPE_LAYOUT) ||
+						"145".equals(pref.getPortletId())) {
+
+						return;
+					}
+
+					Layout layout = _layoutLocalService.getLayout(
+						pref.getPlid());
+
+					if (layout.isTypeControlPanel()) {
+						return;
+					}
+
+					UnicodeProperties props =
+						layout.getTypeSettingsProperties();
+
+					Set<String> keys = props.keySet();
+
+					boolean orphan = true;
+
+					for (String key : keys) {
+						String value = props.getProperty(key);
+
+						if (value.contains(pref.getPortletId())) {
+							orphan = false;
+
+							break;
+						}
+					}
+
+					if (orphan) {
+						_portletPreferencesLocalService.
+							deletePortletPreferences(pref);
+					}
 				});
 
 			actionableDynamicQuery.setParallel(true);

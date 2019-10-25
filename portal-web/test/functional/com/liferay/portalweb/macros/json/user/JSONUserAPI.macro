@@ -12,8 +12,8 @@ definition {
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
 				-d autoPassword=false \
-				-d password1=test \
-				-d password2=test \
+				-d password1=initPassword \
+				-d password2=initPassword \
 				-d autoScreenName=false \
 				-d screenName=${userScreenName} \
 				-d emailAddress=${userEmailAddress} \

@@ -199,10 +199,7 @@
 	<condition property="liferay.releng.ee">
 		<or>
 			<istrue value="${ee.override}" />
-			<resourcecontains
-				resource="${project.dir}/portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-				substring=" Digital Experience Platform"
-			/>
+			<equals arg1="${release.info.name}" arg2="Liferay Digital Experience Platform" />
 		</or>
 	</condition>
 

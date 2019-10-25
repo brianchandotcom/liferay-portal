@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.workflow.metrics.exception.NoSuchSLADefinitionVersionException;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
@@ -22,9 +23,15 @@ import com.liferay.portal.workflow.metrics.service.base.WorkflowMetricsSLADefini
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion",
+	service = AopService.class
+)
 public class WorkflowMetricsSLADefinitionVersionLocalServiceImpl
 	extends WorkflowMetricsSLADefinitionVersionLocalServiceBaseImpl {
 

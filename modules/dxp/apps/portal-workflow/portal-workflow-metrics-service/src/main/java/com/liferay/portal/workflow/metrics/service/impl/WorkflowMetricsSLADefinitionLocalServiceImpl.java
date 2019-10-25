@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.service.impl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -40,7 +41,6 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.TermsQuery;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDuplicateNameException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDurationException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionNameException;
@@ -64,9 +64,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition",
+	service = AopService.class
+)
 public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	extends WorkflowMetricsSLADefinitionLocalServiceBaseImpl {
 
@@ -557,24 +564,24 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 	private static final String _VERSION_DEFAULT = "1.0";
 
-	@ServiceReference(type = Aggregations.class)
+	@Reference
 	private Aggregations _aggregations;
 
-	@ServiceReference(type = Queries.class)
+	@Reference
 	private Queries _queries;
 
-	@ServiceReference(type = SearchRequestExecutor.class)
+	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
 
-	@ServiceReference(type = SLAProcessResultWorkflowMetricsIndexer.class)
+	@Reference
 	private SLAProcessResultWorkflowMetricsIndexer
 		_slaProcessResultWorkflowMetricsIndexer;
 
-	@ServiceReference(type = SLATaskResultWorkflowMetricsIndexer.class)
+	@Reference
 	private SLATaskResultWorkflowMetricsIndexer
 		_slaTaskResultWorkflowMetricsIndexer;
 
-	@ServiceReference(type = WorkflowMetricsPortalExecutor.class)
+	@Reference
 	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;
 
 }

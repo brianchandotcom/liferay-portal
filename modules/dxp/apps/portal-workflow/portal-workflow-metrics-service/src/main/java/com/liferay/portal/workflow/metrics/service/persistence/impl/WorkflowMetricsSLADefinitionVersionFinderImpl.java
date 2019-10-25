@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionImpl;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionVersionFinder;
@@ -28,9 +27,13 @@ import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSL
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Rafael Praxedes
  */
+@Component(service = WorkflowMetricsSLADefinitionVersionFinder.class)
 public class WorkflowMetricsSLADefinitionVersionFinderImpl
 	extends WorkflowMetricsSLADefinitionVersionFinderBaseImpl
 	implements WorkflowMetricsSLADefinitionVersionFinder {
@@ -72,7 +75,7 @@ public class WorkflowMetricsSLADefinitionVersionFinderImpl
 		}
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

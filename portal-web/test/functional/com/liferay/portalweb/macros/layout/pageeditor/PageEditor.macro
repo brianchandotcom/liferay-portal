@@ -110,9 +110,11 @@ definition {
 	macro addFragment {
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
-		Click.clickNoMouseOverNoWaitForVisible(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_ADD_FRAGMENT_BUTTON");
+		DragAndDrop(
+			fragmentName = "${fragmentName}",
+			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+			value1 = "");
 
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",

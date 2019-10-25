@@ -18,10 +18,12 @@
 		publishURL: string
 	]}
 	{@param? changeEntries: list<[
-		userName: string,
+		changeType: string,
 		contentType: string,
+		diffURL: string,
+		editURL: string,
 		lastEdited: string,
-		changeType: string
+		userName: string
 	]>}
 	{@param? changeListsDropdownMenu: list<[
 		label: string,
@@ -153,10 +155,12 @@
 	{@param? cardEmpty: bool}
 	{@param? cardStateColor: string}
 	{@param? changeEntries: list<[
-		userName: string,
+		changeType: string,
 		contentType: string,
+		diffURL: string,
+		editURL: string,
 		lastEdited: string,
-		changeType: string
+		userName: string
 	]>}
 	{@param? changeListsDropdownMenu: list<[
 		label: string,
@@ -337,10 +341,12 @@
 
 {template .overviewCardBody}
 	{@param? changeEntries: list<[
-		userName: string,
+		changeType: string,
 		contentType: string,
+		diffURL: string,
+		editURL: string,
 		lastEdited: string,
-		changeType: string
+		userName: string
 	]>}
 	{@param? changesLabel: string}
 	{@param? changes: [
@@ -458,6 +464,10 @@
 										last-edited{/msg}</th>
 									<th class="table-cell-expand">{msg desc=""}
 										change-type{/msg}</th>
+									<th class="table-cell-expand">{msg desc=""}
+										diff{/msg}</th>
+									<th class="table-cell-expand">{msg desc=""}
+										edit{/msg}</th>
 								</tr>
 								</thead>
 
@@ -466,6 +476,8 @@
 										{call .changeEntry}
 											{param changeType: $changeEntry.changeType /}
 											{param contentType: $changeEntry.contentType /}
+											{param diffURL: $changeEntry.diffURL /}
+											{param editURL: $changeEntry.editURL /}
 											{param index: index($changeEntry) /}
 											{param lastEdited: $changeEntry.lastEdited /}
 											{param userName: $changeEntry.userName /}
@@ -484,6 +496,8 @@
 {template .changeEntry}
 	{@param changeType: string}
 	{@param contentType: string}
+	{@param diffURL: string}
+	{@param editURL: string}
 	{@param index: number}
 	{@param lastEdited: string}
 	{@param userName: string}
@@ -500,6 +514,16 @@
 		</td>
 		<td class="table-cell-expand">
 			<div id="change-entry-change-type-{$index}">{$changeType}</div>
+		</td>
+		<td class="table-cell-expand">
+			<div id="change-entry-diff-{$index}"><a href="{$diffURL}">{msg desc=""}view{/msg}</a></div>
+		</td>
+		<td class="table-cell-expand">
+			<div id="change-entry-edit-{$index}">
+				{if $editURL}
+					<a href="{$editURL}">{msg desc=""}edit{/msg}</a>
+				{/if}
+			</div>
 		</td>
 	</tr>
 {/template}

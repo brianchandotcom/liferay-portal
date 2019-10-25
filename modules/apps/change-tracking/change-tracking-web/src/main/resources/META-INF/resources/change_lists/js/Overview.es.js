@@ -74,11 +74,10 @@ Overview.STATE = {
 		Config.shapeOf({
 			changeType: Config.string(),
 			contentType: Config.string(),
+			diffURL: Config.string(),
+			editURL: Config.string(),
 			lastEdited: Config.string(),
-			site: Config.string(),
-			title: Config.string(),
-			userName: Config.string(),
-			version: Config.string()
+			userName: Config.string()
 		})
 	).required(),
 

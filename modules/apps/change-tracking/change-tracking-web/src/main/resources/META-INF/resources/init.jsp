@@ -33,6 +33,7 @@ page import="com.liferay.change.tracking.exception.CTCollectionNameException" %>
 page import="com.liferay.change.tracking.model.CTCollection" %><%@
 page import="com.liferay.change.tracking.model.CTEntry" %><%@
 page import="com.liferay.change.tracking.web.internal.constants.CTWebKeys" %><%@
+page import="com.liferay.change.tracking.web.internal.display.CTEntryDiffDisplay" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ChangeListsConfigurationDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ChangeListsDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ChangeListsHistoryDetailsDisplayContext" %><%@

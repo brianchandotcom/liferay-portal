@@ -25,6 +25,7 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebConstants;
+import com.liferay.change.tracking.web.internal.display.CTDisplayRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -43,12 +44,9 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -56,6 +54,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -87,25 +86,25 @@ import javax.servlet.http.HttpServletRequest;
 public class ChangeListsDisplayContext {
 
 	public ChangeListsDisplayContext(
-		ClassNameLocalService classNameLocalService,
 		CTCollectionLocalService ctCollectionLocalService,
+		CTDisplayRegistry ctDisplayRegistry,
 		CTEntryLocalService ctEntryLocalService,
 		CTPreferencesLocalService ctPreferencesLocalService,
-		CTProcessLocalService ctProcessLocalService,
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse, ResourceActions resourceActions,
+		CTProcessLocalService ctProcessLocalService, Portal portal,
+		RenderRequest renderRequest, RenderResponse renderResponse,
 		UserLocalService userLocalService) {
 
-		_classNameLocalService = classNameLocalService;
 		_ctCollectionLocalService = ctCollectionLocalService;
+		_ctDisplayRegistry = ctDisplayRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
 		_ctPreferencesLocalService = ctPreferencesLocalService;
 		_ctProcessLocalService = ctProcessLocalService;
-		_httpServletRequest = httpServletRequest;
+		_portal = portal;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_resourceActions = resourceActions;
 		_userLocalService = userLocalService;
+
+		_httpServletRequest = _portal.getHttpServletRequest(renderRequest);
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -534,47 +533,64 @@ public class ChangeListsDisplayContext {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		if (_ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			PortletURL diffURL = PortletURLFactoryUtil.create(
+				_renderRequest, CTPortletKeys.CHANGE_LISTS,
+				PortletRequest.RENDER_PHASE);
+
+			diffURL.setParameter(
+				"mvcRenderCommandName", "/change_lists/view_diff");
+
 			for (CTEntry ctEntry :
 					_ctEntryLocalService.getCTCollectionCTEntries(
 						_ctCollectionId)) {
 
-				jsonArray.put(_getCTEntryJSONObject(ctEntry));
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+				String changeTypeKey = "added";
+
+				if (ctEntry.getChangeType() == 1) {
+					changeTypeKey = "deleted";
+				}
+				else if (ctEntry.getChangeType() == 2) {
+					changeTypeKey = "modified";
+				}
+
+				Format format = FastDateFormatFactoryUtil.getDateTime(
+					_themeDisplay.getLocale());
+
+				diffURL.setParameter("changeType", changeTypeKey);
+				diffURL.setParameter(
+					"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+
+				String editURL = _ctDisplayRegistry.getEditURL(
+					_httpServletRequest, ctEntry);
+
+				if (editURL == null) {
+					editURL = StringPool.BLANK;
+				}
+
+				jsonArray.put(
+					jsonObject.put(
+						"changeType",
+						LanguageUtil.get(
+							_themeDisplay.getLocale(), changeTypeKey)
+					).put(
+						"contentType",
+						_ctDisplayRegistry.getTypeName(
+							_portal.getLocale(_httpServletRequest), ctEntry)
+					).put(
+						"diffURL", diffURL.toString()
+					).put(
+						"editURL", editURL
+					).put(
+						"lastEdited", format.format(ctEntry.getModifiedDate())
+					).put(
+						"userName", ctEntry.getUserName()
+					));
 			}
 		}
 
 		return jsonArray;
-	}
-
-	private JSONObject _getCTEntryJSONObject(CTEntry ctEntry) throws Exception {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		String changeTypeKey = "added";
-
-		if (ctEntry.getChangeType() == 1) {
-			changeTypeKey = "deleted";
-		}
-		else if (ctEntry.getChangeType() == 2) {
-			changeTypeKey = "modified";
-		}
-
-		Format format = FastDateFormatFactoryUtil.getDateTime(
-			_themeDisplay.getLocale());
-
-		ClassName className = _classNameLocalService.getClassName(
-			ctEntry.getModelClassNameId());
-
-		return jsonObject.put(
-			"changeType",
-			LanguageUtil.get(_themeDisplay.getLocale(), changeTypeKey)
-		).put(
-			"contentType",
-			_resourceActions.getModelResource(
-				_httpServletRequest, className.getClassName())
-		).put(
-			"lastEdited", format.format(ctEntry.getModifiedDate())
-		).put(
-			"userName", ctEntry.getUserName()
-		);
 	}
 
 	private String _getFilterByStatus() {
@@ -778,10 +794,10 @@ public class ChangeListsDisplayContext {
 			OrderByComparatorFactoryUtil.create(
 				"CTCollection", "modifiedDate", false);
 
-	private final ClassNameLocalService _classNameLocalService;
 	private final boolean _confirmationEnabled;
 	private final long _ctCollectionId;
 	private final CTCollectionLocalService _ctCollectionLocalService;
+	private final CTDisplayRegistry _ctDisplayRegistry;
 	private final CTEntryLocalService _ctEntryLocalService;
 	private final CTPreferencesLocalService _ctPreferencesLocalService;
 	private final CTProcessLocalService _ctProcessLocalService;
@@ -790,10 +806,10 @@ public class ChangeListsDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private String _orderByCol;
 	private String _orderByType;
+	private final Portal _portal;
 	private CTCollection _productionCTCollection;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final ResourceActions _resourceActions;
 	private final ThemeDisplay _themeDisplay;
 	private final UserLocalService _userLocalService;
 

@@ -22,7 +22,6 @@ import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRegistry;
 import com.liferay.change.tracking.web.internal.display.context.ChangeListsDisplayContext;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -85,11 +84,10 @@ public class ChangeListsPortlet extends BaseChangeListsPortlet {
 
 		ChangeListsDisplayContext changeListsDisplayContext =
 			new ChangeListsDisplayContext(
-				_classNameLocalService, _ctCollectionLocalService,
+				_ctCollectionLocalService, _ctDisplayRegistry,
 				_ctEntryLocalService, _ctPreferencesLocalService,
-				_ctProcessLocalService,
-				_portal.getHttpServletRequest(renderRequest), renderRequest,
-				renderResponse, _resourceActions, _userLocalService);
+				_ctProcessLocalService, _portal, renderRequest, renderResponse,
+				_userLocalService);
 
 		renderRequest.setAttribute(
 			CTWebKeys.CHANGE_LISTS_DISPLAY_CONTEXT, changeListsDisplayContext);
@@ -104,6 +102,9 @@ public class ChangeListsPortlet extends BaseChangeListsPortlet {
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
+	private CTDisplayRegistry _ctDisplayRegistry;
+
+	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
@@ -114,9 +115,6 @@ public class ChangeListsPortlet extends BaseChangeListsPortlet {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private ResourceActions _resourceActions;
 
 	@Reference
 	private UserLocalService _userLocalService;

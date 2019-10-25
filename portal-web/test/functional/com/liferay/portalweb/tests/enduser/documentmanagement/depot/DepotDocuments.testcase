@@ -220,7 +220,7 @@ definition {
 			locationFieldName = "true");
 	}
 
-	@description = "This ensures that a document can be auto tagged and can add, remove tags manually in a depot."
+	@description = "This ensures that a document in a depot can be auto tagged and have its tag replaced manually."
 	@priority = "5"
 	test ReplaceAutoTagInDocument {
 		AutoTagging.enableOpenNLP(
@@ -265,7 +265,7 @@ definition {
 		AutoTagging.assertAutoTagPresent(tagName = "newtag");
 	}
 
-	@description = "This ensures that document can be Restored to depot."
+	@description = "This ensures that document can be restored to a depot."
 	@priority = "5"
 	test RestoreDocument {
 		DepotNavigator.openDepotAdmin();
@@ -305,7 +305,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This ensures that document can be shared to other user in a depot."
+	@description = "This ensures that a document can be shared with another user in a depot."
 	@priority = "5"
 	test ShareDocument {
 		JSONUser.addUser(

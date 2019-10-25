@@ -4245,13 +4245,6 @@ billboard.js@1.5.1:
   dependencies:
     d3 "^5.5.0"
 
-billboard.js@^1.6.0:
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/billboard.js/-/billboard.js-1.10.2.tgz#2cddd5d7e56b9a547c1b6c891580f9909a6aba58"
-  integrity sha512-9AbLl3xnsaA50hyQuelYVK0cw7VW3IMkLcCwJ4nYmy9IN7UD617AIAfFY4AbH+/zKMsDceeUOPFfstqy2UeyGA==
-  dependencies:
-    d3 "^5.9.7"
-
 billboard.js@^1.8.0:
   version "1.9.2"
   resolved "https://registry.yarnpkg.com/billboard.js/-/billboard.js-1.9.2.tgz#625e9ce700f745c96c0cef48d48cdaed0d9ae688"
@@ -5042,15 +5035,7 @@ clay-card@2.18.3, clay-card@^2.18.3:
     metal-state "^2.16.0"
     metal-web-component "^2.16.0"
 
-clay-charts-react@2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/clay-charts-react/-/clay-charts-react-2.4.1.tgz#7d7155d3bc1a50838bcc0ae23a369d8fc4d29861"
-  integrity sha512-Wv05J4CKbCl/I6JrBilymoYNTp9vLZMkGv9MU6VF6BCi31brtoEAVYyHNeTGqtKi+46HOOV7MSpjK2aKJb7k5Q==
-  dependencies:
-    clay-charts-shared "^2.4.1"
-    react-billboardjs "^1.4.3"
-
-clay-charts-shared@^2.16.2, clay-charts-shared@^2.4.1:
+clay-charts-shared@^2.16.2:
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/clay-charts-shared/-/clay-charts-shared-2.16.2.tgz#f9bf6f4caaa534006ace4b064eb7b7a37a26e769"
   integrity sha512-HuIjXB5NDXeGIJWaAHWHdawc1AQuo2vdiqSp47EOT302CHYJ0q5bbsrAdfWuYt3umZo0yB1lh6f14Jjl1qRENw==
@@ -5865,11 +5850,6 @@ core-js@^2.2.0, core-js@^2.4.0, core-js@^2.5.0, core-js@^2.5.6:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
   integrity sha512-HOpZf6eXmnl7la+cUdMnLvUxKNqLUzJvgIziQ0DiF3JwSImNphIqdGqzj6hIKyX04MmV0poclQ7+wjWvxQyR2A==
 
-core-js@^2.4.1:
-  version "2.6.10"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.10.tgz#8a5b8391f8cc7013da703411ce5b585706300d7f"
-  integrity sha512-I39t74+4t+zau64EN1fE5v2W31Adtc/REhzWN+gWRRXg6WH5qAsZm62DHpQ1+Yhe4047T55jvzz7MUqF/dBBlA==
-
 core-js@^3.0.1, core-js@^3.0.4:
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.1.4.tgz#3a2837fc48e582e1ae25907afcd6cf03b0cc7a07"
@@ -6458,43 +6438,6 @@ d3@^5.5.0, d3@^5.7.0, d3@^5.9.2:
   version "5.9.2"
   resolved "https://registry.yarnpkg.com/d3/-/d3-5.9.2.tgz#64e8a7e9c3d96d9e6e4999d2c8a2c829767e67f5"
   integrity sha512-ydrPot6Lm3nTWH+gJ/Cxf3FcwuvesYQ5uk+j/kXEH/xbuYWYWTMAHTJQkyeuG8Y5WM5RSEYB41EctUrXQQytRQ==
-  dependencies:
-    d3-array "1"
-    d3-axis "1"
-    d3-brush "1"
-    d3-chord "1"
-    d3-collection "1"
-    d3-color "1"
-    d3-contour "1"
-    d3-dispatch "1"
-    d3-drag "1"
-    d3-dsv "1"
-    d3-ease "1"
-    d3-fetch "1"
-    d3-force "1"
-    d3-format "1"
-    d3-geo "1"
-    d3-hierarchy "1"
-    d3-interpolate "1"
-    d3-path "1"
-    d3-polygon "1"
-    d3-quadtree "1"
-    d3-random "1"
-    d3-scale "2"
-    d3-scale-chromatic "1"
-    d3-selection "1"
-    d3-shape "1"
-    d3-time "1"
-    d3-time-format "2"
-    d3-timer "1"
-    d3-transition "1"
-    d3-voronoi "1"
-    d3-zoom "1"
-
-d3@^5.9.7:
-  version "5.12.0"
-  resolved "https://registry.yarnpkg.com/d3/-/d3-5.12.0.tgz#0ddeac879c28c882317cd439b495290acd59ab61"
-  integrity sha512-flYVMoVuhPFHd9zVCe2BxIszUWqBcd5fvQGMNRmSiBrgdnh6Vlruh60RJQTouAK9xPbOB0plxMvBm4MoyODXNg==
   dependencies:
     d3-array "1"
     d3-axis "1"
@@ -8071,31 +8014,12 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs-css-vars@^1.0.0:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/fbjs-css-vars/-/fbjs-css-vars-1.0.2.tgz#216551136ae02fe255932c3ec8775f18e2c078b8"
-  integrity sha512-b2XGFAFdWZWg0phtAWLHCk836A1Xann+I+Dgd3Gk64MHKZO44FfoD1KxyvbSh0qZsIoXQGGlVztIY+oitJPpRQ==
-
 fbjs@^0.8.0, fbjs@^0.8.1:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   integrity sha1-xNWY6taUkRJlPWWIsBpc3Nn5D90=
   dependencies:
     core-js "^1.0.0"
-    isomorphic-fetch "^2.1.1"
-    loose-envify "^1.0.0"
-    object-assign "^4.1.0"
-    promise "^7.1.1"
-    setimmediate "^1.0.5"
-    ua-parser-js "^0.7.18"
-
-fbjs@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-1.0.0.tgz#52c215e0883a3c86af2a7a776ed51525ae8e0a5a"
-  integrity sha512-MUgcMEJaFhCaF1QtWGnmq9ZDRAzECTCRAF7O6UZIlAlkTs1SasiX9aP0Iw7wfD2mJ7wDTNfg2w7u5fSCwJk1OA==
-  dependencies:
-    core-js "^2.4.1"
-    fbjs-css-vars "^1.0.0"
     isomorphic-fetch "^2.1.1"
     loose-envify "^1.0.0"
     object-assign "^4.1.0"
@@ -15340,16 +15264,6 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-billboardjs@^1.4.3:
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/react-billboardjs/-/react-billboardjs-1.5.3.tgz#7dad31759ba9131c630b5423ab2b2935c532ebcb"
-  integrity sha512-42VloMbgUfiAbux2n2TXtXd9iB93MhtA93SS7dfWXXgfXjdqrEZdd7RDBHBAf2SYFGR67QqULiqrAG3/OT+wEg==
-  dependencies:
-    billboard.js "^1.6.0"
-    fbjs "^1.0.0"
-    prop-types "^15.7.2"
-    react-parm "^2.3.0"
-
 react-clientside-effect@^1.2.0:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/react-clientside-effect/-/react-clientside-effect-1.2.2.tgz#6212fb0e07b204e714581dd51992603d1accc837"
@@ -15529,11 +15443,6 @@ react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
-
-react-parm@^2.3.0:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/react-parm/-/react-parm-2.7.1.tgz#bc26afa797d15e377b6f5f239e0a95b05d1eb1de"
-  integrity sha512-MLBxiHT2jTXJLe/oMMXn587BaeNUc5GqXTgRtfiEdjQgF0QIwzIybZaeMT1Q6cFfcHzjdiQKjmFQrIIHSaPYNw==
 
 react-popper-tooltip@^2.8.3:
   version "2.8.3"

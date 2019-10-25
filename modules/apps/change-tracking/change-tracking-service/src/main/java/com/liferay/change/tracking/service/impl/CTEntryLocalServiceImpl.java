@@ -22,6 +22,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Collections;
@@ -106,6 +108,30 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 		return ctEntryPersistence.findByC_MCNI(
 			ctCollectionId, modelClassNameId);
+	}
+
+	public List<Long> getExclusiveModelClassPKs(
+		long ctCollectionId, long modelClassNameId) {
+
+		List<CTEntry> ctEntries = ctEntryPersistence.findByC_MCNI(
+			ctCollectionId, modelClassNameId);
+
+		if (ctEntries.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<Long> modelClassPKs = ListUtil.toList(
+			ctEntries, CTEntry::getModelClassPK);
+
+		for (CTEntry ctEntry :
+				ctEntryPersistence.findByNotC_MCPK(
+					ctCollectionId,
+					ArrayUtil.toArray(modelClassPKs.toArray(new Long[0])))) {
+
+			modelClassPKs.remove(ctEntry.getModelClassPK());
+		}
+
+		return modelClassPKs;
 	}
 
 	@Override

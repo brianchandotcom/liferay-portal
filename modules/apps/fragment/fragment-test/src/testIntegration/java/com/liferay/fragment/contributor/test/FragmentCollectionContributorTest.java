@@ -29,7 +29,9 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.After;
@@ -123,6 +125,11 @@ public class FragmentCollectionContributorTest {
 		}
 
 		@Override
+		public List<FragmentEntry> getFragmentEntries() {
+			return Collections.emptyList();
+		}
+
+		@Override
 		public List<FragmentEntry> getFragmentEntries(int type) {
 			List<FragmentEntry> fragmentEntries = new ArrayList<>();
 
@@ -142,6 +149,11 @@ public class FragmentCollectionContributorTest {
 			}
 
 			return fragmentEntries;
+		}
+
+		@Override
+		public List<FragmentEntry> getFragmentEntries(Locale locale) {
+			return Collections.emptyList();
 		}
 
 		@Override

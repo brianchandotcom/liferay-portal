@@ -94,6 +94,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_COMPLETION_VELOCITY_ITEMS_UNIT</td>
+	<td>//div[@class='pb-2']//span[@class='velocity-unit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_ITEMS_VALUE</td>
+	<td>//div[@class='pb-2']//span[@class='velocity-value']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN</td>
 	<td>xpath=(//button[contains(@class, 'dropdown-toggle')]//span[contains(@class, 'navbar-text-truncate')])[3]</td>
 	<td></td>

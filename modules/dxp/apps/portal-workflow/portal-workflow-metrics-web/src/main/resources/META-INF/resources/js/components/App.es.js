@@ -16,10 +16,10 @@ import HeaderController from '../shared/components/header-controller/HeaderContr
 import {withParams} from '../shared/components/router/routerUtil.es';
 import fetch from '../shared/rest/fetch.es';
 import {AppContext} from './AppContext.es';
+import InstanceListPage from './instance-list-page/InstanceListPage.es';
+import PerformanceByStepPage from './performance-by-step-page/PerformanceByStepPage.es';
 import ProcessListCard from './process-list/ProcessListCard.es';
 import ProcessMetrics from './process-metrics/ProcessMetrics.es';
-import InstanceListCard from './process-metrics/instance-list/InstanceListCard.es';
-import PerformanceByStep from './process-metrics/performance-by-step/PerformanceByStep.es';
 import SLAForm from './sla/SLAForm.es';
 import SLAListCard from './sla/SLAListCard.es';
 import WorkloadByAssigneePage from './workload-by-assignee-page/WorkloadByAssigneePage.es';
@@ -89,7 +89,7 @@ export default class AppComponent extends React.Component {
 
 							<Route
 								path="/instances/:processId/:pageSize/:page"
-								render={withParams(InstanceListCard)}
+								render={withParams(InstanceListPage)}
 							/>
 
 							<Route
@@ -112,7 +112,7 @@ export default class AppComponent extends React.Component {
 
 							<Route
 								path="/performance/:processId/:pageSize/:page/:sort/:search?"
-								render={withParams(PerformanceByStep)}
+								render={withParams(PerformanceByStepPage)}
 							/>
 
 							<Route

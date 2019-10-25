@@ -20,8 +20,8 @@ import {
 	EmptyView,
 	ErrorView,
 	LoadingView
-} from './WorkloadByAssigneePage.Body.es';
-import {Item, Table} from './WorkloadByAssigneePage.Table.es';
+} from './WorkloadByAssigneePageBody.es';
+import {Item, Table} from './WorkloadByAssigneePageTable.es';
 
 const WorkloadByAssigneePage = ({page, pageSize, processId, query, sort}) => {
 	const {assigneeTaskKeys = []} = useMemo(() => getFiltersParam(query), [

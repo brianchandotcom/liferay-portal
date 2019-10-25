@@ -16,8 +16,8 @@ import {ChildLink} from '../../../shared/components/router/routerWrapper.es';
 import {formatNumber} from '../../../shared/util/numeral.es';
 import {getPercentage} from '../../../shared/util/util.es';
 import {AppContext} from '../../AppContext.es';
+import {filterConstants} from '../../instance-list-page/store/InstanceListPageStore.es';
 import {processStatusConstants} from '../filter/store/ProcessStatusStore.es';
-import {filterConstants} from '../instance-list/store/InstanceListStore.es';
 import {formatQueryDate} from '../util/timeRangeUtil.es';
 
 class SummaryCard extends React.Component {

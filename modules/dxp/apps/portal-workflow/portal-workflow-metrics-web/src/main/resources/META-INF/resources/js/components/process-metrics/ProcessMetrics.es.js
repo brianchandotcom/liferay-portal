@@ -22,11 +22,11 @@ import {AppContext} from '../AppContext.es';
 import AlertMessage from './AlertMessage.es';
 import DropDownHeader from './DropDownHeader.es';
 import CompletionVelocityCard from './completion-velocity/CompletionVelocityCard.es';
-import PerformanceByStepCard from './performance-by-step/PerformanceByStepCard.es';
+import PerformanceByStepCard from './performance-by-step-card/PerformanceByStepCard.es';
 import CompletedItemsCard from './process-items/CompletedItemsCard.es';
 import PendingItemsCard from './process-items/PendingItemsCard.es';
-import WorkloadByAssigneeCard from './workload-by-assignee/WorkloadByAssigneeCard.es';
-import WorkloadByStepCard from './workload-by-step/WorkloadByStepCard.es';
+import WorkloadByAssigneeCard from './workload-by-assignee-card/WorkloadByAssigneeCard.es';
+import WorkloadByStepCard from './workload-by-step-card/WorkloadByStepCard.es';
 
 class ProcessMetrics extends React.Component {
 	constructor(props) {

@@ -25,6 +25,7 @@ import com.liferay.saml.runtime.configuration.SamlConfiguration;
 import java.util.Date;
 
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -37,6 +38,12 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SamlSpAuthRequestLocalServiceImpl
 	extends SamlSpAuthRequestLocalServiceBaseImpl {
+
+	@Activate
+	public void activate() {
+		_samlConfiguration = SamlConfigurationUtil.getSamlConfiguration(
+			_configurationAdmin);
+	}
 
 	@Override
 	public SamlSpAuthRequest addSamlSpAuthRequest(
@@ -57,14 +64,6 @@ public class SamlSpAuthRequestLocalServiceImpl
 		samlSpAuthRequestPersistence.update(samlSpAuthRequest);
 
 		return samlSpAuthRequest;
-	}
-
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		_samlConfiguration = SamlConfigurationUtil.getSamlConfiguration(
-			_configurationAdmin);
 	}
 
 	@Override

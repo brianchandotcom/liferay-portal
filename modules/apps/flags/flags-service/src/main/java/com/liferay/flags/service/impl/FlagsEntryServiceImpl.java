@@ -19,6 +19,8 @@ import com.liferay.flags.service.base.FlagsEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -40,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FlagsEntryServiceImpl extends FlagsEntryServiceBaseImpl {
 
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public void addEntry(
 			String className, long classPK, String reporterEmailAddress,

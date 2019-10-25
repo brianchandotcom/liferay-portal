@@ -14,7 +14,7 @@
 
 package com.liferay.saml.persistence.service.base;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -32,13 +32,10 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.persistence.service.persistence.SamlIdpSpConnectionPersistence;
@@ -55,6 +52,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * Provides the base implementation for the saml sp idp connection local service.
  *
@@ -68,7 +67,8 @@ import javax.sql.DataSource;
  */
 public abstract class SamlSpIdpConnectionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements IdentifiableOSGiService, SamlSpIdpConnectionLocalService {
+	implements AopService, IdentifiableOSGiService,
+			   SamlSpIdpConnectionLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -356,444 +356,18 @@ public abstract class SamlSpIdpConnectionLocalServiceBaseImpl
 		return samlSpIdpConnectionPersistence.update(samlSpIdpConnection);
 	}
 
-	/**
-	 * Returns the saml idp sp connection local service.
-	 *
-	 * @return the saml idp sp connection local service
-	 */
-	public com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService
-		getSamlIdpSpConnectionLocalService() {
-
-		return samlIdpSpConnectionLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			SamlSpIdpConnectionLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the saml idp sp connection local service.
-	 *
-	 * @param samlIdpSpConnectionLocalService the saml idp sp connection local service
-	 */
-	public void setSamlIdpSpConnectionLocalService(
-		com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService
-			samlIdpSpConnectionLocalService) {
-
-		this.samlIdpSpConnectionLocalService = samlIdpSpConnectionLocalService;
-	}
-
-	/**
-	 * Returns the saml idp sp connection persistence.
-	 *
-	 * @return the saml idp sp connection persistence
-	 */
-	public SamlIdpSpConnectionPersistence getSamlIdpSpConnectionPersistence() {
-		return samlIdpSpConnectionPersistence;
-	}
-
-	/**
-	 * Sets the saml idp sp connection persistence.
-	 *
-	 * @param samlIdpSpConnectionPersistence the saml idp sp connection persistence
-	 */
-	public void setSamlIdpSpConnectionPersistence(
-		SamlIdpSpConnectionPersistence samlIdpSpConnectionPersistence) {
-
-		this.samlIdpSpConnectionPersistence = samlIdpSpConnectionPersistence;
-	}
-
-	/**
-	 * Returns the saml idp sp session local service.
-	 *
-	 * @return the saml idp sp session local service
-	 */
-	public com.liferay.saml.persistence.service.SamlIdpSpSessionLocalService
-		getSamlIdpSpSessionLocalService() {
-
-		return samlIdpSpSessionLocalService;
-	}
-
-	/**
-	 * Sets the saml idp sp session local service.
-	 *
-	 * @param samlIdpSpSessionLocalService the saml idp sp session local service
-	 */
-	public void setSamlIdpSpSessionLocalService(
-		com.liferay.saml.persistence.service.SamlIdpSpSessionLocalService
-			samlIdpSpSessionLocalService) {
-
-		this.samlIdpSpSessionLocalService = samlIdpSpSessionLocalService;
-	}
-
-	/**
-	 * Returns the saml idp sp session persistence.
-	 *
-	 * @return the saml idp sp session persistence
-	 */
-	public SamlIdpSpSessionPersistence getSamlIdpSpSessionPersistence() {
-		return samlIdpSpSessionPersistence;
-	}
-
-	/**
-	 * Sets the saml idp sp session persistence.
-	 *
-	 * @param samlIdpSpSessionPersistence the saml idp sp session persistence
-	 */
-	public void setSamlIdpSpSessionPersistence(
-		SamlIdpSpSessionPersistence samlIdpSpSessionPersistence) {
-
-		this.samlIdpSpSessionPersistence = samlIdpSpSessionPersistence;
-	}
-
-	/**
-	 * Returns the saml idp sso session local service.
-	 *
-	 * @return the saml idp sso session local service
-	 */
-	public com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalService
-		getSamlIdpSsoSessionLocalService() {
-
-		return samlIdpSsoSessionLocalService;
-	}
-
-	/**
-	 * Sets the saml idp sso session local service.
-	 *
-	 * @param samlIdpSsoSessionLocalService the saml idp sso session local service
-	 */
-	public void setSamlIdpSsoSessionLocalService(
-		com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalService
-			samlIdpSsoSessionLocalService) {
-
-		this.samlIdpSsoSessionLocalService = samlIdpSsoSessionLocalService;
-	}
-
-	/**
-	 * Returns the saml idp sso session persistence.
-	 *
-	 * @return the saml idp sso session persistence
-	 */
-	public SamlIdpSsoSessionPersistence getSamlIdpSsoSessionPersistence() {
-		return samlIdpSsoSessionPersistence;
-	}
-
-	/**
-	 * Sets the saml idp sso session persistence.
-	 *
-	 * @param samlIdpSsoSessionPersistence the saml idp sso session persistence
-	 */
-	public void setSamlIdpSsoSessionPersistence(
-		SamlIdpSsoSessionPersistence samlIdpSsoSessionPersistence) {
-
-		this.samlIdpSsoSessionPersistence = samlIdpSsoSessionPersistence;
-	}
-
-	/**
-	 * Returns the saml sp auth request local service.
-	 *
-	 * @return the saml sp auth request local service
-	 */
-	public com.liferay.saml.persistence.service.SamlSpAuthRequestLocalService
-		getSamlSpAuthRequestLocalService() {
-
-		return samlSpAuthRequestLocalService;
-	}
-
-	/**
-	 * Sets the saml sp auth request local service.
-	 *
-	 * @param samlSpAuthRequestLocalService the saml sp auth request local service
-	 */
-	public void setSamlSpAuthRequestLocalService(
-		com.liferay.saml.persistence.service.SamlSpAuthRequestLocalService
-			samlSpAuthRequestLocalService) {
-
-		this.samlSpAuthRequestLocalService = samlSpAuthRequestLocalService;
-	}
-
-	/**
-	 * Returns the saml sp auth request persistence.
-	 *
-	 * @return the saml sp auth request persistence
-	 */
-	public SamlSpAuthRequestPersistence getSamlSpAuthRequestPersistence() {
-		return samlSpAuthRequestPersistence;
-	}
-
-	/**
-	 * Sets the saml sp auth request persistence.
-	 *
-	 * @param samlSpAuthRequestPersistence the saml sp auth request persistence
-	 */
-	public void setSamlSpAuthRequestPersistence(
-		SamlSpAuthRequestPersistence samlSpAuthRequestPersistence) {
-
-		this.samlSpAuthRequestPersistence = samlSpAuthRequestPersistence;
-	}
-
-	/**
-	 * Returns the saml sp idp connection local service.
-	 *
-	 * @return the saml sp idp connection local service
-	 */
-	public SamlSpIdpConnectionLocalService
-		getSamlSpIdpConnectionLocalService() {
-
-		return samlSpIdpConnectionLocalService;
-	}
-
-	/**
-	 * Sets the saml sp idp connection local service.
-	 *
-	 * @param samlSpIdpConnectionLocalService the saml sp idp connection local service
-	 */
-	public void setSamlSpIdpConnectionLocalService(
-		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService) {
-
-		this.samlSpIdpConnectionLocalService = samlSpIdpConnectionLocalService;
-	}
-
-	/**
-	 * Returns the saml sp idp connection persistence.
-	 *
-	 * @return the saml sp idp connection persistence
-	 */
-	public SamlSpIdpConnectionPersistence getSamlSpIdpConnectionPersistence() {
-		return samlSpIdpConnectionPersistence;
-	}
-
-	/**
-	 * Sets the saml sp idp connection persistence.
-	 *
-	 * @param samlSpIdpConnectionPersistence the saml sp idp connection persistence
-	 */
-	public void setSamlSpIdpConnectionPersistence(
-		SamlSpIdpConnectionPersistence samlSpIdpConnectionPersistence) {
-
-		this.samlSpIdpConnectionPersistence = samlSpIdpConnectionPersistence;
-	}
-
-	/**
-	 * Returns the saml sp message local service.
-	 *
-	 * @return the saml sp message local service
-	 */
-	public com.liferay.saml.persistence.service.SamlSpMessageLocalService
-		getSamlSpMessageLocalService() {
-
-		return samlSpMessageLocalService;
-	}
-
-	/**
-	 * Sets the saml sp message local service.
-	 *
-	 * @param samlSpMessageLocalService the saml sp message local service
-	 */
-	public void setSamlSpMessageLocalService(
-		com.liferay.saml.persistence.service.SamlSpMessageLocalService
-			samlSpMessageLocalService) {
-
-		this.samlSpMessageLocalService = samlSpMessageLocalService;
-	}
-
-	/**
-	 * Returns the saml sp message persistence.
-	 *
-	 * @return the saml sp message persistence
-	 */
-	public SamlSpMessagePersistence getSamlSpMessagePersistence() {
-		return samlSpMessagePersistence;
-	}
-
-	/**
-	 * Sets the saml sp message persistence.
-	 *
-	 * @param samlSpMessagePersistence the saml sp message persistence
-	 */
-	public void setSamlSpMessagePersistence(
-		SamlSpMessagePersistence samlSpMessagePersistence) {
-
-		this.samlSpMessagePersistence = samlSpMessagePersistence;
-	}
-
-	/**
-	 * Returns the saml sp session local service.
-	 *
-	 * @return the saml sp session local service
-	 */
-	public com.liferay.saml.persistence.service.SamlSpSessionLocalService
-		getSamlSpSessionLocalService() {
-
-		return samlSpSessionLocalService;
-	}
-
-	/**
-	 * Sets the saml sp session local service.
-	 *
-	 * @param samlSpSessionLocalService the saml sp session local service
-	 */
-	public void setSamlSpSessionLocalService(
-		com.liferay.saml.persistence.service.SamlSpSessionLocalService
-			samlSpSessionLocalService) {
-
-		this.samlSpSessionLocalService = samlSpSessionLocalService;
-	}
-
-	/**
-	 * Returns the saml sp session persistence.
-	 *
-	 * @return the saml sp session persistence
-	 */
-	public SamlSpSessionPersistence getSamlSpSessionPersistence() {
-		return samlSpSessionPersistence;
-	}
-
-	/**
-	 * Sets the saml sp session persistence.
-	 *
-	 * @param samlSpSessionPersistence the saml sp session persistence
-	 */
-	public void setSamlSpSessionPersistence(
-		SamlSpSessionPersistence samlSpSessionPersistence) {
-
-		this.samlSpSessionPersistence = samlSpSessionPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-
-		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.saml.persistence.model.SamlSpIdpConnection",
-			samlSpIdpConnectionLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.saml.persistence.model.SamlSpIdpConnection");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		samlSpIdpConnectionLocalService =
+			(SamlSpIdpConnectionLocalService)aopProxy;
 	}
 
 	/**
@@ -839,99 +413,43 @@ public abstract class SamlSpIdpConnectionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService.class
-	)
-	protected
-		com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService
-			samlIdpSpConnectionLocalService;
-
-	@BeanReference(type = SamlIdpSpConnectionPersistence.class)
+	@Reference
 	protected SamlIdpSpConnectionPersistence samlIdpSpConnectionPersistence;
 
-	@BeanReference(
-		type = com.liferay.saml.persistence.service.SamlIdpSpSessionLocalService.class
-	)
-	protected com.liferay.saml.persistence.service.SamlIdpSpSessionLocalService
-		samlIdpSpSessionLocalService;
-
-	@BeanReference(type = SamlIdpSpSessionPersistence.class)
+	@Reference
 	protected SamlIdpSpSessionPersistence samlIdpSpSessionPersistence;
 
-	@BeanReference(
-		type = com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalService.class
-	)
-	protected com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalService
-		samlIdpSsoSessionLocalService;
-
-	@BeanReference(type = SamlIdpSsoSessionPersistence.class)
+	@Reference
 	protected SamlIdpSsoSessionPersistence samlIdpSsoSessionPersistence;
 
-	@BeanReference(
-		type = com.liferay.saml.persistence.service.SamlSpAuthRequestLocalService.class
-	)
-	protected com.liferay.saml.persistence.service.SamlSpAuthRequestLocalService
-		samlSpAuthRequestLocalService;
-
-	@BeanReference(type = SamlSpAuthRequestPersistence.class)
+	@Reference
 	protected SamlSpAuthRequestPersistence samlSpAuthRequestPersistence;
 
-	@BeanReference(type = SamlSpIdpConnectionLocalService.class)
 	protected SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService;
 
-	@BeanReference(type = SamlSpIdpConnectionPersistence.class)
+	@Reference
 	protected SamlSpIdpConnectionPersistence samlSpIdpConnectionPersistence;
 
-	@BeanReference(
-		type = com.liferay.saml.persistence.service.SamlSpMessageLocalService.class
-	)
-	protected com.liferay.saml.persistence.service.SamlSpMessageLocalService
-		samlSpMessageLocalService;
-
-	@BeanReference(type = SamlSpMessagePersistence.class)
+	@Reference
 	protected SamlSpMessagePersistence samlSpMessagePersistence;
 
-	@BeanReference(
-		type = com.liferay.saml.persistence.service.SamlSpSessionLocalService.class
-	)
-	protected com.liferay.saml.persistence.service.SamlSpSessionLocalService
-		samlSpSessionLocalService;
-
-	@BeanReference(type = SamlSpSessionPersistence.class)
+	@Reference
 	protected SamlSpSessionPersistence samlSpSessionPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ClassNameLocalService
 		classNameLocalService;
 
-	@ServiceReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
-
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

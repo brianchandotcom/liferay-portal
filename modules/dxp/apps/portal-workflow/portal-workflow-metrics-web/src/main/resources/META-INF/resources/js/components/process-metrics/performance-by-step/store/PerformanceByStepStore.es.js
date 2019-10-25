@@ -30,10 +30,12 @@ const usePerformanceData = (page, pageSize, processId, search, sort) => {
 			params.key = decodeURIComponent(search);
 		}
 
-		client.get(`/processes/${processId}/tasks`, {params}).then(({data}) => {
-			setTotalCount(() => data.totalCount);
-			setItems(() => data.items);
-		});
+		client
+			.get(`/processes/${processId}/tasks?completed=true`, {params})
+			.then(({data}) => {
+				setTotalCount(() => data.totalCount);
+				setItems(() => data.items);
+			});
 	};
 
 	useEffect(() => {

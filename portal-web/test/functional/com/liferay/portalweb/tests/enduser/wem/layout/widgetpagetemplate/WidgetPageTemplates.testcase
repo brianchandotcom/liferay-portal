@@ -265,7 +265,7 @@ definition {
 
 		PageTemplatesAdminGlobalSite.viewDefaultLocalizedCP(
 			pageTemplateNameList = "Blog,Búsqueda,Wiki",
-			portletTitle = "Páginas del sitio web");
+			portletTitle = "Plantillas de página");
 
 		Navigator.openURL();
 

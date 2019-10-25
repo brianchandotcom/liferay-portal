@@ -515,6 +515,10 @@ public interface RoleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getRoles(long companyId, int[] types);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Role> getRoles(
+		long companyId, long classNameId, long[] classPKs, int type);
+
 	/**
 	 * Returns all the roles with the primary keys.
 	 *

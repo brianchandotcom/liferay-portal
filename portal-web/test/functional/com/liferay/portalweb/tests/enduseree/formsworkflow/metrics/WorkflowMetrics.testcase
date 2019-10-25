@@ -239,4 +239,21 @@ definition {
 		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Completed,Last 30 Day,Untracked");
 	}
 
+	@description = "View that Custom Range is selected with shown input date"
+	@priority = "5"
+	test VerifyCustomRangeDateInput {
+		property portal.acceptance = "true";
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		WorkflowMetrics.assertDefaultChartRangesAndUnits();
+
+		WorkflowMetrics.selectDateRange(
+			completionVelocityDateRange = "Custom Range",
+			endDateRange = "11/11/2018",
+			startDateRange = "09/22/2018");
+	}
+
 }

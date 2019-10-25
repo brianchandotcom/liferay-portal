@@ -69,6 +69,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_APPLY</td>
+	<td>//button[@data-testid='applyButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_FROM</td>
+	<td>//input[@name='dateStart']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_TO</td>
+	<td>//input[@name='dateEnd']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN</td>
 	<td>xpath=(//button[contains(@class, 'dropdown-toggle')]//span[contains(@class, 'navbar-text-truncate')])[2]</td>
 	<td></td>

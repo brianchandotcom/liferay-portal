@@ -118,6 +118,30 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
 	}
 
+	macro selectDateRange {
+		var key_completionVelocityDateRange = "${selectVelocityDateRange}";
+		var key_startDateRange = "${startDateRange}";
+		var key_endDateRange = "${endDateRange}";
+
+		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION");
+
+		Type(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_FROM",
+			value1 = "${startDateRange}");
+
+		Type(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_TO",
+			value1 = "${endDateRange}");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_APPLY");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN",
+			value1 = "Sep 22, 2018 - Nov 11, 2018");
+	}
+
 	macro tearDown {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 

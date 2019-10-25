@@ -264,6 +264,11 @@ definition {
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
@@ -274,6 +279,10 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
 		WorkflowMetrics.assertDefaultChartRangesAndUnits();
+
+		WorkflowMetrics.assertChartTotalValue(
+			velocityUnitTotal = "inst / day",
+			velocityValueTotal = "0.03");
 
 		WorkflowMetrics.selectDateRange(
 			completionVelocityDateRange = "Custom Range",

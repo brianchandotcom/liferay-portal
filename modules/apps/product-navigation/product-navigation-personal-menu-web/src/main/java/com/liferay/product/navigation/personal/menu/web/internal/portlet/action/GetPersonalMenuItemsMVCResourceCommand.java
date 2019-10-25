@@ -88,12 +88,36 @@ public class GetPersonalMenuItemsMVCResourceCommand
 	}
 
 	private JSONArray _getImpersonationItemsJSONArray(
-		PortletRequest portletRequest, ThemeDisplay themeDisplay) {
+			PortletRequest portletRequest, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		User realUser = themeDisplay.getRealUser();
+		User user = themeDisplay.getUser();
+
+		String currentURL = _http.removeParameter(
+			ParamUtil.getString(portletRequest, "currentURL"), "doAsUserId");
+
+		String userProfileURL = user.getDisplayURL(themeDisplay, false);
+		String userDashboardURL = user.getDisplayURL(themeDisplay, true);
+
+		userProfileURL = _http.getPath(userProfileURL);
+		userDashboardURL = _http.getPath(userDashboardURL);
+
+		if (currentURL.equals(userProfileURL)) {
+			String realUserProfileURL = realUser.getDisplayURL(
+				themeDisplay, false);
+
+			currentURL = _http.getPath(realUserProfileURL);
+		}
+		else if (currentURL.equals(userDashboardURL)) {
+			String realUserDashboardURL = realUser.getDisplayURL(
+				themeDisplay, true);
+
+			currentURL = _http.getPath(realUserDashboardURL);
+		}
 
 		JSONObject jsonObject1 = JSONUtil.put(
-			"href",
-			_http.removeParameter(
-				ParamUtil.getString(portletRequest, "currentURL"), "doAsUserId")
+			"href", currentURL
 		).put(
 			"label",
 			LanguageUtil.get(themeDisplay.getLocale(), "be-yourself-again")
@@ -102,9 +126,6 @@ public class GetPersonalMenuItemsMVCResourceCommand
 		);
 
 		JSONArray jsonArray = JSONUtil.put(jsonObject1);
-
-		User realUser = themeDisplay.getRealUser();
-		User user = themeDisplay.getUser();
 
 		Locale realUserLocale = realUser.getLocale();
 		Locale userLocale = user.getLocale();

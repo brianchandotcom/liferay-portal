@@ -279,6 +279,13 @@ public class CTEntryLocalServiceUtil {
 		return getService().getCTEntry(ctEntryId);
 	}
 
+	public static java.util.List<Long> getExclusiveModelClassPKs(
+		long ctCollectionId, long modelClassNameId) {
+
+		return getService().getExclusiveModelClassPKs(
+			ctCollectionId, modelClassNameId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

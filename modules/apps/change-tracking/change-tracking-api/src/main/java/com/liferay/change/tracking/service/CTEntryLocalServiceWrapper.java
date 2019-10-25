@@ -292,6 +292,14 @@ public class CTEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<Long> getExclusiveModelClassPKs(
+		long ctCollectionId, long modelClassNameId) {
+
+		return _ctEntryLocalService.getExclusiveModelClassPKs(
+			ctCollectionId, modelClassNameId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

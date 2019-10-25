@@ -14,22 +14,28 @@
 
 package com.liferay.portal.workflow.metrics.service.persistence.impl;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionVersionPersistence;
+import com.liferay.portal.workflow.metrics.service.persistence.impl.constants.WorkflowMetricsPersistenceConstants;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class WorkflowMetricsSLADefinitionVersionFinderBaseImpl
+public abstract class WorkflowMetricsSLADefinitionVersionFinderBaseImpl
 	extends BasePersistenceImpl<WorkflowMetricsSLADefinitionVersion> {
 
 	public WorkflowMetricsSLADefinitionVersionFinderBaseImpl() {
@@ -50,39 +56,51 @@ public class WorkflowMetricsSLADefinitionVersionFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getWorkflowMetricsSLADefinitionVersionPersistence().
+		return workflowMetricsSLADefinitionVersionPersistence.
 			getBadColumnNames();
 	}
 
-	/**
-	 * Returns the workflow metrics sla definition version persistence.
-	 *
-	 * @return the workflow metrics sla definition version persistence
-	 */
-	public WorkflowMetricsSLADefinitionVersionPersistence
-		getWorkflowMetricsSLADefinitionVersionPersistence() {
-
-		return workflowMetricsSLADefinitionVersionPersistence;
+	@Override
+	@Reference(
+		target = WorkflowMetricsPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the workflow metrics sla definition version persistence.
-	 *
-	 * @param workflowMetricsSLADefinitionVersionPersistence the workflow metrics sla definition version persistence
-	 */
-	public void setWorkflowMetricsSLADefinitionVersionPersistence(
-		WorkflowMetricsSLADefinitionVersionPersistence
-			workflowMetricsSLADefinitionVersionPersistence) {
-
-		this.workflowMetricsSLADefinitionVersionPersistence =
-			workflowMetricsSLADefinitionVersionPersistence;
+	@Override
+	@Reference(
+		target = WorkflowMetricsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = WorkflowMetricsSLADefinitionVersionPersistence.class)
+	@Override
+	@Reference(
+		target = WorkflowMetricsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected WorkflowMetricsSLADefinitionVersionPersistence
 		workflowMetricsSLADefinitionVersionPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowMetricsSLADefinitionVersionFinderBaseImpl.class);
+
+	static {
+		try {
+			Class.forName(WorkflowMetricsPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
 
 }

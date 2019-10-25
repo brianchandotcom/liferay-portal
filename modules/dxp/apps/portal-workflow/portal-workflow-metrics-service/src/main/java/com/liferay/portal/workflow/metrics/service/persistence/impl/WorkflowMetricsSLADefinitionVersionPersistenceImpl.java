@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -22,24 +23,26 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.metrics.exception.NoSuchSLADefinitionVersionException;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionImpl;
 import com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionVersionPersistence;
+import com.liferay.portal.workflow.metrics.service.persistence.impl.constants.WorkflowMetricsPersistenceConstants;
 
 import java.io.Serializable;
 
@@ -53,6 +56,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * The persistence implementation for the workflow metrics sla definition version service.
  *
@@ -63,6 +73,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = WorkflowMetricsSLADefinitionVersionPersistence.class)
 public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	extends BasePersistenceImpl<WorkflowMetricsSLADefinitionVersion>
 	implements WorkflowMetricsSLADefinitionVersionPersistence {
@@ -2411,8 +2422,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 
 		setModelImplClass(WorkflowMetricsSLADefinitionVersionImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2438,8 +2447,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			workflowMetricsSLADefinitionVersion) {
 
 		entityCache.putResult(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionImpl.class,
+			entityCacheEnabled, WorkflowMetricsSLADefinitionVersionImpl.class,
 			workflowMetricsSLADefinitionVersion.getPrimaryKey(),
 			workflowMetricsSLADefinitionVersion);
 
@@ -2478,8 +2486,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 					workflowMetricsSLADefinitionVersions) {
 
 			if (entityCache.getResult(
-					WorkflowMetricsSLADefinitionVersionModelImpl.
-						ENTITY_CACHE_ENABLED,
+					entityCacheEnabled,
 					WorkflowMetricsSLADefinitionVersionImpl.class,
 					workflowMetricsSLADefinitionVersion.getPrimaryKey()) ==
 						null) {
@@ -2521,8 +2528,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			workflowMetricsSLADefinitionVersion) {
 
 		entityCache.removeResult(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionImpl.class,
+			entityCacheEnabled, WorkflowMetricsSLADefinitionVersionImpl.class,
 			workflowMetricsSLADefinitionVersion.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2547,8 +2553,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 					workflowMetricsSLADefinitionVersions) {
 
 			entityCache.removeResult(
-				WorkflowMetricsSLADefinitionVersionModelImpl.
-					ENTITY_CACHE_ENABLED,
+				entityCacheEnabled,
 				WorkflowMetricsSLADefinitionVersionImpl.class,
 				workflowMetricsSLADefinitionVersion.getPrimaryKey());
 
@@ -2856,9 +2861,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!WorkflowMetricsSLADefinitionVersionModelImpl.
-				COLUMN_BITMASK_ENABLED) {
-
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -2974,8 +2977,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 		}
 
 		entityCache.putResult(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionImpl.class,
+			entityCacheEnabled, WorkflowMetricsSLADefinitionVersionImpl.class,
 			workflowMetricsSLADefinitionVersion.getPrimaryKey(),
 			workflowMetricsSLADefinitionVersion, false);
 
@@ -3271,29 +3273,31 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	/**
 	 * Initializes the workflow metrics sla definition version persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		WorkflowMetricsSLADefinitionVersionModelImpl.setEntityCacheEnabled(
+			entityCacheEnabled);
+		WorkflowMetricsSLADefinitionVersionModelImpl.setFinderCacheEnabled(
+			finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			WorkflowMetricsSLADefinitionVersionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			WorkflowMetricsSLADefinitionVersionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			WorkflowMetricsSLADefinitionVersionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3302,8 +3306,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			WorkflowMetricsSLADefinitionVersionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
@@ -3312,14 +3315,12 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				MODIFIEDDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid", new String[] {String.class.getName()});
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			WorkflowMetricsSLADefinitionVersionImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -3328,15 +3329,12 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUUID_G",
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			WorkflowMetricsSLADefinitionVersionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -3346,8 +3344,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			WorkflowMetricsSLADefinitionVersionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -3358,18 +3355,13 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				MODIFIEDDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid_C",
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByWorkflowMetricsSLADefinitionId =
 			new FinderPath(
-				WorkflowMetricsSLADefinitionVersionModelImpl.
-					ENTITY_CACHE_ENABLED,
-				WorkflowMetricsSLADefinitionVersionModelImpl.
-					FINDER_CACHE_ENABLED,
+				entityCacheEnabled, finderCacheEnabled,
 				WorkflowMetricsSLADefinitionVersionImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByWorkflowMetricsSLADefinitionId",
@@ -3380,10 +3372,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 
 		_finderPathWithoutPaginationFindByWorkflowMetricsSLADefinitionId =
 			new FinderPath(
-				WorkflowMetricsSLADefinitionVersionModelImpl.
-					ENTITY_CACHE_ENABLED,
-				WorkflowMetricsSLADefinitionVersionModelImpl.
-					FINDER_CACHE_ENABLED,
+				entityCacheEnabled, finderCacheEnabled,
 				WorkflowMetricsSLADefinitionVersionImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByWorkflowMetricsSLADefinitionId",
@@ -3394,15 +3383,13 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 					MODIFIEDDATE_COLUMN_BITMASK);
 
 		_finderPathCountByWorkflowMetricsSLADefinitionId = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByWorkflowMetricsSLADefinitionId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByV_WMSLAD = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			WorkflowMetricsSLADefinitionVersionImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByV_WMSLAD",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -3412,14 +3399,13 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				WORKFLOWMETRICSSLADEFINITIONID_COLUMN_BITMASK);
 
 		_finderPathCountByV_WMSLAD = new FinderPath(
-			WorkflowMetricsSLADefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowMetricsSLADefinitionVersionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByV_WMSLAD",
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByV_WMSLAD",
 			new String[] {String.class.getName(), Long.class.getName()});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(
 			WorkflowMetricsSLADefinitionVersionImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
@@ -3427,10 +3413,44 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = EntityCache.class)
+	@Override
+	@Reference(
+		target = WorkflowMetricsPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = WorkflowMetricsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = WorkflowMetricsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String
@@ -3465,5 +3485,14 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			"uuid", "workflowMetricsSLADefinitionVersionId", "active",
 			"workflowMetricsSLADefinitionId"
 		});
+
+	static {
+		try {
+			Class.forName(WorkflowMetricsPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
 
 }

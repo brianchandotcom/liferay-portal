@@ -59,18 +59,12 @@ public class PrimaryPortalWorkspaceGitRepository
 	}
 
 	private void _setupProfileDXP() {
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
-
-		GitUtil.ExecutionResult executionResult =
-			gitWorkingDirectory.executeBashCommands(
-				GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
-				GitUtil.MILLIS_TIMEOUT, "ant setup-profile-dxp");
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to set up dxp profile\n",
-					executionResult.getStandardError()));
+		try {
+			AntUtil.callTarget(
+				getDirectory(), "build.xml", "setup-profile-dxp");
+		}
+		catch (AntException ae) {
+			throw new RuntimeException("Unable to set up dxp profile", ae);
 		}
 	}
 

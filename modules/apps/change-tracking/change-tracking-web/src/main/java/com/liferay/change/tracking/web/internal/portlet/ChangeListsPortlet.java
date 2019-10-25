@@ -20,6 +20,7 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
+import com.liferay.change.tracking.web.internal.display.CTDisplayRegistry;
 import com.liferay.change.tracking.web.internal.display.context.ChangeListsDisplayContext;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;

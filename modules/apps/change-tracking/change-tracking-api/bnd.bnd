@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.change.tracking.api
 Bundle-Version: 7.0.0
 Export-Package:\
 	com.liferay.change.tracking.constants,\
+	com.liferay.change.tracking.display,\
 	com.liferay.change.tracking.exception,\
 	com.liferay.change.tracking.listener,\
 	com.liferay.change.tracking.model,\

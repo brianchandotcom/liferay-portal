@@ -51,6 +51,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -306,6 +307,9 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 			BundleContext bundleContext) {
 
 			_bundleContext = bundleContext;
+
+			_register(
+				bundleContext, new ContextEntityModel(Collections.emptyList()));
 		}
 
 		private List<EntityField> _addCustomEntityField(

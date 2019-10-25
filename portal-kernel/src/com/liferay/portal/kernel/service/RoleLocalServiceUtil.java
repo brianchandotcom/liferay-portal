@@ -681,6 +681,12 @@ public class RoleLocalServiceUtil {
 		return getService().getRoles(companyId, types);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
+		long companyId, long classNameId, long[] classPKs, int type) {
+
+		return getService().getRoles(companyId, classNameId, classPKs, type);
+	}
+
 	/**
 	 * Returns all the roles with the primary keys.
 	 *

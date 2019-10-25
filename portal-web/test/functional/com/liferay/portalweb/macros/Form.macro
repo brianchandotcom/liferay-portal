@@ -228,7 +228,7 @@ definition {
 	}
 
 	macro enableAutocompleteConfiguration {
-		FormFields.enableSwitcher(fieldName = "Autocomplete");
+		Click(locator1 = "FormFields#SWITCHER_TEXTFIELD");
 	}
 
 	macro getPublishedFormPublicURL {

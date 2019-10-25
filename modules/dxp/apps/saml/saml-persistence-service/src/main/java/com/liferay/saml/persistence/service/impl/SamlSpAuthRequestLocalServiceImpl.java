@@ -14,9 +14,9 @@
 
 package com.liferay.saml.persistence.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.saml.persistence.internal.util.SamlConfigurationUtil;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 import com.liferay.saml.persistence.service.base.SamlSpAuthRequestLocalServiceBaseImpl;
@@ -25,10 +25,16 @@ import com.liferay.saml.runtime.configuration.SamlConfiguration;
 import java.util.Date;
 
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  */
+@Component(
+	property = "model.class.name=com.liferay.saml.persistence.model.SamlSpAuthRequest",
+	service = AopService.class
+)
 public class SamlSpAuthRequestLocalServiceImpl
 	extends SamlSpAuthRequestLocalServiceBaseImpl {
 
@@ -88,7 +94,7 @@ public class SamlSpAuthRequestLocalServiceImpl
 			samlIdpEntityId, samlSpAuthRequestKey);
 	}
 
-	@ServiceReference(type = ConfigurationAdmin.class)
+	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
 	private SamlConfiguration _samlConfiguration;

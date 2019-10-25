@@ -14,6 +14,7 @@
 
 package com.liferay.saml.persistence.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -25,9 +26,15 @@ import com.liferay.saml.persistence.service.base.SamlSpSessionLocalServiceBaseIm
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mika Koivisto
  */
+@Component(
+	property = "model.class.name=com.liferay.saml.persistence.model.SamlSpSession",
+	service = AopService.class
+)
 public class SamlSpSessionLocalServiceImpl
 	extends SamlSpSessionLocalServiceBaseImpl {
 

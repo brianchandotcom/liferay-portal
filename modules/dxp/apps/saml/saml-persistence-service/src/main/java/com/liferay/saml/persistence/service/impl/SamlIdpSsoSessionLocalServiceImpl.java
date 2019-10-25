@@ -14,10 +14,10 @@
 
 package com.liferay.saml.persistence.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.saml.persistence.exception.DuplicateSamlIdpSsoSessionException;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
 import com.liferay.saml.persistence.service.base.SamlIdpSsoSessionLocalServiceBaseImpl;
@@ -27,10 +27,16 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import java.util.Date;
 
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  */
+@Component(
+	property = "model.class.name=com.liferay.saml.persistence.model.SamlIdpSsoSession",
+	service = AopService.class
+)
 public class SamlIdpSsoSessionLocalServiceImpl
 	extends SamlIdpSsoSessionLocalServiceBaseImpl {
 
@@ -113,10 +119,10 @@ public class SamlIdpSsoSessionLocalServiceImpl
 		return samlIdpSsoSession;
 	}
 
-	@ServiceReference(type = ConfigurationAdmin.class)
+	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
-	@ServiceReference(type = SamlProviderConfigurationHelper.class)
+	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 }

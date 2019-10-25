@@ -15,12 +15,12 @@
 package com.liferay.saml.persistence.service.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.saml.persistence.exception.DuplicateSamlSpIdpConnectionSamlIdpEntityIdException;
 import com.liferay.saml.persistence.exception.SamlSpIdpConnectionMetadataUrlException;
 import com.liferay.saml.persistence.exception.SamlSpIdpConnectionMetadataXmlException;
@@ -34,9 +34,16 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mika Koivisto
  */
+@Component(
+	property = "model.class.name=com.liferay.saml.persistence.model.SamlSpIdpConnection",
+	service = AopService.class
+)
 public class SamlSpIdpConnectionLocalServiceImpl
 	extends SamlSpIdpConnectionLocalServiceBaseImpl {
 
@@ -311,7 +318,7 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		return metadataXml;
 	}
 
-	@ServiceReference(type = MetadataUtil.class)
+	@Reference
 	private MetadataUtil _metadataUtil;
 
 }

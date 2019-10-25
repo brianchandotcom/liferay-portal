@@ -34,7 +34,8 @@ public class DDMFormFieldTypesDynamicInclude
 	extends BaseDDMFormFieldTypesDynamicInclude {
 
 	public static final String FIELD_TYPES_REQUESTED_ATTRIBUTE_NAME =
-		DDMFormFieldTypesDynamicInclude.class.getName() + "fieldTypesRequested";
+		DDMFormFieldTypesDynamicInclude.class.getName() +
+			"#fieldTypesRequested";
 
 	@Override
 	public void include(

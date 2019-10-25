@@ -49,6 +49,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -3840,6 +3841,16 @@ public class JournalArticleResourcePersistenceImpl
 	}
 
 	@Override
+	public Set<String> getCTIgnoredAttributeNames() {
+		return _ctIgnoredAttributeNames;
+	}
+
+	@Override
+	public Set<String> getCTMergeableAttributeNames() {
+		return _ctMergeableAttributeNames;
+	}
+
+	@Override
 	public List<String[]> getUniqueIndexColumnNames() {
 		return _uniqueIndexColumnNames;
 	}
@@ -3866,6 +3877,10 @@ public class JournalArticleResourcePersistenceImpl
 		return update(journalArticleResource);
 	}
 
+	private static final Set<String> _ctIgnoredAttributeNames =
+		new HashSet<String>();
+	private static final Set<String> _ctMergeableAttributeNames =
+		new HashSet<String>();
 	private static final List<String[]> _uniqueIndexColumnNames =
 		new ArrayList<String[]>();
 

@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -17493,6 +17494,16 @@ public class LayoutPersistenceImpl
 	}
 
 	@Override
+	public Set<String> getCTIgnoredAttributeNames() {
+		return _ctIgnoredAttributeNames;
+	}
+
+	@Override
+	public Set<String> getCTMergeableAttributeNames() {
+		return _ctMergeableAttributeNames;
+	}
+
+	@Override
 	public List<String[]> getUniqueIndexColumnNames() {
 		return _uniqueIndexColumnNames;
 	}
@@ -17515,10 +17526,20 @@ public class LayoutPersistenceImpl
 		return update(layout);
 	}
 
+	private static final Set<String> _ctIgnoredAttributeNames =
+		new HashSet<String>();
+	private static final Set<String> _ctMergeableAttributeNames =
+		new HashSet<String>();
 	private static final List<String[]> _uniqueIndexColumnNames =
 		new ArrayList<String[]>();
 
 	static {
+		_ctIgnoredAttributeNames.add("modifiedDate");
+
+		_ctMergeableAttributeNames.add("name");
+		_ctMergeableAttributeNames.add("title");
+		_ctMergeableAttributeNames.add("description");
+
 		_uniqueIndexColumnNames.add(
 			new String[] {"uuid_", "groupId", "privateLayout"});
 

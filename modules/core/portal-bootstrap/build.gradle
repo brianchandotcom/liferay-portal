@@ -78,9 +78,9 @@ copySystemPackagesExtraLibs {
 
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.9"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.9.9"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.9.3"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.10"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.9.10"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.10.1"
 	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.13.0.LIFERAY-PATCHED-8"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

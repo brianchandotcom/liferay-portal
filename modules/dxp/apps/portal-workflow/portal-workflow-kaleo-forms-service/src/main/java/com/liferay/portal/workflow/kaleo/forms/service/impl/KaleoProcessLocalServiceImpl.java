@@ -29,6 +29,7 @@ import com.liferay.portal.workflow.kaleo.forms.exception.KaleoProcessDDMTemplate
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPair;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs;
+import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalService;
 import com.liferay.portal.workflow.kaleo.forms.service.base.KaleoProcessLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -150,7 +151,7 @@ public class KaleoProcessLocalServiceImpl
 
 		// Kaleo process links
 
-		kaleoProcessLinkLocalService.deleteKaleoProcessLinks(
+		_kaleoProcessLinkLocalService.deleteKaleoProcessLinks(
 			kaleoProcess.getPrimaryKey());
 
 		// Kaleo process data
@@ -319,7 +320,7 @@ public class KaleoProcessLocalServiceImpl
 
 		// Kaleo process links
 
-		kaleoProcessLinkLocalService.deleteKaleoProcessLinks(kaleoProcessId);
+		_kaleoProcessLinkLocalService.deleteKaleoProcessLinks(kaleoProcessId);
 
 		updateKaleoProcessLinks(kaleoProcessId, kaleoTaskFormPairs);
 
@@ -462,7 +463,7 @@ public class KaleoProcessLocalServiceImpl
 
 		for (KaleoTaskFormPair kaleoTaskFormPair : kaleoTaskFormPairs) {
 			if (Validator.isNotNull(kaleoTaskFormPair.getDDMTemplateId())) {
-				kaleoProcessLinkLocalService.updateKaleoProcessLink(
+				_kaleoProcessLinkLocalService.updateKaleoProcessLink(
 					kaleoProcessId, kaleoTaskFormPair.getWorkflowTaskName(),
 					kaleoTaskFormPair.getDDMTemplateId());
 			}
@@ -484,5 +485,8 @@ public class KaleoProcessLocalServiceImpl
 
 	@Reference
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
+
+	@Reference
+	private KaleoProcessLinkLocalService _kaleoProcessLinkLocalService;
 
 }

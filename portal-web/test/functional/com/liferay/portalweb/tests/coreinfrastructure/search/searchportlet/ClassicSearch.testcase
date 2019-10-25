@@ -195,8 +195,6 @@ definition {
 
 	@priority = "4"
 	test SearchByUserFacet {
-		property portal.suite.search.engine = "disable";
-
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

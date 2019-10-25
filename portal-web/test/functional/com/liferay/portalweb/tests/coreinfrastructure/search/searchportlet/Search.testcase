@@ -941,8 +941,6 @@ definition {
 	}
 
 	test SearchBlogsScopedToPage {
-		property portal.suite.search.engine = "disable";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");

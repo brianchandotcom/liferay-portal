@@ -17,6 +17,7 @@ package com.liferay.flags.service;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -48,6 +49,7 @@ public interface FlagsEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FlagsEntryServiceUtil} to access the flags entry remote service. Add custom service methods to <code>com.liferay.flags.service.impl.FlagsEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public void addEntry(
 			String className, long classPK, String reporterEmailAddress,
 			long reportedUserId, String contentTitle, String contentURL,

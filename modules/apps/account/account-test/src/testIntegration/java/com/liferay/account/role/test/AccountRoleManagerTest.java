@@ -14,6 +14,7 @@
 
 package com.liferay.account.role.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.role.AccountRole;
 import com.liferay.account.role.AccountRoleManager;
@@ -25,10 +26,12 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -120,6 +123,49 @@ public class AccountRoleManagerTest {
 		Assert.assertNotNull(accountRoles);
 
 		Assert.assertEquals(accountRoles.toString(), 1, accountRoles.size());
+	}
+
+	@Test
+	public void testGetAccountRolesMultipleAccountEntries() throws Exception {
+		List<AccountRole> accountRoles = new ArrayList<>();
+
+		accountRoles.add(
+			_addAccountRole(
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				RandomTestUtil.randomString(50)));
+		accountRoles.add(
+			_addAccountRole(
+				_accountEntry1.getAccountEntryId(),
+				RandomTestUtil.randomString(50)));
+
+		// This should not show up in the results
+
+		_addAccountRole(
+			_accountEntry2.getAccountEntryId(),
+			RandomTestUtil.randomString(50));
+
+		List<AccountRole> actualAccountRoles =
+			_accountRoleManager.getAccountRoles(
+				TestPropsValues.getCompanyId(),
+				new long[] {
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+					_accountEntry1.getAccountEntryId()
+				});
+
+		Assert.assertEquals(
+			actualAccountRoles.toString(), 2, actualAccountRoles.size());
+
+		long[] expectedRoleIds = ListUtil.toLongArray(
+			accountRoles, AccountRole::getRoleId);
+
+		Arrays.sort(expectedRoleIds);
+
+		long[] actualRoleIds = ListUtil.toLongArray(
+			actualAccountRoles, AccountRole::getRoleId);
+
+		Arrays.sort(actualRoleIds);
+
+		Assert.assertArrayEquals(expectedRoleIds, actualRoleIds);
 	}
 
 	private AccountRole _addAccountRole(long accountEntryId, String name)

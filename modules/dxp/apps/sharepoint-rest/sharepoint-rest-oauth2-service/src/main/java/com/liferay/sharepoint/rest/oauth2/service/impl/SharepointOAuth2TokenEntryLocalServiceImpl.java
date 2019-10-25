@@ -14,6 +14,7 @@
 
 package com.liferay.sharepoint.rest.oauth2.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
@@ -21,9 +22,15 @@ import com.liferay.sharepoint.rest.oauth2.service.base.SharepointOAuth2TokenEntr
 
 import java.util.Date;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(
+	property = "model.class.name=com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry",
+	service = AopService.class
+)
 public class SharepointOAuth2TokenEntryLocalServiceImpl
 	extends SharepointOAuth2TokenEntryLocalServiceBaseImpl {
 

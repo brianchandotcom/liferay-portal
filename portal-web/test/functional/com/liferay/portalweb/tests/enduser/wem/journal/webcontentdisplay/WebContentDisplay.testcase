@@ -737,7 +737,7 @@ definition {
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
-			groupName = "global",
+			groupName = "Global",
 			title = "WC WebContent Title");
 
 		Navigator.gotoSitePage(

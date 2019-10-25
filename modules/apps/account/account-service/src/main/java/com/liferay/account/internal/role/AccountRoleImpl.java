@@ -31,6 +31,11 @@ public class AccountRoleImpl implements AccountRole {
 		return _role.getName();
 	}
 
+	@Override
+	public long getRoleId() {
+		return _role.getRoleId();
+	}
+
 	private final Role _role;
 
 }

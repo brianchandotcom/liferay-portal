@@ -29,10 +29,11 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AccountRoleManager {
 
 	public AccountRole addAccountRole(
-			long userId, String name, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap)
+			long userId, long accountEntryId, String name,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap)
 		throws PortalException;
 
-	public List<AccountRole> getAccountRoles(long companyId);
+	public List<AccountRole> getAccountRoles(
+		long companyId, long[] accountEntryIds);
 
 }

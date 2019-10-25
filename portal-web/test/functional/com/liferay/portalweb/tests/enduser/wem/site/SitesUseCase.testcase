@@ -1254,6 +1254,7 @@ definition {
 
 	@priority = "4"
 	test SiteTeamsXSS {
+		property test.name.skip.portal.instance = "SitesUsecase#SiteTeamsXSS";
 		property testray.component.names = "Site Administration,XSS";
 
 		ProductMenu.gotoPortlet(

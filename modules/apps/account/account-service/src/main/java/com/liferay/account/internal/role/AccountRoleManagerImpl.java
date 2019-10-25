@@ -19,9 +19,11 @@ import com.liferay.account.role.AccountRole;
 import com.liferay.account.role.AccountRoleManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -37,34 +39,36 @@ public class AccountRoleManagerImpl implements AccountRoleManager {
 
 	@Override
 	public AccountRole addAccountRole(
-			long userId, String name, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap)
+			long userId, long accountEntryId, String name,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap)
 		throws PortalException {
 
 		Role role = _roleLocalService.addRole(
-			userId, AccountEntry.class.getName(), 0, _NAME_NAMESPACE + name,
-			titleMap, descriptionMap, _TYPE_ACCOUNT, null, null);
+			userId, AccountEntry.class.getName(), accountEntryId,
+			_NAME_NAMESPACE + name, titleMap, descriptionMap,
+			RoleConstants.TYPE_PROVIDER, null, null);
 
 		return new AccountRoleImpl(role);
 	}
 
 	@Override
-	public List<AccountRole> getAccountRoles(long companyId) {
-		List<AccountRole> accountRoles = new ArrayList<>();
+	public List<AccountRole> getAccountRoles(
+		long companyId, long[] accountEntryIds) {
 
-		List<Role> roles = _roleLocalService.getRoles(
-			companyId, new int[] {_TYPE_ACCOUNT});
+		long classNameId = _classNameLocalService.getClassNameId(
+			AccountEntry.class);
 
-		for (Role role : roles) {
-			accountRoles.add(new AccountRoleImpl(role));
-		}
-
-		return accountRoles;
+		return TransformUtil.transform(
+			_roleLocalService.getRoles(
+				companyId, classNameId, accountEntryIds,
+				RoleConstants.TYPE_PROVIDER),
+			AccountRoleImpl::new);
 	}
 
 	private static final String _NAME_NAMESPACE = "lfr-account-";
 
-	private static final int _TYPE_ACCOUNT = 910212835;
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

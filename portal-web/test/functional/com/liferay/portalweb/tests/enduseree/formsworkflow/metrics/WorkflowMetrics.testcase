@@ -244,6 +244,31 @@ definition {
 	test VerifyCustomRangeDateInput {
 		property portal.acceptance = "true";
 
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Metrics");
+
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
@@ -254,6 +279,18 @@ definition {
 			completionVelocityDateRange = "Custom Range",
 			endDateRange = "11/11/2018",
 			startDateRange = "09/22/2018");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN",
+			value1 = "Sep 22, 2018 - Nov 11, 2018");
+
+		WorkflowMetrics.selectVelocityUnit(velocityUnit = "INST_WEEK");
+
+		WorkflowMetrics.AssertChartIsPresent(chartVelocityUnit = "Inst / Week");
+
+		WorkflowMetrics.assertChartTotalValue(
+			velocityUnitTotal = "inst / week",
+			velocityValueTotal = "0");
 	}
 
 }

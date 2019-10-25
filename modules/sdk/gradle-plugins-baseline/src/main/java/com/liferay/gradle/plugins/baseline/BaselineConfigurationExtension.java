@@ -21,9 +21,13 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -55,6 +59,25 @@ public class BaselineConfigurationExtension {
 		};
 	}
 
+	@SuppressWarnings("unchecked")
+	public BaselineConfigurationExtension excludedVersions(
+		Iterable<Object> excludedVersions) {
+
+		GUtil.addToCollection(_excludedVersions, excludedVersions);
+
+		return this;
+	}
+
+	public BaselineConfigurationExtension excludedVersions(
+		Object... excludedVersions) {
+
+		return excludedVersions(Arrays.asList(excludedVersions));
+	}
+
+	public List<String> getExcludedVersions() {
+		return GradleUtil.toStringList(_excludedVersions);
+	}
+
 	public String getLowestBaselineVersion() {
 		return GradleUtil.toString(_lowestBaselineVersion);
 	}
@@ -75,6 +98,12 @@ public class BaselineConfigurationExtension {
 		_allowMavenLocal = allowMavenLocal;
 	}
 
+	public void setExcludedVersions(Iterable<Object> excludedVersions) {
+		_excludedVersions.clear();
+
+		excludedVersions(excludedVersions);
+	}
+
 	public void setLowestBaselineVersion(Object lowestBaselineVersion) {
 		_lowestBaselineVersion = lowestBaselineVersion;
 	}
@@ -90,6 +119,7 @@ public class BaselineConfigurationExtension {
 	}
 
 	private boolean _allowMavenLocal;
+	private final List<Object> _excludedVersions = new ArrayList<>();
 	private Object _lowestBaselineVersion = "1.0.0";
 	private Object _lowestMajorVersion;
 	private Object _lowestMajorVersionRequired;

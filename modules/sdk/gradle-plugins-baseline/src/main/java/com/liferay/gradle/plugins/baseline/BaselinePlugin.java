@@ -22,6 +22,7 @@ import com.liferay.gradle.util.Validator;
 import java.io.File;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -123,7 +124,8 @@ public class BaselinePlugin implements Plugin<Project> {
 			"Configures the previous released version of this project for " +
 				"baselining.");
 
-		_configureConfigurationBaseline(configuration);
+		_configureConfigurationBaseline(
+			configuration, baselineConfigurationExtension);
 
 		return configuration;
 	}
@@ -143,7 +145,8 @@ public class BaselinePlugin implements Plugin<Project> {
 	}
 
 	private BaselineTask _addTaskBaseline(
-		AbstractArchiveTask newJarTask, int majorVersion) {
+		AbstractArchiveTask newJarTask, int majorVersion,
+		BaselineConfigurationExtension baselineConfigurationExtension) {
 
 		BaselineTask baselineTask = _addTaskBaseline(
 			newJarTask, BASELINE_TASK_NAME + majorVersion, false);
@@ -166,7 +169,8 @@ public class BaselinePlugin implements Plugin<Project> {
 		final Configuration baselineConfiguration =
 			configurationContainer.detachedConfiguration(dependency);
 
-		_configureConfigurationBaseline(baselineConfiguration);
+		_configureConfigurationBaseline(
+			baselineConfiguration, baselineConfigurationExtension);
 
 		baselineTask.setBaselineConfiguration(baselineConfiguration);
 
@@ -216,7 +220,8 @@ public class BaselinePlugin implements Plugin<Project> {
 	}
 
 	private void _configureConfigurationBaseline(
-		Configuration baselineConfiguration) {
+		Configuration baselineConfiguration,
+		BaselineConfigurationExtension baselineConfigurationExtension) {
 
 		baselineConfiguration.setTransitive(false);
 		baselineConfiguration.setVisible(false);
@@ -237,7 +242,13 @@ public class BaselinePlugin implements Plugin<Project> {
 
 					String version = moduleComponentIdentifier.getVersion();
 
-					if (version.endsWith("-SNAPSHOT")) {
+					List<String> excludedVersions =
+						baselineConfigurationExtension.getExcludedVersions();
+
+					if (excludedVersions.contains(version)) {
+						componentSelection.reject("excluded version");
+					}
+					else if (version.endsWith("-SNAPSHOT")) {
 						componentSelection.reject("no snapshots are allowed");
 					}
 				}
@@ -286,7 +297,7 @@ public class BaselinePlugin implements Plugin<Project> {
 				 majorVersion <= maxMajorVersion; majorVersion++) {
 
 				BaselineTask majorVersionBaselineTask = _addTaskBaseline(
-					newJarTask, majorVersion);
+					newJarTask, majorVersion, baselineConfigurationExtension);
 
 				if (majorVersion < maxMajorVersion) {
 					majorVersionBaselineTask.setIgnoreExcessiveVersionIncreases(

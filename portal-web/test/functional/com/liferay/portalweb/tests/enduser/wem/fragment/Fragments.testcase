@@ -83,7 +83,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Button");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 		}
 
 		task ("Configure the fragment") {
@@ -108,7 +110,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Button");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 		}
 
 		task ("Duplicate the fragment") {
@@ -132,7 +136,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Card");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Card");
 		}
 
 		task ("Configure the fragment") {
@@ -161,7 +167,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Card");
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Card");
 		}
 
 		task ("Duplicate the fragment") {
@@ -185,7 +193,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Heading");
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Heading");
 		}
 
 		task ("Configure the fragment") {
@@ -210,7 +220,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Heading");
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Heading");
 		}
 
 		task ("Duplicate the fragment") {
@@ -234,7 +246,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Image");
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Image");
 		}
 
 		task ("Configure the fragment") {
@@ -259,7 +273,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Image");
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Image");
 		}
 
 		task ("Duplicate the fragment") {
@@ -283,7 +299,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Paragraph");
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Paragraph");
 		}
 
 		task ("Configure the fragment") {
@@ -306,7 +324,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Paragraph");
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Paragraph");
 		}
 
 		task ("Duplicate the fragment") {
@@ -330,7 +350,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Separator");
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Separator");
 		}
 
 		task ("Configure the fragment") {
@@ -353,7 +375,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Separator");
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Separator");
 		}
 
 		task ("Duplicate the fragment") {
@@ -377,7 +401,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Spacer");
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Spacer");
 		}
 
 		task ("Configure the fragment") {
@@ -395,7 +421,9 @@ definition {
 		}
 
 		task ("Add a basic component") {
-			PageEditor.addBasicComponent(fragmentName = "Spacer");
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Spacer");
 		}
 
 		task ("Duplicate the fragment") {

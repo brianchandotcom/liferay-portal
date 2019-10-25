@@ -346,7 +346,9 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		PageEditor.addBasicComponent(fragmentName = "Image");
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Image");
 
 		PageEditor.editFragmentImage(
 			fileName = "Document_1.png",

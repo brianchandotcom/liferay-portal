@@ -42,7 +42,9 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addBasicComponent(fragmentName = "Button");
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
 
 		PageEditor.clickFragmentTopper(fragmentName = "Button");
 

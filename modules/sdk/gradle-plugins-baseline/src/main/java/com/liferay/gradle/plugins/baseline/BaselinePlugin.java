@@ -246,10 +246,10 @@ public class BaselinePlugin implements Plugin<Project> {
 						baselineConfigurationExtension.getExcludedVersions();
 
 					if (excludedVersions.contains(version)) {
-						componentSelection.reject("excluded version");
+						componentSelection.reject("Excluded version");
 					}
 					else if (version.endsWith("-SNAPSHOT")) {
-						componentSelection.reject("no snapshots are allowed");
+						componentSelection.reject("No snapshots are allowed");
 					}
 				}
 

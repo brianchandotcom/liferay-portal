@@ -16,6 +16,13 @@ package com.liferay.portal.settings.authentication.ldap.web.internal.portlet.act
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.Portal;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletContext;
 
@@ -36,6 +43,25 @@ public class PortalSettingsTestLDAPConnectionMVCRenderCommand
 	extends BasePortalSettingsMVCRenderCommand {
 
 	@Override
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			AuthTokenUtil.checkCSRFToken(
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(renderRequest)),
+				PortalSettingsTestLDAPConnectionMVCRenderCommand.class.
+					getName());
+		}
+		catch (PrincipalException pe) {
+			throw new PortletException(pe);
+		}
+
+		return super.render(renderRequest, renderResponse);
+	}
+
+	@Override
 	protected String getJspPath() {
 		return _JSP_PATH;
 	}
@@ -50,5 +76,8 @@ public class PortalSettingsTestLDAPConnectionMVCRenderCommand
 
 	private static final String _JSP_PATH =
 		"/com.liferay.portal.settings.web/test_ldap_connection.jsp";
+
+	@Reference
+	private Portal _portal;
 
 }

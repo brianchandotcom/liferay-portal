@@ -19,6 +19,19 @@ definition {
 			value1 = "${chartVelocityUnit}");
 	}
 
+	macro assertChartTotalValue {
+		var key_completionVelocityUnitTotal = "${velocityUnitTotal}";
+		var key_completionVelocityValueTotal = "${velocityValueTotal}";
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_ITEMS_UNIT",
+			value1 = "${velocityUnitTotal}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_ITEMS_VALUE",
+			value1 = "${velocityValueTotal}");
+	}
+
 	macro assertDefaultChartRangesAndUnits {
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN",
@@ -120,8 +133,8 @@ definition {
 
 	macro selectDateRange {
 		var key_completionVelocityDateRange = "${selectVelocityDateRange}";
-		var key_startDateRange = "${startDateRange}";
 		var key_endDateRange = "${endDateRange}";
+		var key_startDateRange = "${startDateRange}";
 
 		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN");
 
@@ -136,10 +149,14 @@ definition {
 			value1 = "${endDateRange}");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_APPLY");
+	}
 
-		AssertTextEquals(
-			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN",
-			value1 = "Sep 22, 2018 - Nov 11, 2018");
+	macro selectVelocityUnit {
+		var key_velocityUnit = "${velocityUnit}";
+
+		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_${velocityUnit}");
 	}
 
 	macro tearDown {

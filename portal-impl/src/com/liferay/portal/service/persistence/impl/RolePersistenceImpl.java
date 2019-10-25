@@ -9029,6 +9029,770 @@ public class RolePersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_C_CLASSPK_7 =
 		"role_.classPK IN (";
 
+	private FinderPath _finderPathWithPaginationFindByC_C_C_T;
+	private FinderPath _finderPathWithoutPaginationFindByC_C_C_T;
+	private FinderPath _finderPathFetchByC_C_C_T;
+	private FinderPath _finderPathCountByC_C_C_T;
+	private FinderPath _finderPathWithPaginationCountByC_C_C_T;
+
+	/**
+	 * Returns all the roles where companyId = &#63; and classNameId = &#63; and classPK = any &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param type the type
+	 * @return the matching roles
+	 */
+	@Override
+	public List<Role> findByC_C_C_T(
+		long companyId, long classNameId, long[] classPKs, int type) {
+
+		return findByC_C_C_T(
+			companyId, classNameId, classPKs, type, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the roles where companyId = &#63; and classNameId = &#63; and classPK = any &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param type the type
+	 * @param start the lower bound of the range of roles
+	 * @param end the upper bound of the range of roles (not inclusive)
+	 * @return the range of matching roles
+	 */
+	@Override
+	public List<Role> findByC_C_C_T(
+		long companyId, long classNameId, long[] classPKs, int type, int start,
+		int end) {
+
+		return findByC_C_C_T(
+			companyId, classNameId, classPKs, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the roles where companyId = &#63; and classNameId = &#63; and classPK = any &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param type the type
+	 * @param start the lower bound of the range of roles
+	 * @param end the upper bound of the range of roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching roles
+	 */
+	@Override
+	public List<Role> findByC_C_C_T(
+		long companyId, long classNameId, long[] classPKs, int type, int start,
+		int end, OrderByComparator<Role> orderByComparator) {
+
+		return findByC_C_C_T(
+			companyId, classNameId, classPKs, type, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the roles where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param type the type
+	 * @param start the lower bound of the range of roles
+	 * @param end the upper bound of the range of roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching roles
+	 */
+	@Override
+	public List<Role> findByC_C_C_T(
+		long companyId, long classNameId, long[] classPKs, int type, int start,
+		int end, OrderByComparator<Role> orderByComparator,
+		boolean useFinderCache) {
+
+		if (classPKs == null) {
+			classPKs = new long[0];
+		}
+		else if (classPKs.length > 1) {
+			classPKs = ArrayUtil.sortedUnique(classPKs);
+		}
+
+		if (classPKs.length == 1) {
+			Role role = fetchByC_C_C_T(
+				companyId, classNameId, classPKs[0], type);
+
+			if (role == null) {
+				return Collections.emptyList();
+			}
+			else {
+				List<Role> list = new ArrayList<Role>(1);
+
+				list.add(role);
+
+				return list;
+			}
+		}
+
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					companyId, classNameId, StringUtil.merge(classPKs), type
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				companyId, classNameId, StringUtil.merge(classPKs), type, start,
+				end, orderByComparator
+			};
+		}
+
+		List<Role> list = null;
+
+		if (useFinderCache) {
+			list = (List<Role>)FinderCacheUtil.getResult(
+				_finderPathWithPaginationFindByC_C_C_T, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Role role : list) {
+					if ((companyId != role.getCompanyId()) ||
+						(classNameId != role.getClassNameId()) ||
+						!ArrayUtil.contains(classPKs, role.getClassPK()) ||
+						(type != role.getType())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_ROLE__WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
+
+			if (classPKs.length > 0) {
+				query.append("(");
+
+				query.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_7);
+
+				query.append(StringUtil.merge(classPKs));
+
+				query.append(")");
+
+				query.append(")");
+
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_C_C_C_T_TYPE_2);
+
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				query.append(RoleModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				qPos.add(type);
+
+				list = (List<Role>)QueryUtil.list(q, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByC_C_C_T, finderArgs,
+						list);
+				}
+			}
+			catch (Exception e) {
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationFindByC_C_C_T, finderArgs);
+				}
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the role where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; or throws a <code>NoSuchRoleException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param type the type
+	 * @return the matching role
+	 * @throws NoSuchRoleException if a matching role could not be found
+	 */
+	@Override
+	public Role findByC_C_C_T(
+			long companyId, long classNameId, long classPK, int type)
+		throws NoSuchRoleException {
+
+		Role role = fetchByC_C_C_T(companyId, classNameId, classPK, type);
+
+		if (role == null) {
+			StringBundler msg = new StringBundler(10);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append(", type=");
+			msg.append(type);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchRoleException(msg.toString());
+		}
+
+		return role;
+	}
+
+	/**
+	 * Returns the role where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param type the type
+	 * @return the matching role, or <code>null</code> if a matching role could not be found
+	 */
+	@Override
+	public Role fetchByC_C_C_T(
+		long companyId, long classNameId, long classPK, int type) {
+
+		return fetchByC_C_C_T(companyId, classNameId, classPK, type, true);
+	}
+
+	/**
+	 * Returns the role where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param type the type
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching role, or <code>null</code> if a matching role could not be found
+	 */
+	@Override
+	public Role fetchByC_C_C_T(
+		long companyId, long classNameId, long classPK, int type,
+		boolean useFinderCache) {
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, classNameId, classPK, type};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_C_C_T, finderArgs, this);
+		}
+
+		if (result instanceof Role) {
+			Role role = (Role)result;
+
+			if ((companyId != role.getCompanyId()) ||
+				(classNameId != role.getClassNameId()) ||
+				(classPK != role.getClassPK()) || (type != role.getType())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_SELECT_ROLE__WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_T_TYPE_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				qPos.add(type);
+
+				List<Role> list = q.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByC_C_C_T, finderArgs, list);
+					}
+				}
+				else {
+					Role role = list.get(0);
+
+					result = role;
+
+					cacheResult(role);
+				}
+			}
+			catch (Exception e) {
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByC_C_C_T, finderArgs);
+				}
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Role)result;
+		}
+	}
+
+	/**
+	 * Removes the role where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param type the type
+	 * @return the role that was removed
+	 */
+	@Override
+	public Role removeByC_C_C_T(
+			long companyId, long classNameId, long classPK, int type)
+		throws NoSuchRoleException {
+
+		Role role = findByC_C_C_T(companyId, classNameId, classPK, type);
+
+		return remove(role);
+	}
+
+	/**
+	 * Returns the number of roles where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param type the type
+	 * @return the number of matching roles
+	 */
+	@Override
+	public int countByC_C_C_T(
+		long companyId, long classNameId, long classPK, int type) {
+
+		FinderPath finderPath = _finderPathCountByC_C_C_T;
+
+		Object[] finderArgs = new Object[] {
+			companyId, classNameId, classPK, type
+		};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_ROLE__WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_T_TYPE_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				qPos.add(type);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of roles where companyId = &#63; and classNameId = &#63; and classPK = any &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param type the type
+	 * @return the number of matching roles
+	 */
+	@Override
+	public int countByC_C_C_T(
+		long companyId, long classNameId, long[] classPKs, int type) {
+
+		if (classPKs == null) {
+			classPKs = new long[0];
+		}
+		else if (classPKs.length > 1) {
+			classPKs = ArrayUtil.sortedUnique(classPKs);
+		}
+
+		Object[] finderArgs = new Object[] {
+			companyId, classNameId, StringUtil.merge(classPKs), type
+		};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			_finderPathWithPaginationCountByC_C_C_T, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_COUNT_ROLE__WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
+
+			if (classPKs.length > 0) {
+				query.append("(");
+
+				query.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_7);
+
+				query.append(StringUtil.merge(classPKs));
+
+				query.append(")");
+
+				query.append(")");
+
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_C_C_C_T_TYPE_2);
+
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				qPos.add(type);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(
+					_finderPathWithPaginationCountByC_C_C_T, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(
+					_finderPathWithPaginationCountByC_C_C_T, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of roles that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param type the type
+	 * @return the number of matching roles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_C_C_T(
+		long companyId, long classNameId, long classPK, int type) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByC_C_C_T(companyId, classNameId, classPK, type);
+		}
+
+		StringBundler query = new StringBundler(5);
+
+		query.append(_FILTER_SQL_COUNT_ROLE__WHERE);
+
+		query.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_T_TYPE_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Role.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(classNameId);
+
+			qPos.add(classPK);
+
+			qPos.add(type);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of roles that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = any &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param type the type
+	 * @return the number of matching roles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_C_C_T(
+		long companyId, long classNameId, long[] classPKs, int type) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByC_C_C_T(companyId, classNameId, classPKs, type);
+		}
+
+		if (classPKs == null) {
+			classPKs = new long[0];
+		}
+		else if (classPKs.length > 1) {
+			classPKs = ArrayUtil.sortedUnique(classPKs);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_ROLE__WHERE);
+
+		query.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
+
+		if (classPKs.length > 0) {
+			query.append("(");
+
+			query.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_7);
+
+			query.append(StringUtil.merge(classPKs));
+
+			query.append(")");
+
+			query.append(")");
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_C_C_C_T_TYPE_2_SQL);
+
+		query.setStringAt(
+			removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Role.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(classNameId);
+
+			qPos.add(type);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_C_C_C_T_COMPANYID_2 =
+		"role_.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2 =
+		"role_.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_C_T_CLASSPK_2 =
+		"role_.classPK = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_C_T_CLASSPK_7 =
+		"role_.classPK IN (";
+
+	private static final String _FINDER_COLUMN_C_C_C_T_TYPE_2 =
+		"role_.type = ?";
+
+	private static final String _FINDER_COLUMN_C_C_C_T_TYPE_2_SQL =
+		"role_.type_ = ?";
+
 	public RolePersistenceImpl() {
 		setModelClass(Role.class);
 
@@ -9064,6 +9828,14 @@ public class RolePersistenceImpl
 			_finderPathFetchByC_C_C,
 			new Object[] {
 				role.getCompanyId(), role.getClassNameId(), role.getClassPK()
+			},
+			role);
+
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_C_C_T,
+			new Object[] {
+				role.getCompanyId(), role.getClassNameId(), role.getClassPK(),
+				role.getType()
 			},
 			role);
 
@@ -9158,6 +9930,16 @@ public class RolePersistenceImpl
 			_finderPathCountByC_C_C, args, Long.valueOf(1), false);
 		FinderCacheUtil.putResult(
 			_finderPathFetchByC_C_C, args, roleModelImpl, false);
+
+		args = new Object[] {
+			roleModelImpl.getCompanyId(), roleModelImpl.getClassNameId(),
+			roleModelImpl.getClassPK(), roleModelImpl.getType()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_C_C_T, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_C_C_T, args, roleModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -9205,6 +9987,30 @@ public class RolePersistenceImpl
 
 			FinderCacheUtil.removeResult(_finderPathCountByC_C_C, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByC_C_C, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				roleModelImpl.getCompanyId(), roleModelImpl.getClassNameId(),
+				roleModelImpl.getClassPK(), roleModelImpl.getType()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_C_C_T, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_C_C_T, args);
+		}
+
+		if ((roleModelImpl.getColumnBitmask() &
+			 _finderPathFetchByC_C_C_T.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				roleModelImpl.getOriginalCompanyId(),
+				roleModelImpl.getOriginalClassNameId(),
+				roleModelImpl.getOriginalClassPK(),
+				roleModelImpl.getOriginalType()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_C_C_T, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_C_C_T, args);
 		}
 	}
 
@@ -9458,6 +10264,15 @@ public class RolePersistenceImpl
 			FinderCacheUtil.removeResult(
 				_finderPathWithoutPaginationFindByC_C_C, args);
 
+			args = new Object[] {
+				roleModelImpl.getCompanyId(), roleModelImpl.getClassNameId(),
+				roleModelImpl.getClassPK(), roleModelImpl.getType()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_C_C_T, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByC_C_C_T, args);
+
 			FinderCacheUtil.removeResult(
 				_finderPathCountAll, FINDER_ARGS_EMPTY);
 			FinderCacheUtil.removeResult(
@@ -9641,6 +10456,32 @@ public class RolePersistenceImpl
 				FinderCacheUtil.removeResult(_finderPathCountByC_C_C, args);
 				FinderCacheUtil.removeResult(
 					_finderPathWithoutPaginationFindByC_C_C, args);
+			}
+
+			if ((roleModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_C_C_T.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					roleModelImpl.getOriginalCompanyId(),
+					roleModelImpl.getOriginalClassNameId(),
+					roleModelImpl.getOriginalClassPK(),
+					roleModelImpl.getOriginalType()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_C_C_T, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_C_C_T, args);
+
+				args = new Object[] {
+					roleModelImpl.getCompanyId(),
+					roleModelImpl.getClassNameId(), roleModelImpl.getClassPK(),
+					roleModelImpl.getType()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_C_C_T, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_C_C_T, args);
 			}
 		}
 
@@ -10815,6 +11656,62 @@ public class RolePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
+		_finderPathWithPaginationFindByC_C_C_T = new FinderPath(
+			RoleModelImpl.ENTITY_CACHE_ENABLED,
+			RoleModelImpl.FINDER_CACHE_ENABLED, RoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByC_C_C_T = new FinderPath(
+			RoleModelImpl.ENTITY_CACHE_ENABLED,
+			RoleModelImpl.FINDER_CACHE_ENABLED, RoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName()
+			},
+			RoleModelImpl.COMPANYID_COLUMN_BITMASK |
+			RoleModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			RoleModelImpl.CLASSPK_COLUMN_BITMASK |
+			RoleModelImpl.TYPE_COLUMN_BITMASK |
+			RoleModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathFetchByC_C_C_T = new FinderPath(
+			RoleModelImpl.ENTITY_CACHE_ENABLED,
+			RoleModelImpl.FINDER_CACHE_ENABLED, RoleImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName()
+			},
+			RoleModelImpl.COMPANYID_COLUMN_BITMASK |
+			RoleModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			RoleModelImpl.CLASSPK_COLUMN_BITMASK |
+			RoleModelImpl.TYPE_COLUMN_BITMASK);
+
+		_finderPathCountByC_C_C_T = new FinderPath(
+			RoleModelImpl.ENTITY_CACHE_ENABLED,
+			RoleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName()
+			});
+
+		_finderPathWithPaginationCountByC_C_C_T = new FinderPath(
+			RoleModelImpl.ENTITY_CACHE_ENABLED,
+			RoleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName()
 			});
 	}
 

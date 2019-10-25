@@ -280,6 +280,23 @@ public class RolePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_C_T() throws Exception {
+		_persistence.countByC_C_C_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_C_C_T(0L, 0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByC_C_C_TArrayable() throws Exception {
+		_persistence.countByC_C_C_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.nextInt());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Role newRole = addRole();
 
@@ -540,6 +557,23 @@ public class RolePersistenceTest {
 			Long.valueOf(existingRole.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
 				existingRole, "getOriginalClassPK", new Class<?>[0]));
+
+		Assert.assertEquals(
+			Long.valueOf(existingRole.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingRole, "getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingRole.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingRole, "getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingRole.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				existingRole, "getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(
+			Integer.valueOf(existingRole.getType()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingRole, "getOriginalType", new Class<?>[0]));
 	}
 
 	protected Role addRole() throws Exception {

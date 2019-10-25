@@ -150,11 +150,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_SIDEBAR_ADD_FRAGMENT_BUTTON</td>
-	<td>//button[@data-item-name='${key_fragmentName}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENT_SIDEBAR_CENTER_TEXT</td>
 	<td>//div[contains(@class,'text-center')]/h1</td>
 	<td></td>

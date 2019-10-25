@@ -97,7 +97,6 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/language/Language.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/language/LanguageUtil.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/log/*,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/model/AttachedModel.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/model/AuditedModel.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/model/BaseModel.class,\

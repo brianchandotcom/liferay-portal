@@ -28,5 +28,4 @@ Main-Class: com.liferay.lang.builder.LangBuilder
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/language/LanguageConstants.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/language/LanguageValidator.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/log/*,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/util/*

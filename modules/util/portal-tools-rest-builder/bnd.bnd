@@ -23,7 +23,6 @@ Main-Class: com.liferay.portal.tools.rest.builder.RESTBuilder
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/log/*,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/search/Sort.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/search/filter/Filter.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/util/*,\

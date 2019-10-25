@@ -12,5 +12,4 @@ Main-Class: com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilder
 	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/io/unsync/*,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/log/*,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/util/*

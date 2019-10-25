@@ -27,7 +27,6 @@ Main-Class: com.liferay.javadoc.formatter.JavadocFormatter
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/log/*,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/search/Document.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/search/Field.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/search/highlight/HighlightUtil.class,\

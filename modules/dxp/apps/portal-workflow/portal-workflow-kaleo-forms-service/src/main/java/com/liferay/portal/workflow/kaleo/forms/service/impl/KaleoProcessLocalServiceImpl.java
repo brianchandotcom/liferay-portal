@@ -18,13 +18,13 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPair;
@@ -36,12 +36,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * Provides the local service for accessing, adding, deleting, and updating
  * Kaleo processes.
  *
  * @author Marcellus Tavares
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
+	service = AopService.class
+)
 public class KaleoProcessLocalServiceImpl
 	extends KaleoProcessLocalServiceBaseImpl {
 
@@ -475,7 +482,7 @@ public class KaleoProcessLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = DDMTemplateLinkLocalService.class)
+	@Reference
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 
 }

@@ -15,12 +15,15 @@
 package com.liferay.portal.workflow.kaleo.forms.service.impl;
 
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
 import com.liferay.portal.workflow.kaleo.forms.service.base.KaleoProcessLinkLocalServiceBaseImpl;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the local service for accessing, adding, deleting, and updating
@@ -28,6 +31,10 @@ import java.util.List;
  *
  * @author Marcellus Tavares
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink",
+	service = AopService.class
+)
 public class KaleoProcessLinkLocalServiceImpl
 	extends KaleoProcessLinkLocalServiceBaseImpl {
 
@@ -218,7 +225,7 @@ public class KaleoProcessLinkLocalServiceImpl
 		return kaleoProcessLink;
 	}
 
-	@ServiceReference(type = DDMTemplateLinkLocalService.class)
+	@Reference
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 
 }

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.forms.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
@@ -31,12 +31,22 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * Provides the remote service for accessing, adding, deleting, and updating
  * Kaleo processes. This class's methods include permission checks.
  *
  * @author Marcellus Tavares
  */
+@Component(
+	property = {
+		"json.web.service.context.name=kaleoforms",
+		"json.web.service.context.path=KaleoProcess"
+	},
+	service = AopService.class
+)
 public class KaleoProcessServiceImpl extends KaleoProcessServiceBaseImpl {
 
 	/**
@@ -213,10 +223,9 @@ public class KaleoProcessServiceImpl extends KaleoProcessServiceBaseImpl {
 			kaleoTaskFormPairs, serviceContext);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				KaleoProcessServiceImpl.class, "_portletResourcePermission",
-				KaleoFormsConstants.RESOURCE_NAME);
+	@Reference(
+		target = "(resource.name=" + KaleoFormsConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

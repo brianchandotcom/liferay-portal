@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessFinder;
@@ -34,11 +33,15 @@ import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessF
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * Implements custom finders for Kaleo processes.
  *
  * @author Inácio Nery
  */
+@Component(service = KaleoProcessFinder.class)
 public class KaleoProcessFinderImpl
 	extends KaleoProcessFinderBaseImpl implements KaleoProcessFinder {
 
@@ -503,7 +506,7 @@ public class KaleoProcessFinderImpl
 		}
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

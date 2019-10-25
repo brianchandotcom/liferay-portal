@@ -830,7 +830,7 @@
 				<dirset
 					dir="${modules.dir}"
 					excludes="**/*-test*,${app.module.dirs.excludes}"
-					includes="apps/${app.name}/**,dxp/apps/${app.name}/**"
+					includes="apps/${app.name}/**"
 				>
 					<present targetdir="${modules.dir}">
 						<mapper

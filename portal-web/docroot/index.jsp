@@ -52,6 +52,17 @@ if (!request.isRequestedSessionIdFromCookie()) {
 	redirect = PortalUtil.getURLWithSessionId(redirect, session.getId());
 }
 
+String queryString = request.getQueryString();
+
+if (Validator.isNotNull(queryString)) {
+	if (redirect.contains(StringPool.QUESTION)) {
+		redirect = redirect + StringPool.AMPERSAND + queryString;
+	}
+	else {
+		redirect = redirect + StringPool.QUESTION + queryString;
+	}
+}
+
 response.setHeader(HttpHeaders.LOCATION, redirect);
 
 response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);

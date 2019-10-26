@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.view.count.service.ViewCountEntryLocalService;
 
 import java.util.Date;
 
@@ -52,7 +54,7 @@ public class AssetEntryDocumentContributor implements DocumentContributor {
 
 		long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 
-		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			className, classPK);
 
 		if (assetEntry == null) {
@@ -90,11 +92,23 @@ public class AssetEntryDocumentContributor implements DocumentContributor {
 				assetEntry.getTitleMap(), assetEntry.getDefaultLanguageId(),
 				assetEntry.getGroupId()),
 			true, true);
-		document.addNumber("viewCount", assetEntry.getViewCount());
 		document.addKeyword("visible", assetEntry.isVisible());
+
+		document.addNumber(
+			"viewCount",
+			_viewCountEntryLocalService.getViewCount(
+				assetEntry.getCompanyId(),
+				_classNameLocalService.getClassNameId(AssetEntry.class),
+				assetEntry.getPrimaryKey()));
 	}
 
 	@Reference
-	protected AssetEntryLocalService assetEntryLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private ViewCountEntryLocalService _viewCountEntryLocalService;
 
 }

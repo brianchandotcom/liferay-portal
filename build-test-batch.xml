@@ -381,6 +381,15 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						<then>
 							<start-docker-database />
 						</then>
+						<elseif>
+							<and>
+								<equals arg1="@{database.type}" arg2="oracle" />
+								<equals arg1="@{database.version}" arg2="19.3.0.0.0" />
+							</and>
+							<then>
+								<fail message="Unsupported database: @{database.type}-@{database.version}" />
+							</then>
+						</elseif>
 						<else>
 							<exec executable="${database.service.executable}" resultproperty="exec.result">
 								<arg line="${database.service.cmd.start}" />

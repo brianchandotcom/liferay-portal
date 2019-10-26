@@ -77,62 +77,31 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		_ctService.updateWithUnsafeFunction(this::_publish);
 	}
 
-	private void _moveCTEntries(
-		CTPersistence<T> ctPersistence, Map<Serializable, CTEntry> ctEntries,
-		long fromCTCollectionId, long toCTCollectionId) {
+	private static void _flushAndClear(CTPersistence<?> ctPersistence) {
+		Session session = ctPersistence.getCurrentSession();
 
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(fromCTCollectionId)) {
+		session.flush();
+		session.clear();
+	}
 
-			Map<Serializable, T> ctModels = ctPersistence.fetchByPrimaryKeys(
-				ctEntries.keySet());
+	private static <T extends CTModel<T>> void _updateCTCollectionId(
+		CTPersistence<T> ctPersistence, long ctCollectionId, T ctModel) {
 
-			if ((ctEntries == _modificationCTEntries) &&
-				(ctEntries.size() != ctModels.size())) {
+		ctModel.setCtCollectionId(ctCollectionId);
 
-				throw new SystemException(
-					StringBundler.concat(
-						"Size mismatch between ", ctEntries, " and ", ctModels,
-						" for ", _ctService.getModelClass()));
-			}
+		ctModel = ctPersistence.updateCTModel(ctModel, true);
 
-			for (Map.Entry<Serializable, T> entry : ctModels.entrySet()) {
-				Serializable primaryKey = entry.getKey();
+		ctPersistence.clearCache(ctModel);
+	}
 
-				CTEntry ctEntry = ctEntries.get(primaryKey);
+	private void _checkModificationSize(
+		Map<Serializable, CTEntry> ctEntries, Map<Serializable, T> ctModels) {
 
-				T ctModel = entry.getValue();
-
-				long mvccVersion = ctModel.getMvccVersion();
-
-				if ((fromCTCollectionId == _targetCTCollectionId) &&
-					(mvccVersion != ctEntry.getModelMvccVersion())) {
-
-					throw new SystemException(
-						StringBundler.concat(
-							"MVCC version mismatch between ", ctEntry, " and ",
-							ctModel, " for ", _ctService.getModelClass()));
-				}
-
-				ctModel.setCtCollectionId(toCTCollectionId);
-
-				ctModel = ctPersistence.updateCTModel(ctModel, true);
-
-				ctPersistence.clearCache(ctModel);
-
-				if (toCTCollectionId == _sourceCTCollectionId) {
-					ctEntry.setModelMvccVersion(mvccVersion + 1);
-
-					ctEntries.put(
-						primaryKey,
-						_ctEntryLocalService.updateCTEntry(ctEntry));
-				}
-			}
-
-			Session session = ctPersistence.getCurrentSession();
-
-			session.flush();
-			session.clear();
+		if (ctEntries.size() != ctModels.size()) {
+			throw new SystemException(
+				StringBundler.concat(
+					"Size mismatch between ", ctEntries, " and ", ctModels,
+					" for ", _ctService.getModelClass()));
 		}
 	}
 
@@ -141,31 +110,136 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		// Order matters to avoid causing constraint violations
 
 		if (_deletionCTEntries != null) {
-			_moveCTEntries(
-				ctPersistence, _deletionCTEntries, _targetCTCollectionId,
-				_sourceCTCollectionId);
+			try (SafeClosable safeClosable =
+					CTCollectionThreadLocal.setCTCollectionId(
+						_targetCTCollectionId)) {
+
+				Map<Serializable, T> ctModels =
+					ctPersistence.fetchByPrimaryKeys(
+						_deletionCTEntries.keySet());
+
+				for (Map.Entry<Serializable, T> entry : ctModels.entrySet()) {
+					Serializable primaryKey = entry.getKey();
+
+					CTEntry ctEntry = _deletionCTEntries.get(primaryKey);
+
+					T ctModel = entry.getValue();
+
+					long mvccVersion = ctModel.getMvccVersion();
+
+					if (mvccVersion != ctEntry.getModelMvccVersion()) {
+						throw new SystemException(
+							StringBundler.concat(
+								"MVCC version mismatch between ", ctEntry,
+								" and ", ctModel, " for ",
+								_ctService.getModelClass()));
+					}
+
+					_updateCTCollectionId(
+						ctPersistence, _sourceCTCollectionId, ctModel);
+
+					ctEntry.setModelMvccVersion(mvccVersion + 1);
+
+					_deletionCTEntries.put(
+						primaryKey,
+						_ctEntryLocalService.updateCTEntry(ctEntry));
+				}
+
+				_flushAndClear(ctPersistence);
+			}
 		}
 
 		if (_modificationCTEntries != null) {
+			Map<Serializable, T> sourceCTModels = null;
+
 			long tempCTCollectionId = -_sourceCTCollectionId;
 
-			_moveCTEntries(
-				ctPersistence, _modificationCTEntries, _sourceCTCollectionId,
-				tempCTCollectionId);
+			try (SafeClosable safeClosable =
+					CTCollectionThreadLocal.setCTCollectionId(
+						_sourceCTCollectionId)) {
 
-			_moveCTEntries(
-				ctPersistence, _modificationCTEntries, _targetCTCollectionId,
-				_sourceCTCollectionId);
+				sourceCTModels = ctPersistence.fetchByPrimaryKeys(
+					_modificationCTEntries.keySet());
 
-			_moveCTEntries(
-				ctPersistence, _modificationCTEntries, tempCTCollectionId,
-				_targetCTCollectionId);
+				_checkModificationSize(_modificationCTEntries, sourceCTModels);
+
+				for (T ctModel : sourceCTModels.values()) {
+					_updateCTCollectionId(
+						ctPersistence, tempCTCollectionId, ctModel);
+				}
+
+				_flushAndClear(ctPersistence);
+			}
+
+			try (SafeClosable safeClosable =
+					CTCollectionThreadLocal.setCTCollectionId(
+						_targetCTCollectionId)) {
+
+				Map<Serializable, T> ctModels =
+					ctPersistence.fetchByPrimaryKeys(
+						_modificationCTEntries.keySet());
+
+				_checkModificationSize(_modificationCTEntries, ctModels);
+
+				for (Map.Entry<Serializable, T> entry : ctModels.entrySet()) {
+					Serializable primaryKey = entry.getKey();
+
+					CTEntry ctEntry = _modificationCTEntries.get(primaryKey);
+
+					T ctModel = entry.getValue();
+
+					long mvccVersion = ctModel.getMvccVersion();
+
+					if (mvccVersion != ctEntry.getModelMvccVersion()) {
+						throw new SystemException(
+							StringBundler.concat(
+								"MVCC version mismatch between ", ctEntry,
+								" and ", ctModel, " for ",
+								_ctService.getModelClass()));
+					}
+
+					_updateCTCollectionId(
+						ctPersistence, _sourceCTCollectionId, ctModel);
+
+					ctEntry.setModelMvccVersion(mvccVersion + 1);
+
+					_modificationCTEntries.put(
+						primaryKey,
+						_ctEntryLocalService.updateCTEntry(ctEntry));
+				}
+
+				_flushAndClear(ctPersistence);
+			}
+
+			try (SafeClosable safeClosable =
+					CTCollectionThreadLocal.setCTCollectionId(
+						tempCTCollectionId)) {
+
+				for (T ctModel : sourceCTModels.values()) {
+					_updateCTCollectionId(
+						ctPersistence, _targetCTCollectionId, ctModel);
+				}
+
+				_flushAndClear(ctPersistence);
+			}
 		}
 
 		if (_additionCTEntries != null) {
-			_moveCTEntries(
-				ctPersistence, _additionCTEntries, _sourceCTCollectionId,
-				_targetCTCollectionId);
+			try (SafeClosable safeClosable =
+					CTCollectionThreadLocal.setCTCollectionId(
+						_sourceCTCollectionId)) {
+
+				Map<Serializable, T> ctModels =
+					ctPersistence.fetchByPrimaryKeys(
+						_additionCTEntries.keySet());
+
+				for (T ctModel : ctModels.values()) {
+					_updateCTCollectionId(
+						ctPersistence, _targetCTCollectionId, ctModel);
+				}
+
+				_flushAndClear(ctPersistence);
+			}
 		}
 
 		return null;

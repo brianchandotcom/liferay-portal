@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.exception.GroupInheritContentException;
 import com.liferay.portal.kernel.exception.GroupKeyException;
 import com.liferay.portal.kernel.exception.GroupParentException;
 import com.liferay.portal.kernel.exception.LocaleException;
+import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.exception.PendingBackgroundTaskException;
@@ -4923,10 +4924,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if (site) {
-			Company company = companyLocalService.getCompany(companyId);
+			try {
+				Company company = companyLocalService.getCompany(companyId);
 
-			if (groupKey.equals(company.getName())) {
-				throw new DuplicateGroupException();
+				if (groupKey.equals(company.getName())) {
+					throw new DuplicateGroupException();
+				}
+			}
+			catch (NoSuchCompanyException nsce) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsce, nsce);
+				}
 			}
 		}
 	}

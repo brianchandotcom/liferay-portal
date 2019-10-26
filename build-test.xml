@@ -9738,15 +9738,31 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<get-database-property property.name="database.username" />
 
 							<if>
-								<os family="windows" />
+								<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 								<then>
-									<exec executable="${oracle.sqlplus.executable}" failonerror="true">
-										<arg value="${oracle.admin.user}/${oracle.admin.password} as sysdba" />
-										<arg value="@create.sql" />
-										<arg value="${database.username}" />
-										<arg value="${database.password}" />
-									</exec>
+									<get-database-property property.name="database.host" />
+
+									<property location="create.sql" name="create.sql.file.path" />
+
+									<execute failonerror="false">
+										<![CDATA[
+											docker cp ${create.sql.file.path} ${database.host}:/tmp/create.sql
+
+											docker exec ${database.host} sqlplus ${oracle.admin.user}/${oracle.admin.password} @/tmp/create.sql ${database.username} ${database.password}
+										]]>
+									</execute>
 								</then>
+								<elseif>
+									<os family="windows" />
+									<then>
+										<exec executable="${oracle.sqlplus.executable}" failonerror="true">
+											<arg value="${oracle.admin.user}/${oracle.admin.password} as sysdba" />
+											<arg value="@create.sql" />
+											<arg value="${database.username}" />
+											<arg value="${database.password}" />
+										</exec>
+									</then>
+								</elseif>
 								<else>
 									<retry retrycount="10" retrydelay="60000">
 										<exec executable="${oracle.sqlplus.executable}" failonerror="true">
@@ -10003,78 +10019,34 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								<param name="sql.file" value="create-bare-${database.type}.sql" />
 							</antcall>
 
-							<property location="${project.dir}/setup.sql" name="setup.sql.file" />
+							<property location="${project.dir}/setup_data_pump.sql" name="oracle.setup.file.path" />
 
-							<echo file="${setup.sql.file}">
+							<echo file="${oracle.setup.file.path}">
 								<![CDATA[
-									alter system set result_cache_max_size=24M scope=spfile;
-									alter system set sga_target=4928M scope=spfile;
-									alter system set shared_pool_reserved_size=40M scope=spfile;
-
-									create or replace directory DATA_PUMP_DIR as '/home/oracle/data_pump_dir';
-
-									shutdown;
-
-									startup;
+									create or replace directory DATA_PUMP_DIR as '/tmp/data_pump_dir';
 
 									quit;
 								]]>
 							</echo>
 
-							<get-database-property property.name="database.version" />
+							<get-database-property property.name="database.host" />
 
-							<execute>
+							<property location="${liferay.home}/oracle.dmp" name="oracle.dump.file.path" />
+
+							<execute failonerror="false">
 								<![CDATA[
-									docker cp ${setup.sql.file} ${env.HOSTNAME}_oracle:/home/oracle/setup.sql
+									docker exec ${database.host} mkdir -p /tmp/data_pump_dir
 
-									docker exec ${env.HOSTNAME}_oracle /bin/bash -c "source /home/oracle/.bashrc ; sqlplus / as sysdba @/home/oracle/setup.sql"
+									docker cp ${oracle.dump.file.path} ${database.host}:/tmp/data_pump_dir/oracle.dmp
+									docker cp ${oracle.setup.file.path} ${database.host}:/tmp/setup_data_pump.sql
+
+									docker exec ${database.host} chown -R oracle:oracle /tmp/data_pump_dir
+
+									docker exec ${database.host} sqlplus ${oracle.admin.user}/${oracle.admin.password} @/tmp/setup_data_pump.sql
+
+									docker exec ${database.host} impdp ${oracle.admin.user}/${oracle.admin.password} dumpfile=oracle.dmp table_exists_action=replace
 								]]>
 							</execute>
-
-							<delete file="${setup.sql.file}" />
-
-							<echo file="data-pump.sql">
-								<![CDATA[
-									drop user lportal cascade;
-
-									select directory_name,directory_path from dba_directories where directory_name='DATA_PUMP_DIR';
-
-									quit;
-								]]>
-							</echo>
-
-							<exec executable="${oracle.sqlplus.executable}" failonerror="true" outputproperty="data.pump.output">
-								<arg value="${oracle.admin.user}/${oracle.admin.password}" />
-								<arg value="@data-pump.sql" />
-							</exec>
-
-							<delete file="data-pump.sql" />
-
-							<propertyregex
-								input="${data.pump.output}"
-								override="true"
-								property="data.pump.dir"
-								regexp="[\s\S]+DATA_PUMP_DIR[^/]+(.+)[\S\s]*"
-								replace="\1"
-							/>
-
-							<property name="oracle.dump.file.name" value="${database.type}.dmp" />
-
-							<property location="${liferay.home}/${oracle.dump.file.name}" name="oracle.dump.file.path" />
-
-							<execute>
-								<![CDATA[
-									docker exec ${env.HOSTNAME}_oracle mkdir -p ${data.pump.dir}
-
-									docker cp ${oracle.dump.file.path} ${env.HOSTNAME}_oracle:${data.pump.dir}/${oracle.dump.file.name}
-								]]>
-							</execute>
-
-							<exec executable="impdp">
-								<arg value="${oracle.admin.user}/${oracle.admin.password}" />
-								<arg value="dumpfile=${oracle.dump.file.name}" />
-								<arg value="table_exists_action=replace" />
-							</exec>
 						</then>
 						<else>
 							<sql classpath="${app.server.lib.global.dir}/${jdbc.oracle.driver}" driver="oracle.jdbc.OracleDriver" onerror="continue" output="data.pump.log" password="${oracle.admin.password}" print="true" url="${database.oracle.url}" userid="${oracle.admin.user}">

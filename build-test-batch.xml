@@ -3019,6 +3019,53 @@ log.sanitizer.enabled=false</echo>
 			</exec>
 
 			<delete file="${docker.start.script}" />
+
+			<if>
+				<equals arg1="${database.type}" arg2="oracle" />
+				<then>
+					<property location="${project.dir}/setup.sh" name="setup.sh.file" />
+
+					<echo file="${setup.sh.file}">
+						<![CDATA[
+							#!/bin/bash
+
+							sqlplus ${oracle.admin.user}/${oracle.admin.password} @/tmp/setup.sql
+
+							while [[ "$(${ORACLE_HOME}/bin/lsnrctl status | grep READY)" == "" ]]
+							do
+								echo "Waiting for Oracle to be ready"
+
+								sleep 10
+							done
+
+							${ORACLE_HOME}/bin/lsnrctl status
+						]]>
+					</echo>
+
+					<property location="${project.dir}/setup.sql" name="setup.sql.file" />
+
+					<echo file="${setup.sql.file}">
+						<![CDATA[
+							alter system set result_cache_max_size=24M scope=spfile;
+							alter system set sga_target=4928M scope=spfile;
+							alter system set shared_pool_reserved_size=40M scope=spfile;
+
+							quit;
+						]]>
+					</echo>
+
+					<get-database-property property.name="database.host" />
+
+					<execute failonerror="false">
+						<![CDATA[
+							docker cp ${setup.sh.file} ${database.host}:/tmp/setup.sh
+							docker cp ${setup.sql.file} ${database.host}:/tmp/setup.sql
+
+							docker exec ${database.host} /bin/bash /tmp/setup.sh
+						]]>
+					</execute>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

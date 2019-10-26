@@ -14,21 +14,22 @@
 
 package com.liferay.layout.page.template.admin.web.internal.upgrade.v1_1_0;
 
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
 
 /**
  * @author Rubén Pulido
@@ -39,102 +40,91 @@ public class UpgradePreviewFileEntryId extends UpgradeProcess {
 	}
 
 	@Override
-	protected void doUpgrade() throws UpgradeException {
-		try {
-			_insertRepository();
-			_updateDLFileEntryRepositoryId();
-		}
-		catch (SQLException sqle) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(sqle, sqle);
-			}
-
-			throw new UpgradeException(sqle);
-		}
+	protected void doUpgrade() throws Exception {
+		updateDLFileEntryId();
 	}
 
-	private void _insertRepository() throws SQLException {
-		StringBundler sb1 = new StringBundler(6);
-
-		sb1.append("select mvccVersion, groupId, companyId, userId,  ");
-		sb1.append("userName, classNameId, name, description, typeSettings, ");
-		sb1.append("dlFolderId, lastPublishDate from Repository where ");
-		sb1.append("portletId = '");
-		sb1.append(LayoutAdminPortletKeys.GROUP_PAGES);
-		sb1.append("'");
-
-		StringBundler sb2 = new StringBundler(6);
-
-		sb2.append("insert into Repository (mvccVersion, uuid_, ");
-		sb2.append("repositoryId, groupId, companyId, userId, userName, ");
-		sb2.append("createDate, modifiedDate, classNameId, name,  ");
-		sb2.append("description, portletId, typeSettings, dlFolderId,  ");
-		sb2.append("lastPublishDate) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,  ");
-		sb2.append("?, ?, ?, ?, ?, ?)");
-
-		try (Statement s = connection.createStatement();
-			ResultSet rs = s.executeQuery(sb1.toString());
-			PreparedStatement ps = AutoBatchPreparedStatementUtil.autoBatch(
-				connection.prepareStatement(sb2.toString()))) {
+	protected void updateDLFileEntryId() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps1 = connection.prepareStatement(
+				"select distinct groupId from LayoutPageTemplateEntry where " +
+					"previewFileEntryId > 0");
+			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long mvccVersion = rs.getLong("mvccVersion");
 				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
-				long classNameId = rs.getLong("classNameId");
-				String name = rs.getString("name");
-				String description = rs.getString("description");
-				String typeSettings = rs.getString("typeSettings");
-				long dlFolderId = rs.getLong("dlFolderId");
-				Timestamp lastPublishDate = rs.getTimestamp("lastPublishDate");
 
-				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+				Repository repository = _getRepository(groupId);
 
-				ps.setLong(1, mvccVersion);
-				ps.setString(2, PortalUUIDUtil.generate());
-				ps.setLong(3, increment());
-				ps.setLong(4, groupId);
-				ps.setLong(5, companyId);
-				ps.setLong(6, userId);
-				ps.setString(7, userName);
-				ps.setTimestamp(8, timestamp);
-				ps.setTimestamp(9, timestamp);
-				ps.setLong(10, classNameId);
-				ps.setString(11, name);
-				ps.setString(12, description);
-				ps.setString(
-					13,
-					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES);
-				ps.setString(14, typeSettings);
-				ps.setLong(15, dlFolderId);
-				ps.setTimestamp(16, lastPublishDate);
+				Folder folder = _getFolder(repository);
 
-				ps.addBatch();
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("update DLFileEntry set repositoryId = ?, folderId ");
+				sb.append("= ?, treePath = ? where fileEntryId in (select ");
+				sb.append("previewFileEntryId from LayoutPageTemplateEntry ");
+				sb.append("where previewFileEntryId > 0 and groupId = ?)");
+
+				try (PreparedStatement ps2 = connection.prepareStatement(
+						sb.toString())) {
+
+					long folderId = folder.getFolderId();
+
+					ps2.setLong(1, repository.getRepositoryId());
+					ps2.setLong(2, folderId);
+					ps2.setString(
+						3, StringPool.SLASH + folderId + StringPool.SLASH);
+					ps2.setLong(4, groupId);
+
+					ps2.executeUpdate();
+				}
 			}
-
-			ps.executeBatch();
 		}
 	}
 
-	private void _updateDLFileEntryRepositoryId() throws SQLException {
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("with repositories_lookup as (select r1.repositoryId as ");
-		sb.append("repositoryId1, r2.repositoryId as repositoryId2 from ");
-		sb.append("Repository r1, Repository r2 where r1.portletId = ");
-		sb.append("'com_liferay_layout_admin_web_portlet_GroupPagesPortlet' ");
-		sb.append("and r2.portletId = 'com_liferay_layout_page_template_");
-		sb.append("admin_web_portlet_LayoutPageTemplatesPortlet' and  ");
-		sb.append("r1.groupId = r2.groupId) update DLFileEntry dlfe inner ");
-		sb.append("join repositories_lookup ON dlfe.repositoryId = ");
-		sb.append("repositories_lookup.repositoryId1 SET repositoryId = ");
-		sb.append("repositoryId2");
-
-		try (Statement s = connection.createStatement()) {
-			s.executeQuery(sb.toString());
+	private Folder _getFolder(Repository repository) throws PortalException {
+		try {
+			return PortletFileRepositoryUtil.getPortletFolder(
+				repository.getRepositoryId(), 0,
+				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES);
 		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		return PortletFileRepositoryUtil.addPortletFolder(
+			repository.getUserId(), repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+			serviceContext);
+	}
+
+	private Repository _getRepository(long groupId) throws PortalException {
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				groupId,
+				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES);
+
+		if (repository == null) {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+
+			repository = PortletFileRepositoryUtil.addPortletRepository(
+				groupId,
+				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+				serviceContext);
+		}
+
+		return repository;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

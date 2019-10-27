@@ -31,7 +31,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 <liferay-ui:error exception="<%= LocaleException.class %>">
 
 	<%
-		LocaleException le = (LocaleException)errorException;
+	LocaleException le = (LocaleException)errorException;
 	%>
 
 	<c:choose>
@@ -47,7 +47,6 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 <liferay-ui:error exception="<%= DepotEntryNameException.class %>">
 	<liferay-ui:message key="repository-name-is-required-for-the-default-language" />
 </liferay-ui:error>
-
 
 <aui:input checked="<%= inheritLocales %>" id="<%= GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES %>" label="use-the-default-language-options" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= true %>" />
 
@@ -78,6 +77,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 </aui:fieldset>
 
 <aui:fieldset id='<%= renderResponse.getNamespace() + "customLocalesFieldset" %>'>
+
 	<%
 	Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(group.getGroupId());
 	%>
@@ -218,9 +218,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 					if (nameMap) {
 						defaultLanguageName = nameMap[defaultLanguage];
 					}
-				} catch (e) {
-					console.log(e);
-				}
+				} catch (e) {}
 			}
 
 			new A.Alert({

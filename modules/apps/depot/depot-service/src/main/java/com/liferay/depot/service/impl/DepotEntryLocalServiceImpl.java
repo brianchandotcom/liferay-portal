@@ -171,9 +171,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 					depotEntry.getGroupId());
 		}
 
-		if ((!formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) ||
-			 Validator.isNull(
-				 formTypeSettingsProperties.getProperty(PropsKeys.LOCALES))) &&
+		if ((!formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) ) &&
 			(!currentTypeSettingsProperties.containsKey(PropsKeys.LOCALES) ||
 			 Validator.isNull(
 				 currentTypeSettingsProperties.getProperty(

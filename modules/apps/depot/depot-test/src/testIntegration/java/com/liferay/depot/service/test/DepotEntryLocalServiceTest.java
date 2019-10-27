@@ -241,8 +241,8 @@ public class DepotEntryLocalServiceTest {
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
 
-		Assert.assertEquals("Repository without name.", group.getName(LocaleUtil.getDefault()));
-
+		Assert.assertEquals(
+			"Repository without name.", group.getName(LocaleUtil.getDefault()));
 	}
 
 	@Test(expected = LocaleException.class)

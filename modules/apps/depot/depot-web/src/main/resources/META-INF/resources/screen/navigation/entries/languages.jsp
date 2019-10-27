@@ -28,6 +28,27 @@ UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
 boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getProperty(GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES), true);
 %>
 
+<liferay-ui:error exception="<%= LocaleException.class %>">
+
+	<%
+		LocaleException le = (LocaleException)errorException;
+	%>
+
+	<c:choose>
+		<c:when test="<%= le.getType() == LocaleException.TYPE_DEFAULT %>">
+			<liferay-ui:message key="you-cannot-remove-a-language-that-is-the-current-default-language" />
+		</c:when>
+		<c:when test="<%= le.getType() == LocaleException.TYPE_DISPLAY_SETTINGS %>">
+			<liferay-ui:message arguments='<%= "<em>" + StringUtil.merge(LocaleUtil.toDisplayNames(le.getSourceAvailableLocales(), locale), StringPool.COMMA_AND_SPACE) + "</em>" %>' key="please-select-the-available-languages-of-the-repository-among-the-available-languages-of-the-portal-x" translateArguments="<%= false %>" />
+		</c:when>
+	</c:choose>
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= DepotEntryNameException.class %>">
+	<liferay-ui:message key="repository-name-is-required-for-the-default-language" />
+</liferay-ui:error>
+
+
 <aui:input checked="<%= inheritLocales %>" id="<%= GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES %>" label="use-the-default-language-options" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= true %>" />
 
 <aui:input checked="<%= !inheritLocales %>" id="customLocales" label="define-a-custom-default-language-and-additional-available-languages-for-this-repository" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= false %>" />
@@ -57,26 +78,6 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 </aui:fieldset>
 
 <aui:fieldset id='<%= renderResponse.getNamespace() + "customLocalesFieldset" %>'>
-	<liferay-ui:error exception="<%= LocaleException.class %>">
-
-		<%
-		LocaleException le = (LocaleException)errorException;
-		%>
-
-		<c:choose>
-			<c:when test="<%= le.getType() == LocaleException.TYPE_DEFAULT %>">
-				<liferay-ui:message key="you-cannot-remove-a-language-that-is-the-current-default-language" />
-			</c:when>
-			<c:when test="<%= le.getType() == LocaleException.TYPE_DISPLAY_SETTINGS %>">
-				<liferay-ui:message arguments='<%= "<em>" + StringUtil.merge(LocaleUtil.toDisplayNames(le.getSourceAvailableLocales(), locale), StringPool.COMMA_AND_SPACE) + "</em>" %>' key="please-select-the-available-languages-of-the-repository-among-the-available-languages-of-the-portal-x" translateArguments="<%= false %>" />
-			</c:when>
-		</c:choose>
-	</liferay-ui:error>
-
-	<liferay-ui:error exception="<%= DepotEntryNameException.class %>">
-		<liferay-ui:message key="repository-name-is-required-for-the-default-language" />
-	</liferay-ui:error>
-
 	<%
 	Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(group.getGroupId());
 	%>

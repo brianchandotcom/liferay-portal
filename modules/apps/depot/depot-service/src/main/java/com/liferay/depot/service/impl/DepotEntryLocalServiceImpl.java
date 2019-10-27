@@ -87,11 +87,11 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
- 		DepotEntry depotEntry = getDepotEntry(depotEntryId);
+		DepotEntry depotEntry = getDepotEntry(depotEntryId);
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
 
-	    UnicodeProperties currentTypeSettingsProperties =
+		UnicodeProperties currentTypeSettingsProperties =
 			group.getTypeSettingsProperties();
 
 		boolean inheritLocales = GetterUtil.getBoolean(
@@ -114,8 +114,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			currentTypeSettingsProperties, depotEntry,
 			formTypeSettingsProperties);
 
-		if (formTypeSettingsProperties.containsKey(PropsKeys.LOCALES)){
-
+		if (formTypeSettingsProperties.containsKey(PropsKeys.LOCALES)) {
 			_fillEmptyLanguajes(
 				nameMap,
 				LocaleUtil.fromLanguageId(
@@ -142,9 +141,12 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			defaultLocale, DepotEntryLocalServiceImpl.class);
 
 		if (Validator.isNull(nameMap.get(defaultLocale))) {
-			nameMap.put(defaultLocale, _language.get(resourceBundle, "unnamed-repository"));
+			nameMap.put(
+				defaultLocale,
+				_language.get(resourceBundle, "unnamed-repository"));
 		}
 	}
+
 	private void _validateNameMap(
 			Map<Locale, String> nameMap, Locale defaultLocale)
 		throws DepotEntryNameException {
@@ -171,7 +173,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 					depotEntry.getGroupId());
 		}
 
-		if ((!formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) ) &&
+		if (!formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) &&
 			(!currentTypeSettingsProperties.containsKey(PropsKeys.LOCALES) ||
 			 Validator.isNull(
 				 currentTypeSettingsProperties.getProperty(

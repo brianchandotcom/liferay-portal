@@ -14,13 +14,17 @@
 
 package com.liferay.layout.page.template.admin.web.internal.upgrade;
 
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.layout.page.template.admin.web.internal.upgrade.v1_1_0.UpgradePreviewFileEntryId;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.rmi.registry.Registry;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -33,7 +37,23 @@ public class LayoutPageTemplateAdminWebUpgrade
 	public void register(Registry registry) {
 		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
-		registry.register("1.0.0", "1.1.0", new UpgradePreviewFileEntryId());
+		registry.register(
+			"1.0.0", "1.1.0",
+			new UpgradePreviewFileEntryId(
+				_dlFileEntryLocalService,
+				_layoutPageTemplateEntryLocalService));
 	}
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference(
+		target = "(class.name=com.liferay.portal.repository.portletrepository.PortletRepository)"
+	)
+	private RepositoryFactory _repositoryFactory;
 
 }

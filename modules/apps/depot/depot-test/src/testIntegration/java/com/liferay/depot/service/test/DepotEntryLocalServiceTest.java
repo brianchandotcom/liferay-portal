@@ -231,7 +231,7 @@ public class DepotEntryLocalServiceTest {
 			StringPool.BLANK, group.getDescription(LocaleUtil.getDefault()));
 	}
 
-	@Test(expected = DepotEntryNameException.class)
+	@Test
 	public void testUpdateDepotEntryNoName() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry("name", "description");
 
@@ -239,6 +239,11 @@ public class DepotEntryLocalServiceTest {
 			depotEntry.getDepotEntryId(), new UnicodeProperties(),
 			new HashMap<>(), new HashMap<>(),
 			ServiceContextTestUtil.getServiceContext());
+
+		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
+
+		Assert.assertEquals("Repository without name.", group.getName(LocaleUtil.getDefault()));
+
 	}
 
 	@Test(expected = LocaleException.class)
@@ -247,8 +252,13 @@ public class DepotEntryLocalServiceTest {
 
 		DepotEntry depotEntry = _addDepotEntry("name", "description");
 
+		UnicodeProperties formTypeSettingsProperties = new UnicodeProperties();
+
+		formTypeSettingsProperties.setProperty("inheritLocales", "false");
+		formTypeSettingsProperties.setProperty(PropsKeys.LOCALES, null);
+
 		_depotEntryLocalService.updateDepotEntry(
-			depotEntry.getDepotEntryId(), new UnicodeProperties(),
+			depotEntry.getDepotEntryId(), formTypeSettingsProperties,
 			new HashMap<Locale, String>() {
 				{
 					put(LocaleUtil.getDefault(), "newName");

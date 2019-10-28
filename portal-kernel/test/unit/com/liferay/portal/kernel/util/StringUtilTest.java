@@ -28,7 +28,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -574,10 +573,12 @@ public class StringUtilTest {
 
 	@Test(timeout = 1000)
 	public void testReplaceWithStringBundle() {
-		Map<String, StringBundler> map = new HashMap<>();
-
-		map.put("Hallo", new StringBundler("Hello"));
-		map.put("Wirld", new StringBundler("World"));
+		Map<String, StringBundler> map =
+			HashMapBuilder.<String, StringBundler>put(
+				"Hallo", new StringBundler("Hello")
+			).put(
+				"Wirld", new StringBundler("World")
+			).build();
 
 		Assert.assertEquals(
 			"Hello World",

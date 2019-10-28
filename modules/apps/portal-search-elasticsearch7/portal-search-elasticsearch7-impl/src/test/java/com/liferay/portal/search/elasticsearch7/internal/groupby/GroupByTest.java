@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch7.internal.groupby;
 
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.groupby.GroupByResponse;
@@ -23,7 +24,6 @@ import com.liferay.portal.search.test.util.groupby.BaseGroupByTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -165,10 +165,12 @@ public class GroupByTest extends BaseGroupByTestCase {
 		sortFieldOrderedResults.add("2|2|2");
 		sortFieldOrderedResults.add("3|1|1");
 
-		Map<String, List<String>> orderedResultsMap = new HashMap<>();
-
-		orderedResultsMap.put(GROUP_FIELD, groupFieldOrderedResults);
-		orderedResultsMap.put(SORT_FIELD, sortFieldOrderedResults);
+		Map<String, List<String>> orderedResultsMap =
+			HashMapBuilder.<String, List<String>>put(
+				GROUP_FIELD, groupFieldOrderedResults
+			).put(
+				SORT_FIELD, sortFieldOrderedResults
+			).build();
 
 		assertSearch(
 			indexingTestHelper -> {

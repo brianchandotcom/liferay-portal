@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -78,7 +79,6 @@ import com.liferay.social.kernel.model.impl.SocialActivityInterpreterImpl;
 import com.liferay.social.kernel.model.impl.SocialRequestInterpreterImpl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -115,9 +115,9 @@ public class PortletBagFactory {
 
 		_validate();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("javax.portlet.name", portlet.getPortletName());
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"javax.portlet.name", portlet.getPortletName()
+		).build();
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -863,11 +863,12 @@ public class PortletBagFactory {
 			WebDAVStorage webDAVStorageInstance = _newInstance(
 				WebDAVStorage.class, portlet.getWebDAVStorageClass());
 
-			Map<String, Object> webDAVProperties = new HashMap<>();
-
-			webDAVProperties.put("javax.portlet.name", portlet.getPortletId());
-			webDAVProperties.put(
-				"webdav.storage.token", portlet.getWebDAVStorageToken());
+			Map<String, Object> webDAVProperties =
+				HashMapBuilder.<String, Object>put(
+					"javax.portlet.name", portlet.getPortletId()
+				).put(
+					"webdav.storage.token", portlet.getWebDAVStorageToken()
+				).build();
 
 			registry.registerService(
 				WebDAVStorage.class, webDAVStorageInstance, webDAVProperties);

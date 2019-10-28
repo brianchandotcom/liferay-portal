@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -58,7 +59,6 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -426,10 +426,12 @@ public class DDLRecordServiceTest {
 
 		DDLRecord record = recordTestHelper.addRecord();
 
-		Map<String, Serializable> fieldsMap = new HashMap<>();
-
-		fieldsMap.put("Name", "Joe Bloggs");
-		fieldsMap.put("Phone", "123456");
+		Map<String, Serializable> fieldsMap =
+			HashMapBuilder.<String, Serializable>put(
+				"Name", "Joe Bloggs"
+			).put(
+				"Phone", "123456"
+			).build();
 
 		updateRecord(
 			record.getRecordId(), fieldsMap, true,

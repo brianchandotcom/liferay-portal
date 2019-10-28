@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -54,11 +53,9 @@ public class NumericDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put(
-			"dataType",
-			getDataType(ddmFormField, ddmFormFieldRenderingContext));
+		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+			"dataType", getDataType(ddmFormField, ddmFormFieldRenderingContext)
+		).build();
 
 		LocalizedValue placeholder = (LocalizedValue)ddmFormField.getProperty(
 			"placeholder");

@@ -17,8 +17,8 @@ package com.liferay.adaptive.media.image.internal.configuration;
 import com.liferay.adaptive.media.AMAttribute;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -48,32 +48,31 @@ public class AMImageAttributeMapping {
 		}
 
 		Map<AMAttribute<AMImageProcessor, ?>, Optional<?>> optionals =
-			new HashMap<>();
-
-		optionals.put(
-			AMAttribute.getConfigurationUuidAMAttribute(),
-			_getValueOptional(
-				properties, AMAttribute.getConfigurationUuidAMAttribute()));
-		optionals.put(
-			AMAttribute.getContentLengthAMAttribute(),
-			_getValueOptional(
-				properties, AMAttribute.getContentLengthAMAttribute()));
-		optionals.put(
-			AMAttribute.getContentTypeAMAttribute(),
-			_getValueOptional(
-				properties, AMAttribute.getContentTypeAMAttribute()));
-		optionals.put(
-			AMAttribute.getFileNameAMAttribute(),
-			_getValueOptional(
-				properties, AMAttribute.getFileNameAMAttribute()));
-		optionals.put(
-			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT,
-			_getValueOptional(
-				properties, AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT));
-		optionals.put(
-			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH,
-			_getValueOptional(
-				properties, AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH));
+			HashMapBuilder.<AMAttribute<AMImageProcessor, ?>, Optional<?>>put(
+				AMAttribute.getConfigurationUuidAMAttribute(),
+				_getValueOptional(
+					properties, AMAttribute.getConfigurationUuidAMAttribute())
+			).put(
+				AMAttribute.getContentLengthAMAttribute(),
+				_getValueOptional(
+					properties, AMAttribute.getContentLengthAMAttribute())
+			).put(
+				AMAttribute.getContentTypeAMAttribute(),
+				_getValueOptional(
+					properties, AMAttribute.getContentTypeAMAttribute())
+			).put(
+				AMAttribute.getFileNameAMAttribute(),
+				_getValueOptional(
+					properties, AMAttribute.getFileNameAMAttribute())
+			).put(
+				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT,
+				_getValueOptional(
+					properties, AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT)
+			).put(
+				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH,
+				_getValueOptional(
+					properties, AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH)
+			).build();
 
 		return new AMImageAttributeMapping(optionals);
 	}

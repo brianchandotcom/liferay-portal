@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -54,13 +54,11 @@ public class RadioDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put(
-			"inline",
-			GetterUtil.getBoolean(ddmFormField.getProperty("inline")));
-		parameters.put(
-			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
+		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+			"inline", GetterUtil.getBoolean(ddmFormField.getProperty("inline"))
+		).put(
+			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext)
+		).build();
 
 		String predefinedValue = getPredefinedValue(
 			ddmFormField, ddmFormFieldRenderingContext);

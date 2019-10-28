@@ -621,11 +621,13 @@ public class AssetPublisherDisplayContext {
 				List<Map<String, Object>> selectedItems = new ArrayList<>();
 
 				for (AssetCategory category : categories) {
-					Map<String, Object> selectedCategory = new HashMap<>();
-
-					selectedCategory.put(
-						"label", category.getTitle(_themeDisplay.getLocale()));
-					selectedCategory.put("value", category.getCategoryId());
+					Map<String, Object> selectedCategory =
+						HashMapBuilder.<String, Object>put(
+							"label",
+							category.getTitle(_themeDisplay.getLocale())
+						).put(
+							"value", category.getCategoryId()
+						).build();
 
 					selectedItems.add(selectedCategory);
 				}

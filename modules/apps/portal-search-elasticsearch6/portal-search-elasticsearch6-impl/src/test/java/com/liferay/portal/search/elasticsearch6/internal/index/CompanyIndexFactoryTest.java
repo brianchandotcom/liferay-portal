@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch6.internal.index;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.IndexName;
@@ -119,12 +120,15 @@ public class CompanyIndexFactoryTest {
 
 	@Test
 	public void testCreateIndicesWithBlankStrings() throws Exception {
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("additionalIndexConfigurations", StringPool.BLANK);
-		properties.put("additionalTypeMappings", StringPool.SPACE);
-		properties.put("indexNumberOfReplicas", StringPool.BLANK);
-		properties.put("indexNumberOfShards", StringPool.SPACE);
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"additionalIndexConfigurations", StringPool.BLANK
+		).put(
+			"additionalTypeMappings", StringPool.SPACE
+		).put(
+			"indexNumberOfReplicas", StringPool.BLANK
+		).put(
+			"indexNumberOfShards", StringPool.SPACE
+		).build();
 
 		_companyIndexFactory.activate(properties);
 

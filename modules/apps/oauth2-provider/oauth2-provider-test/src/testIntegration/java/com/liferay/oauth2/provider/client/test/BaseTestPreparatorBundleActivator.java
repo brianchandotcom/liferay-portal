@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
@@ -45,7 +46,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
@@ -308,9 +308,9 @@ public abstract class BaseTestPreparatorBundleActivator
 			autoCloseables.add(
 				() -> bundleContext.ungetService(serviceReference));
 
-			Map<Locale, String> titleMap = new HashMap<>();
-
-			titleMap.put(LocaleUtil.getDefault(), name);
+			Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+				LocaleUtil.getDefault(), name
+			).build();
 
 			SAPEntry sapEntry = sapEntryLocalService.addSAPEntry(
 				userId, allowedServiceSignatures, defaultSAPEntry, enabled,

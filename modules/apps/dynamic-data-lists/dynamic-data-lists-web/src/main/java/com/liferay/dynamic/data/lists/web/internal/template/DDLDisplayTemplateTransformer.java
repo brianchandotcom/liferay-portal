@@ -29,11 +29,11 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.templateparser.Transformer;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
@@ -56,22 +56,22 @@ public class DDLDisplayTemplateTransformer {
 	public String transform() throws Exception {
 		Transformer transformer = TransformerHolder.getTransformer();
 
-		Map<String, Object> contextObjects = new HashMap<>();
-
-		contextObjects.put(
+		Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 			DDLConstants.RESERVED_DDM_STRUCTURE_ID,
-			_recordSet.getDDMStructureId());
-		contextObjects.put(
-			DDLConstants.RESERVED_DDM_TEMPLATE_ID, _ddmTemplateId);
-		contextObjects.put(
+			_recordSet.getDDMStructureId()
+		).put(
+			DDLConstants.RESERVED_DDM_TEMPLATE_ID, _ddmTemplateId
+		).put(
 			DDLConstants.RESERVED_RECORD_SET_DESCRIPTION,
-			_recordSet.getDescription(_themeDisplay.getLocale()));
-		contextObjects.put(
-			DDLConstants.RESERVED_RECORD_SET_ID, _recordSet.getRecordSetId());
-		contextObjects.put(
+			_recordSet.getDescription(_themeDisplay.getLocale())
+		).put(
+			DDLConstants.RESERVED_RECORD_SET_ID, _recordSet.getRecordSetId()
+		).put(
 			DDLConstants.RESERVED_RECORD_SET_NAME,
-			_recordSet.getName(_themeDisplay.getLocale()));
-		contextObjects.put(TemplateConstants.TEMPLATE_ID, _ddmTemplateId);
+			_recordSet.getName(_themeDisplay.getLocale())
+		).put(
+			TemplateConstants.TEMPLATE_ID, _ddmTemplateId
+		).build();
 
 		String viewMode = Constants.VIEW;
 

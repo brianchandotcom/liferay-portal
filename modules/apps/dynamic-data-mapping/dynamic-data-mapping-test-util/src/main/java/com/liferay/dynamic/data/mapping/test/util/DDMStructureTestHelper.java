@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -41,11 +41,9 @@ import java.util.Map;
 public class DDMStructureTestHelper {
 
 	public static Map<Locale, String> getDefaultLocaleMap(String value) {
-		Map<Locale, String> map = new HashMap<>();
-
-		map.put(LocaleUtil.getSiteDefault(), value);
-
-		return map;
+		return HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), value
+		).build();
 	}
 
 	public DDMStructureTestHelper(long classNameId, Group group)

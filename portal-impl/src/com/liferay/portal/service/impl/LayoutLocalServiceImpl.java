@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLoca
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -638,21 +639,21 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
-		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			locale, name
+		).build();
 
-		nameMap.put(locale, name);
+		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+			locale, title
+		).build();
 
-		Map<Locale, String> titleMap = new HashMap<>();
+		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
+			locale, description
+		).build();
 
-		titleMap.put(locale, title);
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(locale, description);
-
-		Map<Locale, String> friendlyURLMap = new HashMap<>();
-
-		friendlyURLMap.put(LocaleUtil.getSiteDefault(), friendlyURL);
+		Map<Locale, String> friendlyURLMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), friendlyURL
+		).build();
 
 		return addLayout(
 			userId, groupId, privateLayout, parentLayoutId, nameMap, titleMap,

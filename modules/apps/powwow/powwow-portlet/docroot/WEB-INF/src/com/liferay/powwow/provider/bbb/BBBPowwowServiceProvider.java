@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.xml.Document;
@@ -38,7 +39,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -155,14 +155,11 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 			throw new SystemException("Unable to add BBB meeting");
 		}
 
-		Map<String, Serializable> providerTypeMetadataMap = new HashMap<>();
-
-		providerTypeMetadataMap.put(
-			"attendeePW", getText(element, "attendeePW"));
-		providerTypeMetadataMap.put(
-			"moderatorPW", getText(element, "moderatorPW"));
-
-		return providerTypeMetadataMap;
+		return HashMapBuilder.<String, Serializable>put(
+			"attendeePW", getText(element, "attendeePW")
+		).put(
+			"moderatorPW", getText(element, "moderatorPW")
+		).build();
 	}
 
 	@Override

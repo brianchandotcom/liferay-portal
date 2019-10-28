@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.test.rule.AdviseWith;
@@ -35,7 +36,6 @@ import java.lang.reflect.Constructor;
 import java.nio.ByteBuffer;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
@@ -70,13 +70,12 @@ public class MailboxUtilTest {
 
 	@Test
 	public void testDepositMailWithReaperThreadDisabled() {
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
 			PropsKeys.INTRABAND_MAILBOX_REAPER_THREAD_ENABLED,
-			Boolean.FALSE.toString());
-		properties.put(
-			PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE, String.valueOf(0));
+			Boolean.FALSE.toString()
+		).put(
+			PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE, String.valueOf(0)
+		).build();
 
 		PropsTestUtil.setProps(properties);
 
@@ -107,13 +106,12 @@ public class MailboxUtilTest {
 	@AdviseWith(adviceClasses = ReceiptStubAdvice.class)
 	@Test
 	public void testDepositMailWithReaperThreadEnabled() throws Exception {
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
 			PropsKeys.INTRABAND_MAILBOX_REAPER_THREAD_ENABLED,
-			Boolean.TRUE.toString());
-		properties.put(
-			PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE, String.valueOf(0));
+			Boolean.TRUE.toString()
+		).put(
+			PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE, String.valueOf(0)
+		).build();
 
 		PropsTestUtil.setProps(properties);
 
@@ -172,13 +170,12 @@ public class MailboxUtilTest {
 
 	@Test
 	public void testReceiveMailWithReaperThreadDisabled() {
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
 			PropsKeys.INTRABAND_MAILBOX_REAPER_THREAD_ENABLED,
-			Boolean.FALSE.toString());
-		properties.put(
-			PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE, String.valueOf(10000));
+			Boolean.FALSE.toString()
+		).put(
+			PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE, String.valueOf(10000)
+		).build();
 
 		PropsTestUtil.setProps(properties);
 
@@ -199,13 +196,12 @@ public class MailboxUtilTest {
 
 	@Test
 	public void testReceiveMailWithReaperThreadEnabled() {
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
 			PropsKeys.INTRABAND_MAILBOX_REAPER_THREAD_ENABLED,
-			Boolean.TRUE.toString());
-		properties.put(
-			PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE, String.valueOf(10000));
+			Boolean.TRUE.toString()
+		).put(
+			PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE, String.valueOf(10000)
+		).build();
 
 		PropsTestUtil.setProps(properties);
 

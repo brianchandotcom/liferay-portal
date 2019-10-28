@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -384,9 +385,10 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testUpdateLocalization() {
-		Map<Locale, String> localizationMap = new HashMap<>();
-
-		localizationMap.put(LocaleUtil.US, _ENGLISH_HELLO);
+		Map<Locale, String> localizationMap =
+			HashMapBuilder.<Locale, String>put(
+				LocaleUtil.US, _ENGLISH_HELLO
+			).build();
 
 		StringBundler sb = new StringBundler(10);
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
 import java.util.HashMap;
 
 import org.junit.Assert;
@@ -41,9 +43,9 @@ public class ElasticsearchConnectionManagerTest {
 
 	@Test
 	public void testActivateMustNotOpenAnyConnection() {
-		HashMap<String, Object> properties = new HashMap<>();
-
-		properties.put("operationMode", OperationMode.EMBEDDED.name());
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.EMBEDDED.name()
+		).build();
 
 		_elasticsearchConnectionManager.activate(properties);
 
@@ -53,9 +55,9 @@ public class ElasticsearchConnectionManagerTest {
 
 	@Test
 	public void testActivateThenConnect() {
-		HashMap<String, Object> properties = new HashMap<>();
-
-		properties.put("operationMode", OperationMode.EMBEDDED.name());
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.EMBEDDED.name()
+		).build();
 
 		_elasticsearchConnectionManager.activate(properties);
 
@@ -97,9 +99,9 @@ public class ElasticsearchConnectionManagerTest {
 
 	@Test
 	public void testSetModifiedOperationModeResetsConnection() {
-		HashMap<String, Object> properties = new HashMap<>();
-
-		properties.put("operationMode", OperationMode.EMBEDDED.name());
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.EMBEDDED.name()
+		).build();
 
 		_elasticsearchConnectionManager.activate(properties);
 

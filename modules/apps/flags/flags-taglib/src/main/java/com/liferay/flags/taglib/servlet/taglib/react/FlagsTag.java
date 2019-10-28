@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -170,10 +171,9 @@ public class FlagsTag extends IncludeTag {
 
 		Map<String, Object> data = new HashMap<>();
 
-		Map<String, Object> context = new HashMap<>();
-
-		context.put(
-			"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
+			"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS)
+		).build();
 
 		data.put("context", context);
 

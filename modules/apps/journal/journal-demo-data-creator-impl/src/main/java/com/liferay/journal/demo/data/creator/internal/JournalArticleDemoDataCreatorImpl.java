@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import java.io.IOException;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -146,11 +146,9 @@ public class JournalArticleDemoDataCreatorImpl
 		String description = StringUtil.read(
 			clazz.getClassLoader(), descriptionPath, false);
 
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(LocaleUtil.getSiteDefault(), description);
-
-		return descriptionMap;
+		return HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), description
+		).build();
 	}
 
 	private int _getNextIndex() {
@@ -195,11 +193,9 @@ public class JournalArticleDemoDataCreatorImpl
 		String title = StringUtil.read(
 			clazz.getClassLoader(), titlePath, false);
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(LocaleUtil.getSiteDefault(), title);
-
-		return titleMap;
+		return HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), title
+		).build();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

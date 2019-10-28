@@ -42,6 +42,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -59,7 +60,6 @@ import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -935,10 +935,10 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 
 		Map<String, DDMExpressionFunctionFactory>
-			ddmExpressionFunctionFactoryMap = new HashMap<>();
-
-		ddmExpressionFunctionFactoryMap.put(
-			"jumpPage", () -> new JumpPageFunction());
+			ddmExpressionFunctionFactoryMap =
+				HashMapBuilder.<String, DDMExpressionFunctionFactory>put(
+					"jumpPage", () -> new JumpPageFunction()
+				).build();
 
 		DDMExpressionFunctionTracker ddmExpressionFunctionTracker = mock(
 			DDMExpressionFunctionTracker.class);

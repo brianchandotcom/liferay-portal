@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -275,9 +276,9 @@ public class UIItemsBuilder {
 
 		selectFileVersionURL.setParameter("version", _fileVersion.getVersion());
 
-		Map<String, Object> data = new HashMap<>();
-
-		data.put("uri", selectFileVersionURL);
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"uri", selectFileVersionURL
+		).build();
 
 		PortletURL compareVersionURL = _getRenderURL(
 			"/document_library/compare_versions", null);
@@ -484,10 +485,11 @@ public class UIItemsBuilder {
 		URLMenuItem urlMenuItem = _addURLUIItem(
 			new URLMenuItem(), menuItems, DLUIItemKeys.DOWNLOAD, label, url);
 
-		Map<String, Object> data = new HashMap<>();
-
-		data.put("analytics-file-entry-id", _fileEntry.getFileEntryId());
-		data.put("senna-off", "true");
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"analytics-file-entry-id", _fileEntry.getFileEntryId()
+		).put(
+			"senna-off", "true"
+		).build();
 
 		urlMenuItem.setData(data);
 

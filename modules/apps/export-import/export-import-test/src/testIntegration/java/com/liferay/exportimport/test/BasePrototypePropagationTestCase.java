@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.service.test.ServiceTestUtil;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -119,15 +118,15 @@ public abstract class BasePrototypePropagationTestCase {
 			String columnId)
 		throws Exception {
 
-		Map<String, String[]> parameterMap = new HashMap<>();
-
-		parameterMap.put(
-			"articleId", new String[] {journalArticle.getArticleId()});
-		parameterMap.put(
-			"groupId",
-			new String[] {String.valueOf(journalArticle.getGroupId())});
-		parameterMap.put(
-			"showAvailableLocales", new String[] {Boolean.TRUE.toString()});
+		Map<String, String[]> parameterMap =
+			HashMapBuilder.<String, String[]>put(
+				"articleId", new String[] {journalArticle.getArticleId()}
+			).put(
+				"groupId",
+				new String[] {String.valueOf(journalArticle.getGroupId())}
+			).put(
+				"showAvailableLocales", new String[] {Boolean.TRUE.toString()}
+			).build();
 
 		return LayoutTestUtil.addPortletToLayout(
 			userId, layout, JournalContentPortletKeys.JOURNAL_CONTENT, columnId,

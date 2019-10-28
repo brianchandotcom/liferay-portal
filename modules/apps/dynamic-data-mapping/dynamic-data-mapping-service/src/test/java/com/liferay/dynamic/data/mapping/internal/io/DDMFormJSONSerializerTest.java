@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldTypeSettingsTestUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -35,7 +36,6 @@ import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -137,12 +137,13 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 			_defaultDDMFormFieldType
 		);
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("ddm.form.field.type.icon", "my-icon");
-		properties.put(
-			"ddm.form.field.type.js.class.name", "myJavaScriptClass");
-		properties.put("ddm.form.field.type.js.module", "myJavaScriptModule");
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"ddm.form.field.type.icon", "my-icon"
+		).put(
+			"ddm.form.field.type.js.class.name", "myJavaScriptClass"
+		).put(
+			"ddm.form.field.type.js.module", "myJavaScriptModule"
+		).build();
 
 		when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(

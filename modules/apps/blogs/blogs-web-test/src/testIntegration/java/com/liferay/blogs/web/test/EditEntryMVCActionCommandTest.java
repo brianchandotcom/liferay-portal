@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -42,7 +43,6 @@ import com.liferay.registry.ServiceTracker;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.service.TrashEntryLocalService;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -177,11 +177,9 @@ public class EditEntryMVCActionCommandTest {
 
 		@Override
 		public Map<String, String[]> getParameterMap() {
-			Map<String, String[]> parameters = new HashMap<>();
-
-			parameters.put("entryId", new String[] {String.valueOf(_entryId)});
-
-			return parameters;
+			return HashMapBuilder.<String, String[]>put(
+				"entryId", new String[] {String.valueOf(_entryId)}
+			).build();
 		}
 
 		private final long _entryId;

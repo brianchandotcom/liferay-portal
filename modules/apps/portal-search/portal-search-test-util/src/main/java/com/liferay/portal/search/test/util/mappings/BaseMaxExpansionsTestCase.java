@@ -16,12 +16,12 @@ package com.liferay.portal.search.test.util.mappings;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.internal.analysis.SimpleKeywordTokenizer;
 import com.liferay.portal.search.internal.analysis.TitleFieldQueryBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
@@ -101,9 +101,10 @@ public abstract class BaseMaxExpansionsTestCase
 			{
 				keywordTokenizer = new SimpleKeywordTokenizer();
 
-				Map<String, Object> properties = new HashMap<>();
-
-				properties.put("maxExpansions", _MAX_EXPANSIONS);
+				Map<String, Object> properties =
+					HashMapBuilder.<String, Object>put(
+						"maxExpansions", _MAX_EXPANSIONS
+					).build();
 
 				activate(properties);
 			}

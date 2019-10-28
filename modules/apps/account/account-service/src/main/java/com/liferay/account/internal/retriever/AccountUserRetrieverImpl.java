@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHits;
@@ -41,7 +42,6 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -173,22 +173,36 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 
 		searchContext.setAndSearch(andSearch);
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put("accountEntryIds", accountEntryIds);
-		attributes.put("city", keywords);
-		attributes.put("country", keywords);
-		attributes.put("emailAddress", keywords);
-		attributes.put("firstName", keywords);
-		attributes.put("fullName", keywords);
-		attributes.put("lastName", keywords);
-		attributes.put("middleName", keywords);
-		attributes.put("params", new LinkedHashMap<>());
-		attributes.put("region", keywords);
-		attributes.put("screenName", keywords);
-		attributes.put("status", status);
-		attributes.put("street", keywords);
-		attributes.put("zip", keywords);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				"accountEntryIds", accountEntryIds
+			).put(
+				"city", keywords
+			).put(
+				"country", keywords
+			).put(
+				"emailAddress", keywords
+			).put(
+				"firstName", keywords
+			).put(
+				"fullName", keywords
+			).put(
+				"lastName", keywords
+			).put(
+				"middleName", keywords
+			).put(
+				"params", new LinkedHashMap<>()
+			).put(
+				"region", keywords
+			).put(
+				"screenName", keywords
+			).put(
+				"status", status
+			).put(
+				"street", keywords
+			).put(
+				"zip", keywords
+			).build();
 
 		searchContext.setAttributes(attributes);
 

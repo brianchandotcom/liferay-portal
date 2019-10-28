@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -75,9 +75,9 @@ public class SyncSAPEntryActivator {
 			boolean defaultSAPEntry = GetterUtil.getBoolean(
 				sapEntryObjectArray[2]);
 
-			Map<Locale, String> map = new HashMap<>();
-
-			map.put(LocaleUtil.getDefault(), name);
+			Map<Locale, String> map = HashMapBuilder.<Locale, String>put(
+				LocaleUtil.getDefault(), name
+			).build();
 
 			_sapEntryLocalService.addSAPEntry(
 				_userLocalService.getDefaultUserId(companyId),

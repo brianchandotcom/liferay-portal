@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -63,7 +64,6 @@ import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.trash.TrashHelper;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -585,15 +585,15 @@ public class JournalArticleActionDropdownItemsProvider {
 			JournalUtil.getPreviewPlid(_article, _themeDisplay),
 			JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
 
-		Map<String, String[]> parameters = new HashMap<>();
-
-		parameters.put("articleId", new String[] {_article.getArticleId()});
-		parameters.put(
-			"groupId", new String[] {String.valueOf(_article.getGroupId())});
-		parameters.put(
-			"mvcPath", new String[] {"/preview_article_content.jsp"});
-		parameters.put(
-			"version", new String[] {String.valueOf(_article.getVersion())});
+		Map<String, String[]> parameters = HashMapBuilder.<String, String[]>put(
+			"articleId", new String[] {_article.getArticleId()}
+		).put(
+			"groupId", new String[] {String.valueOf(_article.getGroupId())}
+		).put(
+			"mvcPath", new String[] {"/preview_article_content.jsp"}
+		).put(
+			"version", new String[] {String.valueOf(_article.getVersion())}
+		).build();
 
 		portletURL.setParameters(parameters);
 

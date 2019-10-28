@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,10 +46,11 @@ public abstract class BaseFormNavigatorEntryConfigurationRetrieverTestCase {
 	protected void createConfiguration(
 		String formNavigatorId, String[] formNavigatorEntryKeys) {
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("formNavigatorEntryKeys", formNavigatorEntryKeys);
-		properties.put("formNavigatorId", formNavigatorId);
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"formNavigatorEntryKeys", formNavigatorEntryKeys
+		).put(
+			"formNavigatorId", formNavigatorId
+		).build();
 
 		FormNavigatorEntryConfigurationParser
 			formNavigatorEntryConfigurationParser =

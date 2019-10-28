@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.scripting;
 
-import java.util.HashMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -37,11 +38,13 @@ public class ScriptingHelperUtil {
 		PortletConfig portletConfig, PortletContext portletContext,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Map<String, Object> portletObjects = new HashMap<>();
-
-		portletObjects.put("portletConfig", portletConfig);
-		portletObjects.put("portletContext", portletContext);
-		portletObjects.put("preferences", portletRequest.getPreferences());
+		Map<String, Object> portletObjects = HashMapBuilder.<String, Object>put(
+			"portletConfig", portletConfig
+		).put(
+			"portletContext", portletContext
+		).put(
+			"preferences", portletRequest.getPreferences()
+		).build();
 
 		if (portletRequest instanceof ActionRequest) {
 			portletObjects.put("actionRequest", portletRequest);

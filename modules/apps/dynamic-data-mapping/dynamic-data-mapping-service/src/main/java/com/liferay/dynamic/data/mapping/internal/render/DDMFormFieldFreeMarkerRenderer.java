@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -119,13 +120,17 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			String label, String value)
 		throws Exception {
 
-		Map<String, Object> fieldStructure = new HashMap<>();
-
-		fieldStructure.put("children", StringPool.BLANK);
-		fieldStructure.put("fieldNamespace", StringUtil.randomId());
-		fieldStructure.put("label", label);
-		fieldStructure.put("name", StringUtil.randomId());
-		fieldStructure.put("value", value);
+		Map<String, Object> fieldStructure = HashMapBuilder.<String, Object>put(
+			"children", StringPool.BLANK
+		).put(
+			"fieldNamespace", StringUtil.randomId()
+		).put(
+			"label", label
+		).put(
+			"name", StringUtil.randomId()
+		).put(
+			"value", value
+		).build();
 
 		freeMarkerContext.put("fieldStructure", fieldStructure);
 

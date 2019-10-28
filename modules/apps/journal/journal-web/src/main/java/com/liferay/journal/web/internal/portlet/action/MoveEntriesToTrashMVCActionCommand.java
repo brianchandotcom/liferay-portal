@@ -24,13 +24,13 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -88,9 +88,9 @@ public class MoveEntriesToTrashMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		Map<String, Object> data = new HashMap<>();
-
-		data.put("trashedModels", trashedModels);
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"trashedModels", trashedModels
+		).build();
 
 		SessionMessages.add(
 			actionRequest,

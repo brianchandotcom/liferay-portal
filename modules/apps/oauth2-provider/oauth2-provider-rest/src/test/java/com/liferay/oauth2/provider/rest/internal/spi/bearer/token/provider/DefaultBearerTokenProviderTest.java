@@ -16,8 +16,8 @@ package com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider;
 
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -38,14 +38,15 @@ public class DefaultBearerTokenProviderTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("access.token.expires.in", _ACCESS_TOKEN_EXPIRES_IN);
-		properties.put(
-			"access.token.key.byte.size", _ACCESS_TOKEN_KEY_BYTE_SIZE);
-		properties.put("refresh.token.expires.in", _REFRESH_TOKEN_EXPIRES_IN);
-		properties.put(
-			"refresh.token.key.byte.size", _REFRESH_TOKEN_KEY_BYTE_SIZE);
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"access.token.expires.in", _ACCESS_TOKEN_EXPIRES_IN
+		).put(
+			"access.token.key.byte.size", _ACCESS_TOKEN_KEY_BYTE_SIZE
+		).put(
+			"refresh.token.expires.in", _REFRESH_TOKEN_EXPIRES_IN
+		).put(
+			"refresh.token.key.byte.size", _REFRESH_TOKEN_KEY_BYTE_SIZE
+		).build();
 
 		_defaultBearerTokenProvider = new DefaultBearerTokenProvider();
 

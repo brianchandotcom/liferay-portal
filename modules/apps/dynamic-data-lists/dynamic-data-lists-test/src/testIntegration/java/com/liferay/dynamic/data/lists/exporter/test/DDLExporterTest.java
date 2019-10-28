@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -75,7 +76,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -734,23 +734,33 @@ public class DDLExporterTest {
 	}
 
 	protected Map<DDMFormFieldType, String> setUpDDMFormFieldDataTypes() {
-		_ddmFormFieldDataTypes = new HashMap<>();
-
-		_ddmFormFieldDataTypes.put(DDMFormFieldType.CHECKBOX, "boolean");
-		_ddmFormFieldDataTypes.put(DDMFormFieldType.DATE, "date");
-		_ddmFormFieldDataTypes.put(DDMFormFieldType.DECIMAL, "double");
-		_ddmFormFieldDataTypes.put(
-			DDMFormFieldType.DOCUMENT_LIBRARY, "document-library");
-		_ddmFormFieldDataTypes.put(DDMFormFieldType.GEOLOCATION, "geolocation");
-		_ddmFormFieldDataTypes.put(DDMFormFieldType.INTEGER, "integer");
-		_ddmFormFieldDataTypes.put(
-			DDMFormFieldType.LINK_TO_PAGE, "link-to-page");
-		_ddmFormFieldDataTypes.put(DDMFormFieldType.NUMBER, "number");
-		_ddmFormFieldDataTypes.put(DDMFormFieldType.RADIO, "string");
-		_ddmFormFieldDataTypes.put(DDMFormFieldType.SELECT, "string");
-		_ddmFormFieldDataTypes.put(DDMFormFieldType.TEXT, "string");
-		_ddmFormFieldDataTypes.put(DDMFormFieldType.TEXT_AREA, "string");
-		_ddmFormFieldDataTypes.put(DDMFormFieldType.TEXT_HTML, "html");
+		_ddmFormFieldDataTypes = HashMapBuilder.<DDMFormFieldType, String>put(
+			DDMFormFieldType.CHECKBOX, "boolean"
+		).put(
+			DDMFormFieldType.DATE, "date"
+		).put(
+			DDMFormFieldType.DECIMAL, "double"
+		).put(
+			DDMFormFieldType.DOCUMENT_LIBRARY, "document-library"
+		).put(
+			DDMFormFieldType.GEOLOCATION, "geolocation"
+		).put(
+			DDMFormFieldType.INTEGER, "integer"
+		).put(
+			DDMFormFieldType.LINK_TO_PAGE, "link-to-page"
+		).put(
+			DDMFormFieldType.NUMBER, "number"
+		).put(
+			DDMFormFieldType.RADIO, "string"
+		).put(
+			DDMFormFieldType.SELECT, "string"
+		).put(
+			DDMFormFieldType.TEXT, "string"
+		).put(
+			DDMFormFieldType.TEXT_AREA, "string"
+		).put(
+			DDMFormFieldType.TEXT_HTML, "html"
+		).build();
 
 		return _ddmFormFieldDataTypes;
 	}
@@ -758,26 +768,34 @@ public class DDLExporterTest {
 	protected Map<DDMFormFieldType, String> setUpDDMFormFieldValues()
 		throws Exception {
 
-		_fieldValues = new HashMap<>();
-
-		_fieldValues.put(DDMFormFieldType.CHECKBOX, "false");
-		_fieldValues.put(DDMFormFieldType.DATE, "1970-01-01");
-		_fieldValues.put(DDMFormFieldType.DECIMAL, "1.0");
-		_fieldValues.put(
+		_fieldValues = HashMapBuilder.<DDMFormFieldType, String>put(
+			DDMFormFieldType.CHECKBOX, "false"
+		).put(
+			DDMFormFieldType.DATE, "1970-01-01"
+		).put(
+			DDMFormFieldType.DECIMAL, "1.0"
+		).put(
 			DDMFormFieldType.DOCUMENT_LIBRARY,
-			createDocumentLibraryDDMFormFieldValue());
-		_fieldValues.put(
-			DDMFormFieldType.GEOLOCATION, createGeolocationDDMFormFieldValue());
-		_fieldValues.put(DDMFormFieldType.INTEGER, "2");
-		_fieldValues.put(
-			DDMFormFieldType.LINK_TO_PAGE, createLinkToPageDDMFormFieldValue());
-		_fieldValues.put(DDMFormFieldType.NUMBER, "3");
-		_fieldValues.put(DDMFormFieldType.RADIO, "Value 1");
-		_fieldValues.put(
-			DDMFormFieldType.SELECT, createListDDMFormFieldValue());
-		_fieldValues.put(DDMFormFieldType.TEXT, "Text content");
-		_fieldValues.put(DDMFormFieldType.TEXT_AREA, "Text Area content");
-		_fieldValues.put(DDMFormFieldType.TEXT_HTML, "Text HTML content");
+			createDocumentLibraryDDMFormFieldValue()
+		).put(
+			DDMFormFieldType.GEOLOCATION, createGeolocationDDMFormFieldValue()
+		).put(
+			DDMFormFieldType.INTEGER, "2"
+		).put(
+			DDMFormFieldType.LINK_TO_PAGE, createLinkToPageDDMFormFieldValue()
+		).put(
+			DDMFormFieldType.NUMBER, "3"
+		).put(
+			DDMFormFieldType.RADIO, "Value 1"
+		).put(
+			DDMFormFieldType.SELECT, createListDDMFormFieldValue()
+		).put(
+			DDMFormFieldType.TEXT, "Text content"
+		).put(
+			DDMFormFieldType.TEXT_AREA, "Text Area content"
+		).put(
+			DDMFormFieldType.TEXT_HTML, "Text HTML content"
+		).build();
 
 		return _fieldValues;
 	}

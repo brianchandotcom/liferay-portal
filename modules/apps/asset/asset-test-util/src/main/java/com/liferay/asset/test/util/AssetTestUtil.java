@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
@@ -87,9 +88,9 @@ public class AssetTestUtil {
 
 		titleMap.put(locale, RandomTestUtil.randomString());
 
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(locale, RandomTestUtil.randomString());
+		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
+			locale, RandomTestUtil.randomString()
+		).build();
 
 		String[] categoryProperties = null;
 
@@ -138,9 +139,9 @@ public class AssetTestUtil {
 
 		titleMap.put(locale, RandomTestUtil.randomString());
 
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(locale, RandomTestUtil.randomString());
+		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
+			locale, RandomTestUtil.randomString()
+		).build();
 
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();

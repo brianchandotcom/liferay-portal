@@ -28,6 +28,7 @@ import aQute.lib.filter.Filter;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -56,7 +57,6 @@ import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -117,10 +117,11 @@ public class WabProcessorTest {
 			Assert.assertEquals(resources.toString(), 1244, resources.size());
 		}
 
-		Map<String, String[]> parameters = new HashMap<>();
-
-		parameters.put("Bundle-Version", new String[] {"7.0.0.8"});
-		parameters.put("Web-ContextPath", new String[] {"/classic-theme"});
+		Map<String, String[]> parameters = HashMapBuilder.<String, String[]>put(
+			"Bundle-Version", new String[] {"7.0.0.8"}
+		).put(
+			"Web-ContextPath", new String[] {"/classic-theme"}
+		).build();
 
 		WabProcessor wabProcessor = new TestWabProcessor(file, parameters);
 
@@ -285,10 +286,11 @@ public class WabProcessorTest {
 
 			Parameters requirements = domain.getRequireCapability();
 
-			Map<String, Object> arguments = new HashMap<>();
-
-			arguments.put("osgi.extender", "osgi.cdi");
-			arguments.put("version", new Version(1));
+			Map<String, Object> arguments = HashMapBuilder.<String, Object>put(
+				"osgi.extender", "osgi.cdi"
+			).put(
+				"version", new Version(1)
+			).build();
 
 			for (Attrs attrs : requirements.values()) {
 				String filterString = attrs.get("filter:");
@@ -371,10 +373,11 @@ public class WabProcessorTest {
 
 			Parameters requirements = domain.getRequireCapability();
 
-			Map<String, Object> arguments = new HashMap<>();
-
-			arguments.put("osgi.extender", "osgi.cdi");
-			arguments.put("version", new Version(1));
+			Map<String, Object> arguments = HashMapBuilder.<String, Object>put(
+				"osgi.extender", "osgi.cdi"
+			).put(
+				"version", new Version(1)
+			).build();
 
 			Map.Entry<String, Attrs> entry = findRequirement(
 				requirements, "osgi.extender", arguments);
@@ -466,10 +469,11 @@ public class WabProcessorTest {
 
 			Parameters requirements = domain.getRequireCapability();
 
-			Map<String, Object> arguments = new HashMap<>();
-
-			arguments.put("osgi.extender", "osgi.cdi");
-			arguments.put("version", new Version(1));
+			Map<String, Object> arguments = HashMapBuilder.<String, Object>put(
+				"osgi.extender", "osgi.cdi"
+			).put(
+				"version", new Version(1)
+			).build();
 
 			Map.Entry<String, Attrs> entry = findRequirement(
 				requirements, "osgi.extender", arguments);

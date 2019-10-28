@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.repository.util.LocalRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
@@ -42,7 +43,6 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.io.File;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -421,11 +421,9 @@ public class LiferayDynamicCapabilityTest {
 	private Map<String, Object> _getCapabilityProperties(
 		String repositoryClassName) {
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("repository.class.name", repositoryClassName);
-
-		return properties;
+		return HashMapBuilder.<String, Object>put(
+			"repository.class.name", repositoryClassName
+		).build();
 	}
 
 	@DeleteAfterTestRun

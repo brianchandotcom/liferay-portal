@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -51,7 +52,6 @@ import java.io.Serializable;
 import java.text.DateFormat;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -258,11 +258,9 @@ public abstract class BaseDDMServiceTestCase {
 	}
 
 	protected Map<Locale, String> getDefaultLocaleMap(String value) {
-		Map<Locale, String> map = new HashMap<>();
-
-		map.put(LocaleUtil.getSiteDefault(), value);
-
-		return map;
+		return HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), value
+		).build();
 	}
 
 	protected String getTestTemplateScript(String language) throws Exception {

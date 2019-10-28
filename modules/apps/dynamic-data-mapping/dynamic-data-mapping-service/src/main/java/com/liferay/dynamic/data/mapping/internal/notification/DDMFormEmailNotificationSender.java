@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -338,13 +339,11 @@ public class DDMFormEmailNotificationSender {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
 		Locale locale) {
 
-		Map<String, Object> pageMap = new HashMap<>();
-
-		pageMap.put(
+		Map<String, Object> pageMap = HashMapBuilder.<String, Object>put(
 			"fields",
 			getFields(
-				getFieldNames(ddmFormLayoutPage), ddmFormFieldValuesMap,
-				locale));
+				getFieldNames(ddmFormLayoutPage), ddmFormFieldValuesMap, locale)
+		).build();
 
 		LocalizedValue title = ddmFormLayoutPage.getTitle();
 

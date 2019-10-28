@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.test.rule.Inject;
@@ -484,9 +485,9 @@ public class PDFProcessorTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		HashMap<String, Object> properties = new HashMap<>();
-
-		properties.put("service.ranking", 1000);
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"service.ranking", 1000
+		).build();
 
 		_dlProcessorServiceRegistration = registry.registerService(
 			DLProcessor.class, cleanUpDLProcessor, properties);

@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -114,9 +114,9 @@ public class DLBreadcrumbUtil {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view");
 
-		Map<String, Object> data = new HashMap<>();
-
-		data.put("direction-right", Boolean.TRUE.toString());
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"direction-right", Boolean.TRUE.toString()
+		).build();
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -188,10 +188,11 @@ public class DLBreadcrumbUtil {
 			portletURL.setParameter(
 				"folderId", String.valueOf(ancestorFolder.getFolderId()));
 
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("direction-right", Boolean.TRUE.toString());
-			data.put("folder-id", ancestorFolder.getFolderId());
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"direction-right", Boolean.TRUE.toString()
+			).put(
+				"folder-id", ancestorFolder.getFolderId()
+			).build();
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				httpServletRequest, ancestorFolder.getName(),
@@ -211,10 +212,11 @@ public class DLBreadcrumbUtil {
 
 			Folder unescapedFolder = folder.toUnescapedModel();
 
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("direction-right", Boolean.TRUE.toString());
-			data.put("folder-id", folderId);
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"direction-right", Boolean.TRUE.toString()
+			).put(
+				"folder-id", folderId
+			).build();
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				httpServletRequest, unescapedFolder.getName(),

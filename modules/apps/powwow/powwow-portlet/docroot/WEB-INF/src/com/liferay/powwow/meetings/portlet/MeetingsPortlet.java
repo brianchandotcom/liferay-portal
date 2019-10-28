@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -468,9 +469,9 @@ public class MeetingsPortlet extends MVCPortlet {
 					serviceContext.getCompanyId(), userId);
 			}
 
-			Map<Locale, String> nameMap = new HashMap<>();
-
-			nameMap.put(LocaleUtil.getDefault(), userName);
+			Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+				LocaleUtil.getDefault(), userName
+			).build();
 
 			Map<Locale, String> descriptionMap = new HashMap<>();
 

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -41,7 +42,6 @@ import com.liferay.staging.StagingGroupHelper;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -923,9 +923,9 @@ public class StagingGroupHelperTest {
 	private Group _addScopeGroup(Group group) throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(group);
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getDefault(), String.valueOf(layout.getPlid()));
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getDefault(), String.valueOf(layout.getPlid())
+		).build();
 
 		return GroupLocalServiceUtil.addGroup(
 			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,

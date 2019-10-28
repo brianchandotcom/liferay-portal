@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
@@ -27,7 +28,6 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -102,9 +102,9 @@ public class DDMDataProviderTest {
 	}
 
 	protected static void setUpTestDDMDataProvider() {
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("ddm.data.provider.instance.id", "test");
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"ddm.data.provider.instance.id", "test"
+		).build();
 
 		Registry registry = RegistryUtil.getRegistry();
 

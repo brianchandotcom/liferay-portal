@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
@@ -43,7 +44,6 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -170,9 +170,9 @@ public class AssetAutoTaggerOSGiCommandsTest
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("model.class.name", AssetEntry.class.getName());
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"model.class.name", AssetEntry.class.getName()
+		).build();
 
 		ServiceRegistration<AssetAutoTagProvider>
 			assetAutoTagProviderServiceRegistration = registry.registerService(

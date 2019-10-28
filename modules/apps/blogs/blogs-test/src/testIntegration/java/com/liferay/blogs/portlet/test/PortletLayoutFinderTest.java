@@ -36,11 +36,11 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.FindStrutsAction;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -175,9 +175,10 @@ public class PortletLayoutFinderTest {
 			LayoutTestUtil.addPortletToLayout(_blogLayout, portletId);
 		}
 
-		Map<String, String[]> preferenceMap = new HashMap<>();
-
-		preferenceMap.put("assetLinkBehavior", new String[] {"viewInPortlet"});
+		Map<String, String[]> preferenceMap =
+			HashMapBuilder.<String, String[]>put(
+				"assetLinkBehavior", new String[] {"viewInPortlet"}
+			).build();
 
 		_testPortletId = PortletIdCodec.encode(
 			"com_liferay_hello_world_web_portlet_HelloWorldPortlet");

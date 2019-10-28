@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.servlet.PortalClassLoaderServlet;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -81,7 +82,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -375,10 +375,12 @@ public class WabProcessor {
 					Parameters requireCapabilities = analyzer.parseHeader(
 						analyzer.getProperty(Constants.REQUIRE_CAPABILITY));
 
-					Map<String, Object> arguments = new HashMap<>();
-
-					arguments.put("osgi.extender", "osgi.cdi");
-					arguments.put("version", new Version(1));
+					Map<String, Object> arguments =
+						HashMapBuilder.<String, Object>put(
+							"osgi.extender", "osgi.cdi"
+						).put(
+							"version", new Version(1)
+						).build();
 
 					for (Map.Entry<String, Attrs> entry :
 							requireCapabilities.entrySet()) {

@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.model.table;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,10 +75,11 @@ public class Field {
 	}
 
 	public Map<String, ?> toMap() {
-		Map<String, Object> map = new HashMap<>();
-
-		map.put("contentRenderer", _contentRenderer);
-		map.put("contentRendererMap", _contentRendererMap);
+		Map<String, Object> map = HashMapBuilder.<String, Object>put(
+			"contentRenderer", _contentRenderer
+		).put(
+			"contentRendererMap", _contentRendererMap
+		).build();
 		map.putAll(_customProperties);
 		map.put("fieldName", _fieldName);
 		map.put("fieldsMap", _fieldsMap);

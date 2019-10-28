@@ -59,7 +59,6 @@ import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -276,9 +275,9 @@ public class AMJournalArticleStagedModelDataHandlerTest
 			RandomTestUtil.randomString(), "This is a test folder.",
 			serviceContext);
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(LocaleUtil.getSiteDefault(), "Test Article");
+		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), "Test Article"
+		).build();
 
 		return _journalArticleLocalService.addArticle(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),

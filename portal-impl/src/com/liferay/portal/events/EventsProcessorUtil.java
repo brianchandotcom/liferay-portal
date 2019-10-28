@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.LifecycleEvent;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Registry;
@@ -29,7 +30,6 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -118,9 +118,9 @@ public class EventsProcessorUtil {
 	public static void registerEvent(String key, Object event) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("key", key);
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"key", key
+		).build();
 
 		ServiceRegistration<LifecycleAction> serviceRegistration =
 			registry.registerService(

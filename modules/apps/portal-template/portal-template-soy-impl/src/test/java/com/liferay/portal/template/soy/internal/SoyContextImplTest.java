@@ -14,10 +14,10 @@
 
 package com.liferay.portal.template.soy.internal;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -128,9 +128,9 @@ public class SoyContextImplTest {
 
 		soyContextImpl.putInjectedData("injectedKey", "injectedValue");
 
-		Map<String, Object> injectedData = new HashMap<>();
-
-		injectedData.put("injectedKey", "overrideValue");
+		Map<String, Object> injectedData = HashMapBuilder.<String, Object>put(
+			"injectedKey", "overrideValue"
+		).build();
 
 		soyContextImpl.put(SoyTemplateConstants.INJECTED_DATA, injectedData);
 
@@ -142,9 +142,9 @@ public class SoyContextImplTest {
 	public void testPutAllThrowsWithInvalidInjectedData() {
 		SoyContextImpl soyContextImpl = new SoyContextImpl();
 
-		Map<String, Object> data = new HashMap<>();
-
-		data.put(SoyTemplateConstants.INJECTED_DATA, new Object());
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			SoyTemplateConstants.INJECTED_DATA, new Object()
+		).build();
 
 		soyContextImpl.putAll(data);
 	}

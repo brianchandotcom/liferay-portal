@@ -19,9 +19,9 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,14 +45,11 @@ public class ParagraphDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put(
+		return HashMapBuilder.<String, Object>put(
 			"text",
 			_soyHTMLSanitizer.sanitize(
-				getText(ddmFormField, ddmFormFieldRenderingContext)));
-
-		return parameters;
+				getText(ddmFormField, ddmFormFieldRenderingContext))
+		).build();
 	}
 
 	protected String getText(

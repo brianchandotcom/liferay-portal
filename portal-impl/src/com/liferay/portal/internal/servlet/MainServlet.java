@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -111,7 +112,6 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -1266,11 +1266,13 @@ public class MainServlet extends HttpServlet {
 	private void _registerPortalInitialized() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("module.service.lifecycle", "portal.initialized");
-		properties.put("service.vendor", ReleaseInfo.getVendor());
-		properties.put("service.version", ReleaseInfo.getVersion());
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"module.service.lifecycle", "portal.initialized"
+		).put(
+			"service.vendor", ReleaseInfo.getVendor()
+		).put(
+			"service.version", ReleaseInfo.getVersion()
+		).build();
 
 		_portalInitializedModuleServiceLifecycleServiceRegistration =
 			registry.registerService(
@@ -1279,11 +1281,13 @@ public class MainServlet extends HttpServlet {
 				},
 				properties);
 
-		properties = new HashMap<>();
-
-		properties.put("module.service.lifecycle", "portlets.initialized");
-		properties.put("service.vendor", ReleaseInfo.getVendor());
-		properties.put("service.version", ReleaseInfo.getVersion());
+		properties = HashMapBuilder.<String, Object>put(
+			"module.service.lifecycle", "portlets.initialized"
+		).put(
+			"service.vendor", ReleaseInfo.getVendor()
+		).put(
+			"service.version", ReleaseInfo.getVersion()
+		).build();
 
 		_portalPortletsInitializedModuleServiceLifecycleServiceRegistration =
 			registry.registerService(
@@ -1292,20 +1296,24 @@ public class MainServlet extends HttpServlet {
 				},
 				properties);
 
-		properties = new HashMap<>();
-
-		properties.put("bean.id", ServletContext.class.getName());
-		properties.put("original.bean", Boolean.TRUE);
-		properties.put("service.vendor", ReleaseInfo.getVendor());
+		properties = HashMapBuilder.<String, Object>put(
+			"bean.id", ServletContext.class.getName()
+		).put(
+			"original.bean", Boolean.TRUE
+		).put(
+			"service.vendor", ReleaseInfo.getVendor()
+		).build();
 
 		_servletContextServiceRegistration = registry.registerService(
 			ServletContext.class, getServletContext(), properties);
 
-		properties = new HashMap<>();
-
-		properties.put("module.service.lifecycle", "system.check");
-		properties.put("service.vendor", ReleaseInfo.getVendor());
-		properties.put("service.version", ReleaseInfo.getVersion());
+		properties = HashMapBuilder.<String, Object>put(
+			"module.service.lifecycle", "system.check"
+		).put(
+			"service.vendor", ReleaseInfo.getVendor()
+		).put(
+			"service.version", ReleaseInfo.getVersion()
+		).build();
 
 		_systemCheckModuleServiceLifecycleServiceRegistration =
 			registry.registerService(

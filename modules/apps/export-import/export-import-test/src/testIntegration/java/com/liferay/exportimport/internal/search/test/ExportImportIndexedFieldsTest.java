@@ -132,11 +132,9 @@ public class ExportImportIndexedFieldsTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private HashMap<String, Serializable> _addGroupAttribute() {
-		HashMap<String, Serializable> map = new HashMap<>();
-
-		map.put(Field.GROUP_ID, _group.getGroupId());
-
-		return map;
+		return HashMapBuilder.<String, Serializable>put(
+			Field.GROUP_ID, _group.getGroupId()
+		).build();
 	}
 
 	private Map<String, String> _expectedFieldValues(

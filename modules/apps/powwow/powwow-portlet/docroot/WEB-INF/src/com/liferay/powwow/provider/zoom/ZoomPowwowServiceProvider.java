@@ -204,16 +204,18 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		JSONObject responseJSONObject = execute(
 			powwowServer, "meeting", "create", parameterMap);
 
-		Map<String, Serializable> providerTypeMetadataMap = new HashMap<>();
-
-		providerTypeMetadataMap.put("host_id", hostId);
-		providerTypeMetadataMap.put("id", responseJSONObject.getString("id"));
-		providerTypeMetadataMap.put(
-			"option_host_video",
-			options.get(PowwowMeetingConstants.OPTION_AUTO_START_VIDEO));
-		providerTypeMetadataMap.put(
-			"option_participants_video",
-			options.get(PowwowMeetingConstants.OPTION_AUTO_START_VIDEO));
+		Map<String, Serializable> providerTypeMetadataMap =
+			HashMapBuilder.<String, Serializable>put(
+				"host_id", hostId
+			).put(
+				"id", responseJSONObject.getString("id")
+			).put(
+				"option_host_video",
+				options.get(PowwowMeetingConstants.OPTION_AUTO_START_VIDEO)
+			).put(
+				"option_participants_video",
+				options.get(PowwowMeetingConstants.OPTION_AUTO_START_VIDEO)
+			).build();
 
 		if (Validator.isNotNull(password)) {
 			providerTypeMetadataMap.put(

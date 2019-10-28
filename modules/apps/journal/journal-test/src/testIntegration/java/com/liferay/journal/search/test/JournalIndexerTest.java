@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -53,7 +54,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -345,17 +345,21 @@ public class JournalIndexerTest {
 
 		assertSearchCount(0, _group.getGroupId(), searchContext2);
 
-		Map<Locale, String> titleMap = new HashMap<>();
+		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.GERMANY, "Titel"
+		).put(
+			LocaleUtil.SPAIN, "Titulo"
+		).put(
+			LocaleUtil.US, "Title"
+		).build();
 
-		titleMap.put(LocaleUtil.GERMANY, "Titel");
-		titleMap.put(LocaleUtil.SPAIN, "Titulo");
-		titleMap.put(LocaleUtil.US, "Title");
-
-		Map<Locale, String> contentMap = new HashMap<>();
-
-		contentMap.put(LocaleUtil.GERMANY, "Liferay Architektur Ansatz");
-		contentMap.put(LocaleUtil.SPAIN, "Liferay Arquitectura Aproximacion");
-		contentMap.put(LocaleUtil.US, "Liferay Architectural Approach");
+		Map<Locale, String> contentMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.GERMANY, "Liferay Architektur Ansatz"
+		).put(
+			LocaleUtil.SPAIN, "Liferay Arquitectura Aproximacion"
+		).put(
+			LocaleUtil.US, "Liferay Architectural Approach"
+		).build();
 
 		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
 			_group.getGroupId(), titleMap, titleMap, contentMap, true);
@@ -401,17 +405,21 @@ public class JournalIndexerTest {
 
 		assertSearchCount(0, _group.getGroupId(), searchContext2);
 
-		Map<Locale, String> titleMap = new HashMap<>();
+		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.GERMANY, "Titel"
+		).put(
+			LocaleUtil.SPAIN, "Titulo"
+		).put(
+			LocaleUtil.US, "Title"
+		).build();
 
-		titleMap.put(LocaleUtil.GERMANY, "Titel");
-		titleMap.put(LocaleUtil.SPAIN, "Titulo");
-		titleMap.put(LocaleUtil.US, "Title");
-
-		Map<Locale, String> contentMap = new HashMap<>();
-
-		contentMap.put(LocaleUtil.GERMANY, "Liferay Architektur Ansatz");
-		contentMap.put(LocaleUtil.SPAIN, "Liferay Arquitectura Aproximacion");
-		contentMap.put(LocaleUtil.US, "Liferay Architectural Approach");
+		Map<Locale, String> contentMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.GERMANY, "Liferay Architektur Ansatz"
+		).put(
+			LocaleUtil.SPAIN, "Liferay Arquitectura Aproximacion"
+		).put(
+			LocaleUtil.US, "Liferay Architectural Approach"
+		).build();
 
 		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
 			_group.getGroupId(), titleMap, titleMap, contentMap, true);

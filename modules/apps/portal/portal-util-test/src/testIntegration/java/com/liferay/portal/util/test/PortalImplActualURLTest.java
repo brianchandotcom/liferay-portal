@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -153,12 +154,9 @@ public class PortalImplActualURLTest {
 	}
 
 	private Map<String, Object> _getRequestContext() {
-		Map<String, Object> requestContext = new HashMap<>();
-
-		requestContext.put(
-			"request", new MockHttpServletRequest(Method.GET, "/"));
-
-		return requestContext;
+		return HashMapBuilder.<String, Object>put(
+			"request", new MockHttpServletRequest(Method.GET, "/")
+		).build();
 	}
 
 	@DeleteAfterTestRun

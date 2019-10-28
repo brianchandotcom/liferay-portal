@@ -35,13 +35,13 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -259,13 +259,13 @@ public class DDMStructureManagerTest {
 	public void testUpdateStructure() throws Exception {
 		DDMStructure expectedStructure = addStructure();
 
-		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.US, "Structure Name Modified"
+		).build();
 
-		nameMap.put(LocaleUtil.US, "Structure Name Modified");
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(LocaleUtil.US, "Structure Description Modified");
+		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.US, "Structure Description Modified"
+		).build();
 
 		DDMStructure actualStructure = _ddmStructureManager.updateStructure(
 			TestPropsValues.getUserId(), expectedStructure.getStructureId(), 0,
@@ -309,13 +309,13 @@ public class DDMStructureManagerTest {
 	}
 
 	protected DDMStructure addStructure() throws Exception {
-		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.US, "Test Structure Name"
+		).build();
 
-		nameMap.put(LocaleUtil.US, "Test Structure Name");
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(LocaleUtil.US, "Test Structure Description");
+		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.US, "Test Structure Description"
+		).build();
 
 		return _ddmStructureManager.addStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(), null,

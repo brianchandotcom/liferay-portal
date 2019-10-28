@@ -42,13 +42,13 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -124,13 +124,15 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 				}
 			}
 			else {
-				Map<Locale, String> nameMap = new HashMap<>();
+				Map<Locale, String> nameMap =
+					HashMapBuilder.<Locale, String>put(
+						locale, name
+					).build();
 
-				nameMap.put(locale, name);
-
-				Map<Locale, String> descriptionMap = new HashMap<>();
-
-				descriptionMap.put(locale, name);
+				Map<Locale, String> descriptionMap =
+					HashMapBuilder.<Locale, String>put(
+						locale, name
+					).build();
 
 				DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(
 					ddmForm);

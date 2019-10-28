@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.logging.ExpectedLogTestRule;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Rule;
@@ -58,9 +58,9 @@ public class ElasticsearchIndexSearcherLogExceptionsOnlyTest
 
 	protected ElasticsearchFixture createElasticsearchFixture() {
 		Map<String, Object> elasticsearchConfigurationProperties =
-			new HashMap<>();
-
-		elasticsearchConfigurationProperties.put("logExceptionsOnly", true);
+			HashMapBuilder.<String, Object>put(
+				"logExceptionsOnly", true
+			).build();
 
 		return new ElasticsearchFixture(
 			ElasticsearchIndexWriterLogExceptionsOnlyTest.class.getSimpleName(),

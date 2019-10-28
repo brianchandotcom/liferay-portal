@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -231,9 +232,10 @@ public class ServiceTestUtil {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		HashMap<String, Object> messageBusProperties = new HashMap<>();
-
-		messageBusProperties.put("service.ranking", Integer.MAX_VALUE);
+		HashMap<String, Object> messageBusProperties =
+			HashMapBuilder.<String, Object>put(
+				"service.ranking", Integer.MAX_VALUE
+			).build();
 
 		registry.registerService(
 			MessageBus.class, _messageBusWrapper, messageBusProperties);
@@ -243,10 +245,9 @@ public class ServiceTestUtil {
 		}
 
 		HashMap<String, Object> portalExecutorManagerProperties =
-			new HashMap<>();
-
-		portalExecutorManagerProperties.put(
-			"service.ranking", Integer.MAX_VALUE);
+			HashMapBuilder.<String, Object>put(
+				"service.ranking", Integer.MAX_VALUE
+			).build();
 
 		registry.registerService(
 			PortalExecutorManager.class, _portalExecutorManagerWrapper,

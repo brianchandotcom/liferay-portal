@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -3885,9 +3886,10 @@ public class PortletImpl extends PortletBaseImpl {
 					readiness._serviceRegistrar = serviceRegistrar;
 				}
 
-				Map<String, Object> properties = new HashMap<>();
-
-				properties.put("javax.portlet.name", getPortletName());
+				Map<String, Object> properties =
+					HashMapBuilder.<String, Object>put(
+						"javax.portlet.name", getPortletName()
+					).build();
 
 				serviceRegistrar.registerService(
 					Portlet.class, this, properties);

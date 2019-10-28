@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -69,7 +70,6 @@ import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import java.io.ByteArrayInputStream;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -498,11 +498,9 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
-
-		ddmFormValuesMap.put(ddmStructureKey, ddmFormValues);
-
-		return ddmFormValuesMap;
+		return HashMapBuilder.<String, DDMFormValues>put(
+			ddmStructureKey, ddmFormValues
+		).build();
 	}
 
 	@Override

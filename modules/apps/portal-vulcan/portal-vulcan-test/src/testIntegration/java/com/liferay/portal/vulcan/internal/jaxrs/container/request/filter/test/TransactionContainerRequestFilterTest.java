@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -32,7 +33,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -66,13 +66,15 @@ public class TransactionContainerRequestFilterTest {
 	public void setUp() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("liferay.auth.verifier", true);
-		properties.put("liferay.oauth2", false);
-		properties.put("osgi.jaxrs.application.base", "/test-vulcan");
-		properties.put(
-			"osgi.jaxrs.extension.select", "(osgi.jaxrs.name=Liferay.Vulcan)");
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"liferay.auth.verifier", true
+		).put(
+			"liferay.oauth2", false
+		).put(
+			"osgi.jaxrs.application.base", "/test-vulcan"
+		).put(
+			"osgi.jaxrs.extension.select", "(osgi.jaxrs.name=Liferay.Vulcan)"
+		).build();
 
 		_serviceRegistration = registry.registerService(
 			Application.class,

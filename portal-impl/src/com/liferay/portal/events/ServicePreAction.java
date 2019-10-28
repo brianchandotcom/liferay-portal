@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -107,7 +108,6 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -246,38 +246,38 @@ public class ServicePreAction extends Action {
 
 		User user = UserLocalServiceUtil.getUser(userId);
 
-		Map<String, String[]> parameterMap = new HashMap<>();
-
-		parameterMap.put(
-			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.THEME_REFERENCE,
-			new String[] {Boolean.TRUE.toString()});
+		Map<String, String[]> parameterMap =
+			HashMapBuilder.<String, String[]>put(
+				PortletDataHandlerKeys.PERMISSIONS,
+				new String[] {Boolean.TRUE.toString()}
+			).put(
+				PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL,
+				new String[] {Boolean.TRUE.toString()}
+			).put(
+				PortletDataHandlerKeys.PORTLET_CONFIGURATION,
+				new String[] {Boolean.TRUE.toString()}
+			).put(
+				PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
+				new String[] {Boolean.TRUE.toString()}
+			).put(
+				PortletDataHandlerKeys.PORTLET_DATA,
+				new String[] {Boolean.TRUE.toString()}
+			).put(
+				PortletDataHandlerKeys.PORTLET_DATA_ALL,
+				new String[] {Boolean.TRUE.toString()}
+			).put(
+				PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
+				new String[] {Boolean.TRUE.toString()}
+			).put(
+				PortletDataHandlerKeys.PORTLET_SETUP_ALL,
+				new String[] {Boolean.TRUE.toString()}
+			).put(
+				PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL,
+				new String[] {Boolean.TRUE.toString()}
+			).put(
+				PortletDataHandlerKeys.THEME_REFERENCE,
+				new String[] {Boolean.TRUE.toString()}
+			).build();
 
 		Map<String, Serializable> importLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.

@@ -23,7 +23,6 @@ import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -38,14 +37,15 @@ public class AMAttributeDistanceComparatorTest {
 	@Before
 	public void setUp() {
 		Map<AMAttribute<AMImageProcessor, ?>, AMImageQueryBuilder.SortOrder>
-			amAttributes = new HashMap<>();
-
-		amAttributes.put(
-			AMAttribute.getContentLengthAMAttribute(),
-			AMImageQueryBuilder.SortOrder.ASC);
-		amAttributes.put(
-			AMAttribute.getFileNameAMAttribute(),
-			AMImageQueryBuilder.SortOrder.DESC);
+			amAttributes =
+				HashMapBuilder.<AMAttribute<AMImageProcessor, ?>,
+				 AMImageQueryBuilder.SortOrder>put(
+					AMAttribute.getContentLengthAMAttribute(),
+					AMImageQueryBuilder.SortOrder.ASC
+				).put(
+					AMAttribute.getFileNameAMAttribute(),
+					AMImageQueryBuilder.SortOrder.DESC
+				).build();
 
 		_multiAMAttributeDistanceComparator = new AMAttributeDistanceComparator(
 			amAttributes);

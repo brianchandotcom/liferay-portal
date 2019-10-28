@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -53,7 +54,6 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -302,13 +302,13 @@ public class StagingLocalizationTest {
 	}
 
 	private Map<Locale, String> _prepareNameMap() {
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.GERMANY, StringPool.BLANK);
-		nameMap.put(LocaleUtil.SPAIN, null);
-		nameMap.put(LocaleUtil.US, RandomTestUtil.randomString());
-
-		return nameMap;
+		return HashMapBuilder.<Locale, String>put(
+			LocaleUtil.GERMANY, StringPool.BLANK
+		).put(
+			LocaleUtil.SPAIN, null
+		).put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
 	}
 
 	private static Set<Locale> _availableLocales;

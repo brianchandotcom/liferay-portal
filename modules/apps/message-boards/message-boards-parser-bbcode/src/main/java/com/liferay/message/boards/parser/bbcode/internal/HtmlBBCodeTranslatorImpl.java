@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -95,14 +94,19 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			emoticon[0] = sb.toString();
 		}
 
-		_excludeNewLineTypes = new HashMap<>();
-
-		_excludeNewLineTypes.put("*", BBCodeParser.TYPE_TAG_START_END);
-		_excludeNewLineTypes.put("li", BBCodeParser.TYPE_TAG_START_END);
-		_excludeNewLineTypes.put("table", BBCodeParser.TYPE_TAG_END);
-		_excludeNewLineTypes.put("td", BBCodeParser.TYPE_TAG_START_END);
-		_excludeNewLineTypes.put("th", BBCodeParser.TYPE_TAG_START_END);
-		_excludeNewLineTypes.put("tr", BBCodeParser.TYPE_TAG_START_END);
+		_excludeNewLineTypes = HashMapBuilder.<String, Integer>put(
+			"*", BBCodeParser.TYPE_TAG_START_END
+		).put(
+			"li", BBCodeParser.TYPE_TAG_START_END
+		).put(
+			"table", BBCodeParser.TYPE_TAG_END
+		).put(
+			"td", BBCodeParser.TYPE_TAG_START_END
+		).put(
+			"th", BBCodeParser.TYPE_TAG_START_END
+		).put(
+			"tr", BBCodeParser.TYPE_TAG_START_END
+		).build();
 
 		_imageAttributes = new HashSet<>(
 			Arrays.asList(

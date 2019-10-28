@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -74,10 +75,9 @@ public class AssetVocabularyLocalServiceImpl
 		long defaultUserId = userLocalService.getDefaultUserId(
 			group.getCompanyId());
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(
-			LocaleUtil.getSiteDefault(), PropsValues.ASSET_VOCABULARY_DEFAULT);
+		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), PropsValues.ASSET_VOCABULARY_DEFAULT
+		).build();
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -158,9 +158,9 @@ public class AssetVocabularyLocalServiceImpl
 
 		titleMap.put(locale, title);
 
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(locale, StringPool.BLANK);
+		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
+			locale, StringPool.BLANK
+		).build();
 
 		return assetVocabularyLocalService.addVocabulary(
 			userId, groupId, title, titleMap, descriptionMap, null,

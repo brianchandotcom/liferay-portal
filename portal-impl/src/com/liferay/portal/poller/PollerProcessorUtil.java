@@ -17,6 +17,7 @@ package com.liferay.portal.poller;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.proxy.TargetLocator;
 import com.liferay.portal.kernel.poller.PollerProcessor;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyInstallationUtil;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil;
 import com.liferay.portal.nio.intraband.proxy.StubHolder;
@@ -33,7 +34,6 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
 import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
 
@@ -74,9 +74,9 @@ public class PollerProcessorUtil {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("javax.portlet.name", portletId);
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"javax.portlet.name", portletId
+		).build();
 
 		ServiceRegistration<PollerProcessor> serviceRegistration =
 			registry.registerService(

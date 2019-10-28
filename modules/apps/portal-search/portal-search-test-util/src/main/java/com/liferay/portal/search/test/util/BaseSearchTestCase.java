@@ -42,12 +42,12 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.test.randomizerbumpers.BBCodeRandomizerBumper;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -86,10 +86,11 @@ public abstract class BaseSearchTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		Map<Locale, String> keywordsMap = new HashMap<>();
-
-		keywordsMap.put(LocaleUtil.getDefault(), "entity title");
-		keywordsMap.put(LocaleUtil.HUNGARY, "entitas neve");
+		Map<Locale, String> keywordsMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getDefault(), "entity title"
+		).put(
+			LocaleUtil.HUNGARY, "entitas neve"
+		).build();
 
 		baseModel = addBaseModelWithWorkflow(
 			parentBaseModel, true, keywordsMap, serviceContext);

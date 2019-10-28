@@ -90,6 +90,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -320,15 +321,14 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 				group.getGroupId(), ddmStructure.getStructureId(),
 				PortalUtil.getClassNameId(JournalArticle.class));
 
-			Map<Locale, String> titleMap = new HashMap<>();
+			Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build();
 
-			titleMap.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString());
-
-			Map<Locale, String> descriptionMap = new HashMap<>();
-
-			descriptionMap.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString());
+			Map<Locale, String> descriptionMap =
+				HashMapBuilder.<Locale, String>put(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()
+				).build();
 
 			String content = DDMStructureTestUtil.getSampleStructuredContent();
 
@@ -398,9 +398,9 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
 			ddmForm, StorageType.JSON.toString());
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.US, RandomTestUtil.randomString());
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
 
 		return DDLRecordSetLocalServiceUtil.addRecordSet(
 			adminUser.getUserId(), group.getGroupId(),

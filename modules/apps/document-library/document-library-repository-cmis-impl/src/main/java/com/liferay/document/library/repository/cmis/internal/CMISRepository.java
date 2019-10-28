@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -161,11 +162,11 @@ public class CMISRepository extends BaseCmisRepository {
 			org.apache.chemistry.opencmis.client.api.Folder cmisFolder =
 				getCmisFolder(session, folderId);
 
-			Map<String, Object> properties = new HashMap<>();
-
-			properties.put(PropertyIds.NAME, title);
-			properties.put(
-				PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_DOCUMENT.value());
+			Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+				PropertyIds.NAME, title
+			).put(
+				PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_DOCUMENT.value()
+			).build();
 
 			ContentStream contentStream = new ContentStreamImpl(
 				title, BigInteger.valueOf(size), mimeType, is);
@@ -219,11 +220,11 @@ public class CMISRepository extends BaseCmisRepository {
 			org.apache.chemistry.opencmis.client.api.Folder cmisFolder =
 				getCmisFolder(session, parentFolderId);
 
-			Map<String, Object> properties = new HashMap<>();
-
-			properties.put(PropertyIds.NAME, name);
-			properties.put(
-				PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_FOLDER.value());
+			Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+				PropertyIds.NAME, name
+			).put(
+				PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_FOLDER.value()
+			).build();
 
 			return toFolder(cmisFolder.createFolder(properties));
 		}
@@ -1328,9 +1329,9 @@ public class CMISRepository extends BaseCmisRepository {
 			ContentStream contentStream = null;
 
 			if (Validator.isNotNull(title) && !title.equals(currentTitle)) {
-				properties = new HashMap<>();
-
-				properties.put(PropertyIds.NAME, title);
+				properties = HashMapBuilder.<String, Object>put(
+					PropertyIds.NAME, title
+				).build();
 			}
 
 			if (is != null) {

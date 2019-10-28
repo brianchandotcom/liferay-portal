@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -54,7 +55,6 @@ import com.liferay.portal.util.LocalizationImpl;
 import java.nio.ByteBuffer;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.solr.client.solrj.SolrQuery;
@@ -271,12 +271,15 @@ public class SolrIndexingFixture implements IndexingFixture {
 	protected Map<String, Object> createSolrConfigurationProperties(
 		Map<String, Object> solrConfigurationProperties) {
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("defaultCollection", "liferay");
-		properties.put("logExceptionsOnly", false);
-		properties.put("readURL", "http://localhost:8983/solr/liferay");
-		properties.put("writeURL", "http://localhost:8983/solr/liferay");
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"defaultCollection", "liferay"
+		).put(
+			"logExceptionsOnly", false
+		).put(
+			"readURL", "http://localhost:8983/solr/liferay"
+		).put(
+			"writeURL", "http://localhost:8983/solr/liferay"
+		).build();
 
 		properties.putAll(solrConfigurationProperties);
 

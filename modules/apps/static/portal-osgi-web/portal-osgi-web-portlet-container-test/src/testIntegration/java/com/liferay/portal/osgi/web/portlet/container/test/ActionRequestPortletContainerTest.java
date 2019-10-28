@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthToken;
 import com.liferay.portal.kernel.security.auth.AuthTokenWhitelist;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -38,7 +39,6 @@ import java.io.PrintWriter;
 
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -345,11 +345,12 @@ public class ActionRequestPortletContainerTest
 
 		url = HttpUtil.removeParameter(url, "p_auth");
 
-		Map<String, List<String>> headers = new HashMap<>();
-
-		headers.put("Cookie", response.getCookies());
-		headers.put(
-			"X-CSRF-Token", Collections.singletonList(response.getBody()));
+		Map<String, List<String>> headers =
+			HashMapBuilder.<String, List<String>>put(
+				"Cookie", response.getCookies()
+			).put(
+				"X-CSRF-Token", Collections.singletonList(response.getBody())
+			).build();
 
 		response = PortletContainerTestUtil.request(url, headers);
 

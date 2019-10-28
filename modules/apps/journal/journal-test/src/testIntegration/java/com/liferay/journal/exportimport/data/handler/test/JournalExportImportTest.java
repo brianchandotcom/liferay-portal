@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -598,14 +599,14 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	protected Map<String, String[]> getBaseParameterMap(long groupId, long plid)
 		throws Exception {
 
-		Map<String, String[]> parameterMap = new HashMap<>();
-
-		parameterMap.put(
-			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
-			new String[] {Boolean.FALSE.toString()});
+		Map<String, String[]> parameterMap =
+			HashMapBuilder.<String, String[]>put(
+				PortletDataHandlerKeys.PERMISSIONS,
+				new String[] {Boolean.TRUE.toString()}
+			).put(
+				PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
+				new String[] {Boolean.FALSE.toString()}
+			).build();
 
 		addParameter(parameterMap, "doAsGroupId", String.valueOf(groupId));
 		addParameter(parameterMap, "feeds", true);

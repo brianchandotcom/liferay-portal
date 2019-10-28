@@ -17,10 +17,10 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.fieldset;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -75,24 +75,28 @@ public class FieldSetDDMFormFieldTemplateContextContributorTest {
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
-		Map<String, Object> nestedField0 = new HashMap<>();
+		Map<String, Object> nestedField0 = HashMapBuilder.<String, Object>put(
+			"name", "field0"
+		).put(
+			"type", "text"
+		).build();
 
-		nestedField0.put("name", "field0");
-		nestedField0.put("type", "text");
+		Map<String, Object> nestedField1 = HashMapBuilder.<String, Object>put(
+			"name", "field1"
+		).put(
+			"type", "checkbox"
+		).build();
 
-		Map<String, Object> nestedField1 = new HashMap<>();
+		Map<String, List<Object>> nestedFields =
+			HashMapBuilder.<String, List<Object>>put(
+				"field0", Arrays.<Object>asList(nestedField0)
+			).put(
+				"field1", Arrays.<Object>asList(nestedField1)
+			).build();
 
-		nestedField1.put("name", "field1");
-		nestedField1.put("type", "checkbox");
-
-		Map<String, List<Object>> nestedFields = new HashMap<>();
-
-		nestedFields.put("field0", Arrays.<Object>asList(nestedField0));
-		nestedFields.put("field1", Arrays.<Object>asList(nestedField1));
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("nestedFields", nestedFields);
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"nestedFields", nestedFields
+		).build();
 
 		ddmFormFieldRenderingContext.setProperties(properties);
 
@@ -134,30 +138,36 @@ public class FieldSetDDMFormFieldTemplateContextContributorTest {
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
-		Map<String, Object> nestedField0 = new HashMap<>();
+		Map<String, Object> nestedField0 = HashMapBuilder.<String, Object>put(
+			"name", "field0"
+		).put(
+			"type", "text"
+		).build();
 
-		nestedField0.put("name", "field0");
-		nestedField0.put("type", "text");
+		Map<String, Object> nestedField1 = HashMapBuilder.<String, Object>put(
+			"name", "field1"
+		).put(
+			"type", "checkbox"
+		).build();
 
-		Map<String, Object> nestedField1 = new HashMap<>();
+		Map<String, Object> nestedField2 = HashMapBuilder.<String, Object>put(
+			"name", "field2"
+		).put(
+			"type", "select"
+		).build();
 
-		nestedField1.put("name", "field1");
-		nestedField1.put("type", "checkbox");
+		Map<String, List<Object>> nestedFields =
+			HashMapBuilder.<String, List<Object>>put(
+				"field0", Arrays.<Object>asList(nestedField0)
+			).put(
+				"field1", Arrays.<Object>asList(nestedField1)
+			).put(
+				"field2", Arrays.<Object>asList(nestedField2)
+			).build();
 
-		Map<String, Object> nestedField2 = new HashMap<>();
-
-		nestedField2.put("name", "field2");
-		nestedField2.put("type", "select");
-
-		Map<String, List<Object>> nestedFields = new HashMap<>();
-
-		nestedFields.put("field0", Arrays.<Object>asList(nestedField0));
-		nestedFields.put("field1", Arrays.<Object>asList(nestedField1));
-		nestedFields.put("field2", Arrays.<Object>asList(nestedField2));
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("nestedFields", nestedFields);
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"nestedFields", nestedFields
+		).build();
 
 		ddmFormFieldRenderingContext.setProperties(properties);
 

@@ -31,10 +31,10 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -109,11 +109,13 @@ public class DDMFormDisplayExportImportTest
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstanceRecord.getFormInstance();
 
-		Map<String, String[]> preferenceMap = new HashMap<>();
-
-		preferenceMap.put(
-			"formInstanceId",
-			new String[] {String.valueOf(ddmFormInstance.getFormInstanceId())});
+		Map<String, String[]> preferenceMap =
+			HashMapBuilder.<String, String[]>put(
+				"formInstanceId",
+				new String[] {
+					String.valueOf(ddmFormInstance.getFormInstanceId())
+				}
+			).build();
 
 		PortletPreferences importedPortletPreferences =
 			getImportedPortletPreferences(preferenceMap);

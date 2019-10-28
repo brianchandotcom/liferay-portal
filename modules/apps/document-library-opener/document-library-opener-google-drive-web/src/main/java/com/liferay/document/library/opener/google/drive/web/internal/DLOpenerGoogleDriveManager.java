@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,7 +56,6 @@ import java.net.URLConnection;
 
 import java.security.GeneralSecurityException;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -246,18 +246,20 @@ public class DLOpenerGoogleDriveManager
 			String cmd, FileEntry fileEntry, long userId)
 		throws PortalException {
 
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		taskContextMap.put(
-			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
-		taskContextMap.put(GoogleDriveBackgroundTaskConstants.CMD, cmd);
-		taskContextMap.put(
-			GoogleDriveBackgroundTaskConstants.COMPANY_ID,
-			fileEntry.getCompanyId());
-		taskContextMap.put(
-			GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID,
-			fileEntry.getFileEntryId());
-		taskContextMap.put(GoogleDriveBackgroundTaskConstants.USER_ID, userId);
+		Map<String, Serializable> taskContextMap =
+			HashMapBuilder.<String, Serializable>put(
+				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
+			).put(
+				GoogleDriveBackgroundTaskConstants.CMD, cmd
+			).put(
+				GoogleDriveBackgroundTaskConstants.COMPANY_ID,
+				fileEntry.getCompanyId()
+			).put(
+				GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID,
+				fileEntry.getFileEntryId()
+			).put(
+				GoogleDriveBackgroundTaskConstants.USER_ID, userId
+			).build();
 
 		return _backgroundTaskManager.addBackgroundTask(
 			userId, CompanyConstants.SYSTEM,

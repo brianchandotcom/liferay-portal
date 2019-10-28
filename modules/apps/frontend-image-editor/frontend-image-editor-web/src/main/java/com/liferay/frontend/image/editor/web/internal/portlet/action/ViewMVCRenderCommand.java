@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -62,10 +63,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		Template template = getTemplate(renderRequest);
 
-		Map<String, Object> imageEditorCapabilitiesContext = new HashMap<>();
-
-		imageEditorCapabilitiesContext.put(
-			"tools", getImageEditorToolsContexts(renderRequest));
+		Map<String, Object> imageEditorCapabilitiesContext =
+			HashMapBuilder.<String, Object>put(
+				"tools", getImageEditorToolsContexts(renderRequest)
+			).build();
 
 		template.put("imageEditorCapabilities", imageEditorCapabilitiesContext);
 

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -128,13 +128,12 @@ public class JournalContentPortletToolbarContributor
 			String title = LanguageUtil.format(
 				themeDisplay.getLocale(), "new-x", ddmStructureName);
 
-			Map<String, Object> data = new HashMap<>();
-
-			data.put(
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
 				"id",
-				HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
-
-			data.put("title", HtmlUtil.escape(title));
+				HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset"
+			).put(
+				"title", HtmlUtil.escape(title)
+			).build();
 
 			urlMenuItem.setData(data);
 

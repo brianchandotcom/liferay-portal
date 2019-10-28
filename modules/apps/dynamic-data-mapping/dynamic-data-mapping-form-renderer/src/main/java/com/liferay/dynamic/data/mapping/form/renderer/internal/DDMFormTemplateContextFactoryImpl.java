@@ -309,13 +309,13 @@ public class DDMFormTemplateContextFactoryImpl
 	}
 
 	protected Map<String, Object> toMap(DDMFormRule ddmFormRule) {
-		Map<String, Object> map = new HashMap<>();
-
-		map.put("actions", ddmFormRule.getActions());
-		map.put("condition", ddmFormRule.getCondition());
-		map.put("enable", ddmFormRule.isEnabled());
-
-		return map;
+		return HashMapBuilder.<String, Object>put(
+			"actions", ddmFormRule.getActions()
+		).put(
+			"condition", ddmFormRule.getCondition()
+		).put(
+			"enable", ddmFormRule.isEnabled()
+		).build();
 	}
 
 	protected List<Object> toObjectList(List<DDMFormRule> ddmFormRules) {

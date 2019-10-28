@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -100,10 +101,11 @@ public class SegmentsExperimentDisplayContext {
 			return _data;
 		}
 
-		_data = new HashMap<>();
-
-		_data.put("context", getContext());
-		_data.put("props", getProps());
+		_data = HashMapBuilder.<String, Object>put(
+			"context", getContext()
+		).put(
+			"props", getProps()
+		).build();
 
 		return _data;
 	}
@@ -311,11 +313,11 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private Map<String, Object> _getPage() {
-		Map<String, Object> page = new HashMap<>();
-
-		page.put(
-			"classNameId", PortalUtil.getClassNameId(Layout.class.getName()));
-		page.put("classPK", _themeDisplay.getPlid());
+		Map<String, Object> page = HashMapBuilder.<String, Object>put(
+			"classNameId", PortalUtil.getClassNameId(Layout.class.getName())
+		).put(
+			"classPK", _themeDisplay.getPlid()
+		).build();
 
 		Layout layout = _themeDisplay.getLayout();
 

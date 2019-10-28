@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.model.table;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,15 +56,17 @@ public class Schema {
 	}
 
 	public Map<String, ?> toMap() {
-		Map<String, Object> map = new HashMap<>();
-
-		map.put("fields", _getFields());
-		map.put("inputName", _inputName);
-		map.put("inputNameField", _inputNameField);
-		map.put("inputNamesMap", _inputNamesMap);
-		map.put("inputValueField", _inputValueField);
-
-		return map;
+		return HashMapBuilder.<String, Object>put(
+			"fields", _getFields()
+		).put(
+			"inputName", _inputName
+		).put(
+			"inputNameField", _inputNameField
+		).put(
+			"inputNamesMap", _inputNamesMap
+		).put(
+			"inputValueField", _inputValueField
+		).build();
 	}
 
 	private List<Map<String, ?>> _getFields() {

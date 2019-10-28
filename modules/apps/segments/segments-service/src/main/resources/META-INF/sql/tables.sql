@@ -32,6 +32,18 @@ create table SegmentsEntryRel (
 	classPK LONG
 );
 
+create table SegmentsEntryRole (
+	mvccVersion LONG default 0 not null,
+	segmentsEntryRoleId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	roleId LONG,
+	segmentsEntryId LONG
+);
+
 create table SegmentsExperience (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,

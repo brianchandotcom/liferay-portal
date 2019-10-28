@@ -65,7 +65,7 @@ export default function NodeListItem({
 							node.name
 						}`}
 						className="lfr-treeview-node-list-item__button"
-						onClick={() => setExpanded(!expanded)}
+						onClick={() => setExpanded(expanded => !expanded)}
 						type="button"
 					>
 						<ClayIcon

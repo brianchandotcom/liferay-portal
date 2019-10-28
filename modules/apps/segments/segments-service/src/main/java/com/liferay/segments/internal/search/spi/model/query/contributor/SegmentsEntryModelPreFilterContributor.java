@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.roles.admin.internal.segments.entry.search.spi.model.query.contributor;
+package com.liferay.segments.internal.search.spi.model.query.contributor;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;

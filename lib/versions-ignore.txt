@@ -27,12 +27,8 @@ tmp/lib-pre/com.liferay.portal.impl.document.library.compat.jar
 tmp/lib-pre/com.liferay.portal.impl.message.boards.compat.jar
 tmp/lib-pre/com.liferay.portal.impl.trash.compat.jar
 tmp/lib-pre/com.liferay.portal.kernel.blogs.compat.jar
-tmp/lib-pre/com.liferay.portal.kernel.concurrent.compat.jar
 tmp/lib-pre/com.liferay.portal.kernel.document.library.compat.jar
-tmp/lib-pre/com.liferay.portal.kernel.io.compat.jar
 tmp/lib-pre/com.liferay.portal.kernel.message.boards.compat.jar
-tmp/lib-pre/com.liferay.portal.kernel.nio.compat.jar
-tmp/lib-pre/com.liferay.portal.kernel.util.compat.jar
 tmp/lib-pre/com.liferay.registry.api.jar
 tmp/lib-pre/com.liferay.util.java.compat.jar
 tmp/lib-pre/com.liferay.util.taglib.compat.jar

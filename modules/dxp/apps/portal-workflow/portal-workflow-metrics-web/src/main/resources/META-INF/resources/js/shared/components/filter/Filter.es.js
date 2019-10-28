@@ -178,6 +178,7 @@ class Filter extends React.Component {
 	render() {
 		const {expanded, items} = this.state;
 		const {
+			buttonClassName = 'btn-secondary btn-sm',
 			children,
 			elementClasses,
 			hideControl = false,
@@ -192,6 +193,13 @@ class Filter extends React.Component {
 			'dropdown-menu',
 			children && 'show',
 			position && `dropdown-menu-${position}`
+		);
+
+		const customButtonClassName = getClassName(
+			'btn',
+			'dropdown-toggle',
+			'nav-link',
+			buttonClassName
 		);
 
 		const dropdownClassName = getClassName(
@@ -217,7 +225,7 @@ class Filter extends React.Component {
 				<button
 					aria-expanded={expanded}
 					aria-haspopup="true"
-					className="btn btn-secondary btn-sm dropdown-toggle nav-link"
+					className={customButtonClassName}
 					onClick={this.toggleDropDown}
 					type="button"
 				>

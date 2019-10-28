@@ -404,12 +404,11 @@ public abstract class BaseMessagingConfigurator
 
 		@Override
 		public void dependenciesFulfilled() {
-			ClassLoader operatingClassLoader = getOperatingClassloader();
-
 			Map<String, Object> properties = HashMapBuilder.<String, Object>put(
 				"destination.name", _destinationName
 			).put(
-				"message.listener.operating.class.loader", operatingClassLoader
+				"message.listener.operating.class.loader",
+				getOperatingClassloader()
 			).build();
 
 			for (MessageListener messageListener : _messageListeners) {

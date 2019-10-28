@@ -44,6 +44,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -57,7 +58,7 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{className}/{version}'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{className}/{contentType}/{version}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Operation(description = "Submits a request for exporting items to a file.")
@@ -67,10 +68,11 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
 			@Parameter(in = ParameterIn.PATH, name = "contentType"),
 			@Parameter(in = ParameterIn.PATH, name = "version"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL"),
+			@Parameter(in = ParameterIn.QUERY, name = "fieldNames")
 		}
 	)
-	@Path("/export-task/{className}/{version}")
+	@Path("/export-task/{className}/{contentType}/{version}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExportTask")})
 	public ExportTask postExportTask(
@@ -81,7 +83,9 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 			@NotNull @Parameter(hidden = true) @PathParam("version") String
 				version,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL)
+				callbackURL,
+			@Parameter(hidden = true) @QueryParam("fieldNames") String
+				fieldNames)
 		throws Exception {
 
 		return new ExportTask();
@@ -107,6 +111,30 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 		throws Exception {
 
 		return new ExportTask();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{exportTaskId}/content/'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Operation(description = "Retrieves the exported content.")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "exportTaskId")}
+	)
+	@Path("/export-task/{exportTaskId}/content/")
+	@Produces("application/octet-stream")
+	@Tags(value = {@Tag(name = "ExportTask")})
+	public Response getExportTaskContent(
+			@NotNull @Parameter(hidden = true) @PathParam("exportTaskId") Long
+				exportTaskId)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

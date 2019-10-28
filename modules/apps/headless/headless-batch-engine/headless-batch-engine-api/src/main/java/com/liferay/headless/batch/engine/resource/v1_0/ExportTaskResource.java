@@ -24,6 +24,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -42,10 +43,12 @@ public interface ExportTaskResource {
 
 	public ExportTask postExportTask(
 			String className, String contentType, String version,
-			String callbackURL)
+			String callbackURL, String fieldNames)
 		throws Exception;
 
 	public ExportTask getExportTask(Long exportTaskId) throws Exception;
+
+	public Response getExportTaskContent(Long exportTaskId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

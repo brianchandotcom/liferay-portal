@@ -715,6 +715,14 @@ public class WorkflowTaskDisplayContext {
 		return false;
 	}
 
+	public Boolean isDisabled() throws PortalException {
+		if (getTotalItems() == 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowEditURL(WorkflowTask workflowTask) {
 		boolean showEditURL = false;
 

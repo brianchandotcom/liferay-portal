@@ -117,13 +117,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 	}
 
 	var form = document.<portlet:namespace />fm;
-	var mergeTagNamesInput = document.getElementById(
+	var mergeTagNamesInputs = document.getElementsByName(
 		'<portlet:namespace />mergeTagNames'
 	);
 
-	if (form && mergeTagNamesInput && targetTagNameSelect) {
+	if (form && mergeTagNamesInputs && targetTagNameSelect) {
 		form.addEventListener('submit', function(event) {
-			var mergeTagNames = mergeTagNamesInput.value.split(',');
+			var mergeTagNames = Array.from(mergeTagNamesInputs).map(function(
+				mergeTagNamesInput
+			) {
+				return mergeTagNamesInput.value;
+			});
 
 			if (mergeTagNames.length < 2) {
 				alert(

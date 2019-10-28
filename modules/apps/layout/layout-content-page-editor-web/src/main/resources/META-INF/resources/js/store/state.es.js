@@ -702,7 +702,7 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	selectedSidebarPanelId: Config.string().value('sections'),
+	selectedSidebarPanelId: Config.string().value('elements'),
 
 	/**
 	 * Flag indicating if resolved comments should be shown

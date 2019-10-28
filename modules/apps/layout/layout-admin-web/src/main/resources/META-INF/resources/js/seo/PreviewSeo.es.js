@@ -133,4 +133,6 @@ PreviewSeoContainer.propTypes = {
 	).isRequired
 };
 
-export default PreviewSeoContainer;
+export default function(props) {
+	return <PreviewSeoContainer {...props} />;
+}

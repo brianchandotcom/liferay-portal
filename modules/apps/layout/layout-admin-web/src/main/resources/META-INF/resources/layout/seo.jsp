@@ -76,7 +76,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 			<react:component
 				data="<%= data %>"
-				module="js/seo/index.es"
+				module="js/seo/PreviewSeo.es"
 			/>
 		</div>
 	</div>

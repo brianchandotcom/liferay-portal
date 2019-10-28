@@ -121,6 +121,32 @@ public class LayoutCTTest {
 	}
 
 	@Test
+	public void testDeleteCTCollection() throws Exception {
+		Layout layout = null;
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			layout = LayoutTestUtil.addLayout(_group);
+		}
+
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			layout = _layoutLocalService.fetchLayout(layout.getPlid());
+
+			Assert.assertNull(layout);
+		}
+		finally {
+			_ctCollection = null;
+		}
+	}
+
+	@Test
 	public void testModifyLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(_group);
 

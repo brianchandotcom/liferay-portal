@@ -16,16 +16,49 @@
 		/>
 	</path>
 
-	<target name="compile">
+	<target depends="replace-release-info-tokens" name="compile">
+		<if>
+			<equals arg1="${release.info.uptodate}" arg2="false" />
+			<then>
+				<copy
+					file="build/temp/ReleaseInfo.java.new"
+					overwrite="true"
+					tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+					verbose="true"
+				/>
+			</then>
+		</if>
+
+		<ant antfile="${project.dir}/build-common-java.xml" dir="${project.dir}/portal-kernel" inheritRefs="true" target="compile" />
+
+		<if>
+			<equals arg1="${release.info.uptodate}" arg2="false" />
+			<then>
+				<copy
+					file="build/temp/ReleaseInfo.java.original"
+					overwrite="true"
+					tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+					verbose="true"
+				/>
+			</then>
+		</if>
+	</target>
+
+	<target name="replace-release-info-tokens">
 		<copy
 			file="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
 			overwrite="true"
-			tofile="build/temp/ReleaseInfo.java"
-			verbose="true"
+			tofile="build/temp/ReleaseInfo.java.original"
+		/>
+
+		<copy
+			file="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+			overwrite="true"
+			tofile="build/temp/ReleaseInfo.java.new"
 		/>
 
 		<replace
-			file="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+			file="build/temp/ReleaseInfo.java.new"
 		>
 			<replacefilter
 				token="@release.info.build@"
@@ -49,11 +82,14 @@
 			/>
 		</replace>
 
-		<ant antfile="${project.dir}/build-common-java.xml" dir="${project.dir}/portal-kernel" inheritRefs="true" target="compile" />
+		<condition else="false" property="release.info.uptodate" value="true">
+			<filesmatch file1="build/temp/ReleaseInfo.java.old" file2="build/temp/ReleaseInfo.java.new" />
+		</condition>
 
-		<move
-			file="build/temp/ReleaseInfo.java"
-			tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+		<copy
+			file="build/temp/ReleaseInfo.java.new"
+			overwrite="true"
+			tofile="build/temp/ReleaseInfo.java.old"
 		/>
 	</target>
 </project>

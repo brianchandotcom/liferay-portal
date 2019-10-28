@@ -6,28 +6,8 @@
 	# Ignore apps that are no longer under active development.
 	#
 	apps/archived
-	apps/chat
 	apps/google-maps
-	apps/mail-reader
 	apps/microblogs
-
-##
-## Configuration Files
-##
-
-	#
-	# Unignore configuration files because they should be treated as "modern"
-	# despite not having an ".es.js" extension.
-	#
-	!.eslintrc.js
-	!npmscripts.config.js
-
-	#
-	# Unlike the other configuration files (which can appear inside project
-	# subdirectories), there should only ever be one global Prettier configuration
-	# file at the top-level, so we do not use a recursive ("**/*") glob here.
-	#
-	!.prettierrc.js
 
 ##
 ## Generated Files

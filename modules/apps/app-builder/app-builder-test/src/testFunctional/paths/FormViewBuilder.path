@@ -22,6 +22,20 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>FORM_VIEW_NAME</td>
+	<td>//input[@placeholder='Untitled Form View']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SAVE_FORM_VIEW_BUTTON</td>
+	<td>//div[contains(@class,'input-group-item')]//button[contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+
+
+
 </tbody>
 </table>
 </body>

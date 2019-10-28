@@ -12,8 +12,9 @@
  * details.
  */
 
-import React from 'react';
 import {cleanup, fireEvent, render} from '@testing-library/react';
+import React from 'react';
+
 import Treeview from '../../src/main/resources/META-INF/resources/treeview/Treeview.es';
 
 const nodes = [

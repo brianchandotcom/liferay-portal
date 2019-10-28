@@ -29,7 +29,7 @@
 		) {
 			if (event.target.id === '<%= id %>Content') {
 				storeTask({
-					<%= id %>: event.type === 'hide'
+					['<%= id %>']: event.type === 'hide'
 				});
 			}
 		});

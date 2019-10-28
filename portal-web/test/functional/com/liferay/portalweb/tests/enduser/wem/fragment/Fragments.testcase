@@ -674,6 +674,117 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-100540. Global fragments "View Site Usages" option shows all the Sites that use the fragment and how many usages there are per site"
+	@priority = "5"
+	test ViewGlobalFragmentsSiteUsages {
+		property osgi.module.configuration.file.names = "com.liferay.fragment.web.internal.configuration.FragmentGlobalPanelAppConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Navigate to fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+		}
+
+		task ("Add a fragment collection") {
+			FragmentsAdmin.addCollection(collectionName = "Global Collection Name");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
+		}
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			JSONFragment.addSection(
+				collectionName = "Global Collection Name",
+				groupName = "Global",
+				name = "Global Fragment Name 1");
+		}
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			JSONFragment.addSection(
+				collectionName = "Global Collection Name",
+				groupName = "Global",
+				name = "Global Fragment Name 2");
+		}
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Global Collection Name",
+			fragmentName = "Global Fragment Name 1");
+
+		PageEditor.addFragment(
+			collectionName = "Global Collection Name",
+			fragmentName = "Global Fragment Name 2");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Content Page Name 2");
+
+		PageEditor.addFragment(
+			collectionName = "Global Collection Name",
+			fragmentName = "Global Fragment Name 1");
+
+		PageEditor.addFragment(
+			collectionName = "Global Collection Name",
+			fragmentName = "Global Fragment Name 2");
+
+		PageEditor.clickPublish();
+
+		JSONGroup.addGroup(groupName = "Test Site Name 2");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-2");
+
+		ContentPages.addPage(pageName = "Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Global Collection Name",
+			fragmentName = "Global Fragment Name 1");
+
+		PageEditor.clickPublish();
+
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+
+		FragmentsAdminNavigator.gotoEntryEllipsisItem(
+			entry = "Global Fragment Name 1",
+			item = "View Site Usages");
+
+		AssertTextEquals(
+			locator1 = "//tr[1]/td[2]",
+			value1 = "Test Site Name");
+
+		AssertTextEquals(
+			locator1 = "//tr[1]/td[3]",
+			value1 = "4");
+
+		AssertTextEquals(
+			locator1 = "//tr[2]/td[2]",
+			value1 = "Test Site Name 2");
+
+		AssertTextEquals(
+			locator1 = "//tr[2]/td[3]",
+			value1 = "2");
+
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+
+		FragmentsAdminNavigator.gotoEntryEllipsisItem(
+			entry = "Global Fragment Name 2",
+			item = "View Site Usages");
+
+		AssertTextEquals(
+			locator1 = "//tr[1]/td[2]",
+			value1 = "Test Site Name");
+
+		AssertTextEquals(
+			locator1 = "//tr[1]/td[3]",
+			value1 = "4");
+
+		AssertElementNotPresent(locator1 = "//tr[2]/td[2]");
+	}
+
 	@description = "Once fragments are published, they can no longer be saved as draft."
 	@priority = "4"
 	test ViewOnlyDraftFragmentsCanBeSaved {

@@ -180,7 +180,9 @@ const SettingsSidebarBody = () => {
 		});
 	}, [focusedFieldName, form]);
 
-	return <div ref={formRef}></div>;
+	const onSubmit = event => event.preventDefault();
+
+	return <form onSubmit={onSubmit} ref={formRef}></form>;
 };
 
 const SettingsSidebarHeader = () => {

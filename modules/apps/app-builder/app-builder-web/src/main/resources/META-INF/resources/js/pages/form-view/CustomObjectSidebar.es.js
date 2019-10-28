@@ -14,7 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {
@@ -141,73 +141,75 @@ const Header = ({keywords, onCloseSearch, onSearch}) => {
 	} = dataDefinition;
 
 	return (
-		<div
-			className={classNames(
-				'custom-object-sidebar-header',
-				'mt-4',
-				'p-2',
-				{
-					'ml-4': !searchMode
-				}
-			)}
-		>
-			<div className="autofit-row autofit-row-center">
-				{searchMode ? (
-					<>
-						<div className="autofit-col autofit-col-expand">
-							<ClayInput.Group>
-								<ClayInput.GroupItem>
-									<ClayInput
-										aria-label={Liferay.Language.get(
-											'search'
-										)}
-										className="input-group-inset input-group-inset-after"
-										onChange={onChangeSearchInput}
-										placeholder={Liferay.Language.get(
-											'search'
-										)}
-										ref={searchInputRef}
-										type="text"
-										value={keywords}
-									/>
-									<ClayInput.GroupInsetItem after>
-										<ClayButtonWithIcon
-											displayType="unstyled"
-											symbol="search"
-										/>
-									</ClayInput.GroupInsetItem>
-								</ClayInput.GroupItem>
-							</ClayInput.Group>
-						</div>
-						<div className="autofit-col ml-2" key="closeButton">
-							<ClayButtonWithIcon
-								displayType="unstyled"
-								onClick={onClickClose}
-								symbol="times"
-							/>
-						</div>
-					</>
-				) : (
-					<>
-						<div className="autofit-col autofit-col-expand">
-							<h3>{dataDefinitionName}</h3>
-						</div>
-
-						<div className="autofit-col" key="searchButton">
-							<ClayButtonWithIcon
-								displayType="unstyled"
-								onClick={onClickSearch}
-								symbol="search"
-							/>
-						</div>
-
-						<div className="autofit-col" key="dropdown">
-							<DropDown />
-						</div>
-					</>
+		<ClayForm onSubmit={event => event.preventDefault()}>
+			<div
+				className={classNames(
+					'custom-object-sidebar-header',
+					'mt-4',
+					'p-2',
+					{
+						'ml-4': !searchMode
+					}
 				)}
+			>
+				<div className="autofit-row autofit-row-center">
+					{searchMode ? (
+						<>
+							<div className="autofit-col autofit-col-expand">
+								<ClayInput.Group>
+									<ClayInput.GroupItem>
+										<ClayInput
+											aria-label={Liferay.Language.get(
+												'search'
+											)}
+											className="input-group-inset input-group-inset-after"
+											onChange={onChangeSearchInput}
+											placeholder={Liferay.Language.get(
+												'search'
+											)}
+											ref={searchInputRef}
+											type="text"
+											value={keywords}
+										/>
+										<ClayInput.GroupInsetItem after>
+											<ClayButtonWithIcon
+												displayType="unstyled"
+												symbol="search"
+											/>
+										</ClayInput.GroupInsetItem>
+									</ClayInput.GroupItem>
+								</ClayInput.Group>
+							</div>
+							<div className="autofit-col ml-2" key="closeButton">
+								<ClayButtonWithIcon
+									displayType="unstyled"
+									onClick={onClickClose}
+									symbol="times"
+								/>
+							</div>
+						</>
+					) : (
+						<>
+							<div className="autofit-col autofit-col-expand">
+								<h3>{dataDefinitionName}</h3>
+							</div>
+
+							<div className="autofit-col" key="searchButton">
+								<ClayButtonWithIcon
+									displayType="unstyled"
+									onClick={onClickSearch}
+									symbol="search"
+								/>
+							</div>
+
+							<div className="autofit-col" key="dropdown">
+								<DropDown />
+							</div>
+						</>
+					)}
+				</div>
 			</div>
-		</div>
+		</ClayForm>
 	);
 };
 

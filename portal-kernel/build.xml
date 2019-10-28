@@ -21,6 +21,7 @@
 			file="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
 			overwrite="true"
 			tofile="build/temp/ReleaseInfo.java"
+			verbose="true"
 		/>
 
 		<replace

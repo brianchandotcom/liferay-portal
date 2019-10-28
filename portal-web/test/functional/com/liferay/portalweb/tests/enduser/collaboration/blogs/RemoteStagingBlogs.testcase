@@ -269,10 +269,6 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
-		AssertClick(
-			locator1 = "ItemSelector#ADD_BUTTON",
-			value1 = "Add");
-
 		PortletEntry.publish();
 
 		Navigator.gotoSitePage(

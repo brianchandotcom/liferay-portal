@@ -337,9 +337,11 @@ class FragmentEditableField extends PortletBase {
 	 */
 	_disposeFloatingToolbar() {
 		if (this._floatingToolbar) {
-			this._floatingToolbar.dispose();
+			requestAnimationFrame(() => {
+				this._floatingToolbar.dispose();
 
-			this._floatingToolbar = null;
+				this._floatingToolbar = null;
+			});
 		}
 	}
 

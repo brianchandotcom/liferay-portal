@@ -36,14 +36,12 @@ export default ({dataLayoutBuilder}) => {
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getProvider();
 
-		const eventHandler = provider.on('pagesChanged', () => {
-			provider.once('rendered', () => {
-				setColumns(getColumns());
-			});
-		});
+		const eventHandler = provider.on('rendered', () =>
+			setColumns(getColumns())
+		);
 
 		return () => eventHandler.removeListener();
-	});
+	}, [dataLayoutBuilder]);
 
 	return (
 		<>

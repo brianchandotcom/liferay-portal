@@ -22,6 +22,7 @@ import com.liferay.document.library.web.internal.display.context.logic.DLPortlet
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.document.library.web.internal.security.permission.resource.DLPermission;
+import com.liferay.document.library.web.internal.util.DLFolderUtil;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -184,7 +185,7 @@ public class FolderActionDisplayContext {
 
 		Folder folder = _getFolder();
 
-		if (!_isRepositoryRoot(folder)) {
+		if (!DLFolderUtil.isRepositoryRoot(folder)) {
 			portletURL.setParameter(
 				ActionRequest.ACTION_NAME, "/document_library/edit_folder");
 		}
@@ -196,7 +197,7 @@ public class FolderActionDisplayContext {
 		portletURL.setParameter(Constants.CMD, _getDeleteFolderCommand());
 		portletURL.setParameter("redirect", _getParentFolderURL());
 
-		if (!_isRepositoryRoot(folder)) {
+		if (!DLFolderUtil.isRepositoryRoot(folder)) {
 			portletURL.setParameter("folderId", String.valueOf(_getFolderId()));
 		}
 		else {
@@ -231,7 +232,7 @@ public class FolderActionDisplayContext {
 			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
-		if ((folder == null) || !_isRepositoryRoot(folder)) {
+		if ((folder == null) || !DLFolderUtil.isRepositoryRoot(folder)) {
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/document_library/edit_folder");
 		}
@@ -412,7 +413,7 @@ public class FolderActionDisplayContext {
 
 		Folder folder = _getFolder();
 
-		if ((folder != null) && _isRepositoryRoot(folder)) {
+		if ((folder != null) && DLFolderUtil.isRepositoryRoot(folder)) {
 			return false;
 		}
 
@@ -452,7 +453,7 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 
-		if (_isRepositoryRoot(folder) &&
+		if (DLFolderUtil.isRepositoryRoot(folder) &&
 			folder.isRepositoryCapabilityProvided(
 				TemporaryFileEntriesCapability.class)) {
 
@@ -515,7 +516,7 @@ public class FolderActionDisplayContext {
 	public boolean isMoveFolderActionVisible() throws PortalException {
 		Folder folder = _getFolder();
 
-		if ((folder == null) || _isRepositoryRoot(folder)) {
+		if ((folder == null) || DLFolderUtil.isRepositoryRoot(folder)) {
 			return false;
 		}
 
@@ -551,7 +552,7 @@ public class FolderActionDisplayContext {
 			return true;
 		}
 
-		if (!_isRepositoryRoot(folder)) {
+		if (!DLFolderUtil.isRepositoryRoot(folder)) {
 			return true;
 		}
 
@@ -648,7 +649,7 @@ public class FolderActionDisplayContext {
 	private String _getDeleteFolderCommand() throws PortalException {
 		Folder folder = _getFolder();
 
-		if (_isRepositoryRoot(folder)) {
+		if (DLFolderUtil.isRepositoryRoot(folder)) {
 			return Constants.DELETE;
 		}
 
@@ -704,7 +705,7 @@ public class FolderActionDisplayContext {
 
 			Folder folder = _getFolder();
 
-			if ((folder != null) && !_isRepositoryRoot(folder) &&
+			if ((folder != null) && !DLFolderUtil.isRepositoryRoot(folder) &&
 				(folder.getParentFolderId() !=
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
@@ -725,7 +726,7 @@ public class FolderActionDisplayContext {
 
 		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 
-		if (_isRepositoryRoot(folder)) {
+		if (DLFolderUtil.isRepositoryRoot(folder)) {
 			portletURL.setParameter(
 				"folderId",
 				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
@@ -799,17 +800,6 @@ public class FolderActionDisplayContext {
 			_dlRequestHelper.getPermissionChecker(),
 			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
 			ActionKeys.VIEW);
-	}
-
-	private boolean _isRepositoryRoot(Folder folder) {
-		if (folder.isMountPoint() ||
-			(folder.isRoot() &&
-			 RepositoryUtil.isExternalRepository(folder.getRepositoryId()))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isView() {

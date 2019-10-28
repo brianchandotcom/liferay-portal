@@ -118,6 +118,38 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="SegmentsEntryRole" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="segmentsEntryRoleId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="roleId" type="long" />
+		<column name="segmentsEntryId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="RoleId" return-type="Collection">
+			<finder-column name="roleId" />
+		</finder>
+		<finder name="SegmentsEntryId" return-type="Collection">
+			<finder-column name="segmentsEntryId" />
+		</finder>
+		<finder name="R_S" return-type="SegmentsEntryRole" unique="true">
+			<finder-column name="roleId" />
+			<finder-column name="segmentsEntryId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="SegmentsExperience" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

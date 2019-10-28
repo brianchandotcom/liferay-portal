@@ -612,9 +612,9 @@
 		<column name="parentLayoutId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column localized="true" name="name" type="String" />
-		<column localized="true" name="title" type="String" />
-		<column localized="true" name="description" type="String" />
+		<column change-tracking-mode="merge" localized="true" name="name" type="String" />
+		<column change-tracking-mode="merge" localized="true" name="title" type="String" />
+		<column change-tracking-mode="merge" localized="true" name="description" type="String" />
 		<column localized="true" name="keywords" type="String" />
 		<column localized="true" name="robots" type="String" />
 		<column name="type" type="String" />

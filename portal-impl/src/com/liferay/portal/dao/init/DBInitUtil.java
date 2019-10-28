@@ -80,16 +80,6 @@ public class DBInitUtil {
 				}
 			}
 
-			try {
-				db.runSQL(
-					connection, "alter table Release_ add state_ INTEGER");
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e.getMessage());
-				}
-			}
-
 			if (_checkDefaultRelease(connection)) {
 				_setSupportsStringCaseSensitiveQuery(db, connection);
 
@@ -115,8 +105,8 @@ public class DBInitUtil {
 				StringBundler.concat(
 					"insert into Release_ (releaseId, createDate, ",
 					"modifiedDate, servletContextName, schemaVersion, ",
-					"buildNumber, verified) values (",
-					ReleaseConstants.DEFAULT_ID, ", ?, ?, ?, ?, ?, ?)"))) {
+					"buildNumber, verified, testString) values (",
+					ReleaseConstants.DEFAULT_ID, ", ?, ?, ?, ?, ?, ?, ?)"))) {
 
 			Date now = new Date(System.currentTimeMillis());
 
@@ -132,6 +122,7 @@ public class DBInitUtil {
 
 			ps.setInt(5, ReleaseInfo.getBuildNumber());
 			ps.setBoolean(6, false);
+			ps.setString(7, ReleaseConstants.TEST_STRING);
 
 			ps.executeUpdate();
 		}
@@ -179,7 +170,8 @@ public class DBInitUtil {
 	}
 
 	private static boolean _hasDefaultReleaseWithTestString(
-		Connection connection, String testString) {
+			Connection connection, String testString)
+		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select count(*) from Release_ where releaseId = ? and " +
@@ -192,11 +184,6 @@ public class DBInitUtil {
 				if (rs.next() && (rs.getInt(1) > 0)) {
 					return true;
 				}
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
 			}
 		}
 
@@ -216,40 +203,14 @@ public class DBInitUtil {
 	}
 
 	private static void _setSupportsStringCaseSensitiveQuery(
-		DB db, Connection connection) {
+			DB db, Connection connection)
+		throws Exception {
 
 		if (!_hasDefaultReleaseWithTestString(
 				connection, ReleaseConstants.TEST_STRING)) {
 
-			try {
-				db.runSQL(
-					connection,
-					"alter table Release_ add testString VARCHAR(1024) null");
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e.getMessage());
-				}
-			}
-
-			try {
-				db.runSQL(
-					connection,
-					"update Release_ set testString = '" +
-						ReleaseConstants.TEST_STRING + "'");
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e.getMessage());
-				}
-			}
-
-			if (!_hasDefaultReleaseWithTestString(
-					connection, ReleaseConstants.TEST_STRING)) {
-
-				throw new SystemException(
-					"Release_ table was not initialized properly");
-			}
+			throw new SystemException(
+				"Release_ table was not initialized properly");
 		}
 
 		if (_hasDefaultReleaseWithTestString(

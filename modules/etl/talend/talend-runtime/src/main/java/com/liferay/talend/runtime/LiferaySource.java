@@ -27,7 +27,6 @@ import org.talend.components.api.component.runtime.BoundedReader;
 import org.talend.components.api.component.runtime.BoundedSource;
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.daikon.properties.ValidationResult;
-import org.talend.daikon.properties.ValidationResultMutable;
 
 /**
  * @author Zoltán Takács
@@ -72,22 +71,17 @@ public class LiferaySource
 			return validationResult;
 		}
 
-		ValidationResultMutable validationResultMutable =
-			new ValidationResultMutable(validationResult);
-
 		Class<?> propertiesClass =
 			liferayConnectionPropertiesProvider.getClass();
 
 		if (!(liferayConnectionPropertiesProvider instanceof
 				TLiferayInputProperties)) {
 
-			validationResultMutable.setMessage(
+			return new ValidationResult(
+				ValidationResult.Result.ERROR,
 				i18nMessages.getMessage(
 					"error.validation.properties",
 					propertiesClass.getCanonicalName()));
-			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
-
-			return validationResultMutable;
 		}
 
 		_tLiferayInputProperties =
@@ -98,7 +92,7 @@ public class LiferaySource
 		_tLiferayInputProperties.resource.connection = getEffectiveConnection(
 			runtimeContainer);
 
-		return validationResultMutable;
+		return ValidationResult.OK;
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

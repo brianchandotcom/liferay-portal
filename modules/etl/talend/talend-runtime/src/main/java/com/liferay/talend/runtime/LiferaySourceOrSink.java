@@ -48,7 +48,6 @@ import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.i18n.TranslatableImpl;
 import org.talend.daikon.properties.ValidationResult;
-import org.talend.daikon.properties.ValidationResultMutable;
 
 /**
  * @author Zoltán Takács
@@ -266,22 +265,23 @@ public class LiferaySourceOrSink
 		RuntimeContainer runtimeContainer,
 		ComponentProperties componentProperties) {
 
-		ValidationResultMutable validationResultMutable =
-			new ValidationResultMutable();
+		if (!(componentProperties instanceof
+				LiferayConnectionPropertiesProvider)) {
+
+			return ValidationResult.OK;
+		}
 
 		liferayConnectionPropertiesProvider =
 			(LiferayConnectionPropertiesProvider)componentProperties;
 
-		validationResultMutable.setStatus(ValidationResult.Result.OK);
-
 		try {
 			getRestClient(runtimeContainer);
+
+			return ValidationResult.OK;
 		}
 		catch (TalendRuntimeException tre) {
 			return ExceptionUtils.exceptionToValidationResult(tre);
 		}
-
-		return validationResultMutable;
 	}
 
 	@Override

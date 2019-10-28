@@ -19,7 +19,7 @@ import templates from './AutoField.soy';
 
 import 'asset-taglib/asset_categories_selector/AssetCategoriesSelector.es';
 
-import 'asset-taglib/asset_tags_selector/AssetTagsSelector.es';
+import 'asset-taglib/asset_tags_selector/soy/AssetTagsSelector.es';
 
 const DEFAULT_RULE = {
 	queryContains: true,

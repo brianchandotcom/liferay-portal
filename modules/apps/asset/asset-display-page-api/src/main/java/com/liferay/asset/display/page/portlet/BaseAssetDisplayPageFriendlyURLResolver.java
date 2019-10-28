@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -101,9 +102,12 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 		Locale locale = portal.getLocale(httpServletRequest);
 
-		portal.setPageDescription(
-			infoDisplayObjectProvider.getDescription(locale),
-			httpServletRequest);
+		String description = HtmlUtil.unescape(
+			HtmlUtil.stripHtml(
+				infoDisplayObjectProvider.getDescription(locale)));
+
+		portal.setPageDescription(description, httpServletRequest);
+
 		portal.setPageKeywords(
 			infoDisplayObjectProvider.getKeywords(locale), httpServletRequest);
 		portal.setPageTitle(

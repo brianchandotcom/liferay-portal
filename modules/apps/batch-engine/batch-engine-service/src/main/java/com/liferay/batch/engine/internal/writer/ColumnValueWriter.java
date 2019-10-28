@@ -28,10 +28,13 @@ import java.util.function.Consumer;
  */
 public class ColumnValueWriter {
 
-	public void write(Object item, Consumer<Collection<?>> consumer)
+	public void write(
+			Object item, Map<String, Field> fieldMap,
+			Consumer<Collection<?>> consumer)
 		throws IllegalAccessException {
 
-		Map<String, Object> columnNameValueMap = _getColumnNameValueMap(item);
+		Map<String, Object> columnNameValueMap = _getColumnNameValueMap(
+			item, fieldMap);
 
 		if (!_firstLineWritten) {
 			consumer.accept(columnNameValueMap.keySet());
@@ -42,14 +45,13 @@ public class ColumnValueWriter {
 		consumer.accept(columnNameValueMap.values());
 	}
 
-	private Map<String, Object> _getColumnNameValueMap(Object item)
+	private Map<String, Object> _getColumnNameValueMap(
+			Object item, Map<String, Field> fieldMap)
 		throws IllegalAccessException {
-
-		Map<String, Field> fields = ItemClassIndexUtil.index(item.getClass());
 
 		Map<String, Object> columnNameValueMap = new TreeMap<>();
 
-		for (Map.Entry<String, Field> entry : fields.entrySet()) {
+		for (Map.Entry<String, Field> entry : fieldMap.entrySet()) {
 			String key = entry.getKey();
 
 			Field field = entry.getValue();

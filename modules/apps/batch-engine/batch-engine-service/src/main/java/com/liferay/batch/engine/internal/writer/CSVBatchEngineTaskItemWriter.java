@@ -21,12 +21,15 @@ import com.liferay.petra.string.StringUtil;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import java.lang.reflect.Field;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ivica cardic
@@ -34,9 +37,11 @@ import java.util.List;
 public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 
 	public CSVBatchEngineTaskItemWriter(
-		String delimiter, OutputStream outputStream) {
+		String delimiter, Map<String, Field> fieldMap,
+		OutputStream outputStream) {
 
 		_delimiter = delimiter;
+		_fieldMap = fieldMap;
 		_columnValueWriter = new ColumnValueWriter();
 		_unsyncPrintWriter = new UnsyncPrintWriter(outputStream);
 	}
@@ -53,7 +58,7 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 
 		for (Object item : items) {
 			_columnValueWriter.write(
-				item, values -> _write(dateFormat, values));
+				item, _fieldMap, values -> _write(dateFormat, values));
 		}
 	}
 
@@ -76,6 +81,7 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 
 	private final ColumnValueWriter _columnValueWriter;
 	private final String _delimiter;
+	private final Map<String, Field> _fieldMap;
 	private final UnsyncPrintWriter _unsyncPrintWriter;
 
 }

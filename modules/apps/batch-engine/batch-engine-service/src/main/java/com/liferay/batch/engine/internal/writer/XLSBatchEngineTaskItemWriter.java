@@ -17,9 +17,12 @@ package com.liferay.batch.engine.internal.writer;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import java.lang.reflect.Field;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -35,7 +38,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 
-	public XLSBatchEngineTaskItemWriter(OutputStream outputStream) {
+	public XLSBatchEngineTaskItemWriter(
+		Map<String, Field> fieldMap, OutputStream outputStream) {
+
+		_fieldMap = fieldMap;
 		_outputStream = outputStream;
 		_columnValueWriter = new ColumnValueWriter();
 
@@ -56,7 +62,7 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 	@Override
 	public void write(List<?> items) throws Exception {
 		for (Object item : items) {
-			_columnValueWriter.write(item, this::_write);
+			_columnValueWriter.write(item, _fieldMap, this::_write);
 		}
 	}
 
@@ -97,6 +103,7 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 	}
 
 	private final ColumnValueWriter _columnValueWriter;
+	private final Map<String, Field> _fieldMap;
 	private final OutputStream _outputStream;
 	private int _rowNum;
 	private final Sheet _sheet;

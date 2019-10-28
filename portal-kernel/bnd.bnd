@@ -7,10 +7,5 @@ Export-Package:\
 	\
 	com.liferay.*
 Import-Package: *
-Include-Resource:\
-	classes,\
-	@../tmp/lib-pre/com.liferay.portal.kernel.concurrent.compat.jar,\
-	@../tmp/lib-pre/com.liferay.portal.kernel.io.compat.jar,\
-	@../tmp/lib-pre/com.liferay.portal.kernel.nio.compat.jar,\
-	@../tmp/lib-pre/com.liferay.portal.kernel.util.compat.jar
+Include-Resource: classes
 -include ../common.bnd

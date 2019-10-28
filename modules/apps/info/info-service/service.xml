@@ -22,8 +22,8 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="containerType" type="long" />
 		<column name="containerKey" type="String" />
+		<column name="containerType" type="long" />
 		<column name="plid" type="long" />
 		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />
@@ -42,16 +42,16 @@
 			<finder-column name="classPK" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="C_C_P" return-type="Collection" where="containerKey IS NOT NULL">
-			<finder-column name="containerType" />
+		<finder name="CK_CT_P" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="containerKey" />
+			<finder-column name="containerType" />
 			<finder-column name="plid" />
 		</finder>
-		<finder name="C_C_C_C_P" return-type="InfoItemUsage" unique="true">
+		<finder name="C_C_CK_CT_P" return-type="InfoItemUsage" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
-			<finder-column name="containerType" />
 			<finder-column name="containerKey" />
+			<finder-column name="containerType" />
 			<finder-column name="plid" />
 		</finder>
 	</entity>

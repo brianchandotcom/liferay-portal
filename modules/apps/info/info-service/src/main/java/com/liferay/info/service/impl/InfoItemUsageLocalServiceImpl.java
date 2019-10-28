@@ -64,8 +64,8 @@ public class InfoItemUsageLocalServiceImpl
 		infoItemUsage.setModifiedDate(new Date());
 		infoItemUsage.setClassNameId(classNameId);
 		infoItemUsage.setClassPK(classPK);
-		infoItemUsage.setContainerType(containerType);
 		infoItemUsage.setContainerKey(containerKey);
+		infoItemUsage.setContainerType(containerType);
 		infoItemUsage.setPlid(plid);
 		infoItemUsage.setType(type);
 
@@ -79,10 +79,10 @@ public class InfoItemUsageLocalServiceImpl
 
 	@Override
 	public void deleteInfoItemUsages(
-		long containerType, String containerKey, long plid) {
+		String containerKey, long containerType, long plid) {
 
-		infoItemUsagePersistence.removeByC_C_P(
-			containerType, containerKey, plid);
+		infoItemUsagePersistence.removeByCK_CT_P(
+			containerKey, containerType, plid);
 	}
 
 	@Override
@@ -92,11 +92,11 @@ public class InfoItemUsageLocalServiceImpl
 
 	@Override
 	public InfoItemUsage fetchInfoItemUsage(
-		long classNameId, long classPK, long containerType, String containerKey,
+		long classNameId, long classPK, String containerKey, long containerType,
 		long plid) {
 
-		return infoItemUsagePersistence.fetchByC_C_C_C_P(
-			classNameId, classPK, containerType, containerKey, plid);
+		return infoItemUsagePersistence.fetchByC_C_CK_CT_P(
+			classNameId, classPK, containerKey, containerType, plid);
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class InfoItemUsageLocalServiceImpl
 	public boolean hasDefaultInfoItemUsage(long classNameId, long classPK) {
 		InfoItemUsage infoItemUsage =
 			infoItemUsageLocalService.fetchInfoItemUsage(
-				classNameId, classPK, 0, StringPool.BLANK, 0);
+				classNameId, classPK, StringPool.BLANK, 0, 0);
 
 		if (infoItemUsage != null) {
 			return true;

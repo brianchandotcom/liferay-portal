@@ -97,14 +97,6 @@ public interface PortletDataContext extends Serializable {
 
 	public void addLocks(String className, String key, Lock lock);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addPermissions(Class, Serializable)}
-	 */
-	@Deprecated
-	public void addPermissions(Class<?> clazz, long classPK)
-		throws PortalException;
-
 	public void addPermissions(Class<?> clazz, Serializable classPK)
 		throws PortalException;
 
@@ -166,23 +158,9 @@ public interface PortletDataContext extends Serializable {
 
 	public Object fromXML(String xml);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getAssetCategoryIds(Class, Serializable)}
-	 */
-	@Deprecated
-	public long[] getAssetCategoryIds(Class<?> clazz, long classPK);
-
 	public long[] getAssetCategoryIds(Class<?> clazz, Serializable classPK);
 
 	public Set<Long> getAssetLinkIds();
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getAssetTagNames(Class, Serializable)}
-	 */
-	@Deprecated
-	public String[] getAssetTagNames(Class<?> clazz, long classPK);
 
 	public String[] getAssetTagNames(Class<?> clazz, Serializable classPK);
 
@@ -378,14 +356,6 @@ public interface PortletDataContext extends Serializable {
 	public void importLocks(Class<?> clazz, String key, String newKey)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #importPermissions(Class, Serializable, Serializable)}
-	 */
-	@Deprecated
-	public void importPermissions(Class<?> clazz, long classPK, long newClassPK)
-		throws PortalException;
-
 	public void importPermissions(
 			Class<?> clazz, Serializable classPK, Serializable newClassPK)
 		throws PortalException;
@@ -409,13 +379,6 @@ public interface PortletDataContext extends Serializable {
 	public boolean isInitialPublication();
 
 	public boolean isMissingReference(Element referenceElement);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #isModelCounted(String, Serializable)}
-	 */
-	@Deprecated
-	public boolean isModelCounted(String className, long classPK);
 
 	public boolean isModelCounted(String className, Serializable classPK);
 

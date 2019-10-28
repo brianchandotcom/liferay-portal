@@ -13,7 +13,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import React, {useState, useEffect} from 'react';
 
@@ -51,11 +51,15 @@ const Sidebar = React.forwardRef(
 				>
 					<div className="sidebar sidebar-light">
 						{(closeable || onSearch) && (
-							<SidebarSearchInput
-								closeable={closeable}
-								onSearch={onSearch}
-								onToggle={handleToggle}
-							/>
+							<ClayForm
+								onSubmit={event => event.preventDefault()}
+							>
+								<SidebarSearchInput
+									closeable={closeable}
+									onSearch={onSearch}
+									onToggle={handleToggle}
+								/>
+							</ClayForm>
 						)}
 						{children}
 					</div>

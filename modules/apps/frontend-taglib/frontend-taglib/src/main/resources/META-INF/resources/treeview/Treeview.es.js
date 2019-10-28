@@ -33,29 +33,29 @@ const flattenNodes = (nodes, nodeList = []) => {
 
 function Treeview({
 	NodeComponent,
-	initialSelectedNodesIds,
+	initialSelectedNodeIds,
 	multiSelection,
-	onSelectedNodesChange,
-	nodes
+	nodes,
+	onSelectedNodesChange
 }) {
 	const nodeList = useRef([]);
-	const [selectedNodesIds, setSelectedNodesIds] = useState(
-		initialSelectedNodesIds
+	const [selectedNodeIds, setSelectedNodesIds] = useState(
+		initialSelectedNodeIds
 	);
 
 	const handleNodeSelected = useCallback(
 		id => {
-			if (selectedNodesIds.includes(id)) {
+			if (selectedNodeIds.includes(id)) {
 				setSelectedNodesIds(
-					selectedNodesIds.filter(selectedId => selectedId !== id)
+					selectedNodeIds.filter(selectedId => selectedId !== id)
 				);
 			} else if (multiSelection) {
-				setSelectedNodesIds([...selectedNodesIds, id]);
+				setSelectedNodesIds([...selectedNodeIds, id]);
 			} else {
 				setSelectedNodesIds([id]);
 			}
 		},
-		[multiSelection, selectedNodesIds]
+		[multiSelection, selectedNodeIds]
 	);
 
 	useEffect(() => {
@@ -63,41 +63,36 @@ function Treeview({
 	}, [nodes]);
 
 	useEffect(() => {
-		if (selectedNodesIds !== initialSelectedNodesIds) {
+		if (selectedNodeIds !== initialSelectedNodeIds) {
 			onSelectedNodesChange(
-				selectedNodesIds.map(nodeId =>
+				selectedNodeIds.map(nodeId =>
 					nodeList.current.find(node => node.id === nodeId)
 				)
 			);
 		}
-	}, [
-		initialSelectedNodesIds,
-		nodes,
-		onSelectedNodesChange,
-		selectedNodesIds
-	]);
+	}, [initialSelectedNodeIds, nodes, onSelectedNodesChange, selectedNodeIds]);
 
 	return (
 		<NodeList
 			NodeComponent={NodeComponent}
-			initialSelectedNodesIds={initialSelectedNodesIds}
+			initialSelectedNodeIds={initialSelectedNodeIds}
 			nodes={nodes}
 			onNodeSelected={handleNodeSelected}
-			selectedNodesIds={selectedNodesIds}
+			selectedNodeIds={selectedNodeIds}
 		/>
 	);
 }
 
 Treeview.defaultProps = {
 	NodeComponent: TreeviewLabel,
-	initialSelectedNodesIds: [],
+	initialSelectedNodeIds: [],
 	multiSelection: true,
 	onSelectedNodesChange: () => {}
 };
 
 Treeview.propTypes = {
 	NodeComponent: PropTypes.func,
-	initialSelectedNodesIds: PropTypes.arrayOf(PropTypes.string),
+	initialSelectedNodeIds: PropTypes.arrayOf(PropTypes.string),
 	multiSelection: PropTypes.bool,
 	nodes: PropTypes.arrayOf(
 		PropTypes.shape({

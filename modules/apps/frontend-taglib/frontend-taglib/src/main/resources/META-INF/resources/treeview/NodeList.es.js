@@ -18,22 +18,22 @@ import React from 'react';
 import NodeListItem from './NodeListItem.es';
 
 export default function NodeList({
-	initialSelectedNodesIds,
+	NodeComponent,
+	initialSelectedNodeIds,
 	nodes,
 	onNodeSelected,
-	selectedNodesIds,
-	NodeComponent
+	selectedNodeIds
 }) {
 	return (
 		<div className="lfr-treeview-node-list">
 			{nodes.map(node => (
 				<NodeListItem
 					NodeComponent={NodeComponent}
-					initialSelectedNodesIds={initialSelectedNodesIds}
+					initialSelectedNodeIds={initialSelectedNodeIds}
 					key={node.id}
 					node={node}
 					onNodeSelected={onNodeSelected}
-					selectedNodesIds={selectedNodesIds}
+					selectedNodeIds={selectedNodeIds}
 				/>
 			))}
 		</div>
@@ -50,5 +50,5 @@ NodeList.propTypes = {
 		})
 	).isRequired,
 	onNodeSelected: PropTypes.func.isRequired,
-	selectedNodesIds: PropTypes.arrayOf(PropTypes.string).isRequired
+	selectedNodeIds: PropTypes.arrayOf(PropTypes.string).isRequired
 };

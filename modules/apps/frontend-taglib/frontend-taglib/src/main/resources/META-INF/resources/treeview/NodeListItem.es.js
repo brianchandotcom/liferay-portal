@@ -19,32 +19,30 @@ import React, {useState, useEffect} from 'react';
 
 import NodeList from './NodeList.es';
 
-function hasToBeExpanded(selectedNodesIds, node) {
+function hasToBeExpanded(selectedNodeIds, node) {
 	if (!node.children || node.children.length === 0) {
 		return false;
 	}
 
-	if (node.children.some(child => selectedNodesIds.includes(child.id))) {
+	if (node.children.some(child => selectedNodeIds.includes(child.id))) {
 		return true;
 	}
 
-	return node.children.some(child =>
-		hasToBeExpanded(selectedNodesIds, child)
-	);
+	return node.children.some(child => hasToBeExpanded(selectedNodeIds, child));
 }
 
 export default function NodeListItem({
-	initialSelectedNodesIds,
+	NodeComponent,
+	initialSelectedNodeIds,
 	node,
 	onNodeSelected,
-	selectedNodesIds,
-	NodeComponent
+	selectedNodeIds
 }) {
 	const [expanded, setExpanded] = useState(false);
 
 	useEffect(() => {
-		setExpanded(hasToBeExpanded(initialSelectedNodesIds, node));
-	}, [initialSelectedNodesIds, node]);
+		setExpanded(hasToBeExpanded(initialSelectedNodeIds, node));
+	}, [initialSelectedNodeIds, node]);
 
 	const children = node.children || [];
 
@@ -79,7 +77,7 @@ export default function NodeListItem({
 					<NodeComponent
 						node={node}
 						onNodeSelected={onNodeSelected}
-						selectedNodesIds={selectedNodesIds}
+						selectedNodeIds={selectedNodeIds}
 					/>
 				</div>
 			</div>
@@ -91,10 +89,10 @@ export default function NodeListItem({
 				>
 					<NodeList
 						NodeComponent={NodeComponent}
-						initialSelectedNodesIds={initialSelectedNodesIds}
+						initialSelectedNodeIds={initialSelectedNodeIds}
 						nodes={children}
 						onNodeSelected={onNodeSelected}
-						selectedNodesIds={selectedNodesIds}
+						selectedNodeIds={selectedNodeIds}
 					/>
 				</div>
 			)}
@@ -106,5 +104,5 @@ NodeListItem.propTypes = {
 	NodeComponent: PropTypes.func.isRequired,
 	node: PropTypes.shape({children: PropTypes.array}),
 	onNodeSelected: PropTypes.func.isRequired,
-	selectedNodesIds: PropTypes.arrayOf(PropTypes.string).isRequired
+	selectedNodeIds: PropTypes.arrayOf(PropTypes.string).isRequired
 };

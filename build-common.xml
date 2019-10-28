@@ -874,7 +874,7 @@ information.
 						<arg value="tasks" />
 						<arg value="--all" />
 						<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
-						<redirector errorproperty="${redirector.error.property}" outputproperty="tasks.output" unless:blank="tasks.output" />
+						<redirector errorproperty="tasks.error" outputproperty="tasks.output" unless:blank="tasks.output" />
 					</exec>
 
 					<condition else="false" property="task.available" value="true">
@@ -883,22 +883,10 @@ information.
 
 					<if>
 						<not>
-							<equals arg1="${redirector.error.property}" arg2="" />
+							<equals arg1="${tasks.error}" arg2="" />
 						</not>
 						<then>
-							<local name="task.error" />
-
-							<propertycopy from="${redirector.error.property}" name="task.error" />
-
-							<if>
-								<equals arg1="${task.error}" arg2="" />
-								<then>
-									<var name="${redirector.error.property}" unset="true" />
-								</then>
-								<else>
-									<propertycopy from="${redirector.error.property}" name="@{outputproperty}.error" />
-								</else>
-							</if>
+							<propertycopy from="tasks.error" name="@{outputproperty}.error" />
 						</then>
 					</if>
 				</then>
@@ -970,7 +958,7 @@ information.
 								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 								<arg line="@{task}" />
 								<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
-								<redirector errorproperty="@{outputproperty}.error" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
+								<redirector errorproperty="${redirector.error.property}" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
 							</exec>
 						</try>
 						<catch>
@@ -979,7 +967,7 @@ information.
 								<then>
 									<local name="task.error" />
 
-									<propertycopy from="${redirector.output.property}" name="task.error" />
+									<propertycopy from="${redirector.error.property}" name="task.error" />
 
 									<echo message="${task.error}" />
 								</then>
@@ -1007,7 +995,7 @@ information.
 									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 									<arg line="@{task}" />
 									<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
-									<redirector errorproperty="@{outputproperty}.error" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
+									<redirector errorproperty="${redirector.error.property}" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
 								</exec>
 							</echoxml>
 

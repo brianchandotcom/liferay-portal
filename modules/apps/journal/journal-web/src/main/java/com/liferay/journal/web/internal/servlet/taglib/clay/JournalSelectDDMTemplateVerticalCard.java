@@ -21,12 +21,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
@@ -55,17 +55,17 @@ public class JournalSelectDDMTemplateVerticalCard implements VerticalCard {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Map<String, String> data = new HashMap<>();
-
-		data.put("ddmtemplateid", String.valueOf(_ddmTemplate.getTemplateId()));
-		data.put("ddmtemplatekey", _ddmTemplate.getTemplateKey());
-		data.put(
-			"description",
-			_ddmTemplate.getDescription(themeDisplay.getLocale()));
-		data.put("imageurl", _ddmTemplate.getTemplateImageURL(themeDisplay));
-		data.put("name", _ddmTemplate.getName(themeDisplay.getLocale()));
-
-		return data;
+		return HashMapBuilder.put(
+			"ddmtemplateid", String.valueOf(_ddmTemplate.getTemplateId())
+		).put(
+			"ddmtemplatekey", _ddmTemplate.getTemplateKey()
+		).put(
+			"description", _ddmTemplate.getDescription(themeDisplay.getLocale())
+		).put(
+			"imageurl", _ddmTemplate.getTemplateImageURL(themeDisplay)
+		).put(
+			"name", _ddmTemplate.getName(themeDisplay.getLocale())
+		).build();
 	}
 
 	@Override

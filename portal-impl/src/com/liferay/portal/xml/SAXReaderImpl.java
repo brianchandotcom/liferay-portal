@@ -15,6 +15,7 @@
 package com.liferay.portal.xml;
 
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -40,7 +41,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -299,9 +299,9 @@ public class SAXReaderImpl implements SAXReader {
 	public XPath createXPath(
 		String xPathExpression, String prefix, String namespace) {
 
-		Map<String, String> namespaceContextMap = new HashMap<>();
-
-		namespaceContextMap.put(prefix, namespace);
+		Map<String, String> namespaceContextMap = HashMapBuilder.put(
+			prefix, namespace
+		).build();
 
 		return createXPath(xPathExpression, namespaceContextMap);
 	}

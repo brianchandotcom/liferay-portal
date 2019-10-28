@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.servlet.JspFactorySwapper;
@@ -32,7 +33,6 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.EventListener;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -191,25 +191,29 @@ public class JspServlet extends HttpServlet {
 		_jspBundleClassloader = new JspBundleClassloader(
 			_allParticipatingBundles);
 
-		final Map<String, String> defaults = new HashMap<>();
-
-		defaults.put(
+		final Map<String, String> defaults = HashMapBuilder.put(
 			"compilerClassName",
 			"com.liferay.portal.osgi.web.servlet.jsp.compiler.internal." +
-				"JspCompiler");
-		defaults.put("compilerSourceVM", "1.8");
-		defaults.put("compilerTargetVM", "1.8");
-		defaults.put(
-			"development",
-			String.valueOf(PropsValues.WORK_DIR_OVERRIDE_ENABLED));
-		defaults.put("httpMethods", "GET,POST,HEAD");
-		defaults.put(
+				"JspCompiler"
+		).put(
+			"compilerSourceVM", "1.8"
+		).put(
+			"compilerTargetVM", "1.8"
+		).put(
+			"development", String.valueOf(PropsValues.WORK_DIR_OVERRIDE_ENABLED)
+		).put(
+			"httpMethods", "GET,POST,HEAD"
+		).put(
 			"jspCompilerClassName",
 			"com.liferay.portal.osgi.web.servlet.jsp.compiler.internal." +
-				"CompilerWrapper");
-		defaults.put("keepgenerated", "false");
-		defaults.put("logVerbosityLevel", "NONE");
-		defaults.put("saveBytecode", "true");
+				"CompilerWrapper"
+		).put(
+			"keepgenerated", "false"
+		).put(
+			"logVerbosityLevel", "NONE"
+		).put(
+			"saveBytecode", "true"
+		).build();
 
 		StringBundler sb = new StringBundler(4);
 

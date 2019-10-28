@@ -531,10 +531,11 @@ public class StringUtilTest {
 
 	@Test(timeout = 1000)
 	public void testReplaceMap() {
-		Map<String, String> map = new HashMap<>();
-
-		map.put("Hallo", "Hello");
-		map.put("Wirld", "World");
+		Map<String, String> map = HashMapBuilder.put(
+			"Hallo", "Hello"
+		).put(
+			"Wirld", "World"
+		).build();
 
 		Assert.assertEquals(
 			"Hello World",

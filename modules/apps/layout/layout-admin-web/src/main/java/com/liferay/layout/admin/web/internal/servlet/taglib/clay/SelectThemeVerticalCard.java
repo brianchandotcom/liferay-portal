@@ -19,10 +19,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
@@ -42,11 +42,9 @@ public class SelectThemeVerticalCard implements VerticalCard {
 
 	@Override
 	public Map<String, String> getData() {
-		Map<String, String> data = new HashMap<>();
-
-		data.put("themeid", _theme.getThemeId());
-
-		return data;
+		return HashMapBuilder.put(
+			"themeid", _theme.getThemeId()
+		).build();
 	}
 
 	@Override

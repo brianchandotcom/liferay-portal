@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
@@ -99,10 +100,11 @@ public class EntryAttachmentContentUpdaterTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			_getInputStream(), ContentTypes.IMAGE_JPEG);
 
-		Map<String, String> attributes = new HashMap<>();
-
-		attributes.put("alt", "A big image");
-		attributes.put("class", "image-big");
+		Map<String, String> attributes = HashMapBuilder.put(
+			"alt", "A big image"
+		).put(
+			"class", "image-big"
+		).build();
 
 		String tempFileEntryImgTag = _getTempEntryAttachmentFileEntryImgTag(
 			tempFileEntry.getFileEntryId(), _TEMP_FILE_ENTRY_IMAGE_URL,

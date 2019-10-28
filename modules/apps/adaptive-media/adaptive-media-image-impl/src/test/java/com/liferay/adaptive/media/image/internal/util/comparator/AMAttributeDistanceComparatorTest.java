@@ -20,6 +20,7 @@ import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder;
 import com.liferay.adaptive.media.image.internal.configuration.AMImageAttributeMapping;
 import com.liferay.adaptive.media.image.internal.processor.AMImage;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -138,10 +139,11 @@ public class AMAttributeDistanceComparatorTest {
 		AMAttribute<AMImageProcessor, S> amAttribute1, S value1,
 		AMAttribute<AMImageProcessor, T> amAttribute2, T value2) {
 
-		Map<String, String> properties = new HashMap<>();
-
-		properties.put(amAttribute1.getName(), String.valueOf(value1));
-		properties.put(amAttribute2.getName(), String.valueOf(value2));
+		Map<String, String> properties = HashMapBuilder.put(
+			amAttribute1.getName(), String.valueOf(value1)
+		).put(
+			amAttribute2.getName(), String.valueOf(value2)
+		).build();
 
 		AMImageAttributeMapping amImageAttributeMapping =
 			AMImageAttributeMapping.fromProperties(properties);

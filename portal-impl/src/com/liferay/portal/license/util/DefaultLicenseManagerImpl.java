@@ -22,13 +22,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.LicenseUtil;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -149,9 +149,9 @@ public class DefaultLicenseManagerImpl implements LicenseManager {
 
 	@Override
 	public int getLicenseState(String productId) {
-		Map<String, String> licenseProperties = new HashMap<>();
-
-		licenseProperties.put("productId", productId);
+		Map<String, String> licenseProperties = HashMapBuilder.put(
+			"productId", productId
+		).build();
 
 		return getLicenseState(licenseProperties);
 	}

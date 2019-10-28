@@ -18,11 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -146,9 +146,9 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 
 	@Test
 	public void test10MkcolWithBody() {
-		Map<String, String> headers = new HashMap<>();
-
-		headers.put(HttpHeaders.CONTENT_TYPE, "xyz-foo/bar-512");
+		Map<String, String> headers = HashMapBuilder.put(
+			HttpHeaders.CONTENT_TYPE, "xyz-foo/bar-512"
+		).build();
 
 		assertCode(
 			HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE,

@@ -32,13 +32,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -237,12 +237,15 @@ public class KBTemplatesManagementToolbarDisplayContext {
 	private List<DropdownItem> _getOrderByDropdownItems() {
 		return new DropdownItemList() {
 			{
-				final Map<String, String> orderColumnsMap = new HashMap<>();
-
-				orderColumnsMap.put("create-date", "create-date");
-				orderColumnsMap.put("modified-date", "modified-date");
-				orderColumnsMap.put("title", "title");
-				orderColumnsMap.put("user-name", "user-name");
+				final Map<String, String> orderColumnsMap = HashMapBuilder.put(
+					"create-date", "create-date"
+				).put(
+					"modified-date", "modified-date"
+				).put(
+					"title", "title"
+				).put(
+					"user-name", "user-name"
+				).build();
 
 				for (Map.Entry<String, String> orderByColEntry :
 						orderColumnsMap.entrySet()) {

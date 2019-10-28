@@ -16,10 +16,10 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.radio;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -59,12 +59,11 @@ public class RadioDDMFormFieldContextHelperTest {
 	}
 
 	protected Map<String, String> createOption(String label, String value) {
-		Map<String, String> option = new HashMap<>();
-
-		option.put("label", label);
-		option.put("value", value);
-
-		return option;
+		return HashMapBuilder.put(
+			"label", label
+		).put(
+			"value", value
+		).build();
 	}
 
 	protected List<Object> getActualOptions(

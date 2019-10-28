@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -43,7 +44,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -145,32 +145,48 @@ public class MBMessageIndexerIndexedFieldsTest {
 	private Map<String, String> _expectedFieldValues(MBMessage mbMessage)
 		throws Exception {
 
-		Map<String, String> map = new HashMap<>();
-
-		map.put(Field.CATEGORY_ID, String.valueOf(mbMessage.getCategoryId()));
-		map.put(
-			Field.CLASS_NAME_ID, String.valueOf(mbMessage.getClassNameId()));
-		map.put(Field.CLASS_PK, String.valueOf(mbMessage.getClassPK()));
-		map.put(Field.COMPANY_ID, String.valueOf(mbMessage.getCompanyId()));
-		map.put(Field.ENTRY_CLASS_NAME, MBMessage.class.getName());
-		map.put(Field.ENTRY_CLASS_PK, String.valueOf(mbMessage.getMessageId()));
-		map.put(Field.GROUP_ID, String.valueOf(mbMessage.getGroupId()));
-		map.put(
+		Map<String, String> map = HashMapBuilder.put(
+			Field.CATEGORY_ID, String.valueOf(mbMessage.getCategoryId())
+		).put(
+			Field.CLASS_NAME_ID, String.valueOf(mbMessage.getClassNameId())
+		).put(
+			Field.CLASS_PK, String.valueOf(mbMessage.getClassPK())
+		).put(
+			Field.COMPANY_ID, String.valueOf(mbMessage.getCompanyId())
+		).put(
+			Field.ENTRY_CLASS_NAME, MBMessage.class.getName()
+		).put(
+			Field.ENTRY_CLASS_PK, String.valueOf(mbMessage.getMessageId())
+		).put(
+			Field.GROUP_ID, String.valueOf(mbMessage.getGroupId())
+		).put(
 			Field.ROOT_ENTRY_CLASS_PK,
-			String.valueOf(mbMessage.getRootMessageId()));
-		map.put(Field.SCOPE_GROUP_ID, String.valueOf(mbMessage.getGroupId()));
-		map.put(Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup()));
-		map.put(Field.STATUS, String.valueOf(mbMessage.getStatus()));
-		map.put(Field.USER_ID, String.valueOf(mbMessage.getUserId()));
-		map.put(Field.USER_NAME, StringUtil.lowerCase(mbMessage.getUserName()));
-		map.put("answer", "false");
-		map.put("answer_String_sortable", "false");
-		map.put("discussion", "false");
-		map.put(
-			"parentMessageId", String.valueOf(mbMessage.getParentMessageId()));
-		map.put("question", "false");
-		map.put("threadId", String.valueOf(mbMessage.getThreadId()));
-		map.put("visible", "true");
+			String.valueOf(mbMessage.getRootMessageId())
+		).put(
+			Field.SCOPE_GROUP_ID, String.valueOf(mbMessage.getGroupId())
+		).put(
+			Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup())
+		).put(
+			Field.STATUS, String.valueOf(mbMessage.getStatus())
+		).put(
+			Field.USER_ID, String.valueOf(mbMessage.getUserId())
+		).put(
+			Field.USER_NAME, StringUtil.lowerCase(mbMessage.getUserName())
+		).put(
+			"answer", "false"
+		).put(
+			"answer_String_sortable", "false"
+		).put(
+			"discussion", "false"
+		).put(
+			"parentMessageId", String.valueOf(mbMessage.getParentMessageId())
+		).put(
+			"question", "false"
+		).put(
+			"threadId", String.valueOf(mbMessage.getThreadId())
+		).put(
+			"visible", "true"
+		).build();
 
 		indexedFieldsFixture.populatePriority("0.0", map);
 		indexedFieldsFixture.populateUID(

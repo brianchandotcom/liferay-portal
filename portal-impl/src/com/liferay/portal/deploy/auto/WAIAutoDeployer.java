@@ -17,12 +17,12 @@ package com.liferay.portal.deploy.auto;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.bridges.wai.WAIPortlet;
 
 import java.io.File;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -52,10 +52,11 @@ public class WAIAutoDeployer extends PortletAutoDeployer {
 			portletName = pluginPackage.getName();
 		}
 
-		Map<String, String> filterMap = new HashMap<>();
-
-		filterMap.put("portlet_name", displayName);
-		filterMap.put("portlet_title", portletName);
+		Map<String, String> filterMap = HashMapBuilder.put(
+			"portlet_name", displayName
+		).put(
+			"portlet_title", portletName
+		).build();
 
 		if (pluginPackage != null) {
 			Properties deploymentSettings =

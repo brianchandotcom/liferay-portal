@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
@@ -36,7 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -139,31 +139,35 @@ public class BookmarksFolderIndexerIndexedFieldsTest {
 			BookmarksFolder bookmarksFolder)
 		throws Exception {
 
-		Map<String, String> map = new HashMap<>();
-
-		map.put(
-			Field.COMPANY_ID, String.valueOf(bookmarksFolder.getCompanyId()));
-		map.put(Field.DESCRIPTION, bookmarksFolder.getDescription());
-		map.put(Field.ENTRY_CLASS_NAME, BookmarksFolder.class.getName());
-		map.put(
-			Field.ENTRY_CLASS_PK,
-			String.valueOf(bookmarksFolder.getFolderId()));
-		map.put(
-			Field.FOLDER_ID,
-			String.valueOf(bookmarksFolder.getParentFolderId()));
-		map.put(Field.GROUP_ID, String.valueOf(bookmarksFolder.getGroupId()));
-		map.put(
-			Field.SCOPE_GROUP_ID, String.valueOf(bookmarksFolder.getGroupId()));
-		map.put(Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup()));
-		map.put(Field.STATUS, String.valueOf(bookmarksFolder.getStatus()));
-		map.put(Field.TITLE, bookmarksFolder.getName());
-		map.put(Field.USER_ID, String.valueOf(bookmarksFolder.getUserId()));
-		map.put(
-			Field.USER_NAME,
-			StringUtil.lowerCase(bookmarksFolder.getUserName()));
-		map.put(
-			"title_sortable", StringUtil.lowerCase(bookmarksFolder.getName()));
-		map.put("visible", "true");
+		Map<String, String> map = HashMapBuilder.put(
+			Field.COMPANY_ID, String.valueOf(bookmarksFolder.getCompanyId())
+		).put(
+			Field.DESCRIPTION, bookmarksFolder.getDescription()
+		).put(
+			Field.ENTRY_CLASS_NAME, BookmarksFolder.class.getName()
+		).put(
+			Field.ENTRY_CLASS_PK, String.valueOf(bookmarksFolder.getFolderId())
+		).put(
+			Field.FOLDER_ID, String.valueOf(bookmarksFolder.getParentFolderId())
+		).put(
+			Field.GROUP_ID, String.valueOf(bookmarksFolder.getGroupId())
+		).put(
+			Field.SCOPE_GROUP_ID, String.valueOf(bookmarksFolder.getGroupId())
+		).put(
+			Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup())
+		).put(
+			Field.STATUS, String.valueOf(bookmarksFolder.getStatus())
+		).put(
+			Field.TITLE, bookmarksFolder.getName()
+		).put(
+			Field.USER_ID, String.valueOf(bookmarksFolder.getUserId())
+		).put(
+			Field.USER_NAME, StringUtil.lowerCase(bookmarksFolder.getUserName())
+		).put(
+			"title_sortable", StringUtil.lowerCase(bookmarksFolder.getName())
+		).put(
+			"visible", "true"
+		).build();
 
 		bookmarksFixture.populateLocalizedTitles(
 			bookmarksFolder.getName(), map);

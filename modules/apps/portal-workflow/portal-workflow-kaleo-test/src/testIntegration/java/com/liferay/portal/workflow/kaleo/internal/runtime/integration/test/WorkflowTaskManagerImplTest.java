@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -228,11 +229,10 @@ public class WorkflowTaskManagerImplTest
 
 		Folder folder = addFolder();
 
-		Map<String, String> dlFileEntryTypeMap = new HashMap<>();
-
-		dlFileEntryTypeMap.put(
+		Map<String, String> dlFileEntryTypeMap = HashMapBuilder.put(
 			String.valueOf(DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL),
-			"Single Approver@1");
+			"Single Approver@1"
+		).build();
 
 		folder = updateFolder(
 			folder, DLFolderConstants.RESTRICTION_TYPE_WORKFLOW,
@@ -728,11 +728,10 @@ public class WorkflowTaskManagerImplTest
 
 		Folder folder = addFolder();
 
-		Map<String, String> dlFileEntryTypeMap = new HashMap<>();
-
-		dlFileEntryTypeMap.put(
+		Map<String, String> dlFileEntryTypeMap = HashMapBuilder.put(
 			String.valueOf(DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL),
-			"Single Approver@1");
+			"Single Approver@1"
+		).build();
 
 		folder = updateFolder(
 			folder, DLFolderConstants.RESTRICTION_TYPE_WORKFLOW,

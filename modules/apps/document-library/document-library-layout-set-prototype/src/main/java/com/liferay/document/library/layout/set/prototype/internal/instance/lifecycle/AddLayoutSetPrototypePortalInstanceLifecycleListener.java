@@ -29,12 +29,12 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.kernel.util.DefaultLayoutSetPrototypesUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.rss.constants.RSSPortletKeys;
 import com.liferay.site.navigation.language.constants.SiteNavigationLanguagePortletKeys;
 import com.liferay.social.activities.constants.SocialActivitiesPortletKeys;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -95,11 +95,11 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 		String portletId = DefaultLayoutPrototypesUtil.addPortletId(
 			homeLayout, AssetPublisherPortletKeys.ASSET_PUBLISHER, "column-2");
 
-		Map<String, String> preferences = new HashMap<>();
-
-		preferences.put(
-			"portletSetupTitle_" + LocaleUtil.getDefault(), "Recent Content");
-		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
+		Map<String, String> preferences = HashMapBuilder.put(
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Recent Content"
+		).put(
+			"portletSetupUseCustomTitle", Boolean.TRUE.toString()
+		).build();
 
 		DefaultLayoutPrototypesUtil.updatePortletSetup(
 			homeLayout, portletId, preferences);
@@ -112,9 +112,9 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 		portletId = DefaultLayoutPrototypesUtil.addPortletId(
 			documentsLayout, DLPortletKeys.DOCUMENT_LIBRARY, "column-1");
 
-		preferences = new HashMap<>();
-
-		preferences.put("portletSetupPortletDecoratorId", "borderless");
+		preferences = HashMapBuilder.put(
+			"portletSetupPortletDecoratorId", "borderless"
+		).build();
 
 		DefaultLayoutPrototypesUtil.updatePortletSetup(
 			documentsLayout, portletId, preferences);
@@ -127,15 +127,16 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 		portletId = DefaultLayoutPrototypesUtil.addPortletId(
 			newsLayout, RSSPortletKeys.RSS, "column-1");
 
-		preferences = new HashMap<>();
-
-		preferences.put("expandedEntriesPerFeed", "3");
-		preferences.put(
-			"portletSetupTitle_" + LocaleUtil.getDefault(), "Technology news");
-		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
-		preferences.put(
+		preferences = HashMapBuilder.put(
+			"expandedEntriesPerFeed", "3"
+		).put(
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Technology news"
+		).put(
+			"portletSetupUseCustomTitle", Boolean.TRUE.toString()
+		).put(
 			"urls",
-			"http://www.nytimes.com/services/xml/rss/userland/Technology.xml");
+			"http://www.nytimes.com/services/xml/rss/userland/Technology.xml"
+		).build();
 
 		DefaultLayoutPrototypesUtil.updatePortletSetup(
 			newsLayout, portletId, preferences);
@@ -143,17 +144,19 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 		portletId = DefaultLayoutPrototypesUtil.addPortletId(
 			newsLayout, RSSPortletKeys.RSS, "column-2");
 
-		preferences = new HashMap<>();
-
-		preferences.put("expandedEntriesPerFeed", "0");
-		preferences.put(
-			"portletSetupTitle_" + LocaleUtil.getDefault(), "Liferay news");
-		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
-		preferences.put("titles", "Liferay Press Releases");
-		preferences.put(
+		preferences = HashMapBuilder.put(
+			"expandedEntriesPerFeed", "0"
+		).put(
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Liferay news"
+		).put(
+			"portletSetupUseCustomTitle", Boolean.TRUE.toString()
+		).put(
+			"titles", "Liferay Press Releases"
+		).put(
 			"urls",
 			"https://www.liferay.com/about-us/newsroom/press-releases/-" +
-				"/asset_publisher/2oZC/rss");
+				"/asset_publisher/2oZC/rss"
+		).build();
 
 		DefaultLayoutPrototypesUtil.updatePortletSetup(
 			newsLayout, portletId, preferences);

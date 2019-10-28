@@ -16,13 +16,13 @@ package com.liferay.portal.remote.cors.internal.jaxrs.feature;
 
 import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.remote.cors.annotation.CORS;
 import com.liferay.portal.remote.cors.internal.CORSSupport;
 
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.container.ContainerRequestContext;
@@ -94,24 +94,23 @@ public class CORSAnnotationDynamicFeature implements DynamicFeature {
 	protected CORSSupport getCORSSupport(CORS cors) {
 		CORSSupport corsSupport = new CORSSupport();
 
-		Map<String, String> corsHeaders = new HashMap<>();
-
-		corsHeaders.put(
+		Map<String, String> corsHeaders = HashMapBuilder.put(
 			CORSSupport.ACCESS_CONTROL_ALLOW_CREDENTIALS,
-			String.valueOf(cors.allowCredentials()));
-		corsHeaders.put(
+			String.valueOf(cors.allowCredentials())
+		).put(
 			CORSSupport.ACCESS_CONTROL_ALLOW_HEADERS,
-			StringUtil.merge(cors.allowHeaders(), StringPool.COMMA));
-		corsHeaders.put(
+			StringUtil.merge(cors.allowHeaders(), StringPool.COMMA)
+		).put(
 			CORSSupport.ACCESS_CONTROL_ALLOW_METHODS,
-			StringUtil.merge(cors.allowMethods(), StringPool.COMMA));
-		corsHeaders.put(
-			CORSSupport.ACCESS_CONTROL_ALLOW_ORIGIN, cors.allowOrigin());
-		corsHeaders.put(
+			StringUtil.merge(cors.allowMethods(), StringPool.COMMA)
+		).put(
+			CORSSupport.ACCESS_CONTROL_ALLOW_ORIGIN, cors.allowOrigin()
+		).put(
 			CORSSupport.ACCESS_CONTROL_EXPOSE_HEADERS,
-			StringUtil.merge(cors.exposeHeaders(), StringPool.COMMA));
-		corsHeaders.put(
-			CORSSupport.ACCESS_CONTROL_MAX_AGE, String.valueOf(cors.maxAge()));
+			StringUtil.merge(cors.exposeHeaders(), StringPool.COMMA)
+		).put(
+			CORSSupport.ACCESS_CONTROL_MAX_AGE, String.valueOf(cors.maxAge())
+		).build();
 
 		corsSupport.setCORSHeaders(corsHeaders);
 

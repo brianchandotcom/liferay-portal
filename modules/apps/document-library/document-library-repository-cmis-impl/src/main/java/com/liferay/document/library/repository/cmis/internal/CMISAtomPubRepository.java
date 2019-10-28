@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.exception.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -40,15 +40,15 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 
 	@Override
 	public Session getSession() throws PortalException {
-		Map<String, String> parameters = new HashMap<>();
-
-		parameters.put(
+		Map<String, String> parameters = HashMapBuilder.put(
 			SessionParameter.ATOMPUB_URL,
 			getTypeSettingsValue(
-				CMISRepositoryConstants.CMIS_ATOMPUB_URL_PARAMETER));
-		parameters.put(
-			SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
-		parameters.put(SessionParameter.COMPRESSION, Boolean.TRUE.toString());
+				CMISRepositoryConstants.CMIS_ATOMPUB_URL_PARAMETER)
+		).put(
+			SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value()
+		).put(
+			SessionParameter.COMPRESSION, Boolean.TRUE.toString()
+		).build();
 
 		Locale locale = LocaleUtil.getSiteDefault();
 

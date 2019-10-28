@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -27,7 +28,6 @@ import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 import com.liferay.portal.security.sso.cas.internal.constants.CASWebKeys;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -147,12 +147,15 @@ public class CASFilter extends BaseFilter {
 		Cas20ProxyTicketValidator cas20ProxyTicketValidator =
 			new Cas20ProxyTicketValidator(serverUrl);
 
-		Map<String, String> parameters = new HashMap<>();
-
-		parameters.put("casServerLoginUrl", loginUrl);
-		parameters.put("casServerUrlPrefix", serverUrl);
-		parameters.put("redirectAfterValidation", "false");
-		parameters.put("serverName", serverName);
+		Map<String, String> parameters = HashMapBuilder.put(
+			"casServerLoginUrl", loginUrl
+		).put(
+			"casServerUrlPrefix", serverUrl
+		).put(
+			"redirectAfterValidation", "false"
+		).put(
+			"serverName", serverName
+		).build();
 
 		cas20ProxyTicketValidator.setCustomParameters(parameters);
 

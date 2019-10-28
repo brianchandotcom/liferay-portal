@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -465,12 +466,15 @@ public class JabberImpl implements Jabber {
 
 		User user = _userLocalService.getUserById(userId);
 
-		Map<String, String> attributes = new HashMap<>();
-
-		attributes.put("email", user.getEmailAddress());
-		attributes.put("first", user.getFirstName());
-		attributes.put("last", user.getLastName());
-		attributes.put("name", user.getFullName());
+		Map<String, String> attributes = HashMapBuilder.put(
+			"email", user.getEmailAddress()
+		).put(
+			"first", user.getFirstName()
+		).put(
+			"last", user.getLastName()
+		).put(
+			"name", user.getFullName()
+		).build();
 
 		accountManager.createAccount(
 			user.getScreenName(), password, attributes);

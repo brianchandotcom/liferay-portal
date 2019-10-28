@@ -18,6 +18,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
@@ -30,7 +31,6 @@ import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.resource.factory.SmsFactory;
 import com.twilio.sdk.resource.instance.Account;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,10 +76,11 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 		}
 
 		for (String number : numbers) {
-			Map<String, String> params = new HashMap<>();
-
-			params.put("Body", body);
-			params.put("From", from);
+			Map<String, String> params = HashMapBuilder.put(
+				"Body", body
+			).put(
+				"From", from
+			).build();
 
 			String statusCallback =
 				_smsPushNotificationsSenderConfiguration.statusCallback();

@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -295,12 +296,11 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 	}
 
 	protected Map<String, String> createOption(String label, String value) {
-		Map<String, String> option = new HashMap<>();
-
-		option.put("label", label);
-		option.put("value", value);
-
-		return option;
+		return HashMapBuilder.put(
+			"label", label
+		).put(
+			"value", value
+		).build();
 	}
 
 	protected SelectDDMFormFieldTemplateContextContributor createSpy() {

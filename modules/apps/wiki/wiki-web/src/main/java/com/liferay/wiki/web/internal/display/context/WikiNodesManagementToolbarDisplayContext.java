@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.model.WikiNode;
@@ -33,7 +34,6 @@ import com.liferay.wiki.web.internal.security.permission.resource.WikiNodePermis
 import com.liferay.wiki.web.internal.security.permission.resource.WikiResourcePermission;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -204,10 +204,11 @@ public class WikiNodesManagementToolbarDisplayContext {
 	private List<DropdownItem> _getOrderByDropdownItems() {
 		return new DropdownItemList() {
 			{
-				final Map<String, String> orderColumns = new HashMap<>();
-
-				orderColumns.put("lastPostDate", "last-post-date");
-				orderColumns.put("name", "name");
+				final Map<String, String> orderColumns = HashMapBuilder.put(
+					"lastPostDate", "last-post-date"
+				).put(
+					"name", "name"
+				).build();
 
 				for (Map.Entry<String, String> orderByColEntry :
 						orderColumns.entrySet()) {

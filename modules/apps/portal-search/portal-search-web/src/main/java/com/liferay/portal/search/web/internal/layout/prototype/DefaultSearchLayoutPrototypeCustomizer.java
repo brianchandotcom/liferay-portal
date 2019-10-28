@@ -16,6 +16,7 @@ package com.liferay.portal.search.web.internal.layout.prototype;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
 import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
 import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
@@ -29,7 +30,6 @@ import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPort
 import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
 import com.liferay.portal.search.web.layout.prototype.SearchLayoutPrototypeCustomizer;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -86,9 +86,9 @@ public class DefaultSearchLayoutPrototypeCustomizer
 		String portletId = DefaultLayoutPrototypesUtil.addPortletId(
 			layout, portletKey, columnId);
 
-		Map<String, String> preferences = new HashMap<>();
-
-		preferences.put("portletSetupPortletDecoratorId", "barebone");
+		Map<String, String> preferences = HashMapBuilder.put(
+			"portletSetupPortletDecoratorId", "barebone"
+		).build();
 
 		DefaultLayoutPrototypesUtil.updatePortletSetup(
 			layout, portletId, preferences);

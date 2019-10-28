@@ -15,13 +15,13 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletResponse;
@@ -74,12 +74,15 @@ public class AlertTag extends IncludeTag {
 
 	@Override
 	public int processEndTag() throws Exception {
-		Map<String, String> values = new HashMap<>();
-
-		values.put("animationTime", String.valueOf(_animationTime));
-		values.put("closeable", String.valueOf(_closeable));
-		values.put("icon", String.valueOf(_icon));
-		values.put("message", HtmlUtil.escapeJS(_message));
+		Map<String, String> values = HashMapBuilder.put(
+			"animationTime", String.valueOf(_animationTime)
+		).put(
+			"closeable", String.valueOf(_closeable)
+		).put(
+			"icon", String.valueOf(_icon)
+		).put(
+			"message", HtmlUtil.escapeJS(_message)
+		).build();
 
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();

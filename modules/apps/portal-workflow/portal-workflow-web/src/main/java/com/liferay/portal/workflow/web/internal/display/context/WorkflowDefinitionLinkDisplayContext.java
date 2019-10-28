@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -61,7 +62,6 @@ import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionLi
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -286,63 +286,49 @@ public class WorkflowDefinitionLinkDisplayContext {
 	}
 
 	public Map<String, String> getResourceTooltips() {
-		Map<String, String> resourceTooltips = new HashMap<>();
-
-		resourceTooltips.put(
+		return HashMapBuilder.put(
 			WorkflowDefinitionLinkResourcesConstants.BLOGS_ENTRY,
 			LanguageUtil.get(
 				getResourceBundle(),
-				"workflow-triggered-on-blog-post-submission"));
-
-		resourceTooltips.put(
+				"workflow-triggered-on-blog-post-submission")
+		).put(
 			WorkflowDefinitionLinkResourcesConstants.CALENDAR_BOOKING,
 			LanguageUtil.get(
-				getResourceBundle(), "workflow-triggered-on-event-submission"));
-
-		resourceTooltips.put(
+				getResourceBundle(), "workflow-triggered-on-event-submission")
+		).put(
 			WorkflowDefinitionLinkResourcesConstants.COMMENT,
 			LanguageUtil.get(
-				getResourceBundle(),
-				"workflow-triggered-on-comment-submission"));
-
-		resourceTooltips.put(
+				getResourceBundle(), "workflow-triggered-on-comment-submission")
+		).put(
 			WorkflowDefinitionLinkResourcesConstants.KNOWLEDGE_BASE_ARTICLE,
 			LanguageUtil.get(
-				getResourceBundle(),
-				"workflow-triggered-on-article-submission"));
-
-		resourceTooltips.put(
+				getResourceBundle(), "workflow-triggered-on-article-submission")
+		).put(
 			WorkflowDefinitionLinkResourcesConstants.MESSAGE_BOARDS_MESSAGE,
 			LanguageUtil.get(
-				getResourceBundle(),
-				"workflow-triggered-on-message-submission"));
-
-		resourceTooltips.put(
+				getResourceBundle(), "workflow-triggered-on-message-submission")
+		).put(
 			WorkflowDefinitionLinkResourcesConstants.PAGE_REVISION,
 			LanguageUtil.get(
 				getResourceBundle(),
 				"workflow-triggered-on-page-modification-in-the-stage-" +
-					"enviroment"));
-
-		resourceTooltips.put(
+					"enviroment")
+		).put(
 			WorkflowDefinitionLinkResourcesConstants.WIKI_PAGE,
 			LanguageUtil.get(
 				getResourceBundle(),
-				"workflow-triggered-on-wiki-page-submission"));
-
-		resourceTooltips.put(
+				"workflow-triggered-on-wiki-page-submission")
+		).put(
 			WorkflowDefinitionLinkResourcesConstants.USER,
 			LanguageUtil.get(
 				getResourceBundle(),
-				"workflow-triggered-on-guest-user-account-submission"));
-
-		resourceTooltips.put(
+				"workflow-triggered-on-guest-user-account-submission")
+		).put(
 			WorkflowDefinitionLinkResourcesConstants.WEB_CONTENT_ARTICLE,
 			LanguageUtil.get(
 				getResourceBundle(),
-				"workflow-triggered-on-web-content-submission"));
-
-		return resourceTooltips;
+				"workflow-triggered-on-web-content-submission")
+		).build();
 	}
 
 	public WorkflowDefinitionLinkSearch getSearchContainer()

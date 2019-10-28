@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -69,7 +70,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -161,9 +161,9 @@ public class JournalArticleServiceTest {
 
 	@Test(expected = StorageFieldRequiredException.class)
 	public void testAddArticleWithEmptyRequiredHTMLField() throws Exception {
-		Map<String, String> requiredFields = new HashMap<>();
-
-		requiredFields.put("HTML2030", "");
+		Map<String, String> requiredFields = HashMapBuilder.put(
+			"HTML2030", ""
+		).build();
 
 		testAddArticleRequiredFields(
 			"test-ddm-structure-html-required-field.xml",
@@ -173,9 +173,9 @@ public class JournalArticleServiceTest {
 
 	@Test
 	public void testAddArticleWithNotEmptyRequiredHTMLField() throws Exception {
-		Map<String, String> requiredFields = new HashMap<>();
-
-		requiredFields.put("HTML2030", "<p>Hello.</p>");
+		Map<String, String> requiredFields = HashMapBuilder.put(
+			"HTML2030", "<p>Hello.</p>"
+		).build();
 
 		testAddArticleRequiredFields(
 			"test-ddm-structure-html-required-field.xml",

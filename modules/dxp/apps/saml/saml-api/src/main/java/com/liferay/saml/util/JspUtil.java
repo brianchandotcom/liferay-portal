@@ -15,10 +15,10 @@
 package com.liferay.saml.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.struts.Definition;
 import com.liferay.portal.struts.TilesUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -52,11 +52,13 @@ public class JspUtil {
 			boolean popUp)
 		throws Exception {
 
-		Map<String, String> attributes = new HashMap<>();
-
-		attributes.put("content", path);
-		attributes.put("pop_up", String.valueOf(popUp));
-		attributes.put("title", title);
+		Map<String, String> attributes = HashMapBuilder.put(
+			"content", path
+		).put(
+			"pop_up", String.valueOf(popUp)
+		).put(
+			"title", title
+		).build();
 
 		httpServletRequest.setAttribute(
 			TilesUtil.DEFINITION, new Definition(StringPool.BLANK, attributes));

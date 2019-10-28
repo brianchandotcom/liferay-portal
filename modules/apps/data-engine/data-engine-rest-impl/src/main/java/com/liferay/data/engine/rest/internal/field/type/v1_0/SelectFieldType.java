@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -136,23 +136,20 @@ public class SelectFieldType extends BaseFieldType {
 	private Map<String, String> _getLanguageTerms(
 		HttpServletRequest httpServletRequest) {
 
-		Map<String, String> languageTerms = new HashMap<>();
-
-		languageTerms.put(
+		return HashMapBuilder.put(
 			"chooseAnOption",
-			LanguageUtil.get(httpServletRequest, "choose-an-option"));
-		languageTerms.put(
+			LanguageUtil.get(httpServletRequest, "choose-an-option")
+		).put(
 			"chooseOptions",
-			LanguageUtil.get(httpServletRequest, "choose-options"));
-		languageTerms.put(
+			LanguageUtil.get(httpServletRequest, "choose-options")
+		).put(
 			"dynamicallyLoadedData",
-			LanguageUtil.get(httpServletRequest, "dynamically-loaded-data"));
-		languageTerms.put(
-			"emptyList", LanguageUtil.get(httpServletRequest, "empty-list"));
-		languageTerms.put(
-			"search", LanguageUtil.get(httpServletRequest, "search"));
-
-		return languageTerms;
+			LanguageUtil.get(httpServletRequest, "dynamically-loaded-data")
+		).put(
+			"emptyList", LanguageUtil.get(httpServletRequest, "empty-list")
+		).put(
+			"search", LanguageUtil.get(httpServletRequest, "search")
+		).build();
 	}
 
 }

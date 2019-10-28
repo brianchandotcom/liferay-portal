@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -109,25 +109,39 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 	private Map<String, String> _expectedFieldValues(BlogsEntry blogsEntry)
 		throws Exception {
 
-		Map<String, String> map = new HashMap<>();
-
-		map.put(Field.COMPANY_ID, String.valueOf(blogsEntry.getCompanyId()));
-		map.put(Field.CONTENT, blogsEntry.getContent());
-		map.put(Field.DESCRIPTION, blogsEntry.getDescription());
-		map.put(Field.ENTRY_CLASS_NAME, BlogsEntry.class.getName());
-		map.put(Field.ENTRY_CLASS_PK, String.valueOf(blogsEntry.getEntryId()));
-		map.put(Field.GROUP_ID, String.valueOf(blogsEntry.getGroupId()));
-		map.put(Field.SCOPE_GROUP_ID, String.valueOf(blogsEntry.getGroupId()));
-		map.put(Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup()));
-		map.put(Field.STATUS, String.valueOf(blogsEntry.getStatus()));
-		map.put(Field.SUBTITLE, blogsEntry.getSubtitle());
-		map.put(Field.TITLE, blogsEntry.getTitle());
-		map.put(Field.USER_ID, String.valueOf(blogsEntry.getUserId()));
-		map.put(
-			Field.USER_NAME, StringUtil.lowerCase(blogsEntry.getUserName()));
-		map.put("localized_title", StringUtil.lowerCase(blogsEntry.getTitle()));
-		map.put("title_sortable", StringUtil.lowerCase(blogsEntry.getTitle()));
-		map.put("visible", "true");
+		Map<String, String> map = HashMapBuilder.put(
+			Field.COMPANY_ID, String.valueOf(blogsEntry.getCompanyId())
+		).put(
+			Field.CONTENT, blogsEntry.getContent()
+		).put(
+			Field.DESCRIPTION, blogsEntry.getDescription()
+		).put(
+			Field.ENTRY_CLASS_NAME, BlogsEntry.class.getName()
+		).put(
+			Field.ENTRY_CLASS_PK, String.valueOf(blogsEntry.getEntryId())
+		).put(
+			Field.GROUP_ID, String.valueOf(blogsEntry.getGroupId())
+		).put(
+			Field.SCOPE_GROUP_ID, String.valueOf(blogsEntry.getGroupId())
+		).put(
+			Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup())
+		).put(
+			Field.STATUS, String.valueOf(blogsEntry.getStatus())
+		).put(
+			Field.SUBTITLE, blogsEntry.getSubtitle()
+		).put(
+			Field.TITLE, blogsEntry.getTitle()
+		).put(
+			Field.USER_ID, String.valueOf(blogsEntry.getUserId())
+		).put(
+			Field.USER_NAME, StringUtil.lowerCase(blogsEntry.getUserName())
+		).put(
+			"localized_title", StringUtil.lowerCase(blogsEntry.getTitle())
+		).put(
+			"title_sortable", StringUtil.lowerCase(blogsEntry.getTitle())
+		).put(
+			"visible", "true"
+		).build();
 
 		indexedFieldsFixture.populateUID(
 			BlogsEntry.class.getName(), blogsEntry.getEntryId(), map);

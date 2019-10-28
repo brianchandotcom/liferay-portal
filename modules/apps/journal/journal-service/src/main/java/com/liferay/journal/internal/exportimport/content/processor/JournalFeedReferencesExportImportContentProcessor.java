@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -140,11 +140,13 @@ public class JournalFeedReferencesExportImportContentProcessor
 			return null;
 		}
 
-		Map<String, String> map = new HashMap<>();
-
-		map.put("endPos", String.valueOf(endPos));
-		map.put("feedId", pathArray[1]);
-		map.put("groupId", pathArray[0]);
+		Map<String, String> map = HashMapBuilder.put(
+			"endPos", String.valueOf(endPos)
+		).put(
+			"feedId", pathArray[1]
+		).put(
+			"groupId", pathArray[0]
+		).build();
 
 		String groupIdString = MapUtil.getString(map, "groupId");
 

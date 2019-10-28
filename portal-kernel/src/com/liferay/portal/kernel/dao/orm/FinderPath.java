@@ -19,11 +19,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -118,22 +118,25 @@ public class FinderPath {
 	}
 
 	private static Map<String, String> _getEncodedTypes() {
-		Map<String, String> encodedTypes = new HashMap<>();
-
-		encodedTypes.put(
-			Boolean.class.getName(), Boolean.class.getSimpleName());
-		encodedTypes.put(Byte.class.getName(), Byte.class.getSimpleName());
-		encodedTypes.put(
-			Character.class.getName(), Character.class.getSimpleName());
-		encodedTypes.put(Double.class.getName(), Double.class.getSimpleName());
-		encodedTypes.put(Float.class.getName(), Float.class.getSimpleName());
-		encodedTypes.put(
-			Integer.class.getName(), Integer.class.getSimpleName());
-		encodedTypes.put(Long.class.getName(), Long.class.getSimpleName());
-		encodedTypes.put(Short.class.getName(), Short.class.getSimpleName());
-		encodedTypes.put(String.class.getName(), String.class.getSimpleName());
-
-		return encodedTypes;
+		return HashMapBuilder.put(
+			Boolean.class.getName(), Boolean.class.getSimpleName()
+		).put(
+			Byte.class.getName(), Byte.class.getSimpleName()
+		).put(
+			Character.class.getName(), Character.class.getSimpleName()
+		).put(
+			Double.class.getName(), Double.class.getSimpleName()
+		).put(
+			Float.class.getName(), Float.class.getSimpleName()
+		).put(
+			Integer.class.getName(), Integer.class.getSimpleName()
+		).put(
+			Long.class.getName(), Long.class.getSimpleName()
+		).put(
+			Short.class.getName(), Short.class.getSimpleName()
+		).put(
+			String.class.getName(), String.class.getSimpleName()
+		).build();
 	}
 
 	private Serializable _getCacheKey(String[] keys) {

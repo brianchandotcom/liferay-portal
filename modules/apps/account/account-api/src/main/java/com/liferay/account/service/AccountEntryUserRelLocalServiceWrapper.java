@@ -295,6 +295,14 @@ public class AccountEntryUserRelLocalServiceWrapper
 	}
 
 	@Override
+	public long getAccountEntryUserRelsCountByAccountEntryId(
+		long accountEntryId) {
+
+		return _accountEntryUserRelLocalService.
+			getAccountEntryUserRelsCountByAccountEntryId(accountEntryId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

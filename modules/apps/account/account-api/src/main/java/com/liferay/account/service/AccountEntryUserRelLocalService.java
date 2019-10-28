@@ -239,6 +239,10 @@ public interface AccountEntryUserRelLocalService
 	public int getAccountEntryUserRelsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getAccountEntryUserRelsCountByAccountEntryId(
+		long accountEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

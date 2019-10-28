@@ -274,6 +274,13 @@ public class AccountEntryUserRelLocalServiceUtil {
 		return getService().getAccountEntryUserRelsCount();
 	}
 
+	public static long getAccountEntryUserRelsCountByAccountEntryId(
+		long accountEntryId) {
+
+		return getService().getAccountEntryUserRelsCountByAccountEntryId(
+			accountEntryId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

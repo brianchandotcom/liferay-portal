@@ -15,23 +15,24 @@
 package com.liferay.layout.page.template.admin.web.internal.upgrade.v1_1_0;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
-import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.InputStream;
 
@@ -45,12 +46,15 @@ public class UpgradePreviewFileEntryId extends UpgradeProcess {
 
 	public UpgradePreviewFileEntryId(
 		DLFileEntryLocalService dlFileEntryLocalService,
-		LayoutPageTemplateEntryLocalService
-			layoutPageTemplateEntryLocalService) {
+		DLFolderLocalService dlFolderLocalService,
+		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
+		RepositoryLocalService repositoryLocalService) {
 
 		_dlFileEntryLocalService = dlFileEntryLocalService;
+		_dlFolderLocalService = dlFolderLocalService;
 		_layoutPageTemplateEntryLocalService =
 			layoutPageTemplateEntryLocalService;
+		_repositoryLocalService = repositoryLocalService;
 	}
 
 	@Override
@@ -75,37 +79,32 @@ public class UpgradePreviewFileEntryId extends UpgradeProcess {
 		}
 	}
 
-	private Folder _getOrCreateFolder(
+	private DLFolder _getOrCreateFolder(
 			Repository repository, ServiceContext serviceContext)
 		throws PortalException {
 
-		Folder folder = _repositoryFolders.get(repository.getRepositoryId());
+		DLFolder dlFolder = _repositoryFolders.get(
+			repository.getRepositoryId());
 
-		if (folder != null) {
-			return folder;
+		if (dlFolder != null) {
+			return dlFolder;
 		}
 
-		try {
-			folder = PortletFileRepositoryUtil.getPortletFolder(
-				repository.getRepositoryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES);
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
+		dlFolder = _dlFolderLocalService.fetchFolder(
+			repository.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_PORTLET_NAME);
 
-			folder = PortletFileRepositoryUtil.addPortletFolder(
-				repository.getUserId(), repository.getRepositoryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-				serviceContext);
+		if (dlFolder == null) {
+			dlFolder = _dlFolderLocalService.addFolder(
+				repository.getUserId(), repository.getGroupId(),
+				repository.getRepositoryId(), true,
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _PORTLET_NAME, null,
+				true, serviceContext);
 		}
 
-		_repositoryFolders.put(repository.getRepositoryId(), folder);
+		_repositoryFolders.put(repository.getRepositoryId(), dlFolder);
 
-		return folder;
+		return dlFolder;
 	}
 
 	private Repository _getOrCreateRepository(
@@ -119,13 +118,22 @@ public class UpgradePreviewFileEntryId extends UpgradeProcess {
 		}
 
 		repository = PortletFileRepositoryUtil.fetchPortletRepository(
-			groupId, LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES);
+			groupId, _PORTLET_NAME);
 
 		if (repository == null) {
-			repository = PortletFileRepositoryUtil.addPortletRepository(
-				groupId,
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-				serviceContext);
+			Repository originalRepository =
+				PortletFileRepositoryUtil.getPortletRepository(
+					groupId, LayoutAdminPortletKeys.GROUP_PAGES);
+
+			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+			unicodeProperties.fastLoad(originalRepository.getTypeSettings());
+
+			repository = _repositoryLocalService.addRepository(
+				originalRepository.getUserId(), originalRepository.getGroupId(),
+				originalRepository.getClassNameId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _PORTLET_NAME, null,
+				_PORTLET_NAME, unicodeProperties, true, serviceContext);
 		}
 
 		_groupRepositories.put(groupId, repository);
@@ -149,7 +157,7 @@ public class UpgradePreviewFileEntryId extends UpgradeProcess {
 		Repository repository = _getOrCreateRepository(
 			originalDLFileEntry.getGroupId(), serviceContext);
 
-		Folder folder = _getOrCreateFolder(repository, serviceContext);
+		DLFolder dlFolder = _getOrCreateFolder(repository, serviceContext);
 
 		serviceContext.setAttribute(
 			"className", originalDLFileEntry.getClassName());
@@ -163,7 +171,7 @@ public class UpgradePreviewFileEntryId extends UpgradeProcess {
 
 		DLFileEntry newDLFileEntry = _dlFileEntryLocalService.addFileEntry(
 			originalDLFileEntry.getUserId(), originalDLFileEntry.getGroupId(),
-			repository.getRepositoryId(), folder.getFolderId(),
+			repository.getRepositoryId(), dlFolder.getFolderId(),
 			originalDLFileEntry.getFileName(),
 			originalDLFileEntry.getMimeType(), originalDLFileEntry.getTitle(),
 			originalDLFileEntry.getDescription(), null,
@@ -179,15 +187,19 @@ public class UpgradePreviewFileEntryId extends UpgradeProcess {
 		_dlFileEntryLocalService.deleteDLFileEntry(originalDLFileEntry);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradePreviewFileEntryId.class);
+	private static final String _PORTLET_NAME =
+		"com_liferay_layout_page_template_admin_web_portlet_" +
+			"LayoutPageTemplatesPortlet";
 
 	private static final Map<Long, Repository> _groupRepositories =
 		new HashMap<>();
-	private static final Map<Long, Folder> _repositoryFolders = new HashMap<>();
+	private static final Map<Long, DLFolder> _repositoryFolders =
+		new HashMap<>();
 
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
+	private final DLFolderLocalService _dlFolderLocalService;
 	private final LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+	private final RepositoryLocalService _repositoryLocalService;
 
 }

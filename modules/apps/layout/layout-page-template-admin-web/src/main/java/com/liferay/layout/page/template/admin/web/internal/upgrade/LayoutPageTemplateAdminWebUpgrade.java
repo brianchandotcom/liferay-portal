@@ -15,9 +15,10 @@
 package com.liferay.layout.page.template.admin.web.internal.upgrade;
 
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.layout.page.template.admin.web.internal.upgrade.v1_1_0.UpgradePreviewFileEntryId;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -40,20 +41,21 @@ public class LayoutPageTemplateAdminWebUpgrade
 		registry.register(
 			"1.0.0", "1.1.0",
 			new UpgradePreviewFileEntryId(
-				_dlFileEntryLocalService,
-				_layoutPageTemplateEntryLocalService));
+				_dlFileEntryLocalService, _dlFolderLocalService,
+				_layoutPageTemplateEntryLocalService, _repositoryLocalService));
 	}
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
+	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
-	@Reference(
-		target = "(repository.target.class.name=com.liferay.portal.repository.portletrepository.PortletRepository)"
-	)
-	private RepositoryFactory _repositoryFactory;
+	@Reference
+	private RepositoryLocalService _repositoryLocalService;
 
 }

@@ -144,7 +144,7 @@ public class EditEntryMVCActionCommandTest {
 		ActionRequest actionRequest, boolean moveToTrash) {
 
 		ReflectionTestUtil.invoke(
-			_serviceTracker.getService(), "deleteEntries",
+			_serviceTracker.getService(), "_deleteEntries",
 			new Class<?>[] {ActionRequest.class, boolean.class}, actionRequest,
 			moveToTrash);
 	}

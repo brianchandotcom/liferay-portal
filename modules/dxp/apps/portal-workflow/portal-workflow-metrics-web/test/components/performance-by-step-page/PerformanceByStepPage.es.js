@@ -9,76 +9,94 @@
  * distribution rights of the Software.
  */
 
-import {render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import {AppContext} from '../../../src/main/resources/META-INF/resources/js/components/AppContext.es';
 import PerformanceByStepPage from '../../../src/main/resources/META-INF/resources/js/components/performance-by-step-page/PerformanceByStepPage.es';
-import {PerformanceDataProvider} from '../../../src/main/resources/META-INF/resources/js/components/performance-by-step-page/store/PerformanceByStepPageStore.es';
-import {MockRouter as Router} from '../../mock/MockRouter.es';
-import fetch from '../../mock/fetch.es';
+import {MockRouter} from '../../mock/MockRouter.es';
 
-import '@testing-library/jest-dom/extend-expect';
+const data = {
+	items: [
+		{
+			breachedInstanceCount: 4,
+			durationAvg: 0,
+			instanceCount: 4,
+			key: 'review',
+			name: 'Review',
+			onTimeInstanceCount: 0,
+			overdueInstanceCount: 4
+		}
+	],
+	totalCount: 1
+};
 
-test('Should render velocity data provider', async () => {
-	const data = {
-		items: [
-			{
-				durationAvg: 123456,
-				instanceCount: 64,
-				name: 'test',
-				overdueInstanceCount: 10
-			}
-		],
-		lastPage: 1,
-		page: 1,
-		pageSize: 7,
-		totalCount: 7
-	};
+const clientMock = {
+	get: jest.fn()
+};
 
-	const AppContextState = {
-		client: fetch(data),
-		companyId: '12345',
-		defaultDelta: 20,
-		deltas: 0,
-		isAmPm: true,
-		maxPages: 10,
-		namespace: 'test',
-		setStatus() {},
-		setTitle() {},
-		status: null,
-		title: Liferay.Language.get('metrics')
-	};
+const wrapper = ({children}) => (
+	<MockRouter client={clientMock}>{children}</MockRouter>
+);
 
-	const Wrapper = ({children}) => (
-		<AppContext.Provider value={AppContextState}>
-			<Router client={fetch(data)}>
-				<PerformanceDataProvider
-					page={1}
-					pageSize={10}
-					processId="123456"
-					sort={'overdueInstanceCount:asc'}
-				>
-					<div>{children}</div>
-				</PerformanceDataProvider>
-			</Router>
-		</AppContext.Provider>
-	);
+describe('The performance by step page should', () => {
+	let getAllByTestId;
 
-	const {getByTestId, unmount} = render(
-		<Wrapper>
+	afterEach(cleanup);
+
+	beforeEach(() => {
+		clientMock.get.mockResolvedValue({data});
+
+		const renderResult = render(
 			<PerformanceByStepPage
 				page={1}
 				pageSize={10}
-				processId="123456"
-				sort={'overdueInstanceCount:asc'}
-			/>
-		</Wrapper>
-	);
+				processId="12345"
+				sort="overdueInstanceCount:desc"
+			/>,
+			{
+				wrapper
+			}
+		);
 
-	const testElement = await getByTestId('performance-test', {exact: false});
+		getAllByTestId = renderResult.getAllByTestId;
+	});
 
-	expect(testElement).toBeInTheDocument();
+	test('Be rendered with 1 item on table', async () => {
+		const stepNameCell = await getAllByTestId('stepName');
 
-	unmount();
+		expect(stepNameCell[0].innerHTML).toBe('Review');
+	});
+});
+
+describe('The performance by step page, when there is no item, should', () => {
+	let getByTestId;
+
+	afterEach(cleanup);
+
+	beforeEach(() => {
+		clientMock.get.mockResolvedValue({data: {}});
+
+		const renderResult = render(
+			<PerformanceByStepPage
+				page={1}
+				pageSize={10}
+				processId="12345"
+				search="update"
+				sort="overdueInstanceCount:desc"
+			/>,
+			{
+				wrapper
+			}
+		);
+
+		getByTestId = renderResult.getByTestId;
+	});
+
+	test('Be rendered with empty view after search', () => {
+		const performanceByStepBody = getByTestId('performanceByStepBody');
+
+		expect(
+			performanceByStepBody.children[0].children[1].children[0].innerHTML
+		).toBe('no-results-were-found');
+	});
 });

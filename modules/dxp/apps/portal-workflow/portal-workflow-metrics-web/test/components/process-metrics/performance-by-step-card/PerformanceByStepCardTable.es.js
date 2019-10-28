@@ -97,3 +97,19 @@ describe('The performance by step table component, when duration has less than 6
 		expect(durations[1].innerHTML).toBe('0min');
 	});
 });
+
+describe('The performance by step table component, when items is empty, should', () => {
+	let getAllByTestId;
+
+	afterEach(cleanup);
+
+	beforeEach(() => {
+		const renderResult = render(<PerformanceByStepCard.Table />);
+
+		getAllByTestId = renderResult.getAllByTestId;
+	});
+
+	test('Be rendered with no items', () => {
+		expect(() => getAllByTestId('stepName')).toThrow();
+	});
+});

@@ -9,106 +9,64 @@
  * distribution rights of the Software.
  */
 
-import {render} from '@testing-library/react';
+import {renderHook} from '@testing-library/react-hooks';
 import React from 'react';
 
-import {AppContext} from '../../../../src/main/resources/META-INF/resources/js/components/AppContext.es';
-import {PerformanceDataProvider} from '../../../../src/main/resources/META-INF/resources/js/components/performance-by-step-page/store/PerformanceByStepPageStore.es';
-import {MockRouter as Router} from '../../../mock/MockRouter.es';
-import fetch from '../../../mock/fetch.es';
+import {usePerformanceData} from '../../../../src/main/resources/META-INF/resources/js/components/performance-by-step-page/store/PerformanceByStepPageStore.es';
+import {TimeRangeProvider} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/TimeRangeStore.es';
+import Request from '../../../../src/main/resources/META-INF/resources/js/shared/components/request/Request.es';
+import {MockRouter} from '../../../mock/MockRouter.es';
 
-import '@testing-library/jest-dom/extend-expect';
+const data = {
+	items: [
+		{
+			breachedInstanceCount: 4,
+			durationAvg: 0,
+			instanceCount: 4,
+			key: 'review',
+			name: 'Review',
+			onTimeInstanceCount: 0,
+			overdueInstanceCount: 4
+		},
+		{
+			breachedInstanceCount: 0,
+			durationAvg: 0,
+			instanceCount: 0,
+			key: 'update',
+			name: 'Update',
+			onTimeInstanceCount: 0,
+			overdueInstanceCount: 0
+		}
+	],
+	totalCount: 2
+};
 
-test('Should render velocity data provider', async () => {
-	const data = {
-		items: [],
-		lastPage: 1,
-		page: 1,
-		pageSize: 7,
-		totalCount: 7
-	};
+const clientMock = {
+	get: jest.fn().mockResolvedValue({data})
+};
 
-	const AppContextState = {
-		client: fetch(data),
-		companyId: '12345',
-		defaultDelta: 20,
-		deltas: 0,
-		isAmPm: true,
-		maxPages: 10,
-		namespace: 'test',
-		setStatus() {},
-		setTitle() {},
-		status: null,
-		title: Liferay.Language.get('metrics')
-	};
+const wrapper = ({children}) => (
+	<MockRouter client={clientMock}>
+		<Request>
+			<TimeRangeProvider timeRangeKeys={['30']}>
+				{children}
+			</TimeRangeProvider>
+		</Request>
+	</MockRouter>
+);
 
-	const Wrapper = () => (
-		<AppContext.Provider value={AppContextState}>
-			<Router client={fetch(data)}>
-				<PerformanceDataProvider
-					page={1}
-					pageSize={10}
-					processId="123456"
-					sort={'overdueInstanceCount:asc'}
-				>
-					<div>{'test'}</div>
-				</PerformanceDataProvider>
-			</Router>
-		</AppContext.Provider>
-	);
+describe('The performance by step store should', () => {
+	test('Return 2 items after request finish', async () => {
+		const {result, unmount, waitForNextUpdate} = renderHook(
+			() => usePerformanceData('2019-01-07', '2019-01-01', ['30']),
+			{wrapper}
+		);
 
-	const {findByText, unmount} = render(<Wrapper></Wrapper>);
+		result.current.fetchData(1, 10, 12345, 'e');
 
-	const testElement = await findByText('test', {exact: false});
+		await waitForNextUpdate();
 
-	expect(testElement).toBeInTheDocument();
-
-	unmount();
-});
-
-test('Should render velocity without page', async () => {
-	const data = {
-		items: [],
-		lastPage: 1,
-		page: 1,
-		pageSize: 7,
-		totalCount: 7
-	};
-
-	const AppContextState = {
-		client: fetch(data),
-		companyId: '12345',
-		defaultDelta: 20,
-		deltas: 0,
-		isAmPm: true,
-		maxPages: 10,
-		namespace: 'test',
-		setStatus() {},
-		setTitle() {},
-		status: null,
-		title: Liferay.Language.get('metrics')
-	};
-
-	const Wrapper = () => (
-		<AppContext.Provider value={AppContextState}>
-			<Router client={fetch(data)}>
-				<PerformanceDataProvider
-					page={0}
-					pageSize={10}
-					processId="123456"
-					sort={'overdueInstanceCount:asc'}
-				>
-					<div>{'test'}</div>
-				</PerformanceDataProvider>
-			</Router>
-		</AppContext.Provider>
-	);
-
-	const {findByText, unmount} = render(<Wrapper></Wrapper>);
-
-	const testElement = await findByText('test', {exact: false});
-
-	expect(testElement).toBeInTheDocument();
-
-	unmount();
+		expect(result.current.items.length).toBe(2);
+		unmount();
+	});
 });

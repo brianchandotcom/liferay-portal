@@ -100,7 +100,7 @@ const ImagePreviewer = ({imageURL}) => {
 	};
 
 	const handleWindowResize = debounce(() => {
-		if (isMounted && !image.current.style.width) {
+		if (isMounted() && !image.current.style.width) {
 			updateToolbar(getFittingZoom());
 		}
 	}, 250);

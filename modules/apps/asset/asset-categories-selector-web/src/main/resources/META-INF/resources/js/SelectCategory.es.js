@@ -36,10 +36,10 @@ const filterNodes = (nodes, filterValue) => {
 };
 
 function SelectCategory({multiSelection, namespace, nodes}) {
-	const [innerNodes, setInnerNodes] = useState(nodes);
+	const [filteredNodes, setFilteredNodes] = useState(nodes);
 
 	useEffect(() => {
-		setInnerNodes(nodes);
+		setFilteredNodes(nodes);
 	}, [nodes]);
 
 	const handleOnChange = useCallback(
@@ -47,9 +47,9 @@ function SelectCategory({multiSelection, namespace, nodes}) {
 			const searchValue = event.target.value.toLowerCase();
 
 			if (searchValue) {
-				setInnerNodes(filterNodes(nodes, searchValue));
+				setFilteredNodes(filterNodes(nodes, searchValue));
 			} else {
-				setInnerNodes(nodes);
+				setFilteredNodes(nodes);
 			}
 		},
 		[nodes]
@@ -85,7 +85,7 @@ function SelectCategory({multiSelection, namespace, nodes}) {
 						<Treeview
 							NodeComponent={Treeview.Card}
 							multiSelection={multiSelection}
-							nodes={innerNodes}
+							nodes={filteredNodes}
 						/>
 					</div>
 				</fieldset>

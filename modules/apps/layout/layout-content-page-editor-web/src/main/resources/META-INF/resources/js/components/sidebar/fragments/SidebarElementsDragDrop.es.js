@@ -134,6 +134,12 @@ class SidebarElementsDragDrop extends State {
 
 		if (data.target) {
 			const {itemGroupId, itemId, itemName} = data.source.dataset;
+			const {
+				itemGroupId,
+				itemId,
+				itemName,
+				itemType
+			} = data.source.dataset;
 
 			requestAnimationFrame(() => {
 				this._initializeDragAndDrop();
@@ -142,6 +148,7 @@ class SidebarElementsDragDrop extends State {
 			this.dispatch(enableSavingChangesStatusAction())
 				.dispatch({
 					fragmentEntryKey: itemId,
+					fragmentEntryLinkRowType: itemType,
 					fragmentName: itemName,
 					groupId: itemGroupId,
 					type: ADD_FRAGMENT_ENTRY_LINK

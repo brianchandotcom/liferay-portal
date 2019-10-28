@@ -50,6 +50,7 @@ const SidebarCard = ({item}) => {
 			data-item-group-id={item.groupId}
 			data-item-id={item.fragmentEntryKey}
 			data-item-name={item.name}
+			data-item-type={item.type}
 		>
 			<ImagePreview imagePreviewURL={item.imagePreviewURL} />
 

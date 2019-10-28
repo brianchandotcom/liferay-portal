@@ -34,13 +34,13 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		this(
 			name, null, null, false, false, false, null, null, true, true,
 			false, null, null, false, null, null, true, true, false, false,
-			false, false, false, null, false);
+			"strict", false, false, null, false);
 	}
 
 	public EntityColumn(String name, String dbName) {
 		this(
 			name, dbName, "String", false, false, false, null, null, null, null,
-			true, false, false, false, false, false, false, null, false);
+			true, false, false, false, "strict", false, false, null, false);
 	}
 
 	public EntityColumn(
@@ -50,9 +50,9 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		boolean orderByAscending, boolean orderColumn, String comparator,
 		String arrayableOperator, boolean arrayablePagination, String idType,
 		String idParam, boolean convertNull, boolean lazy, boolean localized,
-		boolean jsonEnabled, boolean changeTrackingIgnore,
-		boolean containerModel, boolean parentContainerModel,
-		String uadAnonymizeFieldName, boolean uadNonanonymizable) {
+		boolean jsonEnabled, String changeTrackingMode, boolean containerModel,
+		boolean parentContainerModel, String uadAnonymizeFieldName,
+		boolean uadNonanonymizable) {
 
 		_name = name;
 		_dbName = dbName;
@@ -74,7 +74,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_lazy = lazy;
 		_localized = localized;
 		_jsonEnabled = jsonEnabled;
-		_changeTrackingIgnore = changeTrackingIgnore;
+		_changeTrackingMode = changeTrackingMode;
 		_containerModel = containerModel;
 		_parentContainerModel = parentContainerModel;
 		_uadAnonymizeFieldName = uadAnonymizeFieldName;
@@ -89,14 +89,14 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		boolean accessor, boolean filterPrimary, String ejbName,
 		String mappingTable, String idType, String idParam, boolean convertNull,
 		boolean lazy, boolean localized, boolean jsonEnabled,
-		boolean changeTrackingIgnore, boolean containerModel,
+		String changeTrackingMode, boolean containerModel,
 		boolean parentContainerModel, String uadAnonymizeFieldName,
 		boolean uadNonanonymizable) {
 
 		this(
 			name, dbName, type, primary, accessor, filterPrimary, ejbName,
 			mappingTable, true, true, false, null, null, false, idType, idParam,
-			convertNull, lazy, localized, jsonEnabled, changeTrackingIgnore,
+			convertNull, lazy, localized, jsonEnabled, changeTrackingMode,
 			containerModel, parentContainerModel, uadAnonymizeFieldName,
 			uadNonanonymizable);
 	}
@@ -109,7 +109,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 			isCaseSensitive(), isOrderByAscending(), isOrderColumn(),
 			getComparator(), getArrayableOperator(), hasArrayablePagination(),
 			getIdType(), getIdParam(), isConvertNull(), isLazy(), isLocalized(),
-			isJsonEnabled(), isChangeTrackingIgnore(), isContainerModel(),
+			isJsonEnabled(), _changeTrackingMode, isContainerModel(),
 			isParentContainerModel(), getUADAnonymizeFieldName(),
 			isUADNonanonymizable());
 	}
@@ -303,7 +303,11 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	}
 
 	public boolean isChangeTrackingIgnore() {
-		return _changeTrackingIgnore;
+		return _changeTrackingMode.equals("ignore");
+	}
+
+	public boolean isChangeTrackingMerge() {
+		return _changeTrackingMode.equals("merge");
 	}
 
 	public boolean isCollection() {
@@ -586,7 +590,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	private String _arrayableOperator;
 	private boolean _arrayablePagination;
 	private boolean _caseSensitive;
-	private final boolean _changeTrackingIgnore;
+	private final String _changeTrackingMode;
 	private String _comparator;
 	private boolean _containerModel;
 	private boolean _convertNull;

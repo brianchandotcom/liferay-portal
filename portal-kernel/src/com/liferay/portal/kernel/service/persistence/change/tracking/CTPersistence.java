@@ -33,6 +33,10 @@ public interface CTPersistence<T extends CTModel<T>>
 		return Collections.emptySet();
 	}
 
+	public default Set<String> getCTMergeableAttributeNames() {
+		return Collections.emptySet();
+	}
+
 	public List<String[]> getUniqueIndexColumnNames();
 
 	public T removeCTModel(T ctModel, boolean quiet);

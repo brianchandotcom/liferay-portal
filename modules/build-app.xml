@@ -22,10 +22,6 @@
 
 	<property name="osgi.dir" value="${liferay.home}/osgi" />
 
-	<condition property="build.profile.dxp">
-		<equals arg1="${build.profile}" arg2="dxp" />
-	</condition>
-
 	<macrodef name="set-artifact-versions-previous-release">
 		<attribute name="app.version.previous.release" />
 
@@ -521,7 +517,7 @@
 
 	<target depends="get-app-names-core" name="get-app-names" unless="app.names">
 		<condition else="apps/**/app.bnd" property="app.names.includes" value="apps/**/app.bnd,dxp/apps/**/app.bnd">
-			<istrue value="${build.profile.dxp}" />
+			<equals arg1="${build.profile}" arg2="dxp" />
 		</condition>
 
 		<condition else="Liferay-Releng-Suite:\s*[\w-]+$" property="liferay.releng.suite.pattern" value=".">
@@ -700,14 +696,14 @@
 		<condition else="${modules.dir}/apps/${app.name}" property="app.dir" value="${modules.dir}/dxp/apps/${app.name}">
 			<and>
 				<available file="${modules.dir}/dxp/apps/${app.name}" />
-				<istrue value="${build.profile.dxp}" />
+				<equals arg1="${build.profile}" arg2="dxp" />
 			</and>
 		</condition>
 
 		<condition else="${modules.dir}/.releng/apps/${app.name}" property="releng.app.dir" value="${modules.dir}/.releng/dxp/apps/${app.name}">
 			<and>
 				<available file="${modules.dir}/.releng/dxp/apps/${app.name}" />
-				<istrue value="${build.profile.dxp}" />
+				<equals arg1="${build.profile}" arg2="dxp" />
 			</and>
 		</condition>
 
@@ -716,10 +712,10 @@
 				<and>
 					<available file="${modules.dir}/dxp/apps/${app.name}" />
 					<available file="${app.dir}/.lfrbuild-release-src" />
-					<istrue value="${build.profile.dxp}" />
+					<equals arg1="${build.profile}" arg2="dxp" />
 				</and>
 				<not>
-					<istrue value="${build.profile.dxp}" />
+					<equals arg1="${build.profile}" arg2="dxp" />
 				</not>
 			</or>
 		</condition>
@@ -892,7 +888,7 @@
 
 		<condition property="check.stale.artifacts.skip">
 			<and>
-				<istrue value="${build.profile.dxp}" />
+				<equals arg1="${build.profile}" arg2="dxp" />
 				<not>
 					<available file="${modules.dir}/dxp/apps/${app.name}" />
 				</not>

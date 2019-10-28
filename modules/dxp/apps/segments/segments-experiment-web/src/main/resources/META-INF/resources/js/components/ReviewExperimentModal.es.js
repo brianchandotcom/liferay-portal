@@ -199,7 +199,9 @@ function ReviewExperimentModal({modalObserver, onModalClose, onRun, variants}) {
 									/>
 								)}
 
-								{estimation.error && !estimation.loading ? (
+								{!estimation.loading &&
+								(estimation.days === undefined ||
+									estimation.error) ? (
 									<span className="small text-secondary">
 										{Liferay.Language.get('not-available')}
 									</span>

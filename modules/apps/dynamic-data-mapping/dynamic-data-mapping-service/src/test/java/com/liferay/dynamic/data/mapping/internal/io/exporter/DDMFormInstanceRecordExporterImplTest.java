@@ -41,6 +41,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -305,10 +306,12 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 
 		ddmFormField2.setLabel(localizedValue2);
 
-		Map<String, DDMFormField> ddmFormFieldMap = new HashMap<>();
-
-		ddmFormFieldMap.put("field1", ddmFormField1);
-		ddmFormFieldMap.put("field2", ddmFormField2);
+		Map<String, DDMFormField> ddmFormFieldMap =
+			HashMapBuilder.<String, DDMFormField>put(
+				"field1", ddmFormField1
+			).put(
+				"field2", ddmFormField2
+			).build();
 
 		Map<String, String> ddmFormFieldsLabel =
 			ddmFormInstanceRecordExporterImpl.getDDMFormFieldsLabel(

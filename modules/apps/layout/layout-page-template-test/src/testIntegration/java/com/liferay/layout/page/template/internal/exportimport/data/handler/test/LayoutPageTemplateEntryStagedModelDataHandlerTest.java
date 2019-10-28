@@ -38,12 +38,12 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -132,9 +132,9 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 			long companyId, long groupId, String name, long userId)
 		throws Exception {
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getDefault(), name);
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getDefault(), name
+		).build();
 
 		return LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
 			userId, companyId, nameMap, (Map<Locale, String>)null, true,

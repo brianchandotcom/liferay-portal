@@ -20,9 +20,9 @@ import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -49,9 +49,9 @@ public class DDMTemplateTestUtil {
 			Locale defaultLocale)
 		throws Exception {
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(defaultLocale, "Test Template");
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			defaultLocale, "Test Template"
+		).build();
 
 		ServiceContext serviceContext = new ServiceContext();
 

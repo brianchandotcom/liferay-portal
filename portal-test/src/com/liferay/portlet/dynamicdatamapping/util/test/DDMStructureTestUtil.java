@@ -24,11 +24,11 @@ import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -53,9 +53,9 @@ public class DDMStructureTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(defaultLocale, "Test Structure");
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			defaultLocale, "Test Structure"
+		).build();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);

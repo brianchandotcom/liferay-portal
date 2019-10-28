@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.servlet.FileTimestampUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -127,12 +128,13 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			ResourceBundleUtil.getResourceBundleLoader(
 				portlet.getResourceBundle(), classLoader);
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
-			"resource.bundle.base.name", portlet.getResourceBundle());
-		properties.put("service.ranking", Integer.MIN_VALUE);
-		properties.put("servlet.context.name", portlet.getContextName());
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"resource.bundle.base.name", portlet.getResourceBundle()
+		).put(
+			"service.ranking", Integer.MIN_VALUE
+		).put(
+			"servlet.context.name", portlet.getContextName()
+		).build();
 
 		_resourceBundleLoaderServiceRegistrations.put(
 			portlet.getPortletId(),

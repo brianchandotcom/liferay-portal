@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.repository.external.LegacyExternalRepositoryDefiner;
@@ -35,7 +36,6 @@ import com.liferay.registry.collections.StringServiceRegistrationMap;
 import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -195,9 +195,9 @@ public class RepositoryClassDefinitionCatalogImpl
 			_repositoryClassDefinitions.put(
 				className, repositoryClassDefinition);
 
-			Map<String, Object> properties = new HashMap<>();
-
-			properties.put("class.name", className);
+			Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+				"class.name", className
+			).build();
 
 			return registry.registerService(
 				RepositoryFactory.class, repositoryClassDefinition, properties);

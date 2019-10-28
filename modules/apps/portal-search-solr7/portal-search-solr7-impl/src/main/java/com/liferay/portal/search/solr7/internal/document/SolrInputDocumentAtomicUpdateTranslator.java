@@ -15,9 +15,9 @@
 package com.liferay.portal.search.solr7.internal.document;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.solr.common.SolrInputDocument;
@@ -48,9 +48,10 @@ public class SolrInputDocumentAtomicUpdateTranslator {
 				continue;
 			}
 
-			Map<String, Object> modifiedValue = new HashMap<>();
-
-			modifiedValue.put("set", values);
+			Map<String, Object> modifiedValue =
+				HashMapBuilder.<String, Object>put(
+					"set", values
+				).build();
 
 			modifiedSolrInputDocument.setField(fieldName, modifiedValue);
 		}

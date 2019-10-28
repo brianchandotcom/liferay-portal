@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -59,7 +60,6 @@ import com.sun.syndication.io.XmlReader;
 
 import java.lang.reflect.Field;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipFile;
@@ -292,11 +292,13 @@ public class InitUtil {
 	public static void registerSpringInitialized() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("module.service.lifecycle", "spring.initialized");
-		properties.put("service.vendor", ReleaseInfo.getVendor());
-		properties.put("service.version", ReleaseInfo.getVersion());
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"module.service.lifecycle", "spring.initialized"
+		).put(
+			"service.vendor", ReleaseInfo.getVendor()
+		).put(
+			"service.version", ReleaseInfo.getVersion()
+		).build();
 
 		final ServiceRegistration<ModuleServiceLifecycle>
 			moduleServiceLifecycleServiceRegistration =

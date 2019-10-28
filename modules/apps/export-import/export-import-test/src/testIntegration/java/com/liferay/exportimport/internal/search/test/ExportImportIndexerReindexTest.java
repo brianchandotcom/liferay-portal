@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -120,11 +121,9 @@ public class ExportImportIndexerReindexTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private HashMap<String, Serializable> _addGroupAttribute() {
-		HashMap<String, Serializable> map = new HashMap<>();
-
-		map.put(Field.GROUP_ID, _group.getGroupId());
-
-		return map;
+		return HashMapBuilder.<String, Serializable>put(
+			Field.GROUP_ID, _group.getGroupId()
+		).build();
 	}
 
 	@DeleteAfterTestRun

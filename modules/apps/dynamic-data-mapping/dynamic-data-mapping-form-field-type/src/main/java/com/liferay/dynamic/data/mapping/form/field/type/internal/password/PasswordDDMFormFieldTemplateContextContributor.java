@@ -20,8 +20,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -45,15 +45,12 @@ public class PasswordDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put(
+		return HashMapBuilder.<String, Object>put(
 			"placeholder",
-			getPlaceholder(ddmFormField, ddmFormFieldRenderingContext));
-		parameters.put(
-			"tooltip", getTooltip(ddmFormField, ddmFormFieldRenderingContext));
-
-		return parameters;
+			getPlaceholder(ddmFormField, ddmFormFieldRenderingContext)
+		).put(
+			"tooltip", getTooltip(ddmFormField, ddmFormFieldRenderingContext)
+		).build();
 	}
 
 	protected String getPlaceholder(

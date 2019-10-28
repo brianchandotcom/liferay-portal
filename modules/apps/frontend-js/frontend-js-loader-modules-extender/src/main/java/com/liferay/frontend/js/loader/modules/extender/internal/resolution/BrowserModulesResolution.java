@@ -17,6 +17,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,10 +92,11 @@ public class BrowserModulesResolution {
 		Object value = mappedModuleName;
 
 		if (exactMatch) {
-			Map<String, Object> map = new HashMap<>();
-
-			map.put("exactMatch", true);
-			map.put("value", mappedModuleName);
+			Map<String, Object> map = HashMapBuilder.<String, Object>put(
+				"exactMatch", true
+			).put(
+				"value", mappedModuleName
+			).build();
 
 			value = map;
 		}
@@ -111,9 +113,9 @@ public class BrowserModulesResolution {
 	}
 
 	public String toJSON() {
-		Map<String, Object> map = new HashMap<>();
-
-		map.put("configMap", _mappedModuleNamesMap);
+		Map<String, Object> map = HashMapBuilder.<String, Object>put(
+			"configMap", _mappedModuleNamesMap
+		).build();
 
 		if (_explanation != null) {
 			map.put("explanation", _resolvedModuleNames);

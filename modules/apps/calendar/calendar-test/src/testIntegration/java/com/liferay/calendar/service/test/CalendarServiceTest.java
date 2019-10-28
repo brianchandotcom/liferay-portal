@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -117,10 +118,9 @@ public class CalendarServiceTest {
 				PortalUtil.getClassNameId(Group.class), group.getGroupId());
 
 		if (calendarResource == null) {
-			Map<Locale, String> nameMap = new HashMap<>();
-
-			nameMap.put(
-				LocaleUtil.getSiteDefault(), group.getDescriptiveName());
+			Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+				LocaleUtil.getSiteDefault(), group.getDescriptiveName()
+			).build();
 
 			Map<Locale, String> descriptionMap = new HashMap<>();
 

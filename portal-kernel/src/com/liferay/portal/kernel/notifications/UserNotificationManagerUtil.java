@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -148,9 +149,9 @@ public class UserNotificationManagerUtil {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("javax.portlet.name", portletId);
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"javax.portlet.name", portletId
+		).build();
 
 		ServiceRegistration<UserNotificationDefinition> serviceRegistration =
 			registry.registerService(

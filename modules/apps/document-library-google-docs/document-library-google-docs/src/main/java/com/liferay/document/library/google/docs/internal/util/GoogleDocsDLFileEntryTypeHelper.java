@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -144,11 +145,9 @@ public class GoogleDocsDLFileEntryTypeHelper {
 		long defaultUserId = _userLocalService.getDefaultUserId(
 			_company.getCompanyId());
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(
-			LocaleUtil.getDefault(),
-			GoogleDocsConstants.DL_FILE_ENTRY_TYPE_NAME);
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getDefault(), GoogleDocsConstants.DL_FILE_ENTRY_TYPE_NAME
+		).build();
 
 		Map<Locale, String> descriptionMap = new HashMap<>();
 

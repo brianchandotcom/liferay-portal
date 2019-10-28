@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.resiliency.spi.SPIRegistryImpl;
@@ -50,7 +51,6 @@ import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -79,13 +79,13 @@ public class MPIHelperUtilTest {
 
 	@Before
 	public void setUp() {
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
-			PropsKeys.INTRABAND_IMPL, ExecutorIntraband.class.getName());
-		properties.put(PropsKeys.INTRABAND_TIMEOUT_DEFAULT, "10000");
-		properties.put(
-			PropsKeys.INTRABAND_WELDER_IMPL, SocketWelder.class.getName());
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			PropsKeys.INTRABAND_IMPL, ExecutorIntraband.class.getName()
+		).put(
+			PropsKeys.INTRABAND_TIMEOUT_DEFAULT, "10000"
+		).put(
+			PropsKeys.INTRABAND_WELDER_IMPL, SocketWelder.class.getName()
+		).build();
 
 		PropsTestUtil.setProps(properties);
 

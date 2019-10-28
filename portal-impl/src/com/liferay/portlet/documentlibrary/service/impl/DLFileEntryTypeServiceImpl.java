@@ -23,13 +23,13 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeServiceBaseImpl;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -64,13 +64,13 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 			long[] ddmStructureIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), name
+		).build();
 
-		nameMap.put(LocaleUtil.getSiteDefault(), name);
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(LocaleUtil.getSiteDefault(), description);
+		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), description
+		).build();
 
 		return addFileEntryType(
 			groupId, null, nameMap, descriptionMap, ddmStructureIds,
@@ -188,13 +188,13 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 			long[] ddmStructureIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), name
+		).build();
 
-		nameMap.put(LocaleUtil.getSiteDefault(), name);
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(LocaleUtil.getSiteDefault(), description);
+		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), description
+		).build();
 
 		updateFileEntryType(
 			fileEntryTypeId, nameMap, descriptionMap, ddmStructureIds,

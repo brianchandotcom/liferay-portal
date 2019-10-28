@@ -17,6 +17,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
@@ -73,27 +73,24 @@ public class EditRankingDisplayBuilder {
 	}
 
 	private Map<String, Object> _getConstants() {
-		Map<String, Object> constants = new HashMap<>();
-
-		constants.put(
-			"WORKFLOW_ACTION_PUBLISH", WorkflowConstants.ACTION_PUBLISH);
-		constants.put(
-			"WORKFLOW_ACTION_SAVE_DRAFT", WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		return constants;
+		return HashMapBuilder.<String, Object>put(
+			"WORKFLOW_ACTION_PUBLISH", WorkflowConstants.ACTION_PUBLISH
+		).put(
+			"WORKFLOW_ACTION_SAVE_DRAFT", WorkflowConstants.ACTION_SAVE_DRAFT
+		).build();
 	}
 
 	private Map<String, Object> _getContext() {
-		Map<String, Object> context = new HashMap<>();
-
-		context.put("companyId", String.valueOf(_themeDisplay.getCompanyId()));
-		context.put("constants", _getConstants());
-		context.put("namespace", _renderResponse.getNamespace());
-		context.put(
+		return HashMapBuilder.<String, Object>put(
+			"companyId", String.valueOf(_themeDisplay.getCompanyId())
+		).put(
+			"constants", _getConstants()
+		).put(
+			"namespace", _renderResponse.getNamespace()
+		).put(
 			"spritemap",
-			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-
-		return context;
+			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+		).build();
 	}
 
 	private String _getFormName() {
@@ -117,20 +114,21 @@ public class EditRankingDisplayBuilder {
 	}
 
 	private Map<String, Object> _getProps() {
-		Map<String, Object> props = new HashMap<>();
-
-		props.put("cancelUrl", HtmlUtil.escape(_getRedirect()));
-		props.put(
-			"fetchDocumentsHiddenUrl", _getHiddenResultRankingsResourceURL());
-		props.put(
-			"fetchDocumentsSearchUrl", _getSearchResultRankingsResourceURL());
-		props.put(
-			"fetchDocumentsVisibleUrl", _getVisibleResultRankingsResourceURL());
-		props.put("formName", _renderResponse.getNamespace() + _getFormName());
-		props.put("initialAliases", _getAliases());
-		props.put("searchQuery", _getKeywords());
-
-		return props;
+		return HashMapBuilder.<String, Object>put(
+			"cancelUrl", HtmlUtil.escape(_getRedirect())
+		).put(
+			"fetchDocumentsHiddenUrl", _getHiddenResultRankingsResourceURL()
+		).put(
+			"fetchDocumentsSearchUrl", _getSearchResultRankingsResourceURL()
+		).put(
+			"fetchDocumentsVisibleUrl", _getVisibleResultRankingsResourceURL()
+		).put(
+			"formName", _renderResponse.getNamespace() + _getFormName()
+		).put(
+			"initialAliases", _getAliases()
+		).put(
+			"searchQuery", _getKeywords()
+		).build();
 	}
 
 	private String _getRedirect() {
@@ -188,10 +186,11 @@ public class EditRankingDisplayBuilder {
 	}
 
 	private void _setData(EditRankingDisplayContext editRankingDisplayContext) {
-		Map<String, Object> data = new HashMap<>();
-
-		data.put("context", _getContext());
-		data.put("props", _getProps());
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"context", _getContext()
+		).put(
+			"props", _getProps()
+		).build();
 
 		editRankingDisplayContext.setData(data);
 	}

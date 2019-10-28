@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -34,7 +35,6 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import java.io.File;
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -513,9 +513,10 @@ public class WikiTestUtil {
 			WikiPage page, ServiceContext serviceContext)
 		throws Exception {
 
-		Map<String, Serializable> workflowContext = new HashMap<>();
-
-		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+		Map<String, Serializable> workflowContext =
+			HashMapBuilder.<String, Serializable>put(
+				WorkflowConstants.CONTEXT_URL, "http://localhost"
+			).build();
 
 		page = WikiPageLocalServiceUtil.updateStatus(
 			page.getUserId(), page, WorkflowConstants.STATUS_APPROVED,

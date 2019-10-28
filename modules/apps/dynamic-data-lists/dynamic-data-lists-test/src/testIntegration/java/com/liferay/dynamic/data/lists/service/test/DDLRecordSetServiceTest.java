@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -44,7 +45,6 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -152,9 +152,9 @@ public class DDLRecordSetServiceTest {
 		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
 			ddmStructureDDMForm, StorageType.JSON.toString());
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.US, RandomTestUtil.randomString());
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -228,9 +228,9 @@ public class DDLRecordSetServiceTest {
 		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
 			ddmStructureDDMForm, StorageType.JSON.toString());
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.US, RandomTestUtil.randomString());
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());

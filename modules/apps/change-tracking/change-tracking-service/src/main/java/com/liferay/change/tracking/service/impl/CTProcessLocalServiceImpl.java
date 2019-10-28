@@ -25,12 +25,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,10 +67,12 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 		Company company = companyLocalService.getCompany(
 			ctCollection.getCompanyId());
 
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		taskContextMap.put("ctCollectionId", ctCollectionId);
-		taskContextMap.put("ctProcessId", ctProcessId);
+		Map<String, Serializable> taskContextMap =
+			HashMapBuilder.<String, Serializable>put(
+				"ctCollectionId", ctCollectionId
+			).put(
+				"ctProcessId", ctProcessId
+			).build();
 
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.addBackgroundTask(

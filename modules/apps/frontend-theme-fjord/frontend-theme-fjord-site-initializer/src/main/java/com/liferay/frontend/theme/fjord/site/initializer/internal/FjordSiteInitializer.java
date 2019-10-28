@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -302,9 +303,9 @@ public class FjordSiteInitializer implements SiteInitializer {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), name,
 			fragmentEntryIds, StringPool.BLANK, serviceContext);
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getSiteDefault(), name);
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), name
+		).build();
 
 		Layout layout = _layoutLocalService.addLayout(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(), false,

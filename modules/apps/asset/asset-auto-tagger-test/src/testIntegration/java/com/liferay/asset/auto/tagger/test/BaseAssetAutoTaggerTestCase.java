@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -44,7 +45,6 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.util.Arrays;
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -71,9 +71,9 @@ public abstract class BaseAssetAutoTaggerTestCase {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("model.class.name", DLFileEntryConstants.getClassName());
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"model.class.name", DLFileEntryConstants.getClassName()
+		).build();
 
 		_assetAutoTagProviderServiceRegistration = registry.registerService(
 			AssetAutoTagProvider.class,

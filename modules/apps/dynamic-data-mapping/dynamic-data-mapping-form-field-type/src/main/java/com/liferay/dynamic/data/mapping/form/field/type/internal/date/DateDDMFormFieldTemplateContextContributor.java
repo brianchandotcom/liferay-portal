@@ -19,10 +19,10 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,11 +46,10 @@ public class DateDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put(
+		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
 			"predefinedValue",
-			GetterUtil.getString(ddmFormField.getPredefinedValue(), ""));
+			GetterUtil.getString(ddmFormField.getPredefinedValue(), "")
+		).build();
 
 		String predefinedValue = getPredefinedValue(
 			ddmFormField, ddmFormFieldRenderingContext);

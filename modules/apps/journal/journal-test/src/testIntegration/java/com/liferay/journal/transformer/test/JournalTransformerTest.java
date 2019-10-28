@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -50,7 +51,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -158,10 +158,11 @@ public class JournalTransformerTest {
 	public void testLocaleTransformerListener() throws Exception {
 		Map<String, String> tokens = getTokens();
 
-		Map<Locale, String> contents = new HashMap<>();
-
-		contents.put(LocaleUtil.BRAZIL, "Joao da Silva");
-		contents.put(LocaleUtil.US, "Joe Bloggs");
+		Map<Locale, String> contents = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.BRAZIL, "Joao da Silva"
+		).put(
+			LocaleUtil.US, "Joe Bloggs"
+		).build();
 
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
 			contents, LanguageUtil.getLanguageId(LocaleUtil.US));
@@ -196,9 +197,9 @@ public class JournalTransformerTest {
 
 		Map<String, String> tokens = getTokens();
 
-		Map<Locale, String> contents = new HashMap<>();
-
-		contents.put(LocaleUtil.US, "Joe Bloggs");
+		Map<Locale, String> contents = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.US, "Joe Bloggs"
+		).build();
 
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
 			contents, LanguageUtil.getLanguageId(LocaleUtil.US));

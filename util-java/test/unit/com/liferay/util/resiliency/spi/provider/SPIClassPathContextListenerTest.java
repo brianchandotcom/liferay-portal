@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -152,13 +153,15 @@ public class SPIClassPathContextListenerTest {
 		putResource(
 			resources, _portalServiceJarFile, PortalException.class.getName());
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(PropsKeys.INTRABAND_IMPL, StringPool.BLANK);
-		properties.put(PropsKeys.INTRABAND_TIMEOUT_DEFAULT, StringPool.BLANK);
-		properties.put(PropsKeys.INTRABAND_WELDER_IMPL, StringPool.BLANK);
-		properties.put(
-			PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME, driverClassName);
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			PropsKeys.INTRABAND_IMPL, StringPool.BLANK
+		).put(
+			PropsKeys.INTRABAND_TIMEOUT_DEFAULT, StringPool.BLANK
+		).put(
+			PropsKeys.INTRABAND_WELDER_IMPL, StringPool.BLANK
+		).put(
+			PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME, driverClassName
+		).build();
 
 		PropsTestUtil.setProps(properties);
 

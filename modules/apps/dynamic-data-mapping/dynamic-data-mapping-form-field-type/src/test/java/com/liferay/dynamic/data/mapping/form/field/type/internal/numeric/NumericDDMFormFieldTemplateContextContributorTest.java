@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -85,9 +86,10 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
-		Map<String, Object> changedProperties = new HashMap<>();
-
-		changedProperties.put("dataType", "double");
+		Map<String, Object> changedProperties =
+			HashMapBuilder.<String, Object>put(
+				"dataType", "double"
+			).build();
 
 		ddmFormFieldRenderingContext.setProperty(
 			"changedProperties", changedProperties);

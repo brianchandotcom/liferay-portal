@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -35,7 +36,6 @@ import java.net.URLConnection;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -62,13 +62,15 @@ public class XMLMessageBodyWriterTest {
 	public void setUp() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("liferay.auth.verifier", true);
-		properties.put("liferay.oauth2", false);
-		properties.put("osgi.jaxrs.application.base", "/test-vulcan");
-		properties.put(
-			"osgi.jaxrs.extension.select", "(osgi.jaxrs.name=Liferay.Vulcan)");
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"liferay.auth.verifier", true
+		).put(
+			"liferay.oauth2", false
+		).put(
+			"osgi.jaxrs.application.base", "/test-vulcan"
+		).put(
+			"osgi.jaxrs.extension.select", "(osgi.jaxrs.name=Liferay.Vulcan)"
+		).build();
 
 		_serviceRegistration = registry.registerService(
 			Application.class, new TestApplication(), properties);

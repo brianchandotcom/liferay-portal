@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -66,7 +67,6 @@ import com.liferay.sites.kernel.util.Sites;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -327,9 +327,10 @@ public class LayoutSetPrototypePropagationTest
 			_layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
 				_layoutSetPrototypeGroup, true, layoutPrototype, true);
 
-			Map<String, String[]> preferenceMap = new HashMap<>();
-
-			preferenceMap.put("bulletStyle", new String[] {"Dots"});
+			Map<String, String[]> preferenceMap =
+				HashMapBuilder.<String, String[]>put(
+					"bulletStyle", new String[] {"Dots"}
+				).build();
 
 			String testPortletId1 = LayoutTestUtil.addPortletToLayout(
 				TestPropsValues.getUserId(), _layoutSetPrototypeLayout,

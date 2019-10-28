@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.elasticsearch6.configuration.OperationMode;
 
@@ -57,9 +58,9 @@ public class RemoteElasticsearchConnectionTest {
 
 	@Test
 	public void testModifyConnected() {
-		HashMap<String, Object> properties = new HashMap<>();
-
-		properties.put("operationMode", OperationMode.REMOTE.name());
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.REMOTE.name()
+		).build();
 
 		_remoteElasticsearchConnection.activate(properties);
 
@@ -82,9 +83,9 @@ public class RemoteElasticsearchConnectionTest {
 
 	@Test
 	public void testModifyConnectedWithInvalidPropertiesThenValidProperties() {
-		HashMap<String, Object> properties = new HashMap<>();
-
-		properties.put("operationMode", OperationMode.REMOTE.name());
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.REMOTE.name()
+		).build();
 
 		_remoteElasticsearchConnection.activate(properties);
 
@@ -117,9 +118,9 @@ public class RemoteElasticsearchConnectionTest {
 	public void testModifyUnconnected() {
 		Assert.assertFalse(_remoteElasticsearchConnection.isConnected());
 
-		HashMap<String, Object> properties = new HashMap<>();
-
-		properties.put("operationMode", OperationMode.REMOTE.name());
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.REMOTE.name()
+		).build();
 
 		_remoteElasticsearchConnection.modified(properties);
 

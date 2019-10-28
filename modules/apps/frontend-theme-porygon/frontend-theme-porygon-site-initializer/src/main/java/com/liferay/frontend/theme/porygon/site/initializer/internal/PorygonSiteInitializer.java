@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -207,9 +208,9 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			String fileName = FileUtil.stripExtension(
 				FileUtil.getShortFileName(url.getPath()));
 
-			Map<Locale, String> nameMap = new HashMap<>();
-
-			nameMap.put(LocaleUtil.getSiteDefault(), fileName);
+			Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+				LocaleUtil.getSiteDefault(), fileName
+			).build();
 
 			DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
@@ -461,13 +462,13 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
 
-		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			siteDefaultLocale, "Porygon Entry"
+		).build();
 
-		nameMap.put(siteDefaultLocale, "Porygon Entry");
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(siteDefaultLocale, "Porygon Entry");
+		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
+			siteDefaultLocale, "Porygon Entry"
+		).build();
 
 		URL definitionURL = _bundle.getEntry(
 			_PATH + "/journal/structures/porygon_entry/definition.json");
@@ -513,9 +514,9 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			String ddmTemplateName = StringUtil.upperCaseFirstLetter(
 				StringUtil.replace(ddmTemplateKey, '_', ' '));
 
-			Map<Locale, String> nameMap = new HashMap<>();
-
-			nameMap.put(LocaleUtil.getSiteDefault(), ddmTemplateName);
+			Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+				LocaleUtil.getSiteDefault(), ddmTemplateName
+			).build();
 
 			_ddmTemplateLocalService.addTemplate(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
@@ -561,9 +562,9 @@ public class PorygonSiteInitializer implements SiteInitializer {
 					StringUtil.replace(
 						fileName, CharPool.UNDERLINE, CharPool.SPACE)));
 
-			Map<Locale, String> nameMap = new HashMap<>();
-
-			nameMap.put(LocaleUtil.getSiteDefault(), articleName);
+			Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+				LocaleUtil.getSiteDefault(), articleName
+			).build();
 
 			JournalArticle article = _journalArticleLocalService.addArticle(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
@@ -585,9 +586,9 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	private Layout _addLayout(String name, ServiceContext serviceContext)
 		throws Exception {
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getSiteDefault(), name);
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), name
+		).build();
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 

@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -693,9 +694,9 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 					serviceContext.getCompanyId(), userId);
 			}
 
-			Map<Locale, String> nameMap = new HashMap<>();
-
-			nameMap.put(LocaleUtil.getSiteDefault(), userName);
+			Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+				LocaleUtil.getSiteDefault(), userName
+			).build();
 
 			Map<Locale, String> descriptionMap = new HashMap<>();
 
@@ -731,9 +732,9 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 			userId = userIds[0];
 		}
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getSiteDefault(), group.getDescriptiveName());
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), group.getDescriptiveName()
+		).build();
 
 		Map<Locale, String> descriptionMap = new HashMap<>();
 

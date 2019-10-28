@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.URLCodec;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -297,10 +297,12 @@ public class HttpImplTest {
 
 	@Test
 	public void testParameterMapFromString() {
-		Map<String, String[]> expectedParameterMap = new HashMap<>();
-
-		expectedParameterMap.put("key1", new String[] {"value1", "value2"});
-		expectedParameterMap.put("key2", new String[] {"value3"});
+		Map<String, String[]> expectedParameterMap =
+			HashMapBuilder.<String, String[]>put(
+				"key1", new String[] {"value1", "value2"}
+			).put(
+				"key2", new String[] {"value3"}
+			).build();
 
 		StringBundler sb = new StringBundler(12);
 

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -60,7 +61,6 @@ import com.liferay.site.service.SiteFriendlyURLLocalService;
 
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -169,9 +169,9 @@ public class FriendlyURLServlet extends HttpServlet {
 				WebKeys.REDIRECT_TO_DEFAULT_LAYOUT, Boolean.TRUE);
 		}
 
-		Map<String, Object> requestContext = new HashMap<>();
-
-		requestContext.put("request", httpServletRequest);
+		Map<String, Object> requestContext = HashMapBuilder.<String, Object>put(
+			"request", httpServletRequest
+		).build();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -140,11 +141,9 @@ public class ExportImportMultiLanguageSearchTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private HashMap<String, Serializable> _addGroupAttribute() {
-		HashMap<String, Serializable> map = new HashMap<>();
-
-		map.put(Field.GROUP_ID, _group.getGroupId());
-
-		return map;
+		return HashMapBuilder.<String, Serializable>put(
+			Field.GROUP_ID, _group.getGroupId()
+		).build();
 	}
 
 	private Map<String, String> _getMapResult(String keywords) {

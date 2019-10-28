@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -72,7 +73,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -989,10 +989,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		searchContext.setAndSearch(andSearch);
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put("description", description);
-		attributes.put("name", name);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				"description", description
+			).put(
+				"name", name
+			).build();
 
 		searchContext.setAttributes(attributes);
 

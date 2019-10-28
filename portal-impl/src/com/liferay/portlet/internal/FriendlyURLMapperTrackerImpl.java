@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperTracker;
 import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.portlet.Router;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,7 +38,6 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerFieldUpdaterCustomizer;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -99,9 +99,9 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 	public void register(FriendlyURLMapper friendlyURLMapper) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("javax.portlet.name", _portlet.getPortletId());
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"javax.portlet.name", _portlet.getPortletId()
+		).build();
 
 		ServiceRegistration<?> serviceRegistration = registry.registerService(
 			FriendlyURLMapper.class, friendlyURLMapper, properties);

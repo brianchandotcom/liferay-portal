@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -191,19 +191,15 @@ public class ExportImportBackgroundTaskDisplay
 
 	@Override
 	protected Map<String, Object> getTemplateVars() {
-		Map<String, Object> templateVars = new HashMap<>();
-
-		templateVars.put(
+		return HashMapBuilder.<String, Object>put(
 			"exported",
-			MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "exported"));
-		templateVars.put(
+			MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "exported")
+		).put(
 			"validated",
-			MapUtil.getBoolean(
-				backgroundTask.getTaskContextMap(), "validated"));
-
-		templateVars.put("htmlUtil", HtmlUtil.getHtml());
-
-		return templateVars;
+			MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "validated")
+		).put(
+			"htmlUtil", HtmlUtil.getHtml()
+		).build();
 	}
 
 	protected boolean hasRemoteMessage() {

@@ -40,10 +40,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -138,13 +138,15 @@ public class DisplayPageManagementToolbarDisplayContext
 			{
 				addDropdownItem(
 					dropdownItem -> {
-						Map<String, Object> dropDownItemData = new HashMap<>();
-
-						dropDownItemData.put("action", "addDisplayPage");
-						dropDownItemData.put(
-							"addDisplayPageURL", addDisplayPageURL.toString());
-						dropDownItemData.put(
-							"mappingTypes", _getMappingTypesJSONArray());
+						Map<String, Object> dropDownItemData =
+							HashMapBuilder.<String, Object>put(
+								"action", "addDisplayPage"
+							).put(
+								"addDisplayPageURL",
+								addDisplayPageURL.toString()
+							).put(
+								"mappingTypes", _getMappingTypesJSONArray()
+							).build();
 
 						dropdownItem.setData(dropDownItemData);
 

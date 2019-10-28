@@ -17,12 +17,12 @@ package com.liferay.portal.language.servlet.filter.internal;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
@@ -156,11 +156,11 @@ public class LanguageFilterTracker {
 				filterSB.append(")");
 			}
 
-			Map<String, Object> properties = new HashMap<>();
-
-			properties.put("service.ranking", Integer.MIN_VALUE);
-
-			properties.put("servlet.context.name", contextName);
+			Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+				"service.ranking", Integer.MIN_VALUE
+			).put(
+				"servlet.context.name", contextName
+			).build();
 
 			return ServiceTrackerFactory.open(
 				bundle.getBundleContext(), filterSB.toString(),

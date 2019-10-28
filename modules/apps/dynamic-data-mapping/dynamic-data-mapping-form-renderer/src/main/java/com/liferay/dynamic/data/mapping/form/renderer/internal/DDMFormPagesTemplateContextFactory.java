@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -126,15 +127,13 @@ public class DDMFormPagesTemplateContextFactory {
 	protected Map<String, Object> createColumnTemplateContext(
 		DDMFormLayoutColumn ddmFormLayoutColumn) {
 
-		Map<String, Object> columnTemplateContext = new HashMap<>();
-
-		columnTemplateContext.put(
+		return HashMapBuilder.<String, Object>put(
 			"fields",
 			createFieldsTemplateContext(
-				ddmFormLayoutColumn.getDDMFormFieldNames()));
-		columnTemplateContext.put("size", ddmFormLayoutColumn.getSize());
-
-		return columnTemplateContext;
+				ddmFormLayoutColumn.getDDMFormFieldNames())
+		).put(
+			"size", ddmFormLayoutColumn.getSize()
+		).build();
 	}
 
 	protected List<Object> createFieldsTemplateContext(
@@ -242,14 +241,11 @@ public class DDMFormPagesTemplateContextFactory {
 	protected Map<String, Object> createRowTemplateContext(
 		DDMFormLayoutRow ddmFormLayoutRow) {
 
-		Map<String, Object> rowTemplateContext = new HashMap<>();
-
-		rowTemplateContext.put(
+		return HashMapBuilder.<String, Object>put(
 			"columns",
 			createColumnsTemplateContext(
-				ddmFormLayoutRow.getDDMFormLayoutColumns()));
-
-		return rowTemplateContext;
+				ddmFormLayoutRow.getDDMFormLayoutColumns())
+		).build();
 	}
 
 	protected Map<String, String> getLocalizedValueMap(

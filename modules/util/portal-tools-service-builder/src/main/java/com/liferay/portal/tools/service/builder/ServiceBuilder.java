@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -4469,20 +4470,31 @@ public class ServiceBuilder {
 
 		TemplateHashModel staticModels = beansWrapper.getStaticModels();
 
-		Map<String, Object> context = new HashMap<>();
-
-		context.put("apiPackagePath", _apiPackagePath);
-		context.put("author", _author);
-		context.put("beanLocatorUtil", _beanLocatorUtil);
-		context.put("dependencyInjectorDS", _dependencyInjectorDS);
-		context.put("modelHintsUtil", ModelHintsUtil.getModelHints());
-		context.put("osgiModule", _osgiModule);
-		context.put("packagePath", _packagePath);
-		context.put("pluginName", _pluginName);
-		context.put("portletShortName", _portletShortName);
-		context.put("propsUtil", _propsUtil);
-		context.put("serviceBuilder", this);
-		context.put("stringUtil", StringUtil_IW.getInstance());
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
+			"apiPackagePath", _apiPackagePath
+		).put(
+			"author", _author
+		).put(
+			"beanLocatorUtil", _beanLocatorUtil
+		).put(
+			"dependencyInjectorDS", _dependencyInjectorDS
+		).put(
+			"modelHintsUtil", ModelHintsUtil.getModelHints()
+		).put(
+			"osgiModule", _osgiModule
+		).put(
+			"packagePath", _packagePath
+		).put(
+			"pluginName", _pluginName
+		).put(
+			"portletShortName", _portletShortName
+		).put(
+			"propsUtil", _propsUtil
+		).put(
+			"serviceBuilder", this
+		).put(
+			"stringUtil", StringUtil_IW.getInstance()
+		).build();
 		//context.put("system", staticModels.get("java.lang.System"));
 		context.put(
 			"textFormatter", staticModels.get(TextFormatter.class.getName()));

@@ -37,10 +37,10 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -117,9 +117,9 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 	protected Group addFormsGroup(long companyId) throws PortalException {
 		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getDefault(), GroupConstants.FORMS);
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getDefault(), GroupConstants.FORMS
+		).build();
 
 		return _groupLocalService.addGroup(
 			defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,

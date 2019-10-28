@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.CookieUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -931,11 +932,14 @@ public class SPIAgentRequestTest {
 
 		MockHttpSession originalHttpSession = new MockHttpSession();
 
-		Map<String, Serializable> portletSessionAttributes = new HashMap<>();
-
-		portletSessionAttributes.put("key1", "value1");
-		portletSessionAttributes.put("key2", "value2");
-		portletSessionAttributes.put("key3", "value3");
+		Map<String, Serializable> portletSessionAttributes =
+			HashMapBuilder.<String, Serializable>put(
+				"key1", "value1"
+			).put(
+				"key2", "value2"
+			).put(
+				"key3", "value3"
+			).build();
 
 		originalHttpSession.setAttribute(
 			WebKeys.PORTLET_SESSION_ATTRIBUTES.concat(servletContextName),

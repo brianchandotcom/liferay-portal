@@ -46,13 +46,13 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -342,12 +342,15 @@ public class JournalArticleLocalServiceTest {
 			TemplateConstants.LANG_TYPE_VM,
 			JournalTestUtil.getSampleTemplateXSL(), LocaleUtil.US);
 
-		Map<Locale, String> values = new HashMap<>();
-
-		values.put(LocaleUtil.BRAZIL, "Valor Predefinido");
-		values.put(LocaleUtil.FRENCH, "Valeur Prédéfinie");
-		values.put(LocaleUtil.ITALY, "Valore Predefinito");
-		values.put(LocaleUtil.US, "Predefined Value");
+		Map<Locale, String> values = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.BRAZIL, "Valor Predefinido"
+		).put(
+			LocaleUtil.FRENCH, "Valeur Prédéfinie"
+		).put(
+			LocaleUtil.ITALY, "Valore Predefinito"
+		).put(
+			LocaleUtil.US, "Predefined Value"
+		).build();
 
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
 			values, LocaleUtil.US.toString());
@@ -355,9 +358,9 @@ public class JournalArticleLocalServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(LocaleUtil.US, title);
+		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.US, title
+		).build();
 
 		JournalArticle article =
 			_journalArticleLocalService.addArticleDefaultValues(

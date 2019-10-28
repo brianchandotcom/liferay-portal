@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.sync.internal.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.model.SyncDLObject;
@@ -40,7 +41,6 @@ import com.liferay.sync.service.SyncDLFileVersionDiffLocalService;
 import com.liferay.sync.service.SyncDLObjectLocalService;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -121,9 +121,10 @@ public class SyncMaintenanceMessageListener extends BaseMessageListener {
 							() -> {
 								Message dlSyncEventMessage = new Message();
 
-								Map<String, Object> values = new HashMap<>();
-
-								values.put("event", dlSyncEvent.getEvent());
+								Map<String, Object> values =
+									HashMapBuilder.<String, Object>put(
+										"event", dlSyncEvent.getEvent()
+									).build();
 
 								long latestModifiedTime =
 									_syncDLObjectLocalService.

@@ -30,9 +30,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -122,11 +122,12 @@ public class MasterPageManagementToolbarDisplayContext
 			{
 				addDropdownItem(
 					dropdownItem -> {
-						Map<String, Object> dropDownItemData = new HashMap<>();
-
-						dropDownItemData.put("action", "addMasterPage");
-						dropDownItemData.put(
-							"addMasterPageURL", addMasterPageURL.toString());
+						Map<String, Object> dropDownItemData =
+							HashMapBuilder.<String, Object>put(
+								"action", "addMasterPage"
+							).put(
+								"addMasterPageURL", addMasterPageURL.toString()
+							).build();
 
 						dropdownItem.setData(dropDownItemData);
 

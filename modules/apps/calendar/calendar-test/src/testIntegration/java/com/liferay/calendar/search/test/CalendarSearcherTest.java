@@ -34,13 +34,13 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -219,13 +219,13 @@ public class CalendarSearcherTest {
 			CalendarResourceUtil.getGroupCalendarResource(
 				_group.getGroupId(), serviceContext);
 
-		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), name
+		).build();
 
-		nameMap.put(LocaleUtil.getSiteDefault(), name);
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(LocaleUtil.getSiteDefault(), description);
+		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getSiteDefault(), description
+		).build();
 
 		CalendarLocalServiceUtil.addCalendar(
 			_user.getUserId(), _group.getGroupId(),

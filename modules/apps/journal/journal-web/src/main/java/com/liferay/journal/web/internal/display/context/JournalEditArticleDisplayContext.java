@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -109,9 +110,9 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public Map<String, Object> getChangeDefaultLanguageData() {
-		Map<String, Object> data = new HashMap<>();
-
-		data.put("defaultLanguage", getDefaultArticleLanguageId());
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"defaultLanguage", getDefaultArticleLanguageId()
+		).build();
 
 		List<Map<String, Object>> languages = new ArrayList<>();
 
@@ -124,13 +125,12 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		for (String languageId : uniqueLanguageIds) {
-			Map<String, Object> language = new HashMap<>();
-
-			language.put(
+			Map<String, Object> language = HashMapBuilder.<String, Object>put(
 				"icon",
-				StringUtil.toLowerCase(
-					StringUtil.replace(languageId, '_', '-')));
-			language.put("label", languageId);
+				StringUtil.toLowerCase(StringUtil.replace(languageId, '_', '-'))
+			).put(
+				"label", languageId
+			).build();
 
 			languages.add(language);
 		}

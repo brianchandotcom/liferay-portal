@@ -33,10 +33,10 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -75,9 +75,9 @@ public class AssetCategoryLocalServiceTest {
 
 	@Test
 	public void testDeleteCategory() throws Exception {
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(LocaleUtil.US, RandomTestUtil.randomString());
+		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

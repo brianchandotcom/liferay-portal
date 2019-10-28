@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
 import com.liferay.portal.kernel.servlet.StubHttpServletResponse;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -43,7 +44,6 @@ import java.nio.CharBuffer;
 
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -364,20 +364,21 @@ public class SPIAgentResponseTest {
 		spiAgentResponse.portalResiliencyResponse = true;
 
 		Map<String, Serializable> distributedRequestAttributes =
-			new HashMap<>();
-
-		distributedRequestAttributes.put(
-			RequestAttributes.ATTRIBUTE_1, RequestAttributes.ATTRIBUTE_1);
-		distributedRequestAttributes.put(
-			RequestAttributes.ATTRIBUTE_3, RequestAttributes.ATTRIBUTE_3);
+			HashMapBuilder.<String, Serializable>put(
+				RequestAttributes.ATTRIBUTE_1, RequestAttributes.ATTRIBUTE_1
+			).put(
+				RequestAttributes.ATTRIBUTE_3, RequestAttributes.ATTRIBUTE_3
+			).build();
 
 		spiAgentResponse.distributedRequestAttributes =
 			distributedRequestAttributes;
 
-		Map<String, Serializable> deltaSessionAttributes = new HashMap<>();
-
-		deltaSessionAttributes.put(_SESSION_ATTRIBUTE_1, _SESSION_ATTRIBUTE_1);
-		deltaSessionAttributes.put(_SESSION_ATTRIBUTE_2, _SESSION_ATTRIBUTE_2);
+		Map<String, Serializable> deltaSessionAttributes =
+			HashMapBuilder.<String, Serializable>put(
+				_SESSION_ATTRIBUTE_1, _SESSION_ATTRIBUTE_1
+			).put(
+				_SESSION_ATTRIBUTE_2, _SESSION_ATTRIBUTE_2
+			).build();
 
 		spiAgentResponse.deltaSessionAttributes = deltaSessionAttributes;
 

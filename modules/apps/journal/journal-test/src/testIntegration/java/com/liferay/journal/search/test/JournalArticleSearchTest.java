@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -625,9 +626,9 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 				fieldValues.length);
 
 			for (String fieldValue : fieldValues) {
-				Map<Locale, String> map = new HashMap<>();
-
-				map.put(LocaleUtil.US, fieldValue);
+				Map<Locale, String> map = HashMapBuilder.<Locale, String>put(
+					LocaleUtil.US, fieldValue
+				).build();
 
 				contents.add(map);
 			}

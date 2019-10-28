@@ -49,13 +49,13 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.ByteArrayInputStream;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -234,11 +234,9 @@ public class DLFileEntryMetadataLocalServiceTest {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
-
-		ddmFormValuesMap.put(ddmStructureKey, ddmFormValues);
-
-		return ddmFormValuesMap;
+		return HashMapBuilder.<String, DDMFormValues>put(
+			ddmStructureKey, ddmFormValues
+		).build();
 	}
 
 	@DeleteAfterTestRun

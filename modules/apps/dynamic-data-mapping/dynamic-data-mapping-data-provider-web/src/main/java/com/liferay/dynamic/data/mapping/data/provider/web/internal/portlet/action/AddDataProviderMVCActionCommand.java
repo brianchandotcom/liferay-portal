@@ -31,10 +31,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -108,11 +108,9 @@ public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected Map<Locale, String> getLocalizedMap(Locale locale, String value) {
-		Map<Locale, String> localizedMap = new HashMap<>();
-
-		localizedMap.put(locale, value);
-
-		return localizedMap;
+		return HashMapBuilder.<Locale, String>put(
+			locale, value
+		).build();
 	}
 
 	@Reference

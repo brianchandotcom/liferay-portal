@@ -30,13 +30,13 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -98,9 +98,10 @@ public class DLFileEntryMetadataDDMStructureFixture {
 		try (InputStream inputStream = clazz.getResourceAsStream(
 				"dependencies/" + fileName)) {
 
-			Map<String, Serializable> fileAttributes = new HashMap<>();
-
-			fileAttributes.put("fileEntryTypeId", fileEntryTypeId);
+			Map<String, Serializable> fileAttributes =
+				HashMapBuilder.<String, Serializable>put(
+					"fileEntryTypeId", fileEntryTypeId
+				).build();
 
 			return _fileEntrySearchFixture.addFileEntry(
 				new FileEntryBlueprint() {

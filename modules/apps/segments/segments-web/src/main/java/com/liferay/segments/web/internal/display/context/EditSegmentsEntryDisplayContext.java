@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -100,10 +101,11 @@ public class EditSegmentsEntryDisplayContext {
 			return _data;
 		}
 
-		_data = new HashMap<>();
-
-		_data.put("context", getContext());
-		_data.put("props", getProps());
+		_data = HashMapBuilder.<String, Object>put(
+			"context", getContext()
+		).put(
+			"props", getProps()
+		).build();
 
 		return _data;
 	}
@@ -185,40 +187,49 @@ public class EditSegmentsEntryDisplayContext {
 	}
 
 	protected Map<String, Object> getContext() {
-		Map<String, Object> context = new HashMap<>();
-
-		context.put(
-			"assetsPath",
-			PortalUtil.getPathContext(_renderRequest) + "/assets");
-		context.put("namespace", _renderResponse.getNamespace());
-		context.put(
-			"requestFieldValueNameURL", _getSegmentsFieldValueNameURL());
-
-		return context;
+		return HashMapBuilder.<String, Object>put(
+			"assetsPath", PortalUtil.getPathContext(_renderRequest) + "/assets"
+		).put(
+			"namespace", _renderResponse.getNamespace()
+		).put(
+			"requestFieldValueNameURL", _getSegmentsFieldValueNameURL()
+		).build();
 	}
 
 	protected Map<String, Object> getProps() throws Exception {
-		Map<String, Object> props = new HashMap<>();
-
-		props.put("availableLocales", _getAvailableLocales());
-		props.put("contributors", _getContributorsJSONArray());
-		props.put("defaultLanguageId", _getDefaultLanguageId());
-		props.put("formId", _renderResponse.getNamespace() + "editSegmentFm");
-		props.put("hasUpdatePermission", _hasUpdatePermission());
-		props.put("initialMembersCount", _getSegmentsEntryClassPKsCount());
-		props.put("initialSegmentActive", _isInitialSegmentActive());
-		props.put("initialSegmentName", _getInitialSegmentsNameJSONObject());
-		props.put("locale", _locale.toString());
-		props.put("portletNamespace", _renderResponse.getNamespace());
-		props.put("previewMembersURL", _getPreviewMembersURL());
-		props.put("propertyGroups", _getPropertyGroupsJSONArray());
-		props.put("redirect", HtmlUtil.escape(getRedirect()));
-		props.put(
-			"requestMembersCountURL", _getSegmentsEntryClassPKsCountURL());
-		props.put("showInEditMode", _isShowInEditMode());
-		props.put("source", _getSource());
-
-		return props;
+		return HashMapBuilder.<String, Object>put(
+			"availableLocales", _getAvailableLocales()
+		).put(
+			"contributors", _getContributorsJSONArray()
+		).put(
+			"defaultLanguageId", _getDefaultLanguageId()
+		).put(
+			"formId", _renderResponse.getNamespace() + "editSegmentFm"
+		).put(
+			"hasUpdatePermission", _hasUpdatePermission()
+		).put(
+			"initialMembersCount", _getSegmentsEntryClassPKsCount()
+		).put(
+			"initialSegmentActive", _isInitialSegmentActive()
+		).put(
+			"initialSegmentName", _getInitialSegmentsNameJSONObject()
+		).put(
+			"locale", _locale.toString()
+		).put(
+			"portletNamespace", _renderResponse.getNamespace()
+		).put(
+			"previewMembersURL", _getPreviewMembersURL()
+		).put(
+			"propertyGroups", _getPropertyGroupsJSONArray()
+		).put(
+			"redirect", HtmlUtil.escape(getRedirect())
+		).put(
+			"requestMembersCountURL", _getSegmentsEntryClassPKsCountURL()
+		).put(
+			"showInEditMode", _isShowInEditMode()
+		).put(
+			"source", _getSource()
+		).build();
 	}
 
 	private Map<String, String> _getAvailableLocales() throws PortalException {

@@ -39,11 +39,11 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -258,9 +258,10 @@ public class ResourcesImporterHotDeployMessageListener
 			message.put("targetClassPK", importer.getTargetClassPK());
 
 			if (Validator.isNotNull(messageResponseId)) {
-				Map<String, Object> responseMap = new HashMap<>();
-
-				responseMap.put("groupId", importer.getTargetClassPK());
+				Map<String, Object> responseMap =
+					HashMapBuilder.<String, Object>put(
+						"groupId", importer.getTargetClassPK()
+					).build();
 
 				message.setPayload(responseMap);
 

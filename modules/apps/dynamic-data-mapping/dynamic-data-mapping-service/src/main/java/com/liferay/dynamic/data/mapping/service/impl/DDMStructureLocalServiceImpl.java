@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -94,7 +95,6 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -1833,9 +1833,10 @@ public class DDMStructureLocalServiceImpl
 			DDMStructureIndexerBackgroundTaskExecutor.getBackgroundTaskName(
 				structure.getStructureId());
 
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		taskContextMap.put("structureId", structure.getStructureId());
+		Map<String, Serializable> taskContextMap =
+			HashMapBuilder.<String, Serializable>put(
+				"structureId", structure.getStructureId()
+			).build();
 
 		_backgroundTaskManager.addBackgroundTask(
 			structure.getUserId(), structure.getGroupId(), backgroundTaskName,

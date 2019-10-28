@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -187,9 +188,9 @@ public class JournalArticleAtomCollectionProvider
 
 		Locale locale = LocaleUtil.getDefault();
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(locale, title);
+		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+			locale, title
+		).build();
 
 		Map<Locale, String> descriptionMap = new HashMap<>();
 

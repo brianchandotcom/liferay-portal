@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -102,16 +103,20 @@ public class DDMFormBuilderContextFactoryHelper {
 	}
 
 	protected Map<String, Object> createEmptyStateContext() {
-		Map<String, Object> emptyFormContext = new HashMap<>();
+		Map<String, Object> emptyFormContext =
+			HashMapBuilder.<String, Object>put(
+				"pages", new ArrayList<>()
+			).put(
+				"rules", new ArrayList<>()
+			).build();
 
-		emptyFormContext.put("pages", new ArrayList<>());
-		emptyFormContext.put("rules", new ArrayList<>());
-
-		Map<String, Object> successPage = new HashMap<>();
-
-		successPage.put("body", StringPool.BLANK);
-		successPage.put("enabled", Boolean.FALSE);
-		successPage.put("title", StringPool.BLANK);
+		Map<String, Object> successPage = HashMapBuilder.<String, Object>put(
+			"body", StringPool.BLANK
+		).put(
+			"enabled", Boolean.FALSE
+		).put(
+			"title", StringPool.BLANK
+		).build();
 
 		emptyFormContext.put("successPage", successPage);
 

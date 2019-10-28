@@ -17,8 +17,8 @@ package com.liferay.portal.editor.configuration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -40,12 +40,11 @@ public class EditorConfigurationImpl implements EditorConfiguration {
 
 	@Override
 	public Map<String, Object> getData() {
-		Map<String, Object> data = new HashMap<>();
-
-		data.put("editorConfig", _configJSONObject);
-		data.put("editorOptions", _editorOptions);
-
-		return data;
+		return HashMapBuilder.<String, Object>put(
+			"editorConfig", _configJSONObject
+		).put(
+			"editorOptions", _editorOptions
+		).build();
 	}
 
 	@Override

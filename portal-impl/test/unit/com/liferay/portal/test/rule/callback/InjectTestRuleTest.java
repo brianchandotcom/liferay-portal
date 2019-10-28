@@ -16,6 +16,7 @@ package com.liferay.portal.test.rule.callback;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ConsoleTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.InjectTestBag;
 import com.liferay.portal.test.rule.InjectTestRule;
@@ -24,7 +25,6 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -190,9 +190,9 @@ public class InjectTestRuleTest {
 
 		Service3 service3b = new Service3();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("inject.test.rule.test", true);
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"inject.test.rule.test", true
+		).build();
 
 		registry.registerService(Service3.class, service3b, properties);
 

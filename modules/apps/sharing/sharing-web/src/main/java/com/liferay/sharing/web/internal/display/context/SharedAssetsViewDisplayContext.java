@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -54,7 +55,6 @@ import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryMenuItemCo
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -359,18 +359,18 @@ public class SharedAssetsViewDisplayContext {
 
 			URLMenuItem urlMenuItem = new URLMenuItem();
 
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("destroyOnHide", true);
-			data.put(
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"destroyOnHide", true
+			).put(
 				"id",
 				HtmlUtil.escape(_liferayPortletResponse.getNamespace()) +
-					"editAsset");
-			data.put(
+					"editAsset"
+			).put(
 				"title",
 				LanguageUtil.format(
 					_httpServletRequest, "edit-x",
-					HtmlUtil.escape(getTitle(sharingEntry)), false));
+					HtmlUtil.escape(getTitle(sharingEntry)), false)
+			).build();
 
 			urlMenuItem.setData(data);
 

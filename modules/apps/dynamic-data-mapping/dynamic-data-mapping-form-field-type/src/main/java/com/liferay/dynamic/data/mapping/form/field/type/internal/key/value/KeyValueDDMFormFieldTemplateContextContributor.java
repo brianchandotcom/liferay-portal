@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -52,11 +51,10 @@ public class KeyValueDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put(
+		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
 			"autoFocus",
-			GetterUtil.getBoolean(ddmFormField.getProperty("autoFocus")));
+			GetterUtil.getBoolean(ddmFormField.getProperty("autoFocus"))
+		).build();
 
 		LocalizedValue placeholder = (LocalizedValue)ddmFormField.getProperty(
 			"placeholder");

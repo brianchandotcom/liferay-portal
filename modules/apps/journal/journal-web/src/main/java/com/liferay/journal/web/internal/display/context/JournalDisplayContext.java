@@ -85,6 +85,7 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -101,7 +102,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -394,13 +394,10 @@ public class JournalDisplayContext {
 	}
 
 	public Map<String, Object> getComponentContext() throws Exception {
-		Map<String, Object> componentContext = new HashMap<>();
-
-		componentContext.put(
+		return HashMapBuilder.<String, Object>put(
 			"trashEnabled",
-			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId()));
-
-		return componentContext;
+			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())
+		).build();
 	}
 
 	public String getDDMStructureKey() {
@@ -1075,16 +1072,23 @@ public class JournalDisplayContext {
 
 		searchContext.setAndSearch(false);
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(Field.ARTICLE_ID, getKeywords());
-		attributes.put(
-			Field.CLASS_NAME_ID, JournalArticleConstants.CLASSNAME_ID_DEFAULT);
-		attributes.put(Field.CONTENT, getKeywords());
-		attributes.put(Field.DESCRIPTION, getKeywords());
-		attributes.put(Field.STATUS, getStatus());
-		attributes.put(Field.TITLE, getKeywords());
-		attributes.put("ddmStructureKey", getDDMStructureKey());
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				Field.ARTICLE_ID, getKeywords()
+			).put(
+				Field.CLASS_NAME_ID,
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT
+			).put(
+				Field.CONTENT, getKeywords()
+			).put(
+				Field.DESCRIPTION, getKeywords()
+			).put(
+				Field.STATUS, getStatus()
+			).put(
+				Field.TITLE, getKeywords()
+			).put(
+				"ddmStructureKey", getDDMStructureKey()
+			).build();
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 

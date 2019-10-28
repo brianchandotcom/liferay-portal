@@ -19,9 +19,9 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,14 +46,13 @@ public class GridDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put(
+		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
 			"columns",
-			getOptions("columns", ddmFormField, ddmFormFieldRenderingContext));
-		parameters.put(
+			getOptions("columns", ddmFormField, ddmFormFieldRenderingContext)
+		).put(
 			"rows",
-			getOptions("rows", ddmFormField, ddmFormFieldRenderingContext));
+			getOptions("rows", ddmFormField, ddmFormFieldRenderingContext)
+		).build();
 
 		String value = ddmFormFieldRenderingContext.getValue();
 

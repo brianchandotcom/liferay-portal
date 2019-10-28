@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -44,7 +45,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -283,14 +283,13 @@ public class SegmentsEntryLocalServiceTest {
 
 		String segmentsEntryKey = RandomTestUtil.randomString();
 
-		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getDefault(), RandomTestUtil.randomString()
+		).build();
 
-		nameMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(
-			LocaleUtil.getDefault(), RandomTestUtil.randomString());
+		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getDefault(), RandomTestUtil.randomString()
+		).build();
 
 		String criteria = RandomTestUtil.randomString();
 

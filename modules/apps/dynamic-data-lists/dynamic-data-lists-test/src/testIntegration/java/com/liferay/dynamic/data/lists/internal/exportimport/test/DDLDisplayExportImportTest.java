@@ -28,10 +28,10 @@ import com.liferay.exportimport.test.util.lar.BasePortletExportImportTestCase;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -84,11 +84,11 @@ public class DDLDisplayExportImportTest
 
 		DDLRecordSet recordSet = record.getRecordSet();
 
-		Map<String, String[]> preferenceMap = new HashMap<>();
-
-		preferenceMap.put(
-			"recordSetId",
-			new String[] {String.valueOf(recordSet.getRecordSetId())});
+		Map<String, String[]> preferenceMap =
+			HashMapBuilder.<String, String[]>put(
+				"recordSetId",
+				new String[] {String.valueOf(recordSet.getRecordSetId())}
+			).build();
 
 		PortletPreferences importedPortletPreferences =
 			getImportedPortletPreferences(preferenceMap);

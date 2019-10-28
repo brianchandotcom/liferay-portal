@@ -51,13 +51,13 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -74,9 +74,9 @@ public class MembershipPolicyTestUtil {
 	public static Group addGroup() throws Exception {
 		String name = RandomTestUtil.randomString();
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getDefault(), name);
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getDefault(), name
+		).build();
 
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
@@ -229,14 +229,15 @@ public class MembershipPolicyTestUtil {
 		expandoBridge.addAttribute("key3", false);
 		expandoBridge.addAttribute("key4", false);
 
-		Map<String, Serializable> expandoMap = new HashMap<>();
-
-		expandoMap.put("key1", "value1");
-		expandoMap.put("key2", "value2");
-		expandoMap.put("key3", "value3");
-		expandoMap.put("key4", "value4");
-
-		return expandoMap;
+		return HashMapBuilder.<String, Serializable>put(
+			"key1", "value1"
+		).put(
+			"key2", "value2"
+		).put(
+			"key3", "value3"
+		).put(
+			"key4", "value4"
+		).build();
 	}
 
 	protected static ServiceContext populateServiceContext(

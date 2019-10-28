@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -60,21 +61,21 @@ public class BackgroundTaskThreadLocalManagerImpl
 
 	@Override
 	public Map<String, Serializable> getThreadLocalValues() {
-		Map<String, Serializable> threadLocalValues = new HashMap<>();
-
-		threadLocalValues.put(
-			"clusterInvoke", ClusterInvokeThreadLocal.isEnabled());
-		threadLocalValues.put("companyId", CompanyThreadLocal.getCompanyId());
-		threadLocalValues.put(
-			"defaultLocale", LocaleThreadLocal.getDefaultLocale());
-		threadLocalValues.put("groupId", GroupThreadLocal.getGroupId());
-		threadLocalValues.put("principalName", PrincipalThreadLocal.getName());
-		threadLocalValues.put(
-			"siteDefaultLocale", LocaleThreadLocal.getSiteDefaultLocale());
-		threadLocalValues.put(
-			"themeDisplayLocale", LocaleThreadLocal.getThemeDisplayLocale());
-
-		return threadLocalValues;
+		return HashMapBuilder.<String, Serializable>put(
+			"clusterInvoke", ClusterInvokeThreadLocal.isEnabled()
+		).put(
+			"companyId", CompanyThreadLocal.getCompanyId()
+		).put(
+			"defaultLocale", LocaleThreadLocal.getDefaultLocale()
+		).put(
+			"groupId", GroupThreadLocal.getGroupId()
+		).put(
+			"principalName", PrincipalThreadLocal.getName()
+		).put(
+			"siteDefaultLocale", LocaleThreadLocal.getSiteDefaultLocale()
+		).put(
+			"themeDisplayLocale", LocaleThreadLocal.getThemeDisplayLocale()
+		).build();
 	}
 
 	@Override

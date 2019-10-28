@@ -15,6 +15,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.elasticsearch7.configuration.OperationMode;
 
@@ -55,9 +56,9 @@ public class RemoteElasticsearchConnectionTest {
 
 	@Test
 	public void testModifyConnected() {
-		HashMap<String, Object> properties = new HashMap<>();
-
-		properties.put("operationMode", OperationMode.REMOTE.name());
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.REMOTE.name()
+		).build();
 
 		_remoteElasticsearchConnection.activate(properties);
 
@@ -82,9 +83,9 @@ public class RemoteElasticsearchConnectionTest {
 	public void testModifyUnconnected() {
 		Assert.assertFalse(_remoteElasticsearchConnection.isConnected());
 
-		HashMap<String, Object> properties = new HashMap<>();
-
-		properties.put("operationMode", OperationMode.REMOTE.name());
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.REMOTE.name()
+		).build();
 
 		_remoteElasticsearchConnection.modified(properties);
 

@@ -16,8 +16,8 @@ package com.liferay.portal.configuration.metatype.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -34,15 +34,16 @@ public class ParameterMapUtilWhenSettingAParameterMapWithPrefixesTest {
 		ParameterMapUtilTestUtil.TestBean testBean =
 			ParameterMapUtilTestUtil.getTestBean();
 
-		Map<String, String[]> parameterMap = new HashMap<>();
-
-		parameterMap.put("prefix--testBoolean1--", new String[] {"false"});
-		parameterMap.put(
-			"prefix--testString1--",
-			new String[] {ParameterMapUtilTestUtil.PARAMETER_MAP_STRING});
-		parameterMap.put(
-			"prefix--testStringArray1--",
-			ParameterMapUtilTestUtil.PARAMETER_MAP_STRING_ARRAY);
+		Map<String, String[]> parameterMap =
+			HashMapBuilder.<String, String[]>put(
+				"prefix--testBoolean1--", new String[] {"false"}
+			).put(
+				"prefix--testString1--",
+				new String[] {ParameterMapUtilTestUtil.PARAMETER_MAP_STRING}
+			).put(
+				"prefix--testStringArray1--",
+				ParameterMapUtilTestUtil.PARAMETER_MAP_STRING_ARRAY
+			).build();
 
 		_testBean = ParameterMapUtil.setParameterMap(
 			ParameterMapUtilTestUtil.TestBean.class, testBean, parameterMap,

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.registry.BasicRegistryImpl;
@@ -52,15 +53,17 @@ public class FinderCacheImplTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_properties = new HashMap<>();
-
-		_properties.put(PropsKeys.VALUE_OBJECT_ENTITY_BLOCKING_CACHE, "true");
-		_properties.put(PropsKeys.VALUE_OBJECT_ENTITY_CACHE_ENABLED, "true");
-		_properties.put(PropsKeys.VALUE_OBJECT_FINDER_CACHE_ENABLED, "true");
-		_properties.put(
-			PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD, "-1");
-		_properties.put(
-			PropsKeys.VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED, "true");
+		_properties = HashMapBuilder.<String, Object>put(
+			PropsKeys.VALUE_OBJECT_ENTITY_BLOCKING_CACHE, "true"
+		).put(
+			PropsKeys.VALUE_OBJECT_ENTITY_CACHE_ENABLED, "true"
+		).put(
+			PropsKeys.VALUE_OBJECT_FINDER_CACHE_ENABLED, "true"
+		).put(
+			PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD, "-1"
+		).put(
+			PropsKeys.VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED, "true"
+		).build();
 
 		_serializedMultiVMPool = (MultiVMPool)ProxyUtil.newProxyInstance(
 			_classLoader, new Class<?>[] {MultiVMPool.class},

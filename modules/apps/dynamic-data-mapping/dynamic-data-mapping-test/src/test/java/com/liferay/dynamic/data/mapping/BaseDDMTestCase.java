@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -498,12 +499,13 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 			_defaultDDMFormFieldType
 		);
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("ddm.form.field.type.icon", "my-icon");
-		properties.put(
-			"ddm.form.field.type.js.class.name", "myJavaScriptClass");
-		properties.put("ddm.form.field.type.js.module", "myJavaScriptModule");
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"ddm.form.field.type.icon", "my-icon"
+		).put(
+			"ddm.form.field.type.js.class.name", "myJavaScriptClass"
+		).put(
+			"ddm.form.field.type.js.module", "myJavaScriptModule"
+		).build();
 
 		when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(

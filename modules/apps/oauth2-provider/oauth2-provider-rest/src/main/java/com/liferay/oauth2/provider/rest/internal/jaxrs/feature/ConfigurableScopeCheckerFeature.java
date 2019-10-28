@@ -24,6 +24,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -135,10 +135,10 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 			return false;
 		}
 
-		Map<Class<?>, Integer> contracts = new HashMap<>();
-
-		contracts.put(
-			ContainerRequestFilter.class, Priorities.AUTHORIZATION - 8);
+		Map<Class<?>, Integer> contracts =
+			HashMapBuilder.<Class<?>, Integer>put(
+				ContainerRequestFilter.class, Priorities.AUTHORIZATION - 8
+			).build();
 
 		context.register(
 			new ConfigurableContainerScopeCheckerContainerRequestFilter(),

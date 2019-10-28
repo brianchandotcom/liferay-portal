@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MathUtil;
@@ -3286,12 +3287,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			long userId, WikiPage page, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<String, Serializable> workflowContext = new HashMap<>();
-
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_COMMAND, serviceContext.getCommand());
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_URL, _getPageURL(page, serviceContext));
+		Map<String, Serializable> workflowContext =
+			HashMapBuilder.<String, Serializable>put(
+				WorkflowConstants.CONTEXT_COMMAND, serviceContext.getCommand()
+			).put(
+				WorkflowConstants.CONTEXT_URL, _getPageURL(page, serviceContext)
+			).build();
 
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			page.getCompanyId(), page.getGroupId(), userId,

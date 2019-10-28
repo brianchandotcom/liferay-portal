@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -120,40 +120,50 @@ public abstract class BaseFieldType implements FieldType {
 		HttpServletResponse httpServletResponse,
 		SPIDataDefinitionField spiDataDefinitionField) {
 
-		Map<String, Object> context = new HashMap<>();
-
-		context.put(
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
 			"dir",
-			LanguageUtil.get(httpServletRequest, LanguageConstants.KEY_DIR));
-		context.put("fieldName", spiDataDefinitionField.getName());
-		context.put("indexable", spiDataDefinitionField.getIndexable());
-		context.put("indexType", spiDataDefinitionField.getIndexType());
-		context.put(
+			LanguageUtil.get(httpServletRequest, LanguageConstants.KEY_DIR)
+		).put(
+			"fieldName", spiDataDefinitionField.getName()
+		).put(
+			"indexable", spiDataDefinitionField.getIndexable()
+		).put(
+			"indexType", spiDataDefinitionField.getIndexType()
+		).put(
 			"label",
 			MapUtil.getString(
 				spiDataDefinitionField.getLabel(),
-				LocaleUtil.toLanguageId(httpServletRequest.getLocale())));
-		context.put("localizable", spiDataDefinitionField.getLocalizable());
-		context.put("name", spiDataDefinitionField.getName());
-		context.put(
+				LocaleUtil.toLanguageId(httpServletRequest.getLocale()))
+		).put(
+			"localizable", spiDataDefinitionField.getLocalizable()
+		).put(
+			"name", spiDataDefinitionField.getName()
+		).put(
 			"nestedDataDefinitionFields",
-			spiDataDefinitionField.getNestedSPIDataDefinitionFields());
-		context.put(
+			spiDataDefinitionField.getNestedSPIDataDefinitionFields()
+		).put(
 			"predefinedValue",
 			LocalizedValueUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				spiDataDefinitionField.getDefaultValue()));
-		context.put("readOnly", spiDataDefinitionField.getReadOnly());
-		context.put("repeatable", spiDataDefinitionField.getRepeatable());
-		context.put("required", spiDataDefinitionField.getRequired());
-		context.put("showLabel", spiDataDefinitionField.getShowLabel());
-		context.put(
+				spiDataDefinitionField.getDefaultValue())
+		).put(
+			"readOnly", spiDataDefinitionField.getReadOnly()
+		).put(
+			"repeatable", spiDataDefinitionField.getRepeatable()
+		).put(
+			"required", spiDataDefinitionField.getRequired()
+		).put(
+			"showLabel", spiDataDefinitionField.getShowLabel()
+		).put(
 			"tip",
 			MapUtil.getString(
 				spiDataDefinitionField.getTip(),
-				LocaleUtil.toLanguageId(httpServletRequest.getLocale())));
-		context.put("type", spiDataDefinitionField.getFieldType());
-		context.put("visible", spiDataDefinitionField.getVisible());
+				LocaleUtil.toLanguageId(httpServletRequest.getLocale()))
+		).put(
+			"type", spiDataDefinitionField.getFieldType()
+		).put(
+			"visible", spiDataDefinitionField.getVisible()
+		).build();
 
 		includeContext(
 			context, httpServletRequest, httpServletResponse,

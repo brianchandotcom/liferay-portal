@@ -19,11 +19,11 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.contributor.ContributorConstants;
 import com.liferay.portal.search.contributor.sort.SortFieldNameTranslator;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -121,11 +121,9 @@ public class SortFieldBuilderImplTest {
 			}
 		);
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
-			ContributorConstants.ENTRY_CLASS_NAME_PROPERTY_KEY,
-			"modelClassName");
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			ContributorConstants.ENTRY_CLASS_NAME_PROPERTY_KEY, "modelClassName"
+		).build();
 
 		_sortFieldBuilderImpl.addSortFieldNameTranslator(
 			sortFieldNameTranslator, properties);

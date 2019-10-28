@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -160,17 +161,21 @@ public abstract class BaseBackgroundTaskTestCase {
 	}
 
 	protected HashMap<String, Serializable> initializeThreadLocalValues() {
-		HashMap<String, Serializable> threadLocalValues = new HashMap<>();
-
-		threadLocalValues.put("clusterInvoke", _clusterInvokeEnabled);
-		threadLocalValues.put("companyId", _companyId);
-		threadLocalValues.put("defaultLocale", _defaultLocale);
-		threadLocalValues.put("groupId", _groupId);
-		threadLocalValues.put("principalName", _principalName);
-		threadLocalValues.put("siteDefaultLocale", _siteDefaultLocale);
-		threadLocalValues.put("themeDisplayLocale", _themeDisplayLocale);
-
-		return threadLocalValues;
+		return HashMapBuilder.<String, Serializable>put(
+			"clusterInvoke", _clusterInvokeEnabled
+		).put(
+			"companyId", _companyId
+		).put(
+			"defaultLocale", _defaultLocale
+		).put(
+			"groupId", _groupId
+		).put(
+			"principalName", _principalName
+		).put(
+			"siteDefaultLocale", _siteDefaultLocale
+		).put(
+			"themeDisplayLocale", _themeDisplayLocale
+		).build();
 	}
 
 	protected void resetThreadLocals() {

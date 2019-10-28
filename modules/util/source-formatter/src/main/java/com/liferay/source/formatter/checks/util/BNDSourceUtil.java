@@ -18,6 +18,7 @@ import aQute.bnd.osgi.Constants;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -94,24 +95,19 @@ public class BNDSourceUtil {
 	public static Map<String, Map<String, String>>
 		getFileSpecificDefinitionKeysMap() {
 
-		Map<String, Map<String, String>> fileSpecificDefinitionKeysMap =
-			new HashMap<>();
-
-		fileSpecificDefinitionKeysMap.put(
-			"app.bnd", _populateDefinitionKeysMap(_APP_BND_DEFINITION_KEYS));
-		fileSpecificDefinitionKeysMap.put(
-			"bnd.bnd", _populateDefinitionKeysMap(_BND_BND_DEFINITION_KEYS));
-		fileSpecificDefinitionKeysMap.put(
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"app.bnd", _populateDefinitionKeysMap(_APP_BND_DEFINITION_KEYS)
+		).put(
+			"bnd.bnd", _populateDefinitionKeysMap(_BND_BND_DEFINITION_KEYS)
+		).put(
 			"common.bnd",
-			_populateDefinitionKeysMap(_COMMON_BND_DEFINITION_KEYS));
-		fileSpecificDefinitionKeysMap.put(
+			_populateDefinitionKeysMap(_COMMON_BND_DEFINITION_KEYS)
+		).put(
 			"subsystem.bnd",
-			_populateDefinitionKeysMap(_SUBSYSTEM_BND_DEFINITION_KEYS));
-		fileSpecificDefinitionKeysMap.put(
-			"suite.bnd",
-			_populateDefinitionKeysMap(_SUITE_BND_DEFINITION_KEYS));
-
-		return fileSpecificDefinitionKeysMap;
+			_populateDefinitionKeysMap(_SUBSYSTEM_BND_DEFINITION_KEYS)
+		).put(
+			"suite.bnd", _populateDefinitionKeysMap(_SUITE_BND_DEFINITION_KEYS)
+		).build();
 	}
 
 	public static String getModuleName(String absolutePath) {

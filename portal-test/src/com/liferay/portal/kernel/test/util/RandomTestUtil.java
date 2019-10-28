@@ -17,13 +17,13 @@ package com.liferay.portal.kernel.test.util;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
@@ -98,11 +98,9 @@ public class RandomTestUtil {
 	}
 
 	public static Map<Locale, String> randomLocaleStringMap(Locale locale) {
-		Map<Locale, String> map = new HashMap<>();
-
-		map.put(LocaleUtil.getDefault(), randomString());
-
-		return map;
+		return HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getDefault(), randomString()
+		).build();
 	}
 
 	public static long randomLong() {

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.metrics.internal.background.task.WorkflowMetricsSLAProcessBackgroundTaskExecutor;
 import com.liferay.portal.workflow.metrics.internal.configuration.WorkflowMetricsConfiguration;
@@ -41,7 +42,6 @@ import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionL
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -120,13 +120,14 @@ public class WorkflowMetricsSLAProcessMessageListener
 					return;
 				}
 
-				Map<String, Serializable> taskContextMap = new HashMap<>();
-
-				taskContextMap.put(
-					BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
-				taskContextMap.put(
-					"workflowMetricsSLADefinitionId",
-					workflowMetricsSLADefinition.getPrimaryKey());
+				Map<String, Serializable> taskContextMap =
+					HashMapBuilder.<String, Serializable>put(
+						BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,
+						true
+					).put(
+						"workflowMetricsSLADefinitionId",
+						workflowMetricsSLADefinition.getPrimaryKey()
+					).build();
 
 				_backgroundTaskLocalService.addBackgroundTask(
 					workflowMetricsSLADefinition.getUserId(),

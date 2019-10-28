@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -57,7 +58,6 @@ import com.liferay.trash.test.util.TrashTestUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -283,9 +283,9 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 		User user = UserTestUtil.getAdminUser(group.getCompanyId());
 		Layout layout = LayoutTestUtil.addLayout(group);
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getDefault(), String.valueOf(layout.getPlid()));
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getDefault(), String.valueOf(layout.getPlid())
+		).build();
 
 		return GroupLocalServiceUtil.addGroup(
 			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,

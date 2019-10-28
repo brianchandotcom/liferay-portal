@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -42,7 +43,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -80,17 +80,21 @@ public class PortalImplLocalizedFriendlyURLTest {
 				LocaleUtil.CANADA_FRENCH, LocaleUtil.SPAIN, LocaleUtil.US),
 			LocaleUtil.US);
 
-		_nameMap = new HashMap<>();
+		_nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.CANADA_FRENCH, "Accueil"
+		).put(
+			LocaleUtil.SPAIN, "Inicio"
+		).put(
+			LocaleUtil.US, "Home"
+		).build();
 
-		_nameMap.put(LocaleUtil.CANADA_FRENCH, "Accueil");
-		_nameMap.put(LocaleUtil.SPAIN, "Inicio");
-		_nameMap.put(LocaleUtil.US, "Home");
-
-		_friendlyURLMap = new HashMap<>();
-
-		_friendlyURLMap.put(LocaleUtil.CANADA_FRENCH, "/accueil");
-		_friendlyURLMap.put(LocaleUtil.SPAIN, "/inicio");
-		_friendlyURLMap.put(LocaleUtil.US, "/home");
+		_friendlyURLMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.CANADA_FRENCH, "/accueil"
+		).put(
+			LocaleUtil.SPAIN, "/inicio"
+		).put(
+			LocaleUtil.US, "/home"
+		).build();
 	}
 
 	@AfterClass

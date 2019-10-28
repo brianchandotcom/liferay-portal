@@ -34,7 +34,6 @@ import com.liferay.portlet.PortletPreferencesImpl;
 import java.lang.reflect.Field;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -419,9 +418,10 @@ public class LocalizationImplTest {
 	public void testUpdateLocalizationWithAmpersand() {
 		String spanishValue = "bar&foo";
 
-		Map<Locale, String> localizationMap = new HashMap<>();
-
-		localizationMap.put(LocaleUtil.SPAIN, spanishValue);
+		Map<Locale, String> localizationMap =
+			HashMapBuilder.<Locale, String>put(
+				LocaleUtil.SPAIN, spanishValue
+			).build();
 
 		String englishValue = "foo&bar";
 

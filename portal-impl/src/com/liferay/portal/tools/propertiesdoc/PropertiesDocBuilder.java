@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,7 +34,6 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,9 +66,9 @@ public class PropertiesDocBuilder {
 
 		String title = GetterUtil.getString(arguments.get("properties.title"));
 
-		Map<String, Object> context = new HashMap<>();
-
-		context.put("pageTitle", title);
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
+			"pageTitle", title
+		).build();
 
 		int pos = propertiesFileName.lastIndexOf(StringPool.SLASH);
 

@@ -34,11 +34,11 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletException;
@@ -101,10 +101,10 @@ public abstract class BaseGadgetPortlet extends MVCPortlet {
 			Role guestRole = RoleLocalServiceUtil.getRole(
 				expandoColumn.getCompanyId(), RoleConstants.GUEST);
 
-			Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
-
-			roleIdsToActionIds.put(
-				guestRole.getRoleId(), new String[] {ActionKeys.VIEW});
+			Map<Long, String[]> roleIdsToActionIds =
+				HashMapBuilder.<Long, String[]>put(
+					guestRole.getRoleId(), new String[] {ActionKeys.VIEW}
+				).build();
 
 			Role userRole = RoleLocalServiceUtil.getRole(
 				expandoColumn.getCompanyId(), RoleConstants.USER);

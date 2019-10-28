@@ -16,13 +16,13 @@ package com.liferay.saml.runtime.internal.upgrade;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.internal.constants.LegacySamlPropsKeys;
 import com.liferay.saml.runtime.internal.upgrade.v1_0_0.UpgradeSamlIdpSsoSessionMaxAgeProperty;
 
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -49,11 +49,10 @@ public class UpgradeSamlIdpSsoSessionMaxAgePropertyTest extends PowerMockito {
 	public void testSamlProviderPropertyMapping() throws Exception {
 		long samlIdpSsoSessionMaxAge = RandomTestUtil.randomLong();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
 			LegacySamlPropsKeys.SAML_IDP_SESSION_MAXIMUM_AGE,
-			samlIdpSsoSessionMaxAge);
+			samlIdpSsoSessionMaxAge
+		).build();
 
 		SamlProviderConfiguration samlProviderConfiguration =
 			ConfigurableUtil.createConfigurable(

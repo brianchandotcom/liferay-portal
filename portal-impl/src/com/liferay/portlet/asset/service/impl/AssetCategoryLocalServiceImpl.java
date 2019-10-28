@@ -59,7 +59,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -160,9 +159,9 @@ public class AssetCategoryLocalServiceImpl
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(locale, title);
+		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+			locale, title
+		).build();
 
 		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
 			locale, StringPool.BLANK

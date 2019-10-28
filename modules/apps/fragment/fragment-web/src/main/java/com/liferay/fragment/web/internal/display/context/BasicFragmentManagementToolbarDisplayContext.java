@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -123,10 +123,10 @@ public class BasicFragmentManagementToolbarDisplayContext
 		copyFragmentEntryURL.setParameter(
 			"redirect", themeDisplay.getURLCurrent());
 
-		Map<String, Object> componentContext = new HashMap<>();
-
-		componentContext.put(
-			"copyFragmentEntryURL", copyFragmentEntryURL.toString());
+		Map<String, Object> componentContext =
+			HashMapBuilder.<String, Object>put(
+				"copyFragmentEntryURL", copyFragmentEntryURL.toString()
+			).build();
 
 		PortletURL deleteFragmentEntriesURL =
 			liferayPortletResponse.createActionURL();

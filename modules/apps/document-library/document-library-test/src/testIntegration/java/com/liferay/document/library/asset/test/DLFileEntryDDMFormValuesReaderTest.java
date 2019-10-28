@@ -42,13 +42,13 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.asset.DLFileEntryDDMFormValuesReader;
 
 import java.io.ByteArrayInputStream;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -170,11 +170,9 @@ public class DLFileEntryDDMFormValuesReaderTest {
 
 		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
 
-		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
-
-		ddmFormValuesMap.put(ddmStructure.getStructureKey(), ddmFormValues);
-
-		return ddmFormValuesMap;
+		return HashMapBuilder.<String, DDMFormValues>put(
+			ddmStructure.getStructureKey(), ddmFormValues
+		).build();
 	}
 
 	protected DDMFormField createTextDDMFormField(String name) {

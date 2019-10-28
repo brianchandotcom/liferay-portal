@@ -1357,8 +1357,6 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			entryTitleEdit = "Blogs Entry Title Draft");
 
-		Click(locator1 = "Icon#BACK");
-
 		Navigator.gotoNavItem(navItem = "Not Published (1)");
 
 		BlogsEntry.viewPG(

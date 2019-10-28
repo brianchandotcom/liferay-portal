@@ -24,8 +24,12 @@ import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.segments.internal.search.SegmentsEntryField;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsEntryRole;
+import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,6 +67,21 @@ public class SegmentsEntryModelDocumentContributor
 				segmentsEntry.getDefaultLanguageId(),
 				segmentsEntry.getGroupId()),
 			true, true);
+
+		document.addKeyword(
+			"roleIds", _getRoleIds(segmentsEntry.getSegmentsEntryId()));
+	}
+
+	private long[] _getRoleIds(long segmentsEntryId) {
+		List<SegmentsEntryRole> segmentsEntryRoles =
+			_segmentsEntryRoleLocalService.getSegmentsEntryRoles(
+				segmentsEntryId);
+
+		Stream<SegmentsEntryRole> stream = segmentsEntryRoles.stream();
+
+		return stream.mapToLong(
+			SegmentsEntryRole::getRoleId
+		).toArray();
 	}
 
 	private Locale _getSiteDefaultLocale(long groupId) {
@@ -79,5 +98,8 @@ public class SegmentsEntryModelDocumentContributor
 
 	@Reference
 	private SearchLocalizationHelper _searchLocalizationHelper;
+
+	@Reference
+	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
 
 }

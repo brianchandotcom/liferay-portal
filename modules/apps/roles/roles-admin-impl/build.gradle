@@ -7,6 +7,5 @@ dependencies {
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:portal-search:portal-search-spi")
 	compileOnly project(":apps:roles:roles-admin-api")
-	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:xstream:xstream-configurator-api")
 }

@@ -261,10 +261,6 @@ public class DDMFormValuesExportImportContentProcessorTest {
 			(Map<Long, Long>)_portletDataContextImport.getNewPrimaryKeysMap(
 				JournalArticle.class);
 
-		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
-			LocaleUtil.US, RandomTestUtil.randomString()
-		).build();
-
 		long resourcePrimKey = _journalArticle.getResourcePrimKey();
 
 		JournalArticle newJournalArticle = JournalTestUtil.addArticle(
@@ -316,14 +312,6 @@ public class DDMFormValuesExportImportContentProcessorTest {
 
 		_ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), DLFileEntryMetadata.class.getName());
-
-		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
-			LocaleUtil.US, RandomTestUtil.randomString()
-		).build();
-
-		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
-			LocaleUtil.US, RandomTestUtil.randomString()
-		).build();
 
 		DDMForm journalDDMForm = new DDMForm();
 
@@ -463,10 +451,6 @@ public class DDMFormValuesExportImportContentProcessorTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_stagingGroup.getGroupId(), TestPropsValues.getUserId());
-
-		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
-			LocaleUtil.US, RandomTestUtil.randomString()
-		).build();
 
 		_journalArticle = JournalTestUtil.addArticle(
 			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),

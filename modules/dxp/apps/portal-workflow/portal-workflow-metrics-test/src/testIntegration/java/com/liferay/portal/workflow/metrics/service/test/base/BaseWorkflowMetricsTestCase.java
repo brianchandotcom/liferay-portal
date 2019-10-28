@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.service.test.base;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
@@ -69,7 +70,7 @@ public abstract class BaseWorkflowMetricsTestCase {
 
 	protected String getTaskKey(
 			KaleoDefinition kaleoDefinition, String taskName)
-		throws Exception {
+		throws PortalException {
 
 		KaleoDefinitionVersion latestKaleoDefinitionVersion =
 			_kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(
@@ -89,7 +90,7 @@ public abstract class BaseWorkflowMetricsTestCase {
 					return _kaleoTaskLocalService.getKaleoNodeKaleoTask(
 						kaleoNode.getKaleoNodeId());
 				}
-				catch (Exception e) {
+				catch (PortalException pe) {
 				}
 
 				return null;
@@ -107,7 +108,7 @@ public abstract class BaseWorkflowMetricsTestCase {
 	}
 
 	protected String getTerminalNodeKey(KaleoDefinition kaleoDefinition)
-		throws Exception {
+		throws PortalException {
 
 		KaleoDefinitionVersion latestKaleoDefinitionVersion =
 			_kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(

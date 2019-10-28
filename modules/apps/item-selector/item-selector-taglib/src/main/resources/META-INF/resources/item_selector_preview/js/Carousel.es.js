@@ -40,6 +40,7 @@ const InfoPanel = metadata => {
 		return (
 			<ClayTabs.Item
 				active={activeTabKeyValue == index}
+				key={group.title}
 				onClick={() => setActiveTabKeyValue(index)}
 			>
 				{group.title}
@@ -51,15 +52,18 @@ const InfoPanel = metadata => {
 		const itemContentTab = group.data.map(item => {
 			return (
 				<>
-					<dt class="sidebar-dt">{item.key}</dt>
-					<dd class="sidebar-dd">{item.value}</dd>
+					<dt className="sidebar-dt">{item.key}</dt>
+					<dd className="sidebar-dd">{item.value}</dd>
 				</>
 			);
 		});
 
 		return (
-			<ClayTabs.TabPane aria-labelledby={`tab-${index}`}>
-				<dl class="sidebar-dl sidebar-section">{itemContentTab}</dl>
+			<ClayTabs.TabPane
+				aria-labelledby={`tab-${index}`}
+				key={group.title}
+			>
+				<dl className="sidebar-dl sidebar-section">{itemContentTab}</dl>
 			</ClayTabs.TabPane>
 		);
 	});

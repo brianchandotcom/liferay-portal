@@ -1027,22 +1027,21 @@ if (themeDisplay.isStatePopUp()) {
 			if (window.parent) {
 				var data = {
 					portletAjaxable: <%= !(((portletResourcePortlet != null) && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(liferayRenderRequest, portletId + SessionMessages.KEY_SUFFIX_PORTLET_NOT_AJAXABLE)) %>
-
-					<c:if test="<%= (refreshPortletData != null) && !refreshPortletData.isEmpty() %>">
-
-						<%
-						for (Map.Entry<String, String> entry : refreshPortletData.entrySet()) {
-						%>
-
-							, '<%= entry.getKey() %>': <%= entry.getValue() %>
-
-						<%
-						}
-						%>
-
-					</c:if>
-
 				};
+
+				<c:if test="<%= (refreshPortletData != null) && !refreshPortletData.isEmpty() %>">
+
+					<%
+					for (Map.Entry<String, String> entry : refreshPortletData.entrySet()) {
+					%>
+
+						data['<%= entry.getKey() %>'] = <%= entry.getValue() %>;
+
+					<%
+					}
+					%>
+
+				</c:if>
 
 				Liferay.Util.getOpener().Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(refreshPortletId) %>_', data);
 			}
@@ -1116,22 +1115,21 @@ if (themeDisplay.isStatePopUp()) {
 						if (window.parent) {
 							var data = {
 								portletAjaxable: <%= !(((portletResourcePortlet != null) && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(liferayRenderRequest, portletId + SessionMessages.KEY_SUFFIX_PORTLET_NOT_AJAXABLE)) %>
-
-								<c:if test="<%= (refreshPortletData != null) && !refreshPortletData.isEmpty() %>">
-
-									<%
-									for (Map.Entry<String, String> entry : refreshPortletData.entrySet()) {
-									%>
-
-										, '<%= entry.getKey() %>': <%= entry.getValue() %>
-
-									<%
-									}
-									%>
-
-								</c:if>
-
 							};
+
+							<c:if test="<%= (refreshPortletData != null) && !refreshPortletData.isEmpty() %>">
+
+								<%
+								for (Map.Entry<String, String> entry : refreshPortletData.entrySet()) {
+								%>
+
+									data['<%= entry.getKey() %>'] = <%= entry.getValue() %>;
+
+								<%
+								}
+								%>
+
+							</c:if>
 
 							refreshWindow.Liferay.Portlet.refresh('#p_p_id_<%= closeRefreshPortletId %>_', data);
 						}

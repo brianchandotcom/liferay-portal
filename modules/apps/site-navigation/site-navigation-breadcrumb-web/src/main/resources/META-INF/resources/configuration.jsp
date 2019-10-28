@@ -77,15 +77,26 @@
 </liferay-frontend:edit-form>
 
 <aui:script sandbox="<%= true %>">
-	var data = {
-		_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_displayStyle:
-			'<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyle() %>',
-		_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showCurrentGroup: <%= siteNavigationBreadcrumbDisplayContext.isShowCurrentGroup() %>,
-		_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showGuestGroup: <%= siteNavigationBreadcrumbDisplayContext.isShowGuestGroup() %>,
-		_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showLayout: <%= siteNavigationBreadcrumbDisplayContext.isShowLayout() %>,
-		_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showParentGroups: <%= siteNavigationBreadcrumbDisplayContext.isShowParentGroups() %>,
-		_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showPortletBreadcrumb: <%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>
-	};
+	var data = {};
+
+	data[
+		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_displayStyle'
+	] = '<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyle() %>';
+	data[
+		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showCurrentGroup'
+	] = <%= siteNavigationBreadcrumbDisplayContext.isShowCurrentGroup() %>;
+	data[
+		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showGuestGroup'
+	] = <%= siteNavigationBreadcrumbDisplayContext.isShowGuestGroup() %>;
+	data[
+		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showLayout'
+	] = <%= siteNavigationBreadcrumbDisplayContext.isShowLayout() %>;
+	data[
+		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showParentGroups'
+	] = <%= siteNavigationBreadcrumbDisplayContext.isShowParentGroups() %>;
+	data[
+		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showPortletBreadcrumb'
+	] = <%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>;
 
 	var selectDisplayStyle = document.getElementById(
 		'<portlet:namespace />displayStyle'

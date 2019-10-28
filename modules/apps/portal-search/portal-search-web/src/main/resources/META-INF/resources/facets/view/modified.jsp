@@ -297,12 +297,14 @@ int index = 0;
 				LString.padNumber(dayTo, 2) +
 				'235959]';
 
-			Liferay.Util.postForm(form, {
-				data: {
-					<%= HtmlUtil.escapeJS(facet.getFieldId()) %>: range,
-					<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection: selection
-				}
-			});
+			var data = {};
+
+			data['<%= HtmlUtil.escapeJS(facet.getFieldId()) %>'] = range;
+			data[
+				'<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection'
+			] = selection;
+
+			Liferay.Util.postForm(form, {data: data});
 		}
 	}
 </aui:script>

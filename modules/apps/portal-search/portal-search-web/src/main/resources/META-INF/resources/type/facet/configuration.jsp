@@ -85,13 +85,13 @@ TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal
 		form.addEventListener('submit', function(event) {
 			event.preventDefault();
 
-			Liferay.Util.postForm(form, {
-				data: {
-					<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES) %>: Liferay.Util.listSelect(
-						currentAssetTypes
-					)
-				}
-			});
+			var data = {};
+
+			data[
+				'<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES) %>'
+			] = Liferay.Util.listSelect(currentAssetTypes);
+
+			Liferay.Util.postForm(form, {data: data});
 		});
 	}
 </script>

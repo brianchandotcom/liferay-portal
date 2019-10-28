@@ -28,11 +28,11 @@
 			'hide.bs.collapse show.bs.collapse',
 			function(event) {
 				if (event.target.id === '<%= id %>Content') {
-					storeTask(
-						{
-							'<%= id %>': (event.type === 'hide')
-						}
-					);
+					var task = {};
+
+					task['<%= id %>'] = event.type === 'hide';
+
+					storeTask(task);
 				}
 			}
 		);

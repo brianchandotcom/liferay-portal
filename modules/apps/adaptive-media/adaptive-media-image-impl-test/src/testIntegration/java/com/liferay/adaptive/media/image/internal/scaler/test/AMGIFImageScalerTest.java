@@ -85,12 +85,6 @@ public class AMGIFImageScalerTest {
 
 	@Test
 	public void testAMGIFImageScaler() throws Exception {
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		FileEntry fileEntry = _addFileEntry();
 
 		AMImageScaledImage amImageScaledImage = _amImageScaler.scaleImage(

@@ -14,11 +14,16 @@
 
 package com.liferay.depot.web.internal.util;
 
+import com.liferay.depot.web.internal.constants.DepotPortletKeys;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
-import javax.portlet.RenderURL;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 /**
  * @author Alejandro Tardín
@@ -97,17 +102,19 @@ public class DepotEntryURLUtil {
 		return editDepotEntryActionURL;
 	}
 
-	public static RenderURL getEditDepotEntryRenderURL(
-		long depotEntryId, String redirect,
-		LiferayPortletResponse liferayPortletResponse) {
+	public static PortletURL getEditDepotEntryPortletURL(
+		Group group, String redirect,
+		LiferayPortletRequest httpServletRequest) {
 
-		RenderURL editDepotEntryURL = liferayPortletResponse.createRenderURL();
+		PortletURL editDepotEntryURL = PortalUtil.getControlPanelPortletURL(
+			httpServletRequest, group, DepotPortletKeys.DEPOT_ADMIN, 0, 0,
+			PortletRequest.RENDER_PHASE);
 
 		editDepotEntryURL.setParameter(
 			"mvcRenderCommandName", "/depot_entry/edit");
 		editDepotEntryURL.setParameter("redirect", redirect);
 		editDepotEntryURL.setParameter(
-			"depotEntryId", String.valueOf(depotEntryId));
+			"depotEntryId", String.valueOf(group.getClassPK()));
 
 		return editDepotEntryURL;
 	}

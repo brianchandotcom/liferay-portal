@@ -82,10 +82,9 @@ public class DepotEntryVerticalCard
 					add(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								DepotEntryURLUtil.getEditDepotEntryRenderURL(
-									_group.getClassPK(),
-									_themeDisplay.getURLCurrent(),
-									_liferayPortletResponse));
+								DepotEntryURLUtil.getEditDepotEntryPortletURL(
+									_group, _themeDisplay.getURLCurrent(),
+									_liferayPortletRequest));
 
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, "edit"));

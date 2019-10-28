@@ -27,53 +27,58 @@ const Header = ({
 }) => (
 	<div className="navbar navigation-bar navigation-bar-light">
 		<div className="container-fluid header">
-			<ClayNavigationBar>
-				<ClayNavigationBar.Item>
-					<ClayButton
-						borderless
-						displayType="secondary"
-						monospaced
-						onClick={handleClickClose}
-					>
-						<ClayIcon symbol="angle-left" />
-					</ClayButton>
-				</ClayNavigationBar.Item>
+			<nav class="navbar navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
+				<div class="container-fluid container-fluid-max-xl">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<ClayButton
+								borderless
+								displayType="secondary"
+								monospaced
+								onClick={handleClickClose}
+							>
+								<ClayIcon symbol="angle-left" />
+							</ClayButton>
+						</li>
+						<li class="nav-item d-none d-sm-inline-flex">
+							<strong>{headerTitle} </strong>
+						</li>
+					</ul>
+				</div>
+			</nav>
 
-				<ClayNavigationBar.Item>
-					<strong>{headerTitle} </strong>
-				</ClayNavigationBar.Item>
-			</ClayNavigationBar>
-
-			<ClayNavigationBar>
-				<ClayNavigationBar.Item className="btn-group-item">
-					<ClayButton
-						borderless
-						displayType="secondary"
-						monospaced
-						onClick={handleClickEdit}
-					>
-						<ClayIcon symbol="pencil" />
-					</ClayButton>
-				</ClayNavigationBar.Item>
-
-				<ClayNavigationBar.Item className="btn-group-item">
-					<ClayButton
-						borderless
-						displayType="secondary"
-						id="infoButtonRef"
-						monospaced
-						ref={infoButtonRef}
-					>
-						<ClayIcon symbol="info-panel-open" />
-					</ClayButton>
-				</ClayNavigationBar.Item>
-
-				<ClayNavigationBar.Item>
-					<ClayButton displayType="primary" onClick={handleClickDone}>
-						{Liferay.Language.get('done')}
-					</ClayButton>
-				</ClayNavigationBar.Item>
-			</ClayNavigationBar>
+			<nav class="navbar  navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
+				<div class="container-fluid container-fluid-max-xl">
+					<ul class="navbar-nav">
+						<li class="nav-item btn-group-item">
+							<ClayButton
+								borderless
+								displayType="secondary"
+								monospaced
+								onClick={handleClickEdit}
+							>
+								<ClayIcon symbol="pencil" />
+							</ClayButton>
+						</li>
+						<li class="nav-item btn-group-item">
+							<ClayButton
+								borderless
+								displayType="secondary"
+								id="infoButtonRef"
+								monospaced
+								ref={infoButtonRef}
+							>
+								<ClayIcon symbol="info-panel-open" />
+							</ClayButton>
+						</li>
+						<li class="nav-item">
+							<ClayButton displayType="primary" onClick={handleClickDone}>
+								{Liferay.Language.get('done')}
+							</ClayButton>
+						</li>
+					</ul>
+				</div>
+			</nav>
 		</div>
 	</div>
 );

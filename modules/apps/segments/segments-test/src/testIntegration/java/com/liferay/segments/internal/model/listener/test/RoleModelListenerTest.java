@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.roles.admin.internal.segments.entry.test;
+package com.liferay.segments.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -26,12 +25,10 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.roles.admin.segments.entry.RoleSegmentsEntryManager;
 import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.service.SegmentsEntryRelLocalService;
+import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -40,10 +37,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Drew Brokke
+ * @author Eduardo García
  */
 @RunWith(Arquillian.class)
-public class RoleSegmentsEntryManagerTest {
+public class RoleModelListenerTest {
 
 	@ClassRule
 	@Rule
@@ -56,66 +53,34 @@ public class RoleSegmentsEntryManagerTest {
 
 		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			TestPropsValues.getGroupId());
+	}
 
-		_roleClassNameId = _classNameLocalService.getClassNameId(Role.class);
+	@Test
+	public void testSegmentsEntryRolesRemovedWhenRoleRemoved()
+		throws Exception {
 
-		ServiceContextThreadLocal.pushServiceContext(
+		_segmentsEntryRoleLocalService.addSegmentsEntryRole(
+			_role.getRoleId(), _segmentsEntry.getSegmentsEntryId(),
 			ServiceContextTestUtil.getServiceContext());
-	}
 
-	@After
-	public void tearDown() {
-		ServiceContextThreadLocal.popServiceContext();
-	}
+		_roleLocalService.deleteRole(_role.getRoleId());
 
-	@Test
-	public void testAddRoleSegmentsEntries() throws Exception {
-		_assertSegmentsEntries(0);
-
-		_roleSegmentsEntryManager.addRoleSegmentsEntries(
-			_role.getRoleId(),
-			new long[] {_segmentsEntry.getSegmentsEntryId()});
-
-		_assertSegmentsEntries(1);
-	}
-
-	@Test
-	public void testRemoveRoleSegmentsEntries() throws Exception {
-		_roleSegmentsEntryManager.addRoleSegmentsEntries(
-			_role.getRoleId(),
-			new long[] {_segmentsEntry.getSegmentsEntryId()});
-
-		_assertSegmentsEntries(1);
-
-		_roleSegmentsEntryManager.removeRoleSegmentsEntries(
-			_role.getRoleId(),
-			new long[] {_segmentsEntry.getSegmentsEntryId()});
-
-		_assertSegmentsEntries(0);
-	}
-
-	private void _assertSegmentsEntries(int expected) {
 		Assert.assertEquals(
-			expected,
-			_segmentsEntryRelLocalService.getSegmentsEntryRelsCount(
-				_roleClassNameId, _role.getRoleId()));
+			0,
+			_segmentsEntryRoleLocalService.getSegmentsEntryRolesCountByRoleId(
+				_role.getRoleId()));
 	}
-
-	@Inject
-	private ClassNameLocalService _classNameLocalService;
 
 	@DeleteAfterTestRun
 	private Role _role;
 
-	private long _roleClassNameId;
-
 	@Inject
-	private RoleSegmentsEntryManager _roleSegmentsEntryManager;
+	private RoleLocalService _roleLocalService;
 
 	@DeleteAfterTestRun
 	private SegmentsEntry _segmentsEntry;
 
 	@Inject
-	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
+	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
 
 }

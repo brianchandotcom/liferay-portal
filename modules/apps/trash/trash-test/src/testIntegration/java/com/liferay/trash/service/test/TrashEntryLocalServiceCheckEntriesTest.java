@@ -281,6 +281,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 
 	protected Group createLayoutGroup(Group group) throws Exception {
 		User user = UserTestUtil.getAdminUser(group.getCompanyId());
+
 		Layout layout = LayoutTestUtil.addLayout(group);
 
 		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(

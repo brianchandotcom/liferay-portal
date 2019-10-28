@@ -7,7 +7,7 @@ exports[`Should render component 1`] = `
   <button
     aria-expanded={false}
     aria-haspopup="true"
-    className="btn btn-secondary btn-sm dropdown-toggle nav-link"
+    className="btn dropdown-toggle nav-link btn-secondary btn-sm"
     onClick={[Function]}
     type="button"
   >
@@ -61,7 +61,7 @@ exports[`Should render component with search wrapper 1`] = `
   <button
     aria-expanded={false}
     aria-haspopup="true"
-    className="btn btn-secondary btn-sm dropdown-toggle nav-link"
+    className="btn dropdown-toggle nav-link btn-secondary btn-sm"
     onClick={[Function]}
     type="button"
   >

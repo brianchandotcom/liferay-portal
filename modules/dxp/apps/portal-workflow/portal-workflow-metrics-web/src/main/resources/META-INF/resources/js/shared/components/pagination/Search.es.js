@@ -49,6 +49,7 @@ class Search extends React.Component {
 	render() {
 		const {disabled} = this.props;
 		const {redirect, value} = this.state;
+		let placeholder = Liferay.Language.get('search-for');
 
 		if (redirect) {
 			const {
@@ -72,6 +73,10 @@ class Search extends React.Component {
 			return <Redirect to={{pathname, search}} />;
 		}
 
+		if (typeof this.props.placeholder === 'string') {
+			placeholder = this.props.placeholder;
+		}
+
 		return (
 			<form
 				method="GET"
@@ -84,7 +89,7 @@ class Search extends React.Component {
 							className="form-control input-group-inset input-group-inset-after"
 							disabled={disabled}
 							onChange={this.handleChange.bind(this)}
-							placeholder={Liferay.Language.get('search-for')}
+							placeholder={placeholder}
 							type="text"
 							value={value}
 						/>

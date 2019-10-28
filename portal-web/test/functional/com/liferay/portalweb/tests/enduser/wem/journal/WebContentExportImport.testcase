@@ -439,6 +439,58 @@ definition {
 			siteName = "Site Name");
 	}
 
+	@description = "This is a use case for LPS-88893."
+	@priority = "3"
+	test ImportLARWithTheSameTitle {
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addBlankCP(siteName = "Site Name 1");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addBlankCP(siteName = "Site Name 2");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		LAR.importPortlet(larFileName = "WebContent_portlet.lar");
+
+		AssertConsoleTextNotPresent(value1 = "DuplicateFriendlyURLEntryException");
+	}
+
 	@ignore = "true"
 	@priority = "5"
 	test ImportTrainingLAR {

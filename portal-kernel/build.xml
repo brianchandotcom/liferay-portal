@@ -16,7 +16,7 @@
 		/>
 	</path>
 
-	<target name="jar">
+	<target name="compile">
 		<copy
 			file="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
 			overwrite="true"
@@ -48,7 +48,7 @@
 			/>
 		</replace>
 
-		<ant antfile="${project.dir}/build-common-java.xml" dir="${project.dir}/portal-kernel" inheritRefs="true" target="jar" />
+		<ant antfile="${project.dir}/build-common-java.xml" dir="${project.dir}/portal-kernel" inheritRefs="true" target="compile" />
 
 		<move
 			file="build/temp/ReleaseInfo.java"

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -42,7 +43,6 @@ import com.liferay.taglib.servlet.PageContextFactoryUtil;
 import java.io.IOException;
 import java.io.Writer;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -111,11 +111,11 @@ public class PagesTreeProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Map<String, String> values = new HashMap<>();
-
-		values.put("pathThemeImages", themeDisplay.getPathThemeImages());
-
-		values.put("portletNamespace", portletNamespace);
+		Map<String, String> values = HashMapBuilder.put(
+			"pathThemeImages", themeDisplay.getPathThemeImages()
+		).put(
+			"portletNamespace", portletNamespace
+		).build();
 
 		ResourceBundle resourceBundle = _getResourceBundle(
 			themeDisplay.getLocale());

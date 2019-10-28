@@ -314,11 +314,10 @@ public class MeetingsPortlet extends MVCPortlet {
 		boolean autoStartVideo = ParamUtil.getBoolean(
 			actionRequest, "autoStartVideo");
 
-		Map<String, String> options = new HashMap<>();
-
-		options.put(
+		Map<String, String> options = HashMapBuilder.put(
 			PowwowMeetingConstants.OPTION_AUTO_START_VIDEO,
-			Boolean.toString(autoStartVideo));
+			Boolean.toString(autoStartVideo)
+		).build();
 
 		boolean requirePassword = ParamUtil.getBoolean(
 			actionRequest, "requirePassword");

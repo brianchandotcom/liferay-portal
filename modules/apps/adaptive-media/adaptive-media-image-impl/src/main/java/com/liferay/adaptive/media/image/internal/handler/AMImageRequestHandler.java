@@ -33,12 +33,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -90,10 +90,9 @@ public class AMImageRequestHandler
 		AMAttribute<Object, String> fileNameAMAttribute =
 			AMAttribute.getFileNameAMAttribute();
 
-		Map<String, String> properties = new HashMap<>();
-
-		properties.put(
-			fileNameAMAttribute.getName(), fileVersion.getFileName());
+		Map<String, String> properties = HashMapBuilder.put(
+			fileNameAMAttribute.getName(), fileVersion.getFileName()
+		).build();
 
 		AMAttribute<Object, String> contentTypeAMAttribute =
 			AMAttribute.getContentTypeAMAttribute();

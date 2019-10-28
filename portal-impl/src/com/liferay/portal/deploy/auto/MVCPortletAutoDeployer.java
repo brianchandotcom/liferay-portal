@@ -15,10 +15,10 @@
 package com.liferay.portal.deploy.auto;
 
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.File;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -39,19 +39,26 @@ public class MVCPortletAutoDeployer extends PortletAutoDeployer {
 			pluginName = pluginPackage.getName();
 		}
 
-		Map<String, String> filterMap = new HashMap<>();
-
-		filterMap.put("friendly_url_mapper_class", "");
-		filterMap.put("friendly_url_mapping", "");
-		filterMap.put("friendly_url_routes", "");
-		filterMap.put("init_param_name_0", "view-jsp");
-		filterMap.put("init_param_value_0", "/index_mvc.jsp");
-		filterMap.put(
+		Map<String, String> filterMap = HashMapBuilder.put(
+			"friendly_url_mapper_class", ""
+		).put(
+			"friendly_url_mapping", ""
+		).put(
+			"friendly_url_routes", ""
+		).put(
+			"init_param_name_0", "view-jsp"
+		).put(
+			"init_param_value_0", "/index_mvc.jsp"
+		).put(
 			"portlet_class",
-			"com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet");
-		filterMap.put("portlet_name", pluginName);
-		filterMap.put("portlet_title", pluginName);
-		filterMap.put("restore_current_view", "false");
+			"com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet"
+		).put(
+			"portlet_name", pluginName
+		).put(
+			"portlet_title", pluginName
+		).put(
+			"restore_current_view", "false"
+		).build();
 
 		copyDependencyXml(
 			"liferay-display.xml", srcFile + "/WEB-INF", filterMap);

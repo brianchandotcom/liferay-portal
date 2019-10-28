@@ -83,8 +83,6 @@ public class SelectDDMFormFieldTemplateContextContributor
 				ddmFormFieldOptions, ddmFormFieldRenderingContext.getLocale(),
 				ddmFormFieldRenderingContext));
 
-		Map<String, String> stringsMap = new HashMap<>();
-
 		Locale displayLocale = getDisplayLocale(
 			ddmFormFieldRenderingContext.getHttpServletRequest());
 
@@ -93,6 +91,8 @@ public class SelectDDMFormFieldTemplateContextContributor
 		}
 
 		ResourceBundle resourceBundle = getResourceBundle(displayLocale);
+
+		Map<String, String> stringsMap = new HashMap<>();
 
 		stringsMap.put(
 			"chooseAnOption",
@@ -159,8 +159,6 @@ public class SelectDDMFormFieldTemplateContextContributor
 		List<Object> options = new ArrayList<>();
 
 		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
-			Map<String, String> optionMap = new HashMap<>();
-
 			LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(
 				optionValue);
 
@@ -169,6 +167,8 @@ public class SelectDDMFormFieldTemplateContextContributor
 			if (ddmFormFieldRenderingContext.isViewMode()) {
 				optionLabelString = HtmlUtil.extractText(optionLabelString);
 			}
+
+			Map<String, String> optionMap = new HashMap<>();
 
 			optionMap.put("label", optionLabelString);
 

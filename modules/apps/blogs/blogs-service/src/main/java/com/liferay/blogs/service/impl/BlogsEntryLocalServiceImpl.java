@@ -2016,14 +2016,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		Map<String, String> parts = new HashMap<>();
-
 		String excerpt = StringUtil.shorten(
 			HtmlUtil.extractText(entry.getContent()),
 			PropsValues.BLOGS_LINKBACK_EXCERPT_LENGTH);
 		String url = StringBundler.concat(
 			layoutFullURL, Portal.FRIENDLY_URL_SEPARATOR, "blogs/",
 			entry.getUrlTitle());
+
+		Map<String, String> parts = new HashMap<>();
 
 		parts.put("blog_name", entry.getUserName());
 		parts.put("excerpt", excerpt);

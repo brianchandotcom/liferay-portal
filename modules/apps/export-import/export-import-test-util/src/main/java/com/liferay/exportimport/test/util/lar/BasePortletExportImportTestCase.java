@@ -569,11 +569,11 @@ public abstract class BasePortletExportImportTestCase
 			PortalUtil.getClassNameId(templateHandler.getClassName()), 0,
 			resourceClassNameId);
 
-		Map<String, String[]> preferenceMap = new HashMap<>();
-
 		String displayStyle =
 			PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
 				ddmTemplate.getTemplateKey();
+
+		Map<String, String[]> preferenceMap = new HashMap<>();
 
 		preferenceMap.put("displayStyle", new String[] {displayStyle});
 

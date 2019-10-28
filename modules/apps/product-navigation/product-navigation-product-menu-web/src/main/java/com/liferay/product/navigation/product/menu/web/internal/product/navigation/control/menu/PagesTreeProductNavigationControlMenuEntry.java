@@ -103,8 +103,6 @@ public class PagesTreeProductNavigationControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		Map<String, String> values = new HashMap<>();
-
 		String portletNamespace = _portal.getPortletNamespace(
 			ProductNavigationProductMenuPortletKeys.
 				PRODUCT_NAVIGATION_PRODUCT_MENU);
@@ -112,6 +110,8 @@ public class PagesTreeProductNavigationControlMenuEntry
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		Map<String, String> values = new HashMap<>();
 
 		values.put("pathThemeImages", themeDisplay.getPathThemeImages());
 

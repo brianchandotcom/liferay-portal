@@ -1423,9 +1423,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		String regex = _getModuleSnapshotDependencyRegex(project);
 
-		Map<String, Object> args = new HashMap<>();
-
 		File rootDir = project.getRootDir();
+
+		Map<String, Object> args = new HashMap<>();
 
 		args.put("dir", rootDir.getParentFile());
 
@@ -3786,13 +3786,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		String regex = _getModuleDependencyRegex(project);
 
-		Map<String, Object> args = new HashMap<>();
-
 		File dir = project.getRootDir();
 
 		if (portalRootDir != null) {
 			dir = new File(portalRootDir, "modules");
 		}
+
+		Map<String, Object> args = new HashMap<>();
 
 		args.put("dir", dir);
 		args.put(

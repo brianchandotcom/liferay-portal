@@ -460,10 +460,10 @@ public class DDMFormValuesExportImportContentProcessorTest {
 		long size = 0;
 		File file = FileUtil.createTempFile(is);
 
+		_createDDMFormWithJournalField(_stagingGroup, _journalArticle);
+
 		Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
 			ddmFormValuesMap = new HashMap<>();
-
-		_createDDMFormWithJournalField(_stagingGroup, _journalArticle);
 
 		ddmFormValuesMap.put(
 			_ddmStructure.getStructureKey(),

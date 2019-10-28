@@ -33,13 +33,13 @@ public class MVCPortletAutoDeployer extends PortletAutoDeployer {
 
 		super.copyXmls(srcFile, displayName, pluginPackage);
 
-		Map<String, String> filterMap = new HashMap<>();
-
 		String pluginName = displayName;
 
 		if (pluginPackage != null) {
 			pluginName = pluginPackage.getName();
 		}
+
+		Map<String, String> filterMap = new HashMap<>();
 
 		filterMap.put("friendly_url_mapper_class", "");
 		filterMap.put("friendly_url_mapping", "");

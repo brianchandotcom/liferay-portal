@@ -311,10 +311,10 @@ public class MeetingsPortlet extends MVCPortlet {
 		CalendarBooking calendarBooking = updateCalendarBooking(
 			actionRequest, powwowMeeting, powwowParticipants, serviceContext);
 
-		Map<String, String> options = new HashMap<>();
-
 		boolean autoStartVideo = ParamUtil.getBoolean(
 			actionRequest, "autoStartVideo");
+
+		Map<String, String> options = new HashMap<>();
 
 		options.put(
 			PowwowMeetingConstants.OPTION_AUTO_START_VIDEO,

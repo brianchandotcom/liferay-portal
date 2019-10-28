@@ -158,8 +158,6 @@ public class GradleUtil {
 	public static void applyScript(
 		Project project, String name, Object object) {
 
-		Map<String, Object> args = new HashMap<>();
-
 		ClassLoader classLoader = GradleUtil.class.getClassLoader();
 
 		URL url = classLoader.getResource(name);
@@ -167,6 +165,8 @@ public class GradleUtil {
 		if (url == null) {
 			throw new GradleException("Unable to apply script " + name);
 		}
+
+		Map<String, Object> args = new HashMap<>();
 
 		args.put("from", url);
 

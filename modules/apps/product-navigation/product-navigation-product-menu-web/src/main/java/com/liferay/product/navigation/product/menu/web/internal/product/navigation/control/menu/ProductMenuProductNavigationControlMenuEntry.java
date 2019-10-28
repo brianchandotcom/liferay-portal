@@ -103,11 +103,11 @@ public class ProductMenuProductNavigationControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		Map<String, String> values = new HashMap<>();
-
 		String portletNamespace = _portal.getPortletNamespace(
 			ProductNavigationProductMenuPortletKeys.
 				PRODUCT_NAVIGATION_PRODUCT_MENU);
+
+		Map<String, String> values = new HashMap<>();
 
 		values.put("portletNamespace", portletNamespace);
 

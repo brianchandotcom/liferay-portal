@@ -534,12 +534,12 @@ public class LocalizationImpl implements Localization {
 			return null;
 		}
 
-		Map<Locale, String> map = new HashMap<>();
-
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultValue = _getLocalization(
 			bundleName, defaultLocale, classLoader, key, key);
+
+		Map<Locale, String> map = new HashMap<>();
 
 		map.put(defaultLocale, defaultValue);
 

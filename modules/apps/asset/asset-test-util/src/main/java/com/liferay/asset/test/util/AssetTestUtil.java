@@ -82,9 +82,9 @@ public class AssetTestUtil {
 			long groupId, long vocabularyId, long parentCategoryId)
 		throws Exception {
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
 		Locale locale = LocaleUtil.getSiteDefault();
+
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		titleMap.put(locale, RandomTestUtil.randomString());
 
@@ -133,9 +133,9 @@ public class AssetTestUtil {
 			long groupId, long classNameId, long classTypePK, boolean required)
 		throws Exception {
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
 		Locale locale = LocaleUtil.getSiteDefault();
+
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		titleMap.put(locale, RandomTestUtil.randomString());
 

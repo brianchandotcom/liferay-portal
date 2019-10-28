@@ -53,8 +53,6 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 		long parentGroupId = ParamUtil.getLong(
 			_httpServletRequest, "parentGroupId");
 
-		Map<String, String> data = new HashMap<>();
-
 		PortletURL addSiteURL = _renderResponse.createActionURL();
 
 		addSiteURL.setParameter(ActionRequest.ACTION_NAME, "addGroup");
@@ -65,6 +63,8 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 		addSiteURL.setParameter("creationType", _siteInitializerItem.getType());
 		addSiteURL.setParameter(
 			"siteInitializerKey", _siteInitializerItem.getSiteInitializerKey());
+
+		Map<String, String> data = new HashMap<>();
 
 		data.put("add-site-url", addSiteURL.toString());
 

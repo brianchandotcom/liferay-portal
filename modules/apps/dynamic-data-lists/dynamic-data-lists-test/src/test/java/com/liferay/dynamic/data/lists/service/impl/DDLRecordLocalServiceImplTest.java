@@ -195,9 +195,9 @@ public class DDLRecordLocalServiceImplTest {
 	protected void assertToFields(Collection<Serializable> fieldValues)
 		throws Exception {
 
-		Map<String, Serializable> fieldsMap = new HashMap<>();
-
 		String fieldName = StringUtil.randomString();
+
+		Map<String, Serializable> fieldsMap = new HashMap<>();
 
 		fieldsMap.put(fieldName, (Serializable)fieldValues);
 
@@ -210,9 +210,9 @@ public class DDLRecordLocalServiceImplTest {
 	}
 
 	protected void assertToFields(Serializable[] fieldValues) throws Exception {
-		Map<String, Serializable> fieldsMap = new HashMap<>();
-
 		String fieldName = StringUtil.randomString();
+
+		Map<String, Serializable> fieldsMap = new HashMap<>();
 
 		fieldsMap.put(fieldName, (Serializable)fieldValues);
 
@@ -226,9 +226,9 @@ public class DDLRecordLocalServiceImplTest {
 	}
 
 	protected Field toField(Serializable fieldValue) throws Exception {
-		Map<String, Serializable> fieldsMap = new HashMap<>();
-
 		String fieldName = StringUtil.randomString();
+
+		Map<String, Serializable> fieldsMap = new HashMap<>();
 
 		fieldsMap.put(fieldName, fieldValue);
 

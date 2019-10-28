@@ -166,11 +166,11 @@ public class DLFileEntryDDMFormValuesReaderTest {
 			DDMStructure ddmStructure)
 		throws Exception {
 
-		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
-
 		DDMForm ddmForm = createDDMForm();
 
 		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+
+		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
 
 		ddmFormValuesMap.put(ddmStructure.getStructureKey(), ddmFormValues);
 

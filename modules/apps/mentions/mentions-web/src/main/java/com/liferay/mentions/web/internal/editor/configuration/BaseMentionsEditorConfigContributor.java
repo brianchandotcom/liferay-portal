@@ -54,12 +54,10 @@ public class BaseMentionsEditorConfigContributor
 			"resultTextLocator", "screenName"
 		);
 
-		PortletURL autoCompleteUserURL =
-			requestBackedPortletURLFactory.createResourceURL(
-				MentionsPortletKeys.MENTIONS);
+		PortletURL portletURL = getPortletURL(requestBackedPortletURLFactory);
 
 		String source =
-			autoCompleteUserURL.toString() + "&" +
+			portletURL.toString() + "&" +
 				PortalUtil.getPortletNamespace(MentionsPortletKeys.MENTIONS);
 
 		triggerJSONObject.put(
@@ -97,6 +95,13 @@ public class BaseMentionsEditorConfigContributor
 		}
 
 		jsonObject.put("extraPlugins", extraPlugins);
+	}
+
+	protected PortletURL getPortletURL(
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+
+		return requestBackedPortletURLFactory.createResourceURL(
+			MentionsPortletKeys.MENTIONS);
 	}
 
 }

@@ -84,41 +84,42 @@ class Form extends Component {
 
 				return editor;
 			}),
-			this._createEditor('descriptionEditor')
+			this._createEditor('descriptionEditor'),
+			this._getTranslationManager()
 		];
-
-		dependencies.push(this._getTranslationManager());
 
 		if (this.isFormBuilderView()) {
 			dependencies.push(this._getSettingsDDMForm());
 		}
 
 		Promise.all(dependencies).then(results => {
-			const translationManager = results[2];
+			this._translationManager = results[2];
 
-			if (translationManager) {
+			const translationManager = this._translationManager;
+
+			if (this._translationManager) {
 				this.props.defaultLanguageId = translationManager.get(
 					'defaultLocale'
 				);
+
 				this.props.editingLanguageId = translationManager.get(
 					'editingLocale'
 				);
 
-				translationManager.on('editingLocaleChange', event => {
-					this.props.editingLanguageId = event.newVal;
+				this._translationManager.on('editingLocale', ({newValue}) => {
+					this.props.editingLanguageId = newValue;
 
-					if (
-						translationManager.get('defaultLocale') === event.newVal
-					) {
+					if (translationManager.get('defaultLocale') === newValue) {
 						this.showAddButton();
 					} else {
 						this.hideAddButton();
 					}
 				});
 
-				translationManager.on('deleteAvailableLocale', event => {
-					store.emit('languageIdDeleted', event);
-				});
+				this._translationManager.on(
+					'availableLocales',
+					this.onAvailableLocalesRemoved.bind(this)
+				);
 			}
 
 			this._stateSyncronizer = new StateSyncronizer(
@@ -262,6 +263,11 @@ class Form extends Component {
 		Notifications.closeAlert();
 
 		this._eventHandler.removeAllListeners();
+
+		this._translationManager.detach(
+			'availableLocales',
+			this.onAvailableLocalesRemoved.bind(this)
+		);
 	}
 
 	hideAddButton() {
@@ -295,6 +301,24 @@ class Form extends Component {
 		const {ruleBuilderVisible} = this.state;
 
 		return ruleBuilderVisible && this.isFormBuilderView();
+	}
+
+	onAvailableLocalesRemoved({previousValue, newValue}) {
+		const {store} = this.refs;
+
+		const removedItems = new Map();
+
+		previousValue.forEach((value, key) => {
+			if (!newValue.has(key)) {
+				removedItems.set(key, value);
+			}
+		});
+
+		if (removedItems.size > 0) {
+			store.emit('languageIdDeleted', {
+				locale: removedItems.keys().next().value
+			});
+		}
 	}
 
 	openSidebar() {
@@ -668,17 +692,7 @@ class Form extends Component {
 	}
 
 	_getTranslationManager() {
-		let promise;
-
-		const translationManager = Liferay.component('translationManager');
-
-		if (translationManager) {
-			promise = Promise.resolve(translationManager);
-		} else {
-			promise = Liferay.componentReady('translationManager');
-		}
-
-		return promise;
+		return Liferay.componentReady('translationManager');
 	}
 
 	_handleBackButtonClicked(event) {

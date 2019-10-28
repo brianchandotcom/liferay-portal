@@ -25,36 +25,41 @@ import Component, {Config} from 'metal-jsx';
  */
 class DataLayoutBuilder extends Component {
 	attached() {
-		const {layoutProvider} = this.refs;
 		const {localizable} = this.props;
 
 		if (localizable) {
-			const dependencies = [this._getTranslationManager()];
+			const translationManagerPromise = this._getTranslationManager();
 
-			Promise.all(dependencies).then(results => {
-				const translationManager = results[0];
+			translationManagerPromise.then(translationManager => {
+				translationManager.on('availableLocales', ({newValue}) => {
+					this.props.availableLanguageIds = [...newValue.keys()];
+				});
 
-				if (translationManager) {
-					translationManager.on('availableLocalesChange', event => {
-						this.props.availableLanguageIds = event.newVal.map(
-							({id}) => id
-						);
-					});
+				translationManager.on('editingLocale', ({newValue}) => {
+					this.props.editingLanguageId = newValue;
+				});
 
-					translationManager.on('editingLocaleChange', event => {
-						this.props.editingLanguageId = event.newVal;
-					});
-
-					translationManager.on('deleteAvailableLocale', event => {
-						layoutProvider.emit('languageIdDeleted', event);
-					});
-				}
+				translationManager.on(
+					'availableLocales',
+					this.onAvailableLocalesRemoved.bind(this)
+				);
 			});
 		}
 	}
 
 	dispatch(event, payload) {
 		this.refs.layoutProvider.dispatch(event, payload);
+	}
+
+	disposed() {
+		if (this._translationManager) {
+			this._translationManager.detach(
+				'availableLocales',
+				this.onAvailableLocalesRemoved.bind(this)
+			);
+
+			this._translationManager = null;
+		}
 	}
 
 	getDefinitionField({settingsContext}) {
@@ -195,6 +200,25 @@ class DataLayoutBuilder extends Component {
 		};
 	}
 
+	onAvailableLocalesRemoved({newValue, previousValue}) {
+		const {layoutProvider} = this.refs;
+
+		const removedItems = new Map();
+
+		previousValue.forEach((value, key) => {
+			if (!newValue.has(key)) {
+				removedItems.set(key, value);
+			}
+		});
+
+		if (removedItems.size > 0) {
+			layoutProvider.emit(
+				'languageIdDeleted',
+				removedItems.values().next().value
+			);
+		}
+	}
+
 	render() {
 		const {
 			context,
@@ -246,17 +270,7 @@ class DataLayoutBuilder extends Component {
 	}
 
 	_getTranslationManager() {
-		let promise;
-
-		const translationManager = Liferay.component('translationManager');
-
-		if (translationManager) {
-			promise = Promise.resolve(translationManager);
-		} else {
-			promise = Liferay.componentReady('translationManager');
-		}
-
-		return promise;
+		return Liferay.componentReady('translationManager');
 	}
 
 	_handlePagesChanged({newVal}) {

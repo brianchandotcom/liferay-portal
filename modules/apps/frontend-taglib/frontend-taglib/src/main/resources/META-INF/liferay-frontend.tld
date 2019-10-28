@@ -1454,7 +1454,7 @@
 	<tag>
 		<description>Creates a UI component for managing translations of associated content.</description>
 		<name>translation-manager</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.soy.TranslationManagerTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.TranslationManagerTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description>Available locales of translation languages from which to choose.</description>

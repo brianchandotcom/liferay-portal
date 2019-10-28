@@ -33,14 +33,13 @@ class StateSyncronizer extends Component {
 		);
 
 		if (translationManager) {
-			this._eventHandler.add(
-				translationManager.on('deleteAvailableLocale', ({locale}) => {
-					this.deleteLanguageId(locale);
-				}),
-				translationManager.on('editingLocaleChange', event => {
-					this.syncEditors(event.newVal);
-				})
+			translationManager.on(
+				'availableLocales',
+				this.onRemoveAvailableLocales.bind(this)
 			);
+			translationManager.on('editingLocale', ({newValue}) => {
+				this.syncEditors(newValue);
+			});
 		}
 	}
 
@@ -54,9 +53,15 @@ class StateSyncronizer extends Component {
 	}
 
 	disposeInternal() {
+		const {translationManager} = this.props;
 		super.disposeInternal();
 
 		this._eventHandler.removeAllListeners();
+
+		translationManager.detach(
+			'availableLocales',
+			this.onRemoveAvailableLocales.bind(this)
+		);
 	}
 
 	getAvailableLanguageIds() {
@@ -64,10 +69,11 @@ class StateSyncronizer extends Component {
 		let availableLanguageIds = [{id: this.getDefaultLanguageId()}];
 
 		if (translationManager) {
-			availableLanguageIds = translationManager.get('availableLocales');
+			const availableLocalesMap = translationManager.get('availableLocales');
+			availableLanguageIds = [...availableLocalesMap.keys()];
 		}
 
-		return availableLanguageIds.map(({id}) => id);
+		return availableLanguageIds;
 	}
 
 	getDefaultLanguageId() {
@@ -113,6 +119,20 @@ class StateSyncronizer extends Component {
 		const {store} = this.props;
 
 		return FormSupport.emptyPages(store.state.pages);
+	}
+
+	onRemoveAvailableLocales({newValue, previousValue}) {
+		const removedItems = new Map();
+
+		previousValue.forEach((value, key) => {
+			if (!newValue.has(key)) {
+				removedItems.set(key, value);
+			}
+		});
+
+		if (removedItems.length > 0) {
+			this.deleteLanguageId(removedItems.keys().next().value);
+		}
 	}
 
 	syncEditors(editingLanguageId = this.getDefaultLanguageId()) {

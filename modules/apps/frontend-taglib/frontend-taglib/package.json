@@ -7,13 +7,17 @@
 		"@clayui/form": "3.2.0",
 		"@clayui/icon": "3.0.1",
 		"@clayui/list": "3.0.3",
+		"@clayui/modal": "3.1.0",
 		"clay-dropdown": "2.18.5",
 		"clay-modal": "2.18.5",
 		"frontend-js-web": "*",
 		"metal": "2.16.8",
 		"metal-component": "2.16.8",
 		"metal-soy": "2.16.8",
-		"metal-state": "2.16.8"
+		"metal-state": "2.16.8",
+		"prop-types": "15.7.2",
+		"react": "16.9.0",
+		"react-dom": "16.9.0"
 	},
 	"name": "frontend-taglib",
 	"scripts": {

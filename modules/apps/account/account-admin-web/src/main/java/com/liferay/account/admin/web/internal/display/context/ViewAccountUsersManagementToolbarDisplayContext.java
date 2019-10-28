@@ -14,6 +14,7 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
+import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -139,7 +140,18 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isDisabled() {
-		return false;
+		long accountEntryId = ParamUtil.getLong(
+			liferayPortletRequest, "accountEntryId");
+
+		long accountUsersCount =
+			AccountEntryUserRelLocalServiceUtil.
+				getAccountEntryUserRelsCountByAccountEntryId(accountEntryId);
+
+		if (accountUsersCount > 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

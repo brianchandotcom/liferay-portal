@@ -80,6 +80,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -219,11 +220,11 @@ public class JournalArticleStagedModelDataHandler
 			throw eire;
 		}
 
-		Map<String, String> referenceAttributes = new HashMap<>();
-
-		referenceAttributes.put("article-resource-uuid", articleResourceUuid);
-
-		referenceAttributes.put("article-id", article.getArticleId());
+		Map<String, String> referenceAttributes = HashMapBuilder.put(
+			"article-resource-uuid", articleResourceUuid
+		).put(
+			"article-id", article.getArticleId()
+		).build();
 
 		long defaultUserId = 0;
 

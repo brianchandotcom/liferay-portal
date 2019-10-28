@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -1372,14 +1373,13 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 		User user = getUser();
 
-		Map<String, String> portletPreferencesMap = new HashMap<>();
-
-		portletPreferencesMap.put(
+		Map<String, String> portletPreferencesMap = HashMapBuilder.put(
 			SyncServiceConfigurationKeys.
 				SYNC_CLIENT_AUTHENTICATION_RETRY_INTERVAL,
 			String.valueOf(
 				SyncServiceConfigurationValues.
-					SYNC_CLIENT_AUTHENTICATION_RETRY_INTERVAL));
+					SYNC_CLIENT_AUTHENTICATION_RETRY_INTERVAL)
+		).build();
 
 		int batchFileMaxSize = PrefsPropsUtil.getInteger(
 			user.getCompanyId(),

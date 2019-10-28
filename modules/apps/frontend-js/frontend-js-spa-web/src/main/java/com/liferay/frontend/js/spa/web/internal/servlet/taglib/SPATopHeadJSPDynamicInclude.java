@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,45 +66,46 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Map<String, String> values = new HashMap<>();
-
-		values.put(
+		Map<String, String> values = HashMapBuilder.put(
 			"cacheExpirationTime",
 			String.valueOf(
-				_spaUtil.getCacheExpirationTime(themeDisplay.getCompanyId())));
-
-		values.put(
+				_spaUtil.getCacheExpirationTime(themeDisplay.getCompanyId()))
+		).put(
 			"clearScreensCache",
 			String.valueOf(
 				_spaUtil.isClearScreensCache(
-					httpServletRequest, httpServletRequest.getSession())));
-		values.put("debugEnabled", String.valueOf(_spaUtil.isDebugEnabled()));
-		values.put("excludedPaths", _spaUtil.getExcludedPaths());
-		values.put(
+					httpServletRequest, httpServletRequest.getSession()))
+		).put(
+			"debugEnabled", String.valueOf(_spaUtil.isDebugEnabled())
+		).put(
+			"excludedPaths", _spaUtil.getExcludedPaths()
+		).put(
 			"loginRedirect",
-			_html.escapeJS(_spaUtil.getLoginRedirect(httpServletRequest)));
-		values.put(
+			_html.escapeJS(_spaUtil.getLoginRedirect(httpServletRequest))
+		).put(
 			"message",
 			_language.get(
 				_spaUtil.getLanguageResourceBundle(
 					"frontend-js-spa-web", themeDisplay.getLocale()),
-				"it-looks-like-this-is-taking-longer-than-expected"));
-		values.put(
+				"it-looks-like-this-is-taking-longer-than-expected")
+		).put(
 			"navigationExceptionSelectors",
-			_spaUtil.getNavigationExceptionSelectors());
-		values.put(
-			"portletsBlacklist", _spaUtil.getPortletsBlacklist(themeDisplay));
-		values.put(
-			"requestTimeout", String.valueOf(_spaUtil.getRequestTimeout()));
-		values.put(
-			"timeout", String.valueOf(_spaUtil.getUserNotificationTimeout()));
-		values.put(
+			_spaUtil.getNavigationExceptionSelectors()
+		).put(
+			"portletsBlacklist", _spaUtil.getPortletsBlacklist(themeDisplay)
+		).put(
+			"requestTimeout", String.valueOf(_spaUtil.getRequestTimeout())
+		).put(
+			"timeout", String.valueOf(_spaUtil.getUserNotificationTimeout())
+		).put(
 			"title",
 			_language.get(
 				_spaUtil.getLanguageResourceBundle(
 					"frontend-js-spa-web", themeDisplay.getLocale()),
-				"oops"));
-		values.put("validStatusCodes", _spaUtil.getValidStatusCodes());
+				"oops")
+		).put(
+			"validStatusCodes", _spaUtil.getValidStatusCodes()
+		).build();
 
 		String initModuleName = _npmResolver.resolveModuleName(
 			"frontend-js-spa-web/liferay/init.es");

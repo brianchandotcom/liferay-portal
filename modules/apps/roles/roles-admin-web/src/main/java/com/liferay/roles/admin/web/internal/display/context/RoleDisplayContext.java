@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -36,7 +37,6 @@ import com.liferay.roles.admin.web.internal.role.type.contributor.RoleTypeContri
 import com.liferay.roles.admin.web.internal.role.type.contributor.util.RoleTypeContributorRetrieverUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -283,9 +283,9 @@ public class RoleDisplayContext {
 		assignMembersURL.setParameter(
 			"roleId", String.valueOf(role.getRoleId()));
 
-		Map<String, String> tabsURLs = new HashMap<>();
-
-		tabsURLs.put("assignees", assignMembersURL.toString());
+		Map<String, String> tabsURLs = HashMapBuilder.put(
+			"assignees", assignMembersURL.toString()
+		).build();
 
 		PortletURL definePermissionsURL = _renderResponse.createRenderURL();
 

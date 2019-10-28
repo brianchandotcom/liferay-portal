@@ -48,7 +48,6 @@ import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -212,34 +211,40 @@ public class OrganizationIndexerIndexedFieldsTest {
 
 		String regionName = StringUtil.toLowerCase(region.getName());
 
-		Map<String, String> map = new HashMap<>();
-
-		map.put(Field.COMPANY_ID, String.valueOf(organization.getCompanyId()));
-		map.put(Field.ENTRY_CLASS_NAME, Organization.class.getName());
-		map.put(
+		Map<String, String> map = HashMapBuilder.put(
+			Field.COMPANY_ID, String.valueOf(organization.getCompanyId())
+		).put(
+			Field.ENTRY_CLASS_NAME, Organization.class.getName()
+		).put(
 			Field.ENTRY_CLASS_PK,
-			String.valueOf(organization.getOrganizationId()));
-		map.put(Field.NAME, organization.getName());
-		map.put(
+			String.valueOf(organization.getOrganizationId())
+		).put(
+			Field.NAME, organization.getName()
+		).put(
 			Field.NAME + "_sortable",
-			StringUtil.toLowerCase(organization.getName()));
-		map.put(
+			StringUtil.toLowerCase(organization.getName())
+		).put(
 			Field.ORGANIZATION_ID,
-			String.valueOf(organization.getOrganizationId()));
-		map.put(Field.TREE_PATH, organization.getTreePath());
-		map.put(Field.USER_ID, String.valueOf(organization.getUserId()));
-		map.put(
-			Field.USER_NAME,
-			StringUtil.toLowerCase(organization.getUserName()));
-		map.put("country", countryName);
-		map.put("nameTreePath", organization.getName());
-		map.put(
+			String.valueOf(organization.getOrganizationId())
+		).put(
+			Field.TREE_PATH, organization.getTreePath()
+		).put(
+			Field.USER_ID, String.valueOf(organization.getUserId())
+		).put(
+			Field.USER_NAME, StringUtil.toLowerCase(organization.getUserName())
+		).put(
+			"country", countryName
+		).put(
+			"nameTreePath", organization.getName()
+		).put(
 			"nameTreePath_String_sortable",
-			StringUtil.toLowerCase(organization.getName()));
-		map.put(
+			StringUtil.toLowerCase(organization.getName())
+		).put(
 			"parentOrganizationId",
-			String.valueOf(organization.getParentOrganizationId()));
-		map.put("region", regionName);
+			String.valueOf(organization.getParentOrganizationId())
+		).put(
+			"region", regionName
+		).build();
 
 		indexedFieldsFixture.populateUID(
 			Organization.class.getName(), organization.getOrganizationId(),

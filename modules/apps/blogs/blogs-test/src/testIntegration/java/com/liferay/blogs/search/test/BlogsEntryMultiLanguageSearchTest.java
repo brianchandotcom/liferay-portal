@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -137,10 +138,11 @@ public class BlogsEntryMultiLanguageSearchTest {
 	private Map<String, String> _getMapResult(BlogsEntry blogsEntry) {
 		String title = blogsEntry.getTitle();
 
-		HashMap<String, String> map = new HashMap<>();
-
-		map.put(Field.TITLE, title);
-		map.put(Field.getSortableFieldName(Field.TITLE), title);
+		HashMap<String, String> map = HashMapBuilder.put(
+			Field.TITLE, title
+		).put(
+			Field.getSortableFieldName(Field.TITLE), title
+		).build();
 
 		for (Locale locale :
 				LanguageUtil.getAvailableLocales(blogsEntry.getGroupId())) {

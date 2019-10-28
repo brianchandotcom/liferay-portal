@@ -24,7 +24,6 @@ import org.talend.components.api.component.runtime.DependenciesReader;
 import org.talend.components.api.component.runtime.ExecutionEngine;
 import org.talend.components.api.component.runtime.JarRuntimeInfo;
 import org.talend.components.api.properties.ComponentProperties;
-import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.runtime.RuntimeInfo;
 import org.talend.daikon.runtime.RuntimeUtil;
 import org.talend.daikon.sandbox.SandboxedInstance;
@@ -57,7 +56,7 @@ public abstract class LiferayBaseComponentDefinition
 		LiferayConnectionProperties liferayConnectionProperties) {
 
 		try (SandboxedInstance sandboxedInstance = _getSandboxedInstance(
-				RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+				RUNTIME_SOURCE_OR_SINK_CLASS_NAME, false)) {
 
 			OASSource oasSource = (OASSource)sandboxedInstance.getInstance();
 
@@ -91,49 +90,6 @@ public abstract class LiferayBaseComponentDefinition
 		};
 	}
 
-	/**
-	 * Defines a list of Return Properties (a.k.a After Properties).
-	 *
-	 * <p>
-	 * These properties collect different metrics and information during
-	 * component execution. Values of these properties are returned after
-	 * component finished his work. Runtime Platform may use this method to
-	 * retrieve this list and show in UI.
-	 * </p>
-	 *
-	 * <p>
-	 * Here, it is defined two properties:
-	 * </p>
-	 *
-	 * <ol>
-	 * <li>
-	 * Error message.
-	 * </li>
-	 * <li>
-	 * Number of records processed.
-	 * </li>
-	 * </ol>
-	 *
-	 * <p>
-	 * For Error message property no efforts are required from component
-	 * developer to set its value. Runtime Platform will set its value by itself
-	 * in case of Exception in runtime.
-	 * </p>
-	 *
-	 * <p>
-	 * As for Number of records property see Reader implementation in runtime
-	 * part.
-	 * </p>
-	 *
-	 * @review
-	 */
-	@Override
-	public Property<?>[] getReturnProperties() {
-		return new Property[] {
-			RETURN_ERROR_MESSAGE_PROP, RETURN_TOTAL_RECORD_COUNT_PROP
-		};
-	}
-
 	public static class SandboxedInstanceProvider {
 
 		public static final SandboxedInstanceProvider INSTANCE =
@@ -157,12 +113,6 @@ public abstract class LiferayBaseComponentDefinition
 			return RuntimeUtil.createRuntimeClass(runtimeInfo, classLoader);
 		}
 
-	}
-
-	private static SandboxedInstance _getSandboxedInstance(
-		String runtimeClassName) {
-
-		return _getSandboxedInstance(runtimeClassName, false);
 	}
 
 	private static SandboxedInstance _getSandboxedInstance(

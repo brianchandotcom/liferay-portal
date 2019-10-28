@@ -52,6 +52,8 @@ export default function NodeListItem({
 
 	const childrenId = `node-list-item-${node.id}-children`;
 
+	const symbol = expanded ? 'hr' : 'plus';
+
 	return (
 		<>
 			<div className={nodeListItemClassNames}>
@@ -68,7 +70,8 @@ export default function NodeListItem({
 					>
 						<ClayIcon
 							className="lfr-treeview-node-list-item__button-icon"
-							symbol={expanded ? 'hr' : 'plus'}
+							key={symbol}
+							symbol={symbol}
 						/>
 					</button>
 				)}

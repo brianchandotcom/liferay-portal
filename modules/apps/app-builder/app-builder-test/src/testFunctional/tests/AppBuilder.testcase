@@ -157,7 +157,7 @@ definition {
 
 	@description = "Add a Form View"
 	@priority = "5"
-	test AddFormSimpleFormView {
+	test AddSimpleFormView {
 		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(
@@ -166,7 +166,27 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 
-		FormViewBuilder.addFieldByDragAndDrop(fieldType = "Text Field");
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+
+
+	}
+
+	@description = "Add a Table View"
+	@priority = "5"
+	test AddSimpleTableView {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
 	}
 
 }

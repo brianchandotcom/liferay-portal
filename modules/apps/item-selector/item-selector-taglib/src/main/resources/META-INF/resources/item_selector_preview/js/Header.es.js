@@ -72,7 +72,10 @@ const Header = ({
 							</ClayButton>
 						</li>
 						<li class="nav-item">
-							<ClayButton displayType="primary" onClick={handleClickDone}>
+							<ClayButton
+								displayType="primary"
+								onClick={handleClickDone}
+							>
 								{Liferay.Language.get('done')}
 							</ClayButton>
 						</li>

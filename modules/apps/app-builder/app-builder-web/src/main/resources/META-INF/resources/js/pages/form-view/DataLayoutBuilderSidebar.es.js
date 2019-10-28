@@ -13,6 +13,7 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import React, {
@@ -180,7 +181,12 @@ const SettingsSidebarBody = () => {
 		});
 	}, [focusedFieldName, form]);
 
-	return <div ref={formRef}></div>;
+	return (
+		<ClayForm
+			onSubmit={event => event.preventDefault()}
+			ref={formRef}
+		></ClayForm>
+	);
 };
 
 const SettingsSidebarHeader = () => {

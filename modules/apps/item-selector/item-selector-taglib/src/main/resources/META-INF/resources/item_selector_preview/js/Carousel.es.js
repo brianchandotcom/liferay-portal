@@ -31,7 +31,7 @@ const Arrow = ({direction, handleClick}) => (
 	</div>
 );
 
-const InfoPanel = (metadata) => {
+const InfoPanel = metadata => {
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
 
 	const imageData = JSON.parse(metadata.metadata);
@@ -48,7 +48,7 @@ const InfoPanel = (metadata) => {
 	});
 
 	const itemsContent = imageData.groups.map((group, index) => {
-		const itemContentTab = group.data.map((item) => {
+		const itemContentTab = group.data.map(item => {
 			return (
 				<>
 					<dt class="sidebar-dt">{item.key}</dt>
@@ -59,9 +59,7 @@ const InfoPanel = (metadata) => {
 
 		return (
 			<ClayTabs.TabPane aria-labelledby={`tab-${index}`}>
-				<dl class="sidebar-dl sidebar-section">
-					{itemContentTab}
-				</dl>
+				<dl class="sidebar-dl sidebar-section">{itemContentTab}</dl>
 			</ClayTabs.TabPane>
 		);
 	});
@@ -69,9 +67,7 @@ const InfoPanel = (metadata) => {
 	return (
 		<div className="info-panel sidenav-menu-slider">
 			<div className="sidebar-header">
-				<ClayTabs modern>
-				 	{itemsHeader}
-				</ClayTabs>
+				<ClayTabs modern>{itemsHeader}</ClayTabs>
 			</div>
 			<div className="sidebar-body">
 				<ClayTabs.Content activeIndex={activeTabKeyValue} fade>

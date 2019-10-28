@@ -165,10 +165,6 @@ public class FragmentDisplayContext {
 			fragmentCollectionContributor.getFragmentEntries(
 				_themeDisplay.getLocale());
 
-		fragmentEntries.addAll(
-			fragmentCollectionContributor.getFragmentEntries(
-				_themeDisplay.getLocale()));
-
 		contributedFragmentEntriesSearchContainer.setResults(
 			ListUtil.subList(
 				fragmentEntries,

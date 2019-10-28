@@ -1158,7 +1158,6 @@ public class PortletImportControllerImpl implements PortletImportController {
 		portletDataContext.setExportImportProcessId(
 			String.valueOf(
 				exportImportConfiguration.getExportImportConfigurationId()));
-		portletDataContext.setOldPlid(targetPlid);
 		portletDataContext.setPlid(targetPlid);
 		portletDataContext.setPortletId(portletId);
 		portletDataContext.setPrivateLayout(layout.isPrivateLayout());

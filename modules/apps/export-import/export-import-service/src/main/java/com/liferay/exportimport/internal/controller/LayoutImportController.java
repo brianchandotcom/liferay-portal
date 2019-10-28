@@ -801,11 +801,6 @@ public class LayoutImportController implements ImportController {
 
 			portletDataContext.setPlid(plid);
 
-			long oldPlid = GetterUtil.getLong(
-				portletElement.attributeValue("old-plid"));
-
-			portletDataContext.setOldPlid(oldPlid);
-
 			portletDataContext.setPortletId(portletId);
 
 			if (BackgroundTaskThreadLocal.hasBackgroundTask()) {

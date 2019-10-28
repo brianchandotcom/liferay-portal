@@ -354,7 +354,6 @@ public class StagedGroupStagedModelDataHandler
 		throws Exception {
 
 		portletDataContext.setPlid(plid);
-		portletDataContext.setOldPlid(plid);
 		portletDataContext.setPortletId(portletId);
 		portletDataContext.setScopeGroupId(scopeGroupId);
 		portletDataContext.setScopeType(scopeType);
@@ -526,11 +525,6 @@ public class StagedGroupStagedModelDataHandler
 			}
 
 			portletDataContext.setPlid(plid);
-
-			long oldPlid = GetterUtil.getLong(
-				portletElement.attributeValue("old-plid"));
-
-			portletDataContext.setOldPlid(oldPlid);
 
 			portletDataContext.setPortletId(portletId);
 

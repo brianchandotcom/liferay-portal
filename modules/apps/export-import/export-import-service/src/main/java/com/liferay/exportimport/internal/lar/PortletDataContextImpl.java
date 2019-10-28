@@ -948,15 +948,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _newPrimaryKeysMaps;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public long getOldPlid() {
-		return _oldPlid;
-	}
-
 	@Override
 	public Map<String, String[]> getParameterMap() {
 		return _parameterMap;
@@ -1721,11 +1712,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public void setNewLayouts(List<Layout> newLayouts) {
 		_newLayouts = newLayouts;
-	}
-
-	@Override
-	public void setOldPlid(long oldPlid) {
-		_oldPlid = oldPlid;
 	}
 
 	@Override
@@ -2720,7 +2706,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private transient List<Layout> _newLayouts;
 	private final Map<String, Map<?, ?>> _newPrimaryKeysMaps = new HashMap<>();
 	private final Set<String> _notUniquePerLayout = new HashSet<>();
-	private long _oldPlid;
 	private Map<String, String[]> _parameterMap;
 	private final Map<String, List<KeyValuePair>> _permissionsMap =
 		new HashMap<>();

@@ -334,7 +334,6 @@ public class PortletExportControllerImpl implements PortletExportController {
 		portletElement.addAttribute("portlet-id", portlet.getPortletId());
 		portletElement.addAttribute(
 			"root-portlet-id", portlet.getRootPortletId());
-		portletElement.addAttribute("old-plid", String.valueOf(plid));
 		portletElement.addAttribute(
 			"scope-group-id",
 			String.valueOf(portletDataContext.getScopeGroupId()));
@@ -1209,7 +1208,6 @@ public class PortletExportControllerImpl implements PortletExportController {
 		portletDataContext.setExportImportProcessId(
 			String.valueOf(
 				exportImportConfiguration.getExportImportConfigurationId()));
-		portletDataContext.setOldPlid(sourcePlid);
 		portletDataContext.setPlid(sourcePlid);
 		portletDataContext.setPortletId(portletId);
 		portletDataContext.setType("portlet");

@@ -239,12 +239,6 @@ public interface PortletDataContext extends Serializable {
 
 	public Map<String, Map<?, ?>> getNewPrimaryKeysMaps();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public long getOldPlid();
-
 	public Map<String, String[]> getParameterMap();
 
 	public Map<String, List<KeyValuePair>> getPermissions();
@@ -427,8 +421,6 @@ public interface PortletDataContext extends Serializable {
 	public void setMissingReferencesElement(Element missingReferencesElement);
 
 	public void setNewLayouts(List<Layout> newLayouts);
-
-	public void setOldPlid(long oldPlid);
 
 	public void setParameterMap(Map<String, String[]> parameterMap);
 

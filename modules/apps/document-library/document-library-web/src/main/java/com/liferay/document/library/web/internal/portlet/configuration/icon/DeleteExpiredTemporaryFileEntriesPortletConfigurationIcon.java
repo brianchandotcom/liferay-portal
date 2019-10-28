@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.portlet.configuration.icon;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
+import com.liferay.document.library.web.internal.util.DLFolderUtil;
 import com.liferay.document.library.web.internal.util.DLPortletConfigurationIconUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -109,7 +110,7 @@ public class DeleteExpiredTemporaryFileEntriesPortletConfigurationIcon
 			() -> {
 				Folder folder = ActionUtil.getFolder(portletRequest);
 
-				if (!folder.isMountPoint()) {
+				if (!DLFolderUtil.isRepositoryRoot(folder)) {
 					return false;
 				}
 

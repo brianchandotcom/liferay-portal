@@ -423,6 +423,36 @@ public class LayoutCTTest {
 	}
 
 	@Test
+	public void testPublishModifiedLayoutMergeableConflict() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		String title = layout.getTitle();
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			layout = _layoutLocalService.updateLayout(layout);
+		}
+
+		layout = _layoutLocalService.getLayout(layout.getPlid());
+
+		layout.setTitle(RandomTestUtil.randomString());
+
+		layout = _layoutLocalService.updateLayout(layout);
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		Layout productionLayout = _layoutLocalService.fetchLayout(
+			layout.getPlid());
+
+		Assert.assertNotNull(productionLayout);
+
+		Assert.assertEquals(title, productionLayout.getTitle());
+	}
+
+	@Test
 	public void testPublishModifiedLayoutWithIgnorableChange()
 		throws Exception {
 
@@ -497,6 +527,34 @@ public class LayoutCTTest {
 		Assert.assertNotNull(productionLayout);
 
 		Assert.assertEquals(modifiedDate, productionLayout.getModifiedDate());
+	}
+
+	@Test
+	public void testPublishModifiedLayoutWithMergeableChange()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		String title = RandomTestUtil.randomString();
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			layout.setTitle(title);
+
+			layout = _layoutLocalService.updateLayout(layout);
+		}
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		Layout productionLayout = _layoutLocalService.fetchLayout(
+			layout.getPlid());
+
+		Assert.assertNotNull(productionLayout);
+
+		Assert.assertEquals(title, productionLayout.getTitle());
 	}
 
 	@Test

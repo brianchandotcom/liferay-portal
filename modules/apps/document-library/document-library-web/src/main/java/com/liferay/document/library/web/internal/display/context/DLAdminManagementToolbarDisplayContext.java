@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -68,7 +69,6 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -793,9 +793,9 @@ public class DLAdminManagementToolbarDisplayContext {
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		final Map<String, String> orderColumns = new HashMap<>();
-
-		orderColumns.put("creationDate", "create-date");
+		final Map<String, String> orderColumns = HashMapBuilder.put(
+			"creationDate", "create-date"
+		).build();
 
 		if (_getFileEntryTypeId() == -1) {
 			orderColumns.put("downloads", "downloads");

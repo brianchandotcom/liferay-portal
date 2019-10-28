@@ -14,10 +14,11 @@
 
 package com.liferay.saml.opensaml.integration.internal.bootstrap;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import net.shibboleth.utilities.java.support.xml.BasicParserPool;
@@ -107,23 +108,21 @@ public class OpenSamlBootstrap {
 
 		BasicParserPool parserPool = new BasicParserPool();
 
-		Map<String, Boolean> builderFeatures = new HashMap<>();
-
-		builderFeatures.put(
-			"http://apache.org/xml/features/disallow-doctype-decl",
-			Boolean.TRUE);
-		builderFeatures.put(
+		Map<String, Boolean> builderFeatures = HashMapBuilder.put(
+			"http://apache.org/xml/features/disallow-doctype-decl", Boolean.TRUE
+		).put(
 			"http://apache.org/xml/features/dom/defer-node-expansion",
-			Boolean.FALSE);
-		builderFeatures.put(
+			Boolean.FALSE
+		).put(
 			"http://javax.xml.XMLConstants/feature/secure-processing",
-			Boolean.TRUE);
-		builderFeatures.put(
+			Boolean.TRUE
+		).put(
 			"http://xml.org/sax/features/external-general-entities",
-			Boolean.FALSE);
-		builderFeatures.put(
+			Boolean.FALSE
+		).put(
 			"http://xml.org/sax/features/external-parameter-entities",
-			Boolean.FALSE);
+			Boolean.FALSE
+		).build();
 
 		parserPool.setBuilderFeatures(builderFeatures);
 

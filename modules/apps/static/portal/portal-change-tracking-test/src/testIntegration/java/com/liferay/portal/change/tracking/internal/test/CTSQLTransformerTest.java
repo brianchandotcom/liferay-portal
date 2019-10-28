@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.CaptureAppender;
@@ -50,7 +51,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -1236,19 +1236,17 @@ public class CTSQLTransformerTest {
 				CTSQLTransformerTest.class.getResourceAsStream(
 					"dependencies/" + expectedOutputSQLFile)));
 
-		Map<String, String> replaceMap = new HashMap<>();
-
-		replaceMap.put("CT_COLLECTION_ID", String.valueOf(ctCollectionId));
-
-		replaceMap.put(
+		Map<String, String> replaceMap = HashMapBuilder.put(
+			"CT_COLLECTION_ID", String.valueOf(ctCollectionId)
+		).put(
 			"MAIN_TABLE_CT_ENTRY_MODEL_CLASS_PKS",
 			_getModifiedAndRemovedModelClassPKSQL(
-				ctCollectionId, MainTable.class));
-
-		replaceMap.put(
+				ctCollectionId, MainTable.class)
+		).put(
 			"REFERENCE_TABLE_CT_ENTRY_MODEL_CLASS_PKS",
 			_getModifiedAndRemovedModelClassPKSQL(
-				ctCollectionId, ReferenceTable.class));
+				ctCollectionId, ReferenceTable.class)
+		).build();
 
 		expectedOutputSQL = StringUtil.replace(
 			expectedOutputSQL, "[$", "$]", replaceMap);

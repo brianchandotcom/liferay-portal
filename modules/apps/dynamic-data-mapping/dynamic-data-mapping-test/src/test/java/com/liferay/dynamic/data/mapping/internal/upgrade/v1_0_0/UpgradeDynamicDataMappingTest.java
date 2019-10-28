@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -605,10 +606,9 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 
 	@Test
 	public void testToXMLWithoutLocalizedData() throws Exception {
-		Map<String, String> expandoValuesMap = new HashMap<>();
-
-		expandoValuesMap.put(
-			"Text", createLocalizationXML(new String[] {"Joe Bloggs"}));
+		Map<String, String> expandoValuesMap = HashMapBuilder.put(
+			"Text", createLocalizationXML(new String[] {"Joe Bloggs"})
+		).build();
 
 		String fieldsDisplay = "Text_INSTANCE_hcxo";
 
@@ -637,12 +637,11 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 
 	@Test
 	public void testToXMLWithRepeatableAndLocalizedData() throws Exception {
-		Map<String, String> expandoValuesMap = new HashMap<>();
-
-		expandoValuesMap.put(
+		Map<String, String> expandoValuesMap = HashMapBuilder.put(
 			"Text",
 			createLocalizationXML(
-				new String[] {"A", "B", "C"}, new String[] {"D", "E", "F"}));
+				new String[] {"A", "B", "C"}, new String[] {"D", "E", "F"})
+		).build();
 
 		String fieldsDisplay =
 			"Text_INSTANCE_hcxo,Text_INSTANCE_vfqd,Text_INSTANCE_ycey";

@@ -28,13 +28,13 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletDisplayTemplatePreferences;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -106,11 +106,11 @@ public class UpgradePortletDisplayTemplatePreferencesTest {
 	protected void setPortletDisplayStyle(String portletId, String displayStyle)
 		throws Exception {
 
-		Map<String, String> portletPreferencesMap = new HashMap<>();
-
-		portletPreferencesMap.put("displayStyle", displayStyle);
-		portletPreferencesMap.put(
-			"displayStyleGroupId", String.valueOf(_group.getGroupId()));
+		Map<String, String> portletPreferencesMap = HashMapBuilder.put(
+			"displayStyle", displayStyle
+		).put(
+			"displayStyleGroupId", String.valueOf(_group.getGroupId())
+		).build();
 
 		LayoutTestUtil.updateLayoutPortletPreferences(
 			_layout, portletId, portletPreferencesMap);

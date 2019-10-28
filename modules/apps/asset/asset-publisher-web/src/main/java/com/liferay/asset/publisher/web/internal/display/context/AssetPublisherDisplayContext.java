@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -566,10 +567,11 @@ public class AssetPublisherDisplayContext {
 				List<Map<String, String>> selectedItems = new ArrayList<>();
 
 				for (String tagName : tagNames) {
-					Map<String, String> item = new HashMap<>();
-
-					item.put("label", tagName);
-					item.put("value", tagName);
+					Map<String, String> item = HashMapBuilder.put(
+						"label", tagName
+					).put(
+						"value", tagName
+					).build();
 
 					selectedItems.add(item);
 				}

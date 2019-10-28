@@ -16,10 +16,10 @@ package com.liferay.message.boards.uad.anonymizer;
 
 import com.liferay.message.boards.exception.RequiredMessageException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -33,17 +33,14 @@ public class MBMessageUADAnonymizer extends BaseMBMessageUADAnonymizer {
 
 	@Override
 	public Map<Class, String> getExceptionMessageMap(Locale locale) {
-		Map<Class, String> exceptionMessageMap = new HashMap<>();
-
-		exceptionMessageMap.put(
+		return HashMapBuilder.put(
 			RequiredMessageException.class,
 			LanguageUtil.get(
 				ResourceBundleUtil.getBundle(
 					locale, BaseMBMessageUADAnonymizer.class),
 				"root-messages-with-multiple-replies-cannot-be-deleted.-" +
-					"delete-the-thread-instead"));
-
-		return exceptionMessageMap;
+					"delete-the-thread-instead")
+		).build();
 	}
 
 }

@@ -18,11 +18,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
@@ -42,11 +42,9 @@ public class SelectSiteRoleVerticalCard implements VerticalCard {
 
 	@Override
 	public Map<String, String> getData() {
-		Map<String, String> data = new HashMap<>();
-
-		data.put("id", String.valueOf(_role.getRoleId()));
-
-		return data;
+		return HashMapBuilder.put(
+			"id", String.valueOf(_role.getRoleId())
+		).build();
 	}
 
 	@Override

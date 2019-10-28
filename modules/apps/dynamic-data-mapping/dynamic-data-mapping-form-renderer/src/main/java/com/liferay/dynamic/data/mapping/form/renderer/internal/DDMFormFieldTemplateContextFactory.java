@@ -34,6 +34,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -259,11 +260,11 @@ public class DDMFormFieldTemplateContextFactory {
 		List<Map<String, String>> list = new ArrayList<>();
 
 		for (KeyValuePair keyValuePair : keyValuePairs) {
-			Map<String, String> option = new HashMap<>();
-
-			option.put("label", keyValuePair.getValue());
-
-			option.put("value", keyValuePair.getKey());
+			Map<String, String> option = HashMapBuilder.put(
+				"label", keyValuePair.getValue()
+			).put(
+				"value", keyValuePair.getKey()
+			).build();
 
 			list.add(option);
 		}

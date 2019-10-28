@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.registry.BasicRegistryImpl;
@@ -284,10 +285,9 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 	}
 
 	protected void setWikiPageResourcePrimKey(long primKey) {
-		Map<String, String> fileBrowserParamsMap = new HashMap<>();
-
-		fileBrowserParamsMap.put(
-			"wikiPageResourcePrimKey", String.valueOf(primKey));
+		Map<String, String> fileBrowserParamsMap = HashMapBuilder.put(
+			"wikiPageResourcePrimKey", String.valueOf(primKey)
+		).build();
 
 		_inputEditorTaglibAttributes.put(
 			"liferay-ui:input-editor:fileBrowserParams", fileBrowserParamsMap);

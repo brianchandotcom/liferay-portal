@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,7 +53,6 @@ import com.liferay.portal.kernel.xml.Element;
 
 import java.io.File;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -122,11 +122,11 @@ public class DDMTemplateStagedModelDataHandler
 	public Map<String, String> getReferenceAttributes(
 		PortletDataContext portletDataContext, DDMTemplate template) {
 
-		Map<String, String> referenceAttributes = new HashMap<>();
-
-		referenceAttributes.put(
-			"referenced-class-name", template.getClassName());
-		referenceAttributes.put("template-key", template.getTemplateKey());
+		Map<String, String> referenceAttributes = HashMapBuilder.put(
+			"referenced-class-name", template.getClassName()
+		).put(
+			"template-key", template.getTemplateKey()
+		).build();
 
 		long defaultUserId = 0;
 

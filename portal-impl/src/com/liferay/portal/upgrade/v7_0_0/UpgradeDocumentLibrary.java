@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -40,7 +41,6 @@ import com.liferay.portal.upgrade.v7_0_0.util.DLFolderTable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -238,20 +238,19 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			long companyId, long groupId)
 		throws Exception {
 
-		Map<String, String> nameLanguageKeys = new HashMap<>();
-
-		nameLanguageKeys.put(
+		Map<String, String> nameLanguageKeys = HashMapBuilder.put(
 			DLFileEntryTypeConstants.NAME_CONTRACT,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_CONTRACT);
-		nameLanguageKeys.put(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_CONTRACT
+		).put(
 			DLFileEntryTypeConstants.NAME_MARKETING_BANNER,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_MARKETING_BANNER);
-		nameLanguageKeys.put(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_MARKETING_BANNER
+		).put(
 			DLFileEntryTypeConstants.NAME_ONLINE_TRAINING,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_ONLINE_TRAINING);
-		nameLanguageKeys.put(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_ONLINE_TRAINING
+		).put(
 			DLFileEntryTypeConstants.NAME_SALES_PRESENTATION,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_SALES_PRESENTATION);
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_SALES_PRESENTATION
+		).build();
 
 		for (Map.Entry<String, String> nameAndKey :
 				nameLanguageKeys.entrySet()) {

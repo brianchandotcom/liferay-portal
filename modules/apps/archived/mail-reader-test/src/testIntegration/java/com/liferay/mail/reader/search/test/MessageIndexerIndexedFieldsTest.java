@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
@@ -37,7 +38,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -133,32 +133,30 @@ public class MessageIndexerIndexedFieldsTest {
 	private Map<String, String> _expectedFieldValues(Message message)
 		throws Exception {
 
-		Map<String, String> map = new HashMap<>();
-
-		map.put(Field.COMPANY_ID, String.valueOf(message.getCompanyId()));
-
-		map.put(Field.CONTENT, message.getBody());
-
-		map.put(Field.ENTRY_CLASS_NAME, Message.class.getName());
-
-		map.put(Field.ENTRY_CLASS_PK, String.valueOf(message.getMessageId()));
-
-		map.put(Field.FOLDER_ID, String.valueOf(message.getFolderId()));
-
-		map.put(Field.TITLE, message.getSubject());
-
-		map.put(Field.USER_ID, String.valueOf(message.getUserId()));
-
-		map.put(Field.USER_NAME, StringUtil.lowerCase(message.getUserName()));
-
-		map.put("accountId", String.valueOf(message.getAccountId()));
-
-		map.put(
-			"remoteMessageId", String.valueOf(message.getRemoteMessageId()));
-
-		map.put(
+		Map<String, String> map = HashMapBuilder.put(
+			Field.COMPANY_ID, String.valueOf(message.getCompanyId())
+		).put(
+			Field.CONTENT, message.getBody()
+		).put(
+			Field.ENTRY_CLASS_NAME, Message.class.getName()
+		).put(
+			Field.ENTRY_CLASS_PK, String.valueOf(message.getMessageId())
+		).put(
+			Field.FOLDER_ID, String.valueOf(message.getFolderId())
+		).put(
+			Field.TITLE, message.getSubject()
+		).put(
+			Field.USER_ID, String.valueOf(message.getUserId())
+		).put(
+			Field.USER_NAME, StringUtil.lowerCase(message.getUserName())
+		).put(
+			"accountId", String.valueOf(message.getAccountId())
+		).put(
+			"remoteMessageId", String.valueOf(message.getRemoteMessageId())
+		).put(
 			Field.getSortableFieldName(Field.TITLE),
-			StringUtil.lowerCase(message.getSubject()));
+			StringUtil.lowerCase(message.getSubject())
+		).build();
 
 		indexedFieldsFixture.populateUID(
 			Message.class.getName(), message.getMessageId(), map);

@@ -26,12 +26,12 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -71,10 +71,11 @@ public class EditImageConfigurationEntryMVCActionCommand
 		String maxHeight = ParamUtil.getString(actionRequest, "maxHeight");
 		String maxWidth = ParamUtil.getString(actionRequest, "maxWidth");
 
-		Map<String, String> properties = new HashMap<>();
-
-		properties.put("max-height", maxHeight);
-		properties.put("max-width", maxWidth);
+		Map<String, String> properties = HashMapBuilder.put(
+			"max-height", maxHeight
+		).put(
+			"max-width", maxWidth
+		).build();
 
 		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(

@@ -21,11 +21,11 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -230,15 +230,17 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 	}
 
 	protected List<Map<String, String>> createDDMFormOptions() {
-		Map<String, String> keyValuePair0 = new HashMap<>();
+		Map<String, String> keyValuePair0 = HashMapBuilder.put(
+			"label", "Label 0"
+		).put(
+			"value", "Value 0"
+		).build();
 
-		keyValuePair0.put("label", "Label 0");
-		keyValuePair0.put("value", "Value 0");
-
-		Map<String, String> keyValuePair1 = new HashMap<>();
-
-		keyValuePair1.put("label", "Label 1");
-		keyValuePair1.put("value", "Value 1");
+		Map<String, String> keyValuePair1 = HashMapBuilder.put(
+			"label", "Label 1"
+		).put(
+			"value", "Value 1"
+		).build();
 
 		return Arrays.asList(keyValuePair0, keyValuePair1);
 	}

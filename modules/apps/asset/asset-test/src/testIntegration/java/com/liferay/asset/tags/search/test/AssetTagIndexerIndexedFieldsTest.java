@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
@@ -36,7 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -149,22 +149,32 @@ public class AssetTagIndexerIndexedFieldsTest {
 	private Map<String, String> _expectedFieldValues(AssetTag assetTag)
 		throws Exception {
 
-		Map<String, String> map = new HashMap<>();
-
-		map.put(Field.COMPANY_ID, String.valueOf(assetTag.getCompanyId()));
-		map.put(Field.ENTRY_CLASS_NAME, AssetTag.class.getName());
-		map.put(Field.ENTRY_CLASS_PK, String.valueOf(assetTag.getTagId()));
-		map.put(Field.GROUP_ID, String.valueOf(assetTag.getGroupId()));
-		map.put(Field.NAME, assetTag.getName());
-		map.put(Field.SCOPE_GROUP_ID, String.valueOf(assetTag.getGroupId()));
-		map.put(Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup()));
-		map.put(Field.USER_ID, String.valueOf(assetTag.getUserId()));
-		map.put(Field.USER_NAME, StringUtil.lowerCase(assetTag.getUserName()));
-		map.put("assetCount", String.valueOf(assetTag.getAssetCount()));
-		map.put(
+		Map<String, String> map = HashMapBuilder.put(
+			Field.COMPANY_ID, String.valueOf(assetTag.getCompanyId())
+		).put(
+			Field.ENTRY_CLASS_NAME, AssetTag.class.getName()
+		).put(
+			Field.ENTRY_CLASS_PK, String.valueOf(assetTag.getTagId())
+		).put(
+			Field.GROUP_ID, String.valueOf(assetTag.getGroupId())
+		).put(
+			Field.NAME, assetTag.getName()
+		).put(
+			Field.SCOPE_GROUP_ID, String.valueOf(assetTag.getGroupId())
+		).put(
+			Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup())
+		).put(
+			Field.USER_ID, String.valueOf(assetTag.getUserId())
+		).put(
+			Field.USER_NAME, StringUtil.lowerCase(assetTag.getUserName())
+		).put(
+			"assetCount", String.valueOf(assetTag.getAssetCount())
+		).put(
 			"assetCount_Number_sortable",
-			String.valueOf(assetTag.getAssetCount()));
-		map.put("name_String_sortable", assetTag.getName());
+			String.valueOf(assetTag.getAssetCount())
+		).put(
+			"name_String_sortable", assetTag.getName()
+		).build();
 
 		indexedFieldsFixture.populateUID(
 			AssetTag.class.getName(), assetTag.getTagId(), map);

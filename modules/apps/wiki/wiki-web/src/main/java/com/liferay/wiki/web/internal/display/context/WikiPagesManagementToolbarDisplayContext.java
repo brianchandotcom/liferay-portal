@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -42,7 +43,6 @@ import com.liferay.wiki.web.internal.portlet.toolbar.item.WikiPortletToolbarCont
 import com.liferay.wiki.web.internal.security.permission.resource.WikiPagePermission;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -358,10 +358,11 @@ public class WikiPagesManagementToolbarDisplayContext {
 
 		return new DropdownItemList() {
 			{
-				Map<String, String> orderColumns = new HashMap<>();
-
-				orderColumns.put("modifiedDate", "modified-date");
-				orderColumns.put("title", "title");
+				Map<String, String> orderColumns = HashMapBuilder.put(
+					"modifiedDate", "modified-date"
+				).put(
+					"title", "title"
+				).build();
 
 				PortletURL portletURL = _getPortletURL();
 

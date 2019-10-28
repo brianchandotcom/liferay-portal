@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ThemeConstants;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslator;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,19 +50,29 @@ import org.osgi.service.component.annotations.Component;
 public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 	public HtmlBBCodeTranslatorImpl() {
-		_bbCodeCharacters = new HashMap<>();
-
-		_bbCodeCharacters.put("&", "&amp;");
-		_bbCodeCharacters.put("'", "&#039;");
-		_bbCodeCharacters.put("(", "&#40;");
-		_bbCodeCharacters.put(")", "&#41;");
-		_bbCodeCharacters.put("/", "&#047;");
-		_bbCodeCharacters.put("<", "&lt;");
-		_bbCodeCharacters.put(">", "&gt;");
-		_bbCodeCharacters.put("[", "&#91;");
-		_bbCodeCharacters.put("\"", "&#034;");
-		_bbCodeCharacters.put("]", "&#93;");
-		_bbCodeCharacters.put("`", "&#096;");
+		_bbCodeCharacters = HashMapBuilder.put(
+			"&", "&amp;"
+		).put(
+			"'", "&#039;"
+		).put(
+			"(", "&#40;"
+		).put(
+			")", "&#41;"
+		).put(
+			"/", "&#047;"
+		).put(
+			"<", "&lt;"
+		).put(
+			">", "&gt;"
+		).put(
+			"[", "&#91;"
+		).put(
+			"\"", "&#034;"
+		).put(
+			"]", "&#93;"
+		).put(
+			"`", "&#096;"
+		).build();
 
 		for (int i = 0; i < _EMOTICONS.length; i++) {
 			String[] emoticon = _EMOTICONS[i];
@@ -98,19 +109,25 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 				"alt", "class", "dir", "height", "id", "lang", "longdesc",
 				"style", "title", "width"));
 
-		_orderedListStyles = new HashMap<>();
+		_orderedListStyles = HashMapBuilder.put(
+			"1", "list-style: decimal outside;"
+		).put(
+			"a", "list-style: lower-alpha outside;"
+		).put(
+			"A", "list-style: upper-alpha outside;"
+		).put(
+			"i", "list-style: lower-roman outside;"
+		).put(
+			"I", "list-style: upper-roman outside;"
+		).build();
 
-		_orderedListStyles.put("1", "list-style: decimal outside;");
-		_orderedListStyles.put("a", "list-style: lower-alpha outside;");
-		_orderedListStyles.put("A", "list-style: upper-alpha outside;");
-		_orderedListStyles.put("i", "list-style: lower-roman outside;");
-		_orderedListStyles.put("I", "list-style: upper-roman outside;");
-
-		_unorderedListStyles = new HashMap<>();
-
-		_unorderedListStyles.put("circle", "list-style: circle outside;");
-		_unorderedListStyles.put("disc", "list-style: disc outside;");
-		_unorderedListStyles.put("square", "list-style: square outside;");
+		_unorderedListStyles = HashMapBuilder.put(
+			"circle", "list-style: circle outside;"
+		).put(
+			"disc", "list-style: disc outside;"
+		).put(
+			"square", "list-style: square outside;"
+		).build();
 	}
 
 	@Override

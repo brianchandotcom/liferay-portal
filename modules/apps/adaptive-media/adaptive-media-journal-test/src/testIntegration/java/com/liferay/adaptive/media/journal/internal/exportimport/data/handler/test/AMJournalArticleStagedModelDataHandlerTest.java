@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -88,10 +89,11 @@ public class AMJournalArticleStagedModelDataHandlerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		Map<String, String> properties = new HashMap<>();
-
-		properties.put("max-height", "600");
-		properties.put("max-width", "800");
+		Map<String, String> properties = HashMapBuilder.put(
+			"max-height", "600"
+		).put(
+			"max-width", "800"
+		).build();
 
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
 			stagingGroup.getCompanyId(), StringUtil.randomString(),

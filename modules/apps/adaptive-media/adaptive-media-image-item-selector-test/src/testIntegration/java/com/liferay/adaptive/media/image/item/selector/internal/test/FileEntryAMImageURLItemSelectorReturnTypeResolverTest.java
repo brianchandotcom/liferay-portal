@@ -37,12 +37,12 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -537,10 +537,11 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 			String name, String uuid, int height, int width)
 		throws Exception {
 
-		Map<String, String> properties = new HashMap<>();
-
-		properties.put("max-height", String.valueOf(height));
-		properties.put("max-width", String.valueOf(width));
+		Map<String, String> properties = HashMapBuilder.put(
+			"max-height", String.valueOf(height)
+		).put(
+			"max-width", String.valueOf(width)
+		).build();
 
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), name, StringPool.BLANK, uuid,

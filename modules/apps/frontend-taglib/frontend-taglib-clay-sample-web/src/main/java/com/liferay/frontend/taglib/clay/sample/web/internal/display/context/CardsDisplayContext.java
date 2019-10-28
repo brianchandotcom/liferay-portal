@@ -19,8 +19,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.portal.kernel.security.RandomUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -94,9 +94,9 @@ public class CardsDisplayContext {
 			return _labelStylesMap;
 		}
 
-		_labelStylesMap = new HashMap<>();
-
-		_labelStylesMap.put("Pending", "warning");
+		_labelStylesMap = HashMapBuilder.put(
+			"Pending", "warning"
+		).build();
 
 		return _labelStylesMap;
 	}

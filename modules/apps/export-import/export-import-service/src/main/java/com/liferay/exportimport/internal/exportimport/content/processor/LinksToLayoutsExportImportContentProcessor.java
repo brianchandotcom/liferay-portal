@@ -32,12 +32,12 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -316,14 +316,14 @@ public class LinksToLayoutsExportImportContentProcessor
 						LinksToLayoutsExportImportContentProcessor.class.
 							getName());
 
-				Map<String, String> layoutReferenceParameters = new HashMap<>();
-
-				layoutReferenceParameters.put(
-					"groupId", String.valueOf(groupId));
-				layoutReferenceParameters.put(
-					"layoutId", String.valueOf(layoutId));
-				layoutReferenceParameters.put(
-					"privateLayout", String.valueOf(privateLayout));
+				Map<String, String> layoutReferenceParameters =
+					HashMapBuilder.put(
+						"groupId", String.valueOf(groupId)
+					).put(
+						"layoutId", String.valueOf(layoutId)
+					).put(
+						"privateLayout", String.valueOf(privateLayout)
+					).build();
 
 				eicve.setLayoutReferenceParameters(layoutReferenceParameters);
 

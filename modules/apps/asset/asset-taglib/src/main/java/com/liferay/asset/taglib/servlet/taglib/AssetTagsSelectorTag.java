@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -280,10 +281,11 @@ public class AssetTagsSelectorTag extends IncludeTag {
 				List<Map<String, String>> selectedItems = new ArrayList<>();
 
 				for (String tagName : getTagNames()) {
-					Map<String, String> selectedItem = new HashMap<>();
-
-					selectedItem.put("label", tagName);
-					selectedItem.put("value", tagName);
+					Map<String, String> selectedItem = HashMapBuilder.put(
+						"label", tagName
+					).put(
+						"value", tagName
+					).build();
 
 					selectedItems.add(selectedItem);
 				}

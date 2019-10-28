@@ -19,12 +19,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.browser.web.internal.display.context.SiteBrowserDisplayContext;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,19 +56,19 @@ public class SiteVerticalCard implements VerticalCard {
 		}
 
 		try {
-			Map<String, String> data = new HashMap<>();
-
-			data.put("entityid", String.valueOf(_group.getGroupId()));
-			data.put(
+			return HashMapBuilder.put(
+				"entityid", String.valueOf(_group.getGroupId())
+			).put(
 				"entityname",
-				_group.getDescriptiveName(_themeDisplay.getLocale()));
-			data.put("grouptarget", _siteBrowserDisplayContext.getTarget());
-			data.put(
+				_group.getDescriptiveName(_themeDisplay.getLocale())
+			).put(
+				"grouptarget", _siteBrowserDisplayContext.getTarget()
+			).put(
 				"grouptype",
-				LanguageUtil.get(_httpServletRequest, _group.getTypeLabel()));
-			data.put("url", _group.getDisplayURL(_themeDisplay));
-
-			return data;
+				LanguageUtil.get(_httpServletRequest, _group.getTypeLabel())
+			).put(
+				"url", _group.getDisplayURL(_themeDisplay)
+			).build();
 		}
 		catch (Exception e) {
 		}

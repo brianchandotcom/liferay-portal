@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
@@ -36,7 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -128,22 +128,28 @@ public class MBCategoryIndexerIndexedFieldsTest {
 	private Map<String, String> _expectedFieldValues(MBCategory mbCategory)
 		throws Exception {
 
-		Map<String, String> map = new HashMap<>();
-
-		map.put(
+		Map<String, String> map = HashMapBuilder.put(
 			Field.ASSET_PARENT_CATEGORY_ID,
-			String.valueOf(mbCategory.getParentCategoryId()));
-		map.put(Field.COMPANY_ID, String.valueOf(mbCategory.getCompanyId()));
-		map.put(Field.ENTRY_CLASS_NAME, MBCategory.class.getName());
-		map.put(
-			Field.ENTRY_CLASS_PK, String.valueOf(mbCategory.getCategoryId()));
-		map.put(Field.GROUP_ID, String.valueOf(mbCategory.getGroupId()));
-		map.put(Field.SCOPE_GROUP_ID, String.valueOf(mbCategory.getGroupId()));
-		map.put(Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup()));
-		map.put(Field.STATUS, String.valueOf(mbCategory.getStatus()));
-		map.put(Field.USER_ID, String.valueOf(mbCategory.getUserId()));
-		map.put(
-			Field.USER_NAME, StringUtil.lowerCase(mbCategory.getUserName()));
+			String.valueOf(mbCategory.getParentCategoryId())
+		).put(
+			Field.COMPANY_ID, String.valueOf(mbCategory.getCompanyId())
+		).put(
+			Field.ENTRY_CLASS_NAME, MBCategory.class.getName()
+		).put(
+			Field.ENTRY_CLASS_PK, String.valueOf(mbCategory.getCategoryId())
+		).put(
+			Field.GROUP_ID, String.valueOf(mbCategory.getGroupId())
+		).put(
+			Field.SCOPE_GROUP_ID, String.valueOf(mbCategory.getGroupId())
+		).put(
+			Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup())
+		).put(
+			Field.STATUS, String.valueOf(mbCategory.getStatus())
+		).put(
+			Field.USER_ID, String.valueOf(mbCategory.getUserId())
+		).put(
+			Field.USER_NAME, StringUtil.lowerCase(mbCategory.getUserName())
+		).build();
 
 		indexedFieldsFixture.populateUID(
 			MBCategory.class.getName(), mbCategory.getCategoryId(), map);

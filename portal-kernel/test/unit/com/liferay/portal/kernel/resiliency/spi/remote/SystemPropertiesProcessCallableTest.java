@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.resiliency.spi.remote;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -41,11 +41,13 @@ public class SystemPropertiesProcessCallableTest {
 
 		System.setProperties(newProperties);
 
-		Map<String, String> propertiesMap = new HashMap<>();
-
-		propertiesMap.put("key1", "value1");
-		propertiesMap.put("key2", "value2");
-		propertiesMap.put("key3", "value3");
+		Map<String, String> propertiesMap = HashMapBuilder.put(
+			"key1", "value1"
+		).put(
+			"key2", "value2"
+		).put(
+			"key3", "value3"
+		).build();
 
 		SystemPropertiesProcessCallable systemPropertiesProcessCallable =
 			new SystemPropertiesProcessCallable(propertiesMap);

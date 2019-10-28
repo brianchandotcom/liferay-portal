@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,7 +45,6 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -1367,36 +1367,37 @@ public class GroupFinderImpl
 			return _joinMap;
 		}
 
-		Map<String, String> joinMap = new HashMap<>();
-
-		joinMap.put("active", _removeWhere(CustomSQLUtil.get(JOIN_BY_ACTIVE)));
-		joinMap.put(
-			"groupOrg", _removeWhere(CustomSQLUtil.get(JOIN_BY_GROUP_ORG)));
-		joinMap.put(
-			"groupsOrgs", _removeWhere(CustomSQLUtil.get(JOIN_BY_GROUPS_ORGS)));
-		joinMap.put(
-			"groupsRoles",
-			_removeWhere(CustomSQLUtil.get(JOIN_BY_GROUPS_ROLES)));
-		joinMap.put(
+		Map<String, String> joinMap = HashMapBuilder.put(
+			"active", _removeWhere(CustomSQLUtil.get(JOIN_BY_ACTIVE))
+		).put(
+			"groupOrg", _removeWhere(CustomSQLUtil.get(JOIN_BY_GROUP_ORG))
+		).put(
+			"groupsOrgs", _removeWhere(CustomSQLUtil.get(JOIN_BY_GROUPS_ORGS))
+		).put(
+			"groupsRoles", _removeWhere(CustomSQLUtil.get(JOIN_BY_GROUPS_ROLES))
+		).put(
 			"groupsUserGroups",
-			_removeWhere(CustomSQLUtil.get(JOIN_BY_GROUPS_USER_GROUPS)));
-		joinMap.put("layout", _removeWhere(CustomSQLUtil.get(JOIN_BY_LAYOUT)));
-		joinMap.put(
+			_removeWhere(CustomSQLUtil.get(JOIN_BY_GROUPS_USER_GROUPS))
+		).put(
+			"layout", _removeWhere(CustomSQLUtil.get(JOIN_BY_LAYOUT))
+		).put(
 			"membershipRestriction",
-			_removeWhere(CustomSQLUtil.get(JOIN_BY_MEMBERSHIP_RESTRICTION)));
-		joinMap.put(
-			"pageCount", _removeWhere(CustomSQLUtil.get(JOIN_BY_PAGE_COUNT)));
-		joinMap.put(
+			_removeWhere(CustomSQLUtil.get(JOIN_BY_MEMBERSHIP_RESTRICTION))
+		).put(
+			"pageCount", _removeWhere(CustomSQLUtil.get(JOIN_BY_PAGE_COUNT))
+		).put(
 			"rolePermissions_6",
-			_removeWhere(CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_PERMISSIONS)));
-		joinMap.put("site", _removeWhere(CustomSQLUtil.get(JOIN_BY_SITE)));
-		joinMap.put("type", _removeWhere(CustomSQLUtil.get(JOIN_BY_TYPE)));
-		joinMap.put(
+			_removeWhere(CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_PERMISSIONS))
+		).put(
+			"site", _removeWhere(CustomSQLUtil.get(JOIN_BY_SITE))
+		).put(
+			"type", _removeWhere(CustomSQLUtil.get(JOIN_BY_TYPE))
+		).put(
 			"userGroupRole",
-			_removeWhere(CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE)));
-		joinMap.put(
-			"usersGroups",
-			_removeWhere(CustomSQLUtil.get(JOIN_BY_USERS_GROUPS)));
+			_removeWhere(CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE))
+		).put(
+			"usersGroups", _removeWhere(CustomSQLUtil.get(JOIN_BY_USERS_GROUPS))
+		).build();
 
 		_joinMap = joinMap;
 
@@ -1408,46 +1409,45 @@ public class GroupFinderImpl
 			return _whereMap;
 		}
 
-		Map<String, String> whereMap = new HashMap<>();
-
-		whereMap.put(
-			"active", _getCondition(CustomSQLUtil.get(JOIN_BY_ACTIVE)));
-		whereMap.put(
+		Map<String, String> whereMap = HashMapBuilder.put(
+			"active", _getCondition(CustomSQLUtil.get(JOIN_BY_ACTIVE))
+		).put(
 			"creatorUserId",
-			_getCondition(CustomSQLUtil.get(JOIN_BY_CREATOR_USER_ID)));
-		whereMap.put(
-			"groupOrg", _getCondition(CustomSQLUtil.get(JOIN_BY_GROUP_ORG)));
-		whereMap.put(
-			"groupsOrgs",
-			_getCondition(CustomSQLUtil.get(JOIN_BY_GROUPS_ORGS)));
-		whereMap.put(
+			_getCondition(CustomSQLUtil.get(JOIN_BY_CREATOR_USER_ID))
+		).put(
+			"groupOrg", _getCondition(CustomSQLUtil.get(JOIN_BY_GROUP_ORG))
+		).put(
+			"groupsOrgs", _getCondition(CustomSQLUtil.get(JOIN_BY_GROUPS_ORGS))
+		).put(
 			"groupsRoles",
-			_getCondition(CustomSQLUtil.get(JOIN_BY_GROUPS_ROLES)));
-		whereMap.put(
+			_getCondition(CustomSQLUtil.get(JOIN_BY_GROUPS_ROLES))
+		).put(
 			"groupsUserGroups",
-			_getCondition(CustomSQLUtil.get(JOIN_BY_GROUPS_USER_GROUPS)));
-		whereMap.put(
-			"layout", _getCondition(CustomSQLUtil.get(JOIN_BY_LAYOUT)));
-		whereMap.put(
+			_getCondition(CustomSQLUtil.get(JOIN_BY_GROUPS_USER_GROUPS))
+		).put(
+			"layout", _getCondition(CustomSQLUtil.get(JOIN_BY_LAYOUT))
+		).put(
 			"manualMembership",
-			_getCondition(CustomSQLUtil.get(JOIN_BY_MANUAL_MEMBERSHIP)));
-		whereMap.put(
+			_getCondition(CustomSQLUtil.get(JOIN_BY_MANUAL_MEMBERSHIP))
+		).put(
 			"membershipRestriction",
-			_getCondition(CustomSQLUtil.get(JOIN_BY_MEMBERSHIP_RESTRICTION)));
-		whereMap.put(
-			"pageCount", _getCondition(CustomSQLUtil.get(JOIN_BY_PAGE_COUNT)));
-		whereMap.put(
+			_getCondition(CustomSQLUtil.get(JOIN_BY_MEMBERSHIP_RESTRICTION))
+		).put(
+			"pageCount", _getCondition(CustomSQLUtil.get(JOIN_BY_PAGE_COUNT))
+		).put(
 			"rolePermissions_6",
-			_getCondition(
-				CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_PERMISSIONS)));
-		whereMap.put("site", _getCondition(CustomSQLUtil.get(JOIN_BY_SITE)));
-		whereMap.put("type", _getCondition(CustomSQLUtil.get(JOIN_BY_TYPE)));
-		whereMap.put(
+			_getCondition(CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_PERMISSIONS))
+		).put(
+			"site", _getCondition(CustomSQLUtil.get(JOIN_BY_SITE))
+		).put(
+			"type", _getCondition(CustomSQLUtil.get(JOIN_BY_TYPE))
+		).put(
 			"userGroupRole",
-			_getCondition(CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE)));
-		whereMap.put(
+			_getCondition(CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE))
+		).put(
 			"usersGroups",
-			_getCondition(CustomSQLUtil.get(JOIN_BY_USERS_GROUPS)));
+			_getCondition(CustomSQLUtil.get(JOIN_BY_USERS_GROUPS))
+		).build();
 
 		_whereMap = whereMap;
 

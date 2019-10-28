@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,7 +43,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -435,16 +435,16 @@ public class ModulesStructureTest {
 
 	@Test
 	public void testScanLog4JConfigurationXML() throws IOException {
-		final Map<String, String> renameMap = new HashMap<>();
-
-		renameMap.put(
+		final Map<String, String> renameMap = HashMapBuilder.put(
 			"src/main/resources/META-INF/portal-log4j-ext.xml",
-			"module-log4j-ext.xml");
-		renameMap.put(
-			"src/main/resources/META-INF/portal-log4j.xml", "module-log4j.xml");
-		renameMap.put(
-			"src/META-INF/portal-log4j-ext.xml", "module-log4j-ext.xml");
-		renameMap.put("src/META-INF/portal-log4j.xml", "module-log4j.xml");
+			"module-log4j-ext.xml"
+		).put(
+			"src/main/resources/META-INF/portal-log4j.xml", "module-log4j.xml"
+		).put(
+			"src/META-INF/portal-log4j-ext.xml", "module-log4j-ext.xml"
+		).put(
+			"src/META-INF/portal-log4j.xml", "module-log4j.xml"
+		).build();
 
 		Files.walkFileTree(
 			_modulesDirPath,

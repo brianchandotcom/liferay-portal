@@ -25,6 +25,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -36,7 +37,6 @@ import com.liferay.taglib.aui.IconTag;
 
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -116,9 +116,9 @@ public class CTIndicatorProductNavigationControlMenuEntry
 			}
 		}
 
-		Map<String, String> values = new HashMap<>();
-
-		values.put("ctCollectionName", ctCollectionName);
+		Map<String, String> values = HashMapBuilder.put(
+			"ctCollectionName", ctCollectionName
+		).build();
 
 		PortletURL changeTrackingURL = _portal.getControlPanelPortletURL(
 			httpServletRequest, themeDisplay.getScopeGroup(),

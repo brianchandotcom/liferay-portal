@@ -21,10 +21,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,10 +67,11 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{
-				Map<String, String> orderColumnsMap = new HashMap<>();
-
-				orderColumnsMap.put("createDate", "authorization");
-				orderColumnsMap.put("oAuth2ApplicationId", "application-id");
+				Map<String, String> orderColumnsMap = HashMapBuilder.put(
+					"createDate", "authorization"
+				).put(
+					"oAuth2ApplicationId", "application-id"
+				).build();
 
 				addGroup(
 					dropdownGroupItem -> {

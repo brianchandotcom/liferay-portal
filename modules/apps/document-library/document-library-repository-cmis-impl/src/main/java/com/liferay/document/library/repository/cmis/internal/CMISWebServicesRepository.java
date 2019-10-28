@@ -20,9 +20,9 @@ import com.liferay.document.library.repository.cmis.internal.constants.CMISRepos
 import com.liferay.portal.kernel.exception.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -36,11 +36,11 @@ public class CMISWebServicesRepository extends CMISRepositoryHandler {
 
 	@Override
 	public Session getSession() throws PortalException {
-		Map<String, String> parameters = new HashMap<>();
-
-		parameters.put(
-			SessionParameter.BINDING_TYPE, BindingType.WEBSERVICES.value());
-		parameters.put(SessionParameter.COMPRESSION, Boolean.TRUE.toString());
+		Map<String, String> parameters = HashMapBuilder.put(
+			SessionParameter.BINDING_TYPE, BindingType.WEBSERVICES.value()
+		).put(
+			SessionParameter.COMPRESSION, Boolean.TRUE.toString()
+		).build();
 
 		Locale locale = LocaleUtil.getSiteDefault();
 

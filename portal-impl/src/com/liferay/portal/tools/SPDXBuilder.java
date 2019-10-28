@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.Dom4jUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.xml.SAXReaderFactory;
@@ -286,10 +287,11 @@ public class SPDXBuilder {
 
 		Document document = DocumentHelper.createDocument();
 
-		Map<String, String> args = new HashMap<>();
-
-		args.put("href", "versions.xsl");
-		args.put("type", "text/xsl");
+		Map<String, String> args = HashMapBuilder.put(
+			"href", "versions.xsl"
+		).put(
+			"type", "text/xsl"
+		).build();
 
 		document.addProcessingInstruction("xml-stylesheet", args);
 

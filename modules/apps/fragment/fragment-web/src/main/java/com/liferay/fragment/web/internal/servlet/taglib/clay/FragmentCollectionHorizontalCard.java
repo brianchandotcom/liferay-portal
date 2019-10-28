@@ -17,9 +17,9 @@ package com.liferay.fragment.web.internal.servlet.taglib.clay;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCard;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -33,14 +33,11 @@ public class FragmentCollectionHorizontalCard implements HorizontalCard {
 
 	@Override
 	public Map<String, String> getData() {
-		Map<String, String> data = new HashMap<>();
-
-		data.put(
-			"id",
-			String.valueOf(_fragmentCollection.getFragmentCollectionId()));
-		data.put("name", _fragmentCollection.getName());
-
-		return data;
+		return HashMapBuilder.put(
+			"id", String.valueOf(_fragmentCollection.getFragmentCollectionId())
+		).put(
+			"name", _fragmentCollection.getName()
+		).build();
 	}
 
 	@Override

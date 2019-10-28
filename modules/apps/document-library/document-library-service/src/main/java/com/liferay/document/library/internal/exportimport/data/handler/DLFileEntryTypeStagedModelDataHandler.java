@@ -35,10 +35,10 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -103,10 +103,9 @@ public class DLFileEntryTypeStagedModelDataHandler
 	public Map<String, String> getReferenceAttributes(
 		PortletDataContext portletDataContext, DLFileEntryType fileEntryType) {
 
-		Map<String, String> referenceAttributes = new HashMap<>();
-
-		referenceAttributes.put(
-			"file-entry-type-key", fileEntryType.getFileEntryTypeKey());
+		Map<String, String> referenceAttributes = HashMapBuilder.put(
+			"file-entry-type-key", fileEntryType.getFileEntryTypeKey()
+		).build();
 
 		long defaultUserId = UserConstants.USER_ID_DEFAULT;
 

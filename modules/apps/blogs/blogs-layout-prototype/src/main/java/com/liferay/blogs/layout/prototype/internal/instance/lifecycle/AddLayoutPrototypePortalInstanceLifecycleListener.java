@@ -31,12 +31,12 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -96,12 +96,12 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 			layout, AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD,
 			"column-2");
 
-		Map<String, String> preferences = new HashMap<>();
-
-		preferences.put(
+		Map<String, String> preferences = HashMapBuilder.put(
 			"classNameId",
-			String.valueOf(_portal.getClassNameId(BlogsEntry.class)));
-		preferences.put("showAssetCount", Boolean.TRUE.toString());
+			String.valueOf(_portal.getClassNameId(BlogsEntry.class))
+		).put(
+			"showAssetCount", Boolean.TRUE.toString()
+		).build();
 
 		DefaultLayoutPrototypesUtil.updatePortletSetup(
 			layout, portletId, preferences);

@@ -29,13 +29,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -119,11 +119,13 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{
-				Map<String, String> orderColumnsMap = new HashMap<>();
-
-				orderColumnsMap.put("clientId", "client-id");
-				orderColumnsMap.put("createDate", "createDate");
-				orderColumnsMap.put("name", "name");
+				Map<String, String> orderColumnsMap = HashMapBuilder.put(
+					"clientId", "client-id"
+				).put(
+					"createDate", "createDate"
+				).put(
+					"name", "name"
+				).build();
 
 				addGroup(
 					dropdownGroupItem -> {

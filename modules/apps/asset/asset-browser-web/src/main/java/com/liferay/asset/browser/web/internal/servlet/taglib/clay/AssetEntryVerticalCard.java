@@ -23,11 +23,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
@@ -65,20 +65,22 @@ public class AssetEntryVerticalCard implements VerticalCard {
 			return null;
 		}
 
-		Map<String, String> data = new HashMap<>();
-
-		data.put("assetclassname", _assetEntry.getClassName());
-		data.put(
-			"assetclassnameid", String.valueOf(_assetEntry.getClassNameId()));
-		data.put("assetclasspk", String.valueOf(_assetEntry.getClassPK()));
-		data.put(
-			"assettitle", _assetRenderer.getTitle(_themeDisplay.getLocale()));
-		data.put(
+		Map<String, String> data = HashMapBuilder.put(
+			"assetclassname", _assetEntry.getClassName()
+		).put(
+			"assetclassnameid", String.valueOf(_assetEntry.getClassNameId())
+		).put(
+			"assetclasspk", String.valueOf(_assetEntry.getClassPK())
+		).put(
+			"assettitle", _assetRenderer.getTitle(_themeDisplay.getLocale())
+		).put(
 			"assettype",
 			_assetRendererFactory.getTypeName(
 				_themeDisplay.getLocale(),
-				_assetBrowserDisplayContext.getSubtypeSelectionId()));
-		data.put("entityid", String.valueOf(_assetEntry.getEntryId()));
+				_assetBrowserDisplayContext.getSubtypeSelectionId())
+		).put(
+			"entityid", String.valueOf(_assetEntry.getEntryId())
+		).build();
 
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			_assetEntry.getGroupId());

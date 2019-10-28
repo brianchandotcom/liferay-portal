@@ -36,10 +36,10 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.kernel.util.DefaultLayoutSetPrototypesUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -99,12 +99,13 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 		portletId = DefaultLayoutPrototypesUtil.addPortletId(
 			homeLayout, AssetPublisherPortletKeys.ASSET_PUBLISHER, "column-2");
 
-		Map<String, String> preferences = new HashMap<>();
-
-		preferences.put("anyAssetType", Boolean.FALSE.toString());
-		preferences.put(
-			"portletSetupTitle_" + LocaleUtil.getDefault(), "Recent Content");
-		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
+		Map<String, String> preferences = HashMapBuilder.put(
+			"anyAssetType", Boolean.FALSE.toString()
+		).put(
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Recent Content"
+		).put(
+			"portletSetupUseCustomTitle", Boolean.TRUE.toString()
+		).build();
 
 		DefaultLayoutPrototypesUtil.updatePortletSetup(
 			homeLayout, portletId, preferences);

@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -133,12 +133,15 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		userToolAssetAddonEntryKeys = upgradeBooleanAssetAddonEntry(
 			userToolAssetAddonEntryKeys, portletPreferences, "enablePrint");
 
-		Map<String, String> extensions = new HashMap<>();
-
-		extensions.put("doc", "enableDOC");
-		extensions.put("odt", "enableODT");
-		extensions.put("pdf", "enablePDF");
-		extensions.put("txt", "enableTXT");
+		Map<String, String> extensions = HashMapBuilder.put(
+			"doc", "enableDOC"
+		).put(
+			"odt", "enableODT"
+		).put(
+			"pdf", "enablePDF"
+		).put(
+			"txt", "enableTXT"
+		).build();
 
 		userToolAssetAddonEntryKeys = upgradeMultiValueAssetAddonEntryKeys(
 			userToolAssetAddonEntryKeys, portletPreferences, "extensions",

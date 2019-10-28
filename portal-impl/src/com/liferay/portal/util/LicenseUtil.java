@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -179,14 +180,15 @@ public class LicenseUtil {
 	}
 
 	public static Map<String, String> getServerInfo() {
-		Map<String, String> serverInfo = new HashMap<>();
-
-		serverInfo.put("hostName", PortalUtil.getComputerName());
-		serverInfo.put("ipAddresses", StringUtil.merge(getIpAddresses()));
-		serverInfo.put("macAddresses", StringUtil.merge(getMacAddresses()));
-		serverInfo.put("processorCores", String.valueOf(getProcessorCores()));
-
-		return serverInfo;
+		return HashMapBuilder.put(
+			"hostName", PortalUtil.getComputerName()
+		).put(
+			"ipAddresses", StringUtil.merge(getIpAddresses())
+		).put(
+			"macAddresses", StringUtil.merge(getMacAddresses())
+		).put(
+			"processorCores", String.valueOf(getProcessorCores())
+		).build();
 	}
 
 	/**

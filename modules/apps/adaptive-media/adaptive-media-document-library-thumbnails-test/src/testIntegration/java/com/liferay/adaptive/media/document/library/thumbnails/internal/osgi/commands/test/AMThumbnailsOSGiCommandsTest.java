@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
@@ -54,7 +55,6 @@ import com.liferay.registry.ServiceReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -316,10 +316,11 @@ public class AMThumbnailsOSGiCommandsTest {
 	}
 
 	private void _addConfiguration(int width, int height) throws Exception {
-		Map<String, String> properties = new HashMap<>();
-
-		properties.put("max-height", String.valueOf(height));
-		properties.put("max-width", String.valueOf(width));
+		Map<String, String> properties = HashMapBuilder.put(
+			"max-height", String.valueOf(height)
+		).put(
+			"max-width", String.valueOf(width)
+		).build();
 
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
 			_company.getCompanyId(), _THUMBNAIL_CONFIGURATION + width,

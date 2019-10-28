@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,7 +40,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -147,42 +147,50 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 			AssetCategory assetCategory)
 		throws Exception {
 
-		Map<String, String> map = new HashMap<>();
-
-		map.put(
+		Map<String, String> map = HashMapBuilder.put(
 			Field.ASSET_CATEGORY_ID,
-			String.valueOf(assetCategory.getCategoryId()));
-		map.put(
+			String.valueOf(assetCategory.getCategoryId())
+		).put(
 			Field.ASSET_CATEGORY_TITLE,
-			StringUtil.lowerCase(assetCategory.getName()));
-		map.put(
+			StringUtil.lowerCase(assetCategory.getName())
+		).put(
 			Field.ASSET_VOCABULARY_ID,
-			String.valueOf(assetCategory.getVocabularyId()));
-		map.put(Field.COMPANY_ID, String.valueOf(assetCategory.getCompanyId()));
-		map.put(Field.ENTRY_CLASS_NAME, AssetCategory.class.getName());
-		map.put(
-			Field.ENTRY_CLASS_PK,
-			String.valueOf(assetCategory.getCategoryId()));
-		map.put(Field.GROUP_ID, String.valueOf(assetCategory.getGroupId()));
-		map.put(Field.NAME, assetCategory.getName());
-		map.put(
-			Field.SCOPE_GROUP_ID, String.valueOf(assetCategory.getGroupId()));
-		map.put(Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup()));
-		map.put(Field.TITLE, assetCategory.getName());
-		map.put(Field.USER_ID, String.valueOf(assetCategory.getUserId()));
-		map.put(
-			Field.USER_NAME, StringUtil.lowerCase(assetCategory.getUserName()));
-		map.put(
+			String.valueOf(assetCategory.getVocabularyId())
+		).put(
+			Field.COMPANY_ID, String.valueOf(assetCategory.getCompanyId())
+		).put(
+			Field.ENTRY_CLASS_NAME, AssetCategory.class.getName()
+		).put(
+			Field.ENTRY_CLASS_PK, String.valueOf(assetCategory.getCategoryId())
+		).put(
+			Field.GROUP_ID, String.valueOf(assetCategory.getGroupId())
+		).put(
+			Field.NAME, assetCategory.getName()
+		).put(
+			Field.SCOPE_GROUP_ID, String.valueOf(assetCategory.getGroupId())
+		).put(
+			Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup())
+		).put(
+			Field.TITLE, assetCategory.getName()
+		).put(
+			Field.USER_ID, String.valueOf(assetCategory.getUserId())
+		).put(
+			Field.USER_NAME, StringUtil.lowerCase(assetCategory.getUserName())
+		).put(
 			"assetCategoryTitle_ja_JP",
-			StringUtil.lowerCase(assetCategory.getName()));
-		map.put("name_sortable", StringUtil.lowerCase(assetCategory.getName()));
-		map.put(
+			StringUtil.lowerCase(assetCategory.getName())
+		).put(
+			"name_sortable", StringUtil.lowerCase(assetCategory.getName())
+		).put(
 			"parentCategoryId",
-			String.valueOf(assetCategory.getParentCategoryId()));
-		map.put("title_ja_JP", assetCategory.getName());
-		map.put(
-			"title_sortable", StringUtil.lowerCase(assetCategory.getName()));
-		map.put("treePath", assetCategory.getTreePath());
+			String.valueOf(assetCategory.getParentCategoryId())
+		).put(
+			"title_ja_JP", assetCategory.getName()
+		).put(
+			"title_sortable", StringUtil.lowerCase(assetCategory.getName())
+		).put(
+			"treePath", assetCategory.getTreePath()
+		).build();
 
 		indexedFieldsFixture.populateUID(
 			AssetCategory.class.getName(), assetCategory.getCategoryId(), map);

@@ -21,6 +21,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.exception.PushNotificationsException;
@@ -28,7 +29,6 @@ import com.liferay.push.notifications.sender.PushNotificationsSender;
 import com.liferay.push.notifications.sender.firebase.internal.configuration.FirebasePushNotificationsSenderConfiguration;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -118,11 +118,10 @@ public class FirebasePushNotificationsSender
 		}
 
 		if (newPayloadJSONObject.length() > 0) {
-			Map<String, String> data = new HashMap<>();
-
-			data.put(
+			Map<String, String> data = HashMapBuilder.put(
 				PushNotificationsConstants.KEY_PAYLOAD,
-				newPayloadJSONObject.toString());
+				newPayloadJSONObject.toString()
+			).build();
 
 			builder.data(data);
 		}

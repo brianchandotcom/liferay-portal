@@ -37,6 +37,17 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 	</model>
+	<model name="com.liferay.segments.model.SegmentsEntryRole">
+		<field name="mvccVersion" type="long" />
+		<field name="segmentsEntryRoleId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="roleId" type="long" />
+		<field name="segmentsEntryId" type="long" />
+	</model>
 	<model name="com.liferay.segments.model.SegmentsExperience">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />

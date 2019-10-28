@@ -42,7 +42,6 @@ import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -111,9 +110,10 @@ public class DDMFormTemplateContextFactoryImpl
 			containerId = StringUtil.randomId();
 		}
 
-		Map<String, Object> templateContext = new HashMap<>();
-
-		templateContext.put("containerId", containerId);
+		Map<String, Object> templateContext =
+			HashMapBuilder.<String, Object>put(
+				"containerId", containerId
+			).build();
 
 		String currentPage = ParamUtil.getString(
 			ddmFormRenderingContext.getHttpServletRequest(), "currentPage",

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.background.task.internal;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
 import java.io.Serializable;
 
 import java.util.HashMap;
@@ -32,11 +34,11 @@ public class BackgroundTaskThreadLocalManagerImplTest
 		HashMap<String, Serializable> threadLocalValues =
 			initializeThreadLocalValues();
 
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		taskContextMap.put(
-			BackgroundTaskThreadLocalManagerImpl.KEY_THREAD_LOCAL_VALUES,
-			threadLocalValues);
+		Map<String, Serializable> taskContextMap =
+			HashMapBuilder.<String, Serializable>put(
+				BackgroundTaskThreadLocalManagerImpl.KEY_THREAD_LOCAL_VALUES,
+				threadLocalValues
+			).build();
 
 		backgroundTaskThreadLocalManagerImpl.deserializeThreadLocals(
 			taskContextMap);

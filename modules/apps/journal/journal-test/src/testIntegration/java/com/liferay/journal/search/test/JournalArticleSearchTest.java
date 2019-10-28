@@ -71,7 +71,6 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -147,11 +146,13 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 		String keywords = "keywords";
 
-		Map<Locale, String> keywordsMap = new HashMap<>();
-
-		keywordsMap.put(LocaleUtil.getDefault(), keywords);
-		keywordsMap.put(LocaleUtil.GERMANY, keywords);
-		keywordsMap.put(LocaleUtil.SPAIN, keywords);
+		Map<Locale, String> keywordsMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.getDefault(), keywords
+		).put(
+			LocaleUtil.GERMANY, keywords
+		).put(
+			LocaleUtil.SPAIN, keywords
+		).build();
 
 		String articleId = "Article.Id";
 

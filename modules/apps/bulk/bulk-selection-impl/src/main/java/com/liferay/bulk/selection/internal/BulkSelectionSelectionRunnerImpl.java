@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.Serializable;
 
@@ -74,17 +75,16 @@ public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 		Class<? extends BulkSelectionAction> bulkSelectionActionClass =
 			bulkSelectionAction.getClass();
 
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		taskContextMap.put(
-			BulkSelectionBackgroundTaskConstants.
-				BULK_SELECTION_ACTION_CLASS_NAME,
-			bulkSelectionActionClass.getName());
-
-		taskContextMap.put(
-			BulkSelectionBackgroundTaskConstants.
-				BULK_SELECTION_ACTION_INPUT_MAP,
-			new HashMap<>(inputMap));
+		Map<String, Serializable> taskContextMap =
+			HashMapBuilder.<String, Serializable>put(
+				BulkSelectionBackgroundTaskConstants.
+					BULK_SELECTION_ACTION_CLASS_NAME,
+				bulkSelectionActionClass.getName()
+			).put(
+				BulkSelectionBackgroundTaskConstants.
+					BULK_SELECTION_ACTION_INPUT_MAP,
+				new HashMap<>(inputMap)
+			).build();
 
 		Class<? extends BulkSelectionFactory> bulkSelectionFactoryClass =
 			bulkSelection.getBulkSelectionFactoryClass();

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -51,7 +52,6 @@ import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -157,13 +157,13 @@ public class JournalManagementToolbarDisplayContext
 		addArticleURL.setParameter(
 			"folderId", String.valueOf(_journalDisplayContext.getFolderId()));
 
-		Map<String, Object> componentContext = new HashMap<>();
-
-		componentContext.put("addArticleURL", addArticleURL.toString());
-
-		componentContext.put(
-			"folderId",
-			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+		Map<String, Object> componentContext =
+			HashMapBuilder.<String, Object>put(
+				"addArticleURL", addArticleURL.toString()
+			).put(
+				"folderId",
+				String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+			).build();
 
 		PortletURL moveEntriesURL = liferayPortletResponse.createRenderURL();
 

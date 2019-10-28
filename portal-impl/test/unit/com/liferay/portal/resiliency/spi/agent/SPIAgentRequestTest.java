@@ -254,9 +254,10 @@ public class SPIAgentRequestTest {
 
 		FileItem[] fileItems = new FileItem[0];
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		fileParameters.put(fileParameter, fileItems);
+		Map<String, FileItem[]> fileParameters =
+			HashMapBuilder.<String, FileItem[]>put(
+				fileParameter, fileItems
+			).build();
 
 		spiAgentRequest = new SPIAgentRequest(
 			new UploadServletRequestImpl(
@@ -296,9 +297,10 @@ public class SPIAgentRequestTest {
 
 		List<String> parameters = new ArrayList<>();
 
-		Map<String, List<String>> regularParameters = new HashMap<>();
-
-		regularParameters.put(regularParameter, parameters);
+		Map<String, List<String>> regularParameters =
+			HashMapBuilder.<String, List<String>>put(
+				regularParameter, parameters
+			).build();
 
 		spiAgentRequest = new SPIAgentRequest(
 			new UploadServletRequestImpl(

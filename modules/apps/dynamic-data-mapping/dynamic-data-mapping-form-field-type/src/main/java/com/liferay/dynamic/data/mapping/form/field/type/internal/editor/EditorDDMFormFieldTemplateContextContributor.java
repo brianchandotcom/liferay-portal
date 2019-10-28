@@ -19,8 +19,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,11 +53,9 @@ public class EditorDDMFormFieldTemplateContextContributor
 				ddmFormFieldRenderingContext.getLocale());
 		}
 
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put("placeholder", placeholderString);
-
-		return parameters;
+		return HashMapBuilder.<String, Object>put(
+			"placeholder", placeholderString
+		).build();
 	}
 
 }

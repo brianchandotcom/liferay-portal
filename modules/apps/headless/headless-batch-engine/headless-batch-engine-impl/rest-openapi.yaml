@@ -114,8 +114,8 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    /export-task/{className}/{version}:
-        # @review
+    /export-task/{className}/{contentType}/{version}:
+        #@review
         post:
             description:
                 Submits a request for exporting items to a file.

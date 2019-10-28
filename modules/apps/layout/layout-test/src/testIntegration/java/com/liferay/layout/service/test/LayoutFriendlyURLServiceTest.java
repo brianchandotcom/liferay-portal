@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -69,11 +68,13 @@ public class LayoutFriendlyURLServiceTest {
 
 		String name = RandomTestUtil.randomString();
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.GERMANY, name);
-		nameMap.put(LocaleUtil.SPAIN, name);
-		nameMap.put(LocaleUtil.US, name);
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.GERMANY, name
+		).put(
+			LocaleUtil.SPAIN, name
+		).put(
+			LocaleUtil.US, name
+		).build();
 
 		Map<Locale, String> friendlyURLMap = HashMapBuilder.<Locale, String>put(
 			LocaleUtil.GERMANY, "/germanurl"
@@ -116,10 +117,11 @@ public class LayoutFriendlyURLServiceTest {
 
 		String name = RandomTestUtil.randomString();
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.SPAIN, name);
-		nameMap.put(LocaleUtil.US, name);
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.SPAIN, name
+		).put(
+			LocaleUtil.US, name
+		).build();
 
 		Map<Locale, String> friendlyURLMap = HashMapBuilder.<Locale, String>put(
 			LocaleUtil.SPAIN, "/spanishurl"

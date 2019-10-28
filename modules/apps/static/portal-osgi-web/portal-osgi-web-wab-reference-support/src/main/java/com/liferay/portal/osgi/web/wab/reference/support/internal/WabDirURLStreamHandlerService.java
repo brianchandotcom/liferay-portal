@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -36,7 +37,6 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -85,10 +85,10 @@ public class WabDirURLStreamHandlerService
 				bundleSymbolicName = _getNameFromProperties(warDir);
 			}
 
-			Map<String, String[]> parameters = new HashMap<>();
-
-			parameters.put(
-				"Bundle-SymbolicName", new String[] {bundleSymbolicName});
+			Map<String, String[]> parameters =
+				HashMapBuilder.<String, String[]>put(
+					"Bundle-SymbolicName", new String[] {bundleSymbolicName}
+				).build();
 
 			String contextName = _http.getParameter(
 				url.toExternalForm(), "Web-ContextPath");

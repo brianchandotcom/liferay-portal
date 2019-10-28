@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -84,9 +83,9 @@ public class AssetTestUtil {
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(locale, RandomTestUtil.randomString());
+		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+			locale, RandomTestUtil.randomString()
+		).build();
 
 		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
 			locale, RandomTestUtil.randomString()
@@ -135,9 +134,9 @@ public class AssetTestUtil {
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(locale, RandomTestUtil.randomString());
+		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+			locale, RandomTestUtil.randomString()
+		).build();
 
 		Map<Locale, String> descriptionMap = HashMapBuilder.<Locale, String>put(
 			locale, RandomTestUtil.randomString()

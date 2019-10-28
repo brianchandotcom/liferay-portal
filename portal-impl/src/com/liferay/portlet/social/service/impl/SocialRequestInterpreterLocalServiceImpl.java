@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.social.service.base.SocialRequestInterpreterLocalServiceBaseImpl;
@@ -38,7 +39,6 @@ import com.liferay.social.kernel.model.SocialRequestFeedEntry;
 import com.liferay.social.kernel.model.SocialRequestInterpreter;
 import com.liferay.social.kernel.model.impl.SocialRequestInterpreterImpl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -79,10 +79,9 @@ public class SocialRequestInterpreterLocalServiceImpl
 		SocialRequestInterpreterImpl socialRequestInterpreterImpl =
 			(SocialRequestInterpreterImpl)requestInterpreter;
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
-			"javax.portlet.name", socialRequestInterpreterImpl.getPortletId());
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"javax.portlet.name", socialRequestInterpreterImpl.getPortletId()
+		).build();
 
 		ServiceRegistration<SocialRequestInterpreter> serviceRegistration =
 			registry.registerService(

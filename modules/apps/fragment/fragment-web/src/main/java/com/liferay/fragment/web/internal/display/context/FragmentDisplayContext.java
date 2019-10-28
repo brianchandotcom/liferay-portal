@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -50,7 +51,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -274,11 +274,10 @@ public class FragmentDisplayContext {
 		deleteFragmentCollectionURL.setParameter(
 			ActionRequest.ACTION_NAME, "/fragment/delete_fragment_collection");
 
-		Map<String, Object> context = new HashMap<>();
-
-		context.put(
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
 			"deleteFragmentCollectionURL",
-			deleteFragmentCollectionURL.toString());
+			deleteFragmentCollectionURL.toString()
+		).build();
 
 		LiferayPortletURL exportFragmentCollectionsURL =
 			(LiferayPortletURL)_renderResponse.createResourceURL();

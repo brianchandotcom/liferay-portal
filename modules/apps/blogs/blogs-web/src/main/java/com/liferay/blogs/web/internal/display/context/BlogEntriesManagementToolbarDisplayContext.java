@@ -32,12 +32,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -110,9 +110,9 @@ public class BlogEntriesManagementToolbarDisplayContext
 			cmd = Constants.MOVE_TO_TRASH;
 		}
 
-		Map<String, Object> context = new HashMap<>();
-
-		context.put("deleteEntriesCmd", cmd);
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
+			"deleteEntriesCmd", cmd
+		).build();
 
 		PortletURL deleteEntriesURL = liferayPortletResponse.createActionURL();
 

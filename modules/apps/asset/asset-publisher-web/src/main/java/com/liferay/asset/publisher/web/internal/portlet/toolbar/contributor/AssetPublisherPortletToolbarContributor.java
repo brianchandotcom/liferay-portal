@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -130,10 +130,9 @@ public class AssetPublisherPortletToolbarContributor
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		Map<String, Object> data = new HashMap<>();
-
-		data.put(
-			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset"
+		).build();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
@@ -186,10 +185,9 @@ public class AssetPublisherPortletToolbarContributor
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		Map<String, Object> data = new HashMap<>();
-
-		data.put(
-			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset"
+		).build();
 
 		String message = assetPublisherAddItemHolder.getModelResource();
 

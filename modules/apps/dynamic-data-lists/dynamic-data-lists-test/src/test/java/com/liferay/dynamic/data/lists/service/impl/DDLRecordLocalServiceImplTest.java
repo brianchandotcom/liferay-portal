@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.service.impl;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -25,7 +26,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -197,9 +197,10 @@ public class DDLRecordLocalServiceImplTest {
 
 		String fieldName = StringUtil.randomString();
 
-		Map<String, Serializable> fieldsMap = new HashMap<>();
-
-		fieldsMap.put(fieldName, (Serializable)fieldValues);
+		Map<String, Serializable> fieldsMap =
+			HashMapBuilder.<String, Serializable>put(
+				fieldName, (Serializable)fieldValues
+			).build();
 
 		Fields fields = _ddlRecordLocalServiceImpl.toFields(
 			0, fieldsMap, LocaleUtil.US, LocaleUtil.US);
@@ -212,9 +213,10 @@ public class DDLRecordLocalServiceImplTest {
 	protected void assertToFields(Serializable[] fieldValues) throws Exception {
 		String fieldName = StringUtil.randomString();
 
-		Map<String, Serializable> fieldsMap = new HashMap<>();
-
-		fieldsMap.put(fieldName, (Serializable)fieldValues);
+		Map<String, Serializable> fieldsMap =
+			HashMapBuilder.<String, Serializable>put(
+				fieldName, (Serializable)fieldValues
+			).build();
 
 		Fields fields = _ddlRecordLocalServiceImpl.toFields(
 			0, fieldsMap, LocaleUtil.US, LocaleUtil.US);
@@ -228,9 +230,10 @@ public class DDLRecordLocalServiceImplTest {
 	protected Field toField(Serializable fieldValue) throws Exception {
 		String fieldName = StringUtil.randomString();
 
-		Map<String, Serializable> fieldsMap = new HashMap<>();
-
-		fieldsMap.put(fieldName, fieldValue);
+		Map<String, Serializable> fieldsMap =
+			HashMapBuilder.<String, Serializable>put(
+				fieldName, fieldValue
+			).build();
 
 		Fields fields = _ddlRecordLocalServiceImpl.toFields(
 			0, fieldsMap, LocaleUtil.US, LocaleUtil.US);

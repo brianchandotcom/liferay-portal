@@ -18,6 +18,7 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
+import com.liferay.document.library.web.internal.util.DLFolderUtil;
 import com.liferay.document.library.web.internal.util.DLPortletConfigurationIconUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -93,7 +94,7 @@ public class EditFolderPortletConfigurationIcon
 				portletURL.setParameter("rootFolder", Boolean.TRUE.toString());
 			}
 			else {
-				if (folder.isMountPoint() || folder.isRoot()) {
+				if (DLFolderUtil.isRepositoryRoot(folder)) {
 					portletURL.setParameter(
 						"mvcRenderCommandName",
 						"/document_library/edit_repository");

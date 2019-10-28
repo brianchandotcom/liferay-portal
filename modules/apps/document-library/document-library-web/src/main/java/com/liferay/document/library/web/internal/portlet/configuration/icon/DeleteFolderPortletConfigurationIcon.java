@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.portlet.configuration.icon;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
+import com.liferay.document.library.web.internal.util.DLFolderUtil;
 import com.liferay.document.library.web.internal.util.DLPortletConfigurationIconUtil;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -91,7 +92,7 @@ public class DeleteFolderPortletConfigurationIcon
 
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
-			if (folder.isMountPoint() || folder.isRoot()) {
+			if (DLFolderUtil.isRepositoryRoot(folder)) {
 				portletURL.setParameter(
 					ActionRequest.ACTION_NAME,
 					"/document_library/edit_repository");
@@ -105,7 +106,7 @@ public class DeleteFolderPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			if (folder.isMountPoint() || folder.isRoot() ||
+			if (DLFolderUtil.isRepositoryRoot(folder) ||
 				!_dlTrashUtil.isTrashEnabled(
 					themeDisplay.getScopeGroupId(), folder.getRepositoryId())) {
 
@@ -139,7 +140,7 @@ public class DeleteFolderPortletConfigurationIcon
 
 			portletURL.setParameter("redirect", redirectURL.toString());
 
-			if (folder.isMountPoint() || folder.isRoot()) {
+			if (DLFolderUtil.isRepositoryRoot(folder)) {
 				portletURL.setParameter(
 					"repositoryId", String.valueOf(folder.getRepositoryId()));
 			}

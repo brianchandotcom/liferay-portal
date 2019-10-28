@@ -14,7 +14,6 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayNavigationBar from '@clayui/navigation-bar';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -27,10 +26,10 @@ const Header = ({
 }) => (
 	<div className="navbar navigation-bar navigation-bar-light">
 		<div className="container-fluid header">
-			<nav class="navbar navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
-				<div class="container-fluid container-fluid-max-xl">
-					<ul class="navbar-nav">
-						<li class="nav-item">
+			<nav className="navbar navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
+				<div className="container-fluid container-fluid-max-xl">
+					<ul className="navbar-nav">
+						<li className="nav-item">
 							<ClayButton
 								borderless
 								displayType="secondary"
@@ -40,17 +39,17 @@ const Header = ({
 								<ClayIcon symbol="angle-left" />
 							</ClayButton>
 						</li>
-						<li class="nav-item d-none d-sm-inline-flex">
+						<li className="d-none d-sm-inline-flex nav-item">
 							<strong>{headerTitle} </strong>
 						</li>
 					</ul>
 				</div>
 			</nav>
 
-			<nav class="navbar  navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
-				<div class="container-fluid container-fluid-max-xl">
-					<ul class="navbar-nav">
-						<li class="nav-item btn-group-item">
+			<nav className="navbar navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
+				<div className="container-fluid container-fluid-max-xl">
+					<ul className="navbar-nav">
+						<li className="btn-group-item nav-item">
 							<ClayButton
 								borderless
 								displayType="secondary"
@@ -60,7 +59,7 @@ const Header = ({
 								<ClayIcon symbol="pencil" />
 							</ClayButton>
 						</li>
-						<li class="nav-item btn-group-item">
+						<li className="btn-group-item nav-item">
 							<ClayButton
 								borderless
 								displayType="secondary"
@@ -71,7 +70,7 @@ const Header = ({
 								<ClayIcon symbol="info-panel-open" />
 							</ClayButton>
 						</li>
-						<li class="nav-item">
+						<li className="nav-item">
 							<ClayButton
 								displayType="primary"
 								onClick={handleClickDone}

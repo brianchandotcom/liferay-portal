@@ -106,6 +106,10 @@ public class SchemaBuilder {
 		return schemaName;
 	}
 
+	public Schema getEntitySchema(String entityName, JsonObject oasJsonObject) {
+		return _getSchema(entityName, oasJsonObject);
+	}
+
 	public Schema inferSchema(
 		String endpoint, String operation, JsonObject apiSpecJsonObject) {
 
@@ -269,33 +273,36 @@ public class SchemaBuilder {
 		return strings;
 	}
 
-	private Schema _getSchema(
-		String endpoint, String operation, JsonObject apiSpecJsonObject) {
-
-		AtomicInteger index = new AtomicInteger();
-		List<Schema.Field> schemaFields = new ArrayList<>();
-		Set<String> previousFieldNames = new HashSet<>();
-
-		String schemaName = extractEndpointSchemaName(
-			endpoint, operation, apiSpecJsonObject);
-
-		if (_logger.isDebugEnabled()) {
-			_logger.debug("Schema name: {}", schemaName);
-		}
-
+	private Schema _getSchema(String schemaName, JsonObject oasJsonObject) {
 		if (StringUtil.isEmpty(schemaName)) {
 			throw TalendRuntimeException.createUnexpectedException(
 				"Unable to determine the Schema for the selected endpoint");
 		}
 
+		if (_logger.isDebugEnabled()) {
+			_logger.debug("Create schema for: {}", schemaName);
+		}
+
+		AtomicInteger index = new AtomicInteger();
+		List<Schema.Field> schemaFields = new ArrayList<>();
+		Set<String> previousFieldNames = new HashSet<>();
+
 		JsonObject schemaJsonObject = _extractSchemaJsonObject(
-			schemaName, apiSpecJsonObject);
+			schemaName, oasJsonObject);
 
 		_processSchemaJsonObject(
 			null, schemaJsonObject, index, previousFieldNames, schemaFields,
-			apiSpecJsonObject);
+			oasJsonObject);
 
 		return Schema.createRecord("Runtime", null, null, false, schemaFields);
+	}
+
+	private Schema _getSchema(
+		String endpoint, String operation, JsonObject apiSpecJsonObject) {
+
+		return _getSchema(
+			extractEndpointSchemaName(endpoint, operation, apiSpecJsonObject),
+			apiSpecJsonObject);
 	}
 
 	private void _processSchemaJsonObject(

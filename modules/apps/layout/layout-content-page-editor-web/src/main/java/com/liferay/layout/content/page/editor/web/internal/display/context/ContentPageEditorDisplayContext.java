@@ -719,6 +719,8 @@ public class ContentPageEditorDisplayContext {
 				fragmentEntry.getImagePreviewURL(themeDisplay)
 			).put(
 				"name", fragmentEntry.getName()
+			).put(
+				"type", fragmentEntry.getType()
 			);
 
 			soyContexts.add(soyContext);

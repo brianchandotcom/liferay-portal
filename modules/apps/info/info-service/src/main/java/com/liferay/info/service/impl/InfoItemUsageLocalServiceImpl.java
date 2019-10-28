@@ -43,7 +43,7 @@ public class InfoItemUsageLocalServiceImpl
 		ServiceContext serviceContext) {
 
 		return addInfoItemUsage(
-			groupId, classNameId, classPK, 0, StringPool.BLANK, 0,
+			groupId, classNameId, classPK, StringPool.BLANK, 0, 0,
 			InfoItemUsageConstants.TYPE_DEFAULT, serviceContext);
 	}
 

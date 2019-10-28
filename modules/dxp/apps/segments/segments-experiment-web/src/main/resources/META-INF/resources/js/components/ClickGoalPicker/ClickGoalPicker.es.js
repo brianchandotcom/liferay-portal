@@ -92,16 +92,6 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 		return null;
 	}
 
-	if (process.env.NODE_ENV === 'development') {
-		const style = getComputedStyle(root);
-
-		if (style.position === 'static') {
-			console.warn(
-				'<SegmentsExperimentsClickGoal /> requires that #content be a positioned element (ie. not position: "static")'
-			);
-		}
-	}
-
 	const scrollIntoView = event => {
 		const target = document.querySelector(state.selectedTarget);
 

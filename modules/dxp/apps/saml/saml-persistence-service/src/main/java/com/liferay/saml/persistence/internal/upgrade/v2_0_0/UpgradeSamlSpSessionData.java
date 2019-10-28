@@ -14,10 +14,10 @@
 
 package com.liferay.saml.persistence.internal.upgrade.v2_0_0;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 
@@ -67,7 +67,7 @@ public class UpgradeSamlSpSessionData extends UpgradeProcess {
 				StringBundler.concat(
 					"update SamlSpSession set samlIdpEntityId = '",
 					samlSpDefaultIdpEntityId, "' where companyId = ",
-					String.valueOf(companyId)));
+					companyId));
 
 			properties.remove("saml.sp.default.idp.entity.id");
 

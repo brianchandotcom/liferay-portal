@@ -14,10 +14,10 @@
 
 package com.liferay.sharepoint.soap.connector.operation;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.sharepoint.soap.connector.SharepointException;
 import com.liferay.sharepoint.soap.connector.SharepointObject;
@@ -269,8 +269,8 @@ public final class GetSharepointObjectsByQueryOperation extends BaseOperation {
 
 		_log.debug(
 			StringBundler.concat(
-				"Query: ", String.valueOf(query), "\nQuery options: ",
-				String.valueOf(queryOptionsList), "\nResult: ",
+				"Query: ", query, "\nQuery options: ", queryOptionsList,
+				"\nResult: ",
 				XMLUtil.toString(
 					XMLUtil.getElement(
 						getListItemsResponseGetListItemsResult))));

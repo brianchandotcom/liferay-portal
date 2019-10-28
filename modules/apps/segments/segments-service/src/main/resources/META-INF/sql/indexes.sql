@@ -11,6 +11,9 @@ create index IX_E1165342 on SegmentsEntryRel (classNameId, classPK);
 create index IX_5FBA8532 on SegmentsEntryRel (groupId, classNameId, classPK);
 create unique index IX_55B38A5 on SegmentsEntryRel (segmentsEntryId, classNameId, classPK);
 
+create unique index IX_B2DD086A on SegmentsEntryRole (roleId, segmentsEntryId);
+create index IX_1B24832F on SegmentsEntryRole (segmentsEntryId);
+
 create index IX_50DD7CFA on SegmentsExperience (groupId, classNameId, classPK, active_);
 create unique index IX_8B4A6BC7 on SegmentsExperience (groupId, classNameId, classPK, priority);
 create index IX_5B21AD71 on SegmentsExperience (groupId, segmentsEntryId, classNameId, classPK, active_);

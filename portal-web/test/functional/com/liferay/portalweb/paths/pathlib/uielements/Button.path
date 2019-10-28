@@ -454,6 +454,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROPAGATE</td>
+	<td>//button[contains(@data-title,'Propagate')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH</td>
 	<td>//button[span[contains(.,'Publish')]] | //div[contains(@class,'button-holder')]//button[contains(text(),'Publish')]</td>
 	<td></td>

@@ -97,8 +97,6 @@ public abstract class BaseFragmentCollectionContributor
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(Locale locale) {
-		_initialize();
-
 		return _getFragmentEntries(getFragmentEntries(), locale);
 	}
 

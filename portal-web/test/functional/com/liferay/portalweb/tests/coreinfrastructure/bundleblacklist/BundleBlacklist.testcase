@@ -21,6 +21,8 @@ definition {
 
 	@priority = "4"
 	test BlacklistModuleJar {
+		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleJar";
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

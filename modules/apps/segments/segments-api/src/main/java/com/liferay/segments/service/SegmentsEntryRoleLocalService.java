@@ -21,10 +21,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -60,6 +63,9 @@ public interface SegmentsEntryRoleLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsEntryRoleLocalServiceUtil} to access the segments entry role local service. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsEntryRoleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SegmentsEntryRole addSegmentsEntryRole(
+			long roleId, long segmentsEntryId, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the segments entry role to the database. Also notifies the appropriate model listeners.
@@ -98,6 +104,11 @@ public interface SegmentsEntryRoleLocalService
 	public SegmentsEntryRole deleteSegmentsEntryRole(long segmentsEntryRoleId)
 		throws PortalException;
 
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public SegmentsEntryRole deleteSegmentsEntryRole(
+			long roleId, long segmentsEntryId)
+		throws PortalException;
+
 	/**
 	 * Deletes the segments entry role from the database. Also notifies the appropriate model listeners.
 	 *
@@ -107,6 +118,14 @@ public interface SegmentsEntryRoleLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public SegmentsEntryRole deleteSegmentsEntryRole(
 		SegmentsEntryRole segmentsEntryRole);
+
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteSegmentsEntryRoles(long segmentsEntryId)
+		throws PortalException;
+
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteSegmentsEntryRolesByRoleId(long roleId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
@@ -220,6 +239,12 @@ public interface SegmentsEntryRoleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsEntryRole> getSegmentsEntryRoles(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntryRole> getSegmentsEntryRoles(long segmentsEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntryRole> getSegmentsEntryRolesByRoleId(long roleId);
+
 	/**
 	 * Returns the number of segments entry roles.
 	 *
@@ -227,6 +252,12 @@ public interface SegmentsEntryRoleLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsEntryRolesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSegmentsEntryRolesCount(long segmentsEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSegmentsEntryRolesCountByRoleId(long roleId);
 
 	/**
 	 * Updates the segments entry role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

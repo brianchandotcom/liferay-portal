@@ -1,6 +1,7 @@
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import java.lang.reflect.Constructor;
 
 
@@ -11,7 +12,7 @@ try {
 
 	Constructor<?> constructor = clazz.getConstructor(String.class);
 
-	PortalCache testCache = MultiVMPoolUtil.getPortalCache("test.cache");
+	PortalCache testCache = PortalCacheHelperUtil.getPortalCache(PortalCacheManagerNames.MULTI_VM, "test.cache");
 
 	testCache.put("test.key", constructor.newInstance("test.value"));
 }

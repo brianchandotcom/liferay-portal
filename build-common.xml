@@ -822,34 +822,6 @@ information.
 
 			<local name="task.available" />
 
-			<local name="redirector.error.property" />
-			<local name="redirector.output.property" />
-
-			<if>
-				<or>
-					<not>
-						<equals arg1="@{outputproperty}" arg2="" />
-					</not>
-					<and>
-						<not>
-							<isset property="env.JENKINS_HOME" />
-						</not>
-						<equals arg1="${gradle.execute.silent}" arg2="true" />
-					</and>
-				</or>
-				<then>
-					<property name="redirector.error.property" value="error.property" />
-					<property name="redirector.output.property" value="output.property" />
-				</then>
-				<else>
-					<property name="redirector.error.property" value="" />
-					<property name="redirector.output.property" value="" />
-				</else>
-			</if>
-
-			<local name="${redirector.error.property}" />
-			<local name="${redirector.output.property}" />
-
 			<if>
 				<equals arg1="@{checktask}" arg2="true" />
 				<then>
@@ -934,6 +906,34 @@ information.
 							<property name="gradle.executable.task" value="@{task}" />
 						</else>
 					</if>
+
+					<local name="redirector.error.property" />
+					<local name="redirector.output.property" />
+
+					<if>
+						<or>
+							<not>
+								<equals arg1="@{outputproperty}" arg2="" />
+							</not>
+							<and>
+								<not>
+									<isset property="env.JENKINS_HOME" />
+								</not>
+								<equals arg1="${gradle.execute.silent}" arg2="true" />
+							</and>
+						</or>
+						<then>
+							<property name="redirector.error.property" value="error.property" />
+							<property name="redirector.output.property" value="output.property" />
+						</then>
+						<else>
+							<property name="redirector.error.property" value="" />
+							<property name="redirector.output.property" value="" />
+						</else>
+					</if>
+
+					<local name="${redirector.error.property}" />
+					<local name="${redirector.output.property}" />
 
 					<trycatch>
 						<try>

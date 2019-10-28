@@ -200,18 +200,20 @@ class FragmentEditableField extends PortletBase {
 	 * @review
 	 */
 	syncActiveItemId() {
+		const eventName = this.type === 'image' ? 'dblclick' : 'click';
+
 		if (
 			this._getItemId() === this.activeItemId &&
 			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable
 		) {
 			this._createFloatingToolbar();
 
-			this.element.addEventListener('click', this._createProcessor);
+			this.element.addEventListener(eventName, this._createProcessor);
 		} else {
 			this._disposeFloatingToolbar();
 			this._destroyProcessors();
 
-			this.element.removeEventListener('click', this._createProcessor);
+			this.element.removeEventListener(eventName, this._createProcessor);
 		}
 	}
 

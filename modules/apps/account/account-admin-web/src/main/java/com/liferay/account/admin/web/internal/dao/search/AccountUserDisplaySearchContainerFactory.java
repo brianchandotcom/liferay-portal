@@ -52,7 +52,7 @@ public class AccountUserDisplaySearchContainerFactory {
 		String emptyResultsMessage =
 			"there-are-no-users-associated-with-this-account";
 
-		if (navigation.equals("inactive")) {
+		if (_accountUserRetriever.getAccountUsersCount(accountEntryId) > 0) {
 			emptyResultsMessage = "no-users-were-found";
 		}
 

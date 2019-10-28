@@ -1,9 +1,10 @@
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import java.util.List;
 
 
-PortalCache<String, String> testCache = MultiVMPoolUtil.getPortalCache("test.cache");
+PortalCache<String, String> testCache = PortalCacheHelperUtil.getPortalCache(PortalCacheManagerNames.MULTI_VM, "test.cache");
 
 List<String> keys = testCache.getKeys();
 

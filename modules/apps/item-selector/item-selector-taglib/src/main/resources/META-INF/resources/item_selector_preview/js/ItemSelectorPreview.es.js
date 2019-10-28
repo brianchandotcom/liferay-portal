@@ -67,7 +67,6 @@ class ItemSelectorPreview extends Component {
 			Liferay.SideNavigation.initialize(sidenavToggle, {
 				container: '.sidenav-container',
 				position: 'right',
-				type: 'relative',
 				typeMobile: 'fixed',
 				width: '320px'
 			});

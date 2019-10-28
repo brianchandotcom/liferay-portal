@@ -247,10 +247,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		boolean exportPortletData = getExportPortletData(
 			companyId, portletId, parameterMap);
 
-		Map<String, Boolean> exportPortletControlsMap = new HashMap<>();
-
-		exportPortletControlsMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA, exportPortletData);
+		Map<String, Boolean> exportPortletControlsMap = HashMapBuilder.put(
+			PortletDataHandlerKeys.PORTLET_DATA, exportPortletData
+		).build();
 
 		exportPortletControlsMap.putAll(
 			getExportPortletSetupControlsMap(

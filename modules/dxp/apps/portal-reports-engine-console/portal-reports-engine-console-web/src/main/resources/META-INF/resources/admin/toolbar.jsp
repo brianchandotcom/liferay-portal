@@ -64,6 +64,7 @@ portletURL.setParameter("tabs1", tabs1);
 <clay:management-toolbar
 	clearResultsURL="<%= reportsEngineDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= reportsEngineDisplayContext.getCreationMenu() %>"
+	disabled="<%= reportsEngineDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= reportsEngineDisplayContext.getFilterOptions() %>"
 	itemsTotal="<%= reportsEngineDisplayContext.getTotalItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"

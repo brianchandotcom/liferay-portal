@@ -324,6 +324,14 @@ public class ReportsEngineDisplayContext {
 		return false;
 	}
 
+	public Boolean isDisabled() throws PortalException {
+		if (getTotalItems() == 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isReportsTabSelected() {
 		String tabs1 = _getTabs1();
 

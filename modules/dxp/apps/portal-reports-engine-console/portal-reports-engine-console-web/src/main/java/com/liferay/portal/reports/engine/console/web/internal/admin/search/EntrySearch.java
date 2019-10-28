@@ -35,7 +35,7 @@ import javax.portlet.PortletURL;
  */
 public class EntrySearch extends SearchContainer<Entry> {
 
-	public static final String EMPTY_RESULTS_MESSAGE = "no-reports-were-found";
+	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-reports";
 
 	public static List<String> headerNames = new ArrayList<String>() {
 		{

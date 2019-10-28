@@ -35,7 +35,7 @@ import javax.portlet.PortletURL;
  */
 public class SourceSearch extends SearchContainer<Source> {
 
-	public static final String EMPTY_RESULTS_MESSAGE = "no-sources-were-found";
+	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-sources";
 
 	public static List<String> headerNames = new ArrayList<String>() {
 		{

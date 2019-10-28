@@ -36,7 +36,7 @@ import javax.portlet.PortletURL;
 public class DefinitionSearch extends SearchContainer<Definition> {
 
 	public static final String EMPTY_RESULTS_MESSAGE =
-		"no-definitions-were-found";
+		"there-are-no-definitions";
 
 	public static List<String> headerNames = new ArrayList<String>() {
 		{

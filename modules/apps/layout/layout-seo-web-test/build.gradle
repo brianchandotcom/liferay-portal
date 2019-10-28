@@ -2,5 +2,9 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.jsoup", name: "jsoup", version: "1.10.2"
+	testIntegrationCompile project(":apps:document-library:document-library-api")
+	testIntegrationCompile project(":apps:layout:layout-seo-api")
+	testIntegrationCompile project(":apps:layout:layout-test-util")
+	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

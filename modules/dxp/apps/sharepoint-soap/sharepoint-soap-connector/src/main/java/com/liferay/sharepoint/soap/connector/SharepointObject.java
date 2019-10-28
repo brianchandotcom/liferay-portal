@@ -14,8 +14,8 @@
 
 package com.liferay.sharepoint.soap.connector;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.net.URL;
 

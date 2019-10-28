@@ -14,6 +14,7 @@
 
 package com.liferay.sharepoint.soap.repository.search;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
-import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Iván Zaera

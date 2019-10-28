@@ -27,6 +27,8 @@ public interface AccountUserRetriever {
 
 	public List<User> getAccountUsers(long accountEntryId);
 
+	public long getAccountUsersCount(long accountEntryId);
+
 	public BaseModelSearchResult<User> searchAccountUsers(
 			long accountEntryId, String keywords, int status, int cur,
 			int delta, String sortField, boolean reverse)

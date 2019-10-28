@@ -65,6 +65,12 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 	}
 
 	@Override
+	public long getAccountUsersCount(long accountEntryId) {
+		return _accountEntryUserRelLocalService.
+			getAccountEntryUserRelsCountByAccountEntryId(accountEntryId);
+	}
+
+	@Override
 	public BaseModelSearchResult<User> searchAccountUsers(
 			long accountEntryId, String keywords, int status, int cur,
 			int delta, String sortField, boolean reverse)

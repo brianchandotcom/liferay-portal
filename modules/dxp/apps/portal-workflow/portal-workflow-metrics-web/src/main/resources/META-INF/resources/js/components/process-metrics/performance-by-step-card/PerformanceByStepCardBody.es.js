@@ -20,6 +20,7 @@ import Request from '../../../shared/components/request/Request.es';
 import {ChildLink} from '../../../shared/components/router/routerWrapper.es';
 import {AppContext} from '../../AppContext.es';
 import {TimeRangeContext} from '../filter/store/TimeRangeStore.es';
+import {formatQueryDate} from '../util/timeRangeUtil.es';
 import PerformanceByStepCard from './PerformanceByStepCard.es';
 
 const Body = ({processId}) => {
@@ -48,6 +49,15 @@ const Body = ({processId}) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [timeRange]);
 
+	const viewAllStepsQuery = timeRange
+		? {
+				filters: {
+					dateEnd: formatQueryDate(timeRange.dateEnd),
+					dateStart: formatQueryDate(timeRange.dateStart),
+					performanceTimeRange: timeRange.key
+				}
+		  }
+		: {};
 	const viewAllStepsUrl = `/performance/${processId}/${defaultDelta}/1/overdueInstanceCount:desc`;
 
 	return (
@@ -58,7 +68,10 @@ const Body = ({processId}) => {
 						<PerformanceByStepCard.Table items={data.items} />
 
 						<div className="mb-1 text-right">
-							<ChildLink to={viewAllStepsUrl}>
+							<ChildLink
+								query={viewAllStepsQuery}
+								to={viewAllStepsUrl}
+							>
 								<button className="border-0 btn btn-secondary btn-sm">
 									<span data-testid="viewAllSteps">
 										{Liferay.Language.get(

@@ -20,7 +20,7 @@ import Treeview from 'frontend-taglib/treeview/Treeview.es';
 import React, {useState, useEffect, useCallback} from 'react';
 
 const filterNodes = (nodes, filterValue) => {
-	let filteredNodes = [];
+	const filteredNodes = [];
 
 	nodes.forEach(node => {
 		if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
@@ -28,9 +28,7 @@ const filterNodes = (nodes, filterValue) => {
 		}
 
 		if (node.children) {
-			filteredNodes = filteredNodes.concat(
-				filterNodes(node.children, filterValue)
-			);
+			filteredNodes.push(...filterNodes(node.children, filterValue));
 		}
 	});
 

@@ -56,6 +56,14 @@ public class SchemaBuilderTest extends BaseTestCase {
 	}
 
 	@Test
+	public void testGetEntitySchema() {
+		Schema productSchema = _schemaBuilder.getEntitySchema(
+			"Product", _oasJsonObject);
+
+		_assertValidProductSchema(productSchema);
+	}
+
+	@Test
 	public void testInferSchemaForDeleteOperation() {
 		String endpoint =
 			"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}";

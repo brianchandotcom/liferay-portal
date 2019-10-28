@@ -849,6 +849,10 @@ public class JournalArticleActionDropdownItemsProvider {
 			return true;
 		}
 
+		if (Validator.isNotNull(_article.getLayoutUuid())) {
+			return true;
+		}
+
 		return false;
 	}
 

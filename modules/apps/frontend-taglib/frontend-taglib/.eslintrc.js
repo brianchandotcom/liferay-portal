@@ -13,8 +13,5 @@
  */
 
 module.exports = {
-	extends: ['liferay/react'],
-	rules: {
-		'react/no-string-refs': 'off'
-	}
+	extends: ['liferay/react']
 };

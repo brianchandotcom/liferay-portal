@@ -33,6 +33,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CREATE_NEW_CONTENT_FORM-->
+<tr>
+	<td>CONTENT_NAME_FIELD</td>
+	<td>//div[contains(@class,'form-group') and label[contains(.,'${key_fieldName}')]]//input</td>
+	<td></td>
+</tr>
 <!--FRAGMENT_SIDEBAR-->
 <tr>
 	<td>FRAGMENT_SIDEBAR</td>

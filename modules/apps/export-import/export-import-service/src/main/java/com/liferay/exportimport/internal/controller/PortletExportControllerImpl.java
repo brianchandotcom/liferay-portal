@@ -990,15 +990,6 @@ public class PortletExportControllerImpl implements PortletExportController {
 						processExportPortletPreferences(
 							portletDataContext, jxPortletPreferences);
 				}
-				else {
-					PortletDataHandler portletDataHandler =
-						portlet.getPortletDataHandlerInstance();
-
-					jxPortletPreferences =
-						portletDataHandler.processExportPortletPreferences(
-							portletDataContext, portletId,
-							jxPortletPreferences);
-				}
 			}
 			finally {
 				portletDataContext.setExportDataRootElement(

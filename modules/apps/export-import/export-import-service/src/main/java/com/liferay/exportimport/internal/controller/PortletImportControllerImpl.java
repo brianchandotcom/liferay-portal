@@ -597,20 +597,6 @@ public class PortletImportControllerImpl implements PortletImportController {
 							processImportPortletPreferences(
 								portletDataContext, jxPortletPreferences);
 					}
-					else {
-						PortletDataHandler portletDataHandler =
-							_portletDataHandlerProvider.provide(
-								portletDataContext.getCompanyId(),
-								curPortletId);
-
-						if (portletDataHandler != null) {
-							jxPortletPreferences =
-								portletDataHandler.
-									processImportPortletPreferences(
-										portletDataContext, curPortletId,
-										jxPortletPreferences);
-						}
-					}
 				}
 				finally {
 					portletDataContext.setImportDataRootElement(

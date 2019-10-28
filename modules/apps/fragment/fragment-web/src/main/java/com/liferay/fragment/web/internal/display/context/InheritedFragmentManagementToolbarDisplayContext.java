@@ -95,13 +95,13 @@ public class InheritedFragmentManagementToolbarDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, Object> componentContext = new HashMap<>();
-
 		ResourceURL exportFragmentEntriesURL =
 			liferayPortletResponse.createResourceURL();
 
 		exportFragmentEntriesURL.setResourceID(
 			"/fragment/export_fragment_entries");
+
+		Map<String, Object> componentContext = new HashMap<>();
 
 		componentContext.put(
 			"exportFragmentEntriesURL", exportFragmentEntriesURL.toString());

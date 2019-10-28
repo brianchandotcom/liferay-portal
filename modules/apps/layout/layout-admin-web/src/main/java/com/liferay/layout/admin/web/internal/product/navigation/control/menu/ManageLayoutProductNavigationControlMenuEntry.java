@@ -92,10 +92,10 @@ public class ManageLayoutProductNavigationControlMenuEntry
 			layout = _layoutLocalService.fetchLayout(layout.getClassPK());
 		}
 
-		Map<String, String> values = new HashMap<>();
-
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
+
+		Map<String, String> values = new HashMap<>();
 
 		values.put(
 			"configurePage",

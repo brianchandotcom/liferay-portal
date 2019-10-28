@@ -87,10 +87,10 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 	@Override
 	public Map<String, String> getIndexFields(PowwowMeeting powwowMeeting) {
-		Map<String, String> indexFields = new HashMap<>();
-
 		Map<String, Serializable> providerTypeMetadata =
 			powwowMeeting.getProviderTypeMetadataMap();
+
+		Map<String, String> indexFields = new HashMap<>();
 
 		indexFields.put(
 			"zoomHostId", String.valueOf(providerTypeMetadata.get("host_id")));
@@ -179,9 +179,9 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		User user, PowwowServer powwowServer, long powwowMeetingId, String name,
 		Map<String, String> options) {
 
-		Map<String, String> parameterMap = new HashMap<>();
-
 		String hostId = getHostId(user, powwowServer);
+
+		Map<String, String> parameterMap = new HashMap<>();
 
 		parameterMap.put("host_id", hostId);
 
@@ -511,10 +511,10 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 	}
 
 	protected Map<String, String> getParameterMap(PowwowMeeting powwowMeeting) {
-		Map<String, String> parameterMap = new HashMap<>();
-
 		Map<String, Serializable> providerTypeMetadataMap =
 			powwowMeeting.getProviderTypeMetadataMap();
+
+		Map<String, String> parameterMap = new HashMap<>();
 
 		parameterMap.put(
 			"host_id", String.valueOf(providerTypeMetadataMap.get("host_id")));
@@ -609,10 +609,10 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		PowwowServer powwowServer, PowwowMeeting powwowMeeting, String name,
 		User user, Map<String, String> options) {
 
-		Map<String, String> parameterMap = new HashMap<>();
-
 		Map<String, Serializable> providerTypeMetadataMap =
 			powwowMeeting.getProviderTypeMetadataMap();
+
+		Map<String, String> parameterMap = new HashMap<>();
 
 		parameterMap.put(
 			"id", String.valueOf(providerTypeMetadataMap.get("id")));

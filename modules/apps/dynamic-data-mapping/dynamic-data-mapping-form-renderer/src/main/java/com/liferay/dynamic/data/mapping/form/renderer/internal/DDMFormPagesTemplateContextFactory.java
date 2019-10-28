@@ -186,9 +186,9 @@ public class DDMFormPagesTemplateContextFactory {
 	protected Map<String, Object> createPageTemplateContext(
 		DDMFormLayoutPage ddmFormLayoutPage, int pageIndex) {
 
-		Map<String, Object> pageTemplateContext = new HashMap<>();
-
 		LocalizedValue description = ddmFormLayoutPage.getDescription();
+
+		Map<String, Object> pageTemplateContext = new HashMap<>();
 
 		pageTemplateContext.put(
 			"description",

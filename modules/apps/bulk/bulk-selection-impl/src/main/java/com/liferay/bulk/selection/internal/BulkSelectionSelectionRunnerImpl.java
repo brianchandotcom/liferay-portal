@@ -71,10 +71,10 @@ public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 			Map<String, Serializable> inputMap)
 		throws PortalException {
 
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
 		Class<? extends BulkSelectionAction> bulkSelectionActionClass =
 			bulkSelectionAction.getClass();
+
+		Map<String, Serializable> taskContextMap = new HashMap<>();
 
 		taskContextMap.put(
 			BulkSelectionBackgroundTaskConstants.

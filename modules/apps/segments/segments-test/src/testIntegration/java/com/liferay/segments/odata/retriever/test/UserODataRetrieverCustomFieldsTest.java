@@ -251,9 +251,9 @@ public class UserODataRetrieverCustomFieldsTest {
 			ExpandoColumnConstants.STRING_LOCALIZED,
 			ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
 
-		Map<Locale, String> columnValueMap = new HashMap<>();
-
 		Locale esLocale = LocaleUtil.fromLanguageId("es_ES");
+
+		Map<Locale, String> columnValueMap = new HashMap<>();
 
 		columnValueMap.put(esLocale, RandomTestUtil.randomString());
 
@@ -294,9 +294,9 @@ public class UserODataRetrieverCustomFieldsTest {
 			ExpandoColumnConstants.STRING_LOCALIZED,
 			ExpandoColumnConstants.INDEX_TYPE_TEXT);
 
-		Map<Locale, String> columnValueMap = new HashMap<>();
-
 		Locale esLocale = LocaleUtil.fromLanguageId("es_ES");
+
+		Map<Locale, String> columnValueMap = new HashMap<>();
 
 		columnValueMap.put(esLocale, "Hola Mundo!");
 

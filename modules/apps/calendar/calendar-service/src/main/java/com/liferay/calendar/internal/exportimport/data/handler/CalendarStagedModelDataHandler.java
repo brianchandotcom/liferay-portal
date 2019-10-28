@@ -256,10 +256,10 @@ public class CalendarStagedModelDataHandler
 			return calendar.getNameMap();
 		}
 
-		Map<Locale, String> calendarNameMap = new HashMap<>();
-
 		Group scopeGroup = _groupLocalService.getGroup(
 			portletDataContext.getScopeGroupId());
+
+		Map<Locale, String> calendarNameMap = new HashMap<>();
 
 		calendarNameMap.put(
 			LocaleUtil.getSiteDefault(), scopeGroup.getDescriptiveName());

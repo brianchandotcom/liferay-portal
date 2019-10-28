@@ -351,10 +351,10 @@ public class DDMFormBuilderContextFactoryHelper {
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout)
 		throws PortalException {
 
-		Map<String, Object> formContext1 = new HashMap<>();
-
 		Map<String, Object> formContext2 = createFormContext(
 			ddmForm, ddmFormLayout);
+
+		Map<String, Object> formContext1 = new HashMap<>();
 
 		formContext1.put("pages", formContext2.get("pages"));
 
@@ -362,10 +362,10 @@ public class DDMFormBuilderContextFactoryHelper {
 
 		formContext1.put("rules", new ArrayList<>());
 
-		Map<String, Object> successPage = new HashMap<>();
-
 		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
 			ddmForm.getDDMFormSuccessPageSettings();
+
+		Map<String, Object> successPage = new HashMap<>();
 
 		successPage.put("body", toMap(ddmFormSuccessPageSettings.getBody()));
 		successPage.put("enabled", ddmFormSuccessPageSettings.isEnabled());

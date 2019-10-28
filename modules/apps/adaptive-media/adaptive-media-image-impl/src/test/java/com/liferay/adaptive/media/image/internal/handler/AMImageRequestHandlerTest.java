@@ -297,10 +297,10 @@ public class AMImageRequestHandlerTest {
 			AMImageConfigurationEntry amImageConfigurationEntry)
 		throws Exception {
 
-		Map<String, String> properties = new HashMap<>();
-
 		AMAttribute<Object, String> configurationUuidAMAttribute =
 			AMAttribute.getConfigurationUuidAMAttribute();
+
+		Map<String, String> properties = new HashMap<>();
 
 		properties.put(
 			configurationUuidAMAttribute.getName(),

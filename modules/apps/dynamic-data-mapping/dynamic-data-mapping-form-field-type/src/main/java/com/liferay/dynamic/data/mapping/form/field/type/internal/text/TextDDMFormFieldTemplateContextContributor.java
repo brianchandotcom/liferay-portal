@@ -103,8 +103,6 @@ public class TextDDMFormFieldTemplateContextContributor
 				ddmFormField, ddmFormFieldRenderingContext);
 
 		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
-			Map<String, String> optionMap = new HashMap<>();
-
 			LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(
 				optionValue);
 
@@ -114,6 +112,8 @@ public class TextDDMFormFieldTemplateContextContributor
 			if (ddmFormFieldRenderingContext.isViewMode()) {
 				optionLabelString = HtmlUtil.extractText(optionLabelString);
 			}
+
+			Map<String, String> optionMap = new HashMap<>();
 
 			optionMap.put("label", optionLabelString);
 

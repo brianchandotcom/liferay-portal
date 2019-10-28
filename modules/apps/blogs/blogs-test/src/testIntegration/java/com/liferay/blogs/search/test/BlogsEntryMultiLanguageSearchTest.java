@@ -135,9 +135,9 @@ public class BlogsEntryMultiLanguageSearchTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private Map<String, String> _getMapResult(BlogsEntry blogsEntry) {
-		HashMap<String, String> map = new HashMap<>();
-
 		String title = blogsEntry.getTitle();
+
+		HashMap<String, String> map = new HashMap<>();
 
 		map.put(Field.TITLE, title);
 		map.put(Field.getSortableFieldName(Field.TITLE), title);

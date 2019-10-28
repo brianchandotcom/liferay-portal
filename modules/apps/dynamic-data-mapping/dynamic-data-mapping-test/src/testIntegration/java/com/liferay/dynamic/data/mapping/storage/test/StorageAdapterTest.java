@@ -111,9 +111,9 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
-
 		List<Serializable> enValues = ListUtil.fromArray(true, true, true);
+
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, enValues);
 
@@ -255,12 +255,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
-
 		Serializable date1 = getDateFieldValue(0, 1, 2013, _enLocale);
 		Serializable date2 = getDateFieldValue(0, 2, 2013, _enLocale);
 
 		List<Serializable> enValues = ListUtil.fromArray(date1, date2);
+
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, enValues);
 
@@ -295,9 +295,9 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
-
 		List<Serializable> enValues = ListUtil.fromArray(1.1, 1.2, 1.3);
+
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, enValues);
 
@@ -337,8 +337,6 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
@@ -361,6 +359,8 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		List<Serializable> enValues = ListUtil.fromArray(
 			file1Value, file2Value);
+
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, enValues);
 
@@ -393,9 +393,9 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
-
 		List<Serializable> enValues = ListUtil.fromArray(1, 2, 3);
+
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, enValues);
 
@@ -428,10 +428,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
-
 		List<Serializable> enValues = ListUtil.fromArray(
 			"{\"layoutId\":\"1\",\"privateLayout\":false}");
+
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, enValues);
 
@@ -463,9 +463,9 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
-
 		List<Serializable> enValues = ListUtil.fromArray(1, 1.5F, 2);
+
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, enValues);
 
@@ -497,9 +497,9 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
-
 		List<Serializable> enValues = ListUtil.fromArray("value 1", "value 2");
+
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, enValues);
 
@@ -531,10 +531,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
-
 		List<Serializable> enValues = ListUtil.fromArray(
 			"[\"value 1\",\"value 2\"]", "[\"value 3\"]");
+
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, enValues);
 
@@ -567,9 +567,9 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
-
 		List<Serializable> enValues = ListUtil.fromArray("one", "two", "three");
+
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, enValues);
 

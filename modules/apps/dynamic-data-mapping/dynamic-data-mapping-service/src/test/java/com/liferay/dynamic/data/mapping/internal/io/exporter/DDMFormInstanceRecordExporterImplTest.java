@@ -338,9 +338,6 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 
 		DDMFormField ddmFormField = new DDMFormField("field1", "text");
 
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValueMap =
-			new HashMap<>();
-
 		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
 		DDMFormFieldValue ddmFormFieldValue =
@@ -348,6 +345,9 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 				"field1", new UnlocalizedValue("value1"));
 
 		ddmFormFieldValues.add(ddmFormFieldValue);
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValueMap =
+			new HashMap<>();
 
 		ddmFormFieldValueMap.put("field1", ddmFormFieldValues);
 
@@ -411,8 +411,6 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 
 		ddmFormInstanceRecords.add(ddmFormInstanceRecord);
 
-		Map<String, DDMFormField> ddmFormFields = new HashMap<>();
-
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField1 = new DDMFormField("field1", "text");
@@ -422,6 +420,8 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		DDMFormField ddmFormField2 = new DDMFormField("field2", "text");
 
 		ddmForm.addDDMFormField(ddmFormField2);
+
+		Map<String, DDMFormField> ddmFormFields = new HashMap<>();
 
 		ddmFormFields.put("field1", ddmFormField1);
 		ddmFormFields.put("field2", ddmFormField2);

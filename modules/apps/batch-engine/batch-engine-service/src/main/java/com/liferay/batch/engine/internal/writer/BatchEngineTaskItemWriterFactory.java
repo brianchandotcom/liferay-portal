@@ -29,12 +29,13 @@ public class BatchEngineTaskItemWriterFactory {
 
 	public BatchEngineTaskItemWriter create(
 			BatchEngineTaskContentType batchEngineTaskContentType,
-			OutputStream outputStream)
+			Class<?> itemClass, OutputStream outputStream)
 		throws Exception {
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
 			return new CSVBatchEngineTaskItemWriter(
-				_csvFileColumnDelimiter, outputStream);
+				_csvFileColumnDelimiter, ItemClassIndexUtil.index(itemClass),
+				outputStream);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
@@ -48,7 +49,8 @@ public class BatchEngineTaskItemWriterFactory {
 		if ((batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
 			(batchEngineTaskContentType == BatchEngineTaskContentType.XLSX)) {
 
-			return new XLSBatchEngineTaskItemWriter(outputStream);
+			return new XLSBatchEngineTaskItemWriter(
+				ItemClassIndexUtil.index(itemClass), outputStream);
 		}
 
 		throw new IllegalArgumentException(

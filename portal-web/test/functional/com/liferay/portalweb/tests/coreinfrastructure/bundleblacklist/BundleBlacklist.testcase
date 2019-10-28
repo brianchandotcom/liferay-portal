@@ -24,6 +24,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
 			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(

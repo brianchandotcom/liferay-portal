@@ -55,11 +55,11 @@ if (!request.isRequestedSessionIdFromCookie()) {
 String queryString = request.getQueryString();
 
 if (Validator.isNotNull(queryString)) {
-	if (redirect.contains(StringPool.QUESTION)) {
-		redirect = redirect + StringPool.AMPERSAND + queryString;
+	if (redirect.indexOf(CharPool.QUESTION) == -1) {
+		redirect = redirect + StringPool.QUESTION + queryString;
 	}
 	else {
-		redirect = redirect + StringPool.QUESTION + queryString;
+		redirect = redirect + StringPool.AMPERSAND + queryString;
 	}
 }
 

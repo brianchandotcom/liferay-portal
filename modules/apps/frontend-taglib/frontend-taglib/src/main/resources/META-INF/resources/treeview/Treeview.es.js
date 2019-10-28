@@ -12,12 +12,12 @@
  * details.
  */
 
-import React, {useState, useCallback, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
+import React, {useState, useCallback, useEffect, useRef} from 'react';
 
 import NodeList from './NodeList.es';
-import TreeviewLabel from './TreeviewLabel.es';
 import TreeviewCard from './TreeviewCard.es';
+import TreeviewLabel from './TreeviewLabel.es';
 
 const flattenNodes = (nodes, nodeList = []) => {
 	nodes.forEach(node => {

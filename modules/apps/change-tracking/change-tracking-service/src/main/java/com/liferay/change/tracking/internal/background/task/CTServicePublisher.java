@@ -28,8 +28,14 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * @author Preston Crary
@@ -82,6 +88,58 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 		session.flush();
 		session.clear();
+	}
+
+	private static <T extends CTModel<T>> boolean _handleIgnorableChanges(
+		CTPersistence<T> ctPersistence, Map<Serializable, T> sourceCTModels,
+		T targetCTModel) {
+
+		if (sourceCTModels == null) {
+			return false;
+		}
+
+		T sourceCTModel = sourceCTModels.get(targetCTModel.getPrimaryKey());
+
+		Map<String, Function<T, Object>> attributeGetterFunctions =
+			sourceCTModel.getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<T, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
+			String attributeName = entry.getKey();
+
+			if (_ctControlColumnNames.contains(attributeName)) {
+				continue;
+			}
+
+			Function<T, Object> function = entry.getValue();
+
+			Object sourceValue = function.apply(sourceCTModel);
+			Object targetValue = function.apply(targetCTModel);
+
+			if (Objects.equals(sourceValue, targetValue)) {
+				continue;
+			}
+
+			Set<String> ctIgnoredAttributeNames =
+				ctPersistence.getCTIgnoredAttributeNames();
+
+			if (ctIgnoredAttributeNames.contains(attributeName)) {
+				Map<String, BiConsumer<T, Object>> attributeSetterBiConsumers =
+					sourceCTModel.getAttributeSetterBiConsumers();
+
+				BiConsumer<T, Object> biConsumer =
+					attributeSetterBiConsumers.get(attributeName);
+
+				biConsumer.accept(sourceCTModel, targetValue);
+
+				continue;
+			}
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static <T extends CTModel<T>> void _updateCTCollectionId(
@@ -190,7 +248,10 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 					long mvccVersion = ctModel.getMvccVersion();
 
-					if (mvccVersion != ctEntry.getModelMvccVersion()) {
+					if (!_handleIgnorableChanges(
+							ctPersistence, sourceCTModels, ctModel) &&
+						(mvccVersion != ctEntry.getModelMvccVersion())) {
+
 						throw new SystemException(
 							StringBundler.concat(
 								"MVCC version mismatch between ", ctEntry,
@@ -244,6 +305,9 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 		return null;
 	}
+
+	private static final Set<String> _ctControlColumnNames = new HashSet<>(
+		Arrays.asList("ctCollectionId", "mvccVersion"));
 
 	private Map<Serializable, CTEntry> _additionCTEntries;
 	private final CTEntryLocalService _ctEntryLocalService;

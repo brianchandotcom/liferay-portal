@@ -16,12 +16,12 @@ import {ClayCardWithHorizontal} from '@clayui/card';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function TreeviewCard({node, onNodeSelected, selectedNodesIds}) {
+export default function TreeviewCard({node, onNodeSelected, selectedNodeIds}) {
 	return (
 		<div className="p-2">
 			<ClayCardWithHorizontal
 				onSelectChange={() => onNodeSelected(node.id)}
-				selected={selectedNodesIds.includes(node.id)}
+				selected={selectedNodeIds.includes(node.id)}
 				symbol={node.icon}
 				title={node.name}
 			/>
@@ -35,5 +35,5 @@ TreeviewCard.propTypes = {
 		name: PropTypes.string.isRequired
 	}).isRequired,
 	onNodeSelected: PropTypes.func.isRequired,
-	selectedNodesIds: PropTypes.arrayOf(PropTypes.string).isRequired
+	selectedNodeIds: PropTypes.arrayOf(PropTypes.string).isRequired
 };

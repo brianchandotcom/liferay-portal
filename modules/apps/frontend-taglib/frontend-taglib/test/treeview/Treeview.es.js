@@ -73,17 +73,17 @@ describe('Treeview', () => {
 		expect(onSelectedNodesChange).toBeCalledWith(nodes);
 	});
 
-	it('marks the initialSelectedNodesIds as selected', () => {
+	it('marks the initialSelectedNodeIds as selected', () => {
 		const {getByLabelText} = render(
-			<Treeview initialSelectedNodesIds={['1']} nodes={nodes} />
+			<Treeview initialSelectedNodeIds={['1']} nodes={nodes} />
 		);
 
 		expect(getByLabelText('Sandro').checked).toBe(true);
 	});
 
-	it('expands nodes if initialSelectedNodesIds are children', () => {
+	it('expands nodes if initialSelectedNodeIds are children', () => {
 		const {getByLabelText} = render(
-			<Treeview initialSelectedNodesIds={['1.2.1']} nodes={nodes} />
+			<Treeview initialSelectedNodeIds={['1.2.1']} nodes={nodes} />
 		);
 
 		expect(getByLabelText('Eudaldo').checked).toBe(true);
@@ -91,7 +91,7 @@ describe('Treeview', () => {
 
 	it('only expands necessary initial nodes', () => {
 		const {getByLabelText, queryByLabelText} = render(
-			<Treeview initialSelectedNodesIds={['1.1']} nodes={nodes} />
+			<Treeview initialSelectedNodeIds={['1.1']} nodes={nodes} />
 		);
 
 		expect(getByLabelText('Pablictor').checked).toBe(true);
@@ -133,7 +133,7 @@ describe('Treeview', () => {
 
 	it('allows collapsing nodes on click', () => {
 		const {getByLabelText, queryByLabelText} = render(
-			<Treeview initialSelectedNodesIds={['1.1']} nodes={nodes} />
+			<Treeview initialSelectedNodeIds={['1.1']} nodes={nodes} />
 		);
 
 		fireEvent.click(getByLabelText('Collapse Sandro'));
@@ -152,10 +152,10 @@ describe('Treeview', () => {
 
 		const {getByText} = render(
 			<Treeview
-				NodeComponent={({node, onNodeSelected, selectedNodesIds}) => (
+				NodeComponent={({node, onNodeSelected, selectedNodeIds}) => (
 					<button
 						data-icon={node.icon}
-						data-selected={selectedNodesIds.includes(node.id)}
+						data-selected={selectedNodeIds.includes(node.id)}
 						data-size={node.size}
 						onClick={() => onNodeSelected(node.id)}
 						type="button"

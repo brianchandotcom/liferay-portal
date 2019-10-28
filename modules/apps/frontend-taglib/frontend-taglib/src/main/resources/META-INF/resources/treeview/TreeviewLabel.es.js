@@ -15,12 +15,8 @@
 import React from 'react';
 import classNames from 'classnames';
 
-export default function TreeviewLabel({
-	node,
-	selectedNodesIds,
-	onNodeSelected
-}) {
-	const isSelected = selectedNodesIds.includes(node.id);
+export default function TreeviewLabel({node, onNodeSelected, selectedNodeIds}) {
+	const isSelected = selectedNodeIds.includes(node.id);
 
 	const labelClassName = classNames(
 		isSelected ? 'font-weight-bold' : 'font-weight-normal'

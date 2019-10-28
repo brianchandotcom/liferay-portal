@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import java.io.InputStream;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -300,11 +299,10 @@ public class AMImageRequestHandlerTest {
 		AMAttribute<Object, String> configurationUuidAMAttribute =
 			AMAttribute.getConfigurationUuidAMAttribute();
 
-		Map<String, String> properties = new HashMap<>();
-
-		properties.put(
+		Map<String, String> properties = HashMapBuilder.put(
 			configurationUuidAMAttribute.getName(),
-			amImageConfigurationEntry.getUUID());
+			amImageConfigurationEntry.getUUID()
+		).build();
 
 		AMAttribute<Object, String> fileNameAMAttribute =
 			AMAttribute.getFileNameAMAttribute();

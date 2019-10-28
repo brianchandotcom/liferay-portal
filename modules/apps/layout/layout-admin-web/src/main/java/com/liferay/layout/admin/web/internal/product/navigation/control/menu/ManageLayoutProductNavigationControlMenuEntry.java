@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -36,7 +37,6 @@ import com.liferay.taglib.ui.SuccessTag;
 import java.io.IOException;
 import java.io.Writer;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -95,11 +95,10 @@ public class ManageLayoutProductNavigationControlMenuEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
 
-		Map<String, String> values = new HashMap<>();
-
-		values.put(
+		Map<String, String> values = HashMapBuilder.put(
 			"configurePage",
-			_html.escape(_language.get(resourceBundle, "configure-page")));
+			_html.escape(_language.get(resourceBundle, "configure-page"))
+		).build();
 
 		PortletURL editPageURL = _portal.getControlPanelPortletURL(
 			httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,

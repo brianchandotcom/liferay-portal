@@ -165,6 +165,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -2645,21 +2646,18 @@ public class PortalImpl implements Portal {
 
 		String groupIdString = String.valueOf(browsableLayout.getGroupId());
 
-		Map<String, String> variables = new HashMap<>();
-
-		variables.put("liferay:groupId", groupIdString);
-
-		variables.put(
-			"liferay:layoutId", String.valueOf(browsableLayout.getLayoutId()));
-
-		variables.put("liferay:mainPath", mainPath);
-
-		variables.put(
-			"liferay:plid", String.valueOf(browsableLayout.getPlid()));
-
-		variables.put(
+		Map<String, String> variables = HashMapBuilder.put(
+			"liferay:groupId", groupIdString
+		).put(
+			"liferay:layoutId", String.valueOf(browsableLayout.getLayoutId())
+		).put(
+			"liferay:mainPath", mainPath
+		).put(
+			"liferay:plid", String.valueOf(browsableLayout.getPlid())
+		).put(
 			"liferay:privateLayout",
-			String.valueOf(browsableLayout.isPrivateLayout()));
+			String.valueOf(browsableLayout.isPrivateLayout())
+		).build();
 
 		String pvlsgid = "0";
 

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -904,9 +905,9 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 		Query query = addSearchTerm(searchQuery, searchContext, field, like);
 
-		Map<String, Query> queries = new HashMap<>();
-
-		queries.put(field, query);
+		Map<String, Query> queries = HashMapBuilder.<String, Query>put(
+			field, query
+		).build();
 
 		String localizedFieldName = Field.getLocalizedName(
 			searchContext.getLocale(), field);

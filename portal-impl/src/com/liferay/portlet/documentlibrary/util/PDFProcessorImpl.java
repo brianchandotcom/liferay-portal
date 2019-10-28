@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -60,7 +61,6 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -918,9 +918,10 @@ public class PDFProcessorImpl
 
 			int scaledHeight = (int)Math.round(widthFactor * height);
 
-			Map<String, Integer> scaledDimensions = new HashMap<>();
-
-			scaledDimensions.put("height", scaledHeight);
+			Map<String, Integer> scaledDimensions =
+				HashMapBuilder.<String, Integer>put(
+					"height", scaledHeight
+				).build();
 
 			double heightFactor =
 				(double)PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT /

@@ -129,7 +129,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -314,9 +313,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			discussion = true;
 		}
 
-		Map<String, Object> options = new HashMap<>();
-
-		options.put("discussion", discussion);
+		Map<String, Object> options = HashMapBuilder.<String, Object>put(
+			"discussion", discussion
+		).build();
 
 		body = SanitizerUtil.sanitize(
 			user.getCompanyId(), groupId, userId, MBMessage.class.getName(),

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -53,7 +54,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.sql.Connection;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -190,10 +190,10 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
 
-		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
-
-		roleIdsToActionIds.put(
-			role.getRoleId(), new String[] {ActionKeys.CONFIGURATION});
+		Map<Long, String[]> roleIdsToActionIds =
+			HashMapBuilder.<Long, String[]>put(
+				role.getRoleId(), new String[] {ActionKeys.CONFIGURATION}
+			).build();
 
 		Portlet portlet = null;
 		String[][] renamePortletIdsArray = new String[_PORTLET_IDS.length][2];

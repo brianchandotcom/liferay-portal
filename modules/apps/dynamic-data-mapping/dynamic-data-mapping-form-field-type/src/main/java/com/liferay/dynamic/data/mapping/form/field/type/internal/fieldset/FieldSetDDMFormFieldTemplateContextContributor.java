@@ -20,12 +20,12 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -63,16 +63,15 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 		List<Object> nestedFields = getNestedFields(
 			nestedFieldsMap, nestedFieldNames);
 
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put("nestedFields", nestedFields);
-
-		parameters.put(
+		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+			"nestedFields", nestedFields
+		).put(
 			"columnSize",
 			getColumnSize(
 				countVisibleNestedFields(nestedFields),
 				GetterUtil.getString(
-					ddmFormField.getProperty("orientation"), "horizontal")));
+					ddmFormField.getProperty("orientation"), "horizontal"))
+		).build();
 
 		LocalizedValue label = ddmFormField.getLabel();
 

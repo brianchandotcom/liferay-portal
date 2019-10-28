@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.FastDateFormatConstants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -1711,10 +1712,10 @@ public class LanguageImpl implements Language, Serializable {
 		HashMap<String, Locale> groupLanguageIdLocalesMap =
 			new LinkedHashMap<>();
 
-		HashMap<String, Locale> groupLanguageCodeLocalesMap = new HashMap<>();
-
-		groupLanguageCodeLocalesMap.put(
-			defaultLocale.getLanguage(), defaultLocale);
+		HashMap<String, Locale> groupLanguageCodeLocalesMap =
+			HashMapBuilder.<String, Locale>put(
+				defaultLocale.getLanguage(), defaultLocale
+			).build();
 
 		for (String languageId : languageIds) {
 			Locale locale = LocaleUtil.fromLanguageId(languageId, false);

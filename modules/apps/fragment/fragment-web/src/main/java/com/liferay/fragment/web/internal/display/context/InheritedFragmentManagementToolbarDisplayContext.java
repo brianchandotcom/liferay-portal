@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -101,10 +101,10 @@ public class InheritedFragmentManagementToolbarDisplayContext
 		exportFragmentEntriesURL.setResourceID(
 			"/fragment/export_fragment_entries");
 
-		Map<String, Object> componentContext = new HashMap<>();
-
-		componentContext.put(
-			"exportFragmentEntriesURL", exportFragmentEntriesURL.toString());
+		Map<String, Object> componentContext =
+			HashMapBuilder.<String, Object>put(
+				"exportFragmentEntriesURL", exportFragmentEntriesURL.toString()
+			).build();
 
 		long fragmentCollectionId = ParamUtil.getLong(
 			liferayPortletRequest, "fragmentCollectionId");

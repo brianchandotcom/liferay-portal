@@ -44,6 +44,11 @@
 	<td>//div[h3[contains(.,'Content Value')]]//input</td>
 	<td></td>
 </tr>
+<tr>
+	<td>STRUCTURE_FIELD_SELECT</td>
+	<td>//div[contains(.,'Structure Field')]//select</td>
+	<td></td>
+</tr>
 <!--FRAGMENT_SIDEBAR-->
 <tr>
 	<td>FRAGMENT_SIDEBAR</td>

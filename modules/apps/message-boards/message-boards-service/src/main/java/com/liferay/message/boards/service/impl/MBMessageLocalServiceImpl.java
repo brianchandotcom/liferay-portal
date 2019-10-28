@@ -308,13 +308,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		body = getBody(subject, body, format);
 
-		Map<String, Object> options = new HashMap<>();
-
 		boolean discussion = false;
 
 		if (categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID) {
 			discussion = true;
 		}
+
+		Map<String, Object> options = new HashMap<>();
 
 		options.put("discussion", discussion);
 

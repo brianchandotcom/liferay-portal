@@ -109,9 +109,9 @@ public class BaseMessagingConfiguratorTest {
 		_baseMessagingConfigurator.setDestinationConfigurations(
 			destinationConfigurations);
 
-		Map<String, List<MessageListener>> messageListeners = new HashMap<>();
-
 		List<MessageListener> messageListenersList = new ArrayList<>();
+
+		Map<String, List<MessageListener>> messageListeners = new HashMap<>();
 
 		messageListeners.put("liferay/plugintest1", messageListenersList);
 
@@ -188,9 +188,9 @@ public class BaseMessagingConfiguratorTest {
 		_baseMessagingConfigurator.setDestinationConfigurations(
 			destinationConfigurations);
 
-		Map<String, List<MessageListener>> messageListeners = new HashMap<>();
-
 		List<MessageListener> messageListenersList1 = new ArrayList<>();
+
+		Map<String, List<MessageListener>> messageListeners = new HashMap<>();
 
 		messageListeners.put("liferay/portaltest1", messageListenersList1);
 

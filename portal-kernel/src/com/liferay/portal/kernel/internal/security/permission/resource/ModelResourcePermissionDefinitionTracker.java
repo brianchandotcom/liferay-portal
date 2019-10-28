@@ -90,10 +90,10 @@ public class ModelResourcePermissionDefinitionTracker {
 			ModelResourcePermission<?> modelResourcePermission = _create(
 				modelResourcePermissionDefinition);
 
-			Map<String, Object> properties = new HashMap<>();
-
 			Class<?> modelClass =
 				modelResourcePermissionDefinition.getModelClass();
+
+			Map<String, Object> properties = new HashMap<>();
 
 			properties.put("model.class.name", modelClass.getName());
 

@@ -96,8 +96,6 @@ public class NotificationTemplateContextFactory {
 
 		// Attributes
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
 		Format userDateTimeFormat = _getUserDateTimeFormat(
 			calendarBooking, user);
 
@@ -106,6 +104,8 @@ public class NotificationTemplateContextFactory {
 		String endTime =
 			userDateTimeFormat.format(calendarBooking.getEndTime()) +
 				StringPool.SPACE + userTimezoneDisplayName;
+
+		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put("endTime", endTime);
 

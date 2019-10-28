@@ -89,9 +89,9 @@ public class KnowledgeBaseAttachmentResourceTest
 
 	@Override
 	protected Map<String, File> getMultipartFiles() throws Exception {
-		Map<String, File> files = new HashMap<>();
-
 		String randomString = RandomTestUtil.randomString();
+
+		Map<String, File> files = new HashMap<>();
 
 		files.put("file", FileUtil.createTempFile(randomString.getBytes()));
 

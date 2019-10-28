@@ -167,18 +167,16 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		for (Map.Entry<String, List<ImageEditorCapabilityDescriptor>> entry :
 				imageEditorCapabilityDescriptorsMap.entrySet()) {
 
-			Map<String, Object> context = new HashMap<>();
-
 			List<Map<String, Object>> controlContexts = new ArrayList<>();
 			String icon = StringPool.BLANK;
 
 			for (ImageEditorCapabilityDescriptor
 					imageEditorCapabilityDescriptor : entry.getValue()) {
 
-				Map<String, Object> controlContext = new HashMap<>();
-
 				ImageEditorCapability imageEditorCapability =
 					imageEditorCapabilityDescriptor.getImageEditorCapability();
+
+				Map<String, Object> controlContext = new HashMap<>();
 
 				controlContext.put(
 					"label",
@@ -210,6 +208,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 					properties.get(
 						"com.liferay.frontend.image.editor.capability.icon"));
 			}
+
+			Map<String, Object> context = new HashMap<>();
 
 			context.put("controls", controlContexts);
 			context.put("icon", icon);

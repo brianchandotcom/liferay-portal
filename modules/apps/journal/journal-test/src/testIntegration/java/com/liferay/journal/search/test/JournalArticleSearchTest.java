@@ -145,9 +145,9 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		Map<Locale, String> keywordsMap = new HashMap<>();
-
 		String keywords = "keywords";
+
+		Map<Locale, String> keywordsMap = new HashMap<>();
 
 		keywordsMap.put(LocaleUtil.getDefault(), keywords);
 		keywordsMap.put(LocaleUtil.GERMANY, keywords);

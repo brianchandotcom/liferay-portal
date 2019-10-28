@@ -52,8 +52,6 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> parameters = new HashMap<>();
-
 		Map<String, List<Object>> nestedFieldsMap =
 			(Map<String, List<Object>>)ddmFormFieldRenderingContext.getProperty(
 				"nestedFields");
@@ -64,6 +62,8 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 
 		List<Object> nestedFields = getNestedFields(
 			nestedFieldsMap, nestedFieldNames);
+
+		Map<String, Object> parameters = new HashMap<>();
 
 		parameters.put("nestedFields", nestedFields);
 

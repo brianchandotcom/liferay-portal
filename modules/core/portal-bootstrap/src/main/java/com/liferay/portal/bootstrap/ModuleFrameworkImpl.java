@@ -681,9 +681,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.debug("Building OSGi framework properties");
 		}
 
-		Map<String, String> properties = new HashMap<>();
-
 		// Release
+
+		Map<String, String> properties = new HashMap<>();
 
 		properties.put(
 			Constants.BUNDLE_DESCRIPTION, ReleaseInfo.getReleaseInfo());

@@ -105,13 +105,13 @@ public class DDMFormTemplateContextFactoryImpl
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws PortalException {
 
-		Map<String, Object> templateContext = new HashMap<>();
-
 		String containerId = ddmFormRenderingContext.getContainerId();
 
 		if (Validator.isNull(containerId)) {
 			containerId = StringUtil.randomId();
 		}
+
+		Map<String, Object> templateContext = new HashMap<>();
 
 		templateContext.put("containerId", containerId);
 

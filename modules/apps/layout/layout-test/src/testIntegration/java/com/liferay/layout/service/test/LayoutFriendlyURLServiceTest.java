@@ -67,9 +67,9 @@ public class LayoutFriendlyURLServiceTest {
 		_group = GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), availableLocales, LocaleUtil.SPAIN);
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
 		String name = RandomTestUtil.randomString();
+
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.GERMANY, name);
 		nameMap.put(LocaleUtil.SPAIN, name);
@@ -114,9 +114,9 @@ public class LayoutFriendlyURLServiceTest {
 		_group = GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), availableLocales, defaultLocale);
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
 		String name = RandomTestUtil.randomString();
+
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.SPAIN, name);
 		nameMap.put(LocaleUtil.US, name);

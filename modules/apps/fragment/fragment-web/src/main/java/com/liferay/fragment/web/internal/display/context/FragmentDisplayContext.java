@@ -267,14 +267,14 @@ public class FragmentDisplayContext {
 	public Map<String, Object> getFragmentCollectionsViewContext()
 		throws Exception {
 
-		Map<String, Object> context = new HashMap<>();
-
 		LiferayPortletURL deleteFragmentCollectionURL =
 			_renderResponse.createActionURL();
 
 		deleteFragmentCollectionURL.setCopyCurrentRenderParameters(false);
 		deleteFragmentCollectionURL.setParameter(
 			ActionRequest.ACTION_NAME, "/fragment/delete_fragment_collection");
+
+		Map<String, Object> context = new HashMap<>();
 
 		context.put(
 			"deleteFragmentCollectionURL",

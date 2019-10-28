@@ -241,9 +241,9 @@ public class DDMFormFieldTemplateContextFactory {
 		Map<String, LocalizedValue> options = ddmFormFieldOptions.getOptions();
 
 		for (Map.Entry<String, LocalizedValue> entry : options.entrySet()) {
-			Map<String, String> option = new HashMap<>();
-
 			LocalizedValue localizedValue = entry.getValue();
+
+			Map<String, String> option = new HashMap<>();
 
 			option.put("label", localizedValue.getString(_locale));
 

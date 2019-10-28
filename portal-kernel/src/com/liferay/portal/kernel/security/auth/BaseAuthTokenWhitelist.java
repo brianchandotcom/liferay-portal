@@ -95,9 +95,9 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	protected void registerPortalProperty(String key) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<>();
-
 		String[] values = PropsUtil.getArray(key);
+
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put(key, values);
 

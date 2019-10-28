@@ -89,8 +89,6 @@ public class TestCluster {
 	protected HashMap<String, Object>
 		createElasticsearchConfigurationProperties(String prefix, int size) {
 
-		HashMap<String, Object> properties = new HashMap<>();
-
 		int startingPort = 9310;
 
 		String range = String.valueOf(startingPort);
@@ -100,6 +98,8 @@ public class TestCluster {
 
 			range = range + StringPool.MINUS + endingPort;
 		}
+
+		HashMap<String, Object> properties = new HashMap<>();
 
 		properties.put("clusterName", prefix + "-Cluster");
 		properties.put("discoveryZenPingUnicastHostsPort", range);

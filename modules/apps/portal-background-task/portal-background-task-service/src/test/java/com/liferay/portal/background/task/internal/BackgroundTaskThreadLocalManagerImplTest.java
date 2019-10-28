@@ -29,10 +29,10 @@ public class BackgroundTaskThreadLocalManagerImplTest
 
 	@Test
 	public void testDeserializeThreadLocals() {
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
 		HashMap<String, Serializable> threadLocalValues =
 			initializeThreadLocalValues();
+
+		Map<String, Serializable> taskContextMap = new HashMap<>();
 
 		taskContextMap.put(
 			BackgroundTaskThreadLocalManagerImpl.KEY_THREAD_LOCAL_VALUES,

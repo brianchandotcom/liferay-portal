@@ -169,18 +169,18 @@ public class FlagsTag extends IncludeTag {
 	private Map<String, Object> _getData(String message)
 		throws PortalException {
 
-		Map<String, Object> data = new HashMap<>();
-
 		Map<String, Object> context = HashMapBuilder.<String, Object>put(
 			"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS)
 		).build();
 
-		data.put("context", context);
+		Map<String, Object> data = new HashMap<>();
 
-		Map<String, Object> props = new HashMap<>();
+		data.put("context", context);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		Map<String, Object> props = new HashMap<>();
 
 		props.put("baseData", _getDataJSONObject(themeDisplay));
 

@@ -1708,9 +1708,10 @@ public class LanguageImpl implements Language, Serializable {
 		catch (Exception e) {
 		}
 
-		HashMap<String, Locale> groupLanguageCodeLocalesMap = new HashMap<>();
 		HashMap<String, Locale> groupLanguageIdLocalesMap =
 			new LinkedHashMap<>();
+
+		HashMap<String, Locale> groupLanguageCodeLocalesMap = new HashMap<>();
 
 		groupLanguageCodeLocalesMap.put(
 			defaultLocale.getLanguage(), defaultLocale);

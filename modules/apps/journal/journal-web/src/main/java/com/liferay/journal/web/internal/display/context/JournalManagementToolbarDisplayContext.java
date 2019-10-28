@@ -148,8 +148,6 @@ public class JournalManagementToolbarDisplayContext
 	}
 
 	public Map<String, Object> getComponentContext() throws Exception {
-		Map<String, Object> componentContext = new HashMap<>();
-
 		PortletURL addArticleURL = liferayPortletResponse.createRenderURL();
 
 		addArticleURL.setParameter("mvcPath", "/edit_article.jsp");
@@ -158,6 +156,8 @@ public class JournalManagementToolbarDisplayContext
 			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
 		addArticleURL.setParameter(
 			"folderId", String.valueOf(_journalDisplayContext.getFolderId()));
+
+		Map<String, Object> componentContext = new HashMap<>();
 
 		componentContext.put("addArticleURL", addArticleURL.toString());
 

@@ -66,8 +66,6 @@ public class WabDirURLStreamHandlerService
 	@Override
 	public URLConnection openConnection(URL url) {
 		try {
-			Map<String, String[]> parameters = new HashMap<>();
-
 			URI uri = new URI(url.getPath());
 
 			File warDir = new File(uri);
@@ -86,6 +84,8 @@ public class WabDirURLStreamHandlerService
 			if (bundleSymbolicName.equals(StringPool.BLANK)) {
 				bundleSymbolicName = _getNameFromProperties(warDir);
 			}
+
+			Map<String, String[]> parameters = new HashMap<>();
 
 			parameters.put(
 				"Bundle-SymbolicName", new String[] {bundleSymbolicName});

@@ -97,8 +97,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		parameters.put(
 			"lexiconIconsPath", getLexiconIconsPath(httpServletRequest));
 
-		Map<String, String> stringsMap = new HashMap<>();
-
 		Locale displayLocale;
 
 		if (ddmFormFieldRenderingContext.isViewMode()) {
@@ -108,6 +106,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			displayLocale = getDisplayLocale(
 				ddmFormFieldRenderingContext.getHttpServletRequest());
 		}
+
+		Map<String, String> stringsMap = new HashMap<>();
 
 		stringsMap.put(
 			"select",

@@ -117,13 +117,13 @@ public class FreeMarkerFragmentEntryProcessor
 			TemplateManagerUtil.getTemplateManager(
 				TemplateConstants.LANG_TYPE_FTL);
 
-		Map<String, Object> contextObjects = new HashMap<>();
-
 		JSONObject configurationValuesJSONObject =
 			FragmentEntryConfigUtil.getConfigurationJSONObject(
 				fragmentEntryLink.getConfiguration(),
 				fragmentEntryLink.getEditableValues(),
 				fragmentEntryProcessorContext.getSegmentsExperienceIds());
+
+		Map<String, Object> contextObjects = new HashMap<>();
 
 		contextObjects.put("configuration", configurationValuesJSONObject);
 
@@ -191,11 +191,11 @@ public class FreeMarkerFragmentEntryProcessor
 					TemplateManagerUtil.getTemplateManager(
 						TemplateConstants.LANG_TYPE_FTL);
 
-				Map<String, Object> contextObjects = new HashMap<>();
-
 				JSONObject configurationDefaultValuesJSONObject =
 					FragmentEntryConfigUtil.
 						getConfigurationDefaultValuesJSONObject(configuration);
+
+				Map<String, Object> contextObjects = new HashMap<>();
 
 				contextObjects.put(
 					"configuration", configurationDefaultValuesJSONObject);

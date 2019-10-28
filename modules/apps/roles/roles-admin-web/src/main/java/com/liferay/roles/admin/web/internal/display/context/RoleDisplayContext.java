@@ -275,8 +275,6 @@ public class RoleDisplayContext {
 
 		Role role = RoleServiceUtil.fetchRole(roleId);
 
-		Map<String, String> tabsURLs = new HashMap<>();
-
 		PortletURL assignMembersURL = _renderResponse.createRenderURL();
 
 		assignMembersURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
@@ -284,6 +282,8 @@ public class RoleDisplayContext {
 		assignMembersURL.setParameter("redirect", backURL);
 		assignMembersURL.setParameter(
 			"roleId", String.valueOf(role.getRoleId()));
+
+		Map<String, String> tabsURLs = new HashMap<>();
 
 		tabsURLs.put("assignees", assignMembersURL.toString());
 

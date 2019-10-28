@@ -417,9 +417,9 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testUpdateLocalizationWithAmpersand() {
-		Map<Locale, String> localizationMap = new HashMap<>();
-
 		String spanishValue = "bar&foo";
+
+		Map<Locale, String> localizationMap = new HashMap<>();
 
 		localizationMap.put(LocaleUtil.SPAIN, spanishValue);
 

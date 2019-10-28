@@ -1036,8 +1036,6 @@ public class FileSystemImporter extends BaseImporter {
 
 		String colorSchemeId = layoutJSONObject.getString("colorSchemeId");
 
-		Map<Locale, String> friendlyURLMap = new HashMap<>();
-
 		String friendlyURL = layoutJSONObject.getString("friendlyURL");
 
 		if (Validator.isNotNull(friendlyURL) &&
@@ -1045,6 +1043,8 @@ public class FileSystemImporter extends BaseImporter {
 
 			friendlyURL = StringPool.SLASH + friendlyURL;
 		}
+
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
 
 		friendlyURLMap.put(LocaleUtil.getDefault(), friendlyURL);
 

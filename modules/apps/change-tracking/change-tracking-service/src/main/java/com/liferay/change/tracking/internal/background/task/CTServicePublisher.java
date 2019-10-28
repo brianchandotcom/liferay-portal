@@ -136,6 +136,13 @@ public class CTServicePublisher<T extends CTModel<T>> {
 				continue;
 			}
 
+			Set<String> ctMergeableAttributeNames =
+				ctPersistence.getCTMergeableAttributeNames();
+
+			if (ctMergeableAttributeNames.contains(attributeName)) {
+				continue;
+			}
+
 			return false;
 		}
 

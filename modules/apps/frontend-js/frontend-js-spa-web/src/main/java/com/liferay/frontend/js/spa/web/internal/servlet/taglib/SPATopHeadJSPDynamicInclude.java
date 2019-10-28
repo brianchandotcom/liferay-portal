@@ -62,11 +62,11 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 		ScriptData scriptData = new ScriptData();
 
-		Map<String, String> values = new HashMap<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		Map<String, String> values = new HashMap<>();
 
 		values.put(
 			"cacheExpirationTime",

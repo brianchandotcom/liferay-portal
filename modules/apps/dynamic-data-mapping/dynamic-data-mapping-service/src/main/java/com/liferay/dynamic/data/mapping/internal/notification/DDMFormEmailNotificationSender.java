@@ -253,8 +253,6 @@ public class DDMFormEmailNotificationSender {
 	protected Map<String, Object> getField(
 		List<DDMFormFieldValue> ddmFormFieldValues, Locale locale) {
 
-		Map<String, Object> fieldMap = new HashMap<>();
-
 		String labelString = null;
 		StringBundler sb = new StringBundler(
 			(ddmFormFieldValues.size() * 2) - 1);
@@ -280,6 +278,8 @@ public class DDMFormEmailNotificationSender {
 				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 		}
+
+		Map<String, Object> fieldMap = new HashMap<>();
 
 		fieldMap.put("label", labelString);
 		fieldMap.put("value", _soyDataFactory.createSoyRawData(sb.toString()));
@@ -423,10 +423,10 @@ public class DDMFormEmailNotificationSender {
 			DDMFormInstance ddmFormInstance, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Map<String, String[]> params = new HashMap<>();
-
 		String portletNamespace = _portal.getPortletNamespace(
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
+
+		Map<String, String[]> params = new HashMap<>();
 
 		params.put(
 			portletNamespace.concat("mvcPath"),
@@ -446,10 +446,10 @@ public class DDMFormEmailNotificationSender {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Map<String, String[]> params = new HashMap<>();
-
 		String portletNamespace = _portal.getPortletNamespace(
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
+
+		Map<String, String[]> params = new HashMap<>();
 
 		params.put(
 			portletNamespace.concat("mvcPath"),

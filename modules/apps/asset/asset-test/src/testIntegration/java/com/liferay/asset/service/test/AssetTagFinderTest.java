@@ -68,9 +68,9 @@ public class AssetTagFinderTest {
 
 		Layout layout = LayoutTestUtil.addLayout(_group);
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
 		String name = RandomTestUtil.randomString();
+
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), name);
 

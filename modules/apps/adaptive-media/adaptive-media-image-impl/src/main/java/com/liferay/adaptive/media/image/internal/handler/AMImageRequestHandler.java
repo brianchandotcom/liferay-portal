@@ -87,10 +87,10 @@ public class AMImageRequestHandler
 			FileVersion fileVersion)
 		throws PortalException {
 
-		Map<String, String> properties = new HashMap<>();
-
 		AMAttribute<Object, String> fileNameAMAttribute =
 			AMAttribute.getFileNameAMAttribute();
+
+		Map<String, String> properties = new HashMap<>();
 
 		properties.put(
 			fileNameAMAttribute.getName(), fileVersion.getFileName());

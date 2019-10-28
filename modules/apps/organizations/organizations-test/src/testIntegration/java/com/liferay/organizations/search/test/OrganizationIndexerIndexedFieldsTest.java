@@ -206,13 +206,13 @@ public class OrganizationIndexerIndexedFieldsTest {
 	private Map<String, String> _expectedFieldValues(Organization organization)
 		throws Exception {
 
-		Map<String, String> map = new HashMap<>();
-
 		String countryName = organizationFixture.getCountryNames(organization);
 
 		Region region = regionService.getRegion(organization.getRegionId());
 
 		String regionName = StringUtil.toLowerCase(region.getName());
+
+		Map<String, String> map = new HashMap<>();
 
 		map.put(Field.COMPANY_ID, String.valueOf(organization.getCompanyId()));
 		map.put(Field.ENTRY_CLASS_NAME, Organization.class.getName());

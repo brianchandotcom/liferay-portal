@@ -187,10 +187,10 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
-
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
+
+		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 
 		roleIdsToActionIds.put(
 			role.getRoleId(), new String[] {ActionKeys.CONFIGURATION});

@@ -514,14 +514,14 @@ public class ContentPageEditorDisplayContext {
 			return _defaultConfigurations;
 		}
 
-		Map<String, Object> configurations = new HashMap<>();
-
 		EditorConfiguration commentEditorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 				"pageEditorCommentEditor", StringPool.BLANK,
 				Collections.emptyMap(), themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(request));
+
+		Map<String, Object> configurations = new HashMap<>();
 
 		configurations.put("comment", commentEditorConfiguration.getData());
 

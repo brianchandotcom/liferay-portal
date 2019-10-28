@@ -104,13 +104,13 @@ public class BlogEntriesManagementToolbarDisplayContext
 	}
 
 	public Map<String, Object> getComponentContext() throws PortalException {
-		Map<String, Object> context = new HashMap<>();
-
 		String cmd = Constants.DELETE;
 
 		if (_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroup())) {
 			cmd = Constants.MOVE_TO_TRASH;
 		}
+
+		Map<String, Object> context = new HashMap<>();
 
 		context.put("deleteEntriesCmd", cmd);
 

@@ -483,12 +483,12 @@ public class NettyRepositoryTest {
 	@AdviseWith(adviceClasses = NettyUtilAdvice.class)
 	@Test
 	public void testGetFiles() throws Exception {
-		Map<Path, Path> pathMap = new HashMap<>();
-
 		Path remoteFilePath1 = Paths.get("remoteFile1");
 		Path remoteFilePath2 = Paths.get("remoteFile2");
 		Path localFilePath = FileServerTestUtil.registerForCleanUp(
 			Paths.get("localFile1"));
+
+		Map<Path, Path> pathMap = new HashMap<>();
 
 		pathMap.put(remoteFilePath1, localFilePath);
 
@@ -538,9 +538,9 @@ public class NettyRepositoryTest {
 	@AdviseWith(adviceClasses = NettyUtilAdvice.class)
 	@Test
 	public void testGetFilesCancelled() {
-		Map<Path, Path> pathMap = new HashMap<>();
-
 		Path remoteFilePath1 = Paths.get("remoteFile1");
+
+		Map<Path, Path> pathMap = new HashMap<>();
 
 		pathMap.put(remoteFilePath1, Paths.get("localFile1"));
 
@@ -569,9 +569,9 @@ public class NettyRepositoryTest {
 	)
 	@Test
 	public void testGetFilesCovertCausedException() throws Exception {
-		Map<Path, Path> pathMap = new HashMap<>();
-
 		Path remoteFilePath = Paths.get("remoteFile");
+
+		Map<Path, Path> pathMap = new HashMap<>();
 
 		pathMap.put(remoteFilePath, Paths.get("localFile"));
 
@@ -627,9 +627,9 @@ public class NettyRepositoryTest {
 	@AdviseWith(adviceClasses = NettyUtilAdvice.class)
 	@Test
 	public void testGetFilesExecutionException() throws Exception {
-		Map<Path, Path> pathMap = new HashMap<>();
-
 		Path remoteFilePath1 = Paths.get("remoteFile1");
+
+		Map<Path, Path> pathMap = new HashMap<>();
 
 		pathMap.put(remoteFilePath1, Paths.get("requestFile1"));
 

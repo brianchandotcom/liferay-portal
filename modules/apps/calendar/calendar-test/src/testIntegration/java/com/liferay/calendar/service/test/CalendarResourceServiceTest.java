@@ -112,11 +112,11 @@ public class CalendarResourceServiceTest {
 	}
 
 	protected Map<Locale, String> createNameMap() {
-		Map<Locale, String> nameMap = new HashMap<>();
-
 		String name =
 			RandomTestUtil.randomString() + StringPool.SPACE +
 				RandomTestUtil.randomString();
+
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getSiteDefault(), name);
 

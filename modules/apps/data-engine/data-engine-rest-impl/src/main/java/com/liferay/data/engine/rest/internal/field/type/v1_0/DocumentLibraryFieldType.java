@@ -263,8 +263,6 @@ public class DocumentLibraryFieldType extends BaseFieldType {
 	private Map<String, String> _getStrings(
 		HttpServletRequest httpServletRequest) {
 
-		Map<String, String> values = new HashMap<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -273,6 +271,8 @@ public class DocumentLibraryFieldType extends BaseFieldType {
 			ResourceBundleUtil.getBundle(
 				"content.Language", themeDisplay.getLocale(), getClass()),
 			_portal.getResourceBundle(themeDisplay.getLocale()));
+
+		Map<String, String> values = new HashMap<>();
 
 		values.put("select", LanguageUtil.get(resourceBundle, "select"));
 

@@ -272,10 +272,10 @@ public class CalendarResourceStagedModelDataHandler
 			return calendarResource.getNameMap();
 		}
 
-		Map<Locale, String> calendarResourceNameMap = new HashMap<>();
-
 		Group scopeGroup = _groupLocalService.getGroup(
 			portletDataContext.getScopeGroupId());
+
+		Map<Locale, String> calendarResourceNameMap = new HashMap<>();
 
 		calendarResourceNameMap.put(
 			LocaleUtil.getSiteDefault(), scopeGroup.getDescriptiveName());

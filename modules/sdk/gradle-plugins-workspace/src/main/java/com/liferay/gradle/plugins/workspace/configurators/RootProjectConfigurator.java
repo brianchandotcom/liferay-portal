@@ -363,8 +363,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			REMOVE_DOCKER_CONTAINER_TASK_NAME, DOCKER_DEPLOY_TASK_NAME,
 			PULL_DOCKER_IMAGE_TASK_NAME);
 
-		Map<String, String> binds = new HashMap<>();
-
 		File dockerDir = workspaceExtension.getDockerDir();
 
 		String dockerPath = dockerDir.getAbsolutePath();
@@ -378,6 +376,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			dockerPath = dockerPath.replace('\\', '/');
 		}
+
+		Map<String, String> binds = new HashMap<>();
 
 		binds.put(dockerPath, "/etc/liferay/mount");
 

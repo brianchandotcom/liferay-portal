@@ -2641,11 +2641,11 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getLayoutActualURL(Layout layout, String mainPath) {
-		Map<String, String> variables = new HashMap<>();
-
 		Layout browsableLayout = getBrowsableLayout(layout);
 
 		String groupIdString = String.valueOf(browsableLayout.getGroupId());
+
+		Map<String, String> variables = new HashMap<>();
 
 		variables.put("liferay:groupId", groupIdString);
 

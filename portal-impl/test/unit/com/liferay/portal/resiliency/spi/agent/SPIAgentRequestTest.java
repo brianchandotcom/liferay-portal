@@ -250,11 +250,11 @@ public class SPIAgentRequestTest {
 
 		// Upload servlet request with multipart data
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
 		String fileParameter = "fileParameter";
 
 		FileItem[] fileItems = new FileItem[0];
+
+		Map<String, FileItem[]> fileParameters = new HashMap<>();
 
 		fileParameters.put(fileParameter, fileItems);
 
@@ -292,11 +292,11 @@ public class SPIAgentRequestTest {
 
 		// Upload servlet request with multipart and regular data
 
-		Map<String, List<String>> regularParameters = new HashMap<>();
-
 		String regularParameter = "regularParameter";
 
 		List<String> parameters = new ArrayList<>();
+
+		Map<String, List<String>> regularParameters = new HashMap<>();
 
 		regularParameters.put(regularParameter, parameters);
 

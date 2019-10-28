@@ -14,6 +14,7 @@
 
 package com.liferay.talend;
 
+import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
 import com.liferay.talend.common.schema.SchemaBuilder;
 
 import javax.json.Json;
@@ -21,6 +22,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 import org.apache.avro.Schema;
+import org.apache.avro.generic.IndexedRecord;
 
 /**
  * @author Igor Beslic
@@ -34,6 +36,20 @@ public abstract class BaseTestCase {
 			baseTestClass.getResourceAsStream(fileName));
 
 		return jsonReader.readObject();
+	}
+
+	protected IndexedRecord createIndexedRecordFromFile(
+		String name, Schema schema) {
+
+		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
+			new JsonObjectIndexedRecordConverter(schema);
+
+		return jsonObjectIndexedRecordConverter.toIndexedRecord(
+			readObject(name));
+	}
+
+	protected Schema getEntitySchema(String name, JsonObject oasJsonObject) {
+		return _schemaBuilder.getEntitySchema(name, oasJsonObject);
 	}
 
 	protected Schema getSchema(

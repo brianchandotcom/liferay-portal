@@ -9,7 +9,7 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	macro viewBlacklistModule {
+	macro viewProductMenuBlacklistedModule {
 		ProductMenuHelper.expandPanel(panel = "${panel}");
 
 		ProductMenuHelper.expandCategory(category = "${category}");
@@ -19,7 +19,7 @@ definition {
 			locator1 = "ProductMenu#PORTLET",
 			value1 = "${portlet}");
 
-		AssertConsoleTextPresent(value1 = "${expectedText}");
+		AssertConsoleTextPresent(value1 = "${consoleText}");
 	}
 
 }

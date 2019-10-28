@@ -20,7 +20,7 @@ definition {
 	}
 
 	@priority = "4"
-	test BundleBlacklistModuleJARViaUI {
+	test BlacklistModuleJar {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -35,9 +35,9 @@ definition {
 			label = "Blacklist Bundle Symbolic Names",
 			symbolicName = "com.liferay.gogo.shell.web");
 
-		BundleBlacklist.viewBlacklistModule(
+		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "Configuration",
-			expectedText = "STOPPED com.liferay.gogo.shell.web",
+			consoleText = "STOPPED com.liferay.gogo.shell.web",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 	}

@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.portlet;
 import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
@@ -173,7 +174,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT,
 				new LayoutsAdminDisplayContext(
-					_layoutSEOLinkManager,
+					_dlurlHelper, _layoutSEOLinkManager,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
 
@@ -216,6 +217,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupPagesPortlet.class);
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private GroupProvider _groupProvider;

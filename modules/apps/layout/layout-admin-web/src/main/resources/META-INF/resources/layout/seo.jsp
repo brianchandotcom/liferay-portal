@@ -204,7 +204,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 		<div class="input-group">
 			<div class="input-group-item">
-				<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="image" type="text" value="<%= layoutsAdminDisplayContext.getItemSelectorURL() %>" wrapperCssClass="w-100" />
+				<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="w-100" />
 			</div>
 
 			<div class="input-group-item input-group-item-shrink">
@@ -239,12 +239,12 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 											itemValue.fileEntryId;
 									}
 
-									var openGraphImageTitle = document.getElementById(
+									var openGraphImageURL = document.getElementById(
 										'<portlet:namespace />openGraphImageTitle'
 									);
 
-									if (openGraphImageTitle) {
-										openGraphImageTitle.value = itemValue.url;
+									if (openGraphImageURL) {
+										openGraphImageURL.value = itemValue.url;
 									}
 								}
 							}.bind(this)

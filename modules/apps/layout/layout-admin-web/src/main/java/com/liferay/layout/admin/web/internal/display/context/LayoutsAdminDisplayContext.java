@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -69,7 +70,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
@@ -123,10 +123,11 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutsAdminDisplayContext {
 
 	public LayoutsAdminDisplayContext(
-		LayoutSEOLinkManager layoutSEOLinkManager,
+		DLURLHelper dlurlHelper, LayoutSEOLinkManager layoutSEOLinkManager,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
+		_dlurlHelper = dlurlHelper;
 		_layoutSEOLinkManager = layoutSEOLinkManager;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -832,7 +833,7 @@ public class LayoutsAdminDisplayContext {
 		return deleteLayoutURL.toString();
 	}
 
-	public String getOpenGraphImageTitle() {
+	public String getOpenGraphImageURL() {
 		LayoutSEOEntry layoutSEOEntry = getSelLayoutSEOEntry();
 
 		if ((layoutSEOEntry == null) ||
@@ -842,13 +843,13 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		try {
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				layoutSEOEntry.getOpenGraphImageFileEntryId());
-
-			return fileEntry.getTitle();
+			return _dlurlHelper.getImagePreviewURL(
+				DLAppLocalServiceUtil.getFileEntry(
+					layoutSEOEntry.getOpenGraphImageFileEntryId()),
+				_themeDisplay);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (Exception e) {
+			_log.error(e, e);
 
 			return null;
 		}
@@ -1866,6 +1867,7 @@ public class LayoutsAdminDisplayContext {
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;
 	private String _displayStyle;
+	private final DLURLHelper _dlurlHelper;
 	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;

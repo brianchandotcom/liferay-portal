@@ -30,7 +30,8 @@ import {initializeDragDrop} from '../../../utils/FragmentsEditorDragDrop.es';
 import {setDraggingItemPosition} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
-	FRAGMENTS_EDITOR_ITEM_TYPES
+	FRAGMENTS_EDITOR_ITEM_TYPES,
+	FRAGMENTS_EDITOR_ROW_TYPES
 } from '../../../utils/constants';
 
 /**
@@ -74,6 +75,19 @@ class SidebarElementsDragDrop extends State {
 		const targetIsRow = targetItem && 'layoutRowId' in data;
 
 		setDraggingItemPosition(eventData.originalEvent);
+
+		const sourceItem = eventData.source;
+
+		const sourceData = sourceItem ? sourceItem.dataset : null;
+
+		if (sourceData && !this._targetSet) {
+			this._targetSet = true;
+
+			this._dragDrop.targets =
+				sourceData.itemType === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow
+					? '.fragments-editor__drop-target--sidebar-section'
+					: '.fragments-editor__drop-target--sidebar-fragment';
+		}
 
 		if (targetIsColumn || targetIsFragment || targetIsRow) {
 			const mouseY = eventData.originalEvent.clientY;
@@ -132,8 +146,9 @@ class SidebarElementsDragDrop extends State {
 	_handleDrop(data, event) {
 		event.preventDefault();
 
+		this._targetSet = false;
+
 		if (data.target) {
-			const {itemGroupId, itemId, itemName} = data.source.dataset;
 			const {
 				itemGroupId,
 				itemId,
@@ -172,8 +187,7 @@ class SidebarElementsDragDrop extends State {
 
 		this._dragDrop = initializeDragDrop({
 			handles: '.fragments-editor__drag-handler',
-			sources: '.fragments-editor__drag-source--sidebar-fragment',
-			targets: '.fragments-editor__drop-target--sidebar-fragment'
+			sources: '.fragments-editor__drag-source--sidebar-fragment'
 		});
 
 		this._dragDrop.on(DragDrop.Events.DRAG, this._handleDrag.bind(this));
@@ -197,6 +211,16 @@ SidebarElementsDragDrop.STATE = {
 	 * @type {object|null}
 	 */
 	_dragDrop: Config.object().internal(),
+
+	/**
+	 * Controls whether the target has been set.
+	 * @default false
+	 * @instance
+	 * @memberOf SidebarElementsDragDrop
+	 * @review
+	 * @type {boolean}
+	 */
+	_targetSet: Config.bool().value(false),
 
 	/**
 	 * @instance

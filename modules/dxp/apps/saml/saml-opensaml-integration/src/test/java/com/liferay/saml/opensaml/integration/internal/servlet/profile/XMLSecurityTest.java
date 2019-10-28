@@ -14,7 +14,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;

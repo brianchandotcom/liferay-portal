@@ -14,7 +14,7 @@
 
 package com.liferay.portal.rules.engine.drools.test;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 /**
  * @author Michael C. Han

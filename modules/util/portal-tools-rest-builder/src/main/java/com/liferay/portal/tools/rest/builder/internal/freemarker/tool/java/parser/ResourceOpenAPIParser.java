@@ -658,6 +658,12 @@ public class ResourceOpenAPIParser {
 					return void.class.getName();
 				}
 
+				String format = schema.getFormat();
+
+				if ((format != null) && format.equals("binary")) {
+					return javax.ws.rs.core.Response.class.getName();
+				}
+
 				String returnType = OpenAPIParserUtil.getJavaDataType(
 					javaDataTypeMap, schema);
 

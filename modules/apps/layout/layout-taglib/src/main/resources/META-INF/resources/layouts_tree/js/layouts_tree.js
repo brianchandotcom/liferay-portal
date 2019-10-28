@@ -322,7 +322,7 @@ AUI.add(
 						label: name,
 						plid: node.plid,
 						title,
-						url: node.friendlyURL,
+						url: node.regularURL,
 						uuid: node.uuid
 					},
 					node

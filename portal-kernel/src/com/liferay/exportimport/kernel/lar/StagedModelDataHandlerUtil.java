@@ -171,21 +171,6 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #importReferenceStagedModel(PortletDataContext, Class,
-	 *             Serializable)}
-	 */
-	@Deprecated
-	public static void importReferenceStagedModel(
-			PortletDataContext portletDataContext, Class<?> stagedModelClass,
-			long classPK)
-		throws PortletDataException {
-
-		importReferenceStagedModel(
-			portletDataContext, stagedModelClass, Long.valueOf(classPK));
-	}
-
-	/**
 	 * Imports the staged model that is referenced by a portlet. To import a
 	 * staged model referenced by another staged model, use {@link
 	 * #importReferenceStagedModel(PortletDataContext, StagedModel, Class,
@@ -232,22 +217,6 @@ public class StagedModelDataHandlerUtil {
 
 		doImportReferenceStagedModel(
 			portletDataContext, referenceElement, stagedModelClassName);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #importReferenceStagedModel(PortletDataContext, StagedModel,
-	 *             Class, Serializable)}
-	 */
-	@Deprecated
-	public static <T extends StagedModel> void importReferenceStagedModel(
-			PortletDataContext portletDataContext, T referrerStagedModel,
-			Class<?> stagedModelClass, long classPK)
-		throws PortletDataException {
-
-		importReferenceStagedModel(
-			portletDataContext, referrerStagedModel, stagedModelClass,
-			Long.valueOf(classPK));
 	}
 
 	/**

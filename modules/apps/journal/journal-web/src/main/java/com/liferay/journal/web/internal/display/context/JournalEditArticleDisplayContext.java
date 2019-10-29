@@ -118,7 +118,7 @@ public class JournalEditArticleDisplayContext {
 
 		LinkedHashSet<String> uniqueLanguageIds = new LinkedHashSet<>();
 
-		uniqueLanguageIds.add(getDefaultLanguageId());
+		uniqueLanguageIds.add(getSelectedLanguageId());
 
 		for (Locale availableLocale : getAvailableLocales()) {
 			uniqueLanguageIds.add(LocaleUtil.toLanguageId(availableLocale));
@@ -348,23 +348,6 @@ public class JournalEditArticleDisplayContext {
 			_article.getContent(), siteDefaultLocale);
 	}
 
-	public String getDefaultLanguageId() {
-		if (Validator.isNotNull(_defaultLanguageId)) {
-			return _defaultLanguageId;
-		}
-
-		_defaultLanguageId = ParamUtil.getString(
-			_httpServletRequest, "languageId");
-
-		if (Validator.isNotNull(_defaultLanguageId)) {
-			return _defaultLanguageId;
-		}
-
-		_defaultLanguageId = getDefaultArticleLanguageId();
-
-		return _defaultLanguageId;
-	}
-
 	public String getEditArticleURL() {
 		PortletURL editArticleURL = _liferayPortletResponse.createRenderURL();
 
@@ -494,6 +477,23 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		return "save";
+	}
+
+	public String getSelectedLanguageId() {
+		if (Validator.isNotNull(_defaultLanguageId)) {
+			return _defaultLanguageId;
+		}
+
+		_defaultLanguageId = ParamUtil.getString(
+			_httpServletRequest, "languageId");
+
+		if (Validator.isNotNull(_defaultLanguageId)) {
+			return _defaultLanguageId;
+		}
+
+		_defaultLanguageId = getDefaultArticleLanguageId();
+
+		return _defaultLanguageId;
 	}
 
 	public String getSmallImageSource() {

@@ -14,17 +14,15 @@
 
 package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
-import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.headless.admin.workflow.dto.v1_0.ChangeTransition;
-import com.liferay.headless.admin.workflow.dto.v1_0.ObjectReviewed;
 import com.liferay.headless.admin.workflow.dto.v1_0.Role;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToMe;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToRole;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToUser;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.admin.workflow.internal.resource.v1_0.helper.ResourceHelper;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
-import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -37,12 +35,9 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -283,23 +278,6 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 				workflowTaskAssignToMe.getDueDate()));
 	}
 
-	private String _getResourceType(
-		Map<String, Serializable> optionalAttributes) {
-
-		String className = GetterUtil.getString(
-			optionalAttributes.get("entryClassName"));
-
-		if (className.equals(BlogsEntry.class.getName())) {
-			return "BlogPosting";
-		}
-
-		if (className.equals(MBDiscussion.class.getName())) {
-			return "Comment";
-		}
-
-		return null;
-	}
-
 	private Role[] _getRoles(List<WorkflowTaskAssignee> workflowTaskAssignees)
 		throws PortalException {
 
@@ -324,17 +302,6 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 		}
 
 		return roles.toArray(new Role[0]);
-	}
-
-	private ObjectReviewed _toObjectReviewed(
-		Map<String, Serializable> optionalAttributes) {
-
-		return new ObjectReviewed() {
-			{
-				id = GetterUtil.getLong(optionalAttributes.get("entryClassPK"));
-				resourceType = _getResourceType(optionalAttributes);
-			}
-		};
 	}
 
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)
@@ -382,7 +349,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 				id = workflowTask.getWorkflowTaskId();
 				instanceId = workflowTask.getWorkflowInstanceId();
 				name = workflowTask.getName();
-				objectReviewed = _toObjectReviewed(
+				objectReviewed = _resourceHelper.toObjectReviewed(
 					workflowTask.getOptionalAttributes());
 			}
 		};
@@ -390,6 +357,9 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceHelper _resourceHelper;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

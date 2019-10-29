@@ -51,7 +51,7 @@ public interface LayoutSEOCompanyConfiguration {
 	 * Sets if open graph is enabled.
 	 */
 	@Meta.AD(
-		deflt = "false",
+		deflt = "true",
 		description = "layout-seo-configuration-enable-open-graph-description",
 		name = "layout-seo-configuration-enable-open-graph", required = false
 	)

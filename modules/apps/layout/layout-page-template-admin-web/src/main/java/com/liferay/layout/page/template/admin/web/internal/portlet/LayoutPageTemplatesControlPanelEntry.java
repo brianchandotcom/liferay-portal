@@ -15,13 +15,8 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,20 +30,4 @@ import org.osgi.service.component.annotations.Component;
 )
 public class LayoutPageTemplatesControlPanelEntry
 	extends BaseControlPanelEntry {
-
-	@Override
-	protected boolean hasPermissionImplicitlyGranted(
-			PermissionChecker permissionChecker, Group group, Portlet portlet)
-		throws Exception {
-
-		if (GroupPermissionUtil.contains(
-				permissionChecker, group, ActionKeys.MANAGE_LAYOUTS)) {
-
-			return true;
-		}
-
-		return super.hasPermissionImplicitlyGranted(
-			permissionChecker, group, portlet);
-	}
-
 }

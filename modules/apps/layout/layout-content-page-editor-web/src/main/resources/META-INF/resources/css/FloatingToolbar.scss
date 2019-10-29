@@ -118,22 +118,22 @@
 		& .fragments-editor__floating-toolbar--linked-field {
 			&.active,
 			&:hover {
-				background-color: $fragmentEditableFieldGridLinkedColorFaded;
+				background-color: fade_out(#0b5fff, 0.94);
 			}
 
 			.lexicon-icon {
-				fill: $fragmentEditableFieldGridLinkedColor;
+				fill: #0b5fff;
 			}
 		}
 
 		& .fragments-editor__floating-toolbar--mapped-field {
 			&.active,
 			&:hover {
-				background-color: $fragmentEditableFieldGridMappedColorFaded;
+				background-color: fade_out(#af78ff, 0.9);
 			}
 
 			.lexicon-icon {
-				fill: $fragmentEditableFieldGridMappedColor;
+				fill: #af78ff;
 			}
 		}
 	}

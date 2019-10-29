@@ -1,6 +1,11 @@
+$colorWhite: #fff;
+$footerBackgroundColor: #30313f;
+$fullscreenBackgroundColor: #272833;
+$infoPanelSidebarDDColor: #a7a9bc;
+
 .item-selector-preview {
 	&.fullscreen {
-		background-color: #272833;
+		background-color: $fullscreenBackgroundColor;
 		height: 100%;
 		left: 0;
 		position: fixed;
@@ -58,29 +63,29 @@
 			&:active,
 			&:hover,
 			&:focus {
-				color: #fff;
+				color: $colorWhite;
 			}
 		}
 
 		.info-panel {
-			color: #fff;
+			color: $colorWhite;
 			height: calc(100% - 7rem);
 			text-align: left;
 
 			.nav-link.active {
-				color: #fff;
+				color: $colorWhite;
 			}
 
 			.sidebar-dd {
-				color: #a7a9bc;
+				color: $infoPanelSidebarDDColor;
 			}
 		}
 	}
 
 	.footer {
-		background-color: #30313f;
+		background-color: $footerBackgroundColor;
 		bottom: 0;
-		color: #fff;
+		color: $colorWhite;
 		padding: 0.75rem 1.5rem;
 		position: fixed;
 		text-align: center;

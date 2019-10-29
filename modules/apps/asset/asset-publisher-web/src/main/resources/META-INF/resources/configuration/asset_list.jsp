@@ -53,6 +53,15 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 
 	if (selectAssetListButton) {
 		selectAssetListButton.addEventListener('click', function(event) {
+			var uri =
+				'<%= assetPublisherDisplayContext.getAssetListSelectorURL() %>';
+
+			uri = Liferay.Util.addParams(
+				'<%= assetPublisherDisplayContext.getAssetListPortletNamespace() %>assetListEntryId=' +
+					assetListEntryId.value,
+				uri
+			);
+
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -63,8 +72,7 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 						'<%= assetPublisherDisplayContext.getSelectAssetListEventName() %>',
 					id: '<portlet:namespace />selectAssetList',
 					title: '<liferay-ui:message key="select-content-set" />',
-					uri:
-						'<%= assetPublisherDisplayContext.getAssetListSelectorURL() %>'
+					uri: uri
 				},
 				function(event) {
 					assetListEntryId.value = event.assetlistentryid;

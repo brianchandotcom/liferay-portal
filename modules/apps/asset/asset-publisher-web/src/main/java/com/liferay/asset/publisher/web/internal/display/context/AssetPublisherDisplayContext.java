@@ -439,18 +439,17 @@ public class AssetPublisherDisplayContext {
 		return _assetLinkBehavior;
 	}
 
+	public String getAssetListPortletNamespace() {
+		String assetListPortletId = PortletProviderUtil.getPortletId(
+			AssetListEntry.class.getName(), PortletProvider.Action.BROWSE);
+
+		return PortalUtil.getPortletNamespace(assetListPortletId);
+	}
+
 	public String getAssetListSelectorURL() throws Exception {
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			_httpServletRequest, AssetListEntry.class.getName(),
 			PortletProvider.Action.BROWSE);
-
-		AssetListEntry assetListEntry = fetchAssetListEntry();
-
-		if (assetListEntry != null) {
-			portletURL.setParameter(
-				"assetListEntryId",
-				String.valueOf(assetListEntry.getAssetListEntryId()));
-		}
 
 		portletURL.setParameter("eventName", getSelectAssetListEventName());
 

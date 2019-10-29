@@ -1958,6 +1958,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>selectedLanguageId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>toolbarSet</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

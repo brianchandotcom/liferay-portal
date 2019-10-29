@@ -130,6 +130,8 @@ class JournalPortlet extends PortletBase {
 				defaultLanguageId,
 				selectedLanguageId
 			);
+
+			this._updateLanguageIdInput(selectedLanguageId);
 		}
 	}
 
@@ -246,6 +248,15 @@ class JournalPortlet extends PortletBase {
 		if (actionName) {
 			this._setActionName(actionName);
 		}
+	}
+
+	/**
+	 * @private
+	 */
+	_updateLanguageIdInput(selectedLanguageId) {
+		const languageIdInput = document.getElementById(this.ns('languageId'));
+
+		languageIdInput.value = selectedLanguageId;
 	}
 
 	/**

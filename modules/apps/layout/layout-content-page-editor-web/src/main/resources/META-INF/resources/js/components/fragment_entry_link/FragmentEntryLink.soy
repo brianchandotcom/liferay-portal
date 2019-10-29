@@ -29,11 +29,7 @@
 	{@param? store: ?}
 
 	{let $wrapperClasses kind="text"}
-		fragments-editor__drag-source
-		{sp}fragment-entry-link-wrapper
-		{sp}fragments-editor__drag-source--fragment
-		{sp}fragments-editor__drop-target
-		{sp}fragments-editor__topper-wrapper
+		fragment-entry-link-wrapper
 
 		{if $rowType == $_fragmentsEditorRowTypes.componentRow}
 			{sp}fragments-editor__drop-target--fragment
@@ -45,18 +41,25 @@
 			{sp}{$dropTargetBorder}
 		{/if}
 
-		{if $activeItemId == $fragmentEntryLinkId and $_fragmentsEditorItemTypes and $activeItemType == $_fragmentsEditorItemTypes.fragment}
-			{sp}fragments-editor__topper-wrapper--active
-			{sp}fragment-entry-link-wrapper--active
-		{/if}
+		{if $hasUpdatePermissions}
+			{sp}fragments-editor__drag-source
+			{sp}fragments-editor__drag-source--fragment
+			{sp}fragments-editor__drop-target
+			{sp}fragments-editor__topper-wrapper
 
-		{if $_hovered}
-			{sp}fragments-editor__topper-wrapper--hovered
-			{sp}fragment-entry-link-wrapper--hovered
-		{/if}
+			{if $activeItemId == $fragmentEntryLinkId and $_fragmentsEditorItemTypes and $activeItemType == $_fragmentsEditorItemTypes.fragment}
+				{sp}fragments-editor__topper-wrapper--active
+				{sp}fragment-entry-link-wrapper--active
+			{/if}
 
-		{if $error}
-			{sp}fragments-editor__topper-wrapper--error
+			{if $_hovered}
+				{sp}fragments-editor__topper-wrapper--hovered
+				{sp}fragment-entry-link-wrapper--hovered
+			{/if}
+
+			{if $error}
+				{sp}fragments-editor__topper-wrapper--error
+			{/if}
 		{/if}
 	{/let}
 

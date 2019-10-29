@@ -1,13 +1,11 @@
 {
 	"dependencies": {
-		"clay-button": "2.18.4",
-		"clay-icon": "2.18.4",
-		"clay-label": "2.18.4",
+		"@clayui/button": "3.0.0",
+		"@clayui/icon": "3.0.0",
+		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
-		"metal-component": "2.16.8",
-		"metal-dom": "2.16.8",
-		"metal-soy": "2.16.8",
-		"metal-state": "2.16.8"
+		"prop-types": "15.7.2",
+		"react": "16.9.0"
 	},
 	"name": "portal-search-admin-web",
 	"scripts": {

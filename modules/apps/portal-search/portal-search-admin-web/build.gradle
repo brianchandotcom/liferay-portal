@@ -10,9 +10,9 @@ dependencies {
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:portal-instances:portal-instances-api")
-	compileOnly project(":apps:portal-portlet-bridge:portal-portlet-bridge-soy-api")
 	compileOnly project(":apps:portal-search:portal-search-api")
 	compileOnly project(":apps:portal-search:portal-search-web-api")
 	compileOnly project(":core:petra:petra-function")
@@ -23,6 +23,7 @@ dependencies {
 	jsCompile project(":apps:frontend-js:frontend-js-web")
 	jsCompile project(":apps:frontend-taglib:frontend-taglib")
 	jsCompile project(":apps:frontend-taglib:frontend-taglib-clay")
+	jsCompile project(":apps:frontend-taglib:frontend-taglib-react")
 	jsCompile project(":apps:frontend-taglib:frontend-taglib-soy")
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

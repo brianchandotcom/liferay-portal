@@ -26,10 +26,10 @@ public class OAuthServiceBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext context) throws Exception {
-		OAuthUpgradeServiceModuleRelease upgradeServiceModuleRelease =
+		OAuthUpgradeServiceModuleRelease oAuthUpgradeServiceModuleRelease =
 			new OAuthUpgradeServiceModuleRelease();
 
-		upgradeServiceModuleRelease.upgrade();
+		oAuthUpgradeServiceModuleRelease.upgrade();
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class OAuthWebBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		BaseUpgradeWebModuleRelease upgradeWebModuleRelease =
+		BaseUpgradeWebModuleRelease baseUpgradeWebModuleRelease =
 			new BaseUpgradeWebModuleRelease() {
 
 				@Override
@@ -44,7 +44,7 @@ public class OAuthWebBundleActivator implements BundleActivator {
 
 			};
 
-		upgradeWebModuleRelease.upgrade();
+		baseUpgradeWebModuleRelease.upgrade();
 	}
 
 	@Override

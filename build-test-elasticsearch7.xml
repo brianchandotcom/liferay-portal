@@ -262,15 +262,15 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<sequential>
 			<lstopwatch action="start" name="prepare.elasticsearch.analyzers" />
 
-				<chmod
-					maxparallel="10"
-					perm="a+rwx"
-					type="both"
-				>
-					<fileset
-						dir="${elasticsearch.dir}"
-					/>
-				</chmod>
+			<chmod
+				maxparallel="10"
+				perm="a+rwx"
+				type="both"
+			>
+				<fileset
+					dir="${elasticsearch.dir}"
+				/>
+			</chmod>
 
 			<if>
 				<not>

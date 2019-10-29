@@ -83,14 +83,14 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 	@Override
 	public DepotEntry updateDepotEntry(
-			long depotEntryId, UnicodeProperties formTypeSettingsProperties,
+			long depotEntryId, UnicodeProperties typeSettingsProperties,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		DepotEntry depotEntry = getDepotEntry(depotEntryId);
 
-		_validateTypeSettingsProperties(depotEntry, formTypeSettingsProperties);
+		_validateTypeSettingsProperties(depotEntry, typeSettingsProperties);
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
 
@@ -101,18 +101,18 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			currentTypeSettingsProperties.getProperty("inheritLocales"), true);
 
 		inheritLocales = GetterUtil.getBoolean(
-			formTypeSettingsProperties.getProperty("inheritLocales"),
+			typeSettingsProperties.getProperty("inheritLocales"),
 			inheritLocales);
 
 		if (inheritLocales) {
-			formTypeSettingsProperties.setProperty(
+			typeSettingsProperties.setProperty(
 				PropsKeys.LOCALES,
 				StringUtil.merge(
 					LocaleUtil.toLanguageIds(
 						LanguageUtil.getAvailableLocales())));
 		}
 
-		currentTypeSettingsProperties.putAll(formTypeSettingsProperties);
+		currentTypeSettingsProperties.putAll(typeSettingsProperties);
 
 		Locale locale = LocaleUtil.fromLanguageId(
 			currentTypeSettingsProperties.getProperty("languageId"));
@@ -160,16 +160,16 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 	}
 
 	private void _validateTypeSettingsProperties(
-			DepotEntry depotEntry, UnicodeProperties formTypeSettingsProperties)
+			DepotEntry depotEntry, UnicodeProperties typeSettingsProperties)
 		throws LocaleException {
 
-		if (formTypeSettingsProperties.isEmpty()) {
+		if (typeSettingsProperties.isEmpty()) {
 			return;
 		}
 
-		if (formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) &&
+		if (typeSettingsProperties.containsKey(PropsKeys.LOCALES) &&
 			Validator.isNull(
-				formTypeSettingsProperties.getProperty(PropsKeys.LOCALES))) {
+				typeSettingsProperties.getProperty(PropsKeys.LOCALES))) {
 
 			throw new LocaleException(
 				LocaleException.TYPE_DEFAULT,
@@ -178,10 +178,10 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		}
 
 		boolean inheritLocales = GetterUtil.getBoolean(
-			formTypeSettingsProperties.getProperty("inheritLocales"));
+			typeSettingsProperties.getProperty("inheritLocales"));
 
 		if (!inheritLocales &&
-			!formTypeSettingsProperties.containsKey(PropsKeys.LOCALES)) {
+			!typeSettingsProperties.containsKey(PropsKeys.LOCALES)) {
 
 			throw new LocaleException(
 				LocaleException.TYPE_DEFAULT,

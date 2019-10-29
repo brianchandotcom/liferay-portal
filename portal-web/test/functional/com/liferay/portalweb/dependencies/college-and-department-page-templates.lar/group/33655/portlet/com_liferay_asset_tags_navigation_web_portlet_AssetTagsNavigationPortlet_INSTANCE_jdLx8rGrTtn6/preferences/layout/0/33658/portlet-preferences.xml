@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<portlet-preferences owner-id="0" owner-type="3" default-user="false" plid="33658" portlet-id="com_liferay_asset_tags_navigation_web_portlet_AssetTagsNavigationPortlet_INSTANCE_jdLx8rGrTtn6">
+	<preference>
+		<name>showAssetCount</name>
+		<value>true</value>
+	</preference>
+	<preference>
+		<name>classNameId</name>
+		<value>28702</value>
+	</preference>
+</portlet-preferences>

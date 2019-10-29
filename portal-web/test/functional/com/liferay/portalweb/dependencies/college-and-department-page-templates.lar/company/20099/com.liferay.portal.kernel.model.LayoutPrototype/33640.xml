@@ -1,0 +1,23 @@
+<LayoutPrototype>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__uuid>b4cb35d2-8119-90fe-548b-2fe908023187</__uuid>
+  <__originalUuid>b4cb35d2-8119-90fe-548b-2fe908023187</__originalUuid>
+  <__layoutPrototypeId>33640</__layoutPrototypeId>
+  <__companyId>20099</__companyId>
+  <__originalCompanyId>20099</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20103</__userId>
+  <__userName></__userName>
+  <__createDate>2019-10-29 06:03:50.19 UTC</__createDate>
+  <__modifiedDate>2019-10-29 06:03:50.19 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US,fi_FI,zh_CN,es_ES,iw_IL,pt_BR,ja_JP,fr_FR,ca_ES,nl_NL,hu_HU,de_DE&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;fi_FI&quot;&gt;Blogit&lt;/Name&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Blog&lt;/Name&gt;&lt;Name language-id=&quot;zh_CN&quot;&gt;博客&lt;/Name&gt;&lt;Name language-id=&quot;es_ES&quot;&gt;Blog&lt;/Name&gt;&lt;Name language-id=&quot;iw_IL&quot;&gt;בלוג&lt;/Name&gt;&lt;Name language-id=&quot;pt_BR&quot;&gt;Blog&lt;/Name&gt;&lt;Name language-id=&quot;ja_JP&quot;&gt;ブログ&lt;/Name&gt;&lt;Name language-id=&quot;fr_FR&quot;&gt;Blogue&lt;/Name&gt;&lt;Name language-id=&quot;ca_ES&quot;&gt;Bloc&lt;/Name&gt;&lt;Name language-id=&quot;nl_NL&quot;&gt;Blog&lt;/Name&gt;&lt;Name language-id=&quot;hu_HU&quot;&gt;Blog&lt;/Name&gt;&lt;Name language-id=&quot;de_DE&quot;&gt;Blog&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__description>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US,fi_FI,zh_CN,es_ES,iw_IL,pt_BR,ja_JP,fr_FR,ca_ES,nl_NL,hu_HU,de_DE&quot; default-locale=&quot;en_US&quot;&gt;&lt;Description language-id=&quot;fi_FI&quot;&gt;Luo, muokkaa ja näytä tämän sivun blogit. Selaa aiheita käytämällä tunnisteita ja tutustu muihin tämän blogin kirjoittajiin.&lt;/Description&gt;&lt;Description language-id=&quot;en_US&quot;&gt;Create, edit, and view blogs from this page. Explore topics using tags, and connect with other members that blog.&lt;/Description&gt;&lt;Description language-id=&quot;zh_CN&quot;&gt;在页面中创建，编辑并且预览博客。通便签导出主题，并也博客中的其他成员联系。&lt;/Description&gt;&lt;Description language-id=&quot;es_ES&quot;&gt;Cree, edite y vea blogs desde esta página. Explore los temas usando etiquetas y conecte con otros miembros del blog.&lt;/Description&gt;&lt;Description language-id=&quot;iw_IL&quot;&gt;צור, ערוך וצפה בבלוגים מעמוד זה. חקור נושאים באמצעות תגיות והתחבר עם חברים אחרים שכותבים בלוגים.&lt;/Description&gt;&lt;Description language-id=&quot;pt_BR&quot;&gt;Crie, edite e visualize blogs a partir desta página. Explore tópicos utilizando tags e conecte-se a outros membros deste blog.&lt;/Description&gt;&lt;Description language-id=&quot;ja_JP&quot;&gt;このページからブログの作成、編集、閲覧ができます。タグを使用して記事を検索したり、ブログの他のメンバーを結びつけることができます。&lt;/Description&gt;&lt;Description language-id=&quot;fr_FR&quot;&gt;Créer, éditer et visualiser les blogs de cette page. Explorer les sujets en utilisant des tags et se connecter à d&apos;autres membres de ce blog.&lt;/Description&gt;&lt;Description language-id=&quot;ca_ES&quot;&gt;Crear, editar i veure els blogs d&apos;aquesta pàgina. Explorar temes fent ús de les etiquetes i connectar-se amb altres membres d&apos;aquest blog.&lt;/Description&gt;&lt;Description language-id=&quot;nl_NL&quot;&gt;Vanaf deze pagina kunt u blogs aanmaken, bewerken en bekijken. Ontdek onderwerpen aan de hand van tags, en verbind met andere leden die bloggen.&lt;/Description&gt;&lt;Description language-id=&quot;hu_HU&quot;&gt;Hozz létre, szerkessz és tekints meg blogokat erről az oldalról. Fedezd fel a témákat a címkék segítségével és lépj kapcsolatba a többi blog taggal.&lt;/Description&gt;&lt;Description language-id=&quot;de_DE&quot;&gt;Erstellen, bearbeiten und ansehen von Blogs dieser Seite. Erkunden Sie Themen mit Hilfe von Tags und verbinden Sie sich mit anderen Mitgliedern, die bloggen.&lt;/Description&gt;&lt;/root&gt;</__description>
+  <__settings></__settings>
+  <__active>true</__active>
+  <__originalActive>true</__originalActive>
+  <__setOriginalActive>false</__setOriginalActive>
+  <__columnBitmask>0</__columnBitmask>
+</LayoutPrototype>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<JournalPortletDataHandler self-path="/group/20136/portlet/com_liferay_journal_web_portlet_JournalPortlet/20136/portlet-data.xml" group-id="20136">
+	<DDMStructure>
+		<staged-model group-id="20136" uuid="c327f5b0-56bc-0b09-508b-6650a023680f" preloaded="true" ddm-form-path="/group/20136/com.liferay.dynamic.data.mapping.model.DDMStructure/33301/ddm-form.json" ddm-data-provider-instance-ids="" ddm-form-layout-path="/group/20136/com.liferay.dynamic.data.mapping.model.DDMStructure/33301/ddm-form-layout.json" path="/group/20136/com.liferay.dynamic.data.mapping.model.DDMStructure/33301.xml" attached-class-name="com.liferay.journal.model.JournalArticle" user-uuid="d1373223-53e9-64ce-22a0-6022869a69fd" asset-entry-priority="0.0"/>
+	</DDMStructure>
+	<DDMTemplate>
+		<staged-model group-id="20136" uuid="4b02543f-4b60-6489-ec66-654e047647a2" preloaded="true" resource-class-name="com.liferay.journal.model.JournalArticle" path="/group/20136/com.liferay.dynamic.data.mapping.model.DDMTemplate/33304.xml" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" user-uuid="d1373223-53e9-64ce-22a0-6022869a69fd" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" class-pk="33301" attached-class-name="com.liferay.journal.model.JournalArticle" group-id="20136" group-key="20099" live-group-id="20136" type="strong" uuid="c327f5b0-56bc-0b09-508b-6650a023680f" company-id="20099" preloaded="true" referenced-class-name="com.liferay.journal.model.JournalArticle" structure-key="BASIC-WEB-CONTENT" missing="false"/>
+			</references>
+		</staged-model>
+	</DDMTemplate>
+</JournalPortletDataHandler>

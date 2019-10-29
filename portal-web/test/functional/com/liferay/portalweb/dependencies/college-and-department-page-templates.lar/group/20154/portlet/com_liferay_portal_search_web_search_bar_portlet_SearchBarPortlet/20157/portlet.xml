@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<portlet portlet-id="com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet" root-portlet-id="com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet" old-plid="20157" scope-group-id="20154" private-layout="true" self-path="/group/20154/portlet/com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet/20157/portlet.xml">
+	<portlet-preferences path="/group/20154/portlet/com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet/preferences/layout/0/20157/portlet-preferences.xml">
+		<preference-data/>
+	</portlet-preferences>
+</portlet>

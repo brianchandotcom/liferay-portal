@@ -1,0 +1,23 @@
+<LayoutPrototype>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__uuid>d465969f-8c96-9f92-c168-4918504c050a</__uuid>
+  <__originalUuid>d465969f-8c96-9f92-c168-4918504c050a</__originalUuid>
+  <__layoutPrototypeId>33653</__layoutPrototypeId>
+  <__companyId>20099</__companyId>
+  <__originalCompanyId>20099</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20103</__userId>
+  <__userName></__userName>
+  <__createDate>2019-10-29 06:03:50.455 UTC</__createDate>
+  <__modifiedDate>2019-10-29 06:03:50.455 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US,fi_FI,zh_CN,es_ES,iw_IL,pt_BR,ja_JP,fr_FR,ca_ES,nl_NL,hu_HU,de_DE&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;fi_FI&quot;&gt;Wikit&lt;/Name&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Wiki&lt;/Name&gt;&lt;Name language-id=&quot;zh_CN&quot;&gt;Wiki&lt;/Name&gt;&lt;Name language-id=&quot;es_ES&quot;&gt;Wiki&lt;/Name&gt;&lt;Name language-id=&quot;iw_IL&quot;&gt;ויקי&lt;/Name&gt;&lt;Name language-id=&quot;pt_BR&quot;&gt;Wiki&lt;/Name&gt;&lt;Name language-id=&quot;ja_JP&quot;&gt;Wiki&lt;/Name&gt;&lt;Name language-id=&quot;fr_FR&quot;&gt;Wiki (Panneau de Configuration)&lt;/Name&gt;&lt;Name language-id=&quot;ca_ES&quot;&gt;Wiki&lt;/Name&gt;&lt;Name language-id=&quot;nl_NL&quot;&gt;Wiki&apos;s&lt;/Name&gt;&lt;Name language-id=&quot;hu_HU&quot;&gt;Wikik&lt;/Name&gt;&lt;Name language-id=&quot;de_DE&quot;&gt;Wiki&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__description>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US,fi_FI,zh_CN,es_ES,iw_IL,pt_BR,ja_JP,fr_FR,ca_ES,nl_NL,hu_HU,de_DE&quot; default-locale=&quot;en_US&quot;&gt;&lt;Description language-id=&quot;fi_FI&quot;&gt;Tee yhteistyötä jäsenten kanssa wikin kautta tällä sivulla. Tutustu aiheeseen liittyvään sisältöön tunnisteiden kautta ja siirry helposti ja nopeasti luokkien välillä.&lt;/Description&gt;&lt;Description language-id=&quot;en_US&quot;&gt;Collaborate with members through the wiki on this page. Discover related content through tags, and navigate quickly and easily with categories.&lt;/Description&gt;&lt;Description language-id=&quot;zh_CN&quot;&gt;通过此页的Wiki与成员协作。通过标签搜索相关的内容，快速导航、轻松的类别。&lt;/Description&gt;&lt;Description language-id=&quot;es_ES&quot;&gt;Colabora con los miembros a través de la wiki en esta página. Descubre el contenido relacionado a través de etiquetas y navega rápida y fácilmente por las categorías.&lt;/Description&gt;&lt;Description language-id=&quot;iw_IL&quot;&gt;שתפו פעולה עם חברים באמצעות הוויקי בדף זה. גלו תוכן קשור באמצעות תגיות ונווטו מהר ובקלות בין קטגוריות.&lt;/Description&gt;&lt;Description language-id=&quot;pt_BR&quot;&gt;Colabore com os membros através do wiki nesta página. Descubra conteúdo relacionado através de etiquetas e navegue rápida e facilmente com as categorias.&lt;/Description&gt;&lt;Description language-id=&quot;ja_JP&quot;&gt;このページのWikiを通じてメンバーとコラボレーションできます。タグを利用して関連するコンテンツを見つけたり、カテゴリを使って簡単に情報をたどることができます&lt;/Description&gt;&lt;Description language-id=&quot;fr_FR&quot;&gt;Collaborez avec les membres par le bias de wiki sur cette page. Découvrez le contenu lié par le biais des tags et naviguez rapidement et facilement avec les catégories.&lt;/Description&gt;&lt;Description language-id=&quot;ca_ES&quot;&gt;Col·labora amb els membres a través de la wiki en aquesta pàgina. Descobreix el contingut relacionat a través d&apos;etiquetes i navega d&apos;una forma ràpida i fàcil amb les categories.&lt;/Description&gt;&lt;Description language-id=&quot;nl_NL&quot;&gt;Werk samen met leden via de wiki op deze pagina. Ontdek verwante inhoud via tags en navigeer snel en eenvoudig met behulp van categorieën.&lt;/Description&gt;&lt;Description language-id=&quot;hu_HU&quot;&gt;Működjön együtt a tagokkal az ezen az oldalon található wiki-n keresztül. Fedezzen fel kapcsolódó tartalmat címkékkel, és navigáljon gyorsan és könnyen kategóriákkal.&lt;/Description&gt;&lt;Description language-id=&quot;de_DE&quot;&gt;Arbeiten Sie mit Hilfe des Wikis dieser Seite mit anderen Mitgliedern zusammen. Entdecken Sie in Verbindung stehende Inhalte über Tags und navigieren Sie schnell und einfach mit Kategorien.&lt;/Description&gt;&lt;/root&gt;</__description>
+  <__settings></__settings>
+  <__active>true</__active>
+  <__originalActive>true</__originalActive>
+  <__setOriginalActive>false</__setOriginalActive>
+  <__columnBitmask>0</__columnBitmask>
+</LayoutPrototype>

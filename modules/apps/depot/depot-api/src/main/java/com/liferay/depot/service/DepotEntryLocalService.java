@@ -299,8 +299,9 @@ public interface DepotEntryLocalService
 	public DepotEntry updateDepotEntry(DepotEntry depotEntry);
 
 	public DepotEntry updateDepotEntry(
-			long depotEntryId, UnicodeProperties formTypeSettingsProperties,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			long depotEntryId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap,
+			UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
 		throws PortalException;
 

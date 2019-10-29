@@ -60,7 +60,7 @@ definition {
 		Depot.viewDefaultCP();
 	}
 
-	@description = "This ensures that a depot with the multiple files can be deleted."
+	@description = "This ensures that a depot with multiple files can be deleted."
 	@priority = "4"
 	test DeleteDepotWithMultipleFiles {
 		DepotNavigator.openDepotAdmin();

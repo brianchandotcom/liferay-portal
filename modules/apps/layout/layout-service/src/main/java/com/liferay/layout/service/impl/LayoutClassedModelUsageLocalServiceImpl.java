@@ -15,10 +15,14 @@
 package com.liferay.layout.service.impl;
 
 import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.service.base.LayoutClassedModelUsageLocalServiceBaseImpl;
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -26,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -44,14 +49,13 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 		return addLayoutClassedModelUsage(
 			groupId, classNameId, classPK, StringPool.BLANK, 0, 0,
-			LayoutClassedModelUsageConstants.TYPE_DEFAULT, serviceContext);
+			serviceContext);
 	}
 
 	@Override
 	public LayoutClassedModelUsage addLayoutClassedModelUsage(
 		long groupId, long classNameId, long classPK, String containerKey,
-		long containerType, long plid, int type,
-		ServiceContext serviceContext) {
+		long containerType, long plid, ServiceContext serviceContext) {
 
 		long layoutClassedModelUsageId = counterLocalService.increment();
 
@@ -68,7 +72,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 		layoutClassedModelUsage.setContainerKey(containerKey);
 		layoutClassedModelUsage.setContainerType(containerType);
 		layoutClassedModelUsage.setPlid(plid);
-		layoutClassedModelUsage.setType(type);
+		layoutClassedModelUsage.setType(_getType(plid));
 
 		return layoutClassedModelUsagePersistence.update(
 			layoutClassedModelUsage);
@@ -171,5 +175,41 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 		return false;
 	}
+
+	private int _getType(long plid) {
+		if (plid <= 0) {
+			return LayoutClassedModelUsageConstants.TYPE_DEFAULT;
+		}
+
+		Layout layout = layoutLocalService.fetchLayout(plid);
+
+		if (layout == null) {
+			return LayoutClassedModelUsageConstants.TYPE_DEFAULT;
+		}
+
+		if ((layout.getClassNameId() > 0) && (layout.getClassPK() > 0)) {
+			plid = layout.getClassPK();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(plid);
+
+		if (layoutPageTemplateEntry == null) {
+			return LayoutClassedModelUsageConstants.TYPE_LAYOUT;
+		}
+
+		if (layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+
+			return LayoutClassedModelUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE;
+		}
+
+		return LayoutClassedModelUsageConstants.TYPE_PAGE_TEMPLATE;
+	}
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 }

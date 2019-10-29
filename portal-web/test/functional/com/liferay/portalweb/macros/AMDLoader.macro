@@ -1,0 +1,17 @@
+definition {
+
+	macro getAMDLoaderLogLevel {
+		WaitForSPARefresh();
+
+		var javaScript = '''
+		var logLevel = Liferay.Loader._config.logLevel;
+
+		return logLevel;
+		''';
+
+		var logLevel = selenium.getEval("${javaScript}");
+
+		return "${logLevel}";
+	}
+
+}

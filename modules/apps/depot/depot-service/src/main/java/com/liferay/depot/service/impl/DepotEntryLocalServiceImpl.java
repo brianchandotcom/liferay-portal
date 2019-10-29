@@ -89,6 +89,8 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 		DepotEntry depotEntry = getDepotEntry(depotEntryId);
 
+		_validateTypeSettingsProperties(depotEntry, formTypeSettingsProperties);
+
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
 
 		UnicodeProperties currentTypeSettingsProperties =
@@ -97,10 +99,9 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		boolean inheritLocales = GetterUtil.getBoolean(
 			currentTypeSettingsProperties.getProperty("inheritLocales"), true);
 
-		if (formTypeSettingsProperties.containsKey("inheritLocales")) {
-			inheritLocales = GetterUtil.getBoolean(
-				formTypeSettingsProperties.getProperty("inheritLocales"));
-		}
+		inheritLocales = GetterUtil.getBoolean(
+			formTypeSettingsProperties.getProperty("inheritLocales"),
+			inheritLocales);
 
 		if (inheritLocales) {
 			formTypeSettingsProperties.setProperty(
@@ -110,17 +111,12 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 						LanguageUtil.getAvailableLocales())));
 		}
 
-		_validateTypeSettingsProperties(
-			currentTypeSettingsProperties, depotEntry,
-			formTypeSettingsProperties);
+		currentTypeSettingsProperties.putAll(formTypeSettingsProperties);
 
-		if (formTypeSettingsProperties.containsKey(PropsKeys.LOCALES)) {
-			_fillEmptyLanguajes(
-				nameMap,
-				LocaleUtil.fromLanguageId(
-					formTypeSettingsProperties.getProperty("languageId")));
-			currentTypeSettingsProperties.putAll(formTypeSettingsProperties);
-		}
+		_fillEmptyLanguages(
+			nameMap,
+			LocaleUtil.fromLanguageId(
+				currentTypeSettingsProperties.getProperty("languageId")));
 
 		group = _groupLocalService.updateGroup(
 			depotEntry.getGroupId(), group.getParentGroupId(), nameMap,
@@ -134,13 +130,13 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		return depotEntryPersistence.update(depotEntry);
 	}
 
-	private void _fillEmptyLanguajes(
+	private void _fillEmptyLanguages(
 		Map<Locale, String> nameMap, Locale defaultLocale) {
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			defaultLocale, DepotEntryLocalServiceImpl.class);
-
 		if (Validator.isNull(nameMap.get(defaultLocale))) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				defaultLocale, DepotEntryLocalServiceImpl.class);
+
 			nameMap.put(
 				defaultLocale,
 				_language.get(resourceBundle, "unnamed-repository"));
@@ -159,9 +155,12 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 	}
 
 	private void _validateTypeSettingsProperties(
-			UnicodeProperties currentTypeSettingsProperties,
 			DepotEntry depotEntry, UnicodeProperties formTypeSettingsProperties)
 		throws LocaleException {
+
+		if (formTypeSettingsProperties.isEmpty()) {
+			return;
+		}
 
 		if (formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) &&
 			Validator.isNull(
@@ -173,11 +172,11 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 					depotEntry.getGroupId());
 		}
 
-		if (!formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) &&
-			(!currentTypeSettingsProperties.containsKey(PropsKeys.LOCALES) ||
-			 Validator.isNull(
-				 currentTypeSettingsProperties.getProperty(
-					 PropsKeys.LOCALES)))) {
+		boolean inheritLocales = GetterUtil.getBoolean(
+			formTypeSettingsProperties.getProperty("inheritLocales"));
+
+		if (!inheritLocales &&
+			!formTypeSettingsProperties.containsKey(PropsKeys.LOCALES)) {
 
 			throw new LocaleException(
 				LocaleException.TYPE_DEFAULT,

@@ -348,6 +348,49 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<lstopwatch action="total" name="prepare.elasticsearch.analyzers" />
 		</sequential>
 	</macrodef>
+
+	<macrodef name="prepare-elasticsearch-ltr">
+		<sequential>
+			<lstopwatch action="start" name="prepare.elasticsearch.ltr" />
+
+			<chmod
+				file="${elasticsearch.dir}/bin/**"
+				perm="a+x"
+			/>
+
+			<if>
+				<not>
+					<available file="${elasticsearch.dir}/${elasticsearch.ltr.zip.name}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${elasticsearch.dir}/${elasticsearch.ltr.zip.name}"
+						skipChecksum="true"
+						src="${elasticsearch.ltr.url}"
+					/>
+				</then>
+			</if>
+
+			<if>
+				<os family="unix" />
+				<then>
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./elasticsearch-plugin install file:///${elasticsearch.dir}/${elasticsearch.ltr.zip.name}" />
+					</exec>
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg value="elasticsearch-plugin install file:///${elasticsearch.dir}/${elasticsearch.ltr.zip.name}" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+
+			<lstopwatch action="total" name="prepare.elasticsearch.ltr" />
 		</sequential>
 	</macrodef>
 
@@ -696,6 +739,19 @@ xpack.monitoring.collection.enabled: true</echo>
 		<unzip-elasticsearch />
 
 		<prepare-elasticsearch-analyzers />
+
+		<get-testcase-property property.name="remote.elasticsearch.ltr.enabled" />
+
+		<if>
+			<equals arg1="${remote.elasticsearch.ltr.enabled}" arg2="true" />
+			<then>
+				<configure-elasticsearch7-ltr-test-properties />
+
+				<prepare-elasticsearch-ltr />
+
+				<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}path.repo: ${liferay.home}/data/elasticsearch7/repo</echo>
+			</then>
+		</if>
 
 		<configure-elasticsearch-properties />
 

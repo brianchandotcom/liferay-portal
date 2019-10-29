@@ -64,19 +64,19 @@ public class PropertiesDocBuilder {
 
 		File propertiesFile = new File(propertiesFileName);
 
+		List<PropertiesSection> propertiesSections = getPropertiesSections(
+			propertiesFile);
+
+		if (propertiesSections == null) {
+			return;
+		}
+
 		String title = GetterUtil.getString(arguments.get("properties.title"));
 
 		int pos = propertiesFileName.lastIndexOf(StringPool.SLASH);
 
 		if (pos != -1) {
 			propertiesFileName = propertiesFileName.substring(pos + 1);
-		}
-
-		List<PropertiesSection> propertiesSections = getPropertiesSections(
-			propertiesFile);
-
-		if (propertiesSections == null) {
-			return;
 		}
 
 		boolean toc = GetterUtil.getBoolean(arguments.get("properties.toc"));

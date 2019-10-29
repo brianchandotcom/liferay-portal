@@ -68,10 +68,12 @@
 	/}
 
 	{if
-		$availableSegmentsExperiences and
-		(($hasUpdatePermissions and length($availableSegmentsExperiences) > 0)
-		or (not $hasUpdatePermissions and length($availableSegmentsExperiences) > 1)) and
-		$canCreateExperiences
+		$canCreateExperiences and
+		$availableSegmentsExperiencesList and
+		(
+			($hasUpdatePermissions and (length($availableSegmentsExperiencesList) > 0)) or
+			((not $hasUpdatePermissions) and (length($availableSegmentsExperiencesList) > 1))
+		)
 	}
 		<div
 			class="segments-experience-selector position-relative"

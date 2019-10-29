@@ -844,13 +844,13 @@ xpack.monitoring.collection.enabled: true</echo>
 			</fileset>
 		</chmod>
 
-		<configure-kibana-properties />
-
 		<get-testcase-property property.name="elastic.xpack.enabled" />
 
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
 			<then>
+				<configure-kibana-properties />
+
 				<configure-kibana-x-pack-security-properties />
 			</then>
 		</if>

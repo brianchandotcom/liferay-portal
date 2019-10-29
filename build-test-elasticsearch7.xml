@@ -661,19 +661,28 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	<target name="add-boston-dataset-index">
 		<unzip-boston-dataset-index />
 
-		<exec executable="curl" outputproperty="curl.output">
-			<arg line="-X PUT &quot;localhost:9201/_snapshot/my_backup&quot; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;type&quot;: &quot;fs&quot;,&quot;settings&quot;: {&quot;location&quot;: &quot;${liferay.home}/data/elasticsearch7/repo&quot;}}&apos;" />
-		</exec>
+		<antcall target="restore-backup">
+			<param name="backup.index" value="${backup.index}" />
 
-		<echo>Defining snapshot repository.${line.separator}${curl.output}</echo>
-
-		<exec executable="curl" outputproperty="curl.output">
-			<arg line="-X POST &quot;localhost:9201/_snapshot/my_backup/snapshot_2/_restore&quot; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;indices&quot;: &quot;boston311&quot;,&quot;ignore_unavailable&quot;: true,&quot;include_global_state&quot;: true,&quot;rename_pattern&quot;: &quot;index_(.+)&quot;,&quot;rename_replacement&quot;: &quot;restored_index_$1&quot;}&apos;" />
-		</exec>
-
-		<echo>Restoring Boston dataset snapshot.${line.separator}${curl.output}</echo>
+			<param name="elasticsearch.port" value="${elasticsearch.port}" />
+		</antcall>
 
 		<echo>Finished adding Boston dataset index.</echo>
+	</target>
+
+	<target name="add-ltr-linear-regression-model">
+		<configure-elasticsearch7-test-properties />
+
+		<configure-elasticsearch7-ltr-test-properties />
+
+		<unzip-ltr-linear-regression-model />
+
+		<antcall target="restore-backup">
+			<param name="backup.index" value="${backup.index}" />
+			<param name="elasticsearch.port" value="${elasticsearch.port}" />
+		</antcall>
+
+		<echo>Finished adding LTR linear regression model.</echo>
 	</target>
 
 	<target name="configure-elasticsearch-cluster-properties">
@@ -729,6 +738,20 @@ xpack.monitoring.collection.enabled: true</echo>
 		</antelope:repeat>
 
 		<delete dir="${elasticsearch.dir}" />
+	</target>
+
+	<target name="restore-backup">
+		<exec executable="curl" outputproperty="curl.output">
+			<arg line="-X PUT &quot;localhost:${elasticsearch.port}/_snapshot/my_backup&quot; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;type&quot;: &quot;fs&quot;,&quot;settings&quot;: {&quot;location&quot;: &quot;${liferay.home}/data/elasticsearch7/repo&quot;}}&apos;" />
+		</exec>
+
+		<echo>Defining snapshot repository.${line.separator}${curl.output}</echo>
+
+		<exec executable="curl" outputproperty="curl.output">
+			<arg line="-X POST &quot;localhost:${elasticsearch.port}/_snapshot/my_backup/snapshot_2/_restore&quot; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;indices&quot;: &quot;${backup.index}&quot;,&quot;ignore_unavailable&quot;: true,&quot;include_global_state&quot;: true,&quot;rename_pattern&quot;: &quot;index_(.+)&quot;,&quot;rename_replacement&quot;: &quot;restored_index_$1&quot;}&apos;" />
+		</exec>
+
+		<echo>Restoring snapshot.${line.separator}${curl.output}</echo>
 	</target>
 
 	<target name="start-elasticsearch">

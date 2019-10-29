@@ -287,9 +287,21 @@ public class CTServicePublisher<T extends CTModel<T>> {
 				CTCollectionThreadLocal.setCTCollectionId(tempCTCollectionId)) {
 
 			if (addedCTModels != null) {
-				for (T ctModel : addedCTModels.values()) {
+				for (Map.Entry<Serializable, T> entry :
+						addedCTModels.entrySet()) {
+
+					T ctModel = entry.getValue();
+
+					long mvccVersion = ctModel.getMvccVersion();
+
 					_updateCTCollectionId(
 						ctPersistence, _targetCTCollectionId, ctModel);
+
+					CTEntry ctEntry = _additionCTEntries.get(entry.getKey());
+
+					ctEntry.setModelMvccVersion(mvccVersion + 1);
+
+					_ctEntryLocalService.updateCTEntry(ctEntry);
 				}
 			}
 

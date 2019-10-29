@@ -12,28 +12,23 @@
  * details.
  */
 
-package com.liferay.analytics.settings.web.internal.configuration.definition;
+package com.liferay.analytics.settings.web.internal.settings.definition;
 
 import com.liferay.analytics.settings.web.internal.configuration.AnalyticsConfiguration;
-import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marcellus Tavares
  */
-@Component(service = ConfigurationPidMapping.class)
-public class AnalyticsCompanyServiceConfigurationPidMapping
-	implements ConfigurationPidMapping {
+@Component(immediate = true, service = ConfigurationBeanDeclaration.class)
+public class AnalyticsCompanyServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
 		return AnalyticsConfiguration.class;
-	}
-
-	@Override
-	public String getConfigurationPid() {
-		return "com.liferay.analytics";
 	}
 
 }

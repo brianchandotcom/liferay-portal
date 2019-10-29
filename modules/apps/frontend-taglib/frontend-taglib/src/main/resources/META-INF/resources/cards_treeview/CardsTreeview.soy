@@ -22,8 +22,8 @@
  */
 {template .nodes}
 	{@param nodes: list<?>}
-	{@param? parentPath: string}
 	{@param pathThemeImages: string}
+	{@param? parentPath: string}
 	{@param? viewType: string}
 
 	{if $nodes}
@@ -116,10 +116,10 @@
  */
 {template .card}
 	{@param icon: string}
-	{@param? nodePath: string}
 	{@param path: string}
 	{@param pathThemeImages: string}
 	{@param title: string}
+	{@param? nodePath: string}
 	{@param? viewType: string}
 
 	{let $nodeAttributes kind="attributes"}

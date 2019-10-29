@@ -21,7 +21,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -108,11 +107,6 @@ public class SegmentsExperienceUtil {
 						valueJSONObject = editableJSONObject.getJSONObject(
 							SegmentsExperienceConstants.ID_PREFIX +
 								sourceSegmentsExperienceId);
-					}
-					else if (editableJSONObject.has("defaultValue")) {
-						valueJSONObject = JSONUtil.put(
-							"defaultValue",
-							editableJSONObject.getString("defaultValue"));
 					}
 					else {
 						continue;

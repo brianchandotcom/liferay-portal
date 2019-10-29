@@ -1304,7 +1304,7 @@ war.path=${app.server.portal.dir}/</echo>
 				<then>
 					<local name="poshi.java.jdk.opts" />
 
-					<get-java-jdk-home architecture="x32" version="1.8" />
+					<get-java-jdk-home version="8" />
 
 					<get-poshi-java-jdk-opts />
 

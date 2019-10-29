@@ -28,9 +28,12 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author     Eudaldo Alonso
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.layout.service.persistence.impl.LayoutClassedModelUsageFinderImpl}
  */
 @Component(service = AssetEntryUsageFinder.class)
+@Deprecated
 public class AssetEntryUsageFinderImpl
 	extends AssetEntryUsageFinderBaseImpl implements AssetEntryUsageFinder {
 

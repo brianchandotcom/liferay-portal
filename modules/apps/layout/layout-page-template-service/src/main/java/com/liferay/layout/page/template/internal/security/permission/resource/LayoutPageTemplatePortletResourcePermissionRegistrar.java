@@ -15,7 +15,7 @@
 package com.liferay.layout.page.template.internal.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
@@ -49,7 +49,8 @@ public class LayoutPageTemplatePortletResourcePermissionRegistrar {
 			PortletResourcePermissionFactory.create(
 				LayoutPageTemplateConstants.RESOURCE_NAME,
 				new StagedPortletPermissionLogic(
-					_stagingPermission, LayoutAdminPortletKeys.GROUP_PAGES)),
+					_stagingPermission,
+					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES)),
 			properties);
 	}
 

@@ -5,7 +5,8 @@
 
 	<macrodef name="configure-elasticsearch-properties">
 		<sequential>
-			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}cluster.name: LiferayElasticsearchCluster</echo>
+			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}cluster.name: LiferayElasticsearchCluster
+xpack.ml.enabled: false</echo>
 		</sequential>
 	</macrodef>
 
@@ -261,7 +262,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<sequential>
 			<lstopwatch action="start" name="prepare.elasticsearch.analyzers" />
 
-			<chmod
 				file="${elasticsearch.dir}/bin/**"
 				perm="a+x"
 			/>

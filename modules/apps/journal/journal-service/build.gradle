@@ -29,6 +29,7 @@ dependencies {
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:friendly-url:friendly-url-api")
 	compileOnly project(":apps:journal:journal-api")
+	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:mobile-device-rules:mobile-device-rules-api")
 	compileOnly project(":apps:petra:petra-xml")
 	compileOnly project(":apps:portal-configuration:portal-configuration-upgrade-api")

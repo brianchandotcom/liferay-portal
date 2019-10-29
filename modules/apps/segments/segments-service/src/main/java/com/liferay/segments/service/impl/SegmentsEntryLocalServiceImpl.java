@@ -46,6 +46,7 @@ import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.exception.SegmentsEntryNameException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
+import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.base.SegmentsEntryLocalServiceBaseImpl;
 
@@ -196,6 +197,11 @@ public class SegmentsEntryLocalServiceImpl
 		// Segments rels
 
 		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
+			segmentsEntry.getSegmentsEntryId());
+
+		// Segments roles
+
+		_segmentsEntryRoleLocalService.deleteSegmentsEntryRoles(
 			segmentsEntry.getSegmentsEntryId());
 
 		return segmentsEntry;
@@ -470,6 +476,9 @@ public class SegmentsEntryLocalServiceImpl
 
 	@Reference
 	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
+
+	@Reference
+	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

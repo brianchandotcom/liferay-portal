@@ -14,11 +14,13 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.util.RawMetadataProcessorUtil;
+import com.liferay.document.library.service.DLFileVersionPreviewLocalServiceUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -185,7 +187,11 @@ public class ActionUtil {
 			fileVersion = fileEntry.getFileVersion();
 		}
 
-		if (RawMetadataProcessorUtil.isSupported(fileVersion)) {
+		if (RawMetadataProcessorUtil.isSupported(fileVersion) &&
+			!DLFileVersionPreviewLocalServiceUtil.hasDLFileVersionPreview(
+				fileEntry.getFileEntryId(), fileVersion.getFileVersionId(),
+				DLFileVersionPreviewConstants.STATUS_FAILURE)) {
+
 			RawMetadataProcessorUtil.generateMetadata(fileVersion);
 		}
 

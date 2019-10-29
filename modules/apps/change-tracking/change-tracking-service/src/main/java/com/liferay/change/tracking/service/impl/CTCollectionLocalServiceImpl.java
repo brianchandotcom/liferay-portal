@@ -26,6 +26,7 @@ import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.base.CTCollectionLocalServiceBaseImpl;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -174,7 +175,9 @@ public class CTCollectionLocalServiceImpl
 		try (SafeClosable safeClosable1 =
 				CTPersistenceHelperThreadLocal.setEnabled(false);
 			SafeClosable safeClosable2 =
-				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
+				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId);
+			SafeClosable safeClosable3 = CTSQLModeThreadLocal.setCTSQLMode(
+				CTSQLModeThreadLocal.CTSQLMode.CT_ONLY)) {
 
 			ctService.updateWithUnsafeFunction(
 				ctPersistence -> {

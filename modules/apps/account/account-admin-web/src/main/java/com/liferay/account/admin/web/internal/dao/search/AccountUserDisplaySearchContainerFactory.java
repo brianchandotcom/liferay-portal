@@ -54,10 +54,6 @@ public class AccountUserDisplaySearchContainerFactory {
 
 		String accountNavigation = ParamUtil.getString(
 			liferayPortletRequest, "accountNavigation", "all");
-		String keywords = ParamUtil.getString(
-			liferayPortletRequest, "keywords", null);
-		String navigation = ParamUtil.getString(
-			liferayPortletRequest, "navigation", "active");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
@@ -96,43 +92,9 @@ public class AccountUserDisplaySearchContainerFactory {
 			};
 		}
 
-		SearchContainer accountUserDisplaySearchContainer = new SearchContainer(
-			liferayPortletRequest,
-			PortletURLUtil.getCurrent(
-				liferayPortletRequest, liferayPortletResponse),
-			null, "there-are-no-users-associated-with-this-account");
-
-		accountUserDisplaySearchContainer.setId("accountUsers");
-
-		String orderByCol = ParamUtil.getString(
-			liferayPortletRequest, "orderByCol", "last-name");
-
-		accountUserDisplaySearchContainer.setOrderByCol(orderByCol);
-
-		String orderByType = ParamUtil.getString(
-			liferayPortletRequest, "orderByType", "asc");
-
-		accountUserDisplaySearchContainer.setOrderByType(orderByType);
-
-		accountUserDisplaySearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(liferayPortletResponse));
-
-		BaseModelSearchResult<User> baseModelSearchResult =
-			_accountUserRetriever.searchAccountUsers(
-				accountEntryIds, keywords, _getStatus(navigation),
-				accountUserDisplaySearchContainer.getStart(),
-				accountUserDisplaySearchContainer.getDelta(),
-				accountUserDisplaySearchContainer.getOrderByCol(),
-				_isReverseOrder(
-					accountUserDisplaySearchContainer.getOrderByType()));
-
-		accountUserDisplaySearchContainer.setResults(
-			TransformUtil.transform(
-				baseModelSearchResult.getBaseModels(), AccountUserDisplay::of));
-		accountUserDisplaySearchContainer.setTotal(
-			baseModelSearchResult.getLength());
-
-		return accountUserDisplaySearchContainer;
+		return _create(
+			accountEntryIds, "no-users-were-found", liferayPortletRequest,
+			liferayPortletResponse);
 	}
 
 	public static SearchContainer create(
@@ -140,17 +102,37 @@ public class AccountUserDisplaySearchContainerFactory {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		String keywords = ParamUtil.getString(
-			liferayPortletRequest, "keywords", null);
-		String navigation = ParamUtil.getString(
-			liferayPortletRequest, "navigation", "active");
-
 		String emptyResultsMessage =
 			"there-are-no-users-associated-with-this-account";
 
 		if (_accountUserRetriever.getAccountUsersCount(accountEntryId) > 0) {
 			emptyResultsMessage = "no-users-were-found";
 		}
+
+		return _create(
+			new long[] {accountEntryId}, emptyResultsMessage,
+			liferayPortletRequest, liferayPortletResponse);
+	}
+
+	@Reference(unbind = "-")
+	protected void setAccountEntryLocalService(
+		AccountEntryLocalService accountEntryLocalService) {
+
+		_accountEntryLocalService = accountEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAccountUserRetriever(
+		AccountUserRetriever accountUserRetriever) {
+
+		_accountUserRetriever = accountUserRetriever;
+	}
+
+	private static SearchContainer _create(
+			long[] accountEntryIds, String emptyResultsMessage,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException {
 
 		SearchContainer accountUserDisplaySearchContainer = new SearchContainer(
 			liferayPortletRequest,
@@ -173,9 +155,14 @@ public class AccountUserDisplaySearchContainerFactory {
 		accountUserDisplaySearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
 
+		String keywords = ParamUtil.getString(
+			liferayPortletRequest, "keywords", null);
+		String navigation = ParamUtil.getString(
+			liferayPortletRequest, "navigation", "active");
+
 		BaseModelSearchResult<User> baseModelSearchResult =
 			_accountUserRetriever.searchAccountUsers(
-				accountEntryId, keywords, _getStatus(navigation),
+				accountEntryIds, keywords, _getStatus(navigation),
 				accountUserDisplaySearchContainer.getStart(),
 				accountUserDisplaySearchContainer.getDelta(),
 				accountUserDisplaySearchContainer.getOrderByCol(),
@@ -189,20 +176,6 @@ public class AccountUserDisplaySearchContainerFactory {
 			baseModelSearchResult.getLength());
 
 		return accountUserDisplaySearchContainer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAccountEntryLocalService(
-		AccountEntryLocalService accountEntryLocalService) {
-
-		_accountEntryLocalService = accountEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAccountUserRetriever(
-		AccountUserRetriever accountUserRetriever) {
-
-		_accountUserRetriever = accountUserRetriever;
 	}
 
 	private static int _getStatus(String navigation) {

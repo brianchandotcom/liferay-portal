@@ -4,7 +4,12 @@
  * MasterFragmentEntryLinkContent
  */
 {template .render}
-	<div ref="content">
+	{@param? _handleMasterFragmentEntryLinkContentClick: any}
+
+	<div
+		data-onclick="{$_handleMasterFragmentEntryLinkContentClick}"
+		ref="content"
+	>
 		<div class="loading-animation"></div>
 	</div>
 {/template}

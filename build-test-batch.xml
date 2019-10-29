@@ -3464,6 +3464,12 @@ log.sanitizer.enabled=false</echo>
 					<try>
 						<for keepgoing="true" list="check-upgrade-client-gogoshell,check-upgrade-client-help,check-upgrade-client-java-version,check-upgrade-client-custom-log,check-upgrade-client-additional-settings,check-upgrade-client-sh-disconnect,check-upgrade-client-upgrade-core-only,check-upgrade-client-zip-content,check-upgrade-properties-app-db-set,check-upgrade-properties-app-ext-set,check-upgrade-properties-db-ext-set,check-upgrade-properties-none-set" param="upgrade.test.target">
 							<sequential>
+								<antcall target="rebuild-legacy-database">
+									<param name="portal.version" value="6.2.5" />
+									<param name="data.archive.type" value="data-archive-polls" />
+									<param name="skip.get.testcase.database.properties" value="true" />
+								</antcall>
+
 								<ant antfile="modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml" target="@{upgrade.test.target}" />
 							</sequential>
 						</for>
@@ -3503,12 +3509,6 @@ log.sanitizer.enabled=false</echo>
 						</if>
 					</action>
 				</database-test-action>
-
-				<antcall target="rebuild-legacy-database">
-					<param name="portal.version" value="6.2.5" />
-					<param name="data.archive.type" value="data-archive-polls" />
-					<param name="skip.get.testcase.database.properties" value="true" />
-				</antcall>
 
 				<prepare-database-upgrade-configuration />
 			</test-set-up>

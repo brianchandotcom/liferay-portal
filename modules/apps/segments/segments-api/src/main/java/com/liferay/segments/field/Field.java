@@ -16,7 +16,6 @@ package com.liferay.segments.field;
 
 import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.io.Serializable;
 
@@ -24,7 +23,6 @@ import java.text.Collator;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Represents a segments criteria field.

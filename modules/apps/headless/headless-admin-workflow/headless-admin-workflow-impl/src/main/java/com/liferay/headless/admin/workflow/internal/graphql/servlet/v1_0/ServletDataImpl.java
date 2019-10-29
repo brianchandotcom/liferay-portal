@@ -18,6 +18,7 @@ import com.liferay.headless.admin.workflow.internal.graphql.mutation.v1_0.Mutati
 import com.liferay.headless.admin.workflow.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.admin.workflow.resource.v1_0.CreatorResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.TransitionsResource;
+import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowInstanceResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowLogResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -41,6 +42,8 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setWorkflowInstanceResourceComponentServiceObjects(
+			_workflowInstanceResourceComponentServiceObjects);
 		Mutation.setWorkflowTaskResourceComponentServiceObjects(
 			_workflowTaskResourceComponentServiceObjects);
 
@@ -48,6 +51,8 @@ public class ServletDataImpl implements ServletData {
 			_creatorResourceComponentServiceObjects);
 		Query.setTransitionsResourceComponentServiceObjects(
 			_transitionsResourceComponentServiceObjects);
+		Query.setWorkflowInstanceResourceComponentServiceObjects(
+			_workflowInstanceResourceComponentServiceObjects);
 		Query.setWorkflowLogResourceComponentServiceObjects(
 			_workflowLogResourceComponentServiceObjects);
 		Query.setWorkflowTaskResourceComponentServiceObjects(
@@ -72,6 +77,10 @@ public class ServletDataImpl implements ServletData {
 	public Query getQuery() {
 		return new Query();
 	}
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<WorkflowInstanceResource>
+		_workflowInstanceResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<WorkflowTaskResource>

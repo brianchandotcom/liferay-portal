@@ -14,7 +14,9 @@
 
 package com.liferay.headless.admin.workflow.resource.v1_0;
 
-import com.liferay.headless.admin.workflow.dto.v1_0.Transitions;
+import com.liferay.headless.admin.workflow.dto.v1_0.ChangeTransition;
+import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstance;
+import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstanceSubmit;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -40,14 +42,25 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface TransitionsResource {
+public interface WorkflowInstanceResource {
 
-	public Page<Transitions> getWorkflowInstanceNextTransitionsPage(
-			Long workflowInstanceId, Pagination pagination)
+	public Page<WorkflowInstance> getWorkflowInstancesPage(
+			String[] assetClassNames, Long[] assetPrimaryKeys,
+			Boolean completed, Pagination pagination)
 		throws Exception;
 
-	public Page<Transitions> getWorkflowTaskNextTransitionsPage(
-			Long workflowTaskId, Pagination pagination)
+	public WorkflowInstance postWorkflowInstanceSubmit(
+			WorkflowInstanceSubmit workflowInstanceSubmit)
+		throws Exception;
+
+	public void deleteWorkflowInstance(Long workflowInstanceId)
+		throws Exception;
+
+	public WorkflowInstance getWorkflowInstance(Long workflowInstanceId)
+		throws Exception;
+
+	public WorkflowInstance postWorkflowInstanceChangeTransition(
+			Long workflowInstanceId, ChangeTransition changeTransition)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

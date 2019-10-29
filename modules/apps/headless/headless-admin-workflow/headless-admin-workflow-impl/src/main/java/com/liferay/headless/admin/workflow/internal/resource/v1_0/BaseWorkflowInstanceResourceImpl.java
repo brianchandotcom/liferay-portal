@@ -14,8 +14,10 @@
 
 package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
-import com.liferay.headless.admin.workflow.dto.v1_0.Transitions;
-import com.liferay.headless.admin.workflow.resource.v1_0.TransitionsResource;
+import com.liferay.headless.admin.workflow.dto.v1_0.ChangeTransition;
+import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstance;
+import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstanceSubmit;
+import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowInstanceResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -40,10 +42,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -53,29 +59,35 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseTransitionsResourceImpl
-	implements TransitionsResource {
+public abstract class BaseWorkflowInstanceResourceImpl
+	implements WorkflowInstanceResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/next-transitions'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId"),
+			@Parameter(in = ParameterIn.QUERY, name = "assetClassNames"),
+			@Parameter(in = ParameterIn.QUERY, name = "assetPrimaryKeys"),
+			@Parameter(in = ParameterIn.QUERY, name = "completed"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/workflow-instances/{workflowInstanceId}/next-transitions")
+	@Path("/workflow-instances")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Transitions")})
-	public Page<Transitions> getWorkflowInstanceNextTransitionsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("workflowInstanceId")
-				Long workflowInstanceId,
+	@Tags(value = {@Tag(name = "WorkflowInstance")})
+	public Page<WorkflowInstance> getWorkflowInstancesPage(
+			@Parameter(hidden = true) @QueryParam("assetClassNames") String[]
+				assetClassNames,
+			@Parameter(hidden = true) @QueryParam("assetPrimaryKeys") Long[]
+				assetPrimaryKeys,
+			@Parameter(hidden = true) @QueryParam("completed") Boolean
+				completed,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -85,27 +97,82 @@ public abstract class BaseTransitionsResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/next-transitions'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/submit' -d $'{"context": ___, "definitionName": ___, "definitionVersion": ___, "siteId": ___, "transition": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@POST
+	@Path("/workflow-instances/submit")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "WorkflowInstance")})
+	public WorkflowInstance postWorkflowInstanceSubmit(
+			WorkflowInstanceSubmit workflowInstanceSubmit)
+		throws Exception {
+
+		return new WorkflowInstance();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId")}
+	)
+	@Path("/workflow-instances/{workflowInstanceId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowInstance")})
+	public void deleteWorkflowInstance(
+			@NotNull @Parameter(hidden = true) @PathParam("workflowInstanceId")
+				Long workflowInstanceId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
 	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "workflowTaskId"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
+		value = {@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId")}
 	)
-	@Path("/workflow-tasks/{workflowTaskId}/next-transitions")
+	@Path("/workflow-instances/{workflowInstanceId}")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Transitions")})
-	public Page<Transitions> getWorkflowTaskNextTransitionsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("workflowTaskId") Long
-				workflowTaskId,
-			@Context Pagination pagination)
+	@Tags(value = {@Tag(name = "WorkflowInstance")})
+	public WorkflowInstance getWorkflowInstance(
+			@NotNull @Parameter(hidden = true) @PathParam("workflowInstanceId")
+				Long workflowInstanceId)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		return new WorkflowInstance();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/change-transition' -d $'{"comment": ___, "transition": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId")}
+	)
+	@Path("/workflow-instances/{workflowInstanceId}/change-transition")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "WorkflowInstance")})
+	public WorkflowInstance postWorkflowInstanceChangeTransition(
+			@NotNull @Parameter(hidden = true) @PathParam("workflowInstanceId")
+				Long workflowInstanceId,
+			ChangeTransition changeTransition)
+		throws Exception {
+
+		return new WorkflowInstance();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -137,7 +204,8 @@ public abstract class BaseTransitionsResourceImpl
 	}
 
 	protected void preparePatch(
-		Transitions transitions, Transitions existingTransitions) {
+		WorkflowInstance workflowInstance,
+		WorkflowInstance existingWorkflowInstance) {
 	}
 
 	protected <T, R> List<R> transform(

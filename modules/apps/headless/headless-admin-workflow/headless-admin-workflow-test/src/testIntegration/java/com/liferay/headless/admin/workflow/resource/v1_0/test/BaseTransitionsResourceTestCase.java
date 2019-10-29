@@ -187,6 +187,128 @@ public abstract class BaseTransitionsResourceTestCase {
 	}
 
 	@Test
+	public void testGetWorkflowInstanceNextTransitionsPage() throws Exception {
+		Page<Transitions> page =
+			transitionsResource.getWorkflowInstanceNextTransitionsPage(
+				testGetWorkflowInstanceNextTransitionsPage_getWorkflowInstanceId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long workflowInstanceId =
+			testGetWorkflowInstanceNextTransitionsPage_getWorkflowInstanceId();
+		Long irrelevantWorkflowInstanceId =
+			testGetWorkflowInstanceNextTransitionsPage_getIrrelevantWorkflowInstanceId();
+
+		if ((irrelevantWorkflowInstanceId != null)) {
+			Transitions irrelevantTransitions =
+				testGetWorkflowInstanceNextTransitionsPage_addTransitions(
+					irrelevantWorkflowInstanceId,
+					randomIrrelevantTransitions());
+
+			page = transitionsResource.getWorkflowInstanceNextTransitionsPage(
+				irrelevantWorkflowInstanceId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantTransitions),
+				(List<Transitions>)page.getItems());
+			assertValid(page);
+		}
+
+		Transitions transitions1 =
+			testGetWorkflowInstanceNextTransitionsPage_addTransitions(
+				workflowInstanceId, randomTransitions());
+
+		Transitions transitions2 =
+			testGetWorkflowInstanceNextTransitionsPage_addTransitions(
+				workflowInstanceId, randomTransitions());
+
+		page = transitionsResource.getWorkflowInstanceNextTransitionsPage(
+			workflowInstanceId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(transitions1, transitions2),
+			(List<Transitions>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetWorkflowInstanceNextTransitionsPageWithPagination()
+		throws Exception {
+
+		Long workflowInstanceId =
+			testGetWorkflowInstanceNextTransitionsPage_getWorkflowInstanceId();
+
+		Transitions transitions1 =
+			testGetWorkflowInstanceNextTransitionsPage_addTransitions(
+				workflowInstanceId, randomTransitions());
+
+		Transitions transitions2 =
+			testGetWorkflowInstanceNextTransitionsPage_addTransitions(
+				workflowInstanceId, randomTransitions());
+
+		Transitions transitions3 =
+			testGetWorkflowInstanceNextTransitionsPage_addTransitions(
+				workflowInstanceId, randomTransitions());
+
+		Page<Transitions> page1 =
+			transitionsResource.getWorkflowInstanceNextTransitionsPage(
+				workflowInstanceId, Pagination.of(1, 2));
+
+		List<Transitions> transitionses1 = (List<Transitions>)page1.getItems();
+
+		Assert.assertEquals(
+			transitionses1.toString(), 2, transitionses1.size());
+
+		Page<Transitions> page2 =
+			transitionsResource.getWorkflowInstanceNextTransitionsPage(
+				workflowInstanceId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Transitions> transitionses2 = (List<Transitions>)page2.getItems();
+
+		Assert.assertEquals(
+			transitionses2.toString(), 1, transitionses2.size());
+
+		Page<Transitions> page3 =
+			transitionsResource.getWorkflowInstanceNextTransitionsPage(
+				workflowInstanceId, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(transitions1, transitions2, transitions3),
+			(List<Transitions>)page3.getItems());
+	}
+
+	protected Transitions
+			testGetWorkflowInstanceNextTransitionsPage_addTransitions(
+				Long workflowInstanceId, Transitions transitions)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetWorkflowInstanceNextTransitionsPage_getWorkflowInstanceId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetWorkflowInstanceNextTransitionsPage_getIrrelevantWorkflowInstanceId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetWorkflowTaskNextTransitionsPage() throws Exception {
 		Page<Transitions> page =
 			transitionsResource.getWorkflowTaskNextTransitionsPage(

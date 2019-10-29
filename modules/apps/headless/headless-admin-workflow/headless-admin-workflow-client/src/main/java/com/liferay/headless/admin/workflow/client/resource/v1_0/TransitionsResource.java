@@ -38,6 +38,15 @@ public interface TransitionsResource {
 		return new Builder();
 	}
 
+	public Page<Transitions> getWorkflowInstanceNextTransitionsPage(
+			Long workflowInstanceId, Pagination pagination)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getWorkflowInstanceNextTransitionsPageHttpResponse(
+				Long workflowInstanceId, Pagination pagination)
+		throws Exception;
+
 	public Page<Transitions> getWorkflowTaskNextTransitionsPage(
 			Long workflowTaskId, Pagination pagination)
 		throws Exception;
@@ -101,6 +110,70 @@ public interface TransitionsResource {
 	}
 
 	public static class TransitionsResourceImpl implements TransitionsResource {
+
+		public Page<Transitions> getWorkflowInstanceNextTransitionsPage(
+				Long workflowInstanceId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getWorkflowInstanceNextTransitionsPageHttpResponse(
+					workflowInstanceId, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, TransitionsSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getWorkflowInstanceNextTransitionsPageHttpResponse(
+					Long workflowInstanceId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/next-transitions",
+				workflowInstanceId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
 
 		public Page<Transitions> getWorkflowTaskNextTransitionsPage(
 				Long workflowTaskId, Pagination pagination)

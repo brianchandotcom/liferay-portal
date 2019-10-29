@@ -24,6 +24,7 @@ import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeClosable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
@@ -259,6 +260,60 @@ public class LayoutCTTest {
 		Assert.assertNotNull(layout2);
 
 		Assert.assertEquals(friendlyURL, layout2.getFriendlyURL());
+	}
+
+	@Test
+	public void testPublishCTEntriesValues() throws Exception {
+		Layout deletedLayout = LayoutTestUtil.addLayout(_group);
+		Layout modifiedLayout = LayoutTestUtil.addLayout(_group);
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			LayoutTestUtil.addLayout(_group);
+
+			_layoutLocalService.deleteLayout(deletedLayout);
+
+			modifiedLayout.setFriendlyURL("/testModifyLayout");
+
+			modifiedLayout = _layoutLocalService.updateLayout(modifiedLayout);
+		}
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				StringBundler.concat(
+					"select changeType from CTEntry inner join Layout on ",
+					"CTEntry.modelClassNameId = ",
+					_classNameLocalService.getClassNameId(Layout.class),
+					" and CTEntry.modelClassPK = Layout.plid and ",
+					"CTEntry.modelMvccVersion = Layout.mvccVersion where ",
+					"CTEntry.ctCollectionId = ",
+					_ctCollection.getCtCollectionId(),
+					" order by ctEntryId ASC"));
+			ResultSet rs = ps.executeQuery()) {
+
+			Assert.assertTrue(rs.next());
+
+			Assert.assertEquals(
+				CTConstants.CT_CHANGE_TYPE_ADDITION, rs.getLong("changeType"));
+
+			Assert.assertTrue(rs.next());
+
+			Assert.assertEquals(
+				CTConstants.CT_CHANGE_TYPE_DELETION, rs.getLong("changeType"));
+
+			Assert.assertTrue(rs.next());
+
+			Assert.assertEquals(
+				CTConstants.CT_CHANGE_TYPE_MODIFICATION,
+				rs.getLong("changeType"));
+
+			Assert.assertFalse(rs.next());
+		}
 	}
 
 	@ExpectedLogs(

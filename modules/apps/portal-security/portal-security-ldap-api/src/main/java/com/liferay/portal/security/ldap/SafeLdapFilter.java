@@ -22,11 +22,9 @@ import com.liferay.portal.security.ldap.validator.LDAPFilterException;
 import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.TreeMap;
 
 /**
  * @author Tomas Polesovsky
@@ -35,14 +33,13 @@ public class SafeLdapFilter {
 
 	public static SafeLdapFilter approx(String key, Object value) {
 		return new SafeLdapFilter(
-			_concat(rfc2254Escape(key), "~=", _ARGUMENT_PLACEHOLDER),
+			_concat(rfc2254Escape(key), "~=", ARGUMENT_PLACEHOLDER),
 			Collections.singletonList(value));
 	}
 
 	public static SafeLdapFilter eq(String key, Object value) {
 		return new SafeLdapFilter(
-			_concat(
-				rfc2254Escape(key), StringPool.EQUAL, _ARGUMENT_PLACEHOLDER),
+			_concat(rfc2254Escape(key), StringPool.EQUAL, ARGUMENT_PLACEHOLDER),
 			Collections.singletonList(value));
 	}
 
@@ -66,7 +63,7 @@ public class SafeLdapFilter {
 		return new SafeLdapFilter(
 			_concat(
 				rfc2254Escape(key), StringPool.GREATER_THAN_OR_EQUAL,
-				_ARGUMENT_PLACEHOLDER),
+				ARGUMENT_PLACEHOLDER),
 			Collections.singletonList(value));
 	}
 
@@ -74,7 +71,7 @@ public class SafeLdapFilter {
 		return new SafeLdapFilter(
 			_concat(
 				rfc2254Escape(key), StringPool.LESS_THAN_OR_EQUAL,
-				_ARGUMENT_PLACEHOLDER),
+				ARGUMENT_PLACEHOLDER),
 			Collections.singletonList(value));
 	}
 
@@ -139,7 +136,7 @@ public class SafeLdapFilter {
 		for (int i = 0; i < _filterSB.index(); i++) {
 			String string = _filterSB.stringAt(i);
 
-			if (Objects.equals(string, _ARGUMENT_PLACEHOLDER)) {
+			if (Objects.equals(string, ARGUMENT_PLACEHOLDER)) {
 				sb.append(StringPool.OPEN_CURLY_BRACE);
 				sb.append(placeholderPos);
 				sb.append(StringPool.CLOSE_CURLY_BRACE);
@@ -209,6 +206,8 @@ public class SafeLdapFilter {
 		return _filterSB;
 	}
 
+	protected static final String ARGUMENT_PLACEHOLDER = "(PLACEHOLDER)";
+
 	private static StringBundler _concat(String key, String op, String value) {
 		StringBundler sb = new StringBundler(5);
 
@@ -221,8 +220,6 @@ public class SafeLdapFilter {
 		return sb;
 	}
 
-	protected static final String _ARGUMENT_PLACEHOLDER = "(PLACEHOLDER)";
-
 	private static final String[] _RFC2254_ESCAPE_KEYS = {
 		StringPool.BACK_SLASH, StringPool.CLOSE_PARENTHESIS,
 		StringPool.NULL_CHAR, StringPool.OPEN_PARENTHESIS, StringPool.STAR,
@@ -231,8 +228,7 @@ public class SafeLdapFilter {
 	};
 
 	private static final String[] _RFC2254_ESCAPE_VALUES = {
-		"\\5c", "\\29", "\\00", "\\28", "\\2a", "\\3d", "\\3e", "\\3c",
-		"\\7e"
+		"\\5c", "\\29", "\\00", "\\28", "\\2a", "\\3d", "\\3e", "\\3c", "\\7e"
 	};
 
 	private final List<Object> _arguments;

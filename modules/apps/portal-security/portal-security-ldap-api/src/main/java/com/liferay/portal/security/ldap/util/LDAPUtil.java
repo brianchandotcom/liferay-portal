@@ -222,9 +222,11 @@ public class LDAPUtil {
 
 		try {
 			return new SafeLdapFilterTemplate(
-				filter, new String[] {
+				filter,
+				new String[] {
 					"@company_id@", "@email_address@", "@screen_name@",
-					"@user_id@"},
+					"@user_id@"
+				},
 				ldapFilterValidator);
 		}
 		catch (LDAPFilterException ldapfe) {

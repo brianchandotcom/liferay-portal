@@ -731,17 +731,17 @@ public class MediaQueryProviderImplTest {
 			String url)
 		throws Exception {
 
+		AMAttribute amAttribute = AMAttribute.getConfigurationUuidAMAttribute();
+
 		Map<String, String> properties = HashMapBuilder.put(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT.getName(),
 			String.valueOf(height)
 		).put(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH.getName(),
 			String.valueOf(width)
+		).put(
+			amAttribute.getName(), amImageConfigurationEntryUuid
 		).build();
-
-		AMAttribute amAttribute = AMAttribute.getConfigurationUuidAMAttribute();
-
-		properties.put(amAttribute.getName(), amImageConfigurationEntryUuid);
 
 		return new AMImage(
 			() -> null, AMImageAttributeMapping.fromProperties(properties),

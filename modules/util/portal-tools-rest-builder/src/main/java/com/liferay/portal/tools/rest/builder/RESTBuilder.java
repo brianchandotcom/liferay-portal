@@ -129,16 +129,17 @@ public class RESTBuilder {
 	}
 
 	public void build() throws Exception {
-		Map<String, Object> context = HashMapBuilder.<String, Object>put(
-			"configYAML", _configYAML
-		).build();
-
 		FreeMarkerTool freeMarkerTool = FreeMarkerTool.getInstance();
 
-		context.put("freeMarkerTool", freeMarkerTool);
-
-		context.put("stringUtil", StringUtil_IW.getInstance());
-		context.put("validator", Validator_IW.getInstance());
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
+			"configYAML", _configYAML
+		).put(
+			"freeMarkerTool", freeMarkerTool
+		).put(
+			"stringUtil", StringUtil_IW.getInstance()
+		).put(
+			"validator", Validator_IW.getInstance()
+		).build();
 
 		if (_configYAML.isGenerateREST()) {
 			_createApplicationFile(context);

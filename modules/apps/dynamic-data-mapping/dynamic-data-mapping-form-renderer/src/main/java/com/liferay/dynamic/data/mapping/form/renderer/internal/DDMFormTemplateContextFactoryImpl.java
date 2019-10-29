@@ -110,16 +110,9 @@ public class DDMFormTemplateContextFactoryImpl
 			containerId = StringUtil.randomId();
 		}
 
-		Map<String, Object> templateContext =
-			HashMapBuilder.<String, Object>put(
-				"containerId", containerId
-			).build();
-
 		String currentPage = ParamUtil.getString(
 			ddmFormRenderingContext.getHttpServletRequest(), "currentPage",
 			"1");
-
-		templateContext.put("currentPage", currentPage);
 
 		setDDMFormFieldsEvaluableProperty(ddmForm);
 
@@ -129,24 +122,30 @@ public class DDMFormTemplateContextFactoryImpl
 			locale = LocaleThreadLocal.getSiteDefaultLocale();
 		}
 
-		templateContext.put(
-			"editingLanguageId", LanguageUtil.getLanguageId(locale));
-
-		templateContext.put(
-			"evaluatorURL", getDDMFormContextProviderServletURL());
-
-		templateContext.put("groupId", ddmFormRenderingContext.getGroupId());
-
 		List<Object> pages = getPages(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 
-		templateContext.put("pages", pages);
-
-		templateContext.put(
-			"paginationMode", ddmFormLayout.getPaginationMode());
-		templateContext.put(
-			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
-		templateContext.put("readOnly", ddmFormRenderingContext.isReadOnly());
+		Map<String, Object> templateContext =
+			HashMapBuilder.<String, Object>put(
+				"containerId", containerId
+			).put(
+				"currentPage", currentPage
+			).put(
+				"editingLanguageId", LanguageUtil.getLanguageId(locale)
+			).put(
+				"evaluatorURL", getDDMFormContextProviderServletURL()
+			).put(
+				"groupId", ddmFormRenderingContext.getGroupId()
+			).put(
+				"pages", pages
+			).put(
+				"paginationMode", ddmFormLayout.getPaginationMode()
+			).put(
+				"portletNamespace",
+				ddmFormRenderingContext.getPortletNamespace()
+			).put(
+				"readOnly", ddmFormRenderingContext.isReadOnly()
+			).build();
 
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 

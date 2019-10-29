@@ -157,14 +157,6 @@ public class JournalManagementToolbarDisplayContext
 		addArticleURL.setParameter(
 			"folderId", String.valueOf(_journalDisplayContext.getFolderId()));
 
-		Map<String, Object> componentContext =
-			HashMapBuilder.<String, Object>put(
-				"addArticleURL", addArticleURL.toString()
-			).put(
-				"folderId",
-				String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)
-			).build();
-
 		PortletURL moveEntriesURL = liferayPortletResponse.createRenderURL();
 
 		moveEntriesURL.setParameter("mvcPath", "/move_entries.jsp");
@@ -180,8 +172,6 @@ public class JournalManagementToolbarDisplayContext
 		moveEntriesURL.setParameter(
 			"referringPortletResource", referringPortletResource);
 
-		componentContext.put("moveEntriesURL", moveEntriesURL.toString());
-
 		PortletURL openViewMoreStructuresURL =
 			liferayPortletResponse.createRenderURL();
 
@@ -194,19 +184,10 @@ public class JournalManagementToolbarDisplayContext
 			liferayPortletResponse.getNamespace() + "selectAddMenuItem");
 		openViewMoreStructuresURL.setWindowState(LiferayWindowState.POP_UP);
 
-		componentContext.put(
-			"openViewMoreStructuresURL", openViewMoreStructuresURL.toString());
-
 		PortletURL selectEntityURL = liferayPortletResponse.createRenderURL();
 
 		selectEntityURL.setParameter("mvcPath", "/select_ddm_structure.jsp");
 		selectEntityURL.setWindowState(LiferayWindowState.POP_UP);
-
-		componentContext.put("selectEntityURL", selectEntityURL.toString());
-
-		componentContext.put(
-			"trashEnabled",
-			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId()));
 
 		PortletURL viewDDMStructureArticlesURL =
 			liferayPortletResponse.createRenderURL();
@@ -216,9 +197,26 @@ public class JournalManagementToolbarDisplayContext
 			"folderId",
 			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 
-		componentContext.put(
-			"viewDDMStructureArticlesURL",
-			viewDDMStructureArticlesURL.toString());
+		Map<String, Object> componentContext =
+			HashMapBuilder.<String, Object>put(
+				"addArticleURL", addArticleURL.toString()
+			).put(
+				"folderId",
+				String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+			).put(
+				"moveEntriesURL", moveEntriesURL.toString()
+			).put(
+				"openViewMoreStructuresURL",
+				openViewMoreStructuresURL.toString()
+			).put(
+				"selectEntityURL", selectEntityURL.toString()
+			).put(
+				"trashEnabled",
+				_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())
+			).put(
+				"viewDDMStructureArticlesURL",
+				viewDDMStructureArticlesURL.toString()
+			).build();
 
 		return componentContext;
 	}

@@ -429,17 +429,6 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 	@Test
 	public void testLoadPaths() throws Exception {
-		Path inputPath1 = Paths.get("inputPaths1");
-		Path mappedInputPath1 = Paths.get("mappedInputPath1");
-		Path inputPath2 = Paths.get("inputPaths2");
-		Path mappedInputPath2 = Paths.get("mappedInputPath2");
-
-		final Map<Path, Path> mergedPaths = HashMapBuilder.<Path, Path>put(
-			inputPath1, mappedInputPath1
-		).put(
-			inputPath2, mappedInputPath2
-		).build();
-
 		Path bootstrapPath1 = Paths.get("bootstrapPath1");
 		Path mappedBootstrapPath1 = Paths.get("mappedBootstrapPath1");
 		Path bootstrapPath2 = Paths.get("bootstrapPath2");
@@ -447,9 +436,10 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		Path bootstrapPath3 = Paths.get("bootstrapPath3");
 		Path mappedBootstrapPath3 = Paths.get("mappedBootstrapPath3");
 
-		mergedPaths.put(bootstrapPath1, mappedBootstrapPath1);
-		mergedPaths.put(bootstrapPath2, mappedBootstrapPath2);
-		mergedPaths.put(bootstrapPath3, mappedBootstrapPath3);
+		Path inputPath1 = Paths.get("inputPaths1");
+		Path mappedInputPath1 = Paths.get("mappedInputPath1");
+		Path inputPath2 = Paths.get("inputPaths2");
+		Path mappedInputPath2 = Paths.get("mappedInputPath2");
 
 		Path runtimePath1 = Paths.get("runtimePath1");
 		Path mappedRuntimePath1 = Paths.get("mappedRuntimePath1");
@@ -458,9 +448,23 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		Path runtimePath3 = Paths.get("runtimePath3");
 		Path mappedRuntimePath3 = Paths.get("mappedRuntimePath3");
 
-		mergedPaths.put(runtimePath1, mappedRuntimePath1);
-		mergedPaths.put(runtimePath2, mappedRuntimePath2);
-		mergedPaths.put(runtimePath3, mappedRuntimePath3);
+		final Map<Path, Path> mergedPaths = HashMapBuilder.<Path, Path>put(
+			bootstrapPath1, mappedBootstrapPath1
+		).put(
+			bootstrapPath2, mappedBootstrapPath2
+		).put(
+			bootstrapPath3, mappedBootstrapPath3
+		).put(
+			inputPath1, mappedInputPath1
+		).put(
+			inputPath2, mappedInputPath2
+		).put(
+			runtimePath1, mappedRuntimePath1
+		).put(
+			runtimePath2, mappedRuntimePath2
+		).put(
+			runtimePath3, mappedRuntimePath3
+		).build();
 
 		NettyFabricWorkerExecutionChannelHandler
 			nettyFabricWorkerExecutionChannelHandler =

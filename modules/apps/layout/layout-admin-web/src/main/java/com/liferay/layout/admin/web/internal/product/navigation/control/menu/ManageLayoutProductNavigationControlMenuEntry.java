@@ -95,11 +95,6 @@ public class ManageLayoutProductNavigationControlMenuEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
 
-		Map<String, String> values = HashMapBuilder.put(
-			"configurePage",
-			_html.escape(_language.get(resourceBundle, "configure-page"))
-		).build();
-
 		PortletURL editPageURL = _portal.getControlPanelPortletURL(
 			httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
@@ -117,7 +112,12 @@ public class ManageLayoutProductNavigationControlMenuEntry
 		editPageURL.setParameter(
 			"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
-		values.put("editPageURL", editPageURL.toString());
+		Map<String, String> values = HashMapBuilder.put(
+			"configurePage",
+			_html.escape(_language.get(resourceBundle, "configure-page"))
+		).put(
+			"editPageURL", editPageURL.toString()
+		).build();
 
 		try {
 			IconTag iconTag = new IconTag();

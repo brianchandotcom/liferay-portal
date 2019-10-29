@@ -918,18 +918,18 @@ public class PDFProcessorImpl
 
 			int scaledHeight = (int)Math.round(widthFactor * height);
 
-			Map<String, Integer> scaledDimensions =
-				HashMapBuilder.<String, Integer>put(
-					"height", scaledHeight
-				).build();
-
 			double heightFactor =
 				(double)PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT /
 					height;
 
 			int scaledWidth = (int)Math.round(heightFactor * width);
 
-			scaledDimensions.put("width", scaledWidth);
+			Map<String, Integer> scaledDimensions =
+				HashMapBuilder.<String, Integer>put(
+					"height", scaledHeight
+				).put(
+					"width", scaledWidth
+				).build();
 
 			return scaledDimensions;
 		}

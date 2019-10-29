@@ -103,13 +103,6 @@ public class DDMFormBuilderContextFactoryHelper {
 	}
 
 	protected Map<String, Object> createEmptyStateContext() {
-		Map<String, Object> emptyFormContext =
-			HashMapBuilder.<String, Object>put(
-				"pages", new ArrayList<>()
-			).put(
-				"rules", new ArrayList<>()
-			).build();
-
 		Map<String, Object> successPage = HashMapBuilder.<String, Object>put(
 			"body", StringPool.BLANK
 		).put(
@@ -118,7 +111,14 @@ public class DDMFormBuilderContextFactoryHelper {
 			"title", StringPool.BLANK
 		).build();
 
-		emptyFormContext.put("successPage", successPage);
+		Map<String, Object> emptyFormContext =
+			HashMapBuilder.<String, Object>put(
+				"pages", new ArrayList<>()
+			).put(
+				"rules", new ArrayList<>()
+			).put(
+				"successPage", successPage
+			).build();
 
 		return emptyFormContext;
 	}
@@ -354,14 +354,6 @@ public class DDMFormBuilderContextFactoryHelper {
 		Map<String, Object> formContext2 = createFormContext(
 			ddmForm, ddmFormLayout);
 
-		Map<String, Object> formContext1 = HashMapBuilder.<String, Object>put(
-			"pages", formContext2.get("pages")
-		).put(
-			"paginationMode", ddmFormLayout.getPaginationMode()
-		).put(
-			"rules", new ArrayList<>()
-		).build();
-
 		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
 			ddmForm.getDDMFormSuccessPageSettings();
 
@@ -373,7 +365,15 @@ public class DDMFormBuilderContextFactoryHelper {
 			"title", toMap(ddmFormSuccessPageSettings.getTitle())
 		).build();
 
-		formContext1.put("successPageSettings", successPage);
+		Map<String, Object> formContext1 = HashMapBuilder.<String, Object>put(
+			"pages", formContext2.get("pages")
+		).put(
+			"paginationMode", ddmFormLayout.getPaginationMode()
+		).put(
+			"rules", new ArrayList<>()
+		).put(
+			"successPageSettings", successPage
+		).build();
 
 		return formContext1;
 	}

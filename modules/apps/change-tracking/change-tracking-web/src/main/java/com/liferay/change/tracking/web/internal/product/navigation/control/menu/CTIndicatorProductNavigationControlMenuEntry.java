@@ -116,10 +116,6 @@ public class CTIndicatorProductNavigationControlMenuEntry
 			}
 		}
 
-		Map<String, String> values = HashMapBuilder.put(
-			"ctCollectionName", ctCollectionName
-		).build();
-
 		PortletURL changeTrackingURL = _portal.getControlPanelPortletURL(
 			httpServletRequest, themeDisplay.getScopeGroup(),
 			CTPortletKeys.CHANGE_LISTS, 0, 0, PortletRequest.RENDER_PHASE);
@@ -131,7 +127,11 @@ public class CTIndicatorProductNavigationControlMenuEntry
 			ReflectionUtil.throwException(wse);
 		}
 
-		values.put("changeTrackingURL", changeTrackingURL.toString());
+		Map<String, String> values = HashMapBuilder.put(
+			"ctCollectionName", ctCollectionName
+		).put(
+			"changeTrackingURL", changeTrackingURL.toString()
+		).build();
 
 		try {
 			IconTag iconTag = new IconTag();

@@ -1373,67 +1373,56 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 		User user = getUser();
 
+		int batchFileMaxSize = PrefsPropsUtil.getInteger(
+			user.getCompanyId(),
+			SyncServiceConfigurationKeys.SYNC_CLIENT_BATCH_FILE_MAX_SIZE,
+			SyncServiceConfigurationValues.SYNC_CLIENT_BATCH_FILE_MAX_SIZE);
+		boolean forceSecurityMode = PrefsPropsUtil.getBoolean(
+			user.getCompanyId(),
+			SyncServiceConfigurationKeys.SYNC_CLIENT_FORCE_SECURITY_MODE,
+			SyncServiceConfigurationValues.SYNC_CLIENT_FORCE_SECURITY_MODE);
+		int maxConnections = PrefsPropsUtil.getInteger(
+			user.getCompanyId(),
+			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS,
+			SyncServiceConfigurationValues.SYNC_CLIENT_MAX_CONNECTIONS);
+		int maxDownloadRate = PrefsPropsUtil.getInteger(
+			user.getCompanyId(),
+			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_DOWNLOAD_RATE,
+			SyncServiceConfigurationValues.SYNC_CLIENT_MAX_DOWNLOAD_RATE);
+		int maxUploadRate = PrefsPropsUtil.getInteger(
+			user.getCompanyId(),
+			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_UPLOAD_RATE,
+			SyncServiceConfigurationValues.SYNC_CLIENT_MAX_UPLOAD_RATE);
+		int pollInterval = PrefsPropsUtil.getInteger(
+			user.getCompanyId(),
+			SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
+			SyncServiceConfigurationValues.SYNC_CLIENT_POLL_INTERVAL);
+
 		Map<String, String> portletPreferencesMap = HashMapBuilder.put(
 			SyncServiceConfigurationKeys.
 				SYNC_CLIENT_AUTHENTICATION_RETRY_INTERVAL,
 			String.valueOf(
 				SyncServiceConfigurationValues.
 					SYNC_CLIENT_AUTHENTICATION_RETRY_INTERVAL)
+		).put(
+			SyncServiceConfigurationKeys.SYNC_CLIENT_BATCH_FILE_MAX_SIZE,
+			String.valueOf(batchFileMaxSize)
+		).put(
+			SyncServiceConfigurationKeys.SYNC_CLIENT_FORCE_SECURITY_MODE,
+			String.valueOf(forceSecurityMode)
+		).put(
+			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS,
+			String.valueOf(maxConnections)
+		).put(
+			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_DOWNLOAD_RATE,
+			String.valueOf(maxDownloadRate)
+		).put(
+			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_UPLOAD_RATE,
+			String.valueOf(maxUploadRate)
+		).put(
+			SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
+			String.valueOf(pollInterval)
 		).build();
-
-		int batchFileMaxSize = PrefsPropsUtil.getInteger(
-			user.getCompanyId(),
-			SyncServiceConfigurationKeys.SYNC_CLIENT_BATCH_FILE_MAX_SIZE,
-			SyncServiceConfigurationValues.SYNC_CLIENT_BATCH_FILE_MAX_SIZE);
-
-		portletPreferencesMap.put(
-			SyncServiceConfigurationKeys.SYNC_CLIENT_BATCH_FILE_MAX_SIZE,
-			String.valueOf(batchFileMaxSize));
-
-		boolean forceSecurityMode = PrefsPropsUtil.getBoolean(
-			user.getCompanyId(),
-			SyncServiceConfigurationKeys.SYNC_CLIENT_FORCE_SECURITY_MODE,
-			SyncServiceConfigurationValues.SYNC_CLIENT_FORCE_SECURITY_MODE);
-
-		portletPreferencesMap.put(
-			SyncServiceConfigurationKeys.SYNC_CLIENT_FORCE_SECURITY_MODE,
-			String.valueOf(forceSecurityMode));
-
-		int maxConnections = PrefsPropsUtil.getInteger(
-			user.getCompanyId(),
-			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS,
-			SyncServiceConfigurationValues.SYNC_CLIENT_MAX_CONNECTIONS);
-
-		portletPreferencesMap.put(
-			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS,
-			String.valueOf(maxConnections));
-
-		int maxDownloadRate = PrefsPropsUtil.getInteger(
-			user.getCompanyId(),
-			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_DOWNLOAD_RATE,
-			SyncServiceConfigurationValues.SYNC_CLIENT_MAX_DOWNLOAD_RATE);
-
-		portletPreferencesMap.put(
-			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_DOWNLOAD_RATE,
-			String.valueOf(maxDownloadRate));
-
-		int maxUploadRate = PrefsPropsUtil.getInteger(
-			user.getCompanyId(),
-			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_UPLOAD_RATE,
-			SyncServiceConfigurationValues.SYNC_CLIENT_MAX_UPLOAD_RATE);
-
-		portletPreferencesMap.put(
-			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_UPLOAD_RATE,
-			String.valueOf(maxUploadRate));
-
-		int pollInterval = PrefsPropsUtil.getInteger(
-			user.getCompanyId(),
-			SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
-			SyncServiceConfigurationValues.SYNC_CLIENT_POLL_INTERVAL);
-
-		portletPreferencesMap.put(
-			SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
-			String.valueOf(pollInterval));
 
 		return portletPreferencesMap;
 	}

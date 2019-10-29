@@ -75,6 +75,9 @@ public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 		Class<? extends BulkSelectionAction> bulkSelectionActionClass =
 			bulkSelectionAction.getClass();
 
+		Class<? extends BulkSelectionFactory> bulkSelectionFactoryClass =
+			bulkSelection.getBulkSelectionFactoryClass();
+
 		Map<String, Serializable> taskContextMap =
 			HashMapBuilder.<String, Serializable>put(
 				BulkSelectionBackgroundTaskConstants.
@@ -84,21 +87,17 @@ public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 				BulkSelectionBackgroundTaskConstants.
 					BULK_SELECTION_ACTION_INPUT_MAP,
 				new HashMap<>(inputMap)
+			).put(
+				BulkSelectionBackgroundTaskConstants.
+					BULK_SELECTION_FACTORY_CLASS_NAME,
+				bulkSelectionFactoryClass.getName()
+			).put(
+				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
+			).put(
+				BulkSelectionBackgroundTaskConstants.
+					BULK_SELECTION_PARAMETER_MAP,
+				new HashMap<>(bulkSelection.getParameterMap())
 			).build();
-
-		Class<? extends BulkSelectionFactory> bulkSelectionFactoryClass =
-			bulkSelection.getBulkSelectionFactoryClass();
-
-		taskContextMap.put(
-			BulkSelectionBackgroundTaskConstants.
-				BULK_SELECTION_FACTORY_CLASS_NAME,
-			bulkSelectionFactoryClass.getName());
-
-		taskContextMap.put(
-			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
-		taskContextMap.put(
-			BulkSelectionBackgroundTaskConstants.BULK_SELECTION_PARAMETER_MAP,
-			new HashMap<>(bulkSelection.getParameterMap()));
 
 		_backgroundTaskLocalService.addBackgroundTask(
 			user.getUserId(), CompanyConstants.SYSTEM,

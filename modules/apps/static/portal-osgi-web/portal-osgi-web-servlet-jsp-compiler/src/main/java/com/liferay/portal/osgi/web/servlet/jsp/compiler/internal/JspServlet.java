@@ -191,6 +191,13 @@ public class JspServlet extends HttpServlet {
 		_jspBundleClassloader = new JspBundleClassloader(
 			_allParticipatingBundles);
 
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_WORK_DIR);
+		sb.append(_bundle.getSymbolicName());
+		sb.append(StringPool.DASH);
+		sb.append(_bundle.getVersion());
+
 		final Map<String, String> defaults = HashMapBuilder.put(
 			"compilerClassName",
 			"com.liferay.portal.osgi.web.servlet.jsp.compiler.internal." +
@@ -213,16 +220,9 @@ public class JspServlet extends HttpServlet {
 			"logVerbosityLevel", "NONE"
 		).put(
 			"saveBytecode", "true"
+		).put(
+			_INIT_PARAMETER_NAME_SCRATCH_DIR, sb.toString()
 		).build();
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_WORK_DIR);
-		sb.append(_bundle.getSymbolicName());
-		sb.append(StringPool.DASH);
-		sb.append(_bundle.getVersion());
-
-		defaults.put(_INIT_PARAMETER_NAME_SCRATCH_DIR, sb.toString());
 
 		String symbolicName = _bundle.getSymbolicName();
 

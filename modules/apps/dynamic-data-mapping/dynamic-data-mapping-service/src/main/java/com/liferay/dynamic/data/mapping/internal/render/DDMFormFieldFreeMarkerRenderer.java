@@ -521,17 +521,17 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 				namespace, parentDDMFormField, locale);
 		}
 
-		Map<String, Object> freeMarkerContext =
-			HashMapBuilder.<String, Object>put(
-				"ddmPortletId", DDMPortletKeys.DYNAMIC_DATA_MAPPING
-			).build();
-
 		Editor editor = DDMFormFieldFreeMarkerRendererHelper.getEditor(
 			httpServletRequest);
 
-		freeMarkerContext.put("editorName", editor.getName());
-
-		freeMarkerContext.put("fieldStructure", fieldContext);
+		Map<String, Object> freeMarkerContext =
+			HashMapBuilder.<String, Object>put(
+				"ddmPortletId", DDMPortletKeys.DYNAMIC_DATA_MAPPING
+			).put(
+				"editorName", editor.getName()
+			).put(
+				"fieldStructure", fieldContext
+			).build();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

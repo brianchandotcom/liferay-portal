@@ -268,19 +268,18 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 	public void testCreateWithParameterForOneRoleAndClassName()
 		throws Exception {
 
+		String className = RandomTestUtil.randomString();
+
 		Map<String, String[]> parameterMap =
 			HashMapBuilder.<String, String[]>put(
 				ModelPermissionsFactory.MODEL_PERMISSIONS_PREFIX +
 					RoleConstants.GUEST,
 				new String[] {ActionKeys.VIEW}
+			).put(
+				ModelPermissionsFactory.MODEL_PERMISSIONS_PREFIX + className +
+					RoleConstants.GUEST,
+				new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}
 			).build();
-
-		String className = RandomTestUtil.randomString();
-
-		parameterMap.put(
-			ModelPermissionsFactory.MODEL_PERMISSIONS_PREFIX + className +
-				RoleConstants.GUEST,
-			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -341,6 +340,8 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 	public void testCreateWithParameterForTwoRolesAndClassName()
 		throws Exception {
 
+		String className = RandomTestUtil.randomString();
+
 		Map<String, String[]> parameterMap =
 			HashMapBuilder.<String, String[]>put(
 				ModelPermissionsFactory.MODEL_PERMISSIONS_PREFIX +
@@ -350,18 +351,15 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 				ModelPermissionsFactory.MODEL_PERMISSIONS_PREFIX +
 					RoleConstants.SITE_MEMBER,
 				new String[] {ActionKeys.VIEW}
+			).put(
+				ModelPermissionsFactory.MODEL_PERMISSIONS_PREFIX + className +
+					RoleConstants.ORGANIZATION_USER,
+				new String[] {ActionKeys.DELETE, ActionKeys.VIEW}
+			).put(
+				ModelPermissionsFactory.MODEL_PERMISSIONS_PREFIX + className +
+					RoleConstants.POWER_USER,
+				new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}
 			).build();
-
-		String className = RandomTestUtil.randomString();
-
-		parameterMap.put(
-			ModelPermissionsFactory.MODEL_PERMISSIONS_PREFIX + className +
-				RoleConstants.ORGANIZATION_USER,
-			new String[] {ActionKeys.DELETE, ActionKeys.VIEW});
-		parameterMap.put(
-			ModelPermissionsFactory.MODEL_PERMISSIONS_PREFIX + className +
-				RoleConstants.POWER_USER,
-			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

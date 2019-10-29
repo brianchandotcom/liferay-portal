@@ -36,69 +36,65 @@ public class CMISWebServicesRepository extends CMISRepositoryHandler {
 
 	@Override
 	public Session getSession() throws PortalException {
+		Locale locale = LocaleUtil.getSiteDefault();
+
 		Map<String, String> parameters = HashMapBuilder.put(
 			SessionParameter.BINDING_TYPE, BindingType.WEBSERVICES.value()
 		).put(
 			SessionParameter.COMPRESSION, Boolean.TRUE.toString()
-		).build();
-
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		parameters.put(
-			SessionParameter.LOCALE_ISO639_LANGUAGE, locale.getLanguage());
-		parameters.put(
-			SessionParameter.LOCALE_ISO3166_COUNTRY, locale.getCountry());
-
-		parameters.put(
-			SessionParameter.PASSWORD, PrincipalThreadLocal.getPassword());
-
-		parameters.put(SessionParameter.USER, getLogin());
-
-		parameters.put(
+		).put(
+			SessionParameter.LOCALE_ISO639_LANGUAGE, locale.getLanguage()
+		).put(
+			SessionParameter.LOCALE_ISO3166_COUNTRY, locale.getCountry()
+		).put(
+			SessionParameter.PASSWORD, PrincipalThreadLocal.getPassword()
+		).put(
+			SessionParameter.USER, getLogin()
+		).put(
 			SessionParameter.WEBSERVICES_ACL_SERVICE,
 			getTypeSettingsValue(
-				CMISRepositoryConstants.
-					CMIS_WEBSERVICES_ACL_SERVICE_PARAMETER));
-		parameters.put(
+				CMISRepositoryConstants.CMIS_WEBSERVICES_ACL_SERVICE_PARAMETER)
+		).put(
 			SessionParameter.WEBSERVICES_DISCOVERY_SERVICE,
 			getTypeSettingsValue(
 				CMISRepositoryConstants.
-					CMIS_WEBSERVICES_DISCOVERY_SERVICE_PARAMETER));
-		parameters.put(
+					CMIS_WEBSERVICES_DISCOVERY_SERVICE_PARAMETER)
+		).put(
 			SessionParameter.WEBSERVICES_MULTIFILING_SERVICE,
 			getTypeSettingsValue(
 				CMISRepositoryConstants.
-					CMIS_WEBSERVICES_MULTIFILING_SERVICE_PARAMETER));
-		parameters.put(
+					CMIS_WEBSERVICES_MULTIFILING_SERVICE_PARAMETER)
+		).put(
 			SessionParameter.WEBSERVICES_NAVIGATION_SERVICE,
 			getTypeSettingsValue(
 				CMISRepositoryConstants.
-					CMIS_WEBSERVICES_NAVIGATION_SERVICE_PARAMETER));
-		parameters.put(
+					CMIS_WEBSERVICES_NAVIGATION_SERVICE_PARAMETER)
+		).put(
 			SessionParameter.WEBSERVICES_OBJECT_SERVICE,
 			getTypeSettingsValue(
 				CMISRepositoryConstants.
-					CMIS_WEBSERVICES_OBJECT_SERVICE_PARAMETER));
-		parameters.put(
+					CMIS_WEBSERVICES_OBJECT_SERVICE_PARAMETER)
+		).put(
 			SessionParameter.WEBSERVICES_POLICY_SERVICE,
 			getTypeSettingsValue(
 				CMISRepositoryConstants.
-					CMIS_WEBSERVICES_POLICY_SERVICE_PARAMETER));
-		parameters.put(
+					CMIS_WEBSERVICES_POLICY_SERVICE_PARAMETER)
+		).put(
 			SessionParameter.WEBSERVICES_RELATIONSHIP_SERVICE,
 			getTypeSettingsValue(
 				CMISRepositoryConstants.
-					CMIS_WEBSERVICES_RELATIONSHIP_SERVICE_PARAMETER));
-		parameters.put(
+					CMIS_WEBSERVICES_RELATIONSHIP_SERVICE_PARAMETER)
+		).put(
 			SessionParameter.WEBSERVICES_REPOSITORY_SERVICE,
 			getTypeSettingsValue(
 				CMISRepositoryConstants.
-					CMIS_WEBSERVICES_REPOSITORY_SERVICE_PARAMETER));
-		parameters.put(
+					CMIS_WEBSERVICES_REPOSITORY_SERVICE_PARAMETER)
+		).put(
 			SessionParameter.WEBSERVICES_VERSIONING_SERVICE,
 			getTypeSettingsValue(
 				CMISRepositoryConstants.
-					CMIS_WEBSERVICES_VERSIONING_SERVICE_PARAMETER));
+					CMIS_WEBSERVICES_VERSIONING_SERVICE_PARAMETER)
+		).build();
 
 		CMISRepositoryUtil.checkRepository(
 			getRepositoryId(), parameters, getTypeSettingsProperties(),

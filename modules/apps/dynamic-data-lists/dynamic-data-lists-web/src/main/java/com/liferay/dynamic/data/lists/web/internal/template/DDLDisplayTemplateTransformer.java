@@ -56,6 +56,13 @@ public class DDLDisplayTemplateTransformer {
 	public String transform() throws Exception {
 		Transformer transformer = TransformerHolder.getTransformer();
 
+		String viewMode = Constants.VIEW;
+
+		if (_renderRequest != null) {
+			viewMode = ParamUtil.getString(
+				_renderRequest, "viewMode", Constants.VIEW);
+		}
+
 		Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 			DDLConstants.RESERVED_DDM_STRUCTURE_ID,
 			_recordSet.getDDMStructureId()
@@ -71,16 +78,9 @@ public class DDLDisplayTemplateTransformer {
 			_recordSet.getName(_themeDisplay.getLocale())
 		).put(
 			TemplateConstants.TEMPLATE_ID, _ddmTemplateId
+		).put(
+			"viewMode", viewMode
 		).build();
-
-		String viewMode = Constants.VIEW;
-
-		if (_renderRequest != null) {
-			viewMode = ParamUtil.getString(
-				_renderRequest, "viewMode", Constants.VIEW);
-		}
-
-		contextObjects.put("viewMode", viewMode);
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 			_ddmTemplateId);

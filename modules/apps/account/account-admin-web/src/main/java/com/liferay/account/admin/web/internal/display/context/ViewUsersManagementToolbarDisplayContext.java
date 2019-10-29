@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -88,34 +89,10 @@ public class ViewUsersManagementToolbarDisplayContext
 								_getFilterAccountsDropdownItemsLabel());
 						});
 				}
-
-				List<DropdownItem> filterNavigationDropdownItems =
-					getFilterNavigationDropdownItems();
-
-				if (filterNavigationDropdownItems != null) {
-					addGroup(
-						dropdownGroupItem -> {
-							dropdownGroupItem.setDropdownItems(
-								filterNavigationDropdownItems);
-							dropdownGroupItem.setLabel(
-								getFilterNavigationDropdownItemsLabel());
-						});
-				}
-
-				List<DropdownItem> orderByDropdownItems =
-					getOrderByDropdownItems();
-
-				if (orderByDropdownItems != null) {
-					addGroup(
-						dropdownGroupItem -> {
-							dropdownGroupItem.setDropdownItems(
-								orderByDropdownItems);
-							dropdownGroupItem.setLabel(
-								getOrderByDropdownItemsLabel());
-						});
-				}
 			}
 		};
+
+		filterDropdownItems.addAll(super.getFilterDropdownItems());
 
 		if (filterDropdownItems.isEmpty()) {
 			return null;
@@ -131,10 +108,10 @@ public class ViewUsersManagementToolbarDisplayContext
 				String accountNavigation = ParamUtil.getString(
 					request, "accountNavigation", "all");
 
-				long[] accountEntryIds = ParamUtil.getLongValues(
-					request, "accountEntryIds");
-
 				if (accountNavigation.equals("accounts")) {
+					long[] accountEntryIds = ParamUtil.getLongValues(
+						request, "accountEntryIds");
+
 					for (long accountEntryId : accountEntryIds) {
 						AccountEntry accountEntry =
 							AccountEntryLocalServiceUtil.fetchAccountEntry(
@@ -199,14 +176,12 @@ public class ViewUsersManagementToolbarDisplayContext
 	}
 
 	private List<DropdownItem> _getFilterAccountsDropdownItems() {
-		final String navigation = ParamUtil.getString(
-			request, "accountNavigation", "all");
-
 		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setActive(navigation.equals("all"));
+						dropdownItem.setActive(
+							Objects.equals(getNavigation(), "all"));
 
 						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
 
@@ -215,9 +190,11 @@ public class ViewUsersManagementToolbarDisplayContext
 								currentURLObj, liferayPortletResponse),
 							"accountNavigation", "all");
 					});
+
 				add(
 					dropdownItem -> {
-						dropdownItem.setActive(navigation.equals("accounts"));
+						dropdownItem.setActive(
+							Objects.equals(getNavigation(), "accounts"));
 
 						PortletURL accountSelectorURL =
 							liferayPortletResponse.createRenderURL();
@@ -239,10 +216,12 @@ public class ViewUsersManagementToolbarDisplayContext
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "accounts"));
 					});
+
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							navigation.equals("no-assigned-account"));
+							Objects.equals(
+								getNavigation(), "no-assigned-account"));
 
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "no-assigned-account"));

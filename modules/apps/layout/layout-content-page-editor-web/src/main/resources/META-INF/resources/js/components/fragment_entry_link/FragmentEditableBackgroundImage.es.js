@@ -75,7 +75,7 @@ class FragmentEditableBackgroundImage extends Component {
 
 		if (this.element) {
 			this.element.removeEventListener(
-				'click',
+				'dblclick',
 				this._handleEditableBackgroundImageClick
 			);
 		}

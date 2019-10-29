@@ -209,6 +209,40 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertAlternateLinkTag(document, _group.getAvailableLanguageIds());
 	}
 
+	@Test
+	public void testPrivateLayout() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_layout.setPrivateLayout(true);
+
+		_dynamicInclude.include(
+			_getHttpServletRequest(), mockHttpServletResponse,
+			RandomTestUtil.randomString());
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertNoLinkElements(document, "canonical");
+		_assertNoLinkElements(document, "alternate");
+	}
+
+	@Test
+	public void testSignedIn() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_dynamicInclude.include(
+			_getSignedInHttpServletRequest(), mockHttpServletResponse,
+			RandomTestUtil.randomString());
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertNoLinkElements(document, "canonical");
+		_assertNoLinkElements(document, "alternate");
+	}
+
 	private FileEntry _addImageFileEntry(ServiceContext serviceContext)
 		throws Exception {
 
@@ -259,6 +293,12 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Assert.assertEquals(content, element.attr("content"));
 	}
 
+	private void _assertNoLinkElements(Document document, String rel) {
+		Elements elements = document.select("link[rel='" + rel + "']");
+
+		Assert.assertEquals(0, elements.size());
+	}
+
 	private HttpServletRequest _getHttpServletRequest() throws PortalException {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -270,6 +310,29 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 				_group.getFriendlyURL() + _layout.getFriendlyURL());
 
 		return mockHttpServletRequest;
+	}
+
+	private HttpServletRequest _getSignedInHttpServletRequest()
+		throws PortalException {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getSingedInThemeDisplay());
+		mockHttpServletRequest.setRequestURI(
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				_group.getFriendlyURL() + _layout.getFriendlyURL());
+
+		return mockHttpServletRequest;
+	}
+
+	private ThemeDisplay _getSingedInThemeDisplay() throws PortalException {
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		themeDisplay.setSignedIn(true);
+
+		return themeDisplay;
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws PortalException {

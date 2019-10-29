@@ -211,6 +211,8 @@ definition {
 			larFileName = "college-and-department-page-templates.lar",
 			uploadFrom = "dependencies");
 
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+
 		PageTemplatesAdminGlobalSite.viewCP(pageTemplateName = "College Landing Page");
 
 		PageTemplatesAdminGlobalSite.viewCP(pageTemplateName = "Department Landing Page");

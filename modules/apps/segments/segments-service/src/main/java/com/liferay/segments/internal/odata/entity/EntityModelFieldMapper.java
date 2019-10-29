@@ -223,6 +223,12 @@ public class EntityModelFieldMapper {
 							getSegmentFieldCustomizerOptional(
 								entityModelName, entityField.getName());
 
+				if ((entityField.getType() == EntityField.Type.ID) &&
+					!segmentsFieldCustomizerOptional.isPresent()) {
+
+					return;
+				}
+
 				complexFields.add(
 					getField(
 						"customContext/" + entityField.getName(),

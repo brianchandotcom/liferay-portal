@@ -46,7 +46,7 @@ public class RubySassCompilerTest {
 	public void testCompileFileClayCss() throws Exception {
 		try (SassCompiler sassCompiler = new RubySassCompiler()) {
 			File clayCssDir = new File(
-				"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+				"../sass-compiler-jni/test-classes/unit/com/liferay/sass" +
 					"/compiler/jni/internal/dependencies/clay-css");
 
 			for (File inputFile : clayCssDir.listFiles()) {
@@ -88,7 +88,7 @@ public class RubySassCompilerTest {
 		SassCompiler sassCompiler = new RubySassCompiler();
 
 		File sassSpecDir = new File(
-			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+			"../sass-compiler-jni/test-classes/unit/com/liferay/sass" +
 				"/compiler/jni/internal/dependencies/sass-spec");
 
 		for (File testDir : sassSpecDir.listFiles()) {
@@ -120,7 +120,7 @@ public class RubySassCompilerTest {
 		SassCompiler sassCompiler = new RubySassCompiler();
 
 		File inputDir = new File(
-			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+			"../sass-compiler-jni/test-classes/unit/com/liferay/sass" +
 				"/compiler/jni/internal/dependencies/");
 
 		File inputFile = new File(inputDir, "/unicode/input.scss");
@@ -144,7 +144,7 @@ public class RubySassCompilerTest {
 		SassCompiler sassCompiler = new RubySassCompiler();
 
 		File inputDir = new File(
-			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+			"../sass-compiler-jni/test-classes/unit/com/liferay/sass" +
 				"/compiler/jni/internal/dependencies/sass-spec/14_imports");
 
 		File sourceMapFile = new File(inputDir, ".sass-cache/input.css.map");
@@ -164,7 +164,7 @@ public class RubySassCompilerTest {
 		Assert.assertTrue(sourceMapFile.exists());
 
 		File expectedOutputFile = new File(
-			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+			"../sass-compiler-jni/test-classes/unit/com/liferay/sass" +
 				"/compiler/jni/internal/dependencies/sourcemap",
 			"expected_output_custom_source_map.css");
 
@@ -191,7 +191,7 @@ public class RubySassCompilerTest {
 		SassCompiler sassCompiler = new RubySassCompiler();
 
 		File inputDir = new File(
-			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+			"../sass-compiler-jni/test-classes/unit/com/liferay/sass" +
 				"/compiler/jni/internal/dependencies/");
 
 		File inputFile = new File(inputDir, "/unicode/input.scss");
@@ -216,7 +216,7 @@ public class RubySassCompilerTest {
 		SassCompiler sassCompiler = new RubySassCompiler();
 
 		File inputDir = new File(
-			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+			"../sass-compiler-jni/test-classes/unit/com/liferay/sass" +
 				"/compiler/jni/internal/dependencies/sass-spec/14_imports");
 
 		File sourceMapFile = new File(inputDir, "input.css.map");
@@ -237,7 +237,7 @@ public class RubySassCompilerTest {
 		Assert.assertTrue(sourceMapFile.exists());
 
 		File expectedOutputFile = new File(
-			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+			"../sass-compiler-jni/test-classes/unit/com/liferay/sass" +
 				"/compiler/jni/internal/dependencies/sourcemap",
 			"expected_output.css");
 

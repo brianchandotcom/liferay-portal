@@ -10,8 +10,7 @@ liferayOSGi {
 }
 
 processTestResources {
-	dependsOn ":util:sass-compiler-jni:downloadClay"
-	dependsOn ":util:sass-compiler-jni:downloadSassSpec"
+	dependsOn ":util:sass-compiler-jni:processTestResources"
 }
 
 test {

@@ -16,8 +16,10 @@ package com.liferay.journal.internal.model.listener;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,6 +37,10 @@ public class JournalArticleModelListener
 	@Override
 	public void onAfterRemove(JournalArticle journalArticle) {
 		clearCache(journalArticle);
+
+		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+			_portal.getClassNameId(JournalArticle.class),
+			journalArticle.getResourcePrimKey());
 	}
 
 	@Override
@@ -64,5 +70,12 @@ public class JournalArticleModelListener
 	}
 
 	private JournalContent _journalContent;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

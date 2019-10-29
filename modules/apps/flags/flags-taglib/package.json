@@ -1,10 +1,10 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.0.0",
-		"@clayui/icon": "3.0.0",
-		"@clayui/modal": "3.0.0",
-		"clay-button": "2.18.3",
-		"clay-icon": "2.18.3",
+		"@clayui/button": "3.0.1",
+		"@clayui/icon": "3.0.1",
+		"@clayui/modal": "3.1.0",
+		"clay-button": "2.18.4",
+		"clay-icon": "2.18.4",
 		"frontend-js-web": "*",
 		"metal-soy": "2.16.8",
 		"metal-state": "2.16.8",

@@ -1,11 +1,11 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.0.0",
-		"@clayui/drop-down": "3.0.0",
-		"@clayui/icon": "3.0.0",
-		"@clayui/label": "3.0.0",
-		"clay-dropdown": "2.18.3",
-		"clay-label": "2.18.3",
+		"@clayui/button": "3.0.1",
+		"@clayui/drop-down": "3.0.1",
+		"@clayui/icon": "3.0.1",
+		"@clayui/label": "3.0.1",
+		"clay-dropdown": "2.18.4",
+		"clay-label": "2.18.4",
 		"frontend-js-web": "*",
 		"metal": "2.16.8",
 		"metal-dom": "2.16.8",

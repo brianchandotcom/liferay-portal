@@ -129,25 +129,111 @@ public class LayoutCTTest {
 	}
 
 	@Test
-	public void testDeleteCTCollection() throws Exception {
-		Layout layout = null;
-
+	public void testDeleteCTCollectionAdd() throws Exception {
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(
 					_ctCollection.getCtCollectionId())) {
 
-			layout = LayoutTestUtil.addLayout(_group);
+			LayoutTestUtil.addLayout(_group);
 		}
 
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"select * from Layout where ctCollectionId = " +
+					_ctCollection.getCtCollectionId());
+			ResultSet rs = ps.executeQuery()) {
+
+			Assert.assertFalse(rs.next());
+		}
+		finally {
+			_ctCollection = null;
+		}
+	}
+
+	@Test
+	public void testDeleteCTCollectionModify() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(
 					_ctCollection.getCtCollectionId())) {
 
-			layout = _layoutLocalService.fetchLayout(layout.getPlid());
+			layout.setTitle(RandomTestUtil.randomString());
 
-			Assert.assertNull(layout);
+			layout = _layoutLocalService.updateLayout(layout);
+		}
+
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
+
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"select * from Layout where ctCollectionId = " +
+					_ctCollection.getCtCollectionId());
+			ResultSet rs = ps.executeQuery()) {
+
+			Assert.assertFalse(rs.next());
+		}
+		finally {
+			_ctCollection = null;
+		}
+	}
+
+	@Test
+	public void testDeleteCTCollectionPublishDelete() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			_layoutLocalService.deleteLayout(layout);
+		}
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
+
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"select * from Layout where ctCollectionId = " +
+					_ctCollection.getCtCollectionId());
+			ResultSet rs = ps.executeQuery()) {
+
+			Assert.assertFalse(rs.next());
+		}
+		finally {
+			_ctCollection = null;
+		}
+	}
+
+	@Test
+	public void testDeleteCTCollectionPublishModify() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			layout.setTitle(RandomTestUtil.randomString());
+
+			layout = _layoutLocalService.updateLayout(layout);
+		}
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
+
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"select * from Layout where ctCollectionId = " +
+					_ctCollection.getCtCollectionId());
+			ResultSet rs = ps.executeQuery()) {
+
+			Assert.assertFalse(rs.next());
 		}
 		finally {
 			_ctCollection = null;

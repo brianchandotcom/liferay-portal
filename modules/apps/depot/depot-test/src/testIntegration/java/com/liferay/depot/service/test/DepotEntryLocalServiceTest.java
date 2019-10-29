@@ -107,7 +107,7 @@ public class DepotEntryLocalServiceTest {
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
 		_depotEntryLocalService.updateDepotEntry(
-			depotEntry.getDepotEntryId(), formTypeSettingsProperties,
+			depotEntry.getDepotEntryId(),
 			new HashMap<Locale, String>() {
 				{
 					put(LocaleUtil.getDefault(), "newName");
@@ -118,6 +118,7 @@ public class DepotEntryLocalServiceTest {
 					put(LocaleUtil.getDefault(), "newDescription");
 				}
 			},
+			formTypeSettingsProperties,
 			ServiceContextTestUtil.getServiceContext());
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
@@ -144,7 +145,7 @@ public class DepotEntryLocalServiceTest {
 			PropsKeys.LOCALES, StringUtil.merge(locales));
 
 		_depotEntryLocalService.updateDepotEntry(
-			depotEntry.getDepotEntryId(), formTypeSettingsProperties,
+			depotEntry.getDepotEntryId(),
 			new HashMap<Locale, String>() {
 				{
 					put(LocaleUtil.getDefault(), "newName");
@@ -157,6 +158,7 @@ public class DepotEntryLocalServiceTest {
 					put(LocaleUtil.fromLanguageId("es_ES"), "nuevaDescripcion");
 				}
 			},
+			formTypeSettingsProperties,
 			ServiceContextTestUtil.getServiceContext());
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
@@ -177,7 +179,7 @@ public class DepotEntryLocalServiceTest {
 		formTypeSettingsProperties.setProperty("inheritLocales", "true");
 
 		_depotEntryLocalService.updateDepotEntry(
-			depotEntry.getDepotEntryId(), formTypeSettingsProperties,
+			depotEntry.getDepotEntryId(),
 			new HashMap<Locale, String>() {
 				{
 					put(LocaleUtil.getDefault(), "newName");
@@ -188,6 +190,7 @@ public class DepotEntryLocalServiceTest {
 					put(LocaleUtil.getDefault(), "newDescription");
 				}
 			},
+			formTypeSettingsProperties,
 			ServiceContextTestUtil.getServiceContext());
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
@@ -216,13 +219,14 @@ public class DepotEntryLocalServiceTest {
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
 		_depotEntryLocalService.updateDepotEntry(
-			depotEntry.getDepotEntryId(), formTypeSettingsProperties,
+			depotEntry.getDepotEntryId(),
 			new HashMap<Locale, String>() {
 				{
 					put(LocaleUtil.getDefault(), "newName");
 				}
 			},
-			new HashMap<>(), ServiceContextTestUtil.getServiceContext());
+			new HashMap<>(), formTypeSettingsProperties,
+			ServiceContextTestUtil.getServiceContext());
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
 
@@ -236,8 +240,8 @@ public class DepotEntryLocalServiceTest {
 		DepotEntry depotEntry = _addDepotEntry("name", "description");
 
 		_depotEntryLocalService.updateDepotEntry(
-			depotEntry.getDepotEntryId(), new UnicodeProperties(),
-			new HashMap<>(), new HashMap<>(),
+			depotEntry.getDepotEntryId(), new HashMap<>(), new HashMap<>(),
+			new UnicodeProperties(),
 			ServiceContextTestUtil.getServiceContext());
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
@@ -258,7 +262,7 @@ public class DepotEntryLocalServiceTest {
 		formTypeSettingsProperties.setProperty(PropsKeys.LOCALES, null);
 
 		_depotEntryLocalService.updateDepotEntry(
-			depotEntry.getDepotEntryId(), formTypeSettingsProperties,
+			depotEntry.getDepotEntryId(),
 			new HashMap<Locale, String>() {
 				{
 					put(LocaleUtil.getDefault(), "newName");
@@ -271,6 +275,7 @@ public class DepotEntryLocalServiceTest {
 					put(LocaleUtil.fromLanguageId("es_ES"), "descripcion");
 				}
 			},
+			formTypeSettingsProperties,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

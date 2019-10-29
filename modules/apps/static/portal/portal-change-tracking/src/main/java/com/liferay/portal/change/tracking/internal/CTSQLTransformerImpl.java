@@ -18,6 +18,7 @@ import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.portal.change.tracking.registry.CTModelRegistration;
 import com.liferay.portal.change.tracking.registry.CTModelRegistry;
 import com.liferay.portal.change.tracking.sql.CTSQLContextFactory;
+import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.change.tracking.sql.CTSQLTransformer;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
@@ -205,7 +206,9 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 			String transformedSQL = sql;
 
 			if (statement instanceof Select) {
-				statement.accept(new SelectStatementVisitor(ctCollectionId));
+				statement.accept(
+					new SelectStatementVisitor(
+						ctCollectionId, CTSQLModeThreadLocal.getCTSQLMode()));
 
 				transformedSQL = _unescape(statement.toString());
 			}
@@ -1139,16 +1142,29 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 		@Override
 		protected SelectStatementVisitor newInstance() {
-			return new SelectStatementVisitor(ctCollectionId);
+			return new SelectStatementVisitor(ctCollectionId, _ctSQLMode);
 		}
 
-		private SelectStatementVisitor(long ctCollectionId) {
+		private SelectStatementVisitor(
+			long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode) {
+
 			super(ctCollectionId);
+
+			_ctSQLMode = ctSQLMode;
 		}
 
 		private Expression _getWhereExpression(
 			Table table, String tableName,
 			CTModelRegistration ctModelRegistration) {
+
+			if (CTSQLModeThreadLocal.CTSQLMode.CT_ONLY == _ctSQLMode) {
+				EqualsTo equalsTo = new EqualsTo();
+
+				equalsTo.setLeftExpression(new Column(table, "ctCollectionId"));
+				equalsTo.setRightExpression(new LongValue(ctCollectionId));
+
+				return equalsTo;
+			}
 
 			Column ctCollectionIdColumn = new Column(table, "ctCollectionId");
 
@@ -1232,6 +1248,8 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 			return new AndExpression(inExpression, equalsToCTCollectionIdZero);
 		}
+
+		private final CTSQLModeThreadLocal.CTSQLMode _ctSQLMode;
 
 	}
 

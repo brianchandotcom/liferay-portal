@@ -215,30 +215,6 @@ public class FragmentEntryProcessorEditableTest {
 	}
 
 	@Test
-	public void testFragmentEntryProcessorEditableWithMatchedDefaultExperienceAndDefaultLanguage()
-		throws Exception {
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
-
-		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
-
-		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-
-		fragmentEntryLink.setEditableValues(
-			_getJsonFileAsString(
-				"fragment_entry_link_editable_values_matching_default_" +
-					"segments_experience_and_default_language.json"));
-
-		Assert.assertEquals(
-			_processedHTML,
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink,
-				_getFragmentEntryProcessorContext(
-					LocaleUtil.CHINESE, new long[] {2L, 0L})));
-	}
-
-	@Test
 	public void testFragmentEntryProcessorEditableWithMatchedExperienceAndDefaultLanguage()
 		throws Exception {
 
@@ -345,6 +321,30 @@ public class FragmentEntryProcessorEditableTest {
 		throws Exception {
 
 		_addFragmentEntry("fragment_entry_with_nested_editable_in_html.html");
+	}
+
+	@Test
+	public void testFragmentEntryProcessorEditableWithUnmatchedExperience()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		fragmentEntryLink.setEditableValues(
+			_getJsonFileAsString(
+				"fragment_entry_link_editable_values_unmatching_segments_" +
+					"experience.json"));
+
+		Assert.assertEquals(
+			_processedHTML,
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.US, new long[] {2L, 0L})));
 	}
 
 	@Test

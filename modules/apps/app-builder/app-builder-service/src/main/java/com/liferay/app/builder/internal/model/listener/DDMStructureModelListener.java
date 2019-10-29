@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 
 	@Override
-	public void onAfterRemove(DDMStructure ddmStructure)
+	public void onBeforeRemove(DDMStructure ddmStructure)
 		throws ModelListenerException {
 
 		try {

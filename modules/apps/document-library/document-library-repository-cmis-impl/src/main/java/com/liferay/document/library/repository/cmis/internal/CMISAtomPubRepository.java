@@ -40,22 +40,7 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 
 	@Override
 	public Session getSession() throws PortalException {
-		Map<String, String> parameters = HashMapBuilder.put(
-			SessionParameter.ATOMPUB_URL,
-			getTypeSettingsValue(
-				CMISRepositoryConstants.CMIS_ATOMPUB_URL_PARAMETER)
-		).put(
-			SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value()
-		).put(
-			SessionParameter.COMPRESSION, Boolean.TRUE.toString()
-		).build();
-
 		Locale locale = LocaleUtil.getSiteDefault();
-
-		parameters.put(
-			SessionParameter.LOCALE_ISO639_LANGUAGE, locale.getLanguage());
-		parameters.put(
-			SessionParameter.LOCALE_ISO3166_COUNTRY, locale.getCountry());
 
 		String login = getLogin();
 		String password = null;
@@ -68,8 +53,23 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 			password = _DL_REPOSITORY_GUEST_PASSWORD;
 		}
 
-		parameters.put(SessionParameter.PASSWORD, password);
-		parameters.put(SessionParameter.USER, login);
+		Map<String, String> parameters = HashMapBuilder.put(
+			SessionParameter.ATOMPUB_URL,
+			getTypeSettingsValue(
+				CMISRepositoryConstants.CMIS_ATOMPUB_URL_PARAMETER)
+		).put(
+			SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value()
+		).put(
+			SessionParameter.COMPRESSION, Boolean.TRUE.toString()
+		).put(
+			SessionParameter.LOCALE_ISO639_LANGUAGE, locale.getLanguage()
+		).put(
+			SessionParameter.LOCALE_ISO3166_COUNTRY, locale.getCountry()
+		).put(
+			SessionParameter.PASSWORD, password
+		).put(
+			SessionParameter.USER, login
+		).build();
 
 		Thread thread = Thread.currentThread();
 

@@ -176,17 +176,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				ImageEditorCapability imageEditorCapability =
 					imageEditorCapabilityDescriptor.getImageEditorCapability();
 
-				Map<String, Object> controlContext =
-					HashMapBuilder.<String, Object>put(
-						"label",
-						imageEditorCapability.getLabel(themeDisplay.getLocale())
-					).build();
-
 				ServletContext servletContext =
 					imageEditorCapability.getServletContext();
-
-				controlContext.put(
-					"modulePath", servletContext.getContextPath());
 
 				Map<String, Object> properties =
 					imageEditorCapabilityDescriptor.getProperties();
@@ -196,7 +187,15 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 						"com.liferay.frontend.image.editor.capability." +
 							"controls"));
 
-				controlContext.put("variant", variant);
+				Map<String, Object> controlContext =
+					HashMapBuilder.<String, Object>put(
+						"label",
+						imageEditorCapability.getLabel(themeDisplay.getLocale())
+					).put(
+						"modulePath", servletContext.getContextPath()
+					).put(
+						"variant", variant
+					).build();
 
 				imageEditorCapability.prepareContext(
 					controlContext,
@@ -209,15 +208,15 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 						"com.liferay.frontend.image.editor.capability.icon"));
 			}
 
+			String category = entry.getKey();
+
 			Map<String, Object> context = HashMapBuilder.<String, Object>put(
 				"controls", controlContexts
 			).put(
 				"icon", icon
+			).put(
+				"title", LanguageUtil.get(resourceBundle, category)
 			).build();
-
-			String category = entry.getKey();
-
-			context.put("title", LanguageUtil.get(resourceBundle, category));
 
 			imageEditorToolsContexts.add(context);
 		}

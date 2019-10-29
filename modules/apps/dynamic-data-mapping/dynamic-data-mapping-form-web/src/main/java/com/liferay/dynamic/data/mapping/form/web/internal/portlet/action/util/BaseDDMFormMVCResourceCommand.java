@@ -65,19 +65,18 @@ public abstract class BaseDDMFormMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		User user = themeDisplay.getUser();
+
 		Map<String, Object> response = HashMapBuilder.<String, Object>put(
 			"ddmStructureId", formInstance.getStructureId()
 		).put(
 			"formInstanceId", formInstance.getFormInstanceId()
-		).build();
-
-		User user = themeDisplay.getUser();
-
-		response.put(
+		).put(
 			"modifiedDate",
 			formatDate(
 				formInstance.getModifiedDate(), user.getLocale(),
-				user.getTimeZoneId()));
+				user.getTimeZoneId())
+		).build();
 
 		JSONSerializer jsonSerializer = jsonFactory.createJSONSerializer();
 

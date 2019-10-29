@@ -171,16 +171,15 @@ public class WorkflowTaskManagerImplTest
 
 		DLFileEntryType fileEntryType = addFileEntryType();
 
+		DLFileEntryType basicFileEntryType = getBasicFileEntryType();
+
 		Map<String, String> dlFileEntryTypeMap = HashMapBuilder.put(
 			String.valueOf(fileEntryType.getFileEntryTypeId()),
 			"Single Approver@1"
-		).build();
-
-		DLFileEntryType basicFileEntryType = getBasicFileEntryType();
-
-		dlFileEntryTypeMap.put(
+		).put(
 			String.valueOf(basicFileEntryType.getFileEntryTypeId()),
-			StringPool.BLANK);
+			StringPool.BLANK
+		).build();
 
 		Folder folder = addFolder();
 

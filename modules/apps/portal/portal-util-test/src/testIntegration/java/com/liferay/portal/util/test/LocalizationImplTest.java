@@ -416,16 +416,15 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testUpdateLocalizationWithAmpersand() {
+		String englishValue = "foo&bar";
 		String spanishValue = "bar&foo";
 
 		Map<Locale, String> localizationMap =
 			HashMapBuilder.<Locale, String>put(
 				LocaleUtil.SPAIN, spanishValue
+			).put(
+				LocaleUtil.US, englishValue
 			).build();
-
-		String englishValue = "foo&bar";
-
-		localizationMap.put(LocaleUtil.US, englishValue);
 
 		String xml = LocalizationUtil.updateLocalization(
 			localizationMap, _xml, "static-content", "en_US");

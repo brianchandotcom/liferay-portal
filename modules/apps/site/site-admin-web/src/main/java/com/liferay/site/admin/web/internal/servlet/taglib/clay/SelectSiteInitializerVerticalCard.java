@@ -64,10 +64,6 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 		addSiteURL.setParameter(
 			"siteInitializerKey", _siteInitializerItem.getSiteInitializerKey());
 
-		Map<String, String> data = HashMapBuilder.put(
-			"add-site-url", addSiteURL.toString()
-		).build();
-
 		String checkboxFieldName = StringPool.BLANK;
 
 		if (Objects.equals(
@@ -77,11 +73,14 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 			checkboxFieldName = "layoutSetVisibilityPrivate";
 		}
 
-		data.put("checkbox-field-name", checkboxFieldName);
-
-		data.put(
+		Map<String, String> data = HashMapBuilder.put(
+			"add-site-url", addSiteURL.toString()
+		).put(
+			"checkbox-field-name", checkboxFieldName
+		).put(
 			"layout-set-prototype-id",
-			String.valueOf(_siteInitializerItem.getLayoutSetPrototypeId()));
+			String.valueOf(_siteInitializerItem.getLayoutSetPrototypeId())
+		).build();
 
 		return data;
 	}

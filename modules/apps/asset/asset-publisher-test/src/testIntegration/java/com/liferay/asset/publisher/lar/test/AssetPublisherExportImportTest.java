@@ -383,17 +383,16 @@ public class AssetPublisherExportImportTest
 		long journalArticleClassNameId = PortalUtil.getClassNameId(
 			JournalArticle.class);
 
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
 		Map<String, String[]> preferenceMap =
 			HashMapBuilder.<String, String[]>put(
 				"anyAssetType",
 				new String[] {String.valueOf(journalArticleClassNameId)}
+			).put(
+				"classTypeIds",
+				new String[] {String.valueOf(ddmStructure.getStructureId())}
 			).build();
-
-		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-
-		preferenceMap.put(
-			"classTypeIds",
-			new String[] {String.valueOf(ddmStructure.getStructureId())});
 
 		testDynamicExportImport(preferenceMap, expectedAssetEntries, true);
 	}

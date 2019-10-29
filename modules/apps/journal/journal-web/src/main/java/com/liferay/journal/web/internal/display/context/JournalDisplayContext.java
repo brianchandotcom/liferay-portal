@@ -1072,6 +1072,11 @@ public class JournalDisplayContext {
 
 		searchContext.setAndSearch(false);
 
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("expandoAttributes", getKeywords());
+		params.put("keywords", getKeywords());
+
 		Map<String, Serializable> attributes =
 			HashMapBuilder.<String, Serializable>put(
 				Field.ARTICLE_ID, getKeywords()
@@ -1088,14 +1093,9 @@ public class JournalDisplayContext {
 				Field.TITLE, getKeywords()
 			).put(
 				"ddmStructureKey", getDDMStructureKey()
+			).put(
+				"params", params
 			).build();
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("expandoAttributes", getKeywords());
-		params.put("keywords", getKeywords());
-
-		attributes.put("params", params);
 
 		searchContext.setAttributes(attributes);
 

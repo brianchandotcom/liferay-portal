@@ -101,15 +101,8 @@ public class InheritedFragmentManagementToolbarDisplayContext
 		exportFragmentEntriesURL.setResourceID(
 			"/fragment/export_fragment_entries");
 
-		Map<String, Object> componentContext =
-			HashMapBuilder.<String, Object>put(
-				"exportFragmentEntriesURL", exportFragmentEntriesURL.toString()
-			).build();
-
 		long fragmentCollectionId = ParamUtil.getLong(
 			liferayPortletRequest, "fragmentCollectionId");
-
-		componentContext.put("fragmentCollectionId", fragmentCollectionId);
 
 		PortletURL copyFragmentEntryURL =
 			liferayPortletResponse.createActionURL();
@@ -119,9 +112,6 @@ public class InheritedFragmentManagementToolbarDisplayContext
 		copyFragmentEntryURL.setParameter(
 			"redirect", themeDisplay.getURLCurrent());
 
-		componentContext.put(
-			"copyFragmentEntryURL", copyFragmentEntryURL.toString());
-
 		PortletURL selectFragmentCollectionURL =
 			liferayPortletResponse.createActionURL();
 
@@ -129,9 +119,17 @@ public class InheritedFragmentManagementToolbarDisplayContext
 			"mvcRenderCommandName", "/fragment/select_fragment_collection");
 		selectFragmentCollectionURL.setWindowState(LiferayWindowState.POP_UP);
 
-		componentContext.put(
-			"selectFragmentCollectionURL",
-			selectFragmentCollectionURL.toString());
+		Map<String, Object> componentContext =
+			HashMapBuilder.<String, Object>put(
+				"copyFragmentEntryURL", copyFragmentEntryURL.toString()
+			).put(
+				"exportFragmentEntriesURL", exportFragmentEntriesURL.toString()
+			).put(
+				"fragmentCollectionId", fragmentCollectionId
+			).put(
+				"selectFragmentCollectionURL",
+				selectFragmentCollectionURL.toString()
+			).build();
 
 		return componentContext;
 	}

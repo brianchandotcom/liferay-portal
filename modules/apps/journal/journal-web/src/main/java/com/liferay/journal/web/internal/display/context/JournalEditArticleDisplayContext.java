@@ -110,10 +110,6 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public Map<String, Object> getChangeDefaultLanguageData() {
-		Map<String, Object> data = HashMapBuilder.<String, Object>put(
-			"defaultLanguage", getDefaultArticleLanguageId()
-		).build();
-
 		List<Map<String, Object>> languages = new ArrayList<>();
 
 		LinkedHashSet<String> uniqueLanguageIds = new LinkedHashSet<>();
@@ -135,8 +131,6 @@ public class JournalEditArticleDisplayContext {
 			languages.add(language);
 		}
 
-		data.put("languages", languages);
-
 		Map<String, Object> strings = new HashMap<>();
 
 		for (Locale availableLocale : getAvailableLocales()) {
@@ -148,7 +142,13 @@ public class JournalEditArticleDisplayContext {
 					StringPool.CLOSE_PARENTHESIS));
 		}
 
-		data.put("strings", strings);
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"defaultLanguage", getDefaultArticleLanguageId()
+		).put(
+			"languages", languages
+		).put(
+			"strings", strings
+		).build();
 
 		return data;
 	}

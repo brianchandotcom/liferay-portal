@@ -172,10 +172,6 @@ public class FlagsTag extends IncludeTag {
 			"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS)
 		).build();
 
-		Map<String, Object> data = HashMapBuilder.<String, Object>put(
-			"context", context
-		).build();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -204,7 +200,11 @@ public class FlagsTag extends IncludeTag {
 		props.put("signedIn", themeDisplay.isSignedIn());
 		props.put("uri", FlagsTagUtil.getURI(request));
 
-		data.put("props", props);
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"context", context
+		).put(
+			"props", props
+		).build();
 
 		return data;
 	}

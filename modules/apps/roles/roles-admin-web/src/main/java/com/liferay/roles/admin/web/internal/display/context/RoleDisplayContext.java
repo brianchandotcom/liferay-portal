@@ -283,10 +283,6 @@ public class RoleDisplayContext {
 		assignMembersURL.setParameter(
 			"roleId", String.valueOf(role.getRoleId()));
 
-		Map<String, String> tabsURLs = HashMapBuilder.put(
-			"assignees", assignMembersURL.toString()
-		).build();
-
 		PortletURL definePermissionsURL = _renderResponse.createRenderURL();
 
 		definePermissionsURL.setParameter(
@@ -297,8 +293,6 @@ public class RoleDisplayContext {
 		definePermissionsURL.setParameter(
 			"roleId", String.valueOf(role.getRoleId()));
 
-		tabsURLs.put("define-permissions", definePermissionsURL.toString());
-
 		PortletURL editRoleURL = _renderResponse.createRenderURL();
 
 		editRoleURL.setParameter("mvcPath", "/edit_role.jsp");
@@ -306,7 +300,13 @@ public class RoleDisplayContext {
 		editRoleURL.setParameter("redirect", backURL);
 		editRoleURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
-		tabsURLs.put("details", editRoleURL.toString());
+		Map<String, String> tabsURLs = HashMapBuilder.put(
+			"assignees", assignMembersURL.toString()
+		).put(
+			"define-permissions", definePermissionsURL.toString()
+		).put(
+			"details", editRoleURL.toString()
+		).build();
 
 		return tabsURLs;
 	}

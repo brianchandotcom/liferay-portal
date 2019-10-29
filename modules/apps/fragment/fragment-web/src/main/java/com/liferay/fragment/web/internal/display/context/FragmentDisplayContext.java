@@ -274,21 +274,12 @@ public class FragmentDisplayContext {
 		deleteFragmentCollectionURL.setParameter(
 			ActionRequest.ACTION_NAME, "/fragment/delete_fragment_collection");
 
-		Map<String, Object> context = HashMapBuilder.<String, Object>put(
-			"deleteFragmentCollectionURL",
-			deleteFragmentCollectionURL.toString()
-		).build();
-
 		LiferayPortletURL exportFragmentCollectionsURL =
 			(LiferayPortletURL)_renderResponse.createResourceURL();
 
 		exportFragmentCollectionsURL.setCopyCurrentRenderParameters(false);
 		exportFragmentCollectionsURL.setResourceID(
 			"/fragment/export_fragment_collections");
-
-		context.put(
-			"exportFragmentCollectionsURL",
-			exportFragmentCollectionsURL.toString());
 
 		PortletURL viewExportFragmentCollectionsURL =
 			_renderResponse.createRenderURL();
@@ -300,10 +291,6 @@ public class FragmentDisplayContext {
 		viewExportFragmentCollectionsURL.setWindowState(
 			LiferayWindowState.POP_UP);
 
-		context.put(
-			"viewExportFragmentCollectionsURL",
-			viewExportFragmentCollectionsURL.toString());
-
 		PortletURL viewDeleteFragmentCollectionsURL =
 			_renderResponse.createRenderURL();
 
@@ -312,17 +299,27 @@ public class FragmentDisplayContext {
 		viewDeleteFragmentCollectionsURL.setWindowState(
 			LiferayWindowState.POP_UP);
 
-		context.put(
-			"viewDeleteFragmentCollectionsURL",
-			viewDeleteFragmentCollectionsURL.toString());
-
 		PortletURL viewImportURL = _renderResponse.createRenderURL();
 
 		viewImportURL.setParameter(
 			"mvcRenderCommandName", "/fragment/view_import");
 		viewImportURL.setWindowState(LiferayWindowState.POP_UP);
 
-		context.put("viewImportURL", viewImportURL.toString());
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
+			"deleteFragmentCollectionURL",
+			deleteFragmentCollectionURL.toString()
+		).put(
+			"exportFragmentCollectionsURL",
+			exportFragmentCollectionsURL.toString()
+		).put(
+			"viewExportFragmentCollectionsURL",
+			viewExportFragmentCollectionsURL.toString()
+		).put(
+			"viewDeleteFragmentCollectionsURL",
+			viewDeleteFragmentCollectionsURL.toString()
+		).put(
+			"viewImportURL", viewImportURL.toString()
+		).build();
 
 		return context;
 	}

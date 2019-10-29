@@ -46,19 +46,17 @@ public class OptionsDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
+		DDMForm ddmForm = ddmFormField.getDDMForm();
+
 		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
 			"allowEmptyOptions",
 			GetterUtil.getBoolean(ddmFormField.getProperty("allowEmptyOptions"))
-		).build();
-
-		DDMForm ddmForm = ddmFormField.getDDMForm();
-
-		parameters.put(
+		).put(
 			"defaultLanguageId",
-			LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()));
-
-		parameters.put(
-			"value", getValue(ddmFormField, ddmFormFieldRenderingContext));
+			LocaleUtil.toLanguageId(ddmForm.getDefaultLocale())
+		).put(
+			"value", getValue(ddmFormField, ddmFormFieldRenderingContext)
+		).build();
 
 		return parameters;
 	}

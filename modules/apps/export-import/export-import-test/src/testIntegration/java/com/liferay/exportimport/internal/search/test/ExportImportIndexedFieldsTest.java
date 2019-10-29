@@ -140,6 +140,9 @@ public class ExportImportIndexedFieldsTest {
 	private Map<String, String> _expectedFieldValues(
 		ExportImportConfiguration exportImportConfiguration) {
 
+		Map<String, Serializable> setttingMap =
+			exportImportConfiguration.getSettingsMap();
+
 		Map<String, String> map = HashMapBuilder.put(
 			Field.COMPANY_ID,
 			String.valueOf(exportImportConfiguration.getCompanyId())
@@ -181,21 +184,19 @@ public class ExportImportIndexedFieldsTest {
 		).put(
 			"name_sortable",
 			StringUtil.lowerCase(exportImportConfiguration.getName())
-		).build();
-
-		Map<String, Serializable> setttingMap =
-			exportImportConfiguration.getSettingsMap();
-
-		map.put("setting_locale", String.valueOf(setttingMap.get("locale")));
-		map.put(
+		).put(
+			"setting_locale", String.valueOf(setttingMap.get("locale"))
+		).put(
 			"setting_privateLayout",
-			String.valueOf(setttingMap.get("privateLayout")));
-
-		map.put("setting_sourceGroupId", String.valueOf(0));
-		map.put(
+			String.valueOf(setttingMap.get("privateLayout"))
+		).put(
+			"setting_sourceGroupId", String.valueOf(0)
+		).put(
 			"setting_targetGroupId",
-			String.valueOf(setttingMap.get("targetGroupId")));
-		map.put("setting_userId", String.valueOf(setttingMap.get("userId")));
+			String.valueOf(setttingMap.get("targetGroupId"))
+		).put(
+			"setting_userId", String.valueOf(setttingMap.get("userId"))
+		).build();
 
 		_populateDates(exportImportConfiguration, map);
 

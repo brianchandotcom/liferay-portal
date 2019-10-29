@@ -110,20 +110,19 @@ public class BlogEntriesManagementToolbarDisplayContext
 			cmd = Constants.MOVE_TO_TRASH;
 		}
 
-		Map<String, Object> context = HashMapBuilder.<String, Object>put(
-			"deleteEntriesCmd", cmd
-		).build();
-
 		PortletURL deleteEntriesURL = liferayPortletResponse.createActionURL();
 
 		deleteEntriesURL.setParameter(
 			ActionRequest.ACTION_NAME, "/blogs/edit_entry");
 
-		context.put("deleteEntriesURL", deleteEntriesURL.toString());
-
-		context.put(
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
+			"deleteEntriesCmd", cmd
+		).put(
+			"deleteEntriesURL", deleteEntriesURL.toString()
+		).put(
 			"trashEnabled",
-			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId()));
+			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())
+		).build();
 
 		return context;
 	}

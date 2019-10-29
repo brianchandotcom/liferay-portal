@@ -111,18 +111,17 @@ public class PagesTreeProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		ResourceBundle resourceBundle = _getResourceBundle(
+			themeDisplay.getLocale());
+
 		Map<String, String> values = HashMapBuilder.put(
 			"pathThemeImages", themeDisplay.getPathThemeImages()
 		).put(
 			"portletNamespace", portletNamespace
-		).build();
-
-		ResourceBundle resourceBundle = _getResourceBundle(
-			themeDisplay.getLocale());
-
-		values.put(
+		).put(
 			"title",
-			HtmlUtil.escape(LanguageUtil.get(resourceBundle, "find-a-page")));
+			HtmlUtil.escape(LanguageUtil.get(resourceBundle, "find-a-page"))
+		).build();
 
 		String pagesTreeState = SessionClicks.get(
 			httpServletRequest,

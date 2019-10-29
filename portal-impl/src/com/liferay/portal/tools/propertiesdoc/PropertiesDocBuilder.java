@@ -66,17 +66,11 @@ public class PropertiesDocBuilder {
 
 		String title = GetterUtil.getString(arguments.get("properties.title"));
 
-		Map<String, Object> context = HashMapBuilder.<String, Object>put(
-			"pageTitle", title
-		).build();
-
 		int pos = propertiesFileName.lastIndexOf(StringPool.SLASH);
 
 		if (pos != -1) {
 			propertiesFileName = propertiesFileName.substring(pos + 1);
 		}
-
-		context.put("propertiesFileName", propertiesFileName);
 
 		List<PropertiesSection> propertiesSections = getPropertiesSections(
 			propertiesFile);
@@ -85,11 +79,17 @@ public class PropertiesDocBuilder {
 			return;
 		}
 
-		context.put("sections", propertiesSections);
-
 		boolean toc = GetterUtil.getBoolean(arguments.get("properties.toc"));
 
-		context.put("toc", toc);
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
+			"pageTitle", title
+		).put(
+			"propertiesFileName", propertiesFileName
+		).put(
+			"sections", propertiesSections
+		).put(
+			"toc", toc
+		).build();
 
 		try {
 			StringBundler sb = new StringBundler(4);

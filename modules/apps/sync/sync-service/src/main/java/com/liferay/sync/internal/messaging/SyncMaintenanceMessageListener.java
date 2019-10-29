@@ -121,20 +121,20 @@ public class SyncMaintenanceMessageListener extends BaseMessageListener {
 							() -> {
 								Message dlSyncEventMessage = new Message();
 
-								Map<String, Object> values =
-									HashMapBuilder.<String, Object>put(
-										"event", dlSyncEvent.getEvent()
-									).build();
-
 								long latestModifiedTime =
 									_syncDLObjectLocalService.
 										getLatestModifiedTime();
 
-								values.put(
-									"modifiedTime", latestModifiedTime + 1);
-
-								values.put("type", dlSyncEvent.getType());
-								values.put("typePK", dlSyncEvent.getTypePK());
+								Map<String, Object> values =
+									HashMapBuilder.<String, Object>put(
+										"event", dlSyncEvent.getEvent()
+									).put(
+										"modifiedTime", latestModifiedTime + 1
+									).put(
+										"type", dlSyncEvent.getType()
+									).put(
+										"typePK", dlSyncEvent.getTypePK()
+									).build();
 
 								dlSyncEventMessage.setValues(values);
 

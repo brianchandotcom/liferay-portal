@@ -103,10 +103,6 @@ public class DLFileEntryTypeStagedModelDataHandler
 	public Map<String, String> getReferenceAttributes(
 		PortletDataContext portletDataContext, DLFileEntryType fileEntryType) {
 
-		Map<String, String> referenceAttributes = HashMapBuilder.put(
-			"file-entry-type-key", fileEntryType.getFileEntryTypeKey()
-		).build();
-
 		long defaultUserId = UserConstants.USER_ID_DEFAULT;
 
 		try {
@@ -125,7 +121,11 @@ public class DLFileEntryTypeStagedModelDataHandler
 			preloaded = true;
 		}
 
-		referenceAttributes.put("preloaded", String.valueOf(preloaded));
+		Map<String, String> referenceAttributes = HashMapBuilder.put(
+			"file-entry-type-key", fileEntryType.getFileEntryTypeKey()
+		).put(
+			"preloaded", String.valueOf(preloaded)
+		).build();
 
 		return referenceAttributes;
 	}

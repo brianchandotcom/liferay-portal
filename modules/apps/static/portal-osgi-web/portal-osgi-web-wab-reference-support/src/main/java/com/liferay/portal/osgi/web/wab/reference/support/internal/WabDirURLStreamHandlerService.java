@@ -85,11 +85,6 @@ public class WabDirURLStreamHandlerService
 				bundleSymbolicName = _getNameFromProperties(warDir);
 			}
 
-			Map<String, String[]> parameters =
-				HashMapBuilder.<String, String[]>put(
-					"Bundle-SymbolicName", new String[] {bundleSymbolicName}
-				).build();
-
 			String contextName = _http.getParameter(
 				url.toExternalForm(), "Web-ContextPath");
 
@@ -114,7 +109,12 @@ public class WabDirURLStreamHandlerService
 				contextName = StringPool.SLASH.concat(contextName);
 			}
 
-			parameters.put("Web-ContextPath", new String[] {contextName});
+			Map<String, String[]> parameters =
+				HashMapBuilder.<String, String[]>put(
+					"Bundle-SymbolicName", new String[] {bundleSymbolicName}
+				).put(
+					"Web-ContextPath", new String[] {contextName}
+				).build();
 
 			File generatedJarFile = _wabGenerator.generate(
 				_classLoader, warDir, parameters);

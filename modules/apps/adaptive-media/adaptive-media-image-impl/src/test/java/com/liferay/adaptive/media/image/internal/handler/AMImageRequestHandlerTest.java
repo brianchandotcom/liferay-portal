@@ -296,42 +296,34 @@ public class AMImageRequestHandlerTest {
 			AMImageConfigurationEntry amImageConfigurationEntry)
 		throws Exception {
 
+		Map<String, String> configurationEntryProperties =
+			amImageConfigurationEntry.getProperties();
 		AMAttribute<Object, String> configurationUuidAMAttribute =
 			AMAttribute.getConfigurationUuidAMAttribute();
+		AMAttribute<Object, Long> contentLengthAMAttribute =
+			AMAttribute.getContentLengthAMAttribute();
+		AMAttribute<Object, String> contentTypeAMAttribute =
+			AMAttribute.getContentTypeAMAttribute();
+		AMAttribute<Object, String> fileNameAMAttribute =
+			AMAttribute.getFileNameAMAttribute();
 
 		Map<String, String> properties = HashMapBuilder.put(
 			configurationUuidAMAttribute.getName(),
 			amImageConfigurationEntry.getUUID()
-		).build();
-
-		AMAttribute<Object, String> fileNameAMAttribute =
-			AMAttribute.getFileNameAMAttribute();
-
-		properties.put(
-			fileNameAMAttribute.getName(), fileVersion.getFileName());
-
-		AMAttribute<Object, String> contentTypeAMAttribute =
-			AMAttribute.getContentTypeAMAttribute();
-
-		properties.put(
-			contentTypeAMAttribute.getName(), fileVersion.getMimeType());
-
-		AMAttribute<Object, Long> contentLengthAMAttribute =
-			AMAttribute.getContentLengthAMAttribute();
-
-		properties.put(
+		).put(
 			contentLengthAMAttribute.getName(),
-			String.valueOf(fileVersion.getSize()));
-
-		Map<String, String> configurationEntryProperties =
-			amImageConfigurationEntry.getProperties();
-
-		properties.put(
-			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH.getName(),
-			configurationEntryProperties.get("max-width"));
-		properties.put(
+			String.valueOf(fileVersion.getSize())
+		).put(
+			contentTypeAMAttribute.getName(), fileVersion.getMimeType()
+		).put(
+			fileNameAMAttribute.getName(), fileVersion.getFileName()
+		).put(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT.getName(),
-			configurationEntryProperties.get("max-height"));
+			configurationEntryProperties.get("max-height")
+		).put(
+			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH.getName(),
+			configurationEntryProperties.get("max-width")
+		).build();
 
 		return new AMImage(
 			() -> {

@@ -2166,16 +2166,16 @@ public class StagingImpl implements Staging {
 		String backgroundTaskName = MapUtil.getString(
 			parameterMap, "name", exportImportConfiguration.getName());
 
+		boolean privateLayout = MapUtil.getBoolean(
+			settingsMap, "privateLayout");
+
 		Map<String, Serializable> taskContextMap =
 			HashMapBuilder.<String, Serializable>put(
 				"exportImportConfigurationId",
 				exportImportConfiguration.getExportImportConfigurationId()
+			).put(
+				"privateLayout", privateLayout
 			).build();
-
-		boolean privateLayout = MapUtil.getBoolean(
-			settingsMap, "privateLayout");
-
-		taskContextMap.put("privateLayout", privateLayout);
 
 		BackgroundTask backgroundTask =
 			_backgroundTaskManager.addBackgroundTask(
@@ -3265,12 +3265,6 @@ public class StagingImpl implements Staging {
 		String backgroundTaskName = MapUtil.getString(
 			parameterMap, "name", exportImportConfiguration.getName());
 
-		Map<String, Serializable> taskContextMap =
-			HashMapBuilder.<String, Serializable>put(
-				"exportImportConfigurationId",
-				exportImportConfiguration.getExportImportConfigurationId()
-			).build();
-
 		String remoteURL = _stagingURLHelper.buildRemoteURL(
 			remoteAddress, remotePort, remotePathContext, secureConnection);
 
@@ -3283,9 +3277,15 @@ public class StagingImpl implements Staging {
 			remoteURL, user.getLogin(), user.getPassword(),
 			user.isPasswordEncrypted());
 
-		taskContextMap.put("httpPrincipal", httpPrincipal);
-
-		taskContextMap.put("privateLayout", remotePrivateLayout);
+		Map<String, Serializable> taskContextMap =
+			HashMapBuilder.<String, Serializable>put(
+				"exportImportConfigurationId",
+				exportImportConfiguration.getExportImportConfigurationId()
+			).put(
+				"httpPrincipal", httpPrincipal
+			).put(
+				"privateLayout", remotePrivateLayout
+			).build();
 
 		BackgroundTask backgroundTask =
 			_backgroundTaskManager.addBackgroundTask(

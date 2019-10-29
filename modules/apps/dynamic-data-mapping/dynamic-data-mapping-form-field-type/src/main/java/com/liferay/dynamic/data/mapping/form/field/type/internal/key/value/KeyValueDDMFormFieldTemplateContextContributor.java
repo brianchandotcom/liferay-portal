@@ -51,17 +51,10 @@ public class KeyValueDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
-			"autoFocus",
-			GetterUtil.getBoolean(ddmFormField.getProperty("autoFocus"))
-		).build();
-
 		LocalizedValue placeholder = (LocalizedValue)ddmFormField.getProperty(
 			"placeholder");
 
 		Locale locale = ddmFormFieldRenderingContext.getLocale();
-
-		parameters.put("placeholder", getValueString(placeholder, locale));
 
 		Map<String, String> stringsMap = HashMapBuilder.put(
 			"keyLabel",
@@ -71,12 +64,19 @@ public class KeyValueDDMFormFieldTemplateContextContributor
 				"field-name")
 		).build();
 
-		parameters.put("strings", stringsMap);
-
 		LocalizedValue tooltip = (LocalizedValue)ddmFormField.getProperty(
 			"tooltip");
 
-		parameters.put("tooltip", getValueString(tooltip, locale));
+		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+			"autoFocus",
+			GetterUtil.getBoolean(ddmFormField.getProperty("autoFocus"))
+		).put(
+			"placeholder", getValueString(placeholder, locale)
+		).put(
+			"strings", stringsMap
+		).put(
+			"tooltip", getValueString(tooltip, locale)
+		).build();
 
 		return parameters;
 	}

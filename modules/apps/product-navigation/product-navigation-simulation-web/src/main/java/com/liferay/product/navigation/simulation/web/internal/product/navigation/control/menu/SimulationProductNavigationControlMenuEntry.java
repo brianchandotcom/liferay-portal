@@ -216,15 +216,15 @@ public class SimulationProductNavigationControlMenuEntry
 
 	private void _processBodyBottomTagBody(PageContext pageContext) {
 		try {
-			Map<String, String> values = HashMapBuilder.put(
-				"portletNamespace", _portletNamespace
-			).build();
-
 			MessageTag messageTag = new MessageTag();
 
 			messageTag.setKey("simulation");
 
-			values.put("sidebarMessage", messageTag.doTagAsString(pageContext));
+			Map<String, String> values = HashMapBuilder.put(
+				"portletNamespace", _portletNamespace
+			).put(
+				"sidebarMessage", messageTag.doTagAsString(pageContext)
+			).build();
 
 			messageTag = new MessageTag();
 

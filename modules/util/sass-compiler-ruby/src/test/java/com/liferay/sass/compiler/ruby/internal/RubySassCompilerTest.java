@@ -67,7 +67,7 @@ public class RubySassCompilerTest {
 
 				String expectedOutputFileName =
 					"expected" + File.separator +
-						fileName.replace("scss", "css");
+						fileName.replace(".scss", "-ruby.css");
 
 				File expectedOutputFile = new File(
 					clayCssDir, expectedOutputFileName);

@@ -16,6 +16,7 @@ package com.liferay.layout.service.base;
 
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.layout.service.persistence.LayoutClassedModelUsageFinder;
 import com.liferay.layout.service.persistence.LayoutClassedModelUsagePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -452,7 +453,14 @@ public abstract class LayoutClassedModelUsageLocalServiceBaseImpl
 		layoutClassedModelUsagePersistence;
 
 	@Reference
+	protected LayoutClassedModelUsageFinder layoutClassedModelUsageFinder;
+
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.LayoutLocalService
+		layoutLocalService;
 
 }

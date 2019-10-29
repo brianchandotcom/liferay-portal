@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
+<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.portal.search.admin.web.internal.constants.SearchAdminWebKeys" %><%@
@@ -28,16 +28,16 @@ page import="java.util.Map" %>
 <%
 FieldMappingsDisplayContext fieldMappingsDisplayContext = (FieldMappingsDisplayContext)request.getAttribute(SearchAdminWebKeys.FIELD_MAPPINGS_DISPLAY_CONTEXT);
 
-Map<String, Object> context = new HashMap<>();
+Map<String, Object> data = new HashMap<>();
 
-context.put("fieldMappingsJson", fieldMappingsDisplayContext.getFieldMappings());
-context.put("indexList", fieldMappingsDisplayContext.getFieldMappingIndexDisplayContexts());
-context.put("selectedIndexName", fieldMappingsDisplayContext.getSelectedIndexName());
-context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+data.put("fieldMappingsJson", fieldMappingsDisplayContext.getFieldMappings());
+data.put("indexList", fieldMappingsDisplayContext.getFieldMappingIndexDisplayContexts());
+data.put("selectedIndexName", fieldMappingsDisplayContext.getSelectedIndexName());
 %>
 
-<soy:component-renderer
-	context="<%= context %>"
-	module="js/FieldMappings.es"
-	templateNamespace="com.liferay.portal.search.admin.web.FieldMappings.render"
-/>
+<div>
+	<react:component
+		data="<%= data %>"
+		module="js/FieldMappings.es"
+	/>
+</div>

@@ -14,10 +14,17 @@
 
 package com.liferay.segments.field;
 
+import com.liferay.portal.kernel.util.CollatorUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
+
 import java.io.Serializable;
+
+import java.text.Collator;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Represents a segments criteria field.
@@ -42,11 +49,19 @@ public final class Field implements Comparable<Field>, Serializable {
 		_type = type;
 		_options = options;
 		_selectEntity = selectEntity;
+
+		Locale defaultLocale = LocaleThreadLocal.getThemeDisplayLocale();
+
+		if (defaultLocale == null) {
+			defaultLocale = LocaleUtil.getDefault();
+		}
+
+		_collator = CollatorUtil.getInstance(defaultLocale);
 	}
 
 	@Override
 	public int compareTo(Field field) {
-		return _name.compareTo(field._name);
+		return _collator.compare(_label, field._label);
 	}
 
 	public String getLabel() {
@@ -129,6 +144,7 @@ public final class Field implements Comparable<Field>, Serializable {
 
 	}
 
+	private Collator _collator;
 	private String _label;
 	private String _name;
 	private List<Option> _options;

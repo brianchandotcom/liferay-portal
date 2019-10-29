@@ -230,10 +230,12 @@ public class LayoutCTTest {
 	}
 
 	@Test
-	public void testPublishAvoidsConstraintViolations() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(_group);
+	public void testPublishAvoidsConstraintViolationsWithAddRemove()
+		throws Exception {
 
-		String friendlyURL = layout.getFriendlyURL();
+		Layout layout1 = LayoutTestUtil.addLayout(_group);
+
+		String friendlyURL = layout1.getFriendlyURL();
 
 		Layout layout2 = null;
 
@@ -241,7 +243,7 @@ public class LayoutCTTest {
 				CTCollectionThreadLocal.setCTCollectionId(
 					_ctCollection.getCtCollectionId())) {
 
-			_layoutLocalService.deleteLayout(layout);
+			_layoutLocalService.deleteLayout(layout1);
 
 			layout2 = LayoutTestUtil.addLayout(_group);
 
@@ -253,13 +255,56 @@ public class LayoutCTTest {
 		_ctProcessLocalService.addCTProcess(
 			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
-		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
+		Assert.assertNull(_layoutLocalService.fetchLayout(layout1.getPlid()));
 
 		layout2 = _layoutLocalService.fetchLayout(layout2.getPlid());
 
 		Assert.assertNotNull(layout2);
 
 		Assert.assertEquals(friendlyURL, layout2.getFriendlyURL());
+	}
+
+	@Test
+	public void testPublishAvoidsConstraintViolationsWithModifications()
+		throws Exception {
+
+		Layout layout1 = LayoutTestUtil.addLayout(_group);
+		Layout layout2 = LayoutTestUtil.addLayout(_group);
+
+		String friendlyURLA = layout1.getFriendlyURL();
+		String friendlyURLB = layout2.getFriendlyURL();
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			layout1.setFriendlyURL("/friendlyURLSwap");
+
+			layout1 = _layoutLocalService.updateLayout(layout1);
+
+			layout2.setFriendlyURL(friendlyURLA);
+
+			layout2 = _layoutLocalService.updateLayout(layout2);
+
+			layout1.setFriendlyURL(friendlyURLB);
+
+			layout1 = _layoutLocalService.updateLayout(layout1);
+		}
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		layout1 = _layoutLocalService.fetchLayout(layout1.getPlid());
+
+		Assert.assertNotNull(layout1);
+
+		layout2 = _layoutLocalService.fetchLayout(layout2.getPlid());
+
+		Assert.assertNotNull(layout2);
+
+		Assert.assertEquals(friendlyURLB, layout1.getFriendlyURL());
+
+		Assert.assertEquals(friendlyURLA, layout2.getFriendlyURL());
 	}
 
 	@Test

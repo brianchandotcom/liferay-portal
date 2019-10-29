@@ -30,7 +30,7 @@ const TPL_EDIT_DIALOG_TITLE = '{edit} {title} ({copy})';
 
 class ItemSelectorPreview extends Component {
 	static propTypes = {
-		container: PropTypes.node,
+		container: PropTypes.instanceOf(Element),
 		currentIndex: PropTypes.number.isRequired,
 		editItemURL: PropTypes.string.isRequired,
 		handleSelectedItem: PropTypes.func.isRequired,

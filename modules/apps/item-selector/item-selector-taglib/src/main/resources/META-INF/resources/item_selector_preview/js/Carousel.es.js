@@ -40,7 +40,7 @@ const InfoPanel = metadata => {
 		return (
 			<ClayTabs.Item
 				active={activeTabKeyValue == index}
-				key={group.title}
+				key={`tabItem-${index}`}
 				onClick={() => setActiveTabKeyValue(index)}
 			>
 				{group.title}
@@ -61,7 +61,7 @@ const InfoPanel = metadata => {
 		return (
 			<ClayTabs.TabPane
 				aria-labelledby={`tab-${index}`}
-				key={group.title}
+				key={`tabPane-${index}`}
 			>
 				<dl className="sidebar-dl sidebar-section">{itemContentTab}</dl>
 			</ClayTabs.TabPane>

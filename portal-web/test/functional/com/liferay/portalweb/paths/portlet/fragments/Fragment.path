@@ -162,7 +162,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_VERTICAL_SPACE</td>
-	<td>//div[contains(@class,'component-${key_fragmentName}')]//hr[contains(@class,'mb-${key_verticalSpace}')]</td>
+	<td>//div[contains(@class,'component-${key_fragmentName}')]//hr[contains(@class,'pb-${key_verticalSpace}')]</td>
 	<td></td>
 </tr>
 <!--FRAGMENT_HEADER-->

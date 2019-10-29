@@ -15,8 +15,11 @@
 package com.liferay.asset.constants;
 
 /**
- * @author Eudaldo Alonso
+ * @author     Eudaldo Alonso
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.layout.util.constants.LayoutClassedModelUsageConstants}
  */
+@Deprecated
 public class AssetEntryUsageConstants {
 
 	public static final int TYPE_DEFAULT = 0;

@@ -33,12 +33,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pavel Savinov
+ * @author     Pavel Savinov
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.layout.service.impl.LayoutClassedModelUsageLocalServiceImpl}
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.model.AssetEntryUsage",
 	service = AopService.class
 )
+@Deprecated
 public class AssetEntryUsageLocalServiceImpl
 	extends AssetEntryUsageLocalServiceBaseImpl {
 

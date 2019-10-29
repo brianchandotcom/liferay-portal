@@ -26,6 +26,16 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro deleteCP {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = "${depotName}");
+
+		AssertConfirm(value1 = "Removing a repository can affect sites that use the contents stored in it. Are you sure you want to continue removing this repository?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro editDepot {
 		DepotNavigator.gotoEdit(depotName = "${depotName}");
 
@@ -44,6 +54,12 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro viewDefaultCP {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No repositories were found.");
 	}
 
 	macro viewSearchResult {

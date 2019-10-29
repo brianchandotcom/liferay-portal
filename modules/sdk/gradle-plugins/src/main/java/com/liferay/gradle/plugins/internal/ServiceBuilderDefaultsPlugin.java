@@ -102,35 +102,7 @@ public class ServiceBuilderDefaultsPlugin
 
 				@Override
 				public void execute(Project project) {
-					File apiDir = buildServiceTask.getApiDir();
-
-					if (apiDir == null) {
-						return;
-					}
-
-					File apiProjectDir = GradleUtil.getRootDir(
-						project.file(apiDir), "bnd.bnd");
-
-					if (apiProjectDir != null) {
-						Project rootProject = project.getRootProject();
-
-						String relativePath = FileUtil.relativize(
-							apiProjectDir, rootProject.getProjectDir());
-
-						relativePath = relativePath.replace(
-							File.separatorChar, '/');
-
-						String apiProjectPath =
-							':' + relativePath.replace('/', ':');
-
-						Project apiProject = rootProject.findProject(
-							apiProjectPath);
-
-						if (apiProject != null) {
-							buildServiceTask.finalizedBy(
-								apiProjectPath + ":baseline");
-						}
-					}
+					_configureTaskBaseline(project, buildServiceTask);
 				}
 
 			});
@@ -180,6 +152,36 @@ public class ServiceBuilderDefaultsPlugin
 			});
 
 		return buildDBTask;
+	}
+
+	private void _configureTaskBaseline(
+		Project project, BuildServiceTask buildServiceTask) {
+
+		File apiDir = buildServiceTask.getApiDir();
+
+		if (apiDir == null) {
+			return;
+		}
+
+		File apiProjectDir = GradleUtil.getRootDir(
+			project.file(apiDir), "bnd.bnd");
+
+		if (apiProjectDir != null) {
+			Project rootProject = project.getRootProject();
+
+			String relativePath = FileUtil.relativize(
+				apiProjectDir, rootProject.getProjectDir());
+
+			relativePath = relativePath.replace(File.separatorChar, '/');
+
+			String apiProjectPath = ':' + relativePath.replace('/', ':');
+
+			Project apiProject = rootProject.findProject(apiProjectPath);
+
+			if (apiProject != null) {
+				buildServiceTask.finalizedBy(apiProjectPath + ":baseline");
+			}
+		}
 	}
 
 	private void _configureTaskBuildDBClasspath(

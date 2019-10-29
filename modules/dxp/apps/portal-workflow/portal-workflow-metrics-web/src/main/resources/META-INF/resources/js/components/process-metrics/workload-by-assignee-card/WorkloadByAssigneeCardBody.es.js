@@ -12,6 +12,7 @@
 import React, {useContext, useEffect, useState, useMemo} from 'react';
 
 import Icon from '../../../shared/components/Icon.es';
+import {getFiltersParam} from '../../../shared/components/filter/util/filterUtil.es';
 import {ErrorContext} from '../../../shared/components/request/Error.es';
 import {LoadingContext} from '../../../shared/components/request/Loading.es';
 import Request from '../../../shared/components/request/Request.es';
@@ -27,7 +28,16 @@ const Body = ({currentTab, processId, query}) => {
 	const {setLoading} = useContext(LoadingContext);
 	const [data, setData] = useState({});
 
-	const processSteps = useMemo(getSelectedProcessSteps, [query]);
+	const {assigneeTaskKeys} = useMemo(() => getFiltersParam(query), [query]);
+	const processSteps = useMemo(
+		() => getSelectedProcessSteps(assigneeTaskKeys),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[assigneeTaskKeys]
+	);
+	const processStepKey = useMemo(
+		() => (processSteps ? processSteps[0].key : null),
+		[processSteps]
+	);
 
 	useEffect(() => {
 		setLoading(true);
@@ -54,6 +64,7 @@ const Body = ({currentTab, processId, query}) => {
 						currentTab={currentTab}
 						items={data.items}
 						processId={processId}
+						processStepKey={processStepKey}
 					/>
 
 					<div className="mb-1 text-right">

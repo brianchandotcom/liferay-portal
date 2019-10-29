@@ -27,6 +27,7 @@ const Item = ({
 	onTimeTaskCount,
 	overdueTaskCount,
 	processId,
+	processStepKey,
 	taskCount
 }) => {
 	const currentCount =
@@ -47,6 +48,7 @@ const Item = ({
 		const filterParams = {
 			[filterConstants.assignees]: [id],
 			[filterConstants.processStatus]: [processStatusConstants.pending],
+			[filterConstants.processStep]: [processStepKey],
 			[filterConstants.slaStatus]: [slaStatusConstants[currentTab]]
 		};
 
@@ -87,7 +89,7 @@ const Item = ({
 	);
 };
 
-const Table = ({currentTab, items = [], processId}) => (
+const Table = ({currentTab, items = [], processId, processStepKey}) => (
 	<div className="mb-3 table-fit-panel">
 		<table className="table table-autofit table-hover">
 			<tbody>
@@ -97,6 +99,7 @@ const Table = ({currentTab, items = [], processId}) => (
 						currentTab={currentTab}
 						key={index}
 						processId={processId}
+						processStepKey={processStepKey}
 					/>
 				))}
 			</tbody>

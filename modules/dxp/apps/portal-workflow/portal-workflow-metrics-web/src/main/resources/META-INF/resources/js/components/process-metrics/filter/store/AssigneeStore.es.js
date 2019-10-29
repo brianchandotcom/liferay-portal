@@ -35,7 +35,7 @@ const useAssignee = (assigneeKeys, processId) => {
 				const items = data.items || [];
 
 				const assignees = [
-					getUnassigned(assigneeKeys),
+					getUnassigned(assigneeKeys, data.totalCount),
 					...items.map(item => {
 						const itemKey = String(item.id);
 
@@ -94,9 +94,9 @@ const useAssignee = (assigneeKeys, processId) => {
 	};
 };
 
-const getUnassigned = assigneeKeys => {
+const getUnassigned = (assigneeKeys, totalCount) => {
 	const unassigned = {
-		dividerAfter: true,
+		dividerAfter: !!totalCount,
 		id: -1,
 		key: '-1',
 		name: Liferay.Language.get('unassigned')

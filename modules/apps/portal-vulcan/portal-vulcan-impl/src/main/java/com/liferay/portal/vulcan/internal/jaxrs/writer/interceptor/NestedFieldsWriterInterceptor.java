@@ -172,7 +172,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 						_getNestedFieldValue(
 							fieldName, item, nestedFieldsContext,
 							resourceMethod,
-							_getResourceMethodArgNameTypes(
+							_getResourceMethodArgNameTypeEntries(
 								resourceClass, resourceMethod),
 							serviceObjects));
 
@@ -263,7 +263,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		private Object[] _getMethodArgs(
 				String fieldName, Object item,
 				NestedFieldsContext nestedFieldsContext, Method resourceMethod,
-				Map.Entry<String, Class<?>>[] resourceMethodArgNameTypes)
+				Map.Entry<String, Class<?>>[] resourceMethodArgNameTypeEntries)
 			throws Exception {
 
 			Object[] args = new Object[resourceMethod.getParameterCount()];
@@ -275,17 +275,17 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 				nestedFieldsContext.getQueryParameters();
 
 			for (int i = 0; i < resourceMethod.getParameterCount(); i++) {
-				if (resourceMethodArgNameTypes[i] == null) {
+				if (resourceMethodArgNameTypeEntries[i] == null) {
 					continue;
 				}
 
 				args[i] = _getMethodArgValueFromRequest(
 					fieldName, nestedFieldsContext, pathParameters,
-					queryParameters, resourceMethodArgNameTypes[i]);
+					queryParameters, resourceMethodArgNameTypeEntries[i]);
 
 				if (args[i] == null) {
 					args[i] = _getMethodArgValueFromItem(
-						item, resourceMethodArgNameTypes[i]);
+						item, resourceMethodArgNameTypeEntries[i]);
 				}
 			}
 
@@ -294,7 +294,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 		private Object _getMethodArgValueFromItem(
 				Object item,
-				Map.Entry<String, Class<?>> resourceMethodArgNameType)
+				Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry)
 			throws Exception {
 
 			List<Class> itemClasses = new ArrayList<>();
@@ -308,7 +308,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			for (Class<?> curItemClass : itemClasses) {
 				try {
 					Field itemField = curItemClass.getDeclaredField(
-						resourceMethodArgNameType.getKey());
+						resourceMethodArgNameTypeEntry.getKey());
 
 					if (itemField != null) {
 						itemField.setAccessible(true);
@@ -330,12 +330,12 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			String fieldName, NestedFieldsContext nestedFieldsContext,
 			MultivaluedMap<String, String> pathParameters,
 			MultivaluedMap<String, String> queryParameters,
-			Map.Entry<String, Class<?>> resourceMethodArgNameType) {
+			Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry) {
 
 			Object argValue = null;
 
 			Class<?> resourceMethodArgType =
-				resourceMethodArgNameType.getValue();
+				resourceMethodArgNameTypeEntry.getValue();
 
 			Message message = _getNestedFieldsAwareMessage(
 				fieldName, nestedFieldsContext.getMessage());
@@ -349,14 +349,15 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			}
 			else {
 				argValue = _convert(
-					pathParameters.getFirst(resourceMethodArgNameType.getKey()),
+					pathParameters.getFirst(
+						resourceMethodArgNameTypeEntry.getKey()),
 					resourceMethodArgType);
 
 				if (argValue == null) {
 					argValue = _convert(
 						queryParameters.getFirst(
 							fieldName + StringPool.PERIOD +
-								resourceMethodArgNameType.getKey()),
+								resourceMethodArgNameTypeEntry.getKey()),
 						resourceMethodArgType);
 				}
 			}
@@ -378,7 +379,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		private Object _getNestedFieldValue(
 				String fieldName, Object item,
 				NestedFieldsContext nestedFieldsContext, Method resourceMethod,
-				Map.Entry<String, Class<?>>[] resourceMethodArgNameTypes,
+				Map.Entry<String, Class<?>>[] resourceMethodArgNameTypeEntries,
 				ServiceObjects<Object> serviceObjects)
 			throws Exception {
 
@@ -390,7 +391,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 				Object[] args = _getMethodArgs(
 					fieldName, item, nestedFieldsContext, resourceMethod,
-					resourceMethodArgNameTypes);
+					resourceMethodArgNameTypeEntries);
 
 				return resourceMethod.invoke(resource, args);
 			}
@@ -399,14 +400,15 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			}
 		}
 
-		private Map.Entry<String, Class<?>>[] _getResourceMethodArgNameTypes(
-			Class<?> resourceClass, Method resourceMethod) {
+		private Map.Entry<String, Class<?>>[]
+			_getResourceMethodArgNameTypeEntries(
+				Class<?> resourceClass, Method resourceMethod) {
 
 			Parameter[] resourceMethodParameters =
 				resourceMethod.getParameters();
 
 			@SuppressWarnings("unchecked")
-			Map.Entry<String, Class<?>>[] resourceMethodArgNameTypes =
+			Map.Entry<String, Class<?>>[] resourceMethodArgNameTypeEntries =
 				new Map.Entry[resourceMethodParameters.length];
 
 			Parameter[] parentResourceMethodParameters = null;
@@ -445,7 +447,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 					Context context = parameter.getAnnotation(Context.class);
 
 					if (context != null) {
-						resourceMethodArgNameTypes[i] =
+						resourceMethodArgNameTypeEntries[i] =
 							new AbstractMap.SimpleImmutableEntry<>(
 								parameter.getName(), parameterType);
 					}
@@ -454,7 +456,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 						PathParam.class);
 
 					if (pathParam != null) {
-						resourceMethodArgNameTypes[i] =
+						resourceMethodArgNameTypeEntries[i] =
 							new AbstractMap.SimpleImmutableEntry<>(
 								pathParam.value(), parameterType);
 					}
@@ -463,19 +465,19 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 						QueryParam.class);
 
 					if (queryParam != null) {
-						resourceMethodArgNameTypes[i] =
+						resourceMethodArgNameTypeEntries[i] =
 							new AbstractMap.SimpleImmutableEntry<>(
 								queryParam.value(), parameterType);
 					}
 				}
 				else {
-					resourceMethodArgNameTypes[i] =
+					resourceMethodArgNameTypeEntries[i] =
 						new AbstractMap.SimpleImmutableEntry<>(
 							nestedFieldId.value(), parameterType);
 				}
 			}
 
-			return resourceMethodArgNameTypes;
+			return resourceMethodArgNameTypeEntries;
 		}
 
 		private void _resetNestedAwareMessage(Message message) {

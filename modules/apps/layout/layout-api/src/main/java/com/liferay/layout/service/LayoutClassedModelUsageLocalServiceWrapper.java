@@ -71,12 +71,12 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 	public com.liferay.layout.model.LayoutClassedModelUsage
 		addLayoutClassedModelUsage(
 			long groupId, long classNameId, long classPK, String containerKey,
-			long containerType, long plid, int type,
+			long containerType, long plid,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return _layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			groupId, classNameId, classPK, containerKey, containerType, plid,
-			type, serviceContext);
+			serviceContext);
 	}
 
 	/**

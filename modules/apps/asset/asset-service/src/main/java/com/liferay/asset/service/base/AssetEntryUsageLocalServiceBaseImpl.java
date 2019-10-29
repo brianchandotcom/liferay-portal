@@ -58,8 +58,11 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.asset.service.impl.AssetEntryUsageLocalServiceImpl
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ com.liferay.layout.service.impl.LayoutClassedModelUsageLocalServiceImpl}
  * @generated
  */
+@Deprecated
 public abstract class AssetEntryUsageLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements AopService, AssetEntryUsageLocalService,

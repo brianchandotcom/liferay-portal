@@ -33,8 +33,11 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ com.liferay.layout.service.persistence.impl.LayoutClassedModelUsageFinderImpl}
  * @generated
  */
+@Deprecated
 public abstract class AssetEntryUsageFinderBaseImpl
 	extends BasePersistenceImpl<AssetEntryUsage> {
 

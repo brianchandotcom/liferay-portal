@@ -28,8 +28,11 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see AssetEntryUsage
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ com.liferay.layout.model.impl.LayoutClassedModelUsageImpl}
  * @generated
  */
+@Deprecated
 public class AssetEntryUsageWrapper
 	extends BaseModelWrapper<AssetEntryUsage>
 	implements AssetEntryUsage, ModelWrapper<AssetEntryUsage> {

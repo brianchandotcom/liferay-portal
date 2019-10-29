@@ -24,7 +24,6 @@ import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.tasks.BuildDBTask;
-import com.liferay.gradle.util.FileUtil;
 
 import groovy.lang.Closure;
 
@@ -96,16 +95,6 @@ public class ServiceBuilderDefaultsPlugin
 				}
 
 			});
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					_configureTaskBuildServiceTask(project, buildServiceTask);
-				}
-
-			});
 	}
 
 	@Override
@@ -152,40 +141,6 @@ public class ServiceBuilderDefaultsPlugin
 			});
 
 		return buildDBTask;
-	}
-
-	private void _configureTaskBuildServiceTask(
-		Project project, BuildServiceTask buildServiceTask) {
-
-		File apiDir = buildServiceTask.getApiDir();
-
-		if (apiDir == null) {
-			return;
-		}
-
-		File apiProjectDir = GradleUtil.getRootDir(
-			project.file(apiDir), "bnd.bnd");
-
-		if (apiProjectDir == null) {
-			return;
-		}
-
-		Project rootProject = project.getRootProject();
-
-		String relativePath = FileUtil.relativize(
-			apiProjectDir, rootProject.getProjectDir());
-
-		relativePath = relativePath.replace(File.separatorChar, '/');
-
-		String apiProjectPath = ':' + relativePath.replace('/', ':');
-
-		Project apiProject = rootProject.findProject(apiProjectPath);
-
-		if (apiProject == null) {
-			return;
-		}
-
-		buildServiceTask.finalizedBy(apiProjectPath + ":baseline");
 	}
 
 	private void _configureTaskBuildDBClasspath(

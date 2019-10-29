@@ -368,7 +368,11 @@ class FragmentEditableField extends PortletBase {
 				item.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 		);
 
-		return fragmentEntryLinkIsActive || siblingIsActive;
+		return (
+			!this.hasUpdatePermissions ||
+			fragmentEntryLinkIsActive ||
+			siblingIsActive
+		);
 	}
 
 	/**

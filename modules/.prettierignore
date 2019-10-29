@@ -18,9 +18,9 @@
 ##
 
 	#
-	# These files defines the copyright headers the linter should add
+	# These files define the copyright headers the linter should add
 	# to any file that does not have them. In order to produce the
-	# desired result when prepended, it must have a trailing blank
+	# desired result when prepended, each must have a trailing blank
 	# line. Prettier would remove the blank line if we did not ignore it
 	# here.
 	#

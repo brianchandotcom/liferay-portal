@@ -609,6 +609,28 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</sequential>
 	</macrodef>
 
+	<macrodef name="unzip-ltr-linear-regression-model">
+		<sequential>
+			<if>
+				<not>
+					<available file="${liferay.home}/${elasticsearch.ltr-linear-regression-model.zip.name}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${liferay.home}/${elasticsearch.ltr-linear-regression-model.zip.name}"
+						skipChecksum="true"
+						src="${elasticsearch.ltr-linear-regression-model.zip.url}"
+					/>
+				</then>
+			</if>
+
+			<unzip
+				dest="${liferay.home}/data/elasticsearch7/repo"
+				src="${liferay.home}/${elasticsearch.ltr-linear-regression-model.zip.name}"
+			/>
+		</sequential>
+	</macrodef>
+
 	<target name="add-boston-dataset-index">
 		<unzip-boston-dataset-index />
 

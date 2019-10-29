@@ -73,9 +73,9 @@ public class JSONUtilCheck extends BaseCheck {
 
 		DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
 
-		FullIdent fullIdent = FullIdent.createFullIdent(firstChildDetailAST);
+		FullIdent fullIdent1 = FullIdent.createFullIdent(firstChildDetailAST);
 
-		String methodName = fullIdent.getText();
+		String methodName = fullIdent1.getText();
 
 		if (!methodName.equals("JSONFactoryUtil.createJSONArray") &&
 			!methodName.equals("JSONFactoryUtil.createJSONObject")) {
@@ -96,14 +96,14 @@ public class JSONUtilCheck extends BaseCheck {
 				return;
 			}
 
-			int lineNumber = _getMethodCallLineNumber(
+			FullIdent fullIdent2 = _getMethodCallFullIdent(
 				nextSiblingDetailAST, variableName, "put");
 
-			if (lineNumber != -1) {
+			if (fullIdent2 != null) {
 				log(
-					lineNumber, _MSG_USE_JSON_UTIL_PUT, methodName,
-					fullIdent.getLineNo(), variableName + ".put", lineNumber,
-					"JSONUtil.put");
+					detailAST, _MSG_USE_JSON_UTIL_PUT, methodName,
+					fullIdent1.getLineNo(), variableName + ".put",
+					fullIdent2.getLineNo(), "JSONUtil.put");
 			}
 
 			if (_containsVariableName(nextSiblingDetailAST, variableName)) {
@@ -191,11 +191,11 @@ public class JSONUtilCheck extends BaseCheck {
 		return null;
 	}
 
-	private int _getMethodCallLineNumber(
+	private FullIdent _getMethodCallFullIdent(
 		DetailAST detailAST, String variableName, String methodName) {
 
 		if (detailAST.getType() != TokenTypes.EXPR) {
-			return -1;
+			return null;
 		}
 
 		DetailAST firstChildDetailAST = detailAST.getFirstChild();
@@ -204,7 +204,7 @@ public class JSONUtilCheck extends BaseCheck {
 			if ((firstChildDetailAST == null) ||
 				(firstChildDetailAST.getType() != TokenTypes.METHOD_CALL)) {
 
-				return -1;
+				return null;
 			}
 
 			firstChildDetailAST = firstChildDetailAST.getFirstChild();
@@ -215,11 +215,11 @@ public class JSONUtilCheck extends BaseCheck {
 			if (Objects.equals(
 					fullIdent.getText(), variableName + "." + methodName)) {
 
-				return fullIdent.getLineNo();
+				return fullIdent;
 			}
 
 			if (firstChildDetailAST.getType() != TokenTypes.DOT) {
-				return -1;
+				return null;
 			}
 
 			firstChildDetailAST = firstChildDetailAST.getFirstChild();

@@ -24,6 +24,22 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="send-sighup-to-upgrade-process">
+		<sequential>
+				<exec executable="/bin/bash" failonerror="true" logError="true" output="true">
+					<arg value="-c" />
+					<arg value="pkill -1 -f db_upgrade" />
+				</exec>
+
+				<exec executable="/bin/bash" failonerror="true" logError="true" output="true">
+					<arg value="-c" />
+					<arg value="pkill -1 -f com.liferay.portal.tools.db.upgrade.client.jar" />
+				</exec>
+
+				<echo message="SIGHUP signals sent to db_upgrade script and upgrade client jar." />
+		</sequential>
+	</macrodef>
+
 	<target name="check-upgrade-client-additional-settings">
 		<get-database-upgrade-client-paths />
 
@@ -227,17 +243,7 @@
 
 				<fail if="upgrade.startfailed" message="Upgrade has failed to start." />
 
-				<exec executable="/bin/bash" failonerror="true" logError="true" output="true">
-					<arg value="-c" />
-					<arg value="pkill -1 -f db_upgrade" />
-				</exec>
-
-				<exec executable="/bin/bash" failonerror="true" logError="true" output="true">
-					<arg value="-c" />
-					<arg value="pkill -1 -f com.liferay.portal.tools.db.upgrade.client.jar" />
-				</exec>
-
-				<echo message="SIGHUP signals sent to db_upgrade script and upgrade client jar." />
+				<send-sighup-to-upgrade-process />
 
 				<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.failed">
 					<resourcecontains

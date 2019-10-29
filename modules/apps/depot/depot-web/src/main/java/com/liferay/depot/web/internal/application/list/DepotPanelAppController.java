@@ -21,6 +21,7 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -84,6 +85,10 @@ public class DepotPanelAppController {
 		if (DLPortletKeys.DOCUMENT_LIBRARY_ADMIN.equals(
 				panelApp.getPortletId())) {
 
+			return true;
+		}
+
+		if (JournalPortletKeys.JOURNAL.equals(panelApp.getPortletId())) {
 			return true;
 		}
 

@@ -96,7 +96,7 @@ renderResponse.setTitle(headerTitle);
 				%>
 
 				<div class="form-group">
-					<aui:input label="site" name="toGroupName" type="resource" value="<%= toGroupName %>" />
+					<aui:input label="site-or-repository" name="toGroupName" type="resource" value="<%= toGroupName %>" />
 
 					<aui:button name="selectGroupButton" value="select" />
 				</div>

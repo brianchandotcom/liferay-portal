@@ -835,7 +835,8 @@ definition {
 		DDLNavigator.gotoListRecords(ddlListName = "List Name");
 
 		DDLRecord.viewFirstFieldCP(
-			ddlRecordFieldData = "4/1/17",
+			ddlRecordFieldData = "4/1/2017",
+			ddlRecordFieldData_1 = "4/1/17",
 			field = "Date",
 			fieldFieldLabel = "Date");
 	}

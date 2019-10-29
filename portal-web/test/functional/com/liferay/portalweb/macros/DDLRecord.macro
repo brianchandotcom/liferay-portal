@@ -742,6 +742,13 @@ definition {
 				locator1 = "DDLRecord#FIELD_1",
 				value1 = "${ddlRecordFieldData}");
 		}
+
+		if ("${field}" == "Date") {
+			AssertTextEquals(
+				locator1 = "DDLRecord#FIELD_1",
+				value1 = "${fieldFieldLabel} ${ddlRecordFieldData_1}");
+		}
+
 		else {
 			AssertTextEquals(
 				locator1 = "DDLRecord#FIELD_1",

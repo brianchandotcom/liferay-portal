@@ -102,7 +102,7 @@ public class ServiceBuilderDefaultsPlugin
 
 				@Override
 				public void execute(Project project) {
-					_configureTaskBaseline(project, buildServiceTask);
+					_configureTaskBuildServiceTask(project, buildServiceTask);
 				}
 
 			});
@@ -154,7 +154,7 @@ public class ServiceBuilderDefaultsPlugin
 		return buildDBTask;
 	}
 
-	private void _configureTaskBaseline(
+	private void _configureTaskBuildServiceTask(
 		Project project, BuildServiceTask buildServiceTask) {
 
 		File apiDir = buildServiceTask.getApiDir();

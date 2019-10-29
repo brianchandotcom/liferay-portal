@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,6 +47,7 @@ import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.exception.SegmentsEntryNameException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
+import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.base.SegmentsEntryLocalServiceBaseImpl;
 
@@ -197,6 +197,11 @@ public class SegmentsEntryLocalServiceImpl
 		// Segments rels
 
 		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
+			segmentsEntry.getSegmentsEntryId());
+
+		// Segments roles
+
+		_segmentsEntryRoleLocalService.deleteSegmentsEntryRoles(
 			segmentsEntry.getSegmentsEntryId());
 
 		return segmentsEntry;
@@ -472,6 +477,9 @@ public class SegmentsEntryLocalServiceImpl
 
 	@Reference
 	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
+
+	@Reference
+	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

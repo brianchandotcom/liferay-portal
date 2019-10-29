@@ -14,9 +14,14 @@
 
 package com.liferay.analytics.settings.web.internal.portal.settings.configuration.admin.display;
 
+import com.liferay.analytics.settings.web.internal.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.web.internal.constants.AnalyticsSettingsWebKeys;
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -24,9 +29,10 @@ import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -62,15 +68,34 @@ public abstract class BaseAnalyticsConfigurationScreen
 			RequestDispatcher requestDispatcher =
 				servletContext.getRequestDispatcher(getJspPath());
 
+			setHttpServletRequestAttributes(httpServletRequest);
+
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (ServletException se) {
-			throw new IOException("Unable to render " + getJspPath(), se);
+		catch (Exception e) {
+			throw new IOException("Unable to render " + getJspPath(), e);
 		}
 	}
 
 	protected abstract String getJspPath();
 
 	protected abstract ServletContext getServletContext();
+
+	protected void setHttpServletRequestAttributes(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		httpServletRequest.setAttribute(
+			AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION,
+			configurationProvider.getCompanyConfiguration(
+				AnalyticsConfiguration.class, themeDisplay.getCompanyId()));
+	}
+
+	@Reference
+	protected ConfigurationProvider configurationProvider;
 
 }

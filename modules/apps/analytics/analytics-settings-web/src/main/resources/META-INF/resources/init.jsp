@@ -21,7 +21,9 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
+<%@ page import="com.liferay.analytics.settings.web.internal.configuration.AnalyticsConfiguration" %><%@
+page import="com.liferay.analytics.settings.web.internal.constants.AnalyticsSettingsWebKeys" %><%@
+page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.service.GroupServiceUtil" %><%@

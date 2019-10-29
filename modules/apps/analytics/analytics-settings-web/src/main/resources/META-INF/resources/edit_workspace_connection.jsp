@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
+%>
+
 <portlet:actionURL name="/analytics/edit_workspace_connection" var="editWorkspaceConnectionURL" />
 
 <div class="sheet sheet-lg">
@@ -29,7 +33,7 @@
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<aui:fieldset>
-			<aui:input label="analytics-cloud-token" name="token" placeholder="paste-token-here" />
+			<aui:input label="analytics-cloud-token" name="token" placeholder="paste-token-here" value='<%= (analyticsConfiguration != null) ? analyticsConfiguration.token() : "" %>' />
 
 			<div class="form-text">
 				<liferay-ui:message key="analytics-cloud-token-help" />

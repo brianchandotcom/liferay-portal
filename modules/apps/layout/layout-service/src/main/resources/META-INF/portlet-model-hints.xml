@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.layout.model.LayoutClassedModelUsage">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="layoutClassedModelUsageId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="containerKey" type="String" />
+		<field name="containerType" type="long" />
+		<field name="plid" type="long" />
+		<field name="type" type="int" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+</model-hints>

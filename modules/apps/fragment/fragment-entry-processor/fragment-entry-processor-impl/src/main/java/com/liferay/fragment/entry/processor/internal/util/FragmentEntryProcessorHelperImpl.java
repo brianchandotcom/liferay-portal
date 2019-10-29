@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -267,9 +268,9 @@ public class FragmentEntryProcessorHelperImpl
 	private String _getEditableValueBySegmentsExperienceAndLocale(
 		JSONObject jsonObject, Locale locale, long[] segmentsExperienceIds) {
 
-		for (long segmentsExperienceId : segmentsExperienceIds) {
+		if (ArrayUtil.isNotEmpty(segmentsExperienceIds)) {
 			String value = _getSegmentsExperienceValue(
-				jsonObject, locale, segmentsExperienceId);
+				jsonObject, locale, segmentsExperienceIds[0]);
 
 			if (Validator.isNotNull(value)) {
 				return value;

@@ -87,9 +87,7 @@ definition {
 
 		DMFolder.addCP(dmFolderName = "DM Folder Name");
 
-		DMFolder.deleteCP(
-			dmFolderName = "DM Folder Name",
-			recycleBinDisabled = "true");
+		DMFolder.deleteCP(dmFolderName = "DM Folder Name");
 
 		DMDocument.viewDefaultCP();
 	}

@@ -90,12 +90,13 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 	<liferay-ui:input-localized
 		availableLocales="<%= journalEditArticleDisplayContext.getAvailableLocales() %>"
 		cssClass="form-control"
-		defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultLanguageId() %>"
+		defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
 		editorName="alloyeditor"
 		formName="fm"
 		ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
 		name="descriptionMapAsXML"
 		placeholder="description"
+		selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"
 		type="editor"
 		xml="<%= (article != null) ? article.getDescriptionMapAsXML() : StringPool.BLANK %>"
 	/>

@@ -49,7 +49,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<aui:input name="articleURL" type="hidden" value="<%= editArticleRenderURL %>" />
 	<aui:input name="ddmStructureId" type="hidden" />
 	<aui:input name="ddmTemplateId" type="hidden" />
-	<aui:input name="languageId" type="hidden" value="<%= journalEditArticleDisplayContext.getDefaultLanguageId() %>" />
+	<aui:input name="languageId" type="hidden" value="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-article">
@@ -61,7 +61,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 					%>
 
-					<aui:input autoFocus="<%= (article == null) || article.isNew() %>" cssClass="form-control-inline" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultLanguageId() %>" label="" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' type="text" wrapperCssClass="article-content-title mb-0" />
+					<aui:input autoFocus="<%= (article == null) || article.isNew() %>" cssClass="form-control-inline" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" label="" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" type="text" wrapperCssClass="article-content-title mb-0" />
 				</li>
 				<li class="tbar-item">
 					<div class="journal-article-button-row tbar-section text-right">
@@ -140,7 +140,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<div class="contextual-sidebar-content">
 		<div class="container-fluid container-fluid-max-xl container-view">
 			<div class="sheet sheet-lg">
-				<aui:model-context bean="<%= article %>" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultLanguageId() %>" model="<%= JournalArticle.class %>" />
+				<aui:model-context bean="<%= article %>" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" model="<%= JournalArticle.class %>" />
 
 				<liferay-ui:error exception="<%= ArticleContentException.class %>" message="please-enter-valid-content" />
 				<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-web-content-size-allowed" />
@@ -247,7 +247,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 						classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 						classPK="<%= ddmStructure.getStructureId() %>"
 						ddmFormValues="<%= journalEditArticleDisplayContext.getDDMFormValues(ddmStructure) %>"
-						defaultEditLocale="<%= LocaleUtil.fromLanguageId(journalEditArticleDisplayContext.getDefaultLanguageId()) %>"
+						defaultEditLocale="<%= LocaleUtil.fromLanguageId(journalEditArticleDisplayContext.getSelectedLanguageId()) %>"
 						defaultLocale="<%= LocaleUtil.fromLanguageId(journalEditArticleDisplayContext.getDefaultArticleLanguageId()) %>"
 						documentLibrarySelectorURL="<%= String.valueOf(journalItemSelectorHelper.getDocumentLibrarySelectorURL()) %>"
 						groupId="<%= journalEditArticleDisplayContext.getGroupId() %>"

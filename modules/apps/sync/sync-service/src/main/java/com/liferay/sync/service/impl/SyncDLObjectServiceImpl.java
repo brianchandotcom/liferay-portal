@@ -1398,7 +1398,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
 			SyncServiceConfigurationValues.SYNC_CLIENT_POLL_INTERVAL);
 
-		Map<String, String> portletPreferencesMap = HashMapBuilder.put(
+		return HashMapBuilder.put(
 			SyncServiceConfigurationKeys.
 				SYNC_CLIENT_AUTHENTICATION_RETRY_INTERVAL,
 			String.valueOf(
@@ -1423,8 +1423,6 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
 			String.valueOf(pollInterval)
 		).build();
-
-		return portletPreferencesMap;
 	}
 
 	protected boolean hasModelPermission(long groupId, String name)

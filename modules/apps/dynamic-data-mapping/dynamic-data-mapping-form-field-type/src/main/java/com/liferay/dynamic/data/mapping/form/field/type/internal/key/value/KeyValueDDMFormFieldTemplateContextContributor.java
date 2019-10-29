@@ -67,7 +67,7 @@ public class KeyValueDDMFormFieldTemplateContextContributor
 		LocalizedValue tooltip = (LocalizedValue)ddmFormField.getProperty(
 			"tooltip");
 
-		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+		return HashMapBuilder.<String, Object>put(
 			"autoFocus",
 			GetterUtil.getBoolean(ddmFormField.getProperty("autoFocus"))
 		).put(
@@ -77,8 +77,6 @@ public class KeyValueDDMFormFieldTemplateContextContributor
 		).put(
 			"tooltip", getValueString(tooltip, locale)
 		).build();
-
-		return parameters;
 	}
 
 	protected Locale getDisplayLocale(HttpServletRequest httpServletRequest) {

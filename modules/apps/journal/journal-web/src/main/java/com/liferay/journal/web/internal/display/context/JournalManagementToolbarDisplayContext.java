@@ -197,28 +197,24 @@ public class JournalManagementToolbarDisplayContext
 			"folderId",
 			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 
-		Map<String, Object> componentContext =
-			HashMapBuilder.<String, Object>put(
-				"addArticleURL", addArticleURL.toString()
-			).put(
-				"folderId",
-				String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)
-			).put(
-				"moveEntriesURL", moveEntriesURL.toString()
-			).put(
-				"openViewMoreStructuresURL",
-				openViewMoreStructuresURL.toString()
-			).put(
-				"selectEntityURL", selectEntityURL.toString()
-			).put(
-				"trashEnabled",
-				_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())
-			).put(
-				"viewDDMStructureArticlesURL",
-				viewDDMStructureArticlesURL.toString()
-			).build();
-
-		return componentContext;
+		return HashMapBuilder.<String, Object>put(
+			"addArticleURL", addArticleURL.toString()
+		).put(
+			"folderId",
+			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+		).put(
+			"moveEntriesURL", moveEntriesURL.toString()
+		).put(
+			"openViewMoreStructuresURL", openViewMoreStructuresURL.toString()
+		).put(
+			"selectEntityURL", selectEntityURL.toString()
+		).put(
+			"trashEnabled",
+			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())
+		).put(
+			"viewDDMStructureArticlesURL",
+			viewDDMStructureArticlesURL.toString()
+		).build();
 	}
 
 	@Override

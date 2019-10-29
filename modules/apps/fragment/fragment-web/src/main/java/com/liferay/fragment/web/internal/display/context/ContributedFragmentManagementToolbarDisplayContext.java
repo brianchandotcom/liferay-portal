@@ -109,16 +109,13 @@ public class ContributedFragmentManagementToolbarDisplayContext
 			"mvcRenderCommandName", "/fragment/select_fragment_collection");
 		selectFragmentCollectionURL.setWindowState(LiferayWindowState.POP_UP);
 
-		Map<String, Object> componentContext =
-			HashMapBuilder.<String, Object>put(
-				"copyContributedFragmentEntryURL",
-				copyContributedFragmentEntryURL.toString()
-			).put(
-				"selectFragmentCollectionURL",
-				selectFragmentCollectionURL.toString()
-			).build();
-
-		return componentContext;
+		return HashMapBuilder.<String, Object>put(
+			"copyContributedFragmentEntryURL",
+			copyContributedFragmentEntryURL.toString()
+		).put(
+			"selectFragmentCollectionURL",
+			selectFragmentCollectionURL.toString()
+		).build();
 	}
 
 	@Override

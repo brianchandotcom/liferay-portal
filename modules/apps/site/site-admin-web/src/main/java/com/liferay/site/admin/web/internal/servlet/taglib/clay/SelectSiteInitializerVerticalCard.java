@@ -73,7 +73,7 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 			checkboxFieldName = "layoutSetVisibilityPrivate";
 		}
 
-		Map<String, String> data = HashMapBuilder.put(
+		return HashMapBuilder.put(
 			"add-site-url", addSiteURL.toString()
 		).put(
 			"checkbox-field-name", checkboxFieldName
@@ -81,8 +81,6 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 			"layout-set-prototype-id",
 			String.valueOf(_siteInitializerItem.getLayoutSetPrototypeId())
 		).build();
-
-		return data;
 	}
 
 	@Override

@@ -300,15 +300,13 @@ public class RoleDisplayContext {
 		editRoleURL.setParameter("redirect", backURL);
 		editRoleURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
-		Map<String, String> tabsURLs = HashMapBuilder.put(
+		return HashMapBuilder.put(
 			"assignees", assignMembersURL.toString()
 		).put(
 			"define-permissions", definePermissionsURL.toString()
 		).put(
 			"details", editRoleURL.toString()
 		).build();
-
-		return tabsURLs;
 	}
 
 	private static final String[] _ASSIGNEE_TYPE_NAMES = {

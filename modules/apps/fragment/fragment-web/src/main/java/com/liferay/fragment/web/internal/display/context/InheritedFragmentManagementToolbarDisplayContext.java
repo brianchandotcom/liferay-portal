@@ -119,19 +119,16 @@ public class InheritedFragmentManagementToolbarDisplayContext
 			"mvcRenderCommandName", "/fragment/select_fragment_collection");
 		selectFragmentCollectionURL.setWindowState(LiferayWindowState.POP_UP);
 
-		Map<String, Object> componentContext =
-			HashMapBuilder.<String, Object>put(
-				"copyFragmentEntryURL", copyFragmentEntryURL.toString()
-			).put(
-				"exportFragmentEntriesURL", exportFragmentEntriesURL.toString()
-			).put(
-				"fragmentCollectionId", fragmentCollectionId
-			).put(
-				"selectFragmentCollectionURL",
-				selectFragmentCollectionURL.toString()
-			).build();
-
-		return componentContext;
+		return HashMapBuilder.<String, Object>put(
+			"copyFragmentEntryURL", copyFragmentEntryURL.toString()
+		).put(
+			"exportFragmentEntriesURL", exportFragmentEntriesURL.toString()
+		).put(
+			"fragmentCollectionId", fragmentCollectionId
+		).put(
+			"selectFragmentCollectionURL",
+			selectFragmentCollectionURL.toString()
+		).build();
 	}
 
 }

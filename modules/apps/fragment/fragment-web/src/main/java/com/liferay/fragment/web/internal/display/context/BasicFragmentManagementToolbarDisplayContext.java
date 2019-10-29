@@ -155,23 +155,20 @@ public class BasicFragmentManagementToolbarDisplayContext
 			"mvcRenderCommandName", "/fragment/select_fragment_collection");
 		selectFragmentCollectionURL.setWindowState(LiferayWindowState.POP_UP);
 
-		Map<String, Object> componentContext =
-			HashMapBuilder.<String, Object>put(
-				"copyFragmentEntryURL", copyFragmentEntryURL.toString()
-			).put(
-				"deleteFragmentEntriesURL", deleteFragmentEntriesURL.toString()
-			).put(
-				"exportFragmentEntriesURL", exportFragmentEntriesURL.toString()
-			).put(
-				"fragmentCollectionId", fragmentCollectionId
-			).put(
-				"moveFragmentEntryURL", moveFragmentEntryURL.toString()
-			).put(
-				"selectFragmentCollectionURL",
-				selectFragmentCollectionURL.toString()
-			).build();
-
-		return componentContext;
+		return HashMapBuilder.<String, Object>put(
+			"copyFragmentEntryURL", copyFragmentEntryURL.toString()
+		).put(
+			"deleteFragmentEntriesURL", deleteFragmentEntriesURL.toString()
+		).put(
+			"exportFragmentEntriesURL", exportFragmentEntriesURL.toString()
+		).put(
+			"fragmentCollectionId", fragmentCollectionId
+		).put(
+			"moveFragmentEntryURL", moveFragmentEntryURL.toString()
+		).put(
+			"selectFragmentCollectionURL",
+			selectFragmentCollectionURL.toString()
+		).build();
 	}
 
 	@Override

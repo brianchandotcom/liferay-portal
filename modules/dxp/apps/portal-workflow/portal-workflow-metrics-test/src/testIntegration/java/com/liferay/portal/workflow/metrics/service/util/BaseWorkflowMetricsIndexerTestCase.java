@@ -474,16 +474,13 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 		BlogsEntry blogsEntry = addBlogsEntry();
 
-		Map<String, Serializable> workflowContext =
-			HashMapBuilder.<String, Serializable>put(
-				WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME,
-				BlogsEntry.class.getName()
-			).put(
-				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK,
-				String.valueOf(blogsEntry.getEntryId())
-			).build();
-
-		return workflowContext;
+		return HashMapBuilder.<String, Serializable>put(
+			WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME,
+			BlogsEntry.class.getName()
+		).put(
+			WorkflowConstants.CONTEXT_ENTRY_CLASS_PK,
+			String.valueOf(blogsEntry.getEntryId())
+		).build();
 	}
 
 	private void _deployWorkflowDefinition() throws Exception {

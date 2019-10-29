@@ -121,13 +121,11 @@ public class DLFileEntryTypeStagedModelDataHandler
 			preloaded = true;
 		}
 
-		Map<String, String> referenceAttributes = HashMapBuilder.put(
+		return HashMapBuilder.put(
 			"file-entry-type-key", fileEntryType.getFileEntryTypeKey()
 		).put(
 			"preloaded", String.valueOf(preloaded)
 		).build();
-
-		return referenceAttributes;
 	}
 
 	@Override

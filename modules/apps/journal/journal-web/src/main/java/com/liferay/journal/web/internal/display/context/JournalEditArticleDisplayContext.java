@@ -142,15 +142,13 @@ public class JournalEditArticleDisplayContext {
 					StringPool.CLOSE_PARENTHESIS));
 		}
 
-		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+		return HashMapBuilder.<String, Object>put(
 			"defaultLanguage", getDefaultArticleLanguageId()
 		).put(
 			"languages", languages
 		).put(
 			"strings", strings
 		).build();
-
-		return data;
 	}
 
 	public long getClassNameId() {

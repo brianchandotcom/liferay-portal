@@ -200,13 +200,11 @@ public class FlagsTag extends IncludeTag {
 		props.put("signedIn", themeDisplay.isSignedIn());
 		props.put("uri", FlagsTagUtil.getURI(request));
 
-		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+		return HashMapBuilder.<String, Object>put(
 			"context", context
 		).put(
 			"props", props
 		).build();
-
-		return data;
 	}
 
 	private JSONObject _getDataJSONObject(ThemeDisplay themeDisplay) {

@@ -52,6 +52,7 @@
 		icon: string,
 		id: string,
 		name: string,
+		nodePath: string,
 		selected: bool,
 		value: string
 	]}
@@ -89,9 +90,11 @@
 
 					{call .card}
 						{param icon: $node.icon /}
+						{param nodePath: $node.nodePath /}
 						{param path: $path /}
 						{param pathThemeImages: $pathThemeImages /}
 						{param title: $node.name /}
+						{param viewType: $viewType /}
 					{/call}
 				</div>
 
@@ -113,9 +116,11 @@
  */
 {template .card}
 	{@param icon: string}
+	{@param? nodePath: string}
 	{@param path: string}
 	{@param pathThemeImages: string}
 	{@param title: string}
+	{@param? viewType: string}
 
 	{let $nodeAttributes kind="attributes"}
 		class="card card-horizontal"
@@ -141,6 +146,11 @@
 				<span class="lfr-card-title-text text-default text-truncate treeview-node-name">
 					{$title}
 				</span>
+				{if $viewType == 'flat' and isNonnull($nodePath)}
+					<span class="lfr-card-subtitle-text text-default text-truncate treeview-node-name">
+						{$nodePath}
+					</span>
+				{/if}
 			</div>
 		</div>
 	</div>

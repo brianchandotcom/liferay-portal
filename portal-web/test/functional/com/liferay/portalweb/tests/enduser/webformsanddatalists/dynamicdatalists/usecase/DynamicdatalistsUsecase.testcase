@@ -278,7 +278,9 @@ definition {
 		PortletEntry.publish();
 
 		DDLRecord.viewFieldCP(
-			ddlRecordFieldData = "4/1/17",
+			ddlRecordFieldData = "4/1/2017",
+			ddlRecordFieldData_1 = "4/1/17",
+			field = "Date",
 			fieldFieldLabel = "Date");
 
 		Navigator.openURL();
@@ -299,7 +301,9 @@ definition {
 		PortletEntry.publish();
 
 		DDLRecord.viewFieldCP(
-			ddlRecordFieldData = "4/1/17",
+			ddlRecordFieldData = "4/1/2017",
+			ddlRecordFieldData_1 = "4/1/17",
+			field = "Date",
 			fieldFieldLabel = "Date");
 
 		Navigator.openURL();

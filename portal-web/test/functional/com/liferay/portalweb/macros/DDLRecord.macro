@@ -503,6 +503,7 @@ definition {
 
 	macro viewFieldCP {
 		var key_ddlRecordFieldData = "${ddlRecordFieldData}";
+		var key_ddlRecordFieldData_1 = "${ddlRecordFieldData_1}";
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 
 		if ("${ddlRecordFieldData}" == "") {
@@ -533,6 +534,13 @@ definition {
 				locator1 = "DDLRecord#FIELD",
 				value1 = "${fieldFieldLabel}${ddlRecordFieldData}");
 		}
+
+		if ("${field}" == "Date") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "DDLRecord#FIELD_1",
+				value1 = "${fieldFieldLabel} ${ddlRecordFieldData_1}");
+		}
+
 		else {
 			DDLRecord.viewPopulatedField(
 				ddlRecordFieldData = "${ddlRecordFieldData}",

@@ -44,7 +44,7 @@ definition {
 			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
+			liferayDependencyJars = "com.liferay.cluster.test.module.jar",
 			nodePort = "8080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
@@ -64,7 +64,7 @@ definition {
 			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
+			liferayDependencyJars = "com.liferay.cluster.test.module.jar",
 			nodePort = "9080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
@@ -100,7 +100,7 @@ definition {
 			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
+			liferayDependencyJars = "com.liferay.cluster.test.module.jar",
 			nodePort = "8080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
@@ -148,7 +148,7 @@ definition {
 			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
+			liferayDependencyJars = "com.liferay.cluster.test.module.jar",
 			nodePort = "9080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
@@ -203,7 +203,7 @@ definition {
 			value1 = "This node is slave node");
 
 		Clustering.deployJarOnSpecificServer(
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
+			liferayDependencyJars = "com.liferay.cluster.test.module.jar",
 			nodePort = "9080");
 
 		Clustering.enableDebugging(
@@ -221,7 +221,7 @@ definition {
 			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
+			liferayDependencyJars = "com.liferay.cluster.test.module.jar",
 			nodePort = "8080");
 
 		Clustering.enableDebugging(
@@ -262,7 +262,7 @@ definition {
 			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
+			liferayDependencyJars = "com.liferay.cluster.test.module.jar",
 			nodePort = "8080");
 
 		Clustering.enableDebugging(
@@ -290,7 +290,7 @@ definition {
 			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
+			liferayDependencyJars = "com.liferay.cluster.test.module.jar",
 			nodePort = "9080");
 
 		Clustering.enableDebugging(

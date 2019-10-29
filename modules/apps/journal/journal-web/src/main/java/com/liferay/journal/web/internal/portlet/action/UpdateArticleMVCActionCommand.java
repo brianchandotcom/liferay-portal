@@ -439,6 +439,8 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		String referringPortletResource = ParamUtil.getString(
 			actionRequest, "referringPortletResource");
 
+		String languageId = ParamUtil.getString(actionRequest, "languageId");
+
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, JournalPortletKeys.JOURNAL,
 			PortletRequest.RENDER_PHASE);
@@ -457,6 +459,10 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		portletURL.setParameter("articleId", article.getArticleId());
 		portletURL.setParameter(
 			"version", String.valueOf(article.getVersion()));
+
+		if (Validator.isNotNull(languageId)) {
+			portletURL.setParameter("languageId", languageId);
+		}
 
 		portletURL.setWindowState(actionRequest.getWindowState());
 

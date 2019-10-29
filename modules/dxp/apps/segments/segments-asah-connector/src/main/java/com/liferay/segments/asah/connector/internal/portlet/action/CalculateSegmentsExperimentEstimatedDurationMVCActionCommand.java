@@ -31,20 +31,16 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientFactory;
-import com.liferay.segments.asah.connector.internal.client.model.DXPVariantSettings;
-import com.liferay.segments.asah.connector.internal.client.model.ExperimentSettings;
+import com.liferay.segments.asah.connector.internal.client.model.util.ExperimentSettingsUtil;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 import javax.portlet.ActionRequest;
@@ -121,7 +117,7 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommand
 
 		return _asahFaroBackendClient.calculateExperimentEstimatedDaysDuration(
 			segmentsExperiment.getSegmentsExperimentKey(),
-			_createExperimentSettings(
+			ExperimentSettingsUtil.toExperimentSettings(
 				confidenceLevel, segmentsExperienceKeySplitMap,
 				segmentsExperiment));
 	}
@@ -168,44 +164,6 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommand
 		return JSONUtil.put(
 			"segmentsExperimentEstimatedDaysDuration",
 			segmentsExperimentEstimatedDaysDuration);
-	}
-
-	private DXPVariantSettings _createDXPVariantSettings(
-		String controlSegmentsExperienceKey, String segmentsExperienceKey,
-		Double split) {
-
-		DXPVariantSettings dxpVariantSettings = new DXPVariantSettings();
-
-		dxpVariantSettings.setControl(
-			Objects.equals(
-				controlSegmentsExperienceKey, segmentsExperienceKey));
-
-		dxpVariantSettings.setTrafficSplit(split * 100);
-
-		dxpVariantSettings.setDXPVariantId(segmentsExperienceKey);
-
-		return dxpVariantSettings;
-	}
-
-	private ExperimentSettings _createExperimentSettings(
-		double confidenceLevel,
-		Map<String, Double> segmentsExperienceKeySplitMap,
-		SegmentsExperiment segmentsExperiment) {
-
-		ExperimentSettings experimentSettings = new ExperimentSettings();
-
-		experimentSettings.setConfidenceLevel(confidenceLevel);
-
-		List<DXPVariantSettings> dxpVariantsSettings = new ArrayList<>();
-
-		segmentsExperienceKeySplitMap.forEach(
-			(segmentsExperienceKey, split) -> dxpVariantsSettings.add(
-				_createDXPVariantSettings(
-					segmentsExperiment.getSegmentsExperienceKey(),
-					segmentsExperienceKey, split)));
-		experimentSettings.setDXPVariantsSettings(dxpVariantsSettings);
-
-		return experimentSettings;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

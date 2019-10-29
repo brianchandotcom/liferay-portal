@@ -225,7 +225,7 @@
 					<available file="${db.upgrade.client.log}" />
 				</waitfor>
 
-				<fail if="upgrade.failed" message="Upgrade has failed to start." />
+				<fail if="upgrade.startfailed" message="Upgrade has failed to start." />
 
 				<exec executable="/bin/bash" failonerror="true" logError="true" output="true">
 					<arg value="-c" />

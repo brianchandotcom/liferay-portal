@@ -122,24 +122,6 @@ gradle.beforeProject {
 				}
 			}
 
-			pluginManager.withPlugin("com.liferay.portal.tools.service.builder") {
-				buildService {
-					if (apiDir != null) {
-						File apiProjectDir = _getRootDir(project.file(apiDir), "bnd.bnd")
-
-						if (apiProjectDir != null) {
-							String relativePath = FileUtil.relativize(apiProjectDir, rootDir)
-
-							relativePath = relativePath.replace(File.separatorChar, '/' as char)
-
-							String apiProjectPath = ':' + relativePath.replace('/', ':')
-
-							finalizedBy apiProjectPath + ":baseline"
-						}
-					}
-				}
-			}
-
 			pluginManager.withPlugin("eclipse") {
 				if (tasks.eclipse.ext.has("gradleVersion")) {
 					String gradleVersion = tasks.eclipse.ext.get("gradleVersion")

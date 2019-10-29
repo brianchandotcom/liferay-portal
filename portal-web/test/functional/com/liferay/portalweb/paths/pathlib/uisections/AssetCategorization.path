@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>TAG_AUTOCOMPLETE_SPECIFIC</td>
-	<td>//ul[contains(@class,'dropdown-menu')][contains(@class,'show')]/li/a[.='${key_tagName}']</td>
+	<td>//div[contains(@class,'dropdown-menu')]/ul[contains(@class,'list-unstyled')]//div[.='${key_tagName}']</td>
 	<td></td>
 </tr>
 <tr>

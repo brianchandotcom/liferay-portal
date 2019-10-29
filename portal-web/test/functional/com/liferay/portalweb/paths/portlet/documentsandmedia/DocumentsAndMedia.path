@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKIN_DIALOG_TITLE</td>
+	<td>//h3[contains(.,'Describe Your Changes')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION_IFRAME</td>
 	<td>//iframe[contains(@id,'DLPortlet')]</td>
 	<td></td>

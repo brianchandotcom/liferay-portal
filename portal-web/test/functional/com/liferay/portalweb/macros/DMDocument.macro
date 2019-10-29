@@ -526,7 +526,7 @@ definition {
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Checkin");
 
-		if (IsElementPresent(locator1 = "Radio#MAJOR_VERSION")) {
+		if (IsElementPresent(locator1 = "DocumentsAndMedia#CHECKIN_DIALOG_TITLE")) {
 			if ("${revision}" == "Major") {
 				Click(locator1 = "Radio#MAJOR_VERSION");
 			}
@@ -562,7 +562,7 @@ definition {
 
 		MenuItem.click(menuItem = "Checkin");
 
-		if (IsElementPresent(locator1 = "Radio#MAJOR_VERSION")) {
+		if (IsElementPresent(locator1 = "DocumentsAndMedia#CHECKIN_DIALOG_TITLE")) {
 			if ("${revision}" == "Major") {
 				Click(locator1 = "Radio#MAJOR_VERSION");
 			}
@@ -600,7 +600,7 @@ definition {
 			locator1 = "Button#CHECKIN",
 			value1 = "Checkin");
 
-		if (IsElementPresent(locator1 = "Radio#MAJOR_VERSION")) {
+		if (IsElementPresent(locator1 = "DocumentsAndMedia#CHECKIN_DIALOG_TITLE")) {
 			if ("${revision}" == "Major") {
 				Click(locator1 = "Radio#MAJOR_VERSION");
 			}
@@ -1231,7 +1231,7 @@ definition {
 			locator1 = "Button#SAVE_AND_CHECKIN",
 			value1 = "Save and Check In");
 
-		if (IsElementPresent(locator1 = "Radio#MAJOR_VERSION")) {
+		if (IsElementPresent(locator1 = "DocumentsAndMedia#CHECKIN_DIALOG_TITLE")) {
 			if ("${revision}" == "Major Version") {
 				Click(locator1 = "Radio#MAJOR_VERSION");
 			}

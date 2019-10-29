@@ -223,6 +223,11 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.LPS42924Check">
 			<message key="lps42924" value="Use ''classNameLocalService.getClassNameId'' instead of ''PortalUtil.getClassName''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.MapBuilderCheck">
+			<property name="mapTypeNames" value="ConcurrentHashMap,HashMap,LinkedHashMap,TreeMap" />
+			<message key="map.builder.include" value="Include method call ''{0}'' ({1}) in ''{2}'' ({3}). See " />
+			<message key="map.builder.use" value="Use ''{0}'' ({1}, {2}). See " />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MapIterationCheck">
 			<message key="entry.set.use" value="Use Map.entrySet() to retrieve values. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/map_iteration.markdown" />
 		</module>

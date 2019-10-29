@@ -3060,7 +3060,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			return;
 		}
 
-		buildServiceTask.finalizedBy(apiProjectPath + ":baseline");
+		buildServiceTask.finalizedBy(
+			apiProjectPath + ':' + BaselinePlugin.BASELINE_TASK_NAME);
 	}
 
 	private void _configureTaskBuildWSDD(final Project project) {

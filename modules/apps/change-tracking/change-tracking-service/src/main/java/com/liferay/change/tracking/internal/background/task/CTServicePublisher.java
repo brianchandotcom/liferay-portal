@@ -175,6 +175,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 		// Order matters to avoid causing constraint violations
 
+		Map<Serializable, T> addedCTModels = null;
 		Map<Serializable, T> mergedCTModels = null;
 
 		long tempCTCollectionId = -_sourceCTCollectionId;
@@ -184,11 +185,10 @@ public class CTServicePublisher<T extends CTModel<T>> {
 					_sourceCTCollectionId)) {
 
 			if (_additionCTEntries != null) {
-				Map<Serializable, T> ctModels =
-					ctPersistence.fetchByPrimaryKeys(
-						_additionCTEntries.keySet());
+				addedCTModels = ctPersistence.fetchByPrimaryKeys(
+					_additionCTEntries.keySet());
 
-				for (T ctModel : ctModels.values()) {
+				for (T ctModel : addedCTModels.values()) {
 					_updateCTCollectionId(
 						ctPersistence, tempCTCollectionId, ctModel);
 				}
@@ -290,18 +290,14 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(tempCTCollectionId)) {
 
-			if (_additionCTEntries != null) {
-				Map<Serializable, T> ctModels =
-					ctPersistence.fetchByPrimaryKeys(
-						_additionCTEntries.keySet());
-
-				for (T ctModel : ctModels.values()) {
+			if (addedCTModels != null) {
+				for (T ctModel : addedCTModels.values()) {
 					_updateCTCollectionId(
 						ctPersistence, _targetCTCollectionId, ctModel);
 				}
 			}
 
-			if (_modificationCTEntries != null) {
+			if (mergedCTModels != null) {
 				for (T ctModel : mergedCTModels.values()) {
 					_updateCTCollectionId(
 						ctPersistence, _targetCTCollectionId, ctModel);

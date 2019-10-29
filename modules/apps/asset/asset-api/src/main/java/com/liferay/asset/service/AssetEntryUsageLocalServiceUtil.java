@@ -28,8 +28,11 @@ import org.osgi.util.tracker.ServiceTracker;
  *
  * @author Brian Wing Shun Chan
  * @see AssetEntryUsageLocalService
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ com.liferay.layout.service.impl.LayoutClassedModelUsageLocalServiceImpl}
  * @generated
  */
+@Deprecated
 public class AssetEntryUsageLocalServiceUtil {
 
 	/**

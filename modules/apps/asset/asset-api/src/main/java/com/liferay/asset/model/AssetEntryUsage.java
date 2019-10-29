@@ -25,8 +25,11 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see AssetEntryUsageModel
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ com.liferay.layout.model.impl.LayoutClassedModelUsageImpl}
  * @generated
  */
+@Deprecated
 @ImplementationClassName("com.liferay.asset.model.impl.AssetEntryUsageImpl")
 @ProviderType
 public interface AssetEntryUsage extends AssetEntryUsageModel, PersistedModel {

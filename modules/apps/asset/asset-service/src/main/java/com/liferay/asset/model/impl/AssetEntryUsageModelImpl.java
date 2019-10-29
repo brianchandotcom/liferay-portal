@@ -51,8 +51,11 @@ import java.util.function.Function;
  *
  * @author Brian Wing Shun Chan
  * @see AssetEntryUsageImpl
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ com.liferay.layout.model.impl.LayoutClassedModelUsageImpl}
  * @generated
  */
+@Deprecated
 public class AssetEntryUsageModelImpl
 	extends BaseModelImpl<AssetEntryUsage> implements AssetEntryUsageModel {
 

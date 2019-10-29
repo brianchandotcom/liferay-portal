@@ -77,7 +77,7 @@ public interface LayoutClassedModelUsageLocalService
 
 	public LayoutClassedModelUsage addLayoutClassedModelUsage(
 		long groupId, long classNameId, long classPK, String containerKey,
-		long containerType, long plid, int type, ServiceContext serviceContext);
+		long containerType, long plid, ServiceContext serviceContext);
 
 	/**
 	 * Creates a new layout classed model usage with the primary key. Does not add the layout classed model usage to the database.

@@ -842,6 +842,7 @@ public class LayoutImportController implements ImportController {
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_STARTED,
 					getProcessFlag(),
+					portletDataContext.getExportImportProcessId(),
 					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
 
@@ -872,6 +873,7 @@ public class LayoutImportController implements ImportController {
 					ExportImportLifecycleConstants.
 						EVENT_PORTLET_IMPORT_SUCCEEDED,
 					getProcessFlag(),
+					portletDataContext.getExportImportProcessId(),
 					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
 			}
@@ -879,6 +881,7 @@ public class LayoutImportController implements ImportController {
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_FAILED,
 					getProcessFlag(),
+					portletDataContext.getExportImportProcessId(),
 					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext),
 					t);

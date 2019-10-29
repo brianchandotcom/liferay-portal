@@ -1474,19 +1474,9 @@ definition {
 
 		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
-		Click.pauseClickAt(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR");
-
-		Click(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
-
-		Click.clickNoMouseOver(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE");
-
-		ItemSelector.selectDMImage(
+		BlogsEntry.addEntryExternalLinkViaBrowseButton(
 			imageFileName = "DM Document Title",
 			navTab = "Documents and Media");
-
-		PortletEntry.publish();
 
 		LAR.configureExportSiteCP(
 			checkContentNameList = "Blogs",

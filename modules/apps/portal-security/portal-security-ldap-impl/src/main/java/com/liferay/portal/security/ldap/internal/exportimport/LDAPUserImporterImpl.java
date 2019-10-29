@@ -239,12 +239,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 			authSearchSafeLdapFilterTemplate =
 				authSearchSafeLdapFilterTemplate.replace(
-				new String[] {
-					"@company_id@", "@email_address@", "@screen_name@"
-				},
-				new String[] {
-					String.valueOf(companyId), emailAddress, screenName
-				});
+					new String[] {
+						"@company_id@", "@email_address@", "@screen_name@"
+					},
+					new String[] {
+						String.valueOf(companyId), emailAddress, screenName
+					});
 
 			Properties userMappings = _ldapSettings.getUserMappings(
 				ldapServerId, companyId);

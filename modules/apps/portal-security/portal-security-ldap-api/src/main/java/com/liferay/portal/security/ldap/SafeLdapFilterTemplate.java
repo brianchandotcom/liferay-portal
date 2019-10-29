@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.ldap;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -32,8 +31,6 @@ import java.util.TreeMap;
  * @author Tomas Polesovsky
  */
 public class SafeLdapFilterTemplate extends SafeLdapFilter {
-	private final String[] _replaceKeys;
-	private final LDAPFilterValidator _ldapFilterValidator;
 
 	public SafeLdapFilterTemplate(
 			String template, String[] replaceKeys,
@@ -47,39 +44,12 @@ public class SafeLdapFilterTemplate extends SafeLdapFilter {
 		}
 
 		_replaceKeys = replaceKeys;
+
 		_ldapFilterValidator = ldapFilterValidator;
 
 		_ldapFilterValidator.validate(template);
 
 		_validateReplaceKeyInObject(template);
-	}
-
-	private void _validateReplaceKeyInObject(String template) throws LDAPFilterException {
-		int pos = template.lastIndexOf(StringPool.EQUAL);
-		while (pos > -1) {
-			String expression = template.substring(
-				template.lastIndexOf(StringPool.OPEN_PARENTHESIS, pos), pos);
-
-			if (expression.contains(StringPool.EQUAL)) {
-
-				// subexpression object=a<=b>=c
-
-				pos = template.lastIndexOf(StringPool.EQUAL, pos - 1);
-
-				continue;
-			}
-
-			for (String replaceKey : _replaceKeys) {
-				if (expression.contains(replaceKey)) {
-					throw new LDAPFilterException(
-						StringBundler.concat(
-							"Expression '", expression, "' cannot contain '" ,
-							replaceKey, "' inside template '", template, "'"));
-				}
-			}
-
-			pos = template.lastIndexOf(StringPool.EQUAL, pos - 1);
-		}
 	}
 
 	public String[] getReplaceKeys() {
@@ -121,7 +91,7 @@ public class SafeLdapFilterTemplate extends SafeLdapFilter {
 
 		String[] placeholderValues = new String[values.length];
 
-		Arrays.fill(placeholderValues, _ARGUMENT_PLACEHOLDER);
+		Arrays.fill(placeholderValues, ARGUMENT_PLACEHOLDER);
 
 		StringBundler oldFilterSB = getFilterStringBundler();
 		Object[] oldArguments = getArguments();
@@ -137,8 +107,8 @@ public class SafeLdapFilterTemplate extends SafeLdapFilter {
 				continue;
 			}
 
-			if (Objects.equals(filterString, _ARGUMENT_PLACEHOLDER)) {
-				newFilterSB.append(_ARGUMENT_PLACEHOLDER);
+			if (Objects.equals(filterString, ARGUMENT_PLACEHOLDER)) {
+				newFilterSB.append(ARGUMENT_PLACEHOLDER);
 
 				newArguments.add(oldArguments[argumentsPos]);
 
@@ -171,15 +141,15 @@ public class SafeLdapFilterTemplate extends SafeLdapFilter {
 					filterString, keys, placeholderValues);
 
 				int lastPos = 0;
-				int pos = replacedKeys.indexOf(_ARGUMENT_PLACEHOLDER);
+				int pos = replacedKeys.indexOf(ARGUMENT_PLACEHOLDER);
 
 				while (pos > -1) {
 					newFilterSB.append(replacedKeys.substring(lastPos, pos));
-					newFilterSB.append(_ARGUMENT_PLACEHOLDER);
+					newFilterSB.append(ARGUMENT_PLACEHOLDER);
 
-					lastPos = pos + _ARGUMENT_PLACEHOLDER.length();
+					lastPos = pos + ARGUMENT_PLACEHOLDER.length();
 
-					pos = replacedKeys.indexOf(_ARGUMENT_PLACEHOLDER, lastPos);
+					pos = replacedKeys.indexOf(ARGUMENT_PLACEHOLDER, lastPos);
 				}
 
 				if (lastPos < replacedKeys.length()) {
@@ -195,13 +165,47 @@ public class SafeLdapFilterTemplate extends SafeLdapFilter {
 	}
 
 	protected SafeLdapFilterTemplate(
-		StringBundler filterSB, List<Object> arguments,
-		String[] replaceKeys, LDAPFilterValidator ldapFilterValidator) {
+		StringBundler filterSB, List<Object> arguments, String[] replaceKeys,
+		LDAPFilterValidator ldapFilterValidator) {
 
 		super(filterSB, arguments);
 
-		_ldapFilterValidator = ldapFilterValidator;
 		_replaceKeys = replaceKeys;
+		_ldapFilterValidator = ldapFilterValidator;
 	}
+
+	private void _validateReplaceKeyInObject(String template)
+		throws LDAPFilterException {
+
+		int pos = template.lastIndexOf(StringPool.EQUAL);
+
+		while (pos > -1) {
+			String expression = template.substring(
+				template.lastIndexOf(StringPool.OPEN_PARENTHESIS, pos), pos);
+
+			if (expression.contains(StringPool.EQUAL)) {
+
+				// subexpression object=a<=b>=c
+
+				pos = template.lastIndexOf(StringPool.EQUAL, pos - 1);
+
+				continue;
+			}
+
+			for (String replaceKey : _replaceKeys) {
+				if (expression.contains(replaceKey)) {
+					throw new LDAPFilterException(
+						StringBundler.concat(
+							"Expression '", expression, "' cannot contain '",
+							replaceKey, "' inside template '", template, "'"));
+				}
+			}
+
+			pos = template.lastIndexOf(StringPool.EQUAL, pos - 1);
+		}
+	}
+
+	private final LDAPFilterValidator _ldapFilterValidator;
+	private final String[] _replaceKeys;
 
 }

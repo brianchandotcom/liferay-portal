@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.internal.util.StagingGroupServiceTunnelUtil;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
@@ -65,6 +66,7 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHel
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.LayoutPrototypeException;
@@ -184,7 +186,9 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -193,7 +197,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Wesley Gong
  * @author Zsolt Balogh
  */
-@Component(immediate = true, service = Staging.class)
+@Component(
+	configurationPid = "com.liferay.exportimport.configuration.ExportImportServiceConfiguration",
+	immediate = true, service = Staging.class
+)
 public class StagingImpl implements Staging {
 
 	@Override
@@ -1881,12 +1888,16 @@ public class StagingImpl implements Staging {
 		try {
 			URL remoteSiteURL = new URL(groupDisplayURL);
 
-			String remoteAddress = typeSettingsProperties.getProperty(
-				"remoteAddress");
+			if (!_exportImportServiceConfiguration.
+					stagingUseVirtualHostForRemoteSite()) {
 
-			remoteSiteURL = new URL(
-				remoteSiteURL.getProtocol(), remoteAddress,
-				remoteSiteURL.getPort(), remoteSiteURL.getFile());
+				String remoteAddress = typeSettingsProperties.getProperty(
+					"remoteAddress");
+
+				remoteSiteURL = new URL(
+					remoteSiteURL.getProtocol(), remoteAddress,
+					remoteSiteURL.getPort(), remoteSiteURL.getFile());
+			}
 
 			return remoteSiteURL.toString();
 		}
@@ -3393,6 +3404,13 @@ public class StagingImpl implements Staging {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_exportImportServiceConfiguration = ConfigurableUtil.createConfigurable(
+			ExportImportServiceConfiguration.class, properties);
+	}
+
 	protected long doCopyRemoteLayouts(
 			ExportImportConfiguration exportImportConfiguration,
 			String remoteAddress, int remotePort, String remotePathContext,
@@ -3973,6 +3991,8 @@ public class StagingImpl implements Staging {
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;
+
+	private ExportImportServiceConfiguration _exportImportServiceConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -159,6 +159,13 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 			ctEntry.setChangeType(CTConstants.CT_CHANGE_TYPE_DELETION);
 
 			_ctEntryLocalService.updateCTEntry(ctEntry);
+
+			if ((changeType == CTConstants.CT_CHANGE_TYPE_MODIFICATION) &&
+				(ctModel.getCtCollectionId() !=
+					CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+
+				return true;
+			}
 		}
 
 		return false;

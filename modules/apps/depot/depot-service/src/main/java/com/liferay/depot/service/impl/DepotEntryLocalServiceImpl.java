@@ -113,10 +113,13 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 		currentTypeSettingsProperties.putAll(formTypeSettingsProperties);
 
-		_fillEmptyLanguages(
-			nameMap,
+		nameMap.put(
 			LocaleUtil.fromLanguageId(
-				currentTypeSettingsProperties.getProperty("languageId")));
+				currentTypeSettingsProperties.getProperty("languageId")),
+			_getDefaultName(
+				nameMap,
+				LocaleUtil.fromLanguageId(
+					currentTypeSettingsProperties.getProperty("languageId"))));
 
 		group = _groupLocalService.updateGroup(
 			depotEntry.getGroupId(), group.getParentGroupId(), nameMap,
@@ -130,17 +133,17 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		return depotEntryPersistence.update(depotEntry);
 	}
 
-	private void _fillEmptyLanguages(
+	private String _getDefaultName(
 		Map<Locale, String> nameMap, Locale defaultLocale) {
 
 		if (Validator.isNull(nameMap.get(defaultLocale))) {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				defaultLocale, DepotEntryLocalServiceImpl.class);
 
-			nameMap.put(
-				defaultLocale,
-				_language.get(resourceBundle, "unnamed-repository"));
+			return _language.get(resourceBundle, "unnamed-repository");
 		}
+
+		return nameMap.get(defaultLocale);
 	}
 
 	private void _validateNameMap(

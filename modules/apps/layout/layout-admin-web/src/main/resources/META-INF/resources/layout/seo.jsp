@@ -212,7 +212,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			</div>
 		</div>
 
-		<aui:script use="liferay-item-selector-dialog">
+		<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 			var openGraphImageButton = document.getElementById(
 				'<portlet:namespace />openGraphImageButton'
 			);
@@ -221,40 +221,38 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 				openGraphImageButton.addEventListener('click', function(event) {
 					event.preventDefault();
 
-					var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+					var itemSelectorDialog = new ItemSelectorDialog.default({
+						buttonAddLabel: '<liferay-ui:message key="done" />',
 						eventName: '<portlet:namespace />openGraphImageSelectedItem',
-						on: {
-							selectedItemChange: function(event) {
-								var selectedItem = event.newVal;
-
-								if (selectedItem) {
-									var itemValue = JSON.parse(selectedItem.value);
-
-									var openGraphImageFileEntryId = document.getElementById(
-										'<portlet:namespace />openGraphImageFileEntryId'
-									);
-
-									if (openGraphImageFileEntryId) {
-										openGraphImageFileEntryId.value =
-											itemValue.fileEntryId;
-									}
-
-									var openGraphImageURL = document.getElementById(
-										'<portlet:namespace />openGraphImageURL'
-									);
-
-									if (openGraphImageURL) {
-										openGraphImageURL.value = itemValue.url;
-									}
-								}
-							}.bind(this)
-						},
-						'strings.add': Liferay.Language.get('ok'),
 						title: '<liferay-ui:message key="open-graph-image" />',
 						url: '<%= layoutsAdminDisplayContext.getItemSelectorURL() %>'
 					});
 
 					itemSelectorDialog.open();
+
+					itemSelectorDialog.on('selectedItemChange', function(event) {
+						var selectedItem = event.selectedItem;
+
+						if (selectedItem) {
+							var itemValue = JSON.parse(selectedItem.value);
+
+							var openGraphImageFileEntryId = document.getElementById(
+								'<portlet:namespace />openGraphImageFileEntryId'
+							);
+
+							if (openGraphImageFileEntryId) {
+								openGraphImageFileEntryId.value = itemValue.fileEntryId;
+							}
+
+							var openGraphImageURL = document.getElementById(
+								'<portlet:namespace />openGraphImageURL'
+							);
+
+							if (openGraphImageURL) {
+								openGraphImageURL.value = itemValue.url;
+							}
+						}
+					});
 				});
 			}
 		</aui:script>

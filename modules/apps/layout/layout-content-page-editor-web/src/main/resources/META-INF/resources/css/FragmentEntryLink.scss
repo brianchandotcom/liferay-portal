@@ -2,7 +2,7 @@
 
 @import 'variables';
 
-.fragment-entry-link-wrapper {
+.fragment-entry-link-list {
 	cursor: pointer;
 
 	.portlet {
@@ -40,6 +40,10 @@
 				}
 			}
 		}
+	}
+
+	.master-fragment-entry-link .portlet-topper-toolbar .lexicon-icon {
+		display: none;
 	}
 
 	.fragment-entry-link-content {

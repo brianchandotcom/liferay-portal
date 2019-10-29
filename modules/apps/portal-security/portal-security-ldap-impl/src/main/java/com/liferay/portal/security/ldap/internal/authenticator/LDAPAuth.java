@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.SafeLdapContext;
-import com.liferay.portal.security.ldap.SafeLdapFilter;
 import com.liferay.portal.security.ldap.SafeLdapFilterTemplate;
 import com.liferay.portal.security.ldap.SafeLdapName;
 import com.liferay.portal.security.ldap.SafePortalLDAP;
@@ -320,14 +319,14 @@ public class LDAPAuth implements Authenticator {
 
 			authSearchSafeLdapFilterTemplate =
 				authSearchSafeLdapFilterTemplate.replace(
-				new String[] {
-					"@company_id@", "@email_address@", "@screen_name@",
-					"@user_id@"
-				},
-				new String[] {
-					String.valueOf(companyId), emailAddress, screenName,
-					String.valueOf(userId)
-				});
+					new String[] {
+						"@company_id@", "@email_address@", "@screen_name@",
+						"@user_id@"
+					},
+					new String[] {
+						String.valueOf(companyId), emailAddress, screenName,
+						String.valueOf(userId)
+					});
 
 			Properties userMappings = _ldapSettings.getUserMappings(
 				ldapServerId, companyId);

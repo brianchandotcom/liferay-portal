@@ -147,8 +147,8 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 
 		MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), message.getMessageId(),
-			getSearchKeywords(), getSearchKeywords(), inputStreamOVPs,
-			existingFiles, 0, false, serviceContext);
+			getSearchKeywords(), getSearchKeywords(), inputStreamOVPs, 0, false,
+			serviceContext);
 	}
 
 	@Override

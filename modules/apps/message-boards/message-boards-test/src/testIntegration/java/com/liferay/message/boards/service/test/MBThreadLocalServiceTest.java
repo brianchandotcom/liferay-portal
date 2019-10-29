@@ -36,7 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -140,8 +139,8 @@ public class MBThreadLocalServiceTest {
 
 		MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), childMessage.getMessageId(),
-			newSubject, RandomTestUtil.randomString(), inputStreamOVPs,
-			new ArrayList<String>(), 0.0, false, serviceContext);
+			newSubject, RandomTestUtil.randomString(), inputStreamOVPs, 0.0,
+			false, serviceContext);
 
 		thread = MBThreadLocalServiceUtil.getThread(rootMessage.getThreadId());
 
@@ -208,8 +207,8 @@ public class MBThreadLocalServiceTest {
 
 		MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), rootMessage.getMessageId(), newSubject,
-			RandomTestUtil.randomString(), inputStreamOVPs,
-			new ArrayList<String>(), 0.0, false, serviceContext);
+			RandomTestUtil.randomString(), inputStreamOVPs, 0.0, false,
+			serviceContext);
 
 		thread = MBThreadLocalServiceUtil.getThread(rootMessage.getThreadId());
 

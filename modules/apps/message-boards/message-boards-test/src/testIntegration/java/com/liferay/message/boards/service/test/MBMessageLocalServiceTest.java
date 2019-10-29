@@ -25,9 +25,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -44,7 +41,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -266,62 +262,6 @@ public class MBMessageLocalServiceTest {
 			parentMessage.getThreadId(), parentMessage.getMessageId(),
 			RandomTestUtil.randomString(), StringPool.BLANK, "bbcode", null,
 			false, 0.0, false, serviceContext);
-	}
-
-	@Test
-	public void testDeleteAttachmentsWhenUpdatingMessageAndTrashDisabled()
-		throws Exception {
-
-		TrashUtil.disableTrash(_group);
-
-		MBMessage message = addMessage(null, true);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		MBMessageLocalServiceUtil.updateMessage(
-			TestPropsValues.getUserId(), message.getMessageId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
-			Collections.<String>emptyList(), 0, false, serviceContext);
-
-		Assert.assertEquals(
-			0,
-			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				message.getGroupId(), message.getAttachmentsFolderId()));
-	}
-
-	@Test
-	public void testDeleteAttachmentsWhenUpdatingMessageAndTrashEnabled()
-		throws Exception {
-
-		MBMessage message = addMessage(null, true);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		MBMessageLocalServiceUtil.updateMessage(
-			TestPropsValues.getUserId(), message.getMessageId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
-			Collections.<String>emptyList(), 0, false, serviceContext);
-
-		List<FileEntry> fileEntries =
-			PortletFileRepositoryUtil.getPortletFileEntries(
-				message.getGroupId(), message.getAttachmentsFolderId());
-
-		Assert.assertEquals(fileEntries.toString(), 1, fileEntries.size());
-
-		FileEntry fileEntry = fileEntries.get(0);
-
-		WorkflowCapability workflowCapability =
-			fileEntry.getRepositoryCapability(WorkflowCapability.class);
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_IN_TRASH,
-			workflowCapability.getStatus(fileEntry));
 	}
 
 	@Test

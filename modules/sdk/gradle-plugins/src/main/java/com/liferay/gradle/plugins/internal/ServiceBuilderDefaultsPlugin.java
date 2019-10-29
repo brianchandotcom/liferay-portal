@@ -166,22 +166,26 @@ public class ServiceBuilderDefaultsPlugin
 		File apiProjectDir = GradleUtil.getRootDir(
 			project.file(apiDir), "bnd.bnd");
 
-		if (apiProjectDir != null) {
-			Project rootProject = project.getRootProject();
-
-			String relativePath = FileUtil.relativize(
-				apiProjectDir, rootProject.getProjectDir());
-
-			relativePath = relativePath.replace(File.separatorChar, '/');
-
-			String apiProjectPath = ':' + relativePath.replace('/', ':');
-
-			Project apiProject = rootProject.findProject(apiProjectPath);
-
-			if (apiProject != null) {
-				buildServiceTask.finalizedBy(apiProjectPath + ":baseline");
-			}
+		if (apiProjectDir == null) {
+			return;
 		}
+
+		Project rootProject = project.getRootProject();
+
+		String relativePath = FileUtil.relativize(
+			apiProjectDir, rootProject.getProjectDir());
+
+		relativePath = relativePath.replace(File.separatorChar, '/');
+
+		String apiProjectPath = ':' + relativePath.replace('/', ':');
+
+		Project apiProject = rootProject.findProject(apiProjectPath);
+
+		if (apiProject == null) {
+			return;
+		}
+
+		buildServiceTask.finalizedBy(apiProjectPath + ":baseline");
 	}
 
 	private void _configureTaskBuildDBClasspath(

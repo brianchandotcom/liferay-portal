@@ -25,6 +25,7 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -43,6 +44,10 @@ import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.Date;
 import java.util.List;
@@ -696,6 +701,102 @@ public class LayoutCTTest {
 
 		Assert.assertEquals(
 			CTConstants.CT_CHANGE_TYPE_DELETION, ctEntry.getChangeType());
+	}
+
+	@Test
+	public void testScratchedAddThenDelete() throws Exception {
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			Layout layout = LayoutTestUtil.addLayout(_group);
+
+			try (Connection con = DataAccess.getConnection();
+				PreparedStatement ps = con.prepareStatement(
+					"select ctCollectionId from Layout where plid = " +
+						layout.getPlid());
+				ResultSet rs = ps.executeQuery()) {
+
+				Assert.assertTrue(rs.next());
+
+				Assert.assertEquals(
+					_ctCollection.getCtCollectionId(),
+					rs.getLong("ctCollectionId"));
+
+				Assert.assertFalse(rs.next());
+			}
+
+			_layoutLocalService.deleteLayout(layout);
+
+			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
+				_ctCollection.getCtCollectionId(),
+				_classNameLocalService.getClassNameId(Layout.class),
+				layout.getPlid());
+
+			Assert.assertNull(ctEntry);
+
+			try (Connection con = DataAccess.getConnection();
+				PreparedStatement ps = con.prepareStatement(
+					"select * from Layout where plid = " + layout.getPlid());
+				ResultSet rs = ps.executeQuery()) {
+
+				Assert.assertFalse(rs.next());
+			}
+		}
+	}
+
+	@Test
+	public void testScratchedModifyThenDelete() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			layout.setTitle(RandomTestUtil.randomString());
+
+			layout = _layoutLocalService.updateLayout(layout);
+
+			try (Connection con = DataAccess.getConnection();
+				PreparedStatement ps = con.prepareStatement(
+					"select COUNT(*) from Layout where plid = " +
+						layout.getPlid());
+				ResultSet rs = ps.executeQuery()) {
+
+				Assert.assertTrue(rs.next());
+
+				Assert.assertEquals(2, rs.getLong(1));
+
+				Assert.assertFalse(rs.next());
+			}
+
+			_layoutLocalService.deleteLayout(layout);
+
+			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
+				_ctCollection.getCtCollectionId(),
+				_classNameLocalService.getClassNameId(Layout.class),
+				layout.getPlid());
+
+			Assert.assertNotNull(ctEntry);
+
+			Assert.assertEquals(
+				CTConstants.CT_CHANGE_TYPE_DELETION, ctEntry.getChangeType());
+
+			try (Connection con = DataAccess.getConnection();
+				PreparedStatement ps = con.prepareStatement(
+					"select ctCollectionId from Layout where plid = " +
+						layout.getPlid());
+				ResultSet rs = ps.executeQuery()) {
+
+				Assert.assertTrue(rs.next());
+
+				Assert.assertEquals(
+					CTConstants.CT_COLLECTION_ID_PRODUCTION,
+					rs.getLong("ctCollectionId"));
+
+				Assert.assertFalse(rs.next());
+			}
+		}
 	}
 
 	@Inject

@@ -36,6 +36,22 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 	}
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link LayoutClassedModelUsageLocalServiceUtil} to access the layout classed model usage local service. Add custom service methods to <code>com.liferay.layout.service.impl.LayoutClassedModelUsageLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 */
+	@Override
+	public com.liferay.layout.model.LayoutClassedModelUsage
+		addDefaultLayoutClassedModelUsage(
+			long groupId, long classNameId, long classPK,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return _layoutClassedModelUsageLocalService.
+			addDefaultLayoutClassedModelUsage(
+				groupId, classNameId, classPK, serviceContext);
+	}
+
+	/**
 	 * Adds the layout classed model usage to the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param layoutClassedModelUsage the layout classed model usage
@@ -49,6 +65,18 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 
 		return _layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			layoutClassedModelUsage);
+	}
+
+	@Override
+	public com.liferay.layout.model.LayoutClassedModelUsage
+		addLayoutClassedModelUsage(
+			long groupId, long classNameId, long classPK, String containerKey,
+			long containerType, long plid, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return _layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+			groupId, classNameId, classPK, containerKey, containerType, plid,
+			type, serviceContext);
 	}
 
 	/**
@@ -95,6 +123,26 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 
 		return _layoutClassedModelUsageLocalService.
 			deleteLayoutClassedModelUsage(layoutClassedModelUsageId);
+	}
+
+	@Override
+	public void deleteLayoutClassedModelUsages(long classNameId, long classPK) {
+		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+			classNameId, classPK);
+	}
+
+	@Override
+	public void deleteLayoutClassedModelUsages(
+		String containerKey, long containerType, long plid) {
+
+		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+			containerKey, containerType, plid);
+	}
+
+	@Override
+	public void deleteLayoutClassedModelUsagesByPlid(long plid) {
+		_layoutClassedModelUsageLocalService.
+			deleteLayoutClassedModelUsagesByPlid(plid);
 	}
 
 	/**
@@ -209,6 +257,17 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 			fetchLayoutClassedModelUsage(layoutClassedModelUsageId);
 	}
 
+	@Override
+	public com.liferay.layout.model.LayoutClassedModelUsage
+		fetchLayoutClassedModelUsage(
+			long classNameId, long classPK, String containerKey,
+			long containerType, long plid) {
+
+		return _layoutClassedModelUsageLocalService.
+			fetchLayoutClassedModelUsage(
+				classNameId, classPK, containerKey, containerType, plid);
+	}
+
 	/**
 	 * Returns the layout classed model usage matching the UUID and group.
 	 *
@@ -293,6 +352,46 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.layout.model.LayoutClassedModelUsage>
+		getLayoutClassedModelUsages(long classNameId, long classPK) {
+
+		return _layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
+			classNameId, classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.model.LayoutClassedModelUsage>
+		getLayoutClassedModelUsages(
+			long classNameId, long classPK, int type, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.layout.model.LayoutClassedModelUsage>
+					orderByComparator) {
+
+		return _layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
+			classNameId, classPK, type, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.model.LayoutClassedModelUsage>
+		getLayoutClassedModelUsages(
+			long classNameId, long classPK, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.layout.model.LayoutClassedModelUsage>
+					orderByComparator) {
+
+		return _layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
+			classNameId, classPK, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.model.LayoutClassedModelUsage>
+		getLayoutClassedModelUsagesByPlid(long plid) {
+
+		return _layoutClassedModelUsageLocalService.
+			getLayoutClassedModelUsagesByPlid(plid);
+	}
+
 	/**
 	 * Returns the number of layout classed model usages.
 	 *
@@ -302,6 +401,22 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 	public int getLayoutClassedModelUsagesCount() {
 		return _layoutClassedModelUsageLocalService.
 			getLayoutClassedModelUsagesCount();
+	}
+
+	@Override
+	public int getLayoutClassedModelUsagesCount(
+		long classNameId, long classPK) {
+
+		return _layoutClassedModelUsageLocalService.
+			getLayoutClassedModelUsagesCount(classNameId, classPK);
+	}
+
+	@Override
+	public int getLayoutClassedModelUsagesCount(
+		long classNameId, long classPK, int type) {
+
+		return _layoutClassedModelUsageLocalService.
+			getLayoutClassedModelUsagesCount(classNameId, classPK, type);
 	}
 
 	/**
@@ -321,6 +436,22 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 
 		return _layoutClassedModelUsageLocalService.getPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public int getUniqueLayoutClassedModelUsagesCount(
+		long classNameId, long classPK) {
+
+		return _layoutClassedModelUsageLocalService.
+			getUniqueLayoutClassedModelUsagesCount(classNameId, classPK);
+	}
+
+	@Override
+	public boolean hasDefaultLayoutClassedModelUsage(
+		long classNameId, long classPK) {
+
+		return _layoutClassedModelUsageLocalService.
+			hasDefaultLayoutClassedModelUsage(classNameId, classPK);
 	}
 
 	/**

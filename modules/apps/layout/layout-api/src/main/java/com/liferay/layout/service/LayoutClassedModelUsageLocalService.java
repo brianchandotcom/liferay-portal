@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -60,6 +61,9 @@ public interface LayoutClassedModelUsageLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutClassedModelUsageLocalServiceUtil} to access the layout classed model usage local service. Add custom service methods to <code>com.liferay.layout.service.impl.LayoutClassedModelUsageLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public LayoutClassedModelUsage addDefaultLayoutClassedModelUsage(
+		long groupId, long classNameId, long classPK,
+		ServiceContext serviceContext);
 
 	/**
 	 * Adds the layout classed model usage to the database. Also notifies the appropriate model listeners.
@@ -70,6 +74,10 @@ public interface LayoutClassedModelUsageLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutClassedModelUsage addLayoutClassedModelUsage(
 		LayoutClassedModelUsage layoutClassedModelUsage);
+
+	public LayoutClassedModelUsage addLayoutClassedModelUsage(
+		long groupId, long classNameId, long classPK, String containerKey,
+		long containerType, long plid, int type, ServiceContext serviceContext);
 
 	/**
 	 * Creates a new layout classed model usage with the primary key. Does not add the layout classed model usage to the database.
@@ -102,6 +110,13 @@ public interface LayoutClassedModelUsageLocalService
 	public LayoutClassedModelUsage deleteLayoutClassedModelUsage(
 			long layoutClassedModelUsageId)
 		throws PortalException;
+
+	public void deleteLayoutClassedModelUsages(long classNameId, long classPK);
+
+	public void deleteLayoutClassedModelUsages(
+		String containerKey, long containerType, long plid);
+
+	public void deleteLayoutClassedModelUsagesByPlid(long plid);
 
 	/**
 	 * @throws PortalException
@@ -180,6 +195,11 @@ public interface LayoutClassedModelUsageLocalService
 	public LayoutClassedModelUsage fetchLayoutClassedModelUsage(
 		long layoutClassedModelUsageId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutClassedModelUsage fetchLayoutClassedModelUsage(
+		long classNameId, long classPK, String containerKey, long containerType,
+		long plid);
+
 	/**
 	 * Returns the layout classed model usage matching the UUID and group.
 	 *
@@ -237,6 +257,24 @@ public interface LayoutClassedModelUsageLocalService
 	public List<LayoutClassedModelUsage> getLayoutClassedModelUsages(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutClassedModelUsage> getLayoutClassedModelUsages(
+		long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutClassedModelUsage> getLayoutClassedModelUsages(
+		long classNameId, long classPK, int type, int start, int end,
+		OrderByComparator<LayoutClassedModelUsage> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutClassedModelUsage> getLayoutClassedModelUsages(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<LayoutClassedModelUsage> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutClassedModelUsage> getLayoutClassedModelUsagesByPlid(
+		long plid);
+
 	/**
 	 * Returns the number of layout classed model usages.
 	 *
@@ -244,6 +282,13 @@ public interface LayoutClassedModelUsageLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutClassedModelUsagesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutClassedModelUsagesCount(long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutClassedModelUsagesCount(
+		long classNameId, long classPK, int type);
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -256,6 +301,14 @@ public interface LayoutClassedModelUsageLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUniqueLayoutClassedModelUsagesCount(
+		long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasDefaultLayoutClassedModelUsage(
+		long classNameId, long classPK);
 
 	/**
 	 * Updates the layout classed model usage in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

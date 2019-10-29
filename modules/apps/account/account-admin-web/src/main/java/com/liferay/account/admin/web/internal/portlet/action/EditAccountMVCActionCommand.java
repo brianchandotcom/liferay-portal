@@ -63,7 +63,7 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "parentAccountEntryId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
-		String domains = ParamUtil.getString(actionRequest, "domainNames");
+		String domains = ParamUtil.getString(actionRequest, "domains");
 
 		return _accountEntryLocalService.addAccountEntry(
 			themeDisplay.getUserId(), parentAccountEntryId, name, description,
@@ -126,7 +126,7 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
-		String domains = ParamUtil.getString(actionRequest, "domainNames");
+		String domains = ParamUtil.getString(actionRequest, "domains");
 
 		_accountEntryLocalService.updateAccountEntry(
 			accountEntryId, parentAccountEntryId, name, description, deleteLogo,

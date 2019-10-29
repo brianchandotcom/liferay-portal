@@ -58,7 +58,7 @@ if (accountDisplay != null) {
 		</span>
 	</h3>
 
-	<aui:input name="domainNames" type="hidden" value="<%= StringUtil.merge(domains) %>" />
+	<aui:input name="domains" type="hidden" value="<%= StringUtil.merge(domains) %>" />
 
 	<liferay-ui:search-container
 		compactEmptyResultsMessage="<%= true %>"
@@ -100,10 +100,10 @@ if (accountDisplay != null) {
 
 	var searchContainerContentBox = searchContainer.get('contentBox');
 
-	var domainNamesInput =
-		document.<portlet:namespace />fm.<portlet:namespace />domainNames;
+	var domainsInput =
+		document.<portlet:namespace />fm.<portlet:namespace />domains;
 
-	var domainNames = domainNamesInput.value.split(',').filter(Boolean);
+	var domains = domainsInput.value.split(',').filter(Boolean);
 
 	searchContainerContentBox.delegate(
 		'click',
@@ -116,9 +116,9 @@ if (accountDisplay != null) {
 
 			searchContainer.deleteRow(tr, rowId);
 
-			A.Array.removeItem(domainNames, rowId);
+			A.Array.removeItem(domains, rowId);
 
-			domainNamesInput.value = domainNames.join(',');
+			domainsInput.value = domains.join(',');
 		},
 		'.modify-link'
 	);
@@ -155,34 +155,34 @@ if (accountDisplay != null) {
 					uri: '<%= addDomainsURL.toString() %>'
 				},
 				function(event) {
-					var domains = event.data.split(',');
+					var newDomains = event.data.split(',');
 
-					domains.forEach(function(domain) {
-						if (!domainNames.includes(domain)) {
+					newDomains.forEach(function(domain) {
+						if (!domains.includes(domain)) {
 							addRow(domain.trim());
 						}
 					});
 
 					searchContainer.updateDataStore();
 
-					domainNamesInput.value = domainNames.join(',');
+					domainsInput.value = domains.join(',');
 				}
 			);
 		});
 	}
 
-	Liferay.provide(window, 'addRow', function(domainName) {
+	Liferay.provide(window, 'addRow', function(domain) {
 		var rowColumns = [];
 
-		rowColumns.push(Liferay.Util.escape(domainName));
+		rowColumns.push(Liferay.Util.escape(domain));
 		rowColumns.push(
 			'<a class="modify-link pull-right" data-rowId="' +
-				domainName +
+				domain +
 				'" href="javascript:;"><%= UnicodeFormatter.toString(removeDomainIcon) %></a>'
 		);
 
-		searchContainer.addRow(rowColumns, domainName);
+		searchContainer.addRow(rowColumns, domain);
 
-		domainNames.push(domainName);
+		domains.push(domain);
 	});
 </aui:script>

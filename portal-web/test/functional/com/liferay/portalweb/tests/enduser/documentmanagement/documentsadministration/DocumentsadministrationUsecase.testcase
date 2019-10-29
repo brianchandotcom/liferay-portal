@@ -771,11 +771,11 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION");
 
 		AssertElementPresent.assertElementPresent(
-			key_videoGenerationThumbnailResolution = "1280",
+			key_videoGenerationThumbnailResolution = "854",
 			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION");
 
 		AssertElementPresent.assertElementPresent(
-			key_videoGenerationThumbnailResolution = "720",
+			key_videoGenerationThumbnailResolution = "480",
 			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION");
 	}
 

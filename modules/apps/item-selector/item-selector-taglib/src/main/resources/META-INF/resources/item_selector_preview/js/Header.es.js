@@ -75,7 +75,7 @@ const Header = ({
 								displayType="primary"
 								onClick={handleClickDone}
 							>
-								{Liferay.Language.get('done')}
+								{Liferay.Language.get('add')}
 							</ClayButton>
 						</li>
 					</ul>

@@ -83,8 +83,9 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 	@Override
 	public DepotEntry updateDepotEntry(
-			long depotEntryId, UnicodeProperties typeSettingsProperties,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			long depotEntryId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap,
+			UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 

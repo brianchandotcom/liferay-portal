@@ -9722,13 +9722,40 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<var name="arg.line" unless:blank="${database.password}" value="${arg.line} --password=${database.password}" />
 							<var name="arg.line" unless:blank="${database.username}" value="${arg.line} --user=${database.username}" />
 
-							<propertycopy from="${database.type}.executable" name="database.executable" override="true" />
+							<if>
+								<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+								<then>
+									<property location="create.sh" name="create.sh.file.path" />
 
-							<retry retrycount="3" retrydelay="60000">
-								<exec executable="${database.executable}" failonerror="true" input="create.sql">
-									<arg line="${arg.line}" />
-								</exec>
-							</retry>
+									<echo file="create.sh">
+										<![CDATA[
+											#!/bin/bash
+
+											mysql ${arg.line} < /tmp/create.sql
+										]]>
+									</echo>
+
+									<property location="create.sql" name="create.sql.file.path" />
+
+									<execute failonerror="false">
+										<![CDATA[
+											docker cp ${create.sh.file.path} ${database.host}:/tmp/create.sh
+											docker cp ${create.sql.file.path} ${database.host}:/tmp/create.sql
+
+											docker exec ${database.host} /bin/bash /tmp/create.sh
+										]]>
+									</execute>
+								</then>
+								<else>
+									<propertycopy from="${database.type}.executable" name="database.executable" override="true" />
+
+									<retry retrycount="3" retrydelay="60000">
+										<exec executable="${database.executable}" failonerror="true" input="create.sql">
+											<arg line="${arg.line}" />
+										</exec>
+									</retry>
+								</else>
+							</if>
 						</then>
 					</elseif>
 					<elseif>
@@ -9919,23 +9946,44 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						<param name="sql.file" value="create-bare-mysql.sql" />
 					</antcall>
 
-					<get-database-property property.name="database.host" />
 					<get-database-property property.name="database.password" />
 					<get-database-property property.name="database.schema" />
 					<get-database-property property.name="database.username" />
 
-					<local name="database.host.arg.line" />
-
-					<condition else=" " property="database.host.arg.line" value="--host=${database.host}">
+					<if>
 						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
-					</condition>
+						<then>
+							<property location="${database.type}.sh" name="sh.file.path" />
 
-					<exec executable="${mariadb.executable}" input="${liferay.home}/${database.type}.sql">
-						<arg value="${database.host.arg.line}" />
-						<arg value="--database=${database.schema}" />
-						<arg value="--password=${database.password}" />
-						<arg value="--user=${database.username}" />
-					</exec>
+							<echo file="${database.type}.sh">
+								<![CDATA[
+									#!/bin/bash
+
+									mysql --database=${database.schema} --password=${database.password} --user=${database.username} < /tmp/${database.type}.sql
+								]]>
+							</echo>
+
+							<get-database-property property.name="database.host" />
+
+							<property location="${liferay.home}/${database.type}.sql" name="sql.file.path" />
+
+							<execute>
+								<![CDATA[
+									docker cp ${sh.file.path} ${database.host}:/tmp/${database.type}.sh
+									docker cp ${sql.file.path} ${database.host}:/tmp/${database.type}.sql
+
+									docker exec ${database.host} /bin/bash /tmp/${database.type}.sh
+								]]>
+							</execute>
+						</then>
+						<else>
+							<exec executable="${mariadb.executable}" input="${liferay.home}/${database.type}.sql">
+								<arg value="--database=${database.schema}" />
+								<arg value="--password=${database.password}" />
+								<arg value="--user=${database.username}" />
+							</exec>
+						</else>
+					</if>
 				</then>
 			</elseif>
 			<elseif>
@@ -9982,26 +10030,39 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<var name="arg.line" unless:blank="${database.schema}" value="${arg.line} --database=${database.schema}" />
 					<var name="arg.line" unless:blank="${database.username}" value="${arg.line} --user=${database.username}" />
 
-					<retry retrycount="3" retrydelay="60000">
-						<exec executable="${mysql.executable}" input="${liferay.home}/${database.type}.sql">
-							<arg line="${arg.line}" />
-						</exec>
-					</retry>
-
 					<if>
 						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 						<then>
-							<lstopwatch action="start" name="mysql.upgrade" />
+							<property location="${database.type}.sh" name="sh.file.path" />
+
+							<echo file="${database.type}.sh">
+								<![CDATA[
+									#!/bin/bash
+
+									mysql ${arg.line} < /tmp/${database.type}.sql
+
+									mysql_upgrade --password=${database.password} --user=${database.username}
+								]]>
+							</echo>
+
+							<property location="${liferay.home}/${database.type}.sql" name="sql.file.path" />
 
 							<execute>
 								<![CDATA[
-									docker exec ${env.HOSTNAME}_mysql mysql_upgrade --password=${database.password} --user=${database.username}
+									docker cp ${sh.file.path} ${database.host}:/tmp/${database.type}.sh
+									docker cp ${sql.file.path} ${database.host}:/tmp/${database.type}.sql
+
+									docker exec ${database.host} /bin/bash /tmp/${database.type}.sh
 								]]>
 							</execute>
-
-							<lstopwatch action="total" name="mysql.upgrade" />
 						</then>
 						<else>
+							<retry retrycount="3" retrydelay="60000">
+								<exec executable="${mysql.executable}" input="${liferay.home}/${database.type}.sql">
+									<arg line="${arg.line}" />
+								</exec>
+							</retry>
+
 							<exec executable="mysql_upgrade" />
 						</else>
 					</if>

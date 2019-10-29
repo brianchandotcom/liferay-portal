@@ -16,8 +16,11 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountsPortletKeys;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -62,10 +65,21 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 		long prefixId = ParamUtil.getLong(actionRequest, "prefixId");
 		long suffixId = ParamUtil.getLong(actionRequest, "suffixId");
 
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntryId, themeDisplay.getUserId(), screenName, emailAddress,
-			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
-			lastName, prefixId, suffixId);
+		try {
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				accountEntryId, themeDisplay.getUserId(), screenName,
+				emailAddress, LocaleUtil.fromLanguageId(languageId), firstName,
+				middleName, lastName, prefixId, suffixId);
+		}
+		catch (Exception e) {
+			if (e instanceof UserEmailAddressException ||
+				e instanceof UserScreenNameException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName", "/account_admin/add_account_user");
+			}
+		}
 	}
 
 	@Reference

@@ -20,7 +20,7 @@ package com.liferay.portal.kernel.module.framework;
 public interface ModuleServiceLifecycle {
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
 	public String DATABASE_INITIALIZED =
@@ -33,7 +33,7 @@ public interface ModuleServiceLifecycle {
 		"(module.service.lifecycle=portlets.initialized)";
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
 	public String SPRING_INITIALIZED =

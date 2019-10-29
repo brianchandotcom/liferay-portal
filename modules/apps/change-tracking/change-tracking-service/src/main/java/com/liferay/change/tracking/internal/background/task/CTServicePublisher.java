@@ -240,9 +240,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 					ctEntry.setModelMvccVersion(mvccVersion + 1);
 
-					_deletionCTEntries.put(
-						primaryKey,
-						_ctEntryLocalService.updateCTEntry(ctEntry));
+					_ctEntryLocalService.updateCTEntry(ctEntry);
 				}
 			}
 
@@ -278,9 +276,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 					ctEntry.setModelMvccVersion(mvccVersion + 1);
 
-					_modificationCTEntries.put(
-						primaryKey,
-						_ctEntryLocalService.updateCTEntry(ctEntry));
+					_ctEntryLocalService.updateCTEntry(ctEntry);
 				}
 			}
 

@@ -62,7 +62,7 @@ if (!LDAPFilterValidatorUtil.getInstance().isValid(groupFilter)) {
 	return;
 }
 
-SafeLdapFilter groupSafeLdapFilter = SafeLdapFilter.validate(groupFilter, LDAPFilterValidatorUtil.getInstance());
+SafeLdapFilter groupSafeLdapFilter = SafeLdapFilter.fromUnsafeFilter(groupFilter, LDAPFilterValidatorUtil.getInstance());
 
 String groupMappingsParam = "groupName=" + ParamUtil.getString(request, "groupMappingGroupName") + "\ndescription=" + ParamUtil.getString(request, "groupMappingDescription") + "\nuser=" + ParamUtil.getString(request, "groupMappingUser");
 

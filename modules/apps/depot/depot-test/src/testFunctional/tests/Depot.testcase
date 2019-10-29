@@ -26,6 +26,60 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a depot can be deleted."
+	@priority = "5"
+	test DeleteDepot {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		Depot.deleteCP(depotName = "Test Depot Name");
+
+		Depot.viewDefaultCP();
+	}
+
+	@description = "This ensures that a depot with a folder can be deleted."
+	@priority = "4"
+	test DeleteDepotWithFolder {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DMFolder.addCP(dmFolderName = "DM Folder Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.deleteCP(depotName = "Test Depot Name");
+
+		Depot.viewDefaultCP();
+	}
+
+	@description = "This ensures that a depot with the multiple files can be deleted."
+	@priority = "4"
+	test DeleteDepotWithMultipleFiles {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.deleteCP(depotName = "Test Depot Name");
+
+		Depot.viewDefaultCP();
+	}
+
 	@description = "This ensures that a depot can be edited."
 	@priority = "5"
 	test EditDepot {

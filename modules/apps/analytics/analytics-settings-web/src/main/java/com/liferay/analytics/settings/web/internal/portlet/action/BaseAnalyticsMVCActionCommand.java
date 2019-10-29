@@ -14,21 +14,32 @@
 
 package com.liferay.analytics.settings.web.internal.portlet.action;
 
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.analytics.settings.web.internal.configuration.AnalyticsConfiguration;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.settings.SettingsDescriptor;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.MutableRenderParameters;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -58,7 +69,7 @@ public abstract class BaseAnalyticsMVCActionCommand
 
 			checkPermissions(themeDisplay);
 
-			storeSettings(actionRequest, getModifiableSettings(themeDisplay));
+			saveCompanyConfiguration(actionRequest, themeDisplay);
 		}
 		catch (PrincipalException pe) {
 			SessionErrors.add(actionRequest, pe.getClass());
@@ -70,19 +81,69 @@ public abstract class BaseAnalyticsMVCActionCommand
 		}
 	}
 
-	protected ModifiableSettings getModifiableSettings(
-			ThemeDisplay themeDisplay)
-		throws Exception {
+	protected String getConfigurationPid() {
+		Class<?> clazz = AnalyticsConfiguration.class;
 
-		Settings settings = SettingsFactoryUtil.getSettings(
-			new CompanyServiceSettingsLocator(
-				themeDisplay.getCompanyId(), "com.liferay.analytics"));
+		Meta.OCD ocd = clazz.getAnnotation(Meta.OCD.class);
 
-		return settings.getModifiableSettings();
+		return ocd.id();
 	}
 
-	protected abstract void storeSettings(
-			ActionRequest actionRequest, ModifiableSettings modifiableSettings)
-		throws Exception;
+	protected Dictionary<String, Object> getConfigurationProperties(
+			String pid, long scopePK)
+		throws Exception {
+
+		Dictionary<String, Object> configurationProperties = new Hashtable<>();
+
+		Settings settings = settingsFactory.getSettings(
+			new CompanyServiceSettingsLocator(scopePK, pid));
+
+		SettingsDescriptor settingsDescriptor =
+			settingsFactory.getSettingsDescriptor(pid);
+
+		Set<String> multiValuedKeys = settingsDescriptor.getMultiValuedKeys();
+
+		for (String multiValuedKey : multiValuedKeys) {
+			configurationProperties.put(
+				multiValuedKey,
+				settings.getValues(multiValuedKey, new String[0]));
+		}
+
+		Set<String> keys = settingsDescriptor.getAllKeys();
+
+		keys.removeAll(multiValuedKeys);
+
+		for (String key : keys) {
+			configurationProperties.put(
+				key, settings.getValue(key, StringPool.BLANK));
+		}
+
+		return configurationProperties;
+	}
+
+	protected void saveCompanyConfiguration(
+			ActionRequest actionRequest, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		Dictionary<String, Object> configurationProperties =
+			getConfigurationProperties(
+				getConfigurationPid(), themeDisplay.getCompanyId());
+
+		updateConfigurationProperties(actionRequest, configurationProperties);
+
+		configurationProvider.saveCompanyConfiguration(
+			AnalyticsConfiguration.class, themeDisplay.getCompanyId(),
+			configurationProperties);
+	}
+
+	protected abstract void updateConfigurationProperties(
+		ActionRequest actionRequest,
+		Dictionary<String, Object> configurationProperties);
+
+	@Reference
+	protected ConfigurationProvider configurationProvider;
+
+	@Reference
+	protected SettingsFactory settingsFactory;
 
 }

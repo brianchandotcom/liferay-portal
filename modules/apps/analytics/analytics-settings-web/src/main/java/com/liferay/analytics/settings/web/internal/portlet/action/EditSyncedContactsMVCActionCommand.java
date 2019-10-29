@@ -16,9 +16,10 @@ package com.liferay.analytics.settings.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Dictionary;
 
 import javax.portlet.ActionRequest;
 
@@ -38,9 +39,9 @@ public class EditSyncedContactsMVCActionCommand
 	extends BaseAnalyticsMVCActionCommand {
 
 	@Override
-	protected void storeSettings(
-			ActionRequest actionRequest, ModifiableSettings modifiableSettings)
-		throws Exception {
+	protected void updateConfigurationProperties(
+		ActionRequest actionRequest,
+		Dictionary<String, Object> configurationProperties) {
 
 		String syncAllContactsString = ParamUtil.getString(
 			actionRequest, "syncAllContacts");
@@ -51,10 +52,8 @@ public class EditSyncedContactsMVCActionCommand
 			syncAllContacts = true;
 		}
 
-		modifiableSettings.setValue(
+		configurationProperties.put(
 			"syncAllContacts", String.valueOf(syncAllContacts));
-
-		modifiableSettings.store();
 	}
 
 }

@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Segments Service
 Bundle-SymbolicName: com.liferay.segments.service
 Bundle-Version: 2.0.0
-Liferay-Require-SchemaVersion: 2.1.0
+Liferay-Require-SchemaVersion: 2.2.0
 Liferay-Service: true
 Provide-Capability:\
 	liferay.resource.bundle;\

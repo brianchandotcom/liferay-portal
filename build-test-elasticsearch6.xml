@@ -21,15 +21,6 @@ xpack.ssl.key: certs/localhost/localhost.key</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-kibana-properties">
-		<sequential>
-			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.url: "http://localhost:9200"
-pid.file: ${elastic.kibana.dir}/bin/pid-kibana
-server.basePath: "/o/portal-search-elasticsearch-xpack-monitoring/xpack-monitoring-proxy"
-server.rewriteBasePath: false</echo>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="configure-elasticsearch6-ltr-test-properties">
 		<sequential>
 			<var name="elasticsearch.version" unset="true" />
@@ -84,6 +75,15 @@ server.rewriteBasePath: false</echo>
 			<property name="elasticsearch.tar.url.linux" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.tar.name.linux}" />
 			<property name="elasticsearch.tar.url.mac" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.tar.name.mac}" />
 			<property name="elasticsearch.zip.url.windows" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.zip.name.windows}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="configure-kibana-properties">
+		<sequential>
+			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.url: "http://localhost:9200"
+pid.file: ${elastic.kibana.dir}/bin/pid-kibana
+server.basePath: "/o/portal-search-elasticsearch-xpack-monitoring/xpack-monitoring-proxy"
+server.rewriteBasePath: false</echo>
 		</sequential>
 	</macrodef>
 

@@ -3462,7 +3462,7 @@ log.sanitizer.enabled=false</echo>
 
 				<trycatch property="junit.failure.message">
 					<try>
-						<for keepgoing="true" list="check-upgrade-client-gogoshell,check-upgrade-client-help,check-upgrade-client-java-version,check-upgrade-client-custom-log,check-upgrade-client-additional-settings,check-upgrade-client-sh-disconnect,check-upgrade-client-upgrade-core-only,check-upgrade-client-zip-content,check-upgrade-properties-app-db-set,check-upgrade-properties-app-ext-set,check-upgrade-properties-db-ext-set,check-upgrade-properties-none-set" param="upgrade.test.target">
+						<for keepgoing="true" list="check-upgrade-client-gogoshell,check-upgrade-client-gogoshell-failed-upgrade,check-upgrade-client-help,check-upgrade-client-java-version,check-upgrade-client-custom-log,check-upgrade-client-additional-settings,check-upgrade-client-sh-disconnect,check-upgrade-client-sh-disconnect-reconnect,check-upgrade-client-upgrade-core-only,check-upgrade-client-zip-content,check-upgrade-properties-app-db-set,check-upgrade-properties-app-ext-set,check-upgrade-properties-db-ext-set,check-upgrade-properties-none-set" param="upgrade.test.target">
 							<sequential>
 								<antcall target="rebuild-legacy-database">
 									<param name="portal.version" value="6.2.5" />

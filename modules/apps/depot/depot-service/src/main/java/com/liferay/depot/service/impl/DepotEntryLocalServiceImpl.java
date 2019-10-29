@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
@@ -113,13 +114,14 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 		currentTypeSettingsProperties.putAll(formTypeSettingsProperties);
 
-		nameMap.put(
-			LocaleUtil.fromLanguageId(
-				currentTypeSettingsProperties.getProperty("languageId")),
-			_getDefaultName(
-				nameMap,
-				LocaleUtil.fromLanguageId(
-					currentTypeSettingsProperties.getProperty("languageId"))));
+		Locale locale = LocaleUtil.fromLanguageId(
+			currentTypeSettingsProperties.getProperty("languageId"));
+
+		Optional<String> defaultNameOptional = _getDefaultNameOptional(
+			nameMap, locale);
+
+		defaultNameOptional.ifPresent(
+			defaultName -> nameMap.put(locale, defaultName));
 
 		group = _groupLocalService.updateGroup(
 			depotEntry.getGroupId(), group.getParentGroupId(), nameMap,
@@ -133,17 +135,17 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		return depotEntryPersistence.update(depotEntry);
 	}
 
-	private String _getDefaultName(
+	private Optional<String> _getDefaultNameOptional(
 		Map<Locale, String> nameMap, Locale defaultLocale) {
 
-		if (Validator.isNull(nameMap.get(defaultLocale))) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				defaultLocale, DepotEntryLocalServiceImpl.class);
-
-			return _language.get(resourceBundle, "unnamed-repository");
+		if (Validator.isNotNull(nameMap.get(defaultLocale))) {
+			return Optional.empty();
 		}
 
-		return nameMap.get(defaultLocale);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			defaultLocale, DepotEntryLocalServiceImpl.class);
+
+		return Optional.of(_language.get(resourceBundle, "unnamed-repository"));
 	}
 
 	private void _validateNameMap(

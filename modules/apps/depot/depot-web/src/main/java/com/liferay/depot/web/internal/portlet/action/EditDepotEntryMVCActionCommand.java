@@ -65,12 +65,12 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			_depotEntryLocalService.updateDepotEntry(
 				depotEntryId,
-				PropertiesParamUtil.getProperties(
-					actionRequest, "TypeSettingsProperties--"),
 				LocalizationUtil.getLocalizationMap(
 					actionRequest, "name", group.getNameMap()),
 				LocalizationUtil.getLocalizationMap(
 					actionRequest, "description", group.getDescriptionMap()),
+				PropertiesParamUtil.getProperties(
+					actionRequest, "TypeSettingsProperties--"),
 				ServiceContextFactory.getInstance(
 					DepotEntry.class.getName(), actionRequest));
 		}

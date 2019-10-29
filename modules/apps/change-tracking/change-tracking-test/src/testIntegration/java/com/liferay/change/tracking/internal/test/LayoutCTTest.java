@@ -228,6 +228,39 @@ public class LayoutCTTest {
 		Assert.assertEquals(description, layout.getDescription());
 	}
 
+	@Test
+	public void testPublishAvoidsConstraintViolations() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		String friendlyURL = layout.getFriendlyURL();
+
+		Layout layout2 = null;
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			_layoutLocalService.deleteLayout(layout);
+
+			layout2 = LayoutTestUtil.addLayout(_group);
+
+			layout2.setFriendlyURL(friendlyURL);
+
+			layout2 = _layoutLocalService.updateLayout(layout2);
+		}
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
+
+		layout2 = _layoutLocalService.fetchLayout(layout2.getPlid());
+
+		Assert.assertNotNull(layout2);
+
+		Assert.assertEquals(friendlyURL, layout2.getFriendlyURL());
+	}
+
 	@ExpectedLogs(
 		expectedLogs = {
 			@ExpectedLog(

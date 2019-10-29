@@ -14,19 +14,16 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
  * @author Hugo Huijser
  */
-public class JSONUtilCheck extends BaseCheck {
+public class JSONUtilCheck extends ChainedMethodCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -83,7 +80,7 @@ public class JSONUtilCheck extends BaseCheck {
 			return;
 		}
 
-		String variableName = _getVariableName(detailAST, parentDetailAST);
+		String variableName = getVariableName(detailAST, parentDetailAST);
 
 		if (variableName == null) {
 			return;
@@ -96,7 +93,7 @@ public class JSONUtilCheck extends BaseCheck {
 				return;
 			}
 
-			FullIdent fullIdent2 = _getMethodCallFullIdent(
+			FullIdent fullIdent2 = getMethodCallFullIdent(
 				nextSiblingDetailAST, variableName, "put");
 
 			if (fullIdent2 != null) {
@@ -106,7 +103,7 @@ public class JSONUtilCheck extends BaseCheck {
 					fullIdent2.getLineNo(), "JSONUtil.put");
 			}
 
-			if (_containsVariableName(nextSiblingDetailAST, variableName)) {
+			if (containsVariableName(nextSiblingDetailAST, variableName)) {
 				return;
 			}
 		}
@@ -153,21 +150,6 @@ public class JSONUtilCheck extends BaseCheck {
 		}
 	}
 
-	private boolean _containsVariableName(
-		DetailAST detailAST, String variableName) {
-
-		List<DetailAST> identDetailASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, true, TokenTypes.IDENT);
-
-		for (DetailAST identDetailAST : identDetailASTList) {
-			if (variableName.equals(identDetailAST.getText())) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private DetailAST _getMethodCallDetailAST(
 		DetailAST assignDetailAST, DetailAST parentDetailAST) {
 
@@ -186,64 +168,6 @@ public class JSONUtilCheck extends BaseCheck {
 			(assignValueDetailAST.getType() == TokenTypes.METHOD_CALL)) {
 
 			return assignValueDetailAST;
-		}
-
-		return null;
-	}
-
-	private FullIdent _getMethodCallFullIdent(
-		DetailAST detailAST, String variableName, String methodName) {
-
-		if (detailAST.getType() != TokenTypes.EXPR) {
-			return null;
-		}
-
-		DetailAST firstChildDetailAST = detailAST.getFirstChild();
-
-		while (true) {
-			if ((firstChildDetailAST == null) ||
-				(firstChildDetailAST.getType() != TokenTypes.METHOD_CALL)) {
-
-				return null;
-			}
-
-			firstChildDetailAST = firstChildDetailAST.getFirstChild();
-
-			FullIdent fullIdent = FullIdent.createFullIdent(
-				firstChildDetailAST);
-
-			if (Objects.equals(
-					fullIdent.getText(), variableName + "." + methodName)) {
-
-				return fullIdent;
-			}
-
-			if (firstChildDetailAST.getType() != TokenTypes.DOT) {
-				return null;
-			}
-
-			firstChildDetailAST = firstChildDetailAST.getFirstChild();
-		}
-	}
-
-	private String _getVariableName(
-		DetailAST assignDetailAST, DetailAST parentDetailAST) {
-
-		if (parentDetailAST.getType() == TokenTypes.EXPR) {
-			DetailAST nameDetailAST = assignDetailAST.getFirstChild();
-
-			if (nameDetailAST.getType() == TokenTypes.IDENT) {
-				return nameDetailAST.getText();
-			}
-
-			return null;
-		}
-
-		DetailAST nameDetailAST = parentDetailAST.findFirstToken(
-			TokenTypes.IDENT);
-
-		if (nameDetailAST != null) {
-			return nameDetailAST.getText();
 		}
 
 		return null;

@@ -101,6 +101,10 @@ public class CompositePasswordEncryptor
 			}
 		}
 
+		if (Validator.isNull(algorithm)) {
+			algorithm = getDefaultPasswordAlgorithmType();
+		}
+
 		PasswordEncryptor passwordEncryptor = _select(algorithm);
 
 		String newEncryptedPassword = passwordEncryptor.encrypt(

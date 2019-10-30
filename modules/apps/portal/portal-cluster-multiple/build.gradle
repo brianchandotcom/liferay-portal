@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "org.jgroups", name: "jgroups", version: "4.1.1.Final"
+	compileInclude group: "org.jgroups", name: "jgroups", version: "4.1.6.Final"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

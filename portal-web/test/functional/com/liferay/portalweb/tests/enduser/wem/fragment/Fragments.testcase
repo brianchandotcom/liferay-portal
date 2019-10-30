@@ -715,7 +715,7 @@ definition {
 		}
 
 		task ("Add a section fragment that uses the Button fragment code") {
-			FragmentsAdmin.addSection(fragmentName = "Global Fragment Name 1");
+			FragmentsAdmin.addFragment(fragmentName = "Global Fragment Name 1");
 
 			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
 
@@ -877,13 +877,13 @@ definition {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
-		task ("Add a second section fragment") {
-			FragmentsAdmin.addSection(fragmentName = "Fragment Name 2");
+		task ("Add a second fragment") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name 2");
 
 			SiteAdmin.viewPortletTitle(portletTitle = "Fragment Name 2 (Draft)");
 		}
 
-		task ("Save the second section fragment as draft") {
+		task ("Save the second fragment as draft") {
 			PortletEntry.saveAsDraft();
 		}
 
@@ -895,13 +895,13 @@ definition {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
-		task ("Assert the second section fragment is in draft status") {
+		task ("Assert the second fragment is in draft status") {
 			FragmentsAdmin.viewEntryWorkflowStatus(
 				entry = "Fragment Name 2",
 				workflowStatus = "Draft");
 		}
 
-		task ("Publish the second section fragment") {
+		task ("Publish the second fragment") {
 			FragmentsAdminNavigator.gotoEntryEllipsisItem(
 				entry = "Fragment Name 2",
 				item = "Edit");
@@ -911,7 +911,7 @@ definition {
 
 		FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name 2");
 
-		task ("Assert the second section fragment can no longer be saved as draft") {
+		task ("Assert the second fragment can no longer be saved as draft") {
 			AssertElementNotPresent(locator1 = "Button#SAVE_AS_DRAFT");
 		}
 	}

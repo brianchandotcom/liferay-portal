@@ -37,7 +37,7 @@ definition {
 	test AddInvalidConfiguration {
 		property test.name.skip.portal.instance = "FragmentsConfiguration#AddInvalidConfiguration";
 
-		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
+		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
 		FragmentsEditor.gotoConfigurationTab();
 
@@ -71,7 +71,7 @@ definition {
 	test AddValidConfiguration {
 		property test.name.skip.portal.instance = "FragmentsConfiguration#AddValidConfiguration";
 
-		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
+		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
 		FragmentsEditor.gotoConfigurationTab();
 

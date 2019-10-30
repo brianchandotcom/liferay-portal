@@ -29,7 +29,7 @@ definition {
 		}
 
 		task ("Add a section fragment that uses the Button fragment code") {
-			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
 			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
 
@@ -58,7 +58,7 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		task ("Publish the section fragment") {
+		task ("Publish the fragment") {
 			Button.clickPublish();
 		}
 

@@ -200,7 +200,7 @@ definition {
 				collectionDescription = "Collection Description",
 				collectionName = "New Collection");
 
-			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 		}
 
 		task ("Assert the unpublished fragment does not appear in the sidebar when editing a content page template") {

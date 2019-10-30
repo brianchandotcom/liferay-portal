@@ -45,8 +45,8 @@ definition {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
-		task ("Add a fragment section") {
-			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
+		task ("Add a fragment") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 		}
 
 		task ("Assert the fragment editor has autocomplete for lfr-editable tags") {

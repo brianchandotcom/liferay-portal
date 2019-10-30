@@ -143,25 +143,6 @@ public class KBArticleServiceWrapper
 			groupId, kbFolderId, urlTitle, status);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getAllDescendantKBArticles(long, long, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.knowledge.base.model.KBArticle>
-			getAllDescendantKBArticles(
-				long resourcePrimKey, int status,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.knowledge.base.model.KBArticle>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _kbArticleService.getAllDescendantKBArticles(
-			resourcePrimKey, status, orderByComparator);
-	}
-
 	@Override
 	public java.util.List<com.liferay.knowledge.base.model.KBArticle>
 			getAllDescendantKBArticles(
@@ -221,24 +202,6 @@ public class KBArticleServiceWrapper
 
 		return _kbArticleService.getKBArticleAndAllDescendantKBArticles(
 			resourcePrimKey, status, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getKBArticleAndAllDescendantKBArticles(long, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.knowledge.base.model.KBArticle>
-		getKBArticleAndAllDescendants(
-			long groupId, long resourcePrimKey, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.knowledge.base.model.KBArticle>
-					orderByComparator) {
-
-		return _kbArticleService.getKBArticleAndAllDescendants(
-			groupId, resourcePrimKey, status, orderByComparator);
 	}
 
 	@Override
@@ -388,38 +351,6 @@ public class KBArticleServiceWrapper
 
 		return _kbArticleService.getSectionsKBArticlesCount(
 			groupId, sections, status);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getKBArticles(long,
-	 long, int, int, int, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.knowledge.base.model.KBArticle>
-		getSiblingKBArticles(
-			long groupId, long parentResourcePrimKey, int status, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.knowledge.base.model.KBArticle>
-					orderByComparator) {
-
-		return _kbArticleService.getSiblingKBArticles(
-			groupId, parentResourcePrimKey, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getKBArticlesCount(long, long, int)}
-	 */
-	@Deprecated
-	@Override
-	public int getSiblingKBArticlesCount(
-		long groupId, long parentResourcePrimKey, int status) {
-
-		return _kbArticleService.getSiblingKBArticlesCount(
-			groupId, parentResourcePrimKey, status);
 	}
 
 	@Override

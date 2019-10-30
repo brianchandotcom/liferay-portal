@@ -66,20 +66,6 @@ public class WikiNodeLocalServiceWrapper
 			nodeId, addGroupPermissions, addGuestPermissions);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addNodeResources(WikiNode, ModelPermissions)}
-	 */
-	@Deprecated
-	@Override
-	public void addNodeResources(
-			long nodeId, String[] groupPermissions, String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_wikiNodeLocalService.addNodeResources(
-			nodeId, groupPermissions, guestPermissions);
-	}
-
 	@Override
 	public void addNodeResources(
 			com.liferay.wiki.model.WikiNode node, boolean addGroupPermissions,
@@ -98,21 +84,6 @@ public class WikiNodeLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_wikiNodeLocalService.addNodeResources(node, modelPermissions);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addNodeResources(WikiNode, ModelPermissions)}
-	 */
-	@Deprecated
-	@Override
-	public void addNodeResources(
-			com.liferay.wiki.model.WikiNode node, String[] groupPermissions,
-			String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_wikiNodeLocalService.addNodeResources(
-			node, groupPermissions, guestPermissions);
 	}
 
 	/**

@@ -284,33 +284,6 @@ public class KBFolderServiceSoap {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #updateKBFolder(long, long, long, String, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.knowledge.base.model.KBFolderSoap updateKBFolder(
-			long parentResourceClassNameId, long parentResourcePrimKey,
-			long kbFolderId, String name, String description)
-		throws RemoteException {
-
-		try {
-			com.liferay.knowledge.base.model.KBFolder returnValue =
-				KBFolderServiceUtil.updateKBFolder(
-					parentResourceClassNameId, parentResourcePrimKey,
-					kbFolderId, name, description);
-
-			return com.liferay.knowledge.base.model.KBFolderSoap.toSoapModel(
-				returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.knowledge.base.model.KBFolderSoap updateKBFolder(
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			long kbFolderId, String name, String description,

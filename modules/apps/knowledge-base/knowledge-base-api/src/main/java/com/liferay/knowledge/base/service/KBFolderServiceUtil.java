@@ -156,22 +156,6 @@ public class KBFolderServiceUtil {
 		getService().moveKBFolder(kbFolderId, parentKBFolderId);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #updateKBFolder(long, long, long, String, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
-			long parentResourceClassNameId, long parentResourcePrimKey,
-			long kbFolderId, String name, String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateKBFolder(
-			parentResourceClassNameId, parentResourcePrimKey, kbFolderId, name,
-			description);
-	}
-
 	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			long kbFolderId, String name, String description,

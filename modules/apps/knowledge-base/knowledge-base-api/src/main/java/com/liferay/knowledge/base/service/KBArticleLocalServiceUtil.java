@@ -97,20 +97,6 @@ public class KBArticleLocalServiceUtil {
 		getService().addKBArticleResources(kbArticle, modelPermissions);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addKBArticleResources(KBArticle, ModelPermissions)}
-	 */
-	@Deprecated
-	public static void addKBArticleResources(
-			com.liferay.knowledge.base.model.KBArticle kbArticle,
-			String[] groupPermissions, String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().addKBArticleResources(
-			kbArticle, groupPermissions, guestPermissions);
-	}
-
 	public static void addKBArticleResources(
 			long kbArticleId, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -118,20 +104,6 @@ public class KBArticleLocalServiceUtil {
 
 		getService().addKBArticleResources(
 			kbArticleId, addGroupPermissions, addGuestPermissions);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addKBArticleResources(KBArticle, ModelPermissions)}
-	 */
-	@Deprecated
-	public static void addKBArticleResources(
-			long kbArticleId, String[] groupPermissions,
-			String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().addKBArticleResources(
-			kbArticleId, groupPermissions, guestPermissions);
 	}
 
 	public static int addKBArticlesMarkdown(
@@ -480,23 +452,6 @@ public class KBArticleLocalServiceUtil {
 			resourcePrimKey, status, orderByComparator);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getKBArticleAndAllDescendantKBArticles(long, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	public static java.util.List<com.liferay.knowledge.base.model.KBArticle>
-		getKBArticleAndAllDescendants(
-			long resourcePrimKey, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.knowledge.base.model.KBArticle>
-					orderByComparator) {
-
-		return getService().getKBArticleAndAllDescendants(
-			resourcePrimKey, status, orderByComparator);
-	}
-
 	public static com.liferay.knowledge.base.model.KBArticle
 			getKBArticleByUrlTitle(
 				long groupId, long kbFolderId, String urlTitle)
@@ -714,36 +669,6 @@ public class KBArticleLocalServiceUtil {
 
 		return getService().getSectionsKBArticlesCount(
 			groupId, sections, status);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getKBArticles(long,
-	 long, int, int, int, OrderByComparator)}
-	 */
-	@Deprecated
-	public static java.util.List<com.liferay.knowledge.base.model.KBArticle>
-		getSiblingKBArticles(
-			long groupId, long parentResourcePrimKey, int status, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.knowledge.base.model.KBArticle>
-					orderByComparator) {
-
-		return getService().getSiblingKBArticles(
-			groupId, parentResourcePrimKey, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getKBArticlesCount(long, long, int)}
-	 */
-	@Deprecated
-	public static int getSiblingKBArticlesCount(
-		long groupId, long parentResourcePrimKey, int status) {
-
-		return getService().getSiblingKBArticlesCount(
-			groupId, parentResourcePrimKey, status);
 	}
 
 	public static String[] getTempAttachmentNames(

@@ -339,17 +339,6 @@ public interface KBFolderLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public KBFolder updateKBFolder(KBFolder kbFolder);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #updateKBFolder(long, long, long, String, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public KBFolder updateKBFolder(
-			long parentResourceClassNameId, long parentResourcePrimKey,
-			long kbFolderId, String name, String description)
-		throws PortalException;
-
 	public KBFolder updateKBFolder(
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			long kbFolderId, String name, String description,

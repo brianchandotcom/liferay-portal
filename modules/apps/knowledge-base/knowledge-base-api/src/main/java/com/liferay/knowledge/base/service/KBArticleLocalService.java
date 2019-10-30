@@ -103,29 +103,9 @@ public interface KBArticleLocalService
 			KBArticle kbArticle, ModelPermissions modelPermissions)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addKBArticleResources(KBArticle, ModelPermissions)}
-	 */
-	@Deprecated
-	public void addKBArticleResources(
-			KBArticle kbArticle, String[] groupPermissions,
-			String[] guestPermissions)
-		throws PortalException;
-
 	public void addKBArticleResources(
 			long kbArticleId, boolean addGroupPermissions,
 			boolean addGuestPermissions)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addKBArticleResources(KBArticle, ModelPermissions)}
-	 */
-	@Deprecated
-	public void addKBArticleResources(
-			long kbArticleId, String[] groupPermissions,
-			String[] guestPermissions)
 		throws PortalException;
 
 	public int addKBArticlesMarkdown(
@@ -347,17 +327,6 @@ public interface KBArticleLocalService
 		long resourcePrimKey, int status,
 		OrderByComparator<KBArticle> orderByComparator);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getKBArticleAndAllDescendantKBArticles(long, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getKBArticleAndAllDescendants(
-		long resourcePrimKey, int status,
-		OrderByComparator<KBArticle> orderByComparator);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle getKBArticleByUrlTitle(
 			long groupId, long kbFolderId, String urlTitle)
@@ -496,25 +465,6 @@ public interface KBArticleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSectionsKBArticlesCount(
 		long groupId, String[] sections, int status);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getKBArticles(long,
-	 long, int, int, int, OrderByComparator)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getSiblingKBArticles(
-		long groupId, long parentResourcePrimKey, int status, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getKBArticlesCount(long, long, int)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSiblingKBArticlesCount(
-		long groupId, long parentResourcePrimKey, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String[] getTempAttachmentNames(

@@ -50,17 +50,6 @@ public class WikiPageResourceLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addPageResource(long, long, String)}
-	 */
-	@Deprecated
-	public static com.liferay.wiki.model.WikiPageResource addPageResource(
-		long nodeId, String title) {
-
-		return getService().addPageResource(nodeId, title);
-	}
-
-	/**
 	 * Adds the wiki page resource to the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param wikiPageResource the wiki page resource
@@ -285,15 +274,6 @@ public class WikiPageResourceLocalServiceUtil {
 		long groupId, long nodeId, String title) {
 
 		return getService().getPageResourcePrimKey(groupId, nodeId, title);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getPageResourcePrimKey(long, long, String)}
-	 */
-	@Deprecated
-	public static long getPageResourcePrimKey(long nodeId, String title) {
-		return getService().getPageResourcePrimKey(nodeId, title);
 	}
 
 	public static com.liferay.portal.kernel.model.PersistedModel

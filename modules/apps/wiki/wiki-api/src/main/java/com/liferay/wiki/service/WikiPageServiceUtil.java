@@ -107,20 +107,6 @@ public class WikiPageServiceUtil {
 			nodeId, folderName, fileName, inputStream, mimeType);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addTempFileEntry(long, String, String, InputStream, String)}
-	 */
-	@Deprecated
-	public static void addTempPageAttachment(
-			long nodeId, String fileName, String tempFolderName,
-			java.io.InputStream inputStream, String mimeType)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().addTempPageAttachment(
-			nodeId, fileName, tempFolderName, inputStream, mimeType);
-	}
-
 	public static void changeParent(
 			long nodeId, String title, String newParentTitle,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -214,18 +200,6 @@ public class WikiPageServiceUtil {
 		return getService().getNodePagesRSS(
 			nodeId, max, type, version, displayStyle, feedURL, entryURL,
 			attachmentURLPrefix);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getOrphans(WikiNode)}
-	 */
-	@Deprecated
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
-			long groupId, long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getOrphans(groupId, nodeId);
 	}
 
 	public static java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(

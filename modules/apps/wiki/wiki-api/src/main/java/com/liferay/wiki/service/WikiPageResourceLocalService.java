@@ -64,13 +64,6 @@ public interface WikiPageResourceLocalService
 		long groupId, long nodeId, String title);
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addPageResource(long, long, String)}
-	 */
-	@Deprecated
-	public WikiPageResource addPageResource(long nodeId, String title);
-
-	/**
 	 * Adds the wiki page resource to the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param wikiPageResource the wiki page resource
@@ -229,14 +222,6 @@ public interface WikiPageResourceLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getPageResourcePrimKey(long groupId, long nodeId, String title);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getPageResourcePrimKey(long, long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPageResourcePrimKey(long nodeId, String title);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

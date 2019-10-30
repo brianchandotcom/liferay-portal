@@ -114,17 +114,6 @@ public interface KBFolderService extends BaseService {
 	public void moveKBFolder(long kbFolderId, long parentKBFolderId)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #updateKBFolder(long, long, long, String, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public KBFolder updateKBFolder(
-			long parentResourceClassNameId, long parentResourcePrimKey,
-			long kbFolderId, String name, String description)
-		throws PortalException;
-
 	public KBFolder updateKBFolder(
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			long kbFolderId, String name, String description,

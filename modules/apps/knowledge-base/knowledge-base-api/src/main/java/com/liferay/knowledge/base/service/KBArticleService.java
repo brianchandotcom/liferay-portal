@@ -111,18 +111,6 @@ public interface KBArticleService extends BaseService {
 			long groupId, long kbFolderId, String urlTitle, int status)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getAllDescendantKBArticles(long, long, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getAllDescendantKBArticles(
-			long resourcePrimKey, int status,
-			OrderByComparator<KBArticle> orderByComparator)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBArticle> getAllDescendantKBArticles(
 			long groupId, long resourcePrimKey, int status,
@@ -152,17 +140,6 @@ public interface KBArticleService extends BaseService {
 			long resourcePrimKey, int status,
 			OrderByComparator<KBArticle> orderByComparator)
 		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getKBArticleAndAllDescendantKBArticles(long, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getKBArticleAndAllDescendants(
-		long groupId, long resourcePrimKey, int status,
-		OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getKBArticleRSS(
@@ -233,25 +210,6 @@ public interface KBArticleService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSectionsKBArticlesCount(
 		long groupId, String[] sections, int status);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getKBArticles(long,
-	 long, int, int, int, OrderByComparator)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getSiblingKBArticles(
-		long groupId, long parentResourcePrimKey, int status, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getKBArticlesCount(long, long, int)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSiblingKBArticlesCount(
-		long groupId, long parentResourcePrimKey, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String[] getTempAttachmentNames(long groupId, String tempFolderName)

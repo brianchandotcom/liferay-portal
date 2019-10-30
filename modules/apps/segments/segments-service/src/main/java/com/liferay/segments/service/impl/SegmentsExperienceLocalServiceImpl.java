@@ -154,12 +154,12 @@ public class SegmentsExperienceLocalServiceImpl
 
 		// Segments experience
 
-		if (!GroupThreadLocal.isDeleteInProcess()) {
-			if (segmentsExperience.hasSegmentsExperiment()) {
-				throw new RequiredSegmentsExperienceException.
-					MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments(
-						segmentsExperience.getSegmentsExperienceId());
-			}
+		if (!GroupThreadLocal.isDeleteInProcess() &&
+			segmentsExperience.hasSegmentsExperiment()) {
+
+			throw new RequiredSegmentsExperienceException.
+				MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments(
+					segmentsExperience.getSegmentsExperienceId());
 		}
 
 		segmentsExperiencePersistence.remove(segmentsExperience);

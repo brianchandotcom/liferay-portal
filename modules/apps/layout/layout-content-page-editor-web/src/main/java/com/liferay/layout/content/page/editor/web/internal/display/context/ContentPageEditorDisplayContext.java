@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
@@ -33,6 +32,7 @@ import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
@@ -281,7 +281,7 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"lookAndFeelURL", _getLookAndFeelURL()
 		).put(
-			"mappedAssetEntries", _getMappedAssetEntriesSoyContexts()
+			"mappedAssetEntries", _getMappedInfoItemsSoyContexts()
 		).put(
 			"masterPageLayoutData",
 			JSONFactoryUtil.createJSONObject(_getMasterPageLayoutData())
@@ -1055,30 +1055,34 @@ public class ContentPageEditorDisplayContext {
 		return lookAndFeelURL.toString();
 	}
 
-	private Set<SoyContext> _getMappedAssetEntriesSoyContexts()
+	private Set<SoyContext> _getMappedInfoItemsSoyContexts()
 		throws PortalException {
 
-		Set<SoyContext> mappedAssetEntriesSoyContexts = new HashSet<>();
+		Set<SoyContext> mappedInfoItemsSoyContexts = new HashSet<>();
 
-		Set<AssetEntry> assetEntries = ContentUtil.getMappedAssetEntries(
-			_groupId, themeDisplay.getPlid());
+		Set<InfoDisplayObjectProvider> infoDisplayObjectProviders =
+			ContentUtil.getMappedInfoDisplayObjectProviders(
+				_groupId, themeDisplay.getPlid());
 
-		for (AssetEntry assetEntry : assetEntries) {
-			SoyContext mappedAssetEntrySoyContext =
+		for (InfoDisplayObjectProvider infoDisplayObjectProvider :
+				infoDisplayObjectProviders) {
+
+			SoyContext mappedInfoItemSoyContext =
 				SoyContextFactoryUtil.createSoyContext();
 
-			mappedAssetEntrySoyContext.put(
-				"classNameId", assetEntry.getClassNameId()
+			mappedInfoItemSoyContext.put(
+				"classNameId", infoDisplayObjectProvider.getClassNameId()
 			).put(
-				"classPK", assetEntry.getClassPK()
+				"classPK", infoDisplayObjectProvider.getClassPK()
 			).put(
-				"title", assetEntry.getTitle(themeDisplay.getLocale())
+				"title",
+				infoDisplayObjectProvider.getTitle(themeDisplay.getLocale())
 			);
 
-			mappedAssetEntriesSoyContexts.add(mappedAssetEntrySoyContext);
+			mappedInfoItemsSoyContexts.add(mappedInfoItemSoyContext);
 		}
 
-		return mappedAssetEntriesSoyContexts;
+		return mappedInfoItemsSoyContexts;
 	}
 
 	private String _getMasterPageLayoutData() {

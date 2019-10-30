@@ -356,7 +356,6 @@ definition {
 			searchAssetType = "Message Boards Message");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test XPackSmokeTest {
 		property elastic.xpack.enabled = "true";

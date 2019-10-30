@@ -59,17 +59,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DefaultSegmentsEntryProvider implements SegmentsEntryProvider {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ODataRetriever.class, "model.class.name");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
 	@Override
 	public long[] getSegmentsEntryClassPKs(
 			long segmentsEntryId, int start, int end)
@@ -180,6 +169,17 @@ public class DefaultSegmentsEntryProvider implements SegmentsEntryProvider {
 		).mapToLong(
 			SegmentsEntry::getSegmentsEntryId
 		).toArray();
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ODataRetriever.class, "model.class.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private Criteria.Conjunction _getConjunction(

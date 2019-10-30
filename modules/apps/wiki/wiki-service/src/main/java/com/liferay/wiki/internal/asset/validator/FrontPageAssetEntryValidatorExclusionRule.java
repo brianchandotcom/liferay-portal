@@ -45,13 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 public class FrontPageAssetEntryValidatorExclusionRule
 	implements AssetEntryValidatorExclusionRule {
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_wikiGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
-			WikiGroupServiceConfiguration.class, properties);
-	}
-
 	@Override
 	public boolean isValidationExcluded(
 		long groupId, String className, long classPK, long classTypePK,
@@ -85,6 +78,13 @@ public class FrontPageAssetEntryValidatorExclusionRule
 		}
 
 		return false;
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_wikiGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			WikiGroupServiceConfiguration.class, properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

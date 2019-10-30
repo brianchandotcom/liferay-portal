@@ -33,18 +33,18 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class DefaultBearerTokenProviderAccessor
 	implements BearerTokenProviderAccessor {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_scopedServiceTrackerMap = _scopedServiceTrackerMapFactory.create(
-			bundleContext, BearerTokenProvider.class,
-			"liferay.oauth2.client.id", () -> _defaultBearerTokenProvider);
-	}
-
 	@Override
 	public BearerTokenProvider getBearerTokenProvider(
 		long companyId, String clientId) {
 
 		return _scopedServiceTrackerMap.getService(companyId, clientId);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_scopedServiceTrackerMap = _scopedServiceTrackerMapFactory.create(
+			bundleContext, BearerTokenProvider.class,
+			"liferay.oauth2.client.id", () -> _defaultBearerTokenProvider);
 	}
 
 	@Reference(

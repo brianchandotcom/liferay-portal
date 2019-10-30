@@ -47,35 +47,6 @@ import org.osgi.service.component.annotations.Deactivate;
 )
 public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
-	@Activate
-	protected void activate(Map<String, Object> properties) throws Exception {
-		updateConfigurations(properties);
-
-		String samlKeyStoreType = getSamlKeyStoreType();
-
-		try {
-			_keyStore = KeyStore.getInstance(samlKeyStoreType);
-		}
-		catch (KeyStoreException kse) {
-			String message = StringBundler.concat(
-				"Unable instantiate keystore with type ", samlKeyStoreType,
-				": ", kse.getMessage());
-
-			_keyStoreException = new KeyStoreException(message, kse);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message, kse);
-			}
-			else {
-				_log.error(message);
-			}
-
-			return;
-		}
-
-		loadKeyStore();
-	}
-
 	@Override
 	public KeyStore getKeyStore() throws KeyStoreException {
 		if (_keyStoreException != null) {
@@ -114,6 +85,35 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 			_keyStore.store(
 				fileOutputStream, samlKeyStorePassword.toCharArray());
 		}
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) throws Exception {
+		updateConfigurations(properties);
+
+		String samlKeyStoreType = getSamlKeyStoreType();
+
+		try {
+			_keyStore = KeyStore.getInstance(samlKeyStoreType);
+		}
+		catch (KeyStoreException kse) {
+			String message = StringBundler.concat(
+				"Unable instantiate keystore with type ", samlKeyStoreType,
+				": ", kse.getMessage());
+
+			_keyStoreException = new KeyStoreException(message, kse);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, kse);
+			}
+			else {
+				_log.error(message);
+			}
+
+			return;
+		}
+
+		loadKeyStore();
 	}
 
 	@Deactivate

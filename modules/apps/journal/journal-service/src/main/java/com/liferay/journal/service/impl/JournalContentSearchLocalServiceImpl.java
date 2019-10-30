@@ -55,13 +55,6 @@ import org.osgi.service.component.annotations.Deactivate;
 public class JournalContentSearchLocalServiceImpl
 	extends JournalContentSearchLocalServiceBaseImpl {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, DisplayInformationProvider.class,
-			"javax.portlet.name");
-	}
-
 	@Override
 	public void checkContentSearches(long companyId) throws PortalException {
 		if (_log.isInfoEnabled()) {
@@ -146,11 +139,6 @@ public class JournalContentSearchLocalServiceImpl
 
 			journalContentSearchPersistence.remove(journalContentSearch);
 		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
 	}
 
 	@Override
@@ -331,6 +319,18 @@ public class JournalContentSearchLocalServiceImpl
 		}
 
 		return contentSearches;
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DisplayInformationProvider.class,
+			"javax.portlet.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

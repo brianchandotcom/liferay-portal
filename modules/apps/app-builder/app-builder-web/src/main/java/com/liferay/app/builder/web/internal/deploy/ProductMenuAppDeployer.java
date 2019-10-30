@@ -53,18 +53,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ProductMenuAppDeployer implements AppDeployer {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_bundleContext = null;
-
-		_serviceRegistrationsMap.clear();
-	}
-
 	@Override
 	public void deploy(long appId) throws Exception {
 		AppBuilderAppDeployment appBuilderAppDeployment =
@@ -152,6 +140,18 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			AppBuilderAppConstants.Status.UNDEPLOYED.getValue());
 
 		_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_bundleContext = null;
+
+		_serviceRegistrationsMap.clear();
 	}
 
 	private ServiceRegistration<?> _deployPanelApp(

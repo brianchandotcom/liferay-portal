@@ -62,28 +62,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
-			ConfigurableUtil.createConfigurable(
-				BatchEngineTaskConfiguration.class, properties);
-
-		_batchSize = batchEngineTaskConfiguration.batchSize();
-
-		if (_batchSize <= 0) {
-			_batchSize = 1;
-		}
-
-		Properties batchSizeProperties = PropsUtil.getProperties(
-			"batch.size.", true);
-
-		for (Map.Entry<Object, Object> entry : batchSizeProperties.entrySet()) {
-			_itemClassBatchSizeMap.put(
-				String.valueOf(entry.getKey()),
-				GetterUtil.getInteger(entry.getValue()));
-		}
-	}
-
 	@Override
 	public ImportTask deleteImportTask(
 			String className, String version, String callbackURL,
@@ -124,6 +102,28 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			BatchEngineTaskOperation.UPDATE,
 			multipartBody.getBinaryFile("file"), callbackURL, className, null,
 			version);
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BatchEngineTaskConfiguration.class, properties);
+
+		_batchSize = batchEngineTaskConfiguration.batchSize();
+
+		if (_batchSize <= 0) {
+			_batchSize = 1;
+		}
+
+		Properties batchSizeProperties = PropsUtil.getProperties(
+			"batch.size.", true);
+
+		for (Map.Entry<Object, Object> entry : batchSizeProperties.entrySet()) {
+			_itemClassBatchSizeMap.put(
+				String.valueOf(entry.getKey()),
+				GetterUtil.getInteger(entry.getValue()));
+		}
 	}
 
 	private Map.Entry<byte[], String> _getContentAndExtensionFromCompressedFile(

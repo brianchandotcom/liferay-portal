@@ -39,6 +39,11 @@ import org.slf4j.LoggerFactory;
 @Component(factory = "JSONWebServiceClient", service = {})
 public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 
+	@Override
+	public void afterPropertiesSet() throws IOReactorException {
+		super.afterPropertiesSet();
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties)
 		throws IOReactorException {
@@ -74,11 +79,6 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 		}
 
 		afterPropertiesSet();
-	}
-
-	@Override
-	public void afterPropertiesSet() throws IOReactorException {
-		super.afterPropertiesSet();
 	}
 
 	@Deactivate

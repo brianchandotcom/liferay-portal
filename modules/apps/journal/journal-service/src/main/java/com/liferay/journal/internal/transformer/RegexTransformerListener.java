@@ -43,6 +43,29 @@ import org.osgi.service.component.annotations.Component;
 )
 public class RegexTransformerListener extends BaseTransformerListener {
 
+	@Override
+	public String onOutput(
+		String output, String languageId, Map<String, String> tokens) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("onOutput");
+		}
+
+		return replace(output);
+	}
+
+	@Override
+	public String onScript(
+		String script, Document document, String languageId,
+		Map<String, String> tokens) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("onScript");
+		}
+
+		return replace(script);
+	}
+
 	@Activate
 	protected void activate() {
 		_patterns = new ArrayList<>();
@@ -68,29 +91,6 @@ public class RegexTransformerListener extends BaseTransformerListener {
 			_patterns.add(Pattern.compile(regex));
 			_replacements.add(replacement);
 		}
-	}
-
-	@Override
-	public String onOutput(
-		String output, String languageId, Map<String, String> tokens) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("onOutput");
-		}
-
-		return replace(output);
-	}
-
-	@Override
-	public String onScript(
-		String script, Document document, String languageId,
-		Map<String, String> tokens) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("onScript");
-		}
-
-		return replace(script);
 	}
 
 	protected String replace(String s) {

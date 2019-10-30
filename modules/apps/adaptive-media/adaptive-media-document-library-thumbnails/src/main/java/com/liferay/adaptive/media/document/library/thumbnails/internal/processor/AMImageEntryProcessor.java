@@ -70,15 +70,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		afterPropertiesSet();
-
-		_amSystemImagesConfiguration = ConfigurableUtil.createConfigurable(
-			AMSystemImagesConfiguration.class, properties);
-	}
-
 	@Override
 	public void afterPropertiesSet() {
 		_imageProcessor = new ImageProcessorImpl();
@@ -287,6 +278,15 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	@Override
 	public void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		afterPropertiesSet();
+
+		_amSystemImagesConfiguration = ConfigurableUtil.createConfigurable(
+			AMSystemImagesConfiguration.class, properties);
 	}
 
 	private Stream<AdaptiveMedia<AMImageProcessor>> _getAdaptiveMediaStream(

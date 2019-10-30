@@ -78,13 +78,6 @@ import org.osgi.service.component.annotations.Reference;
 public class SimulationProductNavigationControlMenuEntry
 	extends BaseProductNavigationControlMenuEntry {
 
-	@Activate
-	protected void activate() {
-		_portletNamespace = _portal.getPortletNamespace(
-			ProductNavigationSimulationPortletKeys.
-				PRODUCT_NAVIGATION_SIMULATION);
-	}
-
 	@Override
 	public String getLabel(Locale locale) {
 		return null;
@@ -207,6 +200,13 @@ public class SimulationProductNavigationControlMenuEntry
 		unbind = "-"
 	)
 	public void setPanelCategory(PanelCategory panelCategory) {
+	}
+
+	@Activate
+	protected void activate() {
+		_portletNamespace = _portal.getPortletNamespace(
+			ProductNavigationSimulationPortletKeys.
+				PRODUCT_NAVIGATION_SIMULATION);
 	}
 
 	@Reference(unbind = "-")

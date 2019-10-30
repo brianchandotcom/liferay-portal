@@ -59,26 +59,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
-	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
-			ConfigurableUtil.createConfigurable(
-				BatchEngineTaskConfiguration.class, properties);
-
-		_batchEngineTaskItemReaderFactory =
-			new BatchEngineTaskItemReaderFactory(
-				GetterUtil.getString(
-					batchEngineTaskConfiguration.csvFileColumnDelimiter(),
-					StringPool.COMMA));
-
-		_batchEngineTaskItemResourceDelegateFactory =
-			new BatchEngineTaskItemResourceDelegateFactory(
-				_batchEngineTaskMethodRegistry, _companyLocalService,
-				_userLocalService);
-	}
-
 	@Override
 	public void execute(BatchEngineTask batchEngineTask) {
 		try {
@@ -111,6 +91,26 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
 			BatchEngineTaskCallbackUtil.sendCallback(batchEngineTask);
 		}
+	}
+
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BatchEngineTaskConfiguration.class, properties);
+
+		_batchEngineTaskItemReaderFactory =
+			new BatchEngineTaskItemReaderFactory(
+				GetterUtil.getString(
+					batchEngineTaskConfiguration.csvFileColumnDelimiter(),
+					StringPool.COMMA));
+
+		_batchEngineTaskItemResourceDelegateFactory =
+			new BatchEngineTaskItemResourceDelegateFactory(
+				_batchEngineTaskMethodRegistry, _companyLocalService,
+				_userLocalService);
 	}
 
 	private void _commitItems(

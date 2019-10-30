@@ -48,22 +48,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = DDMDataProviderInvoker.class)
 public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 
-	@Deactivate
-	protected void deactivate() throws Exception {
-		if (!_invoked) {
-			return;
-		}
-
-		Hystrix.reset();
-
-		Field field = ReflectionUtil.getDeclaredField(
-			Hystrix.class, "currentCommand");
-
-		ThreadLocal<?> threadLocal = (ThreadLocal<?>)field.get(null);
-
-		threadLocal.remove();
-	}
-
 	@Override
 	public DDMDataProviderResponse invoke(
 		DDMDataProviderRequest ddmDataProviderRequest) {
@@ -124,6 +108,22 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 		}
 
 		return builder.build();
+	}
+
+	@Deactivate
+	protected void deactivate() throws Exception {
+		if (!_invoked) {
+			return;
+		}
+
+		Hystrix.reset();
+
+		Field field = ReflectionUtil.getDeclaredField(
+			Hystrix.class, "currentCommand");
+
+		ThreadLocal<?> threadLocal = (ThreadLocal<?>)field.get(null);
+
+		threadLocal.remove();
 	}
 
 	protected DDMDataProviderResponse doInvoke(

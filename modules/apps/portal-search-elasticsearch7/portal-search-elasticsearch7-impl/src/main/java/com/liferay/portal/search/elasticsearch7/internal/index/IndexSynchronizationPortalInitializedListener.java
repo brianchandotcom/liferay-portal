@@ -35,13 +35,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = {})
 public class IndexSynchronizationPortalInitializedListener {
 
-	@Activate
-	protected void activate() {
-		_indexSynchronizer.synchronizeIndexes();
-
-		_activated = true;
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -86,6 +79,13 @@ public class IndexSynchronizationPortalInitializedListener {
 			_log.debug(
 				"Portal is initialized and indexes will be synchronized");
 		}
+	}
+
+	@Activate
+	protected void activate() {
+		_indexSynchronizer.synchronizeIndexes();
+
+		_activated = true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

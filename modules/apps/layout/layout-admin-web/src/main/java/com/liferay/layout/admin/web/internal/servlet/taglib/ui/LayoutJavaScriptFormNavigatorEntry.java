@@ -37,6 +37,25 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutJavaScriptFormNavigatorEntry
 	extends BaseLayoutFormNavigatorEntry {
 
+	@Override
+	public String getCategoryKey() {
+		return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_ADVANCED;
+	}
+
+	@Override
+	public String getKey() {
+		return "javascript";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		boolean enableJavaScript =
@@ -60,25 +79,6 @@ public class LayoutJavaScriptFormNavigatorEntry
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
-	}
-
-	@Override
-	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_ADVANCED;
-	}
-
-	@Override
-	public String getKey() {
-		return "javascript";
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	@Override

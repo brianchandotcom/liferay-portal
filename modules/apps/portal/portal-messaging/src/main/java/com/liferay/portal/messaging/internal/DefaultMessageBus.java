@@ -65,83 +65,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 )
 public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_messageListenerServiceTracker = new ServiceTracker<>(
-			bundleContext, MessageListener.class,
-			new ServiceTrackerCustomizer
-				<MessageListener, ObjectValuePair<String, MessageListener>>() {
-
-				@Override
-				public ObjectValuePair<String, MessageListener> addingService(
-					ServiceReference<MessageListener> serviceReference) {
-
-					String destinationName =
-						(String)serviceReference.getProperty(
-							"destination.name");
-
-					if (destinationName == null) {
-						return null;
-					}
-
-					MessageListener messageListener = bundleContext.getService(
-						serviceReference);
-
-					Thread currentThread = Thread.currentThread();
-
-					ClassLoader contextClassLoader =
-						currentThread.getContextClassLoader();
-
-					try {
-						ClassLoader operatingClassLoader =
-							(ClassLoader)serviceReference.getProperty(
-								"message.listener.operating.class.loader");
-
-						if (operatingClassLoader != null) {
-							currentThread.setContextClassLoader(
-								operatingClassLoader);
-						}
-
-						registerMessageListener(
-							destinationName, messageListener);
-					}
-					finally {
-						currentThread.setContextClassLoader(contextClassLoader);
-					}
-
-					return new ObjectValuePair<>(
-						destinationName, messageListener);
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<MessageListener> serviceReference,
-					ObjectValuePair<String, MessageListener> objectValuePair) {
-
-					removedService(serviceReference, objectValuePair);
-
-					ObjectValuePair<String, MessageListener>
-						newObjectValuePair = addingService(serviceReference);
-
-					objectValuePair.setKey(newObjectValuePair.getKey());
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<MessageListener> serviceReference,
-					ObjectValuePair<String, MessageListener> objectValuePair) {
-
-					unregisterMessageListener(
-						objectValuePair.getKey(), objectValuePair.getValue());
-
-					bundleContext.ungetService(serviceReference);
-				}
-
-			});
-
-		_messageListenerServiceTracker.open();
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
@@ -354,6 +277,83 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 			destinationWorkerConfiguration.destinationName());
 
 		updateDestination(destination, destinationWorkerConfiguration);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_messageListenerServiceTracker = new ServiceTracker<>(
+			bundleContext, MessageListener.class,
+			new ServiceTrackerCustomizer
+				<MessageListener, ObjectValuePair<String, MessageListener>>() {
+
+				@Override
+				public ObjectValuePair<String, MessageListener> addingService(
+					ServiceReference<MessageListener> serviceReference) {
+
+					String destinationName =
+						(String)serviceReference.getProperty(
+							"destination.name");
+
+					if (destinationName == null) {
+						return null;
+					}
+
+					MessageListener messageListener = bundleContext.getService(
+						serviceReference);
+
+					Thread currentThread = Thread.currentThread();
+
+					ClassLoader contextClassLoader =
+						currentThread.getContextClassLoader();
+
+					try {
+						ClassLoader operatingClassLoader =
+							(ClassLoader)serviceReference.getProperty(
+								"message.listener.operating.class.loader");
+
+						if (operatingClassLoader != null) {
+							currentThread.setContextClassLoader(
+								operatingClassLoader);
+						}
+
+						registerMessageListener(
+							destinationName, messageListener);
+					}
+					finally {
+						currentThread.setContextClassLoader(contextClassLoader);
+					}
+
+					return new ObjectValuePair<>(
+						destinationName, messageListener);
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<MessageListener> serviceReference,
+					ObjectValuePair<String, MessageListener> objectValuePair) {
+
+					removedService(serviceReference, objectValuePair);
+
+					ObjectValuePair<String, MessageListener>
+						newObjectValuePair = addingService(serviceReference);
+
+					objectValuePair.setKey(newObjectValuePair.getKey());
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<MessageListener> serviceReference,
+					ObjectValuePair<String, MessageListener> objectValuePair) {
+
+					unregisterMessageListener(
+						objectValuePair.getKey(), objectValuePair.getValue());
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
+
+		_messageListenerServiceTracker.open();
 	}
 
 	@Deactivate

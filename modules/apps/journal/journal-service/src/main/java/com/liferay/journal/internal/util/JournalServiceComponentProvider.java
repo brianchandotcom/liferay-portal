@@ -33,16 +33,6 @@ public class JournalServiceComponentProvider {
 		return _journalServiceComponentProvider;
 	}
 
-	@Activate
-	protected void activate() {
-		_journalServiceComponentProvider = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_journalServiceComponentProvider = null;
-	}
-
 	public JournalGroupServiceConfiguration
 		getJournalGroupServiceConfiguration() {
 
@@ -54,6 +44,16 @@ public class JournalServiceComponentProvider {
 		JournalGroupServiceConfiguration journalGroupServiceConfiguration) {
 
 		_journalGroupServiceConfiguration = journalGroupServiceConfiguration;
+	}
+
+	@Activate
+	protected void activate() {
+		_journalServiceComponentProvider = this;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_journalServiceComponentProvider = null;
 	}
 
 	protected void unsetJournalGroupServiceConfiguration(

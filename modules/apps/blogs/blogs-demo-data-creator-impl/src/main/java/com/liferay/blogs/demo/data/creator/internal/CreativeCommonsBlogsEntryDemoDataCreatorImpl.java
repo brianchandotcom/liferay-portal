@@ -41,14 +41,6 @@ import org.osgi.service.component.annotations.Component;
 public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 	extends BaseBlogsEntryDemoDataCreator {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		Collections.addAll(
-			_availableIndexes, new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
-
-		Collections.shuffle(_availableIndexes);
-	}
-
 	@Override
 	public BlogsEntry create(long userId, long groupId)
 		throws IOException, PortalException {
@@ -60,6 +52,14 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 		String content = _getRandomContent(index);
 
 		return createBlogsEntry(userId, groupId, title, subtitle, content);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		Collections.addAll(
+			_availableIndexes, new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+
+		Collections.shuffle(_availableIndexes);
 	}
 
 	private int _getNextIndex() {

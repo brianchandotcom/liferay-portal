@@ -62,17 +62,6 @@ import org.osgi.service.component.annotations.Reference;
 public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 	implements MVCResourceCommand {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ODataRetriever.class, "model.class.name");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
 	@Override
 	public boolean serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -88,6 +77,17 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 		catch (Exception e) {
 			throw new PortletException(e);
 		}
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ODataRetriever.class, "model.class.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	protected int getSegmentsEntryClassPKsCount(

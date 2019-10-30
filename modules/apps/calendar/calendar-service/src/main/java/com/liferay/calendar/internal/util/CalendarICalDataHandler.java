@@ -112,18 +112,6 @@ import org.osgi.service.component.annotations.Deactivate;
 )
 public class CalendarICalDataHandler implements CalendarDataHandler {
 
-	@Activate
-	protected void activate() {
-		CalendarDataHandlerFactory.registerCalendarDataHandler(
-			CalendarDataFormat.ICAL, this);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		CalendarDataHandlerFactory.unregisterCalendarDataHandler(
-			CalendarDataFormat.ICAL);
-	}
-
 	@Override
 	public String exportCalendar(long calendarId) throws Exception {
 		int[] statuses = {
@@ -168,6 +156,18 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 		for (VEvent vEvent : vEvents) {
 			importICalEvent(calendarId, vEvent);
 		}
+	}
+
+	@Activate
+	protected void activate() {
+		CalendarDataHandlerFactory.registerCalendarDataHandler(
+			CalendarDataFormat.ICAL, this);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		CalendarDataHandlerFactory.unregisterCalendarDataHandler(
+			CalendarDataFormat.ICAL);
 	}
 
 	protected void importICalEvent(long calendarId, VEvent vEvent)

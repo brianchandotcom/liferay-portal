@@ -20,7 +20,7 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState, useRef} from 'react';
 
-function PersonalMenu({itemsURL}) {
+function PersonalMenu({color, isImpersonated, itemsURL, size}) {
 	const [items, setItems] = useState([]);
 	const preloadPromise = useRef();
 
@@ -41,13 +41,30 @@ function PersonalMenu({itemsURL}) {
 					onFocus={preloadItems}
 					onMouseOver={preloadItems}
 				>
-					<ClaySticker
-						className="user-icon-color-4"
-						shape="circle"
-						size="lg"
-					>
-						<ClayIcon symbol="user" />
-					</ClaySticker>
+					<span className={`sticker sticker-${size}`}>
+						<ClaySticker
+							className={`user-icon-color-${color}`}
+							shape="circle"
+							size={size}
+						>
+							<ClayIcon symbol="user" />
+						</ClaySticker>
+
+						{isImpersonated && (
+							<ClaySticker
+								className="sticker-user-icon"
+								id="impersonate-user-sticker"
+								outside
+								position="bottom-right"
+								shape="circle"
+								size={size ? 'sm' : ''}
+							>
+								<span id="impersonate-user-icon">
+									<ClayIcon symbol="user" />
+								</span>
+							</ClaySticker>
+						)}
+					</span>
 				</ClayButton>
 			}
 		/>

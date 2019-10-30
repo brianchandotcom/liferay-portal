@@ -811,7 +811,7 @@ public class CustomSQLImpl implements CustomSQL {
 	}
 
 	@Deactivate
-	protected void deactive() {
+	protected void deactivate() {
 		_bundleContext.removeBundleListener(_synchronousBundleListener);
 	}
 

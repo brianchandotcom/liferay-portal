@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.Component;
 public class DepotEntryGroupRelLocalServiceImpl
 	extends DepotEntryGroupRelLocalServiceBaseImpl {
 
+	@Override
 	public DepotEntryGroupRel addDepotEntryGroupRel(
 		long depotEntryId, long toGroupId) {
 
@@ -52,6 +53,7 @@ public class DepotEntryGroupRelLocalServiceImpl
 		return depotEntryGroupRelPersistence.update(depotEntryGroupRel);
 	}
 
+	@Override
 	public List<DepotEntryGroupRel> getDepotEntryGroupRels(
 		DepotEntry depotEntry) {
 

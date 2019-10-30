@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,7 +46,29 @@ public class AccountUserDisplay {
 	}
 
 	public String getAccountNames(HttpServletRequest httpServletRequest) {
-		return LanguageUtil.get(httpServletRequest, _accountNames);
+		List<AccountEntryUserRel> accountEntryUserRels =
+			_getAccountEntryUserRels(getUserId());
+
+		if (ListUtil.isEmpty(accountEntryUserRels)) {
+			return LanguageUtil.get(httpServletRequest, "no-assigned-account");
+		}
+
+		List<String> accountEntryNames = TransformUtil.transform(
+			accountEntryUserRels,
+			accountEntryUserRel -> {
+				AccountEntry accountEntry =
+					AccountEntryLocalServiceUtil.fetchAccountEntry(
+						accountEntryUserRel.getAccountEntryId());
+
+				if (accountEntry == null) {
+					return null;
+				}
+
+				return accountEntry.getName();
+			});
+
+		return StringUtil.merge(
+			ListUtil.sort(accountEntryNames), StringPool.COMMA_AND_SPACE);
 	}
 
 	public String getAccountNamesStyle() {
@@ -81,8 +104,7 @@ public class AccountUserDisplay {
 	}
 
 	private AccountUserDisplay(User user) {
-		_accountNames = _getAccountNames(user);
-		_accountNamesStyle = _getAccountNamesStyle(user);
+		_accountNamesStyle = _getAccountNamesStyle(user.getUserId());
 		_accountRoles = StringPool.BLANK;
 		_emailAddress = user.getEmailAddress();
 		_jobTitle = user.getJobTitle();
@@ -92,41 +114,23 @@ public class AccountUserDisplay {
 		_userId = user.getUserId();
 	}
 
-	private String _getAccountNames(User user) {
-		List<AccountEntryUserRel> accountEntryUserRelList =
+	private List<AccountEntryUserRel> _getAccountEntryUserRels(long userId) {
+		List<AccountEntryUserRel> accountEntryUserRels =
 			AccountEntryUserRelLocalServiceUtil.
-				getAccountEntryUserRelsByAccountUserId(user.getUserId());
+				getAccountEntryUserRelsByAccountUserId(userId);
 
-		if (!ListUtil.isEmpty(accountEntryUserRelList)) {
-			List<Long> accountEntryIdList = TransformUtil.transform(
-				accountEntryUserRelList,
-				AccountEntryUserRel::getAccountEntryId);
-
-			accountEntryIdList = ListUtil.filter(
-				accountEntryIdList, this::_isDefaultAccountEntryId);
-
-			if (!ListUtil.isEmpty(accountEntryIdList)) {
-				List<AccountEntry> accountEntryList = TransformUtil.transform(
-					accountEntryIdList,
-					AccountEntryLocalServiceUtil::getAccountEntry);
-
-				List<String> accountEntryNameList = TransformUtil.transform(
-					accountEntryList, AccountEntry::getName);
-
-				ListUtil.sort(accountEntryNameList);
-
-				return StringUtil.merge(
-					accountEntryNameList, StringPool.COMMA_AND_SPACE);
-			}
-		}
-
-		return "no-assigned-account";
+		return ListUtil.filter(
+			accountEntryUserRels,
+			accountEntryUserRel -> !Objects.equals(
+				accountEntryUserRel.getAccountEntryId(),
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT));
 	}
 
-	private String _getAccountNamesStyle(User user) {
-		String isDefaultAccountEntryID = _getAccountNames(user);
+	private String _getAccountNamesStyle(long userId) {
+		List<AccountEntryUserRel> accountEntryUserRels =
+			_getAccountEntryUserRels(userId);
 
-		if (isDefaultAccountEntryID.equals("no-assigned-account")) {
+		if (ListUtil.isEmpty(accountEntryUserRels)) {
 			return "font-italic text-muted";
 		}
 
@@ -161,11 +165,6 @@ public class AccountUserDisplay {
 		return StringPool.BLANK;
 	}
 
-	private Boolean _isDefaultAccountEntryId(long accountEntryId) {
-		return accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT;
-	}
-
-	private final String _accountNames;
 	private final String _accountNamesStyle;
 	private final String _accountRoles;
 	private final String _emailAddress;

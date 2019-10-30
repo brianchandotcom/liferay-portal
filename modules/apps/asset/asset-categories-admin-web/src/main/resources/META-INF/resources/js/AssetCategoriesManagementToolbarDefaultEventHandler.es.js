@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 
 class AssetCategoriesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteSelectedCategories() {
@@ -28,34 +28,28 @@ class AssetCategoriesManagementToolbarDefaultEventHandler extends DefaultEventHa
 	selectCategory(itemData) {
 		const namespace = this.namespace;
 
-		AUI().use('liferay-item-selector-dialog', A => {
-			const itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: this.ns('selectCategory'),
-				on: {
-					selectedItemChange(event) {
-						const selectedItem = event.newVal;
+		const itemSelectorDialog = new ItemSelectorDialog({
+			buttonAddLabel: Liferay.Language.get('select'),
+			eventName: this.ns('selectCategory'),
+			title: Liferay.Language.get('select-category'),
+			url: itemData.categoriesSelectorURL
+		});
 
-						const category = selectedItem
-							? selectedItem[Object.keys(selectedItem)[0]]
-							: null;
+		itemSelectorDialog.open();
 
-						if (category) {
-							location.href = Liferay.Util.addParams(
-								namespace + 'categoryId=' + category.categoryId,
-								itemData.viewCategoriesURL
-							);
-						}
-					}
-				},
-				strings: {
-					add: Liferay.Language.get('select'),
-					cancel: Liferay.Language.get('cancel')
-				},
-				title: Liferay.Language.get('select-category'),
-				url: itemData.categoriesSelectorURL
-			});
+		itemSelectorDialog.on('selectedItemChange', event => {
+			const selectedItem = event.selectedItem;
 
-			itemSelectorDialog.open();
+			const category = selectedItem
+				? selectedItem[Object.keys(selectedItem)[0]]
+				: null;
+
+			if (category) {
+				location.href = Liferay.Util.addParams(
+					namespace + 'categoryId=' + category.categoryId,
+					itemData.viewCategoriesURL
+				);
+			}
 		});
 	}
 }

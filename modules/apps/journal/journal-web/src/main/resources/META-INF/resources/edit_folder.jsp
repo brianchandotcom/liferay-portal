@@ -149,7 +149,7 @@ renderResponse.setTitle(title);
 
 						<aui:button name="selectFolderButton" value="select" />
 
-						<aui:script use="liferay-item-selector-dialog">
+						<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 							var selectFolderButton = document.getElementById(
 								'<portlet:namespace />selectFolderButton'
 							);
@@ -158,28 +158,9 @@ renderResponse.setTitle(title);
 								selectFolderButton.addEventListener('click', function(event) {
 									event.preventDefault();
 
-									var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+									const itemSelectorDialog = new ItemSelectorDialog.default({
+										buttonAddLabel: '<liferay-ui:message key="done" />',
 										eventName: '<portlet:namespace />selectFolder',
-										on: {
-											selectedItemChange: function(event) {
-												var selectedItem = event.newVal;
-
-												if (selectedItem) {
-													var folderData = {
-														idString: 'parentFolderId',
-														idValue: selectedItem.folderId,
-														nameString: 'parentFolderName',
-														nameValue: selectedItem.folderName
-													};
-
-													Liferay.Util.selectFolder(
-														folderData,
-														'<portlet:namespace />'
-													);
-												}
-											}
-										},
-										'strings.add': '<liferay-ui:message key="done" />',
 										title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
 										<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -192,6 +173,21 @@ renderResponse.setTitle(title);
 									});
 
 									itemSelectorDialog.open();
+
+									itemSelectorDialog.on('selectedItemChange', event => {
+										const selectedItem = event.selectedItem;
+
+										if (selectedItem) {
+											var folderData = {
+												idString: 'parentFolderId',
+												idValue: selectedItem.folderId,
+												nameString: 'parentFolderName',
+												nameValue: selectedItem.folderName
+											};
+
+											Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+										}
+									});
 								});
 							}
 						</aui:script>

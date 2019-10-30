@@ -93,54 +93,53 @@ AssetCategory category = (AssetCategory)row.getObject();
 </liferay-ui:icon-menu>
 
 <c:if test="<%= assetCategoriesDisplayContext.hasPermission(category, ActionKeys.UPDATE) %>">
-	<aui:script use="liferay-item-selector-dialog">
+	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 		var moveCategoryIcon = document.getElementById(
 			'<portlet:namespace /><%= row.getRowId() %>moveCategory'
 		);
 
 		if (moveCategoryIcon) {
 			moveCategoryIcon.addEventListener('click', function(event) {
-				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+
+				const itemSelectorDialog = new ItemSelectorDialog.default({
+					buttonAddLabel: '<liferay-ui:message key="done" />',
 					eventName: '<portlet:namespace />selectCategory',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
-
-							if (selectedItem) {
-								var parentCategoryId = 0;
-								var vocabularyId = 0;
-
-								for (var key in selectedItem) {
-									var item = selectedItem[key];
-
-									if (!item.unchecked) {
-										parentCategoryId = item.categoryId || 0;
-										vocabularyId = item.vocabularyId || 0;
-
-										break;
-									}
-								}
-
-								if (vocabularyId > 0 || parentCategoryId > 0) {
-									document.<portlet:namespace />moveCategoryFm.<portlet:namespace />categoryId.value =
-										'<%= category.getCategoryId() %>';
-									document.<portlet:namespace />moveCategoryFm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
-									document.<portlet:namespace />moveCategoryFm.<portlet:namespace />vocabularyId.value = vocabularyId;
-
-									submitForm(
-										document.<portlet:namespace />moveCategoryFm
-									);
-								}
-							}
-						}
-					},
-					'strings.add': '<liferay-ui:message key="done" />',
-					title:
-						'<liferay-ui:message arguments="<%= category.getTitle(locale) %>" key="move-x" />',
+					title: '<liferay-ui:message arguments="<%= category.getTitle(locale) %>" key="move-x" />',
 					url: '<%= assetCategoriesDisplayContext.getSelectCategoryURL() %>'
 				});
 
 				itemSelectorDialog.open();
+
+				itemSelectorDialog.on('selectedItemChange', event => {
+					const selectedItem = event.selectedItem;
+
+					if (selectedItem) {
+						var parentCategoryId = 0;
+						var vocabularyId = 0;
+
+						for (var key in selectedItem) {
+							var item = selectedItem[key];
+
+							if (!item.unchecked) {
+								parentCategoryId = item.categoryId || 0;
+								vocabularyId = item.vocabularyId || 0;
+
+								break;
+							}
+						}
+
+						if (vocabularyId > 0 || parentCategoryId > 0) {
+							document.<portlet:namespace />moveCategoryFm.<portlet:namespace />categoryId.value =
+								'<%= category.getCategoryId() %>';
+							document.<portlet:namespace />moveCategoryFm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
+							document.<portlet:namespace />moveCategoryFm.<portlet:namespace />vocabularyId.value = vocabularyId;
+
+							submitForm(
+								document.<portlet:namespace />moveCategoryFm
+							);
+						}
+					}
+				});
 			});
 		}
 	</aui:script>

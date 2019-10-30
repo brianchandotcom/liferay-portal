@@ -795,7 +795,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Language Selector");
 
-			PageEditor.gotoTab(tabName = "Sections");
+			PageEditor.gotoTab(tabName = "Section Builder");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",

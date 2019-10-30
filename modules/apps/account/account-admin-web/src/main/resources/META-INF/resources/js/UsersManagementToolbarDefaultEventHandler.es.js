@@ -22,7 +22,7 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			Liferay.Language.get('select-accounts'),
 			itemData.accountSelectorURL,
 			selectedItems => {
-				var portletURL = Liferay.Util.PortletURL.createPortletURL(
+				var redirectURL = Liferay.Util.PortletURL.createPortletURL(
 					itemData.redirectURL,
 					{
 						accountEntryIds: selectedItems.value,
@@ -30,21 +30,21 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 					}
 				);
 
-				window.location.href = portletURL;
+				window.location.href = redirectURL;
 			}
 		);
 	}
 
 	_openAccountSelector(
 		dialogButtonLabel,
-		eventName,
+		dialogEventName,
 		dialogTitle,
 		accountSelectorURL,
 		callback
 	) {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: dialogButtonLabel,
-			eventName: this.ns('selectAccounts'),
+			eventName: dialogEventName,
 			title: dialogTitle,
 			url: accountSelectorURL
 		});

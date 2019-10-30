@@ -16,7 +16,6 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import '../fragments/FragmentsEditorSidebarCard.es';
 import {removeFragmentEntryLinkAction} from '../../../actions/removeFragmentEntryLinks.es';
 import {removeRowAction} from '../../../actions/removeRow.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';

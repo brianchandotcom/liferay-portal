@@ -558,7 +558,17 @@ public abstract class BaseJavaTerm implements JavaTerm {
 					sb, javaTerm, "\t" + indent, prefix, suffix, maxLineLength);
 			}
 			else {
-				sb.append(javaTermContent);
+				int level = ToolsUtil.getLevel(
+					firstLineJavaTermContent, "<", ">");
+
+				if (level > 0) {
+					appendNewLine(
+						sb, javaTerm, "\t" + indent, prefix, suffix,
+						maxLineLength);
+				}
+				else {
+					sb.append(javaTermContent);
+				}
 			}
 		}
 

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.depot.service.http.DepotEntryGroupRelServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @generated

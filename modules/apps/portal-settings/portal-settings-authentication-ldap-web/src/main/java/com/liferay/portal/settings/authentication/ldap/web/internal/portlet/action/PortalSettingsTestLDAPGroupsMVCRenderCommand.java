@@ -15,7 +15,17 @@
 package com.liferay.portal.settings.authentication.ldap.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.Portal;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletContext;
 
@@ -36,6 +46,32 @@ public class PortalSettingsTestLDAPGroupsMVCRenderCommand
 	extends BasePortalSettingsMVCRenderCommand {
 
 	@Override
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			AuthTokenUtil.checkCSRFToken(
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(renderRequest)),
+				getClass().getName());
+
+			return super.render(renderRequest, renderResponse);
+		}
+		catch (PrincipalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to test LDAP connection: " + pe.getMessage(), pe);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn("Unable to test LDAP connection: " + pe.getMessage());
+			}
+		}
+
+		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
+	}
+
+	@Override
 	protected String getJspPath() {
 		return _JSP_PATH;
 	}
@@ -50,5 +86,11 @@ public class PortalSettingsTestLDAPGroupsMVCRenderCommand
 
 	private static final String _JSP_PATH =
 		"/com.liferay.portal.settings.web/test_ldap_groups.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalSettingsTestLDAPGroupsMVCRenderCommand.class);
+
+	@Reference
+	private Portal _portal;
 
 }

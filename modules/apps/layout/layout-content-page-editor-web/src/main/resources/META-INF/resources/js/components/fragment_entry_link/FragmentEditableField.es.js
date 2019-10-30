@@ -42,6 +42,7 @@ import {
 	getItemPath
 } from '../../utils/FragmentsEditorGetUtils.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {computeEditableValue} from '../../utils/computeValues.es';
 import {
 	EDITABLE_FIELD_CONFIG_KEYS,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -51,7 +52,6 @@ import {
 } from '../../utils/constants';
 import debouncedAlert from '../../utils/debouncedAlert.es';
 import {isNullOrUndefined} from '../../utils/isNullOrUndefined.es';
-import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import templates from './FragmentEditableField.soy';
@@ -107,21 +107,11 @@ class FragmentEditableField extends PortletBase {
 	prepareStateForRender(state) {
 		const activable = this._editableIsActivable();
 
-		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
-			this.defaultSegmentsExperienceId
-		);
-		const segmentsExperienceId = prefixSegmentsExperienceId(
-			this.segmentsExperienceId
-		);
-
-		const segmentedValue =
-			this.editableValues[segmentsExperienceId] ||
-			this.editableValues[defaultSegmentsExperienceId] ||
-			this.editableValues;
-
-		const translatedValue =
-			segmentedValue[this.languageId] ||
-			segmentedValue[this.defaultLanguageId];
+		const segmentedValue = computeEditableValue(this.editableValues, {
+			defaultLanguageId: this.defaultLanguageId,
+			selectedExperienceId: this.segmentsExperienceId,
+			selectedLanguageId: this.languageId
+		});
 
 		const mapped = editableIsMapped(this.editableValues);
 
@@ -129,9 +119,7 @@ class FragmentEditableField extends PortletBase {
 			? isNullOrUndefined(this._mappedFieldValue)
 				? this.editableValues.defaultValue
 				: this._mappedFieldValue
-			: isNullOrUndefined(translatedValue)
-			? this.editableValues.defaultValue
-			: translatedValue;
+			: segmentedValue;
 
 		const processor =
 			FragmentProcessors[this.type] || FragmentProcessors.fallback;

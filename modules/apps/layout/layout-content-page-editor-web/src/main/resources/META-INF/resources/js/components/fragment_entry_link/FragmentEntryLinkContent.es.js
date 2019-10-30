@@ -21,6 +21,7 @@ import {Config} from 'metal-state';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {shouldUpdateOnChangeProperties} from '../../utils/FragmentsEditorComponentUtils.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {getComputedEditableValue} from '../../utils/computeValues.es';
 import {
 	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR
@@ -295,7 +296,7 @@ class FragmentEntryLinkContent extends Component {
 	 */
 	_update({
 		defaultLanguageId,
-		defaultSegmentsExperienceId,
+		defaultSegmentsExperienceId: _defaultSegmentsExperienceId,
 		languageId,
 		segmentsExperienceId,
 		updateFunctions
@@ -305,24 +306,17 @@ class FragmentEntryLinkContent extends Component {
 
 		Object.keys(editableValues).forEach(editableId => {
 			const editableValue = editableValues[editableId];
-			const segmentedEditableValue =
-				(segmentsExperienceId && editableValue[segmentsExperienceId]) ||
-				editableValue[defaultSegmentsExperienceId];
 
-			const defaultSegmentedEditableValue =
-				editableValue[defaultSegmentsExperienceId];
+			const {defaultValue, value} = getComputedEditableValue(
+				editableValue,
+				{
+					defaultLanguageId,
+					selectedExperienceId: segmentsExperienceId,
+					selectedLanguageId: languageId
+				}
+			);
 
-			const defaultValue =
-				(segmentedEditableValue &&
-					segmentedEditableValue[defaultLanguageId]) ||
-				(segmentedEditableValue &&
-					segmentedEditableValue.defaultValue) ||
-				(defaultSegmentedEditableValue &&
-					defaultSegmentedEditableValue[defaultLanguageId]) ||
-				editableValue.defaultValue;
 			const mappedField = editableValue.mappedField || '';
-			const value =
-				segmentedEditableValue && segmentedEditableValue[languageId];
 
 			updateFunctions.forEach(updateFunction =>
 				updateFunction(editableId, value, defaultValue, mappedField)

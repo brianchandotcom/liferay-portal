@@ -296,6 +296,12 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			List::parallelStream
 		).map(
 			SearchHit::getSourcesMap
+		).filter(
+			sourcesMap -> GetterUtil.getString(
+				sourcesMap.get("uid")
+			).startsWith(
+				"WorkflowMetricsInstance"
+			)
 		).collect(
 			Collectors.toMap(
 				sourcesMap -> GetterUtil.getLong(sourcesMap.get("instanceId")),

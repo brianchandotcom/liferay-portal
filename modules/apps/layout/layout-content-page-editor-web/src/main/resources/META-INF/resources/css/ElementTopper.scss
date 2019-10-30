@@ -101,8 +101,8 @@
 		transition: box-shadow ease ($topperShowDuration * 0.5);
 	}
 
-	&-wrapper--active > &,
-	&-wrapper--hovered > & {
+	&-wrapper--active > .fragments-editor__topper,
+	&-wrapper--hovered > .fragments-editor__topper {
 		opacity: 1;
 		transform: translateY(1px);
 		transition: background-color ease $topperShowDuration,
@@ -114,7 +114,7 @@
 	}
 
 	&-wrapper--active,
-	&-wrapper--active > & {
+	&-wrapper--active > .fragments-editor__topper {
 		z-index: $topperActiveZIndex;
 	}
 

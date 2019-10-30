@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.service.internal.search.index.test.base;
+package com.liferay.portal.workflow.metrics.service.test.base;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
@@ -58,7 +58,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 import com.liferay.portal.workflow.metrics.service.internal.util.WorkflowDefinitionUtil;
-import com.liferay.portal.workflow.metrics.service.test.base.BaseWorkflowMetricsTestCase;
 
 import java.io.Serializable;
 

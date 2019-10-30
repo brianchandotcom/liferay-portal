@@ -117,6 +117,7 @@ public class LiferayOperations {
 		).build();
 	}
 
+	@DisplayName("Update")
 	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = PATCHEndpointOutputTypeResolver.class)
 	public Result<InputStream, Void> patch(
@@ -146,6 +147,7 @@ public class LiferayOperations {
 		).build();
 	}
 
+	@DisplayName("Create")
 	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = POSTEndpointOutputTypeResolver.class)
 	public Result<InputStream, Void> post(

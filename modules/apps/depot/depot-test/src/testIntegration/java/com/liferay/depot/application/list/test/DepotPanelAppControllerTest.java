@@ -21,6 +21,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -37,6 +38,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -105,7 +108,17 @@ public class DepotPanelAppControllerTest {
 	}
 
 	@Test
-	public void testGetPanelAppsShowsOnlyDocumentsAndMediaInTheContentCategoryForADepotGroup()
+	public void testGetPanelAppsShowsAllContentWithSites() throws Exception {
+		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
+			PermissionThreadLocal.getPermissionChecker(),
+			_groupLocalService.getGroup(TestPropsValues.getGroupId()));
+
+		Assert.assertTrue(panelApps.size() > 2);
+	}
+
+	@Test
+	public void testGetPanelAppsShowsOnlyDocumentsAndMediaAndWebContentInTheContentCategoryForADepotGroup()
 		throws Exception {
 
 		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
@@ -113,12 +126,11 @@ public class DepotPanelAppControllerTest {
 			PermissionThreadLocal.getPermissionChecker(),
 			_groupLocalService.getGroup(_depotEntry.getGroupId()));
 
-		Assert.assertEquals(panelApps.toString(), 1, panelApps.size());
+		Assert.assertEquals(panelApps.toString(), 2, panelApps.size());
 
-		PanelApp panelApp = panelApps.get(0);
-
-		Assert.assertEquals(
-			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, panelApp.getPortletId());
+		_assertPanelAppsContains(
+			panelApps, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+		_assertPanelAppsContains(panelApps, JournalPortletKeys.JOURNAL);
 
 		panelApps = _panelAppRegistry.getPanelApps(
 			PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
@@ -186,6 +198,20 @@ public class DepotPanelAppControllerTest {
 
 		_assertIsDisplayed(
 			TestPropsValues.getGroupId(), parentPanelCategoryKey);
+	}
+
+	private void _assertPanelAppsContains(
+		List<PanelApp> panelApps, String portletId) {
+
+		Stream<PanelApp> stream = panelApps.stream();
+
+		stream.filter(
+			panelApp -> Objects.equals(portletId, panelApp.getPortletId())
+		).findFirst(
+		).orElseThrow(
+			() -> new AssertionError(
+				"Portlet Id not found in panel apps " + portletId)
+		);
 	}
 
 	@DeleteAfterTestRun

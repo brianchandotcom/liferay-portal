@@ -339,25 +339,6 @@
 		</fail>
 	</target>
 
-	<target depends="check-current-branch" if="${current.branch.private}" name="checkout-public-modules-releng">
-		<loadfile
-			property="git.commit.portal.public"
-			srcfile="${project.dir}/git-commit-portal"
-		>
-			<filterchain>
-				<striplinebreaks />
-			</filterchain>
-		</loadfile>
-
-		<echo message="Checking out ${app.name} public releng info from commit ID: ${git.commit.portal.public}" />
-
-		<exec dir="${project.dir}/modules" executable="git">
-			<arg value="checkout" />
-			<arg value="${git.commit.portal.public}" />
-			<arg value=".releng/apps/${app.name}" />
-		</exec>
-	</target>
-
 	<target depends="init-build-app" name="clean-app">
 		<delete dir="${dist.dir}" />
 
@@ -664,7 +645,7 @@
 		</exec>
 	</target>
 
-	<target depends="checkout-public-modules-releng" name="init-build-app">
+	<target depends="check-current-branch" name="init-build-app">
 		<fail message="Please specify a value for &quot;app.name&quot; when running this command.">
 			<condition>
 				<not>

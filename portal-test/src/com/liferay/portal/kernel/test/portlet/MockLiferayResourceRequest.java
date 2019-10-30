@@ -84,7 +84,7 @@ public class MockLiferayResourceRequest
 	}
 
 	@Override
-	public Part getPart(String s) throws IOException, PortletException {
+	public Part getPart(String name) throws IOException, PortletException {
 		return null;
 	}
 

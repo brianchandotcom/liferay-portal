@@ -14,6 +14,7 @@
 
 package com.liferay.mule.internal.connection;
 
+import com.liferay.mule.internal.config.LiferayProxyConfig;
 import com.liferay.mule.internal.connection.authentication.BasicAuthentication;
 import com.liferay.mule.internal.connection.authentication.HttpAuthentication;
 import com.liferay.mule.internal.connection.authentication.OAuth2Authentication;
@@ -46,21 +47,22 @@ public final class LiferayConnection {
 
 	public static LiferayConnection withBasicAuthentication(
 			HttpService httpService, String openApiSpecPath, String username,
-			String password)
+			String password, LiferayProxyConfig liferayProxyConfig)
 		throws ConnectionException {
 
 		return new LiferayConnection(
 			httpService, openApiSpecPath,
-			new BasicAuthentication(username, password));
+			new BasicAuthentication(username, password), liferayProxyConfig);
 	}
 
 	public static LiferayConnection withOAuth2Authentication(
 			HttpService httpService, String openApiSpecPath, String consumerKey,
-			String consumerSecret)
+			String consumerSecret, LiferayProxyConfig liferayProxyConfig)
 		throws ConnectionException {
 
 		return new LiferayConnection(
-			httpService, openApiSpecPath, consumerKey, consumerSecret);
+			httpService, openApiSpecPath, consumerKey, consumerSecret,
+			liferayProxyConfig);
 	}
 
 	public HttpResponse delete(
@@ -129,25 +131,26 @@ public final class LiferayConnection {
 
 	private LiferayConnection(
 			HttpService httpService, String openApiSpecPath,
-			BasicAuthentication basicAuthentication)
+			BasicAuthentication basicAuthentication,
+			LiferayProxyConfig liferayProxyConfig)
 		throws ConnectionException {
 
 		_openAPISpecPath = openApiSpecPath;
 		_serverBaseURL = _getServerBaseURL(openApiSpecPath);
 		_httpAuthentication = basicAuthentication;
 
-		_initHttpClient(httpService);
+		_initHttpClient(httpService, liferayProxyConfig);
 	}
 
 	private LiferayConnection(
 			HttpService httpService, String openApiSpecPath, String consumerKey,
-			String consumerSecret)
+			String consumerSecret, LiferayProxyConfig liferayProxyConfig)
 		throws ConnectionException {
 
 		_openAPISpecPath = openApiSpecPath;
 		_serverBaseURL = _getServerBaseURL(openApiSpecPath);
 
-		_initHttpClient(httpService);
+		_initHttpClient(httpService, liferayProxyConfig);
 
 		try {
 			_httpAuthentication = new OAuth2Authentication(
@@ -197,9 +200,15 @@ public final class LiferayConnection {
 		}
 	}
 
-	private void _initHttpClient(HttpService httpService) {
+	private void _initHttpClient(
+		HttpService httpService, LiferayProxyConfig liferayProxyConfig) {
+
 		HttpClientConfiguration.Builder builder =
 			new HttpClientConfiguration.Builder();
+
+		if (liferayProxyConfig != null) {
+			builder.setProxyConfig(liferayProxyConfig.getProxyConfig());
+		}
 
 		builder.setName("Liferay Http Client");
 

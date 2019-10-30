@@ -40,7 +40,7 @@ public class BasicConnectionProvider extends BaseConnectionProvider {
 		return LiferayConnection.withBasicAuthentication(
 			_httpService, _openApiSpecPath,
 			_basicAuthenticationConfig.getUsername(),
-			_basicAuthenticationConfig.getPassword());
+			_basicAuthenticationConfig.getPassword(), liferayProxyConfig);
 	}
 
 	@ParameterGroup(name = "Connection config")

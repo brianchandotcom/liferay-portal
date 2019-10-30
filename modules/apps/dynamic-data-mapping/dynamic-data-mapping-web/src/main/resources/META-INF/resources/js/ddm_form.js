@@ -876,13 +876,11 @@ AUI.add(
 				repeat() {
 					var instance = this;
 
-					var definition = instance.get('definition');
+					var field = instance.getFieldDefinition();
 
-					definition.fields.forEach(field => {
-						if (field.type === 'select') {
-							field.options.shift();
-						}
-					});
+					if (field.type === 'select') {
+						field.options.shift();
+					}
 
 					instance._getTemplate(fieldTemplate => {
 						var field = instance.createField(fieldTemplate);

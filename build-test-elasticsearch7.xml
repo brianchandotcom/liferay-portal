@@ -133,17 +133,18 @@ xpack.security.sessionTimeout: 600000</echo>
 				replace="\\\\="
 			/>
 
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration.config">kibanaPassword="${osgi.config.elastic.user.password}"
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration.config">kibanaPassword="${osgi.config.elastic.user.password}"
 kibanaURL="https://localhost:5601"
 proxyServletLogEnable="true"</echo>
 
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.xpack.security.internal.configuration.XPackSecurityConfiguration.config">certificateFormat="PEM"
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}authenticationEnabled="true"
+httpSSLEnabled="true"
+networkHostAddresses="https://localhost:9200"
 password="${osgi.config.elastic.user.password}"
-requiresAuthentication="true"
-sslCertificateAuthoritiesPaths="${elasticsearch.dir}-1/config/certs/ca/ca.crt"
-sslCertificatePath="${elasticsearch.dir}-1/config/certs/localhost/localhost.crt"
-sslKeyPath="${elasticsearch.dir}-1/config/certs/localhost/localhost.key"
-transportSSLEnabled="true"</echo>
+truststorePassword="liferay"
+truststorePath="${elasticsearch.dir}-1/config/certs/localhost.p12"
+truststoreType="pkcs12"
+username="elastic"</echo>
 		</sequential>
 	</macrodef>
 

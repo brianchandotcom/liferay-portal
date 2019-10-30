@@ -86,12 +86,8 @@ public class ConvertLayoutMVCActionCommand
 		return super.processAction(actionRequest, actionResponse);
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void convertLayout(long selPlid, ActionRequest actionRequest)
 		throws Exception {
-
-		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
 
 		Layout layout = _layoutService.updateType(
 			selPlid, LayoutConstants.TYPE_CONTENT);
@@ -148,6 +144,16 @@ public class ConvertLayoutMVCActionCommand
 		_layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			new Date());
+	}
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
+
+		convertLayout(selPlid, actionRequest);
 	}
 
 	private String _getDefaultPortletDecoratorId(Layout layout)

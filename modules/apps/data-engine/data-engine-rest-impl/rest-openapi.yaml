@@ -332,7 +332,7 @@ openapi: 3.0.1
 paths:
     "/data-definitions/data-definition-fields/field-types":
         get:
-            operationId: getDataDefinitionDataDefinitionFieldFieldType
+            operationId: getDataDefinitionDataDefinitionFieldFieldTypes
             responses:
                 200:
                     content:
@@ -411,7 +411,7 @@ paths:
             tags: ["DataDefinition"]
     "/data-definitions/{dataDefinitionId}/data-definition-permissions":
         post:
-            operationId: postDataDefinitionDataDefinitionPermission
+            operationId: postDataDefinitionDataDefinitionPermissions
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -485,7 +485,7 @@ paths:
                         ""
             tags: ["DataLayout"]
         post:
-            operationId: postDataDefinitionDataLayout
+            operationId: postDataDefinitionDataLayouts
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -557,7 +557,7 @@ paths:
                         ""
             tags: ["DataListView"]
         post:
-            operationId: postDataDefinitionDataListView
+            operationId: postDataDefinitionDataListViews
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -626,7 +626,7 @@ paths:
                         ""
             tags: ["DataRecordCollection"]
         post:
-            operationId: postDataDefinitionDataRecordCollection
+            operationId: postDataDefinitionDataRecordCollections
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -689,7 +689,7 @@ paths:
                         ""
             tags: ["DataRecord"]
         post:
-            operationId: postDataDefinitionDataRecord
+            operationId: postDataDefinitionDataRecords
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -786,7 +786,7 @@ paths:
             tags: ["DataLayout"]
     "/data-layouts/{dataLayoutId}/data-layout-permissions":
         post:
-            operationId: postDataLayoutDataLayoutPermission
+            operationId: postDataLayoutDataLayoutPermissions
             parameters:
                 - in: path
                   name: dataLayoutId
@@ -952,7 +952,7 @@ paths:
             tags: ["DataRecordCollection"]
     "/data-record-collections/{dataRecordCollectionId}/data-record-collection-permissions":
         post:
-            operationId: postDataRecordCollectionDataRecordCollectionPermission
+            operationId: postDataRecordCollectionDataRecordCollectionPermissions
             parameters:
                 - in: path
                   name: dataRecordCollectionId
@@ -1017,7 +1017,7 @@ paths:
                         ""
             tags: ["DataRecord"]
         post:
-            operationId: postDataRecordCollectionDataRecord
+            operationId: postDataRecordCollectionDataRecords
             parameters:
                 - in: path
                   name: dataRecordCollectionId
@@ -1141,7 +1141,7 @@ paths:
             tags: ["DataRecord"]
     "/sites/{siteId}/data-definition-permissions":
         post:
-            operationId: postSiteDataDefinitionPermission
+            operationId: postSiteDataDefinitionPermissions
             parameters:
                 - in: path
                   name: siteId
@@ -1213,7 +1213,7 @@ paths:
                         ""
             tags: ["DataDefinition"]
         post:
-            operationId: postSiteDataDefinition
+            operationId: postSiteDataDefinitions
             parameters:
                 - in: path
                   name: siteId
@@ -1270,7 +1270,7 @@ paths:
             tags: ["DataDefinition"]
     "/sites/{siteId}/data-layout-permissions":
         post:
-            operationId: postSiteDataLayoutPermission
+            operationId: postSiteDataLayoutPermissions
             parameters:
                 - in: path
                   name: siteId
@@ -1370,7 +1370,7 @@ paths:
             tags: ["DataLayout"]
     "/sites/{siteId}/data-record-collection-permissions":
         post:
-            operationId: postSiteDataRecordCollectionPermission
+            operationId: postSiteDataRecordCollectionPermissions
             parameters:
                 - in: path
                   name: siteId

@@ -620,7 +620,7 @@ paths:
                         ""
             tags: ["FormRecord"]
         post:
-            operationId: postFormFormRecord
+            operationId: postFormFormRecords
             parameters:
                 - in: path
                   name: formId

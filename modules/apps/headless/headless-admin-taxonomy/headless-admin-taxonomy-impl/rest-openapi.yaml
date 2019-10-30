@@ -393,7 +393,7 @@ paths:
         post:
             description:
                 Inserts a new keyword in a Site.
-            operationId: postSiteKeyword
+            operationId: postSiteKeywords
             parameters:
                 - in: path
                   name: siteId
@@ -472,7 +472,7 @@ paths:
         post:
             description:
                 Inserts a new taxonomy vocabulary in a Site.
-            operationId: postSiteTaxonomyVocabulary
+            operationId: postSiteTaxonomyVocabularies
             parameters:
                 - in: path
                   name: siteId
@@ -552,7 +552,7 @@ paths:
         post:
             description:
                 Inserts a new child taxonomy category.
-            operationId: postTaxonomyCategoryTaxonomyCategory
+            operationId: postTaxonomyCategoryTaxonomyCategories
             parameters:
                 - in: path
                   name: parentTaxonomyCategoryId
@@ -841,7 +841,7 @@ paths:
         post:
             description:
                 Inserts a new taxonomy category in a taxonomy vocabulary.
-            operationId: postTaxonomyVocabularyTaxonomyCategory
+            operationId: postTaxonomyVocabularyTaxonomyCategories
             parameters:
                 - in: path
                   name: taxonomyVocabularyId

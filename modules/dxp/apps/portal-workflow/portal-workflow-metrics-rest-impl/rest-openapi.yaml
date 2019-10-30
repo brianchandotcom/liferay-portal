@@ -712,7 +712,7 @@ paths:
                         ""
             tags: ["SLA"]
         post:
-            operationId: postProcessSLA
+            operationId: postProcessSLAs
             parameters:
                 - in: path
                   name: processId

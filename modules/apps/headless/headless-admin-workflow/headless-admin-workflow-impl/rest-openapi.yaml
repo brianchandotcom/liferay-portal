@@ -883,7 +883,7 @@ paths:
             tags: ["WorkflowTask"]
     "/workflow-tasks/{workflowTaskId}/has-other-assignable-users":
         get:
-            operationId: getWorkflowTaskHasOtherAssignableUser
+            operationId: getWorkflowTaskHasOtherAssignableUsers
             parameters:
                 - in: path
                   name: workflowTaskId

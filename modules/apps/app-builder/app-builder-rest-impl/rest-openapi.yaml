@@ -190,7 +190,7 @@ paths:
                         ""
             tags: ["App"]
         post:
-            operationId: postDataDefinitionApp
+            operationId: postDataDefinitionApps
             parameters:
                 - in: path
                   name: dataDefinitionId

@@ -2159,7 +2159,7 @@ paths:
         post:
             description:
                 Creates a new comment on the blog post.
-            operationId: postBlogPostingComment
+            operationId: postBlogPostingComments
             parameters:
                 - in: path
                   name: blogPostingId
@@ -2416,7 +2416,7 @@ paths:
         post:
             description:
                 Creates a new child comment of the existing comment.
-            operationId: postCommentComment
+            operationId: postCommentComments
             parameters:
                 - in: path
                   name: parentCommentId
@@ -2725,7 +2725,7 @@ paths:
                 Creates a new document inside the folder identified by `documentFolderId`. The request body must be
                 `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string
                 (`document`) with the metadata.
-            operationId: postDocumentFolderDocument
+            operationId: postDocumentFolderDocuments
             parameters:
                 - in: path
                   name: documentFolderId
@@ -2845,7 +2845,7 @@ paths:
         post:
             description:
                 Creates a new folder in a folder identified by `parentDocumentFolderId`.
-            operationId: postDocumentFolderDocumentFolder
+            operationId: postDocumentFolderDocumentFolders
             parameters:
                 - in: path
                   name: parentDocumentFolderId
@@ -3038,7 +3038,7 @@ paths:
         post:
             description:
                 Creates a new comment on the document.
-            operationId: postDocumentComment
+            operationId: postDocumentComments
             parameters:
                 - in: path
                   name: documentId
@@ -3309,7 +3309,7 @@ paths:
                 Creates a new attachment for an existing knowledge base article. The request body must be
                 `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string
                 (`knowledgeBaseAttachment`) with the metadata.
-            operationId: postKnowledgeBaseArticleKnowledgeBaseAttachment
+            operationId: postKnowledgeBaseArticleKnowledgeBaseAttachments
             parameters:
                 - in: path
                   name: knowledgeBaseArticleId
@@ -3532,7 +3532,7 @@ paths:
             description:
                 Creates a child knowledge base article of the knowledge base article identified by
                 `parentKnowledgeBaseArticleId`.
-            operationId: postKnowledgeBaseArticleKnowledgeBaseArticle
+            operationId: postKnowledgeBaseArticleKnowledgeBaseArticles
             parameters:
                 - in: path
                   name: parentKnowledgeBaseArticleId
@@ -3763,7 +3763,7 @@ paths:
         post:
             description:
                 Creates a new knowledge base article in the folder.
-            operationId: postKnowledgeBaseFolderKnowledgeBaseArticle
+            operationId: postKnowledgeBaseFolderKnowledgeBaseArticles
             parameters:
                 - in: path
                   name: knowledgeBaseFolderId
@@ -3830,7 +3830,7 @@ paths:
         post:
             description:
                 Creates a knowledge base folder inside the parent folder.
-            operationId: postKnowledgeBaseFolderKnowledgeBaseFolder
+            operationId: postKnowledgeBaseFolderKnowledgeBaseFolders
             parameters:
                 - in: path
                   name: parentKnowledgeBaseFolderId
@@ -4038,7 +4038,7 @@ paths:
                 Creates an attachment for the message board message. The request body must be `multipart/form-data` with
                 two parts, the file's bytes (`file`), and an optional JSON string (`MessageBoardAttachment`) with the
                 metadata.
-            operationId: postMessageBoardMessageMessageBoardAttachment
+            operationId: postMessageBoardMessageMessageBoardAttachments
             parameters:
                 - in: path
                   name: messageBoardMessageId
@@ -4260,7 +4260,7 @@ paths:
         post:
             description:
                 Creates a child message board message of the parent message.
-            operationId: postMessageBoardMessageMessageBoardMessage
+            operationId: postMessageBoardMessageMessageBoardMessages
             parameters:
                 - in: path
                   name: parentMessageBoardMessageId
@@ -4444,7 +4444,7 @@ paths:
         post:
             description:
                 Creates a new message board thread inside a section.
-            operationId: postMessageBoardSectionMessageBoardThread
+            operationId: postMessageBoardSectionMessageBoardThreads
             parameters:
                 - in: path
                   name: messageBoardSectionId
@@ -4558,7 +4558,7 @@ paths:
         post:
             description:
                 Creates a new message board section in the parent section.
-            operationId: postMessageBoardSectionMessageBoardSection
+            operationId: postMessageBoardSectionMessageBoardSections
             parameters:
                 - in: path
                   name: parentMessageBoardSectionId
@@ -4724,7 +4724,7 @@ paths:
                 Creates a new attachment for the message board thread. The request body should be `multipart/form-data`
                 with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with
                 the metadata.
-            operationId: postMessageBoardThreadMessageBoardAttachment
+            operationId: postMessageBoardThreadMessageBoardAttachments
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -4806,7 +4806,7 @@ paths:
         post:
             description:
                 Creates a new message in the message board thread.
-            operationId: postMessageBoardThreadMessageBoardMessage
+            operationId: postMessageBoardThreadMessageBoardMessages
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -5025,7 +5025,7 @@ paths:
             description:
                 Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's
                 bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata.
-            operationId: postSiteBlogPostingImage
+            operationId: postSiteBlogPostingImages
             parameters:
                 - in: path
                   name: siteId
@@ -5107,7 +5107,7 @@ paths:
         post:
             description:
                 Creates a new blog post.
-            operationId: postSiteBlogPosting
+            operationId: postSiteBlogPostings
             parameters:
                 - in: path
                   name: siteId
@@ -5355,7 +5355,7 @@ paths:
         post:
             description:
                 Creates a new document folder.
-            operationId: postSiteDocumentFolder
+            operationId: postSiteDocumentFolders
             parameters:
                 - in: path
                   name: siteId
@@ -5440,7 +5440,7 @@ paths:
             description:
                 Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes
                 (`file`), and an optional JSON string (`document`) with the metadata.
-            operationId: postSiteDocument
+            operationId: postSiteDocuments
             parameters:
                 - in: path
                   name: siteId
@@ -5527,7 +5527,7 @@ paths:
         post:
             description:
                 Creates a new knowledge base article.
-            operationId: postSiteKnowledgeBaseArticle
+            operationId: postSiteKnowledgeBaseArticles
             parameters:
                 - in: path
                   name: siteId
@@ -5628,7 +5628,7 @@ paths:
         post:
             description:
                 Creates a new knowledge base folder.
-            operationId: postSiteKnowledgeBaseFolder
+            operationId: postSiteKnowledgeBaseFolders
             parameters:
                 - in: path
                   name: siteId
@@ -5712,7 +5712,7 @@ paths:
         post:
             description:
                 Creates a new message board section.
-            operationId: postSiteMessageBoardSection
+            operationId: postSiteMessageBoardSections
             parameters:
                 - in: path
                   name: siteId
@@ -5796,7 +5796,7 @@ paths:
         post:
             description:
                 Creates a new message board thread.
-            operationId: postSiteMessageBoardThread
+            operationId: postSiteMessageBoardThreads
             parameters:
                 - in: path
                   name: siteId
@@ -5880,7 +5880,7 @@ paths:
         post:
             description:
                 Creates a new structured content folder.
-            operationId: postSiteStructuredContentFolder
+            operationId: postSiteStructuredContentFolders
             parameters:
                 - in: path
                   name: siteId
@@ -5968,7 +5968,7 @@ paths:
         post:
             description:
                 Creates a new structured content.
-            operationId: postSiteStructuredContent
+            operationId: postSiteStructuredContents
             parameters:
                 - in: path
                   name: siteId
@@ -6116,7 +6116,7 @@ paths:
         post:
             description:
                 Creates a new wiki node
-            operationId: postSiteWikiNode
+            operationId: postSiteWikiNodes
             parameters:
                 - in: path
                   name: siteId
@@ -6196,7 +6196,7 @@ paths:
         post:
             description:
                 Creates a new structured content folder in an existing folder.
-            operationId: postStructuredContentFolderStructuredContentFolder
+            operationId: postStructuredContentFolderStructuredContentFolders
             parameters:
                 - in: path
                   name: parentStructuredContentFolderId
@@ -6388,7 +6388,7 @@ paths:
         post:
             description:
                 Creates a new structured content in the folder.
-            operationId: postStructuredContentFolderStructuredContent
+            operationId: postStructuredContentFolderStructuredContents
             parameters:
                 - in: path
                   name: structuredContentFolderId
@@ -6656,7 +6656,7 @@ paths:
         post:
             description:
                 Creates a new comment on the structured content.
-            operationId: postStructuredContentComment
+            operationId: postStructuredContentComments
             parameters:
                 - in: path
                   name: structuredContentId
@@ -6976,7 +6976,7 @@ paths:
         post:
             description:
                 Creates a new wiki page
-            operationId: postWikiNodeWikiPage
+            operationId: postWikiNodeWikiPages
             parameters:
                 - in: path
                   name: wikiNodeId
@@ -7111,7 +7111,7 @@ paths:
         post:
             description:
                 Creates a child wiki page of the parent wiki page.
-            operationId: postWikiPageWikiPage
+            operationId: postWikiPageWikiPages
             parameters:
                 - in: path
                   name: parentWikiPageId
@@ -7247,7 +7247,7 @@ paths:
             description:
                 Creates an attachment for the wiki page. The request body must be `multipart/form-data` with two parts,
                 the file's bytes (`file`), and an optional JSON string (`WikiPageAttachment`) with the metadata.
-            operationId: postWikiPageWikiPageAttachment
+            operationId: postWikiPageWikiPageAttachments
             parameters:
                 - in: path
                   name: wikiPageId

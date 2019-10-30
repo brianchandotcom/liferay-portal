@@ -5,7 +5,7 @@
  */
 {template .render}
 	{@param? activeSegmentsExperienceName: string }
-	{@param? availableSegmentsExperiences: list<[
+	{@param? availableSegmentsExperiencesList: list<[
 		segmentsExperienceId: string,
 		hasLockedSegmentsExperiment: bool,
 		name: string,
@@ -42,7 +42,7 @@
 	{@param? _openCreateModal: any }
 	{@param? _toggleEditModal: any }
 	{@param? _toggleCreateModal: any }
-	{@param? availableSegmentsEntries: list<[
+	{@param? availableSegmentsEntriesList: list<[
 		segmentsEntryId: string,
 		name: string
 	]>}
@@ -63,7 +63,7 @@
 
 	{let $canCreateExperiences: (
 			($hasEditSegmentsEntryPermission == true or
-			($availableSegmentsEntries and length($availableSegmentsEntries) > 0))
+			($availableSegmentsEntriesList and length($availableSegmentsEntriesList) > 0))
 		)
 	/}
 
@@ -141,7 +141,8 @@
 
 				{if $hasUpdatePermissions}
 					{let $experiencesHelpMessage kind="text"}
-						{if $availableSegmentsEntries and length($availableSegmentsEntries) < 1 or length($availableSegmentsExperiences) < 2}
+						{if $availableSegmentsEntriesList and
+						length($availableSegmentsEntriesList) < 1 or length($availableSegmentsExperiencesList) < 2}
 							{msg desc=""}experience-help-message-empty-state{/msg}
 						{else}
 							{msg desc=""}experience-help-message-started-state{/msg}
@@ -170,10 +171,11 @@
 					{/call}
 				{/if}
 
-				{let $notDefaultExperienceLength: (length($availableSegmentsExperiences) - 2) /}
-				{if length($availableSegmentsExperiences) > 1}
+				{let $notDefaultExperienceLength: (length($availableSegmentsExperiencesList) - 2) /}
+
+				{if length($availableSegmentsExperiencesList) > 1}
 					<ul class="list-unstyled mt-4">
-						{foreach $experience in $availableSegmentsExperiences}
+						{foreach $experience in $availableSegmentsExperiencesList}
 							{let $experienceClasses kind="text"}
 								d-flex
 								{sp}dropdown-menu__experience
@@ -382,7 +384,7 @@
 				],
 				'segmentSelector': [
 					'inputId': 'SegmentSelector',
-					'segments':  $availableSegmentsEntries,
+					'segments':  $availableSegmentsEntriesList,
 					'label': $segmentLabel,
 					'value': ($modalStates and $modalStates.creation) ? $modalStates.creation.segmentsEntryId : null
 				]
@@ -427,7 +429,7 @@
 				],
 				'segmentSelector': [
 					'inputId': 'SegmentSelector',
-					'segments': $availableSegmentsEntries,
+					'segments': $availableSegmentsEntriesList,
 					'label': $segmentLabel,
 					'value': ($modalStates and $modalStates.edition) ? $modalStates.edition.segmentsEntryId : null
 				]

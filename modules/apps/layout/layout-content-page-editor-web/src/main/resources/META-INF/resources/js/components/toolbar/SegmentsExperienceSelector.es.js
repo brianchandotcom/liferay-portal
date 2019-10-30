@@ -169,7 +169,7 @@ class SegmentsExperienceSelector extends Component {
 	 * @review
 	 */
 	prepareStateForRender(state) {
-		const availableSegmentsExperiencesArray = Object.values(
+		const availableSegmentsExperiencesList = Object.values(
 			state.availableSegmentsExperiences || []
 		)
 			.sort(comparePriority)
@@ -190,12 +190,12 @@ class SegmentsExperienceSelector extends Component {
 		const selectedSegmentsExperienceId =
 			state.segmentsExperienceId || state.defaultSegmentsExperienceId;
 
-		const activeExperience = availableSegmentsExperiencesArray.find(
+		const activeExperience = availableSegmentsExperiencesList.find(
 			experience =>
 				experience.segmentsExperienceId === selectedSegmentsExperienceId
 		);
 
-		const availableSegmentsEntries = Object.values(
+		const availableSegmentsEntriesList = Object.values(
 			state.availableSegmentsEntries || []
 		).filter(
 			segment => segment.segmentsEntryId !== state.defaultSegmentsEntryId
@@ -205,8 +205,8 @@ class SegmentsExperienceSelector extends Component {
 			...state,
 			activeSegmentsExperienceName:
 				activeExperience && activeExperience.name,
-			availableSegmentsEntries,
-			availableSegmentsExperiences: availableSegmentsExperiencesArray,
+			availableSegmentsEntriesList,
+			availableSegmentsExperiencesList,
 			classPK: state.classPK,
 			segmentsExperienceId: selectedSegmentsExperienceId
 		};

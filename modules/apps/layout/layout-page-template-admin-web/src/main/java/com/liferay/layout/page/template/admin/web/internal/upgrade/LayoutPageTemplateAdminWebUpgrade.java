@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.admin.web.internal.upgrade;
 
+import com.liferay.layout.page.template.admin.web.internal.upgrade.v1_1_0.UpgradePreviewFileEntryId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -31,6 +32,8 @@ public class LayoutPageTemplateAdminWebUpgrade
 	@Override
 	public void register(Registry registry) {
 		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+
+		registry.register("1.0.0", "1.1.0", new UpgradePreviewFileEntryId());
 	}
 
 }

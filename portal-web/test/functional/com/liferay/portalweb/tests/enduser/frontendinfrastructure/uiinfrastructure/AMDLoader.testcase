@@ -43,60 +43,26 @@ definition {
 			fail("AMD log level isn't set to Warn in JS console.");
 		}
 
-		SystemSettings.selectOptionSetting(
-			fieldName = "Log Level",
-			selectOption = "Off");
+		for (var logLevelOptionName : list "Off,Error,Info,Debug") {
+			var logLevelOptionNameLowercase = StringUtil.lowerCase("${logLevelOptionName}");
 
-		SystemSettings.saveConfiguration();
+			SystemSettings.selectOptionSetting(
+				fieldName = "Log Level",
+				selectOption = "${logLevelOptionName}");
 
-		Refresh();
+			SystemSettings.saveConfiguration();
 
-		var logLevel = AMDLoader.getAMDLoaderLogLevel();
+			Refresh();
 
-		if ("${logLevel}" != "off") {
-			fail("AMD log level isn't set to Off in JS console.");
-		}
+			FormFields.viewSelectOption(
+				fieldName = "Log Level",
+				selectOption = "${logLevelOptionName}");
 
-		SystemSettings.selectOptionSetting(
-			fieldName = "Log Level",
-			selectOption = "Error");
+			var logLevel = AMDLoader.getAMDLoaderLogLevel();
 
-		SystemSettings.saveConfiguration();
-
-		Refresh();
-
-		var logLevel = AMDLoader.getAMDLoaderLogLevel();
-
-		if ("${logLevel}" != "error") {
-			fail("AMD log level isn't set to Error in JS console.");
-		}
-
-		SystemSettings.selectOptionSetting(
-			fieldName = "Log Level",
-			selectOption = "Info");
-
-		SystemSettings.saveConfiguration();
-
-		Refresh();
-
-		var logLevel = AMDLoader.getAMDLoaderLogLevel();
-
-		if ("${logLevel}" != "info") {
-			fail("AMD log level isn't set to Info in JS console.");
-		}
-
-		SystemSettings.selectOptionSetting(
-			fieldName = "Log Level",
-			selectOption = "Debug");
-
-		SystemSettings.saveConfiguration();
-
-		Refresh();
-
-		var logLevel = AMDLoader.getAMDLoaderLogLevel();
-
-		if ("${logLevel}" != "debug") {
-			fail("AMD log level isn't set to Debug in JS console.");
+			if ("${logLevel}" != "${logLevelOptionNameLowercase}") {
+				fail("AMD log level isn't set to ${logLevelOptionName} in JS console.");
+			}
 		}
 	}
 

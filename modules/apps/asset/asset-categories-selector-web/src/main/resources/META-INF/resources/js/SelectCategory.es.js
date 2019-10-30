@@ -20,6 +20,10 @@ import Treeview from 'frontend-taglib/treeview/Treeview.es';
 import React, {useState, useEffect, useCallback} from 'react';
 
 const filterNodes = (nodes, filterValue) => {
+	if (!filterValue) {
+		return nodes;
+	}
+
 	const filteredNodes = [];
 
 	nodes.forEach(node => {
@@ -36,6 +40,7 @@ const filterNodes = (nodes, filterValue) => {
 };
 
 function SelectCategory({multiSelection, namespace, nodes}) {
+	const [filterQuery, setFilterQuery] = useState('');
 	const [filteredNodes, setFilteredNodes] = useState(nodes);
 
 	useEffect(() => {
@@ -44,13 +49,10 @@ function SelectCategory({multiSelection, namespace, nodes}) {
 
 	const handleOnChange = useCallback(
 		event => {
-			const searchValue = event.target.value.toLowerCase();
+			const value = event.target.value;
 
-			if (searchValue) {
-				setFilteredNodes(filterNodes(nodes, searchValue));
-			} else {
-				setFilteredNodes(nodes);
-			}
+			setFilterQuery(value);
+			setFilteredNodes(filterNodes(nodes, value.toLowerCase()));
 		},
 		[nodes]
 	);
@@ -84,6 +86,7 @@ function SelectCategory({multiSelection, namespace, nodes}) {
 					>
 						<Treeview
 							NodeComponent={Treeview.Card}
+							filterQuery={filterQuery}
 							multiSelection={multiSelection}
 							nodes={filteredNodes}
 						/>

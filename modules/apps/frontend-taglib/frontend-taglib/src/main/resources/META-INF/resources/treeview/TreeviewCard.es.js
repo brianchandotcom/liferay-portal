@@ -12,19 +12,50 @@
  * details.
  */
 
-import {ClayCardWithHorizontal} from '@clayui/card';
+import ClayCard from '@clayui/card';
+import {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
+
+import TreeviewContext from './TreeviewContext.es';
 
 export default function TreeviewCard({node, onNodeSelected, selectedNodeIds}) {
+	const {filterQuery} = useContext(TreeviewContext);
+
+	const path =
+		node.nodePath && filterQuery ? (
+			<div className="lfr-card-subtitle-text text-default text-truncate treeview-node-name">
+				{node.nodePath}
+			</div>
+		) : null;
+
 	return (
 		<div className="p-2">
-			<ClayCardWithHorizontal
-				onSelectChange={() => onNodeSelected(node.id)}
-				selected={selectedNodeIds.includes(node.id)}
-				symbol={node.icon}
-				title={node.name}
-			/>
+			<ClayCard horizontal selectable={true}>
+				<ClayCheckbox
+					checked={selectedNodeIds.includes(node.id)}
+					onChange={() => onNodeSelected(node.id)}
+				>
+					<ClayCard.Body>
+						<ClayCard.Row>
+							<div className="autofit-col">
+								<ClaySticker inline>
+									<ClayIcon symbol={node.icon} />
+								</ClaySticker>
+							</div>
+						</ClayCard.Row>
+
+						<div className="autofit-col autofit-col-expand autofit-col-gutters">
+							<ClayCard.Description displayType="title">
+								{node.name}
+							</ClayCard.Description>
+						</div>
+						{path}
+					</ClayCard.Body>
+				</ClayCheckbox>
+			</ClayCard>
 		</div>
 	);
 }
@@ -32,7 +63,8 @@ export default function TreeviewCard({node, onNodeSelected, selectedNodeIds}) {
 TreeviewCard.propTypes = {
 	node: PropTypes.shape({
 		icon: PropTypes.string,
-		name: PropTypes.string.isRequired
+		name: PropTypes.string.isRequired,
+		nodePath: PropTypes.string
 	}).isRequired,
 	onNodeSelected: PropTypes.func.isRequired,
 	selectedNodeIds: PropTypes.arrayOf(PropTypes.string).isRequired

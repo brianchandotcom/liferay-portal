@@ -17,6 +17,7 @@ import React, {useState, useCallback, useEffect, useRef} from 'react';
 
 import NodeList from './NodeList.es';
 import TreeviewCard from './TreeviewCard.es';
+import TreeviewContext from './TreeviewContext.es';
 import TreeviewLabel from './TreeviewLabel.es';
 
 const flattenNodes = (nodes, nodeList = []) => {
@@ -33,6 +34,7 @@ const flattenNodes = (nodes, nodeList = []) => {
 
 function Treeview({
 	NodeComponent,
+	filterQuery,
 	initialSelectedNodeIds,
 	multiSelection,
 	nodes,
@@ -73,13 +75,15 @@ function Treeview({
 	}, [initialSelectedNodeIds, nodes, onSelectedNodesChange, selectedNodeIds]);
 
 	return (
-		<NodeList
-			NodeComponent={NodeComponent}
-			initialSelectedNodeIds={initialSelectedNodeIds}
-			nodes={nodes}
-			onNodeSelected={handleNodeSelected}
-			selectedNodeIds={selectedNodeIds}
-		/>
+		<TreeviewContext.Provider value={{filterQuery}}>
+			<NodeList
+				NodeComponent={NodeComponent}
+				initialSelectedNodeIds={initialSelectedNodeIds}
+				nodes={nodes}
+				onNodeSelected={handleNodeSelected}
+				selectedNodeIds={selectedNodeIds}
+			/>
+		</TreeviewContext.Provider>
 	);
 }
 

@@ -20,7 +20,7 @@
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 	</entity>
-	<entity local-service="true" name="DepotEntryGroupRel" remote-service="false">
+	<entity local-service="true" name="DepotEntryGroupRel" remote-service="true">
 
 		<!-- PK fields -->
 

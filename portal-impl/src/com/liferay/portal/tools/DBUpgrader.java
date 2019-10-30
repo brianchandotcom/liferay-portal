@@ -15,7 +15,6 @@
 package com.liferay.portal.tools;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.dao.init.DBInitUtil;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -146,8 +145,6 @@ public class DBUpgrader {
 		}
 
 		CacheRegistryUtil.setActive(false);
-
-		DBInitUtil.init();
 
 		// Check required build number
 

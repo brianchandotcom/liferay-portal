@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.dao.db.DBManagerImpl;
+import com.liferay.portal.dao.init.DBInitUtil;
 import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
@@ -214,6 +215,8 @@ public class InitUtil {
 
 				ModuleFrameworkUtilAdapter.initFramework();
 			}
+
+			DBInitUtil.init();
 
 			ApplicationContext infrastructureApplicationContext =
 				new ArrayApplicationContext(

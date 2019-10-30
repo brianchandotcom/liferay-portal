@@ -14,10 +14,17 @@
 
 package com.liferay.depot.service.impl;
 
+import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.base.DepotEntryGroupRelServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the depot entry group rel remote service.
@@ -42,9 +49,17 @@ import org.osgi.service.component.annotations.Component;
 public class DepotEntryGroupRelServiceImpl
 	extends DepotEntryGroupRelServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.liferay.depot.service.DepotEntryGroupRelServiceUtil</code> to access the depot entry group rel remote service.
-	 */
+	@Override
+	public List<DepotEntryGroupRel> getDepotEntryGroupRels(long groupId)
+		throws PortalException {
+
+		_groupPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.VIEW);
+
+		return depotEntryGroupRelLocalService.getDepotEntryGroupRels(groupId);
+	}
+
+	@Reference
+	private GroupPermission _groupPermission;
+
 }

@@ -24,7 +24,6 @@ SelectAccountsManagementToolbarDisplayContext selectAccountsManagementToolbarDis
 
 <clay:management-toolbar
 	displayContext="<%= selectAccountsManagementToolbarDisplayContext %>"
-	showCreationMenu="<%= false %>"
 />
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">

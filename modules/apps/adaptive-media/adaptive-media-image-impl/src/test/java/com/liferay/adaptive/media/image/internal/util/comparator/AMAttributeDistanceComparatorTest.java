@@ -38,14 +38,15 @@ public class AMAttributeDistanceComparatorTest {
 	public void setUp() {
 		Map<AMAttribute<AMImageProcessor, ?>, AMImageQueryBuilder.SortOrder>
 			amAttributes =
-				HashMapBuilder.<AMAttribute<AMImageProcessor, ?>,
-				 AMImageQueryBuilder.SortOrder>put(
-					AMAttribute.getContentLengthAMAttribute(),
-					AMImageQueryBuilder.SortOrder.ASC
-				).put(
-					AMAttribute.getFileNameAMAttribute(),
-					AMImageQueryBuilder.SortOrder.DESC
-				).build();
+				HashMapBuilder.
+					<AMAttribute<AMImageProcessor, ?>,
+					 AMImageQueryBuilder.SortOrder>put(
+						AMAttribute.getContentLengthAMAttribute(),
+						AMImageQueryBuilder.SortOrder.ASC
+					).put(
+						AMAttribute.getFileNameAMAttribute(),
+						AMImageQueryBuilder.SortOrder.DESC
+					).build();
 
 		_multiAMAttributeDistanceComparator = new AMAttributeDistanceComparator(
 			amAttributes);

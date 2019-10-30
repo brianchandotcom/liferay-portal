@@ -53,6 +53,11 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	}
 
 	@Override
+	public int getLineNumber(int pos) {
+		return _lineNumber + SourceUtil.getLineNumber(_content, pos) - 1;
+	}
+
+	@Override
 	public String getName() {
 		return _name;
 	}

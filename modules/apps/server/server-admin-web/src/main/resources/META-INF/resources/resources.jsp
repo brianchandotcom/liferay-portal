@@ -256,7 +256,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 			</li>
 			<li class="clearfix list-group-item">
 				<div class="float-left">
-					<h5><liferay-ui:message key="clean-up-page-revision-portlet-preferences" /> <liferay-ui:icon-help message="clean-up-page-revision-portlet-preferences-help" /></h5>
+					<h5><liferay-ui:message key="clean-up-orphaned-page-revision-portlet-preferences" /> <liferay-ui:icon-help message="clean-up-orphaned-page-revision-portlet-preferences-help" /></h5>
 				</div>
 
 				<div class="float-right">
@@ -265,7 +265,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 			</li>
 			<li class="clearfix list-group-item">
 				<div class="float-left">
-					<h5><liferay-ui:message key="clean-up-orphaned-portlet-preferences" /> <liferay-ui:icon-help message="clean-up-orphaned-portlet-preferences-help" /></h5>
+					<h5><liferay-ui:message key="clean-up-orphaned-theme-portlet-preferences" /> <liferay-ui:icon-help message="clean-up-orphaned-theme-portlet-preferences-help" /></h5>
 				</div>
 
 				<div class="float-right">

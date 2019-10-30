@@ -4,8 +4,6 @@ buildscript {
 
 apply plugin: "com.liferay.settings.plugin"
 
-enableFeaturePreview("STABLE_PUBLISHING")
-
 String testClassGroupIndex = System.getProperty("test.class.group.index")
 
 if (testClassGroupIndex) {

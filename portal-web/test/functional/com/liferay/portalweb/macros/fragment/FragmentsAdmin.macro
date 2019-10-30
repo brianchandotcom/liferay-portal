@@ -10,6 +10,18 @@ definition {
 		Button.clickSave();
 	}
 
+	macro addFragment {
+		LexiconEntry.gotoAdd();
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Add Component");
+
+		PortletEntry.inputName(name = "${fragmentName}");
+
+		Button.clickSave();
+	}
+
 	macro addResource {
 		LexiconEntry.gotoAdd();
 
@@ -24,18 +36,6 @@ definition {
 		AssertClick(
 			locator1 = "Button#OK",
 			value1 = "OK");
-	}
-
-	macro addSection {
-		LexiconEntry.gotoAddMenuItem(menuItem = "Section");
-
-		AssertTextEquals(
-			locator1 = "Modal#HEADER",
-			value1 = "Add Section");
-
-		PortletEntry.inputName(name = "${fragmentName}");
-
-		Button.clickSave();
 	}
 
 	macro deleteEntry {

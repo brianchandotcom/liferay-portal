@@ -60,12 +60,31 @@ public class JavaComponentActivateCheck extends BaseJavaTermCheck {
 		String content = javaTerm.getContent();
 
 		for (String annotationName : annotationNames) {
-			if ((javaTerm.getAccessModifier() ==
-					JavaTerm.ACCESS_MODIFIER_PROTECTED) ||
-				!javaTerm.hasAnnotation(annotationNames) ||
+			if (!javaTerm.hasAnnotation(annotationName) ||
 				!importNames.contains(
 					"org.osgi.service.component.annotations." +
 						annotationName)) {
+
+				continue;
+			}
+
+			String methodName = javaTerm.getName();
+
+			if (!javaTerm.hasAnnotation("Override")) {
+				String expectedMethodName = StringUtil.toLowerCase(
+					annotationName);
+
+				if (!methodName.equals(expectedMethodName)) {
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Method with annotation '", annotationName,
+							"' should have name '", expectedMethodName, "'"));
+				}
+			}
+
+			if (javaTerm.getAccessModifier() ==
+					JavaTerm.ACCESS_MODIFIER_PROTECTED) {
 
 				continue;
 			}

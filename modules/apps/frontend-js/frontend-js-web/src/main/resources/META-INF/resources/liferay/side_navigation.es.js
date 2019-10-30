@@ -375,8 +375,7 @@ SideNavigation.prototype = {
 					instance.setHeight();
 				})
 				.catch(err => {
-					// eslint-disable-next-line no-console
-					console.log(err);
+					console.error(err);
 				});
 		}
 	},

@@ -307,7 +307,6 @@ class LiferayApp extends App {
 			);
 
 			if (Liferay.SPA.debugEnabled) {
-				// eslint-disable-next-line no-console
 				console.error(event.error);
 
 				if (event.error.invalidStatus) {

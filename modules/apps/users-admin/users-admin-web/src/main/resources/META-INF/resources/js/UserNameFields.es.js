@@ -143,7 +143,6 @@ class UserNameFields extends PortletBase {
 	 * @protected
 	 */
 	_handleError(error) {
-		// eslint-disable-next-line no-console
 		console.error(error);
 
 		this._removeLoadingIndicator();

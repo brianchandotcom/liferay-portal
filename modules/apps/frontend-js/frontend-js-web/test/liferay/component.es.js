@@ -48,7 +48,6 @@ describe('Liferay', () => {
 		it('warns through console when a component is registered twice', () => {
 			let msg = '';
 
-			// eslint-disable-next-line no-console
 			console.warn = function() {
 				for (let i = 0; i < arguments.length; i++) {
 					msg += arguments[i].toString();

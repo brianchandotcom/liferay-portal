@@ -51,6 +51,8 @@ xpack.ssl.key: certs/localhost/localhost.key</echo>
 			<var name="elasticsearch.analysis-smartcn.zip.url" unset="true" />
 			<var name="elasticsearch.analysis-stempel.zip.name" unset="true" />
 			<var name="elasticsearch.analysis-stempel.zip.url" unset="true" />
+			<var name="elasticsearch.zip.name" unset="true" />
+			<var name="elasticsearch.zip.url" unset="true" />
 
 			<property name="elasticsearch.version" value="6.7.1" />
 			<property name="elasticsearch.dir" value="${app.server.parent.dir}/elasticsearch-${elasticsearch.version}" />

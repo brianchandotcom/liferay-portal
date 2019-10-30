@@ -107,21 +107,13 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 			int x = javaTermContent.lastIndexOf(
 				exitStatementType, matcher1.start());
 
-			int exitStatementLineNumber =
-				javaTerm.getLineNumber() + getLineNumber(javaTermContent, x) -
-					1;
-
-			int lineNumber =
-				javaTerm.getLineNumber() +
-					getLineNumber(javaTermContent, matcher1.start());
-
 			addMessage(
 				fileName,
 				StringBundler.concat(
 					"Else statement is not needed because of the '",
 					exitStatementType, "' statement on line ",
-					exitStatementLineNumber),
-				lineNumber);
+					javaTerm.getLineNumber(x)),
+				javaTerm.getLineNumber(matcher1.start()));
 		}
 
 		return javaTermContent;

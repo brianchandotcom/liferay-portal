@@ -201,13 +201,10 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 				fromSchemaVersion, expectedIncrementType);
 
 			if (expectedSchemaVersion.compareTo(toSchemaVersion) > 0) {
-				int lineNumber =
-					javaTerm.getLineNumber() + getLineNumber(content, x) - 1;
-
 				addMessage(
 					fileName,
 					"Expected new schema version: " + expectedSchemaVersion,
-					lineNumber);
+					javaTerm.getLineNumber(x));
 			}
 		}
 		catch (IllegalArgumentException iae) {

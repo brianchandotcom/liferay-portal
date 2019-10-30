@@ -15,6 +15,7 @@
 import React from 'react';
 
 import baseReducer from './baseReducer';
+import layoutDataReducer from './layoutDataReducer';
 
 export const DispatchContext = React.createContext(() => {});
 
@@ -23,10 +24,11 @@ export const DispatchContext = React.createContext(() => {});
  * been registered from plugins.
  */
 export function reducer(state, action) {
-	return [baseReducer, ...Object.values(state.reducers)].reduce(
-		(nextState, nextReducer) => {
-			return nextReducer(nextState, action);
-		},
-		state
-	);
+	return [
+		baseReducer,
+		layoutDataReducer,
+		...Object.values(state.reducers)
+	].reduce((nextState, nextReducer) => {
+		return nextReducer(nextState, action);
+	}, state);
 }

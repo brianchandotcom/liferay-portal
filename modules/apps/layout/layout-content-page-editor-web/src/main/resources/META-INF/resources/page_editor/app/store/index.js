@@ -14,6 +14,9 @@
 
 import React from 'react';
 
+import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+
 const INITIAL_STATE = {
 	/**
 	 * A collection of dynamically loaded reducers that may be loaded from
@@ -61,5 +64,21 @@ export function getInitialState([data, config]) {
 function transformServerData(data) {
 	// Currently nothing happening here, but keeping this around so that we have
 	// a place to massage the server data into shape.
-	return {...data};
+	return {
+		...data,
+
+		layoutData: {
+			items: {
+				main: {
+					children: [],
+					config: {...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.root},
+					itemId: 'main',
+					type: LAYOUT_DATA_ITEM_TYPES.root
+				}
+			},
+
+			rootItems: {main: 'main'},
+			version: 1
+		}
+	};
 }

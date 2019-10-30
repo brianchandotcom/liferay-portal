@@ -47,6 +47,7 @@ import {
 	moveRow,
 	removeItem
 } from '../../utils/FragmentsEditorUpdateUtils.es';
+import {computeConfigurationEditableValue} from '../../utils/computeValues.es';
 import {
 	FLOATING_TOOLBAR_BUTTONS,
 	FRAGMENTS_EDITOR_ITEM_TYPES,
@@ -54,7 +55,6 @@ import {
 	FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 } from '../../utils/constants';
 import {isDropZone} from '../../utils/isDropZone.es';
-import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import templates from './FragmentEntryLink.soy';
 
@@ -141,13 +141,6 @@ class FragmentEntryLink extends Component {
 	 */
 	syncFragmentEntryLinks() {
 		if (this.fragmentEntryLinks[this.fragmentEntryLinkId]) {
-			const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
-				this.defaultSegmentsExperienceId
-			);
-			const segmentsExperienceId = prefixSegmentsExperienceId(
-				this.segmentsExperienceId
-			);
-
 			const configurationValues = this.fragmentEntryLinks[
 				this.fragmentEntryLinkId
 			].editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR];
@@ -161,10 +154,10 @@ class FragmentEntryLink extends Component {
 			].defaultConfigurationValues;
 
 			if (configurationValues) {
-				const segmentedConfigurationValues =
-					configurationValues[segmentsExperienceId] ||
-					configurationValues[defaultSegmentsExperienceId] ||
-					configurationValues;
+				const segmentedConfigurationValues = computeConfigurationEditableValue(
+					configurationValues,
+					{selectedExperienceId: this.segmentsExperienceId}
+				);
 
 				this._configurationValues = {
 					...this._defaultConfigurationValues,

@@ -19,18 +19,15 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -66,42 +63,6 @@ public class DefaultLayoutPrototypesUtil {
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, null, null, null,
 			null, LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,
 			friendlyURLMap, serviceContext);
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		layoutTypePortlet.setLayoutTemplateId(0, layoutTemplateId, false);
-
-		return layout;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             LayoutPrototypeHelper#addLayoutPrototype}
-	 */
-	@Deprecated
-	public static Layout addLayoutPrototype(
-			long companyId, long defaultUserId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String layoutTemplateId,
-			List<LayoutPrototype> layoutPrototypes)
-		throws Exception {
-
-		String name = nameMap.get(LocaleUtil.getDefault());
-
-		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
-			String curName = layoutPrototype.getName(LocaleUtil.getDefault());
-
-			if ((name == null) || name.equals(curName)) {
-				return null;
-			}
-		}
-
-		LayoutPrototype layoutPrototype =
-			LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
-				defaultUserId, companyId, nameMap, descriptionMap, true,
-				new ServiceContext());
-
-		Layout layout = layoutPrototype.getLayout();
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

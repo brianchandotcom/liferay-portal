@@ -122,13 +122,11 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 					return;
 				}
 
-				int pos = getLineNumber(javaTermContent, startPos);
-
 				addMessage(
 					fileName,
 					"Use method 'StringBundler.concat' when concatenating " +
 						"more than 3 strings",
-					"concat.markdown", javaTerm.getLineNumber() + pos - 1);
+					"concat.markdown", javaTerm.getLineNumber(startPos));
 			}
 
 			x = endPos;

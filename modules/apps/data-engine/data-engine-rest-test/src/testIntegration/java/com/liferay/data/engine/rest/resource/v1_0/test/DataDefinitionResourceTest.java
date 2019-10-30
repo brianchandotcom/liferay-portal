@@ -44,12 +44,12 @@ public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {
 
 	@Override
-	public void testGetDataDefinitionDataDefinitionFieldFieldType()
+	public void testGetDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception {
 
 		String fieldTypes =
 			dataDefinitionResource.
-				getDataDefinitionDataDefinitionFieldFieldType();
+				getDataDefinitionDataDefinitionFieldFieldTypes();
 
 		Assert.assertTrue(Validator.isNotNull(fieldTypes));
 	}
@@ -105,14 +105,8 @@ public class DataDefinitionResourceTest
 	public void testGraphQLGetSiteDataDefinitionsPage() {
 	}
 
-	@Ignore
 	@Override
-	@Test
-	public void testGraphQLPostSiteDataDefinition() {
-	}
-
-	@Override
-	public void testPostDataDefinitionDataDefinitionPermission()
+	public void testPostDataDefinitionDataDefinitionPermissions()
 		throws Exception {
 
 		DataDefinition dataDefinition =
@@ -122,7 +116,7 @@ public class DataDefinitionResourceTest
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		dataDefinitionResource.postDataDefinitionDataDefinitionPermission(
+		dataDefinitionResource.postDataDefinitionDataDefinitionPermissions(
 			dataDefinition.getId(), _OPERATION_SAVE_PERMISSION,
 			new DataDefinitionPermission() {
 				{
@@ -133,10 +127,10 @@ public class DataDefinitionResourceTest
 	}
 
 	@Override
-	public void testPostSiteDataDefinitionPermission() throws Exception {
+	public void testPostSiteDataDefinitionPermissions() throws Exception {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		dataDefinitionResource.postSiteDataDefinitionPermission(
+		dataDefinitionResource.postSiteDataDefinitionPermissions(
 			testGroup.getGroupId(), _OPERATION_SAVE_PERMISSION,
 			new DataDefinitionPermission() {
 				{

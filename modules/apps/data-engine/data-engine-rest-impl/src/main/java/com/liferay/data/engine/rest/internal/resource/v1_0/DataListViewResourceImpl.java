@@ -151,7 +151,7 @@ public class DataListViewResourceImpl
 	}
 
 	@Override
-	public DataListView postDataDefinitionDataListView(
+	public DataListView postDataDefinitionDataListViews(
 			Long dataDefinitionId, DataListView dataListView)
 		throws Exception {
 

@@ -194,7 +194,7 @@ public class MessageBoardThreadResourceImpl
 	}
 
 	@Override
-	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
+	public MessageBoardThread postMessageBoardSectionMessageBoardThreads(
 			Long messageBoardSectionId, MessageBoardThread messageBoardThread)
 		throws Exception {
 
@@ -220,7 +220,7 @@ public class MessageBoardThreadResourceImpl
 	}
 
 	@Override
-	public MessageBoardThread postSiteMessageBoardThread(
+	public MessageBoardThread postSiteMessageBoardThreads(
 			Long siteId, MessageBoardThread messageBoardThread)
 		throws Exception {
 

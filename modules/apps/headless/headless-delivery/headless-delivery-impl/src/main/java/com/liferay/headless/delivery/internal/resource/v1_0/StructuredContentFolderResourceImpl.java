@@ -122,7 +122,7 @@ public class StructuredContentFolderResourceImpl
 	}
 
 	@Override
-	public StructuredContentFolder postSiteStructuredContentFolder(
+	public StructuredContentFolder postSiteStructuredContentFolders(
 			Long siteId, StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
@@ -133,7 +133,7 @@ public class StructuredContentFolderResourceImpl
 
 	@Override
 	public StructuredContentFolder
-			postStructuredContentFolderStructuredContentFolder(
+			postStructuredContentFolderStructuredContentFolders(
 				Long parentStructuredContentFolderId,
 				StructuredContentFolder structuredContentFolder)
 		throws Exception {

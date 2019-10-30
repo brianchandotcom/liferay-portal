@@ -182,7 +182,7 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	@Override
-	public TaxonomyVocabulary postSiteTaxonomyVocabulary(
+	public TaxonomyVocabulary postSiteTaxonomyVocabularies(
 			Long siteId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 

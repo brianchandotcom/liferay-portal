@@ -174,16 +174,16 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 	}
 
 	@Override
-	public DataRecord postDataDefinitionDataRecord(
+	public DataRecord postDataDefinitionDataRecords(
 			Long dataDefinitionId, DataRecord dataRecord)
 		throws Exception {
 
-		return postDataRecordCollectionDataRecord(
+		return postDataRecordCollectionDataRecords(
 			_getDefaultDataRecordCollectionId(dataDefinitionId), dataRecord);
 	}
 
 	@Override
-	public DataRecord postDataRecordCollectionDataRecord(
+	public DataRecord postDataRecordCollectionDataRecords(
 			Long dataRecordCollectionId, DataRecord dataRecord)
 		throws Exception {
 

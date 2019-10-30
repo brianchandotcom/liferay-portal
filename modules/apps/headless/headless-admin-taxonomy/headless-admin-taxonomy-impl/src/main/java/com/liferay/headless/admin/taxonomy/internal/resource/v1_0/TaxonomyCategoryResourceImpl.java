@@ -184,7 +184,7 @@ public class TaxonomyCategoryResourceImpl
 	}
 
 	@Override
-	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategories(
 			Long parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -198,7 +198,7 @@ public class TaxonomyCategoryResourceImpl
 	}
 
 	@Override
-	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
+	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategories(
 			Long taxonomyVocabularyId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 

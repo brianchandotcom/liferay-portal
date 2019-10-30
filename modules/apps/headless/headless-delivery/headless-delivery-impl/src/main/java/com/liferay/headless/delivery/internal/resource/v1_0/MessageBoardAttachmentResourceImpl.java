@@ -85,15 +85,16 @@ public class MessageBoardAttachmentResourceImpl
 	}
 
 	@Override
-	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
-			Long messageBoardMessageId, MultipartBody multipartBody)
+	public MessageBoardAttachment
+			postMessageBoardMessageMessageBoardAttachments(
+				Long messageBoardMessageId, MultipartBody multipartBody)
 		throws Exception {
 
 		return _addMessageBoardAttachment(messageBoardMessageId, multipartBody);
 	}
 
 	@Override
-	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
+	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachments(
 			Long messageBoardThreadId, MultipartBody multipartBody)
 		throws Exception {
 

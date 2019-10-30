@@ -102,7 +102,7 @@ public class MessageBoardAttachmentResourceTest
 		throws Exception {
 
 		return messageBoardAttachmentResource.
-			postMessageBoardThreadMessageBoardAttachment(
+			postMessageBoardThreadMessageBoardAttachments(
 				_mbThread.getThreadId(), randomMessageBoardAttachment(),
 				getMultipartFiles());
 	}
@@ -113,7 +113,7 @@ public class MessageBoardAttachmentResourceTest
 		throws Exception {
 
 		return messageBoardAttachmentResource.
-			postMessageBoardThreadMessageBoardAttachment(
+			postMessageBoardThreadMessageBoardAttachments(
 				_mbThread.getThreadId(), randomMessageBoardAttachment(),
 				getMultipartFiles());
 	}

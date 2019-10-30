@@ -103,7 +103,7 @@ public class BlogPostingImageResourceImpl
 	}
 
 	@Override
-	public BlogPostingImage postSiteBlogPostingImage(
+	public BlogPostingImage postSiteBlogPostingImages(
 			Long siteId, MultipartBody multipartBody)
 		throws Exception {
 

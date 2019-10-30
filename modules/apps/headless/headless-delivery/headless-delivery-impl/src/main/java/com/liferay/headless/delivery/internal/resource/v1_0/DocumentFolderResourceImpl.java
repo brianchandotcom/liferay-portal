@@ -135,7 +135,7 @@ public class DocumentFolderResourceImpl
 	}
 
 	@Override
-	public DocumentFolder postDocumentFolderDocumentFolder(
+	public DocumentFolder postDocumentFolderDocumentFolders(
 			Long parentDocumentFolderId, DocumentFolder documentFolder)
 		throws Exception {
 
@@ -148,7 +148,7 @@ public class DocumentFolderResourceImpl
 	}
 
 	@Override
-	public DocumentFolder postSiteDocumentFolder(
+	public DocumentFolder postSiteDocumentFolders(
 			Long siteId, DocumentFolder documentFolder)
 		throws Exception {
 

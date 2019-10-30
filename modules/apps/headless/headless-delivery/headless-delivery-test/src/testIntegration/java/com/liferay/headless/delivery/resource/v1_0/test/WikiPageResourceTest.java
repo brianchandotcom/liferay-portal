@@ -97,7 +97,7 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 			Long parentWikiPageId, WikiPage wikiPage)
 		throws Exception {
 
-		return wikiPageResource.postWikiPageWikiPage(
+		return wikiPageResource.postWikiPageWikiPages(
 			parentWikiPageId, randomWikiPage());
 	}
 
@@ -126,7 +126,7 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 	}
 
 	private WikiPage _addWikiPage(Long wikiNodeId) throws Exception {
-		return wikiPageResource.postWikiNodeWikiPage(
+		return wikiPageResource.postWikiNodeWikiPages(
 			wikiNodeId, randomWikiPage());
 	}
 

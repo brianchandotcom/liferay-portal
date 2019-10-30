@@ -70,12 +70,12 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 	@Override
 	@Test
-	public void testPostDataRecordCollectionDataRecord() throws Exception {
-		super.testPostDataRecordCollectionDataRecord();
+	public void testPostDataRecordCollectionDataRecords() throws Exception {
+		super.testPostDataRecordCollectionDataRecords();
 
 		assertHttpResponseStatusCode(
 			404,
-			dataRecordResource.postDataRecordCollectionDataRecordHttpResponse(
+			dataRecordResource.postDataRecordCollectionDataRecordsHttpResponse(
 				RandomTestUtil.randomLong(), randomDataRecord()));
 
 		DataRecord dataRecord = _createDataRecord(
@@ -83,7 +83,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			400,
-			dataRecordResource.postDataRecordCollectionDataRecordHttpResponse(
+			dataRecordResource.postDataRecordCollectionDataRecordsHttpResponse(
 				dataRecord.getDataRecordCollectionId(), dataRecord));
 	}
 
@@ -110,7 +110,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 	@Override
 	protected DataRecord testDeleteDataRecord_addDataRecord() throws Exception {
-		return dataRecordResource.postDataRecordCollectionDataRecord(
+		return dataRecordResource.postDataRecordCollectionDataRecords(
 			_ddlRecordSet.getRecordSetId(), randomDataRecord());
 	}
 
@@ -123,7 +123,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 	@Override
 	protected DataRecord testGetDataRecord_addDataRecord() throws Exception {
-		return dataRecordResource.postDataRecordCollectionDataRecord(
+		return dataRecordResource.postDataRecordCollectionDataRecords(
 			_ddlRecordSet.getRecordSetId(), randomDataRecord());
 	}
 
@@ -133,7 +133,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 				Long dataLayoutId, DataRecord dataRecord)
 		throws Exception {
 
-		return dataRecordResource.postDataRecordCollectionDataRecord(
+		return dataRecordResource.postDataRecordCollectionDataRecords(
 			dataRecord.getDataRecordCollectionId(), dataRecord);
 	}
 
@@ -146,17 +146,17 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 	}
 
 	@Override
-	protected DataRecord testPostDataRecordCollectionDataRecord_addDataRecord(
+	protected DataRecord testPostDataRecordCollectionDataRecords_addDataRecord(
 			DataRecord dataRecord)
 		throws Exception {
 
-		return dataRecordResource.postDataRecordCollectionDataRecord(
+		return dataRecordResource.postDataRecordCollectionDataRecords(
 			dataRecord.getDataRecordCollectionId(), dataRecord);
 	}
 
 	@Override
 	protected DataRecord testPutDataRecord_addDataRecord() throws Exception {
-		return dataRecordResource.postDataRecordCollectionDataRecord(
+		return dataRecordResource.postDataRecordCollectionDataRecords(
 			_ddlRecordSet.getRecordSetId(), randomDataRecord());
 	}
 

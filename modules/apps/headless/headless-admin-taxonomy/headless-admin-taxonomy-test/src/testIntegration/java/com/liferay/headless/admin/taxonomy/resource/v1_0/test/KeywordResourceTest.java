@@ -46,12 +46,6 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	public void testGraphQLGetSiteKeywordsPage() {
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLPostSiteKeyword() {
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name"};

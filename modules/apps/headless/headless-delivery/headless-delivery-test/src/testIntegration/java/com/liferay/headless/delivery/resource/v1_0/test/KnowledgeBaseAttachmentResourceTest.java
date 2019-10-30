@@ -104,7 +104,7 @@ public class KnowledgeBaseAttachmentResourceTest
 		throws Exception {
 
 		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+			postKnowledgeBaseArticleKnowledgeBaseAttachments(
 				_kbArticle.getResourcePrimKey(),
 				randomKnowledgeBaseAttachment(), getMultipartFiles());
 	}
@@ -122,7 +122,7 @@ public class KnowledgeBaseAttachmentResourceTest
 		throws Exception {
 
 		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+			postKnowledgeBaseArticleKnowledgeBaseAttachments(
 				_kbArticle.getResourcePrimKey(),
 				randomKnowledgeBaseAttachment(), getMultipartFiles());
 	}

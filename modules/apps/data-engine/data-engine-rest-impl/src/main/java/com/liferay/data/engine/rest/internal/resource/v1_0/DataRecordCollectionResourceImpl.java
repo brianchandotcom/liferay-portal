@@ -115,7 +115,7 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public DataRecordCollection postDataDefinitionDataRecordCollection(
+	public DataRecordCollection postDataDefinitionDataRecordCollections(
 			Long dataDefinitionId, DataRecordCollection dataRecordCollection)
 		throws Exception {
 
@@ -132,7 +132,7 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public void postDataRecordCollectionDataRecordCollectionPermission(
+	public void postDataRecordCollectionDataRecordCollectionPermissions(
 			Long dataRecordCollectionId, String operation,
 			DataRecordCollectionPermission dataRecordCollectionPermission)
 		throws Exception {
@@ -163,7 +163,7 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public void postSiteDataRecordCollectionPermission(
+	public void postSiteDataRecordCollectionPermissions(
 			Long siteId, String operation,
 			DataRecordCollectionPermission dataRecordCollectionPermission)
 		throws Exception {

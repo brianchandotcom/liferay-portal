@@ -95,7 +95,7 @@ public class WikiNodeResourceImpl
 	}
 
 	@Override
-	public WikiNode postSiteWikiNode(Long siteId, WikiNode wikiNode)
+	public WikiNode postSiteWikiNodes(Long siteId, WikiNode wikiNode)
 		throws Exception {
 
 		return _toWikiNode(

@@ -106,7 +106,7 @@ public class WikiPageAttachmentResourceTest
 			testDeleteWikiPageAttachment_addWikiPageAttachment()
 		throws Exception {
 
-		return wikiPageAttachmentResource.postWikiPageWikiPageAttachment(
+		return wikiPageAttachmentResource.postWikiPageWikiPageAttachments(
 			_wikiPage.getPageId(), randomWikiPageAttachment(),
 			getMultipartFiles());
 	}
@@ -116,7 +116,7 @@ public class WikiPageAttachmentResourceTest
 			testGetWikiPageAttachment_addWikiPageAttachment()
 		throws Exception {
 
-		return wikiPageAttachmentResource.postWikiPageWikiPageAttachment(
+		return wikiPageAttachmentResource.postWikiPageWikiPageAttachments(
 			_wikiPage.getPageId(), randomWikiPageAttachment(),
 			getMultipartFiles());
 	}

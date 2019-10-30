@@ -231,7 +231,7 @@ public class DocumentResourceImpl
 	}
 
 	@Override
-	public Document postDocumentFolderDocument(
+	public Document postDocumentFolderDocuments(
 			Long documentFolderId, MultipartBody multipartBody)
 		throws Exception {
 
@@ -252,7 +252,7 @@ public class DocumentResourceImpl
 	}
 
 	@Override
-	public Document postSiteDocument(Long siteId, MultipartBody multipartBody)
+	public Document postSiteDocuments(Long siteId, MultipartBody multipartBody)
 		throws Exception {
 
 		return _addDocument(siteId, 0L, siteId, multipartBody);

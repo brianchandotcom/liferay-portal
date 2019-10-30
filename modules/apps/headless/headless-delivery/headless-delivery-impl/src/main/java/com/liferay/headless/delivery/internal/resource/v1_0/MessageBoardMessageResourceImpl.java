@@ -138,7 +138,7 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	@Override
-	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
+	public MessageBoardMessage postMessageBoardMessageMessageBoardMessages(
 			Long parentMessageBoardMessageId,
 			MessageBoardMessage messageBoardMessage)
 		throws Exception {
@@ -159,7 +159,7 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	@Override
-	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
+	public MessageBoardMessage postMessageBoardThreadMessageBoardMessages(
 			Long messageBoardThreadId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 

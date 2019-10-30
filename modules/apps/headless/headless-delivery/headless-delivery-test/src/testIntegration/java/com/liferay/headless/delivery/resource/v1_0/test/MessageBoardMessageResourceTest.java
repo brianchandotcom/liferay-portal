@@ -151,7 +151,7 @@ public class MessageBoardMessageResourceTest
 		throws Exception {
 
 		return messageBoardMessageResource.
-			postMessageBoardThreadMessageBoardMessage(
+			postMessageBoardThreadMessageBoardMessages(
 				messageBoardThreadId, randomMessageBoardMessage());
 	}
 

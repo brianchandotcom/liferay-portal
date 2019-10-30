@@ -58,12 +58,6 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	public void testGraphQLGetSiteDocumentsPage() {
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLPostSiteDocument() {
-	}
-
 	@Override
 	protected void assertValid(
 			Document document, Map<String, File> multipartFiles)

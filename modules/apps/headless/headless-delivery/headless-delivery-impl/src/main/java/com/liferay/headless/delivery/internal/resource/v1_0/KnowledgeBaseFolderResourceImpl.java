@@ -97,7 +97,7 @@ public class KnowledgeBaseFolderResourceImpl
 	}
 
 	@Override
-	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
+	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolders(
 			Long parentKnowledgeBaseFolderId,
 			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
@@ -117,7 +117,7 @@ public class KnowledgeBaseFolderResourceImpl
 	}
 
 	@Override
-	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
+	public KnowledgeBaseFolder postSiteKnowledgeBaseFolders(
 			Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 

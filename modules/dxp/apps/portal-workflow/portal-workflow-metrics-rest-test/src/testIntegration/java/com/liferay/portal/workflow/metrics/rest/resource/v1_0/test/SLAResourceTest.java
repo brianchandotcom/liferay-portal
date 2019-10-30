@@ -168,7 +168,7 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 
 	@Override
 	protected SLA testDeleteSLA_addSLA() throws Exception {
-		return super.testPostProcessSLA_addSLA(randomSLA());
+		return super.testPostProcessSLAs_addSLA(randomSLA());
 	}
 
 	@Override
@@ -189,7 +189,7 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 
 	@Override
 	protected SLA testGetSLA_addSLA() throws Exception {
-		SLA sla = super.testPostProcessSLA_addSLA(randomSLA());
+		SLA sla = super.testPostProcessSLAs_addSLA(randomSLA());
 
 		_slas.add(sla);
 
@@ -202,8 +202,8 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 	}
 
 	@Override
-	protected SLA testPostProcessSLA_addSLA(SLA sla) throws Exception {
-		sla = super.testPostProcessSLA_addSLA(sla);
+	protected SLA testPostProcessSLAs_addSLA(SLA sla) throws Exception {
+		sla = super.testPostProcessSLAs_addSLA(sla);
 
 		_slas.add(sla);
 
@@ -212,7 +212,7 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 
 	@Override
 	protected SLA testPutSLA_addSLA() throws Exception {
-		SLA sla = super.testPostProcessSLA_addSLA(randomSLA());
+		SLA sla = super.testPostProcessSLAs_addSLA(randomSLA());
 
 		_slas.add(sla);
 

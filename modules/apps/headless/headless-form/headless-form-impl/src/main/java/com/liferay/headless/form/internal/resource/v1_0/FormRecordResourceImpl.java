@@ -119,7 +119,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 	}
 
 	@Override
-	public FormRecord postFormFormRecord(Long formId, FormRecord formRecord)
+	public FormRecord postFormFormRecords(Long formId, FormRecord formRecord)
 		throws Exception {
 
 		DDMFormInstance ddmFormInstance =

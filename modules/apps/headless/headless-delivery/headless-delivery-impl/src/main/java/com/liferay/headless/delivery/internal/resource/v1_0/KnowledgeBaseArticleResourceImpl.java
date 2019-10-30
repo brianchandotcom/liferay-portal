@@ -196,7 +196,7 @@ public class KnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
+	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticles(
 			Long parentKnowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
@@ -222,7 +222,7 @@ public class KnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
+	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticles(
 			Long knowledgeBaseFolderId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
@@ -236,7 +236,7 @@ public class KnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
+	public KnowledgeBaseArticle postSiteKnowledgeBaseArticles(
 			Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 

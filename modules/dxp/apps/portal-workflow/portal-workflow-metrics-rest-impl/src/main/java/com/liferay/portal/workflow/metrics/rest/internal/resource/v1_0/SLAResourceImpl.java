@@ -139,7 +139,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 	}
 
 	@Override
-	public SLA postProcessSLA(Long processId, SLA sla) throws Exception {
+	public SLA postProcessSLAs(Long processId, SLA sla) throws Exception {
 		return _toSLA(
 			_workflowMetricsSLADefinitionLocalService.
 				addWorkflowMetricsSLADefinition(

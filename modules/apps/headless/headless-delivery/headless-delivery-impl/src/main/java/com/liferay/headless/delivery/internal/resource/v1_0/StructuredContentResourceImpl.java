@@ -394,7 +394,7 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	public StructuredContent postSiteStructuredContent(
+	public StructuredContent postSiteStructuredContents(
 			Long siteId, StructuredContent structuredContent)
 		throws Exception {
 
@@ -404,7 +404,7 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	public StructuredContent postStructuredContentFolderStructuredContent(
+	public StructuredContent postStructuredContentFolderStructuredContents(
 			Long structuredContentFolderId, StructuredContent structuredContent)
 		throws Exception {
 

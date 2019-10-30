@@ -157,7 +157,7 @@ public class WikiPageResourceImpl
 	}
 
 	@Override
-	public WikiPage postWikiNodeWikiPage(Long wikiNodeId, WikiPage wikiPage)
+	public WikiPage postWikiNodeWikiPages(Long wikiNodeId, WikiPage wikiPage)
 		throws Exception {
 
 		WikiNode wikiNode = _wikiNodeService.getNode(wikiNodeId);
@@ -174,7 +174,7 @@ public class WikiPageResourceImpl
 	}
 
 	@Override
-	public WikiPage postWikiPageWikiPage(
+	public WikiPage postWikiPageWikiPages(
 			Long parentWikiPageId, WikiPage wikiPage)
 		throws Exception {
 

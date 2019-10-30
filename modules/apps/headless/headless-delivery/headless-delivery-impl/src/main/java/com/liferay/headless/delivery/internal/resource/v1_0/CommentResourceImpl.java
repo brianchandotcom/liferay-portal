@@ -137,7 +137,7 @@ public class CommentResourceImpl
 	}
 
 	@Override
-	public Comment postBlogPostingComment(Long blogPostingId, Comment comment)
+	public Comment postBlogPostingComments(Long blogPostingId, Comment comment)
 		throws Exception {
 
 		SPICommentResource<Comment> spiCommentResource =
@@ -151,7 +151,7 @@ public class CommentResourceImpl
 	}
 
 	@Override
-	public Comment postCommentComment(Long parentCommentId, Comment comment)
+	public Comment postCommentComments(Long parentCommentId, Comment comment)
 		throws Exception {
 
 		com.liferay.portal.kernel.comment.Comment parentComment =
@@ -169,7 +169,7 @@ public class CommentResourceImpl
 	}
 
 	@Override
-	public Comment postDocumentComment(Long documentId, Comment comment)
+	public Comment postDocumentComments(Long documentId, Comment comment)
 		throws Exception {
 
 		SPICommentResource<Comment> spiCommentResource =
@@ -183,7 +183,7 @@ public class CommentResourceImpl
 	}
 
 	@Override
-	public Comment postStructuredContentComment(
+	public Comment postStructuredContentComments(
 			Long structuredContentId, Comment comment)
 		throws Exception {
 

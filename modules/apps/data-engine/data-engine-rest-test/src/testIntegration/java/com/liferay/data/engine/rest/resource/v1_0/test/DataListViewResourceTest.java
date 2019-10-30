@@ -55,7 +55,7 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 	protected DataListView testDeleteDataListView_addDataListView()
 		throws Exception {
 
-		return dataListViewResource.postDataDefinitionDataListView(
+		return dataListViewResource.postDataDefinitionDataListViews(
 			_ddmStructure.getStructureId(), randomDataListView());
 	}
 
@@ -78,7 +78,7 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 	protected DataListView testGetDataListView_addDataListView()
 		throws Exception {
 
-		return dataListViewResource.postDataDefinitionDataListView(
+		return dataListViewResource.postDataDefinitionDataListViews(
 			_ddmStructure.getStructureId(), randomDataListView());
 	}
 
@@ -86,7 +86,7 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 	protected DataListView testPutDataListView_addDataListView()
 		throws Exception {
 
-		return dataListViewResource.postDataDefinitionDataListView(
+		return dataListViewResource.postDataDefinitionDataListViews(
 			_ddmStructure.getStructureId(), randomDataListView());
 	}
 

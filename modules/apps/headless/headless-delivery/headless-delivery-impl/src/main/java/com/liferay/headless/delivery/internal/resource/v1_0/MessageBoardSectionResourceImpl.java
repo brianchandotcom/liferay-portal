@@ -135,7 +135,7 @@ public class MessageBoardSectionResourceImpl
 	}
 
 	@Override
-	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
+	public MessageBoardSection postMessageBoardSectionMessageBoardSections(
 			Long parentMessageBoardSectionId,
 			MessageBoardSection messageBoardSection)
 		throws Exception {
@@ -149,7 +149,7 @@ public class MessageBoardSectionResourceImpl
 	}
 
 	@Override
-	public MessageBoardSection postSiteMessageBoardSection(
+	public MessageBoardSection postSiteMessageBoardSections(
 			Long siteId, MessageBoardSection messageBoardSection)
 		throws Exception {
 

@@ -144,7 +144,8 @@ public class BlogPostingResourceImpl
 	}
 
 	@Override
-	public BlogPosting postSiteBlogPosting(Long siteId, BlogPosting blogPosting)
+	public BlogPosting postSiteBlogPostings(
+			Long siteId, BlogPosting blogPosting)
 		throws Exception {
 
 		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(

@@ -61,7 +61,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 	protected Comment testDeleteComment_addComment() throws Exception {
 		BlogsEntry blogsEntry = _addBlogsEntry();
 
-		return commentResource.postBlogPostingComment(
+		return commentResource.postBlogPostingComments(
 			blogsEntry.getEntryId(), randomComment());
 	}
 
@@ -78,7 +78,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 	protected Comment testGetComment_addComment() throws Exception {
 		BlogsEntry blogsEntry = _addBlogsEntry();
 
-		return commentResource.postBlogPostingComment(
+		return commentResource.postBlogPostingComments(
 			blogsEntry.getEntryId(), randomComment());
 	}
 
@@ -88,7 +88,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 
 		BlogsEntry blogsEntry = _addBlogsEntry();
 
-		Comment comment = commentResource.postBlogPostingComment(
+		Comment comment = commentResource.postBlogPostingComments(
 			blogsEntry.getEntryId(), randomComment());
 
 		return comment.getId();
@@ -121,10 +121,10 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 	protected Comment testPutComment_addComment() throws Exception {
 		BlogsEntry blogsEntry = _addBlogsEntry();
 
-		Comment comment = commentResource.postBlogPostingComment(
+		Comment comment = commentResource.postBlogPostingComments(
 			blogsEntry.getEntryId(), randomComment());
 
-		return commentResource.postCommentComment(
+		return commentResource.postCommentComments(
 			comment.getId(), randomComment());
 	}
 

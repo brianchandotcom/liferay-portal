@@ -221,7 +221,7 @@ public class AppResourceImpl
 	}
 
 	@Override
-	public App postDataDefinitionApp(Long dataDefinitionId, App app)
+	public App postDataDefinitionApps(Long dataDefinitionId, App app)
 		throws Exception {
 
 		_validate(

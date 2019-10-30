@@ -158,13 +158,13 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 
 	@Override
 	protected App testDeleteApp_addApp() throws Exception {
-		return appResource.postDataDefinitionApp(
+		return appResource.postDataDefinitionApps(
 			_ddmStructure.getStructureId(), randomApp());
 	}
 
 	@Override
 	protected App testGetApp_addApp() throws Exception {
-		return appResource.postDataDefinitionApp(
+		return appResource.postDataDefinitionApps(
 			_ddmStructure.getStructureId(), randomApp());
 	}
 
@@ -177,13 +177,13 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 	protected App testGetSiteAppsPage_addApp(Long siteId, App app)
 		throws Exception {
 
-		return appResource.postDataDefinitionApp(
+		return appResource.postDataDefinitionApps(
 			app.getDataDefinitionId(), app);
 	}
 
 	@Override
 	protected App testPutApp_addApp() throws Exception {
-		return appResource.postDataDefinitionApp(
+		return appResource.postDataDefinitionApps(
 			_ddmStructure.getStructureId(), randomApp());
 	}
 

@@ -92,7 +92,7 @@ public class StructuredContentResourceTest
 		throws Exception {
 
 		StructuredContent structuredContent =
-			structuredContentResource.postSiteStructuredContent(
+			structuredContentResource.postSiteStructuredContents(
 				testGroup.getGroupId(), randomStructuredContent());
 
 		String title = structuredContent.getTitle();
@@ -205,7 +205,7 @@ public class StructuredContentResourceTest
 				Long contentStructureId, StructuredContent structuredContent)
 		throws Exception {
 
-		return structuredContentResource.postSiteStructuredContent(
+		return structuredContentResource.postSiteStructuredContents(
 			testGroup.getGroupId(), structuredContent);
 	}
 

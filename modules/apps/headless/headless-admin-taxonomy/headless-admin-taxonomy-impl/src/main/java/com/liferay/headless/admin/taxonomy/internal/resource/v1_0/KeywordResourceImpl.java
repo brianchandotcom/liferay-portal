@@ -90,7 +90,7 @@ public class KeywordResourceImpl
 	}
 
 	@Override
-	public Keyword postSiteKeyword(Long siteId, Keyword keyword)
+	public Keyword postSiteKeywords(Long siteId, Keyword keyword)
 		throws Exception {
 
 		return _toKeyword(

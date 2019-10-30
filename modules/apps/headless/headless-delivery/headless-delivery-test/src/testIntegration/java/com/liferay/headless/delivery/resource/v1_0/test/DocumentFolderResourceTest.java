@@ -47,7 +47,7 @@ public class DocumentFolderResourceTest
 		throws Exception {
 
 		DocumentFolder postDocumentFolder =
-			documentFolderResource.postSiteDocumentFolder(
+			documentFolderResource.postSiteDocumentFolders(
 				testGroup.getGroupId(), randomDocumentFolder());
 
 		Assert.assertEquals(
@@ -75,7 +75,7 @@ public class DocumentFolderResourceTest
 		throws Exception {
 
 		DocumentFolder documentFolder =
-			documentFolderResource.postSiteDocumentFolder(
+			documentFolderResource.postSiteDocumentFolders(
 				testGroup.getGroupId(), randomDocumentFolder());
 
 		return documentFolder.getId();

@@ -18,15 +18,16 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.background.task.internal.BackgroundTaskImpl;
+import com.liferay.portal.background.task.internal.lock.BackgroundTaskLockHelper;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.base.BackgroundTaskLocalServiceBaseImpl;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskLockHelperUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -56,6 +57,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -69,6 +71,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class BackgroundTaskLocalServiceImpl
 	extends BackgroundTaskLocalServiceBaseImpl {
+
+	@Activate
+	public void activate() {
+		_backgroundTaskLockHelper = new BackgroundTaskLockHelper(_lockManager);
+	}
 
 	@Override
 	public BackgroundTask addBackgroundTask(BackgroundTask backgroundTask) {
@@ -215,7 +222,7 @@ public class BackgroundTaskLocalServiceImpl
 			backgroundTaskId);
 
 		try {
-			BackgroundTaskLockHelperUtil.unlockBackgroundTask(
+			_backgroundTaskLockHelper.unlockBackgroundTask(
 				new BackgroundTaskImpl(backgroundTask));
 		}
 		catch (Exception e) {
@@ -748,11 +755,16 @@ public class BackgroundTaskLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskLocalServiceImpl.class);
 
+	private BackgroundTaskLockHelper _backgroundTaskLockHelper;
+
 	@Reference
 	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
 
 	@Reference
 	private BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;
+
+	@Reference
+	private LockManager _lockManager;
 
 	@Reference
 	private MessageBus _messageBus;

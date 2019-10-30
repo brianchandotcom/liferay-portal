@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
+import {useIsMounted} from 'frontend-js-react-web';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -37,6 +38,7 @@ const SimpleInputModal = ({
 	namespace,
 	placeholder
 }) => {
+	const isMounted = useIsMounted();
 	const [loadingResponse, setLoadingResponse] = useState(false);
 	const [visible, setVisible] = useState(initialVisible);
 	const [inputValue, setInputValue] = useState('');
@@ -55,13 +57,16 @@ const SimpleInputModal = ({
 		})
 			.then(response => response.json())
 			.then(responseContent => {
-				if (responseContent.error) {
-					setLoadingResponse(false);
-				} else {
-					navigate(responseContent.redirectURL);
-					setVisible(false);
+				if (isMounted()) {
+					if (responseContent.error) {
+						setLoadingResponse(false);
+					} else {
+						setVisible(false);
 
-					closeModal();
+						closeModal();
+
+						navigate(responseContent.redirectURL);
+					}
 				}
 			});
 

@@ -20,6 +20,7 @@ module.exports = {
 		IncrementalDOM: true,
 		global: true,
 		module: true,
+		process: true,
 		require: true
 	}
 };

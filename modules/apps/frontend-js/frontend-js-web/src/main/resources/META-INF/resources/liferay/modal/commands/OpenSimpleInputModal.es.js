@@ -13,8 +13,8 @@
  */
 
 import {render} from 'frontend-js-react-web';
-import {unmountComponentAtNode} from 'react-dom';
 import React from 'react';
+import {unmountComponentAtNode} from 'react-dom';
 
 import SimpleInputModal from '../components/SimpleInputModal.es';
 

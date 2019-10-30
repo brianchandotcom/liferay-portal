@@ -209,6 +209,9 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 		if (object == null) {
 			return NullData.INSTANCE;
 		}
+		else if (object == org.json.JSONObject.NULL) {
+			return NullData.INSTANCE;
+		}
 		else if (object instanceof BigDecimal) {
 			return StringData.forValue(object.toString());
 		}

@@ -224,8 +224,8 @@
 
 								{if $hasUpdatePermissions and ($defaultSegmentsExperienceId != $experience.segmentsExperienceId) and not $experience.hasLockedSegmentsExperiment}
 									<div class="align-items-center d-flex dropdown-menu__experience--btn-group px-2">
-										{let $disbledMoveUp: (isFirst($experience)) /}
-										{let $disbledMoveDown: ($notDefaultExperienceLength == index($experience)) /}
+										{let $disabledMoveUp: (isFirst($experience)) /}
+										{let $disabledMoveDown: ($notDefaultExperienceLength == index($experience)) /}
 										{let $priorityUpButtonRef: 'buttonPriorityUp' + $experience.segmentsExperienceId /}
 										{let $priorityDownButtonRef: 'buttonPriorityDown' + $experience.segmentsExperienceId /}
 
@@ -234,7 +234,7 @@
 										{/let}
 
 										{call ClayButton.render}
-											{param disabled: $disbledMoveUp /}
+											{param disabled: $disabledMoveUp /}
 											{param data: [
 												'priority': $experience.priority,
 												'segmentsExperienceId': $experience.segmentsExperienceId
@@ -257,7 +257,7 @@
 										{/let}
 
 										{call ClayButton.render}
-											{param disabled: $disbledMoveDown /}
+											{param disabled: $disabledMoveDown /}
 											{param data: [
 												'priority': $experience.priority,
 												'segmentsExperienceId': $experience.segmentsExperienceId

@@ -34,12 +34,12 @@ public class JournalServiceComponentProvider {
 	}
 
 	@Activate
-	public void activate() {
+	protected void activate() {
 		_journalServiceComponentProvider = this;
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_journalServiceComponentProvider = null;
 	}
 

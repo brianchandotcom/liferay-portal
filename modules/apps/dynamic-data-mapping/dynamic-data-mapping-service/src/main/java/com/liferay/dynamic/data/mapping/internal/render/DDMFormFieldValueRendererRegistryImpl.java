@@ -34,7 +34,7 @@ public class DDMFormFieldValueRendererRegistryImpl
 	implements DDMFormFieldValueRendererRegistry {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		for (int i = 0; i < _defaultDDMFormFieldValueRenderers.length; i++) {
 			_serviceRegistrations[i] = bundleContext.registerService(
 				DDMFormFieldValueRenderer.class,
@@ -62,7 +62,7 @@ public class DDMFormFieldValueRendererRegistryImpl
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_ddmFormFieldValueRendererRegistryUtil.
 			setDDMFormFieldValueRendererRegistry(null);
 

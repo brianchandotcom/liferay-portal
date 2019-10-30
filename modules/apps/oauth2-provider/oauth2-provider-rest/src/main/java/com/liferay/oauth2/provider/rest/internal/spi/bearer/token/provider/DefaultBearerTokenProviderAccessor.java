@@ -34,7 +34,7 @@ public class DefaultBearerTokenProviderAccessor
 	implements BearerTokenProviderAccessor {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_scopedServiceTrackerMap = _scopedServiceTrackerMapFactory.create(
 			bundleContext, BearerTokenProvider.class,
 			"liferay.oauth2.client.id", () -> _defaultBearerTokenProvider);

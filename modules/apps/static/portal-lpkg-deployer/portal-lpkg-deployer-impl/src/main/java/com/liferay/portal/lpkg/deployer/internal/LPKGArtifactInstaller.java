@@ -58,7 +58,7 @@ import org.osgi.service.url.URLStreamHandlerService;
 public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 	}
 

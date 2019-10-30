@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 public class LPKGDeployerRegistrar {
 
 	@Activate
-	public void activate(BundleContext bundleContext) throws Exception {
+	protected void activate(BundleContext bundleContext) throws Exception {
 		bundleContext.addBundleListener(_bundleListener);
 
 		Map<Bundle, List<Bundle>> deployedLPKGBundles =
@@ -94,7 +94,7 @@ public class LPKGDeployerRegistrar {
 	}
 
 	@Deactivate
-	public void deactivate(BundleContext bundleContext) {
+	protected void deactivate(BundleContext bundleContext) {
 		bundleContext.removeBundleListener(_bundleListener);
 	}
 

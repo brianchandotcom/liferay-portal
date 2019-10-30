@@ -66,7 +66,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_messageListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, MessageListener.class,
 			new ServiceTrackerCustomizer

@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentPortletModelResourcePermissionRegistrar {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("resource.name", FragmentConstants.RESOURCE_NAME);
@@ -53,7 +53,7 @@ public class FragmentPortletModelResourcePermissionRegistrar {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceRegistration.unregister();
 	}
 

@@ -74,7 +74,7 @@ public class OpenSamlBootstrap {
 	}
 
 	@Activate
-	public synchronized void activate(BundleContext bundleContext)
+	protected synchronized void activate(BundleContext bundleContext)
 		throws IllegalAccessException, InitializationException,
 			   InvocationTargetException, NoSuchMethodException {
 

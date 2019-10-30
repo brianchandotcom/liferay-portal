@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMFormBuilderTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Activate
-	public void activate() {
+	protected void activate() {
 		_postfix = _portal.getPathProxy();
 
 		if (_postfix.isEmpty()) {

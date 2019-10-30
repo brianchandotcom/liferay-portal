@@ -57,7 +57,7 @@ public class BatchEngineTaskMethodRegistryImpl
 	implements BatchEngineTaskMethodRegistry {
 
 	@Activate
-	public void activate(BundleContext bundleContext)
+	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
 		_serviceTracker = new ServiceTracker<>(
@@ -71,7 +71,7 @@ public class BatchEngineTaskMethodRegistryImpl
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceTracker.close();
 	}
 

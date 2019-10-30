@@ -40,7 +40,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class SoyPortletRegisterTracker {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_serviceTracker =
 			new ServiceTracker
 				<SoyPortletRegister, ServiceRegistration<Portlet>>(
@@ -97,7 +97,7 @@ public class SoyPortletRegisterTracker {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceTracker.close();
 	}
 

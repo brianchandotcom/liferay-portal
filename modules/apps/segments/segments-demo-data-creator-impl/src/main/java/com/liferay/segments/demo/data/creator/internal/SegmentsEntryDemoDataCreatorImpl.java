@@ -58,7 +58,7 @@ public class SegmentsEntryDemoDataCreatorImpl
 	implements SegmentsEntryDemoDataCreator {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		Collections.addAll(_availableIndexes, new Integer[] {1, 2});
 
 		Collections.shuffle(_availableIndexes);

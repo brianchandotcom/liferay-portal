@@ -34,12 +34,12 @@ public class WikiEngineCreoleComponentProvider {
 	}
 
 	@Activate
-	public void activate() {
+	protected void activate() {
 		_wikiEngineCreoleComponentProvider = this;
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_wikiEngineCreoleComponentProvider = null;
 	}
 

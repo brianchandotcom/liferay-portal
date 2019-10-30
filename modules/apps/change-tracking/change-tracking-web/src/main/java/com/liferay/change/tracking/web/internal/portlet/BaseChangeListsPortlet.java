@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Activate;
 public abstract class BaseChangeListsPortlet extends MVCPortlet {
 
 	@Activate
-	public void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties) {
 		Set<String> administratorRoleNames = new HashSet<>();
 
 		CTConfiguration ctConfiguration = ConfigurableUtil.createConfigurable(

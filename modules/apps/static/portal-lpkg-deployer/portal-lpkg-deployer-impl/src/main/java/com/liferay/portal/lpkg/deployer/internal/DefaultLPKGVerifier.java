@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 public class DefaultLPKGVerifier implements LPKGVerifier {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 	}
 

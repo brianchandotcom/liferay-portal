@@ -48,7 +48,7 @@ public class PortalSettingsContributorServiceTrackerCustomizer
 		<PortalSettingsFormContributor, PortalSettingsFormContributor> {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
 		_serviceTracker = ServiceTrackerFactory.open(
@@ -110,7 +110,7 @@ public class PortalSettingsContributorServiceTrackerCustomizer
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_bundleContext = null;
 
 		_serviceTracker.close();

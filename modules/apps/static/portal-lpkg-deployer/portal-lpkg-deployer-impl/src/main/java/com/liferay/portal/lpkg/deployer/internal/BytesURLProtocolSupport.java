@@ -44,7 +44,7 @@ import org.osgi.service.url.URLStreamHandlerService;
 public class BytesURLProtocolSupport {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(

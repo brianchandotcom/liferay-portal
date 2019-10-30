@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class IndexSynchronizationPortalInitializedListener {
 
 	@Activate
-	public void activate() {
+	protected void activate() {
 		_indexSynchronizer.synchronizeIndexes();
 
 		_activated = true;

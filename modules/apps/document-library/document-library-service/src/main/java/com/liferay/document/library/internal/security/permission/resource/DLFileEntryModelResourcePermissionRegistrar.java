@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class DLFileEntryModelResourcePermissionRegistrar {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("model.class.name", DLFileEntry.class.getName());
@@ -135,7 +135,7 @@ public class DLFileEntryModelResourcePermissionRegistrar {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceRegistration.unregister();
 	}
 

@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SegmentsEntryModelResourcePermissionRegistrar {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("model.class.name", SegmentsEntry.class.getName());
@@ -63,7 +63,7 @@ public class SegmentsEntryModelResourcePermissionRegistrar {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceRegistration.unregister();
 	}
 

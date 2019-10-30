@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 
 	@Deactivate
-	public void deactivate() throws Exception {
+	protected void deactivate() throws Exception {
 		if (!_invoked) {
 			return;
 		}

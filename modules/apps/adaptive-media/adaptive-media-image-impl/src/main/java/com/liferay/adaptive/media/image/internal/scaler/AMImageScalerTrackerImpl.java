@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Deactivate;
 public class AMImageScalerTrackerImpl implements AMImageScalerTracker {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, AMImageScaler.class, "(mime.type=*)",
 			new PropertyServiceReferenceMapper<>("mime.type"),
@@ -46,7 +46,7 @@ public class AMImageScalerTrackerImpl implements AMImageScalerTracker {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
 

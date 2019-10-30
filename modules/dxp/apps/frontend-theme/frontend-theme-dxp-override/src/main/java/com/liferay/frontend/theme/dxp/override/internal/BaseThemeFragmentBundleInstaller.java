@@ -53,7 +53,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 public abstract class BaseThemeFragmentBundleInstaller {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		Bundle systemBundle = bundleContext.getBundle(0);
 
 		FrameworkWiring frameworkWiring = systemBundle.adapt(
@@ -174,7 +174,7 @@ public abstract class BaseThemeFragmentBundleInstaller {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_bundleTracker.close();
 	}
 

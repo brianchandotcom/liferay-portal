@@ -36,7 +36,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class PortalProfileGatekeeper {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		Set<String> blacklistPortalProfileNames = SetUtil.fromArray(
 			StringUtil.split(
 				bundleContext.getProperty("blacklist.portal.profile.names")));
@@ -68,7 +68,7 @@ public class PortalProfileGatekeeper {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceTracker.close();
 	}
 

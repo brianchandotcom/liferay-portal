@@ -97,7 +97,7 @@ public class CustomSQLImpl implements CustomSQL {
 		"CONVERT(VARCHAR,?) IS NULL";
 
 	@Activate
-	public void activate(BundleContext bundleContext) throws SQLException {
+	protected void activate(BundleContext bundleContext) throws SQLException {
 		_bundleContext = bundleContext;
 
 		_portal.initCustomSQL();
@@ -254,7 +254,7 @@ public class CustomSQLImpl implements CustomSQL {
 	}
 
 	@Deactivate
-	public void deactive() {
+	protected void deactive() {
 		_bundleContext.removeBundleListener(_synchronousBundleListener);
 	}
 

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Deactivate;
 public class LoginPostActionEnabler {
 
 	@Activate
-	public void activate(ComponentContext componentContext) {
+	protected void activate(ComponentContext componentContext) {
 		ComponentUtil.enableComponents(
 			MessageListener.class,
 			"(destination.name=" + DestinationNames.MAIL_SYNCHRONIZER + ")",
@@ -38,7 +38,7 @@ public class LoginPostActionEnabler {
 	}
 
 	@Deactivate
-	public void deactivate(ComponentContext componentContext) {
+	protected void deactivate(ComponentContext componentContext) {
 		componentContext.disableComponent(LoginPostAction.class.getName());
 	}
 

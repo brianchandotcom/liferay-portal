@@ -53,7 +53,7 @@ public class DefaultAssetPublisherCustomizer
 
 	@Activate
 	@Modified
-	public void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties) {
 		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
 			AssetPublisherWebConfiguration.class, properties);
 	}

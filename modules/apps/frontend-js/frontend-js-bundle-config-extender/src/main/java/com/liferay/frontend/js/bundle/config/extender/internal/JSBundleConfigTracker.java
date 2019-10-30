@@ -45,7 +45,7 @@ public class JSBundleConfigTracker
 		<ServletContext, ServiceReference<ServletContext>> {
 
 	@Activate
-	public void activate(
+	protected void activate(
 			ComponentContext componentContext, Map<String, Object> properties)
 		throws Exception {
 

@@ -40,13 +40,13 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = bundleContext.registerService(
 			NPMResolver.class, this, new Hashtable<String, Object>());
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceRegistration.unregister();
 	}
 

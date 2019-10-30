@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FieldRendererRegistrar {
 
 	@Activate
-	public void activate() {
+	protected void activate() {
 		_fieldRendererFactory.setFieldRenderers(
 			new HashMap<String, FieldRenderer>() {
 				{
@@ -57,7 +57,7 @@ public class FieldRendererRegistrar {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_fieldRendererFactory.setFieldRenderers(null);
 	}
 

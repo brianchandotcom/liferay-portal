@@ -81,7 +81,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ConfigurableScopeCheckerFeature implements Feature {
 
 	@Activate
-	public void activate(
+	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		_bundleContext = bundleContext;

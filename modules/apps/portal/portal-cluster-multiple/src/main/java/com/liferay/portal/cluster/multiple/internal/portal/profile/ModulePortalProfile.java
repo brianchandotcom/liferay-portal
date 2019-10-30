@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ModulePortalProfile extends BaseDSModulePortalProfile {
 
 	@Activate
-	public void activate(ComponentContext componentContext) {
+	protected void activate(ComponentContext componentContext) {
 		Set<String> supportedPortalProfileNames = null;
 
 		if (GetterUtil.getBoolean(_props.get(PropsKeys.CLUSTER_LINK_ENABLED))) {

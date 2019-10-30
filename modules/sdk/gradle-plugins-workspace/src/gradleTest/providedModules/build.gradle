@@ -9,12 +9,10 @@ runGradleTest {
 	dependsOn initBundle
 
 	doLast {
-		File expectedFile = new File(initBundle.destinationDir, "osgi/modules/guava-23.0.jar")
+		configurations.providedModules.dependencies.each {
+			File expectedFile = new File(initBundle.destinationDir, "osgi/modules/${it.name}-${it.version}.jar")
 
-		assert expectedFile.exists()
-
-		expectedFile = new File(initBundle.destinationDir, "osgi/modules/jackson-annotations-2.9.9.jar")
-
-		assert expectedFile.exists()
+			assert expectedFile.exists()
+		}
 	}
 }

@@ -14,6 +14,11 @@
 
 import React from 'react';
 
-export default function UnsafeHTML({markup}) {
-	return <div dangerouslySetInnerHTML={{__html: markup}} />;
+export default function UnsafeHTML({TagName = 'div', className = '', markup}) {
+	return (
+		<TagName
+			className={className}
+			dangerouslySetInnerHTML={{__html: markup}}
+		/>
+	);
 }

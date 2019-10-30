@@ -1764,9 +1764,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Bundle fileInstallBundle = null;
 
-		bundles.removeIf(bundle -> bundle.getState() == Bundle.UNINSTALLED);
+		Iterator<Bundle> bundleIterator = bundles.iterator();
 
-		for (Bundle bundle : bundles) {
+		while (bundleIterator.hasNext()) {
+			Bundle bundle = bundleIterator.next();
+
+			if (bundle.getState() == Bundle.UNINSTALLED) {
+				bundleIterator.remove();
+
+				continue;
+			}
+
 			if (!_isFragmentBundle(bundle)) {
 				if (Objects.equals(
 						bundle.getSymbolicName(),

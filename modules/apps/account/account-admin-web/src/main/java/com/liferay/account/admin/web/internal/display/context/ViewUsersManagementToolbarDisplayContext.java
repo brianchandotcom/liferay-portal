@@ -105,10 +105,7 @@ public class ViewUsersManagementToolbarDisplayContext
 	public List<LabelItem> getFilterLabelItems() {
 		return new LabelItemList() {
 			{
-				String accountNavigation = ParamUtil.getString(
-					request, "accountNavigation", "all");
-
-				if (accountNavigation.equals("accounts")) {
+				if (Objects.equals(_getAccountNavigation(), "accounts")) {
 					long[] accountEntryIds = ParamUtil.getLongValues(
 						request, "accountEntryIds");
 
@@ -175,13 +172,18 @@ public class ViewUsersManagementToolbarDisplayContext
 		return new String[] {"first-name", "last-name", "email-address"};
 	}
 
+	private String _getAccountNavigation() {
+		return ParamUtil.getString(
+			liferayPortletRequest, "accountNavigation", "all");
+	}
+
 	private List<DropdownItem> _getFilterAccountsDropdownItems() {
 		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							Objects.equals(getNavigation(), "all"));
+							Objects.equals(_getAccountNavigation(), "all"));
 
 						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
 
@@ -194,7 +196,8 @@ public class ViewUsersManagementToolbarDisplayContext
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							Objects.equals(getNavigation(), "accounts"));
+							Objects.equals(
+								_getAccountNavigation(), "accounts"));
 
 						PortletURL accountSelectorURL =
 							liferayPortletResponse.createRenderURL();
@@ -221,7 +224,8 @@ public class ViewUsersManagementToolbarDisplayContext
 					dropdownItem -> {
 						dropdownItem.setActive(
 							Objects.equals(
-								getNavigation(), "no-assigned-account"));
+								_getAccountNavigation(),
+								"no-assigned-account"));
 
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "no-assigned-account"));

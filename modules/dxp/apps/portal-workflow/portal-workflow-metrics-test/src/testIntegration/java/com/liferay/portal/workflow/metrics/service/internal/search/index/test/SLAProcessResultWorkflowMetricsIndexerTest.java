@@ -31,7 +31,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
-import com.liferay.portal.workflow.metrics.service.internal.search.index.test.base.BaseWorkflowMetricsIndexerTestCase;
+import com.liferay.portal.workflow.metrics.service.test.base.BaseWorkflowMetricsIndexerTestCase;
 
 import java.util.ArrayList;
 import java.util.List;

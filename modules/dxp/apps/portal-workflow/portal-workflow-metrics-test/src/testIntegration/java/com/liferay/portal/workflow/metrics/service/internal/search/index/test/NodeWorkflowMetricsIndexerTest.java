@@ -27,7 +27,7 @@ import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
-import com.liferay.portal.workflow.metrics.service.internal.search.index.test.base.BaseWorkflowMetricsIndexerTestCase;
+import com.liferay.portal.workflow.metrics.service.test.base.BaseWorkflowMetricsIndexerTestCase;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

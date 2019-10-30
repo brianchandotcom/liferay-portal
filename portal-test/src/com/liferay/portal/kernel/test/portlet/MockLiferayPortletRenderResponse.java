@@ -64,11 +64,11 @@ public class MockLiferayPortletRenderResponse
 	}
 
 	@Override
-	public void addProperty(String s, Element element) {
+	public void addProperty(String name, Element element) {
 	}
 
 	@Override
-	public void addProperty(String s, String s1) {
+	public void addProperty(String name, String value) {
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class MockLiferayPortletRenderResponse
 	}
 
 	@Override
-	public Element createElement(String s) throws DOMException {
+	public Element createElement(String tagName) throws DOMException {
 		return null;
 	}
 
@@ -176,7 +176,7 @@ public class MockLiferayPortletRenderResponse
 	}
 
 	@Override
-	public String encodeURL(String s) {
+	public String encodeURL(String url) {
 		return null;
 	}
 
@@ -240,7 +240,7 @@ public class MockLiferayPortletRenderResponse
 	}
 
 	@Override
-	public String getProperty(String s) {
+	public String getProperty(String name) {
 		return null;
 	}
 
@@ -273,7 +273,7 @@ public class MockLiferayPortletRenderResponse
 	}
 
 	@Override
-	public void setBufferSize(int i) {
+	public void setBufferSize(int bufferSize) {
 	}
 
 	@Override

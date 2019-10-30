@@ -277,23 +277,23 @@ public class MockLiferayResourceResponse
 	}
 
 	@Override
-	public void setBufferSize(int i) {
+	public void setBufferSize(int bufferSize) {
 	}
 
 	@Override
-	public void setCharacterEncoding(String s) {
+	public void setCharacterEncoding(String characterEncoding) {
 	}
 
 	@Override
-	public void setContentLength(int i) {
+	public void setContentLength(int contentLength) {
 	}
 
 	@Override
-	public void setContentLengthLong(long l) {
+	public void setContentLengthLong(long contentLength) {
 	}
 
 	@Override
-	public void setContentType(String s) {
+	public void setContentType(String type) {
 	}
 
 	@Override
@@ -317,7 +317,7 @@ public class MockLiferayResourceResponse
 	}
 
 	@Override
-	public void setStatus(int i) {
+	public void setStatus(int status) {
 	}
 
 	@Override

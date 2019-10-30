@@ -19,6 +19,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -55,32 +55,25 @@ public class AccountUserDisplaySearchContainerFactory {
 		String accountNavigation = ParamUtil.getString(
 			liferayPortletRequest, "accountNavigation", "all");
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		long[] accountEntryIds = null;
 
 		if (accountNavigation.equals("all")) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			List<AccountEntry> accountEntries =
 				_accountEntryLocalService.getAccountEntries(
 					themeDisplay.getCompanyId(),
-					WorkflowConstants.STATUS_APPROVED, -1, -1, null);
+					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
 
-			if (!ListUtil.isEmpty(accountEntries)) {
-				List<Long> accountEntryIdList = TransformUtil.transform(
-					accountEntries, AccountEntry::getAccountEntryId);
+			List<Long> accountEntryIdList = TransformUtil.transform(
+				accountEntries, AccountEntry::getAccountEntryId);
 
-				accountEntryIdList.add(
-					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
+			accountEntryIdList.add(AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
 
-				accountEntryIds = ArrayUtil.toLongArray(accountEntryIdList);
-			}
-			else {
-				accountEntryIds = new long[] {
-					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
-				};
-			}
+			accountEntryIds = ArrayUtil.toLongArray(accountEntryIdList);
 		}
 		else if (accountNavigation.equals("accounts")) {
 			accountEntryIds = ParamUtil.getLongValues(

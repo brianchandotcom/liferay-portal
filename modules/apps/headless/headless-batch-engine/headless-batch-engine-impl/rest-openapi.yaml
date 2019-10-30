@@ -177,6 +177,29 @@ paths:
                     description:
                         ""
             tags: ["ExportTask"]
+    /export-task/{exportTaskId}/content/:
+        #@review
+        get:
+            description:
+                Retrieves the exported content.
+            operationId: getExportTaskContent
+            parameters:
+                - in: path
+                  name: exportTaskId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/octet-stream:
+                            schema:
+                                format: binary
+                                type: string
+                    description:
+                        ''
+            tags: ["ExportTask"]
     /import-task/{className}/{version}:
         # @review
         delete:

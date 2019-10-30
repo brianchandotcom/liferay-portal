@@ -11,6 +11,7 @@
 		<suppress checks="BNDBundleInformationCheck" files="modules/sdk/gradle-plugins-workspace/src/gradleTest/.*" />
 		<suppress checks="BNDBundleInformationCheck" files="modules/sdk/project-templates/project-templates-npm-vuejs-portlet/bnd\.bnd" />
 		<suppress checks="BNDWebContextPathCheck" files="modules/sdk/gradle-plugins-workspace/src/gradleTest/targetPlatformDefault/modules/foo-rule/bnd.bnd" />
+		<suppress checks="GradleProvidedDependenciesCheck" files="modules/sdk/gradle-plugins-workspace/src/gradleTest/providedModules/build\.gradle" />
 		<suppress checks="JavaDeprecatedJavadocCheck" files="modules/sdk/.*" />
 		<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-beanshell/.*" />
 		<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-bnd/.*" />

@@ -66,12 +66,24 @@ public class JournalFeedExportImportContentProcessor
 
 		String oldGroupFriendlyURL = friendlyURLParts[2];
 
+		String oldTargetLayoutFriendlyUrl = feed.getTargetLayoutFriendlyUrl();
+
 		if (newGroupFriendlyURL.equals(oldGroupFriendlyURL)) {
-			String targetLayoutFriendlyUrl = StringUtil.replaceFirst(
-				feed.getTargetLayoutFriendlyUrl(),
-				StringPool.SLASH + newGroupFriendlyURL + StringPool.SLASH,
-				StringPool.SLASH + _DATA_HANDLER_GROUP_FRIENDLY_URL +
-					StringPool.SLASH);
+			String targetLayoutFriendlyUrl = null;
+
+			if (friendlyURLParts.length > 3) {
+				targetLayoutFriendlyUrl = StringUtil.replaceFirst(
+					feed.getTargetLayoutFriendlyUrl(),
+					StringPool.SLASH + newGroupFriendlyURL + StringPool.SLASH,
+					StringPool.SLASH + _DATA_HANDLER_GROUP_FRIENDLY_URL +
+						StringPool.SLASH);
+			}
+			else {
+				targetLayoutFriendlyUrl = StringUtil.replaceFirst(
+					feed.getTargetLayoutFriendlyUrl(),
+					StringPool.SLASH + newGroupFriendlyURL,
+					StringPool.SLASH + _DATA_HANDLER_GROUP_FRIENDLY_URL);
+			}
 
 			feed.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
 		}
@@ -88,11 +100,22 @@ public class JournalFeedExportImportContentProcessor
 			privateLayout = true;
 		}
 
-		String targetLayoutFriendlyURL = StringPool.SLASH + friendlyURLParts[3];
+		Layout targetLayout = null;
 
-		Layout targetLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			targetLayoutGroup.getGroupId(), privateLayout,
-			targetLayoutFriendlyURL);
+		if (friendlyURLParts.length > 3) {
+			String targetLayoutFriendlyURL =
+				StringPool.SLASH + friendlyURLParts[3];
+
+			targetLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
+				targetLayoutGroup.getGroupId(), privateLayout,
+				targetLayoutFriendlyURL);
+		}
+		else {
+			long plid = _portal.getPlidFromFriendlyURL(
+				portletDataContext.getCompanyId(), oldTargetLayoutFriendlyUrl);
+
+			targetLayout = _layoutLocalService.fetchLayout(plid);
+		}
 
 		Element feedElement = portletDataContext.getExportDataElement(feed);
 

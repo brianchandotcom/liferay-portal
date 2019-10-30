@@ -66,4 +66,9 @@ public class DepotEntryGroupRelLocalServiceImpl
 			depotEntry.getDepotEntryId());
 	}
 
+	@Override
+	public List<DepotEntryGroupRel> getDepotEntryGroupRels(long groupId) {
+		return depotEntryGroupRelPersistence.findByToGroupId(groupId);
+	}
+
 }

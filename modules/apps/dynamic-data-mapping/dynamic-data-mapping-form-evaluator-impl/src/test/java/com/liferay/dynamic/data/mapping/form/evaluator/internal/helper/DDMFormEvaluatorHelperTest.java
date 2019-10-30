@@ -832,6 +832,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			DDMFormTestUtil.createDDMFormField(
 				"field2", "field2", "numeric", FieldConstants.DOUBLE,
 				localizable, repeatable, required));
+
 		ddmForm.addDDMFormRule(
 			new DDMFormRule(
 				"getValue(\"field0\") > 0 && getValue(\"field1\") > 0",

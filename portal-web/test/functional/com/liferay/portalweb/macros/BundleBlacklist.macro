@@ -9,6 +9,10 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
+	macro viewConsoleBlacklistedComponent {
+		AssertConsoleTextPresent(value1 = "${consoleText}");
+	}
+
 	macro viewProductMenuBlacklistedModule {
 		ProductMenuHelper.expandPanel(panel = "${panel}");
 

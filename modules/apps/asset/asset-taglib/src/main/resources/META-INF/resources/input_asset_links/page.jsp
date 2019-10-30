@@ -111,7 +111,7 @@
 
 <aui:input name="assetLinkEntryIds" type="hidden" />
 
-<aui:script use="aui-base,escape,liferay-item-selector-dialog,liferay-search-container">
+<aui:script use="aui-base,escape,liferay-search-container">
 	var assetSelectorHandle = A.getBody().delegate(
 		'click',
 		function(event) {
@@ -130,14 +130,21 @@
 				searchContainerData = [];
 			}
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: '<%= inputAssetLinksDisplayContext.getEventName() %>',
-				id:
-					'<%= inputAssetLinksDisplayContext.getEventName() %>' +
-					event.currentTarget.attr('id'),
-				on: {
-					selectedItemChange: function(event) {
-						var assetEntryIds = event.newVal;
+			Liferay.Loader.require(
+				'frontend-js-web/liferay/ItemSelectorDialog.es',
+				function(ItemSelectorDialog) {
+					var itemSelectorDialog = new ItemSelectorDialog.default({
+						buttonAddLabel: '<liferay-ui:message key="done" />',
+						eventName:
+							'<%= inputAssetLinksDisplayContext.getEventName() %>',
+						title: event.currentTarget.attr('data-title'),
+						url: event.currentTarget.attr('data-href')
+					});
+
+					itemSelectorDialog.open();
+
+					itemSelectorDialog.on('selectedItemChange', function(event) {
+						var assetEntryIds = event.selectedItem;
 
 						if (assetEntryIds) {
 							Array.prototype.forEach.call(assetEntryIds, function(
@@ -153,13 +160,11 @@
 
 									var entryHtml =
 										'<h4 class="list-group-title">' +
-										A.Escape.html(assetEntry.assettitle) +
+										encodeURI(assetEntry.assettitle) +
 										'</h4><p class="list-group-subtitle">' +
-										A.Escape.html(assetEntry.assettype) +
+										encodeURI(assetEntry.assettype) +
 										'</p><p class="list-group-subtitle">' +
-										A.Escape.html(
-											assetEntry.groupdescriptivename
-										) +
+										encodeURI(assetEntry.groupdescriptivename) +
 										'</p>';
 
 									searchContainer.addRow(
@@ -171,15 +176,9 @@
 								}
 							});
 						}
-					}
-				},
-				selectedData: searchContainerData,
-				'strings.add': '<liferay-ui:message key="done" />',
-				title: event.currentTarget.attr('data-title'),
-				url: event.currentTarget.attr('data-href')
-			});
-
-			itemSelectorDialog.open();
+					});
+				}
+			);
 		},
 		'.asset-selector a'
 	);

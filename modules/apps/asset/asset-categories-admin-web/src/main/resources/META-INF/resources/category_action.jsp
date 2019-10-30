@@ -100,11 +100,11 @@ AssetCategory category = (AssetCategory)row.getObject();
 
 		if (moveCategoryIcon) {
 			moveCategoryIcon.addEventListener('click', function(event) {
-
 				const itemSelectorDialog = new ItemSelectorDialog.default({
 					buttonAddLabel: '<liferay-ui:message key="done" />',
 					eventName: '<portlet:namespace />selectCategory',
-					title: '<liferay-ui:message arguments="<%= category.getTitle(locale) %>" key="move-x" />',
+					title:
+						'<liferay-ui:message arguments="<%= category.getTitle(locale) %>" key="move-x" />',
 					url: '<%= assetCategoriesDisplayContext.getSelectCategoryURL() %>'
 				});
 
@@ -134,9 +134,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 							document.<portlet:namespace />moveCategoryFm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
 							document.<portlet:namespace />moveCategoryFm.<portlet:namespace />vocabularyId.value = vocabularyId;
 
-							submitForm(
-								document.<portlet:namespace />moveCategoryFm
-							);
+							submitForm(document.<portlet:namespace />moveCategoryFm);
 						}
 					}
 				});

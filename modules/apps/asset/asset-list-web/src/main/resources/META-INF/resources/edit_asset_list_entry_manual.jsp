@@ -161,7 +161,7 @@
 			const delegateTarget = event.delegateTarget;
 
 			const itemSelectorDialog = new ItemSelectorDialog.default({
-				eventName: eventName: '<portlet:namespace />selectAsset',
+				eventName: '<portlet:namespace />selectAsset',
 				title: encodeURI(delegateTarget.dataset.title),
 				url: delegateTarget.dataset.href
 			});
@@ -174,21 +174,17 @@
 				if (selectedItems) {
 					const assetEntryIds = [];
 
-					Array.prototype.forEach.call(
-						selectedItems,
-						function(assetEntry) {
-							assetEntryIds.push(assetEntry.entityid);
-						}
-					);
+					Array.prototype.forEach.call(selectedItems, function(
+						assetEntry
+					) {
+						assetEntryIds.push(assetEntry.entityid);
+					});
 
-					Liferay.Util.postForm(
-						document.<portlet:namespace />fm,
-						{
-							data: {
-								assetEntryIds: assetEntryIds.join(',')
-							}
+					Liferay.Util.postForm(document.<portlet:namespace />fm, {
+						data: {
+							assetEntryIds: assetEntryIds.join(',')
 						}
-					);
+					});
 				}
 			});
 		}

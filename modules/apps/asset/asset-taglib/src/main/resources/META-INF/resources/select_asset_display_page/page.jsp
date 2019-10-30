@@ -76,7 +76,7 @@
 	</div>
 </div>
 
-<aui:script use="liferay-item-selector-dialog">
+<aui:script use="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 	var assetDisplayPageIdInput = document.getElementById(
 		'<portlet:namespace />assetDisplayPageIdInput'
 	);
@@ -94,38 +94,37 @@
 	);
 
 	chooseSpecificDisplayPage.addEventListener('click', function(event) {
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+		const itemSelectorDialog = new ItemSelectorDialog.default({
+			buttonAddLabel: '<liferay-ui:message key="done" />',
 			eventName: '<%= selectAssetDisplayPageDisplayContext.getEventName() %>',
-			on: {
-				selectedItemChange: function(event) {
-					var selectedItem = event.newVal;
-
-					assetDisplayPageIdInput.value = '';
-
-					pagesContainerInput.value = '';
-
-					if (selectedItem) {
-						if (selectedItem.type === 'asset-display-page') {
-							assetDisplayPageIdInput.value = selectedItem.id;
-						} else {
-							pagesContainerInput.value = selectedItem.id;
-						}
-
-						specificDisplayPageNameInput.value = selectedItem.name;
-
-						if (previewSpecificDisplayPageButton) {
-							previewSpecificDisplayPageButton.parentNode.remove();
-						}
-					}
-				}
-			},
-			'strings.add': '<liferay-ui:message key="done" />',
 			title: '<liferay-ui:message key="select-page" />',
 			url:
 				'<%= selectAssetDisplayPageDisplayContext.getAssetDisplayPageItemSelectorURL() %>'
 		});
 
 		itemSelectorDialog.open();
+
+		itemSelectorDialog.on('selectedItemChange', event => {
+			const selectedItem = event.selectedItem;
+
+			assetDisplayPageIdInput.value = '';
+
+			pagesContainerInput.value = '';
+
+			if (selectedItem) {
+				if (selectedItem.type === 'asset-display-page') {
+					assetDisplayPageIdInput.value = selectedItem.id;
+				} else {
+					pagesContainerInput.value = selectedItem.id;
+				}
+
+				specificDisplayPageNameInput.value = selectedItem.name;
+
+				if (previewSpecificDisplayPageButton) {
+					previewSpecificDisplayPageButton.parentNode.remove();
+				}
+			}
+		});
 	});
 
 	var previewDefaultDisplayPageButton = document.getElementById(

@@ -46,6 +46,11 @@ public class SelectAccountsManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isShowCreationMenu() {
+		return false;
+	}
+
+	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"name", "parent-account"};
 	}

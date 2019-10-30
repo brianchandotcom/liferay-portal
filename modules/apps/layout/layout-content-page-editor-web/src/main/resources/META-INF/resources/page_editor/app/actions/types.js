@@ -12,7 +12,9 @@
  * details.
  */
 
+export const ADD_ITEM = 'ADD_ITEM';
 export const DISCARD = 'DISCARD';
 export const LOAD_REDUCER = 'LOAD_REDUCER';
 export const PUBLISH = 'PUBLISH';
+export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const UNLOAD_REDUCER = 'UNLOAD_REDUCER';

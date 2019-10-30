@@ -742,7 +742,8 @@ public class DDMDisplayContext {
 
 		return PortletPermissionUtil.contains(
 			_ddmWebRequestHelper.getPermissionChecker(),
-			_ddmWebRequestHelper.getScopeGroupId(), resourceName,
+			_ddmWebRequestHelper.getScopeGroupId(),
+			_ddmWebRequestHelper.getLayout(), resourceName,
 			ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE);
 	}
 

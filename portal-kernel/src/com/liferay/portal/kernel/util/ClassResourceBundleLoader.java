@@ -39,16 +39,6 @@ public class ClassResourceBundleLoader implements ResourceBundleLoader {
 			_baseName, locale, _classLoader, UTF8Control.INSTANCE);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #loadResourceBundle(Locale)}
-	 */
-	@Deprecated
-	@Override
-	public ResourceBundle loadResourceBundle(String languageId) {
-		return ResourceBundleLoader.super.loadResourceBundle(languageId);
-	}
-
 	private final String _baseName;
 	private final ClassLoader _classLoader;
 

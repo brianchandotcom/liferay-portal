@@ -16,7 +16,6 @@ package com.liferay.frontend.editor.lang.internal;
 
 import com.liferay.portal.kernel.language.UTF8Control;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Locale;
@@ -43,16 +42,6 @@ public class FrontendEditorLangResourceBundleLoader
 		return ResourceBundle.getBundle(
 			"content.Language", locale, clazz.getClassLoader(),
 			UTF8Control.INSTANCE);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #loadResourceBundle(Locale)}
-	 */
-	@Deprecated
-	@Override
-	public ResourceBundle loadResourceBundle(String languageId) {
-		return loadResourceBundle(LocaleUtil.fromLanguageId(languageId));
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

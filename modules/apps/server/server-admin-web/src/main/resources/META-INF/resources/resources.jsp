@@ -256,11 +256,11 @@ long usedMemory = totalMemory - runtime.freeMemory();
 			</li>
 			<li class="clearfix list-group-item">
 				<div class="float-left">
-					<h5><liferay-ui:message key="clean-up-portlet-preferences" /> <liferay-ui:icon-help message="clean-up-portlet-preferences-help" /></h5>
+					<h5><liferay-ui:message key="clean-up-page-revision-portlet-preferences" /> <liferay-ui:icon-help message="clean-up-page-revision-portlet-preferences-help" /></h5>
 				</div>
 
 				<div class="float-right">
-					<aui:button cssClass="save-server-button" data-cmd="cleanUpPortletPreferences" value="execute" />
+					<aui:button cssClass="save-server-button" data-cmd="cleanUpPageRevisionPortletPreferences" value="execute" />
 				</div>
 			</li>
 			<li class="clearfix list-group-item">

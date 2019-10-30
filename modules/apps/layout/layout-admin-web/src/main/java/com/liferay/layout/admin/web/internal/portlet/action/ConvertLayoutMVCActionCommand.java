@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -153,7 +154,15 @@ public class ConvertLayoutMVCActionCommand
 
 		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
 
-		convertLayout(selPlid, actionRequest);
+		long[] selPlids = ParamUtil.getLongValues(actionRequest, "rowIds");
+
+		if ((selPlid > 0) && ArrayUtil.isEmpty(selPlids)) {
+			selPlids = new long[] {selPlid};
+		}
+
+		for (long curSelPlid : selPlids) {
+			convertLayout(curSelPlid, actionRequest);
+		}
 	}
 
 	private String _getDefaultPortletDecoratorId(Layout layout)

@@ -15,8 +15,11 @@
 package com.liferay.gradle.plugins.defaults.internal;
 
 import com.liferay.gradle.plugins.BaseDefaultsPlugin;
+import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.util.PortalTools;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.EnumSet;
 
@@ -24,6 +27,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat;
@@ -40,8 +44,8 @@ public class JavaDefaultsPlugin extends BaseDefaultsPlugin<JavaPlugin> {
 
 	@Override
 	protected void configureDefaults(Project project, JavaPlugin javaPlugin) {
+		_configureJava(project);
 		_configureTasksJar(project, PortalTools.getPortalVersion(project));
-
 		_configureTasksTest(project);
 	}
 
@@ -51,6 +55,13 @@ public class JavaDefaultsPlugin extends BaseDefaultsPlugin<JavaPlugin> {
 	}
 
 	private JavaDefaultsPlugin() {
+	}
+
+	private void _configureJava(Project project) {
+		JavaPluginExtension javaPluginExtension = GradleUtil.getExtension(
+			project, JavaPluginExtension.class);
+
+		javaPluginExtension.disableAutoTargetJvm();
 	}
 
 	private void _configureTaskJarEnabled(Jar jar, String portalVersion) {

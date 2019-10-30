@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.exception.LockedSegmentsExperimentException;
 import com.liferay.segments.exception.RequiredSegmentsExperienceException;
 import com.liferay.segments.exception.SegmentsExperienceNameException;
 import com.liferay.segments.exception.SegmentsExperiencePriorityException;
@@ -155,13 +155,7 @@ public class SegmentsExperienceLocalServiceImpl
 		// Segments experience
 
 		if (!GroupThreadLocal.isDeleteInProcess()) {
-			int count = segmentsExperimentFinder.countByS_C_C_S(
-				segmentsExperience.getSegmentsExperienceId(),
-				segmentsExperience.getClassNameId(),
-				segmentsExperience.getClassPK(),
-				SegmentsExperimentConstants.Status.getLockedStatusValues());
-
-			if (count > 0) {
+			if (segmentsExperience.hasSegmentsExperiment()) {
 				throw new RequiredSegmentsExperienceException.
 					MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments(
 						segmentsExperience.getSegmentsExperienceId());
@@ -351,6 +345,12 @@ public class SegmentsExperienceLocalServiceImpl
 			segmentsExperiencePersistence.findByPrimaryKey(
 				segmentsExperienceId);
 
+		if (segmentsExperience.hasSegmentsExperiment()) {
+			throw new LockedSegmentsExperimentException(
+				"Segments experience " + segmentsExperienceId +
+					" has a locked segments experiment");
+		}
+
 		segmentsExperience.setSegmentsEntryId(segmentsEntryId);
 		segmentsExperience.setNameMap(nameMap);
 		segmentsExperience.setActive(active);
@@ -380,6 +380,12 @@ public class SegmentsExperienceLocalServiceImpl
 		SegmentsExperience segmentsExperience =
 			segmentsExperiencePersistence.findByPrimaryKey(
 				segmentsExperienceId);
+
+		if (segmentsExperience.hasSegmentsExperiment()) {
+			throw new LockedSegmentsExperimentException(
+				"Segments experience " + segmentsExperienceId +
+					" has a locked segments experiment");
+		}
 
 		int count = segmentsExperiencePersistence.countByG_C_C(
 			segmentsExperience.getGroupId(),

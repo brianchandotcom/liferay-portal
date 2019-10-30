@@ -137,6 +137,9 @@ public class CopyLayoutPageTemplateEntryMVCActionCommandTest {
 
 		_layoutLocalService.deleteLayout(_layoutPageTemplateEntry.getPlid());
 
+		long originalLayoutsCount = _layoutLocalService.getLayoutsCount(
+			_group.getGroupId());
+
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doProcessAction",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
@@ -147,6 +150,11 @@ public class CopyLayoutPageTemplateEntryMVCActionCommandTest {
 				_group.getGroupId(), _getName());
 
 		Assert.assertNull(targetLayoutPageTemplateEntry);
+
+		long actualLayoutsCount = _layoutLocalService.getLayoutsCount(
+			_group.getGroupId());
+
+		Assert.assertEquals(originalLayoutsCount, actualLayoutsCount);
 	}
 
 	@Test

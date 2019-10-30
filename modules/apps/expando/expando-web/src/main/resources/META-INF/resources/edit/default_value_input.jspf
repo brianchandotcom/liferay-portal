@@ -165,7 +165,7 @@
 			geolocationField.init();
 		</aui:script>
 
-		<aui:input name="<%= name %>" type="hidden" value="<%= HtmlUtil.escape(value.toString()) %>" />
+		<aui:input name="<%= name %>" type="hidden" value="<%= value.toString() %>" />
 	</c:when>
 	<c:otherwise>
 		<c:if test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD) %>">

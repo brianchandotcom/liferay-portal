@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayField;
@@ -111,9 +110,6 @@ public class GetAssetMappingFieldsMVCResourceCommand
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonArray);
 	}
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;

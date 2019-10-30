@@ -30,10 +30,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -60,24 +64,17 @@ public class CopyLayoutPageTemplateEntryMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long layoutPageTemplateCollectionId = ParamUtil.getLong(
-			actionRequest, "layoutPageTemplateCollectionId");
-		long layoutPageTemplateEntryId = ParamUtil.getLong(
-			actionRequest, "layoutPageTemplateEntryId");
+		Callable<LayoutPageTemplateEntry> copyLayoutPageTemplateEntryCallable =
+			new CopyLayoutPageTemplateEntryCallable(actionRequest);
 
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
-
-			_copyLayoutPageTemplateEntry(
-				themeDisplay.getScopeGroupId(), layoutPageTemplateCollectionId,
-				layoutPageTemplateEntryId, serviceContext);
+			TransactionInvokerUtil.invoke(
+				_transactionConfig, copyLayoutPageTemplateEntryCallable);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (Throwable t) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(t, t);
+			}
 
 			SessionErrors.add(actionRequest, PortalException.class);
 		}
@@ -89,11 +86,20 @@ public class CopyLayoutPageTemplateEntryMVCActionCommand
 		}
 	}
 
-	@Transactional(rollbackFor = PortalException.class)
-	private void _copyLayoutPageTemplateEntry(
-			long groupId, long layoutPageTemplateCollectionId,
-			long layoutPageTemplateEntryId, ServiceContext serviceContext)
-		throws PortalException {
+	private LayoutPageTemplateEntry _copyLayoutPageTemplateEntry(
+			ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long layoutPageTemplateCollectionId = ParamUtil.getLong(
+			actionRequest, "layoutPageTemplateCollectionId");
+		long layoutPageTemplateEntryId = ParamUtil.getLong(
+			actionRequest, "layoutPageTemplateEntryId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
 
 		LayoutPageTemplateEntry sourceLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
@@ -101,7 +107,7 @@ public class CopyLayoutPageTemplateEntryMVCActionCommand
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.copyLayoutPageTemplateEntry(
-				groupId, layoutPageTemplateCollectionId,
+				themeDisplay.getScopeGroupId(), layoutPageTemplateCollectionId,
 				layoutPageTemplateEntryId, serviceContext);
 
 		Layout sourceLayout = _layoutLocalService.getLayout(
@@ -116,17 +122,19 @@ public class CopyLayoutPageTemplateEntryMVCActionCommand
 		Layout draftTargetLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), targetLayout.getPlid());
 
-		try {
-			_layoutCopyHelper.copyLayout(draftSourceLayout, draftTargetLayout);
-			_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
-		}
-		catch (Exception e) {
-			throw new PortalException(e);
-		}
+		_layoutCopyHelper.copyLayout(draftSourceLayout, draftTargetLayout);
+
+		_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+
+		return layoutPageTemplateEntry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CopyLayoutPageTemplateEntryMVCActionCommand.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;
@@ -143,5 +151,23 @@ public class CopyLayoutPageTemplateEntryMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	private class CopyLayoutPageTemplateEntryCallable
+		implements Callable<LayoutPageTemplateEntry> {
+
+		@Override
+		public LayoutPageTemplateEntry call() throws Exception {
+			return _copyLayoutPageTemplateEntry(_actionRequest);
+		}
+
+		private CopyLayoutPageTemplateEntryCallable(
+			ActionRequest actionRequest) {
+
+			_actionRequest = actionRequest;
+		}
+
+		private final ActionRequest _actionRequest;
+
+	}
 
 }

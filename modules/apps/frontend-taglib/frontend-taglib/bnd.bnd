@@ -20,7 +20,4 @@ Provide-Capability:\
 	soy;\
 		type="frontend-taglib";\
 		version:Version="${Bundle-Version}"
-Require-Capability:\
-	osgi.extender;\
-		filter:="(&(osgi.extender=liferay.js)(version>=4.0)(!(version>=5.0)))"
 Web-ContextPath: /frontend-taglib

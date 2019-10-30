@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
-import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -62,7 +61,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		List<String> importNames = _getImportNames(javaTerm);
+		List<String> importNames = getImportNames(javaTerm);
 
 		if (importNames.isEmpty()) {
 			return javaTerm.getContent();
@@ -200,20 +199,6 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		}
 
 		return -1;
-	}
-
-	private List<String> _getImportNames(JavaTerm javaTerm) {
-		JavaClass javaClass = javaTerm.getParentJavaClass();
-
-		while (true) {
-			JavaClass parentJavaClass = javaClass.getParentJavaClass();
-
-			if (parentJavaClass == null) {
-				return javaClass.getImports();
-			}
-
-			javaClass = parentJavaClass;
-		}
 	}
 
 	private String _getPackageName(

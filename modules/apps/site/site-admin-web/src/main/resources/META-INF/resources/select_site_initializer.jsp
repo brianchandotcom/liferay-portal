@@ -57,7 +57,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 		<portlet:param name="parentGroupId" value="<%= String.valueOf(selectSiteInitializerDisplayContext.getParentGroupId()) %>" />
 	</portlet:actionURL>
 
-	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
+	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as openSimpleInputModal">
 		var addSiteActionOptionQueryClickHandler = dom.delegate(
 			document.body,
 			'click',
@@ -65,7 +65,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 			function(event) {
 				var data = event.delegateTarget.dataset;
 
-				modalCommands.openSimpleInputModal({
+				openSimpleInputModal.default({
 					checkboxFieldLabel:
 						'<liferay-ui:message key="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" />',
 					checkboxFieldName: data.checkboxFieldName,

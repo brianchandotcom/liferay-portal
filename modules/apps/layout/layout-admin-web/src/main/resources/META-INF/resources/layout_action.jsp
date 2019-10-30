@@ -97,7 +97,7 @@ Layout curLayout = (Layout)row.getObject();
 	</c:if>
 </liferay-ui:icon-menu>
 
-<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
+<aui:script require="metal-dom/src/all/dom as dom">
 	var addLayoutPrototypeActionOptionQueryClickHandler = dom.delegate(
 		document.body,
 		'click',

@@ -26,11 +26,11 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 	</aui:a>
 </div>
 
-<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
+<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as openSimpleInputModal">
 	function handleCreateAssetListLinkClick(event) {
 		event.preventDefault();
 
-		modalCommands.openSimpleInputModal({
+		openSimpleInputModal.default({
 			dialogTitle: '<liferay-ui:message key="content-set-title" />',
 			formSubmitURL:
 				'<liferay-portlet:actionURL name="/asset_publisher/add_asset_list" portletName="<%= portletResource %>"><portlet:param name="portletResource" value="<%= portletResource %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>',

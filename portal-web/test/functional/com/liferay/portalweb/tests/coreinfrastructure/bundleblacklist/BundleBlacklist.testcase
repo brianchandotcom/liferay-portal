@@ -37,7 +37,7 @@ definition {
 			label = "Blacklist Component Names",
 			symbolicName = "com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth");
 
-		BundleBlacklist.viewConsoleBlacklistedComponent(consoleText = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
+		AssertConsoleTextPresent(value1 = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
 	}
 
 	@priority = "4"

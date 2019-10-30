@@ -965,6 +965,7 @@ definition {
 			value1 = "${fieldFieldLabel}");
 
 		var key_ddlRecordFieldData = "${key_ddlRecordFieldData}";
+		var key_ddlRecordFieldData_1 = "${key_ddlRecordFieldData_1}";
 
 		if (isSet(ddlRecordFieldDataTableDisplay)) {
 			var key_ddlRecordFieldData = "${ddlRecordFieldDataTableDisplay}";
@@ -1009,7 +1010,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "DDLRecord#FIELD_1",
-			value1 = "${ddlRecordFieldData}");
+			value1 = "${ddlRecordFieldData_1}");
 
 		if (isSet(ddlRecordNestedFieldData)) {
 			var key_ddlRecordFieldData = "${ddlRecordNestedFieldData}";

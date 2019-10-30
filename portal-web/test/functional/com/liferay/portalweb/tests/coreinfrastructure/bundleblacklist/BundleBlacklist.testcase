@@ -20,6 +20,27 @@ definition {
 	}
 
 	@priority = "4"
+	test BlacklistComponent {
+		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistComponent";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Module Container",
+			configurationName = "Component Blacklist",
+			configurationScope = "System Scope");
+
+		BundleBlacklist.blacklistModuleAndComponentConfiguration(
+			label = "Blacklist Component Names",
+			symbolicName = "com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth");
+
+		BundleBlacklist.viewConsoleBlacklistedComponent(consoleText = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
+	}
+
+	@priority = "4"
 	test BlacklistModuleJar {
 		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleJar";
 

@@ -12,7 +12,11 @@
  * details.
  */
 
-import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	ItemSelectorDialog,
+	openSimpleInputModal
+} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
@@ -97,31 +101,26 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	updateFragmentEntryPreview(itemData) {
-		AUI().use('liferay-item-selector-dialog', A => {
-			const itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: this.ns('changePreview'),
-				on: {
-					selectedItemChange: function(event) {
-						const selectedItem = event.newVal;
+		const itemSelectorDialog = new ItemSelectorDialog({
+			buttonAddLabel: Liferay.Language.get('ok'),
+			eventName: this.ns('changePreview'),
+			title: Liferay.Language.get('fragment-thumbnail'),
+			url: itemData.itemSelectorURL
+		});
 
-						if (selectedItem) {
-							const itemValue = JSON.parse(selectedItem.value);
+		itemSelectorDialog.open();
 
-							this.one('#fragmentEntryId').value =
-								itemData.fragmentEntryId;
-							this.one('#fileEntryId').value =
-								itemValue.fileEntryId;
+		itemSelectorDialog.on('selectedItemChange', event => {
+			const selectedItem = event.selectedItem;
 
-							submitForm(this.one('#fragmentEntryPreviewFm'));
-						}
-					}.bind(this)
-				},
-				'strings.add': Liferay.Language.get('ok'),
-				title: Liferay.Language.get('fragment-thumbnail'),
-				url: itemData.itemSelectorURL
-			});
+			if (selectedItem) {
+				const itemValue = JSON.parse(selectedItem.value);
 
-			itemSelectorDialog.open();
+				this.one('#fragmentEntryId').value = itemData.fragmentEntryId;
+				this.one('#fileEntryId').value = itemValue.fileEntryId;
+
+				submitForm(this.one('#fragmentEntryPreviewFm'));
+			}
 		});
 	}
 

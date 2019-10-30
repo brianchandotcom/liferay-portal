@@ -12,37 +12,29 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 
 class FragmentCollectionResourcesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	addFragmentCollectionResource(itemData) {
-		AUI().use('liferay-item-selector-dialog', A => {
-			const itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: this.ns('uploadFragmentCollectionResource'),
-				on: {
-					selectedItemChange: function(event) {
-						const selectedItem = event.newVal;
+		const itemSelectorDialog = new ItemSelectorDialog({
+			buttonAddLabel: Liferay.Language.get('ok'),
+			eventName: this.ns('uploadFragmentCollectionResource'),
+			title: Liferay.Language.get('upload-fragment-collection-resource'),
+			url: itemData.itemSelectorURL
+		});
 
-						if (selectedItem) {
-							const itemValue = JSON.parse(selectedItem.value);
+		itemSelectorDialog.open();
 
-							this.one('#fileEntryId').value =
-								itemValue.fileEntryId;
+		itemSelectorDialog.on('selectedItemChange', event => {
+			const selectedItem = event.selectedItem;
 
-							submitForm(
-								this.one('#fragmentCollectionResourceFm')
-							);
-						}
-					}.bind(this)
-				},
-				'strings.add': Liferay.Language.get('ok'),
-				title: Liferay.Language.get(
-					'upload-fragment-collection-resource'
-				),
-				url: itemData.itemSelectorURL
-			});
+			if (selectedItem) {
+				const itemValue = JSON.parse(selectedItem.value);
 
-			itemSelectorDialog.open();
+				this.one('#fileEntryId').value = itemValue.fileEntryId;
+
+				submitForm(this.one('#fragmentCollectionResourceFm'));
+			}
 		});
 	}
 

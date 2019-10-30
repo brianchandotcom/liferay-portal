@@ -18,7 +18,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.34"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
-	compileOnly group: "com.liferay", name: "com.liferay.css.builder", version: "3.0.1"
+	compileOnly group: "com.liferay", name: "com.liferay.css.builder", version: "3.0.2"
 }
 
 gradleTest {

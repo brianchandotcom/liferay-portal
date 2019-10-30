@@ -81,8 +81,6 @@ gradleTest {
 	dependsOn copyRepo
 	dependsOn jar
 
-	deprecationMessagesAreFailures = false
-
 	if (System.getenv("JENKINS_HOME")) {
 		expectFailure "buildDockerImage"
 		expectFailure "createDockerContainer"

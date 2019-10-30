@@ -28,8 +28,6 @@ gradleTest {
 	dependsOn installGradleTestSmokeSample100
 	dependsOn jar
 
-	deprecationMessagesAreFailures = false
-
 	versions gradleVersion
 }
 

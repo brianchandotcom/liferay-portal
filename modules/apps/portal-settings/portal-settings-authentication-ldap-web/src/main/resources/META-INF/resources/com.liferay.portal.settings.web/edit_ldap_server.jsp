@@ -507,13 +507,14 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 
 			var url = null;
 
-			var data = {};
+			var data = {
+				p_auth: '<%= AuthTokenUtil.getToken(request) %>'
+			};
 
 			if (type === 'ldapConnection') {
 				url =
 					'<portlet:renderURL copyCurrentRenderParameters="<%= false %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_ldap_connection" /></portlet:renderURL>';
 
-				data.p_auth = '<%= AuthTokenUtil.getToken(request) %>';
 			} else if (type === 'ldapGroups') {
 				url =
 					'<portlet:renderURL copyCurrentRenderParameters="<%= false %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_ldap_groups" /></portlet:renderURL>';

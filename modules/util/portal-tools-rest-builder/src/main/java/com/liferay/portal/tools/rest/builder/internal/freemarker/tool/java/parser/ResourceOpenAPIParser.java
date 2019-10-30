@@ -532,8 +532,13 @@ public class ResourceOpenAPIParser {
 			else if (Objects.equals(pathName, schemaName)) {
 				methodNameSegments.add(pathName);
 			}
-			else {
+			else if ((i != (pathSegments.length - 1)) ||
+					 !Objects.equals(returnType, String.class.getName())) {
+
 				methodNameSegments.add(OpenAPIUtil.formatSingular(pathName));
+			}
+			else {
+				methodNameSegments.add(pathName);
 			}
 		}
 

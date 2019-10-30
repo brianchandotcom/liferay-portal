@@ -140,6 +140,10 @@ paths:
                   name: callbackURL
                   schema:
                       type: string
+                - in: query
+                  name: fieldNames
+                  schema:
+                      type: string
             responses:
                 202:
                     content:

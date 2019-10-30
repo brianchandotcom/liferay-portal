@@ -165,6 +165,13 @@ public class DepotEntryGroupRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByToGroupId() throws Exception {
+		_persistence.countByToGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByToGroupId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DepotEntryGroupRel newDepotEntryGroupRel = addDepotEntryGroupRel();
 

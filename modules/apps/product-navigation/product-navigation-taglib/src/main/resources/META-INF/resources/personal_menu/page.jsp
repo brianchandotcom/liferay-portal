@@ -19,8 +19,21 @@
 <%
 String namespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
+long color = (long)request.getAttribute("liferay-product-navigation:personal-menu:color");
 boolean expanded = (boolean)request.getAttribute("liferay-product-navigation:personal-menu:expanded");
-String label = (String)request.getAttribute("liferay-product-navigation:personal-menu:label");
+String size = (String)request.getAttribute("liferay-product-navigation:personal-menu:size");
+
+String userStickerClasses = "sticker";
+
+if (size != null) {
+	userStickerClasses += " sticker-" + size;
+}
+
+String impersonateStickerClasses = "sticker";
+
+if (size != null) {
+	impersonateStickerClasses += " sticker-sm";
+}
 %>
 
 <style type="text/css">
@@ -43,7 +56,19 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 
 <div class="personal-menu-dropdown" id="<%= namespace + "personal_menu_dropdown" %>">
 	<button aria-expanded="true" aria-haspopup="true" class="btn btn-unstyled dropdown-toggle" id="<%= namespace + "personal_menu_dropdown_toggle" %>" ref="triggerButton" type="button">
-		<%= label %>
+		<span class="<%= userStickerClasses %>">
+			<span class="<%= userStickerClasses + " sticker-circle user-icon-color-" + color %>">
+				<aui:icon image="user" markupView="lexicon" />
+			</span>
+
+			<c:if test="<%= themeDisplay.isImpersonated() %>">
+				<span class='<%= impersonateStickerClasses + " sticker-bottom-right sticker-circle sticker-outside sticker-user-icon" %>' id="impersonate-user-sticker">
+					<span class="sticker-overlay">
+						<aui:icon id="impersonate-user-icon" image="user" markupView="lexicon" />
+					</span>
+				</span>
+			</c:if>
+		</span>
 	</button>
 
 	<%
@@ -55,7 +80,10 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 
 	Map<String, Object> data = new HashMap<>();
 
+	data.put("color", color);
+	data.put("isImpersonated", themeDisplay.isImpersonated());
 	data.put("itemsURL", resourceURL.toString());
+	data.put("size", size);
 	%>
 
 	<react:component

@@ -302,7 +302,7 @@ public abstract class BaseDocumentFolderResourceImpl
 	@Path("/document-folders/{parentDocumentFolderId}/document-folders")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DocumentFolder")})
-	public DocumentFolder postDocumentFolderDocumentFolder(
+	public DocumentFolder postDocumentFolderDocumentFolders(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("parentDocumentFolderId") Long parentDocumentFolderId,
 			DocumentFolder documentFolder)
@@ -359,7 +359,7 @@ public abstract class BaseDocumentFolderResourceImpl
 	@Path("/sites/{siteId}/document-folders")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DocumentFolder")})
-	public DocumentFolder postSiteDocumentFolder(
+	public DocumentFolder postSiteDocumentFolders(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			DocumentFolder documentFolder)
 		throws Exception {

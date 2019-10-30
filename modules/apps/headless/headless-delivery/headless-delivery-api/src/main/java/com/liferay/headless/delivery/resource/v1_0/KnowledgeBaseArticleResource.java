@@ -88,7 +88,7 @@ public interface KnowledgeBaseArticleResource {
 				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
+	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticles(
 			Long parentKnowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
@@ -99,7 +99,7 @@ public interface KnowledgeBaseArticleResource {
 				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
+	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticles(
 			Long knowledgeBaseFolderId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
@@ -109,7 +109,7 @@ public interface KnowledgeBaseArticleResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
+	public KnowledgeBaseArticle postSiteKnowledgeBaseArticles(
 			Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 

@@ -72,7 +72,8 @@ public interface BlogPostingResource {
 			Sort[] sorts)
 		throws Exception;
 
-	public BlogPosting postSiteBlogPosting(Long siteId, BlogPosting blogPosting)
+	public BlogPosting postSiteBlogPostings(
+			Long siteId, BlogPosting blogPosting)
 		throws Exception;
 
 	public void putSiteBlogPostingSubscribe(Long siteId) throws Exception;

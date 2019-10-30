@@ -31,7 +31,6 @@ import com.liferay.headless.delivery.client.serdes.v1_0.MessageBoardSectionSerDe
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -226,8 +225,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testDeleteMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
-		return messageBoardSectionResource.postSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -299,8 +298,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGetMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
-		return messageBoardSectionResource.postSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -365,8 +364,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testPatchMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
-		return messageBoardSectionResource.postSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -396,8 +395,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testPutMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
-		return messageBoardSectionResource.postSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -422,8 +421,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testPutMessageBoardSectionSubscribe_addMessageBoardSection()
 		throws Exception {
 
-		return messageBoardSectionResource.postSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -448,8 +447,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testPutMessageBoardSectionUnsubscribe_addMessageBoardSection()
 		throws Exception {
 
-		return messageBoardSectionResource.postSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -769,9 +768,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return messageBoardSectionResource.
-			postMessageBoardSectionMessageBoardSection(
-				parentMessageBoardSectionId, messageBoardSection);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -790,14 +788,14 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
-	public void testPostMessageBoardSectionMessageBoardSection()
+	public void testPostMessageBoardSectionMessageBoardSections()
 		throws Exception {
 
 		MessageBoardSection randomMessageBoardSection =
 			randomMessageBoardSection();
 
 		MessageBoardSection postMessageBoardSection =
-			testPostMessageBoardSectionMessageBoardSection_addMessageBoardSection(
+			testPostMessageBoardSectionMessageBoardSections_addMessageBoardSection(
 				randomMessageBoardSection);
 
 		assertEquals(randomMessageBoardSection, postMessageBoardSection);
@@ -805,14 +803,12 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	protected MessageBoardSection
-			testPostMessageBoardSectionMessageBoardSection_addMessageBoardSection(
+			testPostMessageBoardSectionMessageBoardSections_addMessageBoardSection(
 				MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return messageBoardSectionResource.
-			postMessageBoardSectionMessageBoardSection(
-				testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
-				messageBoardSection);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1104,8 +1100,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				Long siteId, MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return messageBoardSectionResource.postSiteMessageBoardSection(
-			siteId, messageBoardSection);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetSiteMessageBoardSectionsPage_getSiteId()
@@ -1179,12 +1175,12 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteMessageBoardSection() throws Exception {
+	public void testPostSiteMessageBoardSections() throws Exception {
 		MessageBoardSection randomMessageBoardSection =
 			randomMessageBoardSection();
 
 		MessageBoardSection postMessageBoardSection =
-			testPostSiteMessageBoardSection_addMessageBoardSection(
+			testPostSiteMessageBoardSections_addMessageBoardSection(
 				randomMessageBoardSection);
 
 		assertEquals(randomMessageBoardSection, postMessageBoardSection);
@@ -1192,214 +1188,20 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	protected MessageBoardSection
-			testPostSiteMessageBoardSection_addMessageBoardSection(
+			testPostSiteMessageBoardSections_addMessageBoardSection(
 				MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return messageBoardSectionResource.postSiteMessageBoardSection(
-			testGetSiteMessageBoardSectionsPage_getSiteId(),
-			messageBoardSection);
-	}
-
-	@Test
-	public void testGraphQLPostSiteMessageBoardSection() throws Exception {
-		MessageBoardSection randomMessageBoardSection =
-			randomMessageBoardSection();
-
-		MessageBoardSection messageBoardSection =
-			testGraphQLMessageBoardSection_addMessageBoardSection(
-				randomMessageBoardSection);
-
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomMessageBoardSection,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(messageBoardSection))));
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected MessageBoardSection
 			testGraphQLMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
-		return testGraphQLMessageBoardSection_addMessageBoardSection(
-			randomMessageBoardSection());
-	}
-
-	protected MessageBoardSection
-			testGraphQLMessageBoardSection_addMessageBoardSection(
-				MessageBoardSection messageBoardSection)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals("description", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = messageBoardSection.getDescription();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = messageBoardSection.getId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"numberOfMessageBoardSections",
-					additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value =
-					messageBoardSection.getNumberOfMessageBoardSections();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"numberOfMessageBoardThreads", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value =
-					messageBoardSection.getNumberOfMessageBoardThreads();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("siteId", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = messageBoardSection.getSiteId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("subscribed", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = messageBoardSection.getSubscribed();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("title", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = messageBoardSection.getTitle();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		GraphQLField graphQLField = new GraphQLField(
-			"mutation",
-			new GraphQLField(
-				"createSiteMessageBoardSection",
-				new HashMap<String, Object>() {
-					{
-						put("siteId", testGroup.getGroupId());
-						put("messageBoardSection", sb.toString());
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONDeserializer<MessageBoardSection> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		String object = invoke(graphQLField.toString());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		return jsonDeserializer.deserialize(
-			String.valueOf(
-				dataJSONObject.getJSONObject("createSiteMessageBoardSection")),
-			MessageBoardSection.class);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(

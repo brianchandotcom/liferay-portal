@@ -111,7 +111,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+			postKnowledgeBaseArticleKnowledgeBaseAttachments(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("knowledgeBaseArticleId") Long
 					knowledgeBaseArticleId,

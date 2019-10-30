@@ -97,13 +97,13 @@ public interface MessageBoardSectionResource {
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
+	public MessageBoardSection postMessageBoardSectionMessageBoardSections(
 			Long parentMessageBoardSectionId,
 			MessageBoardSection messageBoardSection)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postMessageBoardSectionMessageBoardSectionHttpResponse(
+			postMessageBoardSectionMessageBoardSectionsHttpResponse(
 				Long parentMessageBoardSectionId,
 				MessageBoardSection messageBoardSection)
 		throws Exception;
@@ -118,11 +118,11 @@ public interface MessageBoardSectionResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public MessageBoardSection postSiteMessageBoardSection(
+	public MessageBoardSection postSiteMessageBoardSections(
 			Long siteId, MessageBoardSection messageBoardSection)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSiteMessageBoardSectionHttpResponse(
+	public HttpInvoker.HttpResponse postSiteMessageBoardSectionsHttpResponse(
 			Long siteId, MessageBoardSection messageBoardSection)
 		throws Exception;
 
@@ -635,13 +635,13 @@ public interface MessageBoardSectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public MessageBoardSection postMessageBoardSectionMessageBoardSection(
+		public MessageBoardSection postMessageBoardSectionMessageBoardSections(
 				Long parentMessageBoardSectionId,
 				MessageBoardSection messageBoardSection)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postMessageBoardSectionMessageBoardSectionHttpResponse(
+				postMessageBoardSectionMessageBoardSectionsHttpResponse(
 					parentMessageBoardSectionId, messageBoardSection);
 
 			String content = httpResponse.getContent();
@@ -665,7 +665,7 @@ public interface MessageBoardSectionResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postMessageBoardSectionMessageBoardSectionHttpResponse(
+				postMessageBoardSectionMessageBoardSectionsHttpResponse(
 					Long parentMessageBoardSectionId,
 					MessageBoardSection messageBoardSection)
 			throws Exception {
@@ -790,12 +790,12 @@ public interface MessageBoardSectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public MessageBoardSection postSiteMessageBoardSection(
+		public MessageBoardSection postSiteMessageBoardSections(
 				Long siteId, MessageBoardSection messageBoardSection)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteMessageBoardSectionHttpResponse(
+				postSiteMessageBoardSectionsHttpResponse(
 					siteId, messageBoardSection);
 
 			String content = httpResponse.getContent();
@@ -818,8 +818,9 @@ public interface MessageBoardSectionResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postSiteMessageBoardSectionHttpResponse(
-				Long siteId, MessageBoardSection messageBoardSection)
+		public HttpInvoker.HttpResponse
+				postSiteMessageBoardSectionsHttpResponse(
+					Long siteId, MessageBoardSection messageBoardSection)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

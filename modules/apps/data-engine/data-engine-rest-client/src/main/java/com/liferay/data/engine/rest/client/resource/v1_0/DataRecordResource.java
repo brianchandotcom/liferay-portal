@@ -48,11 +48,11 @@ public interface DataRecordResource {
 				Long dataDefinitionId, Pagination pagination)
 		throws Exception;
 
-	public DataRecord postDataDefinitionDataRecord(
+	public DataRecord postDataDefinitionDataRecords(
 			Long dataDefinitionId, DataRecord dataRecord)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postDataDefinitionDataRecordHttpResponse(
+	public HttpInvoker.HttpResponse postDataDefinitionDataRecordsHttpResponse(
 			Long dataDefinitionId, DataRecord dataRecord)
 		throws Exception;
 
@@ -65,12 +65,12 @@ public interface DataRecordResource {
 				Long dataRecordCollectionId, Pagination pagination)
 		throws Exception;
 
-	public DataRecord postDataRecordCollectionDataRecord(
+	public DataRecord postDataRecordCollectionDataRecords(
 			Long dataRecordCollectionId, DataRecord dataRecord)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postDataRecordCollectionDataRecordHttpResponse(
+			postDataRecordCollectionDataRecordsHttpResponse(
 				Long dataRecordCollectionId, DataRecord dataRecord)
 		throws Exception;
 
@@ -220,12 +220,12 @@ public interface DataRecordResource {
 			return httpInvoker.invoke();
 		}
 
-		public DataRecord postDataDefinitionDataRecord(
+		public DataRecord postDataDefinitionDataRecords(
 				Long dataDefinitionId, DataRecord dataRecord)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postDataDefinitionDataRecordHttpResponse(
+				postDataDefinitionDataRecordsHttpResponse(
 					dataDefinitionId, dataRecord);
 
 			String content = httpResponse.getContent();
@@ -249,7 +249,7 @@ public interface DataRecordResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postDataDefinitionDataRecordHttpResponse(
+				postDataDefinitionDataRecordsHttpResponse(
 					Long dataDefinitionId, DataRecord dataRecord)
 			throws Exception {
 
@@ -352,12 +352,12 @@ public interface DataRecordResource {
 			return httpInvoker.invoke();
 		}
 
-		public DataRecord postDataRecordCollectionDataRecord(
+		public DataRecord postDataRecordCollectionDataRecords(
 				Long dataRecordCollectionId, DataRecord dataRecord)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postDataRecordCollectionDataRecordHttpResponse(
+				postDataRecordCollectionDataRecordsHttpResponse(
 					dataRecordCollectionId, dataRecord);
 
 			String content = httpResponse.getContent();
@@ -381,7 +381,7 @@ public interface DataRecordResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postDataRecordCollectionDataRecordHttpResponse(
+				postDataRecordCollectionDataRecordsHttpResponse(
 					Long dataRecordCollectionId, DataRecord dataRecord)
 			throws Exception {
 

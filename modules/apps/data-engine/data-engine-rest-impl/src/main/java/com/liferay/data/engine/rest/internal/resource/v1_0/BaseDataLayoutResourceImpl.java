@@ -105,7 +105,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	@Path("/data-definitions/{dataDefinitionId}/data-layouts")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataLayout")})
-	public DataLayout postDataDefinitionDataLayout(
+	public DataLayout postDataDefinitionDataLayouts(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
 				Long dataDefinitionId,
 			DataLayout dataLayout)
@@ -194,7 +194,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	@Path("/data-layouts/{dataLayoutId}/data-layout-permissions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataLayout")})
-	public void postDataLayoutDataLayoutPermission(
+	public void postDataLayoutDataLayoutPermissions(
 			@NotNull @Parameter(hidden = true) @PathParam("dataLayoutId") Long
 				dataLayoutId,
 			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
@@ -220,7 +220,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	@Path("/sites/{siteId}/data-layout-permissions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataLayout")})
-	public void postSiteDataLayoutPermission(
+	public void postSiteDataLayoutPermissions(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
 				operation,

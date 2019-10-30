@@ -111,7 +111,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Path("/sites/{siteId}/taxonomy-vocabularies")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
-	public TaxonomyVocabulary postSiteTaxonomyVocabulary(
+	public TaxonomyVocabulary postSiteTaxonomyVocabularies(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {

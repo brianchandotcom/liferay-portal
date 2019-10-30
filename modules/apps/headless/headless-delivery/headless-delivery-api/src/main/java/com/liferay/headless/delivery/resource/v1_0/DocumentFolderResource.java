@@ -68,7 +68,7 @@ public interface DocumentFolderResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public DocumentFolder postDocumentFolderDocumentFolder(
+	public DocumentFolder postDocumentFolderDocumentFolders(
 			Long parentDocumentFolderId, DocumentFolder documentFolder)
 		throws Exception;
 
@@ -77,7 +77,7 @@ public interface DocumentFolderResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public DocumentFolder postSiteDocumentFolder(
+	public DocumentFolder postSiteDocumentFolders(
 			Long siteId, DocumentFolder documentFolder)
 		throws Exception;
 

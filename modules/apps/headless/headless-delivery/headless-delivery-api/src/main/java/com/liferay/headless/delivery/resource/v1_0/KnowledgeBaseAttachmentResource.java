@@ -48,7 +48,7 @@ public interface KnowledgeBaseAttachmentResource {
 		throws Exception;
 
 	public KnowledgeBaseAttachment
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+			postKnowledgeBaseArticleKnowledgeBaseAttachments(
 				Long knowledgeBaseArticleId, MultipartBody multipartBody)
 		throws Exception;
 

@@ -65,10 +65,10 @@ public interface KeywordResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public Keyword postSiteKeyword(Long siteId, Keyword keyword)
+	public Keyword postSiteKeywords(Long siteId, Keyword keyword)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSiteKeywordHttpResponse(
+	public HttpInvoker.HttpResponse postSiteKeywordsHttpResponse(
 			Long siteId, Keyword keyword)
 		throws Exception;
 
@@ -379,11 +379,11 @@ public interface KeywordResource {
 			return httpInvoker.invoke();
 		}
 
-		public Keyword postSiteKeyword(Long siteId, Keyword keyword)
+		public Keyword postSiteKeywords(Long siteId, Keyword keyword)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = postSiteKeywordHttpResponse(
-				siteId, keyword);
+			HttpInvoker.HttpResponse httpResponse =
+				postSiteKeywordsHttpResponse(siteId, keyword);
 
 			String content = httpResponse.getContent();
 
@@ -405,7 +405,7 @@ public interface KeywordResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postSiteKeywordHttpResponse(
+		public HttpInvoker.HttpResponse postSiteKeywordsHttpResponse(
 				Long siteId, Keyword keyword)
 			throws Exception {
 

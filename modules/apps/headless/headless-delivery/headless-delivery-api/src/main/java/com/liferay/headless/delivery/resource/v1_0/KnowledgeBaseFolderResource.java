@@ -62,7 +62,7 @@ public interface KnowledgeBaseFolderResource {
 				Long parentKnowledgeBaseFolderId, Pagination pagination)
 		throws Exception;
 
-	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
+	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolders(
 			Long parentKnowledgeBaseFolderId,
 			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception;
@@ -71,7 +71,7 @@ public interface KnowledgeBaseFolderResource {
 			Long siteId, Pagination pagination)
 		throws Exception;
 
-	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
+	public KnowledgeBaseFolder postSiteKnowledgeBaseFolders(
 			Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception;
 

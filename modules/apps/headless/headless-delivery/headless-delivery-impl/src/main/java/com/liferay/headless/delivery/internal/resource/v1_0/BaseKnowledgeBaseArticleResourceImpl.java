@@ -458,7 +458,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
-	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
+	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticles(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("parentKnowledgeBaseArticleId") Long
 				parentKnowledgeBaseArticleId,
@@ -529,7 +529,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
-	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
+	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticles(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
@@ -586,7 +586,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Path("/sites/{siteId}/knowledge-base-articles")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
-	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
+	public KnowledgeBaseArticle postSiteKnowledgeBaseArticles(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {

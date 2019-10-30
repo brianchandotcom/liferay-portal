@@ -62,12 +62,12 @@ public interface WikiPageAttachmentResource {
 			getWikiPageWikiPageAttachmentsPageHttpResponse(Long wikiPageId)
 		throws Exception;
 
-	public WikiPageAttachment postWikiPageWikiPageAttachment(
+	public WikiPageAttachment postWikiPageWikiPageAttachments(
 			Long wikiPageId, WikiPageAttachment wikiPageAttachment,
 			Map<String, File> multipartFiles)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postWikiPageWikiPageAttachmentHttpResponse(
+	public HttpInvoker.HttpResponse postWikiPageWikiPageAttachmentsHttpResponse(
 			Long wikiPageId, WikiPageAttachment wikiPageAttachment,
 			Map<String, File> multipartFiles)
 		throws Exception;
@@ -299,13 +299,13 @@ public interface WikiPageAttachmentResource {
 			return httpInvoker.invoke();
 		}
 
-		public WikiPageAttachment postWikiPageWikiPageAttachment(
+		public WikiPageAttachment postWikiPageWikiPageAttachments(
 				Long wikiPageId, WikiPageAttachment wikiPageAttachment,
 				Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postWikiPageWikiPageAttachmentHttpResponse(
+				postWikiPageWikiPageAttachmentsHttpResponse(
 					wikiPageId, wikiPageAttachment, multipartFiles);
 
 			String content = httpResponse.getContent();
@@ -329,7 +329,7 @@ public interface WikiPageAttachmentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postWikiPageWikiPageAttachmentHttpResponse(
+				postWikiPageWikiPageAttachmentsHttpResponse(
 					Long wikiPageId, WikiPageAttachment wikiPageAttachment,
 					Map<String, File> multipartFiles)
 			throws Exception {

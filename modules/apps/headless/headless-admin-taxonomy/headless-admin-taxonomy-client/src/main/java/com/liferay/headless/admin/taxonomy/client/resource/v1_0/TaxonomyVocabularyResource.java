@@ -49,11 +49,11 @@ public interface TaxonomyVocabularyResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public TaxonomyVocabulary postSiteTaxonomyVocabulary(
+	public TaxonomyVocabulary postSiteTaxonomyVocabularies(
 			Long siteId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSiteTaxonomyVocabularyHttpResponse(
+	public HttpInvoker.HttpResponse postSiteTaxonomyVocabulariesHttpResponse(
 			Long siteId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception;
 
@@ -221,12 +221,12 @@ public interface TaxonomyVocabularyResource {
 			return httpInvoker.invoke();
 		}
 
-		public TaxonomyVocabulary postSiteTaxonomyVocabulary(
+		public TaxonomyVocabulary postSiteTaxonomyVocabularies(
 				Long siteId, TaxonomyVocabulary taxonomyVocabulary)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteTaxonomyVocabularyHttpResponse(
+				postSiteTaxonomyVocabulariesHttpResponse(
 					siteId, taxonomyVocabulary);
 
 			String content = httpResponse.getContent();
@@ -249,8 +249,9 @@ public interface TaxonomyVocabularyResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postSiteTaxonomyVocabularyHttpResponse(
-				Long siteId, TaxonomyVocabulary taxonomyVocabulary)
+		public HttpInvoker.HttpResponse
+				postSiteTaxonomyVocabulariesHttpResponse(
+					Long siteId, TaxonomyVocabulary taxonomyVocabulary)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

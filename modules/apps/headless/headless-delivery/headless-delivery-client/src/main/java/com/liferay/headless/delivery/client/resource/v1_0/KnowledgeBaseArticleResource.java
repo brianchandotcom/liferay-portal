@@ -141,13 +141,13 @@ public interface KnowledgeBaseArticleResource {
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
+	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticles(
 			Long parentKnowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postKnowledgeBaseArticleKnowledgeBaseArticleHttpResponse(
+			postKnowledgeBaseArticleKnowledgeBaseArticlesHttpResponse(
 				Long parentKnowledgeBaseArticleId,
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
@@ -164,13 +164,13 @@ public interface KnowledgeBaseArticleResource {
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
+	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticles(
 			Long knowledgeBaseFolderId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postKnowledgeBaseFolderKnowledgeBaseArticleHttpResponse(
+			postKnowledgeBaseFolderKnowledgeBaseArticlesHttpResponse(
 				Long knowledgeBaseFolderId,
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
@@ -186,11 +186,11 @@ public interface KnowledgeBaseArticleResource {
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
+	public KnowledgeBaseArticle postSiteKnowledgeBaseArticles(
 			Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSiteKnowledgeBaseArticleHttpResponse(
+	public HttpInvoker.HttpResponse postSiteKnowledgeBaseArticlesHttpResponse(
 			Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 
@@ -985,13 +985,13 @@ public interface KnowledgeBaseArticleResource {
 		}
 
 		public KnowledgeBaseArticle
-				postKnowledgeBaseArticleKnowledgeBaseArticle(
+				postKnowledgeBaseArticleKnowledgeBaseArticles(
 					Long parentKnowledgeBaseArticleId,
 					KnowledgeBaseArticle knowledgeBaseArticle)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postKnowledgeBaseArticleKnowledgeBaseArticleHttpResponse(
+				postKnowledgeBaseArticleKnowledgeBaseArticlesHttpResponse(
 					parentKnowledgeBaseArticleId, knowledgeBaseArticle);
 
 			String content = httpResponse.getContent();
@@ -1015,7 +1015,7 @@ public interface KnowledgeBaseArticleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postKnowledgeBaseArticleKnowledgeBaseArticleHttpResponse(
+				postKnowledgeBaseArticleKnowledgeBaseArticlesHttpResponse(
 					Long parentKnowledgeBaseArticleId,
 					KnowledgeBaseArticle knowledgeBaseArticle)
 			throws Exception {
@@ -1142,13 +1142,14 @@ public interface KnowledgeBaseArticleResource {
 			return httpInvoker.invoke();
 		}
 
-		public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
-				Long knowledgeBaseFolderId,
-				KnowledgeBaseArticle knowledgeBaseArticle)
+		public KnowledgeBaseArticle
+				postKnowledgeBaseFolderKnowledgeBaseArticles(
+					Long knowledgeBaseFolderId,
+					KnowledgeBaseArticle knowledgeBaseArticle)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postKnowledgeBaseFolderKnowledgeBaseArticleHttpResponse(
+				postKnowledgeBaseFolderKnowledgeBaseArticlesHttpResponse(
 					knowledgeBaseFolderId, knowledgeBaseArticle);
 
 			String content = httpResponse.getContent();
@@ -1172,7 +1173,7 @@ public interface KnowledgeBaseArticleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postKnowledgeBaseFolderKnowledgeBaseArticleHttpResponse(
+				postKnowledgeBaseFolderKnowledgeBaseArticlesHttpResponse(
 					Long knowledgeBaseFolderId,
 					KnowledgeBaseArticle knowledgeBaseArticle)
 			throws Exception {
@@ -1297,12 +1298,12 @@ public interface KnowledgeBaseArticleResource {
 			return httpInvoker.invoke();
 		}
 
-		public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
+		public KnowledgeBaseArticle postSiteKnowledgeBaseArticles(
 				Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteKnowledgeBaseArticleHttpResponse(
+				postSiteKnowledgeBaseArticlesHttpResponse(
 					siteId, knowledgeBaseArticle);
 
 			String content = httpResponse.getContent();
@@ -1326,7 +1327,7 @@ public interface KnowledgeBaseArticleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postSiteKnowledgeBaseArticleHttpResponse(
+				postSiteKnowledgeBaseArticlesHttpResponse(
 					Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
 			throws Exception {
 

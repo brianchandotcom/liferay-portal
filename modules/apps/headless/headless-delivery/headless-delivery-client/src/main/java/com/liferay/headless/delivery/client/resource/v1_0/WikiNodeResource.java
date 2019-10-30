@@ -49,10 +49,10 @@ public interface WikiNodeResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public WikiNode postSiteWikiNode(Long siteId, WikiNode wikiNode)
+	public WikiNode postSiteWikiNodes(Long siteId, WikiNode wikiNode)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSiteWikiNodeHttpResponse(
+	public HttpInvoker.HttpResponse postSiteWikiNodesHttpResponse(
 			Long siteId, WikiNode wikiNode)
 		throws Exception;
 
@@ -217,11 +217,11 @@ public interface WikiNodeResource {
 			return httpInvoker.invoke();
 		}
 
-		public WikiNode postSiteWikiNode(Long siteId, WikiNode wikiNode)
+		public WikiNode postSiteWikiNodes(Long siteId, WikiNode wikiNode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteWikiNodeHttpResponse(siteId, wikiNode);
+				postSiteWikiNodesHttpResponse(siteId, wikiNode);
 
 			String content = httpResponse.getContent();
 
@@ -243,7 +243,7 @@ public interface WikiNodeResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postSiteWikiNodeHttpResponse(
+		public HttpInvoker.HttpResponse postSiteWikiNodesHttpResponse(
 				Long siteId, WikiNode wikiNode)
 			throws Exception {
 

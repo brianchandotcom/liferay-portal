@@ -31,7 +31,6 @@ import com.liferay.headless.delivery.client.serdes.v1_0.DocumentFolderSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -223,8 +222,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder testDeleteDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		return documentFolderResource.postSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -290,8 +289,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder testGetDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		return documentFolderResource.postSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -351,8 +350,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder testPatchDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		return documentFolderResource.postSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -379,8 +378,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder testPutDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		return documentFolderResource.postSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -402,8 +401,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder testPutDocumentFolderSubscribe_addDocumentFolder()
 		throws Exception {
 
-		return documentFolderResource.postSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -427,8 +426,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testPutDocumentFolderUnsubscribe_addDocumentFolder()
 		throws Exception {
 
-		return documentFolderResource.postSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -727,8 +726,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				Long parentDocumentFolderId, DocumentFolder documentFolder)
 		throws Exception {
 
-		return documentFolderResource.postDocumentFolderDocumentFolder(
-			parentDocumentFolderId, documentFolder);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -747,11 +746,11 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPostDocumentFolderDocumentFolder() throws Exception {
+	public void testPostDocumentFolderDocumentFolders() throws Exception {
 		DocumentFolder randomDocumentFolder = randomDocumentFolder();
 
 		DocumentFolder postDocumentFolder =
-			testPostDocumentFolderDocumentFolder_addDocumentFolder(
+			testPostDocumentFolderDocumentFolders_addDocumentFolder(
 				randomDocumentFolder);
 
 		assertEquals(randomDocumentFolder, postDocumentFolder);
@@ -759,13 +758,12 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	protected DocumentFolder
-			testPostDocumentFolderDocumentFolder_addDocumentFolder(
+			testPostDocumentFolderDocumentFolders_addDocumentFolder(
 				DocumentFolder documentFolder)
 		throws Exception {
 
-		return documentFolderResource.postDocumentFolderDocumentFolder(
-			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
-			documentFolder);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1048,8 +1046,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			Long siteId, DocumentFolder documentFolder)
 		throws Exception {
 
-		return documentFolderResource.postSiteDocumentFolder(
-			siteId, documentFolder);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetSiteDocumentFoldersPage_getSiteId() throws Exception {
@@ -1119,216 +1117,29 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteDocumentFolder() throws Exception {
+	public void testPostSiteDocumentFolders() throws Exception {
 		DocumentFolder randomDocumentFolder = randomDocumentFolder();
 
 		DocumentFolder postDocumentFolder =
-			testPostSiteDocumentFolder_addDocumentFolder(randomDocumentFolder);
+			testPostSiteDocumentFolders_addDocumentFolder(randomDocumentFolder);
 
 		assertEquals(randomDocumentFolder, postDocumentFolder);
 		assertValid(postDocumentFolder);
 	}
 
-	protected DocumentFolder testPostSiteDocumentFolder_addDocumentFolder(
+	protected DocumentFolder testPostSiteDocumentFolders_addDocumentFolder(
 			DocumentFolder documentFolder)
 		throws Exception {
 
-		return documentFolderResource.postSiteDocumentFolder(
-			testGetSiteDocumentFoldersPage_getSiteId(), documentFolder);
-	}
-
-	@Test
-	public void testGraphQLPostSiteDocumentFolder() throws Exception {
-		DocumentFolder randomDocumentFolder = randomDocumentFolder();
-
-		DocumentFolder documentFolder =
-			testGraphQLDocumentFolder_addDocumentFolder(randomDocumentFolder);
-
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomDocumentFolder,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(documentFolder))));
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected DocumentFolder testGraphQLDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		return testGraphQLDocumentFolder_addDocumentFolder(
-			randomDocumentFolder());
-	}
-
-	protected DocumentFolder testGraphQLDocumentFolder_addDocumentFolder(
-			DocumentFolder documentFolder)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals("description", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = documentFolder.getDescription();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = documentFolder.getId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = documentFolder.getName();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"numberOfDocumentFolders", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = documentFolder.getNumberOfDocumentFolders();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"numberOfDocuments", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = documentFolder.getNumberOfDocuments();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("siteId", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = documentFolder.getSiteId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("subscribed", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = documentFolder.getSubscribed();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		GraphQLField graphQLField = new GraphQLField(
-			"mutation",
-			new GraphQLField(
-				"createSiteDocumentFolder",
-				new HashMap<String, Object>() {
-					{
-						put("siteId", testGroup.getGroupId());
-						put("documentFolder", sb.toString());
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONDeserializer<DocumentFolder> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		String object = invoke(graphQLField.toString());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		return jsonDeserializer.deserialize(
-			String.valueOf(
-				dataJSONObject.getJSONObject("createSiteDocumentFolder")),
-			DocumentFolder.class);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(

@@ -51,12 +51,12 @@ public interface DocumentResource {
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public Document postDocumentFolderDocument(
+	public Document postDocumentFolderDocuments(
 			Long documentFolderId, Document document,
 			Map<String, File> multipartFiles)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postDocumentFolderDocumentHttpResponse(
+	public HttpInvoker.HttpResponse postDocumentFolderDocumentsHttpResponse(
 			Long documentFolderId, Document document,
 			Map<String, File> multipartFiles)
 		throws Exception;
@@ -137,11 +137,11 @@ public interface DocumentResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public Document postSiteDocument(
+	public Document postSiteDocuments(
 			Long siteId, Document document, Map<String, File> multipartFiles)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSiteDocumentHttpResponse(
+	public HttpInvoker.HttpResponse postSiteDocumentsHttpResponse(
 			Long siteId, Document document, Map<String, File> multipartFiles)
 		throws Exception;
 
@@ -284,13 +284,13 @@ public interface DocumentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Document postDocumentFolderDocument(
+		public Document postDocumentFolderDocuments(
 				Long documentFolderId, Document document,
 				Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postDocumentFolderDocumentHttpResponse(
+				postDocumentFolderDocumentsHttpResponse(
 					documentFolderId, document, multipartFiles);
 
 			String content = httpResponse.getContent();
@@ -313,7 +313,7 @@ public interface DocumentResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postDocumentFolderDocumentHttpResponse(
+		public HttpInvoker.HttpResponse postDocumentFolderDocumentsHttpResponse(
 				Long documentFolderId, Document document,
 				Map<String, File> multipartFiles)
 			throws Exception {
@@ -954,13 +954,13 @@ public interface DocumentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Document postSiteDocument(
+		public Document postSiteDocuments(
 				Long siteId, Document document,
 				Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteDocumentHttpResponse(siteId, document, multipartFiles);
+				postSiteDocumentsHttpResponse(siteId, document, multipartFiles);
 
 			String content = httpResponse.getContent();
 
@@ -982,7 +982,7 @@ public interface DocumentResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postSiteDocumentHttpResponse(
+		public HttpInvoker.HttpResponse postSiteDocumentsHttpResponse(
 				Long siteId, Document document,
 				Map<String, File> multipartFiles)
 			throws Exception {

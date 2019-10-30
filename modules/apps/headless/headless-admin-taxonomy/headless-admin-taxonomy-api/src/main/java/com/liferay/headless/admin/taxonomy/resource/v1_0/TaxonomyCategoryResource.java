@@ -49,7 +49,7 @@ public interface TaxonomyCategoryResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategories(
 			Long parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
@@ -72,7 +72,7 @@ public interface TaxonomyCategoryResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
+	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategories(
 			Long taxonomyVocabularyId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 

@@ -85,14 +85,14 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public App createDataDefinitionApp(
+	public App createDataDefinitionApps(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("app") App app)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_appResourceComponentServiceObjects, this::_populateResourceContext,
-			appResource -> appResource.postDataDefinitionApp(
+			appResource -> appResource.postDataDefinitionApps(
 				dataDefinitionId, app));
 	}
 

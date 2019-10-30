@@ -31,7 +31,6 @@ import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyVocabulary
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -490,8 +489,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				Long siteId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		return taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-			siteId, taxonomyVocabulary);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetSiteTaxonomyVocabulariesPage_getSiteId()
@@ -565,12 +564,12 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteTaxonomyVocabulary() throws Exception {
+	public void testPostSiteTaxonomyVocabularies() throws Exception {
 		TaxonomyVocabulary randomTaxonomyVocabulary =
 			randomTaxonomyVocabulary();
 
 		TaxonomyVocabulary postTaxonomyVocabulary =
-			testPostSiteTaxonomyVocabulary_addTaxonomyVocabulary(
+			testPostSiteTaxonomyVocabularies_addTaxonomyVocabulary(
 				randomTaxonomyVocabulary);
 
 		assertEquals(randomTaxonomyVocabulary, postTaxonomyVocabulary);
@@ -578,29 +577,12 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	}
 
 	protected TaxonomyVocabulary
-			testPostSiteTaxonomyVocabulary_addTaxonomyVocabulary(
+			testPostSiteTaxonomyVocabularies_addTaxonomyVocabulary(
 				TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		return taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-			testGetSiteTaxonomyVocabulariesPage_getSiteId(),
-			taxonomyVocabulary);
-	}
-
-	@Test
-	public void testGraphQLPostSiteTaxonomyVocabulary() throws Exception {
-		TaxonomyVocabulary randomTaxonomyVocabulary =
-			randomTaxonomyVocabulary();
-
-		TaxonomyVocabulary taxonomyVocabulary =
-			testGraphQLTaxonomyVocabulary_addTaxonomyVocabulary(
-				randomTaxonomyVocabulary);
-
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomTaxonomyVocabulary,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(taxonomyVocabulary))));
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -627,8 +609,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testDeleteTaxonomyVocabulary_addTaxonomyVocabulary()
 		throws Exception {
 
-		return taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-			testGroup.getGroupId(), randomTaxonomyVocabulary());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -698,8 +680,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGetTaxonomyVocabulary_addTaxonomyVocabulary()
 		throws Exception {
 
-		return taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-			testGroup.getGroupId(), randomTaxonomyVocabulary());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -761,8 +743,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testPatchTaxonomyVocabulary_addTaxonomyVocabulary()
 		throws Exception {
 
-		return taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-			testGroup.getGroupId(), randomTaxonomyVocabulary());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -792,153 +774,16 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testPutTaxonomyVocabulary_addTaxonomyVocabulary()
 		throws Exception {
 
-		return taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-			testGroup.getGroupId(), randomTaxonomyVocabulary());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected TaxonomyVocabulary
 			testGraphQLTaxonomyVocabulary_addTaxonomyVocabulary()
 		throws Exception {
 
-		return testGraphQLTaxonomyVocabulary_addTaxonomyVocabulary(
-			randomTaxonomyVocabulary());
-	}
-
-	protected TaxonomyVocabulary
-			testGraphQLTaxonomyVocabulary_addTaxonomyVocabulary(
-				TaxonomyVocabulary taxonomyVocabulary)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals("description", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = taxonomyVocabulary.getDescription();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = taxonomyVocabulary.getId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = taxonomyVocabulary.getName();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"numberOfTaxonomyCategories", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value =
-					taxonomyVocabulary.getNumberOfTaxonomyCategories();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("siteId", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = taxonomyVocabulary.getSiteId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		GraphQLField graphQLField = new GraphQLField(
-			"mutation",
-			new GraphQLField(
-				"createSiteTaxonomyVocabulary",
-				new HashMap<String, Object>() {
-					{
-						put("siteId", testGroup.getGroupId());
-						put("taxonomyVocabulary", sb.toString());
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONDeserializer<TaxonomyVocabulary> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		String object = invoke(graphQLField.toString());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		return jsonDeserializer.deserialize(
-			String.valueOf(
-				dataJSONObject.getJSONObject("createSiteTaxonomyVocabulary")),
-			TaxonomyVocabulary.class);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(

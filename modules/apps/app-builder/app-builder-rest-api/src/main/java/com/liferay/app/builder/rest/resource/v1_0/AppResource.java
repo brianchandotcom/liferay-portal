@@ -60,7 +60,7 @@ public interface AppResource {
 			Sort[] sorts)
 		throws Exception;
 
-	public App postDataDefinitionApp(Long dataDefinitionId, App app)
+	public App postDataDefinitionApps(Long dataDefinitionId, App app)
 		throws Exception;
 
 	public Page<App> getSiteAppsPage(

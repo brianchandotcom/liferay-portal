@@ -50,11 +50,11 @@ public interface DataListViewResource {
 				String sortString)
 		throws Exception;
 
-	public DataListView postDataDefinitionDataListView(
+	public DataListView postDataDefinitionDataListViews(
 			Long dataDefinitionId, DataListView dataListView)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postDataDefinitionDataListViewHttpResponse(
+	public HttpInvoker.HttpResponse postDataDefinitionDataListViewsHttpResponse(
 			Long dataDefinitionId, DataListView dataListView)
 		throws Exception;
 
@@ -208,12 +208,12 @@ public interface DataListViewResource {
 			return httpInvoker.invoke();
 		}
 
-		public DataListView postDataDefinitionDataListView(
+		public DataListView postDataDefinitionDataListViews(
 				Long dataDefinitionId, DataListView dataListView)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postDataDefinitionDataListViewHttpResponse(
+				postDataDefinitionDataListViewsHttpResponse(
 					dataDefinitionId, dataListView);
 
 			String content = httpResponse.getContent();
@@ -237,7 +237,7 @@ public interface DataListViewResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postDataDefinitionDataListViewHttpResponse(
+				postDataDefinitionDataListViewsHttpResponse(
 					Long dataDefinitionId, DataListView dataListView)
 			throws Exception {
 

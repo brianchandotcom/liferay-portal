@@ -46,7 +46,7 @@ public interface SLAResource {
 			Long processId, Integer status, Pagination pagination)
 		throws Exception;
 
-	public SLA postProcessSLA(Long processId, SLA sla) throws Exception;
+	public SLA postProcessSLAs(Long processId, SLA sla) throws Exception;
 
 	public void deleteSLA(Long slaId) throws Exception;
 

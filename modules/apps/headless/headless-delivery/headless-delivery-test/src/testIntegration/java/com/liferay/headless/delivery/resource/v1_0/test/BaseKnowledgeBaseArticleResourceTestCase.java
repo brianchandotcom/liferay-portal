@@ -32,7 +32,6 @@ import com.liferay.headless.delivery.client.serdes.v1_0.KnowledgeBaseArticleSerD
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -237,8 +236,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testDeleteKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -310,8 +309,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -377,8 +376,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testPatchKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -408,8 +407,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testPutKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -439,8 +438,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -465,8 +464,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testPutKnowledgeBaseArticleSubscribe_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -491,8 +490,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testPutKnowledgeBaseArticleUnsubscribe_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -817,9 +816,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return knowledgeBaseArticleResource.
-			postKnowledgeBaseArticleKnowledgeBaseArticle(
-				parentKnowledgeBaseArticleId, knowledgeBaseArticle);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -838,14 +836,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	@Test
-	public void testPostKnowledgeBaseArticleKnowledgeBaseArticle()
+	public void testPostKnowledgeBaseArticleKnowledgeBaseArticles()
 		throws Exception {
 
 		KnowledgeBaseArticle randomKnowledgeBaseArticle =
 			randomKnowledgeBaseArticle();
 
 		KnowledgeBaseArticle postKnowledgeBaseArticle =
-			testPostKnowledgeBaseArticleKnowledgeBaseArticle_addKnowledgeBaseArticle(
+			testPostKnowledgeBaseArticleKnowledgeBaseArticles_addKnowledgeBaseArticle(
 				randomKnowledgeBaseArticle);
 
 		assertEquals(randomKnowledgeBaseArticle, postKnowledgeBaseArticle);
@@ -853,14 +851,12 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected KnowledgeBaseArticle
-			testPostKnowledgeBaseArticleKnowledgeBaseArticle_addKnowledgeBaseArticle(
+			testPostKnowledgeBaseArticleKnowledgeBaseArticles_addKnowledgeBaseArticle(
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return knowledgeBaseArticleResource.
-			postKnowledgeBaseArticleKnowledgeBaseArticle(
-				testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
-				knowledgeBaseArticle);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1185,9 +1181,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return knowledgeBaseArticleResource.
-			postKnowledgeBaseFolderKnowledgeBaseArticle(
-				knowledgeBaseFolderId, knowledgeBaseArticle);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -1206,14 +1201,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	@Test
-	public void testPostKnowledgeBaseFolderKnowledgeBaseArticle()
+	public void testPostKnowledgeBaseFolderKnowledgeBaseArticles()
 		throws Exception {
 
 		KnowledgeBaseArticle randomKnowledgeBaseArticle =
 			randomKnowledgeBaseArticle();
 
 		KnowledgeBaseArticle postKnowledgeBaseArticle =
-			testPostKnowledgeBaseFolderKnowledgeBaseArticle_addKnowledgeBaseArticle(
+			testPostKnowledgeBaseFolderKnowledgeBaseArticles_addKnowledgeBaseArticle(
 				randomKnowledgeBaseArticle);
 
 		assertEquals(randomKnowledgeBaseArticle, postKnowledgeBaseArticle);
@@ -1221,14 +1216,12 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected KnowledgeBaseArticle
-			testPostKnowledgeBaseFolderKnowledgeBaseArticle_addKnowledgeBaseArticle(
+			testPostKnowledgeBaseFolderKnowledgeBaseArticles_addKnowledgeBaseArticle(
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return knowledgeBaseArticleResource.
-			postKnowledgeBaseFolderKnowledgeBaseArticle(
-				testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getKnowledgeBaseFolderId(),
-				knowledgeBaseArticle);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1527,8 +1520,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-			siteId, knowledgeBaseArticle);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetSiteKnowledgeBaseArticlesPage_getSiteId()
@@ -1602,12 +1595,12 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteKnowledgeBaseArticle() throws Exception {
+	public void testPostSiteKnowledgeBaseArticles() throws Exception {
 		KnowledgeBaseArticle randomKnowledgeBaseArticle =
 			randomKnowledgeBaseArticle();
 
 		KnowledgeBaseArticle postKnowledgeBaseArticle =
-			testPostSiteKnowledgeBaseArticle_addKnowledgeBaseArticle(
+			testPostSiteKnowledgeBaseArticles_addKnowledgeBaseArticle(
 				randomKnowledgeBaseArticle);
 
 		assertEquals(randomKnowledgeBaseArticle, postKnowledgeBaseArticle);
@@ -1615,29 +1608,12 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected KnowledgeBaseArticle
-			testPostSiteKnowledgeBaseArticle_addKnowledgeBaseArticle(
+			testPostSiteKnowledgeBaseArticles_addKnowledgeBaseArticle(
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-			testGetSiteKnowledgeBaseArticlesPage_getSiteId(),
-			knowledgeBaseArticle);
-	}
-
-	@Test
-	public void testGraphQLPostSiteKnowledgeBaseArticle() throws Exception {
-		KnowledgeBaseArticle randomKnowledgeBaseArticle =
-			randomKnowledgeBaseArticle();
-
-		KnowledgeBaseArticle knowledgeBaseArticle =
-			testGraphQLKnowledgeBaseArticle_addKnowledgeBaseArticle(
-				randomKnowledgeBaseArticle);
-
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomKnowledgeBaseArticle,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(knowledgeBaseArticle))));
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1661,8 +1637,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testPutSiteKnowledgeBaseArticleSubscribe_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1686,8 +1662,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testPutSiteKnowledgeBaseArticleUnsubscribe_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1749,259 +1725,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGraphQLKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return testGraphQLKnowledgeBaseArticle_addKnowledgeBaseArticle(
-			randomKnowledgeBaseArticle());
-	}
-
-	protected KnowledgeBaseArticle
-			testGraphQLKnowledgeBaseArticle_addKnowledgeBaseArticle(
-				KnowledgeBaseArticle knowledgeBaseArticle)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals("articleBody", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = knowledgeBaseArticle.getArticleBody();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("description", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = knowledgeBaseArticle.getDescription();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = knowledgeBaseArticle.getEncodingFormat();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = knowledgeBaseArticle.getFriendlyUrlPath();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = knowledgeBaseArticle.getId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"numberOfAttachments", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = knowledgeBaseArticle.getNumberOfAttachments();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"numberOfKnowledgeBaseArticles",
-					additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value =
-					knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"parentKnowledgeBaseFolderId", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value =
-					knowledgeBaseArticle.getParentKnowledgeBaseFolderId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("siteId", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = knowledgeBaseArticle.getSiteId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("subscribed", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = knowledgeBaseArticle.getSubscribed();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("title", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = knowledgeBaseArticle.getTitle();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		GraphQLField graphQLField = new GraphQLField(
-			"mutation",
-			new GraphQLField(
-				"createSiteKnowledgeBaseArticle",
-				new HashMap<String, Object>() {
-					{
-						put("siteId", testGroup.getGroupId());
-						put("knowledgeBaseArticle", sb.toString());
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONDeserializer<KnowledgeBaseArticle> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		String object = invoke(graphQLField.toString());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		return jsonDeserializer.deserialize(
-			String.valueOf(
-				dataJSONObject.getJSONObject("createSiteKnowledgeBaseArticle")),
-			KnowledgeBaseArticle.class);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(

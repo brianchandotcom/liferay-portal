@@ -159,10 +159,11 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
-	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardMessageId") Long messageBoardMessageId,
-			MultipartBody multipartBody)
+	public MessageBoardAttachment
+			postMessageBoardMessageMessageBoardAttachments(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("messageBoardMessageId") Long messageBoardMessageId,
+				MultipartBody multipartBody)
 		throws Exception {
 
 		return new MessageBoardAttachment();
@@ -218,7 +219,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
-	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
+	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachments(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("messageBoardThreadId") Long messageBoardThreadId,
 			MultipartBody multipartBody)

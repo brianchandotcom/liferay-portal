@@ -112,7 +112,7 @@ public abstract class BaseWikiPageResourceImpl implements WikiPageResource {
 	@Path("/wiki-nodes/{wikiNodeId}/wiki-pages/")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiPage")})
-	public WikiPage postWikiNodeWikiPage(
+	public WikiPage postWikiNodeWikiPages(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long
 				wikiNodeId,
 			WikiPage wikiPage)
@@ -198,7 +198,7 @@ public abstract class BaseWikiPageResourceImpl implements WikiPageResource {
 	@Path("/wiki-pages/{parentWikiPageId}/wiki-pages")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiPage")})
-	public WikiPage postWikiPageWikiPage(
+	public WikiPage postWikiPageWikiPages(
 			@NotNull @Parameter(hidden = true) @PathParam("parentWikiPageId")
 				Long parentWikiPageId,
 			WikiPage wikiPage)

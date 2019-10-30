@@ -113,7 +113,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Path("/sites/{siteId}/structured-content-folders")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
-	public StructuredContentFolder postSiteStructuredContentFolder(
+	public StructuredContentFolder postSiteStructuredContentFolders(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			StructuredContentFolder structuredContentFolder)
 		throws Exception {
@@ -185,7 +185,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder
-			postStructuredContentFolderStructuredContentFolder(
+			postStructuredContentFolderStructuredContentFolders(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("parentStructuredContentFolderId") Long
 					parentStructuredContentFolderId,

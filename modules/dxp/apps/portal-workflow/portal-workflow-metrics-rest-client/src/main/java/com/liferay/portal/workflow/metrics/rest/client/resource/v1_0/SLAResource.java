@@ -47,9 +47,9 @@ public interface SLAResource {
 			Long processId, Integer status, Pagination pagination)
 		throws Exception;
 
-	public SLA postProcessSLA(Long processId, SLA sla) throws Exception;
+	public SLA postProcessSLAs(Long processId, SLA sla) throws Exception;
 
-	public HttpInvoker.HttpResponse postProcessSLAHttpResponse(
+	public HttpInvoker.HttpResponse postProcessSLAsHttpResponse(
 			Long processId, SLA sla)
 		throws Exception;
 
@@ -189,8 +189,8 @@ public interface SLAResource {
 			return httpInvoker.invoke();
 		}
 
-		public SLA postProcessSLA(Long processId, SLA sla) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = postProcessSLAHttpResponse(
+		public SLA postProcessSLAs(Long processId, SLA sla) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = postProcessSLAsHttpResponse(
 				processId, sla);
 
 			String content = httpResponse.getContent();
@@ -213,7 +213,7 @@ public interface SLAResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postProcessSLAHttpResponse(
+		public HttpInvoker.HttpResponse postProcessSLAsHttpResponse(
 				Long processId, SLA sla)
 			throws Exception {
 

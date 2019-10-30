@@ -372,7 +372,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@Path("/sites/{siteId}/blog-postings")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPosting")})
-	public BlogPosting postSiteBlogPosting(
+	public BlogPosting postSiteBlogPostings(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			BlogPosting blogPosting)
 		throws Exception {

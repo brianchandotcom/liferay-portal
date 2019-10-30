@@ -273,10 +273,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 				KnowledgeBaseAttachment knowledgeBaseAttachment)
 		throws Exception {
 
-		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				knowledgeBaseArticleId, knowledgeBaseAttachment,
-				getMultipartFiles());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -295,7 +293,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testPostKnowledgeBaseArticleKnowledgeBaseAttachment()
+	public void testPostKnowledgeBaseArticleKnowledgeBaseAttachments()
 		throws Exception {
 
 		KnowledgeBaseAttachment randomKnowledgeBaseAttachment =
@@ -304,7 +302,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		Map<String, File> multipartFiles = getMultipartFiles();
 
 		KnowledgeBaseAttachment postKnowledgeBaseAttachment =
-			testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
+			testPostKnowledgeBaseArticleKnowledgeBaseAttachments_addKnowledgeBaseAttachment(
 				randomKnowledgeBaseAttachment, multipartFiles);
 
 		assertEquals(
@@ -315,15 +313,13 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	}
 
 	protected KnowledgeBaseAttachment
-			testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
+			testPostKnowledgeBaseArticleKnowledgeBaseAttachments_addKnowledgeBaseAttachment(
 				KnowledgeBaseAttachment knowledgeBaseAttachment,
 				Map<String, File> multipartFiles)
 		throws Exception {
 
-		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId(),
-				knowledgeBaseAttachment, multipartFiles);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

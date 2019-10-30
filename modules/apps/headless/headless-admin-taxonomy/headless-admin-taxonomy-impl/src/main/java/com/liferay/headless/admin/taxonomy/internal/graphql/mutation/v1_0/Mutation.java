@@ -93,7 +93,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Keyword createSiteKeyword(
+	public Keyword createSiteKeywords(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("keyword") Keyword keyword)
@@ -102,12 +102,12 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			keywordResource -> keywordResource.postSiteKeyword(
+			keywordResource -> keywordResource.postSiteKeywords(
 				siteId, keyword));
 	}
 
 	@GraphQLField
-	public TaxonomyCategory createTaxonomyCategoryTaxonomyCategory(
+	public TaxonomyCategory createTaxonomyCategoryTaxonomyCategories(
 			@GraphQLName("parentTaxonomyCategoryId") Long
 				parentTaxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
@@ -117,7 +117,7 @@ public class Mutation {
 			_taxonomyCategoryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			taxonomyCategoryResource ->
-				taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
+				taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategories(
 					parentTaxonomyCategoryId, taxonomyCategory));
 	}
 
@@ -165,7 +165,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public TaxonomyCategory createTaxonomyVocabularyTaxonomyCategory(
+	public TaxonomyCategory createTaxonomyVocabularyTaxonomyCategories(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
@@ -174,12 +174,13 @@ public class Mutation {
 			_taxonomyCategoryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			taxonomyCategoryResource ->
-				taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
-					taxonomyVocabularyId, taxonomyCategory));
+				taxonomyCategoryResource.
+					postTaxonomyVocabularyTaxonomyCategories(
+						taxonomyVocabularyId, taxonomyCategory));
 	}
 
 	@GraphQLField
-	public TaxonomyVocabulary createSiteTaxonomyVocabulary(
+	public TaxonomyVocabulary createSiteTaxonomyVocabularies(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
@@ -190,7 +191,7 @@ public class Mutation {
 			_taxonomyVocabularyResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			taxonomyVocabularyResource ->
-				taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
+				taxonomyVocabularyResource.postSiteTaxonomyVocabularies(
 					siteId, taxonomyVocabulary));
 	}
 

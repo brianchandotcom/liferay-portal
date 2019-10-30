@@ -65,14 +65,15 @@ public interface MessageBoardAttachmentResource {
 				Long messageBoardMessageId)
 		throws Exception;
 
-	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
-			Long messageBoardMessageId,
-			MessageBoardAttachment messageBoardAttachment,
-			Map<String, File> multipartFiles)
+	public MessageBoardAttachment
+			postMessageBoardMessageMessageBoardAttachments(
+				Long messageBoardMessageId,
+				MessageBoardAttachment messageBoardAttachment,
+				Map<String, File> multipartFiles)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postMessageBoardMessageMessageBoardAttachmentHttpResponse(
+			postMessageBoardMessageMessageBoardAttachmentsHttpResponse(
 				Long messageBoardMessageId,
 				MessageBoardAttachment messageBoardAttachment,
 				Map<String, File> multipartFiles)
@@ -88,14 +89,14 @@ public interface MessageBoardAttachmentResource {
 				Long messageBoardThreadId)
 		throws Exception;
 
-	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
+	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachments(
 			Long messageBoardThreadId,
 			MessageBoardAttachment messageBoardAttachment,
 			Map<String, File> multipartFiles)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postMessageBoardThreadMessageBoardAttachmentHttpResponse(
+			postMessageBoardThreadMessageBoardAttachmentsHttpResponse(
 				Long messageBoardThreadId,
 				MessageBoardAttachment messageBoardAttachment,
 				Map<String, File> multipartFiles)
@@ -334,14 +335,14 @@ public interface MessageBoardAttachmentResource {
 		}
 
 		public MessageBoardAttachment
-				postMessageBoardMessageMessageBoardAttachment(
+				postMessageBoardMessageMessageBoardAttachments(
 					Long messageBoardMessageId,
 					MessageBoardAttachment messageBoardAttachment,
 					Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postMessageBoardMessageMessageBoardAttachmentHttpResponse(
+				postMessageBoardMessageMessageBoardAttachmentsHttpResponse(
 					messageBoardMessageId, messageBoardAttachment,
 					multipartFiles);
 
@@ -366,7 +367,7 @@ public interface MessageBoardAttachmentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postMessageBoardMessageMessageBoardAttachmentHttpResponse(
+				postMessageBoardMessageMessageBoardAttachmentsHttpResponse(
 					Long messageBoardMessageId,
 					MessageBoardAttachment messageBoardAttachment,
 					Map<String, File> multipartFiles)
@@ -474,14 +475,14 @@ public interface MessageBoardAttachmentResource {
 		}
 
 		public MessageBoardAttachment
-				postMessageBoardThreadMessageBoardAttachment(
+				postMessageBoardThreadMessageBoardAttachments(
 					Long messageBoardThreadId,
 					MessageBoardAttachment messageBoardAttachment,
 					Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postMessageBoardThreadMessageBoardAttachmentHttpResponse(
+				postMessageBoardThreadMessageBoardAttachmentsHttpResponse(
 					messageBoardThreadId, messageBoardAttachment,
 					multipartFiles);
 
@@ -506,7 +507,7 @@ public interface MessageBoardAttachmentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postMessageBoardThreadMessageBoardAttachmentHttpResponse(
+				postMessageBoardThreadMessageBoardAttachmentsHttpResponse(
 					Long messageBoardThreadId,
 					MessageBoardAttachment messageBoardAttachment,
 					Map<String, File> multipartFiles)

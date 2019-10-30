@@ -289,8 +289,8 @@ public abstract class BaseDataRecordResourceTestCase {
 			Long dataDefinitionId, DataRecord dataRecord)
 		throws Exception {
 
-		return dataRecordResource.postDataDefinitionDataRecord(
-			dataDefinitionId, dataRecord);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetDataDefinitionDataRecordsPage_getDataDefinitionId()
@@ -308,23 +308,22 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionDataRecord() throws Exception {
+	public void testPostDataDefinitionDataRecords() throws Exception {
 		DataRecord randomDataRecord = randomDataRecord();
 
 		DataRecord postDataRecord =
-			testPostDataDefinitionDataRecord_addDataRecord(randomDataRecord);
+			testPostDataDefinitionDataRecords_addDataRecord(randomDataRecord);
 
 		assertEquals(randomDataRecord, postDataRecord);
 		assertValid(postDataRecord);
 	}
 
-	protected DataRecord testPostDataDefinitionDataRecord_addDataRecord(
+	protected DataRecord testPostDataDefinitionDataRecords_addDataRecord(
 			DataRecord dataRecord)
 		throws Exception {
 
-		return dataRecordResource.postDataDefinitionDataRecord(
-			testGetDataDefinitionDataRecordsPage_getDataDefinitionId(),
-			dataRecord);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -432,8 +431,8 @@ public abstract class BaseDataRecordResourceTestCase {
 				Long dataRecordCollectionId, DataRecord dataRecord)
 		throws Exception {
 
-		return dataRecordResource.postDataRecordCollectionDataRecord(
-			dataRecordCollectionId, dataRecord);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -452,24 +451,23 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataRecordCollectionDataRecord() throws Exception {
+	public void testPostDataRecordCollectionDataRecords() throws Exception {
 		DataRecord randomDataRecord = randomDataRecord();
 
 		DataRecord postDataRecord =
-			testPostDataRecordCollectionDataRecord_addDataRecord(
+			testPostDataRecordCollectionDataRecords_addDataRecord(
 				randomDataRecord);
 
 		assertEquals(randomDataRecord, postDataRecord);
 		assertValid(postDataRecord);
 	}
 
-	protected DataRecord testPostDataRecordCollectionDataRecord_addDataRecord(
+	protected DataRecord testPostDataRecordCollectionDataRecords_addDataRecord(
 			DataRecord dataRecord)
 		throws Exception {
 
-		return dataRecordResource.postDataRecordCollectionDataRecord(
-			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId(),
-			dataRecord);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

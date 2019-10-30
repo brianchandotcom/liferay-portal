@@ -51,7 +51,7 @@ public interface DocumentResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Document postDocumentFolderDocument(
+	public Document postDocumentFolderDocuments(
 			Long documentFolderId, MultipartBody multipartBody)
 		throws Exception;
 
@@ -80,7 +80,7 @@ public interface DocumentResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Document postSiteDocument(Long siteId, MultipartBody multipartBody)
+	public Document postSiteDocuments(Long siteId, MultipartBody multipartBody)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

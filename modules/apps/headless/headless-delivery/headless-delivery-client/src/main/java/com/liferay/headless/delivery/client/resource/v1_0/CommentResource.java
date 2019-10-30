@@ -49,10 +49,10 @@ public interface CommentResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public Comment postBlogPostingComment(Long blogPostingId, Comment comment)
+	public Comment postBlogPostingComments(Long blogPostingId, Comment comment)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postBlogPostingCommentHttpResponse(
+	public HttpInvoker.HttpResponse postBlogPostingCommentsHttpResponse(
 			Long blogPostingId, Comment comment)
 		throws Exception;
 
@@ -82,10 +82,10 @@ public interface CommentResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public Comment postCommentComment(Long parentCommentId, Comment comment)
+	public Comment postCommentComments(Long parentCommentId, Comment comment)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postCommentCommentHttpResponse(
+	public HttpInvoker.HttpResponse postCommentCommentsHttpResponse(
 			Long parentCommentId, Comment comment)
 		throws Exception;
 
@@ -99,10 +99,10 @@ public interface CommentResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public Comment postDocumentComment(Long documentId, Comment comment)
+	public Comment postDocumentComments(Long documentId, Comment comment)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postDocumentCommentHttpResponse(
+	public HttpInvoker.HttpResponse postDocumentCommentsHttpResponse(
 			Long documentId, Comment comment)
 		throws Exception;
 
@@ -117,11 +117,11 @@ public interface CommentResource {
 				Pagination pagination, String sortString)
 		throws Exception;
 
-	public Comment postStructuredContentComment(
+	public Comment postStructuredContentComments(
 			Long structuredContentId, Comment comment)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postStructuredContentCommentHttpResponse(
+	public HttpInvoker.HttpResponse postStructuredContentCommentsHttpResponse(
 			Long structuredContentId, Comment comment)
 		throws Exception;
 
@@ -258,12 +258,12 @@ public interface CommentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Comment postBlogPostingComment(
+		public Comment postBlogPostingComments(
 				Long blogPostingId, Comment comment)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postBlogPostingCommentHttpResponse(blogPostingId, comment);
+				postBlogPostingCommentsHttpResponse(blogPostingId, comment);
 
 			String content = httpResponse.getContent();
 
@@ -285,7 +285,7 @@ public interface CommentResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postBlogPostingCommentHttpResponse(
+		public HttpInvoker.HttpResponse postBlogPostingCommentsHttpResponse(
 				Long blogPostingId, Comment comment)
 			throws Exception {
 
@@ -577,11 +577,12 @@ public interface CommentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Comment postCommentComment(Long parentCommentId, Comment comment)
+		public Comment postCommentComments(
+				Long parentCommentId, Comment comment)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postCommentCommentHttpResponse(parentCommentId, comment);
+				postCommentCommentsHttpResponse(parentCommentId, comment);
 
 			String content = httpResponse.getContent();
 
@@ -603,7 +604,7 @@ public interface CommentResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postCommentCommentHttpResponse(
+		public HttpInvoker.HttpResponse postCommentCommentsHttpResponse(
 				Long parentCommentId, Comment comment)
 			throws Exception {
 
@@ -719,11 +720,11 @@ public interface CommentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Comment postDocumentComment(Long documentId, Comment comment)
+		public Comment postDocumentComments(Long documentId, Comment comment)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postDocumentCommentHttpResponse(documentId, comment);
+				postDocumentCommentsHttpResponse(documentId, comment);
 
 			String content = httpResponse.getContent();
 
@@ -745,7 +746,7 @@ public interface CommentResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postDocumentCommentHttpResponse(
+		public HttpInvoker.HttpResponse postDocumentCommentsHttpResponse(
 				Long documentId, Comment comment)
 			throws Exception {
 
@@ -864,12 +865,12 @@ public interface CommentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Comment postStructuredContentComment(
+		public Comment postStructuredContentComments(
 				Long structuredContentId, Comment comment)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postStructuredContentCommentHttpResponse(
+				postStructuredContentCommentsHttpResponse(
 					structuredContentId, comment);
 
 			String content = httpResponse.getContent();
@@ -893,7 +894,7 @@ public interface CommentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postStructuredContentCommentHttpResponse(
+				postStructuredContentCommentsHttpResponse(
 					Long structuredContentId, Comment comment)
 			throws Exception {
 

@@ -31,7 +31,6 @@ import com.liferay.data.engine.rest.client.serdes.v1_0.DataDefinitionSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -204,7 +203,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testGetDataDefinitionDataDefinitionFieldFieldType()
+	public void testGetDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception {
 
 		Assert.assertTrue(false);
@@ -232,8 +231,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	protected DataDefinition testDeleteDataDefinition_addDataDefinition()
 		throws Exception {
 
-		return dataDefinitionResource.postSiteDataDefinition(
-			testGroup.getGroupId(), randomDataDefinition());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -299,8 +298,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	protected DataDefinition testGetDataDefinition_addDataDefinition()
 		throws Exception {
 
-		return dataDefinitionResource.postSiteDataDefinition(
-			testGroup.getGroupId(), randomDataDefinition());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -356,62 +355,64 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	protected DataDefinition testPutDataDefinition_addDataDefinition()
 		throws Exception {
 
-		return dataDefinitionResource.postSiteDataDefinition(
-			testGroup.getGroupId(), randomDataDefinition());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testPostDataDefinitionDataDefinitionPermission()
+	public void testPostDataDefinitionDataDefinitionPermissions()
 		throws Exception {
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataDefinition dataDefinition =
-			testPostDataDefinitionDataDefinitionPermission_addDataDefinition();
+			testPostDataDefinitionDataDefinitionPermissions_addDataDefinition();
 
 		assertHttpResponseStatusCode(
 			204,
 			dataDefinitionResource.
-				postDataDefinitionDataDefinitionPermissionHttpResponse(
+				postDataDefinitionDataDefinitionPermissionsHttpResponse(
 					dataDefinition.getId(), null, null));
 
 		assertHttpResponseStatusCode(
 			404,
 			dataDefinitionResource.
-				postDataDefinitionDataDefinitionPermissionHttpResponse(
+				postDataDefinitionDataDefinitionPermissionsHttpResponse(
 					0L, null, null));
 	}
 
 	protected DataDefinition
-			testPostDataDefinitionDataDefinitionPermission_addDataDefinition()
+			testPostDataDefinitionDataDefinitionPermissions_addDataDefinition()
 		throws Exception {
 
-		return dataDefinitionResource.postSiteDataDefinition(
-			testGroup.getGroupId(), randomDataDefinition());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testPostSiteDataDefinitionPermission() throws Exception {
+	public void testPostSiteDataDefinitionPermissions() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataDefinition dataDefinition =
-			testPostSiteDataDefinitionPermission_addDataDefinition();
+			testPostSiteDataDefinitionPermissions_addDataDefinition();
 
 		assertHttpResponseStatusCode(
 			204,
-			dataDefinitionResource.postSiteDataDefinitionPermissionHttpResponse(
-				null, null, null));
+			dataDefinitionResource.
+				postSiteDataDefinitionPermissionsHttpResponse(
+					null, null, null));
 
 		assertHttpResponseStatusCode(
 			404,
-			dataDefinitionResource.postSiteDataDefinitionPermissionHttpResponse(
-				null, null, null));
+			dataDefinitionResource.
+				postSiteDataDefinitionPermissionsHttpResponse(
+					null, null, null));
 	}
 
 	protected DataDefinition
-			testPostSiteDataDefinitionPermission_addDataDefinition()
+			testPostSiteDataDefinitionPermissions_addDataDefinition()
 		throws Exception {
 
-		return dataDefinitionResource.postSiteDataDefinition(
-			testGroup.getGroupId(), randomDataDefinition());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -628,8 +629,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			Long siteId, DataDefinition dataDefinition)
 		throws Exception {
 
-		return dataDefinitionResource.postSiteDataDefinition(
-			siteId, dataDefinition);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetSiteDataDefinitionsPage_getSiteId() throws Exception {
@@ -699,36 +700,22 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteDataDefinition() throws Exception {
+	public void testPostSiteDataDefinitions() throws Exception {
 		DataDefinition randomDataDefinition = randomDataDefinition();
 
 		DataDefinition postDataDefinition =
-			testPostSiteDataDefinition_addDataDefinition(randomDataDefinition);
+			testPostSiteDataDefinitions_addDataDefinition(randomDataDefinition);
 
 		assertEquals(randomDataDefinition, postDataDefinition);
 		assertValid(postDataDefinition);
 	}
 
-	protected DataDefinition testPostSiteDataDefinition_addDataDefinition(
+	protected DataDefinition testPostSiteDataDefinitions_addDataDefinition(
 			DataDefinition dataDefinition)
 		throws Exception {
 
-		return dataDefinitionResource.postSiteDataDefinition(
-			testGetSiteDataDefinitionsPage_getSiteId(), dataDefinition);
-	}
-
-	@Test
-	public void testGraphQLPostSiteDataDefinition() throws Exception {
-		DataDefinition randomDataDefinition = randomDataDefinition();
-
-		DataDefinition dataDefinition =
-			testGraphQLDataDefinition_addDataDefinition(randomDataDefinition);
-
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomDataDefinition,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(dataDefinition))));
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -748,8 +735,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	protected DataDefinition testGetSiteDataDefinition_addDataDefinition()
 		throws Exception {
 
-		return dataDefinitionResource.postSiteDataDefinition(
-			testGroup.getGroupId(), randomDataDefinition());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -787,163 +774,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	protected DataDefinition testGraphQLDataDefinition_addDataDefinition()
 		throws Exception {
 
-		return testGraphQLDataDefinition_addDataDefinition(
-			randomDataDefinition());
-	}
-
-	protected DataDefinition testGraphQLDataDefinition_addDataDefinition(
-			DataDefinition dataDefinition)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals(
-					"dataDefinitionKey", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = dataDefinition.getDataDefinitionKey();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"defaultLanguageId", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = dataDefinition.getDefaultLanguageId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = dataDefinition.getId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("siteId", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = dataDefinition.getSiteId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("storageType", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = dataDefinition.getStorageType();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("userId", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = dataDefinition.getUserId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		GraphQLField graphQLField = new GraphQLField(
-			"mutation",
-			new GraphQLField(
-				"createSiteDataDefinition",
-				new HashMap<String, Object>() {
-					{
-						put("siteId", testGroup.getGroupId());
-						put("dataDefinition", sb.toString());
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONDeserializer<DataDefinition> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		String object = invoke(graphQLField.toString());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		return jsonDeserializer.deserialize(
-			String.valueOf(
-				dataJSONObject.getJSONObject("createSiteDataDefinition")),
-			DataDefinition.class);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(

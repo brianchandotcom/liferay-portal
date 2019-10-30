@@ -325,7 +325,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
-	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
+	public MessageBoardSection postMessageBoardSectionMessageBoardSections(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("parentMessageBoardSectionId") Long
 				parentMessageBoardSectionId,
@@ -383,7 +383,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Path("/sites/{siteId}/message-board-sections")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
-	public MessageBoardSection postSiteMessageBoardSection(
+	public MessageBoardSection postSiteMessageBoardSections(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			MessageBoardSection messageBoardSection)
 		throws Exception {

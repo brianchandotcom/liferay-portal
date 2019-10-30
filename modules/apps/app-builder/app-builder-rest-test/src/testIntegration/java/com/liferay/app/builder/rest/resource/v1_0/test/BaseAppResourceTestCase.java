@@ -513,7 +513,8 @@ public abstract class BaseAppResourceTestCase {
 			Long dataDefinitionId, App app)
 		throws Exception {
 
-		return appResource.postDataDefinitionApp(dataDefinitionId, app);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetDataDefinitionAppsPage_getDataDefinitionId()
@@ -530,18 +531,18 @@ public abstract class BaseAppResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionApp() throws Exception {
+	public void testPostDataDefinitionApps() throws Exception {
 		App randomApp = randomApp();
 
-		App postApp = testPostDataDefinitionApp_addApp(randomApp);
+		App postApp = testPostDataDefinitionApps_addApp(randomApp);
 
 		assertEquals(randomApp, postApp);
 		assertValid(postApp);
 	}
 
-	protected App testPostDataDefinitionApp_addApp(App app) throws Exception {
-		return appResource.postDataDefinitionApp(
-			testGetDataDefinitionAppsPage_getDataDefinitionId(), app);
+	protected App testPostDataDefinitionApps_addApp(App app) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

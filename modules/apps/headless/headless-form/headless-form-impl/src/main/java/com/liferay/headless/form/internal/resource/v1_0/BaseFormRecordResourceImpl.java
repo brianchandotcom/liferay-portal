@@ -139,7 +139,7 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	@Path("/forms/{formId}/form-records")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "FormRecord")})
-	public FormRecord postFormFormRecord(
+	public FormRecord postFormFormRecords(
 			@NotNull @Parameter(hidden = true) @PathParam("formId") Long formId,
 			FormRecord formRecord)
 		throws Exception {

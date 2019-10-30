@@ -50,12 +50,12 @@ public interface TaxonomyCategoryResource {
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategories(
 			Long parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postTaxonomyCategoryTaxonomyCategoryHttpResponse(
+			postTaxonomyCategoryTaxonomyCategoriesHttpResponse(
 				Long parentTaxonomyCategoryId,
 				TaxonomyCategory taxonomyCategory)
 		throws Exception;
@@ -101,12 +101,12 @@ public interface TaxonomyCategoryResource {
 				Pagination pagination, String sortString)
 		throws Exception;
 
-	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
+	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategories(
 			Long taxonomyVocabularyId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postTaxonomyVocabularyTaxonomyCategoryHttpResponse(
+			postTaxonomyVocabularyTaxonomyCategoriesHttpResponse(
 				Long taxonomyVocabularyId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
@@ -246,13 +246,13 @@ public interface TaxonomyCategoryResource {
 			return httpInvoker.invoke();
 		}
 
-		public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+		public TaxonomyCategory postTaxonomyCategoryTaxonomyCategories(
 				Long parentTaxonomyCategoryId,
 				TaxonomyCategory taxonomyCategory)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postTaxonomyCategoryTaxonomyCategoryHttpResponse(
+				postTaxonomyCategoryTaxonomyCategoriesHttpResponse(
 					parentTaxonomyCategoryId, taxonomyCategory);
 
 			String content = httpResponse.getContent();
@@ -276,7 +276,7 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postTaxonomyCategoryTaxonomyCategoryHttpResponse(
+				postTaxonomyCategoryTaxonomyCategoriesHttpResponse(
 					Long parentTaxonomyCategoryId,
 					TaxonomyCategory taxonomyCategory)
 			throws Exception {
@@ -647,12 +647,12 @@ public interface TaxonomyCategoryResource {
 			return httpInvoker.invoke();
 		}
 
-		public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
+		public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategories(
 				Long taxonomyVocabularyId, TaxonomyCategory taxonomyCategory)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postTaxonomyVocabularyTaxonomyCategoryHttpResponse(
+				postTaxonomyVocabularyTaxonomyCategoriesHttpResponse(
 					taxonomyVocabularyId, taxonomyCategory);
 
 			String content = httpResponse.getContent();
@@ -676,7 +676,7 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postTaxonomyVocabularyTaxonomyCategoryHttpResponse(
+				postTaxonomyVocabularyTaxonomyCategoriesHttpResponse(
 					Long taxonomyVocabularyId,
 					TaxonomyCategory taxonomyCategory)
 			throws Exception {

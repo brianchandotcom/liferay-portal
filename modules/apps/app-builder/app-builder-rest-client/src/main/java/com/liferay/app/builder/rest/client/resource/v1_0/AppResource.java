@@ -72,10 +72,10 @@ public interface AppResource {
 			String sortString)
 		throws Exception;
 
-	public App postDataDefinitionApp(Long dataDefinitionId, App app)
+	public App postDataDefinitionApps(Long dataDefinitionId, App app)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postDataDefinitionAppHttpResponse(
+	public HttpInvoker.HttpResponse postDataDefinitionAppsHttpResponse(
 			Long dataDefinitionId, App app)
 		throws Exception;
 
@@ -444,11 +444,11 @@ public interface AppResource {
 			return httpInvoker.invoke();
 		}
 
-		public App postDataDefinitionApp(Long dataDefinitionId, App app)
+		public App postDataDefinitionApps(Long dataDefinitionId, App app)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postDataDefinitionAppHttpResponse(dataDefinitionId, app);
+				postDataDefinitionAppsHttpResponse(dataDefinitionId, app);
 
 			String content = httpResponse.getContent();
 
@@ -470,7 +470,7 @@ public interface AppResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postDataDefinitionAppHttpResponse(
+		public HttpInvoker.HttpResponse postDataDefinitionAppsHttpResponse(
 				Long dataDefinitionId, App app)
 			throws Exception {
 

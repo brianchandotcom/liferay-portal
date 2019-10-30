@@ -509,8 +509,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		return taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
-			parentTaxonomyCategoryId, taxonomyCategory);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -529,11 +529,11 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testPostTaxonomyCategoryTaxonomyCategory() throws Exception {
+	public void testPostTaxonomyCategoryTaxonomyCategories() throws Exception {
 		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
 
 		TaxonomyCategory postTaxonomyCategory =
-			testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
+			testPostTaxonomyCategoryTaxonomyCategories_addTaxonomyCategory(
 				randomTaxonomyCategory);
 
 		assertEquals(randomTaxonomyCategory, postTaxonomyCategory);
@@ -541,13 +541,12 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	protected TaxonomyCategory
-			testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
+			testPostTaxonomyCategoryTaxonomyCategories_addTaxonomyCategory(
 				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		return taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
-			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId(),
-			taxonomyCategory);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1048,8 +1047,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				Long taxonomyVocabularyId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		return taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
-			taxonomyVocabularyId, taxonomyCategory);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -1068,11 +1067,13 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testPostTaxonomyVocabularyTaxonomyCategory() throws Exception {
+	public void testPostTaxonomyVocabularyTaxonomyCategories()
+		throws Exception {
+
 		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
 
 		TaxonomyCategory postTaxonomyCategory =
-			testPostTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
+			testPostTaxonomyVocabularyTaxonomyCategories_addTaxonomyCategory(
 				randomTaxonomyCategory);
 
 		assertEquals(randomTaxonomyCategory, postTaxonomyCategory);
@@ -1080,13 +1081,12 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	protected TaxonomyCategory
-			testPostTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
+			testPostTaxonomyVocabularyTaxonomyCategories_addTaxonomyCategory(
 				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		return taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
-			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId(),
-			taxonomyCategory);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected TaxonomyCategory testGraphQLTaxonomyCategory_addTaxonomyCategory()

@@ -124,7 +124,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
-	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
+	public MessageBoardThread postMessageBoardSectionMessageBoardThreads(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("messageBoardSectionId") Long messageBoardSectionId,
 			MessageBoardThread messageBoardThread)
@@ -505,7 +505,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Path("/sites/{siteId}/message-board-threads")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
-	public MessageBoardThread postSiteMessageBoardThread(
+	public MessageBoardThread postSiteMessageBoardThreads(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			MessageBoardThread messageBoardThread)
 		throws Exception {

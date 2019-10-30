@@ -412,8 +412,8 @@ public abstract class BaseDataListViewResourceTestCase {
 				Long dataDefinitionId, DataListView dataListView)
 		throws Exception {
 
-		return dataListViewResource.postDataDefinitionDataListView(
-			dataDefinitionId, dataListView);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetDataDefinitionDataListViewsPage_getDataDefinitionId()
@@ -431,24 +431,23 @@ public abstract class BaseDataListViewResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionDataListView() throws Exception {
+	public void testPostDataDefinitionDataListViews() throws Exception {
 		DataListView randomDataListView = randomDataListView();
 
 		DataListView postDataListView =
-			testPostDataDefinitionDataListView_addDataListView(
+			testPostDataDefinitionDataListViews_addDataListView(
 				randomDataListView);
 
 		assertEquals(randomDataListView, postDataListView);
 		assertValid(postDataListView);
 	}
 
-	protected DataListView testPostDataDefinitionDataListView_addDataListView(
+	protected DataListView testPostDataDefinitionDataListViews_addDataListView(
 			DataListView dataListView)
 		throws Exception {
 
-		return dataListViewResource.postDataDefinitionDataListView(
-			testGetDataDefinitionDataListViewsPage_getDataDefinitionId(),
-			dataListView);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

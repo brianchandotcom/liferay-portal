@@ -39,11 +39,11 @@ public interface DataDefinitionResource {
 		return new Builder();
 	}
 
-	public String getDataDefinitionDataDefinitionFieldFieldType()
+	public String getDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getDataDefinitionDataDefinitionFieldFieldTypeHttpResponse()
+			getDataDefinitionDataDefinitionFieldFieldTypesHttpResponse()
 		throws Exception;
 
 	public void deleteDataDefinition(Long dataDefinitionId) throws Exception;
@@ -67,27 +67,27 @@ public interface DataDefinitionResource {
 			Long dataDefinitionId, DataDefinition dataDefinition)
 		throws Exception;
 
-	public void postDataDefinitionDataDefinitionPermission(
+	public void postDataDefinitionDataDefinitionPermissions(
 			Long dataDefinitionId, String operation,
 			com.liferay.data.engine.rest.client.dto.v1_0.
 				DataDefinitionPermission dataDefinitionPermission)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postDataDefinitionDataDefinitionPermissionHttpResponse(
+			postDataDefinitionDataDefinitionPermissionsHttpResponse(
 				Long dataDefinitionId, String operation,
 				com.liferay.data.engine.rest.client.dto.v1_0.
 					DataDefinitionPermission dataDefinitionPermission)
 		throws Exception;
 
-	public void postSiteDataDefinitionPermission(
+	public void postSiteDataDefinitionPermissions(
 			Long siteId, String operation,
 			com.liferay.data.engine.rest.client.dto.v1_0.
 				DataDefinitionPermission dataDefinitionPermission)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postSiteDataDefinitionPermissionHttpResponse(
+			postSiteDataDefinitionPermissionsHttpResponse(
 				Long siteId, String operation,
 				com.liferay.data.engine.rest.client.dto.v1_0.
 					DataDefinitionPermission dataDefinitionPermission)
@@ -103,11 +103,11 @@ public interface DataDefinitionResource {
 			String sortString)
 		throws Exception;
 
-	public DataDefinition postSiteDataDefinition(
+	public DataDefinition postSiteDataDefinitions(
 			Long siteId, DataDefinition dataDefinition)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSiteDataDefinitionHttpResponse(
+	public HttpInvoker.HttpResponse postSiteDataDefinitionsHttpResponse(
 			Long siteId, DataDefinition dataDefinition)
 		throws Exception;
 
@@ -175,11 +175,11 @@ public interface DataDefinitionResource {
 	public static class DataDefinitionResourceImpl
 		implements DataDefinitionResource {
 
-		public String getDataDefinitionDataDefinitionFieldFieldType()
+		public String getDataDefinitionDataDefinitionFieldFieldTypes()
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getDataDefinitionDataDefinitionFieldFieldTypeHttpResponse();
+				getDataDefinitionDataDefinitionFieldFieldTypesHttpResponse();
 
 			String content = httpResponse.getContent();
 
@@ -193,7 +193,7 @@ public interface DataDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getDataDefinitionDataDefinitionFieldFieldTypeHttpResponse()
+				getDataDefinitionDataDefinitionFieldFieldTypesHttpResponse()
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -409,14 +409,14 @@ public interface DataDefinitionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postDataDefinitionDataDefinitionPermission(
+		public void postDataDefinitionDataDefinitionPermissions(
 				Long dataDefinitionId, String operation,
 				com.liferay.data.engine.rest.client.dto.v1_0.
 					DataDefinitionPermission dataDefinitionPermission)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postDataDefinitionDataDefinitionPermissionHttpResponse(
+				postDataDefinitionDataDefinitionPermissionsHttpResponse(
 					dataDefinitionId, operation, dataDefinitionPermission);
 
 			String content = httpResponse.getContent();
@@ -429,7 +429,7 @@ public interface DataDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postDataDefinitionDataDefinitionPermissionHttpResponse(
+				postDataDefinitionDataDefinitionPermissionsHttpResponse(
 					Long dataDefinitionId, String operation,
 					com.liferay.data.engine.rest.client.dto.v1_0.
 						DataDefinitionPermission dataDefinitionPermission)
@@ -475,14 +475,14 @@ public interface DataDefinitionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postSiteDataDefinitionPermission(
+		public void postSiteDataDefinitionPermissions(
 				Long siteId, String operation,
 				com.liferay.data.engine.rest.client.dto.v1_0.
 					DataDefinitionPermission dataDefinitionPermission)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteDataDefinitionPermissionHttpResponse(
+				postSiteDataDefinitionPermissionsHttpResponse(
 					siteId, operation, dataDefinitionPermission);
 
 			String content = httpResponse.getContent();
@@ -495,7 +495,7 @@ public interface DataDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postSiteDataDefinitionPermissionHttpResponse(
+				postSiteDataDefinitionPermissionsHttpResponse(
 					Long siteId, String operation,
 					com.liferay.data.engine.rest.client.dto.v1_0.
 						DataDefinitionPermission dataDefinitionPermission)
@@ -614,12 +614,12 @@ public interface DataDefinitionResource {
 			return httpInvoker.invoke();
 		}
 
-		public DataDefinition postSiteDataDefinition(
+		public DataDefinition postSiteDataDefinitions(
 				Long siteId, DataDefinition dataDefinition)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteDataDefinitionHttpResponse(siteId, dataDefinition);
+				postSiteDataDefinitionsHttpResponse(siteId, dataDefinition);
 
 			String content = httpResponse.getContent();
 
@@ -641,7 +641,7 @@ public interface DataDefinitionResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postSiteDataDefinitionHttpResponse(
+		public HttpInvoker.HttpResponse postSiteDataDefinitionsHttpResponse(
 				Long siteId, DataDefinition dataDefinition)
 			throws Exception {
 

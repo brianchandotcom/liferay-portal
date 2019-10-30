@@ -453,7 +453,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
-	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
+	public MessageBoardMessage postMessageBoardMessageMessageBoardMessages(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("parentMessageBoardMessageId") Long
 				parentMessageBoardMessageId,
@@ -521,7 +521,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
-	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
+	public MessageBoardMessage postMessageBoardThreadMessageBoardMessages(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("messageBoardThreadId") Long messageBoardThreadId,
 			MessageBoardMessage messageBoardMessage)

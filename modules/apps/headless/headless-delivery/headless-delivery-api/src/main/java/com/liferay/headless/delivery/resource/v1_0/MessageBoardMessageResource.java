@@ -86,7 +86,7 @@ public interface MessageBoardMessageResource {
 				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
+	public MessageBoardMessage postMessageBoardMessageMessageBoardMessages(
 			Long parentMessageBoardMessageId,
 			MessageBoardMessage messageBoardMessage)
 		throws Exception;
@@ -97,7 +97,7 @@ public interface MessageBoardMessageResource {
 				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
+	public MessageBoardMessage postMessageBoardThreadMessageBoardMessages(
 			Long messageBoardThreadId, MessageBoardMessage messageBoardMessage)
 		throws Exception;
 

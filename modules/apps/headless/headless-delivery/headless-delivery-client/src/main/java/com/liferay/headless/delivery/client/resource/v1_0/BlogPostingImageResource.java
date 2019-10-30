@@ -65,12 +65,12 @@ public interface BlogPostingImageResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public BlogPostingImage postSiteBlogPostingImage(
+	public BlogPostingImage postSiteBlogPostingImages(
 			Long siteId, BlogPostingImage blogPostingImage,
 			Map<String, File> multipartFiles)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSiteBlogPostingImageHttpResponse(
+	public HttpInvoker.HttpResponse postSiteBlogPostingImagesHttpResponse(
 			Long siteId, BlogPostingImage blogPostingImage,
 			Map<String, File> multipartFiles)
 		throws Exception;
@@ -324,13 +324,13 @@ public interface BlogPostingImageResource {
 			return httpInvoker.invoke();
 		}
 
-		public BlogPostingImage postSiteBlogPostingImage(
+		public BlogPostingImage postSiteBlogPostingImages(
 				Long siteId, BlogPostingImage blogPostingImage,
 				Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteBlogPostingImageHttpResponse(
+				postSiteBlogPostingImagesHttpResponse(
 					siteId, blogPostingImage, multipartFiles);
 
 			String content = httpResponse.getContent();
@@ -353,7 +353,7 @@ public interface BlogPostingImageResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postSiteBlogPostingImageHttpResponse(
+		public HttpInvoker.HttpResponse postSiteBlogPostingImagesHttpResponse(
 				Long siteId, BlogPostingImage blogPostingImage,
 				Map<String, File> multipartFiles)
 			throws Exception {

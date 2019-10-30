@@ -49,7 +49,7 @@ public interface WikiPageResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public WikiPage postWikiNodeWikiPage(Long wikiNodeId, WikiPage wikiPage)
+	public WikiPage postWikiNodeWikiPages(Long wikiNodeId, WikiPage wikiPage)
 		throws Exception;
 
 	public void putWikiPageSubscribe(Long wikiPageId) throws Exception;
@@ -59,7 +59,7 @@ public interface WikiPageResource {
 	public Page<WikiPage> getWikiPageWikiPagesPage(Long parentWikiPageId)
 		throws Exception;
 
-	public WikiPage postWikiPageWikiPage(
+	public WikiPage postWikiPageWikiPages(
 			Long parentWikiPageId, WikiPage wikiPage)
 		throws Exception;
 

@@ -49,7 +49,7 @@ public interface WikiNodeResource {
 			Sort[] sorts)
 		throws Exception;
 
-	public WikiNode postSiteWikiNode(Long siteId, WikiNode wikiNode)
+	public WikiNode postSiteWikiNodes(Long siteId, WikiNode wikiNode)
 		throws Exception;
 
 	public void putWikiNodeSubscribe(Long wikiNodeId) throws Exception;

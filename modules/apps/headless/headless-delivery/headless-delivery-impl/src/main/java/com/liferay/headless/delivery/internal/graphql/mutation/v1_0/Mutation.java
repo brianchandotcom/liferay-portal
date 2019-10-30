@@ -293,7 +293,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public BlogPosting createSiteBlogPosting(
+	public BlogPosting createSiteBlogPostings(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("blogPosting") BlogPosting blogPosting)
@@ -302,7 +302,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			blogPostingResource -> blogPostingResource.postSiteBlogPosting(
+			blogPostingResource -> blogPostingResource.postSiteBlogPostings(
 				siteId, blogPosting));
 	}
 
@@ -352,8 +352,8 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLName("postSiteBlogPostingImageSiteIdMultipartBody")
-	public BlogPostingImage createSiteBlogPostingImage(
+	@GraphQLName("postSiteBlogPostingImagesSiteIdMultipartBody")
+	public BlogPostingImage createSiteBlogPostingImages(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
@@ -363,12 +363,12 @@ public class Mutation {
 			_blogPostingImageResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			blogPostingImageResource ->
-				blogPostingImageResource.postSiteBlogPostingImage(
+				blogPostingImageResource.postSiteBlogPostingImages(
 					siteId, multipartBody));
 	}
 
 	@GraphQLField
-	public Comment createBlogPostingComment(
+	public Comment createBlogPostingComments(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
@@ -376,7 +376,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			commentResource -> commentResource.postBlogPostingComment(
+			commentResource -> commentResource.postBlogPostingComments(
 				blogPostingId, comment));
 	}
 
@@ -405,7 +405,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Comment createCommentComment(
+	public Comment createCommentComments(
 			@GraphQLName("parentCommentId") Long parentCommentId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
@@ -413,12 +413,12 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			commentResource -> commentResource.postCommentComment(
+			commentResource -> commentResource.postCommentComments(
 				parentCommentId, comment));
 	}
 
 	@GraphQLField
-	public Comment createDocumentComment(
+	public Comment createDocumentComments(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
@@ -426,12 +426,12 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			commentResource -> commentResource.postDocumentComment(
+			commentResource -> commentResource.postDocumentComments(
 				documentId, comment));
 	}
 
 	@GraphQLField
-	public Comment createStructuredContentComment(
+	public Comment createStructuredContentComments(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
@@ -439,13 +439,13 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			commentResource -> commentResource.postStructuredContentComment(
+			commentResource -> commentResource.postStructuredContentComments(
 				structuredContentId, comment));
 	}
 
 	@GraphQLField
-	@GraphQLName("postDocumentFolderDocumentDocumentFolderIdMultipartBody")
-	public Document createDocumentFolderDocument(
+	@GraphQLName("postDocumentFolderDocumentsDocumentFolderIdMultipartBody")
+	public Document createDocumentFolderDocuments(
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
@@ -453,7 +453,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			documentResource -> documentResource.postDocumentFolderDocument(
+			documentResource -> documentResource.postDocumentFolderDocuments(
 				documentFolderId, multipartBody));
 	}
 
@@ -538,8 +538,8 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLName("postSiteDocumentSiteIdMultipartBody")
-	public Document createSiteDocument(
+	@GraphQLName("postSiteDocumentsSiteIdMultipartBody")
+	public Document createSiteDocuments(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
@@ -548,7 +548,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			documentResource -> documentResource.postSiteDocument(
+			documentResource -> documentResource.postSiteDocuments(
 				siteId, multipartBody));
 	}
 
@@ -624,7 +624,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public DocumentFolder createDocumentFolderDocumentFolder(
+	public DocumentFolder createDocumentFolderDocumentFolders(
 			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
 		throws Exception {
@@ -633,12 +633,12 @@ public class Mutation {
 			_documentFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			documentFolderResource ->
-				documentFolderResource.postDocumentFolderDocumentFolder(
+				documentFolderResource.postDocumentFolderDocumentFolders(
 					parentDocumentFolderId, documentFolder));
 	}
 
 	@GraphQLField
-	public DocumentFolder createSiteDocumentFolder(
+	public DocumentFolder createSiteDocumentFolders(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
@@ -648,7 +648,7 @@ public class Mutation {
 			_documentFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			documentFolderResource ->
-				documentFolderResource.postSiteDocumentFolder(
+				documentFolderResource.postSiteDocumentFolders(
 					siteId, documentFolder));
 	}
 
@@ -771,7 +771,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseArticle createKnowledgeBaseArticleKnowledgeBaseArticle(
+	public KnowledgeBaseArticle createKnowledgeBaseArticleKnowledgeBaseArticles(
 			@GraphQLName("parentKnowledgeBaseArticleId") Long
 				parentKnowledgeBaseArticleId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
@@ -783,12 +783,12 @@ public class Mutation {
 			this::_populateResourceContext,
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.
-					postKnowledgeBaseArticleKnowledgeBaseArticle(
+					postKnowledgeBaseArticleKnowledgeBaseArticles(
 						parentKnowledgeBaseArticleId, knowledgeBaseArticle));
 	}
 
 	@GraphQLField
-	public KnowledgeBaseArticle createKnowledgeBaseFolderKnowledgeBaseArticle(
+	public KnowledgeBaseArticle createKnowledgeBaseFolderKnowledgeBaseArticles(
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
 				knowledgeBaseArticle)
@@ -799,12 +799,12 @@ public class Mutation {
 			this::_populateResourceContext,
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.
-					postKnowledgeBaseFolderKnowledgeBaseArticle(
+					postKnowledgeBaseFolderKnowledgeBaseArticles(
 						knowledgeBaseFolderId, knowledgeBaseArticle));
 	}
 
 	@GraphQLField
-	public KnowledgeBaseArticle createSiteKnowledgeBaseArticle(
+	public KnowledgeBaseArticle createSiteKnowledgeBaseArticles(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
@@ -815,7 +815,7 @@ public class Mutation {
 			_knowledgeBaseArticleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
+				knowledgeBaseArticleResource.postSiteKnowledgeBaseArticles(
 					siteId, knowledgeBaseArticle));
 	}
 
@@ -853,10 +853,10 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLName(
-		"postKnowledgeBaseArticleKnowledgeBaseAttachmentKnowledgeBaseArticleIdMultipartBody"
+		"postKnowledgeBaseArticleKnowledgeBaseAttachmentsKnowledgeBaseArticleIdMultipartBody"
 	)
 	public KnowledgeBaseAttachment
-			createKnowledgeBaseArticleKnowledgeBaseAttachment(
+			createKnowledgeBaseArticleKnowledgeBaseAttachments(
 				@GraphQLName("knowledgeBaseArticleId") Long
 					knowledgeBaseArticleId,
 				@GraphQLName("multipartBody") MultipartBody multipartBody)
@@ -867,7 +867,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			knowledgeBaseAttachmentResource ->
 				knowledgeBaseAttachmentResource.
-					postKnowledgeBaseArticleKnowledgeBaseAttachment(
+					postKnowledgeBaseArticleKnowledgeBaseAttachments(
 						knowledgeBaseArticleId, multipartBody));
 	}
 
@@ -933,7 +933,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseFolder createKnowledgeBaseFolderKnowledgeBaseFolder(
+	public KnowledgeBaseFolder createKnowledgeBaseFolderKnowledgeBaseFolders(
 			@GraphQLName("parentKnowledgeBaseFolderId") Long
 				parentKnowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
@@ -945,12 +945,12 @@ public class Mutation {
 			this::_populateResourceContext,
 			knowledgeBaseFolderResource ->
 				knowledgeBaseFolderResource.
-					postKnowledgeBaseFolderKnowledgeBaseFolder(
+					postKnowledgeBaseFolderKnowledgeBaseFolders(
 						parentKnowledgeBaseFolderId, knowledgeBaseFolder));
 	}
 
 	@GraphQLField
-	public KnowledgeBaseFolder createSiteKnowledgeBaseFolder(
+	public KnowledgeBaseFolder createSiteKnowledgeBaseFolders(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
@@ -961,7 +961,7 @@ public class Mutation {
 			_knowledgeBaseFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			knowledgeBaseFolderResource ->
-				knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+				knowledgeBaseFolderResource.postSiteKnowledgeBaseFolders(
 					siteId, knowledgeBaseFolder));
 	}
 
@@ -983,10 +983,10 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLName(
-		"postMessageBoardMessageMessageBoardAttachmentMessageBoardMessageIdMultipartBody"
+		"postMessageBoardMessageMessageBoardAttachmentsMessageBoardMessageIdMultipartBody"
 	)
 	public MessageBoardAttachment
-			createMessageBoardMessageMessageBoardAttachment(
+			createMessageBoardMessageMessageBoardAttachments(
 				@GraphQLName("messageBoardMessageId") Long
 					messageBoardMessageId,
 				@GraphQLName("multipartBody") MultipartBody multipartBody)
@@ -997,16 +997,16 @@ public class Mutation {
 			this::_populateResourceContext,
 			messageBoardAttachmentResource ->
 				messageBoardAttachmentResource.
-					postMessageBoardMessageMessageBoardAttachment(
+					postMessageBoardMessageMessageBoardAttachments(
 						messageBoardMessageId, multipartBody));
 	}
 
 	@GraphQLField
 	@GraphQLName(
-		"postMessageBoardThreadMessageBoardAttachmentMessageBoardThreadIdMultipartBody"
+		"postMessageBoardThreadMessageBoardAttachmentsMessageBoardThreadIdMultipartBody"
 	)
 	public MessageBoardAttachment
-			createMessageBoardThreadMessageBoardAttachment(
+			createMessageBoardThreadMessageBoardAttachments(
 				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 				@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
@@ -1016,7 +1016,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			messageBoardAttachmentResource ->
 				messageBoardAttachmentResource.
-					postMessageBoardThreadMessageBoardAttachment(
+					postMessageBoardThreadMessageBoardAttachments(
 						messageBoardThreadId, multipartBody));
 	}
 
@@ -1139,7 +1139,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public MessageBoardMessage createMessageBoardMessageMessageBoardMessage(
+	public MessageBoardMessage createMessageBoardMessageMessageBoardMessages(
 			@GraphQLName("parentMessageBoardMessageId") Long
 				parentMessageBoardMessageId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
@@ -1151,12 +1151,12 @@ public class Mutation {
 			this::_populateResourceContext,
 			messageBoardMessageResource ->
 				messageBoardMessageResource.
-					postMessageBoardMessageMessageBoardMessage(
+					postMessageBoardMessageMessageBoardMessages(
 						parentMessageBoardMessageId, messageBoardMessage));
 	}
 
 	@GraphQLField
-	public MessageBoardMessage createMessageBoardThreadMessageBoardMessage(
+	public MessageBoardMessage createMessageBoardThreadMessageBoardMessages(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
 				messageBoardMessage)
@@ -1167,7 +1167,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			messageBoardMessageResource ->
 				messageBoardMessageResource.
-					postMessageBoardThreadMessageBoardMessage(
+					postMessageBoardThreadMessageBoardMessages(
 						messageBoardThreadId, messageBoardMessage));
 	}
 
@@ -1247,7 +1247,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public MessageBoardSection createMessageBoardSectionMessageBoardSection(
+	public MessageBoardSection createMessageBoardSectionMessageBoardSections(
 			@GraphQLName("parentMessageBoardSectionId") Long
 				parentMessageBoardSectionId,
 			@GraphQLName("messageBoardSection") MessageBoardSection
@@ -1259,12 +1259,12 @@ public class Mutation {
 			this::_populateResourceContext,
 			messageBoardSectionResource ->
 				messageBoardSectionResource.
-					postMessageBoardSectionMessageBoardSection(
+					postMessageBoardSectionMessageBoardSections(
 						parentMessageBoardSectionId, messageBoardSection));
 	}
 
 	@GraphQLField
-	public MessageBoardSection createSiteMessageBoardSection(
+	public MessageBoardSection createSiteMessageBoardSections(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("messageBoardSection") MessageBoardSection
@@ -1275,12 +1275,12 @@ public class Mutation {
 			_messageBoardSectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			messageBoardSectionResource ->
-				messageBoardSectionResource.postSiteMessageBoardSection(
+				messageBoardSectionResource.postSiteMessageBoardSections(
 					siteId, messageBoardSection));
 	}
 
 	@GraphQLField
-	public MessageBoardThread createMessageBoardSectionMessageBoardThread(
+	public MessageBoardThread createMessageBoardSectionMessageBoardThreads(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
 			@GraphQLName("messageBoardThread") MessageBoardThread
 				messageBoardThread)
@@ -1291,7 +1291,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			messageBoardThreadResource ->
 				messageBoardThreadResource.
-					postMessageBoardSectionMessageBoardThread(
+					postMessageBoardSectionMessageBoardThreads(
 						messageBoardSectionId, messageBoardThread));
 	}
 
@@ -1414,7 +1414,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public MessageBoardThread createSiteMessageBoardThread(
+	public MessageBoardThread createSiteMessageBoardThreads(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("messageBoardThread") MessageBoardThread
@@ -1425,12 +1425,12 @@ public class Mutation {
 			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			messageBoardThreadResource ->
-				messageBoardThreadResource.postSiteMessageBoardThread(
+				messageBoardThreadResource.postSiteMessageBoardThreads(
 					siteId, messageBoardThread));
 	}
 
 	@GraphQLField
-	public StructuredContent createSiteStructuredContent(
+	public StructuredContent createSiteStructuredContents(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("structuredContent") StructuredContent
@@ -1441,12 +1441,12 @@ public class Mutation {
 			_structuredContentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			structuredContentResource ->
-				structuredContentResource.postSiteStructuredContent(
+				structuredContentResource.postSiteStructuredContents(
 					siteId, structuredContent));
 	}
 
 	@GraphQLField
-	public StructuredContent createStructuredContentFolderStructuredContent(
+	public StructuredContent createStructuredContentFolderStructuredContents(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId,
 			@GraphQLName("structuredContent") StructuredContent
@@ -1458,7 +1458,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			structuredContentResource ->
 				structuredContentResource.
-					postStructuredContentFolderStructuredContent(
+					postStructuredContentFolderStructuredContents(
 						structuredContentFolderId, structuredContent));
 	}
 
@@ -1581,7 +1581,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public StructuredContentFolder createSiteStructuredContentFolder(
+	public StructuredContentFolder createSiteStructuredContentFolders(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("structuredContentFolder") StructuredContentFolder
@@ -1592,13 +1592,14 @@ public class Mutation {
 			_structuredContentFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			structuredContentFolderResource ->
-				structuredContentFolderResource.postSiteStructuredContentFolder(
-					siteId, structuredContentFolder));
+				structuredContentFolderResource.
+					postSiteStructuredContentFolders(
+						siteId, structuredContentFolder));
 	}
 
 	@GraphQLField
 	public StructuredContentFolder
-			createStructuredContentFolderStructuredContentFolder(
+			createStructuredContentFolderStructuredContentFolders(
 				@GraphQLName("parentStructuredContentFolderId") Long
 					parentStructuredContentFolderId,
 				@GraphQLName("structuredContentFolder") StructuredContentFolder
@@ -1610,7 +1611,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			structuredContentFolderResource ->
 				structuredContentFolderResource.
-					postStructuredContentFolderStructuredContentFolder(
+					postStructuredContentFolderStructuredContentFolders(
 						parentStructuredContentFolderId,
 						structuredContentFolder));
 	}
@@ -1698,7 +1699,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public WikiNode createSiteWikiNode(
+	public WikiNode createSiteWikiNodes(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("wikiNode") WikiNode wikiNode)
@@ -1707,7 +1708,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_wikiNodeResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			wikiNodeResource -> wikiNodeResource.postSiteWikiNode(
+			wikiNodeResource -> wikiNodeResource.postSiteWikiNodes(
 				siteId, wikiNode));
 	}
 
@@ -1765,7 +1766,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public WikiPage createWikiNodeWikiPage(
+	public WikiPage createWikiNodeWikiPages(
 			@GraphQLName("wikiNodeId") Long wikiNodeId,
 			@GraphQLName("wikiPage") WikiPage wikiPage)
 		throws Exception {
@@ -1773,7 +1774,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_wikiPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			wikiPageResource -> wikiPageResource.postWikiNodeWikiPage(
+			wikiPageResource -> wikiPageResource.postWikiNodeWikiPages(
 				wikiNodeId, wikiPage));
 	}
 
@@ -1806,7 +1807,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public WikiPage createWikiPageWikiPage(
+	public WikiPage createWikiPageWikiPages(
 			@GraphQLName("parentWikiPageId") Long parentWikiPageId,
 			@GraphQLName("wikiPage") WikiPage wikiPage)
 		throws Exception {
@@ -1814,7 +1815,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_wikiPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			wikiPageResource -> wikiPageResource.postWikiPageWikiPage(
+			wikiPageResource -> wikiPageResource.postWikiPageWikiPages(
 				parentWikiPageId, wikiPage));
 	}
 
@@ -1859,8 +1860,8 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLName("postWikiPageWikiPageAttachmentWikiPageIdMultipartBody")
-	public WikiPageAttachment createWikiPageWikiPageAttachment(
+	@GraphQLName("postWikiPageWikiPageAttachmentsWikiPageIdMultipartBody")
+	public WikiPageAttachment createWikiPageWikiPageAttachments(
 			@GraphQLName("wikiPageId") Long wikiPageId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
@@ -1869,7 +1870,7 @@ public class Mutation {
 			_wikiPageAttachmentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			wikiPageAttachmentResource ->
-				wikiPageAttachmentResource.postWikiPageWikiPageAttachment(
+				wikiPageAttachmentResource.postWikiPageWikiPageAttachments(
 					wikiPageId, multipartBody));
 	}
 

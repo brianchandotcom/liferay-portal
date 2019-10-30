@@ -100,7 +100,7 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Path("/processes/{processId}/slas")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "SLA")})
-	public SLA postProcessSLA(
+	public SLA postProcessSLAs(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
 				processId,
 			SLA sla)

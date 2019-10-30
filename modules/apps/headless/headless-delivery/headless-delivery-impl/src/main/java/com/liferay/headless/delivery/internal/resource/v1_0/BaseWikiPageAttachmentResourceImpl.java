@@ -146,7 +146,7 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 	@Path("/wiki-pages/{wikiPageId}/wiki-page-attachments")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiPageAttachment")})
-	public WikiPageAttachment postWikiPageWikiPageAttachment(
+	public WikiPageAttachment postWikiPageWikiPageAttachments(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
 				wikiPageId,
 			MultipartBody multipartBody)

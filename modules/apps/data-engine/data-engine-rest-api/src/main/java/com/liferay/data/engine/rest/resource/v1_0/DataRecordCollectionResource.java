@@ -48,7 +48,7 @@ public interface DataRecordCollectionResource {
 				Long dataDefinitionId, String keywords, Pagination pagination)
 		throws Exception;
 
-	public DataRecordCollection postDataDefinitionDataRecordCollection(
+	public DataRecordCollection postDataDefinitionDataRecordCollections(
 			Long dataDefinitionId, DataRecordCollection dataRecordCollection)
 		throws Exception;
 
@@ -64,12 +64,12 @@ public interface DataRecordCollectionResource {
 			DataRecordCollection dataRecordCollection)
 		throws Exception;
 
-	public void postDataRecordCollectionDataRecordCollectionPermission(
+	public void postDataRecordCollectionDataRecordCollectionPermissions(
 			Long dataRecordCollectionId, String operation,
 			DataRecordCollectionPermission dataRecordCollectionPermission)
 		throws Exception;
 
-	public void postSiteDataRecordCollectionPermission(
+	public void postSiteDataRecordCollectionPermissions(
 			Long siteId, String operation,
 			DataRecordCollectionPermission dataRecordCollectionPermission)
 		throws Exception;

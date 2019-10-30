@@ -336,7 +336,8 @@ public abstract class BaseFormRecordResourceTestCase {
 			Long formId, FormRecord formRecord)
 		throws Exception {
 
-		return formRecordResource.postFormFormRecord(formId, formRecord);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetFormFormRecordsPage_getFormId() throws Exception {
@@ -351,22 +352,22 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@Test
-	public void testPostFormFormRecord() throws Exception {
+	public void testPostFormFormRecords() throws Exception {
 		FormRecord randomFormRecord = randomFormRecord();
 
-		FormRecord postFormRecord = testPostFormFormRecord_addFormRecord(
+		FormRecord postFormRecord = testPostFormFormRecords_addFormRecord(
 			randomFormRecord);
 
 		assertEquals(randomFormRecord, postFormRecord);
 		assertValid(postFormRecord);
 	}
 
-	protected FormRecord testPostFormFormRecord_addFormRecord(
+	protected FormRecord testPostFormFormRecords_addFormRecord(
 			FormRecord formRecord)
 		throws Exception {
 
-		return formRecordResource.postFormFormRecord(
-			testGetFormFormRecordsPage_getFormId(), formRecord);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

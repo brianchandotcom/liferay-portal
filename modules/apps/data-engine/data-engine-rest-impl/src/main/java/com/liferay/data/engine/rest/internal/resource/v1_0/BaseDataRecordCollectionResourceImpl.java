@@ -106,7 +106,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	@Path("/data-definitions/{dataDefinitionId}/data-record-collections")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
-	public DataRecordCollection postDataDefinitionDataRecordCollection(
+	public DataRecordCollection postDataDefinitionDataRecordCollections(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
 				Long dataDefinitionId,
 			DataRecordCollection dataRecordCollection)
@@ -203,7 +203,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
-	public void postDataRecordCollectionDataRecordCollectionPermission(
+	public void postDataRecordCollectionDataRecordCollectionPermissions(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId,
 			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
@@ -229,7 +229,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	@Path("/sites/{siteId}/data-record-collection-permissions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
-	public void postSiteDataRecordCollectionPermission(
+	public void postSiteDataRecordCollectionPermissions(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
 				operation,

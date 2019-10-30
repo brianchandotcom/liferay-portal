@@ -71,7 +71,7 @@ public interface MessageBoardSectionResource {
 				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
+	public MessageBoardSection postMessageBoardSectionMessageBoardSections(
 			Long parentMessageBoardSectionId,
 			MessageBoardSection messageBoardSection)
 		throws Exception;
@@ -81,7 +81,7 @@ public interface MessageBoardSectionResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public MessageBoardSection postSiteMessageBoardSection(
+	public MessageBoardSection postSiteMessageBoardSections(
 			Long siteId, MessageBoardSection messageBoardSection)
 		throws Exception;
 

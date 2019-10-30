@@ -56,7 +56,7 @@ public interface BlogPostingImageResource {
 			Sort[] sorts)
 		throws Exception;
 
-	public BlogPostingImage postSiteBlogPostingImage(
+	public BlogPostingImage postSiteBlogPostingImages(
 			Long siteId, MultipartBody multipartBody)
 		throws Exception;
 

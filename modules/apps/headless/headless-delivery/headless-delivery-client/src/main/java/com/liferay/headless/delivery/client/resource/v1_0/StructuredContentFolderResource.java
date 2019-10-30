@@ -50,12 +50,13 @@ public interface StructuredContentFolderResource {
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public StructuredContentFolder postSiteStructuredContentFolder(
+	public StructuredContentFolder postSiteStructuredContentFolders(
 			Long siteId, StructuredContentFolder structuredContentFolder)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSiteStructuredContentFolderHttpResponse(
-			Long siteId, StructuredContentFolder structuredContentFolder)
+	public HttpInvoker.HttpResponse
+			postSiteStructuredContentFoldersHttpResponse(
+				Long siteId, StructuredContentFolder structuredContentFolder)
 		throws Exception;
 
 	public Page<StructuredContentFolder>
@@ -71,13 +72,13 @@ public interface StructuredContentFolderResource {
 		throws Exception;
 
 	public StructuredContentFolder
-			postStructuredContentFolderStructuredContentFolder(
+			postStructuredContentFolderStructuredContentFolders(
 				Long parentStructuredContentFolderId,
 				StructuredContentFolder structuredContentFolder)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postStructuredContentFolderStructuredContentFolderHttpResponse(
+			postStructuredContentFolderStructuredContentFoldersHttpResponse(
 				Long parentStructuredContentFolderId,
 				StructuredContentFolder structuredContentFolder)
 		throws Exception;
@@ -277,12 +278,12 @@ public interface StructuredContentFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public StructuredContentFolder postSiteStructuredContentFolder(
+		public StructuredContentFolder postSiteStructuredContentFolders(
 				Long siteId, StructuredContentFolder structuredContentFolder)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteStructuredContentFolderHttpResponse(
+				postSiteStructuredContentFoldersHttpResponse(
 					siteId, structuredContentFolder);
 
 			String content = httpResponse.getContent();
@@ -306,7 +307,7 @@ public interface StructuredContentFolderResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postSiteStructuredContentFolderHttpResponse(
+				postSiteStructuredContentFoldersHttpResponse(
 					Long siteId,
 					StructuredContentFolder structuredContentFolder)
 			throws Exception {
@@ -430,13 +431,13 @@ public interface StructuredContentFolderResource {
 		}
 
 		public StructuredContentFolder
-				postStructuredContentFolderStructuredContentFolder(
+				postStructuredContentFolderStructuredContentFolders(
 					Long parentStructuredContentFolderId,
 					StructuredContentFolder structuredContentFolder)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postStructuredContentFolderStructuredContentFolderHttpResponse(
+				postStructuredContentFolderStructuredContentFoldersHttpResponse(
 					parentStructuredContentFolderId, structuredContentFolder);
 
 			String content = httpResponse.getContent();
@@ -460,7 +461,7 @@ public interface StructuredContentFolderResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postStructuredContentFolderStructuredContentFolderHttpResponse(
+				postStructuredContentFolderStructuredContentFoldersHttpResponse(
 					Long parentStructuredContentFolderId,
 					StructuredContentFolder structuredContentFolder)
 			throws Exception {

@@ -119,7 +119,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Path("/document-folders/{documentFolderId}/documents")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
-	public Document postDocumentFolderDocument(
+	public Document postDocumentFolderDocuments(
 			@NotNull @Parameter(hidden = true) @PathParam("documentFolderId")
 				Long documentFolderId,
 			MultipartBody multipartBody)
@@ -370,7 +370,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Path("/sites/{siteId}/documents")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
-	public Document postSiteDocument(
+	public Document postSiteDocuments(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			MultipartBody multipartBody)
 		throws Exception {

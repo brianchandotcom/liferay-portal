@@ -51,14 +51,14 @@ public interface KnowledgeBaseAttachmentResource {
 		throws Exception;
 
 	public KnowledgeBaseAttachment
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+			postKnowledgeBaseArticleKnowledgeBaseAttachments(
 				Long knowledgeBaseArticleId,
 				KnowledgeBaseAttachment knowledgeBaseAttachment,
 				Map<String, File> multipartFiles)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postKnowledgeBaseArticleKnowledgeBaseAttachmentHttpResponse(
+			postKnowledgeBaseArticleKnowledgeBaseAttachmentsHttpResponse(
 				Long knowledgeBaseArticleId,
 				KnowledgeBaseAttachment knowledgeBaseAttachment,
 				Map<String, File> multipartFiles)
@@ -194,14 +194,14 @@ public interface KnowledgeBaseAttachmentResource {
 		}
 
 		public KnowledgeBaseAttachment
-				postKnowledgeBaseArticleKnowledgeBaseAttachment(
+				postKnowledgeBaseArticleKnowledgeBaseAttachments(
 					Long knowledgeBaseArticleId,
 					KnowledgeBaseAttachment knowledgeBaseAttachment,
 					Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postKnowledgeBaseArticleKnowledgeBaseAttachmentHttpResponse(
+				postKnowledgeBaseArticleKnowledgeBaseAttachmentsHttpResponse(
 					knowledgeBaseArticleId, knowledgeBaseAttachment,
 					multipartFiles);
 
@@ -226,7 +226,7 @@ public interface KnowledgeBaseAttachmentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postKnowledgeBaseArticleKnowledgeBaseAttachmentHttpResponse(
+				postKnowledgeBaseArticleKnowledgeBaseAttachmentsHttpResponse(
 					Long knowledgeBaseArticleId,
 					KnowledgeBaseAttachment knowledgeBaseAttachment,
 					Map<String, File> multipartFiles)

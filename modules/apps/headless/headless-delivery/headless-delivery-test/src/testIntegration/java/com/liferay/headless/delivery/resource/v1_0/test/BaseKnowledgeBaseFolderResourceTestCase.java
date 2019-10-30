@@ -30,7 +30,6 @@ import com.liferay.headless.delivery.client.resource.v1_0.KnowledgeBaseFolderRes
 import com.liferay.headless.delivery.client.serdes.v1_0.KnowledgeBaseFolderSerDes;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -221,8 +220,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
-			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -294,8 +293,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGetKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
-			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -360,8 +359,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testPatchKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
-			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -391,8 +390,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testPutKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
-			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -520,9 +519,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return knowledgeBaseFolderResource.
-			postKnowledgeBaseFolderKnowledgeBaseFolder(
-				parentKnowledgeBaseFolderId, knowledgeBaseFolder);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -541,14 +539,14 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPostKnowledgeBaseFolderKnowledgeBaseFolder()
+	public void testPostKnowledgeBaseFolderKnowledgeBaseFolders()
 		throws Exception {
 
 		KnowledgeBaseFolder randomKnowledgeBaseFolder =
 			randomKnowledgeBaseFolder();
 
 		KnowledgeBaseFolder postKnowledgeBaseFolder =
-			testPostKnowledgeBaseFolderKnowledgeBaseFolder_addKnowledgeBaseFolder(
+			testPostKnowledgeBaseFolderKnowledgeBaseFolders_addKnowledgeBaseFolder(
 				randomKnowledgeBaseFolder);
 
 		assertEquals(randomKnowledgeBaseFolder, postKnowledgeBaseFolder);
@@ -556,14 +554,12 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected KnowledgeBaseFolder
-			testPostKnowledgeBaseFolderKnowledgeBaseFolder_addKnowledgeBaseFolder(
+			testPostKnowledgeBaseFolderKnowledgeBaseFolders_addKnowledgeBaseFolder(
 				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return knowledgeBaseFolderResource.
-			postKnowledgeBaseFolderKnowledgeBaseFolder(
-				testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
-				knowledgeBaseFolder);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -676,8 +672,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
-			siteId, knowledgeBaseFolder);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetSiteKnowledgeBaseFoldersPage_getSiteId()
@@ -751,12 +747,12 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteKnowledgeBaseFolder() throws Exception {
+	public void testPostSiteKnowledgeBaseFolders() throws Exception {
 		KnowledgeBaseFolder randomKnowledgeBaseFolder =
 			randomKnowledgeBaseFolder();
 
 		KnowledgeBaseFolder postKnowledgeBaseFolder =
-			testPostSiteKnowledgeBaseFolder_addKnowledgeBaseFolder(
+			testPostSiteKnowledgeBaseFolders_addKnowledgeBaseFolder(
 				randomKnowledgeBaseFolder);
 
 		assertEquals(randomKnowledgeBaseFolder, postKnowledgeBaseFolder);
@@ -764,218 +760,20 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected KnowledgeBaseFolder
-			testPostSiteKnowledgeBaseFolder_addKnowledgeBaseFolder(
+			testPostSiteKnowledgeBaseFolders_addKnowledgeBaseFolder(
 				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
-			testGetSiteKnowledgeBaseFoldersPage_getSiteId(),
-			knowledgeBaseFolder);
-	}
-
-	@Test
-	public void testGraphQLPostSiteKnowledgeBaseFolder() throws Exception {
-		KnowledgeBaseFolder randomKnowledgeBaseFolder =
-			randomKnowledgeBaseFolder();
-
-		KnowledgeBaseFolder knowledgeBaseFolder =
-			testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder(
-				randomKnowledgeBaseFolder);
-
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomKnowledgeBaseFolder,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(knowledgeBaseFolder))));
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected KnowledgeBaseFolder
 			testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder(
-			randomKnowledgeBaseFolder());
-	}
-
-	protected KnowledgeBaseFolder
-			testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder(
-				KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals("description", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = knowledgeBaseFolder.getDescription();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = knowledgeBaseFolder.getId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = knowledgeBaseFolder.getName();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"numberOfKnowledgeBaseArticles",
-					additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value =
-					knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"numberOfKnowledgeBaseFolders",
-					additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value =
-					knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"parentKnowledgeBaseFolderId", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value =
-					knowledgeBaseFolder.getParentKnowledgeBaseFolderId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("siteId", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = knowledgeBaseFolder.getSiteId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		GraphQLField graphQLField = new GraphQLField(
-			"mutation",
-			new GraphQLField(
-				"createSiteKnowledgeBaseFolder",
-				new HashMap<String, Object>() {
-					{
-						put("siteId", testGroup.getGroupId());
-						put("knowledgeBaseFolder", sb.toString());
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONDeserializer<KnowledgeBaseFolder> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		String object = invoke(graphQLField.toString());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		return jsonDeserializer.deserialize(
-			String.valueOf(
-				dataJSONObject.getJSONObject("createSiteKnowledgeBaseFolder")),
-			KnowledgeBaseFolder.class);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(

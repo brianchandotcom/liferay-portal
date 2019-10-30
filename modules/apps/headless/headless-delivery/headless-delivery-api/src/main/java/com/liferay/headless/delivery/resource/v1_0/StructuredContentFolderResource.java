@@ -49,7 +49,7 @@ public interface StructuredContentFolderResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public StructuredContentFolder postSiteStructuredContentFolder(
+	public StructuredContentFolder postSiteStructuredContentFolders(
 			Long siteId, StructuredContentFolder structuredContentFolder)
 		throws Exception;
 
@@ -60,7 +60,7 @@ public interface StructuredContentFolderResource {
 		throws Exception;
 
 	public StructuredContentFolder
-			postStructuredContentFolderStructuredContentFolder(
+			postStructuredContentFolderStructuredContentFolders(
 				Long parentStructuredContentFolderId,
 				StructuredContentFolder structuredContentFolder)
 		throws Exception;

@@ -54,8 +54,9 @@ public interface MessageBoardAttachmentResource {
 				Long messageBoardMessageId)
 		throws Exception;
 
-	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
-			Long messageBoardMessageId, MultipartBody multipartBody)
+	public MessageBoardAttachment
+			postMessageBoardMessageMessageBoardAttachments(
+				Long messageBoardMessageId, MultipartBody multipartBody)
 		throws Exception;
 
 	public Page<MessageBoardAttachment>
@@ -63,7 +64,7 @@ public interface MessageBoardAttachmentResource {
 				Long messageBoardThreadId)
 		throws Exception;
 
-	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
+	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachments(
 			Long messageBoardThreadId, MultipartBody multipartBody)
 		throws Exception;
 

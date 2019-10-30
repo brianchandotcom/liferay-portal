@@ -802,9 +802,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		return messageBoardMessageResource.
-			postMessageBoardMessageMessageBoardMessage(
-				parentMessageBoardMessageId, messageBoardMessage);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -823,14 +822,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
-	public void testPostMessageBoardMessageMessageBoardMessage()
+	public void testPostMessageBoardMessageMessageBoardMessages()
 		throws Exception {
 
 		MessageBoardMessage randomMessageBoardMessage =
 			randomMessageBoardMessage();
 
 		MessageBoardMessage postMessageBoardMessage =
-			testPostMessageBoardMessageMessageBoardMessage_addMessageBoardMessage(
+			testPostMessageBoardMessageMessageBoardMessages_addMessageBoardMessage(
 				randomMessageBoardMessage);
 
 		assertEquals(randomMessageBoardMessage, postMessageBoardMessage);
@@ -838,14 +837,12 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	protected MessageBoardMessage
-			testPostMessageBoardMessageMessageBoardMessage_addMessageBoardMessage(
+			testPostMessageBoardMessageMessageBoardMessages_addMessageBoardMessage(
 				MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		return messageBoardMessageResource.
-			postMessageBoardMessageMessageBoardMessage(
-				testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId(),
-				messageBoardMessage);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1165,9 +1162,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		return messageBoardMessageResource.
-			postMessageBoardThreadMessageBoardMessage(
-				messageBoardThreadId, messageBoardMessage);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -1186,14 +1182,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
-	public void testPostMessageBoardThreadMessageBoardMessage()
+	public void testPostMessageBoardThreadMessageBoardMessages()
 		throws Exception {
 
 		MessageBoardMessage randomMessageBoardMessage =
 			randomMessageBoardMessage();
 
 		MessageBoardMessage postMessageBoardMessage =
-			testPostMessageBoardThreadMessageBoardMessage_addMessageBoardMessage(
+			testPostMessageBoardThreadMessageBoardMessages_addMessageBoardMessage(
 				randomMessageBoardMessage);
 
 		assertEquals(randomMessageBoardMessage, postMessageBoardMessage);
@@ -1201,14 +1197,12 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	protected MessageBoardMessage
-			testPostMessageBoardThreadMessageBoardMessage_addMessageBoardMessage(
+			testPostMessageBoardThreadMessageBoardMessages_addMessageBoardMessage(
 				MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		return messageBoardMessageResource.
-			postMessageBoardThreadMessageBoardMessage(
-				testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId(),
-				messageBoardMessage);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

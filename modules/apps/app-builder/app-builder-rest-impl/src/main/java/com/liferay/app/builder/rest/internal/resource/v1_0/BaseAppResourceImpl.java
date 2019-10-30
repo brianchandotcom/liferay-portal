@@ -186,7 +186,7 @@ public abstract class BaseAppResourceImpl implements AppResource {
 	@Path("/data-definitions/{dataDefinitionId}/apps")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "App")})
-	public App postDataDefinitionApp(
+	public App postDataDefinitionApps(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
 				Long dataDefinitionId,
 			App app)

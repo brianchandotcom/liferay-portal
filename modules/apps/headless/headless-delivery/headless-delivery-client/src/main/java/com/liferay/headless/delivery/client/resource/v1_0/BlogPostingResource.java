@@ -113,10 +113,11 @@ public interface BlogPostingResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public BlogPosting postSiteBlogPosting(Long siteId, BlogPosting blogPosting)
+	public BlogPosting postSiteBlogPostings(
+			Long siteId, BlogPosting blogPosting)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSiteBlogPostingHttpResponse(
+	public HttpInvoker.HttpResponse postSiteBlogPostingsHttpResponse(
 			Long siteId, BlogPosting blogPosting)
 		throws Exception;
 
@@ -764,12 +765,12 @@ public interface BlogPostingResource {
 			return httpInvoker.invoke();
 		}
 
-		public BlogPosting postSiteBlogPosting(
+		public BlogPosting postSiteBlogPostings(
 				Long siteId, BlogPosting blogPosting)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteBlogPostingHttpResponse(siteId, blogPosting);
+				postSiteBlogPostingsHttpResponse(siteId, blogPosting);
 
 			String content = httpResponse.getContent();
 
@@ -791,7 +792,7 @@ public interface BlogPostingResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postSiteBlogPostingHttpResponse(
+		public HttpInvoker.HttpResponse postSiteBlogPostingsHttpResponse(
 				Long siteId, BlogPosting blogPosting)
 			throws Exception {
 

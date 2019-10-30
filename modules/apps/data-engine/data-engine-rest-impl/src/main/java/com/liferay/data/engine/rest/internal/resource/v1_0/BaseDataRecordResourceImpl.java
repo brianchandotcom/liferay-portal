@@ -100,7 +100,7 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	@Path("/data-definitions/{dataDefinitionId}/data-records")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataRecord")})
-	public DataRecord postDataDefinitionDataRecord(
+	public DataRecord postDataDefinitionDataRecords(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
 				Long dataDefinitionId,
 			DataRecord dataRecord)
@@ -151,7 +151,7 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	@Path("/data-record-collections/{dataRecordCollectionId}/data-records")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataRecord")})
-	public DataRecord postDataRecordCollectionDataRecord(
+	public DataRecord postDataRecordCollectionDataRecords(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId,
 			DataRecord dataRecord)

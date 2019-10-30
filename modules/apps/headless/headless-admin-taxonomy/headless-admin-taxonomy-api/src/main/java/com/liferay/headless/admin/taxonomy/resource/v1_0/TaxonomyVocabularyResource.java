@@ -49,7 +49,7 @@ public interface TaxonomyVocabularyResource {
 			Sort[] sorts)
 		throws Exception;
 
-	public TaxonomyVocabulary postSiteTaxonomyVocabulary(
+	public TaxonomyVocabulary postSiteTaxonomyVocabularies(
 			Long siteId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception;
 

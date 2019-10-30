@@ -408,10 +408,8 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 				MessageBoardAttachment messageBoardAttachment)
 		throws Exception {
 
-		return messageBoardAttachmentResource.
-			postMessageBoardMessageMessageBoardAttachment(
-				messageBoardMessageId, messageBoardAttachment,
-				getMultipartFiles());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -430,7 +428,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testPostMessageBoardMessageMessageBoardAttachment()
+	public void testPostMessageBoardMessageMessageBoardAttachments()
 		throws Exception {
 
 		MessageBoardAttachment randomMessageBoardAttachment =
@@ -439,7 +437,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		Map<String, File> multipartFiles = getMultipartFiles();
 
 		MessageBoardAttachment postMessageBoardAttachment =
-			testPostMessageBoardMessageMessageBoardAttachment_addMessageBoardAttachment(
+			testPostMessageBoardMessageMessageBoardAttachments_addMessageBoardAttachment(
 				randomMessageBoardAttachment, multipartFiles);
 
 		assertEquals(randomMessageBoardAttachment, postMessageBoardAttachment);
@@ -449,15 +447,13 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	}
 
 	protected MessageBoardAttachment
-			testPostMessageBoardMessageMessageBoardAttachment_addMessageBoardAttachment(
+			testPostMessageBoardMessageMessageBoardAttachments_addMessageBoardAttachment(
 				MessageBoardAttachment messageBoardAttachment,
 				Map<String, File> multipartFiles)
 		throws Exception {
 
-		return messageBoardAttachmentResource.
-			postMessageBoardMessageMessageBoardAttachment(
-				testGetMessageBoardMessageMessageBoardAttachmentsPage_getMessageBoardMessageId(),
-				messageBoardAttachment, multipartFiles);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -528,10 +524,8 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 				MessageBoardAttachment messageBoardAttachment)
 		throws Exception {
 
-		return messageBoardAttachmentResource.
-			postMessageBoardThreadMessageBoardAttachment(
-				messageBoardThreadId, messageBoardAttachment,
-				getMultipartFiles());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -550,7 +544,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testPostMessageBoardThreadMessageBoardAttachment()
+	public void testPostMessageBoardThreadMessageBoardAttachments()
 		throws Exception {
 
 		MessageBoardAttachment randomMessageBoardAttachment =
@@ -559,7 +553,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		Map<String, File> multipartFiles = getMultipartFiles();
 
 		MessageBoardAttachment postMessageBoardAttachment =
-			testPostMessageBoardThreadMessageBoardAttachment_addMessageBoardAttachment(
+			testPostMessageBoardThreadMessageBoardAttachments_addMessageBoardAttachment(
 				randomMessageBoardAttachment, multipartFiles);
 
 		assertEquals(randomMessageBoardAttachment, postMessageBoardAttachment);
@@ -569,15 +563,13 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	}
 
 	protected MessageBoardAttachment
-			testPostMessageBoardThreadMessageBoardAttachment_addMessageBoardAttachment(
+			testPostMessageBoardThreadMessageBoardAttachments_addMessageBoardAttachment(
 				MessageBoardAttachment messageBoardAttachment,
 				Map<String, File> multipartFiles)
 		throws Exception {
 
-		return messageBoardAttachmentResource.
-			postMessageBoardThreadMessageBoardAttachment(
-				testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId(),
-				messageBoardAttachment, multipartFiles);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected MessageBoardAttachment

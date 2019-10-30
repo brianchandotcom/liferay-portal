@@ -31,7 +31,6 @@ import com.liferay.headless.delivery.client.serdes.v1_0.WikiNodeSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -443,7 +442,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 			Long siteId, WikiNode wikiNode)
 		throws Exception {
 
-		return wikiNodeResource.postSiteWikiNode(siteId, wikiNode);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetSiteWikiNodesPage_getSiteId() throws Exception {
@@ -510,34 +510,21 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteWikiNode() throws Exception {
+	public void testPostSiteWikiNodes() throws Exception {
 		WikiNode randomWikiNode = randomWikiNode();
 
-		WikiNode postWikiNode = testPostSiteWikiNode_addWikiNode(
+		WikiNode postWikiNode = testPostSiteWikiNodes_addWikiNode(
 			randomWikiNode);
 
 		assertEquals(randomWikiNode, postWikiNode);
 		assertValid(postWikiNode);
 	}
 
-	protected WikiNode testPostSiteWikiNode_addWikiNode(WikiNode wikiNode)
+	protected WikiNode testPostSiteWikiNodes_addWikiNode(WikiNode wikiNode)
 		throws Exception {
 
-		return wikiNodeResource.postSiteWikiNode(
-			testGetSiteWikiNodesPage_getSiteId(), wikiNode);
-	}
-
-	@Test
-	public void testGraphQLPostSiteWikiNode() throws Exception {
-		WikiNode randomWikiNode = randomWikiNode();
-
-		WikiNode wikiNode = testGraphQLWikiNode_addWikiNode(randomWikiNode);
-
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomWikiNode,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(wikiNode))));
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -555,8 +542,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	protected WikiNode testPutWikiNodeSubscribe_addWikiNode() throws Exception {
-		return wikiNodeResource.postSiteWikiNode(
-			testGroup.getGroupId(), randomWikiNode());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -576,8 +563,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 	protected WikiNode testPutWikiNodeUnsubscribe_addWikiNode()
 		throws Exception {
 
-		return wikiNodeResource.postSiteWikiNode(
-			testGroup.getGroupId(), randomWikiNode());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -595,8 +582,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	protected WikiNode testDeleteWikiNode_addWikiNode() throws Exception {
-		return wikiNodeResource.postSiteWikiNode(
-			testGroup.getGroupId(), randomWikiNode());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -657,8 +644,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	protected WikiNode testGetWikiNode_addWikiNode() throws Exception {
-		return wikiNodeResource.postSiteWikiNode(
-			testGroup.getGroupId(), randomWikiNode());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -708,163 +695,13 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	protected WikiNode testPutWikiNode_addWikiNode() throws Exception {
-		return wikiNodeResource.postSiteWikiNode(
-			testGroup.getGroupId(), randomWikiNode());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected WikiNode testGraphQLWikiNode_addWikiNode() throws Exception {
-		return testGraphQLWikiNode_addWikiNode(randomWikiNode());
-	}
-
-	protected WikiNode testGraphQLWikiNode_addWikiNode(WikiNode wikiNode)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals("description", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = wikiNode.getDescription();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = wikiNode.getId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = wikiNode.getName();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"numberOfWikiPages", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = wikiNode.getNumberOfWikiPages();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("siteId", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = wikiNode.getSiteId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("subscribed", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = wikiNode.getSubscribed();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		GraphQLField graphQLField = new GraphQLField(
-			"mutation",
-			new GraphQLField(
-				"createSiteWikiNode",
-				new HashMap<String, Object>() {
-					{
-						put("siteId", testGroup.getGroupId());
-						put("wikiNode", sb.toString());
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONDeserializer<WikiNode> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		String object = invoke(graphQLField.toString());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		return jsonDeserializer.deserialize(
-			String.valueOf(dataJSONObject.getJSONObject("createSiteWikiNode")),
-			WikiNode.class);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(

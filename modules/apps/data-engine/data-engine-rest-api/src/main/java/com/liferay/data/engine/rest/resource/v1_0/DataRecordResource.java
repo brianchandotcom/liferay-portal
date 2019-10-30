@@ -46,7 +46,7 @@ public interface DataRecordResource {
 			Long dataDefinitionId, Pagination pagination)
 		throws Exception;
 
-	public DataRecord postDataDefinitionDataRecord(
+	public DataRecord postDataDefinitionDataRecords(
 			Long dataDefinitionId, DataRecord dataRecord)
 		throws Exception;
 
@@ -54,7 +54,7 @@ public interface DataRecordResource {
 			Long dataRecordCollectionId, Pagination pagination)
 		throws Exception;
 
-	public DataRecord postDataRecordCollectionDataRecord(
+	public DataRecord postDataRecordCollectionDataRecords(
 			Long dataRecordCollectionId, DataRecord dataRecord)
 		throws Exception;
 

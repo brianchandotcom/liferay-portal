@@ -376,10 +376,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTaskHasOtherAssignableUser(workflowTaskId: ___){}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTaskHasOtherAssignableUsers(workflowTaskId: ___){}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public String workflowTaskHasOtherAssignableUser(
+	public String workflowTaskHasOtherAssignableUsers(
 			@GraphQLName("workflowTaskId") Long workflowTaskId)
 		throws Exception {
 
@@ -387,31 +387,8 @@ public class Query {
 			_workflowTaskResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			workflowTaskResource ->
-				workflowTaskResource.getWorkflowTaskHasOtherAssignableUser(
+				workflowTaskResource.getWorkflowTaskHasOtherAssignableUsers(
 					workflowTaskId));
-	}
-
-	@GraphQLTypeExtension(WorkflowTask.class)
-	public class GetWorkflowTaskHasOtherAssignableUserTypeExtension {
-
-		public GetWorkflowTaskHasOtherAssignableUserTypeExtension(
-			WorkflowTask workflowTask) {
-
-			_workflowTask = workflowTask;
-		}
-
-		@GraphQLField
-		public String hasOtherAssignableUser() throws Exception {
-			return _applyComponentServiceObjects(
-				_workflowTaskResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				workflowTaskResource ->
-					workflowTaskResource.getWorkflowTaskHasOtherAssignableUser(
-						_workflowTask.getId()));
-		}
-
-		private WorkflowTask _workflowTask;
-
 	}
 
 	@GraphQLTypeExtension(WorkflowTask.class)
@@ -491,6 +468,29 @@ public class Query {
 					workflowLogResource.getWorkflowTaskWorkflowLogsPage(
 						_workflowTask.getId(), types,
 						Pagination.of(page, pageSize))));
+		}
+
+		private WorkflowTask _workflowTask;
+
+	}
+
+	@GraphQLTypeExtension(WorkflowTask.class)
+	public class GetWorkflowTaskHasOtherAssignableUsersTypeExtension {
+
+		public GetWorkflowTaskHasOtherAssignableUsersTypeExtension(
+			WorkflowTask workflowTask) {
+
+			_workflowTask = workflowTask;
+		}
+
+		@GraphQLField
+		public String hasOtherAssignableUsers() throws Exception {
+			return _applyComponentServiceObjects(
+				_workflowTaskResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				workflowTaskResource ->
+					workflowTaskResource.getWorkflowTaskHasOtherAssignableUsers(
+						_workflowTask.getId()));
 		}
 
 		private WorkflowTask _workflowTask;

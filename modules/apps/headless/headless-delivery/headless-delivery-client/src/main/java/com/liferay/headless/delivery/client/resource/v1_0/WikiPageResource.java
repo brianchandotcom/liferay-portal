@@ -49,10 +49,10 @@ public interface WikiPageResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public WikiPage postWikiNodeWikiPage(Long wikiNodeId, WikiPage wikiPage)
+	public WikiPage postWikiNodeWikiPages(Long wikiNodeId, WikiPage wikiPage)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postWikiNodeWikiPageHttpResponse(
+	public HttpInvoker.HttpResponse postWikiNodeWikiPagesHttpResponse(
 			Long wikiNodeId, WikiPage wikiPage)
 		throws Exception;
 
@@ -75,11 +75,11 @@ public interface WikiPageResource {
 			Long parentWikiPageId)
 		throws Exception;
 
-	public WikiPage postWikiPageWikiPage(
+	public WikiPage postWikiPageWikiPages(
 			Long parentWikiPageId, WikiPage wikiPage)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postWikiPageWikiPageHttpResponse(
+	public HttpInvoker.HttpResponse postWikiPageWikiPagesHttpResponse(
 			Long parentWikiPageId, WikiPage wikiPage)
 		throws Exception;
 
@@ -232,11 +232,12 @@ public interface WikiPageResource {
 			return httpInvoker.invoke();
 		}
 
-		public WikiPage postWikiNodeWikiPage(Long wikiNodeId, WikiPage wikiPage)
+		public WikiPage postWikiNodeWikiPages(
+				Long wikiNodeId, WikiPage wikiPage)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postWikiNodeWikiPageHttpResponse(wikiNodeId, wikiPage);
+				postWikiNodeWikiPagesHttpResponse(wikiNodeId, wikiPage);
 
 			String content = httpResponse.getContent();
 
@@ -258,7 +259,7 @@ public interface WikiPageResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postWikiNodeWikiPageHttpResponse(
+		public HttpInvoker.HttpResponse postWikiNodeWikiPagesHttpResponse(
 				Long wikiNodeId, WikiPage wikiPage)
 			throws Exception {
 
@@ -455,12 +456,12 @@ public interface WikiPageResource {
 			return httpInvoker.invoke();
 		}
 
-		public WikiPage postWikiPageWikiPage(
+		public WikiPage postWikiPageWikiPages(
 				Long parentWikiPageId, WikiPage wikiPage)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postWikiPageWikiPageHttpResponse(parentWikiPageId, wikiPage);
+				postWikiPageWikiPagesHttpResponse(parentWikiPageId, wikiPage);
 
 			String content = httpResponse.getContent();
 
@@ -482,7 +483,7 @@ public interface WikiPageResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postWikiPageWikiPageHttpResponse(
+		public HttpInvoker.HttpResponse postWikiPageWikiPagesHttpResponse(
 				Long parentWikiPageId, WikiPage wikiPage)
 			throws Exception {
 

@@ -119,7 +119,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Path("/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
-	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategories(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("parentTaxonomyCategoryId") Long
 				parentTaxonomyCategoryId,
@@ -318,7 +318,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
-	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
+	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategories(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			TaxonomyCategory taxonomyCategory)

@@ -49,7 +49,7 @@ public interface DataLayoutResource {
 			Sort[] sorts)
 		throws Exception;
 
-	public DataLayout postDataDefinitionDataLayout(
+	public DataLayout postDataDefinitionDataLayouts(
 			Long dataDefinitionId, DataLayout dataLayout)
 		throws Exception;
 
@@ -60,12 +60,12 @@ public interface DataLayoutResource {
 	public DataLayout putDataLayout(Long dataLayoutId, DataLayout dataLayout)
 		throws Exception;
 
-	public void postDataLayoutDataLayoutPermission(
+	public void postDataLayoutDataLayoutPermissions(
 			Long dataLayoutId, String operation,
 			DataLayoutPermission dataLayoutPermission)
 		throws Exception;
 
-	public void postSiteDataLayoutPermission(
+	public void postSiteDataLayoutPermissions(
 			Long siteId, String operation,
 			DataLayoutPermission dataLayoutPermission)
 		throws Exception;

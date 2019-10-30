@@ -60,11 +60,11 @@ public interface StructuredContentResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public StructuredContent postSiteStructuredContent(
+	public StructuredContent postSiteStructuredContents(
 			Long siteId, StructuredContent structuredContent)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSiteStructuredContentHttpResponse(
+	public HttpInvoker.HttpResponse postSiteStructuredContentsHttpResponse(
 			Long siteId, StructuredContent structuredContent)
 		throws Exception;
 
@@ -96,12 +96,12 @@ public interface StructuredContentResource {
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public StructuredContent postStructuredContentFolderStructuredContent(
+	public StructuredContent postStructuredContentFolderStructuredContents(
 			Long structuredContentFolderId, StructuredContent structuredContent)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postStructuredContentFolderStructuredContentHttpResponse(
+			postStructuredContentFolderStructuredContentsHttpResponse(
 				Long structuredContentFolderId,
 				StructuredContent structuredContent)
 		throws Exception;
@@ -416,12 +416,12 @@ public interface StructuredContentResource {
 			return httpInvoker.invoke();
 		}
 
-		public StructuredContent postSiteStructuredContent(
+		public StructuredContent postSiteStructuredContents(
 				Long siteId, StructuredContent structuredContent)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteStructuredContentHttpResponse(
+				postSiteStructuredContentsHttpResponse(
 					siteId, structuredContent);
 
 			String content = httpResponse.getContent();
@@ -444,7 +444,7 @@ public interface StructuredContentResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postSiteStructuredContentHttpResponse(
+		public HttpInvoker.HttpResponse postSiteStructuredContentsHttpResponse(
 				Long siteId, StructuredContent structuredContent)
 			throws Exception {
 
@@ -699,13 +699,13 @@ public interface StructuredContentResource {
 			return httpInvoker.invoke();
 		}
 
-		public StructuredContent postStructuredContentFolderStructuredContent(
+		public StructuredContent postStructuredContentFolderStructuredContents(
 				Long structuredContentFolderId,
 				StructuredContent structuredContent)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postStructuredContentFolderStructuredContentHttpResponse(
+				postStructuredContentFolderStructuredContentsHttpResponse(
 					structuredContentFolderId, structuredContent);
 
 			String content = httpResponse.getContent();
@@ -729,7 +729,7 @@ public interface StructuredContentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postStructuredContentFolderStructuredContentHttpResponse(
+				postStructuredContentFolderStructuredContentsHttpResponse(
 					Long structuredContentFolderId,
 					StructuredContent structuredContent)
 			throws Exception {

@@ -49,14 +49,14 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public SLA createProcessSLA(
+	public SLA createProcessSLAs(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("sla") SLA sla)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_slaResourceComponentServiceObjects, this::_populateResourceContext,
-			slaResource -> slaResource.postProcessSLA(processId, sla));
+			slaResource -> slaResource.postProcessSLAs(processId, sla));
 	}
 
 	@GraphQLField

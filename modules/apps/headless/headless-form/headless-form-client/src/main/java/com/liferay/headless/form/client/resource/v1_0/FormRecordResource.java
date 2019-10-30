@@ -59,10 +59,10 @@ public interface FormRecordResource {
 			Long formId, Pagination pagination)
 		throws Exception;
 
-	public FormRecord postFormFormRecord(Long formId, FormRecord formRecord)
+	public FormRecord postFormFormRecords(Long formId, FormRecord formRecord)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postFormFormRecordHttpResponse(
+	public HttpInvoker.HttpResponse postFormFormRecordsHttpResponse(
 			Long formId, FormRecord formRecord)
 		throws Exception;
 
@@ -317,11 +317,12 @@ public interface FormRecordResource {
 			return httpInvoker.invoke();
 		}
 
-		public FormRecord postFormFormRecord(Long formId, FormRecord formRecord)
+		public FormRecord postFormFormRecords(
+				Long formId, FormRecord formRecord)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postFormFormRecordHttpResponse(formId, formRecord);
+				postFormFormRecordsHttpResponse(formId, formRecord);
 
 			String content = httpResponse.getContent();
 
@@ -343,7 +344,7 @@ public interface FormRecordResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postFormFormRecordHttpResponse(
+		public HttpInvoker.HttpResponse postFormFormRecordsHttpResponse(
 				Long formId, FormRecord formRecord)
 			throws Exception {
 

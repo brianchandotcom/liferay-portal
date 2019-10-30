@@ -112,7 +112,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Path("/blog-postings/{blogPostingId}/comments")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
-	public Comment postBlogPostingComment(
+	public Comment postBlogPostingComments(
 			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId") Long
 				blogPostingId,
 			Comment comment)
@@ -236,7 +236,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Path("/comments/{parentCommentId}/comments")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
-	public Comment postCommentComment(
+	public Comment postCommentComments(
 			@NotNull @Parameter(hidden = true) @PathParam("parentCommentId")
 				Long parentCommentId,
 			Comment comment)
@@ -294,7 +294,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Path("/documents/{documentId}/comments")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
-	public Comment postDocumentComment(
+	public Comment postDocumentComments(
 			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
 				documentId,
 			Comment comment)
@@ -354,7 +354,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Path("/structured-contents/{structuredContentId}/comments")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
-	public Comment postStructuredContentComment(
+	public Comment postStructuredContentComments(
 			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
 				Long structuredContentId,
 			Comment comment)

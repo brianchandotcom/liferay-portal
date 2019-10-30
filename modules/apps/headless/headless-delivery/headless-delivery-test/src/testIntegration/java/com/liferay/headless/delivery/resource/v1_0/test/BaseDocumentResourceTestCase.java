@@ -32,7 +32,6 @@ import com.liferay.headless.delivery.client.serdes.v1_0.DocumentSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -476,8 +475,8 @@ public abstract class BaseDocumentResourceTestCase {
 			Long documentFolderId, Document document)
 		throws Exception {
 
-		return documentResource.postDocumentFolderDocument(
-			documentFolderId, document, getMultipartFiles());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetDocumentFolderDocumentsPage_getDocumentFolderId()
@@ -495,12 +494,12 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testPostDocumentFolderDocument() throws Exception {
+	public void testPostDocumentFolderDocuments() throws Exception {
 		Document randomDocument = randomDocument();
 
 		Map<String, File> multipartFiles = getMultipartFiles();
 
-		Document postDocument = testPostDocumentFolderDocument_addDocument(
+		Document postDocument = testPostDocumentFolderDocuments_addDocument(
 			randomDocument, multipartFiles);
 
 		assertEquals(randomDocument, postDocument);
@@ -509,13 +508,12 @@ public abstract class BaseDocumentResourceTestCase {
 		assertValid(postDocument, multipartFiles);
 	}
 
-	protected Document testPostDocumentFolderDocument_addDocument(
+	protected Document testPostDocumentFolderDocuments_addDocument(
 			Document document, Map<String, File> multipartFiles)
 		throws Exception {
 
-		return documentResource.postDocumentFolderDocument(
-			testGetDocumentFolderDocumentsPage_getDocumentFolderId(), document,
-			multipartFiles);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -533,8 +531,8 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Document testDeleteDocument_addDocument() throws Exception {
-		return documentResource.postSiteDocument(
-			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -595,8 +593,8 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Document testGetDocument_addDocument() throws Exception {
-		return documentResource.postSiteDocument(
-			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -653,8 +651,8 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Document testPatchDocument_addDocument() throws Exception {
-		return documentResource.postSiteDocument(
-			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -681,8 +679,8 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Document testPutDocument_addDocument() throws Exception {
-		return documentResource.postSiteDocument(
-			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -705,8 +703,8 @@ public abstract class BaseDocumentResourceTestCase {
 	protected Document testDeleteDocumentMyRating_addDocument()
 		throws Exception {
 
-		return documentResource.postSiteDocument(
-			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -953,8 +951,8 @@ public abstract class BaseDocumentResourceTestCase {
 			Long siteId, Document document)
 		throws Exception {
 
-		return documentResource.postSiteDocument(
-			siteId, document, getMultipartFiles());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetSiteDocumentsPage_getSiteId() throws Exception {
@@ -1021,12 +1019,12 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteDocument() throws Exception {
+	public void testPostSiteDocuments() throws Exception {
 		Document randomDocument = randomDocument();
 
 		Map<String, File> multipartFiles = getMultipartFiles();
 
-		Document postDocument = testPostSiteDocument_addDocument(
+		Document postDocument = testPostSiteDocuments_addDocument(
 			randomDocument, multipartFiles);
 
 		assertEquals(randomDocument, postDocument);
@@ -1035,25 +1033,12 @@ public abstract class BaseDocumentResourceTestCase {
 		assertValid(postDocument, multipartFiles);
 	}
 
-	protected Document testPostSiteDocument_addDocument(
+	protected Document testPostSiteDocuments_addDocument(
 			Document document, Map<String, File> multipartFiles)
 		throws Exception {
 
-		return documentResource.postSiteDocument(
-			testGetSiteDocumentsPage_getSiteId(), document, multipartFiles);
-	}
-
-	@Test
-	public void testGraphQLPostSiteDocument() throws Exception {
-		Document randomDocument = randomDocument();
-
-		Document document = testGraphQLDocument_addDocument(randomDocument);
-
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomDocument,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(document))));
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1105,210 +1090,8 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Document testGraphQLDocument_addDocument() throws Exception {
-		return testGraphQLDocument_addDocument(randomDocument());
-	}
-
-	protected Document testGraphQLDocument_addDocument(Document document)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals("contentUrl", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = document.getContentUrl();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("description", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = document.getDescription();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("documentFolderId", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = document.getDocumentFolderId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = document.getEncodingFormat();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("fileExtension", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = document.getFileExtension();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = document.getId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("numberOfComments", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = document.getNumberOfComments();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("sizeInBytes", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = document.getSizeInBytes();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("title", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = document.getTitle();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		GraphQLField graphQLField = new GraphQLField(
-			"mutation",
-			new GraphQLField(
-				"createSiteDocument",
-				new HashMap<String, Object>() {
-					{
-						put("siteId", testGroup.getGroupId());
-						put("document", sb.toString());
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONDeserializer<Document> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		String object = invoke(graphQLField.toString());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		return jsonDeserializer.deserialize(
-			String.valueOf(dataJSONObject.getJSONObject("createSiteDocument")),
-			Document.class);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(

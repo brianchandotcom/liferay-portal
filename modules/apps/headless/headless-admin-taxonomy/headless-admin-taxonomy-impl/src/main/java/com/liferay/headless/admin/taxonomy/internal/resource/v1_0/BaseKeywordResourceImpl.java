@@ -173,7 +173,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Path("/sites/{siteId}/keywords")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Keyword")})
-	public Keyword postSiteKeyword(
+	public Keyword postSiteKeywords(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			Keyword keyword)
 		throws Exception {

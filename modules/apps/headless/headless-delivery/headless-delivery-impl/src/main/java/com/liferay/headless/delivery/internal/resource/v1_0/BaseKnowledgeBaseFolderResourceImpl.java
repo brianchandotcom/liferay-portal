@@ -274,7 +274,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
-	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
+	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolders(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("parentKnowledgeBaseFolderId") Long
 				parentKnowledgeBaseFolderId,
@@ -325,7 +325,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Path("/sites/{siteId}/knowledge-base-folders")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
-	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
+	public KnowledgeBaseFolder postSiteKnowledgeBaseFolders(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {

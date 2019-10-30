@@ -49,7 +49,7 @@ public interface CommentResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Comment postBlogPostingComment(Long blogPostingId, Comment comment)
+	public Comment postBlogPostingComments(Long blogPostingId, Comment comment)
 		throws Exception;
 
 	public void deleteComment(Long commentId) throws Exception;
@@ -63,7 +63,7 @@ public interface CommentResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Comment postCommentComment(Long parentCommentId, Comment comment)
+	public Comment postCommentComments(Long parentCommentId, Comment comment)
 		throws Exception;
 
 	public Page<Comment> getDocumentCommentsPage(
@@ -71,7 +71,7 @@ public interface CommentResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Comment postDocumentComment(Long documentId, Comment comment)
+	public Comment postDocumentComments(Long documentId, Comment comment)
 		throws Exception;
 
 	public Page<Comment> getStructuredContentCommentsPage(
@@ -79,7 +79,7 @@ public interface CommentResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Comment postStructuredContentComment(
+	public Comment postStructuredContentComments(
 			Long structuredContentId, Comment comment)
 		throws Exception;
 

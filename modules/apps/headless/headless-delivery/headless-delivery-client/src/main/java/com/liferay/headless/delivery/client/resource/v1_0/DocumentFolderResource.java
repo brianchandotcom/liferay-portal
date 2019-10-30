@@ -93,12 +93,12 @@ public interface DocumentFolderResource {
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public DocumentFolder postDocumentFolderDocumentFolder(
+	public DocumentFolder postDocumentFolderDocumentFolders(
 			Long parentDocumentFolderId, DocumentFolder documentFolder)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postDocumentFolderDocumentFolderHttpResponse(
+			postDocumentFolderDocumentFoldersHttpResponse(
 				Long parentDocumentFolderId, DocumentFolder documentFolder)
 		throws Exception;
 
@@ -112,11 +112,11 @@ public interface DocumentFolderResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public DocumentFolder postSiteDocumentFolder(
+	public DocumentFolder postSiteDocumentFolders(
 			Long siteId, DocumentFolder documentFolder)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSiteDocumentFolderHttpResponse(
+	public HttpInvoker.HttpResponse postSiteDocumentFoldersHttpResponse(
 			Long siteId, DocumentFolder documentFolder)
 		throws Exception;
 
@@ -616,12 +616,12 @@ public interface DocumentFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public DocumentFolder postDocumentFolderDocumentFolder(
+		public DocumentFolder postDocumentFolderDocumentFolders(
 				Long parentDocumentFolderId, DocumentFolder documentFolder)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postDocumentFolderDocumentFolderHttpResponse(
+				postDocumentFolderDocumentFoldersHttpResponse(
 					parentDocumentFolderId, documentFolder);
 
 			String content = httpResponse.getContent();
@@ -645,7 +645,7 @@ public interface DocumentFolderResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postDocumentFolderDocumentFolderHttpResponse(
+				postDocumentFolderDocumentFoldersHttpResponse(
 					Long parentDocumentFolderId, DocumentFolder documentFolder)
 			throws Exception {
 
@@ -766,12 +766,12 @@ public interface DocumentFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public DocumentFolder postSiteDocumentFolder(
+		public DocumentFolder postSiteDocumentFolders(
 				Long siteId, DocumentFolder documentFolder)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteDocumentFolderHttpResponse(siteId, documentFolder);
+				postSiteDocumentFoldersHttpResponse(siteId, documentFolder);
 
 			String content = httpResponse.getContent();
 
@@ -793,7 +793,7 @@ public interface DocumentFolderResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postSiteDocumentFolderHttpResponse(
+		public HttpInvoker.HttpResponse postSiteDocumentFoldersHttpResponse(
 				Long siteId, DocumentFolder documentFolder)
 			throws Exception {
 

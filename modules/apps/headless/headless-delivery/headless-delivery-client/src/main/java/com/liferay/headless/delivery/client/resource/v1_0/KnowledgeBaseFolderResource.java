@@ -80,13 +80,13 @@ public interface KnowledgeBaseFolderResource {
 				Long parentKnowledgeBaseFolderId, Pagination pagination)
 		throws Exception;
 
-	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
+	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolders(
 			Long parentKnowledgeBaseFolderId,
 			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postKnowledgeBaseFolderKnowledgeBaseFolderHttpResponse(
+			postKnowledgeBaseFolderKnowledgeBaseFoldersHttpResponse(
 				Long parentKnowledgeBaseFolderId,
 				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception;
@@ -99,11 +99,11 @@ public interface KnowledgeBaseFolderResource {
 			Long siteId, Pagination pagination)
 		throws Exception;
 
-	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
+	public KnowledgeBaseFolder postSiteKnowledgeBaseFolders(
 			Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSiteKnowledgeBaseFolderHttpResponse(
+	public HttpInvoker.HttpResponse postSiteKnowledgeBaseFoldersHttpResponse(
 			Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception;
 
@@ -484,13 +484,13 @@ public interface KnowledgeBaseFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
+		public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolders(
 				Long parentKnowledgeBaseFolderId,
 				KnowledgeBaseFolder knowledgeBaseFolder)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postKnowledgeBaseFolderKnowledgeBaseFolderHttpResponse(
+				postKnowledgeBaseFolderKnowledgeBaseFoldersHttpResponse(
 					parentKnowledgeBaseFolderId, knowledgeBaseFolder);
 
 			String content = httpResponse.getContent();
@@ -514,7 +514,7 @@ public interface KnowledgeBaseFolderResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postKnowledgeBaseFolderKnowledgeBaseFolderHttpResponse(
+				postKnowledgeBaseFolderKnowledgeBaseFoldersHttpResponse(
 					Long parentKnowledgeBaseFolderId,
 					KnowledgeBaseFolder knowledgeBaseFolder)
 			throws Exception {
@@ -618,12 +618,12 @@ public interface KnowledgeBaseFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
+		public KnowledgeBaseFolder postSiteKnowledgeBaseFolders(
 				Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteKnowledgeBaseFolderHttpResponse(
+				postSiteKnowledgeBaseFoldersHttpResponse(
 					siteId, knowledgeBaseFolder);
 
 			String content = httpResponse.getContent();
@@ -646,8 +646,9 @@ public interface KnowledgeBaseFolderResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postSiteKnowledgeBaseFolderHttpResponse(
-				Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
+		public HttpInvoker.HttpResponse
+				postSiteKnowledgeBaseFoldersHttpResponse(
+					Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

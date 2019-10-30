@@ -156,7 +156,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Path("/sites/{siteId}/blog-posting-images")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
-	public BlogPostingImage postSiteBlogPostingImage(
+	public BlogPostingImage postSiteBlogPostingImages(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			MultipartBody multipartBody)
 		throws Exception {

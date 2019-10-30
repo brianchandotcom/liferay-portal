@@ -55,7 +55,7 @@ public interface KeywordResource {
 			Sort[] sorts)
 		throws Exception;
 
-	public Keyword postSiteKeyword(Long siteId, Keyword keyword)
+	public Keyword postSiteKeywords(Long siteId, Keyword keyword)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

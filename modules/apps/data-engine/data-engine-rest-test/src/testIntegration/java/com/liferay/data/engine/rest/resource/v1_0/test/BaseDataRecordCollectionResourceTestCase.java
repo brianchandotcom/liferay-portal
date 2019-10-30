@@ -322,9 +322,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 				DataRecordCollection dataRecordCollection)
 		throws Exception {
 
-		return dataRecordCollectionResource.
-			postDataDefinitionDataRecordCollection(
-				dataDefinitionId, dataRecordCollection);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -343,12 +342,12 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionDataRecordCollection() throws Exception {
+	public void testPostDataDefinitionDataRecordCollections() throws Exception {
 		DataRecordCollection randomDataRecordCollection =
 			randomDataRecordCollection();
 
 		DataRecordCollection postDataRecordCollection =
-			testPostDataDefinitionDataRecordCollection_addDataRecordCollection(
+			testPostDataDefinitionDataRecordCollections_addDataRecordCollection(
 				randomDataRecordCollection);
 
 		assertEquals(randomDataRecordCollection, postDataRecordCollection);
@@ -356,14 +355,12 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	protected DataRecordCollection
-			testPostDataDefinitionDataRecordCollection_addDataRecordCollection(
+			testPostDataDefinitionDataRecordCollections_addDataRecordCollection(
 				DataRecordCollection dataRecordCollection)
 		throws Exception {
 
-		return dataRecordCollectionResource.
-			postDataDefinitionDataRecordCollection(
-				testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId(),
-				dataRecordCollection);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -531,28 +528,28 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataRecordCollectionDataRecordCollectionPermission()
+	public void testPostDataRecordCollectionDataRecordCollectionPermissions()
 		throws Exception {
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataRecordCollection dataRecordCollection =
-			testPostDataRecordCollectionDataRecordCollectionPermission_addDataRecordCollection();
+			testPostDataRecordCollectionDataRecordCollectionPermissions_addDataRecordCollection();
 
 		assertHttpResponseStatusCode(
 			204,
 			dataRecordCollectionResource.
-				postDataRecordCollectionDataRecordCollectionPermissionHttpResponse(
+				postDataRecordCollectionDataRecordCollectionPermissionsHttpResponse(
 					dataRecordCollection.getId(), null, null));
 
 		assertHttpResponseStatusCode(
 			404,
 			dataRecordCollectionResource.
-				postDataRecordCollectionDataRecordCollectionPermissionHttpResponse(
+				postDataRecordCollectionDataRecordCollectionPermissionsHttpResponse(
 					0L, null, null));
 	}
 
 	protected DataRecordCollection
-			testPostDataRecordCollectionDataRecordCollectionPermission_addDataRecordCollection()
+			testPostDataRecordCollectionDataRecordCollectionPermissions_addDataRecordCollection()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -560,26 +557,26 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteDataRecordCollectionPermission() throws Exception {
+	public void testPostSiteDataRecordCollectionPermissions() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataRecordCollection dataRecordCollection =
-			testPostSiteDataRecordCollectionPermission_addDataRecordCollection();
+			testPostSiteDataRecordCollectionPermissions_addDataRecordCollection();
 
 		assertHttpResponseStatusCode(
 			204,
 			dataRecordCollectionResource.
-				postSiteDataRecordCollectionPermissionHttpResponse(
+				postSiteDataRecordCollectionPermissionsHttpResponse(
 					null, null, null));
 
 		assertHttpResponseStatusCode(
 			404,
 			dataRecordCollectionResource.
-				postSiteDataRecordCollectionPermissionHttpResponse(
+				postSiteDataRecordCollectionPermissionsHttpResponse(
 					null, null, null));
 	}
 
 	protected DataRecordCollection
-			testPostSiteDataRecordCollectionPermission_addDataRecordCollection()
+			testPostSiteDataRecordCollectionPermissions_addDataRecordCollection()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

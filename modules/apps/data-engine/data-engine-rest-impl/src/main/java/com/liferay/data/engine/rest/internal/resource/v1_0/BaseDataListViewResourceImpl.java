@@ -105,7 +105,7 @@ public abstract class BaseDataListViewResourceImpl
 	@Path("/data-definitions/{dataDefinitionId}/data-list-views")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataListView")})
-	public DataListView postDataDefinitionDataListView(
+	public DataListView postDataDefinitionDataListViews(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
 				Long dataDefinitionId,
 			DataListView dataListView)

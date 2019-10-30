@@ -135,13 +135,13 @@ public interface MessageBoardMessageResource {
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
+	public MessageBoardMessage postMessageBoardMessageMessageBoardMessages(
 			Long parentMessageBoardMessageId,
 			MessageBoardMessage messageBoardMessage)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postMessageBoardMessageMessageBoardMessageHttpResponse(
+			postMessageBoardMessageMessageBoardMessagesHttpResponse(
 				Long parentMessageBoardMessageId,
 				MessageBoardMessage messageBoardMessage)
 		throws Exception;
@@ -158,12 +158,12 @@ public interface MessageBoardMessageResource {
 				Pagination pagination, String sortString)
 		throws Exception;
 
-	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
+	public MessageBoardMessage postMessageBoardThreadMessageBoardMessages(
 			Long messageBoardThreadId, MessageBoardMessage messageBoardMessage)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postMessageBoardThreadMessageBoardMessageHttpResponse(
+			postMessageBoardThreadMessageBoardMessagesHttpResponse(
 				Long messageBoardThreadId,
 				MessageBoardMessage messageBoardMessage)
 		throws Exception;
@@ -943,13 +943,13 @@ public interface MessageBoardMessageResource {
 			return httpInvoker.invoke();
 		}
 
-		public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
+		public MessageBoardMessage postMessageBoardMessageMessageBoardMessages(
 				Long parentMessageBoardMessageId,
 				MessageBoardMessage messageBoardMessage)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postMessageBoardMessageMessageBoardMessageHttpResponse(
+				postMessageBoardMessageMessageBoardMessagesHttpResponse(
 					parentMessageBoardMessageId, messageBoardMessage);
 
 			String content = httpResponse.getContent();
@@ -973,7 +973,7 @@ public interface MessageBoardMessageResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postMessageBoardMessageMessageBoardMessageHttpResponse(
+				postMessageBoardMessageMessageBoardMessagesHttpResponse(
 					Long parentMessageBoardMessageId,
 					MessageBoardMessage messageBoardMessage)
 			throws Exception {
@@ -1096,13 +1096,13 @@ public interface MessageBoardMessageResource {
 			return httpInvoker.invoke();
 		}
 
-		public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
+		public MessageBoardMessage postMessageBoardThreadMessageBoardMessages(
 				Long messageBoardThreadId,
 				MessageBoardMessage messageBoardMessage)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postMessageBoardThreadMessageBoardMessageHttpResponse(
+				postMessageBoardThreadMessageBoardMessagesHttpResponse(
 					messageBoardThreadId, messageBoardMessage);
 
 			String content = httpResponse.getContent();
@@ -1126,7 +1126,7 @@ public interface MessageBoardMessageResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postMessageBoardThreadMessageBoardMessageHttpResponse(
+				postMessageBoardThreadMessageBoardMessagesHttpResponse(
 					Long messageBoardThreadId,
 					MessageBoardMessage messageBoardMessage)
 			throws Exception {

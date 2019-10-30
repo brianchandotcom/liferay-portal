@@ -109,7 +109,7 @@ public abstract class BaseWikiNodeResourceImpl implements WikiNodeResource {
 	@Path("/sites/{siteId}/wiki-nodes/")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiNode")})
-	public WikiNode postSiteWikiNode(
+	public WikiNode postSiteWikiNodes(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			WikiNode wikiNode)
 		throws Exception {

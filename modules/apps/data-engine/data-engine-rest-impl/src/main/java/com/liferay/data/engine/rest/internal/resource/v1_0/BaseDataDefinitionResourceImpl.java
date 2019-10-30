@@ -74,7 +74,7 @@ public abstract class BaseDataDefinitionResourceImpl
 	@Path("/data-definitions/data-definition-fields/field-types")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
-	public String getDataDefinitionDataDefinitionFieldFieldType()
+	public String getDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception {
 
 		return StringPool.BLANK;
@@ -160,7 +160,7 @@ public abstract class BaseDataDefinitionResourceImpl
 	@Path("/data-definitions/{dataDefinitionId}/data-definition-permissions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
-	public void postDataDefinitionDataDefinitionPermission(
+	public void postDataDefinitionDataDefinitionPermissions(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
 				Long dataDefinitionId,
 			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
@@ -186,7 +186,7 @@ public abstract class BaseDataDefinitionResourceImpl
 	@Path("/sites/{siteId}/data-definition-permissions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
-	public void postSiteDataDefinitionPermission(
+	public void postSiteDataDefinitionPermissions(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
 				operation,
@@ -234,7 +234,7 @@ public abstract class BaseDataDefinitionResourceImpl
 	@Path("/sites/{siteId}/data-definitions")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataDefinition")})
-	public DataDefinition postSiteDataDefinition(
+	public DataDefinition postSiteDataDefinitions(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			DataDefinition dataDefinition)
 		throws Exception {

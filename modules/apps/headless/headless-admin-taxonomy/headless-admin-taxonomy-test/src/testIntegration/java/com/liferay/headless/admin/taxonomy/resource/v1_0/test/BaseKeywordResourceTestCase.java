@@ -31,7 +31,6 @@ import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.KeywordSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -213,8 +212,8 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	protected Keyword testDeleteKeyword_addKeyword() throws Exception {
-		return keywordResource.postSiteKeyword(
-			testGroup.getGroupId(), randomKeyword());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -274,8 +273,8 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	protected Keyword testGetKeyword_addKeyword() throws Exception {
-		return keywordResource.postSiteKeyword(
-			testGroup.getGroupId(), randomKeyword());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -323,8 +322,8 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	protected Keyword testPutKeyword_addKeyword() throws Exception {
-		return keywordResource.postSiteKeyword(
-			testGroup.getGroupId(), randomKeyword());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -568,7 +567,8 @@ public abstract class BaseKeywordResourceTestCase {
 			Long siteId, Keyword keyword)
 		throws Exception {
 
-		return keywordResource.postSiteKeyword(siteId, keyword);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long testGetSiteKeywordsPage_getSiteId() throws Exception {
@@ -635,152 +635,25 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteKeyword() throws Exception {
+	public void testPostSiteKeywords() throws Exception {
 		Keyword randomKeyword = randomKeyword();
 
-		Keyword postKeyword = testPostSiteKeyword_addKeyword(randomKeyword);
+		Keyword postKeyword = testPostSiteKeywords_addKeyword(randomKeyword);
 
 		assertEquals(randomKeyword, postKeyword);
 		assertValid(postKeyword);
 	}
 
-	protected Keyword testPostSiteKeyword_addKeyword(Keyword keyword)
+	protected Keyword testPostSiteKeywords_addKeyword(Keyword keyword)
 		throws Exception {
 
-		return keywordResource.postSiteKeyword(
-			testGetSiteKeywordsPage_getSiteId(), keyword);
-	}
-
-	@Test
-	public void testGraphQLPostSiteKeyword() throws Exception {
-		Keyword randomKeyword = randomKeyword();
-
-		Keyword keyword = testGraphQLKeyword_addKeyword(randomKeyword);
-
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomKeyword,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(keyword))));
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Keyword testGraphQLKeyword_addKeyword() throws Exception {
-		return testGraphQLKeyword_addKeyword(randomKeyword());
-	}
-
-	protected Keyword testGraphQLKeyword_addKeyword(Keyword keyword)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = keyword.getId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"keywordUsageCount", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = keyword.getKeywordUsageCount();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = keyword.getName();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("siteId", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = keyword.getSiteId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		GraphQLField graphQLField = new GraphQLField(
-			"mutation",
-			new GraphQLField(
-				"createSiteKeyword",
-				new HashMap<String, Object>() {
-					{
-						put("siteId", testGroup.getGroupId());
-						put("keyword", sb.toString());
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONDeserializer<Keyword> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		String object = invoke(graphQLField.toString());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		return jsonDeserializer.deserialize(
-			String.valueOf(dataJSONObject.getJSONObject("createSiteKeyword")),
-			Keyword.class);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(

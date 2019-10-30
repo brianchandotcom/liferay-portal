@@ -124,7 +124,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public FormRecord createFormFormRecord(
+	public FormRecord createFormFormRecords(
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("formRecord") FormRecord formRecord)
 		throws Exception {
@@ -132,7 +132,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_formRecordResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			formRecordResource -> formRecordResource.postFormFormRecord(
+			formRecordResource -> formRecordResource.postFormFormRecords(
 				formId, formRecord));
 	}
 

@@ -290,10 +290,7 @@
 		<condition property="current.branch.private">
 			<or>
 				<istrue value="${ee.override}" />
-				<resourcecontains
-					resource="${modules.dir}/../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-					substring=" Digital Experience Platform"
-				/>
+				<equals arg1="${build.profile}" arg2="dxp" />
 			</or>
 		</condition>
 

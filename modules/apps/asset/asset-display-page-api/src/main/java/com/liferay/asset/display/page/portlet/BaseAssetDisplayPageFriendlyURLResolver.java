@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -152,9 +151,6 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	protected AssetHelper assetHelper;
-
-	@Reference
-	protected Http http;
 
 	@Reference
 	protected InfoDisplayContributorTracker infoDisplayContributorTracker;
@@ -282,7 +278,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 				friendlyURL.length() - versionClassPKValue.length() - 1);
 		}
 
-		return http.encodePath(urlTitle);
+		return urlTitle;
 	}
 
 	private long _getVersionClassPK(String friendlyURL) {

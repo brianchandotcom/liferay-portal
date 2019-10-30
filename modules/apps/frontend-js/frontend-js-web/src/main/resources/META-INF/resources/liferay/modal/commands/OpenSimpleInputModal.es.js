@@ -36,26 +36,6 @@ const getDefaultModalContainer = () => {
 	return container;
 };
 
-/**
- * Function that implements the SimpleInputModal pattern, which allows
- * manipulating small amounts of data with a form shown inside a modal.
- *
- * @review
- */
-let didEmitDeprecationWarning = false;
-
-export function openSimpleInputModal(data) {
-	if (process.env.NODE_ENV === 'development' && !didEmitDeprecationWarning) {
-		console.warn(
-			'The named "openSimpleInput" export is deprecated: use the default export instead'
-		);
-
-		didEmitDeprecationWarning = true;
-	}
-
-	return openSimpleInputModalImplementation.call(null, data);
-}
-
 function openSimpleInputModalImplementation(data) {
 	const container = getDefaultModalContainer();
 
@@ -87,3 +67,25 @@ function openSimpleInputModalImplementation(data) {
 
 	render(SimpleInputModalComponent, {...data, ...renderData}, container);
 }
+
+let didEmitDeprecationWarning = false;
+
+/**
+ * Function that implements the SimpleInputModal pattern, which allows
+ * manipulating small amounts of data with a form shown inside a modal.
+ *
+ * @deprecated As of Athanasius (7.3.x), replaced by the default export
+ */
+export function openSimpleInputModal(data) {
+	if (process.env.NODE_ENV === 'development' && !didEmitDeprecationWarning) {
+		console.warn(
+			'The named "openSimpleInputModal" export is deprecated: use the default export instead'
+		);
+
+		didEmitDeprecationWarning = true;
+	}
+
+	return openSimpleInputModalImplementation.call(null, data);
+}
+
+export default openSimpleInputModalImplementation;

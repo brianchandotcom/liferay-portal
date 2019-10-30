@@ -206,6 +206,7 @@
 		</check>
 		<check name="JavaCleanUpMethodSuperCleanUpCheck" />
 		<check name="JavaCleanUpMethodVariablesCheck" />
+		<check name="JavaComponentActivateCheck" />
 		<check name="JavaComponentAnnotationsCheck">
 			<property name="checkConfigurationPolicyAttribute" value="false" />
 			<property name="checkMismatchedServiceAttribute" value="false" />

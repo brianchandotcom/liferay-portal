@@ -12,101 +12,131 @@
  * details.
  */
 
-import React from 'react';
+import classNames from 'classnames';
+import React, {useContext} from 'react';
 
-import {ConfigContext} from '../config/index';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {StoreContext} from '../store/index';
 import UnsafeHTML from './UnsafeHTML';
 
-const {useContext} = React;
-
 export default function PageEditor() {
-	const config = useContext(ConfigContext);
 	const state = useContext(StoreContext);
 
-	const {fragmentEntryLinks, layoutData} = state;
+	const {layoutData} = state;
+	const mainItem = layoutData.items[layoutData.rootItems.main];
 
-	return (
-		<>
-			<Body
-				fragmentEntryLinks={fragmentEntryLinks}
-				layoutData={layoutData}
-			/>
-			<DebugInfo config={config} state={state} />
-		</>
-	);
+	return <LayoutDataItem item={mainItem} layoutData={layoutData} />;
 }
 
-function Body({fragmentEntryLinks, layoutData}) {
-	return layoutData.structure.map((row, index) => {
-		return (
-			<Row
-				columns={row.columns}
-				fragmentEntryLinks={fragmentEntryLinks}
-				key={index}
-			/>
-		);
-	});
-}
+function LayoutDataItem({item, layoutData}) {
+	const Component = LAYOUT_DATA_ITEMS[item.type];
 
-function Row({columns, fragmentEntryLinks}) {
 	return (
-		<div className="row">
-			{columns.map((column, index) => {
-				const {fragmentEntryLinkIds, size} = column;
-
-				const links = fragmentEntryLinkIds.map(id => {
-					return fragmentEntryLinks[id];
-				});
-
+		<Component item={item}>
+			{item.children.map(childId => {
 				return (
-					<Column
-						fragmentEntryLinks={links}
-						key={index}
-						size={size}
+					<LayoutDataItem
+						item={layoutData.items[childId]}
+						key={childId}
+						layoutData={layoutData}
 					/>
 				);
 			})}
-		</div>
+		</Component>
 	);
 }
 
-function Column({fragmentEntryLinks, size}) {
+const LAYOUT_DATA_ITEMS = {
+	[LAYOUT_DATA_ITEM_TYPES.column]: Column,
+	[LAYOUT_DATA_ITEM_TYPES.container]: Container,
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: Fragment,
+	[LAYOUT_DATA_ITEM_TYPES.root]: Root,
+	[LAYOUT_DATA_ITEM_TYPES.row]: Row
+};
+
+function Column({children, item}) {
+	const {size} = item.config;
+
 	return (
-		<div className={`col-md-${size}`}>
-			{fragmentEntryLinks.map(({content, fragmentEntryLinkId}) => {
-				if (content.value.contentKind === 'HTML') {
-					return (
-						<UnsafeHTML
-							key={fragmentEntryLinkId}
-							markup={content.value.content}
-						/>
-					);
-				} else {
-					return (
-						// TODO: actually handle other `contentKind`s
-						<pre key={fragmentEntryLinkId}>
-							{JSON.stringify(content, null, 2)}
-						</pre>
-					);
-				}
-			})}
+		<div className={classNames('col', {[`col-${size}`]: size})}>
+			{children}
 		</div>
 	);
 }
 
-let DebugInfo;
+function Container({children, item}) {
+	const {
+		backgroundColorCssClass,
+		backgroundImage,
+		paddingHorizontal,
+		paddingVertical,
+		type
+	} = item.config;
 
-if (process.env.NODE_ENV === 'development') {
-	DebugInfo = ({config, state}) => (
-		<>
-			<h2>Debug Information</h2>
-			<h3>Config</h3>
-			<pre>{JSON.stringify(config, null, 2)}</pre>
-			<h3>Store state</h3>
-			<pre>{JSON.stringify(state, null, 2)}</pre>
-		</>
+	return (
+		<div
+			className={classNames(`py-${paddingVertical}`, {
+				[`bg-${backgroundColorCssClass}`]: Boolean(
+					backgroundColorCssClass
+				),
+				container: type === 'fixed',
+				'container-fluid': type === 'fluid',
+				[`px-${paddingHorizontal}`]: paddingHorizontal !== 3
+			})}
+			style={
+				backgroundImage
+					? {
+							backgroundImage: `url(${backgroundImage})`,
+							backgroundPosition: '50% 50%',
+							backgroundRepeat: 'no-repeat',
+							backgroundSize: 'cover'
+					  }
+					: {}
+			}
+		>
+			{children}
+		</div>
 	);
-} else {
-	DebugInfo = () => null;
+}
+
+function Fragment({item}) {
+	const {fragmentEntryLinks} = useContext(StoreContext);
+
+	const fragmentEntryLink =
+		fragmentEntryLinks[item.config.fragmentEntryLinkId];
+
+	return (
+		<UnsafeHTML className="fragment" markup={fragmentEntryLink.content} />
+	);
+}
+
+function Root({children}) {
+	return <>{children}</>;
+}
+
+function Row({children, item}) {
+	const {layoutData} = useContext(StoreContext);
+
+	const parent = Object.values(layoutData.items).find(parent =>
+		parent.children.includes(item.itemId)
+	);
+
+	const rowContent = (
+		<div
+			className={classNames('row', {
+				empty: !item.children.some(
+					childId => layoutData.items[childId].children.length
+				),
+				'no-gutters': !item.config.gutters
+			})}
+		>
+			{children}
+		</div>
+	);
+
+	return parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
+		<div className="container-fluid p-0">{rowContent}</div>
+	) : (
+		rowContent
+	);
 }

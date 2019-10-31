@@ -60,12 +60,11 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 
 		for (Object item : items) {
 			_columnValueWriter.write(
-				item, _fieldMap, _fieldNames,
-				values -> _write(dateFormat, values));
+				values -> _write(dateFormat, values), _fieldMap, _fieldNames,
+				item);
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	private void _write(DateFormat dateFormat, Collection<?> values) {
 		if (values.isEmpty()) {
 			return;

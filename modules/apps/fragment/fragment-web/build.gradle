@@ -26,6 +26,7 @@ dependencies {
 	compileOnly project(":apps:item-selector:item-selector-criteria-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:portal-template:portal-template-soy-api")
+	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")
 	compileOnly project(":apps:staging:staging-api")

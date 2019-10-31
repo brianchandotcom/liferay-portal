@@ -65,6 +65,8 @@ public class BNDBundleCheck extends BaseFileCheck {
 		content = BNDSourceUtil.updateInstruction(
 			content, "Liferay-Releng-Public", "${liferay.releng.public}");
 		content = BNDSourceUtil.updateInstruction(
+			content, "Liferay-Releng-Restart-Required", "true");
+		content = BNDSourceUtil.updateInstruction(
 			content, "Liferay-Releng-Support-Url", "http://www.liferay.com");
 		content = BNDSourceUtil.updateInstruction(
 			content, "Liferay-Releng-Supported", "${liferay.releng.supported}");

@@ -25,6 +25,12 @@
 				"metal-web-component": ">=2.16.8",
 				"xss-filters": ">=1.2.7"
 			},
+			"frontend-js-react-web": {
+				"classnames": ">=2.2.6",
+				"prop-types": ">=15.7.2",
+				"react": ">=16.8.6",
+				"react-dom": ">=16.8.6"
+			},
 			"frontend-js-web": {
 				"/": ">=2.0.6",
 				"liferay-amd-loader": ">=4.1.0",
@@ -37,6 +43,13 @@
 				"uuid": ">=3.3.2"
 			},
 			"frontend-taglib-clay": {
+				"@clayui/alert": ">=3.0.0",
+				"@clayui/button": ">=3.0.0",
+				"@clayui/form": ">=3.0.0",
+				"@clayui/icon": ">=3.0.0",
+				"@clayui/link": ">=3.0.0",
+				"@clayui/modal": ">=3.0.0",
+				"@clayui/shared": ">=3.0.0",
 				"clay": ">=2.16.2",
 				"clay-alert": ">=2.16.2",
 				"clay-button": ">=2.16.2",

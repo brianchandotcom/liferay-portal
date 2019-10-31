@@ -218,13 +218,15 @@ definition {
 
 		SitePages._addPage(
 			assertCheckboxMissing = "${assertCheckboxMissing}",
+			categoryName = "${categoryName}",
 			collectionName = "${collectionName}",
 			inheritChanges = "${inheritChanges}",
 			navigationMenus = "${navigationMenus}",
 			pageName = "${pageName}",
 			pageTemplateName = "${pageTemplateName}",
 			pageTypeURL = "${pageTypeURL}",
-			sitePageType = "${sitePageType}");
+			sitePageType = "${sitePageType}",
+			vocabularyName = "${vocabularyName}");
 	}
 
 	macro configureChildPage {

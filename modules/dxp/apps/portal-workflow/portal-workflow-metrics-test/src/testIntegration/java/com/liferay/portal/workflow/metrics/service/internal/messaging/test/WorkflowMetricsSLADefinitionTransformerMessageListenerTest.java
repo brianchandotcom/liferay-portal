@@ -32,8 +32,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
-import com.liferay.portal.workflow.metrics.service.internal.util.WorkflowDefinitionUtil;
-import com.liferay.portal.workflow.metrics.service.test.base.BaseWorkflowMetricsTestCase;
+import com.liferay.portal.workflow.metrics.service.util.BaseWorkflowMetricsTestCase;
+import com.liferay.portal.workflow.metrics.service.util.WorkflowDefinitionUtil;
 
 import org.junit.Assert;
 import org.junit.Before;

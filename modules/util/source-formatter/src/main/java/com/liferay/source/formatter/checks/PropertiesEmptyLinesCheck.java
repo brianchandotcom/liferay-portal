@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,9 +63,22 @@ public class PropertiesEmptyLinesCheck extends BaseFileCheck {
 		Matcher matcher = _missingEmptyLineAfterMultiLinePattern.matcher(
 			content);
 
-		if (matcher.find()) {
-			return StringUtil.replaceFirst(
-				content, "\n", "\n\n", matcher.start(1));
+		while (matcher.find()) {
+			String currentPropertyKeyPattern =
+				Pattern.quote(matcher.group(1)) + "#?" +
+					Pattern.quote(matcher.group(2));
+
+			String nextLinePropertyKey = StringUtil.extractFirst(
+				matcher.group(4), "=");
+
+			if (Validator.isNull(nextLinePropertyKey)) {
+				continue;
+			}
+
+			if (!nextLinePropertyKey.matches(currentPropertyKeyPattern)) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start(4) - 1);
+			}
 		}
 
 		matcher = _missingEmptyLineBeforeMultiLinePattern.matcher(content);
@@ -80,8 +94,7 @@ public class PropertiesEmptyLinesCheck extends BaseFileCheck {
 	private static final Pattern _missingEmptyLineAfterCategoryPattern =
 		Pattern.compile("\n## \\w.*\n##\n([^\n#]|#[^#])");
 	private static final Pattern _missingEmptyLineAfterMultiLinePattern =
-		Pattern.compile(
-			"\n *[^ #\n].*\\\\\n *[^ #\n][^#\n]*([^\\\\\n])\n[^\n]");
+		Pattern.compile("( *)([^#\n].*?)=\\\\(\n\\1 +.+)+\n(.+)");
 	private static final Pattern _missingEmptyLineBeforeCategoryPattern =
 		Pattern.compile("\n([^\n#]|#[^#]).*\n##\n");
 	private static final Pattern _missingEmptyLineBeforeMultiLinePattern =

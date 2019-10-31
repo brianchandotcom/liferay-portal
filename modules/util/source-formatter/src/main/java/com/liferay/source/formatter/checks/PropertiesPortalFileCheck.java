@@ -121,11 +121,11 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 						StringPool.FOUR_SPACES +
 							"[^# ]+?=[^,]+(,[^ ][^,]+)+")) {
 
-					String trimmedLine = StringUtil.trimLeading(line);
+					String propertyKey = StringUtil.extractFirst(
+						StringUtil.trimLeading(line), "=");
 
-					if (!allowedSingleLinePropertyKeys.contains(
-							trimmedLine.substring(
-								0, trimmedLine.indexOf("=")))) {
+					if (!propertyKey.contains("regex") &&
+						!allowedSingleLinePropertyKeys.contains(propertyKey)) {
 
 						line = line.replaceFirst("=", "=\\\\\n        ");
 

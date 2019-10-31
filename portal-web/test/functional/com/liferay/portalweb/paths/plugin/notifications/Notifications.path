@@ -50,6 +50,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATIONS_TITLE_2</td>
+	<td>xpath=(//div[@class='title'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATIONS_VERTICAL_ELLIPSIS</td>
 	<td>//li[contains(.,'${key_contentBody}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
@@ -67,6 +72,11 @@
 <tr>
 	<td>NOTIFICATIONS_CONTENT</td>
 	<td>//div[contains(@class,'content')]//div[@class='body' and contains(.,'${key_contentBody}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_CONTENT_2</td>
+	<td>xpath=(//div[contains(@class,'content')]//div[@class='body' and contains(.,'${key_contentBody}')])[2]</td>
 	<td></td>
 </tr>
 <tr>

@@ -61,11 +61,7 @@ public class LiferaySourceOrSink
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		return _responseHandler.asJsonObject(restClient.executeDeleteRequest());
-	}
-
-	public JsonObject doGetRequest(RuntimeContainer runtimeContainer) {
-		return doGetRequest(runtimeContainer, null);
+		return _getResponseContentJsonObject(restClient.executeDeleteRequest());
 	}
 
 	public JsonObject doGetRequest(
@@ -73,7 +69,7 @@ public class LiferaySourceOrSink
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		return _responseHandler.asJsonObject(restClient.executeGetRequest());
+		return _getResponseContentJsonObject(restClient.executeGetRequest());
 	}
 
 	public JsonObject doGetRequest(String resourceURL) {
@@ -86,25 +82,8 @@ public class LiferaySourceOrSink
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		Response response = restClient.executePatchRequest(jsonObject);
-
-		if (!_responseHandler.isSuccess(response)) {
-			throw new ResponseContentClientException(
-				"Request did not succeed", response.getStatus(), null);
-		}
-
-		if (!_responseHandler.isApplicationJsonContentType(response)) {
-			if (response.getStatus() == 204) {
-				return null;
-			}
-
-			throw new ResponseContentClientException(
-				"Unable to decode response content type " +
-					_responseHandler.getContentType(response),
-				response.getStatus(), null);
-		}
-
-		return _responseHandler.asJsonObject(response);
+		return _getResponseContentJsonObject(
+			restClient.executePatchRequest(jsonObject));
 	}
 
 	public JsonObject doPostRequest(
@@ -293,7 +272,7 @@ public class LiferaySourceOrSink
 		RuntimeContainer runtimeContainer) {
 
 		try {
-			doGetRequest(runtimeContainer);
+			doGetRequest(runtimeContainer, null);
 
 			return new ValidationResult(
 				ValidationResult.Result.OK,
@@ -343,6 +322,26 @@ public class LiferaySourceOrSink
 	protected volatile LiferayConnectionPropertiesProvider
 		liferayConnectionPropertiesProvider;
 	protected RESTClient restClient;
+
+	private JsonObject _getResponseContentJsonObject(Response response) {
+		if (!_responseHandler.isSuccess(response)) {
+			throw new ResponseContentClientException(
+				"Request did not succeed", response.getStatus(), null);
+		}
+
+		if (!_responseHandler.isApplicationJsonContentType(response)) {
+			if (response.getStatus() == 204) {
+				return null;
+			}
+
+			throw new ResponseContentClientException(
+				"Unable to decode response content type " +
+					_responseHandler.getContentType(response),
+				response.getStatus(), null);
+		}
+
+		return _responseHandler.asJsonObject(response);
+	}
 
 	private boolean _isNullString(String value) {
 		if (value == null) {

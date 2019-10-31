@@ -68,6 +68,8 @@ public class OpenAPIResourceImpl {
 
 			add(TransitionResourceImpl.class);
 
+			add(WorkflowDefinitionResourceImpl.class);
+
 			add(WorkflowInstanceResourceImpl.class);
 
 			add(WorkflowLogResourceImpl.class);

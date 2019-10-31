@@ -173,11 +173,11 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<div id="<portlet:namespace />openGraphSettings">
 				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-open-graph-title" name="openGraphTitleEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
-				<aui:input label="<%= StringPool.BLANK %>" name="openGraphTitle" placeholder="title" />
+				<aui:input disabled="<%= !selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphTitle" placeholder="<%= layoutsAdminDisplayContext.getPageTitle() %>" />
 
 				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-open-graph-description" name="openGraphDescriptionEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
-				<aui:input label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="description" />
+				<aui:input label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="description" type="textarea" />
 
 				<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 			</div>
@@ -186,7 +186,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<div id="<portlet:namespace />openGraphSettings">
 				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-open-graph-title" name="openGraphTitleEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
-				<aui:input label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphTitle" type="text" />
+				<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphTitle" placeholder="<%= layoutsAdminDisplayContext.getPageTitle() %>" type="text" />
 
 				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-open-graph-description" name="openGraphDescriptionEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
@@ -211,51 +211,83 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 				<aui:button name="openGraphImageButton" value="select" />
 			</div>
 		</div>
-
-		<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
-			var openGraphImageButton = document.getElementById(
-				'<portlet:namespace />openGraphImageButton'
-			);
-
-			if (openGraphImageButton) {
-				var itemSelectorDialog = new ItemSelectorDialog.default({
-					buttonAddLabel: '<liferay-ui:message key="done" />',
-					eventName: '<portlet:namespace />openGraphImageSelectedItem',
-					title: '<liferay-ui:message key="open-graph-image" />',
-					url: '<%= layoutsAdminDisplayContext.getItemSelectorURL() %>'
-				});
-
-				itemSelectorDialog.on('selectedItemChange', function(event) {
-					var selectedItem = event.selectedItem;
-
-					if (selectedItem) {
-						var itemValue = JSON.parse(selectedItem.value);
-
-						var openGraphImageFileEntryId = document.getElementById(
-							'<portlet:namespace />openGraphImageFileEntryId'
-						);
-
-						if (openGraphImageFileEntryId) {
-							openGraphImageFileEntryId.value = itemValue.fileEntryId;
-						}
-
-						var openGraphImageURL = document.getElementById(
-							'<portlet:namespace />openGraphImageURL'
-						);
-
-						if (openGraphImageURL) {
-							openGraphImageURL.value = itemValue.url;
-						}
-					}
-				});
-
-				openGraphImageButton.addEventListener('click', function(event) {
-					event.preventDefault();
-					itemSelectorDialog.open();
-				});
-			}
-		</aui:script>
 	</div>
+
+	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+		var openGraphImageButton = document.getElementById(
+			'<portlet:namespace />openGraphImageButton'
+		);
+
+		if (openGraphImageButton) {
+			var itemSelectorDialog = new ItemSelectorDialog.default({
+				buttonAddLabel: '<liferay-ui:message key="done" />',
+				eventName: '<portlet:namespace />openGraphImageSelectedItem',
+				title: '<liferay-ui:message key="open-graph-image" />',
+				url: '<%= layoutsAdminDisplayContext.getItemSelectorURL() %>'
+			});
+
+			itemSelectorDialog.on('selectedItemChange', function(event) {
+				var selectedItem = event.selectedItem;
+
+				if (selectedItem) {
+					var itemValue = JSON.parse(selectedItem.value);
+
+					var openGraphImageFileEntryId = document.getElementById(
+						'<portlet:namespace />openGraphImageFileEntryId'
+					);
+
+					if (openGraphImageFileEntryId) {
+						openGraphImageFileEntryId.value = itemValue.fileEntryId;
+					}
+
+					var openGraphImageURL = document.getElementById(
+						'<portlet:namespace />openGraphImageURL'
+					);
+
+					if (openGraphImageURL) {
+						openGraphImageURL.value = itemValue.url;
+					}
+				}
+			});
+
+			openGraphImageButton.addEventListener('click', function(event) {
+				event.preventDefault();
+				itemSelectorDialog.open();
+			});
+		}
+
+		var openGraphTitleEnabledCheck = document.getElementById(
+			'<portlet:namespace />openGraphTitleEnabled'
+		);
+		var openGraphTitleEnabledCheckField = document.getElementById(
+			'<portlet:namespace />openGraphTitle'
+		);
+
+		if (openGraphTitleEnabledCheck && openGraphTitleEnabledCheckField) {
+			openGraphTitleEnabledCheck.addEventListener('click', function(event) {
+				Liferay.Util.toggleDisabled(
+					openGraphTitleEnabledCheckField,
+					!event.target.checked
+				);
+			});
+		}
+
+		var openGraphDescriptionEnabledCheck = document.getElementById(
+			'<portlet:namespace />openGraphDescriptionEnabled'
+		);
+		var openGraphDescriptionField = document.getElementById(
+			'<portlet:namespace />openGraphDescription'
+		);
+
+		if (openGraphDescriptionEnabledCheck && openGraphDescriptionField) {
+			openGraphDescriptionEnabledCheck.addEventListener('click', function(event) {
+				Liferay.Util.toggleDisabled(
+					openGraphDescriptionField,
+					!event.target.checked
+				);
+			});
+		}
+	</aui:script>
 </c:if>
 
 <aui:script>

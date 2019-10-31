@@ -10,16 +10,12 @@
  */
 
 import {cleanup, render, waitForElement} from '@testing-library/react';
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {TimeRangeContext} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/TimeRangeStore.es';
 import PerformanceByStepCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/performance-by-step-card/PerformanceByStepCard.es';
 import Request from '../../../../src/main/resources/META-INF/resources/js/shared/components/request/Request.es';
 import {MockRouter} from '../../../mock/MockRouter.es';
-
-const clientMock = {
-	get: jest.fn().mockResolvedValue({data: {}})
-};
 
 const items = [
 	{
@@ -42,35 +38,24 @@ const items = [
 	}
 ];
 
-const timeRange = {
-	dateEnd: new Date('2019-01-07'),
-	dateStart: new Date('2019-01-01'),
-	id: 7,
-	name: 'Last 7 days'
-};
-
-const timeRangeContextMock = {
-	getSelectedTimeRange: () => timeRange
-};
-
 describe('The performance by step body component should', () => {
 	let getAllByTestId;
 
 	afterEach(cleanup);
 
 	beforeEach(() => {
-		clientMock.get.mockResolvedValueOnce({
-			data: {items, totalCount: items.length}
-		});
+		const wrapper = mockTimeRangeContext();
 
 		const renderResult = render(
 			<Request>
-				<TimeRangeContext.Provider value={timeRangeContextMock}>
-					<MockRouter client={clientMock}>
-						<PerformanceByStepCard.Body processId={123456} />
-					</MockRouter>
-				</TimeRangeContext.Provider>
-			</Request>
+				<MockRouter>
+					<PerformanceByStepCard.Body
+						data={{items, totalCount: items.length}}
+						processId={123456}
+					/>
+				</MockRouter>
+			</Request>,
+			{wrapper}
 		);
 
 		getAllByTestId = renderResult.getAllByTestId;
@@ -111,3 +96,25 @@ describe('The performance by step body component should', () => {
 		expect(durations[1].innerHTML).toBe('5d 12h');
 	});
 });
+
+const mockTimeRangeContext = () => ({children}) => {
+	const timeRange = useMemo(
+		() => ({
+			dateEnd: new Date('2019-01-07'),
+			dateStart: new Date('2019-01-01'),
+			id: 7,
+			name: 'Last 7 days'
+		}),
+		[]
+	);
+
+	return (
+		<TimeRangeContext.Provider
+			value={{
+				getSelectedTimeRange: () => timeRange
+			}}
+		>
+			{children}
+		</TimeRangeContext.Provider>
+	);
+};

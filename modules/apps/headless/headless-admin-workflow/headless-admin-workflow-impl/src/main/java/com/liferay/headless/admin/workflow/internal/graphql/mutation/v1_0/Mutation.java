@@ -15,12 +15,14 @@
 package com.liferay.headless.admin.workflow.internal.graphql.mutation.v1_0;
 
 import com.liferay.headless.admin.workflow.dto.v1_0.ChangeTransition;
+import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstance;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstanceSubmit;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToMe;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToRole;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToUser;
+import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowInstanceResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -47,6 +49,14 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
+	public static void setWorkflowDefinitionResourceComponentServiceObjects(
+		ComponentServiceObjects<WorkflowDefinitionResource>
+			workflowDefinitionResourceComponentServiceObjects) {
+
+		_workflowDefinitionResourceComponentServiceObjects =
+			workflowDefinitionResourceComponentServiceObjects;
+	}
+
 	public static void setWorkflowInstanceResourceComponentServiceObjects(
 		ComponentServiceObjects<WorkflowInstanceResource>
 			workflowInstanceResourceComponentServiceObjects) {
@@ -61,6 +71,80 @@ public class Mutation {
 
 		_workflowTaskResourceComponentServiceObjects =
 			workflowTaskResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public WorkflowDefinition createWorkflowDefinitionDeploy(
+			@GraphQLName("workflowDefinition") WorkflowDefinition
+				workflowDefinition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.postWorkflowDefinitionDeploy(
+					workflowDefinition));
+	}
+
+	@GraphQLField
+	public WorkflowDefinition createWorkflowDefinitionSave(
+			@GraphQLName("workflowDefinition") WorkflowDefinition
+				workflowDefinition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.postWorkflowDefinitionSave(
+					workflowDefinition));
+	}
+
+	@GraphQLField
+	public boolean deleteWorkflowDefinitionUndeploy(
+			@GraphQLName("name") String name,
+			@GraphQLName("version") String version)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.deleteWorkflowDefinitionUndeploy(
+					name, version));
+
+		return true;
+	}
+
+	@GraphQLField
+	public WorkflowDefinition createWorkflowDefinitionUpdateActive(
+			@GraphQLName("active") Boolean active,
+			@GraphQLName("name") String name,
+			@GraphQLName("version") String version)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.postWorkflowDefinitionUpdateActive(
+					active, name, version));
+	}
+
+	@GraphQLField
+	public WorkflowDefinition createWorkflowDefinitionUpdateTitle(
+			@GraphQLName("name") String name,
+			@GraphQLName("title") String title,
+			@GraphQLName("version") String version)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.postWorkflowDefinitionUpdateTitle(
+					name, title, version));
 	}
 
 	@GraphQLField
@@ -219,6 +303,20 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			WorkflowDefinitionResource workflowDefinitionResource)
+		throws Exception {
+
+		workflowDefinitionResource.setContextAcceptLanguage(_acceptLanguage);
+		workflowDefinitionResource.setContextCompany(_company);
+		workflowDefinitionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		workflowDefinitionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		workflowDefinitionResource.setContextUriInfo(_uriInfo);
+		workflowDefinitionResource.setContextUser(_user);
+	}
+
+	private void _populateResourceContext(
 			WorkflowInstanceResource workflowInstanceResource)
 		throws Exception {
 
@@ -245,6 +343,8 @@ public class Mutation {
 		workflowTaskResource.setContextUser(_user);
 	}
 
+	private static ComponentServiceObjects<WorkflowDefinitionResource>
+		_workflowDefinitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WorkflowInstanceResource>
 		_workflowInstanceResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WorkflowTaskResource>

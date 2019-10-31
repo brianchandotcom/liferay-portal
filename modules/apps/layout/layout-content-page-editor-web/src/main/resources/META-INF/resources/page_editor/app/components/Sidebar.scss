@@ -110,6 +110,32 @@ $zIndexContent: 0;
 					}
 				}
 			}
+
+			&__layouts {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+
+				&__layout-preview {
+					margin: $sidebarLayoutPreviewSpacing 0;
+					padding: 0;
+
+					&__row {
+						border: solid 2px $sidebarLayoutPreviewBorderColor;
+						border-radius: $sidebarLayoutPreviewBorderRadius;
+						height: $sidebarLayoutPreviewRowHeight;
+						margin: 0;
+						padding: $sidebarLayoutPreviewSpacing;
+					}
+
+					&__col {
+						border: solid 1px $sidebarLayoutPreviewBorderColor;
+						flex: 1;
+						margin: 2px;
+						padding: 0;
+					}
+				}
+			}
 		}
 	}
 

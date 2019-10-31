@@ -19,6 +19,8 @@ $sidebarButtonHoverColor: #fff;
 $sidebarButtonSeparatorColor: #6b6c7e;
 $sidebarCollapseLineColor: #dfdfe9;
 $sidebarContentBackgroundColor: #fff;
+$sidebarLayoutPreviewBorderColor: #6b6c7e;
+$sidebarLayoutPreviewColumnColor: #ddd;
 $toolbarBorderColor: fade_out(#dcdcdc, 0.5);
 
 //
@@ -33,6 +35,9 @@ $fragmentCardMarginBottom: $pageEditorSpacing * 2;
 $fragmentCardPadding: $pageEditorSpacing;
 $fragmentCardWidth: calc(50% - #{$pageEditorSpacing});
 $sidebarContentWidth: 280px;
+$sidebarLayoutPreviewBorderRadius: 2px;
+$sidebarLayoutPreviewRowHeight: 40px;
+$sidebarLayoutPreviewSpacing: 2px;
 $toolbarBorderWidth: 1px;
 $toolbarHeight: 64px;
 

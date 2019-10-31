@@ -35,7 +35,7 @@ definition {
 
 		var scope = JSONPermissionSetter.setScope(roleType = "${roleType}");
 
-		JSONPermissionAPI._addResourcePermission(
+		JSONPermissionAPI._removeResourcePermission(
 			actionId = "${actionId}",
 			groupId = "${groupId}",
 			name = "${name}",

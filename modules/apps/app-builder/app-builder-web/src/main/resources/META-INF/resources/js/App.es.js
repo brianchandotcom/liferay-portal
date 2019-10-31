@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayModalProvider} from '@clayui/modal';
 import React from 'react';
 import {DragDropContext as dragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -26,16 +27,22 @@ export default dragDropContext(HTML5Backend)(props => {
 	return (
 		<AppContextProvider {...props}>
 			<ToastContextProvider>
-				<Router>
-					<Switch>
-						<Route component={ListCustomObjects} exact path="/" />
+				<ClayModalProvider>
+					<Router>
+						<Switch>
+							<Route
+								component={ListCustomObjects}
+								exact
+								path="/"
+							/>
 
-						<Route
-							component={ViewCustomObject}
-							path="/custom-object/:dataDefinitionId(\d+)"
-						/>
-					</Switch>
-				</Router>
+							<Route
+								component={ViewCustomObject}
+								path="/custom-object/:dataDefinitionId(\d+)"
+							/>
+						</Switch>
+					</Router>
+				</ClayModalProvider>
 			</ToastContextProvider>
 		</AppContextProvider>
 	);

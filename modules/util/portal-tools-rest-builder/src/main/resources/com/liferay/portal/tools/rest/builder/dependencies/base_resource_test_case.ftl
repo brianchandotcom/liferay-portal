@@ -283,7 +283,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
 						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
 
-						return ${schemaVarName}Resource.postSite${schemaName}(testGroup.getGroupId(), random${schemaName}()
+						return ${schemaVarName}Resource.postSite${schemaNames}(testGroup.getGroupId(), random${schemaName}()
 
 						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 							<#assign generateGetMultipartFilesMethod = true />
@@ -869,7 +869,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
 						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
 
-						return ${schemaVarName}Resource.postSite${schemaName}(testGroup.getGroupId(), random${schemaName}()
+						return ${schemaVarName}Resource.postSite${schemaNames}(testGroup.getGroupId(), random${schemaName}()
 
 						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 							<#assign generateGetMultipartFilesMethod = true />
@@ -927,7 +927,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
 						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
 
-						return ${schemaVarName}Resource.postSite${schemaName}(testGroup.getGroupId(), random${schemaName}()
+						return ${schemaVarName}Resource.postSite${schemaNames}(testGroup.getGroupId(), random${schemaName}()
 
 						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 							, getMultipartFiles()
@@ -979,8 +979,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 						modifiedPathJavaMethodParameterName = firstPathJavaMethodParameter.parameterName?remove_beginning("parent")?remove_ending("Id")?cap_first
 					/>
 
-					<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, firstPathJavaMethodParameter.parameterName, schemaName) && stringUtil.equals(javaMethodSignature.methodName, "post" + modifiedPathJavaMethodParameterName + schemaName)>
-						return ${schemaVarName}Resource.post${modifiedPathJavaMethodParameterName}${schemaName}(testGet${modifiedPathJavaMethodParameterName}${schemaNames}Page_get<#if stringUtil.startsWith(firstPathJavaMethodParameter.parameterName, "parent")>Parent</#if>${modifiedPathJavaMethodParameterName}Id(), ${schemaVarName}
+					<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, firstPathJavaMethodParameter.parameterName, schemaName) && stringUtil.equals(javaMethodSignature.methodName, "post" + modifiedPathJavaMethodParameterName + schemaNames)>
+						return ${schemaVarName}Resource.post${modifiedPathJavaMethodParameterName}${schemaNames}(testGet${modifiedPathJavaMethodParameterName}${schemaNames}Page_get<#if stringUtil.startsWith(firstPathJavaMethodParameter.parameterName, "parent")>Parent</#if>${modifiedPathJavaMethodParameterName}Id(), ${schemaVarName}
 
 						<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
 							, multipartFiles
@@ -1037,7 +1037,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
 						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
 
-						return ${schemaVarName}Resource.postSite${schemaName}(testGroup.getGroupId(), random${schemaName}()
+						return ${schemaVarName}Resource.postSite${schemaNames}(testGroup.getGroupId(), random${schemaName}()
 
 						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 							, getMultipartFiles()
@@ -1096,7 +1096,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
 					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
 
-					return ${schemaVarName}Resource.postSite${schemaName}(testGroup.getGroupId(), random${schemaName}()
+					return ${schemaVarName}Resource.postSite${schemaNames}(testGroup.getGroupId(), random${schemaName}()
 
 					<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 						, getMultipartFiles()
@@ -1250,7 +1250,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					Assert.assertTrue(true);
 				</#if>
 			}
-		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post") && stringUtil.equals(javaMethodSignature.methodName, "postSite" + schemaName)>
+		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post") && stringUtil.equals(javaMethodSignature.methodName, "postSite" + schemaNames)>
 			@Test
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
 				${schemaName} random${schemaName} = random${schemaName}();
@@ -1313,7 +1313,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	</#list>
 
 	<#if properties?keys?seq_contains("id")>
-		<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "postSite" + schemaName)>
+		<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "postSite" + schemaNames)>
 			protected ${schemaName} testGraphQL${schemaName}_add${schemaName}() throws Exception {
 				return testGraphQL${schemaName}_add${schemaName}(random${schemaName}());
 			}
@@ -1356,7 +1356,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				GraphQLField graphQLField = new GraphQLField(
 					"mutation",
 					new GraphQLField(
-						"createSite${schemaName}",
+						"createSite${schemaNames}",
 						new HashMap<String, Object>() {
 							{
 								put("siteId", testGroup.getGroupId());
@@ -1375,7 +1375,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
-				return jsonDeserializer.deserialize(String.valueOf(dataJSONObject.getJSONObject("createSite${schemaName}")), ${schemaName}.class);
+				return jsonDeserializer.deserialize(String.valueOf(dataJSONObject.getJSONObject("createSite${schemaNames}")), ${schemaName}.class);
 			}
 		<#else>
 			protected ${schemaName} testGraphQL${schemaName}_add${schemaName}() throws Exception {

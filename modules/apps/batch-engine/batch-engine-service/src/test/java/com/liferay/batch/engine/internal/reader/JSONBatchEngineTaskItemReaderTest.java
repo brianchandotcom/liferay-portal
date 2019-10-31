@@ -168,7 +168,7 @@ public class JSONBatchEngineTaskItemReaderTest
 	public void testReadInvalidRow() throws Exception {
 		try (JSONBatchEngineTaskItemReader jsonBatchEngineTaskItemReader =
 				_getJSONBatchEngineTaskItemReader(
-					_CELL_NAMES,
+					_FIELD_NAMES,
 					new Object[][] {
 						{
 							null, "\"sample description\"", 1,
@@ -200,7 +200,7 @@ public class JSONBatchEngineTaskItemReaderTest
 	public void testReadMultipleRows() throws Exception {
 		try (JSONBatchEngineTaskItemReader jsonBatchEngineTaskItemReader =
 				_getJSONBatchEngineTaskItemReader(
-					_CELL_NAMES,
+					_FIELD_NAMES,
 					new Object[][] {
 						{
 							"\"" + createDateString + "\"",
@@ -235,7 +235,7 @@ public class JSONBatchEngineTaskItemReaderTest
 	public void testReadRowsWithCommaInsideQuotes() throws Exception {
 		try (JSONBatchEngineTaskItemReader jsonBatchEngineTaskItemReader =
 				_getJSONBatchEngineTaskItemReader(
-					_CELL_NAMES,
+					_FIELD_NAMES,
 					new Object[][] {
 						{
 							"\"" + createDateString + "\"",
@@ -260,7 +260,7 @@ public class JSONBatchEngineTaskItemReaderTest
 	public void testReadRowsWithLessValues() throws Exception {
 		try (JSONBatchEngineTaskItemReader jsonBatchEngineTaskItemReader =
 				_getJSONBatchEngineTaskItemReader(
-					_CELL_NAMES, new Object[][] {{"null", "null", 1}})) {
+					_FIELD_NAMES, new Object[][] {{"null", "null", 1}})) {
 
 			validate(
 				null, null, 1L, Collections.emptyMap(),
@@ -272,7 +272,7 @@ public class JSONBatchEngineTaskItemReaderTest
 	public void testReadRowsWithNullValues() throws Exception {
 		try (JSONBatchEngineTaskItemReader jsonBatchEngineTaskItemReader =
 				_getJSONBatchEngineTaskItemReader(
-					_CELL_NAMES,
+					_FIELD_NAMES,
 					new Object[][] {
 						{
 							"\"" + createDateString + "\"", "null", 1,
@@ -344,7 +344,7 @@ public class JSONBatchEngineTaskItemReaderTest
 			new ByteArrayInputStream(_getContent(cellNames, rowValues)));
 	}
 
-	private static final String[] _CELL_NAMES = {
+	private static final String[] _FIELD_NAMES = {
 		"createDate", "description", "id", "name", "unknownColumn"
 	};
 

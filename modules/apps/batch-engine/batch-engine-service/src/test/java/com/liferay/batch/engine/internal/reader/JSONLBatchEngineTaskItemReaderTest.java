@@ -167,7 +167,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 	public void testReadInvalidRow() throws Exception {
 		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
 				_getJSONLBatchEngineTaskItemReader(
-					_CELL_NAMES,
+					_FIELD_NAMES,
 					new Object[][] {
 						{
 							null, "\"sample description\"", 1,
@@ -199,7 +199,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 	public void testReadMultipleRows() throws Exception {
 		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
 				_getJSONLBatchEngineTaskItemReader(
-					_CELL_NAMES,
+					_FIELD_NAMES,
 					new Object[][] {
 						{
 							"\"" + createDateString + "\"",
@@ -234,7 +234,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 	public void testReadRowsWithCommaInsideQuotes() throws Exception {
 		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
 				_getJSONLBatchEngineTaskItemReader(
-					_CELL_NAMES,
+					_FIELD_NAMES,
 					new Object[][] {
 						{
 							"\"" + createDateString + "\"",
@@ -259,7 +259,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 	public void testReadRowsWithLessValues() throws Exception {
 		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
 				_getJSONLBatchEngineTaskItemReader(
-					_CELL_NAMES, new Object[][] {{"null", "null", 1}})) {
+					_FIELD_NAMES, new Object[][] {{"null", "null", 1}})) {
 
 			validate(
 				null, null, 1L, Collections.emptyMap(),
@@ -271,7 +271,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 	public void testReadRowsWithNullValues() throws Exception {
 		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
 				_getJSONLBatchEngineTaskItemReader(
-					_CELL_NAMES,
+					_FIELD_NAMES,
 					new Object[][] {
 						{
 							"\"" + createDateString + "\"", "null", 1,
@@ -340,7 +340,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 			new ByteArrayInputStream(_getContent(cellNames, rowValues)));
 	}
 
-	private static final String[] _CELL_NAMES = {
+	private static final String[] _FIELD_NAMES = {
 		"createDate", "description", "id", "name", "unknownColumn"
 	};
 

@@ -174,7 +174,7 @@ public class CSVBatchEngineTaskItemReaderTest
 	public void testReadInvalidRow() throws Exception {
 		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
 				_getCSVBatchEngineTaskItemReader(
-					CELL_NAMES, StringPool.COMMA,
+					FIELD_NAMES, StringPool.COMMA,
 					new Object[][] {
 						{
 							"", "sample description", 1, "sample name", "naziv",
@@ -196,7 +196,7 @@ public class CSVBatchEngineTaskItemReaderTest
 	public void testReadMultipleRows() throws Exception {
 		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
 				_getCSVBatchEngineTaskItemReader(
-					CELL_NAMES, StringPool.COMMA,
+					FIELD_NAMES, StringPool.COMMA,
 					new Object[][] {
 						{
 							createDateString, "sample description 1", 1,
@@ -229,7 +229,7 @@ public class CSVBatchEngineTaskItemReaderTest
 	public void testReadRowsWithCommaInsideQuotes() throws Exception {
 		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
 				_getCSVBatchEngineTaskItemReader(
-					CELL_NAMES, StringPool.SEMICOLON,
+					FIELD_NAMES, StringPool.SEMICOLON,
 					new Object[][] {
 						{
 							createDateString, "hey, here is comma inside", 1,
@@ -253,7 +253,7 @@ public class CSVBatchEngineTaskItemReaderTest
 	public void testReadRowsWithLessValues() throws Exception {
 		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
 				_getCSVBatchEngineTaskItemReader(
-					CELL_NAMES, StringPool.COMMA,
+					FIELD_NAMES, StringPool.COMMA,
 					new Object[][] {{"", "", 1}})) {
 
 			validate(
@@ -266,7 +266,7 @@ public class CSVBatchEngineTaskItemReaderTest
 	public void testReadRowsWithNullValues() throws Exception {
 		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
 				_getCSVBatchEngineTaskItemReader(
-					CELL_NAMES, StringPool.COMMA,
+					FIELD_NAMES, StringPool.COMMA,
 					new Object[][] {
 						{createDateString, "", 1, "", "naziv 1"},
 						{

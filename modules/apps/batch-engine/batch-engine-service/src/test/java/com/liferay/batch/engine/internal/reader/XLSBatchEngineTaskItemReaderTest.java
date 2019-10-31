@@ -176,7 +176,7 @@ public class XLSBatchEngineTaskItemReaderTest
 	public void testReadInvalidRow() throws Exception {
 		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
 				_getXLSBatchEngineTaskItemReader(
-					CELL_NAMES,
+					FIELD_NAMES,
 					new Object[][] {
 						{
 							new Date(), "sample description", 1L, "sample name",
@@ -198,7 +198,7 @@ public class XLSBatchEngineTaskItemReaderTest
 	public void testReadMultipleRows() throws Exception {
 		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
 				_getXLSBatchEngineTaskItemReader(
-					CELL_NAMES,
+					FIELD_NAMES,
 					new Object[][] {
 						{
 							createDate, "sample description 1", 1L,
@@ -231,7 +231,7 @@ public class XLSBatchEngineTaskItemReaderTest
 	public void testReadRowsWithCommaInsideQuotes() throws Exception {
 		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
 				_getXLSBatchEngineTaskItemReader(
-					CELL_NAMES,
+					FIELD_NAMES,
 					new Object[][] {
 						{
 							createDate, "hey, here is comma inside", 1L,
@@ -255,7 +255,7 @@ public class XLSBatchEngineTaskItemReaderTest
 	public void testReadRowsWithLessValues() throws Exception {
 		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
 				_getXLSBatchEngineTaskItemReader(
-					CELL_NAMES, new Object[][] {{null, null, 1}})) {
+					FIELD_NAMES, new Object[][] {{null, null, 1}})) {
 
 			validate(
 				null, null, 1L, Collections.emptyMap(),
@@ -267,7 +267,7 @@ public class XLSBatchEngineTaskItemReaderTest
 	public void testReadRowsWithNullValues() throws Exception {
 		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
 				_getXLSBatchEngineTaskItemReader(
-					CELL_NAMES,
+					FIELD_NAMES,
 					new Object[][] {
 						{createDate, null, 1L, null, "naziv"},
 						{

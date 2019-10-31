@@ -65,10 +65,9 @@ const ImagePreviewer = ({imageURL}) => {
 	};
 
 	const getFittingZoom = () => {
-		return Math.min(
-			ZOOM_LEVELS_REVERSED[0],
-			imageContainer.current.clientWidth / image.current.naturalWidth
-		);
+		const imageElement = image.current;
+
+		return imageElement.width / imageElement.naturalWidth;
 	};
 
 	const getImageStyles = () => {

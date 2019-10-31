@@ -1,8 +1,8 @@
 {
-    "exclude": {
-        "*": true
-    },
-    "ignore": [
-        "**/*"
-    ],
+	"exclude": {
+		"*": true
+	},
+	"ignore": [
+		"**/*"
+	],
 }

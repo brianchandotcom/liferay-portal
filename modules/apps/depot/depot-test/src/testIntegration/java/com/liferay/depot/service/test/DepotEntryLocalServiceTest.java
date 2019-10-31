@@ -75,7 +75,10 @@ public class DepotEntryLocalServiceTest {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, group.getParentGroupId());
 		Assert.assertEquals(GroupConstants.TYPE_DEPOT, group.getType());
 		Assert.assertFalse(group.isSite());
+	}
 
+	@Test
+	public void testAddDepotEntryWithNullName() throws Exception {
 		try {
 			_addDepotEntry(null, null);
 

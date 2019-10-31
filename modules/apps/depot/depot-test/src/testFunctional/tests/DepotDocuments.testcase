@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This ensures that a shortcut can be added to a depot."
-	@priority = "5"
+	@priority = "3"
 	test AccessShortcut {
 		JSONGroup.addGroup(groupName = "Site Name");
 

@@ -37,6 +37,12 @@ definition {
 
 		PortletEntry.inputName(name = "${pageName}");
 
+		if (isSet(categoryName)) {
+			AssetCategorization.addCategory(
+				categoryName = "${categoryName}",
+				vocabularyName = "${vocabularyName}");
+		}
+
 		Button.clickAdd();
 
 		SelectFrame.selectFrameTop();

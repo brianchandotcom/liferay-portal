@@ -16,7 +16,7 @@ checkoutDXPScript {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()
 
 		exec {
-			commandLine "git", "for-each-ref", "--format=%(refname) %(committerdate:short)", "refs/remotes/*/master-private"
+			commandLine "git", "for-each-ref", "--format=%(refname)", "refs/remotes/*/master-private"
 			ignoreExitValue = true
 			standardOutput = byteArrayOutputStream
 		}
@@ -24,15 +24,18 @@ checkoutDXPScript {
 		String result = byteArrayOutputStream.toString();
 
 		if (Validator.isNotNull(result)) {
-			String[][] refInfos = result.split("\n").collect { String s ->
-				s.split(" ")
-			}
+			String refName = result.split('\n').last()
 
-			refInfos = refInfos.sort { String[] a, String[] b ->
-				a[1].compareTo(b[1])
-			}
+			String[] tokens = refName.split('/')
 
-			String refName = refInfos.last()[0]
+			logger.lifecycle "git fetch {} {}", tokens[2], tokens[3]
+
+			exec {
+				commandLine "git", "fetch", tokens[2], tokens[3]
+				errorOutput = new ByteArrayOutputStream()
+				standardOutput = new ByteArrayOutputStream()
+				workingDir = projectDir.parentFile
+			}
 
 			logger.lifecycle "git checkout {} -- build-working-dir.xml working.dir.properties", refName
 

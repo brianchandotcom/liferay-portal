@@ -1,5 +1,5 @@
 Bundle-SymbolicName: org.apache.axis
-Bundle-Version: 1.4.LIFERAY-PATCHED-3
+Bundle-Version: 1.4.LIFERAY-PATCHED-4
 Export-Package:\
 	org.apache.axis.*,\
 	org.apache.xml.*

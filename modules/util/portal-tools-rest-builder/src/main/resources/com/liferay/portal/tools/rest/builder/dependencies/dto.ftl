@@ -225,6 +225,9 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		protected ${propertyType} ${propertyName};
 	</#list>
 
+	@Schema(defaultValue = "${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName}", name = "x-classname")
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

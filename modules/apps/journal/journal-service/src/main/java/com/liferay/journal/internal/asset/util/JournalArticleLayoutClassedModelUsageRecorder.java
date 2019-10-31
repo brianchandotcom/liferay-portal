@@ -14,19 +14,18 @@
 
 package com.liferay.journal.internal.asset.util;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.service.AssetEntryUsageLocalService;
-import com.liferay.asset.util.AssetEntryUsageRecorder;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalContentSearch;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
+import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.layout.util.LayoutClassedModelUsageRecorder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -53,57 +52,43 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "model.class.name=com.liferay.journal.model.JournalArticle",
-	service = AssetEntryUsageRecorder.class
+	service = LayoutClassedModelUsageRecorder.class
 )
-public class JournalArticleAssetEntryUsageRecorder
-	implements AssetEntryUsageRecorder {
+public class JournalArticleLayoutClassedModelUsageRecorder
+	implements LayoutClassedModelUsageRecorder {
 
 	@Override
-	public void record(AssetEntry assetEntry) throws PortalException {
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				assetEntry.getClassName());
-
-		AssetRenderer<JournalArticle> assetRenderer =
-			assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
-
-		JournalArticle article = assetRenderer.getAssetObject();
-
-		if (!article.isApproved()) {
-			assetEntry = _assetEntryLocalService.fetchEntry(
-				_portal.getClassNameId(JournalArticle.class),
-				article.getResourcePrimKey());
-		}
-
-		if (_assetEntryUsageLocalService.hasDefaultAssetEntryUsage(
-				assetEntry.getEntryId())) {
+	public void record(long classNameId, long classPK) throws PortalException {
+		if (_layoutClassedModelUsageLocalService.
+				hasDefaultLayoutClassedModelUsage(classNameId, classPK)) {
 
 			return;
 		}
 
-		_recordJournalContentSearches(assetEntry);
-		_recordPortletPreferences(assetEntry, true);
-		_recordPortletPreferences(assetEntry, false);
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
+				_portal.getClassName(classNameId));
 
-		_assetEntryUsageLocalService.addDefaultAssetEntryUsage(
-			assetEntry.getGroupId(), assetEntry.getEntryId(),
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
+			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+
+		_recordJournalContentSearches(infoDisplayObjectProvider);
+		_recordPortletPreferences(infoDisplayObjectProvider, true);
+		_recordPortletPreferences(infoDisplayObjectProvider, false);
+
+		_layoutClassedModelUsageLocalService.addDefaultLayoutClassedModelUsage(
+			infoDisplayObjectProvider.getGroupId(), classNameId, classPK,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 
-	private void _recordJournalContentSearches(AssetEntry assetEntry)
-		throws PortalException {
+	private void _recordJournalContentSearches(
+		InfoDisplayObjectProvider infoDisplayObjectProvider) {
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				assetEntry.getClassName());
-
-		AssetRenderer<JournalArticle> assetRenderer =
-			assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
-
-		JournalArticle article = assetRenderer.getAssetObject();
+		JournalArticle article =
+			(JournalArticle)infoDisplayObjectProvider.getDisplayObject();
 
 		List<JournalContentSearch> contentSearches =
 			_journalContentSearchLocalService.getArticleContentSearches(
@@ -114,33 +99,42 @@ public class JournalArticleAssetEntryUsageRecorder
 				contentSearch.getGroupId(), contentSearch.isPrivateLayout(),
 				contentSearch.getLayoutId());
 
-			AssetEntryUsage assetEntryUsage =
-				_assetEntryUsageLocalService.fetchAssetEntryUsage(
-					assetEntry.getEntryId(),
-					_portal.getClassNameId(Portlet.class),
-					contentSearch.getPortletId(), layout.getPlid());
+			LayoutClassedModelUsage layoutClassedModelUsage =
+				_layoutClassedModelUsageLocalService.
+					fetchLayoutClassedModelUsage(
+						infoDisplayObjectProvider.getClassNameId(),
+						infoDisplayObjectProvider.getClassPK(),
+						contentSearch.getPortletId(),
+						_portal.getClassNameId(Portlet.class),
+						layout.getPlid());
 
-			if (assetEntryUsage != null) {
+			if (layoutClassedModelUsage != null) {
 				continue;
 			}
 
-			_assetEntryUsageLocalService.addAssetEntryUsage(
-				contentSearch.getGroupId(), assetEntry.getEntryId(),
-				_portal.getClassNameId(Portlet.class),
-				contentSearch.getPortletId(), layout.getPlid(), serviceContext);
+			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+				contentSearch.getGroupId(),
+				infoDisplayObjectProvider.getClassNameId(),
+				infoDisplayObjectProvider.getClassPK(),
+				contentSearch.getPortletId(),
+				_portal.getClassNameId(Portlet.class), layout.getPlid(),
+				serviceContext);
 		}
 	}
 
 	private void _recordPortletPreferences(
-			AssetEntry assetEntry, boolean privateLayout)
-		throws PortalException {
+		InfoDisplayObjectProvider infoDisplayObjectProvider,
+		boolean privateLayout) {
+
+		JournalArticle article =
+			(JournalArticle)infoDisplayObjectProvider.getDisplayObject();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		List<PortletPreferences> portletPreferencesList =
 			_portletPreferencesLocalService.getPortletPreferences(
-				assetEntry.getCompanyId(), assetEntry.getGroupId(),
+				article.getCompanyId(), article.getGroupId(),
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 				AssetPublisherPortletKeys.ASSET_PUBLISHER, privateLayout);
@@ -165,26 +159,36 @@ public class JournalArticleAssetEntryUsageRecorder
 			String assetEntryXml = jxPortletPreferences.getValue(
 				"assetEntryXml", StringPool.BLANK);
 
-			if (!assetEntryXml.contains(assetEntry.getClassUuid())) {
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				infoDisplayObjectProvider.getClassNameId(),
+				infoDisplayObjectProvider.getClassPK());
+
+			if ((assetEntry == null) ||
+				!assetEntryXml.contains(assetEntry.getClassUuid())) {
+
 				continue;
 			}
 
-			AssetEntryUsage assetEntryUsage =
-				_assetEntryUsageLocalService.fetchAssetEntryUsage(
-					assetEntry.getEntryId(),
-					_portal.getClassNameId(Portlet.class),
-					portletPreferences.getPortletId(),
-					portletPreferences.getPlid());
+			LayoutClassedModelUsage layoutClassedModelUsage =
+				_layoutClassedModelUsageLocalService.
+					fetchLayoutClassedModelUsage(
+						infoDisplayObjectProvider.getClassNameId(),
+						infoDisplayObjectProvider.getClassPK(),
+						portletPreferences.getPortletId(),
+						_portal.getClassNameId(Portlet.class),
+						portletPreferences.getPlid());
 
-			if (assetEntryUsage != null) {
+			if (layoutClassedModelUsage != null) {
 				continue;
 			}
 
-			_assetEntryUsageLocalService.addAssetEntryUsage(
-				assetEntry.getGroupId(), assetEntry.getEntryId(),
+			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+				infoDisplayObjectProvider.getGroupId(),
+				infoDisplayObjectProvider.getClassNameId(),
+				infoDisplayObjectProvider.getClassPK(),
+				portletPreferences.getPortletId(),
 				_portal.getClassNameId(Portlet.class),
-				portletPreferences.getPortletId(), portletPreferences.getPlid(),
-				serviceContext);
+				portletPreferences.getPlid(), serviceContext);
 		}
 	}
 
@@ -192,13 +196,14 @@ public class JournalArticleAssetEntryUsageRecorder
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

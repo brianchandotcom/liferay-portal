@@ -330,6 +330,12 @@ public class FormStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.form.dto.v1_0.FormStructure",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

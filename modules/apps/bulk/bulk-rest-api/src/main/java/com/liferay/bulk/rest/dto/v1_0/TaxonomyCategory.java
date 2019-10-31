@@ -100,6 +100,12 @@ public class TaxonomyCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String taxonomyCategoryName;
 
+	@Schema(
+		defaultValue = "com.liferay.bulk.rest.dto.v1_0.TaxonomyCategory",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

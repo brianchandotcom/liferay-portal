@@ -163,6 +163,12 @@ public class DataDefinitionRule {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String ruleType;
 
+	@Schema(
+		defaultValue = "com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRule",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

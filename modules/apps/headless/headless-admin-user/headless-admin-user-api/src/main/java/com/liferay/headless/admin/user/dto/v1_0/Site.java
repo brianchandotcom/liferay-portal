@@ -294,6 +294,12 @@ public class Site {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Site[] sites;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Site",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

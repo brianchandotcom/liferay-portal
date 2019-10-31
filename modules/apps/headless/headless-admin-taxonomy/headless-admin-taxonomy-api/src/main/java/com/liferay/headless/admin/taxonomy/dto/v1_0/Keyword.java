@@ -248,6 +248,12 @@ public class Keyword {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

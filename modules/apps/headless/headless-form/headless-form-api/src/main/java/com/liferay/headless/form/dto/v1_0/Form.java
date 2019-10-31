@@ -441,6 +441,12 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long structureId;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.form.dto.v1_0.Form",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

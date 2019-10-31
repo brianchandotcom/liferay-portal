@@ -275,6 +275,12 @@ public class Segment {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String source;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Segment",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

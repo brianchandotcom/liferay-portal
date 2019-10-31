@@ -126,6 +126,12 @@ public class Validation {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.form.dto.v1_0.Validation",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

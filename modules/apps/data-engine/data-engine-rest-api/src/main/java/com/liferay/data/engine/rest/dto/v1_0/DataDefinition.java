@@ -424,6 +424,12 @@ public class DataDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long userId;
 
+	@Schema(
+		defaultValue = "com.liferay.data.engine.rest.dto.v1_0.DataDefinition",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

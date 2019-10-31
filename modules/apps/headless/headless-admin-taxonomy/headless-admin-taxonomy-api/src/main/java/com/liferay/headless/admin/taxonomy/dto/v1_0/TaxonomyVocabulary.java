@@ -419,6 +419,12 @@ public class TaxonomyVocabulary {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

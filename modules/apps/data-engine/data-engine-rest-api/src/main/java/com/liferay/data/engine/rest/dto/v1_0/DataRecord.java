@@ -130,6 +130,12 @@ public class DataRecord {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema(
+		defaultValue = "com.liferay.data.engine.rest.dto.v1_0.DataRecord",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

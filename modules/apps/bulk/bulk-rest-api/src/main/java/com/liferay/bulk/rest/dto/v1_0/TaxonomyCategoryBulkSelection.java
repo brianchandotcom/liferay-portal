@@ -140,6 +140,12 @@ public class TaxonomyCategoryBulkSelection {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] taxonomyCategoryIdsToRemove;
 
+	@Schema(
+		defaultValue = "com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkSelection",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

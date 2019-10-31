@@ -104,6 +104,12 @@ public class DocumentBulkSelection {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SelectionScope selectionScope;
 
+	@Schema(
+		defaultValue = "com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

@@ -70,6 +70,12 @@ public class Keyword {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema(
+		defaultValue = "com.liferay.bulk.rest.dto.v1_0.Keyword",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

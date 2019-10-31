@@ -128,6 +128,12 @@ public class AssetType {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.AssetType",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

@@ -76,6 +76,12 @@ public class DataLayoutRow {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataLayoutColumn[] dataLayoutColumns;
 
+	@Schema(
+		defaultValue = "com.liferay.data.engine.rest.dto.v1_0.DataLayoutRow",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

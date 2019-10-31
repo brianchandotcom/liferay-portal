@@ -770,6 +770,12 @@ public class FormField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Validation validation;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.form.dto.v1_0.FormField",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

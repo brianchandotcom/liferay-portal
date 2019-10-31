@@ -326,6 +326,12 @@ public class PostalAddress {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String streetAddressLine3;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.PostalAddress",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

@@ -245,6 +245,12 @@ public class Subscription {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Subscription",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

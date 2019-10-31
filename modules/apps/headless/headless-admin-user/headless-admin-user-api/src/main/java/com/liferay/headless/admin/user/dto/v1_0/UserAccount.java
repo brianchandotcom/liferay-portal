@@ -671,6 +671,12 @@ public class UserAccount {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected SiteBrief[] siteBriefs;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.UserAccount",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

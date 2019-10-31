@@ -96,6 +96,12 @@ public class ParentTaxonomyCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.ParentTaxonomyCategory",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

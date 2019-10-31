@@ -352,6 +352,12 @@ public class DataRecordCollectionPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean viewDataRecord;
 
+	@Schema(
+		defaultValue = "com.liferay.data.engine.rest.dto.v1_0.DataRecordCollectionPermission",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

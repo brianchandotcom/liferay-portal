@@ -100,6 +100,12 @@ public class ChangeTransition {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String transition;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.ChangeTransition",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

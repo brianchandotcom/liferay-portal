@@ -397,6 +397,12 @@ public class ImportTask {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String version;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.batch.engine.dto.v1_0.ImportTask",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

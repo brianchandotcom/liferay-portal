@@ -183,6 +183,12 @@ public class FormFieldValue {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.form.dto.v1_0.FormFieldValue",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

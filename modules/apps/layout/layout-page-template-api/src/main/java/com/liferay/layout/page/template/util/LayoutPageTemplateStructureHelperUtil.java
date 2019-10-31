@@ -52,6 +52,8 @@ public class LayoutPageTemplateStructureHelperUtil {
 			JSONObject structureJSONObject = JSONUtil.put(
 				"columns", JSONUtil.put(columnJSONObject)
 			).put(
+				"config", JSONFactoryUtil.createJSONObject()
+			).put(
 				"rowId", String.valueOf(i)
 			).put(
 				"type", String.valueOf(_getRowType(fragmentEntryLink))
@@ -69,8 +71,7 @@ public class LayoutPageTemplateStructureHelperUtil {
 		);
 
 		if (!fragmentEntryLinks.isEmpty()) {
-			jsonObject.put(
-				"nextRowId", String.valueOf(fragmentEntryLinks.size() - 1));
+			jsonObject.put("nextRowId", fragmentEntryLinks.size() - 1);
 		}
 
 		jsonObject.put("structure", structureJSONArray);

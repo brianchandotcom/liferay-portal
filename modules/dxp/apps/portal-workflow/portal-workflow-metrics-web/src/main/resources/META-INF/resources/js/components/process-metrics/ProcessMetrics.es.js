@@ -22,6 +22,7 @@ import {AppContext} from '../AppContext.es';
 import AlertMessage from './AlertMessage.es';
 import DropDownHeader from './DropDownHeader.es';
 import CompletionVelocityCard from './completion-velocity/CompletionVelocityCard.es';
+import PerformanceByAssigneeCard from './performance-by-assignee-card/PerformanceByAssigneeCard.es';
 import PerformanceByStepCard from './performance-by-step-card/PerformanceByStepCard.es';
 import CompletedItemsCard from './process-items/CompletedItemsCard.es';
 import PendingItemsCard from './process-items/PendingItemsCard.es';
@@ -182,7 +183,8 @@ class ProcessMetrics extends React.Component {
 							render={withParams(
 								CompletedItemsCard,
 								CompletionVelocityCard,
-								PerformanceByStepCard
+								PerformanceByStepCard,
+								PerformanceByAssigneeCard
 							)}
 						/>
 					</Switch>

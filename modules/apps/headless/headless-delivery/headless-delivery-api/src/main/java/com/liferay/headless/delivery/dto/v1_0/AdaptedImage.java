@@ -186,6 +186,12 @@ public class AdaptedImage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer width;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.AdaptedImage",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

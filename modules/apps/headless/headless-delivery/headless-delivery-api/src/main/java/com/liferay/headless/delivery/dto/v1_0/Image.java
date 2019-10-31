@@ -130,6 +130,12 @@ public class Image {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long imageId;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Image",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

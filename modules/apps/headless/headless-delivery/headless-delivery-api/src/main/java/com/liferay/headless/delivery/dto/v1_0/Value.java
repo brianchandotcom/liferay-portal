@@ -217,6 +217,12 @@ public class Value {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StructuredContentLink structuredContentLink;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Value",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

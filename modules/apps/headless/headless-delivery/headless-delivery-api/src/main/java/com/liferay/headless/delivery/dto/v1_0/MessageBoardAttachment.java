@@ -212,6 +212,12 @@ public class MessageBoardAttachment {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

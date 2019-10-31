@@ -100,6 +100,12 @@ public class ParentKnowledgeBaseFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String folderName;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ParentKnowledgeBaseFolder",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

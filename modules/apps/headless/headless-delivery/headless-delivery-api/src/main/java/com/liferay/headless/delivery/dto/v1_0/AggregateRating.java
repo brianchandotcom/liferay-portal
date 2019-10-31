@@ -188,6 +188,12 @@ public class AggregateRating {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double worstRating;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.AggregateRating",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

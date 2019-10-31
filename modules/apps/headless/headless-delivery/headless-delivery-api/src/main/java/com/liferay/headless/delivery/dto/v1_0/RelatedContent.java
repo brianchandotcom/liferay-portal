@@ -126,6 +126,12 @@ public class RelatedContent {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String title;
 
+	@Schema(
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RelatedContent",
+		name = "x-classname"
+	)
+	public String xClassName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

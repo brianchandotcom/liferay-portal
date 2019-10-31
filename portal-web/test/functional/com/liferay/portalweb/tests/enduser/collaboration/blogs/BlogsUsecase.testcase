@@ -950,8 +950,6 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		Portlet.addPG(portletName = "Documents and Media");
-
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder 1 Description",
 			dmFolderName = "DM Folder 1 Name");

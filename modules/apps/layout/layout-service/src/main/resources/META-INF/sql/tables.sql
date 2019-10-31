@@ -7,7 +7,7 @@ create table LayoutClassedModelUsage (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	containerKey VARCHAR(75) null,
+	containerKey VARCHAR(200) null,
 	containerType LONG,
 	plid LONG,
 	type_ INTEGER,

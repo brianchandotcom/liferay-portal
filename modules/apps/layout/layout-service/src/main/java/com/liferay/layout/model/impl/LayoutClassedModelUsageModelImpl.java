@@ -96,7 +96,7 @@ public class LayoutClassedModelUsageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutClassedModelUsage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutClassedModelUsageId LONG not null primary key,groupId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,containerKey VARCHAR(75) null,containerType LONG,plid LONG,type_ INTEGER,lastPublishDate DATE null)";
+		"create table LayoutClassedModelUsage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutClassedModelUsageId LONG not null primary key,groupId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,containerKey VARCHAR(200) null,containerType LONG,plid LONG,type_ INTEGER,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutClassedModelUsage";

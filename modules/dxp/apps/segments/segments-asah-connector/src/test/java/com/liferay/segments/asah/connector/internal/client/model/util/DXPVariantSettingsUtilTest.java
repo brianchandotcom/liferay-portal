@@ -41,7 +41,7 @@ public class DXPVariantSettingsUtilTest {
 		Assert.assertEquals(
 			controlSegmentsExperienceKey, dxpVariantSettings.getDXPVariantId());
 		Assert.assertEquals(
-			split, dxpVariantSettings.getTrafficSplit() / 100, 0);
+			split, dxpVariantSettings.getTrafficSplit() / 100, 0.001);
 		Assert.assertTrue(dxpVariantSettings.isControl());
 	}
 
@@ -60,7 +60,7 @@ public class DXPVariantSettingsUtilTest {
 		Assert.assertEquals(
 			segmentsExperienceKey, dxpVariantSettings.getDXPVariantId());
 		Assert.assertEquals(
-			split, dxpVariantSettings.getTrafficSplit() / 100, 0);
+			split, dxpVariantSettings.getTrafficSplit() / 100, 0.001);
 		Assert.assertFalse(dxpVariantSettings.isControl());
 	}
 

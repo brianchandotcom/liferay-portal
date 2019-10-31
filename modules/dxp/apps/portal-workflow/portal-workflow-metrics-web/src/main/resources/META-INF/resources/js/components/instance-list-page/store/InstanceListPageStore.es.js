@@ -11,7 +11,10 @@
 
 import React, {createContext, useContext, useState} from 'react';
 
-import {getFiltersParam} from '../../../shared/components/filter/util/filterUtil.es';
+import {
+	getFiltersParam,
+	reduceFilters
+} from '../../../shared/components/filter/util/filterUtil.es';
 import {AppContext} from '../../AppContext.es';
 import {AssigneeContext} from '../../process-metrics/filter/store/AssigneeStore.es';
 import {ProcessStatusContext} from '../../process-metrics/filter/store/ProcessStatusStore.es';
@@ -28,9 +31,6 @@ const filterConstants = {
 	timeRangeDateEnd: 'dateEnd',
 	timeRangeDateStart: 'dateStart'
 };
-
-const reduceFilters = (filterItems, paramKey) =>
-	filterItems.reduce((acc, cur) => `&${paramKey}=${cur.key}${acc}`, '');
 
 const useInstanceListData = (page, pageSize, processId, query) => {
 	const [instanceId, setInstanceId] = useState();

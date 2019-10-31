@@ -120,3 +120,10 @@ export function verifySelectedItems(filter, filtersParam) {
 
 	return filter;
 }
+
+export function reduceFilters(filterItems, paramKey) {
+	return filterItems.reduce(
+		(acc, cur) => `&${paramKey}=${cur.key}${acc}`,
+		''
+	);
+}

@@ -12,8 +12,73 @@
  * details.
  */
 
-import React from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 
-export default function SectionBuilderSidebar({title}) {
-	return <h1>{title}</h1>;
+import {StoreContext} from '../../../app/store/index';
+import Collapse from '../../../common/components/Collapse';
+import SearchForm from '../../../common/components/SearchForm';
+import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
+import FragmentCard from './FragmentCard';
+import Layouts from './Layouts';
+
+export default function SectionBuilderSidebar() {
+	const {elements} = useContext(StoreContext);
+	const [searchValue, setSearchValue] = useState('');
+
+	const filteredElements = useMemo(() => {
+		const searchValueLowerCase = searchValue.toLowerCase();
+
+		return elements
+			.map(fragmentCollection => {
+				return {
+					...fragmentCollection,
+					fragmentEntries: fragmentCollection.fragmentEntries.filter(
+						fragmentEntry =>
+							fragmentEntry.name
+								.toLowerCase()
+								.indexOf(searchValueLowerCase) !== -1
+					)
+				};
+			})
+			.filter(fragmentCollection => {
+				return fragmentCollection.fragmentEntries.length > 0;
+			});
+	}, [searchValue, elements]);
+
+	return (
+		<>
+			<SidebarPanelHeader>
+				{Liferay.Language.get('section-builder')}
+			</SidebarPanelHeader>
+
+			<div className="page-editor-sidebar-panel page-editor-sidebar-panel__section-builder">
+				<SearchForm onChange={setSearchValue} value={searchValue} />
+
+				{!searchValue.length && <Layouts />}
+
+				{filteredElements.map(fragmentCollection => (
+					<div key={fragmentCollection.fragmentCollectionId}>
+						<Collapse
+							label={fragmentCollection.name}
+							open={searchValue.length > 0}
+						>
+							<div className="page-editor-sidebar-panel__section-builder__fragments">
+								{fragmentCollection.fragmentEntries.map(
+									fragmentEntry => (
+										<FragmentCard
+											imagePreviewURL={
+												fragmentEntry.imagePreviewURL
+											}
+											key={fragmentEntry.fragmentEntryKey}
+											name={fragmentEntry.name}
+										/>
+									)
+								)}
+							</div>
+						</Collapse>
+					</div>
+				))}
+			</div>
+		</>
+	);
 }

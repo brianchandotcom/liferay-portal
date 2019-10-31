@@ -111,6 +111,13 @@ $zIndexContent: 0;
 				}
 			}
 
+			&__fragments {
+				align-items: flex-start;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+			}
+
 			&__layouts {
 				display: flex;
 				flex-wrap: wrap;

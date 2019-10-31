@@ -162,6 +162,20 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 <c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) && LayoutSEOLinkManagerUtil.isOpenGraphEnabled(selLayout) %>">
 	<h4><liferay-ui:message key="open-graph" /></h4>
 
+	<div>
+		<label class="control-label"><liferay-ui:message key="image" /></label>
+
+		<div class="input-group">
+			<div class="input-group-item">
+				<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="w-100" />
+			</div>
+
+			<div class="input-group-item input-group-item-shrink">
+				<aui:button name="openGraphImageButton" value="select" />
+			</div>
+		</div>
+	</div>
+
 	<%
 	LayoutSEOEntry selLayoutSEOEntry = layoutsAdminDisplayContext.getSelLayoutSEOEntry();
 	%>
@@ -198,20 +212,6 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	</c:choose>
 
 	<portlet:actionURL name="/layout/upload_open_graph_image" var="uploadOpenGraphImageURL" />
-
-	<div>
-		<label class="control-label"><liferay-ui:message key="image" /></label>
-
-		<div class="input-group">
-			<div class="input-group-item">
-				<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="w-100" />
-			</div>
-
-			<div class="input-group-item input-group-item-shrink">
-				<aui:button name="openGraphImageButton" value="select" />
-			</div>
-		</div>
-	</div>
 
 	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 		var openGraphImageButton = document.getElementById(

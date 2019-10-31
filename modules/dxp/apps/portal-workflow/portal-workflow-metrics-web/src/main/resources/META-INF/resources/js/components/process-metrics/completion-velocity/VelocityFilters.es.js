@@ -25,7 +25,11 @@ const VelocityFilters = () => {
 					showFilterName={false}
 				/>
 
-				<VelocityUnitFilter hideControl={true} position="right" />
+				<VelocityUnitFilter
+					className={'pl-3'}
+					hideControl={true}
+					position="right"
+				/>
 			</ul>
 		</div>
 	);

@@ -25,14 +25,18 @@ function addItemReducer(items, action) {
 		return items;
 	}
 
-	if (!parentItem) {
-		throw new Error(`There is no item with id "${parentId}"`);
-	}
-
-	if (!LAYOUT_DATA_ALLOWED_PARENT_TYPES[itemType].includes(parentItem.type)) {
-		throw new Error(
-			`Cannot put item of type "${itemType}" inside "${parentItem.type}"`
-		);
+	if (process.env.NODE_ENV === 'development') {
+		if (!parentItem) {
+			console.error(`Parent item "${parentId}" does not exist`);
+		} else if (
+			!LAYOUT_DATA_ALLOWED_PARENT_TYPES[itemType].includes(
+				parentItem.type
+			)
+		) {
+			console.error(
+				`Item of type "${itemType}" shouldn't be placed inside "${parentItem.type}"`
+			);
+		}
 	}
 
 	const {position = parentItem.children.length} = action;

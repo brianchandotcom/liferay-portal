@@ -136,25 +136,6 @@ describe('layoutDataReducer', () => {
 			]);
 		});
 
-		it('throws an error if parent does not exist', () => {
-			expect(() =>
-				layoutDataReducer(state, addItem({parentId: 'no-parent'}))
-			).toThrow('There is no item with id "no-parent"');
-		});
-
-		it('throws an error if item cannot be placed inside parent', () => {
-			expect(() =>
-				layoutDataReducer(
-					state,
-					addItem({
-						itemId: 'new-column',
-						itemType: LAYOUT_DATA_ITEM_TYPES.column,
-						parentId: 'example-fragment-0'
-					})
-				)
-			).toThrow('Cannot put item of type "column" inside "fragment');
-		});
-
 		it('does nothing if there is an item with same id', () => {
 			const nextState = layoutDataReducer(
 				state,

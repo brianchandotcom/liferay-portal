@@ -60,9 +60,9 @@ public class ViewUsersManagementToolbarDisplayContext
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 
-		clearResultsURL.setParameter("accountEntryIds", StringPool.BLANK);
-		clearResultsURL.setParameter("accountNavigation", "all");
 		clearResultsURL.setParameter("navigation", (String)null);
+		clearResultsURL.setParameter("accountNavigation", "all");
+		clearResultsURL.setParameter("accountEntryIds", StringPool.BLANK);
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();

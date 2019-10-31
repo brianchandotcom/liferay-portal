@@ -335,6 +335,77 @@ definition {
 			entryTitle = "Blogs Entry Title Edit");
 	}
 
+	@description = "This test covers LPS-103502. It ensures that notifications are displayed correctly after being mentioned."
+	@priority = "3"
+	test ViewWebsiteNotificationdForMention {
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Mentions.addMentionViaComments(
+			entryComment = "Comment mentioning",
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewComment(
+			assetType = "Blogs Entry",
+			contentBody = "Comment mentioning @usersn",
+			mentioned = "true",
+			user = "Test Test");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Mentions.addMentionViaComments(
+			entryComment = "Reply comment mentioning",
+			mentionsUserFullName = "test test",
+			mentionsUserScreenName = "test");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "2");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewComment(
+			assetType = "comment",
+			content = "Blogs Entry Title",
+			contentBody = "Reply comment mentioning @test",
+			user = "userfn userln");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Notifications#NOTIFICATIONS_TITLE_2",
+			value1 = "userfn userln mentioned you in a comment in a blogs entry.");
+
+		AssertTextEquals.assertPartialText(
+			key_contentBody = "Reply comment mentioning",
+			locator1 = "Notifications#NOTIFICATIONS_CONTENT_2",
+			value1 = "Reply comment mentioning @test");
+	}
+
 	@priority = "4"
 	test ViewWebsiteNotificationForNewBlogsEntry {
 		Navigator.gotoPage(pageName = "Blogs Page");

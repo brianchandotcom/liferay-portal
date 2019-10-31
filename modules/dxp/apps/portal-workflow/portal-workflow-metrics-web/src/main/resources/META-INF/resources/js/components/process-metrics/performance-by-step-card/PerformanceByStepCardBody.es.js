@@ -9,45 +9,18 @@
  * distribution rights of the Software.
  */
 
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 
 import Icon from '../../../shared/components/Icon.es';
 import Panel from '../../../shared/components/Panel.es';
 import EmptyState from '../../../shared/components/list/EmptyState.es';
-import {ErrorContext} from '../../../shared/components/request/Error.es';
-import {LoadingContext} from '../../../shared/components/request/Loading.es';
-import Request from '../../../shared/components/request/Request.es';
 import {ChildLink} from '../../../shared/components/router/routerWrapper.es';
 import {AppContext} from '../../AppContext.es';
-import {TimeRangeContext} from '../filter/store/TimeRangeStore.es';
 import {formatQueryDate} from '../util/timeRangeUtil.es';
 import PerformanceByStepCard from './PerformanceByStepCard.es';
 
-const Body = ({processId}) => {
-	const {client, defaultDelta} = useContext(AppContext);
-	const {getSelectedTimeRange} = useContext(TimeRangeContext);
-	const {setError} = useContext(ErrorContext);
-	const {setLoading} = useContext(LoadingContext);
-	const [data, setData] = useState({});
-
-	const timeRange = getSelectedTimeRange();
-
-	useEffect(() => {
-		setLoading(true);
-
-		client
-			.get(getRequestUrl(processId, timeRange))
-			.then(({data}) => {
-				setData(data);
-			})
-			.catch(error => {
-				setError(error);
-			})
-			.then(() => {
-				setLoading(false);
-			});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [timeRange]);
+const Body = ({data, processId, timeRange}) => {
+	const {defaultDelta} = useContext(AppContext);
 
 	const viewAllStepsQuery = timeRange
 		? {
@@ -61,34 +34,31 @@ const Body = ({processId}) => {
 	const viewAllStepsUrl = `/performance/${processId}/${defaultDelta}/1/overdueInstanceCount:desc`;
 
 	return (
-		<Request.Success>
-			<Panel.Body>
-				{data.totalCount ? (
-					<>
-						<PerformanceByStepCard.Table items={data.items} />
+		<Panel.Body>
+			{data.totalCount ? (
+				<>
+					<PerformanceByStepCard.Table items={data.items} />
 
-						<div className="mb-1 text-right">
-							<ChildLink
-								query={viewAllStepsQuery}
-								to={viewAllStepsUrl}
-							>
-								<button className="border-0 btn btn-secondary btn-sm">
-									<span data-testid="viewAllSteps">
-										{Liferay.Language.get(
-											'view-all-steps'
-										) + ` (${data.totalCount})`}
-									</span>
+					<div className="mb-1 text-right">
+						<ChildLink
+							query={viewAllStepsQuery}
+							to={viewAllStepsUrl}
+						>
+							<button className="border-0 btn btn-secondary btn-sm">
+								<span data-testid="viewAllSteps">
+									{Liferay.Language.get('view-all-steps') +
+										` (${data.totalCount})`}
+								</span>
 
-									<Icon iconName="caret-right-l" />
-								</button>
-							</ChildLink>
-						</div>
-					</>
-				) : (
-					<PerformanceByStepCard.Empty />
-				)}
-			</Panel.Body>
-		</Request.Success>
+								<Icon iconName="caret-right-l" />
+							</button>
+						</ChildLink>
+					</div>
+				</>
+			) : (
+				<PerformanceByStepCard.Empty />
+			)}
+		</Panel.Body>
 	);
 };
 
@@ -101,20 +71,6 @@ const Empty = () => {
 			messageClassName="small"
 		/>
 	);
-};
-
-const getRequestUrl = (processId, timeRange) => {
-	let requestUrl = `/processes/${processId}/tasks?completed=true`;
-
-	if (timeRange) {
-		const {dateEnd, dateStart} = timeRange;
-
-		requestUrl += `&dateEnd=${dateEnd.toISOString()}&dateStart=${dateStart.toISOString()}`;
-	}
-
-	requestUrl += '&page=1&pageSize=10&sort=durationAvg:desc';
-
-	return requestUrl;
 };
 
 export {Body, Empty};

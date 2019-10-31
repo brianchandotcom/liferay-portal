@@ -127,7 +127,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 
 				<c:if test="<%= (article != null) && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 					<liferay-ui:section>
-						<liferay-asset:asset-view-usages
+						<liferay-layout:layout-classed-model-usages-view
 							className="<%= JournalArticle.class.getName() %>"
 							classPK="<%= article.getResourcePrimKey() %>"
 						/>

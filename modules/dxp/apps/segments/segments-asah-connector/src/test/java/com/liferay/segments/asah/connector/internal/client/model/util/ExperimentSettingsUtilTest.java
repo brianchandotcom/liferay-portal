@@ -60,7 +60,7 @@ public class ExperimentSettingsUtilTest {
 				segmentsExperiment);
 
 		Assert.assertEquals(
-			confidenceLevel, experimentSettings.getConfidenceLevel(), 0);
+			confidenceLevel, experimentSettings.getConfidenceLevel(), 0.001);
 
 		List<DXPVariantSettings> dxpVariantsSettings =
 			experimentSettings.getDXPVariantsSettings();

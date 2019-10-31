@@ -16,9 +16,11 @@ package com.liferay.segments.asah.connector.internal.client.model.util;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.segments.asah.connector.internal.client.model.DXPVariantSettings;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
@@ -41,7 +43,7 @@ public class DXPVariantSettingsUtilTest {
 		Assert.assertEquals(
 			controlSegmentsExperienceKey, dxpVariantSettings.getDXPVariantId());
 		Assert.assertEquals(
-			split, dxpVariantSettings.getTrafficSplit() / 100, 0);
+			split, dxpVariantSettings.getTrafficSplit() / 100, 0.001);
 		Assert.assertTrue(dxpVariantSettings.isControl());
 	}
 
@@ -60,7 +62,7 @@ public class DXPVariantSettingsUtilTest {
 		Assert.assertEquals(
 			segmentsExperienceKey, dxpVariantSettings.getDXPVariantId());
 		Assert.assertEquals(
-			split, dxpVariantSettings.getTrafficSplit() / 100, 0);
+			split, dxpVariantSettings.getTrafficSplit() / 100, 0.001);
 		Assert.assertFalse(dxpVariantSettings.isControl());
 	}
 

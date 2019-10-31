@@ -21,6 +21,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 import com.liferay.friendly.url.service.base.FriendlyURLEntryLocalServiceBaseImpl;
 import com.liferay.friendly.url.util.comparator.FriendlyURLEntryCreateDateComparator;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -526,14 +527,14 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	private int _getNewEndPos(String urlTitle, int endPos) {
-		char c = urlTitle.charAt(endPos - 1);
+		if (!Character.isLowSurrogate(urlTitle.charAt(endPos - 1)) ||
+			(endPos < 2)) {
 
-		if (Character.isLowSurrogate(c) && ((endPos - 2) >= 0)) {
-			char c2 = urlTitle.charAt(endPos - 2);
+			return endPos - 1;
+		}
 
-			if (Character.isHighSurrogate(c2)) {
-				return endPos - 2;
-			}
+		if (Character.isHighSurrogate(urlTitle.charAt(endPos - 2))) {
+			return endPos - 2;
 		}
 
 		return endPos - 1;

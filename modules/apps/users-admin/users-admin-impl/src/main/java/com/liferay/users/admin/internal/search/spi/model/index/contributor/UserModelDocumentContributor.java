@@ -76,6 +76,7 @@ public class UserModelDocumentContributor
 			document.addKeyword(
 				"ancestorOrganizationIds",
 				getAncestorOrganizationIds(user.getOrganizationIds()));
+			document.addDate("birthDate", user.getBirthday());
 			document.addKeyword("defaultUser", user.isDefaultUser());
 			document.addText("emailAddress", user.getEmailAddress());
 			document.addText("firstName", user.getFirstName());

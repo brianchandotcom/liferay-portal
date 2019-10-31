@@ -31,7 +31,7 @@
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
 		<finder name="G_ALEK" return-type="AssetListEntry" unique="true">
 			<finder-column name="groupId" />
@@ -42,7 +42,7 @@
 			<finder-column name="title" />
 		</finder>
 		<finder name="G_LikeT" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column comparator="LIKE" name="title" />
 		</finder>
 		<finder name="G_TY" return-type="Collection">

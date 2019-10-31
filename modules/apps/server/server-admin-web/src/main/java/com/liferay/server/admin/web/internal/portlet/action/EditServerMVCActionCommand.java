@@ -184,8 +184,8 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		else if (cmd.equals("cleanUpLayoutRevisionPortletPreferences")) {
 			cleanUpLayoutRevisionPortletPreferences();
 		}
-		else if (cmd.equals("cleanUpOrphanedPortletPreferencies")) {
-			cleanUpOrphanedPortletPreferencies();
+		else if (cmd.equals("cleanUpOrphanedPortletPreferences")) {
+			cleanUpOrphanedPortletPreferences();
 		}
 		else if (cmd.startsWith("convertProcess.")) {
 			redirect = convertProcess(actionRequest, actionResponse, cmd);
@@ -353,7 +353,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void cleanUpOrphanedPortletPreferencies() throws PortalException {
+	protected void cleanUpOrphanedPortletPreferences() throws PortalException {
 		CacheRegistryUtil.setActive(true);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {

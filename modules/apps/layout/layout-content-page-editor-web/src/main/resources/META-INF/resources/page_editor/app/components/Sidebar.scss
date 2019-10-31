@@ -59,6 +59,13 @@ $zIndexContent: 0;
 		transform: translateX(0);
 	}
 
+	&-panel__header {
+		font-size: 18px;
+		font-weight: bold;
+		margin: 32px 0 24px 0;
+		padding: 0 1rem;
+	}
+
 	body.has-control-menu & {
 		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
 		top: $controlMenuHeight + $toolbarHeight;

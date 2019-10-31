@@ -19,7 +19,7 @@
 	]}
 	{@param? _fields: ?}
 	{@param? _handleAssetBrowserLinkClick: any}
-	{@param? _handleAssetEntryLinkClick: any}
+	{@param? _handleInfoItemLinkClick: any}
 	{@param? _handleFieldOptionChange: any}
 	{@param? _handleInputHrefKeyUp: any}
 	{@param? _handleTargetOptionChange: any}
@@ -27,7 +27,7 @@
 	{@param? _handleSourceTypeChange: any}
 	{@param? _handleSubmit: any}
 	{@param? _mappedFieldValue: string}
-	{@param? _selectedAssetEntry: [
+	{@param? _selectedInfoItem: [
 		title: string
 	]}
 	{@param? _selectedSourceTypeId: string}
@@ -40,7 +40,7 @@
 		label: string
 	]>}
 	{@param? _targetTypes: ?}
-	{@param? mappedAssetEntries: list<[
+	{@param? mappedInfoItems: list<[
 		encodedId: string,
 		classNameId: string,
 		classPK: string,
@@ -100,15 +100,15 @@
 						{param fieldId: $item.editableValues.config.mappedField or $item.editableValues.config.fieldId /}
 						{param fields: $_fields /}
 						{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
-						{param handleAssetEntryLinkClick: $_handleAssetEntryLinkClick /}
+						{param handleInfoItemLinkClick: $_handleInfoItemLinkClick /}
 						{param handleFieldOptionChange: $_handleFieldOptionChange /}
 						{param handleSourceTypeChange: $_handleSourceTypeChange /}
-						{param mappedAssetEntries: $mappedAssetEntries /}
+						{param mappedInfoItems: $mappedInfoItems /}
 						{param mappingFieldsURL: $mappingFieldsURL /}
 						{param mappedFieldValue: $_mappedFieldValue /}
 						{param sourceTypeIds: $_sourceTypeIds /}
 						{param sourceTypes: $_sourceTypes /}
-						{param selectedAssetEntryTitle: $item.editableValues.config ? $item.editableValues.config.title ?: $_selectedAssetEntry.title : '' /}
+						{param selectedInfoItemTitle: $item.editableValues.config ? $item.editableValues.config.title ?: $_selectedInfoItem.title : '' /}
 						{param selectedSourceTypeId: $_selectedSourceTypeId /}
 						{param store: $store /}
 					{/call}
@@ -142,19 +142,19 @@
 {template .linkMapping}
 	{@param? fieldId: string}
 	{@param? fields: ?}
-	{@param? mappedAssetEntries: list<[
+	{@param? mappedInfoItems: list<[
 		encodedId: string,
 		classNameId: string,
 		classPK: string,
 		title: string
 	]>}
 	{@param? handleAssetBrowserLinkClick: any}
-	{@param? handleAssetEntryLinkClick: any}
+	{@param? handleInfoItemLinkClick: any}
 	{@param? handleFieldOptionChange: any}
 	{@param? handleSourceTypeChange: any}
 	{@param? mappingFieldsURL: string}
 	{@param? mappedFieldValue: string}
-	{@param? selectedAssetEntryTitle: string}
+	{@param? selectedInfoItemTitle: string}
 	{@param? selectedSourceTypeId: string}
 	{@param? sourceTypeIds: [
 		content: string,
@@ -182,9 +182,9 @@
 				{param fieldId kind="text"}floatingToolbarMappingPanelAssetSelect{/param}
 				{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
 				{param handleAssetBrowserLinkClick: $handleAssetBrowserLinkClick /}
-				{param handleAssetEntryLinkClick: $handleAssetEntryLinkClick /}
-				{param recentlyUsedAssetEntries: $mappedAssetEntries /}
-				{param selectedAssetEntryTitle: $selectedAssetEntryTitle /}
+				{param handleInfoItemLinkClick: $handleInfoItemLinkClick /}
+				{param recentlyUsedInfoItems: $mappedInfoItems /}
+				{param selectedInfoItemTitle: $selectedInfoItemTitle /}
 				{param store: $store /}
 			{/call}
 		</div>

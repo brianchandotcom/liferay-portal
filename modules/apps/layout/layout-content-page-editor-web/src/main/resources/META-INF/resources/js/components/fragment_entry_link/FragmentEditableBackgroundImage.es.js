@@ -25,7 +25,7 @@ import {getAssetFieldValue} from '../../utils/FragmentsEditorFetchUtils.es';
 import {
 	editableShouldBeHighlighted,
 	editableIsMapped,
-	editableIsMappedToAssetEntry
+	editableIsMappedToInfoItem
 } from '../../utils/FragmentsEditorGetUtils.es';
 import {
 	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
@@ -370,7 +370,7 @@ class FragmentEditableBackgroundImage extends Component {
 	_updateMappedFieldValue() {
 		if (
 			this.getAssetFieldValueURL &&
-			editableIsMappedToAssetEntry(this.editableValues)
+			editableIsMappedToInfoItem(this.editableValues)
 		) {
 			getAssetFieldValue(
 				this.editableValues.classNameId,

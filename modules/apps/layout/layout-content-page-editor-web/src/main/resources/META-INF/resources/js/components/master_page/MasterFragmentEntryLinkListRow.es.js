@@ -24,7 +24,7 @@ import {Config} from 'metal-state';
 
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {getAssetFieldValue} from '../../utils/FragmentsEditorFetchUtils.es';
-import {editableIsMappedToAssetEntry} from '../../utils/FragmentsEditorGetUtils.es';
+import {editableIsMappedToInfoItem} from '../../utils/FragmentsEditorGetUtils.es';
 
 class MasterFragmentEntryLinkListRow extends Component {
 	prepareStateForRender(state) {
@@ -48,7 +48,7 @@ class MasterFragmentEntryLinkListRow extends Component {
 		if (
 			this.getAssetFieldValueURL &&
 			this.row.config.backgroundImage &&
-			editableIsMappedToAssetEntry(this.row.config.backgroundImage)
+			editableIsMappedToInfoItem(this.row.config.backgroundImage)
 		) {
 			getAssetFieldValue(
 				this.row.config.backgroundImage.classNameId,

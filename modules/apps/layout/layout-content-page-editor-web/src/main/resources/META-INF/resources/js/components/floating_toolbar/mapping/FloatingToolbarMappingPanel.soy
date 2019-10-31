@@ -14,11 +14,11 @@
 	]}
 	{@param? _fields: ?}
 	{@param? _handleAssetBrowserLinkClick: any}
-	{@param? _handleAssetEntryLinkClick: any}
+	{@param? _handleInfoItemLinkClick: any}
 	{@param? _handleCreateContentClick: any}
 	{@param? _handleFieldOptionChange: any}
 	{@param? _handleSourceTypeChange: any}
-	{@param? _selectedAssetEntry: [
+	{@param? _selectedInfoItem: [
 		title: string
 	]}
 	{@param? _selectedSourceTypeId: string}
@@ -31,7 +31,7 @@
 		label: string
 	]>}
 	{@param? contentCreationEnabled: bool}
-	{@param? mappedAssetEntries: list<[
+	{@param? mappedInfoItems: list<[
 		encodedId: string,
 		classNameId: string,
 		classPK: string,
@@ -67,9 +67,9 @@
 							{param fieldId kind="text"}floatingToolbarMappingPanelAssetSelect{/param}
 							{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
 							{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
-							{param handleAssetEntryLinkClick: $_handleAssetEntryLinkClick /}
-							{param recentlyUsedAssetEntries: $mappedAssetEntries /}
-							{param selectedAssetEntryTitle: $item.editableValues.title ?: $_selectedAssetEntry.title /}
+							{param handleInfoItemLinkClick: $_handleInfoItemLinkClick /}
+							{param recentlyUsedInfoItems: $mappedInfoItems /}
+							{param selectedInfoItemTitle: $item.editableValues.title ?: $_selectedInfoItem.title /}
 							{param store: $store /}
 						{/call}
 					</div>

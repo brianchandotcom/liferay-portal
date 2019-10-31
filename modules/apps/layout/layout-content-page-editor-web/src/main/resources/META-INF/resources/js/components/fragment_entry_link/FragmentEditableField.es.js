@@ -37,7 +37,7 @@ import {
 } from '../../utils/FragmentsEditorComponentUtils.es';
 import {
 	editableIsMapped,
-	editableIsMappedToAssetEntry,
+	editableIsMappedToInfoItem,
 	editableShouldBeHighlighted,
 	getItemPath
 } from '../../utils/FragmentsEditorGetUtils.es';
@@ -538,7 +538,7 @@ class FragmentEditableField extends PortletBase {
 	_updateMappedFieldValue() {
 		if (
 			this.getAssetFieldValueURL &&
-			editableIsMappedToAssetEntry(this.editableValues)
+			editableIsMappedToInfoItem(this.editableValues)
 		) {
 			this.fetch(this.getAssetFieldValueURL, {
 				classNameId: this.editableValues.classNameId,

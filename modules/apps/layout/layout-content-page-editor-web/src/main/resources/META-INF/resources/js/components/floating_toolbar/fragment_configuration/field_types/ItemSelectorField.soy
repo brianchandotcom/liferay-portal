@@ -30,7 +30,7 @@
 				{param configurationValues: $configurationValues /}
 				{param field: $field /}
 				{param handleItemSelectClick: $_handleItemSelectClick /}
-				{param selectedAssetEntryTitle: $configurationValues[$field.name]?.title /}
+				{param selectedInfoItemTitle: $configurationValues[$field.name]?.title /}
 				{param spritemap: $spritemap /}
 			{/call}
 		{else}
@@ -39,8 +39,8 @@
 					{param fieldId: $field.name /}
 					{param fieldName: $field.label /}
 					{param handleAssetBrowserLinkClick: $_handleItemTypeClick /}
-					{param handleAssetEntryLinkClick: $_handleItemSelectClick /}
-					{param selectedAssetEntryTitle: $configurationValues[$field.name]?.title /}
+					{param handleInfoItemLinkClick: $_handleItemSelectClick /}
+					{param selectedInfoItemTitle: $configurationValues[$field.name]?.title /}
 					{param store: $store /}
 				{/call}
 			</div>

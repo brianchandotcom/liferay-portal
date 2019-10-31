@@ -59,7 +59,7 @@ function deepClone(objectToClone) {
 function editableIsMapped(editableValues) {
 	return Boolean(
 		editableValues.mappedField ||
-			editableIsMappedToAssetEntry(editableValues)
+			editableIsMappedToInfoItem(editableValues)
 	);
 }
 
@@ -70,7 +70,7 @@ function editableIsMapped(editableValues) {
  * @return {boolean}
  * @review
  */
-function editableIsMappedToAssetEntry(editableValues) {
+function editableIsMappedToInfoItem(editableValues) {
 	return Boolean(
 		editableValues.classNameId &&
 			editableValues.classPK &&
@@ -443,7 +443,7 @@ function itemIsInPath(path, itemId, itemType) {
 export {
 	deepClone,
 	editableIsMapped,
-	editableIsMappedToAssetEntry,
+	editableIsMappedToInfoItem,
 	editableShouldBeHighlighted,
 	getColumn,
 	getDropRowPosition,

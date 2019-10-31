@@ -529,7 +529,7 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {object[]}
 	 */
-	mappedAssetEntries: Config.array().value([]),
+	mappedInfoItems: Config.array().value([]),
 
 	/**
 	 * URL for getting the list of mapping fields

@@ -7,15 +7,15 @@
 	{@param? fieldId: string}
 	{@param? fieldName: string}
 	{@param? handleAssetBrowserLinkClick: any}
-	{@param? handleAssetEntryLinkClick: any}
+	{@param? handleInfoItemLinkClick: any}
 	{@param? infoItemSelectorURL: string}
-	{@param? recentlyUsedAssetEntries: list<[
+	{@param? recentlyUsedInfoItems: list<[
 		encodedId: string,
 		classNameId: string,
 		classPK: string,
 		title: string
 	]>}
-	{@param? selectedAssetEntryTitle: string}
+	{@param? selectedInfoItemTitle: string}
 	{@param? spritemap: string}
 
 	<div>
@@ -29,7 +29,7 @@
 				id="{$fieldId}"
 				readonly
 				type="text"
-				value="{$selectedAssetEntryTitle ?: ''}"
+				value="{$selectedInfoItemTitle ?: ''}"
 			/>
 
 			{let $buttonId kind="text"}
@@ -40,7 +40,7 @@
 			{/let}
 
 			<div class="btn-group">
-				{if $recentlyUsedAssetEntries and length($recentlyUsedAssetEntries) > 0}
+				{if $recentlyUsedInfoItems and length($recentlyUsedInfoItems) > 0}
 					<button
 						aria-expanded="false"
 						aria-haspopup="true"
@@ -55,16 +55,16 @@
 					</button>
 
 					<div class="dropdown-menu item-selector-dropdown-menu" id="{$dropdownId}">
-						{foreach $assetEntry in $recentlyUsedAssetEntries}
+						{foreach $infoItem in $recentlyUsedInfoItems}
 							<button
 								class="dropdown-item"
-								data-class-name-id="{$assetEntry.classNameId}"
-								data-class-pk="{$assetEntry.classPK}"
-								data-onclick="{$handleAssetEntryLinkClick}"
-								key="{$assetEntry.encodedId}"
+								data-class-name-id="{$infoItem.classNameId}"
+								data-class-pk="{$infoItem.classPK}"
+								data-onclick="{$handleInfoItemLinkClick}"
+								key="{$infoItem.encodedId}"
 								type="button"
 							>
-								{$assetEntry.title}
+								{$infoItem.title}
 							</button>
 						{/foreach}
 

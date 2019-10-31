@@ -19,7 +19,7 @@ import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarLinkPanelDelegateTemplate.soy';
 import {
-	ADD_MAPPED_ASSET_ENTRY,
+	ADD_MAPPED_INFO_ITEM,
 	UPDATE_CONFIG_ATTRIBUTES
 } from '../../../actions/actions.es';
 import {
@@ -61,8 +61,8 @@ class FloatingToolbarLinkPanel extends PortletBase {
 
 		nextState = setIn(
 			nextState,
-			['mappedAssetEntries'],
-			nextState.mappedAssetEntries.map(encodeAssetId)
+			['mappedInfoItems'],
+			nextState.mappedInfoItems.map(encodeAssetId)
 		);
 
 		nextState = setIn(
@@ -88,29 +88,29 @@ class FloatingToolbarLinkPanel extends PortletBase {
 		}
 
 		if (
-			nextState.mappedAssetEntries &&
-			nextState._selectedAssetEntry &&
-			nextState._selectedAssetEntry.classNameId &&
-			nextState._selectedAssetEntry.classPK
+			nextState.mappedInfoItems &&
+			nextState._selectedInfoItem &&
+			nextState._selectedInfoItem.classNameId &&
+			nextState._selectedInfoItem.classPK
 		) {
-			const mappedAssetEntry = nextState.mappedAssetEntries.find(
-				assetEntry =>
-					nextState._selectedAssetEntry.classNameId ===
-						assetEntry.classNameId &&
-					nextState._selectedAssetEntry.classPK === assetEntry.classPK
+			const mappedInfoItem = nextState.mappedInfoItems.find(
+				infoItem =>
+					nextState._selectedInfoItem.classNameId ===
+						infoItem.classNameId &&
+					nextState._selectedInfoItem.classPK === infoItem.classPK
 			);
 
-			if (mappedAssetEntry) {
+			if (mappedInfoItem) {
 				nextState = setIn(
 					nextState,
 					['item', 'editableValues', 'config', 'title'],
-					mappedAssetEntry.title
+					mappedInfoItem.title
 				);
 
 				nextState = setIn(
 					nextState,
 					['item', 'editableValues', 'config', 'encodedId'],
-					mappedAssetEntry
+					mappedInfoItem
 				);
 
 				if (
@@ -139,8 +139,8 @@ class FloatingToolbarLinkPanel extends PortletBase {
 	 */
 	rendered(firstRender) {
 		if (firstRender) {
-			this._selectedAssetEntry.classNameId = this.item.editableValues.config.classNameId;
-			this._selectedAssetEntry.classPK = this.item.editableValues.config.classPK;
+			this._selectedInfoItem.classNameId = this.item.editableValues.config.classNameId;
+			this._selectedInfoItem.classPK = this.item.editableValues.config.classPK;
 			this._selectedSourceTypeId = MAPPING_SOURCE_TYPE_IDS.content;
 
 			if (
@@ -224,8 +224,8 @@ class FloatingToolbarLinkPanel extends PortletBase {
 	_getMappedValue(fieldId) {
 		if (fieldId) {
 			return this.fetch(this.getAssetFieldValueURL, {
-				classNameId: this._selectedAssetEntry.classNameId,
-				classPK: this._selectedAssetEntry.classPK,
+				classNameId: this._selectedInfoItem.classNameId,
+				classPK: this._selectedInfoItem.classPK,
 				fieldId
 			})
 				.then(response => response.json())
@@ -239,7 +239,7 @@ class FloatingToolbarLinkPanel extends PortletBase {
 	 */
 	_handleAssetBrowserLinkClick() {
 		openItemSelector(selectedInfoItem => {
-			this._selectAssetEntry(selectedInfoItem);
+			this._selectInfoItem(selectedInfoItem);
 			this._focusPanel();
 		});
 	}
@@ -249,10 +249,10 @@ class FloatingToolbarLinkPanel extends PortletBase {
 	 * @private
 	 * @review
 	 */
-	_handleAssetEntryLinkClick(event) {
+	_handleInfoItemLinkClick(event) {
 		const data = event.delegateTarget.dataset;
 
-		this._selectAssetEntry({
+		this._selectInfoItem({
 			classNameId: data.classNameId,
 			classPK: data.classPk
 		});
@@ -273,8 +273,8 @@ class FloatingToolbarLinkPanel extends PortletBase {
 			this._clearRowConfig();
 		} else {
 			const config = {
-				classNameId: this._selectedAssetEntry.classNameId,
-				classPK: this._selectedAssetEntry.classPK,
+				classNameId: this._selectedInfoItem.classNameId,
+				classPK: this._selectedInfoItem.classPK,
 				href: '',
 				mapperType: 'link'
 			};
@@ -377,12 +377,12 @@ class FloatingToolbarLinkPanel extends PortletBase {
 			promise = this.fetch(this.mappingFieldsURL, data);
 		} else if (
 			this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content &&
-			this._selectedAssetEntry.classNameId &&
-			this._selectedAssetEntry.classPK
+			this._selectedInfoItem.classNameId &&
+			this._selectedInfoItem.classPK
 		) {
 			promise = this.fetch(this.getAssetMappingFieldsURL, {
-				classNameId: this._selectedAssetEntry.classNameId,
-				classPK: this._selectedAssetEntry.classPK
+				classNameId: this._selectedInfoItem.classNameId,
+				classPK: this._selectedInfoItem.classPK
 			});
 		}
 
@@ -400,18 +400,18 @@ class FloatingToolbarLinkPanel extends PortletBase {
 	}
 
 	/**
-	 * @param {object} assetEntry
-	 * @param {string} assetEntry.classNameId
-	 * @param {string} assetEntry.classPK
+	 * @param {object} infoItem
+	 * @param {string} infoItem.classNameId
+	 * @param {string} infoItem.classPK
 	 * @private
 	 * @review
 	 */
-	_selectAssetEntry(assetEntry) {
-		this._selectedAssetEntry = assetEntry;
+	_selectInfoItem(infoItem) {
+		this._selectedInfoItem = infoItem;
 
 		this.store.dispatch({
-			...this._selectedAssetEntry,
-			type: ADD_MAPPED_ASSET_ENTRY
+			...this._selectedInfoItem,
+			type: ADD_MAPPED_INFO_ITEM
 		});
 
 		this._loadFields();
@@ -509,7 +509,7 @@ FloatingToolbarLinkPanel.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	_selectedAssetEntry: Config.object()
+	_selectedInfoItem: Config.object()
 		.internal()
 		.value({}),
 
@@ -564,7 +564,7 @@ const ConnectedFloatingToolbarLinkPanel = getConnectedComponent(
 	[
 		'getAssetFieldValueURL',
 		'getAssetMappingFieldsURL',
-		'mappedAssetEntries',
+		'mappedInfoItems',
 		'mappingFieldsURL',
 		'selectedMappingTypes',
 		'spritemap'

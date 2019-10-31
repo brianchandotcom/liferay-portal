@@ -12,7 +12,7 @@
  * details.
  */
 
-export const ADD_MAPPED_ASSET_ENTRY = 'addMappedAssetEntry';
+export const ADD_MAPPED_INFO_ITEM = 'addMappedInfoItem';
 
 export const UPDATE_PAGE_CONTENTS = 'updatePageContents';
 

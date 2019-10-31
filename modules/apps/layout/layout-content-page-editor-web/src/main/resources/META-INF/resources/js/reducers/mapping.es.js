@@ -22,24 +22,24 @@ import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
  * @param {string} action.title
  * @param {string} action.type
  */
-function addMappingAssetEntry(state, action) {
+function addMappingInfoItem(state, action) {
 	let nextState = state;
 
-	const hasAssetEntry = nextState.mappedAssetEntries.some(
-		assetEntry =>
-			assetEntry.classNameId === action.classNameId &&
-			assetEntry.classPK === action.classPK
+	const hasInfoItem = nextState.mappedInfoItems.some(
+		infoItem =>
+			infoItem.classNameId === action.classNameId &&
+			infoItem.classPK === action.classPK
 	);
 
-	if (!hasAssetEntry) {
+	if (!hasInfoItem) {
 		nextState = setIn(
 			nextState,
-			['mappedAssetEntries'],
-			[...nextState.mappedAssetEntries, action]
+			['mappedInfoItems'],
+			[...nextState.mappedInfoItems, action]
 		);
 	}
 
 	return nextState;
 }
 
-export {addMappingAssetEntry};
+export {addMappingInfoItem};

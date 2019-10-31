@@ -13,7 +13,7 @@
 	{@param? _backgroundImage: string}
 	{@param? _fields: ?}
 	{@param? _handleAssetBrowserLinkClick: any}
-	{@param? _handleAssetEntryLinkClick: any}
+	{@param? _handleInfoItemLinkClick: any}
 	{@param? _handleClearButtonClick: any}
 	{@param? _handleFieldOptionChange: any}
 	{@param? _handleImageSourceTypeSelect: any}
@@ -37,7 +37,7 @@
 	]>}
 	{@param? _selectedImageSourceTypeId: string}
 	{@param? _selectedMappingSourceTypeId: string}
-	{@param? mappedAssetEntries: list<[
+	{@param? mappedInfoItems: list<[
 		encodedId: string,
 		classNameId: string,
 		classPK: string,
@@ -77,9 +77,9 @@
 							{param fieldId kind="text"}floatingToolbarLayoutBackgroundImagePanelAssetSelect{/param}
 							{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
 							{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
-							{param handleAssetEntryLinkClick: $_handleAssetEntryLinkClick /}
-							{param recentlyUsedAssetEntries: $mappedAssetEntries /}
-							{param selectedAssetEntryTitle: $item.config.title /}
+							{param handleInfoItemLinkClick: $_handleInfoItemLinkClick /}
+							{param recentlyUsedInfoItems: $mappedInfoItems /}
+							{param selectedInfoItemTitle: $item.config.title /}
 							{param store: $store /}
 						{/call}
 					</div>

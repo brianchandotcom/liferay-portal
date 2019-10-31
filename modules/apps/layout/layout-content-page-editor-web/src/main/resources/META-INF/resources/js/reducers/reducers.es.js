@@ -14,7 +14,7 @@
 
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
-	ADD_MAPPED_ASSET_ENTRY,
+	ADD_MAPPED_INFO_ITEM,
 	ADD_PORTLET,
 	ADD_ROW,
 	CHANGE_LANGUAGE_ID,
@@ -66,7 +66,7 @@ import {
 	updateFragmentEntryLinkConfigReducer,
 	updateFragmentEntryLinkContentReducer
 } from './fragments.es';
-import {addMappingAssetEntry} from './mapping.es';
+import {addMappingInfoItem} from './mapping.es';
 import {
 	updateActiveItemReducer,
 	updateDropTargetReducer,
@@ -95,7 +95,7 @@ import {updateWigetsReducer} from './widgets.es';
  */
 const reducers = {
 	[ADD_FRAGMENT_ENTRY_LINK]: addFragmentEntryLinkReducer,
-	[ADD_MAPPED_ASSET_ENTRY]: addMappingAssetEntry,
+	[ADD_MAPPED_INFO_ITEM]: addMappingInfoItem,
 	[ADD_PORTLET]: addPortletReducer,
 	[ADD_ROW]: addRowReducer,
 	[CHANGE_LANGUAGE_ID]: createSetValueReducer('languageId'),

@@ -35,7 +35,7 @@ import {
 	getItemPath,
 	getRowIndex,
 	itemIsInPath,
-	editableIsMappedToAssetEntry
+	editableIsMappedToInfoItem
 } from '../../utils/FragmentsEditorGetUtils.es';
 import {
 	moveRow,
@@ -496,7 +496,7 @@ class FragmentEntryLinkListRow extends Component {
 		if (
 			this.getAssetFieldValueURL &&
 			this.row.config.backgroundImage &&
-			editableIsMappedToAssetEntry(this.row.config.backgroundImage)
+			editableIsMappedToInfoItem(this.row.config.backgroundImage)
 		) {
 			getAssetFieldValue(
 				this.row.config.backgroundImage.classNameId,

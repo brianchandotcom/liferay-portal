@@ -25,7 +25,7 @@ import './CreateContentForm.es';
 
 import './MapContentForm.es';
 import {
-	ADD_MAPPED_ASSET_ENTRY,
+	ADD_MAPPED_INFO_ITEM,
 	UPDATE_EDITABLE_VALUE_LOADING
 } from '../../actions/actions.es';
 import {
@@ -167,7 +167,7 @@ class CreateContentDialog extends Component {
 							.dispatch(updatePageContentsAction())
 							.dispatch({
 								...response,
-								type: ADD_MAPPED_ASSET_ENTRY
+								type: ADD_MAPPED_INFO_ITEM
 							})
 							.dispatch(disableSavingChangesStatusAction())
 							.done(() => this.dispose());

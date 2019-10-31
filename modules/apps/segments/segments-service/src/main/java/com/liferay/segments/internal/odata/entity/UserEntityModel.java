@@ -16,6 +16,7 @@ package com.liferay.segments.internal.odata.entity;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.ComplexEntityField;
+import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -37,6 +38,10 @@ public class UserEntityModel implements EntityModel {
 	public UserEntityModel(List<EntityField> customEntityFields) {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new ComplexEntityField("customField", customEntityFields),
+			new DateEntityField(
+				"birthDate",
+				locale -> Field.getSortableFieldName("birthDate"),
+				locale -> "birthDate"),
 			new DateTimeEntityField(
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),

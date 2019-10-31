@@ -77,7 +77,8 @@ class ResultRankingsForm extends Component {
 		fetchDocumentsVisibleUrl: PropTypes.string.isRequired,
 		formName: PropTypes.string.isRequired,
 		initialAliases: PropTypes.arrayOf(String),
-		searchQuery: PropTypes.string.isRequired
+		searchQuery: PropTypes.string.isRequired,
+		status: PropTypes.number.isRequired
 	};
 
 	static defaultProps = {
@@ -85,6 +86,12 @@ class ResultRankingsForm extends Component {
 	};
 
 	state = {
+		/**
+		 * Indicates whether ranking is active or inactive.
+		 * @type {boolean}
+		 */
+		active: !!this.props.status,
+
 		/**
 		 * Number of the active tab.
 		 * @type {number}
@@ -264,6 +271,16 @@ class ResultRankingsForm extends Component {
 		);
 
 		return [...resultIdsPinned, ...notPinnedOrHiddenIds];
+	};
+
+	/**
+	 * Handles what happens when the toggle switch is clicked. Changes the
+	 * state of the ranking to inactive or active (boolean value).
+	 */
+	_handleActive = () => {
+		this.setState(state => ({
+			active: !state.active
+		}));
 	};
 
 	/**
@@ -672,6 +689,7 @@ class ResultRankingsForm extends Component {
 		const {cancelUrl, fetchDocumentsSearchUrl, searchQuery} = this.props;
 
 		const {
+			active,
 			activeTabKeyValue,
 			aliases,
 			dataLoadIndex,
@@ -720,12 +738,19 @@ class ResultRankingsForm extends Component {
 				/>
 
 				<HiddenInput
+					name={`${namespace}status`}
+					value={active ? 1 : 0}
+				/>
+
+				<HiddenInput
 					name={`${namespace}workflowAction`}
 					value={workflowAction}
 				/>
 
 				<PageToolbar
+					active={active}
 					onCancel={cancelUrl}
+					onChangeActive={this._handleActive}
 					onPublish={this._handlePublish}
 				/>
 

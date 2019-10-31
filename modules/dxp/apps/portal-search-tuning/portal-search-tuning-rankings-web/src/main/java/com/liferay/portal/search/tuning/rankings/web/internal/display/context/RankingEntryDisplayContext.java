@@ -49,7 +49,7 @@ public class RankingEntryDisplayContext {
 		return _pinnedResultsCount;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return _status;
 	}
 
@@ -77,7 +77,7 @@ public class RankingEntryDisplayContext {
 		_pinnedResultsCount = pinnedResultsCount;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		_status = status;
 	}
 
@@ -90,7 +90,7 @@ public class RankingEntryDisplayContext {
 	private String _index;
 	private String _keywords;
 	private String _pinnedResultsCount;
-	private String _status;
+	private int _status;
 	private String _uid;
 
 }

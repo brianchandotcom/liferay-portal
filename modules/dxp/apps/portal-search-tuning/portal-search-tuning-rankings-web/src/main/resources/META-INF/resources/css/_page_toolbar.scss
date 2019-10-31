@@ -1,6 +1,5 @@
 .page-toolbar-root {
-	&.upper-tbar {
-		background-color: $white;
+	&.navbar {
 		border-color: $mainLighten74;
 		border-style: solid;
 		border-width: 0 0 1px;
@@ -12,8 +11,12 @@
 		z-index: 971;
 	}
 
-	&.upper-tbar .tbar-item {
+	.nav-item {
 		padding-left: 0.5rem;
 		padding-right: 0.5rem;
+	}
+
+	.toggle-switch {
+		margin-bottom: 0;
 	}
 }

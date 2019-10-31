@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import PageToolbar from '../../../src/main/resources/META-INF/resources/js/components/PageToolbar.es';
@@ -20,7 +20,9 @@ describe('PageToolbar', () => {
 	it('disables the save button', () => {
 		const {getByText} = render(
 			<PageToolbar
+				active={true}
 				onCancel={'cancel'}
+				onChangeActive={jest.fn()}
 				onPublish={jest.fn()}
 				submitDisabled={true}
 			/>
@@ -32,12 +34,60 @@ describe('PageToolbar', () => {
 	it('enables the save button', () => {
 		const {getByText} = render(
 			<PageToolbar
+				active={true}
 				onCancel={'cancel'}
+				onChangeActive={jest.fn()}
 				onPublish={jest.fn()}
 				submitDisabled={false}
 			/>
 		);
 
 		expect(getByText('save')).toBeEnabled();
+	});
+
+	it('shows the active state', () => {
+		const {getByLabelText} = render(
+			<PageToolbar
+				active={true}
+				onCancel={'cancel'}
+				onChangeActive={jest.fn()}
+				onPublish={jest.fn()}
+				submitDisabled={false}
+			/>
+		);
+
+		expect(getByLabelText('active')).toHaveAttribute('checked');
+	});
+
+	it('shows the inactive state', () => {
+		const {getByLabelText} = render(
+			<PageToolbar
+				active={false}
+				onCancel={'cancel'}
+				onChangeActive={jest.fn()}
+				onPublish={jest.fn()}
+				submitDisabled={false}
+			/>
+		);
+
+		expect(getByLabelText('inactive')).not.toHaveAttribute('checked');
+	});
+
+	it('calls the onChangeActive function', () => {
+		const onChangeActive = jest.fn();
+
+		const {getByLabelText} = render(
+			<PageToolbar
+				active={true}
+				onCancel={'cancel'}
+				onChangeActive={onChangeActive}
+				onPublish={jest.fn()}
+				submitDisabled={false}
+			/>
+		);
+
+		fireEvent.click(getByLabelText('active'));
+
+		expect(onChangeActive.mock.calls.length).toBe(1);
 	});
 });

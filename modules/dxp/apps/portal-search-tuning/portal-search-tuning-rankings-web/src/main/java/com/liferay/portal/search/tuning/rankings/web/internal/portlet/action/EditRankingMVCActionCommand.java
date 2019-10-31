@@ -204,6 +204,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "hiddenIdsAdded");
 		String[] hiddenIdsRemoved = ParamUtil.getStringValues(
 			actionRequest, "hiddenIdsRemoved");
+		int status = ParamUtil.getInteger(actionRequest, "status");
 
 		rankingBuilder.aliases(
 			_getAliases(editRankingMVCActionRequest)

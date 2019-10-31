@@ -49,6 +49,10 @@ public class EditRankingDisplayContext {
 		return _resultsRankingUid;
 	}
 
+	public int getStatus() {
+		return _status;
+	}
+
 	public void setBackURL(String backURL) {
 		_backURL = backURL;
 	}
@@ -77,6 +81,10 @@ public class EditRankingDisplayContext {
 		_resultsRankingUid = resultsRankingUid;
 	}
 
+	public void setStatus(int status) {
+		_status = status;
+	}
+
 	private String _backURL;
 	private long _companyId;
 	private Map<String, Object> _data;
@@ -84,5 +92,6 @@ public class EditRankingDisplayContext {
 	private String _keywords;
 	private String _redirect;
 	private String _resultsRankingUid;
+	private int _status;
 
 }

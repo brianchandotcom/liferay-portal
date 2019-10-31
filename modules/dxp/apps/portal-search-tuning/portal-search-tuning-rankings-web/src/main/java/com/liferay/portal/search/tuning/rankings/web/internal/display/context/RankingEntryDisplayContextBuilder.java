@@ -16,7 +16,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 
 import java.util.List;
@@ -41,6 +41,7 @@ public class RankingEntryDisplayContextBuilder {
 		_setAliases(rankingEntryDisplayContext);
 		_setStatus(rankingEntryDisplayContext);
 		_setUid(rankingEntryDisplayContext);
+		_setStatus(rankingEntryDisplayContext);
 
 		return rankingEntryDisplayContext;
 	}
@@ -51,10 +52,10 @@ public class RankingEntryDisplayContextBuilder {
 
 	private int _getStatus() {
 		if (_ranking.isInactive()) {
-			return WorkflowConstants.STATUS_INACTIVE;
+			return ResultRankingsConstants.STATUS_INACTIVE;
 		}
 
-		return WorkflowConstants.STATUS_APPROVED;
+		return ResultRankingsConstants.STATUS_ACTIVE;
 	}
 
 	private void _setAliases(
@@ -94,7 +95,7 @@ public class RankingEntryDisplayContextBuilder {
 	private void _setStatus(
 		RankingEntryDisplayContext rankingEntryDisplayContext) {
 
-		rankingEntryDisplayContext.setStatus(String.valueOf(_getStatus()));
+		rankingEntryDisplayContext.setStatus(_getStatus());
 	}
 
 	private void _setUid(

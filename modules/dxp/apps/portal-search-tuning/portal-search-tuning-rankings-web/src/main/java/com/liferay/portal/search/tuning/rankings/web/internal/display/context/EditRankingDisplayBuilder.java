@@ -62,6 +62,7 @@ public class EditRankingDisplayBuilder {
 		_setKeywords(editRankingDisplayContext);
 		_setRedirect(editRankingDisplayContext);
 		_setResultsRankingUid(editRankingDisplayContext);
+		_setStatus(editRankingDisplayContext);
 
 		return editRankingDisplayContext;
 	}
@@ -128,6 +129,8 @@ public class EditRankingDisplayBuilder {
 			"initialAliases", _getAliases()
 		).put(
 			"searchQuery", _getKeywords()
+		).put(
+			"status", _getStatus()
 		).build();
 	}
 
@@ -156,6 +159,10 @@ public class EditRankingDisplayBuilder {
 		resourceURL.setResourceID("/results_ranking/get_results");
 
 		return resourceURL.toString();
+	}
+
+	private int _getStatus() {
+		return ParamUtil.getInteger(_httpServletRequest, "status");
 	}
 
 	private String _getVisibleResultRankingsResourceURL() {
@@ -217,6 +224,12 @@ public class EditRankingDisplayBuilder {
 		EditRankingDisplayContext editRankingDisplayContext) {
 
 		editRankingDisplayContext.setResultsRankingUid(_getResultsRankingUid());
+	}
+
+	private void _setStatus(
+		EditRankingDisplayContext editRankingDisplayContext) {
+
+		editRankingDisplayContext.setStatus(_getStatus());
 	}
 
 	private final HttpServletRequest _httpServletRequest;

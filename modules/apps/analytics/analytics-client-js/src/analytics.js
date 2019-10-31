@@ -158,7 +158,7 @@ class Analytics {
 	}
 
 	_isTrackingDisabled() {
-		if (window.ac_client_disable_tracking || navigator.doNotTrack) {
+		if (ENV.ac_client_disable_tracking || navigator.doNotTrack) {
 			return true;
 		}
 

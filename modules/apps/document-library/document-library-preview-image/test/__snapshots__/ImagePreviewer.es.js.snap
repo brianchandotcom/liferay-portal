@@ -21,7 +21,7 @@ exports[`document-library-preview-image renders an image previewer 1`] = `
         role="group"
       >
         <button
-          class="btn-floating-bar btn btn-monospaced btn-primary"
+          class="btn-floating-bar btn btn-monospaced"
           title="zoom-out"
           type="button"
         >
@@ -35,7 +35,7 @@ exports[`document-library-preview-image renders an image previewer 1`] = `
           </svg>
         </button>
         <button
-          class="btn-floating-bar btn-floating-bar-text btn btn-primary"
+          class="btn-floating-bar btn-floating-bar-text btn"
           title="zoom-to-fit"
           type="button"
         >
@@ -46,7 +46,7 @@ exports[`document-library-preview-image renders an image previewer 1`] = `
           </span>
         </button>
         <button
-          class="btn-floating-bar btn btn-monospaced btn-primary"
+          class="btn-floating-bar btn btn-monospaced"
           disabled=""
           title="zoom-in"
           type="button"

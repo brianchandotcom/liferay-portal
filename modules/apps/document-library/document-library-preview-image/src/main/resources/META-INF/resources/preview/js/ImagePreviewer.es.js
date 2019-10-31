@@ -163,6 +163,7 @@ const ImagePreviewer = ({imageURL}) => {
 					<ClayButton
 						className="btn-floating-bar"
 						disabled={zoomOutDisabled}
+						displayType={null}
 						monospaced
 						onClick={() => {
 							applyZoom(
@@ -177,6 +178,7 @@ const ImagePreviewer = ({imageURL}) => {
 					</ClayButton>
 					<ClayButton
 						className="btn-floating-bar btn-floating-bar-text"
+						displayType={null}
 						onClick={handlePercentButtonClick}
 						title={
 							currentZoom === 1
@@ -191,6 +193,7 @@ const ImagePreviewer = ({imageURL}) => {
 					<ClayButton
 						className="btn-floating-bar"
 						disabled={zoomInDisabled}
+						displayType={null}
 						monospaced
 						onClick={() => {
 							applyZoom(

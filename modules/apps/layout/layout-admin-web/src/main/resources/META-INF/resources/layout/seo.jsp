@@ -36,6 +36,36 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 	<aui:input id="descriptionSEO" name="description" placeholder="description" />
 
+	<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
+
+		<%
+		LayoutSEOEntry selLayoutSEOEntry = layoutsAdminDisplayContext.getSelLayoutSEOEntry();
+		%>
+
+		<c:choose>
+			<c:when test="<%= selLayoutSEOEntry != null %>">
+				<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
+
+				<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-1" />
+
+				<div id="<portlet:namespace />customCanonicalURLSettings">
+					<aui:input label="<%= StringPool.BLANK %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getCanonicalLayoutURL() %>">
+						<aui:validator name="url" />
+					</aui:input>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-1" />
+
+				<div id="<portlet:namespace />customCanonicalURLSettings">
+					<aui:input label="<%= StringPool.BLANK %>" localized="<%= true %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getCanonicalLayoutURL() %>" type="text">
+						<aui:validator name="url" />
+					</aui:input>
+				</div>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+
 	<aui:input name="keywords" placeholder="keywords" />
 
 	<div class="form-group">
@@ -126,37 +156,6 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		<aui:option label="yearly" />
 		<aui:option label="never" />
 	</aui:select>
-</c:if>
-
-<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
-	<h4><liferay-ui:message key="canonical-url" /></h4>
-
-	<%
-	LayoutSEOEntry selLayoutSEOEntry = layoutsAdminDisplayContext.getSelLayoutSEOEntry();
-	%>
-
-	<c:choose>
-		<c:when test="<%= selLayoutSEOEntry != null %>">
-			<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
-
-			<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="toggle-switch" />
-
-			<div id="<portlet:namespace />customCanonicalURLSettings">
-				<aui:input name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getCanonicalLayoutURL() %>">
-					<aui:validator name="url" />
-				</aui:input>
-			</div>
-		</c:when>
-		<c:otherwise>
-			<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="toggle-switch" />
-
-			<div id="<portlet:namespace />customCanonicalURLSettings">
-				<aui:input localized="<%= true %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getCanonicalLayoutURL() %>" type="text">
-					<aui:validator name="url" />
-				</aui:input>
-			</div>
-		</c:otherwise>
-	</c:choose>
 </c:if>
 
 <c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) && LayoutSEOLinkManagerUtil.isOpenGraphEnabled(selLayout) %>">
@@ -291,8 +290,16 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 </c:if>
 
 <aui:script>
-	Liferay.Util.toggleBoxes(
-		'<portlet:namespace />canonicalURLEnabled',
-		'<portlet:namespace />customCanonicalURLSettings'
+	var canonicalURLEnabledCheck = document.getElementById(
+		'<portlet:namespace />canonicalURLEnabled'
 	);
+	var canonicalURLField = document.getElementById(
+		'<portlet:namespace />canonicalURL'
+	);
+
+	if (canonicalURLEnabledCheck && canonicalURLField) {
+		canonicalURLEnabledCheck.addEventListener('click', function(event) {
+			Liferay.Util.toggleDisabled(canonicalURLField, !event.target.checked);
+		});
+	}
 </aui:script>

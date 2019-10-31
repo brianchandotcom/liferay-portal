@@ -57,20 +57,12 @@ import org.talend.daikon.properties.ValidationResult;
 public class LiferaySourceOrSink
 	extends TranslatableImpl implements OASSource, SourceOrSink {
 
-	public JsonObject doDeleteRequest(RuntimeContainer runtimeContainer) {
-		return doDeleteRequest(runtimeContainer, null);
-	}
-
 	public JsonObject doDeleteRequest(
 		RuntimeContainer runtimeContainer, String resourceURL) {
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
 		return _responseHandler.asJsonObject(restClient.executeDeleteRequest());
-	}
-
-	public JsonObject doDeleteRequest(String resourceURL) {
-		return doDeleteRequest(null, resourceURL);
 	}
 
 	public JsonObject doGetRequest(RuntimeContainer runtimeContainer) {
@@ -117,12 +109,6 @@ public class LiferaySourceOrSink
 	}
 
 	public JsonObject doPostRequest(
-		RuntimeContainer runtimeContainer, JsonObject jsonObject) {
-
-		return doPostRequest(runtimeContainer, null, jsonObject);
-	}
-
-	public JsonObject doPostRequest(
 		RuntimeContainer runtimeContainer, String resourceURL,
 		JsonObject jsonObject) {
 
@@ -130,25 +116,6 @@ public class LiferaySourceOrSink
 
 		return _responseHandler.asJsonObject(
 			restClient.executePostRequest(jsonObject));
-	}
-
-	public JsonObject doPostRequest(String resourceURL, JsonObject jsonObject)
-		throws IOException {
-
-		return doPostRequest(null, resourceURL, jsonObject);
-	}
-
-	public LiferayConnectionProperties getConnectionProperties() {
-		LiferayConnectionProperties liferayConnectionProperties =
-			liferayConnectionPropertiesProvider.
-				getLiferayConnectionProperties();
-
-		if (liferayConnectionProperties.getReferencedComponentId() != null) {
-			liferayConnectionProperties =
-				liferayConnectionProperties.getReferencedConnectionProperties();
-		}
-
-		return liferayConnectionProperties;
 	}
 
 	public LiferayConnectionProperties getEffectiveConnection(

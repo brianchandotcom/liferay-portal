@@ -20,9 +20,7 @@ import {StoreContext} from '../store/index';
 import UnsafeHTML from './UnsafeHTML';
 
 export default function PageEditor() {
-	const state = useContext(StoreContext);
-
-	const {layoutData} = state;
+	const {layoutData} = useContext(StoreContext);
 	const mainItem = layoutData.items[layoutData.rootItems.main];
 
 	return <LayoutDataItem item={mainItem} layoutData={layoutData} />;

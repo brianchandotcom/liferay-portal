@@ -11,12 +11,15 @@
 
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
+import ClayManagementToolbar from '@clayui/management-toolbar';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
 class PageToolbar extends Component {
 	static props = {
+		active: PropTypes.bool,
 		onCancel: PropTypes.string.isRequired,
+		onChangeActive: PropTypes.func,
 		onPublish: PropTypes.func.isRequired,
 		onSaveAsDraft: PropTypes.func,
 		submitDisabled: PropTypes.bool
@@ -27,52 +30,84 @@ class PageToolbar extends Component {
 	};
 
 	render() {
-		const {onCancel, onPublish, onSaveAsDraft, submitDisabled} = this.props;
+		const {
+			active,
+			onCancel,
+			onChangeActive,
+			onPublish,
+			onSaveAsDraft,
+			submitDisabled
+		} = this.props;
 
 		return (
-			<nav
+			<ClayManagementToolbar
 				aria-label={Liferay.Language.get('save')}
-				className="page-toolbar-root tbar upper-tbar"
+				className="page-toolbar-root"
 			>
-				<div className="container-fluid container-fluid-max-xl">
-					<ul className="tbar-nav">
-						<li className="tbar-item tbar-item-expand" />
+				<ClayManagementToolbar.ItemList>
+					<ClayManagementToolbar.Item>
+						<label
+							className="toggle-switch"
+							htmlFor="active-switch-input"
+						>
+							<input
+								checked={active}
+								className="toggle-switch-check"
+								id="active-switch-input"
+								onChange={onChangeActive}
+								type="checkbox"
+							/>
+							<span className="toggle-switch-bar">
+								<span className="toggle-switch-handle"></span>
+							</span>
+							<span className="toggle-switch-text-right">
+								{active
+									? Liferay.Language.get('active')
+									: Liferay.Language.get('inactive')}
+							</span>
+						</label>
+					</ClayManagementToolbar.Item>
+				</ClayManagementToolbar.ItemList>
 
-						<li className="tbar-item">
-							<ClayLink
-								displayType="secondary"
-								href={onCancel}
-								outline="secondary"
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayLink>
-						</li>
+				<ClayManagementToolbar.ItemList
+					expand
+				></ClayManagementToolbar.ItemList>
 
-						{onSaveAsDraft && (
-							<li className="tbar-item">
-								<ClayButton
-									displayType="secondary"
-									onClick={onSaveAsDraft}
-									small
-								>
-									{Liferay.Language.get('save-as-draft')}
-								</ClayButton>
-							</li>
-						)}
+				<ClayManagementToolbar.ItemList>
+					<ClayManagementToolbar.Item>
+						<ClayLink
+							displayType="secondary"
+							href={onCancel}
+							outline="secondary"
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayLink>
+					</ClayManagementToolbar.Item>
 
-						<li className="tbar-item">
+					{onSaveAsDraft && (
+						<ClayManagementToolbar.Item>
 							<ClayButton
-								disabled={submitDisabled}
-								onClick={onPublish}
+								displayType="secondary"
+								onClick={onSaveAsDraft}
 								small
-								type="submit"
 							>
-								{Liferay.Language.get('save')}
+								{Liferay.Language.get('save-as-draft')}
 							</ClayButton>
-						</li>
-					</ul>
-				</div>
-			</nav>
+						</ClayManagementToolbar.Item>
+					)}
+
+					<ClayManagementToolbar.Item>
+						<ClayButton
+							disabled={submitDisabled}
+							onClick={onPublish}
+							small
+							type="submit"
+						>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+					</ClayManagementToolbar.Item>
+				</ClayManagementToolbar.ItemList>
+			</ClayManagementToolbar>
 		);
 	}
 }

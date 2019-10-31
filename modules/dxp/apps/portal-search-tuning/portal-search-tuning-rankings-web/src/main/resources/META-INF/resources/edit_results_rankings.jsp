@@ -49,6 +49,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 	<aui:input name="keywords" type="hidden" value="<%= editRankingDisplayContext.getKeywords() %>" />
 	<aui:input name="resultsRankingUid" type="hidden" value="<%= editRankingDisplayContext.getResultsRankingUid() %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input name="status" type="hidden" value="<%= editRankingDisplayContext.getStatus() %>" />
 
 	<div>
 		<div class="loading-animation-container">

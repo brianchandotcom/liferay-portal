@@ -36,6 +36,8 @@ const HIDE_BUTTON_LABEL = 'hide-result';
 
 const SHOW_BUTTON_LABEL = 'show-result';
 
+const STATUS_INPUT_SELECTOR = '#status';
+
 describe('ResultRankingsForm', () => {
 	it('renders the results ranking form', () => {
 		const {container} = render(
@@ -46,6 +48,7 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery="example"
+				status={1}
 			/>
 		);
 
@@ -63,6 +66,7 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
+				status={1}
 			/>
 		);
 
@@ -81,6 +85,7 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
+				status={1}
 			/>
 		);
 
@@ -102,6 +107,7 @@ describe('ResultRankingsForm', () => {
 				formName={FORM_NAME}
 				initialAliases={['one', 'two', 'three']}
 				searchQuery=""
+				status={1}
 			/>
 		);
 
@@ -122,6 +128,7 @@ describe('ResultRankingsForm', () => {
 				formName={FORM_NAME}
 				initialAliases={['one', 'two', 'three']}
 				searchQuery=""
+				status={1}
 			/>
 		);
 
@@ -145,6 +152,7 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
+				status={1}
 			/>
 		);
 
@@ -171,6 +179,7 @@ describe('ResultRankingsForm', () => {
 				formName={FORM_NAME}
 				initialAliases={['one', 'two', 'three']}
 				searchQuery=""
+				status={1}
 			/>
 		);
 
@@ -196,6 +205,7 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
+				status={1}
 			/>
 		);
 
@@ -219,6 +229,7 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
+				status={1}
 			/>
 		);
 
@@ -248,6 +259,7 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
+				status={1}
 			/>
 		);
 
@@ -273,6 +285,7 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
+				status={1}
 			/>
 		);
 
@@ -304,6 +317,7 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
+				status={1}
 			/>
 		);
 
@@ -330,6 +344,7 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
+				status={1}
 			/>
 		);
 
@@ -346,5 +361,49 @@ describe('ResultRankingsForm', () => {
 		await waitForElement(() => getByTestId('110'));
 
 		expect(pinnedIdsEndIndexInput.value).toBe('4');
+	});
+
+	it('updates the state to inactive', async () => {
+		const {container, getByLabelText} = render(
+			<ResultRankingsForm
+				cancelUrl=""
+				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				formName={FORM_NAME}
+				searchQuery=""
+				status={1}
+			/>
+		);
+
+		fireEvent.click(getByLabelText('active'));
+
+		expect(getByLabelText('inactive')).toBeInTheDocument();
+
+		expect(container.querySelector(STATUS_INPUT_SELECTOR).value).toEqual(
+			'0'
+		);
+	});
+
+	it('updates the state to active', async () => {
+		const {container, getByLabelText} = render(
+			<ResultRankingsForm
+				cancelUrl=""
+				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				formName={FORM_NAME}
+				searchQuery=""
+				status={0}
+			/>
+		);
+
+		fireEvent.click(getByLabelText('inactive'));
+
+		expect(getByLabelText('active')).toBeInTheDocument();
+
+		expect(container.querySelector(STATUS_INPUT_SELECTOR).value).toEqual(
+			'1'
+		);
 	});
 });

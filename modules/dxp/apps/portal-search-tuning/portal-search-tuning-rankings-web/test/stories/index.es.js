@@ -79,6 +79,7 @@ storiesOf('Pages|ResultRankingsForm', module).add('default', () => (
 		initialAliases={['one', 'two', 'three']}
 		saveActionUrl="#"
 		searchQuery={text('Search Term', 'example')}
+		status={1}
 	/>
 ));
 
@@ -223,10 +224,22 @@ storiesOf('Components|List/SearchBar', module)
 		<FilterDisplay searchBarTerm="example" totalResultsCount={100} />
 	));
 
-storiesOf('Components|PageToolbar', module).add('default', () => (
-	<PageToolbar
-		onCancel={action('onCancel')}
-		onPublish={action('onPublish')}
-		submitDisabled={boolean('Disabled', false)}
-	/>
-));
+storiesOf('Components|PageToolbar', module)
+	.add('active', () => (
+		<PageToolbar
+			active={true}
+			onCancel={action('onCancel')}
+			onChangeActive={action('onActivate')}
+			onPublish={action('onPublish')}
+			submitDisabled={boolean('Disabled', false)}
+		/>
+	))
+	.add('inactive', () => (
+		<PageToolbar
+			active={false}
+			onCancel={action('onCancel')}
+			onChangeActive={action('onActivate')}
+			onPublish={action('onPublish')}
+			submitDisabled={boolean('Disabled', false)}
+		/>
+	));

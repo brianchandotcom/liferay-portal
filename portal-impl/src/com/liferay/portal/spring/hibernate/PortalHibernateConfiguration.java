@@ -377,8 +377,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		while (BaseModelImpl.class != modelClass) {
 			for (Class<?> interfaceClazz : modelClass.getInterfaces()) {
 				if (BaseModel.class.isAssignableFrom(interfaceClazz)) {
-					modelClass = interfaceClazz;
-
 					OuterJoinLoadable outerJoinLoadable =
 						(OuterJoinLoadable)classMetadata;
 
@@ -386,12 +384,23 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 						outerJoinLoadable.getPropertyColumnNames(
 							outerJoinLoadable.getIdentifierPropertyName());
 
-					CTModelRegistry.registerCTModel(
-						outerJoinLoadable.getTableName(),
-						new CTModelRegistration(
-							modelClass, identifierColumnNames[0]));
+					try {
+						Class<?> superClass = modelClass.getSuperclass();
 
-					return modelClass;
+						Field field = superClass.getField("TABLE_COLUMNS_MAP");
+
+						CTModelRegistry.registerCTModel(
+							new CTModelRegistration(
+								interfaceClazz,
+								outerJoinLoadable.getTableName(),
+								identifierColumnNames[0],
+								(Map<String, Integer>)field.get(null)));
+					}
+					catch (ReflectiveOperationException roe) {
+						ReflectionUtil.throwException(roe);
+					}
+
+					return interfaceClazz;
 				}
 			}
 

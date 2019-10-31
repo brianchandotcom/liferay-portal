@@ -81,8 +81,8 @@ public class CTSQLTransformerTest {
 		_db = DBManagerUtil.getDB();
 
 		CTModelRegistry.registerCTModel(
-			"MainTable",
-			new CTModelRegistration(MainTable.class, "mainTableId"));
+			new CTModelRegistration(
+				MainTable.class, "MainTable", "mainTableId", null));
 
 		_createCTEntries(1, MainTable.class, 6L, null, null);
 		_createCTEntries(2, MainTable.class, null, 1L, null);
@@ -121,8 +121,9 @@ public class CTSQLTransformerTest {
 				" , 2, 3, 'mt7 add');");
 
 		CTModelRegistry.registerCTModel(
-			"ReferenceTable",
-			new CTModelRegistration(ReferenceTable.class, "referenceTableId"));
+			new CTModelRegistration(
+				ReferenceTable.class, "ReferenceTable", "referenceTableId",
+				null));
 
 		_createCTEntries(1, ReferenceTable.class, 6L, null, null);
 		_createCTEntries(2, ReferenceTable.class, null, 1L, null);

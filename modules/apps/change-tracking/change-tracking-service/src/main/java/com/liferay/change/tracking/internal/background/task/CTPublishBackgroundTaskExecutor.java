@@ -15,7 +15,6 @@
 package com.liferay.change.tracking.internal.background.task;
 
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.internal.CTPersistenceHelperThreadLocal;
 import com.liferay.change.tracking.internal.CTServiceRegistry;
 import com.liferay.change.tracking.internal.background.task.display.CTPublishBackgroundTaskDisplay;
 import com.liferay.change.tracking.model.CTCollection;
@@ -23,7 +22,6 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
-import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -101,7 +99,8 @@ public class CTPublishBackgroundTaskExecutor
 
 						if (ctService != null) {
 							return new CTServicePublisher<>(
-								_ctEntryLocalService, ctService, ctCollectionId,
+								_ctEntryLocalService, ctService,
+								modelClassNameId, ctCollectionId,
 								CTConstants.CT_COLLECTION_ID_PRODUCTION);
 						}
 
@@ -115,14 +114,10 @@ public class CTPublishBackgroundTaskExecutor
 			ctServicePublisher.addCTEntry(ctEntry);
 		}
 
-		try (SafeClosable safeClosable =
-				CTPersistenceHelperThreadLocal.setEnabled(false)) {
+		for (CTServicePublisher<?> ctServicePublisher :
+				ctServicePublishers.values()) {
 
-			for (CTServicePublisher<?> ctServicePublisher :
-					ctServicePublishers.values()) {
-
-				ctServicePublisher.publish();
-			}
+			ctServicePublisher.publish();
 		}
 
 		_ctServiceRegistry.onAfterPublish(ctCollectionId);

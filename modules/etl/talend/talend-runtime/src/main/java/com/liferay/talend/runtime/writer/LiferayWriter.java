@@ -87,8 +87,15 @@ public class LiferayWriter
 	public void doDelete(IndexedRecord indexedRecord) throws IOException {
 		URI resourceURI = _tLiferayOutputProperties.resource.getEndpointURI();
 
-		_liferaySink.doDeleteRequest(
-			_runtimeContainer, resourceURI.toASCIIString());
+		try {
+			_liferaySink.doDeleteRequest(
+				_runtimeContainer, resourceURI.toASCIIString());
+		}
+		catch (Exception e) {
+			_indexedRecordJsonObjectConverter.reject(indexedRecord, e);
+
+			return;
+		}
 
 		_handleSuccessRecord(indexedRecord);
 	}

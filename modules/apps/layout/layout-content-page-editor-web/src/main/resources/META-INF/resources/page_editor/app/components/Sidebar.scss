@@ -77,6 +77,40 @@ $zIndexContent: 0;
 			margin: 32px 0 24px 0;
 			padding: 0 1rem;
 		}
+
+		&__section-builder {
+			&__card {
+				box-shadow: 0 0 0 1px $fragmentCardImageBorderColor;
+				margin-bottom: $fragmentCardMarginBottom;
+				width: $fragmentCardWidth;
+
+				&-image img {
+					width: 100%;
+				}
+
+				&-no-preview {
+					background-color: $fragmentCardNoPreviewBackgroundColor;
+					color: $fragmentCardNoPreviewIconColor;
+					font-size: 24px;
+					line-height: 80px;
+					text-align: center;
+				}
+
+				.card-body {
+					padding: $fragmentCardPadding;
+					text-align: center;
+
+					.card-title {
+						color: $fragmentCardTitleColor;
+						font-size: 12px;
+					}
+
+					.card-row {
+						min-height: 32px;
+					}
+				}
+			}
+		}
 	}
 
 	body.has-control-menu & {

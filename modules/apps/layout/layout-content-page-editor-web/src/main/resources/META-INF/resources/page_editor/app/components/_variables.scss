@@ -8,6 +8,10 @@ $defaultTransitionDuration: 0.5s;
 // Colors
 //
 
+$fragmentCardImageBorderColor: #e7e7ed;
+$fragmentCardNoPreviewBackgroundColor: #e7e7ed;
+$fragmentCardNoPreviewIconColor: #a7a9bc;
+$fragmentCardTitleColor: #6b6c7e;
 $sidebarBorderColor: #e7e7ed;
 $sidebarButtonBackgroundColor: #393a4a;
 $sidebarButtonColor: #a7a9bc;
@@ -21,7 +25,13 @@ $toolbarBorderColor: fade_out(#dcdcdc, 0.5);
 // Layout
 //
 
+$pageEditorSpacing: 8px;
+
 $controlMenuHeight: 56px;
+$fragmentCardImageMaxHeight: 200px;
+$fragmentCardMarginBottom: $pageEditorSpacing * 2;
+$fragmentCardPadding: $pageEditorSpacing;
+$fragmentCardWidth: calc(50% - #{$pageEditorSpacing});
 $sidebarContentWidth: 280px;
 $toolbarBorderWidth: 1px;
 $toolbarHeight: 64px;

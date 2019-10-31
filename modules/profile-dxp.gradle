@@ -21,10 +21,10 @@ checkoutDXPScript {
 			standardOutput = byteArrayOutputStream
 		}
 
-		String refInfoString = byteArrayOutputStream.toString();
+		String result = byteArrayOutputStream.toString();
 
-		if (Validator.isNotNull(refInfoString)) {
-			String[][] refInfos = refInfoString.split("\n").collect { String s ->
+		if (Validator.isNotNull(result)) {
+			String[][] refInfos = result.split("\n").collect { String s ->
 				s.split(" ")
 			}
 

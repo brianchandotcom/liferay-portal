@@ -733,6 +733,25 @@ xpack.monitoring.collection.enabled: true</echo>
 				<prepare-elasticsearch-ltr />
 
 				<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}path.repo: ${liferay.home}/data/elasticsearch6/repo</echo>
+
+				<if>
+					<not>
+						<available file="${liferay.home}/data/elasticsearch6/repo" type="dir" />
+					</not>
+					<then>
+						<mkdir dir="${liferay.home}/data/elasticsearch6/repo" />
+					</then>
+				</if>
+
+				<chmod
+					maxparallel="10"
+					perm="a+rwx"
+					type="both"
+				>
+					<fileset
+						dir="${liferay.home}data/elasticsearch6/repo"
+					/>
+				</chmod>
 			</then>
 		</if>
 
@@ -791,6 +810,20 @@ xpack.monitoring.collection.enabled: true</echo>
 				</waitfor>
 
 				<lstopwatch action="total" name="start.elasticsearch" />
+
+				<var name="elasticsearch.node.number" value="0" />
+
+				<antelope:repeat count="${remote.elasticsearch.cluster.size}">
+					<math
+						datatype="int"
+						operand1="${elasticsearch.node.number}"
+						operand2="1"
+						operation="+"
+						result="elasticsearch.node.number"
+					/>
+
+					<print-file file.name="${elasticsearch.dir}-${elasticsearch.node.number}/logs/LiferayElasticsearchCluster.log" />
+				</antelope:repeat>
 
 				<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
 			</else>

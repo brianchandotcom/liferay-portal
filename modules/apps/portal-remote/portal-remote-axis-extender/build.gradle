@@ -1,6 +1,6 @@
 dependencies {
 	compileInclude group: "axis", name: "axis-wsdl4j", version: "1.5.1"
-	compileInclude group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-3"
+	compileInclude group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-4"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

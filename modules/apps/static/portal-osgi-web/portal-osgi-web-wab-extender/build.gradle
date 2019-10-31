@@ -2,7 +2,7 @@ dependencies {
 	compileInclude group: "com.liferay", name: "javax.servlet.jsp", version: "2.3.3-b02.LIFERAY-PATCHED-9"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
-	compileOnly group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-3"
+	compileOnly group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-4"
 	compileOnly group: "com.liferay", name: "org.eclipse.equinox.http.servlet", version: "1.2.2.v20190228-1648-LIFERAY-CACHED"
 	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.13.0.LIFERAY-PATCHED-8"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

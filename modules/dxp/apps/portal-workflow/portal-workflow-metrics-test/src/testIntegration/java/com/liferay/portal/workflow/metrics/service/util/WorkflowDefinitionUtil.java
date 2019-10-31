@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.service.internal.util;
+package com.liferay.portal.workflow.metrics.service.util;
 
 import com.liferay.portal.kernel.util.FileUtil;
 

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.service.test.base;
+package com.liferay.portal.workflow.metrics.service.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -31,7 +31,7 @@ import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitio
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionTimeframeException;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalServiceUtil;
-import com.liferay.portal.workflow.metrics.service.test.base.BaseWorkflowMetricsTestCase;
+import com.liferay.portal.workflow.metrics.service.util.BaseWorkflowMetricsTestCase;
 
 import java.util.ArrayList;
 import java.util.List;

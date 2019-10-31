@@ -36,6 +36,7 @@ import java.util.Map;
 
 /**
  * @author Eduardo García
+ * @author David Arques
  */
 public class SegmentsExperienceUtil {
 
@@ -46,89 +47,11 @@ public class SegmentsExperienceUtil {
 			long targetSegmentsExperienceId)
 		throws PortalException {
 
-		Map<Long, String> fragmentEntryLinksEditableValuesMap = new HashMap<>();
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				groupId, classNameId, classPK);
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			JSONObject editableValuesJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues());
-
-			Iterator<String> keysIterator = editableValuesJSONObject.keys();
-
-			while (keysIterator.hasNext()) {
-				String editableProcessorKey = keysIterator.next();
-
-				JSONObject editableProcessorJSONObject =
-					editableValuesJSONObject.getJSONObject(
-						editableProcessorKey);
-
-				if (editableProcessorJSONObject == null) {
-					continue;
-				}
-
-				Iterator<String> editableKeysIterator =
-					editableProcessorJSONObject.keys();
-
-				while (editableKeysIterator.hasNext()) {
-					String editableKey = editableKeysIterator.next();
-
-					if (editableKey.startsWith(
-							SegmentsExperienceConstants.ID_PREFIX)) {
-
-						JSONObject baseExperienceValueJSONObject =
-							editableProcessorJSONObject.getJSONObject(
-								SegmentsExperienceConstants.ID_PREFIX +
-									sourceSegmentsExperienceId);
-
-						editableProcessorJSONObject.put(
-							SegmentsExperienceConstants.ID_PREFIX +
-								targetSegmentsExperienceId,
-							baseExperienceValueJSONObject);
-
-						editableValuesJSONObject.put(
-							editableProcessorKey, editableProcessorJSONObject);
-
-						break;
-					}
-
-					JSONObject editableJSONObject =
-						editableProcessorJSONObject.getJSONObject(editableKey);
-
-					JSONObject valueJSONObject = null;
-
-					if (editableJSONObject.has(
-							SegmentsExperienceConstants.ID_PREFIX +
-								sourceSegmentsExperienceId)) {
-
-						valueJSONObject = editableJSONObject.getJSONObject(
-							SegmentsExperienceConstants.ID_PREFIX +
-								sourceSegmentsExperienceId);
-					}
-					else {
-						continue;
-					}
-
-					editableJSONObject.put(
-						SegmentsExperienceConstants.ID_PREFIX +
-							targetSegmentsExperienceId,
-						valueJSONObject);
-
-					editableProcessorJSONObject.put(
-						editableKey, editableJSONObject);
-
-					editableValuesJSONObject.put(
-						editableProcessorKey, editableProcessorJSONObject);
-				}
-			}
-
-			fragmentEntryLinksEditableValuesMap.put(
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				editableValuesJSONObject.toString());
-		}
+		Map<Long, String> fragmentEntryLinksEditableValuesMap =
+			_copyFragmentEntryLinksEditableValues(
+				fragmentEntryLinkLocalService.getFragmentEntryLinks(
+					groupId, classNameId, classPK),
+				sourceSegmentsExperienceId, targetSegmentsExperienceId);
 
 		fragmentEntryLinkLocalService.updateFragmentEntryLinks(
 			fragmentEntryLinksEditableValuesMap);
@@ -233,6 +156,104 @@ public class SegmentsExperienceUtil {
 		copyPortletPreferences(
 			classPK, portletLocalService, portletPreferencesLocalService,
 			sourceSegmentsExperienceId, targetSegmentsExperienceId);
+	}
+
+	protected static JSONObject copyEditableValues(
+		JSONObject editableValuesJSONObject, long sourceSegmentsExperienceId,
+		long targetSegmentsExperienceId) {
+
+		Iterator<String> keysIterator = editableValuesJSONObject.keys();
+
+		while (keysIterator.hasNext()) {
+			String editableProcessorKey = keysIterator.next();
+
+			JSONObject editableProcessorJSONObject =
+				editableValuesJSONObject.getJSONObject(editableProcessorKey);
+
+			if (editableProcessorJSONObject == null) {
+				continue;
+			}
+
+			Iterator<String> editableKeysIterator =
+				editableProcessorJSONObject.keys();
+
+			while (editableKeysIterator.hasNext()) {
+				String editableKey = editableKeysIterator.next();
+
+				if (editableKey.startsWith(
+						SegmentsExperienceConstants.ID_PREFIX)) {
+
+					JSONObject baseExperienceValueJSONObject =
+						editableProcessorJSONObject.getJSONObject(
+							SegmentsExperienceConstants.ID_PREFIX +
+								sourceSegmentsExperienceId);
+
+					editableProcessorJSONObject.put(
+						SegmentsExperienceConstants.ID_PREFIX +
+							targetSegmentsExperienceId,
+						baseExperienceValueJSONObject);
+
+					editableValuesJSONObject.put(
+						editableProcessorKey, editableProcessorJSONObject);
+
+					break;
+				}
+
+				JSONObject editableJSONObject =
+					editableProcessorJSONObject.getJSONObject(editableKey);
+
+				JSONObject valueJSONObject = null;
+
+				if (editableJSONObject.has(
+						SegmentsExperienceConstants.ID_PREFIX +
+							sourceSegmentsExperienceId)) {
+
+					valueJSONObject = editableJSONObject.getJSONObject(
+						SegmentsExperienceConstants.ID_PREFIX +
+							sourceSegmentsExperienceId);
+				}
+				else {
+					continue;
+				}
+
+				editableJSONObject.put(
+					SegmentsExperienceConstants.ID_PREFIX +
+						targetSegmentsExperienceId,
+					valueJSONObject);
+
+				editableProcessorJSONObject.put(
+					editableKey, editableJSONObject);
+
+				editableValuesJSONObject.put(
+					editableProcessorKey, editableProcessorJSONObject);
+			}
+		}
+
+		return editableValuesJSONObject;
+	}
+
+	private static Map<Long, String> _copyFragmentEntryLinksEditableValues(
+			List<FragmentEntryLink> fragmentEntryLinks,
+			long sourceSegmentsExperienceId, long targetSegmentsExperienceId)
+		throws PortalException {
+
+		Map<Long, String> fragmentEntryLinksEditableValuesMap = new HashMap<>();
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
+
+			copyEditableValues(
+				editableValuesJSONObject, sourceSegmentsExperienceId,
+				targetSegmentsExperienceId);
+
+			fragmentEntryLinksEditableValuesMap.put(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				editableValuesJSONObject.toString());
+		}
+
+		return fragmentEntryLinksEditableValuesMap;
 	}
 
 	private SegmentsExperienceUtil() {

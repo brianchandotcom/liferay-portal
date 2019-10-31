@@ -62,11 +62,23 @@ tasks.withType(Upload) {
 					}
 				}
 
-				repository(url: project.properties["sonatype.release.url"] ?: "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases") {
+				String repositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases"
+
+				if (project.path.startsWith(":dxp:")) {
+					repositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-private-releases"
+				}
+
+				repository(url: project.properties["sonatype.release.url"] ?: repositoryURL) {
 					authentication password: project.properties["sonatype.release.password"], userName: project.properties["sonatype.release.username"]
 				}
 
-				snapshotRepository(url: project.properties["sonatype.snapshot.url"] ?: "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots") {
+				String snapshotRepositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots"
+
+				if (project.path.startsWith(":dxp:")) {
+					snapshotRepositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-private-snapshots"
+				}
+
+				snapshotRepository(url: project.properties["sonatype.snapshot.url"] ?: snapshotRepositoryURL) {
 					authentication password: project.properties["sonatype.snapshot.password"], userName: project.properties["sonatype.snapshot.username"]
 				}
 			}

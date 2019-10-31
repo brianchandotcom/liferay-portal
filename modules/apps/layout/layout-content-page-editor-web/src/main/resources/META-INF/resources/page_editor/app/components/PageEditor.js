@@ -19,6 +19,14 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {StoreContext} from '../store/index';
 import UnsafeHTML from './UnsafeHTML';
 
+const LAYOUT_DATA_ITEMS = {
+	[LAYOUT_DATA_ITEM_TYPES.column]: Column,
+	[LAYOUT_DATA_ITEM_TYPES.container]: Container,
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: Fragment,
+	[LAYOUT_DATA_ITEM_TYPES.root]: Root,
+	[LAYOUT_DATA_ITEM_TYPES.row]: Row
+};
+
 export default function PageEditor() {
 	const {layoutData} = useContext(StoreContext);
 	const mainItem = layoutData.items[layoutData.rootItems.main];
@@ -43,14 +51,6 @@ function LayoutDataItem({item, layoutData}) {
 		</Component>
 	);
 }
-
-const LAYOUT_DATA_ITEMS = {
-	[LAYOUT_DATA_ITEM_TYPES.column]: Column,
-	[LAYOUT_DATA_ITEM_TYPES.container]: Container,
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: Fragment,
-	[LAYOUT_DATA_ITEM_TYPES.root]: Root,
-	[LAYOUT_DATA_ITEM_TYPES.row]: Row
-};
 
 function Column({children, item}) {
 	const {size} = item.config;

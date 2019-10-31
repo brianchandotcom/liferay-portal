@@ -225,6 +225,11 @@ public class AssetListEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupIdArrayable() throws Exception {
+		_persistence.countByGroupId(new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByG_ALEK() throws Exception {
 		_persistence.countByG_ALEK(RandomTestUtil.nextLong(), "");
 
@@ -249,6 +254,13 @@ public class AssetListEntryPersistenceTest {
 		_persistence.countByG_LikeT(0L, "null");
 
 		_persistence.countByG_LikeT(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_LikeTArrayable() throws Exception {
+		_persistence.countByG_LikeT(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomString());
 	}
 
 	@Test

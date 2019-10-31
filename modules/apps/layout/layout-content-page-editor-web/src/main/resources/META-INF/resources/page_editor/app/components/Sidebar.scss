@@ -59,11 +59,24 @@ $zIndexContent: 0;
 		transform: translateX(0);
 	}
 
-	&-panel__header {
-		font-size: 18px;
-		font-weight: bold;
-		margin: 32px 0 24px 0;
-		padding: 0 1rem;
+	&-panel {
+		&__collapse {
+			border-color: $sidebarCollapseLineColor;
+			border-radius: 0px;
+			font-size: 12px;
+			margin-bottom: $fragmentCardMarginBottom;
+
+			&:focus {
+				border-radius: 1px;
+			}
+		}
+
+		&__header {
+			font-size: 18px;
+			font-weight: bold;
+			margin: 32px 0 24px 0;
+			padding: 0 1rem;
+		}
 	}
 
 	body.has-control-menu & {

@@ -25,17 +25,17 @@ describe('layoutDataReducer', () => {
 		state = {
 			layoutData: {
 				items: {
-					frag: {
+					'example-fragment-0': {
 						children: [],
 						config: {},
-						itemId: 'frag',
+						itemId: 'example-fragment-0',
 						type: LAYOUT_DATA_ITEM_TYPES.fragment
 					},
 
-					root: {
-						children: ['frag'],
+					'root-item-0': {
+						children: ['example-fragment-0'],
 						config: {},
-						itemId: 'root',
+						itemId: 'root-item-0',
 						type: LAYOUT_DATA_ITEM_TYPES.root
 					}
 				}
@@ -48,20 +48,22 @@ describe('layoutDataReducer', () => {
 			const nextState = layoutDataReducer(
 				state,
 				addItem({
-					itemId: 'new',
+					itemId: 'new-container',
 					itemType: LAYOUT_DATA_ITEM_TYPES.container,
-					parentId: 'root'
+					parentId: 'root-item-0'
 				})
 			);
 
-			expect(nextState.layoutData.items.new).toEqual({
+			expect(nextState.layoutData.items['new-container']).toEqual({
 				children: [],
 				config: LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.container,
-				itemId: 'new',
+				itemId: 'new-container',
 				type: LAYOUT_DATA_ITEM_TYPES.container
 			});
 
-			expect(nextState.layoutData.items.root.children).toContain('new');
+			expect(
+				nextState.layoutData.items['root-item-0'].children
+			).toContain('new-container');
 		});
 
 		it('allows extending default configuration', () => {
@@ -72,20 +74,20 @@ describe('layoutDataReducer', () => {
 						color: 'blue',
 						gutters: false
 					},
-					itemId: 'newrow',
+					itemId: 'new-row',
 					itemType: LAYOUT_DATA_ITEM_TYPES.row,
-					parentId: 'root'
+					parentId: 'root-item-0'
 				})
 			);
 
-			expect(nextState.layoutData.items.newrow).toEqual({
+			expect(nextState.layoutData.items['new-row']).toEqual({
 				children: [],
 				config: {
 					...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.row,
 					color: 'blue',
 					gutters: false
 				},
-				itemId: 'newrow',
+				itemId: 'new-row',
 				type: LAYOUT_DATA_ITEM_TYPES.row
 			});
 		});
@@ -96,18 +98,18 @@ describe('layoutDataReducer', () => {
 			nextState = layoutDataReducer(
 				nextState,
 				addItem({
-					itemId: 'position3',
+					itemId: 'row-at-position-3',
 					itemType: LAYOUT_DATA_ITEM_TYPES.row,
-					parentId: 'root'
+					parentId: 'root-item-0'
 				})
 			);
 
 			nextState = layoutDataReducer(
 				nextState,
 				addItem({
-					itemId: 'position0',
+					itemId: 'row-at-position-0',
 					itemType: LAYOUT_DATA_ITEM_TYPES.container,
-					parentId: 'root',
+					parentId: 'root-item-0',
 					position: 0
 				})
 			);
@@ -115,18 +117,18 @@ describe('layoutDataReducer', () => {
 			nextState = layoutDataReducer(
 				nextState,
 				addItem({
-					itemId: 'position2',
+					itemId: 'row-at-position-2',
 					itemType: LAYOUT_DATA_ITEM_TYPES.row,
-					parentId: 'root',
+					parentId: 'root-item-0',
 					position: 2
 				})
 			);
 
-			expect(nextState.layoutData.items.root.children).toEqual([
-				'position0',
-				'frag',
-				'position2',
-				'position3'
+			expect(nextState.layoutData.items['root-item-0'].children).toEqual([
+				'row-at-position-0',
+				'example-fragment-0',
+				'row-at-position-2',
+				'row-at-position-3'
 			]);
 		});
 
@@ -141,9 +143,9 @@ describe('layoutDataReducer', () => {
 				layoutDataReducer(
 					state,
 					addItem({
-						itemId: 'new',
+						itemId: 'new-column',
 						itemType: LAYOUT_DATA_ITEM_TYPES.column,
-						parentId: 'frag'
+						parentId: 'example-fragment-0'
 					})
 				)
 			).toThrow('Cannot put item of type "column" inside "fragment');
@@ -152,7 +154,7 @@ describe('layoutDataReducer', () => {
 		it('does nothing if there is an item with same id', () => {
 			const nextState = layoutDataReducer(
 				state,
-				addItem({itemId: 'root'})
+				addItem({itemId: 'root-item-0'})
 			);
 
 			expect(nextState).toEqual(state);
@@ -161,20 +163,26 @@ describe('layoutDataReducer', () => {
 
 	describe('REMOVE_ITEM', () => {
 		it('removes an item from layoutData.items', () => {
-			const nextState = layoutDataReducer(state, removeItem('frag'));
+			const nextState = layoutDataReducer(
+				state,
+				removeItem('example-fragment-0')
+			);
 
 			expect(nextState.layoutData.items).toEqual({
-				root: {
+				'root-item-0': {
 					children: [],
 					config: {},
-					itemId: 'root',
+					itemId: 'root-item-0',
 					type: LAYOUT_DATA_ITEM_TYPES.root
 				}
 			});
 		});
 
 		it('does nothing if item does not exist', () => {
-			const nextState = layoutDataReducer(state, removeItem('no-ex'));
+			const nextState = layoutDataReducer(
+				state,
+				removeItem('no-existing-item')
+			);
 
 			expect(nextState.layoutData.items).toEqual(state.layoutData.items);
 		});

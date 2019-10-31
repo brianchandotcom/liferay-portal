@@ -209,12 +209,15 @@ public class TaskResourceImpl
 			}
 
 			booleanQuery.addMustNotQueryClauses(
-				_queries.term("status", WorkflowMetricsSLAStatus.RUNNING));
+				_queries.term(
+					"status", WorkflowMetricsSLAStatus.RUNNING.name()));
 		}
 		else {
 			booleanQuery.addMustNotQueryClauses(
-				_queries.term("status", WorkflowMetricsSLAStatus.COMPLETED),
-				_queries.term("status", WorkflowMetricsSLAStatus.EXPIRED));
+				_queries.term(
+					"status", WorkflowMetricsSLAStatus.COMPLETED.name()),
+				_queries.term(
+					"status", WorkflowMetricsSLAStatus.EXPIRED.name()));
 		}
 
 		TermsQuery termsQuery = _queries.terms("taskName");

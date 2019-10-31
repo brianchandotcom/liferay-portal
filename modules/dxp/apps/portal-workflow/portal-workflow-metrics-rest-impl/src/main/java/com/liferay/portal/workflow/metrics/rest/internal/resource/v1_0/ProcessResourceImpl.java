@@ -285,17 +285,19 @@ public class ProcessResourceImpl
 
 			shouldBooleanQuery.addShouldQueryClauses(
 				_queries.term("slaDefinitionId", 0),
-				_queries.term("status", WorkflowMetricsSLAStatus.COMPLETED));
+				_queries.term(
+					"status", WorkflowMetricsSLAStatus.COMPLETED.name()));
 
 			booleanQuery.addMustQueryClauses(shouldBooleanQuery);
 		}
 		else {
 			booleanQuery.addMustNotQueryClauses(
-				_queries.term("status", WorkflowMetricsSLAStatus.COMPLETED));
+				_queries.term(
+					"status", WorkflowMetricsSLAStatus.COMPLETED.name()));
 		}
 
 		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkflowMetricsSLAStatus.EXPIRED));
+			_queries.term("status", WorkflowMetricsSLAStatus.EXPIRED.name()));
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),

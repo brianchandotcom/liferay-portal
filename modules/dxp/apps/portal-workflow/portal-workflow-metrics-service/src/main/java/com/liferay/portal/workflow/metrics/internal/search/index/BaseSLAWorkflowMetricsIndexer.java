@@ -56,8 +56,8 @@ public abstract class BaseSLAWorkflowMetricsIndexer
 		BooleanQuery booleanQuery = queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(
-			queries.term("status", WorkflowMetricsSLAStatus.COMPLETED),
-			queries.term("status", WorkflowMetricsSLAStatus.STOPPED));
+			queries.term("status", WorkflowMetricsSLAStatus.COMPLETED.name()),
+			queries.term("status", WorkflowMetricsSLAStatus.STOPPED.name()));
 
 		_deleteDocuments(
 			booleanQuery.addMustQueryClauses(
@@ -73,7 +73,7 @@ public abstract class BaseSLAWorkflowMetricsIndexer
 			document -> new DocumentImpl() {
 				{
 					addKeyword(
-						"status", WorkflowMetricsSLAStatus.EXPIRED.toString());
+						"status", WorkflowMetricsSLAStatus.EXPIRED.name());
 					addKeyword(Field.UID, document.getString(Field.UID));
 				}
 			},

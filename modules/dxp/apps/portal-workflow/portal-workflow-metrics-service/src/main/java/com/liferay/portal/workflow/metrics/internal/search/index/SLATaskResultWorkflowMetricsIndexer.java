@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLATaskResult;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.sql.Timestamp;
 
@@ -112,10 +113,12 @@ public class SLATaskResultWorkflowMetricsIndexer
 		document.addKeyword(
 			"slaDefinitionId",
 			workflowMetricsSLATaskResult.getSLADefinitionId());
-		document.addKeyword(
-			"status",
-			String.valueOf(
-				workflowMetricsSLATaskResult.getWorkflowMetricsSLAStatus()));
+
+		WorkflowMetricsSLAStatus workflowMetricsSLAStatus =
+			workflowMetricsSLATaskResult.getWorkflowMetricsSLAStatus();
+
+		document.addKeyword("status", workflowMetricsSLAStatus.name());
+
 		document.addKeyword("taskId", workflowMetricsSLATaskResult.getTaskId());
 		document.addKeyword(
 			"taskName", workflowMetricsSLATaskResult.getTaskName());

@@ -193,7 +193,8 @@ public class AssigneeUserResourceImpl
 
 		if (completed) {
 			booleanQuery.addMustNotQueryClauses(
-				_queries.term("status", WorkflowMetricsSLAStatus.RUNNING));
+				_queries.term(
+					"status", WorkflowMetricsSLAStatus.RUNNING.name()));
 
 			if ((dateEnd != null) && (dateStart != null)) {
 				booleanQuery.addMustQueryClauses(
@@ -205,8 +206,10 @@ public class AssigneeUserResourceImpl
 		}
 		else {
 			booleanQuery.addMustNotQueryClauses(
-				_queries.term("status", WorkflowMetricsSLAStatus.COMPLETED),
-				_queries.term("status", WorkflowMetricsSLAStatus.EXPIRED));
+				_queries.term(
+					"status", WorkflowMetricsSLAStatus.COMPLETED.name()),
+				_queries.term(
+					"status", WorkflowMetricsSLAStatus.EXPIRED.name()));
 		}
 
 		if (taskKeys.length > 0) {

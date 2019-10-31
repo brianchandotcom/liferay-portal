@@ -62,23 +62,31 @@ tasks.withType(Upload) {
 					}
 				}
 
-				String repositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases"
+				String repositoryURL = project.properties["sonatype.release.url"]
 
-				if (project.path.startsWith(":dxp:")) {
+				if (repositoryURL == null) {
+					repositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases"
+				}
+
+				if (project.path.startsWith(":dxp:") && repositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases")) {
 					repositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-private-releases"
 				}
 
-				repository(url: project.properties["sonatype.release.url"] ?: repositoryURL) {
+				repository(url: repositoryURL) {
 					authentication password: project.properties["sonatype.release.password"], userName: project.properties["sonatype.release.username"]
 				}
 
-				String snapshotRepositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots"
+				String snapshotRepositoryURL = project.properties["sonatype.snapshot.url"]
 
-				if (project.path.startsWith(":dxp:")) {
+				if (snapshotRepositoryURL == null) {
+					snapshotRepositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots"
+				}
+
+				if (project.path.startsWith(":dxp:") && snapshotRepositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots")) {
 					snapshotRepositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-private-snapshots"
 				}
 
-				snapshotRepository(url: project.properties["sonatype.snapshot.url"] ?: snapshotRepositoryURL) {
+				snapshotRepository(url: snapshotRepositoryURL) {
 					authentication password: project.properties["sonatype.snapshot.password"], userName: project.properties["sonatype.snapshot.username"]
 				}
 			}

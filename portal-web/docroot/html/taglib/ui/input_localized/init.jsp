@@ -40,7 +40,7 @@ String languageId = (String)request.getAttribute("liferay-ui:input-localized:lan
 String maxLength = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:maxLength"));
 String name = (String)request.getAttribute("liferay-ui:input-localized:name");
 String placeholder = (String)request.getAttribute("liferay-ui:input-localized:placeholder");
-String selectedLanguageId = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:selectedLanguageId"), defaultLanguageId);
+String selectedLanguageId = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:selectedLanguageId"));
 String toolbarSet = (String)request.getAttribute("liferay-ui:input-localized:toolbarSet");
 String type = (String)request.getAttribute("liferay-ui:input-localized:type");
 String xml = (String)request.getAttribute("liferay-ui:input-localized:xml");
@@ -53,6 +53,10 @@ if (Validator.isNotNull(defaultLanguageId)) {
 else {
 	defaultLocale = LocaleUtil.getSiteDefault();
 	defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+}
+
+if (Validator.isNull(selectedLanguageId)) {
+	selectedLanguageId = defaultLanguageId;
 }
 
 String mainLanguageId = selectedLanguageId;

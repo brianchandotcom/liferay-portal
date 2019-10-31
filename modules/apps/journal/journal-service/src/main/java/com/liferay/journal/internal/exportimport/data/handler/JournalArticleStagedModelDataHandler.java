@@ -853,7 +853,7 @@ public class JournalArticleStagedModelDataHandler
 						}
 					}
 					finally {
-						StreamUtil.cleanUp(inputStream);
+						StreamUtil.cleanUp(true, inputStream);
 					}
 				}
 			}

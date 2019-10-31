@@ -15,6 +15,7 @@ import Filter from '../../../shared/components/filter/Filter.es';
 import {ProcessStatusContext} from './store/ProcessStatusStore.es';
 
 const ProcessStatusFilter = ({
+	className,
 	filterKey = 'statuses',
 	hideControl = false,
 	position = 'left'
@@ -23,6 +24,7 @@ const ProcessStatusFilter = ({
 
 	return (
 		<Filter
+			elementClasses={className}
 			filterKey={filterKey}
 			hideControl={hideControl}
 			items={processStatuses}

@@ -15,6 +15,7 @@ import Filter from '../../../shared/components/filter/Filter.es';
 import {VelocityUnitContext} from './store/VelocityUnitStore.es';
 
 const VelocityUnitFilter = ({
+	className,
 	filterKey = 'velocityUnit',
 	hideControl = false,
 	position = 'left'
@@ -30,7 +31,7 @@ const VelocityUnitFilter = ({
 	return (
 		<Filter
 			defaultItem={defaultVelocityUnit}
-			elementClasses="pl-3"
+			elementClasses={className}
 			filterKey={filterKey}
 			hideControl={hideControl}
 			items={[...velocityUnits]}

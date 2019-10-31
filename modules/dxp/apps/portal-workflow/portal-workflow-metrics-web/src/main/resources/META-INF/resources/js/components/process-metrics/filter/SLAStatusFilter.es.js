@@ -15,6 +15,7 @@ import Filter from '../../../shared/components/filter/Filter.es';
 import {SLAStatusContext} from './store/SLAStatusStore.es';
 
 const SLAStatusFilter = ({
+	className,
 	filterKey = 'slaStatuses',
 	hideControl = false,
 	position = 'left'
@@ -23,6 +24,7 @@ const SLAStatusFilter = ({
 
 	return (
 		<Filter
+			elementClasses={className}
 			filterKey={filterKey}
 			hideControl={hideControl}
 			items={slaStatuses}

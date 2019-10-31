@@ -15,6 +15,7 @@ import Filter from '../../../shared/components/filter/Filter.es';
 import {AssigneeContext} from './store/AssigneeStore.es';
 
 const AssigneeFilter = ({
+	className,
 	filterKey = 'assigneeUserIds',
 	hideControl = false,
 	position = 'left'
@@ -23,6 +24,7 @@ const AssigneeFilter = ({
 
 	return (
 		<Filter
+			elementClasses={className}
 			filterKey={filterKey}
 			hideControl={hideControl}
 			items={assignees}

@@ -20,6 +20,7 @@ import {
 
 const TimeRangeFilter = ({
 	buttonClassName,
+	className,
 	filterKey = 'timeRange',
 	hideControl = false,
 	position = 'left',
@@ -61,6 +62,7 @@ const TimeRangeFilter = ({
 		<Filter
 			buttonClassName={buttonClassName}
 			defaultItem={defaultTimeRange}
+			elementClasses={className}
 			filterKey={filterKey}
 			hideControl={hideControl}
 			items={[...timeRanges]}

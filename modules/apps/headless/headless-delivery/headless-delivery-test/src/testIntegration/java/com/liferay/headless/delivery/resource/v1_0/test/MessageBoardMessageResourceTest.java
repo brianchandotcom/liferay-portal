@@ -55,6 +55,18 @@ public class MessageBoardMessageResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testGetMessageBoardMessageMessageBoardMessagesPageWithSortInteger() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetMessageBoardThreadMessageBoardMessagesPageWithSortInteger() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLDeleteMessageBoardMessage() {
 	}
 

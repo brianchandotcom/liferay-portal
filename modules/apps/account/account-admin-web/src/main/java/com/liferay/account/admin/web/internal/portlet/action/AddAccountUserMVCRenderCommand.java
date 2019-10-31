@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class AddAccountUsersMVCRenderCommand implements MVCRenderCommand {
+public class AddAccountUserMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

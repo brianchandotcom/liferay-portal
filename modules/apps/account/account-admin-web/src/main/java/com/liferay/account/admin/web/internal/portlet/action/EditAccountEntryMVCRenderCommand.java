@@ -33,11 +33,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + AccountsPortletKeys.ACCOUNTS_ADMIN,
-		"mvc.command.name=/account_admin/edit_account"
+		"mvc.command.name=/account_admin/edit_account_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditAccountMVCRenderCommand implements MVCRenderCommand {
+public class EditAccountEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -50,7 +50,7 @@ public class EditAccountMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			AccountWebKeys.ACCOUNT_DISPLAY, AccountDisplay.of(accountEntryId));
 
-		return "/edit_account.jsp";
+		return "/edit_account_entry.jsp";
 	}
 
 }

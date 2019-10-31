@@ -47,11 +47,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + AccountsPortletKeys.ACCOUNTS_ADMIN,
-		"mvc.command.name=/account_admin/edit_account"
+		"mvc.command.name=/account_admin/edit_account_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
+public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	protected AccountEntry addAccountEntry(ActionRequest actionRequest)
 		throws Exception {
@@ -97,7 +97,7 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception e) {
-			String mvcPath = "/edit_account.jsp";
+			String mvcPath = "/edit_account_entry.jsp";
 
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());

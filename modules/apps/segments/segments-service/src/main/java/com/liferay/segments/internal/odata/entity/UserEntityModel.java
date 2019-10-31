@@ -39,8 +39,7 @@ public class UserEntityModel implements EntityModel {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new ComplexEntityField("customField", customEntityFields),
 			new DateEntityField(
-				"birthDate",
-				locale -> Field.getSortableFieldName("birthDate"),
+				"birthDate", locale -> Field.getSortableFieldName("birthDate"),
 				locale -> "birthDate"),
 			new DateTimeEntityField(
 				"dateModified",

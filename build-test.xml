@@ -9848,14 +9848,46 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						<then>
 							<get-database-property property.name="database.username" />
 
-							<retry retrycount="3" retrydelay="60000">
-								<exec executable="${postgresql.executable}" failonerror="true">
-									<arg value="-f" />
-									<arg value="create.sql" />
-									<arg value="-U" />
-									<arg value="${database.username}" />
-								</exec>
-							</retry>
+							<if>
+								<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+								<then>
+									<get-database-property property.name="database.password" />
+									<get-database-property property.name="database.host" />
+
+									<property location="create.sh" name="create.sh.file.path" />
+
+									<echo file="${create.sh.file.path}">
+										<![CDATA[
+											#!/bin/bash
+
+											export PGPASSWORD=${database.password}
+
+											psql --file=/tmp/create.sql --username=${database.username}
+										]]>
+									</echo>
+
+									<property location="create.sql" name="create.sql.file.path" />
+
+									<execute>
+										<![CDATA[
+											docker cp ${create.sh.file.path} ${database.host}:/tmp/create.sh
+											docker cp ${create.sql.file.path} ${database.host}:/tmp/create.sql
+
+											docker exec ${database.host} /bin/bash /tmp/create.sh
+										]]>
+									</execute>
+								</then>
+								<else>
+									<retry retrycount="3" retrydelay="60000">
+										<exec executable="${postgresql.executable}" failonerror="true">
+											<arg value="-f" />
+											<arg value="create.sql" />
+											<arg value="-U" />
+											<arg value="${database.username}" />
+										</exec>
+									</retry>
+								</else>
+							</if>
 						</then>
 					</elseif>
 					<elseif>
@@ -10217,11 +10249,50 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<get-database-property property.name="database.schema" />
 					<get-database-property property.name="database.username" />
 
-					<exec executable="${postgresql.executable}" failonerror="true">
-						<arg value="--dbname=${database.schema}" />
-						<arg value="--file=${liferay.home}/${database.type}.sql" />
-						<arg value="--username=${database.username}" />
-					</exec>
+					<if>
+						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+						<then>
+							<antcall target="rebuild-database">
+								<param name="database.type" value="${database.type}" />
+								<param name="sql.dir" value="sql/create-bare/" />
+								<param name="sql.file" value="create-bare-${database.type}.sql" />
+							</antcall>
+
+							<get-database-property property.name="database.password" />
+
+							<property location="postgresql.sh" name="postgresql.sh.file.path" />
+
+							<echo file="${postgresql.sh.file.path}">
+								<![CDATA[
+									#!/bin/bash
+
+									export PGPASSWORD=${database.password}
+
+									psql --dbname=${database.schema} --file=/tmp/postgresql.sql --username=${database.username}
+								]]>
+							</echo>
+
+							<get-database-property property.name="database.host" />
+
+							<property location="${liferay.home}/postgresql.sql" name="postgresql.sql.file.path" />
+
+							<execute failonerror="false">
+								<![CDATA[
+									docker cp ${postgresql.sh.file.path} ${database.host}:/tmp/postgresql.sh
+									docker cp ${postgresql.sql.file.path} ${database.host}:/tmp/postgresql.sql
+
+									docker exec ${database.host} /bin/bash /tmp/postgresql.sh
+								]]>
+							</execute>
+						</then>
+						<else>
+							<exec executable="${postgresql.executable}" failonerror="true">
+								<arg value="--dbname=${database.schema}" />
+								<arg value="--file=${liferay.home}/${database.type}.sql" />
+								<arg value="--username=${database.username}" />
+							</exec>
+						</else>
+					</if>
 				</then>
 			</elseif>
 			<elseif>

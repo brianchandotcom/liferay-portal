@@ -48,7 +48,7 @@ ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplay
 				%>
 
 				<portlet:renderURL var="rowURL">
-					<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account" />
+					<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_entry" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />
 					<portlet:param name="accountEntryId" value="<%= String.valueOf(accountDisplay.getAccountId()) %>" />
 				</portlet:renderURL>
@@ -91,7 +91,7 @@ ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplay
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-jsp
-					path="/account_action.jsp"
+					path="/account_entry_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

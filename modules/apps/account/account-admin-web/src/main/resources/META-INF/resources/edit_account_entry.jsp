@@ -22,7 +22,7 @@ AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebK
 PortletURL portletURL = renderResponse.createRenderURL();
 
 if (accountDisplay != null) {
-	portletURL.setParameter("mvcRenderCommandName", "/account_admin/edit_account");
+	portletURL.setParameter("mvcRenderCommandName", "/account_admin/edit_account_entry");
 	portletURL.setParameter("accountEntryId", String.valueOf(accountDisplay.getAccountId()));
 }
 %>

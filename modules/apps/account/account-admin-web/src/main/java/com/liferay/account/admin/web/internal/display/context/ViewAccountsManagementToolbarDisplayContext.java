@@ -79,7 +79,7 @@ public class ViewAccountsManagementToolbarDisplayContext
 
 				deactivateAccountsURL.setParameter(
 					ActionRequest.ACTION_NAME,
-					"/account_admin/update_account_status");
+					"/account_admin/update_account_entry_status");
 				deactivateAccountsURL.setParameter(
 					Constants.CMD, Constants.DEACTIVATE);
 				deactivateAccountsURL.setParameter(
@@ -108,7 +108,7 @@ public class ViewAccountsManagementToolbarDisplayContext
 
 				activateAccountsURL.setParameter(
 					ActionRequest.ACTION_NAME,
-					"/account_admin/update_account_status");
+					"/account_admin/update_account_entry_status");
 				activateAccountsURL.setParameter(
 					Constants.CMD, Constants.RESTORE);
 				activateAccountsURL.setParameter("navigation", getNavigation());
@@ -131,7 +131,8 @@ public class ViewAccountsManagementToolbarDisplayContext
 					liferayPortletResponse.createActionURL();
 
 				deleteAccountsURL.setParameter(
-					ActionRequest.ACTION_NAME, "/account_admin/delete_account");
+					ActionRequest.ACTION_NAME,
+					"/account_admin/delete_account_entry");
 				deleteAccountsURL.setParameter("navigation", getNavigation());
 
 				dropdownItem.putData(
@@ -195,7 +196,7 @@ public class ViewAccountsManagementToolbarDisplayContext
 						dropdownItem.setHref(
 							liferayPortletResponse.createRenderURL(),
 							"mvcRenderCommandName",
-							"/account_admin/edit_account", "backURL",
+							"/account_admin/edit_account_entry", "backURL",
 							currentURLObj.toString());
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "add-account"));

@@ -35,7 +35,7 @@ long accountEntryId = accountDisplay.getAccountId();
 >
 	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editAccountURL">
-			<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account" />
+			<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_entry" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryId) %>" />
 		</portlet:renderURL>
@@ -48,7 +48,7 @@ long accountEntryId = accountDisplay.getAccountId();
 
 	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.MANAGE_USERS) %>">
 		<portlet:renderURL var="manageUsersURL">
-			<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account" />
+			<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_entry" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryId) %>" />
 			<portlet:param name="screenNavigationCategoryKey" value="<%= AccountScreenNavigationEntryConstants.CATEGORY_KEY_USERS %>" />
@@ -62,7 +62,7 @@ long accountEntryId = accountDisplay.getAccountId();
 
 	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.DELETE) %>">
 		<c:if test='<%= Objects.equals(accountDisplay.getStatusLabel(), "active") %>'>
-			<portlet:actionURL name="/account_admin/update_account_status" var="deactivateAccountURL">
+			<portlet:actionURL name="/account_admin/update_account_entry_status" var="deactivateAccountURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DEACTIVATE %>" />
 				<portlet:param name="navigation" value="<%= navigation %>" />
 				<portlet:param name="accountEntryIds" value="<%= String.valueOf(accountEntryId) %>" />
@@ -74,7 +74,7 @@ long accountEntryId = accountDisplay.getAccountId();
 		</c:if>
 
 		<c:if test='<%= Objects.equals(accountDisplay.getStatusLabel(), "inactive") %>'>
-			<portlet:actionURL name="/account_admin/update_account_status" var="activateAccountURL">
+			<portlet:actionURL name="/account_admin/update_account_entry_status" var="activateAccountURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 				<portlet:param name="navigation" value="<%= navigation %>" />
 				<portlet:param name="accountEntryIds" value="<%= String.valueOf(accountEntryId) %>" />
@@ -86,7 +86,7 @@ long accountEntryId = accountDisplay.getAccountId();
 			/>
 		</c:if>
 
-		<portlet:actionURL name="/account_admin/delete_account" var="deleteAccountURL">
+		<portlet:actionURL name="/account_admin/delete_account_entry" var="deleteAccountURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="accountEntryIds" value="<%= String.valueOf(accountEntryId) %>" />
 		</portlet:actionURL>

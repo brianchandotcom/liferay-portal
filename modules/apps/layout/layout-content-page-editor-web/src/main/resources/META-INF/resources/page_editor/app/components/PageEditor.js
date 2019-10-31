@@ -74,9 +74,7 @@ function Container({children, item}) {
 	return (
 		<div
 			className={classNames(`py-${paddingVertical}`, {
-				[`bg-${backgroundColorCssClass}`]: Boolean(
-					backgroundColorCssClass
-				),
+				[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
 				container: type === 'fixed',
 				'container-fluid': type === 'fluid',
 				[`px-${paddingHorizontal}`]: paddingHorizontal !== 3

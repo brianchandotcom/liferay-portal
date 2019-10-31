@@ -14,9 +14,15 @@
 
 package com.liferay.depot.service.http;
 
+import com.liferay.depot.service.DepotEntryGroupRelServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.depot.service.DepotEntryGroupRelServiceUtil</code> service
+ * <code>DepotEntryGroupRelServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -54,4 +60,28 @@ package com.liferay.depot.service.http;
  * @generated
  */
 public class DepotEntryGroupRelServiceSoap {
+
+	public static com.liferay.depot.model.DepotEntryGroupRelSoap[]
+			getDepotEntryGroupRels(long groupId)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
+				returnValue =
+					DepotEntryGroupRelServiceUtil.getDepotEntryGroupRels(
+						groupId);
+
+			return com.liferay.depot.model.DepotEntryGroupRelSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DepotEntryGroupRelServiceSoap.class);
+
 }

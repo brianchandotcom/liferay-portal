@@ -1,6 +1,5 @@
 Bundle-Name: Liferay Portal Workflow Kaleo Forms Web
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.forms.web
 Bundle-Version: 4.0.0
-Export-Package: com.liferay.portal.workflow.kaleo.forms.web.constants
 Web-ContextPath: /portal-workflow-kaleo-forms-web
 -dsannotations-options: inherit

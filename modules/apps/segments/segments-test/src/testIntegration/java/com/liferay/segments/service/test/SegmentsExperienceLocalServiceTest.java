@@ -377,11 +377,6 @@ public class SegmentsExperienceLocalServiceTest {
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), _classNameId, _classPK);
 
-		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId());
-		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
-		boolean active = RandomTestUtil.randomBoolean();
-
 		SegmentsExperiment segmentsExperiment =
 			SegmentsTestUtil.addSegmentsExperiment(
 				_group.getGroupId(),
@@ -392,9 +387,14 @@ public class SegmentsExperienceLocalServiceTest {
 			segmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_RUNNING);
 
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
 		_segmentsExperienceLocalService.updateSegmentsExperience(
 			segmentsExperience.getSegmentsExperienceId(),
-			segmentsEntry.getSegmentsEntryId(), nameMap, active);
+			segmentsEntry.getSegmentsEntryId(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomBoolean());
 	}
 
 	private long _classNameId;

@@ -55,14 +55,12 @@ class FragmentsEditorToolbar extends Component {
 		return nextState;
 	}
 
-	syncLayoutData(layoutData) {
-		const hasBeenSaved =
-			typeof this.lastSaveDate === 'string' && this.lastSaveDate !== '';
-
+	syncLastSaveDate() {
 		this._publishButtonEnabled =
 			this._online &&
-			hasBeenSaved &&
-			(this.pageType !== PAGE_TYPES.master || layoutData.hasDropZone);
+			Boolean(this.lastSaveDate) &&
+			(this.pageType !== PAGE_TYPES.master ||
+				this.layoutData.hasDropZone);
 	}
 
 	/**

@@ -69,7 +69,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 				removeUsersURL.setParameter(
 					ActionRequest.ACTION_NAME,
-					"/account_admin/remove_account_users");
+					"/account_admin/remove_account_entry_users");
 				removeUsersURL.setParameter(
 					"redirect", currentURLObj.toString());
 
@@ -102,7 +102,8 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 						dropdownItem.setHref(
 							liferayPortletResponse.createRenderURL(),
 							"mvcRenderCommandName",
-							"/account_admin/add_account_user", "accountEntryId",
+							"/account_admin/add_account_entry_user",
+							"accountEntryId",
 							ParamUtil.getLong(
 								liferayPortletRequest, "accountEntryId"));
 						dropdownItem.setLabel(

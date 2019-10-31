@@ -203,7 +203,7 @@ public class ViewUsersManagementToolbarDisplayContext
 							liferayPortletResponse.createRenderURL();
 
 						accountSelectorURL.setParameter(
-							"mvcPath", "/select_accounts.jsp");
+							"mvcPath", "/select_account_entries.jsp");
 						accountSelectorURL.setParameter(
 							"accountNavigation", "accounts");
 						accountSelectorURL.setWindowState(

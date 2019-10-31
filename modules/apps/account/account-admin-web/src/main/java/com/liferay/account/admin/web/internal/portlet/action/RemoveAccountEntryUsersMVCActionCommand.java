@@ -15,11 +15,13 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountsPortletKeys;
-import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.exception.NoSuchEntryUserRelException;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -34,31 +36,47 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + AccountsPortletKeys.ACCOUNTS_ADMIN,
-		"mvc.command.name=/account_admin/update_account_status"
+		"mvc.command.name=/account_admin/remove_account_entry_users"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateAccountStatusMVCActionCommand extends BaseMVCActionCommand {
+public class RemoveAccountEntryUsersMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		try {
+			long accountEntryId = ParamUtil.getLong(
+				actionRequest, "accountEntryId");
+			long[] accountUserIds = ParamUtil.getLongValues(
+				actionRequest, "accountUserIds");
 
-		long[] accountEntryIds = ParamUtil.getLongValues(
-			actionRequest, "accountEntryIds");
+			_accountEntryUserRelLocalService.deleteAccountEntryUserRels(
+				accountEntryId, accountUserIds);
 
-		if (cmd.equals(Constants.DEACTIVATE)) {
-			_accountEntryLocalService.deactivateAccountEntries(accountEntryIds);
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
 		}
-		else if (cmd.equals(Constants.RESTORE)) {
-			_accountEntryLocalService.activateAccountEntries(accountEntryIds);
+		catch (Exception e) {
+			if (e instanceof NoSuchEntryUserRelException) {
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else {
+				throw e;
+			}
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/view_account_entry_users.jsp");
 		}
 	}
 
 	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 }

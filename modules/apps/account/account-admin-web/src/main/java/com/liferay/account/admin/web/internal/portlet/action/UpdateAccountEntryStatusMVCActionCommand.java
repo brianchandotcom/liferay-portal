@@ -15,13 +15,11 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountsPortletKeys;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -36,39 +34,32 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + AccountsPortletKeys.ACCOUNTS_ADMIN,
-		"mvc.command.name=/account_admin/add_account_user"
+		"mvc.command.name=/account_admin/update_account_entry_status"
 	},
 	service = MVCActionCommand.class
 )
-public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
+public class UpdateAccountEntryStatusMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		long accountEntryId = ParamUtil.getLong(
-			actionRequest, "accountEntryId");
-		String screenName = ParamUtil.getString(actionRequest, "screenName");
-		String emailAddress = ParamUtil.getString(
-			actionRequest, "emailAddress");
-		String languageId = ParamUtil.getString(actionRequest, "languageId");
-		String firstName = ParamUtil.getString(actionRequest, "firstName");
-		String middleName = ParamUtil.getString(actionRequest, "middleName");
-		String lastName = ParamUtil.getString(actionRequest, "lastName");
-		long prefixId = ParamUtil.getLong(actionRequest, "prefixId");
-		long suffixId = ParamUtil.getLong(actionRequest, "suffixId");
+		long[] accountEntryIds = ParamUtil.getLongValues(
+			actionRequest, "accountEntryIds");
 
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntryId, themeDisplay.getUserId(), screenName, emailAddress,
-			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
-			lastName, prefixId, suffixId);
+		if (cmd.equals(Constants.DEACTIVATE)) {
+			_accountEntryLocalService.deactivateAccountEntries(accountEntryIds);
+		}
+		else if (cmd.equals(Constants.RESTORE)) {
+			_accountEntryLocalService.activateAccountEntries(accountEntryIds);
+		}
 	}
 
 	@Reference
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 }

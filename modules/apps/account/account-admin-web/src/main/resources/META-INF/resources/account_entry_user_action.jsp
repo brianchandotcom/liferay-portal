@@ -30,7 +30,7 @@ AccountUserDisplay accountUserDisplay = (AccountUserDisplay)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<portlet:actionURL name="/account_admin/remove_account_users" var="removeAccountUsersURL">
+	<portlet:actionURL name="/account_admin/remove_account_entry_users" var="removeAccountUsersURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="accountEntryId" value="<%= String.valueOf(accountDisplay.getAccountId()) %>" />
 		<portlet:param name="accountUserIds" value="<%= String.valueOf(accountUserDisplay.getUserId()) %>" />

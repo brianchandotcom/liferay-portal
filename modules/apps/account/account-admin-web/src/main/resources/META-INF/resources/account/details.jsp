@@ -27,7 +27,7 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle((accountDisplay == null) ? LanguageUtil.get(request, "add-account") : LanguageUtil.format(request, "edit-x", accountDisplay.getName(), false));
 %>
 
-<portlet:actionURL name="/account_admin/edit_account" var="editAccountURL" />
+<portlet:actionURL name="/account_admin/edit_account_entry" var="editAccountURL" />
 
 <liferay-frontend:edit-form
 	action="<%= editAccountURL %>"

@@ -15,13 +15,13 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountsPortletKeys;
-import com.liferay.account.exception.NoSuchEntryUserRelException;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -36,43 +36,36 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + AccountsPortletKeys.ACCOUNTS_ADMIN,
-		"mvc.command.name=/account_admin/remove_account_users"
+		"mvc.command.name=/account_admin/add_account_entry_user"
 	},
 	service = MVCActionCommand.class
 )
-public class RemoveAccountUsersMVCActionCommand extends BaseMVCActionCommand {
+public class AddAccountEntryUserMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		try {
-			long accountEntryId = ParamUtil.getLong(
-				actionRequest, "accountEntryId");
-			long[] accountUserIds = ParamUtil.getLongValues(
-				actionRequest, "accountUserIds");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			_accountEntryUserRelLocalService.deleteAccountEntryUserRels(
-				accountEntryId, accountUserIds);
+		long accountEntryId = ParamUtil.getLong(
+			actionRequest, "accountEntryId");
+		String screenName = ParamUtil.getString(actionRequest, "screenName");
+		String emailAddress = ParamUtil.getString(
+			actionRequest, "emailAddress");
+		String languageId = ParamUtil.getString(actionRequest, "languageId");
+		String firstName = ParamUtil.getString(actionRequest, "firstName");
+		String middleName = ParamUtil.getString(actionRequest, "middleName");
+		String lastName = ParamUtil.getString(actionRequest, "lastName");
+		long prefixId = ParamUtil.getLong(actionRequest, "prefixId");
+		long suffixId = ParamUtil.getLong(actionRequest, "suffixId");
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			if (Validator.isNotNull(redirect)) {
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchEntryUserRelException) {
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
-
-			actionResponse.setRenderParameter(
-				"mvcPath", "/view_account_users.jsp");
-		}
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntryId, themeDisplay.getUserId(), screenName, emailAddress,
+			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
+			lastName, prefixId, suffixId);
 	}
 
 	@Reference

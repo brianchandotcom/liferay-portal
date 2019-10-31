@@ -71,7 +71,7 @@ renderResponse.setTitle((accountDisplay == null) ? "" : accountDisplay.getName()
 				/>
 
 				<liferay-ui:search-container-column-jsp
-					path="/account_user_action.jsp"
+					path="/account_entry_user_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

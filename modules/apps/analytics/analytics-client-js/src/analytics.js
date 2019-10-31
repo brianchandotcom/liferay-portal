@@ -127,9 +127,11 @@ class Analytics {
 			clearInterval(this.flushInterval);
 		}
 
-		instance._pluginDisposers
-			.filter(disposer => typeof disposer === 'function')
-			.forEach(disposer => disposer());
+		if (instance._pluginDisposers) {
+			instance._pluginDisposers
+				.filter(disposer => typeof disposer === 'function')
+				.forEach(disposer => disposer());
+		}
 	}
 
 	_ensureIntegrity() {

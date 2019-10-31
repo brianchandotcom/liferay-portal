@@ -24,8 +24,7 @@ import com.liferay.talend.runtime.client.RESTClient;
 import com.liferay.talend.runtime.client.ResponseHandler;
 import com.liferay.talend.runtime.client.exception.ResponseContentClientException;
 
-import java.io.IOException;
-
+import java.util.Collections;
 import java.util.List;
 
 import javax.json.JsonObject;
@@ -160,15 +159,11 @@ public class LiferaySourceOrSink
 		return liferayConnectionProperties;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
 	@Override
 	public Schema getEndpointSchema(
 		RuntimeContainer runtimeContainer, String endpoint) {
 
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 	@Override
@@ -202,15 +197,9 @@ public class LiferaySourceOrSink
 			getEffectiveConnection(runtimeContainer), resourceURL);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
 	@Override
-	public List<NamedThing> getSchemaNames(RuntimeContainer runtimeContainer)
-		throws IOException {
-
-		throw new UnsupportedOperationException();
+	public List<NamedThing> getSchemaNames(RuntimeContainer runtimeContainer) {
+		return Collections.emptyList();
 	}
 
 	@Override

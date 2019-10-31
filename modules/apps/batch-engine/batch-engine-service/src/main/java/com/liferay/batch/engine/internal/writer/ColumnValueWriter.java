@@ -30,8 +30,8 @@ import java.util.function.Consumer;
 public class ColumnValueWriter {
 
 	public void write(
-			Object item, Map<String, Field> fieldMap, List<String> fieldNames,
-			Consumer<Collection<?>> consumer)
+			Consumer<Collection<?>> consumer, Map<String, Field> fieldMap,
+			List<String> fieldNames, Object item)
 		throws IllegalAccessException {
 
 		Map<String, Object> columnNameValueMap = _getColumnNameValueMap(

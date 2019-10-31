@@ -97,12 +97,23 @@ public class GetPersonalMenuItemsMVCResourceCommand
 		String realUserURL = _http.removeParameter(
 			ParamUtil.getString(portletRequest, "currentURL"), "doAsUserId");
 
-		realUserURL = StringUtil.replace(
-			realUserURL, _http.getPath(user.getDisplayURL(themeDisplay, false)),
-			_http.getPath(realUser.getDisplayURL(themeDisplay, false)));
-		realUserURL = StringUtil.replace(
-			realUserURL, _http.getPath(user.getDisplayURL(themeDisplay, true)),
-			_http.getPath(realUser.getDisplayURL(themeDisplay, true)));
+		String userProfileURL = _http.getPath(
+			user.getDisplayURL(themeDisplay, false));
+
+		if (realUserURL.startsWith(userProfileURL)) {
+			realUserURL = StringUtil.replace(
+				realUserURL, userProfileURL,
+				_http.getPath(realUser.getDisplayURL(themeDisplay, false)));
+		}
+
+		String userDashboardURL = _http.getPath(
+			user.getDisplayURL(themeDisplay, true));
+
+		if (realUserURL.startsWith(userDashboardURL)) {
+			realUserURL = StringUtil.replace(
+				realUserURL, userDashboardURL,
+				_http.getPath(realUser.getDisplayURL(themeDisplay, true)));
+		}
 
 		JSONObject jsonObject1 = JSONUtil.put(
 			"href", realUserURL

@@ -172,8 +172,6 @@ public class LiferayWriter
 
 		if (Action.Delete == action) {
 			doDelete(indexedRecord);
-
-			_handleSuccessRecord(indexedRecord);
 		}
 		else if (Action.Insert == action) {
 			doInsert(indexedRecord);

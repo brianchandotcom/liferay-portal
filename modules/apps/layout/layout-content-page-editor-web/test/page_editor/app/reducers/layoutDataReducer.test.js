@@ -29,6 +29,7 @@ describe('layoutDataReducer', () => {
 						children: [],
 						config: {},
 						itemId: 'example-fragment-0',
+						parentId: 'root-item-0',
 						type: LAYOUT_DATA_ITEM_TYPES.fragment
 					},
 
@@ -36,6 +37,7 @@ describe('layoutDataReducer', () => {
 						children: ['example-fragment-0'],
 						config: {},
 						itemId: 'root-item-0',
+						parentId: null,
 						type: LAYOUT_DATA_ITEM_TYPES.root
 					}
 				}
@@ -58,6 +60,7 @@ describe('layoutDataReducer', () => {
 				children: [],
 				config: LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.container,
 				itemId: 'new-container',
+				parentId: 'root-item-0',
 				type: LAYOUT_DATA_ITEM_TYPES.container
 			});
 
@@ -88,6 +91,7 @@ describe('layoutDataReducer', () => {
 					gutters: false
 				},
 				itemId: 'new-row',
+				parentId: 'root-item-0',
 				type: LAYOUT_DATA_ITEM_TYPES.row
 			});
 		});
@@ -173,6 +177,7 @@ describe('layoutDataReducer', () => {
 					children: [],
 					config: {},
 					itemId: 'root-item-0',
+					parentId: null,
 					type: LAYOUT_DATA_ITEM_TYPES.root
 				}
 			});

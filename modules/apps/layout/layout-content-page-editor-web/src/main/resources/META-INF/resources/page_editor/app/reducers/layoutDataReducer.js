@@ -47,6 +47,7 @@ function addItemReducer(items, action) {
 				...config
 			},
 			itemId,
+			parentId,
 			type: itemType
 		},
 
@@ -63,22 +64,24 @@ function addItemReducer(items, action) {
 
 function removeItemReducer(items, action) {
 	const {itemId} = action;
-
 	let newItems = items;
 
 	if (itemId in items) {
-		const parentItem = Object.values(items).find(item =>
-			item.children.includes(itemId)
-		);
+		const item = items[itemId];
+		const parentItem = items[item.parentId];
 
-		newItems = {
-			...newItems,
+		if (parentItem) {
+			newItems = {
+				...newItems,
 
-			[parentItem.itemId]: {
-				...parentItem,
-				children: parentItem.children.filter(id => id !== itemId)
-			}
-		};
+				[parentItem.itemId]: {
+					...parentItem,
+					children: parentItem.children.filter(id => id !== itemId)
+				}
+			};
+		} else {
+			newItems = {...newItems};
+		}
 
 		delete newItems[itemId];
 	}

@@ -73,6 +73,7 @@ function transformServerData(data) {
 					children: [],
 					config: {...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.root},
 					itemId: 'main',
+					parentId: null,
 					type: LAYOUT_DATA_ITEM_TYPES.root
 				}
 			},

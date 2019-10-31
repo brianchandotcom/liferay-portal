@@ -112,10 +112,7 @@ function Root({children}) {
 
 function Row({children, item}) {
 	const {layoutData} = useContext(StoreContext);
-
-	const parent = Object.values(layoutData.items).find(parent =>
-		parent.children.includes(item.itemId)
-	);
+	const parent = layoutData.items[item.parentId];
 
 	const rowContent = (
 		<div
@@ -130,7 +127,7 @@ function Row({children, item}) {
 		</div>
 	);
 
-	return parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
+	return !parent || parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
 		<div className="container-fluid p-0">{rowContent}</div>
 	) : (
 		rowContent

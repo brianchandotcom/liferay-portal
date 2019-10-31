@@ -15,9 +15,6 @@
 import {TYPES} from '../actions/index';
 import {LAYOUT_DATA_ALLOWED_PARENT_TYPES} from '../config/constants/layoutDataAllowedParentTypes';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
-import deleteIn from './deleteIn';
-import setIn from './setIn';
-import updateIn from './updateIn';
 
 function addItemReducer(items, action) {
 	const {config, itemId, itemType, parentId} = action;
@@ -38,7 +35,9 @@ function addItemReducer(items, action) {
 		);
 	}
 
-	let newItems = {
+	const {position = parentItem.children.length} = action;
+
+	return {
 		...items,
 
 		[itemId]: {
@@ -49,23 +48,17 @@ function addItemReducer(items, action) {
 			},
 			itemId,
 			type: itemType
+		},
+
+		[parentId]: {
+			...parentItem,
+			children: [
+				...parentItem.children.slice(0, position),
+				itemId,
+				...parentItem.children.slice(position)
+			]
 		}
 	};
-
-	const {position = parentItem.children.length} = action;
-
-	newItems = updateIn(
-		newItems,
-		[parentId, 'children'],
-		children => [
-			...children.slice(0, position),
-			itemId,
-			...children.slice(position)
-		],
-		[]
-	);
-
-	return newItems;
 }
 
 function removeItemReducer(items, action) {
@@ -73,18 +66,21 @@ function removeItemReducer(items, action) {
 
 	let newItems = items;
 
-	if (items[itemId]) {
+	if (itemId in items) {
 		const parentItem = Object.values(items).find(item =>
 			item.children.includes(itemId)
 		);
 
-		newItems = deleteIn(items, [itemId]);
+		newItems = {
+			...newItems,
 
-		newItems = deleteIn(newItems, [
-			parentItem.itemId,
-			'children',
-			parentItem.children.indexOf(itemId)
-		]);
+			[parentItem.itemId]: {
+				...parentItem,
+				children: parentItem.children.filter(id => id !== itemId)
+			}
+		};
+
+		delete newItems[itemId];
 	}
 
 	return newItems;
@@ -95,20 +91,24 @@ export default function layoutDataReducer(state, action) {
 
 	switch (action.type) {
 		case TYPES.ADD_ITEM:
-			nextState = setIn(
-				state,
-				['layoutData', 'items'],
-				addItemReducer(state.layoutData.items, action)
-			);
+			nextState = {
+				...state,
+				layoutData: {
+					...state.layoutData,
+					items: addItemReducer(state.layoutData.items, action)
+				}
+			};
 
 			break;
 
 		case TYPES.REMOVE_ITEM:
-			nextState = setIn(
-				state,
-				['layoutData', 'items'],
-				removeItemReducer(state.layoutData.items, action)
-			);
+			nextState = {
+				...state,
+				layoutData: {
+					...state.layoutData,
+					items: removeItemReducer(state.layoutData.items, action)
+				}
+			};
 
 			break;
 

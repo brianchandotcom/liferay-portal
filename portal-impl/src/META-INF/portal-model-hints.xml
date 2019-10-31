@@ -1609,6 +1609,8 @@
 	<model name="com.liferay.ratings.kernel.model.RatingsStats">
 		<field name="statsId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="totalEntries" type="int" />

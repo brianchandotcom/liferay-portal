@@ -47,6 +47,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(
 			new Version(6, 0, 5),
 			new UpgradeCTModel(ResourcePermissionTable.class));
+
+		upgradeProcesses.put(new Version(7, 0, 0), new UpgradeRatingsStats());
 	}
 
 }

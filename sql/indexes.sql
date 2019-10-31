@@ -291,6 +291,8 @@ create unique index IX_B47E3C11 on RatingsEntry (userId, classNameId, classPK);
 create index IX_9F242DF6 on RatingsEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create unique index IX_A6E99284 on RatingsStats (classNameId, classPK);
+create index IX_5EC6007D on RatingsStats (classNameId, createDate);
+create index IX_11A5584A on RatingsStats (classNameId, modifiedDate);
 
 create index IX_B91F79BD on RecentLayoutBranch (groupId);
 create index IX_351E86E8 on RecentLayoutBranch (layoutBranchId);

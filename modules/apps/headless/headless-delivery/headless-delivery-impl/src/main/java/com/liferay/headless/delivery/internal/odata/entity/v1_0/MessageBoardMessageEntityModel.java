@@ -55,6 +55,9 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new IntegerEntityField(
 				"messageBoardSectionId", locale -> Field.CATEGORY_ID),
+			new IntegerEntityField(
+				"ratingValue",
+				locale -> Field.getSortableFieldName("totalScore")),
 			new StringEntityField(
 				"headline",
 				locale -> Field.getSortableFieldName(

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
+import java.util.Date;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -84,6 +86,34 @@ public interface RatingsStatsModel
 	 */
 	@Override
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the create date of this ratings stats.
+	 *
+	 * @return the create date of this ratings stats
+	 */
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this ratings stats.
+	 *
+	 * @param createDate the create date of this ratings stats
+	 */
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this ratings stats.
+	 *
+	 * @return the modified date of this ratings stats
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this ratings stats.
+	 *
+	 * @param modifiedDate the modified date of this ratings stats
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the fully qualified class name of this ratings stats.

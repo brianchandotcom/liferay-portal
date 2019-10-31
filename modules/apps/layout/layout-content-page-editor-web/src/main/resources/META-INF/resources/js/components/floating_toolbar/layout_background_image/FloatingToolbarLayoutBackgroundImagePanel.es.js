@@ -148,7 +148,7 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 			const mappedInfoItem = nextState.mappedInfoItems.find(
 				infoItem =>
 					nextState._selectedInfoItem.classNameId ===
-					infoItem.classNameId &&
+						infoItem.classNameId &&
 					nextState._selectedInfoItem.classPK === infoItem.classPK
 			);
 
@@ -487,9 +487,9 @@ FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	_selectedInfoItem: Config.object()
-		.internal()
-		.value({}),
+	_selectedImageSourceTypeId: Config.oneOf(
+		Object.values(IMAGE_SOURCE_TYPE_IDS)
+	).internal(),
 
 	/**
 	 * @default undefined
@@ -497,9 +497,9 @@ FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	_selectedImageSourceTypeId: Config.oneOf(
-		Object.values(IMAGE_SOURCE_TYPE_IDS)
-	).internal(),
+	_selectedInfoItem: Config.object()
+		.internal()
+		.value({}),
 
 	/**
 	 * @default undefined

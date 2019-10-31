@@ -58,8 +58,7 @@ function deepClone(objectToClone) {
  */
 function editableIsMapped(editableValues) {
 	return Boolean(
-		editableValues.mappedField ||
-			editableIsMappedToInfoItem(editableValues)
+		editableValues.mappedField || editableIsMappedToInfoItem(editableValues)
 	);
 }
 

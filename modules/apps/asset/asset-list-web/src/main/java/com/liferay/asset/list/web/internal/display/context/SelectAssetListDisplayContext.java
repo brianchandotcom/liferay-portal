@@ -18,10 +18,12 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -67,7 +69,7 @@ public class SelectAssetListDisplayContext {
 		return _orderByType;
 	}
 
-	public SearchContainer getSearchContainer() {
+	public SearchContainer getSearchContainer() throws PortalException {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -97,21 +99,27 @@ public class SelectAssetListDisplayContext {
 
 		if (_isSearch()) {
 			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
-				themeDisplay.getScopeGroupId(), _getKeywords(),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-			assetListEntriesCount =
-				AssetListEntryServiceUtil.getAssetListEntriesCount(
-					themeDisplay.getScopeGroupId(), _getKeywords());
-		}
-		else {
-			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
-				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					themeDisplay.getScopeGroupId()),
+				_getKeywords(), searchContainer.getStart(),
 				searchContainer.getEnd(),
 				searchContainer.getOrderByComparator());
 			assetListEntriesCount =
 				AssetListEntryServiceUtil.getAssetListEntriesCount(
-					themeDisplay.getScopeGroupId());
+					PortalUtil.getCurrentAndAncestorSiteGroupIds(
+						themeDisplay.getScopeGroupId()),
+					_getKeywords());
+		}
+		else {
+			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					themeDisplay.getScopeGroupId()),
+				searchContainer.getStart(), searchContainer.getEnd(),
+				searchContainer.getOrderByComparator());
+			assetListEntriesCount =
+				AssetListEntryServiceUtil.getAssetListEntriesCount(
+					PortalUtil.getCurrentAndAncestorSiteGroupIds(
+						themeDisplay.getScopeGroupId()));
 		}
 
 		searchContainer.setResults(assetListEntries);

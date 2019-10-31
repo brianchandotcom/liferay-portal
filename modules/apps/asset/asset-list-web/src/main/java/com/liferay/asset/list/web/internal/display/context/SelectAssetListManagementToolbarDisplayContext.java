@@ -16,6 +16,7 @@ package com.liferay.asset.list.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
@@ -30,10 +31,11 @@ public class SelectAssetListManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public SelectAssetListManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		SelectAssetListDisplayContext selectAssetListDisplayContext) {
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			HttpServletRequest httpServletRequest,
+			SelectAssetListDisplayContext selectAssetListDisplayContext)
+		throws PortalException {
 
 		super(
 			liferayPortletRequest, liferayPortletResponse, httpServletRequest,

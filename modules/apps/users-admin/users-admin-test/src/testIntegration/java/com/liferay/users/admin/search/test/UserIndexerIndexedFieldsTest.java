@@ -247,6 +247,8 @@ public class UserIndexerIndexedFieldsTest {
 		indexedFieldsFixture.populateDate(
 			Field.MODIFIED_DATE, user.getModifiedDate(), map);
 
+		indexedFieldsFixture.populateDate("birthDate", user.getBirthday(), map);
+
 		indexedFieldsFixture.populateRoleIdFields(
 			user.getCompanyId(), User.class.getName(), user.getUserId(),
 			user.getGroupId(), null, map);

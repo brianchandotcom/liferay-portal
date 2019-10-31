@@ -14,18 +14,15 @@
 
 package com.liferay.journal.web.internal.asset.util;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.model.AssetEntryUsage;
-import com.liferay.asset.util.AssetEntryUsageActionMenuContributor;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.util.LayoutClassedModelUsageActionMenuContributor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -60,27 +57,25 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	immediate = true,
 	property = "model.class.name=com.liferay.journal.model.JournalArticle",
-	service = AssetEntryUsageActionMenuContributor.class
+	service = LayoutClassedModelUsageActionMenuContributor.class
 )
-public class JournalArticleAssetEntryUsageActionMenuContributor
-	implements AssetEntryUsageActionMenuContributor {
+public class JournalArticleLayoutClassedModelUsageActionMenuContributor
+	implements LayoutClassedModelUsageActionMenuContributor {
 
 	@Override
-	public List<DropdownItem> getAssetEntryUsageActionMenu(
-		AssetEntryUsage assetEntryUsage,
+	public List<DropdownItem> getLayoutClassedModelUsageActionMenu(
+		LayoutClassedModelUsage layoutClassedModelUsage,
 		HttpServletRequest httpServletRequest) {
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			assetEntryUsage.getAssetEntryId());
-
 		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
-			assetEntry.getClassPK(), WorkflowConstants.STATUS_ANY, false);
+			layoutClassedModelUsage.getClassPK(), WorkflowConstants.STATUS_ANY,
+			false);
 
 		return new DropdownItemList() {
 			{
 				JournalArticle approvedArticle =
 					_journalArticleLocalService.fetchLatestArticle(
-						assetEntry.getClassPK(),
+						layoutClassedModelUsage.getClassPK(),
 						WorkflowConstants.STATUS_APPROVED);
 
 				ThemeDisplay themeDisplay =
@@ -96,7 +91,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 						dropdownItem -> {
 							dropdownItem.setHref(
 								_getURL(
-									assetEntryUsage,
+									layoutClassedModelUsage,
 									AssetRendererFactory.TYPE_LATEST_APPROVED,
 									httpServletRequest));
 							dropdownItem.setLabel(
@@ -129,7 +124,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 								dropdownItem -> {
 									dropdownItem.setHref(
 										_getURL(
-											assetEntryUsage,
+											layoutClassedModelUsage,
 											AssetRendererFactory.TYPE_LATEST,
 											httpServletRequest));
 									dropdownItem.setLabel(label);
@@ -145,8 +140,8 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 	}
 
 	private String _getURL(
-			AssetEntryUsage assetEntryUsage, int previewAssetEntryType,
-			HttpServletRequest httpServletRequest)
+			LayoutClassedModelUsage layoutClassedModelUsage,
+			int previewInfoItemType, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -155,31 +150,37 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 
 		String layoutURL = null;
 
-		if (assetEntryUsage.getContainerType() == _portal.getClassNameId(
-				FragmentEntryLink.class)) {
+		if (layoutClassedModelUsage.getContainerType() ==
+				_portal.getClassNameId(FragmentEntryLink.class)) {
 
 			Layout layout = _layoutLocalService.fetchLayout(
-				assetEntryUsage.getPlid());
+				layoutClassedModelUsage.getPlid());
 
 			layoutURL = _portal.getLayoutFriendlyURL(layout, themeDisplay);
 
 			layoutURL = _http.setParameter(
-				layoutURL, "previewAssetEntryId",
-				String.valueOf(assetEntryUsage.getAssetEntryId()));
+				layoutURL, "previewInfoItemClassNameId",
+				String.valueOf(layoutClassedModelUsage.getClassNameId()));
 			layoutURL = _http.setParameter(
-				layoutURL, "previewAssetEntryType",
-				String.valueOf(previewAssetEntryType));
+				layoutURL, "previewInfoItemClassPK",
+				String.valueOf(layoutClassedModelUsage.getClassPK()));
+			layoutURL = _http.setParameter(
+				layoutURL, "previewInfoItemType",
+				String.valueOf(previewInfoItemType));
 		}
 		else {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				httpServletRequest, assetEntryUsage.getContainerKey(),
-				assetEntryUsage.getPlid(), PortletRequest.RENDER_PHASE);
+				httpServletRequest, layoutClassedModelUsage.getContainerKey(),
+				layoutClassedModelUsage.getPlid(), PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
-				"previewAssetEntryId",
-				String.valueOf(assetEntryUsage.getAssetEntryId()));
+				"previewInfoItemClassNameId",
+				String.valueOf(layoutClassedModelUsage.getClassNameId()));
 			portletURL.setParameter(
-				"previewAssetEntryType", String.valueOf(previewAssetEntryType));
+				"previewInfoItemClassPK",
+				String.valueOf(layoutClassedModelUsage.getClassPK()));
+			portletURL.setParameter(
+				"previewInfoItemType", String.valueOf(previewInfoItemType));
 
 			layoutURL = portletURL.toString();
 		}
@@ -188,14 +189,11 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 			layoutURL, "p_l_back_url", themeDisplay.getURLCurrent());
 
 		return portletURLString + "#portlet_" +
-			assetEntryUsage.getContainerKey();
+			layoutClassedModelUsage.getContainerKey();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleAssetEntryUsageActionMenuContributor.class);
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
+		JournalArticleLayoutClassedModelUsageActionMenuContributor.class);
 
 	@Reference
 	private Http _http;
@@ -205,10 +203,6 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private Portal _portal;

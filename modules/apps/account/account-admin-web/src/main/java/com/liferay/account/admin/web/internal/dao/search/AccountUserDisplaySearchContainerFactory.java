@@ -68,12 +68,12 @@ public class AccountUserDisplaySearchContainerFactory {
 					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 
-			List<Long> accountEntryIdList = TransformUtil.transform(
+			List<Long> accountEntryIdsList = TransformUtil.transform(
 				accountEntries, AccountEntry::getAccountEntryId);
 
-			accountEntryIdList.add(AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
+			accountEntryIdsList.add(AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
 
-			accountEntryIds = ArrayUtil.toLongArray(accountEntryIdList);
+			accountEntryIds = ArrayUtil.toLongArray(accountEntryIdsList);
 		}
 		else if (accountNavigation.equals("accounts")) {
 			accountEntryIds = ParamUtil.getLongValues(

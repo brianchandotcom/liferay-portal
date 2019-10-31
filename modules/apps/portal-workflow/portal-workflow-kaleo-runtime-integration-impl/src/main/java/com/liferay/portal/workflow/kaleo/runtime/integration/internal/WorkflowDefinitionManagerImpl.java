@@ -208,6 +208,23 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	@Override
+	public int getLatestWorkflowDefinitionCount(long companyId)
+		throws WorkflowException {
+
+		try {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(companyId);
+
+			return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(
+				serviceContext);
+		}
+		catch (Exception e) {
+			throw new WorkflowException(e);
+		}
+	}
+
+	@Override
 	public List<WorkflowDefinition> getLatestWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
@@ -257,6 +274,10 @@ public class WorkflowDefinitionManagerImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public int getWorkflowDefinitionCount(long companyId)
 		throws WorkflowException {
@@ -283,6 +304,10 @@ public class WorkflowDefinitionManagerImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, int start, int end,

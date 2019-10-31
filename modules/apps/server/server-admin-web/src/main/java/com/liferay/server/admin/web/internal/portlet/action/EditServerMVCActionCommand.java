@@ -178,14 +178,14 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		else if (cmd.equals("cacheSingle")) {
 			cacheSingle();
 		}
-		else if (cmd.equals("cleanUpOrphanedPortletPreferencies")) {
-			cleanUpOrphanedPortletPreferencies();
-		}
-		else if (cmd.equals("cleanUpPermissions")) {
+		else if (cmd.equals("cleanUpAddToPagePermissions")) {
 			cleanUpAddToPagePermissions(actionRequest);
 		}
-		else if (cmd.equals("cleanUpPageRevisionPortletPreferences")) {
+		else if (cmd.equals("cleanUpLayoutRevisionPortletPreferences")) {
 			cleanUpLayoutRevisionPortletPreferences();
+		}
+		else if (cmd.equals("cleanUpOrphanedPortletPreferencies")) {
+			cleanUpOrphanedPortletPreferencies();
 		}
 		else if (cmd.startsWith("convertProcess.")) {
 			redirect = convertProcess(actionRequest, actionResponse, cmd);

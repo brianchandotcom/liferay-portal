@@ -127,7 +127,7 @@ definition {
 		else if (isSet(mentioned)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Notifications#NOTIFICATIONS_TITLE",
-				value1 = "${user} mentioned you in a comment in a fragment.");
+				value1 = "${user} mentioned you in a comment in a ${assetType}.");
 		}
 
 		else {

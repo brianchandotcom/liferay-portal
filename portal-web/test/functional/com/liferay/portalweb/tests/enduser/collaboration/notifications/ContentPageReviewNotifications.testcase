@@ -408,6 +408,7 @@ definition {
 		Notifications.gotoNotifications();
 
 		Notifications.viewNewComment(
+			assetType = "fragment",
 			contentBody = "Comment by Test @user2",
 			mentioned = "true",
 			user = "Test Test");

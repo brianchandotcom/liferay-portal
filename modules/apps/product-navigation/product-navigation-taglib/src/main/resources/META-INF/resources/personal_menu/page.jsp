@@ -21,6 +21,7 @@ String namespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
 long color = (long)request.getAttribute("liferay-product-navigation:personal-menu:color");
 boolean expanded = (boolean)request.getAttribute("liferay-product-navigation:personal-menu:expanded");
+boolean label = (boolean)request.getAttribute("liferay-product-navigation:personal-menu:label");
 String size = (String)request.getAttribute("liferay-product-navigation:personal-menu:size");
 
 String userStickerClasses = "sticker";
@@ -55,21 +56,28 @@ if (size != null) {
 </style>
 
 <div class="personal-menu-dropdown" id="<%= namespace + "personal_menu_dropdown" %>">
-	<button aria-expanded="true" aria-haspopup="true" class="btn btn-unstyled dropdown-toggle" id="<%= namespace + "personal_menu_dropdown_toggle" %>" ref="triggerButton" type="button">
-		<span class="<%= userStickerClasses %>">
-			<span class="<%= userStickerClasses + " sticker-circle user-icon-color-" + color %>">
-				<aui:icon image="user" markupView="lexicon" />
-			</span>
-
-			<c:if test="<%= themeDisplay.isImpersonated() %>">
-				<span class='<%= impersonateStickerClasses + " sticker-bottom-right sticker-circle sticker-outside sticker-user-icon" %>' id="impersonate-user-sticker">
-					<span class="sticker-overlay">
-						<aui:icon id="impersonate-user-icon" image="user" markupView="lexicon" />
+	<c:choose>
+		<c:when test="<%= Validator.isNotNull(label) %>">
+			<%= label %>
+		</c:when>
+		<c:otherwise>
+			<button aria-expanded="true" aria-haspopup="true" class="btn btn-unstyled dropdown-toggle" id="<%= namespace + "personal_menu_dropdown_toggle" %>" ref="triggerButton" type="button">
+				<span class="<%= userStickerClasses %>">
+					<span class="<%= userStickerClasses + " sticker-circle user-icon-color-" + color %>">
+						<aui:icon image="user" markupView="lexicon" />
 					</span>
+
+					<c:if test="<%= themeDisplay.isImpersonated() %>">
+						<span class='<%= impersonateStickerClasses + " sticker-bottom-right sticker-circle sticker-outside sticker-user-icon" %>' id="impersonate-user-sticker">
+							<span class="sticker-overlay">
+								<aui:icon id="impersonate-user-icon" image="user" markupView="lexicon" />
+							</span>
+						</span>
+					</c:if>
 				</span>
-			</c:if>
-		</span>
-	</button>
+			</button>
+		</c:otherwise>
+	</c:choose>
 
 	<%
 	ResourceURL resourceURL = PortletURLFactoryUtil.create(request, PersonalMenuPortletKeys.PERSONAL_MENU, PortletRequest.RESOURCE_PHASE);
@@ -83,6 +91,7 @@ if (size != null) {
 	data.put("color", color);
 	data.put("isImpersonated", themeDisplay.isImpersonated());
 	data.put("itemsURL", resourceURL.toString());
+	data.put("label", label);
 	data.put("size", size);
 	%>
 

@@ -385,6 +385,10 @@ class Analytics {
 	 * );
 	 */
 	registerMiddleware(middleware) {
+		if (this._isTrackingDisabled()) {
+			return;
+		}
+
 		if (typeof middleware === 'function') {
 			this.client.use(middleware);
 		}

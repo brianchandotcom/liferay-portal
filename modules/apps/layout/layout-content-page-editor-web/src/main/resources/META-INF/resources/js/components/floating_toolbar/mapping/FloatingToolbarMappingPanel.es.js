@@ -326,12 +326,12 @@ class FloatingToolbarMappingPanel extends PortletBase {
 			promise = this.fetch(this.mappingFieldsURL, data);
 		} else if (
 			this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content &&
-			this._selectedinfoItem.classNameId &&
-			this._selectedinfoItem.classPK
+			this._selectedInfoItem.classNameId &&
+			this._selectedInfoItem.classPK
 		) {
 			promise = this.fetch(this.getAssetMappingFieldsURL, {
-				classNameId: this._selectedinfoItem.classNameId,
-				classPK: this._selectedinfoItem.classPK
+				classNameId: this._selectedInfoItem.classNameId,
+				classPK: this._selectedInfoItem.classPK
 			});
 		}
 

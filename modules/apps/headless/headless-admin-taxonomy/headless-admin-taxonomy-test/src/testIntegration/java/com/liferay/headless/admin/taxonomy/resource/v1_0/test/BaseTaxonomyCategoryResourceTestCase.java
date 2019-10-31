@@ -509,8 +509,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategories(
+			parentTaxonomyCategoryId, taxonomyCategory);
 	}
 
 	protected Long
@@ -545,8 +545,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategories(
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId(),
+			taxonomyCategory);
 	}
 
 	@Test
@@ -1047,8 +1048,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				Long taxonomyVocabularyId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return taxonomyCategoryResource.
+			postTaxonomyVocabularyTaxonomyCategories(
+				taxonomyVocabularyId, taxonomyCategory);
 	}
 
 	protected Long
@@ -1085,8 +1087,10 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return taxonomyCategoryResource.
+			postTaxonomyVocabularyTaxonomyCategories(
+				testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId(),
+				taxonomyCategory);
 	}
 
 	protected TaxonomyCategory testGraphQLTaxonomyCategory_addTaxonomyCategory()

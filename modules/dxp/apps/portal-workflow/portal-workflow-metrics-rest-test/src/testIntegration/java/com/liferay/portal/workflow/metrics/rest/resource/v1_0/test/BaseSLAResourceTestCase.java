@@ -274,8 +274,7 @@ public abstract class BaseSLAResourceTestCase {
 	protected SLA testGetProcessSLAsPage_addSLA(Long processId, SLA sla)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return slaResource.postProcessSLAs(processId, sla);
 	}
 
 	protected Long testGetProcessSLAsPage_getProcessId() throws Exception {
@@ -300,8 +299,8 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	protected SLA testPostProcessSLAs_addSLA(SLA sla) throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return slaResource.postProcessSLAs(
+			testGetProcessSLAsPage_getProcessId(), sla);
 	}
 
 	@Test

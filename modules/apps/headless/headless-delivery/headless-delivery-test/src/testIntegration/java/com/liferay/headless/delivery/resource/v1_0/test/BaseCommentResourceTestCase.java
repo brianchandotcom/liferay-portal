@@ -453,8 +453,7 @@ public abstract class BaseCommentResourceTestCase {
 			Long blogPostingId, Comment comment)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return commentResource.postBlogPostingComments(blogPostingId, comment);
 	}
 
 	protected Long testGetBlogPostingCommentsPage_getBlogPostingId()
@@ -484,8 +483,8 @@ public abstract class BaseCommentResourceTestCase {
 	protected Comment testPostBlogPostingComments_addComment(Comment comment)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return commentResource.postBlogPostingComments(
+			testGetBlogPostingCommentsPage_getBlogPostingId(), comment);
 	}
 
 	@Test
@@ -865,8 +864,7 @@ public abstract class BaseCommentResourceTestCase {
 			Long parentCommentId, Comment comment)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return commentResource.postCommentComments(parentCommentId, comment);
 	}
 
 	protected Long testGetCommentCommentsPage_getParentCommentId()
@@ -895,8 +893,8 @@ public abstract class BaseCommentResourceTestCase {
 	protected Comment testPostCommentComments_addComment(Comment comment)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return commentResource.postCommentComments(
+			testGetCommentCommentsPage_getParentCommentId(), comment);
 	}
 
 	@Test
@@ -1142,8 +1140,7 @@ public abstract class BaseCommentResourceTestCase {
 			Long documentId, Comment comment)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return commentResource.postDocumentComments(documentId, comment);
 	}
 
 	protected Long testGetDocumentCommentsPage_getDocumentId()
@@ -1173,8 +1170,8 @@ public abstract class BaseCommentResourceTestCase {
 	protected Comment testPostDocumentComments_addComment(Comment comment)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return commentResource.postDocumentComments(
+			testGetDocumentCommentsPage_getDocumentId(), comment);
 	}
 
 	@Test
@@ -1443,8 +1440,8 @@ public abstract class BaseCommentResourceTestCase {
 			Long structuredContentId, Comment comment)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return commentResource.postStructuredContentComments(
+			structuredContentId, comment);
 	}
 
 	protected Long testGetStructuredContentCommentsPage_getStructuredContentId()
@@ -1476,8 +1473,9 @@ public abstract class BaseCommentResourceTestCase {
 			Comment comment)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return commentResource.postStructuredContentComments(
+			testGetStructuredContentCommentsPage_getStructuredContentId(),
+			comment);
 	}
 
 	protected Comment testGraphQLComment_addComment() throws Exception {

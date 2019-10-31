@@ -322,8 +322,9 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 				DataRecordCollection dataRecordCollection)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataRecordCollectionResource.
+			postDataDefinitionDataRecordCollections(
+				dataDefinitionId, dataRecordCollection);
 	}
 
 	protected Long
@@ -359,8 +360,10 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 				DataRecordCollection dataRecordCollection)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataRecordCollectionResource.
+			postDataDefinitionDataRecordCollections(
+				testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId(),
+				dataRecordCollection);
 	}
 
 	@Test

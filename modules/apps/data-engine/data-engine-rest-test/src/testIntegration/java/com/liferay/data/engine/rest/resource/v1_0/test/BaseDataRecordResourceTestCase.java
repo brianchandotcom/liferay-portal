@@ -289,8 +289,8 @@ public abstract class BaseDataRecordResourceTestCase {
 			Long dataDefinitionId, DataRecord dataRecord)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataRecordResource.postDataDefinitionDataRecords(
+			dataDefinitionId, dataRecord);
 	}
 
 	protected Long testGetDataDefinitionDataRecordsPage_getDataDefinitionId()
@@ -322,8 +322,9 @@ public abstract class BaseDataRecordResourceTestCase {
 			DataRecord dataRecord)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataRecordResource.postDataDefinitionDataRecords(
+			testGetDataDefinitionDataRecordsPage_getDataDefinitionId(),
+			dataRecord);
 	}
 
 	@Test
@@ -431,8 +432,8 @@ public abstract class BaseDataRecordResourceTestCase {
 				Long dataRecordCollectionId, DataRecord dataRecord)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataRecordResource.postDataRecordCollectionDataRecords(
+			dataRecordCollectionId, dataRecord);
 	}
 
 	protected Long
@@ -466,8 +467,9 @@ public abstract class BaseDataRecordResourceTestCase {
 			DataRecord dataRecord)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataRecordResource.postDataRecordCollectionDataRecords(
+			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId(),
+			dataRecord);
 	}
 
 	@Test

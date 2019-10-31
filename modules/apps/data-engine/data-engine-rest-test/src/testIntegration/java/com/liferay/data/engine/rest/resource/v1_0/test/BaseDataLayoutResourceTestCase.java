@@ -408,8 +408,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 			Long dataDefinitionId, DataLayout dataLayout)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataLayoutResource.postDataDefinitionDataLayouts(
+			dataDefinitionId, dataLayout);
 	}
 
 	protected Long testGetDataDefinitionDataLayoutsPage_getDataDefinitionId()
@@ -441,8 +441,9 @@ public abstract class BaseDataLayoutResourceTestCase {
 			DataLayout dataLayout)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataLayoutResource.postDataDefinitionDataLayouts(
+			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId(),
+			dataLayout);
 	}
 
 	@Test

@@ -32,6 +32,7 @@ import com.liferay.headless.delivery.client.serdes.v1_0.BlogPostingSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -229,8 +230,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected BlogPosting testDeleteBlogPosting_addBlogPosting()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return blogPostingResource.postSiteBlogPostings(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	@Test
@@ -291,8 +292,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	protected BlogPosting testGetBlogPosting_addBlogPosting() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return blogPostingResource.postSiteBlogPostings(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	@Test
@@ -347,8 +348,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected BlogPosting testPatchBlogPosting_addBlogPosting()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return blogPostingResource.postSiteBlogPostings(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	@Test
@@ -371,8 +372,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	protected BlogPosting testPutBlogPosting_addBlogPosting() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return blogPostingResource.postSiteBlogPostings(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	@Test
@@ -397,8 +398,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected BlogPosting testDeleteBlogPostingMyRating_addBlogPosting()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return blogPostingResource.postSiteBlogPostings(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	@Test
@@ -654,8 +655,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 			Long siteId, BlogPosting blogPosting)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return blogPostingResource.postSiteBlogPostings(siteId, blogPosting);
 	}
 
 	protected Long testGetSiteBlogPostingsPage_getSiteId() throws Exception {
@@ -736,8 +736,22 @@ public abstract class BaseBlogPostingResourceTestCase {
 			BlogPosting blogPosting)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return blogPostingResource.postSiteBlogPostings(
+			testGetSiteBlogPostingsPage_getSiteId(), blogPosting);
+	}
+
+	@Test
+	public void testGraphQLPostSiteBlogPostings() throws Exception {
+		BlogPosting randomBlogPosting = randomBlogPosting();
+
+		BlogPosting blogPosting = testGraphQLBlogPosting_addBlogPosting(
+			randomBlogPosting);
+
+		Assert.assertTrue(
+			equalsJSONObject(
+				randomBlogPosting,
+				JSONFactoryUtil.createJSONObject(
+					JSONFactoryUtil.serialize(blogPosting))));
 	}
 
 	@Test
@@ -758,8 +772,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected BlogPosting testPutSiteBlogPostingSubscribe_addBlogPosting()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return blogPostingResource.postSiteBlogPostings(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	@Test
@@ -782,8 +796,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected BlogPosting testPutSiteBlogPostingUnsubscribe_addBlogPosting()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return blogPostingResource.postSiteBlogPostings(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	@Test
@@ -840,8 +854,214 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected BlogPosting testGraphQLBlogPosting_addBlogPosting()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLBlogPosting_addBlogPosting(randomBlogPosting());
+	}
+
+	protected BlogPosting testGraphQLBlogPosting_addBlogPosting(
+			BlogPosting blogPosting)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"alternativeHeadline", additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = blogPosting.getAlternativeHeadline();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("articleBody", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = blogPosting.getArticleBody();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = blogPosting.getDescription();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = blogPosting.getEncodingFormat();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = blogPosting.getFriendlyUrlPath();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("headline", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = blogPosting.getHeadline();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = blogPosting.getId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("numberOfComments", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = blogPosting.getNumberOfComments();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("siteId", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = blogPosting.getSiteId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"createSiteBlogPostings",
+				new HashMap<String, Object>() {
+					{
+						put("siteId", testGroup.getGroupId());
+						put("blogPosting", sb.toString());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONDeserializer<BlogPosting> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		String object = invoke(graphQLField.toString());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		return jsonDeserializer.deserialize(
+			String.valueOf(
+				dataJSONObject.getJSONObject("createSiteBlogPostings")),
+			BlogPosting.class);
 	}
 
 	protected void assertHttpResponseStatusCode(

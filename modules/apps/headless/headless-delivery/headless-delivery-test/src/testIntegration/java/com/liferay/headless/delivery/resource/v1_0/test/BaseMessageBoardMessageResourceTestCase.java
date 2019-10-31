@@ -802,8 +802,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return messageBoardMessageResource.
+			postMessageBoardMessageMessageBoardMessages(
+				parentMessageBoardMessageId, messageBoardMessage);
 	}
 
 	protected Long
@@ -841,8 +842,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return messageBoardMessageResource.
+			postMessageBoardMessageMessageBoardMessages(
+				testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId(),
+				messageBoardMessage);
 	}
 
 	@Test
@@ -1162,8 +1165,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return messageBoardMessageResource.
+			postMessageBoardThreadMessageBoardMessages(
+				messageBoardThreadId, messageBoardMessage);
 	}
 
 	protected Long
@@ -1201,8 +1205,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return messageBoardMessageResource.
+			postMessageBoardThreadMessageBoardMessages(
+				testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId(),
+				messageBoardMessage);
 	}
 
 	@Test

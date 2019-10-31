@@ -273,8 +273,10 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 				KnowledgeBaseAttachment knowledgeBaseAttachment)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return knowledgeBaseAttachmentResource.
+			postKnowledgeBaseArticleKnowledgeBaseAttachments(
+				knowledgeBaseArticleId, knowledgeBaseAttachment,
+				getMultipartFiles());
 	}
 
 	protected Long
@@ -318,8 +320,10 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 				Map<String, File> multipartFiles)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return knowledgeBaseAttachmentResource.
+			postKnowledgeBaseArticleKnowledgeBaseAttachments(
+				testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId(),
+				knowledgeBaseAttachment, multipartFiles);
 	}
 
 	@Test

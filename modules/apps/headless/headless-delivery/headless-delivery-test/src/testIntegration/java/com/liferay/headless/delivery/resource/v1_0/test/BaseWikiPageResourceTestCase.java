@@ -453,8 +453,7 @@ public abstract class BaseWikiPageResourceTestCase {
 			Long wikiNodeId, WikiPage wikiPage)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return wikiPageResource.postWikiNodeWikiPages(wikiNodeId, wikiPage);
 	}
 
 	protected Long testGetWikiNodeWikiPagesPage_getWikiNodeId()
@@ -484,8 +483,8 @@ public abstract class BaseWikiPageResourceTestCase {
 	protected WikiPage testPostWikiNodeWikiPages_addWikiPage(WikiPage wikiPage)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return wikiPageResource.postWikiNodeWikiPages(
+			testGetWikiNodeWikiPagesPage_getWikiNodeId(), wikiPage);
 	}
 
 	@Test
@@ -580,8 +579,8 @@ public abstract class BaseWikiPageResourceTestCase {
 			Long parentWikiPageId, WikiPage wikiPage)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return wikiPageResource.postWikiPageWikiPages(
+			parentWikiPageId, wikiPage);
 	}
 
 	protected Long testGetWikiPageWikiPagesPage_getParentWikiPageId()
@@ -611,8 +610,8 @@ public abstract class BaseWikiPageResourceTestCase {
 	protected WikiPage testPostWikiPageWikiPages_addWikiPage(WikiPage wikiPage)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return wikiPageResource.postWikiPageWikiPages(
+			testGetWikiPageWikiPagesPage_getParentWikiPageId(), wikiPage);
 	}
 
 	@Test

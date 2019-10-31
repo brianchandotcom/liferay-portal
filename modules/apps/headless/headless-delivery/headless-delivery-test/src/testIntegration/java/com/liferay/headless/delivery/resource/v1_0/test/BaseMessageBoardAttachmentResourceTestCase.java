@@ -408,8 +408,10 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 				MessageBoardAttachment messageBoardAttachment)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return messageBoardAttachmentResource.
+			postMessageBoardMessageMessageBoardAttachments(
+				messageBoardMessageId, messageBoardAttachment,
+				getMultipartFiles());
 	}
 
 	protected Long
@@ -452,8 +454,10 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 				Map<String, File> multipartFiles)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return messageBoardAttachmentResource.
+			postMessageBoardMessageMessageBoardAttachments(
+				testGetMessageBoardMessageMessageBoardAttachmentsPage_getMessageBoardMessageId(),
+				messageBoardAttachment, multipartFiles);
 	}
 
 	@Test
@@ -524,8 +528,10 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 				MessageBoardAttachment messageBoardAttachment)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return messageBoardAttachmentResource.
+			postMessageBoardThreadMessageBoardAttachments(
+				messageBoardThreadId, messageBoardAttachment,
+				getMultipartFiles());
 	}
 
 	protected Long
@@ -568,8 +574,10 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 				Map<String, File> multipartFiles)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return messageBoardAttachmentResource.
+			postMessageBoardThreadMessageBoardAttachments(
+				testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId(),
+				messageBoardAttachment, multipartFiles);
 	}
 
 	protected MessageBoardAttachment

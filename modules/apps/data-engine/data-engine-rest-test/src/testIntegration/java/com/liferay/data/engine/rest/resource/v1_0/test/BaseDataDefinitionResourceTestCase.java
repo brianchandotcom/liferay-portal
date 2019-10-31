@@ -31,6 +31,7 @@ import com.liferay.data.engine.rest.client.serdes.v1_0.DataDefinitionSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -231,8 +232,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	protected DataDefinition testDeleteDataDefinition_addDataDefinition()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataDefinitionResource.postSiteDataDefinitions(
+			testGroup.getGroupId(), randomDataDefinition());
 	}
 
 	@Test
@@ -298,8 +299,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	protected DataDefinition testGetDataDefinition_addDataDefinition()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataDefinitionResource.postSiteDataDefinitions(
+			testGroup.getGroupId(), randomDataDefinition());
 	}
 
 	@Test
@@ -355,8 +356,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	protected DataDefinition testPutDataDefinition_addDataDefinition()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataDefinitionResource.postSiteDataDefinitions(
+			testGroup.getGroupId(), randomDataDefinition());
 	}
 
 	@Test
@@ -391,8 +392,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			testPostDataDefinitionDataDefinitionPermissions_addDataDefinition()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataDefinitionResource.postSiteDataDefinitions(
+			testGroup.getGroupId(), randomDataDefinition());
 	}
 
 	@Test
@@ -418,8 +419,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			testPostSiteDataDefinitionPermissions_addDataDefinition()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataDefinitionResource.postSiteDataDefinitions(
+			testGroup.getGroupId(), randomDataDefinition());
 	}
 
 	@Test
@@ -636,8 +637,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			Long siteId, DataDefinition dataDefinition)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataDefinitionResource.postSiteDataDefinitions(
+			siteId, dataDefinition);
 	}
 
 	protected Long testGetSiteDataDefinitionsPage_getSiteId() throws Exception {
@@ -721,8 +722,22 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			DataDefinition dataDefinition)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataDefinitionResource.postSiteDataDefinitions(
+			testGetSiteDataDefinitionsPage_getSiteId(), dataDefinition);
+	}
+
+	@Test
+	public void testGraphQLPostSiteDataDefinitions() throws Exception {
+		DataDefinition randomDataDefinition = randomDataDefinition();
+
+		DataDefinition dataDefinition =
+			testGraphQLDataDefinition_addDataDefinition(randomDataDefinition);
+
+		Assert.assertTrue(
+			equalsJSONObject(
+				randomDataDefinition,
+				JSONFactoryUtil.createJSONObject(
+					JSONFactoryUtil.serialize(dataDefinition))));
 	}
 
 	@Test
@@ -742,8 +757,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	protected DataDefinition testGetSiteDataDefinition_addDataDefinition()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataDefinitionResource.postSiteDataDefinitions(
+			testGroup.getGroupId(), randomDataDefinition());
 	}
 
 	@Test
@@ -781,8 +796,163 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	protected DataDefinition testGraphQLDataDefinition_addDataDefinition()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLDataDefinition_addDataDefinition(
+			randomDataDefinition());
+	}
+
+	protected DataDefinition testGraphQLDataDefinition_addDataDefinition(
+			DataDefinition dataDefinition)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"dataDefinitionKey", additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = dataDefinition.getDataDefinitionKey();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals(
+					"defaultLanguageId", additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = dataDefinition.getDefaultLanguageId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = dataDefinition.getId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("siteId", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = dataDefinition.getSiteId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("storageType", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = dataDefinition.getStorageType();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("userId", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = dataDefinition.getUserId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"createSiteDataDefinitions",
+				new HashMap<String, Object>() {
+					{
+						put("siteId", testGroup.getGroupId());
+						put("dataDefinition", sb.toString());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONDeserializer<DataDefinition> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		String object = invoke(graphQLField.toString());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		return jsonDeserializer.deserialize(
+			String.valueOf(
+				dataJSONObject.getJSONObject("createSiteDataDefinitions")),
+			DataDefinition.class);
 	}
 
 	protected void assertHttpResponseStatusCode(

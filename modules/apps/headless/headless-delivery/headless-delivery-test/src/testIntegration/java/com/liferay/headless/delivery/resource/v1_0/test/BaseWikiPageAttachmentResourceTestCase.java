@@ -387,8 +387,8 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 				Long wikiPageId, WikiPageAttachment wikiPageAttachment)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return wikiPageAttachmentResource.postWikiPageWikiPageAttachments(
+			wikiPageId, wikiPageAttachment, getMultipartFiles());
 	}
 
 	protected Long testGetWikiPageWikiPageAttachmentsPage_getWikiPageId()
@@ -428,8 +428,9 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 				Map<String, File> multipartFiles)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return wikiPageAttachmentResource.postWikiPageWikiPageAttachments(
+			testGetWikiPageWikiPageAttachmentsPage_getWikiPageId(),
+			wikiPageAttachment, multipartFiles);
 	}
 
 	protected WikiPageAttachment

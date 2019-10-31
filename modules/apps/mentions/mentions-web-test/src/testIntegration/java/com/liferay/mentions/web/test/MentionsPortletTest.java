@@ -175,7 +175,7 @@ public class MentionsPortletTest {
 		MockResourceResponse mockResourceResponse = new MockResourceResponse();
 
 		mvcPortlet.serveResource(
-			_getMockLiferayResourceRequest("*"), mockResourceResponse);
+			_getMockLiferayResourceRequest(""), mockResourceResponse);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			(MockHttpServletResponse)
@@ -204,7 +204,7 @@ public class MentionsPortletTest {
 		MockResourceResponse mockResourceResponse = new MockResourceResponse();
 
 		mvcPortlet.serveResource(
-			_getMockLiferayResourceRequest("*"), mockResourceResponse);
+			_getMockLiferayResourceRequest(""), mockResourceResponse);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			(MockHttpServletResponse)

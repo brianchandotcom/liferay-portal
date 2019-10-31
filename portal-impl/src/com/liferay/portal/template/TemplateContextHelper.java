@@ -969,16 +969,6 @@ public class TemplateContextHelper {
 			return _http.encodePath(path);
 		}
 
-		/**
-		 * @deprecated As of Judson (7.1.x), replaced by {@link
-		 *             URLCodec#encodeURL(String)}
-		 */
-		@Deprecated
-		@Override
-		public String encodeURL(String url) {
-			return _http.encodeURL(url);
-		}
-
 		@Override
 		public String fixPath(String path) {
 			return _http.fixPath(path);

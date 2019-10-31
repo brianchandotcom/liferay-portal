@@ -75,13 +75,6 @@ public interface Http {
 
 	public String encodePath(String path);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             URLCodec#encodeURL(String)}
-	 */
-	@Deprecated
-	public String encodeURL(String url);
-
 	public String fixPath(String path);
 
 	public String fixPath(String path, boolean leading, boolean trailing);

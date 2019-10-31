@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -44,7 +44,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.oauth.OAuth;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
@@ -132,20 +131,18 @@ public class OAuthAuthorizeAction extends BaseStrutsAction {
 
 		sb.append(themeDisplay.getPathMain());
 		sb.append("/portal/login?redirect=");
-		sb.append(_http.encodeURL(httpServletRequest.getRequestURI()));
+		sb.append(URLCodec.encodeURL(httpServletRequest.getRequestURI()));
 
 		String queryString = httpServletRequest.getQueryString();
 
 		if (Validator.isNotNull(queryString)) {
-			sb.append(_http.encodeURL(StringPool.QUESTION.concat(queryString)));
+			sb.append(
+				URLCodec.encodeURL(StringPool.QUESTION.concat(queryString)));
 		}
 
 		httpServletResponse.sendRedirect(sb.toString());
 
 		return null;
 	}
-
-	@Reference
-	private Http _http;
 
 }

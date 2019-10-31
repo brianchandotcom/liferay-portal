@@ -367,16 +367,6 @@ public class HttpImpl implements Http {
 		return path;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             URLCodec#encodeURL(String)}
-	 */
-	@Deprecated
-	@Override
-	public String encodeURL(String url) {
-		return URLCodec.encodeURL(url, StringPool.UTF8, false);
-	}
-
 	@Override
 	public String fixPath(String path) {
 		return fixPath(path, true, true);

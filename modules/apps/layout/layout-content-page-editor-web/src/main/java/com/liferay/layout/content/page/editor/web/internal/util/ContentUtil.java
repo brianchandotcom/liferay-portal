@@ -362,6 +362,10 @@ public class ContentUtil {
 				InfoDisplayContributorTrackerUtil.getInfoDisplayContributor(
 					PortalUtil.getClassName(classNameId));
 
+			if (infoDisplayContributor == null) {
+				return null;
+			}
+
 			return infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
 		}
 		catch (PortalException pe) {

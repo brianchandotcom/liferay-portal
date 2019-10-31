@@ -2921,7 +2921,7 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 
-		return String.join(",", propertyValues);
+		return join(",", propertyValues);
 	}
 
 	private static String _getGitHubAPIRateLimitStatusMessage(

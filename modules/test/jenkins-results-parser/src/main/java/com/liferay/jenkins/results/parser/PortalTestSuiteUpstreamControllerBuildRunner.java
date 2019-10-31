@@ -165,7 +165,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		}
 
 		buildData.setBuildDescription(
-			String.join(", ", _invokedTestSuiteNames));
+			JenkinsResultsParserUtil.join(", ", _invokedTestSuiteNames));
 
 		updateBuildDescription();
 	}

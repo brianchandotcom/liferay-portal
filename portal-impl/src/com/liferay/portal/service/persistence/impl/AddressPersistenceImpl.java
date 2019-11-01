@@ -4668,6 +4668,18 @@ public class AddressPersistenceImpl
 		}
 	}
 
+	public void clearCache(Set<Serializable> primaryKeys) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Serializable primaryKey : primaryKeys) {
+			EntityCacheUtil.removeResult(
+				AddressModelImpl.ENTITY_CACHE_ENABLED, AddressImpl.class,
+				primaryKey);
+		}
+	}
+
 	/**
 	 * Creates a new address with the primary key. Does not add the address to the database.
 	 *

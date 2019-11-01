@@ -44,6 +44,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * The persistence implementation for the social activity setting service.
@@ -2723,6 +2724,18 @@ public class SocialActivitySettingPersistenceImpl
 
 			clearUniqueFindersCache(
 				(SocialActivitySettingModelImpl)socialActivitySetting, true);
+		}
+	}
+
+	public void clearCache(Set<Serializable> primaryKeys) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Serializable primaryKey : primaryKeys) {
+			EntityCacheUtil.removeResult(
+				SocialActivitySettingModelImpl.ENTITY_CACHE_ENABLED,
+				SocialActivitySettingImpl.class, primaryKey);
 		}
 	}
 

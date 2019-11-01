@@ -172,6 +172,18 @@ public class AccountPersistenceImpl
 		}
 	}
 
+	public void clearCache(Set<Serializable> primaryKeys) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Serializable primaryKey : primaryKeys) {
+			EntityCacheUtil.removeResult(
+				AccountModelImpl.ENTITY_CACHE_ENABLED, AccountImpl.class,
+				primaryKey);
+		}
+	}
+
 	/**
 	 * Creates a new account with the primary key. Does not add the account to the database.
 	 *

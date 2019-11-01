@@ -48,6 +48,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence implementation for the tasks entry service.
@@ -10095,6 +10096,18 @@ public class TasksEntryPersistenceImpl
 			EntityCacheUtil.removeResult(
 				TasksEntryModelImpl.ENTITY_CACHE_ENABLED, TasksEntryImpl.class,
 				tasksEntry.getPrimaryKey());
+		}
+	}
+
+	public void clearCache(Set<Serializable> primaryKeys) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Serializable primaryKey : primaryKeys) {
+			EntityCacheUtil.removeResult(
+				TasksEntryModelImpl.ENTITY_CACHE_ENABLED, TasksEntryImpl.class,
+				primaryKey);
 		}
 	}
 

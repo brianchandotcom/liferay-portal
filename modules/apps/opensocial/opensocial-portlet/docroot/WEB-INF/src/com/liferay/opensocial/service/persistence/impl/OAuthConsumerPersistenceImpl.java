@@ -47,6 +47,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * The persistence implementation for the o auth consumer service.
@@ -1025,6 +1026,18 @@ public class OAuthConsumerPersistenceImpl
 
 			clearUniqueFindersCache(
 				(OAuthConsumerModelImpl)oAuthConsumer, true);
+		}
+	}
+
+	public void clearCache(Set<Serializable> primaryKeys) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Serializable primaryKey : primaryKeys) {
+			EntityCacheUtil.removeResult(
+				OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthConsumerImpl.class, primaryKey);
 		}
 	}
 

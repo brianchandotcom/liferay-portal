@@ -159,6 +159,18 @@ public class LocalizedEntryPersistenceImpl
 		}
 	}
 
+	public void clearCache(Set<Serializable> primaryKeys) {
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Serializable primaryKey : primaryKeys) {
+			entityCache.removeResult(
+				LocalizedEntryModelImpl.ENTITY_CACHE_ENABLED,
+				LocalizedEntryImpl.class, primaryKey);
+		}
+	}
+
 	/**
 	 * Creates a new localized entry with the primary key. Does not add the localized entry to the database.
 	 *

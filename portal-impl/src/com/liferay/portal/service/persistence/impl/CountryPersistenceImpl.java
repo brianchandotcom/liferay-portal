@@ -1361,6 +1361,18 @@ public class CountryPersistenceImpl
 		}
 	}
 
+	public void clearCache(Set<Serializable> primaryKeys) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Serializable primaryKey : primaryKeys) {
+			EntityCacheUtil.removeResult(
+				CountryModelImpl.ENTITY_CACHE_ENABLED, CountryImpl.class,
+				primaryKey);
+		}
+	}
+
 	protected void cacheUniqueFindersCache(CountryModelImpl countryModelImpl) {
 		Object[] args = new Object[] {countryModelImpl.getName()};
 

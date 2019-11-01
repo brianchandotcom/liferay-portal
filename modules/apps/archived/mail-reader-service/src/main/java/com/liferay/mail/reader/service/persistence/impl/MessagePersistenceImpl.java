@@ -1424,6 +1424,17 @@ public class MessagePersistenceImpl
 		}
 	}
 
+	public void clearCache(Set<Serializable> primaryKeys) {
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Serializable primaryKey : primaryKeys) {
+			entityCache.removeResult(
+				entityCacheEnabled, MessageImpl.class, primaryKey);
+		}
+	}
+
 	protected void cacheUniqueFindersCache(MessageModelImpl messageModelImpl) {
 		Object[] args = new Object[] {
 			messageModelImpl.getFolderId(),

@@ -172,6 +172,18 @@ public class NestedSetsTreeEntryPersistenceImpl
 		}
 	}
 
+	public void clearCache(Set<Serializable> primaryKeys) {
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Serializable primaryKey : primaryKeys) {
+			entityCache.removeResult(
+				NestedSetsTreeEntryModelImpl.ENTITY_CACHE_ENABLED,
+				NestedSetsTreeEntryImpl.class, primaryKey);
+		}
+	}
+
 	/**
 	 * Creates a new nested sets tree entry with the primary key. Does not add the nested sets tree entry to the database.
 	 *

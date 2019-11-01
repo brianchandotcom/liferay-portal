@@ -762,6 +762,18 @@ public class PowwowServerPersistenceImpl
 		}
 	}
 
+	public void clearCache(Set<Serializable> primaryKeys) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Serializable primaryKey : primaryKeys) {
+			EntityCacheUtil.removeResult(
+				PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+				PowwowServerImpl.class, primaryKey);
+		}
+	}
+
 	/**
 	 * Creates a new powwow server with the primary key. Does not add the powwow server to the database.
 	 *

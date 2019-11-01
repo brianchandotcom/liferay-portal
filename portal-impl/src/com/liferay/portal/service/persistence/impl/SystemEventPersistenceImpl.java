@@ -2424,6 +2424,18 @@ public class SystemEventPersistenceImpl
 		}
 	}
 
+	public void clearCache(Set<Serializable> primaryKeys) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Serializable primaryKey : primaryKeys) {
+			EntityCacheUtil.removeResult(
+				SystemEventModelImpl.ENTITY_CACHE_ENABLED,
+				SystemEventImpl.class, primaryKey);
+		}
+	}
+
 	/**
 	 * Creates a new system event with the primary key. Does not add the system event to the database.
 	 *

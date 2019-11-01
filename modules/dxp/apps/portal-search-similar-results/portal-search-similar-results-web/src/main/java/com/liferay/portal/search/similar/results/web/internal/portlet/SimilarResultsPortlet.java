@@ -88,32 +88,20 @@ public class SimilarResultsPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			_portletSharedSearchRequest.search(renderRequest);
 
-		SimilarResultsDisplayContext similarResultsDisplayContext = null;
-
-		try {
-			similarResultsDisplayContext = buildDisplayContext(
-				portletSharedSearchResponse, renderRequest, renderResponse);
-		}
-		catch (ConfigurationException ce) {
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
-
 		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, similarResultsDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			buildDisplayContext(
+				portletSharedSearchResponse, renderRequest, renderResponse));
 
 		super.render(renderRequest, renderResponse);
 	}
 
 	protected SimilarResultsDisplayContext buildDisplayContext(
-			PortletSharedSearchResponse portletSharedSearchResponse,
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws Exception {
+		PortletSharedSearchResponse portletSharedSearchResponse,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		SimilarResultsDisplayContext similarResultsDisplayContext =
-			new SimilarResultsDisplayContext(
-				getHttpServletRequest(renderRequest));
+			createSimilarResultsDisplayContext(renderRequest);
 
 		SimilarResultsPortletPreferences similarResultsPortletPreferences =
 			new SimilarResultsPortletPreferencesImpl(
@@ -164,12 +152,10 @@ public class SimilarResultsPortlet extends MVCPortlet {
 	}
 
 	protected List<SimilarResultsDocumentDisplayContext>
-			buildSimilarResultsDocumentDisplayContexts(
-				List<Document> documents,
-				SimilarResultsRoute similarResultsRoute,
-				RenderRequest renderRequest, RenderResponse renderResponse,
-				ThemeDisplay themeDisplay)
-		throws Exception {
+		buildSimilarResultsDocumentDisplayContexts(
+			List<Document> documents, SimilarResultsRoute similarResultsRoute,
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			ThemeDisplay themeDisplay) {
 
 		List<SimilarResultsDocumentDisplayContext>
 			similarResultsDocumentDisplayContexts = new ArrayList<>();
@@ -184,11 +170,22 @@ public class SimilarResultsPortlet extends MVCPortlet {
 		return similarResultsDocumentDisplayContexts;
 	}
 
+	protected SimilarResultsDisplayContext createSimilarResultsDisplayContext(
+		RenderRequest renderRequest) {
+
+		try {
+			return new SimilarResultsDisplayContext(
+				getHttpServletRequest(renderRequest));
+		}
+		catch (ConfigurationException ce) {
+			throw new RuntimeException(ce);
+		}
+	}
+
 	protected SimilarResultsDocumentDisplayContext doBuildSummary(
-			Document document, SimilarResultsRoute similarResultsRoute,
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			ThemeDisplay themeDisplay)
-		throws Exception {
+		Document document, SimilarResultsRoute similarResultsRoute,
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		ThemeDisplay themeDisplay) {
 
 		SimilarResultsDocumentDisplayContextBuilder
 			similarResultsDocumentDisplayContextBuilder =

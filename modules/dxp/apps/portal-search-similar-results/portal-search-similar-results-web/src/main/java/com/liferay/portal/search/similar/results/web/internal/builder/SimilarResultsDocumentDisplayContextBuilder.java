@@ -77,7 +77,7 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 		_similarResultsRoute = similarResultsRoute;
 	}
 
-	public SimilarResultsDocumentDisplayContext build() throws Exception {
+	public SimilarResultsDocumentDisplayContext build() {
 		try {
 			if (_documentBuilderFactory != null) {
 				_document = _documentBuilderFactory.builder(

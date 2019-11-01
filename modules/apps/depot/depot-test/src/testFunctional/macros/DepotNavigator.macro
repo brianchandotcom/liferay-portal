@@ -25,6 +25,16 @@ definition {
 			value1 = "Edit");
 	}
 
+	macro gotoSites {
+		Click(
+			key_tab = "Sites",
+			locator1 = "NavTab#TAB_LINK");
+
+		AssertElementPresent(
+			key_title = "Connected Sites",
+			locator1 = "Header#H3_TITLE");
+	}
+
 	macro openDepotAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_depot_web_portlet_DepotAdminPortlet");
 	}

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 public class WebLogicSupport {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		if (!ServerDetector.isWebLogic()) {
 			return;
 		}
@@ -42,7 +42,7 @@ public class WebLogicSupport {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		if (!ServerDetector.isWebLogic()) {
 			return;
 		}

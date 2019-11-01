@@ -42,7 +42,7 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 	extends BaseBlogsEntryDemoDataCreator {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		Collections.addAll(
 			_availableIndexes, new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
 

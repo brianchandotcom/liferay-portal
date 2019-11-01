@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 public class DefaultCompanyLogoSwapper {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		if (PropsHelperUtil.isCustomized(
 				PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO)) {
 

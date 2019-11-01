@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 public class OrganizationScreenNavigationRegistrar {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
 		registerScreenNavigationCategories();
@@ -53,7 +53,7 @@ public class OrganizationScreenNavigationRegistrar {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_screenNavigationEntryServiceRegistrations.forEach(
 			ServiceRegistration::unregister);
 

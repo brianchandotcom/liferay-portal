@@ -63,13 +63,13 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 	implements MVCResourceCommand {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ODataRetriever.class, "model.class.name");
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
 

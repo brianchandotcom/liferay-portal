@@ -47,7 +47,7 @@ public class VulcanConfigurationModelListener
 	implements ConfigurationModelListener {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 	}
 

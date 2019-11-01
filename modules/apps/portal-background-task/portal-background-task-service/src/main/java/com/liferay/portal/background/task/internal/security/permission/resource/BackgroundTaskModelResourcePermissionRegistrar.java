@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 public class BackgroundTaskModelResourcePermissionRegistrar {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_backgroundTaskModelResourcePermissionLogics =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ModelResourcePermissionLogic.class,
@@ -62,7 +62,7 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceRegistration.unregister();
 
 		_backgroundTaskModelResourcePermissionLogics.close();

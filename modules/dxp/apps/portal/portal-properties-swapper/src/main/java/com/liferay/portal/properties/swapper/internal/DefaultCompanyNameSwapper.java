@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DefaultCompanyNameSwapper {
 
 	@Activate
-	public void activate() {
+	protected void activate() {
 		if (PropsHelperUtil.isCustomized(PropsKeys.COMPANY_DEFAULT_NAME)) {
 			return;
 		}

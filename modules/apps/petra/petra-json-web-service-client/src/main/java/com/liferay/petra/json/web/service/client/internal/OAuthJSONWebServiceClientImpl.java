@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 public class OAuthJSONWebServiceClientImpl extends JSONWebServiceClientImpl {
 
 	@Activate
-	public void activate(Map<String, Object> properties)
+	protected void activate(Map<String, Object> properties)
 		throws IOReactorException {
 
 		setOAuthConsumerKey(getString("oAuthConsumerKey", properties));

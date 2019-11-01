@@ -42,13 +42,13 @@ public class FooRuleRule extends BaseJSPRule {
 
 	@Activate
 	@Override
-	public void activate() {
+	protected void activate() {
 		super.activate();
 	}
 
 	@Deactivate
 	@Override
-	public void deActivate() {
+	protected void deActivate() {
 		super.deActivate();
 	}
 

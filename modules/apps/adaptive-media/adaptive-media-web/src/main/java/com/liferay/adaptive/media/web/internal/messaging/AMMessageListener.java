@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Deactivate;
 public class AMMessageListener extends BaseMessageListener {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, AMProcessor.class, "(model.class.name=*)",
 			(serviceReference, emitter) -> emitter.emit(
@@ -52,7 +52,7 @@ public class AMMessageListener extends BaseMessageListener {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
 

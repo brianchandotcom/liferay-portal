@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 
 	@Activate
-	public void activate(Map<String, Object> properties)
+	protected void activate(Map<String, Object> properties)
 		throws IOReactorException {
 
 		_setHeaders(getString("headers", properties));

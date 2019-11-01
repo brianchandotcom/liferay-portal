@@ -43,7 +43,7 @@ public class SecurityConfigurationBootstrap {
 
 	@Activate
 	@Modified
-	public void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties) {
 		BasicDecryptionConfiguration basicDecryptionConfiguration =
 			DefaultSecurityConfigurationBootstrap.
 				buildDefaultDecryptionConfiguration();

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DefaultGuestGroupLogoSwapper {
 
 	@Activate
-	public void activate(BundleContext bundleContext) throws Exception {
+	protected void activate(BundleContext bundleContext) throws Exception {
 		List<Company> companies = _companyLocalService.getCompanies(0, 1);
 
 		Company company = companies.get(0);

@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 public class StandaloneAppDeployer implements AppDeployer {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 	}
 

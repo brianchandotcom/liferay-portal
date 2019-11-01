@@ -33,7 +33,7 @@ public class NavItemClassNameIdUtil {
 	}
 
 	@Activate
-	public void activate() {
+	protected void activate() {
 		_navItemClassNameId = _portal.getClassNameId(NavItem.class);
 	}
 

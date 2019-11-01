@@ -47,7 +47,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class PortletDisplayTemplateServiceTracker {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, PortletDisplayTemplateRegister.class,
 			_getServiceTrackerCustomizer(bundleContext));
@@ -56,7 +56,7 @@ public class PortletDisplayTemplateServiceTracker {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceTracker.close();
 	}
 

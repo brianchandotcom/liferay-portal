@@ -34,7 +34,7 @@ public class DDMFormFieldRendererRegistryImpl
 	implements DDMFormFieldRendererRegistry {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = bundleContext.registerService(
 			DDMFormFieldRenderer.class, new DDMFormFieldFreeMarkerRenderer(),
 			null);
@@ -65,7 +65,7 @@ public class DDMFormFieldRendererRegistryImpl
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_ddmFormFieldRendererRegistryUtil.setDDMFormFieldRendererRegistry(null);
 
 		_serviceTrackerMap.close();

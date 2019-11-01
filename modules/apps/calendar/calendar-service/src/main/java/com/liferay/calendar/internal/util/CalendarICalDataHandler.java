@@ -113,13 +113,13 @@ import org.osgi.service.component.annotations.Deactivate;
 public class CalendarICalDataHandler implements CalendarDataHandler {
 
 	@Activate
-	public void activate() {
+	protected void activate() {
 		CalendarDataHandlerFactory.registerCalendarDataHandler(
 			CalendarDataFormat.ICAL, this);
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		CalendarDataHandlerFactory.unregisterCalendarDataHandler(
 			CalendarDataFormat.ICAL);
 	}

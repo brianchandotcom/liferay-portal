@@ -52,7 +52,7 @@ public class PushNotificationsDeviceLocalServiceImpl
 	extends PushNotificationsDeviceLocalServiceBaseImpl {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, PushNotificationsSender.class, "platform");
 	}
@@ -82,7 +82,7 @@ public class PushNotificationsDeviceLocalServiceImpl
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
 

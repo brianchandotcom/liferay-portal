@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DefinitionPermissionRegistrar {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = bundleContext.registerService(
 			ModelResourcePermission.class,
 			ModelResourcePermissionFactory.create(
@@ -50,7 +50,7 @@ public class DefinitionPermissionRegistrar {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceRegistration.unregister();
 	}
 

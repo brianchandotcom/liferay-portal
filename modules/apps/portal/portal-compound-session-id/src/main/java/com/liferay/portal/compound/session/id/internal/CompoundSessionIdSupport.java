@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 public class CompoundSessionIdSupport {
 
 	@Activate
-	public void activate(
+	protected void activate(
 		BundleContext bundleContext, ComponentContext componentContext) {
 
 		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {

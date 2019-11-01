@@ -38,7 +38,7 @@ public class LayoutJavaScriptFormNavigatorEntry
 	extends BaseLayoutFormNavigatorEntry {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		boolean enableJavaScript =
 			PropsValues.
 				FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUT_JAVASCRIPT;
@@ -56,7 +56,7 @@ public class LayoutJavaScriptFormNavigatorEntry
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}

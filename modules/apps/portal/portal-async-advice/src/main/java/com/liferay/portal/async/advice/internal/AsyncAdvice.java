@@ -49,7 +49,7 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 
 	@Activate
 	@Modified
-	public void activate(Map<String, String> properties) {
+	protected void activate(Map<String, String> properties) {
 		_asyncAdviceConfiguration = ConfigurableUtil.createConfigurable(
 			AsyncAdviceConfiguration.class, properties);
 

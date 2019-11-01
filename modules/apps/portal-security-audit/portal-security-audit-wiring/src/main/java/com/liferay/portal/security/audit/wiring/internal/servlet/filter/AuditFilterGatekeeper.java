@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 public class AuditFilterGatekeeper {
 
 	@Activate
-	public void activate(ComponentContext componentContext) {
+	protected void activate(ComponentContext componentContext) {
 		AuditConfiguration auditConfiguration =
 			ConfigurableUtil.createConfigurable(
 				AuditConfiguration.class, componentContext.getProperties());

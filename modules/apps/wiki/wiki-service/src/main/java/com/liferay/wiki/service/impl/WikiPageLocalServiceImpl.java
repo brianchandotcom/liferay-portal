@@ -179,7 +179,7 @@ import org.osgi.service.component.annotations.Reference;
 public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Activate
-	public void activate(
+	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
@@ -539,7 +539,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceTrackerMap.close();
 
 		_portalCache.removeAll();

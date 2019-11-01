@@ -47,7 +47,7 @@ public class FrontPageAssetEntryValidatorExclusionRule
 
 	@Activate
 	@Modified
-	public void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties) {
 		_wikiGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
 			WikiGroupServiceConfiguration.class, properties);
 	}

@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 public class RegexTransformerListener extends BaseTransformerListener {
 
 	@Activate
-	public void activate() {
+	protected void activate() {
 		_patterns = new ArrayList<>();
 		_replacements = new ArrayList<>();
 

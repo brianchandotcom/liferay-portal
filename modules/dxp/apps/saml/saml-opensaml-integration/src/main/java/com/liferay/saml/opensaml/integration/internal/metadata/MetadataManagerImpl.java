@@ -93,7 +93,7 @@ public class MetadataManagerImpl
 	implements MetadataManager, SamlHttpRequestUtil {
 
 	@Activate
-	public void activate() throws ComponentInitializationException {
+	protected void activate() throws ComponentInitializationException {
 		_cachingChainingMetadataResolver.setId(
 			CachingChainingMetadataResolver.class.getName());
 		_cachingChainingMetadataResolver.setParserPool(_parserPool);

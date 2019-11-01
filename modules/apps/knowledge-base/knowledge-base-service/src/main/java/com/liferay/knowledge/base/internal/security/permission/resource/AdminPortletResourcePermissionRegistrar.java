@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AdminPortletResourcePermissionRegistrar {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("resource.name", KBConstants.RESOURCE_NAME_ADMIN);
@@ -53,7 +53,7 @@ public class AdminPortletResourcePermissionRegistrar {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_serviceRegistration.unregister();
 	}
 

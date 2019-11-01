@@ -88,7 +88,7 @@ import org.osgi.service.component.annotations.Reference;
 public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_wikiImporterServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, WikiImporter.class, "importer");

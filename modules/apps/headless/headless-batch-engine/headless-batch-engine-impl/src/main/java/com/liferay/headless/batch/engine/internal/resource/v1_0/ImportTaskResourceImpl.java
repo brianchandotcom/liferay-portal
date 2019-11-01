@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 	@Activate
-	public void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties) {
 		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
 			ConfigurableUtil.createConfigurable(
 				BatchEngineTaskConfiguration.class, properties);

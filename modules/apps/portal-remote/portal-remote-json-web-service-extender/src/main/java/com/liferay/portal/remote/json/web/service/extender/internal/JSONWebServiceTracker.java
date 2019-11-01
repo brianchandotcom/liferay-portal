@@ -41,7 +41,7 @@ public class JSONWebServiceTracker
 	implements ServiceTrackerCustomizer<Object, Object> {
 
 	@Activate
-	public void activate(ComponentContext componentContext) {
+	protected void activate(ComponentContext componentContext) {
 		_componentContext = componentContext;
 
 		_serviceTracker = ServiceTrackerFactory.open(
@@ -58,7 +58,7 @@ public class JSONWebServiceTracker
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_componentContext = null;
 
 		_serviceTracker.close();

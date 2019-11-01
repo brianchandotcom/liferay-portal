@@ -22,16 +22,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.function.Consumer;
 
 /**
  * @author Ivica cardic
  */
 public class ColumnValueWriter {
 
-	public void write(
-			Consumer<Collection<?>> consumer, Map<String, Field> fieldMap,
-			List<String> fieldNames, Object item)
+	public Collection<Object> extractValues(
+			Map<String, Field> fieldMap, List<String> fieldNames, Object item)
 		throws IllegalAccessException {
 
 		Map<String, Object> columnNameValueMap = new TreeMap<>();
@@ -79,7 +77,7 @@ public class ColumnValueWriter {
 			}
 		}
 
-		consumer.accept(columnNameValueMap.values());
+		return columnNameValueMap.values();
 	}
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.batch.engine.internal.writer;
 
 import com.liferay.petra.io.unsync.UnsyncPrintWriter;
-import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 
 import java.io.IOException;
@@ -72,7 +71,7 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 			return;
 		}
 
-		_unsyncPrintWriter.write(
+		_unsyncPrintWriter.println(
 			StringUtil.merge(
 				values,
 				value -> {
@@ -83,8 +82,6 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 					return String.valueOf(value);
 				},
 				_delimiter));
-
-		_unsyncPrintWriter.write(StringPool.NEW_LINE);
 	}
 
 	private final String _delimiter;

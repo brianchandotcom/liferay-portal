@@ -166,7 +166,7 @@ public class DataDefinitionResourceImpl
 	}
 
 	@Override
-	public String getDataDefinitionDataDefinitionFieldFieldType()
+	public String getDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -191,7 +191,7 @@ public class DataDefinitionResourceImpl
 	}
 
 	@Override
-	public String getDataDefinitionDataDefinitionFieldLink(
+	public String getDataDefinitionDataDefinitionFieldLinks(
 			Long dataDefinitionId, String fieldName)
 		throws Exception {
 

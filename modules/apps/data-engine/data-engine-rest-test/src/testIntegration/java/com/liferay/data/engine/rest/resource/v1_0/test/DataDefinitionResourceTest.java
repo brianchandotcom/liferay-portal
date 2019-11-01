@@ -44,25 +44,25 @@ public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {
 
 	@Override
-	public void testGetDataDefinitionDataDefinitionFieldFieldType()
+	public void testGetDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception {
 
 		String fieldTypes =
 			dataDefinitionResource.
-				getDataDefinitionDataDefinitionFieldFieldType();
+				getDataDefinitionDataDefinitionFieldFieldTypes();
 
 		Assert.assertTrue(Validator.isNotNull(fieldTypes));
 	}
 
 	@Override
-	public void testGetDataDefinitionDataDefinitionFieldLink()
+	public void testGetDataDefinitionDataDefinitionFieldLinks()
 		throws Exception {
 
 		DataDefinition postDataDefinition =
 			testGetDataDefinition_addDataDefinition();
 
 		String fieldLinks =
-			dataDefinitionResource.getDataDefinitionDataDefinitionFieldLink(
+			dataDefinitionResource.getDataDefinitionDataDefinitionFieldLinks(
 				postDataDefinition.getId(), "");
 
 		Assert.assertTrue(Validator.isNotNull(fieldLinks));

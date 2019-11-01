@@ -37,11 +37,53 @@ AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.
 
 			<div class="form-text">
 				<liferay-ui:message key="analytics-cloud-token-help" />
-			</span>
+			</div>
 
 			<aui:button-row>
 				<aui:button type="submit" value="connect" />
 			</aui:button-row>
 		</aui:fieldset>
 	</aui:form>
+
+	<aui:fieldset>
+		<label class="control-label">
+			<liferay-ui:message key="synced-sites" />
+		</label>
+
+		<div class="form-text">
+			<liferay-ui:message key="synced-sites-help" />
+		</div>
+
+		<small>
+			<strong>
+				<liferay-ui:message key="total-sites-selected" />
+				<%= 0 %>
+			</strong>
+		</small>
+
+		<aui:button-row>
+			<aui:button disabled="true" primary="true" type="button" value="select-sites" />
+		</aui:button-row>
+	</aui:fieldset>
+
+	<aui:fieldset>
+		<label class="control-label">
+			<liferay-ui:message key="synced-contacts" />
+		</label>
+
+		<div class="form-text">
+			<liferay-ui:message key="synced-contacts-help" />
+		</div>
+
+		<small>
+			<strong>
+				<liferay-ui:message key="total-contacts-selected" />
+				<%= 0 %>
+			</strong>
+		</small>
+
+		<aui:button-row>
+			<aui:button disabled="true" primary="true" type="button" value="select-contacts" />
+		</aui:button-row>
+	</aui:fieldset>
 </div>

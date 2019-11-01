@@ -34,7 +34,11 @@
 	<td></td>
 </tr>
 
-
+<tr>
+	<td>FIELD_LABEL</td>
+	<td>//label[contains(text(),'${fieldLabel}')]</td>
+	<td></td>
+</tr>
 
 </tbody>
 </table>

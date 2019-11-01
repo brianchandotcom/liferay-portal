@@ -94,7 +94,7 @@ public class PropertiesEmptyLinesCheck extends BaseFileCheck {
 	private static final Pattern _missingEmptyLineAfterCategoryPattern =
 		Pattern.compile("\n## \\w.*\n##\n([^\n#]|#[^#])");
 	private static final Pattern _missingEmptyLineAfterMultiLinePattern =
-		Pattern.compile("( *)([^#\n].*?)=\\\\(\n\\1 +.+)+\n(.+)");
+		Pattern.compile("( *)([^#\n].*?)=\\\\(\n\\1 +.+)++\n(.+)");
 	private static final Pattern _missingEmptyLineBeforeCategoryPattern =
 		Pattern.compile("\n([^\n#]|#[^#]).*\n##\n");
 	private static final Pattern _missingEmptyLineBeforeMultiLinePattern =

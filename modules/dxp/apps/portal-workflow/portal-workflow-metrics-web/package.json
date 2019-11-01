@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/charts": "3.0.1",
+		"@clayui/charts": "3.0.2",
 		"axios": "0.18.1",
 		"classnames": "2.2.6",
 		"custom-event-polyfill": "1.0.6",

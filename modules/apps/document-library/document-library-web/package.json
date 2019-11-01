@@ -1,12 +1,12 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.0.0",
-		"@clayui/button": "3.0.1",
-		"@clayui/css": "3.1.0",
-		"@clayui/form": "3.1.0",
+		"@clayui/alert": "3.0.1",
+		"@clayui/button": "3.0.2",
+		"@clayui/css": "3.2.0",
+		"@clayui/form": "3.2.0",
 		"@clayui/icon": "3.0.1",
 		"@clayui/loading-indicator": "3.0.0",
-		"@clayui/modal": "3.1.0",
+		"@clayui/modal": "3.1.2",
 		"asset-taglib": "*",
 		"clay-button": "2.18.4",
 		"clay-multi-select": "2.18.4",

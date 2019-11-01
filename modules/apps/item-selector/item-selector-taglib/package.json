@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.0.1",
+		"@clayui/button": "3.0.2",
 		"@clayui/icon": "3.0.1",
-		"@clayui/navigation-bar": "3.0.1",
-		"@clayui/tabs": "3.0.1",
+		"@clayui/navigation-bar": "3.0.3",
+		"@clayui/tabs": "3.0.3",
 		"clay-alert": "2.18.4",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",

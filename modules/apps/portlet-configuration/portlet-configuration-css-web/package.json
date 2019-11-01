@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/color-picker": "3.1.0",
+		"@clayui/color-picker": "3.1.2",
 		"react": "16.9.0"
 	},
 	"name": "portlet-configuration-css-web",

@@ -57,6 +57,7 @@ public class BuildCSSTask extends JavaExec {
 		systemProperty("sass.compiler.jni.clean.temp.dir", true);
 	}
 
+	@SuppressWarnings("unchecked")
 	public BuildCSSTask dirNames(Iterable<Object> dirNames) {
 		GUtil.addToCollection(_dirNames, dirNames);
 
@@ -67,6 +68,7 @@ public class BuildCSSTask extends JavaExec {
 		return dirNames(Arrays.asList(dirNames));
 	}
 
+	@SuppressWarnings("unchecked")
 	public BuildCSSTask excludes(Iterable<Object> excludes) {
 		GUtil.addToCollection(_excludes, excludes);
 
@@ -205,6 +207,7 @@ public class BuildCSSTask extends JavaExec {
 		return project.files(sourceMapFiles);
 	}
 
+	@SuppressWarnings("unchecked")
 	public BuildCSSTask imports(Iterable<Object> imports) {
 		GUtil.addToCollection(_imports, imports);
 
@@ -225,6 +228,7 @@ public class BuildCSSTask extends JavaExec {
 		return _generateSourceMap;
 	}
 
+	@SuppressWarnings("unchecked")
 	public BuildCSSTask rtlExcludedPathRegexps(
 		Iterable<Object> rtlExcludedPathRegexps) {
 

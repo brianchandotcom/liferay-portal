@@ -344,11 +344,6 @@
 	<bean class="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil" id="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil">
 		<property name="friendlyURLNormalizer" ref="com.liferay.portal.kernel.util.FriendlyURLNormalizer" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.util.HashCodeFactoryUtil" id="com.liferay.portal.kernel.util.HashCodeFactoryUtil">
-		<property name="hashCodeFactory">
-			<bean class="com.liferay.portal.util.HashCodeFactoryImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.util.HtmlUtil" id="com.liferay.portal.kernel.util.HtmlUtil">
 		<property name="html" ref="com.liferay.portal.util.HtmlImpl" />
 	</bean>

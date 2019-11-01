@@ -67,8 +67,8 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 	@Override
 	public void write(Collection<?> items) throws Exception {
 		for (Object item : items) {
-			_columnValueWriter.write(
-				this::_write, _fieldMap, _fieldNames, item);
+			_write(
+				_columnValueWriter.extractValues(_fieldMap, _fieldNames, item));
 		}
 	}
 

@@ -61,9 +61,9 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 		for (Object item : items) {
-			_columnValueWriter.write(
-				values -> _write(dateFormat, values), _fieldMap, _fieldNames,
-				item);
+			_write(
+				dateFormat,
+				_columnValueWriter.extractValues(_fieldMap, _fieldNames, item));
 		}
 	}
 

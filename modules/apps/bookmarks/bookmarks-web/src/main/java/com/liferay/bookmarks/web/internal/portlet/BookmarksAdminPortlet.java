@@ -15,6 +15,7 @@
 package com.liferay.bookmarks.web.internal.portlet;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.service.BookmarksFolderService;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.trash.TrashHelper;
@@ -68,6 +69,9 @@ public class BookmarksAdminPortlet extends MVCPortlet {
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private BookmarksFolderService _bookmarksFolderService;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.bookmarks.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"

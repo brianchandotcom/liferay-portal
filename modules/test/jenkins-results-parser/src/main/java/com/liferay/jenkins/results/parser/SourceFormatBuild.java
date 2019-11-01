@@ -155,7 +155,7 @@ public class SourceFormatBuild extends DefaultTopLevelBuild {
 		return _NAME_TEST_SUITE;
 	}
 
-	private static final String _NAME_TEST_SUITE = "ci:test:sf";
+	private static final String _NAME_TEST_SUITE = "sf";
 
 	private PullRequest _pullRequest;
 

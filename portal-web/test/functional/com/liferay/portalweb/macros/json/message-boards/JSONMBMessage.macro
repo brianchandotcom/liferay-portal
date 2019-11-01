@@ -95,9 +95,9 @@ definition {
 	macro getCategoryId {
 		var messageBoardsCategoryURL = selenium.getLocation();
 		var portalURL = PropsUtil.get("portal.url");
-		var categoryId = StringUtil.replace("${messageBoardsCategoryURL}", "${portalURL}/web/guest/message-boards-page/-/message_boards/message/", "");
+		var categoryId = StringUtil.replace("${messageBoardsCategoryURL}", "${portalURL}/web/guest/message-boards-page/-/message_boards/category/", "");
 
-		return "${messageId}";
+		return "${categoryId}";
 	}
 
 	@summary = "This calls the JSON WS API to get the ID of a MB thread through the URL"

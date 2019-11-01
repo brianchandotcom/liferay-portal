@@ -119,6 +119,12 @@ public class DataDefinitionResourceTest
 	public void testGraphQLGetSiteDataDefinitionsPage() {
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostSiteDataDefinitions() {
+	}
+
 	@Override
 	public void testPostDataDefinitionDataDefinitionPermissions()
 		throws Exception {

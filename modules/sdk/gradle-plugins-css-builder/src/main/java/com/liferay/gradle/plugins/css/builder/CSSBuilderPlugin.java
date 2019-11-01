@@ -19,6 +19,7 @@ import com.liferay.gradle.util.GradleUtil;
 import java.io.File;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -57,10 +58,20 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 		Configuration portalCommonCSSConfiguration =
 			_addConfigurationPortalCommonCSS(project);
 
-		_addTaskBuildCSS(project);
+		final BuildCSSTask buildCSSTask = _addTaskBuildCSS(project);
 
 		_configureTasksBuildCSS(
 			project, cssBuilderConfiguration, portalCommonCSSConfiguration);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					_configureTaskBuildCSSJvmArgs(buildCSSTask);
+				}
+
+			});
 	}
 
 	private Configuration _addConfigurationCSSBuilder(final Project project) {
@@ -211,6 +222,12 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _configureTaskBuildCSSJvmArgs(BuildCSSTask buildCSSTask) {
+		if (Objects.equals("ruby", buildCSSTask.getSassCompilerClassName())) {
+			buildCSSTask.jvmArgs("-Xss4096k");
+		}
 	}
 
 	private void _configureTasksBuildCSS(

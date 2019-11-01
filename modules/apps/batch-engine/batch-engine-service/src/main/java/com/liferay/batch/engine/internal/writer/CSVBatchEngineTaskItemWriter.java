@@ -27,8 +27,10 @@ import java.text.SimpleDateFormat;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Ivica cardic
@@ -41,7 +43,7 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 
 		_delimiter = delimiter;
 		_fieldMap = fieldMap;
-		_fieldNames = fieldNames;
+		_fieldNames = new HashSet<>(fieldNames);
 
 		_unsyncPrintWriter = new UnsyncPrintWriter(outputStream);
 
@@ -86,7 +88,7 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 
 	private final String _delimiter;
 	private final Map<String, Field> _fieldMap;
-	private final List<String> _fieldNames;
+	private final Set<String> _fieldNames;
 	private final UnsyncPrintWriter _unsyncPrintWriter;
 
 }

@@ -52,9 +52,9 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "my custom object");
 	}
 
-	@description = "Add a Form View"
+	@description = "Add a Form View with a Text Field"
 	@priority = "5"
-	test AddSimpleFormView {
+	test AddSimpleFormViewWithTextField {
 		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(

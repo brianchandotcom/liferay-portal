@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGER_TITLE</td>
+	<td>//div[contains(@class,'list-group-header-title') and contains(.,'${key_titleName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VERTICAL_ELLIPSIS</td>
 	<td>//li[contains(.,'${key_threadSubject}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]] | //div[contains(@class,'heading')]//div[contains(@class,'dropdown')]//a</td>
 	<td></td>

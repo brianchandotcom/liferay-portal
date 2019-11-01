@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEXT_LINK_2</td>
+	<td>xpath=(//ul[contains(@class,'pagination')]/li/a[contains(.,'Next')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LAST_LINK</td>
 	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'3')]</td>
 	<td></td>
@@ -56,6 +61,11 @@
 <tr>
 	<td>ITEMS_PER_PAGE_SELECT</td>
 	<td>//div[contains(@class,'pagination-items-per-page')]/a[contains(@class,'toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ITEMS_PER_PAGE_SELECT_2</td>
+	<td>xpath=(//div[contains(@class,'pagination-items-per-page')]/a[contains(@class,'toggle')])[2]</td>
 	<td></td>
 </tr>
 <tr>

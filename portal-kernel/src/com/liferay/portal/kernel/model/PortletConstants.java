@@ -25,14 +25,6 @@ public class PortletConstants {
 	public static final String DEFAULT_PREFERENCES = "<portlet-preferences />";
 
 	/**
-	 * Facebook integration method for IFrame.
-	 *
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String FACEBOOK_INTEGRATION_IFRAME = "iframe";
-
-	/**
 	 * Layout separator.
 	 */
 	public static final String LAYOUT_SEPARATOR = "_LAYOUT_";

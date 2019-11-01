@@ -876,18 +876,6 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Returns the Facebook integration method of the portlet.
-	 *
-	 * @return     the Facebook integration method of the portlet
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getFacebookIntegration() {
-		return _facebookIntegration;
-	}
-
-	/**
 	 * Returns a list of CSS files that will be referenced from the page's
 	 * footer relative to the portal's context path.
 	 *
@@ -3175,21 +3163,6 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Sets the Facebook integration method of the portlet.
-	 *
-	 * @param      facebookIntegration the Facebook integration method of the
-	 *             portlet
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void setFacebookIntegration(String facebookIntegration) {
-		if (Validator.isNotNull(facebookIntegration)) {
-			_facebookIntegration = facebookIntegration;
-		}
-	}
-
-	/**
 	 * Sets a list of CSS files that will be referenced from the page's footer
 	 * relative to the portal's context path.
 	 *
@@ -4453,15 +4426,6 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The expiration cache of the portlet.
 	 */
 	private Integer _expCache;
-
-	/**
-	 * The Facebook integration method of the portlet.
-	 *
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	private String _facebookIntegration =
-		PortletConstants.FACEBOOK_INTEGRATION_IFRAME;
 
 	/**
 	 * A list of CSS files that will be referenced from the page's footer

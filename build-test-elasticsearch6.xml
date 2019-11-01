@@ -618,7 +618,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			</if>
 
 			<unzip
-				dest="${liferay.home}/data/elasticsearch7/repo"
+				dest="${liferay.home}/data/elasticsearch6/repo"
 				src="${liferay.home}/${elasticsearch.ltr-linear-regression-model.zip.name}"
 			/>
 		</sequential>

@@ -332,7 +332,7 @@ openapi: 3.0.1
 paths:
     "/data-definitions/data-definition-fields/field-types":
         get:
-            operationId: getDataDefinitionDataDefinitionFieldFieldType
+            operationId: getDataDefinitionDataDefinitionFieldFieldTypes
             responses:
                 200:
                     content:
@@ -411,7 +411,7 @@ paths:
             tags: ["DataDefinition"]
     "/data-definitions/{dataDefinitionId}/data-definition-field-links":
         get:
-            operationId: getDataDefinitionDataDefinitionFieldLink
+            operationId: getDataDefinitionDataDefinitionFieldLinks
             parameters:
                 - in: path
                   name: dataDefinitionId

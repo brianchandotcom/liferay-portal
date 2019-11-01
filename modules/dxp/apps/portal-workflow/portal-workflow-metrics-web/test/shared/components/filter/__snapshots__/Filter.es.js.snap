@@ -145,12 +145,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 0
@@ -176,12 +173,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 1
@@ -207,12 +201,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 2
@@ -238,12 +229,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 3
@@ -269,12 +257,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 4
@@ -300,12 +285,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 5
@@ -331,12 +313,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 6
@@ -362,12 +341,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 7
@@ -393,12 +369,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 8
@@ -424,12 +397,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 9
@@ -455,12 +425,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 10
@@ -486,12 +453,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 11
@@ -517,12 +481,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 12
@@ -548,12 +509,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 13
@@ -579,12 +537,9 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
-          />
-          <span
-            className="dropdown-item-text"
           >
             <span
-              className="dropdown-item-name"
+              className="custom-control-label-text"
               data-testid="filterItemName"
             >
               Item Name 14

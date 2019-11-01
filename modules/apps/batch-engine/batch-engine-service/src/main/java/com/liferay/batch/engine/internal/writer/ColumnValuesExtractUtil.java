@@ -53,25 +53,25 @@ public class ColumnValuesExtractUtil {
 				for (Map.Entry<String, Object> valueEntry :
 						valueMap.entrySet()) {
 
-					Object innerValue = valueEntry.getValue();
-
-					if (innerValue == null) {
-						innerValue = StringPool.BLANK;
-					}
-
 					String name = key.concat(valueEntry.getKey());
 
 					if (fieldNames.contains(name)) {
+						Object innerValue = valueEntry.getValue();
+
+						if (innerValue == null) {
+							innerValue = StringPool.BLANK;
+						}
+
 						columnNameValueMap.put(name, innerValue);
 					}
 				}
 			}
 			else {
-				if (value == null) {
-					value = StringPool.BLANK;
-				}
-
 				if (fieldNames.contains(key)) {
+					if (value == null) {
+						value = StringPool.BLANK;
+					}
+
 					columnNameValueMap.put(key, value);
 				}
 			}

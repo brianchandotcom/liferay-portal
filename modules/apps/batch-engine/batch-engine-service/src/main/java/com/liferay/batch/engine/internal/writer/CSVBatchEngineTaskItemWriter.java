@@ -46,6 +46,8 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 		_unsyncPrintWriter = new UnsyncPrintWriter(outputStream);
 
 		_columnValueWriter = new ColumnValueWriter();
+
+		_unsyncPrintWriter.println(StringUtil.merge(fieldNames, delimiter));
 	}
 
 	@Override

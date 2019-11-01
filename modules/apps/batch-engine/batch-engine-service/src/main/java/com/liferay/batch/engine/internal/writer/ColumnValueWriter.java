@@ -37,12 +37,6 @@ public class ColumnValueWriter {
 		Map<String, Object> columnNameValueMap = _getColumnNameValueMap(
 			item, fieldMap, fieldNames);
 
-		if (!_firstLineWritten) {
-			consumer.accept(fieldNames);
-
-			_firstLineWritten = true;
-		}
-
 		consumer.accept(columnNameValueMap.values());
 	}
 
@@ -97,7 +91,5 @@ public class ColumnValueWriter {
 
 		return columnNameValueMap;
 	}
-
-	private boolean _firstLineWritten;
 
 }

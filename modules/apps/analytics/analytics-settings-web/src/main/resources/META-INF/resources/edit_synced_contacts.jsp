@@ -68,7 +68,7 @@
 							<liferay-ui:message key="sync-by-user-groups" />
 						</h4>
 						<p class="list-group-subtext">
-							<liferay-ui:message arguments="0" key="x-organizations-selected" />
+							<liferay-ui:message arguments="<%= 0 %>" key="x-organizations-selected" />
 						</p>
 					</div>
 				</li>
@@ -83,7 +83,7 @@
 							<liferay-ui:message key="sync-by-organizations" />
 						</h4>
 						<p class="list-group-subtext">
-							<liferay-ui:message arguments="0" key="x-user-groups-selected" />
+							<liferay-ui:message arguments="<%= 0 %>" key="x-user-groups-selected" />
 						</p>
 					</div>
 				</li>

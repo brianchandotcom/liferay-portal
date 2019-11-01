@@ -56,8 +56,7 @@ AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.
 
 		<small>
 			<strong>
-				<liferay-ui:message key="total-sites-selected" />
-				<%= 0 %>
+				<liferay-ui:message arguments="<%= 0 %>" key="total-sites-selected-x" />
 			</strong>
 		</small>
 
@@ -77,8 +76,7 @@ AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.
 
 		<small>
 			<strong>
-				<liferay-ui:message key="total-contacts-selected" />
-				<%= 0 %>
+				<liferay-ui:message arguments="<%= 0 %>" key="total-contacts-selected-x" />
 			</strong>
 		</small>
 

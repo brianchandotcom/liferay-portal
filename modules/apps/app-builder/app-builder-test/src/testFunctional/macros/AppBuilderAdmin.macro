@@ -113,4 +113,10 @@ definition {
 		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
 	}
 
+	macro openItem {
+		Click(
+			key_ItemName = "${customObjectName}",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+	}
+
 }

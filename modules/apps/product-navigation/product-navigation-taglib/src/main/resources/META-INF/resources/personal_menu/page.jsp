@@ -21,7 +21,7 @@ String namespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
 long color = (long)request.getAttribute("liferay-product-navigation:personal-menu:color");
 boolean expanded = (boolean)request.getAttribute("liferay-product-navigation:personal-menu:expanded");
-boolean label = (boolean)request.getAttribute("liferay-product-navigation:personal-menu:label");
+String label = (String)request.getAttribute("liferay-product-navigation:personal-menu:label");
 String size = (String)request.getAttribute("liferay-product-navigation:personal-menu:size");
 
 String userStickerClasses = "sticker";
@@ -58,7 +58,7 @@ if (size != null) {
 <div class="personal-menu-dropdown" id="<%= namespace + "personal_menu_dropdown" %>">
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(label) %>">
-			<%= label %>
+			<div><%= label %></div>
 		</c:when>
 		<c:otherwise>
 			<button aria-expanded="true" aria-haspopup="true" class="btn btn-unstyled dropdown-toggle" id="<%= namespace + "personal_menu_dropdown_toggle" %>" ref="triggerButton" type="button">

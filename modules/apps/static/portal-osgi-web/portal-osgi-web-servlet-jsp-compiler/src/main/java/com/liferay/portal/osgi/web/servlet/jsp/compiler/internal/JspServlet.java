@@ -181,7 +181,7 @@ public class JspServlet extends HttpServlet {
 		).put(
 			"compilerClassName",
 			"com.liferay.portal.osgi.web.servlet.jsp.compiler.internal." +
-				"JspCompiler"
+				"CompilerWrapper"
 		).put(
 			"compilerSourceVM", "1.8"
 		).put(
@@ -190,10 +190,6 @@ public class JspServlet extends HttpServlet {
 			"development", String.valueOf(PropsValues.WORK_DIR_OVERRIDE_ENABLED)
 		).put(
 			"httpMethods", "GET,POST,HEAD"
-		).put(
-			"jspCompilerClassName",
-			"com.liferay.portal.osgi.web.servlet.jsp.compiler.internal." +
-				"CompilerWrapper"
 		).put(
 			"keepgenerated", "false"
 		).put(

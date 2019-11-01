@@ -171,6 +171,12 @@ definition {
 
 		FormViewBuilder.save();
 
+		AppBuilderAdmin.validateCustomObjectNameOnCustomObjectList(customObjectName = "My Form View");
+
+		AppBuilderAdmin.openItem(customObjectName = "My Form View");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text Field");
+
 
 	}
 

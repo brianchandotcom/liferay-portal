@@ -224,6 +224,7 @@
 			<message key="lps42924" value="Use ''classNameLocalService.getClassNameId'' instead of ''PortalUtil.getClassName''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MapBuilderCheck">
+			<property name="enabled" value="false" />
 			<property name="mapTypeNames" value="ConcurrentHashMap,HashMap,LinkedHashMap,TreeMap" />
 			<message key="map.builder.include" value="Include method call ''{0}'' ({1}) in ''{2}'' ({3}). See " />
 			<message key="map.builder.use" value="Use ''{0}'' ({1}, {2}). See " />

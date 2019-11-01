@@ -421,7 +421,8 @@ public class LayoutCTTest {
 					"CTEntry.modelClassNameId = ",
 					_classNameLocalService.getClassNameId(Layout.class),
 					" and CTEntry.modelClassPK = Layout.plid and ",
-					"CTEntry.modelMvccVersion = Layout.mvccVersion where ",
+					"CTEntry.modelMvccVersion = Layout.mvccVersion and ",
+					"CTEntry.ctCollectionId = Layout.ctCollectionId where ",
 					"CTEntry.ctCollectionId = ",
 					_ctCollection.getCtCollectionId(),
 					" order by ctEntryId ASC"));
@@ -430,12 +431,36 @@ public class LayoutCTTest {
 			Assert.assertTrue(rs.next());
 
 			Assert.assertEquals(
-				CTConstants.CT_CHANGE_TYPE_ADDITION, rs.getLong("changeType"));
+				CTConstants.CT_CHANGE_TYPE_DELETION, rs.getLong("changeType"));
 
 			Assert.assertTrue(rs.next());
 
 			Assert.assertEquals(
-				CTConstants.CT_CHANGE_TYPE_DELETION, rs.getLong("changeType"));
+				CTConstants.CT_CHANGE_TYPE_MODIFICATION,
+				rs.getLong("changeType"));
+
+			Assert.assertFalse(rs.next());
+		}
+
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				StringBundler.concat(
+					"select changeType from CTEntry inner join Layout on ",
+					"CTEntry.modelClassNameId = ",
+					_classNameLocalService.getClassNameId(Layout.class),
+					" and CTEntry.modelClassPK = Layout.plid and ",
+					"CTEntry.modelMvccVersion = Layout.mvccVersion where ",
+					"CTEntry.ctCollectionId = ",
+					_ctCollection.getCtCollectionId(),
+					" and Layout.ctCollectionId = ",
+					CTConstants.CT_COLLECTION_ID_PRODUCTION,
+					" order by ctEntryId ASC"));
+			ResultSet rs = ps.executeQuery()) {
+
+			Assert.assertTrue(rs.next());
+
+			Assert.assertEquals(
+				CTConstants.CT_CHANGE_TYPE_ADDITION, rs.getLong("changeType"));
 
 			Assert.assertTrue(rs.next());
 
@@ -626,7 +651,9 @@ public class LayoutCTTest {
 			String message = throwable.getMessage();
 
 			Assert.assertTrue(
-				message, message.contains("MVCC version mismatch between "));
+				message,
+				message.startsWith(
+					"Unable to auto resolve publication conflict "));
 		}
 
 		layout = _layoutLocalService.fetchLayout(layout.getPlid());
@@ -850,8 +877,7 @@ public class LayoutCTTest {
 
 			String message = throwable.toString();
 
-			Assert.assertTrue(
-				message, message.contains("Size mismatch between "));
+			Assert.assertTrue(message, message.contains("Size mismatch "));
 		}
 	}
 

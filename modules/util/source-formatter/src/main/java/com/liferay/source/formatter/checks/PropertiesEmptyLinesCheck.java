@@ -64,16 +64,16 @@ public class PropertiesEmptyLinesCheck extends BaseFileCheck {
 			content);
 
 		while (matcher.find()) {
-			String currentPropertyKeyPattern =
-				Pattern.quote(matcher.group(1)) + "#?" +
-					Pattern.quote(matcher.group(2));
-
 			String nextLinePropertyKey = StringUtil.extractFirst(
 				matcher.group(4), "=");
 
-			if (Validator.isNull(nextLinePropertyKey)) {
+			if (Validator.isNotNull(nextLinePropertyKey)) {
 				continue;
 			}
+
+			String currentPropertyKeyPattern =
+				Pattern.quote(matcher.group(1)) + "#?" +
+					Pattern.quote(matcher.group(2));
 
 			if (!nextLinePropertyKey.matches(currentPropertyKeyPattern)) {
 				return StringUtil.replaceFirst(

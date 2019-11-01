@@ -20,7 +20,6 @@ import java.io.OutputStream;
 
 import java.lang.reflect.Field;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,12 +55,12 @@ public class BatchEngineTaskItemWriterFactory {
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
 			return new JSONBatchEngineTaskItemWriter(
-				new ArrayList<>(fieldMap.keySet()), fieldNames, outputStream);
+				fieldMap.keySet(), fieldNames, outputStream);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSONL) {
 			return new JSONLBatchEngineTaskItemWriter(
-				new ArrayList<>(fieldMap.keySet()), fieldNames, outputStream);
+				fieldMap.keySet(), fieldNames, outputStream);
 		}
 
 		if ((batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||

@@ -10,17 +10,17 @@
 <tbody>
 <tr>
 	<td>INPUT_FIELD</td>
-	<td>//div[contains(@id,'layoutFinder')]//input</td>
+	<td>//div[contains(@id,'layout-finder')]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OUTLINE_ICON</td>
-	<td>//button[contains(@data-title,"Find a Page")]</td>
+	<td>//a[contains(@aria-label,'Find a Page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIEW_IN_PAGE_ADMINISTRATION</td>
-	<td>//div[contains(@id,'layoutFinder')]//a[contains(.,"View in Page Administration")]</td>
+	<td>//div[contains(@id,'layout-finder')]//a[contains(.,"View in Page Administration")]</td>
 	<td></td>
 </tr>
 </tbody>

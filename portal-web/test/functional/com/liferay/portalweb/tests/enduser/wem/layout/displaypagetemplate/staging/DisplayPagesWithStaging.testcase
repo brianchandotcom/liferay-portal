@@ -38,7 +38,7 @@ definition {
 	@priority = "5"
 	test AssertDisplayPagesAreOnlyEditableInStagingView {
 		task ("Assert display pages admin is accessible in the staging site") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name-staging");
 
 			AssertVisible(
 				key_navItem = "Display Page Templates",
@@ -46,7 +46,7 @@ definition {
 		}
 
 		task ("Assert display pages admin is not accessible in the live site") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
 
 			AssertElementNotPresent(
 				key_navItem = "Display Page Templates",

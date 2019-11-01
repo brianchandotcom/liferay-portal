@@ -13,6 +13,7 @@ exports[`Panel does not render component child components without content 1`] = 
 exports[`Panel renders class passed by props 1`] = `
 <div
   class="panel-header"
+  data-testid="panelHeader"
 >
   <div>
     Header
@@ -31,6 +32,7 @@ exports[`Panel renders component 1`] = `
       <Header>
         <div
           className="panel-header"
+          data-testid="panelHeader"
         >
           <div>
             Header
@@ -40,6 +42,7 @@ exports[`Panel renders component 1`] = `
       <Body>
         <div
           className="panel-body"
+          data-testid="panelBody"
         >
           Body
         </div>
@@ -66,6 +69,7 @@ exports[`Panel renders component 1`] = `
 exports[`Panel renders header with title 1`] = `
 <div
   class="panel-header"
+  data-testid="panelHeader"
 >
   <div
     class="panel-title"

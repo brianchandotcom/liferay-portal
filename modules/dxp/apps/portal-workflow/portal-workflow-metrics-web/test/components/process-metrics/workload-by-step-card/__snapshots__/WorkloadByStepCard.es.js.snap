@@ -92,6 +92,7 @@ exports[`Should component receive props 1`] = `
               >
                 <div
                   className="panel-header dashboard-panel-header"
+                  data-testid="panelHeader"
                 >
                   <div>
                     <div>
@@ -138,6 +139,7 @@ exports[`Should component receive props 1`] = `
               <Body>
                 <div
                   className="panel-body"
+                  data-testid="panelBody"
                 >
                   <ListView
                     className="border-0"
@@ -261,6 +263,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
               >
                 <div
                   className="panel-header dashboard-panel-header"
+                  data-testid="panelHeader"
                 >
                   <div>
                     <div>
@@ -307,6 +310,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
               <Body>
                 <div
                   className="panel-body"
+                  data-testid="panelBody"
                 >
                   <ListView
                     className="border-0"
@@ -434,6 +438,7 @@ exports[`Should render component 1`] = `
               >
                 <div
                   className="panel-header dashboard-panel-header"
+                  data-testid="panelHeader"
                 >
                   <div>
                     <div>
@@ -480,6 +485,7 @@ exports[`Should render component 1`] = `
               <Body>
                 <div
                   className="panel-body"
+                  data-testid="panelBody"
                 >
                   <ListView
                     className="border-0"
@@ -524,6 +530,7 @@ exports[`Should render component with empty data 1`] = `
   >
     <div
       className="panel-header dashboard-panel-header"
+      data-testid="panelHeader"
     >
       <div>
         <div>
@@ -558,6 +565,7 @@ exports[`Should render component with empty data 1`] = `
     </div>
     <div
       className="panel-body"
+      data-testid="panelBody"
     >
       <div>
         <div
@@ -583,6 +591,7 @@ exports[`Should render component with error state 1`] = `
   >
     <div
       className="panel-header dashboard-panel-header"
+      data-testid="panelHeader"
     >
       <div>
         <div>
@@ -617,6 +626,7 @@ exports[`Should render component with error state 1`] = `
     </div>
     <div
       className="panel-body"
+      data-testid="panelBody"
     >
       <div>
         <div

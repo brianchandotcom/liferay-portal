@@ -35,6 +35,8 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
+		DepotNavigator.openDepotAdmin();
+
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
 		DMNavigator.gotoMetadataSets();
@@ -83,6 +85,8 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
+		DepotNavigator.openDepotAdmin();
+
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
 		DMFolder.addCP(dmFolderName = "DM Folder Name");
@@ -103,6 +107,8 @@ definition {
 		Depot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
@@ -129,6 +135,8 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
+		DepotNavigator.openDepotAdmin();
+
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
 		DMDocument.addCP(
@@ -136,10 +144,7 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
@@ -162,6 +167,8 @@ definition {
 		Depot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
@@ -208,6 +215,8 @@ definition {
 		Depot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
@@ -293,6 +302,8 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
+		DepotNavigator.openDepotAdmin();
+
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
 		DMDocument.addCP(
@@ -333,6 +344,8 @@ definition {
 		Depot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 

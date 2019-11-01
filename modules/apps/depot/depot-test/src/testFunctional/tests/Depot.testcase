@@ -35,6 +35,8 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
+		DepotNavigator.openDepotAdmin();
+
 		Depot.deleteCP(depotName = "Test Depot Name");
 
 		Depot.viewDefaultCP();
@@ -48,6 +50,8 @@ definition {
 		Depot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
@@ -69,6 +73,8 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
+		DepotNavigator.openDepotAdmin();
+
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls");
@@ -89,10 +95,14 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
+		DepotNavigator.openDepotAdmin();
+
 		Depot.editDepot(
 			depotDescriptionEdit = "This is an edited description of a depot",
 			depotName = "Test Depot Name",
 			depotNameEdit = "Edited Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
 	}
@@ -106,15 +116,23 @@ definition {
 			depotDescription = "Description 1",
 			depotName = "Depo 1");
 
+		DepotNavigator.openDepotAdmin();
+
 		Depot.addDepot(
 			depotDescription = "Description 2",
 			depotName = "Depo 2");
+
+		DepotNavigator.openDepotAdmin();
 
 		Depot.addDepot(
 			depotDescription = "Description 3",
 			depotName = "Depo 3");
 
+		DepotNavigator.openDepotAdmin();
+
 		Depot.addDepot(depotName = "Should be not returned in search");
+
+		DepotNavigator.openDepotAdmin();
 
 		Search.searchCP(searchTerm = "Description");
 
@@ -134,11 +152,19 @@ definition {
 
 		Depot.addDepot(depotName = "Depo 1");
 
+		DepotNavigator.openDepotAdmin();
+
 		Depot.addDepot(depotName = "Depo 2");
+
+		DepotNavigator.openDepotAdmin();
 
 		Depot.addDepot(depotName = "Depo 3");
 
+		DepotNavigator.openDepotAdmin();
+
 		Depot.addDepot(depotName = "Should be not returned in search");
+
+		DepotNavigator.openDepotAdmin();
 
 		Search.searchCP(searchTerm = "Depo");
 
@@ -162,6 +188,8 @@ definition {
 		Depot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 	}

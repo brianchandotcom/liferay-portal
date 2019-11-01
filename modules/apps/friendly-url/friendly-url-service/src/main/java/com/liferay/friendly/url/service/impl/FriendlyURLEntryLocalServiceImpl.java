@@ -527,13 +527,9 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	private int _getNewEndPos(String urlTitle, int endPos) {
-		if (!Character.isLowSurrogate(urlTitle.charAt(endPos - 1)) ||
-			(endPos < 2)) {
+		if ((endPos > 1) &&
+			Character.isHighSurrogate(urlTitle.charAt(endPos - 2))) {
 
-			return endPos - 1;
-		}
-
-		if (Character.isHighSurrogate(urlTitle.charAt(endPos - 2))) {
 			return endPos - 2;
 		}
 

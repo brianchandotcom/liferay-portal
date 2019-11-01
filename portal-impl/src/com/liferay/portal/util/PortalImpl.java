@@ -278,8 +278,6 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.RenderRequest;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
@@ -5964,37 +5962,6 @@ public class PortalImpl implements Portal {
 		Company company = getCompany(httpServletRequest);
 
 		return company.getDefaultUser();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void invokeTaglibDiscussionPagination(
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws IOException, PortletException {
-
-		if (_getCommentsStrutsAction == null) {
-			_log.error(
-				"Unable to find a Struts Action component with property " +
-					"\"path=/portal/comment/discussion/get_comments\"");
-
-			return;
-		}
-
-		try {
-			_getCommentsStrutsAction.execute(
-				getHttpServletRequest(resourceRequest),
-				getHttpServletResponse(resourceResponse));
-		}
-		catch (IOException | PortletException | RuntimeException e) {
-			throw e;
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
 	}
 
 	@Override

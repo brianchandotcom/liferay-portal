@@ -59,8 +59,6 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.RenderRequest;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
 
@@ -1113,15 +1111,6 @@ public interface Portal {
 
 	public User initUser(HttpServletRequest httpServletRequest)
 		throws Exception;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public void invokeTaglibDiscussionPagination(
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws IOException, PortletException;
 
 	public boolean isCDNDynamicResourcesEnabled(
 			HttpServletRequest httpServletRequest)

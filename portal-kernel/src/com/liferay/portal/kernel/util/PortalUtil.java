@@ -62,8 +62,6 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.RenderRequest;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
 
@@ -1829,19 +1827,6 @@ public class PortalUtil {
 		throws Exception {
 
 		return getPortal().initUser(httpServletRequest);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void invokeTaglibDiscussionPagination(
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws IOException, PortletException {
-
-		getPortal().invokeTaglibDiscussionPagination(
-			portletConfig, resourceRequest, resourceResponse);
 	}
 
 	public static boolean isCDNDynamicResourcesEnabled(

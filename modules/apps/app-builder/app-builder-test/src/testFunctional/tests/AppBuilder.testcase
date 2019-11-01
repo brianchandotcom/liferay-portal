@@ -255,6 +255,31 @@ definition {
 		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
 	}
 
+	@description = "Add a Form View with a Date field"
+	@priority = "5"
+	test AddSimpleFormViewWithDateField {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		var fieldType = "Date";
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
+
+		AppBuilderAdmin.openItem(customObjectName = "My Form View");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+	}
+
 
 	@description = "Add a Table View"
 	@priority = "5"

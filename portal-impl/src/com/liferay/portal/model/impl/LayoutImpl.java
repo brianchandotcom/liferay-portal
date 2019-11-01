@@ -1203,19 +1203,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean isTypeSharedPortlet() {
-		if (Objects.equals(getType(), LayoutConstants.TYPE_SHARED_PORTLET)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	@Override
 	public boolean isTypeURL() {
 		if (Objects.equals(getType(), LayoutConstants.TYPE_URL)) {

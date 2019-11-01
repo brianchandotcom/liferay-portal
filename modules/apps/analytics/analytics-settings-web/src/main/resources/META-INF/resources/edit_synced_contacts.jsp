@@ -35,7 +35,7 @@
 				<liferay-ui:message key="sync-all-contacts-help" />
 			</div>
 
-			<label class="toggle-switch mt-3 mb-4">
+			<label class="mb-4 mt-3 toggle-switch">
 				<input class="toggle-switch-check" name="<portlet:namespace />syncAllContacts" type="checkbox" />
 
 				<span aria-hidden="true" class="toggle-switch-bar">
@@ -59,14 +59,19 @@
 			<ul class="list-group mt-4">
 				<li class="list-group-item list-group-item-flex">
 					<div class="autofit-col">
-						<div class="sticker sticker-rounded sticker-light">
-							<liferay-ui:icon icon="user" markupView="lexicon"/>
+						<div class="sticker sticker-light sticker-rounded">
+							<liferay-ui:icon
+								icon="user"
+								markupView="lexicon"
+							/>
 						</div>
 					</div>
+
 					<div class="autofit-col">
 						<h4 class="list-group-title">
 							<liferay-ui:message key="sync-by-user-groups" />
 						</h4>
+
 						<p class="list-group-subtext">
 							<liferay-ui:message arguments="<%= 0 %>" key="x-organizations-selected" />
 						</p>
@@ -74,14 +79,19 @@
 				</li>
 				<li class="list-group-item list-group-item-flex">
 					<div class="autofit-col">
-						<div class="sticker sticker-rounded sticker-light">
-							<liferay-ui:icon icon="organizations" markupView="lexicon"/>
+						<div class="sticker sticker-light sticker-rounded">
+							<liferay-ui:icon
+								icon="organizations"
+								markupView="lexicon"
+							/>
 						</div>
 					</div>
+
 					<div class="autofit-col">
 						<h4 class="list-group-title">
 							<liferay-ui:message key="sync-by-organizations" />
 						</h4>
+
 						<p class="list-group-subtext">
 							<liferay-ui:message arguments="<%= 0 %>" key="x-user-groups-selected" />
 						</p>

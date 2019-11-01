@@ -30,6 +30,12 @@
 </tr>
 
 <tr>
+	<td>ITEM_ON_THE_TABLE_CLICK</td>
+	<td>//table[contains(@class,'table')]//a[contains(text(),'${key_ItemName}')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>CHECKBOX</td>
 	<td>//input[@class='custom-control-input']</td>
 	<td></td>

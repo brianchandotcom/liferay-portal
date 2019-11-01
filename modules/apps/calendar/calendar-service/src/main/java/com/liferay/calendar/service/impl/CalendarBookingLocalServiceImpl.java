@@ -2332,10 +2332,15 @@ public class CalendarBookingLocalServiceImpl
 				calendarBooking.getCalendarBookingId());
 
 		for (CalendarBooking childCalendarBooking : childCalendarBookings) {
-			if (childCalendarBooking.isDenied() &&
-				ArrayUtil.contains(
+			if (!childCalendarBooking.isMasterBooking() &&
+				!ArrayUtil.contains(
 					childCalendarIds, childCalendarBooking.getCalendarId())) {
 
+				deleteCalendarBooking(
+					childCalendarBooking.getCalendarBookingId());
+			}
+
+			if (childCalendarBooking.isDenied()) {
 				continue;
 			}
 

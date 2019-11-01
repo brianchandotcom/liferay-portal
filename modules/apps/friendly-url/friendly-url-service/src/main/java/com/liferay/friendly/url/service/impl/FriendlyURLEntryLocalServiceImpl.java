@@ -520,13 +520,12 @@ public class FriendlyURLEntryLocalServiceImpl
 		int endPos = decodedString.length();
 
 		while (encodedString.length() > maxLength) {
-			if ((endPos > 1) &&
-				Character.isHighSurrogate(decodedString.charAt(endPos - 2))) {
+			endPos--;
 
-				endPos = endPos - 2;
-			}
-			else {
-				endPos = endPos - 1;
+			if ((endPos > 0) &&
+				Character.isHighSurrogate(decodedString.charAt(endPos - 1))) {
+
+				endPos--;
 			}
 
 			encodedString = FriendlyURLNormalizerUtil.normalizeWithEncoding(

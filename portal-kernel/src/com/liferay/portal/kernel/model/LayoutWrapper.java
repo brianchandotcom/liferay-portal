@@ -1627,15 +1627,6 @@ public class LayoutWrapper
 		return model.isTypePortlet();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean isTypeSharedPortlet() {
-		return model.isTypeSharedPortlet();
-	}
-
 	@Override
 	public boolean isTypeURL() {
 		return model.isTypeURL();

@@ -80,7 +80,7 @@ definition {
 			locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
 	}
 
-	macro validateCustomObjectNameOnCustomObjectList {
+	macro validateItemNameOnTable {
 		AssertTextEquals(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
 			value1 = "${customObjectName}");

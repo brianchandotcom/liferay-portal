@@ -49,7 +49,7 @@ definition {
 
 		AppBuilderAdmin.gotoBack();
 
-		AppBuilderAdmin.validateCustomObjectNameOnCustomObjectList(customObjectName = "my custom object");
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "my custom object");
 	}
 
 	@description = "Attempt to add a Custom Object without a valid name"
@@ -173,7 +173,7 @@ definition {
 
 		FormViewBuilder.save();
 
-		AppBuilderAdmin.validateCustomObjectNameOnCustomObjectList(customObjectName = "My Form View");
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
 
 		AppBuilderAdmin.openItem(customObjectName = "My Form View");
 

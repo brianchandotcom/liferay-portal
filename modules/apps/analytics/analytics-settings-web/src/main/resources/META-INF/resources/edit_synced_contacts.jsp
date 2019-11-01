@@ -21,34 +21,44 @@
 <div class="sheet sheet-lg">
 	<h2 class="autofit-row">
 		<span class="autofit-col autofit-col-expand">
-			<liferay-ui:message key="choose-contacts-to-sync" />
+			<liferay-ui:message key="contact-data" />
 		</span>
 	</h2>
 
 	<aui:form action="<%= editSyncedContactsURL %>" method="post" name="fm">
-		<h3 class="autofit-row">
-			<span class="autofit-col autofit-col-expand">
+		<aui:fieldset>
+			<label class="control-label">
 				<liferay-ui:message key="sync-all-contacts" />
-			</span>
-		</h3>
+			</label>
 
-		<div class="form-text">
-			<liferay-ui:message key="sync-all-contacts-help" />
-		</span>
+			<div class="form-text">
+				<liferay-ui:message key="sync-all-contacts-help" />
+			</div>
 
-		<label class="toggle-switch">
-			<input class="toggle-switch-check" name="<portlet:namespace />syncAllContacts" type="checkbox" />
+			<label class="toggle-switch mt-3 mb-3">
+				<input class="toggle-switch-check" name="<portlet:namespace />syncAllContacts" type="checkbox" />
 
-			<span aria-hidden="true" class="toggle-switch-bar">
-				<span class="toggle-switch-handle" />
-			</span>
-			<span class="toggle-switch-text toggle-switch-text-right">
-				<liferay-ui:message arguments="<%= UserServiceUtil.getCompanyUsersCount(themeDisplay.getCompanyId()) %>" key="sync-all-x-contacts" />
-			</span>
-		</label>
+				<span aria-hidden="true" class="toggle-switch-bar">
+					<span class="toggle-switch-handle" />
+				</span>
+				<span class="toggle-switch-text toggle-switch-text-right">
+					<liferay-ui:message arguments="<%= UserServiceUtil.getCompanyUsersCount(themeDisplay.getCompanyId()) %>" key="sync-all-x-contacts" />
+				</span>
+			</label>
+		</aui:fieldset>
+
+		<aui:fieldset>
+			<label class="control-label">
+				<liferay-ui:message key="sync-by-user-groups-and-organizations" />
+			</label>
+
+			<div class="form-text">
+				<liferay-ui:message key="sync-by-user-groups-and-organizations-help" />
+			</div>
+		</aui:fieldset>
 
 		<aui:button-row>
-			<aui:button type="submit" value="save-and-sync" />
+			<aui:button type="submit" value="save" />
 		</aui:button-row>
 	</aui:form>
 </div>

@@ -443,6 +443,23 @@ public class CalendarBookingTestUtil {
 	}
 
 	public static CalendarBooking updateCalendarBooking(
+			CalendarBooking calendarBooking, long[] childCalendarIds,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		long startTime = System.currentTimeMillis();
+
+		return CalendarBookingLocalServiceUtil.updateCalendarBooking(
+			calendarBooking.getUserId(), calendarBooking.getCalendarBookingId(),
+			calendarBooking.getCalendarId(), childCalendarIds,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), startTime,
+			startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
+			serviceContext);
+	}
+
+	public static CalendarBooking updateCalendarBooking(
 			CalendarBooking calendarBooking, Map<Locale, String> titleMap,
 			ServiceContext serviceContext)
 		throws PortalException {

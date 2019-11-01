@@ -37,7 +37,11 @@ function PersonalMenu({color, isImpersonated, itemsURL, label, size}) {
 			items={items}
 			trigger={
 				label ? (
-					<div dangerouslySetInnerHTML={{__html: label}} />
+					<div
+						onFocus={preloadItems}
+						onMouseOver={preloadItems}
+						dangerouslySetInnerHTML={{__html: label}}
+					/>
 				) : (
 					<ClayButton
 						displayType="unstyled"

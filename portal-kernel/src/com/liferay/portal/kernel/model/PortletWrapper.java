@@ -532,18 +532,6 @@ public class PortletWrapper
 	}
 
 	/**
-	 * Returns the Facebook integration method of the portlet.
-	 *
-	 * @return the Facebook integration method of the portlet
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getFacebookIntegration() {
-		return model.getFacebookIntegration();
-	}
-
-	/**
 	 * Returns a list of CSS files that will be referenced from the page's
 	 * footer relative to the portal's context path.
 	 *
@@ -2648,19 +2636,6 @@ public class PortletWrapper
 	@Override
 	public void setExpCache(Integer expCache) {
 		model.setExpCache(expCache);
-	}
-
-	/**
-	 * Sets the Facebook integration method of the portlet.
-	 *
-	 * @param facebookIntegration the Facebook integration method of the
-	 portlet
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void setFacebookIntegration(String facebookIntegration) {
-		model.setFacebookIntegration(facebookIntegration);
 	}
 
 	/**

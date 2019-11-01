@@ -165,8 +165,11 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
 
 
 	}
@@ -180,7 +183,6 @@ definition {
 			customObjectName = "my custom object",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
-
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
 

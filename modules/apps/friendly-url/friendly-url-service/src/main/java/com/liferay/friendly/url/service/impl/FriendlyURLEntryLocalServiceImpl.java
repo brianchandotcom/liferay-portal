@@ -514,23 +514,20 @@ public class FriendlyURLEntryLocalServiceImpl
 		return true;
 	}
 
-	private int _getNewEndPos(String urlTitle, int endPos) {
-		if ((endPos > 1) &&
-			Character.isHighSurrogate(urlTitle.charAt(endPos - 2))) {
-
-			return endPos - 2;
-		}
-
-		return endPos - 1;
-	}
-
 	private String _getURLEncodedSubstring(
 		String decodedString, String encodedString, int maxLength) {
 
 		int endPos = decodedString.length();
 
 		while (encodedString.length() > maxLength) {
-			endPos = _getNewEndPos(decodedString, endPos);
+			if ((endPos > 1) &&
+				Character.isHighSurrogate(decodedString.charAt(endPos - 2))) {
+
+				endPos = endPos - 2;
+			}
+			else {
+				endPos = endPos - 1;
+			}
 
 			encodedString = FriendlyURLNormalizerUtil.normalizeWithEncoding(
 				decodedString.substring(0, endPos));

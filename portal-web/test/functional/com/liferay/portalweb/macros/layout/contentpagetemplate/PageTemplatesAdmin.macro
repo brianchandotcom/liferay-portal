@@ -91,6 +91,10 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1=page-templates");
 	}
 
+	macro openPageTemplatesMenuAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet");
+	}
+
 	macro renamePageTemplate {
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 			item = "Rename",

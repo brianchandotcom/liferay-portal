@@ -25,7 +25,7 @@ AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.
 <div class="sheet sheet-lg">
 	<h2 class="autofit-row">
 		<span class="autofit-col autofit-col-expand">
-			<liferay-ui:message key="workspace-connection" />
+			<liferay-ui:message key="connect-analytics-cloud" />
 		</span>
 	</h2>
 

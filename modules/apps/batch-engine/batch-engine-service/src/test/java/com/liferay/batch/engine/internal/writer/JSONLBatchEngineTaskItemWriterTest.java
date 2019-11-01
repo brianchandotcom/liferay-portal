@@ -18,7 +18,6 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -68,7 +67,7 @@ public class JSONLBatchEngineTaskItemWriterTest
 
 		try (JSONLBatchEngineTaskItemWriter jsonlBatchEngineTaskItemWriter =
 				new JSONLBatchEngineTaskItemWriter(
-					new ArrayList<>(fieldMap.keySet()), fieldNames,
+					fieldMap.keySet(), fieldNames,
 					unsyncByteArrayOutputStream)) {
 
 			for (Item[] items : getItemGroups()) {

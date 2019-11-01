@@ -1,0 +1,57 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "7.0.0"
+	}
+
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.css.builder"
+apply plugin: "com.liferay.node"
+apply plugin: "java"
+
+task runGradleTest
+
+buildCSS {
+	dependsOn npmInstall
+
+	imports = [
+		new File(npmInstall.nodeModulesDir, "clay-css/src/scss")
+	]
+
+	excludes "**/common_main.scss"
+
+	sassCompilerClassName = "ruby"
+}
+
+node {
+	useNpm = true
+}
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn buildCSS
+
+	doLast {
+		File dir = file("src/main/resources/css/.sass-cache")
+
+		for (String fileName in ["main.css", "main_rtl.css"]) {
+			File generatedFile = new File(dir, fileName)
+
+			assert generatedFile.exists()
+		}
+
+		File excludedFile = new File(dir, "common_main.css")
+
+		assert !excludedFile.exists()
+	}
+}

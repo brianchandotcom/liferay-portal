@@ -335,6 +335,10 @@ public class BuildCSSTask extends JavaExec {
 
 		if (Validator.isNotNull(sassCompilerClassName)) {
 			args.add("--compiler=" + sassCompilerClassName);
+
+			if (sassCompilerClassName.equals("ruby")) {
+				jvmArgs("-Xss4096k");
+			}
 		}
 
 		args.add("--dir-names=" + _getDirNamesArg());

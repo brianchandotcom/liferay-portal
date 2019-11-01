@@ -68,7 +68,7 @@ if (size != null) {
 					</span>
 
 					<c:if test="<%= themeDisplay.isImpersonated() %>">
-						<span class='<%= impersonateStickerClasses + " sticker-bottom-right sticker-circle sticker-outside sticker-user-icon" %>' id="impersonate-user-sticker">
+						<span class="<%= impersonateStickerClasses + " sticker-bottom-right sticker-circle sticker-outside sticker-user-icon" %>" id="impersonate-user-sticker">
 							<span class="sticker-overlay">
 								<aui:icon id="impersonate-user-icon" image="user" markupView="lexicon" />
 							</span>

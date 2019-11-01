@@ -52,31 +52,6 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "my custom object");
 	}
 
-	@description = "Add a Form View with a Text Field"
-	@priority = "5"
-	test AddSimpleFormViewWithTextField {
-		property portal.acceptance = "true";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		var fieldType = "Text Field";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
-	}
-
 	@description = "Add a Form View with a Date field"
 	@priority = "5"
 	test AddSimpleFormViewWithDateField {
@@ -213,6 +188,31 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		var fieldType = "Single Selection";
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
+
+		AppBuilderAdmin.openItem(customObjectName = "My Form View");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+	}
+
+	@description = "Add a Form View with a Text Field"
+	@priority = "5"
+	test AddSimpleFormViewWithTextField {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		var fieldType = "Text Field";
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
 

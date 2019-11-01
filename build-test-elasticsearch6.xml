@@ -6,6 +6,7 @@
 	<macrodef name="configure-elasticsearch-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}cluster.name: LiferayElasticsearchCluster
+xpack.ml.enabled: false
 bootstrap.system_call_filter: false</echo>
 		</sequential>
 	</macrodef>

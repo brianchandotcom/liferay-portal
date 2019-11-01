@@ -26,6 +26,22 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro connectSite {
+		for (var siteName : list "${siteList}") {
+			Button.clickAdd();
+
+			SelectFrame(locator1 = "IFrame#SELECT_SITES");
+
+			Navigator.gotoNavItem(navItem = "My Sites");
+
+			SiteSelector.selectSite(site = "${siteName}");
+
+			SelectFrame(value1 = "relative=top");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	macro deleteCP {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
@@ -54,6 +70,14 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro viewConnectedSite {
+		for (var siteName : list "${siteList}") {
+			AssertElementPresent(
+				key_tableEntry = "${siteName}",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+		}
 	}
 
 	macro viewDefaultCP {

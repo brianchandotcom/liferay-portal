@@ -165,7 +165,9 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+		var fieldType = "Text Field";
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
 
 		FormViewBuilder.setName(formViewName = "My Form View");
 
@@ -175,10 +177,9 @@ definition {
 
 		AppBuilderAdmin.openItem(customObjectName = "My Form View");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Text Field");
-
-
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
 	}
+
 
 	@description = "Add a Table View"
 	@priority = "5"

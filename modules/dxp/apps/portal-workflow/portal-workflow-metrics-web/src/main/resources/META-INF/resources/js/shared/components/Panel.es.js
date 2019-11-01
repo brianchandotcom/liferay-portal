@@ -20,7 +20,11 @@ const Body = ({children, elementClasses}) => {
 
 	if (!children) return null;
 
-	return <div className={classes}>{children}</div>;
+	return (
+		<div className={classes} data-testid="panelBody">
+			{children}
+		</div>
+	);
 };
 
 const Footer = ({children, elementClasses, label}) => {
@@ -42,7 +46,7 @@ const Header = props => {
 	const classes = getCN('panel-header', elementClasses);
 
 	return (
-		<div className={classes}>
+		<div className={classes} data-testid="panelHeader">
 			{title && <div className="panel-title">{title}</div>}
 			{!!children && <div>{children}</div>}
 		</div>

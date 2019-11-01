@@ -43,9 +43,8 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 		_delimiter = delimiter;
 		_fieldMap = fieldMap;
 		_fieldNames = fieldNames;
-		_unsyncPrintWriter = new UnsyncPrintWriter(outputStream);
 
-		_columnValueWriter = new ColumnValueWriter();
+		_unsyncPrintWriter = new UnsyncPrintWriter(outputStream);
 
 		_unsyncPrintWriter.println(StringUtil.merge(fieldNames, delimiter));
 	}
@@ -63,7 +62,8 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 		for (Object item : items) {
 			_write(
 				dateFormat,
-				_columnValueWriter.extractValues(_fieldMap, _fieldNames, item));
+				ColumnValuesExtractUtil.extractValues(
+					_fieldMap, _fieldNames, item));
 		}
 	}
 
@@ -87,7 +87,6 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 		_unsyncPrintWriter.write(StringPool.NEW_LINE);
 	}
 
-	private final ColumnValueWriter _columnValueWriter;
 	private final String _delimiter;
 	private final Map<String, Field> _fieldMap;
 	private final List<String> _fieldNames;

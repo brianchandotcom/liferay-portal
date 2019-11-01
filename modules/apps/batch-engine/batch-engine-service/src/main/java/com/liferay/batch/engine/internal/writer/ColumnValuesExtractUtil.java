@@ -26,9 +26,9 @@ import java.util.TreeMap;
 /**
  * @author Ivica cardic
  */
-public class ColumnValueWriter {
+public class ColumnValuesExtractUtil {
 
-	public Collection<Object> extractValues(
+	public static Collection<Object> extractValues(
 			Map<String, Field> fieldMap, List<String> fieldNames, Object item)
 		throws IllegalAccessException {
 

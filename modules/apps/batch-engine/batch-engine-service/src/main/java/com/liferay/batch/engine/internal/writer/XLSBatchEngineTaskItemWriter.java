@@ -46,8 +46,6 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 		_fieldNames = fieldNames;
 		_outputStream = outputStream;
 
-		_columnValueWriter = new ColumnValueWriter();
-
 		_workbook = new XSSFWorkbook();
 
 		_sheet = _workbook.createSheet();
@@ -68,7 +66,8 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 	public void write(Collection<?> items) throws Exception {
 		for (Object item : items) {
 			_write(
-				_columnValueWriter.extractValues(_fieldMap, _fieldNames, item));
+				ColumnValuesExtractUtil.extractValues(
+					_fieldMap, _fieldNames, item));
 		}
 	}
 
@@ -108,7 +107,6 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 		}
 	}
 
-	private final ColumnValueWriter _columnValueWriter;
 	private final Map<String, Field> _fieldMap;
 	private final List<String> _fieldNames;
 	private final OutputStream _outputStream;

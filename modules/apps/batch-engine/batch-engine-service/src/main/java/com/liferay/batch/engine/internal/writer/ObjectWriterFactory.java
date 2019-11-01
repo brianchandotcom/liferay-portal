@@ -21,7 +21,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,13 +39,9 @@ public class ObjectWriterFactory {
 			simpleFilterProvider.setFailOnUnknownId(false);
 		}
 		else {
-			List<String> excludeFieldNames = new ArrayList<>();
+			Set<String> excludeFieldNames = new HashSet<>(allFieldNames);
 
-			for (String fieldName : allFieldNames) {
-				if (!includeFieldNames.contains(fieldName)) {
-					excludeFieldNames.add(fieldName);
-				}
-			}
+			excludeFieldNames.removeAll(includeFieldNames);
 
 			SimpleBeanPropertyFilter simpleBeanPropertyFilter =
 				SimpleBeanPropertyFilter.serializeAllExcept(

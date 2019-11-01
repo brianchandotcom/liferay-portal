@@ -76,7 +76,7 @@ OAuthApplication oAuthApplication = OAuthApplicationLocalServiceUtil.fetchOAuthA
 			<aui:field-wrapper label="logo">
 				<portlet:renderURL var="editLogoURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcPath" value="/admin/edit_application_logo.jsp" />
-					<portlet:param name="oAuthApplicationId" value="<%= StringUtil.valueOf(oAuthApplicationId) %>" />
+					<portlet:param name="oAuthApplicationId" value="<%= String.valueOf(oAuthApplicationId) %>" />
 				</portlet:renderURL>
 
 				<liferay-ui:logo-selector

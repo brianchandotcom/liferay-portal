@@ -104,7 +104,7 @@ public class SoyComponentRendererHelper {
 		String moduleName = StringUtil.extractLast(
 			module, CharPool.FORWARD_SLASH);
 
-		return StringUtil.strip(moduleName, _UNSAFE_MODULE_NAME_CHARS);
+		return StringUtil.removeChars(moduleName, _UNSAFE_MODULE_NAME_CHARS);
 	}
 
 	private void _prepareContext() {

@@ -53,7 +53,7 @@ renderResponse.setTitle((ddlRecord != null) ? LanguageUtil.format(request, "edit
 
 <portlet:actionURL name="updateDDLRecord" var="updateDDLRecordURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="kaleoProcessId" value="<%= StringUtil.valueOf(kaleoProcessId) %>" />
+	<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 </portlet:actionURL>
 
 <div class="container-fluid-1280 sidenav-container sidenav-right">

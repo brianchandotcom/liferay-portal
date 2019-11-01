@@ -3895,35 +3895,6 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns a string representing the string <code>s</code> with all
-	 * occurrences of the specified characters removed.
-	 *
-	 * <p>
-	 * Example:
-	 * </p>
-	 *
-	 * <p>
-	 * <pre>
-	 * <code>
-	 * strip("Hello World", {' ', 'l', 'd'}) returns "HeoWor"
-	 * </code>
-	 * </pre></p>
-	 *
-	 * @param      s the string from which to strip all occurrences the
-	 *             characters
-	 * @param      remove the characters to strip from the string
-	 * @return     a string representing the string <code>s</code> with all
-	 *             occurrences of the specified characters removed, or
-	 *             <code>null</code> if <code>s</code> is <code>null</code>
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #removeChars(String,
-	 *             char...)}
-	 */
-	@Deprecated
-	public static String strip(String s, char[] remove) {
-		return removeChars(s, remove);
-	}
-
-	/**
 	 * Returns a string representing the combination of the substring of
 	 * <code>s</code> up to but not including the string <code>begin</code>
 	 * concatenated with the substring of <code>s</code> after but not including
@@ -4704,19 +4675,6 @@ public class StringUtil {
 		}
 
 		return new String(chars);
-	}
-
-	/**
-	 * Returns the string value of the object.
-	 *
-	 * @param      obj the object whose string value is to be returned
-	 * @return     the string value of the object
-	 * @see        String#valueOf(Object obj)
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String valueOf(Object obj) {
-		return String.valueOf(obj);
 	}
 
 	/**

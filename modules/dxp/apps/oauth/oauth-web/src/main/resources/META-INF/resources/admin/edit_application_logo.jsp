@@ -36,7 +36,7 @@ OAuthApplication oAuthApplication = OAuthApplicationLocalServiceUtil.fetchOAuthA
 	<c:otherwise>
 		<portlet:actionURL name="updateLogo" var="updateLogoURL">
 			<portlet:param name="mvcPath" value="/admin/edit_application_logo.jsp" />
-			<portlet:param name="oAuthApplicationId" value="<%= StringUtil.valueOf(oAuthApplicationId) %>" />
+			<portlet:param name="oAuthApplicationId" value="<%= String.valueOf(oAuthApplicationId) %>" />
 		</portlet:actionURL>
 
 		<aui:form action="<%= updateLogoURL %>" enctype="multipart/form-data" method="post" name="fm">

@@ -47,7 +47,7 @@ else {
 
 		<portlet:actionURL name="deleteWorkflowInstance" var="deleteURL">
 			<portlet:param name="redirect" value="<%= redirectURL %>" />
-			<portlet:param name="workflowInstanceId" value="<%= StringUtil.valueOf(workflowInstance.getWorkflowInstanceId()) %>" />
+			<portlet:param name="workflowInstanceId" value="<%= String.valueOf(workflowInstance.getWorkflowInstanceId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon

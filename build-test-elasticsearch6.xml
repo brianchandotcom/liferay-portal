@@ -640,6 +640,8 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 		<configure-elasticsearch6-ltr-test-properties />
 
+		<unzip-ltr-linear-regression-model />
+
 		<antcall target="restore-backup">
 			<param name="backup.index" value="${backup.index}" />
 			<param name="elasticsearch.port" value="${elasticsearch.port}" />
@@ -749,7 +751,7 @@ xpack.monitoring.collection.enabled: true</echo>
 					type="both"
 				>
 					<fileset
-						dir="${liferay.home}data/elasticsearch6/repo"
+						dir="${liferay.home}/data/elasticsearch6/repo"
 					/>
 				</chmod>
 			</then>

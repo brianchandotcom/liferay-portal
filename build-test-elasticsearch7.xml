@@ -813,7 +813,7 @@ xpack.monitoring.collection.enabled: true</echo>
 					type="both"
 				>
 					<fileset
-						dir="${liferay.home}data/elasticsearch7/repo"
+						dir="${liferay.home}/data/elasticsearch7/repo"
 					/>
 				</chmod>
 			</then>

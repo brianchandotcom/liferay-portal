@@ -52,6 +52,223 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "my custom object");
 	}
 
+	@description = "Add a Form View"
+	@priority = "5"
+	test AddSimpleFormView {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		var fieldType = "Text Field";
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
+
+		AppBuilderAdmin.openItem(customObjectName = "My Form View");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+	}
+
+	@description = "Add a Form View with a Date field"
+	@priority = "5"
+	test AddSimpleFormViewWithDateField {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		var fieldType = "Date";
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
+
+		AppBuilderAdmin.openItem(customObjectName = "My Form View");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+	}
+
+	@description = "Add a Form View with a Grid field"
+	@priority = "5"
+	test AddSimpleFormViewWithGridField {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		var fieldType = "Grid";
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
+
+		AppBuilderAdmin.openItem(customObjectName = "My Form View");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+	}
+
+	@description = "Add a Form View with a Multiple Selection field"
+	@priority = "5"
+	test AddSimpleFormViewWithMultipleSelectionField {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		var fieldType = "Multiple Selection";
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
+
+		AppBuilderAdmin.openItem(customObjectName = "My Form View");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+	}
+
+	@description = "Add a Form View with a Numeric field"
+	@priority = "5"
+	test AddSimpleFormViewWithNumericField {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		var fieldType = "Numeric";
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
+
+		AppBuilderAdmin.openItem(customObjectName = "My Form View");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+	}
+
+	@description = "Add a Form View with a Select From List field"
+	@priority = "5"
+	test AddSimpleFormViewWithSelectFromListField {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		var fieldType = "Select from List";
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
+
+		AppBuilderAdmin.openItem(customObjectName = "My Form View");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+	}
+
+	@description = "Add a Form View with a Single Selection field"
+	@priority = "5"
+	test AddSimpleFormViewWithSingleSelectionField {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		var fieldType = "Single Selection";
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
+
+		AppBuilderAdmin.openItem(customObjectName = "My Form View");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+	}
+
+	@description = "Add a Form View with a Upload field"
+	@priority = "5"
+	test AddSimpleFormViewWithUploadField {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		var fieldType = "Upload";
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
+
+		AppBuilderAdmin.openItem(customObjectName = "My Form View");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+	}
+
+	@description = "Add a Table View"
+	@priority = "5"
+	test AddSimpleTableView {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
+	}
+
 	@description = "Attempt to add a Custom Object without a valid name"
 	@priority = "5"
 	test AttemptToAddCustomObjectWithoutValidName {
@@ -153,224 +370,6 @@ definition {
 			title = "There are no table views yet.");
 
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Table View");
-	}
-
-	@description = "Add a Form View"
-	@priority = "5"
-	test AddSimpleFormView {
-		property portal.acceptance = "true";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		var fieldType = "Text Field";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
-	}
-
-	@description = "Add a Form View with a Select From List field"
-	@priority = "5"
-	test AddSimpleFormViewWithSelectFromListField {
-		property portal.acceptance = "false";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		var fieldType = "Select from List";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
-	}
-
-	@description = "Add a Form View with a Single Selection field"
-	@priority = "5"
-	test AddSimpleFormViewWithSingleSelectionField {
-		property portal.acceptance = "false";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		var fieldType = "Single Selection";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
-	}
-
-	@description = "Add a Form View with a Multiple Selection field"
-	@priority = "5"
-	test AddSimpleFormViewWithMultipleSelectionField {
-		property portal.acceptance = "false";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		var fieldType = "Multiple Selection";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
-	}
-
-	@description = "Add a Form View with a Date field"
-	@priority = "5"
-	test AddSimpleFormViewWithDateField {
-		property portal.acceptance = "false";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		var fieldType = "Date";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
-	}
-
-	@description = "Add a Form View with a Numeric field"
-	@priority = "5"
-	test AddSimpleFormViewWithNumericField {
-		property portal.acceptance = "false";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		var fieldType = "Numeric";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
-	}
-
-	@description = "Add a Form View with a Grid field"
-	@priority = "5"
-	test AddSimpleFormViewWithGridField {
-		property portal.acceptance = "false";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		var fieldType = "Grid";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
-	}
-
-	@description = "Add a Form View with a Upload field"
-	@priority = "5"
-	test AddSimpleFormViewWithUploadField {
-		property portal.acceptance = "false";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		var fieldType = "Upload";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
-	}
-
-
-	@description = "Add a Table View"
-	@priority = "5"
-	test AddSimpleTableView {
-		property portal.acceptance = "true";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
 	}
 
 }

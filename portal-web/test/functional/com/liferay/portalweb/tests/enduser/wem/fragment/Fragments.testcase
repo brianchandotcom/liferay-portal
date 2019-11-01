@@ -462,7 +462,10 @@ definition {
 	@description = "This is a test for LPS-102173. Inherited contributed fragments can be copied."
 	@priority = "5"
 	test CopyInheritedContributedFragment {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until LRQA-53090 resolved
+
+		property portal.acceptance = "false";
 
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
 

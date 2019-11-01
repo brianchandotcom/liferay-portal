@@ -174,7 +174,10 @@ definition {
 	@description = "This is a test for LPS-78928. Editable text in content pages is searchable."
 	@priority = "5"
 	test SearchEditableText {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until LRQA-52753 and LRQA-53219 resolved
+
+		property portal.acceptance = "false";
 
 		task ("Add a Rich Text fragment to the content page") {
 			PageEditor.addFragment(

@@ -34,16 +34,6 @@ public class ColumnValueWriter {
 			List<String> fieldNames, Object item)
 		throws IllegalAccessException {
 
-		Map<String, Object> columnNameValueMap = _getColumnNameValueMap(
-			item, fieldMap, fieldNames);
-
-		consumer.accept(columnNameValueMap.values());
-	}
-
-	private Map<String, Object> _getColumnNameValueMap(
-			Object item, Map<String, Field> fieldMap, List<String> fieldNames)
-		throws IllegalAccessException {
-
 		Map<String, Object> columnNameValueMap = new TreeMap<>();
 
 		for (Map.Entry<String, Field> entry : fieldMap.entrySet()) {
@@ -89,7 +79,7 @@ public class ColumnValueWriter {
 			}
 		}
 
-		return columnNameValueMap;
+		consumer.accept(columnNameValueMap.values());
 	}
 
 }

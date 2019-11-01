@@ -154,7 +154,7 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetUniqueUrlTitleWithNonasciiCharsShortensToMaxLength()
+	public void testGetUniqueUrlTitleWithNonAsciiCharsShortensToMaxLength()
 		throws Exception {
 
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);

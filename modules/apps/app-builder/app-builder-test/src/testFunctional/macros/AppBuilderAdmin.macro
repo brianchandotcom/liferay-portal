@@ -1,6 +1,6 @@
 definition {
 
-	macro addCustomObject() {
+	macro addCustomObject {
 
 		if ("${isCreatingViaPlusIcon}" == "false") {
 			AppBuilderAdmin.gotoAddItemViaNewButton();
@@ -20,7 +20,7 @@ definition {
 		AppBuilderAdmin.continueNewCustomObject();
 	}
 
-	macro assertNewButtonIsVisible() {
+	macro assertNewButtonIsVisible {
 		AssertTextEquals(
 			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
 			value1 = "${buttonValue}");
@@ -58,7 +58,7 @@ definition {
 		}
 	}
 
-	macro switchTab() {
+	macro switchTab {
 		Navigator.gotoNavItem(navItem = "${tabName}");
 	}
 
@@ -92,7 +92,7 @@ definition {
 			value1 = "${customObjectName}");
 	}
 
-	macro validateEmptyListMessage() {
+	macro validateEmptyListMessage {
 		AssertTextEquals(
 			locator1 = "AppBuilder#MESSAGE_TITLE_EMPTY_LIST",
 			value1 = "${title}");

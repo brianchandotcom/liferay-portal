@@ -1,6 +1,6 @@
 definition {
 
-    macro addFieldByDragAndDrop () {
+    macro addFieldByDragAndDrop {
 
         Pause(locator1 = "10000");
 
@@ -16,7 +16,7 @@ definition {
     }
 
 
-    macro addFieldByDoubleClick() {
+    macro addFieldByDoubleClick {
 
         var key_fieldType = "${fieldType}";
 
@@ -25,14 +25,14 @@ definition {
         AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
     }
 
-    macro setName() {
+    macro setName {
 
         Type(
             locator1 = "FormViewBuilder#FORM_VIEW_NAME",
             value1 = "${formViewName}");
     }
 
-    macro save() {
+    macro save {
         Click(locator1 = "FormViewBuilder#SAVE_FORM_VIEW_BUTTON");
     }
 

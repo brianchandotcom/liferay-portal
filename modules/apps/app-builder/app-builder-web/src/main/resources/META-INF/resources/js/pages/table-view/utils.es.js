@@ -27,7 +27,15 @@ export const getColumnIndex = node => {
 		return -1;
 	}
 
-	const columns = rowNode.querySelectorAll(`:scope > ${columnNode.tagName}`);
+	const scopeId = `${Date.now()}`;
+
+	rowNode.setAttribute('data-scope-uuid', scopeId);
+
+	const columns = rowNode.querySelectorAll(
+		`[data-scope-uuid="${scopeId}"] > ${columnNode.tagName}`
+	);
+
+	rowNode.removeAttribute('data-scope-uuid');
 
 	return Array.prototype.indexOf.call(columns, columnNode) - 1;
 };

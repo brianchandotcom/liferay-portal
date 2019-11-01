@@ -234,7 +234,10 @@ definition {
 
 	@priority = "5"
 	test DisableShowCurrentSite {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until LRQA-49480 resolved
+
+		property portal.acceptance = "false";
 		property testray.component.names = "Breadcrumb";
 
 		ProductMenu.gotoPortlet(

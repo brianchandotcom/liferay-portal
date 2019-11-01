@@ -1,53 +1,29 @@
 .dropdown .dropdown-item {
-	padding: 0.5rem 1rem !important;
-
-	&.active .dropdown-item-text {
+	&.active .custom-control-label-text {
 		color: #272833;
 		font-weight: 600;
 	}
 
 	.custom-control {
 		cursor: pointer;
-		display: initial;
 	}
 
-	.custom-control-label::after {
-		left: -1.05rem;
-	}
-
-	&.control-hidden {
-		.custom-control-input,
-		.custom-control-label:after,
-		.custom-control-label:before {
-			display: none;
-		}
-
-		.dropdown-item-text {
-			padding-left: 0;
-		}
+	.custom-control-label-text {
+		color: #6b6c7e;
+		font-weight: normal;
 	}
 
 	.dropdown-item-description {
 		display: block;
 		font-size: 0.625em;
 		line-height: 1rem;
-	}
-
-	.dropdown-item-text {
-		color: #6b6c7e;
-		font-weight: normal;
-		padding: 0 0 0 2rem;
-	}
-
-	&:not(.with-description) .dropdown-item-name {
-		line-height: 1.5625rem;
+		padding-left: 1.7rem;
 	}
 
 	&.with-description {
-		padding-top: 0.75rem !important;
-
-		&:not(.control-hidden) .dropdown-item-text {
-			margin-top: -0.5rem;
+		.custom-control-label::after,
+		.custom-control-label::before {
+			margin-top: 0.5rem;
 		}
 	}
 }

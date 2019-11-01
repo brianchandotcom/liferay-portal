@@ -70,18 +70,16 @@ export default class FilterItem extends React.Component {
 							onClick={onClick}
 						/>
 
-						<span className="custom-control-label" />
-
-						<span className="dropdown-item-text">
+						<span className="custom-control-label">
 							<span
-								className="dropdown-item-name"
+								className="custom-control-label-text"
 								data-testid="filterItemName"
 							>
 								{name}
 							</span>
 
 							{description && (
-								<span className="dropdown-item-description">
+								<span className="custom-control-label-text dropdown-item-description">
 									{description}
 								</span>
 							)}

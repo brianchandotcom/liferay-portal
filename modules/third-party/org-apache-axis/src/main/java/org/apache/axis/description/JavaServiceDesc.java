@@ -40,6 +40,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -531,8 +532,7 @@ public class JavaServiceDesc implements ServiceDesc {
                 {
                     Method meth1 = ((OperationDesc)o1).getMethod();
                     Method meth2 = ((OperationDesc)o2).getMethod();
-                    return (meth1.getParameterTypes().length -
-                                         meth2.getParameterTypes().length);
+                    return meth2.toString().compareTo(meth1.toString());
                 }
             });
 
@@ -641,6 +641,13 @@ public class JavaServiceDesc implements ServiceDesc {
         // Find the method.  We do this once for each Operation.
         
         Method[] methods = getMethods(implClass);
+
+		Arrays.sort(methods, new Comparator<Method>() {
+			@Override
+			public int compare(Method m1, Method m2) {
+				return m2.toString().compareTo(m1.toString());
+			}
+		});
         // A place to keep track of possible matches
         Method possibleMatch = null;
         

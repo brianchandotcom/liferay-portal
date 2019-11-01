@@ -4,11 +4,11 @@
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.batch.engine">
 	<author>Shuyang Zhou</author>
 	<namespace>BatchEngine</namespace>
-	<entity local-service="true" name="BatchEngineTask" remote-service="false" uuid="true">
+	<entity local-service="true" name="BatchEngineImportTask" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="batchEngineTaskId" primary="true" type="long" />
+		<column name="batchEngineImportTaskId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

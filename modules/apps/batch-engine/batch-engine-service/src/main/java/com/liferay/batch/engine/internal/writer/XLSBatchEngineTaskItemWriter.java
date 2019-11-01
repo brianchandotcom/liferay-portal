@@ -51,6 +51,8 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 		_workbook = new XSSFWorkbook();
 
 		_sheet = _workbook.createSheet();
+
+		_write(fieldNames);
 	}
 
 	@Override

@@ -64,7 +64,7 @@ public class CSVBatchEngineTaskItemWriterTest
 		List<String> fieldNames, List<Item> items) {
 
 		if (fieldNames.isEmpty()) {
-			return StringPool.BLANK;
+			return StringPool.NEW_LINE;
 		}
 
 		StringBundler sb = new StringBundler();

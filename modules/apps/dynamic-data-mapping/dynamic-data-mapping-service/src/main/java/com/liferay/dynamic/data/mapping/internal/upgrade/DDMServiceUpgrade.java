@@ -84,19 +84,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_ddmDataProviderSettingsProviderServiceTracker =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DDMDataProviderSettingsProvider.class,
-				"ddm.data.provider.type");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_ddmDataProviderSettingsProviderServiceTracker.close();
-	}
-
 	@Override
 	public void register(Registry registry) {
 		DDMFormSerializer ddmFormSerializer = getDDMFormSerializer();
@@ -296,6 +283,19 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 					DDMStructureVersionTable.class),
 			new UpgradeCTModel(DDMTemplateTable.class),
 			new UpgradeCTModel(DDMTemplateVersionTable.class));
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_ddmDataProviderSettingsProviderServiceTracker =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, DDMDataProviderSettingsProvider.class,
+				"ddm.data.provider.type");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_ddmDataProviderSettingsProviderServiceTracker.close();
 	}
 
 	protected DDMFormDeserializer getDDMFormJSONDeserializer() {

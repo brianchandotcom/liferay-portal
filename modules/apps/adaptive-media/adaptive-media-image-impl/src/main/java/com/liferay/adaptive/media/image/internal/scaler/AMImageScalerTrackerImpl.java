@@ -37,19 +37,6 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(service = AMImageScalerTracker.class)
 public class AMImageScalerTrackerImpl implements AMImageScalerTracker {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, AMImageScaler.class, "(mime.type=*)",
-			new PropertyServiceReferenceMapper<>("mime.type"),
-			new PropertyServiceReferenceComparator<>("service.ranking"));
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
 	@Override
 	public AMImageScaler getAMImageScaler(String mimeType) {
 		List<AMImageScaler> amImageScalers = _serviceTrackerMap.getService(
@@ -78,6 +65,19 @@ public class AMImageScalerTrackerImpl implements AMImageScalerTracker {
 		}
 
 		return null;
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, AMImageScaler.class, "(mime.type=*)",
+			new PropertyServiceReferenceMapper<>("mime.type"),
+			new PropertyServiceReferenceComparator<>("service.ranking"));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

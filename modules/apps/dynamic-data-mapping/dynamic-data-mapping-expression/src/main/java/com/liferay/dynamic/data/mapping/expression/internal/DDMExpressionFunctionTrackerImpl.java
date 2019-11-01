@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Deactivate;
 public class DDMExpressionFunctionTrackerImpl
 	implements DDMExpressionFunctionTracker {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
 	@Override
 	public Map<String, DDMExpressionFunctionFactory>
 		getDDMExpressionFunctionFactories(Set<String> functionNames) {
@@ -86,6 +81,11 @@ public class DDMExpressionFunctionTrackerImpl
 	@Override
 	public void ungetDDMExpressionFunctions(
 		Map<String, DDMExpressionFunction> ddmExpressionFunctionsMap) {
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 	}
 
 	@Deactivate

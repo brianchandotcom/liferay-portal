@@ -33,16 +33,6 @@ public class WikiEngineCreoleComponentProvider {
 		return _wikiEngineCreoleComponentProvider;
 	}
 
-	@Activate
-	protected void activate() {
-		_wikiEngineCreoleComponentProvider = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_wikiEngineCreoleComponentProvider = null;
-	}
-
 	public WikiGroupServiceConfiguration getWikiGroupServiceConfiguration() {
 		return _wikiGroupServiceConfiguration;
 	}
@@ -51,6 +41,16 @@ public class WikiEngineCreoleComponentProvider {
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
 		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
+	}
+
+	@Activate
+	protected void activate() {
+		_wikiEngineCreoleComponentProvider = this;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_wikiEngineCreoleComponentProvider = null;
 	}
 
 	private static WikiEngineCreoleComponentProvider

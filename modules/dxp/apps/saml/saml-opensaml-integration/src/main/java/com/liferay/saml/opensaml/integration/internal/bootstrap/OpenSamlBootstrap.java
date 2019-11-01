@@ -73,36 +73,6 @@ public class OpenSamlBootstrap {
 		}
 	}
 
-	@Activate
-	protected synchronized void activate(BundleContext bundleContext)
-		throws IllegalAccessException, InitializationException,
-			   InvocationTargetException, NoSuchMethodException {
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		try {
-			Bundle bundle = bundleContext.getBundle();
-
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-			currentThread.setContextClassLoader(bundleWiring.getClassLoader());
-
-			bootstrap();
-
-			XMLObjectProviderRegistry xmlObjectProviderRegistry =
-				ConfigurationService.get(XMLObjectProviderRegistry.class);
-
-			_parserPoolServiceRegistration = bundleContext.registerService(
-				ParserPool.class, xmlObjectProviderRegistry.getParserPool(),
-				null);
-		}
-		finally {
-			currentThread.setContextClassLoader(classLoader);
-		}
-	}
-
 	protected static void initializeParserPool()
 		throws InitializationException {
 
@@ -145,6 +115,36 @@ public class OpenSamlBootstrap {
 			throw new InitializationException(
 				"Unable to initialize parser pool: " + xmlpe.getMessage(),
 				xmlpe);
+		}
+	}
+
+	@Activate
+	protected synchronized void activate(BundleContext bundleContext)
+		throws IllegalAccessException, InitializationException,
+			   InvocationTargetException, NoSuchMethodException {
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		try {
+			Bundle bundle = bundleContext.getBundle();
+
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+			currentThread.setContextClassLoader(bundleWiring.getClassLoader());
+
+			bootstrap();
+
+			XMLObjectProviderRegistry xmlObjectProviderRegistry =
+				ConfigurationService.get(XMLObjectProviderRegistry.class);
+
+			_parserPoolServiceRegistration = bundleContext.registerService(
+				ParserPool.class, xmlObjectProviderRegistry.getParserPool(),
+				null);
+		}
+		finally {
+			currentThread.setContextClassLoader(classLoader);
 		}
 	}
 

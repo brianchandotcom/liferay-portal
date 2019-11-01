@@ -28,15 +28,15 @@ import org.osgi.service.component.annotations.Deactivate;
 public class TestItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler<TestItemSelectorCriterion> {
 
+	@Override
+	public Class getItemSelectorCriterionClass() {
+		return TestItemSelectorCriterion.class;
+	}
+
 	@Activate
 	@Override
 	protected void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
-	}
-
-	@Override
-	public Class getItemSelectorCriterionClass() {
-		return TestItemSelectorCriterion.class;
 	}
 
 	@Deactivate

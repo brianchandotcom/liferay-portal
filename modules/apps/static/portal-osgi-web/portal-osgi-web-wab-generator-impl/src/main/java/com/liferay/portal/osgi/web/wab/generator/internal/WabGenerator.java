@@ -90,86 +90,6 @@ public class WabGenerator
 		return wabProcessor.getProcessedFile();
 	}
 
-	@Activate
-	protected void start(BundleContext bundleContext) throws Exception {
-		registerURLStreamHandlerService(bundleContext);
-
-		registerArtifactUrlTransformer(bundleContext);
-
-		final Set<String> requiredForStartupContextPaths =
-			getRequiredForStartupContextPaths(
-				Paths.get(PropsValues.LIFERAY_HOME, "osgi/war"));
-
-		if (requiredForStartupContextPaths.isEmpty()) {
-			return;
-		}
-
-		final CountDownLatch countDownLatch = new CountDownLatch(1);
-
-		BundleTracker<Void> bundleTracker = new BundleTracker<Void>(
-			bundleContext, Bundle.ACTIVE, null) {
-
-			@Override
-			public Void addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-				String location = bundle.getLocation();
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("Activated bundle " + location);
-				}
-
-				if (requiredForStartupContextPaths.remove(
-						_http.getParameter(
-							location, "Web-ContextPath", false))) {
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Bundle " + location + " is required for startup");
-					}
-
-					if (requiredForStartupContextPaths.isEmpty()) {
-						countDownLatch.countDown();
-					}
-				}
-
-				return null;
-			}
-
-		};
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Bundles required for startup: " +
-					requiredForStartupContextPaths);
-		}
-
-		bundleTracker.open();
-
-		while (true) {
-			if (countDownLatch.await(1, TimeUnit.MINUTES)) {
-				break;
-			}
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Waiting on startup required bundles to activate: " +
-						requiredForStartupContextPaths);
-			}
-		}
-
-		bundleTracker.close();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("All startup required bundles are active");
-		}
-	}
-
-	@Deactivate
-	protected void stop(BundleContext bundleContext) throws Exception {
-		_serviceRegistration.unregister();
-
-		_serviceRegistration = null;
-	}
-
 	protected Set<String> getRequiredForStartupContextPaths(Path path)
 		throws IOException {
 
@@ -254,6 +174,86 @@ public class WabGenerator
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_portalIsReady.set(true);
+	}
+
+	@Activate
+	protected void start(BundleContext bundleContext) throws Exception {
+		registerURLStreamHandlerService(bundleContext);
+
+		registerArtifactUrlTransformer(bundleContext);
+
+		final Set<String> requiredForStartupContextPaths =
+			getRequiredForStartupContextPaths(
+				Paths.get(PropsValues.LIFERAY_HOME, "osgi/war"));
+
+		if (requiredForStartupContextPaths.isEmpty()) {
+			return;
+		}
+
+		final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		BundleTracker<Void> bundleTracker = new BundleTracker<Void>(
+			bundleContext, Bundle.ACTIVE, null) {
+
+			@Override
+			public Void addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+				String location = bundle.getLocation();
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Activated bundle " + location);
+				}
+
+				if (requiredForStartupContextPaths.remove(
+						_http.getParameter(
+							location, "Web-ContextPath", false))) {
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Bundle " + location + " is required for startup");
+					}
+
+					if (requiredForStartupContextPaths.isEmpty()) {
+						countDownLatch.countDown();
+					}
+				}
+
+				return null;
+			}
+
+		};
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Bundles required for startup: " +
+					requiredForStartupContextPaths);
+		}
+
+		bundleTracker.open();
+
+		while (true) {
+			if (countDownLatch.await(1, TimeUnit.MINUTES)) {
+				break;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Waiting on startup required bundles to activate: " +
+						requiredForStartupContextPaths);
+			}
+		}
+
+		bundleTracker.close();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("All startup required bundles are active");
+		}
+	}
+
+	@Deactivate
+	protected void stop(BundleContext bundleContext) throws Exception {
+		_serviceRegistration.unregister();
+
+		_serviceRegistration = null;
 	}
 
 	protected void unsetModuleServiceLifecycle(

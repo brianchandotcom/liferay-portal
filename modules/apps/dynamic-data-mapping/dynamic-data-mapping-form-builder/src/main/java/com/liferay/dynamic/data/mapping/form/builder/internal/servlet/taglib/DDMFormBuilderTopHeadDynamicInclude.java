@@ -37,18 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = DynamicInclude.class)
 public class DDMFormBuilderTopHeadDynamicInclude extends BaseDynamicInclude {
 
-	@Activate
-	protected void activate() {
-		_postfix = _portal.getPathProxy();
-
-		if (_postfix.isEmpty()) {
-			_postfix = _servletContext.getContextPath();
-		}
-		else {
-			_postfix = _postfix.concat(_servletContext.getContextPath());
-		}
-	}
-
 	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
@@ -88,6 +76,18 @@ public class DDMFormBuilderTopHeadDynamicInclude extends BaseDynamicInclude {
 		dynamicIncludeRegistry.register(
 			"com.liferay.dynamic.data.mapping.form.web#" +
 				"EditFormInstanceMVCRenderCommand#render");
+	}
+
+	@Activate
+	protected void activate() {
+		_postfix = _portal.getPathProxy();
+
+		if (_postfix.isEmpty()) {
+			_postfix = _servletContext.getContextPath();
+		}
+		else {
+			_postfix = _postfix.concat(_servletContext.getContextPath());
+		}
 	}
 
 	@Reference

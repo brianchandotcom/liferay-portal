@@ -64,11 +64,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class StandaloneAppDeployer implements AppDeployer {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
 	@Override
 	public void deploy(long appId) throws Exception {
 		AppBuilderApp appBuilderApp =
@@ -126,6 +121,11 @@ public class StandaloneAppDeployer implements AppDeployer {
 			AppBuilderAppConstants.Status.UNDEPLOYED.getValue());
 
 		_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 	}
 
 	@Reference(unbind = "-")

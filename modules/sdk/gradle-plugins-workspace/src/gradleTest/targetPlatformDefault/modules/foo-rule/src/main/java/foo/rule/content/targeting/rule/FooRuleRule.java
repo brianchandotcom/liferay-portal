@@ -40,18 +40,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = Rule.class)
 public class FooRuleRule extends BaseJSPRule {
 
-	@Activate
-	@Override
-	protected void activate() {
-		super.activate();
-	}
-
-	@Deactivate
-	@Override
-	protected void deActivate() {
-		super.deActivate();
-	}
-
 	@Override
 	public boolean evaluate(
 			HttpServletRequest httpServletRequest, RuleInstance ruleInstance,
@@ -88,6 +76,18 @@ public class FooRuleRule extends BaseJSPRule {
 	@Reference(target = "(osgi.web.symbolicname=foo.rule)", unbind = "-")
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	@Activate
+	@Override
+	protected void activate() {
+		super.activate();
+	}
+
+	@Deactivate
+	@Override
+	protected void deActivate() {
+		super.deActivate();
 	}
 
 	@Override

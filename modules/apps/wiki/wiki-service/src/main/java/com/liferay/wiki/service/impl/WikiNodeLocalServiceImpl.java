@@ -87,16 +87,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_wikiImporterServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, WikiImporter.class, "importer");
-
-		_portalCache = _multiVMPool.getPortalCache(
-			WikiPageDisplay.class.getName());
-	}
-
 	@Override
 	public WikiNode addDefaultNode(long userId, ServiceContext serviceContext)
 		throws PortalException {
@@ -546,6 +536,16 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		indexer.reindex(node);
 
 		return node;
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_wikiImporterServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, WikiImporter.class, "importer");
+
+		_portalCache = _multiVMPool.getPortalCache(
+			WikiPageDisplay.class.getName());
 	}
 
 	protected List<WikiNode> addDefaultNode(long groupId)

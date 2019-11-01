@@ -68,26 +68,6 @@ import org.osgi.service.component.annotations.Reference;
 public class OrganizationExpandoColumnModelListener
 	extends BaseModelListener<ExpandoColumn> {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		try {
-			_bundleContext = bundleContext;
-
-			_organizationEntityFields = _getOrganizationEntityFields();
-
-			_serviceRegistration = _register(
-				_bundleContext, _organizationEntityFields);
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_unregister(_serviceRegistration);
-	}
-
 	@Override
 	public void onAfterCreate(ExpandoColumn expandoColumn)
 		throws ModelListenerException {
@@ -145,6 +125,26 @@ public class OrganizationExpandoColumnModelListener
 		_organizationEntityFields.remove(expandoColumn.getColumnId());
 
 		onAfterCreate(expandoColumn);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		try {
+			_bundleContext = bundleContext;
+
+			_organizationEntityFields = _getOrganizationEntityFields();
+
+			_serviceRegistration = _register(
+				_bundleContext, _organizationEntityFields);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_unregister(_serviceRegistration);
 	}
 
 	private String _encodeName(ExpandoColumn expandoColumn) {

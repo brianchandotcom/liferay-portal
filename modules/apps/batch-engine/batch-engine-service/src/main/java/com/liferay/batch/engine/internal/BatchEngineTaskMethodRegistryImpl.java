@@ -56,25 +56,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class BatchEngineTaskMethodRegistryImpl
 	implements BatchEngineTaskMethodRegistry {
 
-	@Activate
-	protected void activate(BundleContext bundleContext)
-		throws InvalidSyntaxException {
-
-		_serviceTracker = new ServiceTracker<>(
-			bundleContext,
-			bundleContext.createFilter(
-				"(&(api.version=*)(osgi.jaxrs.resource=true)" +
-					"(!(batch.engine=true)))"),
-			new BatchEngineTaskMethodServiceTrackerCustomizer(bundleContext));
-
-		_serviceTracker.open();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTracker.close();
-	}
-
 	@Override
 	public Class<?> getItemClass(String itemClassName) {
 		Map.Entry<Class<?>, AtomicInteger> entry = _itemClasses.get(
@@ -98,6 +79,25 @@ public class BatchEngineTaskMethodRegistryImpl
 		return _unsafeBiFunctions.get(
 			new FactoryKey(
 				apiVersion, batchEngineTaskOperation, itemClassName));
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
+
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext,
+			bundleContext.createFilter(
+				"(&(api.version=*)(osgi.jaxrs.resource=true)" +
+					"(!(batch.engine=true)))"),
+			new BatchEngineTaskMethodServiceTrackerCustomizer(bundleContext));
+
+		_serviceTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
 	}
 
 	private final Map<String, Map.Entry<Class<?>, AtomicInteger>> _itemClasses =

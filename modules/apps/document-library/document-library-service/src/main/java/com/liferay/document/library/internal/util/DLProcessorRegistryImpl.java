@@ -58,53 +58,6 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
-	@Activate
-	protected void activate(
-			BundleContext bundleContext, Map<String, Object> properties)
-		throws Exception {
-
-		_dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
-			DLFileEntryConfiguration.class, properties);
-
-		_bundleContext = bundleContext;
-
-		_dlProcessorServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DLProcessor.class, null,
-				new ServiceReferenceMapper<String, DLProcessor>() {
-
-					@Override
-					public void map(
-						ServiceReference<DLProcessor> serviceReference,
-						Emitter<String> emitter) {
-
-						DLProcessor dlProcessor = _bundleContext.getService(
-							serviceReference);
-
-						try {
-							emitter.emit(dlProcessor.getType());
-						}
-						finally {
-							_bundleContext.ungetService(serviceReference);
-						}
-					}
-
-				});
-
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		for (String dlProcessorClassName : _DL_FILE_ENTRY_PROCESSORS) {
-			DLProcessor dlProcessor = (DLProcessor)InstanceFactory.newInstance(
-				classLoader, dlProcessorClassName);
-
-			dlProcessor.afterPropertiesSet();
-
-			register(dlProcessor);
-
-			_dlProcessors.add(dlProcessor);
-		}
-	}
-
 	@Override
 	public void cleanUp(FileEntry fileEntry) {
 		if (!DLProcessorThreadLocal.isEnabled()) {
@@ -293,6 +246,53 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			_serviceRegistrations.remove(dlProcessor.getType());
 
 		serviceRegistration.unregister();
+	}
+
+	@Activate
+	protected void activate(
+			BundleContext bundleContext, Map<String, Object> properties)
+		throws Exception {
+
+		_dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
+			DLFileEntryConfiguration.class, properties);
+
+		_bundleContext = bundleContext;
+
+		_dlProcessorServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, DLProcessor.class, null,
+				new ServiceReferenceMapper<String, DLProcessor>() {
+
+					@Override
+					public void map(
+						ServiceReference<DLProcessor> serviceReference,
+						Emitter<String> emitter) {
+
+						DLProcessor dlProcessor = _bundleContext.getService(
+							serviceReference);
+
+						try {
+							emitter.emit(dlProcessor.getType());
+						}
+						finally {
+							_bundleContext.ungetService(serviceReference);
+						}
+					}
+
+				});
+
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		for (String dlProcessorClassName : _DL_FILE_ENTRY_PROCESSORS) {
+			DLProcessor dlProcessor = (DLProcessor)InstanceFactory.newInstance(
+				classLoader, dlProcessorClassName);
+
+			dlProcessor.afterPropertiesSet();
+
+			register(dlProcessor);
+
+			_dlProcessors.add(dlProcessor);
+		}
 	}
 
 	@Deactivate

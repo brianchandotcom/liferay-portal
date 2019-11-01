@@ -38,18 +38,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = DynamicInclude.class)
 public class DDMWebTopHeadDynamicInclude extends BaseDynamicInclude {
 
-	@Activate
-	protected void activate() {
-		_postfix = _portal.getPathProxy();
-
-		if (_postfix.isEmpty()) {
-			_postfix = _servletContext.getContextPath();
-		}
-		else {
-			_postfix = _postfix.concat(_servletContext.getContextPath());
-		}
-	}
-
 	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
@@ -84,6 +72,18 @@ public class DDMWebTopHeadDynamicInclude extends BaseDynamicInclude {
 			DDMPortlet.class.getName() + "#formRendered");
 		dynamicIncludeRegistry.register(
 			"com.liferay.dynamic.data.mapping.taglib#/html/start.jsp#pre");
+	}
+
+	@Activate
+	protected void activate() {
+		_postfix = _portal.getPathProxy();
+
+		if (_postfix.isEmpty()) {
+			_postfix = _servletContext.getContextPath();
+		}
+		else {
+			_postfix = _postfix.concat(_servletContext.getContextPath());
+		}
 	}
 
 	@Reference

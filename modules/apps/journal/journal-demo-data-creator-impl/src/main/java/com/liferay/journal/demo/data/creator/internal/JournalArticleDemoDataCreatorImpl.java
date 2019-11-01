@@ -52,13 +52,6 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalArticleDemoDataCreatorImpl
 	implements JournalArticleDemoDataCreator {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		Collections.addAll(_availableIndexes, new Integer[] {1, 2, 3, 4, 5});
-
-		Collections.shuffle(_availableIndexes);
-	}
-
 	@Override
 	public JournalArticle create(long userId, long groupId)
 		throws IOException, PortalException {
@@ -96,6 +89,13 @@ public class JournalArticleDemoDataCreatorImpl
 
 			_entryIds.remove(entryId);
 		}
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		Collections.addAll(_availableIndexes, new Integer[] {1, 2, 3, 4, 5});
+
+		Collections.shuffle(_availableIndexes);
 	}
 
 	@Reference(unbind = "-")

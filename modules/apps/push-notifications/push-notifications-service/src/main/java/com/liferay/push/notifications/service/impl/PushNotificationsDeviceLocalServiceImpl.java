@@ -51,12 +51,6 @@ import org.osgi.service.component.annotations.Reference;
 public class PushNotificationsDeviceLocalServiceImpl
 	extends PushNotificationsDeviceLocalServiceBaseImpl {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, PushNotificationsSender.class, "platform");
-	}
-
 	@Override
 	public PushNotificationsDevice addPushNotificationsDevice(
 			long userId, String platform, String token)
@@ -79,11 +73,6 @@ public class PushNotificationsDeviceLocalServiceImpl
 		pushNotificationsDevicePersistence.update(pushNotificationsDevice);
 
 		return pushNotificationsDevice;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
 	}
 
 	@Override
@@ -189,6 +178,17 @@ public class PushNotificationsDeviceLocalServiceImpl
 				oldPushNotificationsDevice.getUserId(),
 				oldPushNotificationsDevice.getPlatform(), newToken);
 		}
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, PushNotificationsSender.class, "platform");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	@Reference

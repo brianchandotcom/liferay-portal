@@ -80,6 +80,40 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Provider
 public class ConfigurableScopeCheckerFeature implements Feature {
 
+	@Override
+	public boolean configure(FeatureContext context) {
+		if (_checkPatterns.isEmpty()) {
+			return false;
+		}
+
+		Map<Class<?>, Integer> contracts =
+			HashMapBuilder.<Class<?>, Integer>put(
+				ContainerRequestFilter.class, Priorities.AUTHORIZATION - 8
+			).build();
+
+		context.register(
+			new ConfigurableContainerScopeCheckerContainerRequestFilter(),
+			contracts);
+
+		Configuration configuration = context.getConfiguration();
+
+		Stream<CheckPattern> stream = _checkPatterns.stream();
+
+		_serviceRegistration = _bundleContext.registerService(
+			ScopeFinder.class,
+			new CollectionScopeFinder(
+				stream.flatMap(
+					c -> Arrays.stream(c.getScopes())
+				).filter(
+					Validator::isNotNull
+				).collect(
+					Collectors.toSet()
+				)),
+			buildProperties(configuration));
+
+		return true;
+	}
+
 	@Activate
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
@@ -127,40 +161,6 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 				throw new IllegalArgumentException(pse);
 			}
 		}
-	}
-
-	@Override
-	public boolean configure(FeatureContext context) {
-		if (_checkPatterns.isEmpty()) {
-			return false;
-		}
-
-		Map<Class<?>, Integer> contracts =
-			HashMapBuilder.<Class<?>, Integer>put(
-				ContainerRequestFilter.class, Priorities.AUTHORIZATION - 8
-			).build();
-
-		context.register(
-			new ConfigurableContainerScopeCheckerContainerRequestFilter(),
-			contracts);
-
-		Configuration configuration = context.getConfiguration();
-
-		Stream<CheckPattern> stream = _checkPatterns.stream();
-
-		_serviceRegistration = _bundleContext.registerService(
-			ScopeFinder.class,
-			new CollectionScopeFinder(
-				stream.flatMap(
-					c -> Arrays.stream(c.getScopes())
-				).filter(
-					Validator::isNotNull
-				).collect(
-					Collectors.toSet()
-				)),
-			buildProperties(configuration));
-
-		return true;
 	}
 
 	protected Dictionary<String, Object> buildProperties(

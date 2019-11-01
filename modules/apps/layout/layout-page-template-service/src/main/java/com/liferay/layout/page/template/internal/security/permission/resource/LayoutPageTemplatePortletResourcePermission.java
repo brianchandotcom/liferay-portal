@@ -45,15 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutPageTemplatePortletResourcePermission
 	implements PortletResourcePermission {
 
-	@Activate
-	protected void activate() {
-		_portletResourcePermission = PortletResourcePermissionFactory.create(
-			LayoutPageTemplateConstants.RESOURCE_NAME,
-			new StagedPortletPermissionLogic(
-				_stagingPermission,
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES));
-	}
-
 	@Override
 	public void check(
 			PermissionChecker permissionChecker, Group group, String actionId)
@@ -95,6 +86,15 @@ public class LayoutPageTemplatePortletResourcePermission
 	@Override
 	public String getResourceName() {
 		return LayoutPageTemplateConstants.RESOURCE_NAME;
+	}
+
+	@Activate
+	protected void activate() {
+		_portletResourcePermission = PortletResourcePermissionFactory.create(
+			LayoutPageTemplateConstants.RESOURCE_NAME,
+			new StagedPortletPermissionLogic(
+				_stagingPermission,
+				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES));
 	}
 
 	private long _getGroupId(long groupId) {

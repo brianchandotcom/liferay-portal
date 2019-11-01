@@ -39,12 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 public class SamlSpAuthRequestLocalServiceImpl
 	extends SamlSpAuthRequestLocalServiceBaseImpl {
 
-	@Activate
-	protected void activate() {
-		_samlConfiguration = SamlConfigurationUtil.getSamlConfiguration(
-			_configurationAdmin);
-	}
-
 	@Override
 	public SamlSpAuthRequest addSamlSpAuthRequest(
 		String samlIdpEntityId, String samlSpAuthRequestKey,
@@ -91,6 +85,12 @@ public class SamlSpAuthRequestLocalServiceImpl
 
 		return samlSpAuthRequestPersistence.findBySIEI_SSARK(
 			samlIdpEntityId, samlSpAuthRequestKey);
+	}
+
+	@Activate
+	protected void activate() {
+		_samlConfiguration = SamlConfigurationUtil.getSamlConfiguration(
+			_configurationAdmin);
 	}
 
 	@Reference

@@ -79,18 +79,6 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalContentImpl
 	implements CTEventListener, IdentifiableOSGiService, JournalContent {
 
-	@Activate
-	protected void activate() {
-		_portalCache =
-			(PortalCache<JournalContentKey, JournalArticleDisplay>)
-				_multiVMPool.getPortalCache(CACHE_NAME);
-
-		_journalArticlePortalCacheIndexer = new PortalCacheIndexer<>(
-			new JournalContentArticleKeyIndexEncoder(), _portalCache);
-		_journalTemplatePortalCacheIndexer = new PortalCacheIndexer<>(
-			new JournalContentTemplateKeyIndexEncoder(), _portalCache);
-	}
-
 	@Override
 	public void clearCache() {
 		if (ExportImportThreadLocal.isImportInProcess()) {
@@ -134,11 +122,6 @@ public class JournalContentImpl
 				ReflectionUtil.throwException(t);
 			}
 		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_multiVMPool.removePortalCache(CACHE_NAME);
 	}
 
 	@Override
@@ -404,6 +387,23 @@ public class JournalContentImpl
 	@Override
 	public void onAfterPublish(long ctCollectionId) {
 		_portalCache.removeAll();
+	}
+
+	@Activate
+	protected void activate() {
+		_portalCache =
+			(PortalCache<JournalContentKey, JournalArticleDisplay>)
+				_multiVMPool.getPortalCache(CACHE_NAME);
+
+		_journalArticlePortalCacheIndexer = new PortalCacheIndexer<>(
+			new JournalContentArticleKeyIndexEncoder(), _portalCache);
+		_journalTemplatePortalCacheIndexer = new PortalCacheIndexer<>(
+			new JournalContentTemplateKeyIndexEncoder(), _portalCache);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_multiVMPool.removePortalCache(CACHE_NAME);
 	}
 
 	protected JournalArticleDisplay getArticleDisplay(

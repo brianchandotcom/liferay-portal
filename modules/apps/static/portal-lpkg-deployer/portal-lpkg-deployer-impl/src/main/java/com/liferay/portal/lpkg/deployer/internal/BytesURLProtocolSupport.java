@@ -43,18 +43,6 @@ import org.osgi.service.url.URLStreamHandlerService;
 @Component(immediate = true, service = BytesURLProtocolSupport.class)
 public class BytesURLProtocolSupport {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			URLConstants.URL_HANDLER_PROTOCOL, new String[] {"bytes"});
-
-		bundleContext.registerService(
-			URLStreamHandlerService.class.getName(),
-			new BytesURLStreamHandlerService(), properties);
-	}
-
 	public URL putBytes(String id, byte[] bytes) {
 		try {
 			URL url = new URL(
@@ -71,6 +59,18 @@ public class BytesURLProtocolSupport {
 
 	public byte[] removeBytes(URL url) {
 		return _bytesMap.remove(url);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(
+			URLConstants.URL_HANDLER_PROTOCOL, new String[] {"bytes"});
+
+		bundleContext.registerService(
+			URLStreamHandlerService.class.getName(),
+			new BytesURLStreamHandlerService(), properties);
 	}
 
 	private final Map<URL, byte[]> _bytesMap = new ConcurrentHashMap<>();

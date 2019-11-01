@@ -57,13 +57,6 @@ import org.osgi.service.component.annotations.Reference;
 public class SegmentsEntryDemoDataCreatorImpl
 	implements SegmentsEntryDemoDataCreator {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		Collections.addAll(_availableIndexes, new Integer[] {1, 2});
-
-		Collections.shuffle(_availableIndexes);
-	}
-
 	@Override
 	public SegmentsEntry create(long userId, long groupId)
 		throws IOException, PortalException {
@@ -115,6 +108,13 @@ public class SegmentsEntryDemoDataCreatorImpl
 
 			_segmentsEntryIds.remove(entryId);
 		}
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		Collections.addAll(_availableIndexes, new Integer[] {1, 2});
+
+		Collections.shuffle(_availableIndexes);
 	}
 
 	private String _getCriteria(int index) {

@@ -44,24 +44,6 @@ public class JSBundleConfigTracker
 	implements ServiceTrackerCustomizer
 		<ServletContext, ServiceReference<ServletContext>> {
 
-	@Activate
-	protected void activate(
-			ComponentContext componentContext, Map<String, Object> properties)
-		throws Exception {
-
-		if (_serviceTracker != null) {
-			_serviceTracker.close();
-		}
-
-		_bundleContext = componentContext.getBundleContext();
-
-		_serviceTracker = ServiceTrackerFactory.open(
-			_bundleContext,
-			"(&(objectClass=" + ServletContext.class.getName() +
-				")(osgi.web.contextpath=*))",
-			this);
-	}
-
 	@Override
 	public ServiceReference<ServletContext> addingService(
 		ServiceReference<ServletContext> serviceReference) {
@@ -146,6 +128,24 @@ public class JSBundleConfigTracker
 		private final ServletContext _servletContext;
 		private final URL _url;
 
+	}
+
+	@Activate
+	protected void activate(
+			ComponentContext componentContext, Map<String, Object> properties)
+		throws Exception {
+
+		if (_serviceTracker != null) {
+			_serviceTracker.close();
+		}
+
+		_bundleContext = componentContext.getBundleContext();
+
+		_serviceTracker = ServiceTrackerFactory.open(
+			_bundleContext,
+			"(&(objectClass=" + ServletContext.class.getName() +
+				")(osgi.web.contextpath=*))",
+			this);
 	}
 
 	@Deactivate

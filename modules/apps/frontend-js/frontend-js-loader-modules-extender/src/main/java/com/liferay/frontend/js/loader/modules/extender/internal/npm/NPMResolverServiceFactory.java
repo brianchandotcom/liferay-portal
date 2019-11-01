@@ -39,17 +39,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = ServiceFactory.class)
 public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceRegistration = bundleContext.registerService(
-			NPMResolver.class, this, new Hashtable<String, Object>());
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceRegistration.unregister();
-	}
-
 	@Override
 	public NPMResolver getService(
 		Bundle bundle, ServiceRegistration<NPMResolver> serviceRegistration) {
@@ -67,6 +56,17 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 	public void ungetService(
 		Bundle bundle, ServiceRegistration<NPMResolver> serviceRegistration,
 		NPMResolver npmResolver) {
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceRegistration = bundleContext.registerService(
+			NPMResolver.class, this, new Hashtable<String, Object>());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
 	}
 
 	@Reference(

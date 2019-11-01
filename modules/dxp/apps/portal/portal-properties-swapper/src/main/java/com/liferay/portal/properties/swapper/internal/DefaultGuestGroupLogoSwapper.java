@@ -40,6 +40,25 @@ import org.osgi.service.component.annotations.Reference;
 @Component(enabled = false, immediate = true, service = {})
 public class DefaultGuestGroupLogoSwapper {
 
+	@Reference(unbind = "-")
+	public void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+
+		_layoutSetLocalService = layoutSetLocalService;
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
 		List<Company> companies = _companyLocalService.getCompanies(0, 1);
@@ -66,25 +85,6 @@ public class DefaultGuestGroupLogoSwapper {
 			_layoutSetLocalService.updateLogo(
 				group.getGroupId(), false, true, inputStream);
 		}
-	}
-
-	@Reference(unbind = "-")
-	public void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-
-		_layoutSetLocalService = layoutSetLocalService;
 	}
 
 	private CompanyLocalService _companyLocalService;

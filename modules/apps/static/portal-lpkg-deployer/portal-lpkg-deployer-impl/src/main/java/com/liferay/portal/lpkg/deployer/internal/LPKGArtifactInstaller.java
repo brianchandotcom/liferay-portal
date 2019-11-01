@@ -57,11 +57,6 @@ import org.osgi.service.url.URLStreamHandlerService;
 @Component(immediate = true, service = ArtifactInstaller.class)
 public class LPKGArtifactInstaller implements ArtifactInstaller {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
 	@Override
 	public boolean canHandle(File file) {
 		String name = StringUtil.toLowerCase(file.getName());
@@ -133,6 +128,11 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 	@Override
 	public void update(File file) throws Exception {
 		_update(file, _readMarketplaceProperties(file));
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 	}
 
 	private void _logRestartRequired(String canonicalPath) {

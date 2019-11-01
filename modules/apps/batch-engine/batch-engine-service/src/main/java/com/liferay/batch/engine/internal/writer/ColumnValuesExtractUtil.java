@@ -66,14 +66,12 @@ public class ColumnValuesExtractUtil {
 					}
 				}
 			}
-			else {
-				if (fieldNames.contains(key)) {
-					if (value == null) {
-						value = StringPool.BLANK;
-					}
-
-					columnNameValueMap.put(key, value);
+			else if (fieldNames.contains(key)) {
+				if (value == null) {
+					value = StringPool.BLANK;
 				}
+
+				columnNameValueMap.put(key, value);
 			}
 		}
 

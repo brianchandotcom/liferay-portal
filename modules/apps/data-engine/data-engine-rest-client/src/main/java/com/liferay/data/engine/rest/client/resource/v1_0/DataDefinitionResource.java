@@ -39,11 +39,11 @@ public interface DataDefinitionResource {
 		return new Builder();
 	}
 
-	public String getDataDefinitionDataDefinitionFieldFieldType()
+	public String getDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getDataDefinitionDataDefinitionFieldFieldTypeHttpResponse()
+			getDataDefinitionDataDefinitionFieldFieldTypesHttpResponse()
 		throws Exception;
 
 	public void deleteDataDefinition(Long dataDefinitionId) throws Exception;
@@ -67,12 +67,12 @@ public interface DataDefinitionResource {
 			Long dataDefinitionId, DataDefinition dataDefinition)
 		throws Exception;
 
-	public String getDataDefinitionDataDefinitionFieldLink(
+	public String getDataDefinitionDataDefinitionFieldLinks(
 			Long dataDefinitionId, String fieldName)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getDataDefinitionDataDefinitionFieldLinkHttpResponse(
+			getDataDefinitionDataDefinitionFieldLinksHttpResponse(
 				Long dataDefinitionId, String fieldName)
 		throws Exception;
 
@@ -184,11 +184,11 @@ public interface DataDefinitionResource {
 	public static class DataDefinitionResourceImpl
 		implements DataDefinitionResource {
 
-		public String getDataDefinitionDataDefinitionFieldFieldType()
+		public String getDataDefinitionDataDefinitionFieldFieldTypes()
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getDataDefinitionDataDefinitionFieldFieldTypeHttpResponse();
+				getDataDefinitionDataDefinitionFieldFieldTypesHttpResponse();
 
 			String content = httpResponse.getContent();
 
@@ -202,7 +202,7 @@ public interface DataDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getDataDefinitionDataDefinitionFieldFieldTypeHttpResponse()
+				getDataDefinitionDataDefinitionFieldFieldTypesHttpResponse()
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -418,12 +418,12 @@ public interface DataDefinitionResource {
 			return httpInvoker.invoke();
 		}
 
-		public String getDataDefinitionDataDefinitionFieldLink(
+		public String getDataDefinitionDataDefinitionFieldLinks(
 				Long dataDefinitionId, String fieldName)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getDataDefinitionDataDefinitionFieldLinkHttpResponse(
+				getDataDefinitionDataDefinitionFieldLinksHttpResponse(
 					dataDefinitionId, fieldName);
 
 			String content = httpResponse.getContent();
@@ -438,7 +438,7 @@ public interface DataDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getDataDefinitionDataDefinitionFieldLinkHttpResponse(
+				getDataDefinitionDataDefinitionFieldLinksHttpResponse(
 					Long dataDefinitionId, String fieldName)
 			throws Exception {
 

@@ -99,10 +99,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionDataDefinitionFieldFieldType{}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionDataDefinitionFieldFieldTypes{}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public String dataDefinitionDataDefinitionFieldFieldType()
+	public String dataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -110,7 +110,7 @@ public class Query {
 			this::_populateResourceContext,
 			dataDefinitionResource ->
 				dataDefinitionResource.
-					getDataDefinitionDataDefinitionFieldFieldType());
+					getDataDefinitionDataDefinitionFieldFieldTypes());
 	}
 
 	/**
@@ -133,10 +133,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionDataDefinitionFieldLink(dataDefinitionId: ___, fieldName: ___){}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionDataDefinitionFieldLinks(dataDefinitionId: ___, fieldName: ___){}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public String dataDefinitionDataDefinitionFieldLink(
+	public String dataDefinitionDataDefinitionFieldLinks(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("fieldName") String fieldName)
 		throws Exception {
@@ -145,8 +145,9 @@ public class Query {
 			_dataDefinitionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataDefinitionResource ->
-				dataDefinitionResource.getDataDefinitionDataDefinitionFieldLink(
-					dataDefinitionId, fieldName));
+				dataDefinitionResource.
+					getDataDefinitionDataDefinitionFieldLinks(
+						dataDefinitionId, fieldName));
 	}
 
 	/**
@@ -561,33 +562,6 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(DataDefinition.class)
-	public class GetDataDefinitionDataDefinitionFieldLinkTypeExtension {
-
-		public GetDataDefinitionDataDefinitionFieldLinkTypeExtension(
-			DataDefinition dataDefinition) {
-
-			_dataDefinition = dataDefinition;
-		}
-
-		@GraphQLField
-		public String dataDefinitionFieldLink(
-				@GraphQLName("fieldName") String fieldName)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_dataDefinitionResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				dataDefinitionResource ->
-					dataDefinitionResource.
-						getDataDefinitionDataDefinitionFieldLink(
-							_dataDefinition.getId(), fieldName));
-		}
-
-		private DataDefinition _dataDefinition;
-
-	}
-
-	@GraphQLTypeExtension(DataDefinition.class)
 	public class GetDataDefinitionDataRecordCollectionsPageTypeExtension {
 
 		public GetDataDefinitionDataRecordCollectionsPageTypeExtension(
@@ -611,6 +585,33 @@ public class Query {
 						getDataDefinitionDataRecordCollectionsPage(
 							_dataDefinition.getId(), keywords,
 							Pagination.of(page, pageSize))));
+		}
+
+		private DataDefinition _dataDefinition;
+
+	}
+
+	@GraphQLTypeExtension(DataDefinition.class)
+	public class GetDataDefinitionDataDefinitionFieldLinksTypeExtension {
+
+		public GetDataDefinitionDataDefinitionFieldLinksTypeExtension(
+			DataDefinition dataDefinition) {
+
+			_dataDefinition = dataDefinition;
+		}
+
+		@GraphQLField
+		public String dataDefinitionFieldLinks(
+				@GraphQLName("fieldName") String fieldName)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_dataDefinitionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				dataDefinitionResource ->
+					dataDefinitionResource.
+						getDataDefinitionDataDefinitionFieldLinks(
+							_dataDefinition.getId(), fieldName));
 		}
 
 		private DataDefinition _dataDefinition;

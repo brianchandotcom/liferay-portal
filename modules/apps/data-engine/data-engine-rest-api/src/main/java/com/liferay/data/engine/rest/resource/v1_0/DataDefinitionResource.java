@@ -44,7 +44,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DataDefinitionResource {
 
-	public String getDataDefinitionDataDefinitionFieldFieldType()
+	public String getDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception;
 
 	public void deleteDataDefinition(Long dataDefinitionId) throws Exception;
@@ -56,7 +56,7 @@ public interface DataDefinitionResource {
 			Long dataDefinitionId, DataDefinition dataDefinition)
 		throws Exception;
 
-	public String getDataDefinitionDataDefinitionFieldLink(
+	public String getDataDefinitionDataDefinitionFieldLinks(
 			Long dataDefinitionId, String fieldName)
 		throws Exception;
 

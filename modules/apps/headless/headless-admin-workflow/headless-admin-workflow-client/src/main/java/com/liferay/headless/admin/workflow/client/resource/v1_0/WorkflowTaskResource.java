@@ -173,11 +173,11 @@ public interface WorkflowTaskResource {
 					ChangeTransition changeTransition)
 		throws Exception;
 
-	public String getWorkflowTaskHasOtherAssignableUser(Long workflowTaskId)
+	public String getWorkflowTaskHasOtherAssignableUsers(Long workflowTaskId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getWorkflowTaskHasOtherAssignableUserHttpResponse(
+			getWorkflowTaskHasOtherAssignableUsersHttpResponse(
 				Long workflowTaskId)
 		throws Exception;
 
@@ -1185,11 +1185,12 @@ public interface WorkflowTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public String getWorkflowTaskHasOtherAssignableUser(Long workflowTaskId)
+		public String getWorkflowTaskHasOtherAssignableUsers(
+				Long workflowTaskId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWorkflowTaskHasOtherAssignableUserHttpResponse(
+				getWorkflowTaskHasOtherAssignableUsersHttpResponse(
 					workflowTaskId);
 
 			String content = httpResponse.getContent();
@@ -1204,7 +1205,7 @@ public interface WorkflowTaskResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getWorkflowTaskHasOtherAssignableUserHttpResponse(
+				getWorkflowTaskHasOtherAssignableUsersHttpResponse(
 					Long workflowTaskId)
 			throws Exception {
 

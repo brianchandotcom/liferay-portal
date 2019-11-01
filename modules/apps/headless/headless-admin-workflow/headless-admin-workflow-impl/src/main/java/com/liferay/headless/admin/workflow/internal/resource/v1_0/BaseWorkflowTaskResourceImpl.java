@@ -414,7 +414,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Path("/workflow-tasks/{workflowTaskId}/has-other-assignable-users")
 	@Produces("text/plain")
 	@Tags(value = {@Tag(name = "WorkflowTask")})
-	public String getWorkflowTaskHasOtherAssignableUser(
+	public String getWorkflowTaskHasOtherAssignableUsers(
 			@NotNull @Parameter(hidden = true) @PathParam("workflowTaskId") Long
 				workflowTaskId)
 		throws Exception {

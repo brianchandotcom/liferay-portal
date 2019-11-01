@@ -1016,7 +1016,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkflowTaskHasOtherAssignableUser() throws Exception {
+	public void testGetWorkflowTaskHasOtherAssignableUsers() throws Exception {
 		Assert.assertTrue(false);
 	}
 

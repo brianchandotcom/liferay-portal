@@ -36,4 +36,10 @@ definition {
         Click(locator1 = "FormViewBuilder#SAVE_FORM_VIEW_BUTTON");
     }
 
+    macro validateFieldLabel {
+        AssertTextEquals(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldLabel}");
+    }
+
 }

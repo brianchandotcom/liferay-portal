@@ -21,9 +21,11 @@ import java.lang.reflect.Field;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import java.util.Set;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -43,7 +45,7 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 		OutputStream outputStream) {
 
 		_fieldMap = fieldMap;
-		_fieldNames = fieldNames;
+		_fieldNames = new HashSet<>(fieldNames);
 		_outputStream = outputStream;
 
 		_workbook = new XSSFWorkbook();
@@ -108,7 +110,7 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 	}
 
 	private final Map<String, Field> _fieldMap;
-	private final List<String> _fieldNames;
+	private final Set<String> _fieldNames;
 	private final OutputStream _outputStream;
 	private int _rowNum;
 	private final Sheet _sheet;

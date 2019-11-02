@@ -49,7 +49,13 @@ public class XLSBatchEngineTaskItemWriterTest
 
 	@Test
 	public void testWriteRows() throws Exception {
-		_testWriteRows(Collections.emptyList());
+		try {
+			_testWriteRows(Collections.emptyList());
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+		}
 	}
 
 	@Test

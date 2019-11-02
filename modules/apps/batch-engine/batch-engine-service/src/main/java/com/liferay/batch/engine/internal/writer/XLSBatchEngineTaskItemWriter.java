@@ -42,6 +42,10 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 		Map<String, Field> fieldMap, List<String> fieldNames,
 		OutputStream outputStream) {
 
+		if (fieldNames.isEmpty()) {
+			throw new IllegalArgumentException("Field names are not set");
+		}
+
 		_columnValuesExtractor = new ColumnValuesExtractor(
 			fieldMap, fieldNames);
 		_outputStream = outputStream;

@@ -190,6 +190,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_TITLE</td>
+	<td>//h1[contains(@class,'fragments-editor-sidebar-section__title') and contains(.,'${key_sidebarButton}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

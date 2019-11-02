@@ -72,8 +72,10 @@ public class UpgradeTreePath extends UpgradeProcess {
 				ps2.setString(1, _calculatePath(relations, messageId));
 				ps2.setLong(2, messageId);
 
-				ps2.executeUpdate();
+				ps2.addBatch();
 			}
+
+			ps2.executeBatch();
 		}
 	}
 

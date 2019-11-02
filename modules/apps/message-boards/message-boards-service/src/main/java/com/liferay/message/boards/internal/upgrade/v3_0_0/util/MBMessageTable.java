@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.upgrade.v2_1_0.util;
+package com.liferay.message.boards.internal.upgrade.v3_0_0.util;
 
 import java.sql.Types;
 

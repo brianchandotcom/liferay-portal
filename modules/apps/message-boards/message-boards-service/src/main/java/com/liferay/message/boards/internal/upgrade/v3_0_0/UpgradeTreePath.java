@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.upgrade.v2_1_0.util;
+package com.liferay.message.boards.internal.upgrade.v3_0_0;
 
+import com.liferay.message.boards.internal.upgrade.v3_0_0.util.MBMessageTable;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;

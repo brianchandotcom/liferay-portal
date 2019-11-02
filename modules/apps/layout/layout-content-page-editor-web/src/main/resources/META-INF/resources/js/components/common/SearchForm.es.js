@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -24,7 +23,7 @@ const SearchForm = ({onChange, value}) => (
 					{Liferay.Language.get('search-form')}
 				</label>
 				<input
-					className="form-control form-control-sm input-group-inset input-group-inset-after"
+					className="form-control form-control-sm input-group-inset"
 					id="searchInput"
 					onChange={event => {
 						onChange(event.target.value);
@@ -33,9 +32,6 @@ const SearchForm = ({onChange, value}) => (
 					type="text"
 					value={value}
 				/>
-				<div className="input-group-inset-item input-group-inset-item-after">
-					<ClayIcon symbol="search" />
-				</div>
 			</div>
 		</div>
 	</form>

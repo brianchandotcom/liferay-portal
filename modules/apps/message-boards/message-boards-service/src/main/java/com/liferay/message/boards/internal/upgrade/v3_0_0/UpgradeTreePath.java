@@ -37,27 +37,13 @@ public class UpgradeTreePath extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alter(MBMessageTable.class, new AlterTableAddColumn("treePath STRING"));
 
-		String parentMessageIdSQL =
+		runSQL(
 			"update MBMessage set treePath = CONCAT('/', messageId, '/') " +
-				"where parentMessageId = 0";
+				"where parentMessageId = 0");
 
-		try (PreparedStatement ps =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection, parentMessageIdSQL)) {
-
-			ps.executeUpdate();
-		}
-
-		String rootMessageIdSQL =
+		runSQL(
 			"update MBMessage set treePath = CONCAT('/', rootMessageId, '/', " +
-				"messageId, '/') where parentMessageId = rootMessageId";
-
-		try (PreparedStatement ps =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection, rootMessageIdSQL)) {
-
-			ps.executeUpdate();
-		}
+				"messageId, '/') where parentMessageId = rootMessageId");
 
 		PreparedStatement ps1 = connection.prepareStatement(
 			"select messageId, parentMessageId from MBMessage where " +

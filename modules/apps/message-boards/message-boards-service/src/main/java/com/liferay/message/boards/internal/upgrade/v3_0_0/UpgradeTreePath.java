@@ -45,38 +45,34 @@ public class UpgradeTreePath extends UpgradeProcess {
 			"update MBMessage set treePath = CONCAT('/', rootMessageId, '/', " +
 				"messageId, '/') where parentMessageId = rootMessageId");
 
-		PreparedStatement ps1 = connection.prepareStatement(
-			"select messageId, parentMessageId from MBMessage where " +
-				"parentMessageId != 0 order by createDate desc");
-
 		Map<Long, Long> relations = new HashMap<>();
 
-		try (ResultSet rs = ps1.executeQuery()) {
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select messageId, parentMessageId from MBMessage where " +
+					"parentMessageId != 0 order by createDate desc");
+			ResultSet rs = ps.executeQuery()) {
+
 			while (rs.next()) {
 				relations.put(rs.getLong(1), rs.getLong(2));
 			}
 		}
 
-		PreparedStatement ps2 = connection.prepareStatement(
-			"select messageId from MBMessage where treePath is null or " +
-				"treePath = ''");
+		try (PreparedStatement ps1 = connection.prepareStatement(
+				"select messageId from MBMessage where treePath is null or " +
+					"treePath = ''");
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update MBMessage set treePath = ? where messageId = ?");
+			ResultSet rs = ps1.executeQuery()) {
 
-		try (ResultSet rs = ps2.executeQuery()) {
 			while (rs.next()) {
-				String messageIdSQL =
-					"update MBMessage set treePath = ? where messageId = ?";
+				long messageId = rs.getLong(1);
 
-				try (PreparedStatement ps =
-						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-							connection, messageIdSQL)) {
+				ps2.setString(1, _calculatePath(relations, messageId));
+				ps2.setLong(2, messageId);
 
-					long messageId = rs.getLong(1);
-
-					ps.setString(1, _calculatePath(relations, messageId));
-					ps.setLong(2, messageId);
-
-					ps.executeUpdate();
-				}
+				ps2.executeUpdate();
 			}
 		}
 	}

@@ -21,34 +21,87 @@
 <div class="sheet sheet-lg">
 	<h2 class="autofit-row">
 		<span class="autofit-col autofit-col-expand">
-			<liferay-ui:message key="choose-contacts-to-sync" />
+			<liferay-ui:message key="contact-data" />
 		</span>
 	</h2>
 
 	<aui:form action="<%= editSyncedContactsURL %>" method="post" name="fm">
-		<h3 class="autofit-row">
-			<span class="autofit-col autofit-col-expand">
+		<aui:fieldset>
+			<label class="control-label">
 				<liferay-ui:message key="sync-all-contacts" />
-			</span>
-		</h3>
+			</label>
 
-		<div class="form-text">
-			<liferay-ui:message key="sync-all-contacts-help" />
-		</span>
+			<div class="form-text">
+				<liferay-ui:message key="sync-all-contacts-help" />
+			</div>
 
-		<label class="toggle-switch">
-			<input class="toggle-switch-check" name="<portlet:namespace />syncAllContacts" type="checkbox" />
+			<label class="mb-4 mt-3 toggle-switch">
+				<input class="toggle-switch-check" name="<portlet:namespace />syncAllContacts" type="checkbox" />
 
-			<span aria-hidden="true" class="toggle-switch-bar">
-				<span class="toggle-switch-handle" />
-			</span>
-			<span class="toggle-switch-text toggle-switch-text-right">
-				<liferay-ui:message arguments="<%= UserServiceUtil.getCompanyUsersCount(themeDisplay.getCompanyId()) %>" key="sync-all-x-contacts" />
-			</span>
-		</label>
+				<span aria-hidden="true" class="toggle-switch-bar">
+					<span class="toggle-switch-handle" />
+				</span>
+				<span class="toggle-switch-text toggle-switch-text-right">
+					<liferay-ui:message arguments="<%= UserServiceUtil.getCompanyUsersCount(themeDisplay.getCompanyId()) %>" key="sync-all-x-contacts" />
+				</span>
+			</label>
+		</aui:fieldset>
+
+		<aui:fieldset>
+			<label class="control-label">
+				<liferay-ui:message key="sync-by-user-groups-and-organizations" />
+			</label>
+
+			<div class="form-text">
+				<liferay-ui:message key="sync-by-user-groups-and-organizations-help" />
+			</div>
+
+			<ul class="list-group mt-4">
+				<li class="list-group-item list-group-item-flex">
+					<div class="autofit-col">
+						<div class="sticker sticker-light sticker-rounded">
+							<liferay-ui:icon
+								icon="user"
+								markupView="lexicon"
+							/>
+						</div>
+					</div>
+
+					<div class="autofit-col">
+						<h4 class="list-group-title">
+							<liferay-ui:message key="sync-by-user-groups" />
+						</h4>
+
+						<p class="list-group-subtext">
+							<liferay-ui:message arguments="<%= 0 %>" key="x-organizations-selected" />
+						</p>
+					</div>
+				</li>
+				<li class="list-group-item list-group-item-flex">
+					<div class="autofit-col">
+						<div class="sticker sticker-light sticker-rounded">
+							<liferay-ui:icon
+								icon="organizations"
+								markupView="lexicon"
+							/>
+						</div>
+					</div>
+
+					<div class="autofit-col">
+						<h4 class="list-group-title">
+							<liferay-ui:message key="sync-by-organizations" />
+						</h4>
+
+						<p class="list-group-subtext">
+							<liferay-ui:message arguments="<%= 0 %>" key="x-user-groups-selected" />
+						</p>
+					</div>
+				</li>
+			</ul>
+		</aui:fieldset>
 
 		<aui:button-row>
-			<aui:button type="submit" value="save-and-sync" />
+			<aui:button type="submit" value="save" />
 		</aui:button-row>
 	</aui:form>
 </div>

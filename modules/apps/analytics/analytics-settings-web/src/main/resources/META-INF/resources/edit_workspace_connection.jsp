@@ -25,7 +25,7 @@ AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.
 <div class="sheet sheet-lg">
 	<h2 class="autofit-row">
 		<span class="autofit-col autofit-col-expand">
-			<liferay-ui:message key="workspace-connection" />
+			<liferay-ui:message key="connect-analytics-cloud" />
 		</span>
 	</h2>
 
@@ -37,11 +37,51 @@ AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.
 
 			<div class="form-text">
 				<liferay-ui:message key="analytics-cloud-token-help" />
-			</span>
+			</div>
 
 			<aui:button-row>
 				<aui:button type="submit" value="connect" />
 			</aui:button-row>
 		</aui:fieldset>
 	</aui:form>
+
+	<aui:fieldset>
+		<label class="control-label">
+			<liferay-ui:message key="synced-sites" />
+		</label>
+
+		<div class="form-text">
+			<liferay-ui:message key="synced-sites-help" />
+		</div>
+
+		<small>
+			<strong>
+				<liferay-ui:message arguments="<%= 0 %>" key="total-sites-selected-x" />
+			</strong>
+		</small>
+
+		<aui:button-row>
+			<aui:button disabled="<%= true %>" primary="<%= true %>" value="select-sites" />
+		</aui:button-row>
+	</aui:fieldset>
+
+	<aui:fieldset>
+		<label class="control-label">
+			<liferay-ui:message key="synced-contacts" />
+		</label>
+
+		<div class="form-text">
+			<liferay-ui:message key="synced-contacts-help" />
+		</div>
+
+		<small>
+			<strong>
+				<liferay-ui:message arguments="<%= 0 %>" key="total-contacts-selected-x" />
+			</strong>
+		</small>
+
+		<aui:button-row>
+			<aui:button disabled="<%= true %>" primary="<%= true %>" value="select-contacts" />
+		</aui:button-row>
+	</aui:fieldset>
 </div>

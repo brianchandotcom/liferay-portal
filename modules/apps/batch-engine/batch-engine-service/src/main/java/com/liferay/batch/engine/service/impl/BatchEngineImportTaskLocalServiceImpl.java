@@ -14,8 +14,8 @@
 
 package com.liferay.batch.engine.service.impl;
 
-import com.liferay.batch.engine.model.BatchEngineTask;
-import com.liferay.batch.engine.service.base.BatchEngineTaskLocalServiceBaseImpl;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.service.base.BatchEngineImportTaskLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -31,43 +31,48 @@ import org.osgi.service.component.annotations.Component;
  * @author Shuyang Zhou
  */
 @Component(
-	property = "model.class.name=com.liferay.batch.engine.model.BatchEngineTask",
+	property = "model.class.name=com.liferay.batch.engine.model.BatchEngineImportTask",
 	service = AopService.class
 )
-public class BatchEngineTaskLocalServiceImpl
-	extends BatchEngineTaskLocalServiceBaseImpl {
+public class BatchEngineImportTaskLocalServiceImpl
+	extends BatchEngineImportTaskLocalServiceBaseImpl {
 
 	@Override
-	public BatchEngineTask addBatchEngineTask(
+	public BatchEngineImportTask addBatchEngineImportTask(
 		long companyId, long userId, long batchSize, String callbackURL,
 		String className, byte[] content, String contentType,
 		String executeStatus, Map<String, String> fieldNameMappingMap,
 		String operation, String version) {
 
-		BatchEngineTask batchEngineTask = batchEngineTaskPersistence.create(
-			counterLocalService.increment(BatchEngineTask.class.getName()));
+		BatchEngineImportTask batchEngineImportTask =
+			batchEngineImportTaskPersistence.create(
+				counterLocalService.increment(
+					BatchEngineImportTask.class.getName()));
 
-		batchEngineTask.setCompanyId(companyId);
-		batchEngineTask.setUserId(userId);
-		batchEngineTask.setBatchSize(batchSize);
-		batchEngineTask.setCallbackURL(callbackURL);
-		batchEngineTask.setClassName(className);
-		batchEngineTask.setContent(
+		batchEngineImportTask.setCompanyId(companyId);
+		batchEngineImportTask.setUserId(userId);
+		batchEngineImportTask.setBatchSize(batchSize);
+		batchEngineImportTask.setCallbackURL(callbackURL);
+		batchEngineImportTask.setClassName(className);
+		batchEngineImportTask.setContent(
 			new OutputBlob(
 				new UnsyncByteArrayInputStream(content), content.length));
-		batchEngineTask.setContentType(contentType);
-		batchEngineTask.setExecuteStatus(executeStatus);
-		batchEngineTask.setFieldNameMapping(
+		batchEngineImportTask.setContentType(contentType);
+		batchEngineImportTask.setExecuteStatus(executeStatus);
+		batchEngineImportTask.setFieldNameMapping(
 			(Map<String, Serializable>)(Map)fieldNameMappingMap);
-		batchEngineTask.setOperation(operation);
-		batchEngineTask.setVersion(version);
+		batchEngineImportTask.setOperation(operation);
+		batchEngineImportTask.setVersion(version);
 
-		return batchEngineTaskPersistence.update(batchEngineTask);
+		return batchEngineImportTaskPersistence.update(batchEngineImportTask);
 	}
 
 	@Override
-	public List<BatchEngineTask> getBatchEngineTasks(String executeStatus) {
-		return batchEngineTaskPersistence.findByExecuteStatus(executeStatus);
+	public List<BatchEngineImportTask> getBatchEngineImportTasks(
+		String executeStatus) {
+
+		return batchEngineImportTaskPersistence.findByExecuteStatus(
+			executeStatus);
 	}
 
 }

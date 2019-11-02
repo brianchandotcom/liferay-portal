@@ -15,10 +15,15 @@
 package com.liferay.batch.engine.internal.writer;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +53,31 @@ public class XLSBatchEngineTaskItemWriterTest
 	extends BaseBatchEngineTaskItemWriterTestCase {
 
 	@Test
-	public void testWriteRows() throws Exception {
+	public void testWriteRowsWithDefinedFieldNames1() throws Exception {
+		_testWriteRows(Arrays.asList("createDate", "description", "id"));
+	}
+
+	@Test
+	public void testWriteRowsWithDefinedFieldNames2() throws Exception {
+		_testWriteRows(
+			Arrays.asList(
+				"createDate", "description", "id", "name_en", "name_hr"));
+	}
+
+	@Test
+	public void testWriteRowsWithDefinedFieldNames3() throws Exception {
+		_testWriteRows(Arrays.asList("createDate", "id", "name_en"));
+	}
+
+	@Test
+	public void testWriteRowsWithDefinedFieldNames4() throws Exception {
+		_testWriteRows(
+			Arrays.asList(
+				"id", "name_hr", "name_en", "description", "createDate"));
+	}
+
+	@Test
+	public void testWriteRowsWithEmptyFieldNames() throws Exception {
 		try {
 			_testWriteRows(Collections.emptyList());
 
@@ -58,18 +87,9 @@ public class XLSBatchEngineTaskItemWriterTest
 		}
 	}
 
-	@Test
-	public void testWriteRowsWithDefinedFieldNames() throws Exception {
-		_testWriteRows(Arrays.asList("createDate", "description", "id"));
-		_testWriteRows(
-			Arrays.asList(
-				"createDate", "description", "id", "name_en", "name_hr"));
-		_testWriteRows(Arrays.asList("createDate", "id", "name_en"));
-	}
-
 	private byte[] _getExpectedContent(
 			List<String> fieldNames, List<Item> items)
-		throws IOException {
+		throws IllegalAccessException, IOException {
 
 		try (Workbook workbook = new XSSFWorkbook()) {
 			Sheet sheet = workbook.createSheet();
@@ -80,28 +100,24 @@ public class XLSBatchEngineTaskItemWriterTest
 				for (int i = 0; i < items.size(); i++) {
 					Item item = items.get(i);
 
-					Map<String, String> name = item.getName();
-
 					List<Object> values = new ArrayList<>();
 
-					if (fieldNames.contains("createDate")) {
-						values.add(item.getCreateDate());
-					}
+					for (String fieldName : fieldNames) {
+						if (fieldName.contains(StringPool.UNDERLINE)) {
+							List<String> names = StringUtil.split(
+								fieldName, CharPool.UNDERLINE);
 
-					if (fieldNames.contains("description")) {
-						values.add(item.getDescription());
-					}
+							Field field = fieldMap.get(names.get(0));
 
-					if (fieldNames.contains("id")) {
-						values.add(item.getId());
-					}
+							Map<String, Object> valueMap = (Map)field.get(item);
 
-					if (fieldNames.contains("name_en")) {
-						values.add(name.get("en"));
-					}
+							values.add(valueMap.get(names.get(1)));
+						}
+						else {
+							Field field = fieldMap.get(fieldName);
 
-					if (fieldNames.contains("name_hr")) {
-						values.add(name.get("hr"));
+							values.add(field.get(item));
+						}
 					}
 
 					_populateRow(sheet.createRow(i + 1), workbook, values);
@@ -118,7 +134,7 @@ public class XLSBatchEngineTaskItemWriterTest
 	}
 
 	private Iterator<Row> _getExpectedRowIterator(List<String> fieldNames)
-		throws IOException {
+		throws Exception {
 
 		Workbook expectedWorkbook = new XSSFWorkbook(
 			new ByteArrayInputStream(

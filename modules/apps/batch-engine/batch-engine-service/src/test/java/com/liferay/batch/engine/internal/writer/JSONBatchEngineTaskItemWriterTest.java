@@ -32,16 +32,30 @@ public class JSONBatchEngineTaskItemWriterTest
 	extends BaseBatchEngineTaskItemWriterTestCase {
 
 	@Test
-	public void testWriteRows() throws Exception {
-		_testWriteRows(Collections.emptyList());
+	public void testWriteRowsWithDefinedFieldNames1() throws Exception {
+		_testWriteRows(Arrays.asList("createDate", "description", "id"));
 	}
 
 	@Test
-	public void testWriteRowsWithDefinedFieldNames() throws Exception {
-		_testWriteRows(Arrays.asList("createDate", "description", "id"));
+	public void testWriteRowsWithDefinedFieldNames2() throws Exception {
 		_testWriteRows(
 			Arrays.asList("createDate", "description", "id", "name"));
+	}
+
+	@Test
+	public void testWriteRowsWithDefinedFieldNames3() throws Exception {
 		_testWriteRows(Arrays.asList("createDate", "id", "name"));
+	}
+
+	@Test
+	public void testWriteRowsWithDefinedFieldNames4() throws Exception {
+		_testWriteRows(
+			Arrays.asList("id", "name", "description", "createDate"));
+	}
+
+	@Test
+	public void testWriteRowsWithEmptyFieldNames() throws Exception {
+		_testWriteRows(Collections.emptyList());
 	}
 
 	private String _getExpectedContent(

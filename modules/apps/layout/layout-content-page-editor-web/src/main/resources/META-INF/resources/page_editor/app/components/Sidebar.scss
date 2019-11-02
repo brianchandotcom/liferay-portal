@@ -46,7 +46,7 @@ $zIndexContent: 0;
 		border-left: 1px solid $sidebarBorderColor;
 		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
 		overflow-x: hidden;
-		padding: 8px;
+		padding: $pageEditorSpacing * 2;
 		position: fixed;
 		right: $sidebarButtonWidth;
 		transform: translateX(100%);
@@ -74,8 +74,8 @@ $zIndexContent: 0;
 		&__header {
 			font-size: 18px;
 			font-weight: bold;
-			margin: 32px 0 24px 0;
-			padding: 0 1rem;
+			margin-bottom: $pageEditorSpacing * 4;
+			margin-top: $pageEditorSpacing * 2;
 		}
 
 		&__section-builder {

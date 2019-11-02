@@ -88,10 +88,6 @@ public class CSVBatchEngineTaskItemWriterTest
 			List<String> fieldNames, List<Item> items)
 		throws IllegalAccessException {
 
-		if (fieldNames.isEmpty()) {
-			return StringPool.NEW_LINE;
-		}
-
 		StringBundler sb = new StringBundler();
 
 		sb.append(StringUtil.merge(fieldNames, StringPool.COMMA));

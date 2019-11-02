@@ -94,34 +94,32 @@ public class XLSBatchEngineTaskItemWriterTest
 		try (Workbook workbook = new XSSFWorkbook()) {
 			Sheet sheet = workbook.createSheet();
 
-			if (!fieldNames.isEmpty()) {
-				_populateRow(sheet.createRow(0), workbook, fieldNames);
+			_populateRow(sheet.createRow(0), workbook, fieldNames);
 
-				for (int i = 0; i < items.size(); i++) {
-					Item item = items.get(i);
+			for (int i = 0; i < items.size(); i++) {
+				Item item = items.get(i);
 
-					List<Object> values = new ArrayList<>();
+				List<Object> values = new ArrayList<>();
 
-					for (String fieldName : fieldNames) {
-						if (fieldName.contains(StringPool.UNDERLINE)) {
-							List<String> names = StringUtil.split(
-								fieldName, CharPool.UNDERLINE);
+				for (String fieldName : fieldNames) {
+					if (fieldName.contains(StringPool.UNDERLINE)) {
+						List<String> names = StringUtil.split(
+							fieldName, CharPool.UNDERLINE);
 
-							Field field = fieldMap.get(names.get(0));
+						Field field = fieldMap.get(names.get(0));
 
-							Map<String, Object> valueMap = (Map)field.get(item);
+						Map<String, Object> valueMap = (Map)field.get(item);
 
-							values.add(valueMap.get(names.get(1)));
-						}
-						else {
-							Field field = fieldMap.get(fieldName);
-
-							values.add(field.get(item));
-						}
+						values.add(valueMap.get(names.get(1)));
 					}
+					else {
+						Field field = fieldMap.get(fieldName);
 
-					_populateRow(sheet.createRow(i + 1), workbook, values);
+						values.add(field.get(item));
+					}
 				}
+
+				_populateRow(sheet.createRow(i + 1), workbook, values);
 			}
 
 			ByteArrayOutputStream byteArrayOutputStream =

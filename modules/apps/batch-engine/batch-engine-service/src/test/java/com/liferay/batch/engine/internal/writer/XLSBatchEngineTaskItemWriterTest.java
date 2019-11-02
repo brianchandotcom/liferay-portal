@@ -108,7 +108,7 @@ public class XLSBatchEngineTaskItemWriterTest
 
 						Field field = fieldMap.get(names.get(0));
 
-						Map<String, Object> valueMap = (Map)field.get(item);
+						Map<?, ?> valueMap = (Map<?, ?>)field.get(item);
 
 						values.add(valueMap.get(names.get(1)));
 					}

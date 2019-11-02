@@ -20,7 +20,7 @@ buildCSS {
 	dependsOn npmInstall
 
 	imports = [
-		new File(npmInstall.nodeModulesDir, "clay-css/src/scss")
+		file("node_modules/clay-css/src/scss")
 	]
 
 	excludes "**/common_main.scss"

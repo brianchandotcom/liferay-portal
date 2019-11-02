@@ -21,11 +21,9 @@ import java.lang.reflect.Field;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import java.util.Set;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -44,8 +42,8 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 		Map<String, Field> fieldMap, List<String> fieldNames,
 		OutputStream outputStream) {
 
-		_fieldMap = fieldMap;
-		_fieldNames = new HashSet<>(fieldNames);
+		_columnValuesExtractor = new ColumnValuesExtractor(
+			fieldMap, fieldNames);
 		_outputStream = outputStream;
 
 		_workbook = new XSSFWorkbook();
@@ -67,9 +65,7 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 	@Override
 	public void write(Collection<?> items) throws Exception {
 		for (Object item : items) {
-			_write(
-				ColumnValuesExtractUtil.extractValues(
-					_fieldMap, _fieldNames, item));
+			_write(_columnValuesExtractor.extractValues(item));
 		}
 	}
 
@@ -109,8 +105,7 @@ public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 		}
 	}
 
-	private final Map<String, Field> _fieldMap;
-	private final Set<String> _fieldNames;
+	private final ColumnValuesExtractor _columnValuesExtractor;
 	private final OutputStream _outputStream;
 	private int _rowNum;
 	private final Sheet _sheet;

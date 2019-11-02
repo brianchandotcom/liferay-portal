@@ -37,6 +37,30 @@ public class UpgradeTreePath extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alter(MBMessageTable.class, new AlterTableAddColumn("treePath STRING"));
 
+		_populateTreePath();
+	}
+
+	private String _calculatePath(Map<Long, Long> relations, long messageId) {
+		List<String> paths = new ArrayList<>();
+
+		paths.add("/");
+		paths.add(String.valueOf(messageId));
+
+		while (relations.containsKey(messageId)) {
+			paths.add("/");
+			messageId = relations.get(messageId);
+
+			paths.add(String.valueOf(messageId));
+		}
+
+		paths.add("/");
+
+		Collections.reverse(paths);
+
+		return StringUtil.merge(paths, "");
+	}
+
+	private void _populateTreePath() throws Exception {
 		runSQL(
 			"update MBMessage set treePath = CONCAT('/', messageId, '/') " +
 				"where parentMessageId = 0");
@@ -77,26 +101,6 @@ public class UpgradeTreePath extends UpgradeProcess {
 
 			ps2.executeBatch();
 		}
-	}
-
-	private String _calculatePath(Map<Long, Long> relations, long messageId) {
-		List<String> paths = new ArrayList<>();
-
-		paths.add("/");
-		paths.add(String.valueOf(messageId));
-
-		while (relations.containsKey(messageId)) {
-			paths.add("/");
-			messageId = relations.get(messageId);
-
-			paths.add(String.valueOf(messageId));
-		}
-
-		paths.add("/");
-
-		Collections.reverse(paths);
-
-		return StringUtil.merge(paths, "");
 	}
 
 }

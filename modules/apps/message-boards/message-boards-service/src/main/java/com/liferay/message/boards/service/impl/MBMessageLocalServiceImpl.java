@@ -391,12 +391,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		message.setCategoryId(categoryId);
 		message.setThreadId(thread.getThreadId());
+		message.setTreePath(message.buildTreePath());
 		message.setRootMessageId(thread.getRootMessageId());
 		message.setParentMessageId(parentMessageId);
 		message.setBody(body);
 		message.setFormat(format);
 		message.setAnonymous(anonymous);
-		message.setTreePath(message.buildTreePath());
 
 		if (message.isDiscussion()) {
 			long classNameId = classNameLocalService.getClassNameId(

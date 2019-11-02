@@ -38,14 +38,6 @@ public class BatchEngineTaskItemWriterFactory {
 			OutputStream outputStream)
 		throws Exception {
 
-		if (fieldNames.isEmpty() &&
-			((batchEngineTaskContentType == BatchEngineTaskContentType.CSV) ||
-			 (batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
-			 (batchEngineTaskContentType == BatchEngineTaskContentType.XLSX))) {
-
-			throw new IllegalArgumentException("Field names are not set");
-		}
-
 		Map<String, Field> fieldMap = ItemClassIndexUtil.index(itemClass);
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {

@@ -39,6 +39,10 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 		String delimiter, Map<String, Field> fieldMap, List<String> fieldNames,
 		OutputStream outputStream) {
 
+		if (fieldNames.isEmpty()) {
+			throw new IllegalArgumentException("Field names are not set");
+		}
+
 		_delimiter = delimiter;
 		_columnValuesExtractor = new ColumnValuesExtractor(
 			fieldMap, fieldNames);
@@ -64,10 +68,6 @@ public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
 	}
 
 	private void _write(DateFormat dateFormat, Collection<?> values) {
-		if (values.isEmpty()) {
-			return;
-		}
-
 		_unsyncPrintWriter.println(
 			StringUtil.merge(
 				values,

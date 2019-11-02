@@ -90,6 +90,10 @@ definition {
 	}
 
 	macro addFragment {
+		if (IsElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE", key_sidebarButton = "Section Builder")) {
+			PageEditor.gotoTab(tabName = "Section Builder");
+		}
+
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
 		DragAndDrop(

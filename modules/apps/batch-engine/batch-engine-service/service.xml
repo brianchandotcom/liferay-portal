@@ -4,6 +4,39 @@
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.batch.engine">
 	<author>Shuyang Zhou</author>
 	<namespace>BatchEngine</namespace>
+	<entity local-service="true" name="BatchEngineExportTask" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="batchEngineExportTaskId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="callbackURL" type="String" />
+		<column name="className" type="String" />
+		<column name="content" type="Blob" />
+		<column name="contentType" type="String" />
+		<column name="endTime" type="Date" />
+		<column name="errorMessage" type="String" />
+		<column name="fieldNames" type="String" />
+		<column name="executeStatus" type="String" />
+		<column name="parameters" type="Map" />
+		<column name="startTime" type="Date" />
+		<column name="version" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="ExecuteStatus" return-type="Collection">
+			<finder-column name="executeStatus" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="BatchEngineImportTask" remote-service="false" uuid="true">
 
 		<!-- PK fields -->

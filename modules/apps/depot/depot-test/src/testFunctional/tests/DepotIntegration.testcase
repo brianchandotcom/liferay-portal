@@ -39,6 +39,8 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
+		DepotNavigator.openDepotAdmin();
+
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");

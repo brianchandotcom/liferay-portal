@@ -44,6 +44,8 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
+		DepotNavigator.openDepotAdmin();
+
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
 		DMDocument.addDMShortcutCP(

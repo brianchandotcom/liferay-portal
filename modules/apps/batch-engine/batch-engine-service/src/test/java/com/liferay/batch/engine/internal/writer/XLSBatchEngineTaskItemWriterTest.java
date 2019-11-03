@@ -16,8 +16,6 @@ package com.liferay.batch.engine.internal.writer;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -102,20 +100,21 @@ public class XLSBatchEngineTaskItemWriterTest
 				List<Object> values = new ArrayList<>();
 
 				for (String fieldName : fieldNames) {
-					if (fieldName.contains(StringPool.UNDERLINE)) {
-						List<String> names = StringUtil.split(
-							fieldName, CharPool.UNDERLINE);
+					int index = fieldName.indexOf(CharPool.UNDERLINE);
 
-						Field field = fieldMap.get(names.get(0));
-
-						Map<?, ?> valueMap = (Map<?, ?>)field.get(item);
-
-						values.add(valueMap.get(names.get(1)));
-					}
-					else {
+					if (index == -1) {
 						Field field = fieldMap.get(fieldName);
 
 						values.add(field.get(item));
+					}
+					else {
+						Field field = fieldMap.get(
+							fieldName.substring(0, index));
+
+						Map<?, ?> valueMap = (Map<?, ?>)field.get(item);
+
+						values.add(
+							valueMap.get(fieldName.substring(index + 1)));
 					}
 				}
 

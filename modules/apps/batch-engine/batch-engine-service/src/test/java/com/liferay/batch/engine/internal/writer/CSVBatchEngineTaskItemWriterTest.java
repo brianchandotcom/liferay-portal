@@ -95,20 +95,21 @@ public class CSVBatchEngineTaskItemWriterTest
 
 		for (Item item : items) {
 			for (String fieldName : fieldNames) {
-				if (fieldName.contains(StringPool.UNDERLINE)) {
-					List<String> names = StringUtil.split(
-						fieldName, CharPool.UNDERLINE);
+				int index = fieldName.indexOf(CharPool.UNDERLINE);
 
-					Field field = fieldMap.get(names.get(0));
-
-					Map<?, ?> valueMap = (Map<?, ?>)field.get(item);
-
-					sb.append(_formatValue(valueMap.get(names.get(1))));
-				}
-				else {
+				if (index == -1) {
 					Field field = fieldMap.get(fieldName);
 
 					sb.append(_formatValue(field.get(item)));
+				}
+				else {
+					Field field = fieldMap.get(fieldName.substring(0, index));
+
+					Map<?, ?> valueMap = (Map<?, ?>)field.get(item);
+
+					sb.append(
+						_formatValue(
+							valueMap.get(fieldName.substring(index + 1))));
 				}
 
 				sb.append(StringPool.COMMA);

@@ -1083,6 +1083,14 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (knowledgeBaseFolder.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (knowledgeBaseFolder.getCreator() == null) {
 					valid = false;
@@ -1236,6 +1244,17 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						knowledgeBaseFolder1.getActions(),
+						knowledgeBaseFolder2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1517,6 +1536,11 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(

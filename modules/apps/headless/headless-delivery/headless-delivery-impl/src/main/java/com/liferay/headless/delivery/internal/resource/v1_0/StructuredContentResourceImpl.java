@@ -154,6 +154,9 @@ public class StructuredContentResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			contentStructureId);
+
 		return _getStructuredContentsPage(
 			booleanQuery -> {
 				if (contentStructureId != null) {
@@ -168,7 +171,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			null, search, filter, pagination, sorts);
+			ddmStructure.getGroupId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -263,6 +266,9 @@ public class StructuredContentResourceImpl
 				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		JournalFolder journalFolder = _journalFolderService.getFolder(
+			structuredContentFolderId);
+
 		return _getStructuredContentsPage(
 			booleanQuery -> {
 				if (structuredContentFolderId != null) {
@@ -282,7 +288,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			null, search, filter, pagination, sorts);
+			journalFolder.getGroupId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -635,6 +641,55 @@ public class StructuredContentResourceImpl
 		}
 	}
 
+	private Map<String, Map> _getActions(JournalArticle journalArticle) {
+		Map<String, Map> actions = new HashMap<>();
+
+		actions.put(
+			"delete",
+			addAction(
+				"DELETE", journalArticle.getResourcePrimKey(),
+				"deleteStructuredContent", JournalArticle.class.getName(),
+				journalArticle.getGroupId()));
+		actions.put(
+			"get",
+			addAction(
+				"VIEW", journalArticle.getResourcePrimKey(),
+				"getStructuredContent", JournalArticle.class.getName(),
+				journalArticle.getGroupId()));
+		actions.put(
+			"get-template",
+			addAction(
+				"VIEW", journalArticle.getResourcePrimKey(),
+				"getStructuredContentRenderedContentTemplate",
+				JournalArticle.class.getName(), journalArticle.getGroupId()));
+		actions.put(
+			"replace",
+			addAction(
+				"UPDATE", journalArticle.getResourcePrimKey(),
+				"putStructuredContent", JournalArticle.class.getName(),
+				journalArticle.getGroupId()));
+		actions.put(
+			"subscribe",
+			addAction(
+				"SUBSCRIBE", journalArticle.getResourcePrimKey(),
+				"putStructuredContentSubscribe", JournalArticle.class.getName(),
+				journalArticle.getGroupId()));
+		actions.put(
+			"unsubscribe",
+			addAction(
+				"SUBSCRIBE", journalArticle.getResourcePrimKey(),
+				"putStructuredContentUnsubscribe",
+				JournalArticle.class.getName(), journalArticle.getGroupId()));
+		actions.put(
+			"update",
+			addAction(
+				"UPDATE", journalArticle.getResourcePrimKey(),
+				"patchStructuredContent", JournalArticle.class.getName(),
+				journalArticle.getGroupId()));
+
+		return actions;
+	}
+
 	private DDMFormField _getDDMFormField(
 		DDMStructure ddmStructure, String name) {
 
@@ -669,6 +724,23 @@ public class StructuredContentResourceImpl
 			JournalArticle.class.getName(), contextCompany.getCompanyId(),
 			structuredContent.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private Map<String, Map> _getListActions(Long siteId) {
+		Map<String, Map> actions = new HashMap<>();
+
+		actions.put(
+			"create",
+			addAction(
+				"ADD_ARTICLE", "postSiteStructuredContent",
+				"com.liferay.journal", siteId));
+		actions.put(
+			"get",
+			addAction(
+				"VIEW", "getSiteStructuredContentsPage", "com.liferay.journal",
+				siteId));
+
+		return actions;
 	}
 
 	private List<DDMFormField> _getRootDDMFormFields(
@@ -731,7 +803,7 @@ public class StructuredContentResourceImpl
 					document.get(
 						com.liferay.portal.kernel.search.Field.ARTICLE_ID),
 					WorkflowConstants.STATUS_APPROVED)),
-			sorts);
+			sorts, _getListActions(siteId));
 	}
 
 	private ThemeDisplay _getThemeDisplay(JournalArticle journalArticle)
@@ -873,7 +945,7 @@ public class StructuredContentResourceImpl
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.getPreferredLocale(),
 				journalArticle.getResourcePrimKey(), contextUriInfo,
-				contextUser));
+				contextUser, _getActions(journalArticle)));
 	}
 
 	private void _validateContentFields(

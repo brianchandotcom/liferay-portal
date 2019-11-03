@@ -324,6 +324,8 @@ definition {
 	@description = "This ensures that a document in a depot can be auto tagged and have its tag replaced manually."
 	@priority = "4"
 	test ReplaceAutoTagInDocument {
+		property test.name.skip.portal.instance = "DepotDocuments#ReplaceAutoTagInDocument";
+
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
 			confidenceThreshold = "0.001");

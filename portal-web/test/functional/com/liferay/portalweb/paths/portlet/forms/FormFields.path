@@ -150,12 +150,12 @@
 </tr>
 <tr>
 	<td>GRID_OPTIONS_DRAG_ICON_1</td>
-	<td>//div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber1}]//div[contains(@class,'drag-handle')]</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_gridField}')]/..//div[@class='ddm-field-options'][${key_rowNumber1}]/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GRID_OPTIONS_DRAG_ICON_2</td>
-	<td>//div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber2}]//div[contains(@class,'drag-handle')]</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_gridField}')]/..//div[@class='ddm-options-target'][${key_rowNumber2}]</td>
 	<td></td>
 </tr>
 <tr>

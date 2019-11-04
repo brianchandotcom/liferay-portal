@@ -39,6 +39,8 @@ public interface FragmentEntryProcessorContext {
 
 	public String getMode();
 
+	public long getPreviewClassNameId();
+
 	public long getPreviewClassPK();
 
 	public int getPreviewType();

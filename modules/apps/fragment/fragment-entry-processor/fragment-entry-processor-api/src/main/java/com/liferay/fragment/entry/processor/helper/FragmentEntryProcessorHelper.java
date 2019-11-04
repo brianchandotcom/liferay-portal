@@ -38,10 +38,22 @@ public interface FragmentEntryProcessorHelper {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException;
 
-	public Object getMappedValue(
+	public default Object getMappedValue(
 			JSONObject jsonObject,
 			Map<Long, Map<String, Object>> infoDisplaysFieldValues, String mode,
 			Locale locale, long previewClassPK, int previewType)
+		throws PortalException {
+
+		return getMappedValue(
+			jsonObject, infoDisplaysFieldValues, mode, locale, previewClassPK,
+			0, previewType);
+	}
+
+	public Object getMappedValue(
+			JSONObject jsonObject,
+			Map<Long, Map<String, Object>> infoDisplaysFieldValues, String mode,
+			Locale locale, long previewClassPK, long previewClassNameId,
+			int previewType)
 		throws PortalException;
 
 	public boolean isAssetDisplayPage(String mode);

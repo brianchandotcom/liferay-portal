@@ -157,7 +157,8 @@ public class FragmentEntryProcessorHelperImpl
 	public Object getMappedValue(
 			JSONObject jsonObject,
 			Map<Long, Map<String, Object>> infoDisplaysFieldValues, String mode,
-			Locale locale, long previewClassPK, int previewType)
+			Locale locale, long previewClassPK, long previewClassNameId,
+			int previewType)
 		throws PortalException {
 
 		DefaultFragmentEntryProcessorContext
@@ -165,6 +166,8 @@ public class FragmentEntryProcessorHelperImpl
 				new DefaultFragmentEntryProcessorContext(
 					null, null, mode, locale);
 
+		defaultFragmentEntryProcessorContext.setPreviewClassNameId(
+			previewClassNameId);
 		defaultFragmentEntryProcessorContext.setPreviewClassPK(previewClassPK);
 		defaultFragmentEntryProcessorContext.setPreviewType(previewType);
 

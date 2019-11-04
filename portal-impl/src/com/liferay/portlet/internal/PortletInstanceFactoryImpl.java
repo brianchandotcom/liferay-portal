@@ -206,7 +206,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 			_invokerPortletFactory.create(
 				portlet, portletInstance, portletConfig, portletContext,
 				(InvokerFilterContainer)rootInvokerPortletInstance,
-				checkAuthToken, facesPortlet, headerPortlet, false, false);
+				checkAuthToken, facesPortlet, headerPortlet);
 
 		if (deployed) {
 			portletInstances.put(

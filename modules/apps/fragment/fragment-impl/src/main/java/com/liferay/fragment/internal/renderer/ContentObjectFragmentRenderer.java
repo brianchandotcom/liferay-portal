@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.internal.renderer;
 
-import com.liferay.fragment.internal.configuration.ContentObjectConfiguration;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -24,7 +23,6 @@ import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -35,15 +33,12 @@ import com.liferay.segments.constants.SegmentsWebKeys;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -86,15 +81,6 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "content");
-	}
-
-	@Override
-	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		if (_contentObjectConfiguration.enabled()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override
@@ -147,13 +133,6 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 
 		infoItemRenderer.render(
 			displayObject, httpServletRequest, httpServletResponse);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_contentObjectConfiguration = ConfigurableUtil.createConfigurable(
-			ContentObjectConfiguration.class, properties);
 	}
 
 	private Object _getDisplayObject(String className, long classPK) {
@@ -230,8 +209,6 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 
 		return defaultInfoItemRenderer;
 	}
-
-	private volatile ContentObjectConfiguration _contentObjectConfiguration;
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;

@@ -35,7 +35,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 	displayContext="<%= displayPageManagementToolbarDisplayContext %>"
 />
 
-<portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteDisplayPageURL">
+<portlet:actionURL name="/layout_page_template/delete_layout_page_template_entry" var="deleteDisplayPageURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 

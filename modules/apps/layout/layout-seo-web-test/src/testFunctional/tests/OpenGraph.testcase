@@ -1,0 +1,86 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "SEO";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a Page via JSON") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This ensures that OG tags will not appear when Open Graph is disabled."
+	@priority = "5"
+	test DisableConfiguration {
+		property test.name.skip.portal.instance = "OpenGraph#DisableConfiguration";
+		var portalURL = PropsUtil.get("portal.url");
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "SEO",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.disableCheckbox(fieldName = "Enable");
+
+		SystemSettings.saveConfiguration();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''property="og:title",property="og:site_name",property="og:url",property="og:locale"''');
+	}
+
+	@description = "This ensures that OG tags will appear when Open Graph is enabled."
+	@priority = "5"
+	test Smoke {
+		property test.name.skip.portal.instance = "OpenGraph#Smoke";
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		Panel.expandPanel(panel = "SEO");
+
+		OpenGraph.viewDefaultConfiguration();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''property="og:title",property="og:site_name",property="og:url",property="og:locale"''');
+	}
+
+}

@@ -12,300 +12,279 @@
  * details.
  */
 
-import 'clay-multi-select';
+import ClayButton from '@clayui/button';
+import {useResource} from '@clayui/data-provider';
+import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import ClayMultiSelect from '@clayui/multi-select';
+import classNames from 'classnames';
 import {ItemSelectorDialog} from 'frontend-js-web';
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import PropTypes from 'prop-types';
+import React, {useEffect, useRef, useState} from 'react';
 
-import templates from './AssetVocabularyCategoriesSelector.soy';
+function usePrevious(value) {
+	const ref = useRef();
 
-/**
- * Wraps Clay's existing <code>MultiSelect</code> component that offers the user
- * a categories selection input.
- */
-class AssetVocabularyCategoriesSelector extends Component {
-	/**
-	 * @inheritDoc
-	 */
-	attached(...args) {
-		super.attached(...args);
+	useEffect(() => {
+		ref.current = value;
+	}, [value]);
 
-		this._dataSource = this._handleQuery.bind(this);
-	}
+	return ref.current;
+}
 
-	/**
-	 * Opens the tag selection dialog.
-	 *
-	 * @private
-	 */
-	_handleButtonClicked() {
+function AssetVocabulariesCategoriesSelector({
+	eventName,
+	id,
+	isValid = true,
+	groupIds = [],
+	inputName,
+	label,
+	onSelectedItemsChange = () => {},
+	portletURL,
+	required,
+	selectedItems = [],
+	singleSelect,
+	sourceItemsVocabularyIds = [],
+	useFallbackInput
+}) {
+	const [inputValue, setInputValue] = useState('');
+	const [invalidItems, setInvalidItems] = useState([]);
+
+	const {refetch, resource} = useResource({
+		fetchOptions: {
+			body: new URLSearchParams({
+				cmd: JSON.stringify({
+					'/assetcategory/search': {
+						'-obc': null,
+						end: 20,
+						groupIds,
+						name: `%${inputValue.toLowerCase()}%`,
+						start: 0,
+						vocabularyIds: sourceItemsVocabularyIds
+					}
+				}),
+				p_auth: Liferay.authToken
+			}),
+			credentials: 'include',
+			method: 'POST',
+			'x-csrf-token': Liferay.authToken
+		},
+		link: `${window.location.origin}${themeDisplay.getPathContext()}
+				/api/jsonws/invoke`
+	});
+
+	const previousInputValue = usePrevious(inputValue);
+
+	useEffect(() => {
+		if (inputValue && inputValue !== previousInputValue) {
+			refetch();
+		}
+	}, [inputValue, previousInputValue, refetch]);
+
+	const getUnique = (arr, property) => {
+		return arr
+			.map(element => element[property])
+			.map(
+				(element, index, array) =>
+					array.indexOf(element) === index && index
+			)
+			.filter(element => arr[element])
+			.map(element => arr[element]);
+	};
+
+	const handleItemsChange = items => {
+		const addedItems = getUnique(
+			items.filter(
+				item =>
+					!selectedItems.find(
+						selectedItem => selectedItem.value === item.value
+					)
+			),
+			'label'
+		);
+
+		const invalidAddedItems = [];
+
+		const validAddedItems = [];
+
+		addedItems.map(item => {
+			if (
+				resource.find(
+					sourceItem => sourceItem.titleCurrentValue === item.label
+				)
+			) {
+				validAddedItems.push(item);
+			} else {
+				invalidAddedItems.push(item);
+			}
+		});
+
+		const removedItems = selectedItems.filter(
+			selectedItem =>
+				!items.find(item => item.value === selectedItem.value)
+		);
+
+		const current = [...selectedItems, ...validAddedItems].filter(
+			item =>
+				!removedItems.find(
+					removedItem => removedItem.value === item.value
+				)
+		);
+
+		setInvalidItems(invalidAddedItems);
+
+		onSelectedItemsChange(current);
+	};
+
+	const handleSelectButtonClick = () => {
 		const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
-		const uri = sub(decodeURIComponent(this.portletURL), {
-			selectedCategories: this.selectedItems
-				.map(item => item.value)
-				.join(),
-			singleSelect: this.singleSelect,
-			vocabularyIds: this.vocabularyIds.concat()
+		const url = sub(decodeURIComponent(portletURL), {
+			selectedCategories: selectedItems.map(item => item.value).join(),
+			singleSelect,
+			vocabularyIds: sourceItemsVocabularyIds.concat()
 		});
 
 		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: this.eventName,
+			eventName,
 			title: Liferay.Language.get('select-categories'),
-			url: uri
+			url
 		});
 
 		itemSelectorDialog.open();
+
 		itemSelectorDialog.on('selectedItemChange', event => {
-			const selectedItems = event.selectedItem;
+			const dialogSelectedItems = event.selectedItem;
 
-			if (selectedItems) {
-				this.selectedItems = Object.keys(selectedItems).map(itemKey => {
-					return {
-						label: selectedItems[itemKey].value,
-						value: selectedItems[itemKey].categoryId
-					};
-				});
-			}
-		});
-	}
-
-	_handleInputFocus(event) {
-		this.emit('inputFocus', event);
-	}
-
-	/**
-	 * Converts the list of selected categories into a comma-separated serialized
-	 * version to be used as a fallback for old services and implementations.
-	 *
-	 * @private
-	 * @return {string} The serialized, comma-separated version of the selected items.
-	 */
-	_getCategoryIds() {
-		return this.selectedItems
-			.map(selectedItem => selectedItem.value)
-			.join();
-	}
-
-	/**
-	 * Shows the category error.
-	 *
-	 * @private
-	 */
-	_handleErrorAddinglabelItem(event) {
-		if (event.data.itemDoesNotExists) {
-			this._typedCategory = event.target.inputValue;
-			this._unexistingCategoryError = true;
-		}
-	}
-
-	/**
-	 * Prevents auto cleaning.
-	 *
-	 * @private
-	 */
-	_handleInputOnBlur(event) {
-		event.preventDefault();
-
-		const filteredItems = event.target.filteredItems;
-		const inputValue = event.target.inputValue;
-
-		if (inputValue) {
-			if (
-				!filteredItems ||
-				(filteredItems && filteredItems.length === 0)
-			) {
-				this._typedCategory = inputValue;
-				this._unexistingCategoryError = true;
-			}
-
-			if (
-				filteredItems &&
-				filteredItems.length > 0 &&
-				filteredItems[0].data.label === inputValue
-			) {
-				const existingCategory = this.selectedItems.find(
-					category => category.label === inputValue
+			if (dialogSelectedItems) {
+				const newValues = Object.keys(dialogSelectedItems).reduce(
+					(acc, itemKey) => {
+						const item = dialogSelectedItems[itemKey];
+						if (!item.unchecked) {
+							acc.push({
+								label: item.value,
+								value: item.categoryId
+							});
+						}
+						return acc;
+					},
+					[]
 				);
 
-				if (!existingCategory) {
-					const item = {
-						label: filteredItems[0].data.label,
-						value: filteredItems[0].data.value
-					};
-
-					this.selectedItems = this.selectedItems.concat(item);
-					event.target.inputValue = '';
-				}
+				onSelectedItemsChange(newValues);
 			}
-		}
-	}
-
-	/**
-	 * Updates tags fallback and notifies that a new tag has been added.
-	 *
-	 * @param {!Event} event The event.
-	 * @private
-	 */
-	_handleItemAdded(event) {
-		this.selectedItems = event.data.selectedItems;
-	}
-
-	/**
-	 * Updates tags fallback and notifies that a new tag has been removed.
-	 *
-	 * @param {!Event} event The event.
-	 * @private
-	 */
-	_handleItemRemoved(event) {
-		this.selectedItems = event.data.selectedItems;
-	}
-
-	/**
-	 * Sync the _intpuvalue and hide the category error
-	 *
-	 * @private
-	 * @review
-	 */
-	_handleSyncInputValue(val) {
-		this._inputValue = val.newVal;
-		this._unexistingCategoryError = false;
-	}
-
-	syncSelectedItems(event) {
-		this.categoryIds = this._getCategoryIds();
-
-		this.emit('selectedItemsChange', {
-			selectedItems: event,
-			vocabularyId: this.vocabularyIds[0]
 		});
-	}
+	};
 
-	/**
-	 * Responds to user input to retrieve the list of available tags from the
-	 * tags search service.
-	 *
-	 * @param {!string} query
-	 * @private
-	 */
-	_handleQuery(query) {
-		return new Promise(resolve => {
-			const serviceOptions = {
-				end: 20,
-				groupIds: this.groupIds,
-				name: `%${query}%`,
-				start: 0,
-				vocabularyIds: this.vocabularyIds
-			};
+	return (
+		<div className="field-content">
+			<ClayForm.Group
+				className={classNames({
+					'has-error':
+						(invalidItems && invalidItems.length > 0) || !isValid
+				})}
+				id={id}
+			>
+				{useFallbackInput && (
+					<input
+						name={inputName}
+						type="hidden"
+						value={selectedItems.map(item => item.value).join()}
+					/>
+				)}
 
-			serviceOptions['-obc'] = null;
+				{label && (
+					<label>
+						{label}
 
-			Liferay.Service(
-				'/assetcategory/search',
-				serviceOptions,
-				categories =>
-					resolve(
-						categories.map(category => {
-							return {
-								label: category.titleCurrentValue,
-								value: category.categoryId
-							};
-						})
-					)
-			);
-		});
-	}
+						{required && (
+							<span className="inline-item inline-item-after reference-mark">
+								<ClayIcon symbol={'asterisk'} />
+
+								<span className="hide-accessible">
+									{Liferay.Language.get('required')}
+								</span>
+							</span>
+						)}
+					</label>
+				)}
+
+				<ClayInput.Group>
+					<ClayInput.GroupItem>
+						<ClayMultiSelect
+							inputName={inputName}
+							inputValue={inputValue}
+							items={selectedItems}
+							onChange={setInputValue}
+							onItemsChange={handleItemsChange}
+							sourceItems={
+								resource
+									? resource.map(category => {
+											return {
+												label:
+													category.titleCurrentValue,
+												value: category.categoryId
+											};
+									  })
+									: []
+							}
+						/>
+
+						{invalidItems && invalidItems.length > 0 && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									<ClayForm.FeedbackIndicator symbol="info-circle" />
+
+									{Liferay.Language.get(
+										`category-${invalidItems
+											.map(item => item.label)
+											.join(',')}-does-not-exist`
+									)}
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						)}
+
+						{!isValid && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									<ClayForm.FeedbackIndicator symbol="info-circle" />
+									<span className="ml-2">
+										{Liferay.Language.get(
+											'this-field-is-required'
+										)}
+									</span>
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						)}
+					</ClayInput.GroupItem>
+
+					<ClayInput.GroupItem shrink>
+						<ClayButton
+							displayType="secondary"
+							onClick={handleSelectButtonClick}
+						>
+							{Liferay.Language.get('select')}
+						</ClayButton>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
+			</ClayForm.Group>
+		</div>
+	);
 }
 
-/**
- * State definition.
- *
- * @static
- * @type {!Object}
- */
-AssetVocabularyCategoriesSelector.STATE = {
-	/**
-	 * <code>MultiSelect</code> component's input value.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetVocabularyCategoriesSelector
-	 * @private
-	 * @type {?(string|undefined)}
-	 */
-	_inputValue: Config.string().internal(),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof AssetVocabularyCategoriesSelector
-	 * @private
-	 * @type {?bool}
-	 */
-	_unexistingCategoryError: Config.bool().value(false),
-
-	/**
-	 * Flag to indicate whether input can create an item.
-	 *
-	 * @default false
-	 * @instance
-	 * @memberof AssetVocabularyCategoriesSelector
-	 * @type {?bool}
-	 */
-	allowInputCreateItem: Config.bool().value(false),
-
-	/**
-	 * A comma separated list of selected items.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetVocabularyCategoriesSelector
-	 * @type {?string}
-	 */
-	categoryIds: Config.string().value(''),
-
-	/**
-	 * Event name which fires when the user selects a display page using the
-	 * item selector.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetVocabularyCategoriesSelector
-	 * @type {?string}
-	 */
-	eventName: Config.string(),
-
-	groupIds: Config.array().value([]),
-
-	/**
-	 * URL of a portlet to display the tags.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetVocabularyCategoriesSelector
-	 * @type {?string}
-	 */
-
-	portletURL: Config.string(),
-
-	/**
-	 * List of selected items.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetVocabularyCategoriesSelector
-	 * @type {?Array}
-	 */
-
-	selectedItems: Config.array().value([]),
-
-	singleSelect: Config.bool().value(false),
-
-	vocabularyIds: Config.array().value([])
+AssetVocabulariesCategoriesSelector.propTypes = {
+	eventName: PropTypes.string,
+	groupIds: PropTypes.array,
+	id: PropTypes.string,
+	inputName: PropTypes.string,
+	label: PropTypes.string,
+	onSelectedItemsChange: PropTypes.func,
+	portletURL: PropTypes.string,
+	required: PropTypes.bool,
+	selectedItems: PropTypes.array,
+	singleSelect: PropTypes.bool,
+	sourceItemsVocabularyIds: PropTypes.array,
+	useFallbackInput: PropTypes.bool
 };
 
-Soy.register(AssetVocabularyCategoriesSelector, templates);
-
-export {AssetVocabularyCategoriesSelector};
-export default AssetVocabularyCategoriesSelector;
+export default AssetVocabulariesCategoriesSelector;

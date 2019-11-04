@@ -12,64 +12,78 @@
  * details.
  */
 
-import 'clay-icon';
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import './AssetVocabularyCategoriesSelector.es';
-import templates from './AssetCategoriesSelector.soy';
+import AssetVocabularyCategoriesSelector from './AssetVocabularyCategoriesSelector.es';
 
-/**
- * AssetCategoriesSelector is a component wrapping the existing Clay's MultiSelect component
- * that offers the user a tag selection input
- */
-class AssetCategoriesSelector extends Component {
-	_handleInputFocus(event) {
-		this.emit('inputFocus', event);
-	}
+function AssetCategoriesSelector({
+	eventName,
+	groupIds,
+	id,
+	inputName,
+	onVocabulariesChange,
+	portletURL,
+	useFallbackInput,
+	vocabularies = []
+}) {
+	return (
+		<div id={id}>
+			{vocabularies.map((vocabulary, index) => {
+				const label = vocabulary.group
+					? `${vocabulary.title} ${vocabulary.group}`
+					: vocabulary.title;
 
-	_handleSelectedItemsChange(event) {
-		this.emit('selectedItemsChange', event);
-	}
+				const isValid =
+					!vocabulary.required || vocabulary.selectedItems.length;
+
+				return (
+					<AssetVocabularyCategoriesSelector
+						eventName={eventName}
+						groupIds={groupIds}
+						id={`namespace_assetCategoriesSelector_${vocabulary.id}`}
+						inputName={inputName}
+						isValid={isValid}
+						key={vocabulary.id}
+						label={label}
+						onSelectedItemsChange={selectedItems => {
+							const newVocabulary = {
+								...vocabulary,
+								selectedCategoryIds: selectedItems.map(
+									item => item.value
+								),
+								selectedItems
+							};
+
+							onVocabulariesChange([
+								...vocabularies.slice(0, index),
+								newVocabulary,
+								...vocabularies.slice(index + 1)
+							]);
+						}}
+						portletURL={portletURL}
+						required={vocabulary.required}
+						selectedItems={vocabulary.selectedItems}
+						singleSelect={vocabulary.singleSelect}
+						sourceItemsVocabularyIds={[vocabulary.id]}
+						useFallbackInput={useFallbackInput}
+					/>
+				);
+			})}
+		</div>
+	);
 }
 
-AssetCategoriesSelector.STATE = {
-	/**
-	 * Event name which fires when user selects a display page using item selector
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetCategoriesSelector
-	 * @review
-	 * @type {?string}
-	 */
-
-	eventName: Config.string(),
-
-	/**
-	 * The URL of a portlet to display the tags
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetCategoriesSelector
-	 * @review
-	 * @type {?string}
-	 */
-
-	portletURL: Config.string(),
-
-	/**
-	 * A comma separated version of the list of selected items
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetCategoriesSelector
-	 * @review
-	 * @type {?string}
-	 */
-
-	vocabularies: Config.array()
+AssetCategoriesSelector.propTypes = {
+	eventName: PropTypes.string,
+	groupIds: PropTypes.array,
+	id: PropTypes.string,
+	inputName: PropTypes.string,
+	label: PropTypes.string,
+	onSelectedItemsChange: PropTypes.func,
+	onVocabulariesChange: PropTypes.func.isRequired,
+	portletURL: PropTypes.string,
+	useFallbackInput: PropTypes.bool
 };
 
-Soy.register(AssetCategoriesSelector, templates);
-
-export {AssetCategoriesSelector};
 export default AssetCategoriesSelector;

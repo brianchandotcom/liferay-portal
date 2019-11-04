@@ -2693,7 +2693,7 @@ definition {
 		FormsAdmin.viewRadioEntry(
 			fieldLabel = "New Radio",
 			fieldName = "Radio",
-			fieldValue = "Option2");
+			fieldValue = "Option 2");
 
 		FormsAdmin.viewDateEntry(
 			fieldLabel = "New Date",

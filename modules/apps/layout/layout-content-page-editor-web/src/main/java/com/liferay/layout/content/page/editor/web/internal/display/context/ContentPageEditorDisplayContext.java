@@ -48,7 +48,6 @@ import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSid
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorTypeConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentCreationContentPageEditorConfigurationUtil;
-import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentPageEditorConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -848,14 +847,9 @@ public class ContentPageEditorDisplayContext {
 					SessionErrors.clear(request);
 				}
 
-				if (ContentPageEditorConfigurationUtil.isCommentsEnabled(
-						themeDisplay.getCompanyId())) {
-
-					soyContext.put(
-						"comments",
-						_getFragmentEntryLinkCommentsJSONArray(
-							fragmentEntryLink));
-				}
+				soyContext.put(
+					"comments",
+					_getFragmentEntryLinkCommentsJSONArray(fragmentEntryLink));
 
 				String configuration =
 					_fragmentRendererController.getConfiguration(

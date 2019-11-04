@@ -52,6 +52,10 @@ public class DepotEntryGroupRelLocalServiceImpl
 		return depotEntryGroupRelPersistence.update(depotEntryGroupRel);
 	}
 
+	public void deleteGroupDepotEntryGroupRels(long toGroupId) {
+		depotEntryGroupRelPersistence.removeByToGroupId(toGroupId);
+	}
+
 	public List<DepotEntryGroupRel> getDepotEntryGroupRels(
 		DepotEntry depotEntry) {
 

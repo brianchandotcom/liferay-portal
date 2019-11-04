@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" %>
+
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -25,7 +27,11 @@ PortletURL administrationPortletURL = PortalUtil.getControlPanelPortletURL(reque
 
 administrationPortletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
-data.put("administrationPortletURL", administrationPortletURL.toString());
+boolean hasViewPortletPermission = PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, themeDisplay.getScopeGroupId(), LayoutAdminPortletKeys.GROUP_PAGES);
+
+if (hasViewPortletPermission) {
+	data.put("administrationPortletURL", administrationPortletURL.toString());
+}
 
 LiferayPortletURL findLayoutsURL = PortletURLFactoryUtil.create(request, ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU, PortletRequest.RESOURCE_PHASE);
 
@@ -75,7 +81,9 @@ pageTypeSelectorData.put("namespace", PortalUtil.getPortletNamespace(ProductNavi
 		treeId="pagesTree"
 	/>
 
-	<div class="pages-administration-link">
-		<aui:a cssClass="ml-2" href="<%= administrationPortletURL.toString() %>"><%= LanguageUtil.get(request, "go-to-pages-administration") %></aui:a>
-	</div>
+	<c:if test="<%= hasViewPortletPermission %>">
+		<div class="pages-administration-link">
+			<aui:a cssClass="ml-2" href="<%= administrationPortletURL.toString() %>"><%= LanguageUtil.get(request, "go-to-pages-administration") %></aui:a>
+		</div>
+	</c:if>
 </div>

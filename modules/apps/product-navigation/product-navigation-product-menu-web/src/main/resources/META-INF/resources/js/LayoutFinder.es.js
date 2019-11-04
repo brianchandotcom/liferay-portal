@@ -165,15 +165,17 @@ function LayoutFinder(props) {
 								)}
 							</div>
 
-							<div className="text-center">
-								<a
-									href={`${props.administrationPortletURL}&${props.administrationPortletNamespace}keywords=${keywords}`}
-								>
-									{Liferay.Language.get(
-										'view-in-page-administration'
-									)}
-								</a>
-							</div>
+							{props.administrationPortletURL && (
+								<div className="text-center">
+									<a
+										href={`${props.administrationPortletURL}&${props.administrationPortletNamespace}keywords=${keywords}`}
+									>
+										{Liferay.Language.get(
+											'view-in-page-administration'
+										)}
+									</a>
+								</div>
+							)}
 						</div>
 					)}
 				</>

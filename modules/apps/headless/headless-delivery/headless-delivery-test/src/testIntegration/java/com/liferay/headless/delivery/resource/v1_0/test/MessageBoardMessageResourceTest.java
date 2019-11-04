@@ -19,8 +19,10 @@ import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardMessage;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.test.util.MBTestUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import org.junit.Before;
@@ -43,13 +45,6 @@ public class MessageBoardMessageResourceTest
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
-
-		MBMessage mbMessage = MBTestUtil.addMessage(
-			testGroup.getGroupId(),
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		_mbThread = mbMessage.getThread();
 	}
 
 	@Ignore
@@ -67,6 +62,12 @@ public class MessageBoardMessageResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testGetSiteMessageBoardMessagesPageWithSortInteger() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLDeleteMessageBoardMessage() {
 	}
 
@@ -74,6 +75,12 @@ public class MessageBoardMessageResourceTest
 	@Override
 	@Test
 	public void testGraphQLGetMessageBoardMessage() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteMessageBoardMessagesPage() {
 	}
 
 	@Override
@@ -91,7 +98,7 @@ public class MessageBoardMessageResourceTest
 			testDeleteMessageBoardMessage_addMessageBoardMessage()
 		throws Exception {
 
-		return _addMessageBoardMessage(_mbThread.getThreadId());
+		return _addMessageBoardMessage();
 	}
 
 	@Override
@@ -99,7 +106,7 @@ public class MessageBoardMessageResourceTest
 			testDeleteMessageBoardMessageMyRating_addMessageBoardMessage()
 		throws Exception {
 
-		return _addMessageBoardMessage(_mbThread.getThreadId());
+		return _addMessageBoardMessage();
 	}
 
 	@Override
@@ -107,21 +114,40 @@ public class MessageBoardMessageResourceTest
 			testGetMessageBoardMessage_addMessageBoardMessage()
 		throws Exception {
 
-		return _addMessageBoardMessage(_mbThread.getThreadId());
+		return _addMessageBoardMessage();
 	}
 
 	@Override
 	protected Long
-		testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId() {
+			testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId()
+		throws Exception {
 
-		return _mbThread.getRootMessageId();
+		MBMessage mbMessage = _addMbMessage(
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		return mbMessage.getRootMessageId();
 	}
 
 	@Override
 	protected Long
-		testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId() {
+			testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId()
+		throws Exception {
 
-		return _mbThread.getThreadId();
+		MBMessage mbMessage = _addMbMessage(
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		return mbMessage.getThreadId();
+	}
+
+	@Override
+	protected MessageBoardMessage
+			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
+				Long siteId, MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		return _addMessageBoardMessage(messageBoardMessage, siteId);
 	}
 
 	@Override
@@ -129,8 +155,7 @@ public class MessageBoardMessageResourceTest
 			testPatchMessageBoardMessage_addMessageBoardMessage()
 		throws Exception {
 
-		return _addMessageBoardMessage(
-			testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId());
+		return _addMessageBoardMessage();
 	}
 
 	@Override
@@ -138,8 +163,7 @@ public class MessageBoardMessageResourceTest
 			testPutMessageBoardMessage_addMessageBoardMessage()
 		throws Exception {
 
-		return _addMessageBoardMessage(
-			testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId());
+		return _addMessageBoardMessage();
 	}
 
 	@Override
@@ -147,7 +171,7 @@ public class MessageBoardMessageResourceTest
 			testPutMessageBoardMessageSubscribe_addMessageBoardMessage()
 		throws Exception {
 
-		return _addMessageBoardMessage(_mbThread.getThreadId());
+		return _addMessageBoardMessage();
 	}
 
 	@Override
@@ -155,18 +179,49 @@ public class MessageBoardMessageResourceTest
 			testPutMessageBoardMessageUnsubscribe_addMessageBoardMessage()
 		throws Exception {
 
-		return _addMessageBoardMessage(_mbThread.getThreadId());
+		return _addMessageBoardMessage();
+	}
+
+	private MBMessage _addMbMessage(Long siteId, String subject, String body)
+		throws PortalException {
+
+		MBMessage mbMessage = MBTestUtil.addMessage(
+			siteId,
+			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			subject, body);
+
+		_mbThread = mbMessage.getThread();
+
+		return mbMessage;
+	}
+
+	private MessageBoardMessage _addMessageBoardMessage() throws Exception {
+		return _addMessageBoardMessage(null, testGroup.getGroupId());
 	}
 
 	private MessageBoardMessage _addMessageBoardMessage(
-			Long messageBoardThreadId)
+			MessageBoardMessage messageBoardMessage, Long siteId)
 		throws Exception {
+
+		if (messageBoardMessage != null) {
+			MBMessage mbMessage = _addMbMessage(
+				siteId, messageBoardMessage.getHeadline(),
+				messageBoardMessage.getArticleBody());
+
+			return messageBoardMessageResource.getMessageBoardMessage(
+				mbMessage.getMessageId());
+		}
+
+		_addMbMessage(
+			siteId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
 
 		return messageBoardMessageResource.
 			postMessageBoardThreadMessageBoardMessage(
-				messageBoardThreadId, randomMessageBoardMessage());
+				_mbThread.getThreadId(), randomMessageBoardMessage());
 	}
 
+	@DeleteAfterTestRun
 	private MBThread _mbThread;
 
 }

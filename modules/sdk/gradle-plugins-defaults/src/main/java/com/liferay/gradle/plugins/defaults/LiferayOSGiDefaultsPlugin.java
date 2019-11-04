@@ -3979,14 +3979,17 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		File modulesDir = new File(portalRootDir, "modules");
 
-		File modulesPrivateDir = new File(modulesDir, "private");
+		File startDir = new File(modulesDir, "private");
 
-		if (!FileUtil.isChild(project.getProjectDir(), modulesPrivateDir)) {
-			return null;
+		if (!FileUtil.isChild(project.getProjectDir(), startDir)) {
+			startDir = new File(modulesDir, "dxp");
+
+			if (!FileUtil.isChild(project.getProjectDir(), startDir)) {
+				return null;
+			}
 		}
 
-		String path = FileUtil.relativize(
-			project.getProjectDir(), modulesPrivateDir);
+		String path = FileUtil.relativize(project.getProjectDir(), startDir);
 
 		if (File.separatorChar != '/') {
 			path = path.replace(File.separatorChar, '/');

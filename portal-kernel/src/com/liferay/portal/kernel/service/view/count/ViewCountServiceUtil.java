@@ -29,12 +29,6 @@ public class ViewCountServiceUtil {
 	}
 
 	public static void incrementViewCount(
-		long companyId, long classNameId, long classPK) {
-
-		_viewCountService.incrementViewCount(companyId, classNameId, classPK);
-	}
-
-	public static void incrementViewCount(
 		long companyId, long classNameId, long classPK, int increment) {
 
 		_viewCountService.incrementViewCount(

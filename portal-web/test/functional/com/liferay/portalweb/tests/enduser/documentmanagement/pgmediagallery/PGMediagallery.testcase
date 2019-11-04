@@ -280,7 +280,7 @@ definition {
 	@description = "This test covers LPS-89361. It ensures that video can be played via media gallery."
 	@priority = "4"
 	test ViewVideoViaMediaGallery {
-		property custom.properties = "xuggler.enabled=true${line.separator}dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0";
+		property custom.properties = "xuggler.enabled=true";
 		property dummy.socket.proxy.disabled = "true";
 		property test.assert.warning.exceptions = "false";
 		property test.name.skip.portal.instance = "PGMediagallery#ViewVideoViaMediaGallery";

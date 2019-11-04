@@ -2,7 +2,7 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_Asset_AssetEntryService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.asset.portlet.liferay.com" xmlns:cmp-ns="http://model.kernel.asset.liferay.com" qname="ns:ArrayOf_tns2_AssetEntrySoap" type="java:com.liferay.asset.kernel.model.AssetEntrySoap[]" innerType="cmp-ns:AssetEntrySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.asset.portlet.liferay.com" xmlns:cmp-ns="http://model.kernel.asset.liferay.com" qname="ns:ArrayOf_tns4_AssetEntrySoap" type="java:com.liferay.asset.kernel.model.AssetEntrySoap[]" innerType="cmp-ns:AssetEntrySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.asset.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOfArrayOf_xsd_long" type="java:long[][]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.asset.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.asset.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -15,7 +15,7 @@
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCompanyEntriesCount" qname="operNS:getCompanyEntriesCount" returnQName="getCompanyEntriesCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.kernel.asset.liferay.com" name="getCompanyEntries" qname="operNS:getCompanyEntries" returnQName="getCompanyEntriesReturn" returnType="rtns:ArrayOf_tns2_AssetEntrySoap" returnItemType="tns2:AssetEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.kernel.asset.liferay.com" name="getCompanyEntries" qname="operNS:getCompanyEntries" returnQName="getCompanyEntriesReturn" returnType="rtns:ArrayOf_tns4_AssetEntrySoap" returnItemType="tns2:AssetEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
@@ -23,7 +23,7 @@
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getEntriesCount" qname="operNS:getEntriesCount" returnQName="getEntriesCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://persistence.service.kernel.asset.liferay.com" qname="entryQuery" type="tns:AssetEntryQuery"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.kernel.asset.liferay.com" name="getEntries" qname="operNS:getEntries" returnQName="getEntriesReturn" returnType="rtns:ArrayOf_tns2_AssetEntrySoap" returnItemType="tns2:AssetEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.kernel.asset.liferay.com" name="getEntries" qname="operNS:getEntries" returnQName="getEntriesReturn" returnType="rtns:ArrayOf_tns4_AssetEntrySoap" returnItemType="tns2:AssetEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://persistence.service.kernel.asset.liferay.com" qname="entryQuery" type="tns:AssetEntryQuery"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://model.kernel.asset.liferay.com" name="getEntry" qname="operNS:getEntry" returnQName="getEntryReturn" returnType="rtns:AssetEntrySoap" soapAction="">
@@ -37,6 +37,7 @@
 			<parameter xmlns:tns="http://model.kernel.asset.liferay.com" qname="assetEntry" type="tns:AssetEntrySoap"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://model.kernel.asset.liferay.com" name="incrementViewCounter" qname="operNS:incrementViewCounter" returnQName="incrementViewCounterReturn" returnType="rtns:AssetEntrySoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
 		</operation>

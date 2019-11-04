@@ -47,10 +47,6 @@ public class CTSQLContextFactoryImpl implements CTSQLContextFactory {
 		long ctCollectionId, String tableName, String primaryColumnName,
 		Class<?> clazz) {
 
-		if (ctCollectionId < 0) {
-			return new CTSQLContextImpl(Collections.emptyList(), true, false);
-		}
-
 		long classNameId = _classNameLocalService.getClassNameId(clazz);
 
 		List<CTEntry> ctEntries = _ctEntryLocalService.getCTEntries(

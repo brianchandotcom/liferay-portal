@@ -92,11 +92,9 @@ public class TaskResourceImpl
 		String latestProcessVersion = _resourceHelper.getLatestProcessVersion(
 			contextCompany.getCompanyId(), processId);
 
-		FieldSort fieldSort = _toFieldSort(sorts);
-
 		Map<String, Bucket> taskBuckets = _getTaskBuckets(
-			GetterUtil.getBoolean(completed), dateEnd, dateStart, key,
-			processId, latestProcessVersion);
+			GetterUtil.getBoolean(completed), key, processId,
+			latestProcessVersion);
 
 		Map<String, Task> tasksMap = _getTasksMap(
 			key, processId, taskBuckets.keySet(), latestProcessVersion);
@@ -111,7 +109,7 @@ public class TaskResourceImpl
 			return Page.of(
 				_getTasks(
 					GetterUtil.getBoolean(completed), dateEnd, dateStart,
-					fieldSort, pagination, processId, tasksMap),
+					_toFieldSort(sorts), pagination, processId, tasksMap),
 				pagination, count);
 		}
 
@@ -164,6 +162,19 @@ public class TaskResourceImpl
 			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("processId", processId),
 			_queries.term("version", version));
+	}
+
+	private BooleanQuery _createCompletionDateBooleanQuery(
+		Date dateEnd, Date dateStart) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		return booleanQuery.addShouldQueryClauses(
+			_queries.rangeTerm(
+				"completionDate", true, true,
+				_resourceHelper.formatDate(dateStart),
+				_resourceHelper.formatDate(dateEnd)),
+			_queries.term("slaDefinitionId", 0));
 	}
 
 	private BooleanQuery _createCountFilterBooleanQuery() {
@@ -240,17 +251,8 @@ public class TaskResourceImpl
 					"status", WorkflowMetricsSLAStatus.RUNNING.name()));
 
 			if ((dateEnd != null) && (dateStart != null)) {
-				BooleanQuery completionDateBooleanQuery =
-					_queries.booleanQuery();
-
-				completionDateBooleanQuery.addShouldQueryClauses(
-					_queries.rangeTerm(
-						"completionDate", true, true,
-						_resourceHelper.formatDate(dateStart),
-						_resourceHelper.formatDate(dateEnd)),
-					_queries.term("slaDefinitionId", 0));
-
-				booleanQuery.addMustQueryClauses(completionDateBooleanQuery);
+				booleanQuery.addMustQueryClauses(
+					_createCompletionDateBooleanQuery(dateEnd, dateStart));
 			}
 		}
 		else {
@@ -296,7 +298,7 @@ public class TaskResourceImpl
 
 		booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", "0"));
 
-		if (completed) {
+		if (completed && (dateEnd != null) && (dateStart != null)) {
 			booleanQuery.addMustQueryClauses(
 				_queries.rangeTerm(
 					"completionDate", true, true,
@@ -333,25 +335,12 @@ public class TaskResourceImpl
 	}
 
 	private Map<String, Bucket> _getTaskBuckets(
-		boolean completed, Date dateEnd, Date dateStart, String key,
-		long processId, String version) {
+		boolean completed, String key, long processId, String version) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"taskName", "taskName");
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addMustQueryClauses(_queries.term("completed", completed));
-
-		if (completed && (dateEnd != null) && (dateStart != null)) {
-			booleanQuery.addMustQueryClauses(
-				_queries.rangeTerm(
-					"completionDate", true, true,
-					_resourceHelper.formatDate(dateStart),
-					_resourceHelper.formatDate(dateEnd)));
-		}
 
 		termsAggregation.setSize(10000);
 

@@ -116,6 +116,16 @@ public class AccountEntryUserRelLocalServiceImpl
 	}
 
 	@Override
+	public void addAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws PortalException {
+
+		for (long accountUserId : accountUserIds) {
+			addAccountEntryUserRel(accountEntryId, accountUserId);
+		}
+	}
+
+	@Override
 	public void deleteAccountEntryUserRels(
 			long accountEntryId, long[] accountUserIds)
 		throws PortalException {

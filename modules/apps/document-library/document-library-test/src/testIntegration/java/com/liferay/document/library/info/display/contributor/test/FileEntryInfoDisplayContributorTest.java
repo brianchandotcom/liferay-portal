@@ -20,7 +20,6 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvide
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.DLTestUtil;
@@ -105,8 +104,8 @@ public class FileEntryInfoDisplayContributorTest {
 				Assert.assertEquals(
 					expectedURL,
 					_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-						DLFileEntryConstants.getClassName(),
-						fileEntry.getFileEntryId(), themeDisplay));
+						FileEntry.class.getName(), fileEntry.getFileEntryId(),
+						themeDisplay));
 			});
 	}
 
@@ -115,7 +114,7 @@ public class FileEntryInfoDisplayContributorTest {
 		_withAndWithoutAssetEntry(
 			fileEntry -> {
 				Assert.assertEquals(
-					DLFileEntryConstants.getClassName(),
+					FileEntry.class.getName(),
 					_infoDisplayContributor.getClassName());
 
 				Assert.assertEquals(
@@ -209,7 +208,7 @@ public class FileEntryInfoDisplayContributorTest {
 						LocaleUtil.getDefault()));
 
 				Assert.assertEquals(
-					_portal.getClassNameId(DLFileEntryConstants.getClassName()),
+					_portal.getClassNameId(FileEntry.class.getName()),
 					infoDisplayObjectProvider.getClassNameId());
 
 				Assert.assertEquals(
@@ -251,7 +250,7 @@ public class FileEntryInfoDisplayContributorTest {
 
 		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 			dlFileEntry.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(DLFileEntryConstants.getClassName()),
+			_portal.getClassNameId(FileEntry.class.getName()),
 			dlFileEntry.getFileEntryId(),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			AssetDisplayPageConstants.TYPE_SPECIFIC, serviceContext);
@@ -272,7 +271,7 @@ public class FileEntryInfoDisplayContributorTest {
 		dlFileEntry = DLTestUtil.addDLFileEntry(dlFolder.getFolderId());
 
 		AssetEntryLocalServiceUtil.deleteEntry(
-			DLFileEntryConstants.getClassName(), dlFileEntry.getFileEntryId());
+			FileEntry.class.getName(), dlFileEntry.getFileEntryId());
 
 		testFunction.accept(
 			_dlAppLocalService.getFileEntry(dlFileEntry.getFileEntryId()));

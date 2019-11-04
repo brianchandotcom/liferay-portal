@@ -117,6 +117,13 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEquals(Arrays.asList(task1, task2), (List<Task>)page.getItems());
 
 		page = taskResource.getProcessTasksPage(
+			_process.getId(), true, null, null, null, Pagination.of(1, 2),
+			"overdueInstanceCount:asc");
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(task1, task2), (List<Task>)page.getItems());
+
+		page = taskResource.getProcessTasksPage(
 			_process.getId(), true, null, null, task1.getKey(),
 			Pagination.of(1, 2), null);
 

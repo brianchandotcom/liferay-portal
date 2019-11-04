@@ -63,15 +63,6 @@ public class ViewCountEntryLocalServiceImpl
 		return viewCountEntry.getViewCount();
 	}
 
-	@Override
-	@Transactional(enabled = false)
-	public void incrementViewCount(
-		long companyId, long classNameId, long classPK) {
-
-		viewCountEntryLocalService.incrementViewCount(
-			companyId, classNameId, classPK, 1);
-	}
-
 	@BufferedIncrement(incrementClass = NumberIncrement.class)
 	@Override
 	@Retry(

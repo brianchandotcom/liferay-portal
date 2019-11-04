@@ -71,7 +71,7 @@ import org.junit.runner.RunWith;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class DLFileEntryInfoDisplayContributorTest {
+public class FileEntryInfoDisplayContributorTest {
 
 	@ClassRule
 	@Rule
@@ -111,7 +111,7 @@ public class DLFileEntryInfoDisplayContributorTest {
 	}
 
 	@Test
-	public void testDLFileEntryInfoDisplayContributor() throws Exception {
+	public void testFileEntryInfoDisplayContributor() throws Exception {
 		_withAndWithoutAssetEntry(
 			fileEntry -> {
 				Assert.assertEquals(
@@ -295,7 +295,7 @@ public class DLFileEntryInfoDisplayContributorTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.DLFileEntryInfoDisplayContributor")
+	@Inject(filter = "component.name=*.FileEntryInfoDisplayContributor")
 	private InfoDisplayContributor<FileEntry> _infoDisplayContributor;
 
 	@Inject

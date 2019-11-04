@@ -1,7 +1,7 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.0.0",
-		"@clayui/icon": "3.0.0",
+		"@clayui/button": "3.0.1",
+		"@clayui/icon": "3.0.1",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",

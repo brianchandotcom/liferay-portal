@@ -39,7 +39,8 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 AssetRendererFactory<?> assetRendererFactory = (AssetRendererFactory<?>)request.getAttribute("view.jsp-assetRendererFactory");
 AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute("view.jsp-assetRenderer");
 
-long previewAssetEntryId = ParamUtil.getLong(request, "previewAssetEntryId");
+long previewClassNameId = ParamUtil.getLong(request, "previewClassNameId");
+long previewClassPK = ParamUtil.getLong(request, "previewClassPK");
 
 boolean print = GetterUtil.getBoolean(request.getAttribute("view.jsp-print"));
 
@@ -74,7 +75,7 @@ fragmentsEditorData.put("fragments-editor-item-id", PortalUtil.getClassNameId(as
 fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-item");
 %>
 
-<div class="asset-full-content clearfix mb-5 <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %> <%= (previewAssetEntryId == assetEntry.getEntryId()) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
+<div class="asset-full-content clearfix mb-5 <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %> <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
 	<div class="mb-2">
 		<c:if test="<%= assetPublisherDisplayContext.isShowAssetTitle() %>">
 			<h4 class="component-title">

@@ -17,8 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long previewAssetEntryId = ParamUtil.getLong(request, "previewAssetEntryId");
-int previewAssetEntryType = ParamUtil.getInteger(request, "previewAssetEntryType");
+long previewClassNameId = ParamUtil.getLong(request, "previewClassNameId");
+long previewClassPK = ParamUtil.getLong(request, "previewClassPK");
+int previewType = ParamUtil.getInteger(request, "previewType");
 
 AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view.jsp-assetEntryResult");
 
@@ -32,8 +33,8 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 	AssetRenderer<?> assetRenderer = null;
 
 	try {
-		if (previewAssetEntryId == assetEntry.getEntryId()) {
-			assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), previewAssetEntryType);
+		if ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) {
+			assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), previewType);
 		}
 		else {
 			assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
@@ -45,7 +46,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 		}
 	}
 
-	if ((assetRenderer == null) || (!assetRenderer.isDisplayable() && (previewAssetEntryId <= 0))) {
+	if ((assetRenderer == null) || (!assetRenderer.isDisplayable() && (previewClassPK <= 0))) {
 		continue;
 	}
 

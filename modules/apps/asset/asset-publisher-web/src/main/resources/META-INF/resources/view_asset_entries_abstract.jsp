@@ -17,8 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long previewAssetEntryId = ParamUtil.getLong(request, "previewAssetEntryId");
-int previewAssetEntryType = ParamUtil.getInteger(request, "previewAssetEntryType");
+long previewClassNameId = ParamUtil.getLong(request, "previewClassNameId");
+long previewClassPK = ParamUtil.getLong(request, "previewClassPK");
+int previewType = ParamUtil.getInteger(request, "previewType");
 
 AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view.jsp-assetEntryResult");
 
@@ -32,8 +33,8 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 	AssetRenderer<?> assetRenderer = null;
 
 	try {
-		if (previewAssetEntryId == assetEntry.getEntryId()) {
-			assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), previewAssetEntryType);
+		if ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) {
+			assetRenderer = assetRendererFactory.getAssetRenderer(previewClassPK, previewType);
 		}
 		else {
 			assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
@@ -45,7 +46,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 		}
 	}
 
-	if ((assetRenderer == null) || (!assetRenderer.isDisplayable() && (previewAssetEntryId <= 0))) {
+	if ((assetRenderer == null) || (!assetRenderer.isDisplayable() && (previewClassPK <= 0))) {
 		continue;
 	}
 
@@ -63,7 +64,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 		fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-item");
 %>
 
-		<div class="asset-abstract mb-5 <%= assetPublisherWebUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %> <%= (previewAssetEntryId == assetEntry.getEntryId()) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
+		<div class="asset-abstract mb-5 <%= assetPublisherWebUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %> <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
 			<div class="mb-2">
 				<h4 class="component-title">
 					<c:choose>

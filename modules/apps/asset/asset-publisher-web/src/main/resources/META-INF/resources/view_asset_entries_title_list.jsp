@@ -17,8 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long previewAssetEntryId = ParamUtil.getLong(request, "previewAssetEntryId");
-int previewAssetEntryType = ParamUtil.getInteger(request, "previewAssetEntryType");
+long previewClassNameId = ParamUtil.getLong(request, "previewClassNameId");
+long previewClassPK = ParamUtil.getLong(request, "previewClassPK");
+int previewType = ParamUtil.getInteger(request, "previewType");
 
 AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view.jsp-assetEntryResult");
 %>
@@ -41,8 +42,8 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 		AssetRenderer<?> assetRenderer = null;
 
 		try {
-			if (previewAssetEntryId == assetEntry.getEntryId()) {
-				assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), previewAssetEntryType);
+			if ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) {
+				assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), previewType);
 			}
 			else {
 				assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
@@ -54,7 +55,7 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 			}
 		}
 
-		if ((assetRenderer == null) || (!assetRenderer.isDisplayable() && (previewAssetEntryId <= 0))) {
+		if ((assetRenderer == null) || (!assetRenderer.isDisplayable() && (previewClassPK <= 0))) {
 			continue;
 		}
 
@@ -67,7 +68,7 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 		fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-item");
 	%>
 
-		<li class="list-group-item list-group-item-flex <%= (previewAssetEntryId == assetEntry.getEntryId()) ? "active" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
+		<li class="list-group-item list-group-item-flex <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "active" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
 			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 				<div class="autofit-col">
 					<span class="inline-item">

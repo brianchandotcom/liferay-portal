@@ -117,6 +117,9 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:mode", _mode);
 		httpServletRequest.setAttribute(
+			"liferay-layout:render-fragment-layout:previewClassNameId",
+			_getPreviewClassNameId());
+		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:previewClassPK",
 			_getPreviewClassPK());
 		httpServletRequest.setAttribute(
@@ -139,12 +142,20 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			));
 	}
 
+	private long _getPreviewClassNameId() {
+		if (!_showPreview) {
+			return 0;
+		}
+
+		return ParamUtil.getLong(request, "previewClassNameId");
+	}
+
 	private long _getPreviewClassPK() {
 		if (!_showPreview) {
 			return 0;
 		}
 
-		return ParamUtil.getLong(request, "previewAssetEntryId");
+		return ParamUtil.getLong(request, "previewClassPK");
 	}
 
 	private int _getPreviewType() {
@@ -152,7 +163,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			return 0;
 		}
 
-		return ParamUtil.getInteger(request, "previewAssetEntryType");
+		return ParamUtil.getInteger(request, "previewType");
 	}
 
 	private long[] _getSegmentsExperienceIds() {

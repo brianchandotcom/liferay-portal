@@ -140,8 +140,8 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 	}
 
 	private String _getURL(
-			LayoutClassedModelUsage layoutClassedModelUsage,
-			int previewInfoItemType, HttpServletRequest httpServletRequest)
+			LayoutClassedModelUsage layoutClassedModelUsage, int previewType,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -159,14 +159,13 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 			layoutURL = _portal.getLayoutFriendlyURL(layout, themeDisplay);
 
 			layoutURL = _http.setParameter(
-				layoutURL, "previewInfoItemClassNameId",
+				layoutURL, "previewClassNameId",
 				String.valueOf(layoutClassedModelUsage.getClassNameId()));
 			layoutURL = _http.setParameter(
-				layoutURL, "previewInfoItemClassPK",
+				layoutURL, "previewClassPK",
 				String.valueOf(layoutClassedModelUsage.getClassPK()));
 			layoutURL = _http.setParameter(
-				layoutURL, "previewInfoItemType",
-				String.valueOf(previewInfoItemType));
+				layoutURL, "previewType", String.valueOf(previewType));
 		}
 		else {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -174,13 +173,12 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 				layoutClassedModelUsage.getPlid(), PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
-				"previewInfoItemClassNameId",
+				"previewClassNameId",
 				String.valueOf(layoutClassedModelUsage.getClassNameId()));
 			portletURL.setParameter(
-				"previewInfoItemClassPK",
+				"previewClassPK",
 				String.valueOf(layoutClassedModelUsage.getClassPK()));
-			portletURL.setParameter(
-				"previewInfoItemType", String.valueOf(previewInfoItemType));
+			portletURL.setParameter("previewType", String.valueOf(previewType));
 
 			layoutURL = portletURL.toString();
 		}

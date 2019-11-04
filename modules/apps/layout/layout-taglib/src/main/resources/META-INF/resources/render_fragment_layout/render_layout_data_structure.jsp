@@ -19,6 +19,7 @@
 <%
 Map<String, Object> fieldValues = (Map<String, Object>)request.getAttribute("liferay-layout:render-fragment-layout:fieldValues");
 String mode = (String)request.getAttribute("liferay-layout:render-fragment-layout:mode");
+long previewClassNameId = (long)request.getAttribute("liferay-layout:render-fragment-layout:previewClassNameId");
 long previewClassPK = (long)request.getAttribute("liferay-layout:render-fragment-layout:previewClassPK");
 int previewType = (int)request.getAttribute("liferay-layout:render-fragment-layout:previewType");
 long[] segmentsExperienceIds = (long[])request.getAttribute("liferay-layout:render-fragment-layout:segmentsExperienceIds");
@@ -157,6 +158,7 @@ for (int i = 0; i < structureJSONArray.length(); i++) {
 													defaultFragmentRendererContext.setFieldValues(fieldValues);
 													defaultFragmentRendererContext.setLocale(locale);
 													defaultFragmentRendererContext.setMode(mode);
+													defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
 													defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
 													defaultFragmentRendererContext.setPreviewType(previewType);
 													defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
@@ -211,6 +213,7 @@ for (int i = 0; i < structureJSONArray.length(); i++) {
 								defaultFragmentRendererContext.setFieldValues(fieldValues);
 								defaultFragmentRendererContext.setLocale(locale);
 								defaultFragmentRendererContext.setMode(mode);
+								defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
 								defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
 								defaultFragmentRendererContext.setPreviewType(previewType);
 								defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);

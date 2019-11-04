@@ -1006,15 +1006,17 @@ public class JournalContentDisplayContext {
 	}
 
 	private JournalArticle _getArticleByPreviewAssetEntryId() {
-		long previewAssetEntryId = ParamUtil.getLong(
-			_portletRequest, "previewAssetEntryId");
+		long previewClassNameId = ParamUtil.getLong(
+			_portletRequest, "previewClassNameId");
+		long previewClassPK = ParamUtil.getLong(
+			_portletRequest, "previewClassPK");
 
-		if (previewAssetEntryId <= 0) {
+		if ((previewClassNameId <= 0) || (previewClassPK <= 0)) {
 			return null;
 		}
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			previewAssetEntryId);
+			previewClassNameId, previewClassPK);
 
 		if (assetEntry == null) {
 			return null;
@@ -1027,13 +1029,13 @@ public class JournalContentDisplayContext {
 			return null;
 		}
 
-		int previewAssetEntryType = ParamUtil.getInteger(
-			_portletRequest, "previewAssetEntryType",
+		int previewType = ParamUtil.getInteger(
+			_portletRequest, "previewType",
 			AssetRendererFactory.TYPE_LATEST_APPROVED);
 
 		try {
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-				assetEntry.getClassPK(), previewAssetEntryType);
+				assetEntry.getClassPK(), previewType);
 
 			return (JournalArticle)assetRenderer.getAssetObject();
 		}

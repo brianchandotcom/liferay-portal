@@ -91,6 +91,7 @@ public class LayoutClassedModelUsagesDisplayContext {
 		_fragmentRendererTracker =
 			(FragmentRendererTracker)renderRequest.getAttribute(
 				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER);
+
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -307,13 +308,13 @@ public class LayoutClassedModelUsagesDisplayContext {
 			layoutURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
 
 			layoutURL = HttpUtil.setParameter(
-				layoutURL, "previewInfoItemClassNameId",
+				layoutURL, "previewClassNameId",
 				String.valueOf(layoutClassedModelUsage.getClassNameId()));
 			layoutURL = HttpUtil.setParameter(
-				layoutURL, "previewInfoItemClassPK",
+				layoutURL, "previewClassPK",
 				String.valueOf(layoutClassedModelUsage.getClassPK()));
 			layoutURL = HttpUtil.setParameter(
-				layoutURL, "previewInfoItemType",
+				layoutURL, "previewType",
 				String.valueOf(AssetRendererFactory.TYPE_LATEST));
 		}
 		else {
@@ -322,13 +323,13 @@ public class LayoutClassedModelUsagesDisplayContext {
 				layoutClassedModelUsage.getPlid(), PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
-				"previewInfoItemClassNameId",
+				"previewClassNameId",
 				String.valueOf(layoutClassedModelUsage.getClassNameId()));
 			portletURL.setParameter(
-				"previewInfoItemClassPK",
+				"previewClassPK",
 				String.valueOf(layoutClassedModelUsage.getClassPK()));
 			portletURL.setParameter(
-				"previewInfoItemType",
+				"previewType",
 				String.valueOf(AssetRendererFactory.TYPE_LATEST));
 
 			layoutURL = portletURL.toString();

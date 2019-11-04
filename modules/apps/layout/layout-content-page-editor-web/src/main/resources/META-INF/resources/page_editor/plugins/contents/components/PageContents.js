@@ -12,28 +12,25 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import {StoreContext} from '../../../app/store/index';
-import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import NoPageContents from './NoPageContents';
-import PageContents from './PageContents';
+import PageContent from './PageContent';
 
-export default function ContentsSidebar() {
-	const {pageContents} = useContext(StoreContext);
-	let view = <NoPageContents />;
-
-	if (pageContents.length) {
-		view = <PageContents pageContents={pageContents} />;
-	}
-
+export default function PageContents(props) {
 	return (
-		<>
-			<SidebarPanelHeader>
-				{Liferay.Language.get('contents')}
-			</SidebarPanelHeader>
-
-			{view}
-		</>
+		<ul className="list-unstyled">
+			{props.pageContents.map(pageContent => (
+				<PageContent key={pageContent.classPK} {...pageContent} />
+			))}
+		</ul>
 	);
 }
+
+PageContents.propTypes = {
+	pageContents: PropTypes.arrayOf(
+		PropTypes.shape({
+			classPK: PropTypes.string
+		})
+	)
+};

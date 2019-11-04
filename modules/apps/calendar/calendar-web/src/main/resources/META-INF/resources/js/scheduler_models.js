@@ -421,6 +421,29 @@ AUI.add(
 					}
 				},
 
+				syncNodeTitleUI() {
+					var instance = this,
+						format = instance.get('titleDateFormat'),
+						startDate = instance.get('startDate'),
+						endDate = instance.get('endDate'),
+						title = [];
+
+					if (format.startDate) {
+						title.push(
+							instance._formatDate(startDate, format.startDate) +
+								' '
+						);
+					}
+
+					if (format.endDate) {
+						title.push(
+							instance._formatDate(endDate, format.endDate)
+						);
+					}
+
+					instance.setTitle(title.join(''));
+				},
+
 				syncUI() {
 					var instance = this;
 

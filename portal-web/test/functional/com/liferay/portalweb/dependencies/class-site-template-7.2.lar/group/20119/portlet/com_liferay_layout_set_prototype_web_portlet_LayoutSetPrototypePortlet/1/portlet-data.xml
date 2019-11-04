@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<LayoutSetPrototypePortletDataHandler self-path="/group/20119/portlet/com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet/1/portlet-data.xml" group-id="20119">
+	<LayoutSetPrototype>
+		<staged-model uuid="009ea8b6-3489-b816-219d-a2edcc4901bf" group-id="33989" path="/company/20101/com.liferay.portal.kernel.model.LayoutSetPrototype/33988.xml" user-uuid="92887a0c-fedf-9a26-a25a-62f595dbe655" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="16" group-id="33989" group-key="33988" live-group-id="33989" type="embedded" uuid="dd7e4fa0-a647-7555-62e1-fc2a29a2ecaf" company-id="20101" layout-id="1" private-layout="true" missing="false"/>
+				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="17" group-id="33989" group-key="33988" live-group-id="33989" type="embedded" uuid="8f43bd18-cb9f-32f9-9689-41c012588d58" company-id="20101" layout-id="2" private-layout="true" missing="false"/>
+				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="18" group-id="33989" group-key="33988" live-group-id="33989" type="embedded" uuid="ca1032e8-89df-a8e4-ada8-2b5e14a2bff1" company-id="20101" layout-id="3" private-layout="true" missing="false"/>
+			</references>
+		</staged-model>
+	</LayoutSetPrototype>
+</LayoutSetPrototypePortletDataHandler>

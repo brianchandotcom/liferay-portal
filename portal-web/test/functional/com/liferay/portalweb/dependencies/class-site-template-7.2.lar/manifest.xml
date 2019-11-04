@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
 <root>
-	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7201" export-date="Wed, 04 Sep 2019 07:43:52 +0000" type="portlet" company-id="20115" company-group-id="20151" group-id="20132" user-personal-site-group-id="20148" private-layout="true" root-portlet-id="com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet" schema-version="1.0.0"/>
+	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7210" export-date="Mon, 04 Nov 2019 06:04:24 +0000" type="portlet" company-id="20101" company-group-id="20128" group-id="20119" user-personal-site-group-id="20127" private-layout="true" root-portlet-id="com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet" schema-version="1.0.0"/>
 	<missing-references/>
-	<portlet portlet-id="com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet" layout-id="1" path="/group/20132/portlet/com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet/20136/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup"/>
+	<portlet portlet-id="com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet" layout-id="1" path="/group/20119/portlet/com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet/1/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup"/>
 	<manifest-summary>
 		<staged-model manifest-summary-key="com.liferay.portal.kernel.model.LayoutSetPrototype" addition-count="1"/>
 	</manifest-summary>

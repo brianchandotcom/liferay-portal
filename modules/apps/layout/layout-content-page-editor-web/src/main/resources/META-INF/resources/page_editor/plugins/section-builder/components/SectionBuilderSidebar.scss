@@ -1,0 +1,85 @@
+$pageEditorSpacing: 8px;
+
+$fragmentCardImageBorderColor: #e7e7ed;
+$fragmentCardNoPreviewBackgroundColor: #e7e7ed;
+$fragmentCardNoPreviewIconColor: #a7a9bc;
+$fragmentCardTitleColor: #6b6c7e;
+
+$fragmentCardImageMaxHeight: 200px;
+$fragmentCardMarginBottom: $pageEditorSpacing * 2;
+$fragmentCardPadding: $pageEditorSpacing;
+$fragmentCardWidth: calc(50% - #{$pageEditorSpacing});
+
+$layoutPreviewBorderColor: #6b6c7e;
+$layoutPreviewColumnColor: #ddd;
+
+$layoutPreviewBorderRadius: 2px;
+$layoutPreviewRowHeight: 40px;
+$layoutPreviewSpacing: 2px;
+
+.page-editor-sidebar-panel__section-builder {
+	&__card {
+		box-shadow: 0 0 0 1px $fragmentCardImageBorderColor;
+		margin-bottom: $fragmentCardMarginBottom;
+		width: $fragmentCardWidth;
+
+		&-image img {
+			width: 100%;
+		}
+
+		&-no-preview {
+			background-color: $fragmentCardNoPreviewBackgroundColor;
+			color: $fragmentCardNoPreviewIconColor;
+			font-size: 24px;
+			line-height: 80px;
+			text-align: center;
+		}
+
+		.card-body {
+			padding: $fragmentCardPadding;
+			text-align: center;
+
+			.card-title {
+				color: $fragmentCardTitleColor;
+				font-size: 12px;
+			}
+
+			.card-row {
+				min-height: 32px;
+			}
+		}
+	}
+
+	&__fragments {
+		align-items: flex-start;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+
+	&__layouts {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+
+		&__layout-preview {
+			margin: $layoutPreviewSpacing 0;
+			padding: 0;
+
+			&__row {
+				border: solid 2px $layoutPreviewBorderColor;
+				border-radius: $layoutPreviewBorderRadius;
+				height: $layoutPreviewRowHeight;
+				margin: 0;
+				padding: $layoutPreviewSpacing;
+			}
+
+			&__col {
+				border: solid 1px $layoutPreviewBorderColor;
+				flex: 1;
+				margin: 2px;
+				padding: 0;
+			}
+		}
+	}
+}

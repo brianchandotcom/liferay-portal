@@ -380,7 +380,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 							classNameId="<%= PortalUtil.getClassNameId(BlogsEntry.class) %>"
 							classPK="<%= (entry != null) ? entry.getEntryId() : 0 %>"
 							groupId="<%= scopeGroupId %>"
-							showPortletLayouts="<%= true %>"
+							showPortletLayouts="<%= false %>"
 							showViewInContextLink="<%= true %>"
 						/>
 					</aui:fieldset>

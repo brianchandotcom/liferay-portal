@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.increment.BufferedIncrement;
-import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
@@ -444,14 +442,13 @@ public interface AssetEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntry incrementViewCounter(
-			long userId, String className, long classPK)
+			long companyId, long userId, String className, long classPK)
 		throws PortalException;
 
-	@BufferedIncrement(
-		configuration = "AssetEntry", incrementClass = NumberIncrement.class
-	)
+	@Transactional(enabled = false)
 	public void incrementViewCounter(
-		long userId, String className, long classPK, int increment);
+		long companyId, long userId, String className, long classPK,
+		int increment);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void reindex(List<AssetEntry> entries) throws PortalException;

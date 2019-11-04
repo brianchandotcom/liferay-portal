@@ -740,19 +740,20 @@ public class AssetEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry incrementViewCounter(
-			long userId, String className, long classPK)
+			long companyId, long userId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetEntryLocalService.incrementViewCounter(
-			userId, className, classPK);
+			companyId, userId, className, classPK);
 	}
 
 	@Override
 	public void incrementViewCounter(
-		long userId, String className, long classPK, int increment) {
+		long companyId, long userId, String className, long classPK,
+		int increment) {
 
 		_assetEntryLocalService.incrementViewCounter(
-			userId, className, classPK, increment);
+			companyId, userId, className, classPK, increment);
 	}
 
 	@Override

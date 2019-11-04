@@ -107,10 +107,11 @@ public class AssetEntryServiceWrapper
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry incrementViewCounter(
-			String className, long classPK)
+			long companyId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _assetEntryService.incrementViewCounter(className, classPK);
+		return _assetEntryService.incrementViewCounter(
+			companyId, className, classPK);
 	}
 
 	@Override

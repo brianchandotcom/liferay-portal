@@ -176,8 +176,6 @@ public class AssetEntryPersistenceTest {
 
 		newAssetEntry.setPriority(RandomTestUtil.nextDouble());
 
-		newAssetEntry.setViewCount(RandomTestUtil.nextInt());
-
 		_assetEntries.add(_persistence.update(newAssetEntry));
 
 		AssetEntry existingAssetEntry = _persistence.findByPrimaryKey(
@@ -247,8 +245,6 @@ public class AssetEntryPersistenceTest {
 			existingAssetEntry.getWidth(), newAssetEntry.getWidth());
 		AssertUtils.assertEquals(
 			existingAssetEntry.getPriority(), newAssetEntry.getPriority());
-		Assert.assertEquals(
-			existingAssetEntry.getViewCount(), newAssetEntry.getViewCount());
 	}
 
 	@Test
@@ -363,7 +359,7 @@ public class AssetEntryPersistenceTest {
 			true, "startDate", true, "endDate", true, "publishDate", true,
 			"expirationDate", true, "mimeType", true, "title", true, "url",
 			true, "layoutUuid", true, "height", true, "width", true, "priority",
-			true, "viewCount", true);
+			true);
 	}
 
 	@Test
@@ -656,8 +652,6 @@ public class AssetEntryPersistenceTest {
 		assetEntry.setWidth(RandomTestUtil.nextInt());
 
 		assetEntry.setPriority(RandomTestUtil.nextDouble());
-
-		assetEntry.setViewCount(RandomTestUtil.nextInt());
 
 		_assetEntries.add(_persistence.update(assetEntry));
 

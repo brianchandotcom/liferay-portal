@@ -68,4 +68,6 @@ public interface AssetEntry extends AssetEntryModel, PersistedModel {
 
 	public java.util.List<AssetTag> getTags();
 
+	public long getViewCount();
+
 }

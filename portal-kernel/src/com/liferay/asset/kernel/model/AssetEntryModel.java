@@ -764,20 +764,6 @@ public interface AssetEntryModel
 	 */
 	public void setPriority(double priority);
 
-	/**
-	 * Returns the view count of this asset entry.
-	 *
-	 * @return the view count of this asset entry
-	 */
-	public int getViewCount();
-
-	/**
-	 * Sets the view count of this asset entry.
-	 *
-	 * @param viewCount the view count of this asset entry
-	 */
-	public void setViewCount(int viewCount);
-
 	@Override
 	public String[] getAvailableLanguageIds();
 

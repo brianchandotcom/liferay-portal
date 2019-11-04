@@ -1,0 +1,51 @@
+{
+	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {},
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"editable_img": {
+			"defaultValue": "sample.jpg",
+			"segments-experience-id-0" : {
+				"en_US": "editable img segment 0 english variation",
+				"es_ES": "editable img segment 0 spanish variation",
+				"pt_BR": "editable img segment 0 portuguese variation"
+			},
+			"segments-experience-id-1" : {
+				"en_US": "editable img segment 0 english variation",
+				"es_ES": "editable img segment 1 spanish variation",
+				"pt_BR": "editable img segment 1 portuguese variation"
+			},
+			"segments-experience-id-2" : {
+				"en_US": "editable img segment 0 english variation",
+				"es_ES": "editable img segment 0 spanish variation",
+				"pt_BR": "editable img segment 0 portuguese variation"
+			}
+		},
+		"editable_text": {
+			"defaultValue": "test",
+			"segments-experience-id-0" : {
+				"en_US": "editable text segment 0 english variation",
+				"es_ES": "editable text segment 0 spanish variation",
+				"pt_BR": "editable text segment 0 portuguese variation"
+			},
+			"segments-experience-id-1" : {
+				"en_US": "editable text segment 0 english variation",
+				"es_ES": "editable img segment 1 spanish variation",
+				"pt_BR": "editable img segment 1 portuguese variation"
+			},
+			"segments-experience-id-2" : {
+				"en_US": "editable text segment 0 english variation",
+				"es_ES": "editable text segment 0 spanish variation",
+				"pt_BR": "editable text segment 0 portuguese variation"
+			}
+		}
+	},
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+		"segments-experience-id-0" : {
+			"bodyAppliedStyle" : "dark",
+			"headingAppliedStyle" : "dark"
+		},
+		"segments-experience-id-2" : {
+			"bodyAppliedStyle" : "dark",
+			"headingAppliedStyle" : "dark"
+		}
+	}
+}

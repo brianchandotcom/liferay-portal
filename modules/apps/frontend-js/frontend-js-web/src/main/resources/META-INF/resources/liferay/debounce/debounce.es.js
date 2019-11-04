@@ -23,7 +23,7 @@ function debounce(fn, delay) {
 		const args = arguments;
 		cancelDebounce(debounced);
 		debounced.id = setTimeout(() => {
-			fn(...(null, args));
+			fn(...args);
 		}, delay);
 	};
 }

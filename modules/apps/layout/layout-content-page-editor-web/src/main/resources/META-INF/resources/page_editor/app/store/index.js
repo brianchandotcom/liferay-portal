@@ -67,6 +67,8 @@ function transformServerData(data) {
 	return {
 		...data,
 
+		fragments: data.elements,
+
 		layoutData: {
 			items: {
 				main: {

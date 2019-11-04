@@ -22,13 +22,13 @@ import FragmentCard from './FragmentCard';
 import Layouts from './Layouts';
 
 export default function SectionBuilderSidebar() {
-	const {elements} = useContext(StoreContext);
+	const {fragments} = useContext(StoreContext);
 	const [searchValue, setSearchValue] = useState('');
 
-	const filteredElements = useMemo(() => {
+	const filtererdFragments = useMemo(() => {
 		const searchValueLowerCase = searchValue.toLowerCase();
 
-		return elements
+		return fragments
 			.map(fragmentCollection => {
 				return {
 					...fragmentCollection,
@@ -43,7 +43,7 @@ export default function SectionBuilderSidebar() {
 			.filter(fragmentCollection => {
 				return fragmentCollection.fragmentEntries.length > 0;
 			});
-	}, [searchValue, elements]);
+	}, [searchValue, fragments]);
 
 	return (
 		<>
@@ -56,7 +56,7 @@ export default function SectionBuilderSidebar() {
 
 				{!searchValue.length && <Layouts />}
 
-				{filteredElements.map(fragmentCollection => (
+				{filtererdFragments.map(fragmentCollection => (
 					<div key={fragmentCollection.fragmentCollectionId}>
 						<Collapse
 							label={fragmentCollection.name}

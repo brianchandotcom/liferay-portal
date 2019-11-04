@@ -253,7 +253,7 @@ definition {
 	}
 
 	macro moveGridOptionsRow {
-		DragAndDrop(
+		DragAndDrop.dragAndDropPortletToObject(
 			key_gridField = "${gridField}",
 			key_rowNumber1 = "${rowNumberStart}",
 			key_rowNumber2 = "${rowNumberEnd}",

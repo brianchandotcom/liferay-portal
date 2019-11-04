@@ -13,6 +13,7 @@
  */
 
 export const ADD_CUSTOM_OBJECT_FIELD = 'ADD_CUSTOM_OBJECT_FIELD';
+export const DELETE_DATA_DEFINITION_FIELD = 'DELETE_DATA_DEFINITION_FIELD';
 export const DELETE_DATA_LAYOUT_FIELD = 'DELETE_DATA_LAYOUT_FIELD';
 export const EDIT_CUSTOM_OBJECT_FIELD = 'EDIT_CUSTOM_OBJECT_FIELD';
 export const EVALUATION_ERROR = 'EVALUATION_ERROR';
@@ -70,3 +71,8 @@ export const dropLayoutBuilderField = ({
 		}
 	};
 };
+
+export const deleteDefinitionField = ({fieldName}) => ({
+	payload: {fieldName},
+	type: DELETE_DATA_DEFINITION_FIELD
+});

@@ -19,6 +19,7 @@ import * as DataLayoutVisistor from '../../utils/dataLayoutVisitor.es';
 import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
 import {
 	ADD_CUSTOM_OBJECT_FIELD,
+	DELETE_DATA_DEFINITION_FIELD,
 	DELETE_DATA_LAYOUT_FIELD,
 	EDIT_CUSTOM_OBJECT_FIELD,
 	UPDATE_DATA_DEFINITION,
@@ -65,6 +66,15 @@ const addCustomObjectField = ({
 			[themeDisplay.getLanguageId()]: fieldType.label
 		},
 		name: generateDataDefinitionFieldName(dataDefinition, fieldType.label)
+	};
+};
+
+const deleteDataDefinitionField = (dataDefinition, fieldName) => {
+	return {
+		...dataDefinition,
+		dataDefinitionFields: dataDefinition.dataDefinitionFields.filter(
+			field => field.fieldName !== fieldName
+		)
 	};
 };
 
@@ -186,6 +196,18 @@ const createReducer = dataLayoutBuilder => {
 							newCustomObjectField
 						)
 					}
+				};
+			}
+			case DELETE_DATA_DEFINITION_FIELD: {
+				const {fieldName} = action.payload;
+				const {dataDefinition} = state;
+
+				return {
+					...state,
+					dataDefinition: deleteDataDefinitionField(
+						dataDefinition,
+						fieldName
+					)
 				};
 			}
 			case DELETE_DATA_LAYOUT_FIELD: {

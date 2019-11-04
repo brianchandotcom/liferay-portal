@@ -670,17 +670,20 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetEntry
-			incrementViewCounter(long userId, String className, long classPK)
+			incrementViewCounter(
+				long companyId, long userId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().incrementViewCounter(userId, className, classPK);
+		return getService().incrementViewCounter(
+			companyId, userId, className, classPK);
 	}
 
 	public static void incrementViewCounter(
-		long userId, String className, long classPK, int increment) {
+		long companyId, long userId, String className, long classPK,
+		int increment) {
 
 		getService().incrementViewCounter(
-			userId, className, classPK, increment);
+			companyId, userId, className, classPK, increment);
 	}
 
 	public static void reindex(

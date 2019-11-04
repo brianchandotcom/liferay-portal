@@ -344,7 +344,8 @@ public class AssetEntryServiceHttp {
 
 	public static com.liferay.asset.kernel.model.AssetEntry
 			incrementViewCounter(
-				HttpPrincipal httpPrincipal, String className, long classPK)
+				HttpPrincipal httpPrincipal, long companyId, String className,
+				long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -353,7 +354,7 @@ public class AssetEntryServiceHttp {
 				_incrementViewCounterParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, className, classPK);
+				methodKey, companyId, className, classPK);
 
 			Object returnObj = null;
 
@@ -457,7 +458,7 @@ public class AssetEntryServiceHttp {
 	private static final Class<?>[] _incrementViewCounterParameterTypes7 =
 		new Class[] {com.liferay.asset.kernel.model.AssetEntry.class};
 	private static final Class<?>[] _incrementViewCounterParameterTypes8 =
-		new Class[] {String.class, long.class};
+		new Class[] {long.class, String.class, long.class};
 	private static final Class<?>[] _updateEntryParameterTypes9 = new Class[] {
 		long.class, java.util.Date.class, java.util.Date.class, String.class,
 		long.class, String.class, long.class, long[].class, String[].class,

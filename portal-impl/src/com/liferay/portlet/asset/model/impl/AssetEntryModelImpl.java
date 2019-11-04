@@ -93,7 +93,7 @@ public class AssetEntryModelImpl
 		{"description", Types.CLOB}, {"summary", Types.CLOB},
 		{"url", Types.VARCHAR}, {"layoutUuid", Types.VARCHAR},
 		{"height", Types.INTEGER}, {"width", Types.INTEGER},
-		{"priority", Types.DOUBLE}, {"viewCount", Types.INTEGER}
+		{"priority", Types.DOUBLE}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -127,11 +127,10 @@ public class AssetEntryModelImpl
 		TABLE_COLUMNS_MAP.put("height", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("width", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("viewCount", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetEntry (mvccVersion LONG default 0 not null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,listable BOOLEAN,visible BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description TEXT null,summary TEXT null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE,viewCount INTEGER)";
+		"create table AssetEntry (mvccVersion LONG default 0 not null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,listable BOOLEAN,visible BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description TEXT null,summary TEXT null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetEntry";
 
@@ -222,7 +221,6 @@ public class AssetEntryModelImpl
 		model.setHeight(soapModel.getHeight());
 		model.setWidth(soapModel.getWidth());
 		model.setPriority(soapModel.getPriority());
-		model.setViewCount(soapModel.getViewCount());
 
 		return model;
 	}
@@ -512,10 +510,6 @@ public class AssetEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"priority",
 			(BiConsumer<AssetEntry, Double>)AssetEntry::setPriority);
-		attributeGetterFunctions.put("viewCount", AssetEntry::getViewCount);
-		attributeSetterBiConsumers.put(
-			"viewCount",
-			(BiConsumer<AssetEntry, Integer>)AssetEntry::setViewCount);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -1287,17 +1281,6 @@ public class AssetEntryModelImpl
 		_priority = priority;
 	}
 
-	@JSON
-	@Override
-	public int getViewCount() {
-		return _viewCount;
-	}
-
-	@Override
-	public void setViewCount(int viewCount) {
-		_viewCount = viewCount;
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -1469,7 +1452,6 @@ public class AssetEntryModelImpl
 		assetEntryImpl.setHeight(getHeight());
 		assetEntryImpl.setWidth(getWidth());
 		assetEntryImpl.setPriority(getPriority());
-		assetEntryImpl.setViewCount(getViewCount());
 
 		assetEntryImpl.resetOriginalValues();
 
@@ -1717,8 +1699,6 @@ public class AssetEntryModelImpl
 
 		assetEntryCacheModel.priority = getPriority();
 
-		assetEntryCacheModel.viewCount = getViewCount();
-
 		return assetEntryCacheModel;
 	}
 
@@ -1837,7 +1817,6 @@ public class AssetEntryModelImpl
 	private int _height;
 	private int _width;
 	private double _priority;
-	private int _viewCount;
 	private long _columnBitmask;
 	private AssetEntry _escapedModel;
 

@@ -7,9 +7,15 @@ definition {
 			locator1 = "LexiconCard#CARD_TITLE",
 			value1 = "${depotName}");
 
+		AssertTextNotEquals(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "Repositories");
+
+		ProductMenuHelper.gotoPortlet(portlet = "${portlet}");
+
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",
-			value1 = "Documents and Media");
+			value1 = "${portlet}");
 	}
 
 	macro gotoEdit {

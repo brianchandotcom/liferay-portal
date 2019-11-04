@@ -46,7 +46,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMDocument.addDMShortcutCP(
 			dmDocumentDescription = "DM Document Description",
@@ -69,7 +71,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoMetadataSets();
 
@@ -89,7 +93,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document with DM Document Type Description",
@@ -119,7 +125,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMFolder.addCP(dmFolderName = "DM Folder Name");
 
@@ -142,7 +150,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls");
 
@@ -169,7 +179,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -178,7 +190,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMDocument.editCP(
 			dmDocumentDescription = "DM Document Description1",
@@ -202,7 +216,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
@@ -210,7 +226,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMFolder.editCP(
 			dmFolderDescription = "DM Folder Description",
@@ -250,7 +268,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		LAR.importPortlet(larFileName = "DM_Test.lar");
 
@@ -258,7 +278,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.doc");
 
@@ -268,7 +290,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
 
@@ -286,7 +310,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -295,7 +321,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
@@ -303,7 +331,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMDocument.moveToFolderCP(
 			dmDocumentTitle = "DM Document Title",
@@ -338,7 +368,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -354,7 +386,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMDocument.removeTag(removeTag = "alice");
 
@@ -381,7 +415,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -390,7 +426,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
@@ -405,7 +443,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -438,7 +478,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -447,7 +489,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoShareInfoPanel(dmDocumentTitle = "DM Document Title");
 

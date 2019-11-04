@@ -24,6 +24,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
@@ -40,11 +41,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -59,6 +60,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -150,69 +152,67 @@ public class ContentUtil {
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				layoutClassedModelUsage.getClassName());
 
-		if (assetRendererFactory == null) {
-			return JSONFactoryUtil.createJSONObject();
-		}
+		if (assetRendererFactory != null) {
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(
+					layoutClassedModelUsage.getClassPK());
 
-		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
-			layoutClassedModelUsage.getClassPK());
+			if (assetRenderer != null) {
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					layoutClassedModelUsage.getClassNameId(),
+					layoutClassedModelUsage.getClassPK());
 
-		if (assetRenderer == null) {
-			return JSONFactoryUtil.createJSONObject();
-		}
+				if (assetEntry == null) {
+					return JSONFactoryUtil.createJSONObject();
+				}
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			layoutClassedModelUsage.getClassNameId(),
-			layoutClassedModelUsage.getClassPK());
+				if (AssetEntryPermission.contains(
+						themeDisplay.getPermissionChecker(), assetEntry,
+						ActionKeys.UPDATE)) {
 
-		if (assetEntry == null) {
-			return JSONFactoryUtil.createJSONObject();
-		}
+					PortletURL portletURL = assetRenderer.getURLEdit(
+						httpServletRequest, LiferayWindowState.NORMAL, backURL);
 
-		if (AssetEntryPermission.contains(
-				themeDisplay.getPermissionChecker(), assetEntry,
-				ActionKeys.UPDATE)) {
+					if (portletURL != null) {
+						jsonObject.put("editURL", portletURL.toString());
+					}
+				}
 
-			PortletURL portletURL = assetRenderer.getURLEdit(
-				httpServletRequest, LiferayWindowState.NORMAL, backURL);
+				if (AssetEntryPermission.contains(
+						themeDisplay.getPermissionChecker(), assetEntry,
+						ActionKeys.PERMISSIONS)) {
 
-			if (portletURL != null) {
-				jsonObject.put("editURL", portletURL.toString());
+					String permissionsURL = PermissionsURLTag.doTag(
+						StringPool.BLANK,
+						layoutClassedModelUsage.getClassName(),
+						HtmlUtil.escape(
+							assetEntry.getTitle(themeDisplay.getLocale())),
+						null,
+						String.valueOf(layoutClassedModelUsage.getClassPK()),
+						LiferayWindowState.POP_UP.toString(), null,
+						httpServletRequest);
+
+					if (Validator.isNotNull(permissionsURL)) {
+						jsonObject.put("permissionsURL", permissionsURL);
+					}
+				}
 			}
 		}
 
-		if (AssetEntryPermission.contains(
-				themeDisplay.getPermissionChecker(), assetEntry,
-				ActionKeys.PERMISSIONS)) {
+		PortletURL viewUsagesURL = PortletURLFactoryUtil.create(
+			httpServletRequest,
+			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+			PortletRequest.RENDER_PHASE);
 
-			String permissionsURL = PermissionsURLTag.doTag(
-				StringPool.BLANK, layoutClassedModelUsage.getClassName(),
-				HtmlUtil.escape(assetEntry.getTitle(themeDisplay.getLocale())),
-				null, String.valueOf(layoutClassedModelUsage.getClassPK()),
-				LiferayWindowState.POP_UP.toString(), null, httpServletRequest);
+		viewUsagesURL.setParameter(
+			"mvcPath", "/view_layout_classed_model_usages.jsp");
+		viewUsagesURL.setParameter(
+			"className", layoutClassedModelUsage.getClassName());
+		viewUsagesURL.setParameter(
+			"classPK", String.valueOf(layoutClassedModelUsage.getClassPK()));
+		viewUsagesURL.setWindowState(LiferayWindowState.POP_UP);
 
-			if (Validator.isNotNull(permissionsURL)) {
-				jsonObject.put("permissionsURL", permissionsURL);
-			}
-		}
-
-		if (AssetEntryPermission.contains(
-				themeDisplay.getPermissionChecker(), assetEntry,
-				ActionKeys.VIEW)) {
-
-			String viewUsagesURL = assetRenderer.getURLViewUsages(
-				httpServletRequest);
-
-			viewUsagesURL = HttpUtil.setParameter(
-				viewUsagesURL, "p_p_state",
-				LiferayWindowState.POP_UP.toString());
-
-			if (viewUsagesURL != null) {
-				jsonObject.put("viewUsagesURL", viewUsagesURL);
-			}
-		}
-
-		return jsonObject;
+		return jsonObject.put("viewUsagesURL", viewUsagesURL.toString());
 	}
 
 	private static Set<InfoDisplayObjectProvider>

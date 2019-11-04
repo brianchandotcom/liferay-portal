@@ -14,9 +14,15 @@
 
 package com.liferay.layout.type.controller.link.to.page.internal.model;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
-import com.liferay.portal.kernel.model.impl.ModificationDeniedLayoutTypeAccessPolicyImpl;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.impl.DefaultLayoutTypeAccessPolicyImpl;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,5 +35,59 @@ import org.osgi.service.component.annotations.Component;
 	service = LayoutTypeAccessPolicy.class
 )
 public class LinkToPageLayoutTypeAccessPolicy
-	extends ModificationDeniedLayoutTypeAccessPolicyImpl {
+	extends DefaultLayoutTypeAccessPolicyImpl {
+
+	@Override
+	public boolean isAddLayoutAllowed(
+		PermissionChecker permissionChecker, Layout layout) {
+
+		return false;
+	}
+
+	@Override
+	public boolean isCustomizeLayoutAllowed(
+		PermissionChecker permissionChecker, Layout layout) {
+
+		return false;
+	}
+
+	@Override
+	public boolean isDeleteLayoutAllowed(
+		PermissionChecker permissionChecker, Layout layout) {
+
+		return false;
+	}
+
+	@Override
+	public boolean isUpdateLayoutAllowed(
+		PermissionChecker permissionChecker, Layout layout) {
+
+		return false;
+	}
+
+	@Override
+	public boolean isViewLayoutAllowed(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException {
+
+		return super.isViewLayoutAllowed(permissionChecker, layout);
+	}
+
+	@Override
+	protected boolean hasAccessPermission(
+			HttpServletRequest httpServletRequest, Layout layout,
+			Portlet portlet)
+		throws PortalException {
+
+		return super.hasAccessPermission(httpServletRequest, layout, portlet);
+	}
+
+	@Override
+	protected boolean isAccessAllowedToLayoutPortlet(
+		HttpServletRequest httpServletRequest, Layout layout, Portlet portlet) {
+
+		return super.isAccessAllowedToLayoutPortlet(
+			httpServletRequest, layout, portlet);
+	}
+
 }

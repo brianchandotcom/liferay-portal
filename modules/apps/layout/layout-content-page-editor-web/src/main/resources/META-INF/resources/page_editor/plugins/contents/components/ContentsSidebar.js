@@ -14,6 +14,14 @@
 
 import React from 'react';
 
-export default function ContentsSidebar({title}) {
-	return <h1>{title}</h1>;
+import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
+
+export default function ContentsSidebar() {
+	return (
+		<>
+			<SidebarPanelHeader>
+				{Liferay.Language.get('contents')}
+			</SidebarPanelHeader>
+		</>
+	);
 }

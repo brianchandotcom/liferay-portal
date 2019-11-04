@@ -127,8 +127,7 @@ public class AssetDisplayPageFormProcessorTest {
 				AssetDisplayPageEntry assetDisplayPageEntry =
 					_assetDisplayPageEntryLocalService.
 						fetchAssetDisplayPageEntry(
-							_group.getGroupId(),
-							_portal.getClassNameId(FileEntry.class.getName()),
+							_group.getGroupId(), classNameId,
 							fileEntry.getFileEntryId());
 
 				Assert.assertEquals(

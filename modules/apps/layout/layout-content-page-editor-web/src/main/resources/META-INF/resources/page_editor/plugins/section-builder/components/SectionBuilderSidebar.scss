@@ -1,46 +1,32 @@
 $pageEditorSpacing: 8px;
 
-$fragmentCardImageBorderColor: #e7e7ed;
-$fragmentCardNoPreviewBackgroundColor: #e7e7ed;
-$fragmentCardNoPreviewIconColor: #a7a9bc;
-$fragmentCardTitleColor: #6b6c7e;
-
-$fragmentCardImageMaxHeight: 200px;
-$fragmentCardMarginBottom: $pageEditorSpacing * 2;
-$fragmentCardPadding: $pageEditorSpacing;
-$fragmentCardWidth: calc(50% - #{$pageEditorSpacing});
-
-$layoutPreviewBorderColor: #6b6c7e;
-$layoutPreviewColumnColor: #ddd;
-
-$layoutPreviewBorderRadius: 2px;
-$layoutPreviewRowHeight: 40px;
-$layoutPreviewSpacing: 2px;
+$sectionBuilderLightColor: #e7e7ed;
+$sectionBuilderGrayColor: #6b6c7e;
 
 .page-editor-sidebar-panel__section-builder {
 	&__card {
-		box-shadow: 0 0 0 1px $fragmentCardImageBorderColor;
-		margin-bottom: $fragmentCardMarginBottom;
-		width: $fragmentCardWidth;
+		box-shadow: 0 0 0 1px $sectionBuilderLightColor;
+		margin-bottom: $pageEditorSpacing * 2;
+		width: calc(50% - #{$pageEditorSpacing});
 
 		&-image img {
 			width: 100%;
 		}
 
 		&-no-preview {
-			background-color: $fragmentCardNoPreviewBackgroundColor;
-			color: $fragmentCardNoPreviewIconColor;
+			background-color: $sectionBuilderLightColor;
+			color: #a7a9bc;
 			font-size: 24px;
 			line-height: 80px;
 			text-align: center;
 		}
 
 		.card-body {
-			padding: $fragmentCardPadding;
+			padding: $pageEditorSpacing;
 			text-align: center;
 
 			.card-title {
-				color: $fragmentCardTitleColor;
+				color: $sectionBuilderGrayColor;
 				font-size: 12px;
 			}
 
@@ -63,19 +49,19 @@ $layoutPreviewSpacing: 2px;
 		justify-content: space-between;
 
 		&__layout-preview {
-			margin: $layoutPreviewSpacing 0;
+			margin: 2px 0;
 			padding: 0;
 
 			&__row {
-				border: solid 2px $layoutPreviewBorderColor;
-				border-radius: $layoutPreviewBorderRadius;
-				height: $layoutPreviewRowHeight;
+				border: solid 2px $sectionBuilderGrayColor;
+				border-radius: 2px;
+				height: 40px;
 				margin: 0;
-				padding: $layoutPreviewSpacing;
+				padding: 2px;
 			}
 
 			&__col {
-				border: solid 1px $layoutPreviewBorderColor;
+				border: solid 1px $sectionBuilderGrayColor;
 				flex: 1;
 				margin: 2px;
 				padding: 0;

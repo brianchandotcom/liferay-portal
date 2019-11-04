@@ -190,7 +190,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-open-graph-description" name="openGraphDescriptionEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
-				<aui:input label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="description" type="textarea" />
+				<aui:input disabled="<%= !selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="description" type="textarea" />
 
 				<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 			</div>
@@ -203,7 +203,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-open-graph-description" name="openGraphDescriptionEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
-				<aui:input label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphDescription" type="textarea" />
+				<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphDescription" type="textarea" />
 
 				<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 			</div>

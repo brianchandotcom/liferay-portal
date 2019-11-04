@@ -16,32 +16,13 @@
 
 	.diff-target-selector {
 		border-left: 1px solid transparent;
-		padding-left: 30px;
-	}
-
-	.diff-container-column {
-		.diff-container {
-			min-height: 400px;
-		}
-
-		.user-name {
-			margin-right: 5px;
-		}
-
-		.legend-item {
-			margin-right: 15px;
-		}
 	}
 
 	.divider {
 		margin-bottom: 20px;
 	}
 
-	.input-group-search {
-		padding-bottom: 20px;
-	}
-
-	.version-item {
+	.list-group-item {
 		cursor: pointer;
 	}
 }

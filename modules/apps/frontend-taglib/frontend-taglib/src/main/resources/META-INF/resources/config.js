@@ -20,15 +20,6 @@
 				combine: Liferay.AUI.getCombine(),
 				filter: Liferay.AUI.getFilterConfig(),
 				modules: {
-					'liferay-diff-version-comparator': {
-						path:
-							'diff_version_comparator/js/diff_version_comparator.js',
-						requires: [
-							'autocomplete-base',
-							'autocomplete-filters',
-							'liferay-portlet-base'
-						]
-					},
 					'liferay-management-bar': {
 						path: 'management_bar/js/management_bar.js',
 						requires: ['aui-component', 'liferay-portlet-base']

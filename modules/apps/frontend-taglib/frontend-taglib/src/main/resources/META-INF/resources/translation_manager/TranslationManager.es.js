@@ -22,6 +22,8 @@ import Soy from 'metal-soy';
 
 import templates from './TranslationManager.soy';
 
+/* eslint-disable react/no-string-refs */
+
 /**
  * TranslationManager
  *

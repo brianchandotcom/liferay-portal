@@ -474,7 +474,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		_viewCountService.incrementViewCount(
 			companyId, classNameLocalService.getClassNameId(AssetEntry.class),
-			entry.getEntryId());
+			entry.getEntryId(), increment);
 	}
 
 	@Override

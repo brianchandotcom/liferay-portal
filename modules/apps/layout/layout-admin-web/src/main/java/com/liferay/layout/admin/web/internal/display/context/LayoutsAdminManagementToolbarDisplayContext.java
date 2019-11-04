@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,11 +64,19 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
+		PortletURL deleteLayoutURL = liferayPortletResponse.createActionURL();
+
+		deleteLayoutURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout/delete_layout");
+		deleteLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+
 		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "deleteSelectedPages");
+						dropdownItem.putData(
+							"deleteLayoutURL", deleteLayoutURL.toString());
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "delete"));

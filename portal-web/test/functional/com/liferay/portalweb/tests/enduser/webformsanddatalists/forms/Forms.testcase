@@ -1920,14 +1920,6 @@ definition {
 					rowNumber = "${rowNumber}");
 			}
 
-			FormFields.viewGridOptionNotPresent(
-				gridField = "Rows",
-				rowNumber = "4");
-
-			FormFields.viewGridOptionNotPresent(
-				gridField = "Columns",
-				rowNumber = "4");
-
 			Form.closeSidebar();
 		}
 	}

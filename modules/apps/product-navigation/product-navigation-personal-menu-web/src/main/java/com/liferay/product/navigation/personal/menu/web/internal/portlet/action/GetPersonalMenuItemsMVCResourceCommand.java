@@ -95,10 +95,10 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			_http.removeParameter(
 				ParamUtil.getString(portletRequest, "currentURL"), "doAsUserId")
 		).put(
-			"symbolRight", "change"
-		).put(
 			"label",
 			LanguageUtil.get(themeDisplay.getLocale(), "be-yourself-again")
+		).put(
+			"symbolRight", "change"
 		);
 
 		JSONArray jsonArray = JSONUtil.put(jsonObject1);

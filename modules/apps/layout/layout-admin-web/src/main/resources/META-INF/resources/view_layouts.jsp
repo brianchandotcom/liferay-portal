@@ -91,30 +91,15 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 	</c:choose>
 </aui:form>
 
-<aui:script sandbox="<%= true %>">
-	var deleteSelectedPages = function() {
-		if (
-			confirm(
-				'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
-			)
-		) {
-			submitForm(document.<portlet:namespace />fm);
-		}
-	};
+<%
+Map<String, Object> context = new HashMap<>();
 
-	var ACTIONS = {
-		deleteSelectedPages: deleteSelectedPages
-	};
+context.put("convertLayoutURL", convertLayoutURL.toString());
+context.put("deleteLayoutURL", deleteLayoutURL.toString());
+%>
 
-	Liferay.componentReady('pagesManagementToolbar').then(function(
-		managementToolbar
-	) {
-		managementToolbar.on('actionItemClicked', function(event) {
-			var itemData = event.data.item.data;
-
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= layoutsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= context %>"
+	module="js/LayoutsManagementToolbarDefaultEventHandler.es"
+/>

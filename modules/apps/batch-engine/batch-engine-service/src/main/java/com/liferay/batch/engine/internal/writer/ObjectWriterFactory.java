@@ -44,8 +44,7 @@ public class ObjectWriterFactory {
 			excludeFieldNames.removeAll(includeFieldNames);
 
 			SimpleBeanPropertyFilter simpleBeanPropertyFilter =
-				SimpleBeanPropertyFilter.serializeAllExcept(
-					new HashSet<>(excludeFieldNames));
+				SimpleBeanPropertyFilter.serializeAllExcept(excludeFieldNames);
 
 			simpleFilterProvider.addFilter(
 				"Liferay.Vulcan", simpleBeanPropertyFilter);

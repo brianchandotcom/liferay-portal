@@ -16,6 +16,11 @@ package com.liferay.mentions.web.internal.editor.configuration;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,4 +37,24 @@ import org.osgi.service.component.annotations.Component;
 )
 public class PageCommentsMentionsEditorConfigContributor
 	extends BaseMentionsEditorConfigContributor {
+
+	@Override
+	protected PortletURL getPortletURL(
+		ThemeDisplay themeDisplay,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+
+		PortletURL portletURL = super.getPortletURL(
+			themeDisplay, requestBackedPortletURLFactory);
+
+		portletURL.setParameter(
+			"strategy",
+			JSONUtil.put(
+				"plid", themeDisplay.getPlid()
+			).put(
+				"strategy", "pageEditorCommentStrategy"
+			).toJSONString());
+
+		return portletURL;
+	}
+
 }

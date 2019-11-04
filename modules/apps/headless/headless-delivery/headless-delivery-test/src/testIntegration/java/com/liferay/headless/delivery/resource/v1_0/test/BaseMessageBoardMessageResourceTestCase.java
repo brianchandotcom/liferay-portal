@@ -1212,6 +1212,369 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteMessageBoardMessagesPage() throws Exception {
+		Page<MessageBoardMessage> page =
+			messageBoardMessageResource.getSiteMessageBoardMessagesPage(
+				testGetSiteMessageBoardMessagesPage_getSiteId(), null,
+				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long siteId = testGetSiteMessageBoardMessagesPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteMessageBoardMessagesPage_getIrrelevantSiteId();
+
+		if ((irrelevantSiteId != null)) {
+			MessageBoardMessage irrelevantMessageBoardMessage =
+				testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
+					irrelevantSiteId, randomIrrelevantMessageBoardMessage());
+
+			page = messageBoardMessageResource.getSiteMessageBoardMessagesPage(
+				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantMessageBoardMessage),
+				(List<MessageBoardMessage>)page.getItems());
+			assertValid(page);
+		}
+
+		MessageBoardMessage messageBoardMessage1 =
+			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
+				siteId, randomMessageBoardMessage());
+
+		MessageBoardMessage messageBoardMessage2 =
+			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
+				siteId, randomMessageBoardMessage());
+
+		page = messageBoardMessageResource.getSiteMessageBoardMessagesPage(
+			siteId, null, null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(messageBoardMessage1, messageBoardMessage2),
+			(List<MessageBoardMessage>)page.getItems());
+		assertValid(page);
+
+		messageBoardMessageResource.deleteMessageBoardMessage(
+			messageBoardMessage1.getId());
+
+		messageBoardMessageResource.deleteMessageBoardMessage(
+			messageBoardMessage2.getId());
+	}
+
+	@Test
+	public void testGetSiteMessageBoardMessagesPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteMessageBoardMessagesPage_getSiteId();
+
+		MessageBoardMessage messageBoardMessage1 = randomMessageBoardMessage();
+
+		messageBoardMessage1 =
+			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
+				siteId, messageBoardMessage1);
+
+		for (EntityField entityField : entityFields) {
+			Page<MessageBoardMessage> page =
+				messageBoardMessageResource.getSiteMessageBoardMessagesPage(
+					siteId, null, null,
+					getFilterString(
+						entityField, "between", messageBoardMessage1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(messageBoardMessage1),
+				(List<MessageBoardMessage>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetSiteMessageBoardMessagesPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteMessageBoardMessagesPage_getSiteId();
+
+		MessageBoardMessage messageBoardMessage1 =
+			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
+				siteId, randomMessageBoardMessage());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardMessage messageBoardMessage2 =
+			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
+				siteId, randomMessageBoardMessage());
+
+		for (EntityField entityField : entityFields) {
+			Page<MessageBoardMessage> page =
+				messageBoardMessageResource.getSiteMessageBoardMessagesPage(
+					siteId, null, null,
+					getFilterString(entityField, "eq", messageBoardMessage1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(messageBoardMessage1),
+				(List<MessageBoardMessage>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetSiteMessageBoardMessagesPageWithPagination()
+		throws Exception {
+
+		Long siteId = testGetSiteMessageBoardMessagesPage_getSiteId();
+
+		MessageBoardMessage messageBoardMessage1 =
+			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
+				siteId, randomMessageBoardMessage());
+
+		MessageBoardMessage messageBoardMessage2 =
+			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
+				siteId, randomMessageBoardMessage());
+
+		MessageBoardMessage messageBoardMessage3 =
+			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
+				siteId, randomMessageBoardMessage());
+
+		Page<MessageBoardMessage> page1 =
+			messageBoardMessageResource.getSiteMessageBoardMessagesPage(
+				siteId, null, null, null, Pagination.of(1, 2), null);
+
+		List<MessageBoardMessage> messageBoardMessages1 =
+			(List<MessageBoardMessage>)page1.getItems();
+
+		Assert.assertEquals(
+			messageBoardMessages1.toString(), 2, messageBoardMessages1.size());
+
+		Page<MessageBoardMessage> page2 =
+			messageBoardMessageResource.getSiteMessageBoardMessagesPage(
+				siteId, null, null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<MessageBoardMessage> messageBoardMessages2 =
+			(List<MessageBoardMessage>)page2.getItems();
+
+		Assert.assertEquals(
+			messageBoardMessages2.toString(), 1, messageBoardMessages2.size());
+
+		Page<MessageBoardMessage> page3 =
+			messageBoardMessageResource.getSiteMessageBoardMessagesPage(
+				siteId, null, null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				messageBoardMessage1, messageBoardMessage2,
+				messageBoardMessage3),
+			(List<MessageBoardMessage>)page3.getItems());
+	}
+
+	@Test
+	public void testGetSiteMessageBoardMessagesPageWithSortDateTime()
+		throws Exception {
+
+		testGetSiteMessageBoardMessagesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, messageBoardMessage1, messageBoardMessage2) -> {
+				BeanUtils.setProperty(
+					messageBoardMessage1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteMessageBoardMessagesPageWithSortInteger()
+		throws Exception {
+
+		testGetSiteMessageBoardMessagesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, messageBoardMessage1, messageBoardMessage2) -> {
+				BeanUtils.setProperty(
+					messageBoardMessage1, entityField.getName(), 0);
+				BeanUtils.setProperty(
+					messageBoardMessage2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetSiteMessageBoardMessagesPageWithSortString()
+		throws Exception {
+
+		testGetSiteMessageBoardMessagesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, messageBoardMessage1, messageBoardMessage2) -> {
+				Class<?> clazz = messageBoardMessage1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						messageBoardMessage1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						messageBoardMessage2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						messageBoardMessage1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						messageBoardMessage2, entityField.getName(), "Bbb");
+				}
+			});
+	}
+
+	protected void testGetSiteMessageBoardMessagesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, MessageBoardMessage, MessageBoardMessage,
+				 Exception> unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteMessageBoardMessagesPage_getSiteId();
+
+		MessageBoardMessage messageBoardMessage1 = randomMessageBoardMessage();
+		MessageBoardMessage messageBoardMessage2 = randomMessageBoardMessage();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, messageBoardMessage1, messageBoardMessage2);
+		}
+
+		messageBoardMessage1 =
+			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
+				siteId, messageBoardMessage1);
+
+		messageBoardMessage2 =
+			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
+				siteId, messageBoardMessage2);
+
+		for (EntityField entityField : entityFields) {
+			Page<MessageBoardMessage> ascPage =
+				messageBoardMessageResource.getSiteMessageBoardMessagesPage(
+					siteId, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(messageBoardMessage1, messageBoardMessage2),
+				(List<MessageBoardMessage>)ascPage.getItems());
+
+			Page<MessageBoardMessage> descPage =
+				messageBoardMessageResource.getSiteMessageBoardMessagesPage(
+					siteId, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(messageBoardMessage2, messageBoardMessage1),
+				(List<MessageBoardMessage>)descPage.getItems());
+		}
+	}
+
+	protected MessageBoardMessage
+			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
+				Long siteId, MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetSiteMessageBoardMessagesPage_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Long testGetSiteMessageBoardMessagesPage_getIrrelevantSiteId()
+		throws Exception {
+
+		return irrelevantGroup.getGroupId();
+	}
+
+	@Test
+	public void testGraphQLGetSiteMessageBoardMessagesPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"messageBoardMessages",
+				new HashMap<String, Object>() {
+					{
+						put("page", 1);
+						put("pageSize", 2);
+						put("siteId", testGroup.getGroupId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject messageBoardMessagesJSONObject =
+			dataJSONObject.getJSONObject("messageBoardMessages");
+
+		Assert.assertEquals(
+			0, messageBoardMessagesJSONObject.get("totalCount"));
+
+		MessageBoardMessage messageBoardMessage1 =
+			testGraphQLMessageBoardMessage_addMessageBoardMessage();
+		MessageBoardMessage messageBoardMessage2 =
+			testGraphQLMessageBoardMessage_addMessageBoardMessage();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		messageBoardMessagesJSONObject = dataJSONObject.getJSONObject(
+			"messageBoardMessages");
+
+		Assert.assertEquals(
+			2, messageBoardMessagesJSONObject.get("totalCount"));
+
+		assertEqualsJSONArray(
+			Arrays.asList(messageBoardMessage1, messageBoardMessage2),
+			messageBoardMessagesJSONObject.getJSONArray("items"));
+	}
+
+	@Test
 	public void testGetMessageBoardMessageMyRating() throws Exception {
 		MessageBoardMessage postMessageBoardMessage =
 			testGetMessageBoardMessage_addMessageBoardMessage();

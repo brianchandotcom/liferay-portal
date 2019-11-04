@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.SQLStateAcceptor;
+import com.liferay.portal.kernel.spring.aop.Property;
+import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -63,8 +66,6 @@ public interface ViewCountEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ViewCountEntryLocalServiceUtil} to access the view count entry local service. Add custom service methods to <code>com.liferay.view.count.service.impl.ViewCountEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public ViewCountEntry addViewCountEntry(
-		long companyId, long classNameId, long classPK);
 
 	/**
 	 * Adds the view count entry to the database. Also notifies the appropriate model listeners.
@@ -237,17 +238,21 @@ public interface ViewCountEntryLocalService
 	public ViewCountEntry getViewCountEntry(ViewCountEntryPK viewCountEntryPK)
 		throws PortalException;
 
-	@Transactional(enabled = false)
-	public void incrementViewCount(
-		long companyId, long classNameId, long classPK);
-
 	@BufferedIncrement(incrementClass = NumberIncrement.class)
+	@Retry(
+		acceptor = SQLStateAcceptor.class,
+		properties = {
+			@Property(
+				name = SQLStateAcceptor.SQLSTATE,
+				value = SQLStateAcceptor.SQLSTATE_INTEGRITY_CONSTRAINT_VIOLATION + "," + SQLStateAcceptor.SQLSTATE_TRANSACTION_ROLLBACK
+			)
+		}
+	)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void incrementViewCount(
 		long companyId, long classNameId, long classPK, int increment);
 
-	public void removeViewCount(long companyId, long classNameId, long classPK)
-		throws PortalException;
+	public void removeViewCount(long companyId, long classNameId, long classPK);
 
 	/**
 	 * Updates the view count entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

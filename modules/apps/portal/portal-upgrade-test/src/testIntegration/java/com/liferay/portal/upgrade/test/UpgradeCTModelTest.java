@@ -29,7 +29,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,13 +70,13 @@ public class UpgradeCTModelTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_db.runSQL(TestTableClass.TABLE_SQL_DROP);
+		_db.runSQL("drop table UpgradeCTModelTest");
 	}
 
 	@Test
 	public void testUpgrade() throws Exception {
 		UpgradeCTModel upgradeCTModel = new UpgradeCTModel(
-			TestTableClass.class);
+			"UpgradeCTModelTest");
 
 		upgradeCTModel.upgrade();
 
@@ -108,7 +107,7 @@ public class UpgradeCTModelTest {
 			try (ResultSet rs2 = databaseMetaData.getPrimaryKeys(
 					dbInspector.getCatalog(), dbInspector.getSchema(),
 					dbInspector.normalizeName(
-						TestTableClass.TABLE_NAME, databaseMetaData))) {
+						"UpgradeCTModelTest", databaseMetaData))) {
 
 				Assert.assertTrue("Missing PK", rs2.next());
 
@@ -129,36 +128,6 @@ public class UpgradeCTModelTest {
 				new String[] {"CTCOLLECTIONID", "UPGRADECTMODELID"},
 				pkNames.toArray(new String[0]));
 		}
-	}
-
-	@SuppressWarnings("unused")
-	public static class TestTableClass {
-
-		public static final Object[][] TABLE_COLUMNS = {
-			{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-			{"upgradeCTModelId", Types.BIGINT},
-			{"ctCollectionId", Types.BIGINT}, {"companyId", Types.BIGINT},
-			{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-			{"name", Types.VARCHAR}
-		};
-
-		public static final String TABLE_NAME = "UpgradeCTModelTest";
-
-		public static final String[] TABLE_SQL_ADD_INDEXES = {
-			"create index IX_TEST on UpgradeCTModelTest " +
-				"(uuid_[$COLUMN_LENGTH:75$], companyId)"
-		};
-
-		public static final String TABLE_SQL_CREATE = StringBundler.concat(
-			"create table UpgradeCTModelTest (mvccVersion LONG default 0 not ",
-			"null, uuid_ VARCHAR(75) null, upgradeCTModelId LONG not null, ",
-			"ctCollectionId LONG not null, companyId LONG, createDate DATE ",
-			"null, modifiedDate DATE null, name STRING null, primary key ",
-			"(upgradeCTModelId, ctCollectionId))");
-
-		public static final String TABLE_SQL_DROP =
-			"drop table UpgradeCTModelTest";
-
 	}
 
 	private DB _db;

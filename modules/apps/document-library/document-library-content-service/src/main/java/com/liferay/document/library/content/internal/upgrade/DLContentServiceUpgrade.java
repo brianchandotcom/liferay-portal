@@ -15,7 +15,6 @@
 package com.liferay.document.library.content.internal.upgrade;
 
 import com.liferay.document.library.content.internal.upgrade.v1_0_0.UpgradeClassNames;
-import com.liferay.document.library.content.internal.upgrade.v1_2_0.util.DLContentTable;
 import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -42,8 +41,7 @@ public class DLContentServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
-		registry.register(
-			"1.1.0", "1.2.0", new UpgradeCTModel(DLContentTable.class));
+		registry.register("1.1.0", "1.2.0", new UpgradeCTModel("DLContent"));
 	}
 
 }

@@ -17,11 +17,13 @@ package com.liferay.account.internal.role;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.role.AccountRole;
 import com.liferay.account.role.AccountRoleManager;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
@@ -52,6 +54,33 @@ public class AccountRoleManagerImpl implements AccountRoleManager {
 	}
 
 	@Override
+	public void addUser(long accountEntryId, long roleId, long userId)
+		throws PortalException {
+
+		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+			accountEntryId);
+
+		_userGroupRoleLocalService.addUserGroupRoles(
+			userId, accountEntry.getAccountEntryGroupId(), new long[] {roleId});
+	}
+
+	@Override
+	public List<AccountRole> getAccountRoles(long accountEntryId, long userId)
+		throws PortalException {
+
+		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+			accountEntryId);
+
+		_userGroupRoleLocalService.getUserGroupRoles(
+			userId, accountEntry.getAccountEntryGroupId());
+
+		return TransformUtil.transform(
+			_userGroupRoleLocalService.getUserGroupRoles(
+				userId, accountEntry.getAccountEntryGroupId()),
+			userGroupRole -> new AccountRoleImpl(userGroupRole.getRole()));
+	}
+
+	@Override
 	public List<AccountRole> getAccountRoles(
 		long companyId, long[] accountEntryIds) {
 
@@ -65,12 +94,29 @@ public class AccountRoleManagerImpl implements AccountRoleManager {
 			AccountRoleImpl::new);
 	}
 
+	@Override
+	public void removeUser(long accountEntryId, long roleId, long userId)
+		throws PortalException {
+
+		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+			accountEntryId);
+
+		_userGroupRoleLocalService.deleteUserGroupRoles(
+			userId, accountEntry.getAccountEntryGroupId(), new long[] {roleId});
+	}
+
 	private static final String _NAME_NAMESPACE = "lfr-account-";
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

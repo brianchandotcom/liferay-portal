@@ -161,6 +161,11 @@ public class LayoutsAdminManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getDefaultEventHandler() {
+		return "LAYOUTS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+	}
+
+	@Override
 	public String getSearchActionURL() {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 

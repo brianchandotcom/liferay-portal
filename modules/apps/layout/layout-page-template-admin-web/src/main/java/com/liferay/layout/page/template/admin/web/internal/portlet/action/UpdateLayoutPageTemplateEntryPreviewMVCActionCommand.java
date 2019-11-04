@@ -15,6 +15,7 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
@@ -69,7 +70,7 @@ public class UpdateLayoutPageTemplateEntryPreviewMVCActionCommand
 		Repository repository =
 			PortletFileRepositoryUtil.fetchPortletRepository(
 				themeDisplay.getScopeGroupId(),
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES);
+				LayoutAdminPortletKeys.GROUP_PAGES);
 
 		if (repository == null) {
 			ServiceContext serviceContext = new ServiceContext();
@@ -79,8 +80,7 @@ public class UpdateLayoutPageTemplateEntryPreviewMVCActionCommand
 
 			repository = PortletFileRepositoryUtil.addPortletRepository(
 				themeDisplay.getScopeGroupId(),
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-				serviceContext);
+				LayoutAdminPortletKeys.GROUP_PAGES, serviceContext);
 		}
 
 		String fileName =
@@ -99,9 +99,9 @@ public class UpdateLayoutPageTemplateEntryPreviewMVCActionCommand
 		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			LayoutPageTemplateEntry.class.getName(), layoutPageTemplateEntryId,
-			LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-			repository.getDlFolderId(), fileEntry.getContentStream(), fileName,
-			fileEntry.getMimeType(), false);
+			LayoutAdminPortletKeys.GROUP_PAGES, repository.getDlFolderId(),
+			fileEntry.getContentStream(), fileName, fileEntry.getMimeType(),
+			false);
 
 		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntryId, fileEntry.getFileEntryId());

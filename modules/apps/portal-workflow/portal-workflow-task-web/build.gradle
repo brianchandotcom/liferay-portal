@@ -20,6 +20,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
+	compileOnly project(":apps:layout:layout-taglib")
 	compileOnly project(":apps:portal-workflow:portal-workflow-api")
 	compileOnly project(":apps:product-navigation:product-navigation-personal-menu-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")

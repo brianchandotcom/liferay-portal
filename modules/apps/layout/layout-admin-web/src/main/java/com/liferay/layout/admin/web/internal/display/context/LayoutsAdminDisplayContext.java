@@ -670,7 +670,7 @@ public class LayoutsAdminDisplayContext {
 			}
 
 			JSONObject layoutJSONObject = JSONUtil.put(
-				"actions", _getAvailableActions(layout)
+				"actions", StringUtil.merge(_getAvailableActions(layout))
 			).put(
 				"actionURLs", _getActionURLsJSONObject(layout)
 			).put(
@@ -1614,19 +1614,25 @@ public class LayoutsAdminDisplayContext {
 		return _activeLayoutSetBranchId;
 	}
 
-	private String _getAvailableActions(Layout layout) throws PortalException {
+	private List<String> _getAvailableActions(Layout layout)
+		throws PortalException {
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		List<String> availableActions = new ArrayList<>();
+
+		availableActions.add("convertSelectedPages");
 
 		if (LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), layout,
 				ActionKeys.DELETE)) {
 
-			return "deleteSelectedPages";
+			availableActions.add("deleteSelectedPages");
 		}
 
-		return StringPool.BLANK;
+		return availableActions;
 	}
 
 	private String _getBackURL() {

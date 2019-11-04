@@ -26,7 +26,7 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 
 		<liferay-ui:icon
 			cssClass="refresh"
-			icon="refresh"
+			icon="reload"
 			id="refreshCaptcha"
 			label="<%= false %>"
 			localizeMessage="<%= true %>"

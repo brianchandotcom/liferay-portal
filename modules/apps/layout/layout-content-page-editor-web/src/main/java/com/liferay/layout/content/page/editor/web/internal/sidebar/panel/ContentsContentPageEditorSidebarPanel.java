@@ -15,8 +15,6 @@
 package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
-import com.liferay.layout.content.page.editor.web.internal.configuration.ContentsContentPageEditorSidebarPanelConfiguration;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,18 +24,14 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentsContentPageEditorSidebarPanelConfiguration",
 	immediate = true, property = "service.ranking:Integer=400",
 	service = ContentPageEditorSidebarPanel.class
 )
@@ -72,10 +66,6 @@ public class ContentsContentPageEditorSidebarPanel
 		PermissionChecker permissionChecker, long plid,
 		boolean pageIsDisplayPage) {
 
-		if (!_contentsContentPageEditorSidebarPanelConfiguration.enabled()) {
-			return false;
-		}
-
 		try {
 			if (!LayoutPermissionUtil.contains(
 					permissionChecker, plid, ActionKeys.UPDATE) &&
@@ -95,19 +85,7 @@ public class ContentsContentPageEditorSidebarPanel
 		return true;
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_contentsContentPageEditorSidebarPanelConfiguration =
-			ConfigurableUtil.createConfigurable(
-				ContentsContentPageEditorSidebarPanelConfiguration.class,
-				properties);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentsContentPageEditorSidebarPanel.class);
-
-	private volatile ContentsContentPageEditorSidebarPanelConfiguration
-		_contentsContentPageEditorSidebarPanelConfiguration;
 
 }

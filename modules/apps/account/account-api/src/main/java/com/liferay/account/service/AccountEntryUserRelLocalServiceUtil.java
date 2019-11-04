@@ -72,6 +72,13 @@ public class AccountEntryUserRelLocalServiceUtil {
 			firstName, middleName, lastName, prefixId, suffixId);
 	}
 
+	public static void addAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().addAccountEntryUserRels(accountEntryId, accountUserIds);
+	}
+
 	/**
 	 * Creates a new account entry user rel with the primary key. Does not add the account entry user rel to the database.
 	 *

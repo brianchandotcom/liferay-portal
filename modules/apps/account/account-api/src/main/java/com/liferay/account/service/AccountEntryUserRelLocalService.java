@@ -82,6 +82,10 @@ public interface AccountEntryUserRelLocalService
 			String middleName, String lastName, long prefixId, long suffixId)
 		throws PortalException;
 
+	public void addAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws PortalException;
+
 	/**
 	 * Creates a new account entry user rel with the primary key. Does not add the account entry user rel to the database.
 	 *

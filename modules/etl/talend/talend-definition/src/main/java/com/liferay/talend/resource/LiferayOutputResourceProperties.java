@@ -15,7 +15,6 @@
 package com.liferay.talend.resource;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
-import com.liferay.talend.common.daikon.DaikonUtil;
 import com.liferay.talend.common.oas.OASExplorer;
 import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.oas.constants.OASConstants;
@@ -36,9 +35,6 @@ import org.slf4j.LoggerFactory;
 
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.exception.TalendRuntimeException;
-import org.talend.daikon.i18n.GlobalI18N;
-import org.talend.daikon.i18n.I18nMessageProvider;
-import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.presentation.Form;
@@ -96,41 +92,6 @@ public class LiferayOutputResourceProperties
 				oasSource.getOASJsonObject()));
 
 		return _createEndpointSchema(oasSource);
-	}
-
-	public ValidationResult beforeEndpoint() {
-		LiferayOASSource liferayOASSource =
-			LiferayBaseComponentDefinition.getLiferayOASSource(
-				getEffectiveLiferayConnectionProperties());
-
-		if (!liferayOASSource.isValid()) {
-			return liferayOASSource.getValidationResult();
-		}
-
-		OASSource oasSource = liferayOASSource.getOASSource();
-
-		OASExplorer oasExplorer = new OASExplorer();
-
-		try {
-			Set<String> endpoints = oasExplorer.getEndpointList(
-				oasSource.getOASJsonObject(), OASConstants.OPERATION_DELETE,
-				OASConstants.OPERATION_PATCH, OASConstants.OPERATION_POST);
-
-			if (endpoints.isEmpty()) {
-				return new ValidationResult(
-					ValidationResult.Result.ERROR,
-					_i18nMessages.getMessage("error.validation.resources"));
-			}
-
-			endpoint.setPossibleNamedThingValues(
-				DaikonUtil.toNamedThings(endpoints));
-		}
-		catch (Exception e) {
-			return new ValidationResult(
-				ValidationResult.Result.ERROR, e.getMessage());
-		}
-
-		return null;
 	}
 
 	@Override
@@ -219,6 +180,15 @@ public class LiferayOutputResourceProperties
 		return ValidationResult.OK;
 	}
 
+	@Override
+	protected Set<String> getEndpoints(OASSource oasSource) {
+		OASExplorer oasExplorer = new OASExplorer();
+
+		return oasExplorer.getEndpointList(
+			oasSource.getOASJsonObject(), OASConstants.OPERATION_DELETE,
+			OASConstants.OPERATION_PATCH, OASConstants.OPERATION_POST);
+	}
+
 	private ValidationResult _createEndpointSchema(OASSource oasSource) {
 		try {
 			Action action = operations.getValue();
@@ -237,12 +207,12 @@ public class LiferayOutputResourceProperties
 
 			return new ValidationResult(
 				ValidationResult.Result.ERROR,
-				_i18nMessages.getMessage("error.validation.schema"));
+				getI18nMessage("error.validation.schema"));
 		}
 
 		return new ValidationResult(
 			ValidationResult.Result.OK,
-			_i18nMessages.getMessage("success.validation.schema"));
+			getI18nMessage("success.validation.schema"));
 	}
 
 	private void _resetComponents() {
@@ -273,16 +243,6 @@ public class LiferayOutputResourceProperties
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferayOutputResourceProperties.class);
-
-	private static final I18nMessages _i18nMessages;
-
-	static {
-		I18nMessageProvider i18nMessageProvider =
-			GlobalI18N.getI18nMessageProvider();
-
-		_i18nMessages = i18nMessageProvider.getI18nMessages(
-			LiferayOutputResourceProperties.class);
-	}
 
 	private final SchemaProperties _schemaFlow;
 	private final SchemaProperties _schemaReject;

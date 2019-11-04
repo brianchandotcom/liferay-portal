@@ -14,14 +14,11 @@
 
 package com.liferay.talend.resource;
 
-import com.liferay.talend.LiferayBaseComponentDefinition;
-import com.liferay.talend.common.daikon.DaikonUtil;
 import com.liferay.talend.common.oas.OASExplorer;
 import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.oas.constants.OASConstants;
 import com.liferay.talend.common.schema.SchemaBuilder;
 import com.liferay.talend.common.util.StringUtil;
-import com.liferay.talend.source.LiferayOASSource;
 
 import java.net.URI;
 
@@ -37,9 +34,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.talend.daikon.exception.TalendRuntimeException;
-import org.talend.daikon.i18n.GlobalI18N;
-import org.talend.daikon.i18n.I18nMessageProvider;
-import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.property.Property;
@@ -62,40 +56,6 @@ public class LiferayInputResourceProperties
 			_logger.debug(
 				"Parameters: " + parametersTable.valueColumnName.getValue());
 		}
-	}
-
-	public ValidationResult beforeEndpoint() throws Exception {
-		LiferayOASSource liferayOASSource =
-			LiferayBaseComponentDefinition.getLiferayOASSource(
-				getEffectiveLiferayConnectionProperties());
-
-		if (!liferayOASSource.isValid()) {
-			return liferayOASSource.getValidationResult();
-		}
-
-		OASSource jsonClient = liferayOASSource.getOASSource();
-
-		try {
-			OASExplorer oasExplorer = new OASExplorer();
-
-			Set<String> endpoints = oasExplorer.getEndpointList(
-				jsonClient.getOASJsonObject(), OASConstants.OPERATION_GET);
-
-			if (endpoints.isEmpty()) {
-				return new ValidationResult(
-					ValidationResult.Result.ERROR,
-					_i18nMessages.getMessage("error.validation.resources"));
-			}
-
-			endpoint.setPossibleNamedThingValues(
-				DaikonUtil.toNamedThings(endpoints));
-		}
-		catch (Exception e) {
-			return new ValidationResult(
-				ValidationResult.Result.ERROR, e.getMessage());
-		}
-
-		return null;
 	}
 
 	public void setupLayout() {
@@ -140,7 +100,7 @@ public class LiferayInputResourceProperties
 
 			return new ValidationResult(
 				ValidationResult.Result.ERROR,
-				_i18nMessages.getMessage("error.validation.schema"));
+				getI18nMessage("error.validation.schema"));
 		}
 
 		OASExplorer oasExplorer = new OASExplorer();
@@ -151,6 +111,14 @@ public class LiferayInputResourceProperties
 				oasJsonObject));
 
 		return ValidationResult.OK;
+	}
+
+	@Override
+	protected Set<String> getEndpoints(OASSource oasSource) {
+		OASExplorer oasExplorer = new OASExplorer();
+
+		return oasExplorer.getEndpointList(
+			oasSource.getOASJsonObject(), OASConstants.OPERATION_GET);
 	}
 
 	private void _addNestedFields(UriBuilder uriBuilder) {
@@ -181,15 +149,6 @@ public class LiferayInputResourceProperties
 	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferayInputResourceProperties.class);
 
-	private static final I18nMessages _i18nMessages;
 	private static final long serialVersionUID = 6834821457406101745L;
-
-	static {
-		I18nMessageProvider i18nMessageProvider =
-			GlobalI18N.getI18nMessageProvider();
-
-		_i18nMessages = i18nMessageProvider.getI18nMessages(
-			LiferayInputResourceProperties.class);
-	}
 
 }

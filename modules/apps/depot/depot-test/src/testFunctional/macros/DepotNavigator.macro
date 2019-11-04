@@ -11,6 +11,10 @@ definition {
 			locator1 = "ControlMenu#HEADING",
 			value1 = "Repositories");
 
+		if (IsElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_CLOSED")) {
+			Click.clickNoSPARefresh(locator1 = "ProductMenu#TOGGLE");
+		}
+
 		ProductMenuHelper.gotoPortlet(portlet = "${portlet}");
 
 		AssertTextEquals(

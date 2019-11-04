@@ -332,20 +332,27 @@ String navigation = ParamUtil.getString(request, "navigation");
 		</div>
 
 		<%
-		Map<String, Object> categoriesContext = new HashMap<>();
+		Map<String, Object> editCategoriesContext = new HashMap<>();
+			editCategoriesContext.put("namespace", liferayPortletResponse.getNamespace());
 
-		categoriesContext.put("groupIds", groupIds);
-		categoriesContext.put("pathModule", PortalUtil.getPathModule());
-		categoriesContext.put("repositoryId", String.valueOf(repositoryId));
-		categoriesContext.put("selectCategoriesUrl", selectCategoriesURL.toString());
+			Map<String, Object> editCategoriesProps = new HashMap<>();
+			editCategoriesProps.put("componentId", liferayPortletResponse.getNamespace() + "EditCategoriesComponent");
+			editCategoriesProps.put("groupIds", groupIds);
+			editCategoriesProps.put("pathModule", PortalUtil.getPathModule());
+			editCategoriesProps.put("repositoryId", String.valueOf(repositoryId));
+			editCategoriesProps.put("selectCategoriesUrl", selectCategoriesURL.toString());
+
+			Map<String, Object> editCategoriesData = new HashMap<>();
+			editCategoriesData.put("context", editCategoriesContext);
+			editCategoriesData.put("props", editCategoriesProps);
 		%>
 
-		<liferay-frontend:component
-			componentId='<%= liferayPortletResponse.getNamespace() + "EditCategoriesComponent" %>'
-			containerId='<%= "#" + liferayPortletResponse.getNamespace() + "documentLibraryModal" %>'
-			context="<%= categoriesContext %>"
-			module="document_library/js/categorization/EditCategories.es"
-		/>
+		<div>
+			<react:component
+				data="<%= editCategoriesData %>"
+				module="document_library/js/categorization/categories/EditCategories.es"
+			/>
+		</div>
 
 		<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#post" />
 	</c:otherwise>

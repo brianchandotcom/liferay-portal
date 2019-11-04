@@ -198,11 +198,9 @@ AUI.add(
 				_openModalCategories() {
 					var instance = this;
 
-					var editCategoriesComponent = Liferay.component(
+					Liferay.componentReady(
 						instance.NS + 'EditCategoriesComponent'
-					);
-
-					if (editCategoriesComponent) {
+					).then(editCategoriesComponent => {
 						var bulkSelection =
 							instance._searchContainer.select &&
 							instance._searchContainer.select.get(
@@ -214,7 +212,7 @@ AUI.add(
 							bulkSelection,
 							instance.getFolderId()
 						);
-					}
+					});
 				},
 
 				_openModalMove() {

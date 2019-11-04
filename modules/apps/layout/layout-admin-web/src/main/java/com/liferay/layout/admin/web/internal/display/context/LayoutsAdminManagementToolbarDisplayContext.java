@@ -57,6 +57,8 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			layoutsAdminDisplayContext.getLayoutsSearchContainer());
 
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -259,5 +261,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 		LayoutsAdminManagementToolbarDisplayContext.class);
 
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
+	private final ThemeDisplay _themeDisplay;
 
 }

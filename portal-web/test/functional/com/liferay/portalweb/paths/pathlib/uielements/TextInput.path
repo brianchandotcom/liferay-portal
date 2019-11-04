@@ -304,6 +304,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPEN_GRAPH_CUSTOM_TITLE</td>
+	<td>//div[input[contains(@id,'openGraphTitle')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PASSWORD</td>
 	<td>//div[label[contains(.,'Password')]]/input | //div[label[contains(.,'Contraseña')]]/input | //div[label[contains(.,'パスワード')]]/input | //div[label[contains(.,'密码')]]/input | //div[contains(.,'Kennwort')]//input[@type='password']</td>
 	<td></td>

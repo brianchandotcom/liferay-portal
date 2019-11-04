@@ -1621,15 +1621,15 @@ public class LayoutsAdminDisplayContext {
 	private List<String> _getAvailableActions(Layout layout)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		List<String> availableActions = new ArrayList<>();
 
 		if (isShowConvertLayoutAction(layout)) {
 			availableActions.add("convertSelectedPages");
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), layout,

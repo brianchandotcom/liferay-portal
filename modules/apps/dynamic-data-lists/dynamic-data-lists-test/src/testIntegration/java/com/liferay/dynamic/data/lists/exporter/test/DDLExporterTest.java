@@ -172,7 +172,7 @@ public class DDLExporterTest {
 			sb.append("No");
 			sb.append(CharPool.COMMA);
 
-			sb.append("1/1/70");
+			sb.append("1/1/1970");
 			sb.append(CharPool.COMMA);
 
 			sb.append("1");
@@ -467,7 +467,7 @@ public class DDLExporterTest {
 
 			cell = row.getCell(1);
 
-			Assert.assertEquals("1/1/70", cell.getStringCellValue());
+			Assert.assertEquals("1/1/1970", cell.getStringCellValue());
 
 			cell = row.getCell(2);
 
@@ -569,7 +569,7 @@ public class DDLExporterTest {
 		Element fieldsElement = rootElement.addElement("fields");
 
 		addFieldElement(fieldsElement, "Field0", "No");
-		addFieldElement(fieldsElement, "Field1", "1/1/70");
+		addFieldElement(fieldsElement, "Field1", "1/1/1970");
 		addFieldElement(fieldsElement, "Field2", "1");
 		addFieldElement(fieldsElement, "Field3", "file.txt");
 		addFieldElement(

@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -339,7 +341,7 @@ public class FragmentEntryConfigUtil {
 		return jsonObject.toString();
 	}
 
-	private static Object _getAssetEntry(String value) {
+	private static AssetEntry _getAssetEntry(String value) {
 		if (Validator.isNull(value)) {
 			return null;
 		}
@@ -351,14 +353,7 @@ public class FragmentEntryConfigUtil {
 				jsonObject.getString("className"));
 			long classPK = GetterUtil.getLong(jsonObject.getString("classPK"));
 
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-				className, classPK);
-
-			if (assetEntry != null) {
-				AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
-
-				return assetRenderer.getAssetObject();
-			}
+			return AssetEntryLocalServiceUtil.getEntry(className, classPK);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -378,8 +373,18 @@ public class FragmentEntryConfigUtil {
 			JSONObject configurationValueJSONObject =
 				JSONFactoryUtil.createJSONObject(value);
 
+			AssetEntry assetEntry = _getAssetEntry(value);
+
+			Object assetObject = null;
+
+			if (assetEntry != null) {
+				AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
+
+				assetObject = assetRenderer.getAssetObject();
+			}
+
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerialize(_getAssetEntry(value)));
+				JSONFactoryUtil.looseSerialize(assetObject));
 
 			jsonObject.put(
 				"className",
@@ -398,6 +403,14 @@ public class FragmentEntryConfigUtil {
 				GetterUtil.getLong(
 					configurationValueJSONObject.getString("template"))
 			);
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if ((serviceContext != null) && (assetEntry != null)) {
+				jsonObject.put(
+					"title", assetEntry.getTitle(serviceContext.getLocale()));
+			}
 
 			return jsonObject;
 		}

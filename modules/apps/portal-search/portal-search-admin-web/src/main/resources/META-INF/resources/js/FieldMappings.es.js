@@ -18,6 +18,50 @@ import {useTimeout} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
+class AceEditor extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.container = React.createRef();
+	}
+
+	componentDidMount() {
+		AUI().use('aui-ace-editor', A => {
+			const editor = new A.AceEditor({
+				boundingBox: this.container.current,
+				highlightActiveLine: false,
+				mode: 'json',
+				readOnly: 'true',
+				tabSize: 4,
+				value: this.props.fieldMappings,
+				width: '100%'
+			}).render();
+
+			editor.on('render', () => {
+				this.props.onRender({
+					editorElement: document.querySelector('.ace_editor'),
+					editorTextInput: document.querySelector('.ace_text-input')
+				});
+			});
+		});
+	}
+
+	shouldComponentUpdate() {
+		return false;
+	}
+
+	render() {
+		return (
+			<div className="lfr-source-editor-code" ref={this.container}></div>
+		);
+	}
+}
+
+AceEditor.propTypes = {
+	fieldMappings: PropTypes.string,
+	onRender: PropTypes.func
+};
+
 const FieldMappings = ({
 	fieldMappingIndexDisplayContexts,
 	fieldMappings,
@@ -30,7 +74,7 @@ const FieldMappings = ({
 
 	const delay = useTimeout();
 
-	const copyEditorText = event => {
+	const handleCopyEditorText = event => {
 		const editorTextInput = editorTextInputRef.current;
 
 		editorTextInput.focus();
@@ -141,7 +185,7 @@ const FieldMappings = ({
 								className="btn-copy lfr-portal-tooltip"
 								displayType="secondary"
 								monospaced
-								onClick={copyEditorText}
+								onClick={handleCopyEditorText}
 								title={Liferay.Language.get('copy')}
 							>
 								<ClayIcon symbol="paste" />
@@ -178,43 +222,4 @@ FieldMappings.propTypes = {
 
 export default function(props) {
 	return <FieldMappings {...props} />;
-}
-
-class AceEditor extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.container = React.createRef();
-	}
-
-	componentDidMount() {
-		AUI().use('aui-ace-editor', A => {
-			const editor = new A.AceEditor({
-				boundingBox: this.container.current,
-				highlightActiveLine: false,
-				mode: 'json',
-				readOnly: 'true',
-				tabSize: 4,
-				value: this.props.fieldMappings,
-				width: '100%'
-			}).render();
-
-			editor.on('render', () => {
-				this.props.onRender({
-					editorElement: document.querySelector('.ace_editor'),
-					editorTextInput: document.querySelector('.ace_text-input')
-				});
-			});
-		});
-	}
-
-	shouldComponentUpdate() {
-		return false;
-	}
-
-	render() {
-		return (
-			<div className="lfr-source-editor-code" ref={this.container}></div>
-		);
-	}
 }

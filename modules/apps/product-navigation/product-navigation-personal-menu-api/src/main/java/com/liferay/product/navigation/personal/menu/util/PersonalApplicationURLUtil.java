@@ -54,6 +54,28 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class PersonalApplicationURLUtil {
 
+	public static Layout fetchOrAddEmbeddedPersonalApplicationLayout(
+			User user, Group group, boolean privateLayout)
+		throws PortalException {
+
+		try {
+			return LayoutLocalServiceUtil.getFriendlyURLLayout(
+				group.getGroupId(), privateLayout,
+				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
+		}
+		catch (NoSuchLayoutException nsle) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsle, nsle);
+			}
+
+			return _addEmbeddedPersonalApplicationLayout(
+				user.getUserId(), group.getGroupId(), privateLayout);
+		}
+	}
+
 	public static String getPersonalApplicationURL(
 			HttpServletRequest httpServletRequest, String portletId)
 		throws PortalException {
@@ -99,24 +121,8 @@ public class PersonalApplicationURLUtil {
 				themeDisplay.getCompanyId());
 		}
 
-		Layout layout = null;
-
-		try {
-			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-				group.getGroupId(), privateLayout,
-				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
-		}
-		catch (NoSuchLayoutException nsle) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsle, nsle);
-			}
-
-			layout = _addEmbeddedPersonalApplicationLayout(
-				user.getUserId(), group.getGroupId(), privateLayout);
-		}
+		Layout layout = fetchOrAddEmbeddedPersonalApplicationLayout(
+			user, group, privateLayout);
 
 		if ((controlPanelLayout && !group.isControlPanel()) ||
 			!LayoutPermissionUtil.contains(

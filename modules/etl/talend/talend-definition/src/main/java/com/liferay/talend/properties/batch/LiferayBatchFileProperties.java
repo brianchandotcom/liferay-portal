@@ -23,7 +23,6 @@ import com.liferay.talend.common.oas.OASExplorer;
 import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.schema.SchemaBuilder;
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.resource.LiferayOutputResourceProperties;
 import com.liferay.talend.source.LiferayOASSource;
 
@@ -111,7 +110,8 @@ public class LiferayBatchFileProperties
 				DaikonUtil.toNamedThings(entitySchemaNames));
 		}
 		catch (Exception e) {
-			return ExceptionUtils.exceptionToValidationResult(e);
+			return new ValidationResult(
+				ValidationResult.Result.ERROR, e.getMessage());
 		}
 
 		return null;

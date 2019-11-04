@@ -21,7 +21,6 @@ import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.oas.constants.OASConstants;
 import com.liferay.talend.common.schema.SchemaBuilder;
 import com.liferay.talend.common.util.StringUtil;
-import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.source.LiferayOASSource;
 
 import java.net.URI;
@@ -92,7 +91,8 @@ public class LiferayInputResourceProperties
 				DaikonUtil.toNamedThings(endpoints));
 		}
 		catch (Exception e) {
-			return ExceptionUtils.exceptionToValidationResult(e);
+			return new ValidationResult(
+				ValidationResult.Result.ERROR, e.getMessage());
 		}
 
 		return null;

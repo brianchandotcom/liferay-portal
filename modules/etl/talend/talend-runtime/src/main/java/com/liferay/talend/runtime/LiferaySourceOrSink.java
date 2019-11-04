@@ -19,7 +19,6 @@ import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.util.URIUtil;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
-import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.runtime.client.RESTClient;
 import com.liferay.talend.runtime.client.ResponseHandler;
 import com.liferay.talend.runtime.client.exception.ResponseContentClientException;
@@ -215,7 +214,8 @@ public class LiferaySourceOrSink
 			return ValidationResult.OK;
 		}
 		catch (TalendRuntimeException tre) {
-			return ExceptionUtils.exceptionToValidationResult(tre);
+			return new ValidationResult(
+				ValidationResult.Result.ERROR, tre.getMessage());
 		}
 	}
 

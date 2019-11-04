@@ -16,7 +16,6 @@ package com.liferay.talend;
 
 import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.source.LiferayOASSource;
 
 import org.talend.components.api.component.AbstractComponentDefinition;
@@ -24,6 +23,7 @@ import org.talend.components.api.component.runtime.DependenciesReader;
 import org.talend.components.api.component.runtime.ExecutionEngine;
 import org.talend.components.api.component.runtime.JarRuntimeInfo;
 import org.talend.components.api.properties.ComponentProperties;
+import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.runtime.RuntimeInfo;
 import org.talend.daikon.runtime.RuntimeUtil;
 import org.talend.daikon.sandbox.SandboxedInstance;
@@ -65,7 +65,9 @@ public abstract class LiferayBaseComponentDefinition
 		}
 		catch (Exception e) {
 			return new LiferayOASSource(
-				null, ExceptionUtils.exceptionToValidationResult(e));
+				null,
+				new ValidationResult(
+					ValidationResult.Result.ERROR, e.getMessage()));
 		}
 	}
 

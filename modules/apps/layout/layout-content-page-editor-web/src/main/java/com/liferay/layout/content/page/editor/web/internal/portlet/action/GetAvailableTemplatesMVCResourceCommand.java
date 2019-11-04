@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.portlet;
+package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;

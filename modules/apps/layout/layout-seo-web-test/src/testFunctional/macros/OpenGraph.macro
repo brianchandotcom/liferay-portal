@@ -1,0 +1,82 @@
+definition {
+
+	macro configureOpenGraph {
+		if (isSet(customTitle)) {
+			var checkboxName = "Use Custom Title";
+
+			if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
+				Click(locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			Type(
+				locator1 = "TextInput#OPEN_GRAPH_CUSTOM_TITLE",
+				value1 = "${customTitle}");
+		}
+
+		if (isSet(customDescription)) {
+			var checkboxName = "Use Custom Description";
+
+			if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
+				Click(locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			Type(
+				key_text = "openGraphDescription",
+				locator1 = "TextArea#ANY",
+				value1 = "${customDescription}");
+		}
+
+		PortletEntry.save();
+	}
+
+	macro viewDefaultConfiguration {
+		task ("Assert open graph title") {
+			AssertTextEquals(
+				key_title = "Open Graph",
+				locator1 = "Header#H4_TITLE",
+				value1 = "Open Graph");
+		}
+
+		task ("Assert custom title configuration") {
+			AssertTextEquals.assertPartialText(
+				key_fieldName = "openGraphTitleEnabled",
+				locator1 = "FormFields#CHECKBOX_LABEL",
+				value1 = "Use Custom Title");
+
+			AssertElementPresent(locator1 = "TextInput#OPEN_GRAPH_CUSTOM_TITLE");
+		}
+
+		task ("Assert custom description configuration") {
+			AssertTextEquals.assertPartialText(
+				key_fieldName = "openGraphDescriptionEnabled",
+				locator1 = "FormFields#CHECKBOX_LABEL",
+				value1 = "Use Custom Description");
+
+			AssertElementPresent(
+				key_text = "openGraphDescription",
+				locator1 = "TextArea#ANY");
+		}
+
+		task ("Assert image configuration") {
+			AssertTextEquals(
+				key_fieldLabel = "Image",
+				locator1 = "FormFields#LABEL",
+				value1 = "Image");
+
+			AssertElementPresent(locator1 = "Button#SELECT");
+		}
+	}
+
+	macro viewNoOpenGraphProperties {
+		for (var ogProperty : list "${ogPropertyList}" ) {
+			AssertHTMLSourceTextNotPresent(value1 = "${ogProperty}");
+		}
+	}
+
+	macro viewOpenGraphProperties {
+		for (var ogProperty : list "${ogPropertyList}" ) {
+			AssertHTMLSourceTextPresent(value1 = "${ogProperty}");
+		}
+	}
+
+}

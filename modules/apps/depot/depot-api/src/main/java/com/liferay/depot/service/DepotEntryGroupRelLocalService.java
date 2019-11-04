@@ -107,6 +107,8 @@ public interface DepotEntryGroupRelLocalService
 			long depotEntryGroupRelId)
 		throws PortalException;
 
+	public void deleteGroupDepotEntryGroupRels(long toGroupId);
+
 	/**
 	 * @throws PortalException
 	 */

@@ -96,6 +96,10 @@ public class DepotEntryGroupRelLocalServiceUtil {
 		return getService().deleteDepotEntryGroupRel(depotEntryGroupRelId);
 	}
 
+	public static void deleteGroupDepotEntryGroupRels(long toGroupId) {
+		getService().deleteGroupDepotEntryGroupRels(toGroupId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

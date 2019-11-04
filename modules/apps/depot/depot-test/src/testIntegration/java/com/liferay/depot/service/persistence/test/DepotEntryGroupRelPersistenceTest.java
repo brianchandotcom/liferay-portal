@@ -157,6 +157,13 @@ public class DepotEntryGroupRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByToGroupId() throws Exception {
+		_persistence.countByToGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByToGroupId(0L);
+	}
+
+	@Test
 	public void testCountByD_TGI() throws Exception {
 		_persistence.countByD_TGI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

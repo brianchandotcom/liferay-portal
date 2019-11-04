@@ -99,6 +99,12 @@ public class DepotEntryGroupRelLocalServiceWrapper
 			depotEntryGroupRelId);
 	}
 
+	@Override
+	public void deleteGroupDepotEntryGroupRels(long toGroupId) {
+		_depotEntryGroupRelLocalService.deleteGroupDepotEntryGroupRels(
+			toGroupId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

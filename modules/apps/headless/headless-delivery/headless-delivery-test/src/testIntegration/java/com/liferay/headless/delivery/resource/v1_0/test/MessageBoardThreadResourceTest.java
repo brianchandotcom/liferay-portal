@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -45,6 +47,18 @@ public class MessageBoardThreadResourceTest
 			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetMessageBoardSectionMessageBoardThreadsPageWithSortInteger() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteMessageBoardThreadsPageWithSortInteger() {
 	}
 
 	@Override

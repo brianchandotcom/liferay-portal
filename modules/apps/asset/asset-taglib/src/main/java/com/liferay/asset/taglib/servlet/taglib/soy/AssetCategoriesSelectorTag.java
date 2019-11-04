@@ -95,8 +95,8 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 	@Override
 	public String getModule() {
 		return NPMResolverHolder._npmResolver.resolveModuleName(
-			"asset-taglib/asset_categories_selector/soy/AssetCategoriesSelector." +
-				"es");
+			"asset-taglib/asset_categories_selector/soy" +
+				"/AssetCategoriesSelector.es");
 	}
 
 	public void setCategoryIds(String categoryIds) {

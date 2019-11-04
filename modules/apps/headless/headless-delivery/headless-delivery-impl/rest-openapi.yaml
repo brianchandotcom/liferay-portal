@@ -5704,6 +5704,59 @@ paths:
                     description:
                         ""
             tags: ["KnowledgeBaseFolder"]
+    "/sites/{siteId}/message-board-messages":
+        # @review
+        get:
+            description:
+                Retrieves the Site's message board messages.
+            operationId: getSiteMessageBoardMessagesPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardMessage"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardMessage"
+                                type: array
+                    description:
+                        ""
+            tags: ["MessageBoardMessage"]
     "/sites/{siteId}/message-board-sections":
         get:
             description:

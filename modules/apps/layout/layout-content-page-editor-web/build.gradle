@@ -34,6 +34,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-content-page-editor-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
+	compileOnly project(":apps:mentions:mentions-api")
 	compileOnly project(":apps:portal-template:portal-template-soy-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
 	compileOnly project(":apps:segments:segments-api")

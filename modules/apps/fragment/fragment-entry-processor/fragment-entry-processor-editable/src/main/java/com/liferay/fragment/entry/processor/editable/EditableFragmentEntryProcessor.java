@@ -103,11 +103,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	@Override
-	public JSONObject getDefaultEditableValuesJSONObject(String html) {
-		return _getDefaultEditableValuesJSONObject(html);
-	}
-
-	@Override
 	public JSONObject getDefaultEditableValuesJSONObject(
 		String html, String configuration) {
 

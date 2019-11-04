@@ -155,7 +155,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		validateFragmentEntryHTML(html);
+		validateFragmentEntryHTML(html, StringPool.BLANK);
 
 		String widgetHTML = _renderWidgetHTML(
 			fragmentEntryLink.getEditableValues(),

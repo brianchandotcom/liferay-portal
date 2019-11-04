@@ -472,10 +472,6 @@ public class ProcessResourceImpl
 			}
 		}
 
-		if (processes.size() > pagination.getPageSize()) {
-			return processes.subList(0, processes.size() - 1);
-		}
-
 		return processes;
 	}
 

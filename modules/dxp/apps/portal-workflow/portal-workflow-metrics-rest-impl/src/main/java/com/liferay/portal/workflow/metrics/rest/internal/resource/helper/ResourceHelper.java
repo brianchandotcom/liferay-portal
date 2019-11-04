@@ -95,7 +95,7 @@ public class ResourceHelper {
 
 		bucketSortPipelineAggregation.setFrom(pagination.getStartPosition());
 		bucketSortPipelineAggregation.setGapPolicy(GapPolicy.INSTANT_ZEROS);
-		bucketSortPipelineAggregation.setSize(pagination.getPageSize() + 1);
+		bucketSortPipelineAggregation.setSize(pagination.getPageSize());
 
 		return bucketSortPipelineAggregation;
 	}

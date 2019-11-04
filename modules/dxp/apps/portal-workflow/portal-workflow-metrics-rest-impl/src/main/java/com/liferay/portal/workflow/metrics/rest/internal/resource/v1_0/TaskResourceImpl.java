@@ -424,10 +424,6 @@ public class TaskResourceImpl
 			}
 		}
 
-		if (tasks.size() > pagination.getPageSize()) {
-			return tasks.subList(0, tasks.size() - 1);
-		}
-
 		return tasks;
 	}
 

@@ -340,8 +340,6 @@ public class AssigneeUserResourceImpl
 
 				return assigneeUser;
 			}
-		).limit(
-			pagination.getPageSize()
 		).collect(
 			Collectors.toList()
 		);

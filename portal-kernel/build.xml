@@ -29,6 +29,22 @@
 			</then>
 		</if>
 
+		<if>
+			<istrue value="${build.portal.artifacts.enabled}" />
+			<then>
+				<condition property="compile.uptodate">
+					<and>
+						<uptodate
+							targetfile="classes/.touch"
+						>
+							<srcfiles dir="${basedir}" excludes="src/com/liferay/portal/kernel/util/ReleaseInfo.java" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+						</uptodate>
+						<equals arg1="${release.info.uptodate}" arg2="true" />
+					</and>
+				</condition>
+			</then>
+		</if>
+
 		<ant antfile="${project.dir}/build-common-java.xml" dir="${project.dir}/portal-kernel" inheritRefs="true" target="compile" />
 
 		<if>

@@ -34,19 +34,6 @@ public class ViewCountEntryLocalServiceWrapper
 	}
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link ViewCountEntryLocalServiceUtil} to access the view count entry local service. Add custom service methods to <code>com.liferay.view.count.service.impl.ViewCountEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
-	@Override
-	public com.liferay.view.count.model.ViewCountEntry addViewCountEntry(
-		long companyId, long classNameId, long classPK) {
-
-		return _viewCountEntryLocalService.addViewCountEntry(
-			companyId, classNameId, classPK);
-	}
-
-	/**
 	 * Adds the view count entry to the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param viewCountEntry the view count entry
@@ -299,14 +286,6 @@ public class ViewCountEntryLocalServiceWrapper
 
 	@Override
 	public void incrementViewCount(
-		long companyId, long classNameId, long classPK) {
-
-		_viewCountEntryLocalService.incrementViewCount(
-			companyId, classNameId, classPK);
-	}
-
-	@Override
-	public void incrementViewCount(
 		long companyId, long classNameId, long classPK, int increment) {
 
 		_viewCountEntryLocalService.incrementViewCount(
@@ -314,8 +293,8 @@ public class ViewCountEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void removeViewCount(long companyId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public void removeViewCount(
+		long companyId, long classNameId, long classPK) {
 
 		_viewCountEntryLocalService.removeViewCount(
 			companyId, classNameId, classPK);

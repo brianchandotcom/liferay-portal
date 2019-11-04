@@ -11311,7 +11311,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 			<then>
 				<if>
-					<isset property="env.CI_TEST_SUITE" />
+					<contains string="${env.CI_TEST_SUITE}" substring="search" />
 					<then>
 						<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
 

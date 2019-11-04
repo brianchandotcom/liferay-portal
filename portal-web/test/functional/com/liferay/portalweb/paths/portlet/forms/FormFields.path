@@ -94,12 +94,12 @@
 </tr>
 <tr>
 	<td>OPTIONS_DRAG_ICON_1</td>
-	<td>//div[contains(@class,'ddm-field-options')][${key_rowNumber1}]//svg[contains(@class,'lexicon-icon-drag')] | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber1}]//div[contains(@class,'drag-handle')]</td>
+	<td>//div[contains(@class,'form-group')]/..//div[@class='ddm-field-options'][${key_rowNumber1}]/span | //div[contains(@class,'ddm-field-options')][${key_rowNumber1}]//svg[contains(@class,'lexicon-icon-drag')] | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber1}]//div[contains(@class,'drag-handle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_DRAG_ICON_2</td>
-	<td>//div[contains(@class,'ddm-field-options')][${key_rowNumber2}]//svg[contains(@class,'lexicon-icon-drag')] | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber2}]//div[contains(@class,'drag-handle')]</td>
+	<td>//div[contains(@class,'form-group')]/..//div[@class='ddm-options-target'][${key_rowNumber2}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -150,7 +150,6 @@
 		<field name="height" type="int" />
 		<field name="width" type="int" />
 		<field name="priority" type="double" />
-		<field name="viewCount" type="int" />
 	</model>
 	<model name="com.liferay.asset.kernel.model.AssetLink">
 		<field name="mvccVersion" type="long" />

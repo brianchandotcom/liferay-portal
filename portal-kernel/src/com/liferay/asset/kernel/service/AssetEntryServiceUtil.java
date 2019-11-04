@@ -106,10 +106,10 @@ public class AssetEntryServiceUtil {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetEntry
-			incrementViewCounter(String className, long classPK)
+			incrementViewCounter(long companyId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().incrementViewCounter(className, classPK);
+		return getService().incrementViewCounter(companyId, className, classPK);
 	}
 
 	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(

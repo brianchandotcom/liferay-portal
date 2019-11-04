@@ -15,11 +15,16 @@
 package com.liferay.portal.search.admin.web.internal.display.context;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Adam Brandizzi
  */
 public class FieldMappingsDisplayContext {
+
+	public Map<String, Object> getData() {
+		return _data;
+	}
 
 	public List<FieldMappingIndexDisplayContext>
 		getFieldMappingIndexDisplayContexts() {
@@ -37,6 +42,10 @@ public class FieldMappingsDisplayContext {
 
 	public String getSelectedIndexName() {
 		return _selectedIndexName;
+	}
+
+	public void setData(Map<String, Object> data) {
+		_data = data;
 	}
 
 	public void setFieldMappingIndexDisplayContexts(
@@ -58,6 +67,7 @@ public class FieldMappingsDisplayContext {
 		_selectedIndexName = selectedIndexName;
 	}
 
+	private Map<String, Object> _data;
 	private List<FieldMappingIndexDisplayContext>
 		_fieldMappingIndexDisplayContexts;
 	private String _fieldMappings;

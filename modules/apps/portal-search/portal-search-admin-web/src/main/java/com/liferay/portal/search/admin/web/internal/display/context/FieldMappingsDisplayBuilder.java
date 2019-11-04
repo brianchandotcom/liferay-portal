@@ -15,12 +15,14 @@
 package com.liferay.portal.search.admin.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.index.IndexInformation;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,10 +46,19 @@ public class FieldMappingsDisplayBuilder {
 
 		String selectedIndexName = getSelectedIndexName(indexNames);
 
+		List<FieldMappingIndexDisplayContext> fieldMappingIndexDisplayContexts =
+			getFieldMappingIndexDisplayContexts(indexNames, selectedIndexName);
+
+		String fieldMappings = _indexInformation.getFieldMappings(
+			selectedIndexName);
+
+		fieldMappingsDisplayContext.setData(
+			getData(
+				fieldMappingIndexDisplayContexts, fieldMappings,
+				selectedIndexName));
 		fieldMappingsDisplayContext.setFieldMappingIndexDisplayContexts(
-			getFieldMappingIndexDisplayContexts(indexNames, selectedIndexName));
-		fieldMappingsDisplayContext.setFieldMappings(
-			_indexInformation.getFieldMappings(selectedIndexName));
+			fieldMappingIndexDisplayContexts);
+		fieldMappingsDisplayContext.setFieldMappings(fieldMappings);
 		fieldMappingsDisplayContext.setSelectedIndexName(selectedIndexName);
 
 		return fieldMappingsDisplayContext;
@@ -71,6 +82,19 @@ public class FieldMappingsDisplayBuilder {
 
 	public void setSelectedIndexName(String selectedIndexName) {
 		_selectedIndexName = selectedIndexName;
+	}
+
+	protected Map<String, Object> getData(
+		List<FieldMappingIndexDisplayContext> fieldMappingIndexDisplayContexts,
+		String fieldMappings, String selectedIndexName) {
+
+		return HashMapBuilder.<String, Object>put(
+			"fieldMappingIndexDisplayContexts", fieldMappingIndexDisplayContexts
+		).put(
+			"fieldMappings", fieldMappings
+		).put(
+			"selectedIndexName", selectedIndexName
+		).build();
 	}
 
 	protected FieldMappingIndexDisplayContext

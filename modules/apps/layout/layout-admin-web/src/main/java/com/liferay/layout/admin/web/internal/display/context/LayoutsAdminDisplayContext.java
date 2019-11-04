@@ -621,6 +621,10 @@ public class LayoutsAdminDisplayContext {
 		return layoutColumnsJSONArray;
 	}
 
+	public LayoutConverterConfiguration getLayoutConverterConfiguration() {
+		return _layoutConverterConfiguration;
+	}
+
 	public List<LayoutDescription> getLayoutDescriptions() {
 		if (_layoutDescriptions != null) {
 			return _layoutDescriptions;

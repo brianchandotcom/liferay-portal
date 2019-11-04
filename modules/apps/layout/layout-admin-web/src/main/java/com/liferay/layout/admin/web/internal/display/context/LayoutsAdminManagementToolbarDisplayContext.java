@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -64,12 +65,31 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		PortletURL convertLayoutURL = liferayPortletResponse.createActionURL();
+		DropdownItemList dropdownItems = new DropdownItemList();
 
-		convertLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout/convert_layout");
-		convertLayoutURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
+		LayoutConverterConfiguration layoutConverterConfiguration =
+			_layoutsAdminDisplayContext.getLayoutConverterConfiguration();
+
+		if (layoutConverterConfiguration.enabled()) {
+			PortletURL convertLayoutURL =
+				liferayPortletResponse.createActionURL();
+
+			convertLayoutURL.setParameter(
+				ActionRequest.ACTION_NAME, "/layout/convert_layout");
+			convertLayoutURL.setParameter(
+				"redirect", _themeDisplay.getURLCurrent());
+
+			dropdownItems.add(
+				dropdownItem -> {
+					dropdownItem.putData("action", "convertSelectedPages");
+					dropdownItem.putData(
+						"convertLayoutURL", convertLayoutURL.toString());
+					dropdownItem.setIcon("change");
+					dropdownItem.setLabel(
+						LanguageUtil.get(request, "convertToContentPage"));
+					dropdownItem.setQuickAction(true);
+				});
+		}
 
 		PortletURL deleteLayoutURL = liferayPortletResponse.createActionURL();
 
@@ -77,30 +97,17 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			ActionRequest.ACTION_NAME, "/layout/delete_layout");
 		deleteLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "convertSelectedPages");
-						dropdownItem.putData(
-							"convertLayoutURL", convertLayoutURL.toString());
-						dropdownItem.setIcon("change");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "convertToContentPage"));
-						dropdownItem.setQuickAction(true);
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "deleteSelectedPages");
-						dropdownItem.putData(
-							"deleteLayoutURL", deleteLayoutURL.toString());
-						dropdownItem.setIcon("times-circle");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
-			}
-		};
+		dropdownItems.add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteSelectedPages");
+				dropdownItem.putData(
+					"deleteLayoutURL", deleteLayoutURL.toString());
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setQuickAction(true);
+			});
+
+		return dropdownItems;
 	}
 
 	@Override

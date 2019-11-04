@@ -43,7 +43,7 @@
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteLayoutURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form cssClass="container-fluid-1280" name="fm">
 	<c:choose>
 		<c:when test="<%= layoutsAdminDisplayContext.hasLayouts() %>">
 			<c:choose>

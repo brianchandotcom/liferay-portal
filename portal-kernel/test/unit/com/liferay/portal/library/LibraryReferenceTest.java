@@ -15,6 +15,7 @@
 package com.liferay.portal.library;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -139,6 +140,17 @@ public class LibraryReferenceTest {
 			Assert.assertTrue(
 				_VERSIONS_EXT_FILE_NAME + " is missing a reference to " + jar,
 				_versionsExtJars.contains(jar));
+
+			String libDependencyJarsVersion = _libDependencyJarsVersions.get(
+				jar);
+			String versionsJarsVersion = _versionsJarsVersions.get(jar);
+
+			Assert.assertTrue(
+				StringBundler.concat(
+					_VERSIONS_EXT_FILE_NAME, " has a reference to ", jar,
+					" with a wrong version, it should be ",
+					libDependencyJarsVersion),
+				Objects.equals(libDependencyJarsVersion, versionsJarsVersion));
 		}
 	}
 
@@ -382,6 +394,22 @@ public class LibraryReferenceTest {
 
 						_libDependencyJars.add(jar);
 						_libJars.add(jar);
+
+						String dependency = properties.getProperty(fileTitle);
+
+						if (Validator.isNull(dependency)) {
+							continue;
+						}
+
+						String[] dependencyArray = dependency.split(":");
+
+						if (dependencyArray.length < 3) {
+							continue;
+						}
+
+						String version = dependencyArray[2];
+
+						_libDependencyJarsVersions.put(jar, version);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -489,12 +517,36 @@ public class LibraryReferenceTest {
 
 		Document document = documentBuilder.parse(new File(fileName));
 
-		NodeList nodeList = document.getElementsByTagName("file-name");
+		NodeList nodeList = document.getElementsByTagName("library");
 
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node node = nodeList.item(i);
 
-			jars.add(node.getTextContent());
+			NodeList childNodes = node.getChildNodes();
+
+			String jar = null;
+			String version = null;
+
+			for (int j = 0; j < childNodes.getLength(); j++) {
+				Node childNode = childNodes.item(j);
+
+				if (Objects.equals("file-name", childNode.getNodeName())) {
+					jar = childNode.getTextContent();
+				}
+				else if (Objects.equals("version", childNode.getNodeName())) {
+					version = childNode.getTextContent();
+				}
+			}
+
+			if (Validator.isNull(jar)) {
+				continue;
+			}
+
+			jars.add(jar);
+
+			if (Validator.isNotNull(version)) {
+				_versionsJarsVersions.put(jar, version);
+			}
 		}
 	}
 
@@ -553,6 +605,8 @@ public class LibraryReferenceTest {
 	private static final Map<String, List<String>>
 		_intelliJModuleSourceModules = new HashMap<>();
 	private static final Set<String> _libDependencyJars = new HashSet<>();
+	private static final Map<String, String> _libDependencyJarsVersions =
+		new HashMap<>();
 	private static final Set<String> _libJars = new HashSet<>();
 	private static final Set<String> _moduleSourceDirs = new HashSet<>();
 	private static final Set<String> _netBeansJars = new HashSet<>();
@@ -561,5 +615,7 @@ public class LibraryReferenceTest {
 	private static Path _portalPath;
 	private static final Set<String> _versionsExtJars = new HashSet<>();
 	private static final Set<String> _versionsJars = new HashSet<>();
+	private static final Map<String, String> _versionsJarsVersions =
+		new HashMap<>();
 
 }

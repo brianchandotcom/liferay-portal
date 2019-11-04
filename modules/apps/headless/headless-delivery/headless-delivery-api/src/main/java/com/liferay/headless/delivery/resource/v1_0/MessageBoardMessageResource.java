@@ -101,6 +101,11 @@ public interface MessageBoardMessageResource {
 			Long messageBoardThreadId, MessageBoardMessage messageBoardMessage)
 		throws Exception;
 
+	public Page<MessageBoardMessage> getSiteMessageBoardMessagesPage(
+			Long siteId, Boolean flatten, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

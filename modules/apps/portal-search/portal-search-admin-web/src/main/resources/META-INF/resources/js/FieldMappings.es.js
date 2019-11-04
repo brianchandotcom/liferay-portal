@@ -18,7 +18,11 @@ import {useTimeout} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
-const FieldMappings = ({fieldMappingsJson, indexList, selectedIndexName}) => {
+const FieldMappings = ({
+	fieldMappingIndexDisplayContexts,
+	fieldMappings,
+	selectedIndexName
+}) => {
 	const [theme, setTheme] = useState('light');
 
 	const editorElementRef = useRef();
@@ -58,7 +62,7 @@ const FieldMappings = ({fieldMappingsJson, indexList, selectedIndexName}) => {
 								{Liferay.Language.get('index')}
 							</li>
 
-							{indexList.map(item => {
+							{fieldMappingIndexDisplayContexts.map(item => {
 								return (
 									<li className="nav-item" key={item.name}>
 										<a
@@ -149,7 +153,7 @@ const FieldMappings = ({fieldMappingsJson, indexList, selectedIndexName}) => {
 								'ace_dark'} lfr-source-editor lfr-source-editor-content sheet-section`}
 						>
 							<AceEditor
-								fieldMappingsJson={fieldMappingsJson}
+								fieldMappings={fieldMappings}
 								onRender={({
 									editorElement,
 									editorTextInput
@@ -167,8 +171,8 @@ const FieldMappings = ({fieldMappingsJson, indexList, selectedIndexName}) => {
 };
 
 FieldMappings.propTypes = {
-	fieldMappingsJson: PropTypes.string,
-	indexList: PropTypes.array,
+	fieldMappingIndexDisplayContexts: PropTypes.array,
+	fieldMappings: PropTypes.string,
 	selectedIndexName: PropTypes.string
 };
 
@@ -191,7 +195,7 @@ class AceEditor extends React.Component {
 				mode: 'json',
 				readOnly: 'true',
 				tabSize: 4,
-				value: this.props.fieldMappingsJson,
+				value: this.props.fieldMappings,
 				width: '100%'
 			}).render();
 

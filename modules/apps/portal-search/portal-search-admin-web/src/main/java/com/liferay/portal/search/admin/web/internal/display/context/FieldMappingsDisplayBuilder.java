@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.index.IndexInformation;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,10 +46,19 @@ public class FieldMappingsDisplayBuilder {
 
 		String selectedIndexName = getSelectedIndexName(indexNames);
 
+		List<FieldMappingIndexDisplayContext> fieldMappingIndexDisplayContexts =
+			getFieldMappingIndexDisplayContexts(indexNames, selectedIndexName);
+
+		String fieldMappings = _indexInformation.getFieldMappings(
+			selectedIndexName);
+
+		fieldMappingsDisplayContext.setData(
+			getData(
+				fieldMappingIndexDisplayContexts, fieldMappings,
+				selectedIndexName));
 		fieldMappingsDisplayContext.setFieldMappingIndexDisplayContexts(
-			getFieldMappingIndexDisplayContexts(indexNames, selectedIndexName));
-		fieldMappingsDisplayContext.setFieldMappings(
-			_indexInformation.getFieldMappings(selectedIndexName));
+			fieldMappingIndexDisplayContexts);
+		fieldMappingsDisplayContext.setFieldMappings(fieldMappings);
 		fieldMappingsDisplayContext.setSelectedIndexName(selectedIndexName);
 
 		return fieldMappingsDisplayContext;
@@ -71,6 +82,21 @@ public class FieldMappingsDisplayBuilder {
 
 	public void setSelectedIndexName(String selectedIndexName) {
 		_selectedIndexName = selectedIndexName;
+	}
+
+	protected Map<String, Object> getData(
+		List<FieldMappingIndexDisplayContext> fieldMappingIndexDisplayContexts,
+		String fieldMappings, String selectedIndexName) {
+
+		Map<String, Object> data = new HashMap<>();
+
+		data.put(
+			"fieldMappingIndexDisplayContexts",
+			fieldMappingIndexDisplayContexts);
+		data.put("fieldMappings", fieldMappings);
+		data.put("selectedIndexName", selectedIndexName);
+
+		return data;
 	}
 
 	protected FieldMappingIndexDisplayContext

@@ -3,7 +3,7 @@ dependencies {
 	compileInclude group: "com.github.scribejava", name: "scribejava-core", version: "6.6.3"
 	compileInclude group: "com.google.code.gson", name: "gson", version: "2.8.2"
 	compileInclude group: "com.google.collections", name: "google-collections", version: "1.0"
-	compileInclude group: "com.google.guava", name: "guava", version: "20.0"
+	compileInclude group: "com.google.guava", name: "guava", version: "28.1-jre"
 	compileInclude group: "com.googlecode.jsontoken", name: "jsontoken", version: "1.1"
 	compileInclude group: "com.microsoft.graph", name: "microsoft-graph", version: "1.5.0"
 	compileInclude group: "com.microsoft.graph", name: "microsoft-graph-core", version: "1.0.0"

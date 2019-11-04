@@ -86,7 +86,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 						"convertLayoutURL", convertLayoutURL.toString());
 					dropdownItem.setIcon("change");
 					dropdownItem.setLabel(
-						LanguageUtil.get(request, "convertToContentPage"));
+						LanguageUtil.get(request, "convert-to-content-page"));
 					dropdownItem.setQuickAction(true);
 				});
 		}

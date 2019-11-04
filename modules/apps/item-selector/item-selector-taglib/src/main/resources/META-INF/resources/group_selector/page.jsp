@@ -21,19 +21,27 @@ List<Group> groups = (List<Group>)request.getAttribute("liferay-item-selector:gr
 int groupsCount = GetterUtil.getInteger(request.getAttribute("liferay-item-selector:group-selector:groupsCount"));
 ItemSelector itemSelector = (ItemSelector)request.getAttribute("liferay-item-selector:group-selector:itemSelector");
 
+PortletURL iteratorURL = (PortletURL)request.getAttribute("liferay-item-selector:group-selector:iteratorURL");
+PortletURL repositoriesURL = (PortletURL)request.getAttribute("liferay-item-selector:group-selector:repositoriesURL");
+PortletURL sitesURL = (PortletURL)request.getAttribute("liferay-item-selector:group-selector:sitesURL");
+
 RequestBackedPortletURLFactory requestBackedPortletURLFactory = RequestBackedPortletURLFactoryUtil.create(request);
 
 String itemSelectedEventName = ParamUtil.getString(request, "itemSelectedEventName");
 
 List<ItemSelectorCriterion> itemSelectorCriteria = itemSelector.getItemSelectorCriteria(liferayPortletRequest.getParameterMap());
 
-PortletURL iteratorURL = itemSelector.getItemSelectorURL(requestBackedPortletURLFactory, itemSelectedEventName, itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
-
-iteratorURL.setParameter("selectedTab", ParamUtil.getString(request, "selectedTab"));
-iteratorURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
-
 SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iteratorURL);
+
+boolean repositories = ParamUtil.getBoolean(request, "repositories");
 %>
+
+<div class="container-fluid-1280">
+	<div class="btn-group" role="group">
+		<a class="btn btn-secondary <%= !repositories ? "active" : StringPool.BLANK %>" href="<%= sitesURL %>"><liferay-ui:message key="sites" /></a>
+		<a class="btn btn-secondary <%= repositories? "active" : StringPool.BLANK %>" href="<%= repositoriesURL %>"><liferay-ui:message key="repositories" /></a>
+	</div>
+</div>
 
 <div class="container-fluid-1280 lfr-item-viewer">
 	<liferay-ui:search-container

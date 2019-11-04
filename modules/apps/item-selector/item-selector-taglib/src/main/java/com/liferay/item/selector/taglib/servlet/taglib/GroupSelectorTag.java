@@ -14,6 +14,8 @@
 
 package com.liferay.item.selector.taglib.servlet.taglib;
 
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.item.selector.taglib.internal.servlet.item.selector.ItemSelectorUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -37,6 +40,8 @@ import com.liferay.taglib.util.IncludeTag;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -70,6 +75,10 @@ public class GroupSelectorTag extends IncludeTag {
 	}
 
 	protected List<Group> getGroups(HttpServletRequest httpServletRequest) {
+		if (isRepositories(httpServletRequest)) {
+			return Collections.emptyList();
+		}
+
 		if (_groups == null) {
 			_search(httpServletRequest);
 		}
@@ -78,6 +87,10 @@ public class GroupSelectorTag extends IncludeTag {
 	}
 
 	protected int getGroupsCount(HttpServletRequest httpServletRequest) {
+		if (isRepositories(httpServletRequest)) {
+			return 0;
+		}
+
 		if (_groupsCount < 0) {
 			_search(httpServletRequest);
 		}
@@ -85,9 +98,84 @@ public class GroupSelectorTag extends IncludeTag {
 		return _groupsCount;
 	}
 
+	protected PortletURL getIteratorURL(
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
+
+		String itemSelectedEventName = ParamUtil.getString(
+			request, "itemSelectedEventName");
+
+		List<ItemSelectorCriterion> itemSelectorCriteria =
+			itemSelector.getItemSelectorCriteria(
+				httpServletRequest.getParameterMap());
+
+		PortletURL portletURL = itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			itemSelectedEventName,
+			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
+
+		portletURL.setParameter(
+			"selectedTab",
+			ParamUtil.getString(httpServletRequest, "selectedTab"));
+		portletURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
+
+		return portletURL;
+	}
+
 	@Override
 	protected String getPage() {
 		return "/group_selector/page.jsp";
+	}
+
+	protected PortletURL getRepositoriesURL(
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
+
+		String itemSelectedEventName = ParamUtil.getString(
+			request, "itemSelectedEventName");
+
+		List<ItemSelectorCriterion> itemSelectorCriteria =
+			itemSelector.getItemSelectorCriteria(
+				httpServletRequest.getParameterMap());
+
+		PortletURL portletURL = itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			itemSelectedEventName,
+			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
+
+		portletURL.setParameter(
+			"selectedTab",
+			ParamUtil.getString(httpServletRequest, "selectedTab"));
+		portletURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
+		portletURL.setParameter("repositories", Boolean.TRUE.toString());
+
+		return portletURL;
+	}
+
+	protected PortletURL getSitesURL(
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
+
+		String itemSelectedEventName = ParamUtil.getString(
+			request, "itemSelectedEventName");
+
+		List<ItemSelectorCriterion> itemSelectorCriteria =
+			itemSelector.getItemSelectorCriteria(
+				httpServletRequest.getParameterMap());
+
+		PortletURL portletURL = itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			itemSelectedEventName,
+			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
+
+		portletURL.setParameter(
+			"selectedTab",
+			ParamUtil.getString(httpServletRequest, "selectedTab"));
+		portletURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
+		portletURL.setParameter("repositories", Boolean.FALSE.toString());
+
+		return portletURL;
+	}
+
+	protected boolean isRepositories(HttpServletRequest httpServletRequest) {
+		return ParamUtil.getBoolean(httpServletRequest, "repositories");
 	}
 
 	@Override
@@ -98,9 +186,20 @@ public class GroupSelectorTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-item-selector:group-selector:groupsCount",
 			getGroupsCount(httpServletRequest));
+
+		ItemSelector itemSelector = ItemSelectorUtil.getItemSelector();
+
 		httpServletRequest.setAttribute(
-			"liferay-item-selector:group-selector:itemSelector",
-			ItemSelectorUtil.getItemSelector());
+			"liferay-item-selector:group-selector:itemSelector", itemSelector);
+		httpServletRequest.setAttribute(
+			"liferay-item-selector:group-selector:iteratorURL",
+			getIteratorURL(httpServletRequest, itemSelector));
+		httpServletRequest.setAttribute(
+			"liferay-item-selector:group-selector:repositoriesURL",
+			getRepositoriesURL(httpServletRequest, itemSelector));
+		httpServletRequest.setAttribute(
+			"liferay-item-selector:group-selector:sitesURL",
+			getSitesURL(httpServletRequest, itemSelector));
 	}
 
 	private void _search(HttpServletRequest httpServletRequest) {

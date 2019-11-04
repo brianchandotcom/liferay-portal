@@ -25,8 +25,12 @@ import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -35,6 +39,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -91,6 +96,30 @@ public class JournalFolderStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(JournalFolder folder) {
+		try {
+			List<JournalFolder> ancestors = folder.getAncestors();
+
+			StringBundler sb = new StringBundler(4 * ancestors.size() + 1);
+
+			Collections.reverse(ancestors);
+
+			for (JournalFolder ancestor : ancestors) {
+				sb.append(ancestor.getName());
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.GREATER_THAN);
+				sb.append(StringPool.SPACE);
+			}
+
+			sb.append(folder.getName());
+
+			return sb.toString();
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+		}
+
 		return folder.getName();
 	}
 
@@ -282,6 +311,9 @@ public class JournalFolderStagedModelDataHandler
 
 		_journalFolderLocalService = journalFolderLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalFolderStagedModelDataHandler.class);
 
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private JournalFolderLocalService _journalFolderLocalService;

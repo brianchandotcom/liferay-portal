@@ -97,6 +97,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -185,6 +186,41 @@ public class JournalArticleStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(JournalArticle article) {
+		try {
+			StringBundler sb = new StringBundler();
+
+			if (article.getFolderId() !=
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+				JournalFolder folder = article.getFolder();
+
+				List<JournalFolder> ancestors = folder.getAncestors();
+
+				Collections.reverse(ancestors);
+
+				for (JournalFolder ancestor : ancestors) {
+					sb.append(ancestor.getName());
+					sb.append(StringPool.SPACE);
+					sb.append(StringPool.GREATER_THAN);
+					sb.append(StringPool.SPACE);
+				}
+
+				sb.append(folder.getName());
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.GREATER_THAN);
+				sb.append(StringPool.SPACE);
+			}
+
+			sb.append(article.getTitleCurrentValue());
+
+			return sb.toString();
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+		}
+
 		return article.getTitleCurrentValue();
 	}
 

@@ -19,12 +19,14 @@ import com.liferay.account.admin.web.internal.display.AccountDisplay;
 import com.liferay.account.constants.AccountsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Albert Lee
@@ -50,7 +52,14 @@ public class AddAccountUsersMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			AccountWebKeys.ACCOUNT_DISPLAY, AccountDisplay.of(accountEntryId));
 
+		renderRequest.setAttribute(
+			UserFileUploadsConfiguration.class.getName(),
+			_userFileUploadsConfiguration);
+
 		return "/add_account_user.jsp";
 	}
+
+	@Reference
+	private volatile UserFileUploadsConfiguration _userFileUploadsConfiguration;
 
 }

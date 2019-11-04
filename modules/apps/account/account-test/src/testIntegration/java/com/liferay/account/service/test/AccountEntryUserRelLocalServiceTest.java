@@ -34,14 +34,12 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -200,11 +198,9 @@ public class AccountEntryUserRelLocalServiceTest {
 		_users.add(UserTestUtil.addUser());
 		_users.add(UserTestUtil.addUser());
 
-		Long[] userIds = TransformUtil.transformToArray(
-			_users, User::getUserId, Long.class);
-
 		_accountEntryUserRelLocalService.addAccountEntryUserRels(
-			_accountEntry.getAccountEntryId(), ArrayUtil.toArray(userIds));
+			_accountEntry.getAccountEntryId(),
+			ListUtil.toLongArray(_users, User.USER_ID_ACCESSOR));
 
 		Assert.assertEquals(
 			2,

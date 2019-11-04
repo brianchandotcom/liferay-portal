@@ -11327,7 +11327,12 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 					</then>
 					<else>
 						<if>
-							<contains string="${portal.suite.search.engine}" substring="elasticsearch6" />
+							<or>
+								<contains string="${portal.suite.search.engine}" substring="elasticsearch6" />
+								<not>
+									<isset property="portal.suite.search.engine" />
+								</not>
+							</or>
 							<then>
 								<ant antfile="build-test-elasticsearch6.xml" target="start-elasticsearch" />
 							</then>

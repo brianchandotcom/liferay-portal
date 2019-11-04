@@ -50,6 +50,10 @@ public class AudioDLPreviewRendererProviderFactory {
 			(AudioProcessor)_dlProcessorRegistry.getDLProcessor(
 				DLProcessorConstants.AUDIO_PROCESSOR);
 
+		if (audioProcessor == null) {
+			return;
+		}
+
 		Set<String> audioMimeTypes = audioProcessor.getAudioMimeTypes();
 
 		properties.put("content.type", audioMimeTypes.toArray());
@@ -65,7 +69,9 @@ public class AudioDLPreviewRendererProviderFactory {
 
 	@Deactivate
 	protected void deactivate() {
-		_dlPreviewRendererProviderServiceRegistration.unregister();
+		if (_dlPreviewRendererProviderServiceRegistration != null) {
+			_dlPreviewRendererProviderServiceRegistration.unregister();
+		}
 	}
 
 	@Reference

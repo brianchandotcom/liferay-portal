@@ -50,6 +50,10 @@ public class VideoDLPreviewRendererProviderFactory {
 			(VideoProcessor)_dlProcessorRegistry.getDLProcessor(
 				DLProcessorConstants.VIDEO_PROCESSOR);
 
+		if (videoProcessor == null) {
+			return;
+		}
+
 		Set<String> videoMimeTypes = videoProcessor.getVideoMimeTypes();
 
 		properties.put("content.type", videoMimeTypes.toArray());
@@ -65,7 +69,9 @@ public class VideoDLPreviewRendererProviderFactory {
 
 	@Deactivate
 	protected void deactivate() {
-		_dlPreviewRendererProviderServiceRegistration.unregister();
+		if (_dlPreviewRendererProviderServiceRegistration != null) {
+			_dlPreviewRendererProviderServiceRegistration.unregister();
+		}
 	}
 
 	@Reference

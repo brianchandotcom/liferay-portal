@@ -49,6 +49,10 @@ public class ImageDLPreviewRendererProviderFactory {
 			(ImageProcessor)_dlProcessorRegistry.getDLProcessor(
 				DLProcessorConstants.IMAGE_PROCESSOR);
 
+		if (imageProcessor == null) {
+			return;
+		}
+
 		Set<String> imageMimeTypes = imageProcessor.getImageMimeTypes();
 
 		properties.put("content.type", imageMimeTypes.toArray());
@@ -63,7 +67,9 @@ public class ImageDLPreviewRendererProviderFactory {
 
 	@Deactivate
 	protected void deactivate() {
-		_dlPreviewRendererProviderServiceRegistration.unregister();
+		if (_dlPreviewRendererProviderServiceRegistration != null) {
+			_dlPreviewRendererProviderServiceRegistration.unregister();
+		}
 	}
 
 	@Reference

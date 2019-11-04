@@ -54,7 +54,8 @@ public class BaseMentionsEditorConfigContributor
 			"resultTextLocator", "screenName"
 		);
 
-		PortletURL portletURL = getPortletURL(requestBackedPortletURLFactory);
+		PortletURL portletURL = getPortletURL(
+			themeDisplay, requestBackedPortletURLFactory);
 
 		String source =
 			portletURL.toString() + "&" +
@@ -98,6 +99,7 @@ public class BaseMentionsEditorConfigContributor
 	}
 
 	protected PortletURL getPortletURL(
+		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		return requestBackedPortletURLFactory.createResourceURL(

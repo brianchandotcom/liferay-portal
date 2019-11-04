@@ -62,6 +62,11 @@ public class DefaultFragmentEntryProcessorContext
 	}
 
 	@Override
+	public long getPreviewClassNameId() {
+		return _previewClassNameId;
+	}
+
+	@Override
 	public long getPreviewClassPK() {
 		return _previewClassPK;
 	}
@@ -78,6 +83,10 @@ public class DefaultFragmentEntryProcessorContext
 
 	public void setFieldValues(Map<String, Object> fieldValues) {
 		_fieldValues = fieldValues;
+	}
+
+	public void setPreviewClassNameId(long previewClassNameId) {
+		_previewClassNameId = previewClassNameId;
 	}
 
 	public void setPreviewClassPK(long previewClassPK) {
@@ -97,6 +106,7 @@ public class DefaultFragmentEntryProcessorContext
 	private final HttpServletResponse _httpServletResponse;
 	private final Locale _locale;
 	private final String _mode;
+	private long _previewClassNameId;
 	private long _previewClassPK;
 	private int _previewType = AssetRendererFactory.TYPE_LATEST_APPROVED;
 	private long[] _segmentsExperienceIds = new long[0];

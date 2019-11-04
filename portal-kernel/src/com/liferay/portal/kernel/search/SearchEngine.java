@@ -23,21 +23,9 @@ public interface SearchEngine {
 	public String backup(long companyId, String backupName)
 		throws SearchException;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public BooleanQueryFactory getBooleanQueryFactory();
-
 	public IndexSearcher getIndexSearcher();
 
 	public IndexWriter getIndexWriter();
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public TermQueryFactory getTermQueryFactory();
 
 	public String getVendor();
 

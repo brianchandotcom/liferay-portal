@@ -35,15 +35,6 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 		return _searchEngine.backup(companyId, backupName);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public BooleanQueryFactory getBooleanQueryFactory() {
-		return _searchEngine.getBooleanQueryFactory();
-	}
-
 	@Override
 	public IndexSearcher getIndexSearcher() {
 		return _indexSearcher;
@@ -56,15 +47,6 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 
 	public SearchEngine getSearchEngine() {
 		return _searchEngine;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public TermQueryFactory getTermQueryFactory() {
-		return _searchEngine.getTermQueryFactory();
 	}
 
 	@Override

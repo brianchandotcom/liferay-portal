@@ -22,13 +22,14 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.search.TermQueryFactoryUtil;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.QueryTermImpl;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.powwow.model.PowwowMeeting;
@@ -68,17 +69,16 @@ public class PowwowMeetingIndexer extends BaseIndexer {
 
 		super.postProcessSearchQuery(searchQuery, searchContext);
 
-		BooleanQuery participantTypeBooleanQuery =
-			BooleanQueryFactoryUtil.create(searchContext);
+		BooleanQuery participantTypeBooleanQuery = new BooleanQueryImpl();
 
 		String[] powwowParticipantKeys = GetterUtil.getStringValues(
 			searchContext.getAttribute("powwowParticipantKeys"));
 
 		for (String powwowParticipantKey : powwowParticipantKeys) {
 			participantTypeBooleanQuery.add(
-				TermQueryFactoryUtil.create(
-					searchContext, "powwowParticipantKeys",
-					powwowParticipantKey),
+				new TermQueryImpl(
+					new QueryTermImpl(
+						"powwowParticipantKeys", powwowParticipantKey)),
 				BooleanClauseOccur.SHOULD);
 		}
 
@@ -94,13 +94,12 @@ public class PowwowMeetingIndexer extends BaseIndexer {
 		int[] statuses = (int[])searchContext.getAttribute("statuses");
 
 		if (statuses.length > 0) {
-			BooleanQuery statusesQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+			BooleanQuery statusesQuery = new BooleanQueryImpl();
 
 			for (int status : statuses) {
 				statusesQuery.add(
-					TermQueryFactoryUtil.create(
-						searchContext, "status", status),
+					new TermQueryImpl(
+						new QueryTermImpl("status", String.valueOf(status))),
 					BooleanClauseOccur.SHOULD);
 			}
 

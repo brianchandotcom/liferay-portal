@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -107,8 +107,7 @@ public class ZoomAPICallbackServlet extends HttpServlet {
 
 		SearchContext searchContext = new SearchContext();
 
-		BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		booleanQuery.addExactTerm("zoomHostId", zoomHostId);
 		booleanQuery.addExactTerm("zoomMeetingId", zoomMeetingId);

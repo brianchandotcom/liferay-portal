@@ -44,8 +44,6 @@ public class VideoDLPreviewRendererProviderFactory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
-
 		VideoProcessor videoProcessor =
 			(VideoProcessor)_dlProcessorRegistry.getDLProcessor(
 				DLProcessorConstants.VIDEO_PROCESSOR);
@@ -53,6 +51,8 @@ public class VideoDLPreviewRendererProviderFactory {
 		if (videoProcessor == null) {
 			return;
 		}
+
+		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
 
 		Set<String> videoMimeTypes = videoProcessor.getVideoMimeTypes();
 

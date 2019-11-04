@@ -43,8 +43,6 @@ public class ImageDLPreviewRendererProviderFactory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
-
 		ImageProcessor imageProcessor =
 			(ImageProcessor)_dlProcessorRegistry.getDLProcessor(
 				DLProcessorConstants.IMAGE_PROCESSOR);
@@ -52,6 +50,8 @@ public class ImageDLPreviewRendererProviderFactory {
 		if (imageProcessor == null) {
 			return;
 		}
+
+		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
 
 		Set<String> imageMimeTypes = imageProcessor.getImageMimeTypes();
 

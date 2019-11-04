@@ -44,8 +44,6 @@ public class AudioDLPreviewRendererProviderFactory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
-
 		AudioProcessor audioProcessor =
 			(AudioProcessor)_dlProcessorRegistry.getDLProcessor(
 				DLProcessorConstants.AUDIO_PROCESSOR);
@@ -53,6 +51,8 @@ public class AudioDLPreviewRendererProviderFactory {
 		if (audioProcessor == null) {
 			return;
 		}
+
+		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
 
 		Set<String> audioMimeTypes = audioProcessor.getAudioMimeTypes();
 

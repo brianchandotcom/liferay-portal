@@ -88,17 +88,21 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 			<Table
 				actions={[]}
 				checkable={true}
-				columns={fields.map(({label: {en_US: label}}) => ({
+				columns={fields.map(({label}) => ({
 					key: label,
 					value: (
 						<div className="container p-0">
 							<div className="align-items-center row">
-								<div className="col">{label}</div>
+								<div className="col">
+									{label ? label.en_US : ''}
+								</div>
 							</div>
 						</div>
 					)
 				}))}
-				items={generateItems(fields.map(field => field.label.en_US))}
+				items={generateItems(
+					fields.map(({label}) => (label ? label.en_US : ''))
+				)}
 				ref={drop}
 			/>
 

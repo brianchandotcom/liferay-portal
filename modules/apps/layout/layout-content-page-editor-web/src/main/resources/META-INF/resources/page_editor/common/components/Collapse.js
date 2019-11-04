@@ -34,7 +34,7 @@ export default function Collapse(props) {
 			<button
 				aria-expanded={open}
 				className={classNames(
-					'page-editor-sidebar-panel__collapse',
+					'page-editor__collapse',
 					'align-items-end',
 					'btn',
 					'btn-unstyled',

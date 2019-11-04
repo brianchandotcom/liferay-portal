@@ -60,24 +60,6 @@ $zIndexContent: 0;
 	}
 
 	&-panel {
-		&__collapse {
-			border-color: $sidebarCollapseLineColor;
-			border-radius: 0px;
-			font-size: 12px;
-			margin-bottom: $fragmentCardMarginBottom;
-
-			&:focus {
-				border-radius: 1px;
-			}
-		}
-
-		&__header {
-			font-size: 18px;
-			font-weight: bold;
-			margin-bottom: $pageEditorSpacing * 4;
-			margin-top: $pageEditorSpacing * 2;
-		}
-
 		&__section-builder {
 			&__card {
 				box-shadow: 0 0 0 1px $fragmentCardImageBorderColor;

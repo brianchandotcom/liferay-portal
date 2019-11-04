@@ -2,6 +2,9 @@
 @import './Sidebar';
 @import './Toolbar';
 
+@import '../../common/components/Collapse';
+@import '../../common/components/SidebarPanelHeader';
+
 // Plug-in CSS: later on plug-ins themselves will load this using bundler
 // loaders.
 @import '../../plugins/experience/components/Plugin';

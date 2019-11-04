@@ -219,7 +219,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		}
 		else {
 			if (Validator.isNull(emailAddress)) {
-				return handleException(
+				return doHandleException(
 					httpServletRequest, httpServletResponse,
 					new Exception("Email address is null"));
 			}

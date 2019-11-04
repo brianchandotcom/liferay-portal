@@ -36,15 +36,6 @@ public interface AutoLogin {
 	public static final String AUTO_LOGIN_REDIRECT_AND_CONTINUE =
 		"AUTO_LOGIN_REDIRECT_AND_CONTINUE";
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String[] handleException(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Exception e)
-		throws AutoLoginException;
-
 	public String[] login(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

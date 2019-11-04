@@ -182,6 +182,30 @@ public class LayoutStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(Layout layout) {
+		try {
+			List<Layout> ancestors = layout.getAncestors();
+
+			Collections.reverse(ancestors);
+
+			StringBundler sb = new StringBundler(4 * ancestors.size() + 1);
+
+			for (Layout ancestor : ancestors) {
+				sb.append(ancestor.getNameCurrentValue());
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.GREATER_THAN);
+				sb.append(StringPool.SPACE);
+			}
+
+			sb.append(layout.getNameCurrentValue());
+
+			return sb.toString();
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+		}
+
 		return layout.getNameCurrentValue();
 	}
 

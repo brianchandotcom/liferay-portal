@@ -32,7 +32,7 @@ DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT
 
 Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
 
-renderResponse.setTitle(HtmlUtil.escape(group.getDescriptiveName(locale)));
+renderResponse.setTitle(group.getDescriptiveName(locale));
 %>
 
 <liferay-ui:success key='<%= DepotPortletKeys.DEPOT_ADMIN + "requestProcessed" %>' message="repository-was-added" />

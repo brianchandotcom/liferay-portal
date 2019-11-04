@@ -215,8 +215,6 @@ public class GetPersonalMenuItemsMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject dividerJSONObject = JSONUtil.put("type", "divider");
-
 		if (themeDisplay.isImpersonated()) {
 			JSONObject impersonationJSONObject = JSONUtil.put(
 				"items",
@@ -235,6 +233,8 @@ public class GetPersonalMenuItemsMVCResourceCommand
 
 			jsonArray.put(impersonationJSONObject);
 		}
+
+		JSONObject dividerJSONObject = JSONUtil.put("type", "divider");
 
 		for (List<PersonalMenuEntry> groupedPersonalMenuEntry :
 				groupedPersonalMenuEntries) {

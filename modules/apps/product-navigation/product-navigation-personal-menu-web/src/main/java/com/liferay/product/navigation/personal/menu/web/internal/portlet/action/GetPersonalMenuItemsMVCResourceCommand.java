@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 import com.liferay.product.navigation.personal.menu.constants.PersonalMenuPortletKeys;
+import com.liferay.product.navigation.personal.menu.util.PersonalApplicationURLUtil;
 import com.liferay.product.navigation.personal.menu.web.internal.PersonalMenuEntryRegistry;
 
 import java.util.List;
@@ -104,6 +105,10 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			realUserURL = StringUtil.replace(
 				realUserURL, userProfileURL,
 				_http.getPath(realUser.getDisplayURL(themeDisplay, false)));
+
+			PersonalApplicationURLUtil.
+				fetchOrAddEmbeddedPersonalApplicationLayout(
+					realUser, realUser.getGroup(), false);
 		}
 
 		String userDashboardURL = _http.getPath(
@@ -113,6 +118,10 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			realUserURL = StringUtil.replace(
 				realUserURL, userDashboardURL,
 				_http.getPath(realUser.getDisplayURL(themeDisplay, true)));
+
+			PersonalApplicationURLUtil.
+				fetchOrAddEmbeddedPersonalApplicationLayout(
+					realUser, realUser.getGroup(), true);
 		}
 
 		JSONObject jsonObject1 = JSONUtil.put(

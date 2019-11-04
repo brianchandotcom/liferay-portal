@@ -40,6 +40,8 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
@@ -85,7 +87,12 @@ public class ResourceHelper {
 		BucketSortPipelineAggregation bucketSortPipelineAggregation =
 			_aggregations.bucketSort("sort");
 
-		bucketSortPipelineAggregation.addSortFields(fieldSort);
+		FieldSort keyFieldSort = _sorts.field("_key");
+
+		keyFieldSort.setSortOrder(SortOrder.ASC);
+
+		bucketSortPipelineAggregation.addSortFields(fieldSort, keyFieldSort);
+
 		bucketSortPipelineAggregation.setFrom(pagination.getStartPosition());
 		bucketSortPipelineAggregation.setGapPolicy(GapPolicy.INSTANT_ZEROS);
 		bucketSortPipelineAggregation.setSize(pagination.getPageSize() + 1);
@@ -405,6 +412,9 @@ public class ResourceHelper {
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
+
+	@Reference
+	private Sorts _sorts;
 
 	private Script _workflowMetricsInstanceCountCombineScript;
 	private Script _workflowMetricsInstanceCountInitScript;

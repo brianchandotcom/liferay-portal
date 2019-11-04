@@ -12,21 +12,17 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import React from 'react';
 
-import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import NoPageContents from './NoPageContents';
-
-export default function ContentsSidebar() {
-	const view = <NoPageContents />;
-
+export default function NoPageContents() {
 	return (
-		<>
-			<SidebarPanelHeader>
-				{Liferay.Language.get('contents')}
-			</SidebarPanelHeader>
-
-			{view}
-		</>
+		<ClayAlert
+			className="m-3"
+			displayType="info"
+			title={Liferay.Language.get('info')}
+		>
+			{Liferay.Language.get('there-is-no-content-on-this-page')}
+		</ClayAlert>
 	);
 }

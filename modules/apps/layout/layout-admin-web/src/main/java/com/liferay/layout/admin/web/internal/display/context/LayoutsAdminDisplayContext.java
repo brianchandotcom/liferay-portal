@@ -1627,7 +1627,9 @@ public class LayoutsAdminDisplayContext {
 
 		List<String> availableActions = new ArrayList<>();
 
-		availableActions.add("convertSelectedPages");
+		if (isShowConvertLayoutAction(layout)) {
+			availableActions.add("convertSelectedPages");
+		}
 
 		if (LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), layout,

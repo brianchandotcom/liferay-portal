@@ -203,12 +203,13 @@ public class AssetEntryServiceSoap {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetEntrySoap
-			incrementViewCounter(String className, long classPK)
+			incrementViewCounter(long companyId, String className, long classPK)
 		throws RemoteException {
 
 		try {
 			com.liferay.asset.kernel.model.AssetEntry returnValue =
-				AssetEntryServiceUtil.incrementViewCounter(className, classPK);
+				AssetEntryServiceUtil.incrementViewCounter(
+					companyId, className, classPK);
 
 			return com.liferay.asset.kernel.model.AssetEntrySoap.toSoapModel(
 				returnValue);

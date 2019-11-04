@@ -76,7 +76,7 @@ public class AssetEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -132,8 +132,6 @@ public class AssetEntryCacheModel
 		sb.append(width);
 		sb.append(", priority=");
 		sb.append(priority);
-		sb.append(", viewCount=");
-		sb.append(viewCount);
 		sb.append("}");
 
 		return sb.toString();
@@ -257,7 +255,6 @@ public class AssetEntryCacheModel
 		assetEntryImpl.setHeight(height);
 		assetEntryImpl.setWidth(width);
 		assetEntryImpl.setPriority(priority);
-		assetEntryImpl.setViewCount(viewCount);
 
 		assetEntryImpl.resetOriginalValues();
 
@@ -305,8 +302,6 @@ public class AssetEntryCacheModel
 		width = objectInput.readInt();
 
 		priority = objectInput.readDouble();
-
-		viewCount = objectInput.readInt();
 	}
 
 	@Override
@@ -399,8 +394,6 @@ public class AssetEntryCacheModel
 		objectOutput.writeInt(width);
 
 		objectOutput.writeDouble(priority);
-
-		objectOutput.writeInt(viewCount);
 	}
 
 	public long mvccVersion;
@@ -430,6 +423,5 @@ public class AssetEntryCacheModel
 	public int height;
 	public int width;
 	public double priority;
-	public int viewCount;
 
 }

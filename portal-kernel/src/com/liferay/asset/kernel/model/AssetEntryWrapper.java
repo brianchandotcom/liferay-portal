@@ -69,7 +69,6 @@ public class AssetEntryWrapper
 		attributes.put("height", getHeight());
 		attributes.put("width", getWidth());
 		attributes.put("priority", getPriority());
-		attributes.put("viewCount", getViewCount());
 
 		return attributes;
 	}
@@ -236,12 +235,6 @@ public class AssetEntryWrapper
 
 		if (priority != null) {
 			setPriority(priority);
-		}
-
-		Integer viewCount = (Integer)attributes.get("viewCount");
-
-		if (viewCount != null) {
-			setViewCount(viewCount);
 		}
 	}
 
@@ -763,13 +756,8 @@ public class AssetEntryWrapper
 		return model.getUserUuid();
 	}
 
-	/**
-	 * Returns the view count of this asset entry.
-	 *
-	 * @return the view count of this asset entry
-	 */
 	@Override
-	public int getViewCount() {
+	public long getViewCount() {
 		return model.getViewCount();
 	}
 
@@ -1277,16 +1265,6 @@ public class AssetEntryWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
-	}
-
-	/**
-	 * Sets the view count of this asset entry.
-	 *
-	 * @param viewCount the view count of this asset entry
-	 */
-	@Override
-	public void setViewCount(int viewCount) {
-		model.setViewCount(viewCount);
 	}
 
 	/**

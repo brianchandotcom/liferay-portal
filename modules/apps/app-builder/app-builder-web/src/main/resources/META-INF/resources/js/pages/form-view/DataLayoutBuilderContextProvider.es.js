@@ -24,11 +24,17 @@ import {
 	UPDATE_FOCUSED_FIELD,
 	UPDATE_PAGES
 } from './actions.es';
+import useDeleteDefinitionField from './useDeleteDefinitionField.es';
+import useDeleteDefinitionFieldModal from './useDeleteDefinitionFieldModal.es';
 
 export default ({children, dataLayoutBuilder}) => {
 	const [{dataDefinition, dataLayout}, dispatch] = useContext(
 		FormViewContext
 	);
+	const deleteDefinitionField = useDeleteDefinitionField({dataLayoutBuilder});
+	const onDeleteDefinitionField = useDeleteDefinitionFieldModal(fieldName => {
+		deleteDefinitionField(fieldName);
+	});
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getProvider();
@@ -57,13 +63,19 @@ export default ({children, dataLayoutBuilder}) => {
 				separator: true
 			},
 			{
-				action: indexes =>
-					dataLayoutBuilder.dispatch('fieldDeleted', {indexes}),
+				action: indexes => {
+					const fieldName = getFieldNameFromIndexes(
+						dataLayout,
+						indexes
+					);
+
+					onDeleteDefinitionField(fieldName);
+				},
 				label: Liferay.Language.get('delete-from-object'),
 				style: 'danger'
 			}
 		];
-	}, [dataLayout, dataLayoutBuilder, dispatch]);
+	}, [dataLayout, dataLayoutBuilder, dispatch, onDeleteDefinitionField]);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getProvider();

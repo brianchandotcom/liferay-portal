@@ -23,6 +23,8 @@ import {
 	dropCustomObjectField,
 	UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
 } from './actions.es';
+import useDeleteDefinitionField from './useDeleteDefinitionField.es';
+import useDeleteDefinitionFieldModal from './useDeleteDefinitionFieldModal.es';
 
 const getFieldTypes = ({
 	dataDefinition,
@@ -88,11 +90,19 @@ export default ({keywords}) => {
 		);
 	};
 
+	const deleteField = useDeleteDefinitionField({dataLayoutBuilder});
+
+	const onDeleteDefinitionField = useDeleteDefinitionFieldModal(fieldName =>
+		deleteField(fieldName)
+	);
+
 	return (
 		<FieldTypeList
+			deleteLabel={Liferay.Language.get('delete-from-object')}
 			fieldTypes={fieldTypes}
 			keywords={keywords}
 			onClick={onClick}
+			onDelete={onDeleteDefinitionField}
 			onDoubleClick={onDoubleClick}
 		/>
 	);

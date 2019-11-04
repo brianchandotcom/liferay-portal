@@ -122,7 +122,8 @@ public class DropZoneFragmentComponentRenderer implements FragmentRenderer {
 		printWriter.write(
 			LanguageUtil.get(
 				resourceBundle,
-				"area-enabled-to-place-components-only-when-page-building"));
+				"fragments-and-widgets-for-pages-based-on-this-master-will-" +
+					"be-placed-here"));
 		printWriter.write("</p>");
 		printWriter.write("</div>");
 	}

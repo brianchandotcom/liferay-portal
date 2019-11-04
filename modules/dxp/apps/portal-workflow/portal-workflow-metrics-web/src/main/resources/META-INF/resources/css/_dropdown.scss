@@ -13,6 +13,18 @@
 		font-weight: normal;
 	}
 
+	&.control-hidden {
+		.custom-control-input,
+		.custom-control-label:after,
+		.custom-control-label:before {
+			display: none;
+		}
+
+		.custom-control-label-text {
+			padding-left: 0;
+		}
+	}
+
 	.dropdown-item-description {
 		display: block;
 		font-size: 0.625em;

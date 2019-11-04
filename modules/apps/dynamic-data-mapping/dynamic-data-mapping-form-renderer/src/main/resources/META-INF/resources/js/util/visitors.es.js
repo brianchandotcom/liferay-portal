@@ -23,6 +23,10 @@ class PagesVisitor {
 		this._pages = null;
 	}
 
+	containsField(fieldName) {
+		return !!this.findField(field => field.fieldName === fieldName);
+	}
+
 	findField(condition) {
 		let conditionField;
 

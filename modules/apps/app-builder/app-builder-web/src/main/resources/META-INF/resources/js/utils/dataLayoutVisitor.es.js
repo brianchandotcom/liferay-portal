@@ -12,14 +12,18 @@
  * details.
  */
 
-export function containsField(dataLayoutPages, fieldName) {
-	return (dataLayoutPages || []).some(({dataLayoutRows}) => {
-		return (dataLayoutRows || []).some(({dataLayoutColumns}) => {
-			return (dataLayoutColumns || []).some(({fieldNames}) => {
-				return (fieldNames || []).some(name => name === fieldName);
+export function findField(dataLayoutPages, fieldName) {
+	return (dataLayoutPages || []).find(({dataLayoutRows}) => {
+		return (dataLayoutRows || []).find(({dataLayoutColumns}) => {
+			return (dataLayoutColumns || []).find(({fieldNames}) => {
+				return (fieldNames || []).find(name => name === fieldName);
 			});
 		});
 	});
+}
+
+export function containsField(dataLayoutPages, fieldName) {
+	return !!findField(dataLayoutPages, fieldName);
 }
 
 export function mapDataLayoutColumns(dataLayoutPages, fn = () => {}) {
@@ -68,4 +72,30 @@ export function getFieldNameFromIndexes(
 ) {
 	return dataLayoutPages[pageIndex].dataLayoutRows[rowIndex]
 		.dataLayoutColumns[columnIndex].fieldNames[fieldIndex];
+}
+
+export function getIndexesFromFieldName({dataLayoutPages}, fieldName) {
+	let indexes = {};
+
+	dataLayoutPages.some(({dataLayoutRows}, pageIndex) => {
+		return dataLayoutRows.some(({dataLayoutColumns}, rowIndex) => {
+			return dataLayoutColumns.some(({fieldNames}, columnIndex) => {
+				return fieldNames.some(name => {
+					if (name === fieldName) {
+						indexes = {
+							columnIndex,
+							pageIndex,
+							rowIndex
+						};
+
+						return true;
+					}
+
+					return false;
+				});
+			});
+		});
+	});
+
+	return indexes;
 }

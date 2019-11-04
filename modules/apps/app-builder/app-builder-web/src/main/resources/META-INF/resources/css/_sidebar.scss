@@ -12,6 +12,7 @@
 		transform: translateX(0%);
 		transition: transform 0.3s $animation, opacity 0.3s $animation;
 		width: $sidebarMainWidth;
+		z-index: 50;
 
 		&.closed {
 			opacity: 0;
@@ -38,10 +39,12 @@
 
 	.sidebar {
 		box-shadow: none;
+		overflow: visible;
 	}
 
 	.sidebar-body {
 		height: calc(100vh - 168px);
+		overflow: visible;
 	}
 }
 

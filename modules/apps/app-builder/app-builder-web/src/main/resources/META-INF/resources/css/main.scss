@@ -34,6 +34,22 @@ body.open .app-builder-upper-toolbar {
 	min-width: 260px;
 }
 
+.remove-object-field-message {
+	color: #6b6c7e;
+	font-size: 14px;
+}
+
+.remove-object-field-panel {
+	label {
+		margin-right: 0.25rem;
+	}
+
+	.panel-header {
+		background-color: #f7f8f9;
+		border-bottom: 1px solid #e7e7ed;
+	}
+}
+
 .shadowless-card {
 	border: 1px solid #e7e7ed;
 	box-shadow: none;

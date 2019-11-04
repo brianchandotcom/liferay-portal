@@ -283,6 +283,10 @@ definition {
 
 		AdaptiveMedia.viewImageVariantURL(imageName = "high_resolution_photo.jpg");
 
+		SelectFrameTop(value1 = "relative=top");
+
+		Click(locator1 = "Button#ADD");
+
 		Button.clickPublish();
 	}
 

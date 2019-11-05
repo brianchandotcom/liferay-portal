@@ -75,6 +75,11 @@
 	<td>//*[@data-qa-id='addMenuAddContentCategory'][@aria-expanded='true' and contains(.,'Content')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ASSET_ITEM</td>
+	<td>//div[contains(@class,'open') or contains(@class,'show')]//*[normalize-space(text())='${key_assetItem}']/..</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

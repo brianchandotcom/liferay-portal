@@ -1627,12 +1627,8 @@ public class LayoutsAdminDisplayContext {
 			availableActions.add("convertSelectedPages");
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		if (LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout,
+				_themeDisplay.getPermissionChecker(), layout,
 				ActionKeys.DELETE)) {
 
 			availableActions.add("deleteSelectedPages");

@@ -255,16 +255,12 @@ public class LayoutsAdminManagementToolbarDisplayContext
 	}
 
 	private String _getLabel(boolean privateLayout) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		Layout layout = _layoutsAdminDisplayContext.getSelLayout();
 
 		if (layout != null) {
 			return LanguageUtil.format(
 				request, "add-child-page-of-x",
-				layout.getName(themeDisplay.getLocale()));
+				layout.getName(_themeDisplay.getLocale()));
 		}
 
 		if (_isSiteTemplate()) {

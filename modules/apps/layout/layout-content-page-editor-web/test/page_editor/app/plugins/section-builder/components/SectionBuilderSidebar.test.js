@@ -21,7 +21,7 @@ import SectionBuilderSidebar from '../../../../../../src/main/resources/META-INF
 
 import '@testing-library/jest-dom/extend-expect';
 
-const elements = [
+const fragments = [
 	{
 		fragmentCollectionId: 'basicComponents',
 		fragmentEntries: [
@@ -47,7 +47,7 @@ const elements = [
 
 const RenderSectionBuilderSidebar = () => {
 	return (
-		<StoreContext.Provider value={{elements}}>
+		<StoreContext.Provider value={{fragments}}>
 			<SectionBuilderSidebar />
 		</StoreContext.Provider>
 	);

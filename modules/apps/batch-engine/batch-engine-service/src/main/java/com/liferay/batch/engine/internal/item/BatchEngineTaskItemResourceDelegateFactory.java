@@ -16,12 +16,13 @@ package com.liferay.batch.engine.internal.item;
 
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.internal.BatchEngineTaskMethodRegistry;
-import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 /**
  * @author Ivica cardic
@@ -40,16 +41,17 @@ public class BatchEngineTaskItemResourceDelegateFactory {
 
 	public BatchEngineTaskItemResourceDelegate create(
 			BatchEngineTaskOperation batchEngineTaskOperation, String className,
-			long companyId, long userId, String version)
+			long companyId, Map<String, Serializable> parameters, long userId,
+			String version)
 		throws Exception {
 
-		UnsafeBiFunction
-			<Company, User, BatchEngineTaskItemResourceDelegate,
-			 ReflectiveOperationException> unsafeBiFunction =
-				_batchEngineTaskMethodRegistry.getUnsafeBiFunction(
-					version, batchEngineTaskOperation, className);
+		BatchEngineTaskItemResourceDelegateCreator
+			batchEngineTaskItemResourceDelegateCreator =
+				_batchEngineTaskMethodRegistry.
+					getBatchEngineTaskItemResourceDelegateCreator(
+						version, batchEngineTaskOperation, className);
 
-		if (unsafeBiFunction == null) {
+		if (batchEngineTaskItemResourceDelegateCreator == null) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("No resource available for batch engine task operation ");
@@ -60,8 +62,8 @@ public class BatchEngineTaskItemResourceDelegateFactory {
 			throw new IllegalStateException(sb.toString());
 		}
 
-		return unsafeBiFunction.apply(
-			_companyLocalService.getCompany(companyId),
+		return batchEngineTaskItemResourceDelegateCreator.create(
+			_companyLocalService.getCompany(companyId), parameters,
 			_userLocalService.getUser(userId));
 	}
 

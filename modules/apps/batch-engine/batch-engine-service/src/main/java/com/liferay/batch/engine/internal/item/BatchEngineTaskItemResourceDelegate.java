@@ -14,12 +14,15 @@
 
 package com.liferay.batch.engine.internal.item;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.io.Closeable;
+import java.io.Serializable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -27,6 +30,7 @@ import java.lang.reflect.Parameter;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.framework.ServiceObjects;
 
@@ -36,14 +40,17 @@ import org.osgi.framework.ServiceObjects;
 public class BatchEngineTaskItemResourceDelegate implements Closeable {
 
 	public BatchEngineTaskItemResourceDelegate(
-			Company company, String[] itemClassFieldNames,
-			Method resourceMethod,
+			Company company, Map<String, Field> fieldMap,
+			Map<String, Serializable> parameters, Method resourceMethod,
+			Map.Entry<String, Class<?>>[] resourceMethodArgNameTypeEntries,
 			ServiceObjects<Object> resourceServiceObjects, User user)
 		throws ReflectiveOperationException {
 
 		_company = company;
-		_itemClassFieldNames = itemClassFieldNames;
+		_fieldMap = fieldMap;
+		_parameters = parameters;
 		_resourceMethod = resourceMethod;
+		_resourceMethodArgNameTypeEntries = resourceMethodArgNameTypeEntries;
 		_resourceServiceObjects = resourceServiceObjects;
 		_user = user;
 
@@ -63,19 +70,16 @@ public class BatchEngineTaskItemResourceDelegate implements Closeable {
 					args[i] = item;
 				}
 				else {
-					if (_itemClassFieldNames[i] == null) {
+					if (_resourceMethodArgNameTypeEntries[i] == null) {
 						throw new IllegalArgumentException(
 							"Unable to find method argument name");
 					}
 
-					Class<?> itemClass = item.getClass();
+					Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry =
+						_resourceMethodArgNameTypeEntries[i];
 
-					Field field = itemClass.getDeclaredField(
-						_itemClassFieldNames[i]);
-
-					field.setAccessible(true);
-
-					args[i] = field.get(item);
+					args[i] = _getMethodArgValue(
+						item, resourceMethodArgNameTypeEntry);
 				}
 			}
 
@@ -86,6 +90,32 @@ public class BatchEngineTaskItemResourceDelegate implements Closeable {
 	@Override
 	public void close() {
 		_resourceServiceObjects.ungetService(_resource);
+	}
+
+	private Object _getMethodArgValue(
+			Object item,
+			Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry)
+		throws IllegalAccessException {
+
+		if (resourceMethodArgNameTypeEntry == null) {
+			return null;
+		}
+
+		Object argValue = null;
+
+		if (_parameters.containsKey(resourceMethodArgNameTypeEntry.getKey())) {
+			argValue = _objectMapper.convertValue(
+				_parameters.get(resourceMethodArgNameTypeEntry.getKey()),
+				resourceMethodArgNameTypeEntry.getValue());
+		}
+		else {
+			Field field = _fieldMap.get(
+				resourceMethodArgNameTypeEntry.getKey());
+
+			argValue = field.get(item);
+		}
+
+		return argValue;
 	}
 
 	private Object _getResource() throws ReflectiveOperationException {
@@ -131,10 +161,15 @@ public class BatchEngineTaskItemResourceDelegate implements Closeable {
 		field.set(resource, value);
 	}
 
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
+
 	private final Company _company;
-	private final String[] _itemClassFieldNames;
+	private final Map<String, Field> _fieldMap;
+	private final Map<String, Serializable> _parameters;
 	private final Object _resource;
 	private final Method _resourceMethod;
+	private final Map.Entry<String, Class<?>>[]
+		_resourceMethodArgNameTypeEntries;
 	private final ServiceObjects<Object> _resourceServiceObjects;
 	private final User _user;
 

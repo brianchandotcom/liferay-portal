@@ -173,6 +173,7 @@ public class BatchEngineImportTaskExecutorImpl
 							batchEngineImportTask.getOperation()),
 						batchEngineImportTask.getClassName(),
 						batchEngineImportTask.getCompanyId(),
+						batchEngineImportTask.getParameters(),
 						batchEngineImportTask.getUserId(),
 						batchEngineImportTask.getVersion())) {
 

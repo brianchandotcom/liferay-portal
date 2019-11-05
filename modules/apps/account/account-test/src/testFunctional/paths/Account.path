@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>Account</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Account</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ACCOUNT_DOMAIN_ADD_Link</td>
+	<td>//a[contains(@id,'addDomains')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOMAIN_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_domainName}')]/td[1]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -21,9 +21,33 @@ definition {
 			Uncheck.uncheckToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
 		}
 
+		if (isSet(domainNames)) {
+			Accounts.addDomains(domainNames = "${domainNames}");
+		}
+
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro addDomains {
+		AssertClick(
+			locator1 = "Account#ACCOUNT_DOMAIN_ADD_Link",
+			value1 = "Add");
+
+		IFrame.selectConfigurationFrame();
+
+		PortletEntry.inputText(
+			fieldLabel = "Domain",
+			text = "${domainNames}");
+
+		Button.clickSave();
+
+		for (var domainName : list "${domainNames}") {
+			AssertElementPresent(
+				key_domainName = "${domainName}",
+				locator1 = "Account#DOMAIN_TABLE_NAME");
+		}
 	}
 
 	macro deactivateAccount {

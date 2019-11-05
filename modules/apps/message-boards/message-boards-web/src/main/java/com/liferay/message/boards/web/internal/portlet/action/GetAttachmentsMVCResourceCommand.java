@@ -95,17 +95,17 @@ public class GetAttachmentsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		for (FileEntry fileEntry : attachmentsFileEntries) {
 			JSONObject jsonObject = JSONUtil.put(
-				"id", fileEntry.getFileEntryId()
+				"deleteURL",
+				_getDeleteURL(
+					message, resourceRequest, resourceResponse, fileEntry)
 			).put(
-				"title", fileEntry.getTitle()
+				"id", fileEntry.getFileEntryId()
 			).put(
 				"size",
 				TextFormatter.formatStorageSize(
 					fileEntry.getSize(), resourceRequest.getLocale())
 			).put(
-				"deleteURL",
-				_getDeleteURL(
-					message, resourceRequest, resourceResponse, fileEntry)
+				"title", fileEntry.getTitle()
 			);
 
 			jsonArray.put(jsonObject);

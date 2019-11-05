@@ -133,9 +133,9 @@ public class ManageCollaboratorsViewMVCRenderCommand
 				}
 
 				JSONObject collaboratorJSONObject = JSONUtil.put(
-					"portraitURL", portraitURL
-				).put(
 					"fullName", sharingEntryToUser.getFullName()
+				).put(
+					"portraitURL", portraitURL
 				).put(
 					"sharingEntryId", sharingEntry.getSharingEntryId()
 				);

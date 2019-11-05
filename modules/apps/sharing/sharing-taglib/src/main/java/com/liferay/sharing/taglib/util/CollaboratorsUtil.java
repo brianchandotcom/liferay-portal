@@ -141,9 +141,9 @@ public class CollaboratorsUtil {
 		).put(
 			"fullName", user.getFullName()
 		).put(
-			"userId", user.getUserId()
-		).put(
 			"portraitURL", _getPortraitURL(themeDisplay, user)
+		).put(
+			"userId", user.getUserId()
 		);
 	}
 

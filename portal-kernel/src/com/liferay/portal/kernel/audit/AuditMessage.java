@@ -262,27 +262,27 @@ public class AuditMessage implements Serializable {
 		return JSONUtil.put(
 			_ADDITIONAL_INFO, _additionalInfoJSONObject
 		).put(
-			_COMPANY_ID, _companyId
+			_CLASS_NAME, _className
 		).put(
 			_CLASS_PK, _classPK
-		).put(
-			_CLASS_NAME, _className
 		).put(
 			_CLIENT_HOST, _clientHost
 		).put(
 			_CLIENT_IP, _clientIP
 		).put(
+			_COMPANY_ID, _companyId
+		).put(
+			_EVENT_TYPE, _eventType
+		).put(
 			_MESSAGE, _message
 		).put(
-			_SERVER_PORT, _serverPort
-		).put(
 			_SERVER_NAME, _serverName
+		).put(
+			_SERVER_PORT, _serverPort
 		).put(
 			_SESSION_ID, _sessionID
 		).put(
 			_TIMESTAMP, _getDateFormat().format(new Date())
-		).put(
-			_EVENT_TYPE, _eventType
 		).put(
 			_USER_ID, _userId
 		).put(

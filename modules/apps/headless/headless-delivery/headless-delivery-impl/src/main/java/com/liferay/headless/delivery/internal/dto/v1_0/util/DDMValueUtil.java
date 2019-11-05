@@ -158,9 +158,9 @@ public class DDMValueUtil {
 					).put(
 						"label", layout.getFriendlyURL()
 					).put(
-						"privateLayout", layout.isPrivateLayout()
-					).put(
 						"layoutId", layout.getLayoutId()
+					).put(
+						"privateLayout", layout.isPrivateLayout()
 					).toString();
 				}
 

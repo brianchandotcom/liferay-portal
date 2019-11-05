@@ -481,19 +481,19 @@ public class ChangeListsDisplayContext {
 			ctCollectionChangeTypeCounts.getOrDefault(
 				CTConstants.CT_CHANGE_TYPE_ADDITION, 0L)
 		).put(
+			"deleteURL", getDeleteURL(_ctCollectionId, ctCollection.getName())
+		).put(
 			"deletionCount",
 			ctCollectionChangeTypeCounts.getOrDefault(
 				CTConstants.CT_CHANGE_TYPE_DELETION, 0L)
 		).put(
 			"description", ctCollection.getDescription()
 		).put(
-			"deleteURL", getDeleteURL(_ctCollectionId, ctCollection.getName())
-		).put(
-			"name", ctCollection.getName()
-		).put(
 			"modifiedCount",
 			ctCollectionChangeTypeCounts.getOrDefault(
 				CTConstants.CT_CHANGE_TYPE_MODIFICATION, 0L)
+		).put(
+			"name", ctCollection.getName()
 		).put(
 			"publishURL", getPublishURL(_ctCollectionId, ctCollection.getName())
 		);
@@ -656,9 +656,9 @@ public class ChangeListsDisplayContext {
 		User user = _userLocalService.getUser(ctProcess.getUserId());
 
 		return jsonObject.put(
-			"description", ctCollection.getDescription()
-		).put(
 			"dateTime", format.format(ctProcess.getCreateDate())
+		).put(
+			"description", ctCollection.getDescription()
 		).put(
 			"name", ctCollection.getName()
 		).put(

@@ -1021,12 +1021,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		if (Validator.isNotNull(groupMappingsUser) &&
 			ldapServerConfiguration.groupSearchFilterEnabled()) {
 
-			Binding binding = _safePortalLDAP.getUser(
+			Binding userBinding = _safePortalLDAP.getUser(
 				ldapImportContext.getLdapServerId(),
 				ldapImportContext.getCompanyId(), user.getScreenName(),
 				user.getEmailAddress());
 
-			String fullUserDN = binding.getNameInNamespace();
+			String fullUserDN = userBinding.getNameInNamespace();
 
 			SafeLdapFilter safeLdapFilter = SafeLdapFilterConstraints.eq(
 				groupMappingsUser, fullUserDN);

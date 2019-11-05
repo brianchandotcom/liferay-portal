@@ -34,9 +34,9 @@ const HIDDEN_IDS_REMOVED_INPUT_SELECTOR = '#hiddenIdsRemoved';
 
 const HIDE_BUTTON_LABEL = 'hide-result';
 
-const SHOW_BUTTON_LABEL = 'show-result';
+const INACTIVE_INPUT_SELECTOR = '#inactive';
 
-const STATUS_INPUT_SELECTOR = '#status';
+const SHOW_BUTTON_LABEL = 'show-result';
 
 describe('ResultRankingsForm', () => {
 	it('renders the results ranking form', () => {
@@ -47,8 +47,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
+				initialInactive={false}
 				searchQuery="example"
-				status={1}
 			/>
 		);
 
@@ -65,8 +65,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
+				initialInactive={false}
 				searchQuery=""
-				status={1}
 			/>
 		);
 
@@ -84,8 +84,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
+				initialInactive={false}
 				searchQuery=""
-				status={1}
 			/>
 		);
 
@@ -106,8 +106,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				initialAliases={['one', 'two', 'three']}
+				initialInactive={false}
 				searchQuery=""
-				status={1}
 			/>
 		);
 
@@ -127,8 +127,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				initialAliases={['one', 'two', 'three']}
+				initialInactive={false}
 				searchQuery=""
-				status={1}
 			/>
 		);
 
@@ -151,8 +151,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
+				initialInactive={false}
 				searchQuery=""
-				status={1}
 			/>
 		);
 
@@ -178,8 +178,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				initialAliases={['one', 'two', 'three']}
+				initialInactive={false}
 				searchQuery=""
-				status={1}
 			/>
 		);
 
@@ -204,8 +204,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
+				initialInactive={false}
 				searchQuery=""
-				status={1}
 			/>
 		);
 
@@ -228,8 +228,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
+				initialInactive={false}
 				searchQuery=""
-				status={1}
 			/>
 		);
 
@@ -258,8 +258,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
+				initialInactive={false}
 				searchQuery=""
-				status={1}
 			/>
 		);
 
@@ -284,8 +284,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
+				initialInactive={false}
 				searchQuery=""
-				status={1}
 			/>
 		);
 
@@ -316,8 +316,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
+				initialInactive={false}
 				searchQuery=""
-				status={1}
 			/>
 		);
 
@@ -344,7 +344,6 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
-				status={1}
 			/>
 		);
 
@@ -371,8 +370,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
+				initialInactive={false}
 				searchQuery=""
-				status={1}
 			/>
 		);
 
@@ -380,8 +379,8 @@ describe('ResultRankingsForm', () => {
 
 		expect(getByLabelText('inactive')).toBeInTheDocument();
 
-		expect(container.querySelector(STATUS_INPUT_SELECTOR).value).toEqual(
-			'0'
+		expect(container.querySelector(INACTIVE_INPUT_SELECTOR).value).toEqual(
+			'true'
 		);
 	});
 
@@ -393,8 +392,8 @@ describe('ResultRankingsForm', () => {
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
+				initialInactive={true}
 				searchQuery=""
-				status={0}
 			/>
 		);
 
@@ -402,8 +401,8 @@ describe('ResultRankingsForm', () => {
 
 		expect(getByLabelText('active')).toBeInTheDocument();
 
-		expect(container.querySelector(STATUS_INPUT_SELECTOR).value).toEqual(
-			'1'
+		expect(container.querySelector(INACTIVE_INPUT_SELECTOR).value).toEqual(
+			'false'
 		);
 	});
 });

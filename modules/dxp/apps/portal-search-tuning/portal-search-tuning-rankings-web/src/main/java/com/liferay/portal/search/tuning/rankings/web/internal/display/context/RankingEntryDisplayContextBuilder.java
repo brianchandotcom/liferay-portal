@@ -16,7 +16,6 @@ package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 
 import java.util.List;
@@ -34,28 +33,19 @@ public class RankingEntryDisplayContextBuilder {
 		RankingEntryDisplayContext rankingEntryDisplayContext =
 			new RankingEntryDisplayContext();
 
+		_setAliases(rankingEntryDisplayContext);
 		_setHiddenResultsCount(rankingEntryDisplayContext);
+		_setInactive(rankingEntryDisplayContext);
 		_setIndex(rankingEntryDisplayContext);
 		_setNameForDisplay(rankingEntryDisplayContext);
 		_setPinnedResultsCount(rankingEntryDisplayContext);
-		_setAliases(rankingEntryDisplayContext);
-		_setStatus(rankingEntryDisplayContext);
 		_setUid(rankingEntryDisplayContext);
-		_setStatus(rankingEntryDisplayContext);
 
 		return rankingEntryDisplayContext;
 	}
 
 	protected static String getSizeString(List<?> list) {
 		return String.valueOf(list.size());
-	}
-
-	private int _getStatus() {
-		if (_ranking.isInactive()) {
-			return ResultRankingsConstants.STATUS_INACTIVE;
-		}
-
-		return ResultRankingsConstants.STATUS_ACTIVE;
 	}
 
 	private void _setAliases(
@@ -71,6 +61,12 @@ public class RankingEntryDisplayContextBuilder {
 
 		rankingEntryDisplayContext.setHiddenResultsCount(
 			getSizeString(_ranking.getBlockIds()));
+	}
+
+	private void _setInactive(
+		RankingEntryDisplayContext rankingEntryDisplayContext) {
+
+		rankingEntryDisplayContext.setInactive(_ranking.isInactive());
 	}
 
 	private void _setIndex(
@@ -90,12 +86,6 @@ public class RankingEntryDisplayContextBuilder {
 
 		rankingEntryDisplayContext.setPinnedResultsCount(
 			getSizeString(_ranking.getPins()));
-	}
-
-	private void _setStatus(
-		RankingEntryDisplayContext rankingEntryDisplayContext) {
-
-		rankingEntryDisplayContext.setStatus(_getStatus());
 	}
 
 	private void _setUid(

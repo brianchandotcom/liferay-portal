@@ -308,7 +308,7 @@ public class SegmentsEntryLocalServiceTest {
 			_group.getGroupId());
 
 		_segmentsEntryRoleLocalService.addSegmentsEntryRole(
-			_role.getRoleId(), segmentsEntry.getSegmentsEntryId(),
+			segmentsEntry.getSegmentsEntryId(), _role.getRoleId(),
 			ServiceContextTestUtil.getServiceContext());
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();

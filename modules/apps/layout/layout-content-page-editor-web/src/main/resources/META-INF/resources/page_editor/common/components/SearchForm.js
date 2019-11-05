@@ -15,17 +15,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+let nextInputId = 0;
+
 export default function SearchForm({onChange, value}) {
+	const id = `pageEditorSearchFormInput${nextInputId++}`;
+
 	return (
 		<form className="mb-3" role="search">
 			<div className="input-group">
 				<div className="input-group-item">
-					<label className="sr-only" htmlFor="searchInput">
+					<label className="sr-only" htmlFor={id}>
 						{Liferay.Language.get('search-form')}
 					</label>
+
 					<input
 						className="form-control form-control-sm input-group-inset"
-						id="searchInput"
+						id={id}
 						onChange={event => {
 							onChange(event.target.value);
 						}}

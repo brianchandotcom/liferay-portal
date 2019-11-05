@@ -15,11 +15,15 @@
 package com.liferay.layout.seo.web.internal.servlet.taglib;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.layout.seo.web.internal.util.FileEntryMetadataOpenGraphTagsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -30,6 +34,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -48,6 +53,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -129,6 +135,44 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 							"og:title", _getTitleTag(httpServletRequest)));
 					printWriter.println(
 						_getOpenGraphTag("og:url", layoutSEOLink.getHref()));
+
+					LayoutSEOEntry layoutSEOEntry =
+						_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+							layout.getGroupId(), layout.isPrivateLayout(),
+							layout.getLayoutId());
+
+					if ((layoutSEOEntry != null) &&
+						(layoutSEOEntry.getOpenGraphImageFileEntryId() != 0)) {
+
+						FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+							layoutSEOEntry.getOpenGraphImageFileEntryId());
+
+						printWriter.println(
+							_getOpenGraphTag(
+								"og:image:type", fileEntry.getMimeType()));
+
+						String imageTag = _getImageTag(layout, themeDisplay);
+
+						printWriter.println(
+							_getOpenGraphTag("og:image:url", imageTag));
+
+						if (themeDisplay.isSecure()) {
+							printWriter.println(
+								_getOpenGraphTag(
+									"og:image:url_secure", imageTag));
+						}
+
+						for (KeyValuePair keyValuePair :
+								_fileEntryMetadataOpenGraphTagsProvider.
+									getFileEntryMetadataOpenGraphTagKeyValuePairs(
+										fileEntry)) {
+
+							printWriter.println(
+								_getOpenGraphTag(
+									keyValuePair.getKey(),
+									keyValuePair.getValue()));
+						}
+					}
 				}
 			}
 		}
@@ -143,6 +187,14 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
+	}
+
+	@Activate
+	protected void activate() {
+		_fileEntryMetadataOpenGraphTagsProvider =
+			new FileEntryMetadataOpenGraphTagsProvider(
+				_ddmStructureLocalService, _dlFileEntryMetadataLocalService,
+				_portal, _storageEngine);
 	}
 
 	private String _addLinkTag(LayoutSEOLink layoutSEOLink) {
@@ -258,10 +310,19 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	@Reference
 	private DLURLHelper _dlurlHelper;
+
+	private FileEntryMetadataOpenGraphTagsProvider
+		_fileEntryMetadataOpenGraphTagsProvider;
 
 	@Reference
 	private Language _language;
@@ -274,5 +335,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private StorageEngine _storageEngine;
 
 }

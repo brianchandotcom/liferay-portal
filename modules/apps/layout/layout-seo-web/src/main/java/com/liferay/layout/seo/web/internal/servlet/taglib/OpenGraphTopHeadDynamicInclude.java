@@ -116,9 +116,6 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 							_getDescriptionTag(layout, themeDisplay)));
 					printWriter.println(
 						_getOpenGraphTag(
-							"og:image", _getImageTag(layout, themeDisplay)));
-					printWriter.println(
-						_getOpenGraphTag(
 							"og:locale", themeDisplay.getLanguageId()));
 
 					availableLocales.forEach(
@@ -144,14 +141,17 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 					if ((layoutSEOEntry != null) &&
 						(layoutSEOEntry.getOpenGraphImageFileEntryId() != 0)) {
 
+						String imageTag = _getImageTag(layout, themeDisplay);
+
+						printWriter.println(
+							_getOpenGraphTag("og:image", imageTag));
+
 						FileEntry fileEntry = _dlAppLocalService.getFileEntry(
 							layoutSEOEntry.getOpenGraphImageFileEntryId());
 
 						printWriter.println(
 							_getOpenGraphTag(
 								"og:image:type", fileEntry.getMimeType()));
-
-						String imageTag = _getImageTag(layout, themeDisplay);
 
 						printWriter.println(
 							_getOpenGraphTag("og:image:url", imageTag));

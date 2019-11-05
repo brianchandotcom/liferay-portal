@@ -47,14 +47,12 @@ public class UpgradeTreePath extends UpgradeProcess {
 	private String _calculatePath(Map<Long, Long> relations, long messageId) {
 		List<String> paths = new ArrayList<>();
 
-		paths.add("/");
-		paths.add(String.valueOf(messageId));
+		paths.add(messageId + "/");
 
 		while (relations.containsKey(messageId)) {
-			paths.add("/");
 			messageId = relations.get(messageId);
 
-			paths.add(String.valueOf(messageId));
+			paths.add(messageId + "/");
 		}
 
 		paths.add("/");

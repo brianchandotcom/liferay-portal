@@ -17,8 +17,13 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rachael Koestartyo
@@ -33,14 +38,59 @@ public class UserModelListener extends BaseEntityModelListener<User> {
 
 	@Override
 	public void onAfterCreate(User user) throws ModelListenerException {
+		send("add", user);
 	}
 
 	@Override
 	public void onBeforeRemove(User user) throws ModelListenerException {
+		send("delete", user);
 	}
 
 	@Override
 	public void onBeforeUpdate(User newUser) throws ModelListenerException {
+		try {
+			User oldUser = _userLocalService.getUser(newUser.getUserId());
+
+			if (_equals(newUser, oldUser)) {
+				return;
+			}
+
+			send("update", newUser);
+		}
+		catch (Exception e) {
+			throw new ModelListenerException(e);
+		}
 	}
+
+	private boolean _equals(User newUser, User oldUser) {
+		if (newUser.isPasswordModified()) {
+			return false;
+		}
+
+		Set<String> modifiedAttributes = getModifiedAttributes(
+			new ArrayList<String>() {
+				{
+					add("active");
+					add("agreedToTermsOfUse");
+					add("comments");
+					add("emailAddress");
+					add("languageId");
+					add("reminderQueryAnswer");
+					add("reminderQueryQuestion");
+					add("screenName");
+					add("timeZoneId");
+				}
+			},
+			newUser, oldUser);
+
+		if (!modifiedAttributes.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

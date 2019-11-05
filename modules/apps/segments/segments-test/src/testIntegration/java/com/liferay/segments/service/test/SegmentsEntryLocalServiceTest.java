@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -311,9 +312,10 @@ public class SegmentsEntryLocalServiceTest {
 			segmentsEntry.getSegmentsEntryId(), _role.getRoleId(),
 			ServiceContextTestUtil.getServiceContext());
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("roleIds", new long[] {_role.getRoleId()});
+		LinkedHashMap<String, Object> params =
+			LinkedHashMapBuilder.<String, Object>put(
+				"roleIds", new long[] {_role.getRoleId()}
+			).build();
 
 		BaseModelSearchResult<SegmentsEntry> baseModelSearchResult =
 			_segmentsEntryLocalService.searchSegmentsEntries(

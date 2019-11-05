@@ -44,6 +44,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContentDocument")
 public class ContentDocument {
 
+	@Schema
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	@JsonIgnore
+	public void setContentType(
+		UnsafeSupplier<String, Exception> contentTypeUnsafeSupplier) {
+
+		try {
+			contentType = contentTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String contentType;
+
 	@Schema(description = "The document's relative URL.")
 	public String getContentUrl() {
 		return contentUrl;
@@ -266,6 +294,20 @@ public class ContentDocument {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (contentType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(contentType));
+
+			sb.append("\"");
+		}
 
 		if (contentUrl != null) {
 			if (sb.length() > 1) {

@@ -22,11 +22,13 @@ import com.liferay.talend.common.oas.OASException;
 import com.liferay.talend.common.oas.OASExplorer;
 import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.schema.SchemaBuilder;
+import com.liferay.talend.common.schema.constants.BatchSchemaConstants;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.resource.LiferayOutputResourceProperties;
 import com.liferay.talend.source.LiferayOASSource;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.json.JsonObject;
@@ -86,6 +88,10 @@ public class LiferayBatchFileProperties
 			schemaBuilder.getEntitySchema(
 				_getEntityName(), _getOASJsonObject()));
 
+		OASExplorer oasExplorer = new OASExplorer();
+
+		entityVersion.setValue(oasExplorer.getVersion(_getOASJsonObject()));
+
 		_logger.info("After string property {entity}");
 
 		return null;
@@ -121,10 +127,18 @@ public class LiferayBatchFileProperties
 		return batchFilePath.getStringValue();
 	}
 
+	public String getEntityClass() {
+		return entity.getValue();
+	}
+
 	public Schema getEntitySchema() {
 		Property<Schema> schemaProperty = entitySchema.schema;
 
 		return schemaProperty.getValue();
+	}
+
+	public String getEntityVersion() {
+		return entityVersion.getValue();
 	}
 
 	@Override
@@ -142,6 +156,8 @@ public class LiferayBatchFileProperties
 
 		mainForm.addRow(entitySelectWidget);
 
+		mainForm.addColumn(entityVersion);
+
 		mainForm.addRow(entitySchema.getForm(Form.REFERENCE));
 
 		Widget bulkFilePathWidget = widget(batchFilePath);
@@ -151,23 +167,42 @@ public class LiferayBatchFileProperties
 		mainForm.addRow(bulkFilePathWidget);
 	}
 
+	@Override
+	public void setupProperties() {
+		super.setupProperties();
+
+		Property<Schema> flowSchemaProperty = flowSchema.schema;
+
+		flowSchemaProperty.setValue(BatchSchemaConstants.SCHEMA);
+	}
+
 	public Property<String> batchFilePath = PropertyFactory.newProperty(
 		"batchFilePath");
 	public LiferayConnectionProperties connection =
 		new LiferayConnectionProperties("connection");
 	public StringProperty entity = new StringProperty("entity");
 	public SchemaProperties entitySchema = new SchemaProperties("entitySchema");
+	public StringProperty entityVersion = new StringProperty("entityVersion");
+	public SchemaProperties flowSchema = new SchemaProperties("flowSchema");
+	public SchemaProperties rejectSchema = new SchemaProperties("rejectSchema");
 
 	@Override
 	protected Set<PropertyPathConnector> getAllSchemaPropertiesConnectors(
 		boolean outputConnection) {
 
-		if (outputConnection) {
-			return Collections.emptySet();
+		if (!outputConnection) {
+			return Collections.singleton(
+				new PropertyPathConnector(Connector.MAIN_NAME, "entitySchema"));
 		}
 
-		return Collections.singleton(
-			new PropertyPathConnector(Connector.MAIN_NAME, "entitySchema"));
+		Set<PropertyPathConnector> schemaPropertiesConnectors = new HashSet<>();
+
+		schemaPropertiesConnectors.add(
+			new PropertyPathConnector(Connector.MAIN_NAME, "flowSchema"));
+		schemaPropertiesConnectors.add(
+			new PropertyPathConnector(Connector.REJECT_NAME, "rejectSchema"));
+
+		return Collections.unmodifiableSet(schemaPropertiesConnectors);
 	}
 
 	private String _getEntityName() {
@@ -181,7 +216,7 @@ public class LiferayBatchFileProperties
 
 		LiferayOASSource liferayOASSource =
 			LiferayBaseComponentDefinition.getLiferayOASSource(
-				connection.getReferencedConnectionProperties());
+				connection.getEffectiveLiferayConnectionProperties());
 
 		if (!liferayOASSource.isValid()) {
 			throw new OASException("Unable to obtain OpenAPI specification");

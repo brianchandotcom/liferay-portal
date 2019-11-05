@@ -28,12 +28,12 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -192,16 +192,11 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			return defaultInfoItemRenderer;
 		}
 
-		String template = jsonObject.getString("template");
+		String ddmTemplateKey = jsonObject.getString("template");
 
-		if (Validator.isNull(template)) {
-			return defaultInfoItemRenderer;
-		}
-
-		for (InfoItemRenderer infoItemRenderer : infoItemRenderers) {
-			if (Objects.equals(infoItemRenderer.getKey(), template)) {
-				return infoItemRenderer;
-			}
+		if (Validator.isNotNull(ddmTemplateKey)) {
+			httpServletRequest.setAttribute(
+				WebKeys.JOURNAL_TEMPLATE_ID, ddmTemplateKey);
 		}
 
 		return defaultInfoItemRenderer;

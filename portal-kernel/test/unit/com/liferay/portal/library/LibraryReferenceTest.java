@@ -145,12 +145,10 @@ public class LibraryReferenceTest {
 				jar);
 			String versionsJarsVersion = _versionsJarsVersions.get(jar);
 
-			Assert.assertTrue(
+			Assert.assertEquals(
 				StringBundler.concat(
-					_VERSIONS_EXT_FILE_NAME, " has a reference to ", jar,
-					" with a wrong version, it should be ",
-					libDependencyJarsVersion),
-				Objects.equals(libDependencyJarsVersion, versionsJarsVersion));
+					"Wrong version for ", jar, " in ", _VERSIONS_EXT_FILE_NAME),
+				libDependencyJarsVersion, versionsJarsVersion);
 		}
 	}
 

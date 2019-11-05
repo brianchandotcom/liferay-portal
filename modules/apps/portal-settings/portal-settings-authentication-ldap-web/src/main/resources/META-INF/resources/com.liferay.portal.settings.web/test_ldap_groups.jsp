@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.liferay.portal.security.ldap.SafeLdapFilterFactory" %>
+<%@ page import="com.liferay.portal.security.ldap.SafeLdapFilterConstraints" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -62,7 +63,7 @@ if (!LDAPFilterValidatorUtil.getInstance().isValid(groupFilter)) {
 	return;
 }
 
-SafeLdapFilter groupSafeLdapFilter = SafeLdapFilter.fromUnsafeFilter(groupFilter, LDAPFilterValidatorUtil.getInstance());
+SafeLdapFilter groupSafeLdapFilter = SafeLdapFilterFactory.fromUnsafeFilter(groupFilter, LDAPFilterValidatorUtil.getInstance());
 
 String groupMappingsParam = "groupName=" + ParamUtil.getString(request, "groupMappingGroupName") + "\ndescription=" + ParamUtil.getString(request, "groupMappingDescription") + "\nuser=" + ParamUtil.getString(request, "groupMappingUser");
 
@@ -112,7 +113,8 @@ catch (NameNotFoundException | InvalidNameException nnfe) {
 		}
 
 		if (attribute != null) {
-			SafeLdapFilter safeLdapFilter = groupSafeLdapFilter.and(SafeLdapFilter.eq(groupMappings.getProperty("groupName"), name));
+			SafeLdapFilter safeLdapFilter = groupSafeLdapFilter.and(
+				SafeLdapFilterConstraints.eq(groupMappings.getProperty("groupName"), name));
 
 			attribute = PortalLDAPUtil.getInstance().getMultivaluedAttribute(themeDisplay.getCompanyId(), safeLdapContext, SafeLdapName.fromUnsafe(baseDN), safeLdapFilter, attribute);
 		}

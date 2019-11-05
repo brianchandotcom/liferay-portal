@@ -14,7 +14,6 @@
 
 package com.liferay.mule.internal.connection;
 
-import com.liferay.mule.internal.config.LiferayProxyConfig;
 import com.liferay.mule.internal.connection.authentication.BasicAuthentication;
 import com.liferay.mule.internal.connection.authentication.HttpAuthentication;
 import com.liferay.mule.internal.connection.authentication.OAuth2Authentication;
@@ -35,6 +34,7 @@ import org.mule.runtime.http.api.HttpService;
 import org.mule.runtime.http.api.client.HttpClient;
 import org.mule.runtime.http.api.client.HttpClientConfiguration;
 import org.mule.runtime.http.api.client.HttpClientFactory;
+import org.mule.runtime.http.api.client.proxy.ProxyConfig;
 import org.mule.runtime.http.api.domain.entity.InputStreamHttpEntity;
 import org.mule.runtime.http.api.domain.message.request.HttpRequest;
 import org.mule.runtime.http.api.domain.message.request.HttpRequestBuilder;
@@ -47,22 +47,22 @@ public final class LiferayConnection {
 
 	public static LiferayConnection withBasicAuthentication(
 			HttpService httpService, String openApiSpecPath, String username,
-			String password, LiferayProxyConfig liferayProxyConfig)
+			String password, ProxyConfig proxyConfig)
 		throws ConnectionException {
 
 		return new LiferayConnection(
 			httpService, openApiSpecPath,
-			new BasicAuthentication(username, password), liferayProxyConfig);
+			new BasicAuthentication(username, password), proxyConfig);
 	}
 
 	public static LiferayConnection withOAuth2Authentication(
 			HttpService httpService, String openApiSpecPath, String consumerKey,
-			String consumerSecret, LiferayProxyConfig liferayProxyConfig)
+			String consumerSecret, ProxyConfig proxyConfig)
 		throws ConnectionException {
 
 		return new LiferayConnection(
 			httpService, openApiSpecPath, consumerKey, consumerSecret,
-			liferayProxyConfig);
+			proxyConfig);
 	}
 
 	public HttpResponse delete(
@@ -131,26 +131,25 @@ public final class LiferayConnection {
 
 	private LiferayConnection(
 			HttpService httpService, String openApiSpecPath,
-			BasicAuthentication basicAuthentication,
-			LiferayProxyConfig liferayProxyConfig)
+			BasicAuthentication basicAuthentication, ProxyConfig proxyConfig)
 		throws ConnectionException {
 
 		_openAPISpecPath = openApiSpecPath;
 		_serverBaseURL = _getServerBaseURL(openApiSpecPath);
 		_httpAuthentication = basicAuthentication;
 
-		_initHttpClient(httpService, liferayProxyConfig);
+		_initHttpClient(httpService, proxyConfig);
 	}
 
 	private LiferayConnection(
 			HttpService httpService, String openApiSpecPath, String consumerKey,
-			String consumerSecret, LiferayProxyConfig liferayProxyConfig)
+			String consumerSecret, ProxyConfig proxyConfig)
 		throws ConnectionException {
 
 		_openAPISpecPath = openApiSpecPath;
 		_serverBaseURL = _getServerBaseURL(openApiSpecPath);
 
-		_initHttpClient(httpService, liferayProxyConfig);
+		_initHttpClient(httpService, proxyConfig);
 
 		try {
 			_httpAuthentication = new OAuth2Authentication(
@@ -201,13 +200,13 @@ public final class LiferayConnection {
 	}
 
 	private void _initHttpClient(
-		HttpService httpService, LiferayProxyConfig liferayProxyConfig) {
+		HttpService httpService, ProxyConfig proxyConfig) {
 
 		HttpClientConfiguration.Builder builder =
 			new HttpClientConfiguration.Builder();
 
-		if (liferayProxyConfig != null) {
-			builder.setProxyConfig(liferayProxyConfig.getProxyConfig());
+		if (proxyConfig != null) {
+			builder.setProxyConfig(proxyConfig);
 		}
 
 		builder.setName("Liferay Http Client");

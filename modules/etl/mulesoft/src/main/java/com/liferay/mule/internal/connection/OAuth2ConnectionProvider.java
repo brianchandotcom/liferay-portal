@@ -41,7 +41,7 @@ public class OAuth2ConnectionProvider extends BaseConnectionProvider {
 			_httpService, _openApiSpecPath,
 			_oAuth2AuthenticationConfig.getConsumerKey(),
 			_oAuth2AuthenticationConfig.getConsumerSecret(),
-			liferayProxyConfig);
+			liferayProxyConfig.getProxyConfig());
 	}
 
 	@Inject

@@ -515,27 +515,26 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 				return null;
 			}
 
-			String loginMapping = null;
-			String login = null;
-
-			Properties userMappings = _ldapSettings.getUserMappings(
-				ldapServerId, companyId);
-
 			String authType = PrefsPropsUtil.getString(
 				companyId, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
 				_companySecurityAuthType);
+			Properties userMappings = _ldapSettings.getUserMappings(
+				ldapServerId, companyId);
+
+			String login;
+			String loginMapping;
 
 			if (authType.equals(CompanyConstants.AUTH_TYPE_SN) &&
 				!PrefsPropsUtil.getBoolean(
 					companyId,
 					PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE)) {
 
-				loginMapping = userMappings.getProperty("screenName");
 				login = screenName;
+				loginMapping = userMappings.getProperty("screenName");
 			}
 			else {
-				loginMapping = userMappings.getProperty("emailAddress");
 				login = emailAddress;
+				loginMapping = userMappings.getProperty("emailAddress");
 			}
 
 			LDAPServerConfiguration ldapServerConfiguration =
@@ -573,7 +572,7 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 					UserImportTransactionThreadLocal.getOriginalEmailAddress();
 
 				if (Validator.isNotNull(originalEmailAddress) &&
-					!emailAddress.equals(originalEmailAddress)) {
+					!originalEmailAddress.equals(emailAddress)) {
 
 					return getUser(
 						ldapServerId, companyId, screenName,

@@ -123,8 +123,7 @@ definition {
 			value1 = "cat");
 
 		AssertClick(
-			key_tagName = "category",
-			locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC",
+			locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_CONTAINER",
 			value1 = "category");
 
 		Button.clickSave();

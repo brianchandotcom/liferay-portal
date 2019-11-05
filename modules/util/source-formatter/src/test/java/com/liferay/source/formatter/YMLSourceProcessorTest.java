@@ -52,6 +52,11 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testStandardizeOnReview() throws Exception {
+		test("StandardizeOnReview.testyaml");
+	}
+
+	@Test
 	public void testStyleBlock() throws Exception {
 		test("StyleBlock.testyaml");
 	}

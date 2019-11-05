@@ -1,0 +1,12 @@
+components:
+    schemas:
+        ExportTask:
+            # @review
+            properties:
+                # @review
+                className:
+                    # @review
+                    description:
+                        The item class name for which data will be exported in batch.
+                    example: com.liferay.headless.delivery.dto.v1_0.BlogPosting
+                    type: string

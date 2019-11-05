@@ -1,0 +1,155 @@
+@component-name = "portal-document-management-ee"
+definition {
+
+	property cmis.repository.type = "sharepoint2013";
+	property custom.properties = "session.store.password=true${line.separator}company.security.auth.type=screenName${line.separator}default.layout.template.id=1_column";
+	property dummy.socket.proxy.disabled = "true";
+	property osgi.app.includes = "sharepoint";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		var sharepointVMHostName = PropsUtil.get("cmis.repository.vm.host.name");
+
+		AntCommand(
+			locator1 = "build-test-sharepoint.xml",
+			value1 = "clean-sharepoint-repository -Dssh.host=${sharepointVMHostName}");
+
+		User.loginPG(
+			authenticationMethod = "By Screen Name",
+			userScreenName = "test");
+
+		Navigator.openURL();
+
+		Navigator.gotoAccountSettings();
+
+		User.editDetailsViaMyAccount(userScreenNameEdit = "administrator");
+
+		Navigator.openURL();
+
+		Navigator.gotoAccountSettings();
+
+		User.editPasswordViaMyAccount(
+			currentPassword = "test",
+			newPassword = "password");
+
+		User.logoutPG();
+
+		User.loginPG(
+			authenticationMethod = "By Screen Name",
+			password = "password",
+			userScreenName = "administrator");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMNavigator.gotoAddRepositoryPG();
+
+		DMRepository.edit(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMRepository.addSharepoint(
+			dmRepositoryLibraryName = "Documents",
+			dmRepositoryName = "Sharepoint",
+			dmRepositorySiteURL = "http://${sharepointVMHostName}"),
+			dmServerVersion = "2013";
+
+		PortletEntry.save();
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMRepository.tearDownCP();
+
+			DMDocument.tearDownCP();
+
+			Navigator.openURL();
+
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			User.editDetailsViaMyAccount(userScreenNameEdit = "test");
+
+			Navigator.openURL();
+
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			User.editPasswordViaMyAccount(
+				currentPassword = "password",
+				newPassword = "test");
+
+			User.logoutPG();
+
+			User.loginPG(
+				authenticationMethod = "By Screen Name",
+				password = "test",
+				userScreenName = "test");
+		}
+	}
+
+	@priority = "4"
+	test ViewDocumentAsGuest {
+		property portal.acceptance = "true";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoRepository(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc");
+
+		DMDocument.viewPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc",
+			dmRepositoryName = "true");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoRepository(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.viewPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc",
+			dmRepositoryName = "true");
+
+		User.loginPG(
+			authenticationMethod = "By Screen Name",
+			password = "password",
+			userScreenName = "administrator");
+	}
+
+}

@@ -1,0 +1,621 @@
+@component-name = "portal-document-management-ee"
+definition {
+
+	property cmis.repository.type = "sharepoint2013";
+	property custom.properties = "session.store.password=true${line.separator}company.security.auth.type=screenName";
+	property dummy.socket.proxy.disabled = "true";
+	property osgi.app.includes = "sharepoint";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		var sharepointVMHostName = PropsUtil.get("cmis.repository.vm.host.name");
+
+		AntCommand(
+			locator1 = "build-test-sharepoint.xml",
+			value1 = "clean-sharepoint-repository -Dssh.host=${sharepointVMHostName}");
+
+		User.loginPG(
+			authenticationMethod = "By Screen Name",
+			userScreenName = "test");
+
+		Navigator.openURL();
+
+		Navigator.gotoAccountSettings();
+
+		User.editDetailsViaMyAccount(userScreenNameEdit = "administrator");
+
+		Navigator.openURL();
+
+		Navigator.gotoAccountSettings();
+
+		User.editPasswordViaMyAccount(
+			currentPassword = "test",
+			newPassword = "password");
+
+		User.logoutPG();
+
+		User.loginPG(
+			authenticationMethod = "By Screen Name",
+			password = "password",
+			userScreenName = "administrator");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoAddRepositoryCP();
+
+		DMRepository.edit(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMRepository.addSharepoint(
+			dmRepositoryLibraryName = "Documents",
+			dmRepositoryName = "Sharepoint",
+			dmRepositorySiteURL = "http://${sharepointVMHostName}"),
+			dmServerVersion = "2013";
+
+		PortletEntry.save();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMRepository.tearDownCP();
+
+			DMDocument.tearDownCP();
+
+			Navigator.openURL();
+
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			User.editDetailsViaMyAccount(userScreenNameEdit = "test");
+
+			Navigator.openURL();
+
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			User.editPasswordViaMyAccount(
+				currentPassword = "password",
+				newPassword = "test");
+
+			User.logoutPG();
+
+			User.loginPG(
+				authenticationMethod = "By Screen Name",
+				password = "test",
+				userScreenName = "test");
+		}
+	}
+
+	@priority = "4"
+	test CheckinDocument {
+		property test.name.skip.portal.instance = "CPSharepoint#CheckinDocument";
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_3.txt",
+			dmDocumentTitle = "Document_3.txt");
+
+		Pause(locator1 = "5000");
+
+		DMDocument.checkoutCP(
+			dmDocumentTitle = "Document_3.txt",
+			dmRepositoryName = "true");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_3.txt");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.txt");
+
+		Pause(locator1 = "5000");
+
+		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
+
+		DMDocument.checkinCP(dmRepositoryName = "true");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		Pause(locator1 = "5000");
+
+		var key_dmDocumentTitle = "Document_3.txt";
+
+		AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_NOT_LOCKED");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.txt");
+
+		DMDocument.viewCheckedinCP(
+			dmDocumentVersionNumber = "2.0",
+			dmRepositoryName = "true");
+	}
+
+	@priority = "4"
+	test DeleteDocumentInSubfolder {
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMFolder.addCP(dmFolderName = "DM Folder3 Name");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder3 Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_2.doc",
+			dmDocumentTitle = "Document_2.doc");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2.doc");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_2.doc");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
+
+		DMDocument.deleteCP(
+			dmDocumentTitle = "Document_2.doc",
+			recycleBinDisabled = "true");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
+
+		DMDocument.cannotViewCP(dmDocumentTitle = "Document_2.doc");
+
+		DMDocument.viewDefaultCP();
+	}
+
+	@priority = "4"
+	test DeleteSubfolder {
+		property test.name.skip.portal.instance = "CPSharepoint#DeleteSubfolder";
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMFolder.addCP(dmFolderName = "DM Folder Name");
+
+		DMFolder.deleteCP(
+			dmFolderName = "DM Folder Name",
+			recycleBinDisabled = "true");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMFolder.cannotViewCP(dmFolderName = "DM Folder Name");
+
+		DMFolder.viewDefaultCP();
+	}
+
+	@priority = "4"
+	test EditDocumentFile {
+		property test.name.skip.portal.instance = "CPSharepoint#EditDocumentFile";
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_3.doc",
+			dmDocumentTitle = "Document_3.doc");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
+
+		DMDocument.viewCP(
+			dmDocumentSize = "32 KB",
+			dmDocumentTitle = "Document_3.doc");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Document_2.jpg",
+			dmDocumentTitle = "Document_3.doc");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
+
+		DMDocument.viewCP(
+			dmDocumentSize = "30 KB",
+			dmDocumentTitle = "Document_3.doc");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "image/jpeg",
+			metadataLabel = "Content Type");
+
+		DMDocument.cannotViewDocumentMetadataCP(
+			metadataData = "ISO-8859-1",
+			metadataLabel = "Content Encoding");
+	}
+
+	@priority = "4"
+	test EditRepository {
+		property test.name.skip.portal.instance = "CPSharepoint#EditRepository";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMRepository.viewBreadcrumb(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.expandInfo();
+
+		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+		AssertElementNotPresent(
+			key_menuItem = "Download",
+			locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
+		AssertElementNotPresent(
+			key_menuItem = "Move",
+			locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
+		AssertElementPresent(
+			key_menuItem = "Add Folder",
+			locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
+		AssertElementPresent(
+			key_menuItem = "Delete",
+			locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
+		AssertElementPresent(
+			key_menuItem = "Edit",
+			locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		MenuItem.viewNotPresent(menuItem = "Download");
+		MenuItem.viewNotPresent(menuItem = "Move");
+		MenuItem.viewPresent(menuItem = "Delete");
+		MenuItem.viewPresent(menuItem = "Edit");
+
+		MenuItem.click(menuItem = "Edit");
+
+		DMRepository.edit(dmRepositoryName = "Sharepoint Repository Name Edit");
+
+		PortletEntry.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		AssertTextEquals(
+			key_dmRepositoryName = "Sharepoint Repository Name Edit",
+			locator1 = "DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW",
+			value1 = "Sharepoint Repository Name Edit");
+	}
+
+	@priority = "4"
+	test MoveCheckedoutDocumentToFolder {
+		property test.name.skip.portal.instance = "CPSharepoint#MoveCheckedoutDocumentToFolder";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMFolder.addCP(dmFolderName = "Sharepoint Subfolder");
+
+		DMFolder.viewCP(dmFolderName = "Sharepoint Subfolder");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "Document_1.txt");
+
+		DMDocument.checkoutCP(
+			dmDocumentTitle = "Document_1.txt",
+			dmRepositoryName = "true");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1.txt");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.txt");
+
+		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.moveToSubFolderCP(
+			dmDocumentTitle = "Document_1.txt",
+			dmFolderName = "Sharepoint Repository Name",
+			dmSubFolderName = "Sharepoint Subfolder");
+
+		DMDocument.viewMovedToFolderCP(
+			dmDocumentTitle = "Document_1.txt",
+			dmFolderName = "Sharepoint Subfolder");
+
+		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1.txt");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.txt");
+
+		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
+	}
+
+	@priority = "4"
+	test MoveDocumentToHome {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPSharepoint#MoveDocumentToHome";
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.odt",
+			dmDocumentTitle = "Document_1.odt");
+
+		DMDocument.moveToFolderCP(
+			dmDocumentTitle = "Document_1.odt",
+			dmFolderName = "Home");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.odt");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.odt");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.cannotViewCP(dmDocumentTitle = "Document_1.odt");
+	}
+
+	@priority = "4"
+	test SearchDocumentViaHome {
+		property test.name.skip.portal.instance = "CPSharepoint#SearchDocumentViaHome";
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_3.odt",
+			dmDocumentTitle = "Document_3.odt");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		Search.searchCP(searchTerm = "Document_3.odt");
+
+		DMDocument.viewSearchResultsCP(
+			dmDocumentTitle = "Document_3.odt",
+			dmRepositoryName = "Sharepoint Repository Name");
+	}
+
+	@priority = "4"
+	test ViewEditedCheckedoutDocument {
+		property test.name.skip.portal.instance = "CPSharepoint#ViewEditedCheckedoutDocument";
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.xls",
+			dmDocumentTitle = "Document_1.xls");
+
+		DMDocument.checkoutCP(
+			dmDocumentTitle = "Document_1.xls",
+			dmRepositoryName = "true");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Document_1.xls");
+
+		DMDocument.editCmd(dmDocumentTitleEdit = "Document_1_Edit.xls");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		Alert.viewSuccessMessage();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1_Edit.xls");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1_Edit.xls");
+
+		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
+	}
+
+	@priority = "4"
+	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange {
+		property portal.release = "false";
+		property test.name.skip.portal.instance = "CPSharepoint#ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange";
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.docx",
+			dmDocumentTitle = "Document_1.docx");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Document_1.docx");
+
+		DMDocument.editCmd(dmDocumentTitleEdit = "Document_1.jpg");
+
+		Click(locator1 = "Button#PUBLISH");
+
+		Alert.viewRequestFailedToComplete();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_PUBLISH_UNSUCCESSFUL_EXTENSION",
+			value1 = "The source file does not have the same extension as the original file.");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.docx");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.docx");
+	}
+
+	@priority = "4"
+	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
+		property portal.release = "false";
+		property test.name.skip.portal.instance = "CPSharepoint#ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval";
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_3.docx",
+			dmDocumentTitle = "Document_3.docx");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Document_3.docx");
+
+		DMDocument.editCmd(dmDocumentTitleEdit = "Document_3");
+
+		Click(locator1 = "Button#PUBLISH");
+
+		Alert.viewRequestFailedToComplete();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_PUBLISH_UNSUCCESSFUL_EXTENSION",
+			value1 = "The source file does not have the same extension as the original file.");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.docx");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_3.docx");
+	}
+
+}

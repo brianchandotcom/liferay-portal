@@ -23,6 +23,7 @@ import com.liferay.portal.security.ldap.SafeLdapFilter;
 import com.liferay.portal.security.ldap.SafeLdapFilterFactory;
 import com.liferay.portal.security.ldap.SafeLdapFilterTemplate;
 import com.liferay.portal.security.ldap.SafeLdapName;
+import com.liferay.portal.security.ldap.SafeLdapNameFactory;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.security.ldap.validator.LDAPFilterException;
 import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
@@ -243,7 +244,7 @@ public class LDAPUtil {
 			LDAPServerConfiguration ldapServerConfiguration)
 		throws InvalidNameException {
 
-		return SafeLdapName.fromUnsafe(ldapServerConfiguration.baseDN());
+		return SafeLdapNameFactory.fromUnsafe(ldapServerConfiguration.baseDN());
 	}
 
 	public static String getFullProviderURL(String baseURL, String baseDN) {
@@ -254,7 +255,8 @@ public class LDAPUtil {
 			LDAPServerConfiguration ldapServerConfiguration)
 		throws InvalidNameException {
 
-		return SafeLdapName.fromUnsafe(ldapServerConfiguration.groupsDN());
+		return SafeLdapNameFactory.fromUnsafe(
+			ldapServerConfiguration.groupsDN());
 	}
 
 	public static SafeLdapFilter getGroupSearchSafeLdapFilter(
@@ -285,7 +287,8 @@ public class LDAPUtil {
 			LDAPServerConfiguration ldapServerConfiguration)
 		throws InvalidNameException {
 
-		return SafeLdapName.fromUnsafe(ldapServerConfiguration.usersDN());
+		return SafeLdapNameFactory.fromUnsafe(
+			ldapServerConfiguration.usersDN());
 	}
 
 	public static SafeLdapFilter getUserSearchSafeLdapFilter(

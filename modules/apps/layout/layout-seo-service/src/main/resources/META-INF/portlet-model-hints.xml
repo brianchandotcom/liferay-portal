@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<hint-collection name="TEXTAREA">
+		<hint name="display-height">105</hint>
+		<hint name="display-width">500</hint>
+		<hint name="max-length">4000</hint>
+	</hint-collection>
 	<model name="com.liferay.layout.seo.model.LayoutSEOEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
@@ -15,7 +20,10 @@
 		<field name="layoutId" type="long" />
 		<field localized="true" name="canonicalURL" type="String" />
 		<field name="canonicalURLEnabled" type="boolean" />
-		<field localized="true" name="openGraphDescription" type="String" />
+		<field localized="true" name="openGraphDescription" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">350</hint>
+		</field>
 		<field name="openGraphDescriptionEnabled" type="boolean" />
 		<field name="openGraphImageFileEntryId" type="long" />
 		<field localized="true" name="openGraphTitle" type="String" />

@@ -190,7 +190,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-open-graph-description" name="openGraphDescriptionEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
-				<aui:input disabled="<%= !selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="description" type="textarea" />
+				<aui:input disabled="<%= !selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="<%= selLayout.getDescription(themeDisplay.getLocale()) %>"/>
 
 				<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 			</div>
@@ -203,7 +203,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-open-graph-description" name="openGraphDescriptionEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
-				<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphDescription" type="textarea" />
+				<aui:input  id="openGraphDescription" disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphDescription" type="textarea" placeholder="description" />
 
 				<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 			</div>
@@ -258,14 +258,22 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		var openGraphTitleEnabledCheck = document.getElementById(
 			'<portlet:namespace />openGraphTitleEnabled'
 		);
-		var openGraphTitleEnabledCheckField = document.getElementById(
+		var openGraphTitleField = document.getElementById(
 			'<portlet:namespace />openGraphTitle'
 		);
+		var openGraphTitleFieldDefaultLocale = document.getElementById(
+			'<portlet:namespace />openGraphTitle_<%= themeDisplay.getLanguageId() %>'
+		);
+
 
 		if (openGraphTitleEnabledCheck && openGraphTitleEnabledCheckField) {
 			openGraphTitleEnabledCheck.addEventListener('click', function(event) {
 				Liferay.Util.toggleDisabled(
-					openGraphTitleEnabledCheckField,
+					openGraphTitleField,
+					!event.target.checked
+				);
+				Liferay.Util.toggleDisabled(
+					openGraphTitleFieldDefaultLocale,
 					!event.target.checked
 				);
 			});
@@ -277,6 +285,9 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		var openGraphDescriptionField = document.getElementById(
 			'<portlet:namespace />openGraphDescription'
 		);
+		var openGraphDescriptionFieldDefaultLocale = document.getElementById(
+			'<portlet:namespace />openGraphDescription_<%= themeDisplay.getLanguageId() %>'
+		);
 
 		if (openGraphDescriptionEnabledCheck && openGraphDescriptionField) {
 			openGraphDescriptionEnabledCheck.addEventListener('click', function(event) {
@@ -284,6 +295,12 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 					openGraphDescriptionField,
 					!event.target.checked
 				);
+
+				Liferay.Util.toggleDisabled(
+					openGraphDescriptionFieldDefaultLocale,
+					!event.target.checked
+				);
+
 			});
 		}
 	</aui:script>

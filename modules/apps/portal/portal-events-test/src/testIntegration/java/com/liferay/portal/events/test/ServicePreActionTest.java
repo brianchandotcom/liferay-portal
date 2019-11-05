@@ -46,7 +46,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -81,18 +80,6 @@ public class ServicePreActionTest {
 
 		_request.setAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET, _group.getPublicLayoutSet());
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		ResourceAction resourceAction =
-			_resourceActionLocalService.getResourceAction(
-				Layout.class.getName(), ActionKeys.VIEW);
-
-		_resourcePermissionLocalService.addResourcePermissions(
-			Layout.class.getName(), RoleConstants.GUEST,
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			resourceAction.getBitwiseValue());
 	}
 
 	@Test
@@ -234,16 +221,30 @@ public class ServicePreActionTest {
 				ActionKeys.VIEW);
 		}
 
-		if (signedIn) {
-			_user = UserTestUtil.addUser();
-		}
-		else {
-			_user = _portal.initUser(_request);
-		}
+		try {
+			if (signedIn) {
+				_user = UserTestUtil.addUser();
+			}
+			else {
+				_user = _portal.initUser(_request);
+			}
 
-		_request.setAttribute(WebKeys.USER, _user);
+			_request.setAttribute(WebKeys.USER, _user);
 
-		_servicePreAction.run(_request, _response);
+			_servicePreAction.run(_request, _response);
+		}
+		finally {
+			if (!hasGuestViewPermission) {
+				ResourceAction resourceAction =
+					_resourceActionLocalService.getResourceAction(
+						Layout.class.getName(), ActionKeys.VIEW);
+
+				_resourcePermissionLocalService.addResourcePermissions(
+					Layout.class.getName(), RoleConstants.GUEST,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					resourceAction.getBitwiseValue());
+			}
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);

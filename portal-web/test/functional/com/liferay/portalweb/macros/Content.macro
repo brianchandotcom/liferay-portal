@@ -15,7 +15,9 @@ definition {
 			locator1 = "ControlMenuAddPanel#ADD_NEW_DROPDOWN",
 			value1 = "Add New");
 
-		MenuItem.click(menuItem = "${assetType}");
+		Click(
+			key_assetItem = "${assetType}",
+			locator1 = "ControlMenuAddPanel#ASSET_ITEM");
 	}
 
 	macro addPG {

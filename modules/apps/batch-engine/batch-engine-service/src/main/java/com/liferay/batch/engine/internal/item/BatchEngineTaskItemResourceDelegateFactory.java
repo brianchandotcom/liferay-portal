@@ -16,7 +16,6 @@ package com.liferay.batch.engine.internal.item;
 
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.internal.BatchEngineTaskMethodRegistry;
-import com.liferay.batch.engine.model.BatchEngineTask;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
@@ -40,33 +39,30 @@ public class BatchEngineTaskItemResourceDelegateFactory {
 	}
 
 	public BatchEngineTaskItemResourceDelegate create(
-			BatchEngineTask batchEngineTask)
+			BatchEngineTaskOperation batchEngineTaskOperation, String className,
+			long companyId, long userId, String version)
 		throws Exception {
-
-		BatchEngineTaskOperation batchEngineTaskOperation =
-			BatchEngineTaskOperation.valueOf(batchEngineTask.getOperation());
 
 		UnsafeBiFunction
 			<Company, User, BatchEngineTaskItemResourceDelegate,
 			 ReflectiveOperationException> unsafeBiFunction =
 				_batchEngineTaskMethodRegistry.getUnsafeBiFunction(
-					batchEngineTask.getVersion(), batchEngineTaskOperation,
-					batchEngineTask.getClassName());
+					version, batchEngineTaskOperation, className);
 
 		if (unsafeBiFunction == null) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("No resource available for batch engine task operation ");
-			sb.append(batchEngineTask.getOperation());
+			sb.append(batchEngineTaskOperation);
 			sb.append(" and class name ");
-			sb.append(batchEngineTask.getClassName());
+			sb.append(className);
 
 			throw new IllegalStateException(sb.toString());
 		}
 
 		return unsafeBiFunction.apply(
-			_companyLocalService.getCompany(batchEngineTask.getCompanyId()),
-			_userLocalService.getUser(batchEngineTask.getUserId()));
+			_companyLocalService.getCompany(companyId),
+			_userLocalService.getUser(userId));
 	}
 
 	private final BatchEngineTaskMethodRegistry _batchEngineTaskMethodRegistry;

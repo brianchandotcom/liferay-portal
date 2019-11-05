@@ -16,7 +16,6 @@ package com.liferay.batch.engine.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.batch.engine.model.BatchEngineTask;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,8 +33,10 @@ import org.apache.http.impl.client.HttpClientBuilder;
  */
 public class BatchEngineTaskCallbackUtil {
 
-	public static void sendCallback(BatchEngineTask batchEngineTask) {
-		if (Validator.isBlank(batchEngineTask.getCallbackURL())) {
+	public static void sendCallback(
+		String callbackURL, String executeStatus, long id) {
+
+		if (Validator.isBlank(callbackURL)) {
 			return;
 		}
 
@@ -44,14 +45,12 @@ public class BatchEngineTaskCallbackUtil {
 		try (CloseableHttpClient closeableHttpClient =
 				httpClientBuilder.build()) {
 
-			HttpPost httpPost = new HttpPost(batchEngineTask.getCallbackURL());
+			HttpPost httpPost = new HttpPost(callbackURL);
 
 			httpPost.setEntity(
 				new StringEntity(
 					_objectMapper.writeValueAsString(
-						Collections.singletonMap(
-							batchEngineTask.getBatchEngineTaskId(),
-							batchEngineTask.getExecuteStatus())),
+						Collections.singletonMap(id, executeStatus)),
 					ContentType.APPLICATION_JSON));
 
 			closeableHttpClient.execute(httpPost);

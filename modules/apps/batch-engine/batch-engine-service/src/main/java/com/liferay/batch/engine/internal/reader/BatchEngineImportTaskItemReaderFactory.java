@@ -15,7 +15,6 @@
 package com.liferay.batch.engine.internal.reader;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
-import com.liferay.batch.engine.model.BatchEngineTask;
 
 import java.sql.Blob;
 
@@ -31,32 +30,30 @@ public class BatchEngineImportTaskItemReaderFactory {
 		_csvFileColumnDelimiter = csvFileColumnDelimiter;
 	}
 
-	public BatchEngineTaskItemReader create(BatchEngineTask batchEngineTask)
+	public BatchEngineImportTaskItemReader create(
+			BatchEngineTaskContentType batchEngineTaskContentType, Blob content)
 		throws Exception {
 
-		BatchEngineTaskContentType batchEngineTaskContentType =
-			BatchEngineTaskContentType.valueOf(
-				batchEngineTask.getContentType());
-		Blob content = batchEngineTask.getContent();
-
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
-			return new CSVBatchEngineTaskItemReader(
+			return new CSVBatchEngineImportTaskItemReader(
 				_csvFileColumnDelimiter, content.getBinaryStream());
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
-			return new JSONBatchEngineTaskItemReader(content.getBinaryStream());
+			return new JSONBatchEngineImportTaskItemReader(
+				content.getBinaryStream());
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSONL) {
-			return new JSONLBatchEngineTaskItemReader(
+			return new JSONLBatchEngineImportTaskItemReader(
 				content.getBinaryStream());
 		}
 
 		if ((batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
 			(batchEngineTaskContentType == BatchEngineTaskContentType.XLSX)) {
 
-			return new XLSBatchEngineTaskItemReader(content.getBinaryStream());
+			return new XLSBatchEngineImportTaskItemReader(
+				content.getBinaryStream());
 		}
 
 		throw new IllegalArgumentException(

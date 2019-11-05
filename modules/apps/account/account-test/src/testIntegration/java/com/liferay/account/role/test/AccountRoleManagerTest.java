@@ -16,16 +16,21 @@ package com.liferay.account.role.test;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.role.AccountRole;
 import com.liferay.account.role.AccountRoleManager;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.test.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -71,6 +76,45 @@ public class AccountRoleManagerTest {
 				_roleLocalService.deleteRole(role);
 			}
 		}
+	}
+
+	@Test
+	public void testAccountRoleUser() throws Exception {
+		AccountRole accountRole = _addAccountRole(
+			_accountEntry1.getAccountEntryId(), RandomTestUtil.randomString());
+
+		User user = UserTestUtil.addUser();
+
+		_users.add(user);
+
+		AccountEntryUserRel accountEntryUserRel =
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				_accountEntry1.getAccountEntryId(), user.getUserId());
+
+		_accountEntryUserRels.add(accountEntryUserRel);
+
+		Assert.assertFalse(
+			_hasUserAccountRole(
+				_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
+				user.getUserId()));
+
+		_accountRoleManager.addAccountRoleUser(
+			_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
+			user.getUserId());
+
+		Assert.assertTrue(
+			_hasUserAccountRole(
+				_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
+				user.getUserId()));
+
+		_accountRoleManager.removeAccountRoleUser(
+			_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
+			user.getUserId());
+
+		Assert.assertFalse(
+			_hasUserAccountRole(
+				_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
+				user.getUserId()));
 	}
 
 	@Test
@@ -174,6 +218,17 @@ public class AccountRoleManagerTest {
 		return accountRole;
 	}
 
+	private boolean _hasUserAccountRole(
+			long accountEntryId, long roleId, long accountUserId)
+		throws Exception {
+
+		long[] accountRoleIds = ListUtil.toLongArray(
+			_accountRoleManager.getAccountRoles(accountEntryId, accountUserId),
+			AccountRole::getRoleId);
+
+		return ArrayUtil.contains(accountRoleIds, roleId);
+	}
+
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry1;
 
@@ -184,11 +239,21 @@ public class AccountRoleManagerTest {
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@DeleteAfterTestRun
+	private final List<AccountEntryUserRel> _accountEntryUserRels =
+		new ArrayList<>();
+
+	@Inject
 	private AccountRoleManager _accountRoleManager;
 
 	private final List<String> _names = new ArrayList<>();
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@DeleteAfterTestRun
+	private final List<User> _users = new ArrayList<>();
 
 }

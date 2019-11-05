@@ -87,7 +87,25 @@ public class ConvertLayoutMVCActionCommand
 		return super.processAction(actionRequest, actionResponse);
 	}
 
-	protected void convertLayout(long selPlid, ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
+
+		long[] selPlids = ParamUtil.getLongValues(actionRequest, "rowIds");
+
+		if ((selPlid > 0) && ArrayUtil.isEmpty(selPlids)) {
+			selPlids = new long[] {selPlid};
+		}
+
+		for (long curSelPlid : selPlids) {
+			_convertLayout(curSelPlid, actionRequest);
+		}
+	}
+
+	private void _convertLayout(long selPlid, ActionRequest actionRequest)
 		throws Exception {
 
 		Layout layout = _layoutService.updateType(
@@ -145,24 +163,6 @@ public class ConvertLayoutMVCActionCommand
 		_layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			new Date());
-	}
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
-
-		long[] selPlids = ParamUtil.getLongValues(actionRequest, "rowIds");
-
-		if ((selPlid > 0) && ArrayUtil.isEmpty(selPlids)) {
-			selPlids = new long[] {selPlid};
-		}
-
-		for (long curSelPlid : selPlids) {
-			convertLayout(curSelPlid, actionRequest);
-		}
 	}
 
 	private String _getDefaultPortletDecoratorId(Layout layout)

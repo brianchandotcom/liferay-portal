@@ -5726,7 +5726,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-compress.jar</file-name>
-				<version>1.18</version>
+				<version>1.19</version>
 				<project-name>Commons Compress</project-name>
 				<project-url>http://commons.apache.org/compress</project-url>
 				<licenses>

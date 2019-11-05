@@ -103,6 +103,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -855,10 +856,7 @@ public class TemplateContextHelper {
 		}
 
 		try {
-			com.liferay.portal.kernel.util.Randomizer_IW randomizer =
-				com.liferay.portal.kernel.util.Randomizer_IW.getInstance();
-
-			variables.put("randomizer", randomizer.getWrappedInstance());
+			variables.put("random", new Random());
 		}
 		catch (SecurityException se) {
 			_log.error(se, se);

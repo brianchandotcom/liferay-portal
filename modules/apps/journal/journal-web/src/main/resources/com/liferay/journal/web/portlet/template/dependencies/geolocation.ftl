@@ -20,7 +20,7 @@
 			geolocation=true
 			latitude=latitude
 			longitude=longitude
-			name="${encodedName}${r"${randomizer.nextInt()}"}"
+			name="${encodedName}${r"${random.nextInt()}"}"
 		/>
 	${r"</#if>"}
 <#else>

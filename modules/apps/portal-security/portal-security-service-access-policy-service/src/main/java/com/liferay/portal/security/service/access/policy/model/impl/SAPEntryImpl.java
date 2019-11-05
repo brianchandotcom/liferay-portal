@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.service.access.policy.configuration.SAPConfiguration;
 import com.liferay.portal.security.service.access.policy.constants.SAPConstants;
+import com.liferay.registry.util.StringPlus;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -165,7 +167,7 @@ public class SAPEntryImpl extends SAPEntryBaseImpl {
 			}
 
 			private static final Map<Object, Set<String>> _serviceReferenceMap =
-				new ConcurrentHashMap<>();
+				new HashMap<>();
 
 		}
 

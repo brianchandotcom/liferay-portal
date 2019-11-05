@@ -72,6 +72,8 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isThemeJsFastLoad()) {
+			absolutePortalURLBuilder.ignoreCDNHost();
+
 			sb.append("<script data-senna-track=\"permanent\" src=\"");
 			sb.append(
 				_portal.getStaticResourceURL(

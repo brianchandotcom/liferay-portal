@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -228,6 +229,43 @@ public class I18nServletTest extends I18nServlet {
 
 		_testIsNotDefaultOrFirstLocale(_group, LocaleUtil.US);
 		_testIsNotDefaultOrFirstI18nData(_group, LocaleUtil.US, LocaleUtil.UK);
+	}
+
+	@Test
+	public void testSendRedirectWithContext() throws Exception {
+		MockServletContext mockServletContext = new MockServletContext();
+
+		String contextPath = StringPool.SLASH + RandomTestUtil.randomString(10);
+
+		mockServletContext.setContextPath(contextPath);
+
+		init(new MockServletConfig(mockServletContext));
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setServletPath(
+			String.format(
+				"/%s_%s", LocaleUtil.CANADA_FRENCH.getLanguage(),
+				LocaleUtil.CANADA_FRENCH.getCountry()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		sendRedirect(
+			mockHttpServletRequest, mockHttpServletResponse,
+			getI18nData(mockHttpServletRequest));
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_MOVED_PERMANENTLY,
+			mockHttpServletResponse.getStatus());
+
+		Assert.assertEquals(
+			String.format(
+				"%s/%s-%s/", contextPath,
+				LocaleUtil.CANADA_FRENCH.getLanguage(),
+				LocaleUtil.CANADA_FRENCH.getCountry()),
+			mockHttpServletResponse.getHeader("Location"));
 	}
 
 	@Test

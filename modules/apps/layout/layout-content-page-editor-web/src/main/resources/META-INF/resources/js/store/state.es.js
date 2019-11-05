@@ -517,6 +517,14 @@ const INITIAL_STATE = {
 	).value([]),
 
 	/**
+	 * Whether or not the selected Experience edition is locked
+	 * @default false
+	 * @review
+	 * @type {boolean}
+	 */
+	lockedSegmentsExperience: Config.bool().value(false),
+
+	/**
 	 * Current layout look&feel url
 	 * @default undefined
 	 * @review

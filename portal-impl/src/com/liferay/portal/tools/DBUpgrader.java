@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupHelperUtil;
@@ -112,6 +113,8 @@ public class DBUpgrader {
 			verify();
 
 			DependencyManagerSyncUtil.sync();
+
+			DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 
 			_registerModuleServiceLifecycle("database.initialized");
 

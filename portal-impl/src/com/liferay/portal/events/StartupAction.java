@@ -14,6 +14,7 @@
 
 package com.liferay.portal.events;
 
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.fabric.server.FabricServerUtil;
 import com.liferay.portal.jericho.CachedLoggerProvider;
@@ -132,6 +133,8 @@ public class StartupAction extends SimpleAction {
 		// Check required schema version
 
 		StartupHelperUtil.verifyRequiredSchemaVersion();
+
+		DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 
 		Registry registry = RegistryUtil.getRegistry();
 

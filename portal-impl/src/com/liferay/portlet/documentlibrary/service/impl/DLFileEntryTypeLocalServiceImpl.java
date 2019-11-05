@@ -37,7 +37,6 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.kernel.StructureDefinitionException;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -171,18 +170,6 @@ public class DLFileEntryTypeLocalServiceImpl
 		return addFileEntryType(
 			userId, groupId, null, nameMap, descriptionMap, ddmStructureIds,
 			serviceContext);
-	}
-
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		try {
-			dlFileEntryTypeLocalService.getBasicDocumentDLFileEntryType();
-		}
-		catch (NoSuchFileEntryTypeException nsfete) {
-			ReflectionUtil.throwException(nsfete);
-		}
 	}
 
 	@Override

@@ -1,6 +1,4 @@
-<%@ page import="com.liferay.portal.security.ldap.SafeLdapFilterFactory" %>
-<%@ page import="com.liferay.portal.security.ldap.SafeLdapFilterConstraints" %>
-<%@ page import="com.liferay.portal.security.ldap.SafeLdapNameFactory" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -114,8 +112,7 @@ catch (NameNotFoundException | InvalidNameException nnfe) {
 		}
 
 		if (attribute != null) {
-			SafeLdapFilter safeLdapFilter = groupSafeLdapFilter.and(
-				SafeLdapFilterConstraints.eq(groupMappings.getProperty("groupName"), name));
+			SafeLdapFilter safeLdapFilter = groupSafeLdapFilter.and(SafeLdapFilterConstraints.eq(groupMappings.getProperty("groupName"), name));
 
 			attribute = PortalLDAPUtil.getInstance().getMultivaluedAttribute(themeDisplay.getCompanyId(), safeLdapContext, SafeLdapNameFactory.fromUnsafe(baseDN), safeLdapFilter, attribute);
 		}

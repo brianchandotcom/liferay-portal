@@ -65,7 +65,7 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 					MBThreadFlagTable.class, MBThreadTable.class
 				}));
 
-		registry.register("2.0.0", "2.1.0", new UpgradeTreePath());
+		registry.register("2.0.0", "3.0.0", new UpgradeTreePath());
 	}
 
 	@Reference

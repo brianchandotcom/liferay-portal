@@ -21,6 +21,7 @@ import com.liferay.talend.runtime.client.exception.ConnectionClientException;
 import com.liferay.talend.runtime.client.exception.OAuth2AuthorizationClientException;
 import com.liferay.talend.runtime.client.exception.RemoteExecutionClientException;
 
+import java.io.File;
 import java.io.StringWriter;
 
 import java.net.URI;
@@ -52,6 +53,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.HttpUrlConnectorProvider;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,6 +88,8 @@ public class RESTClient {
 
 		_client.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
 
+		_client.register(MultiPartFeature.class);
+
 		if (_logger.isDebugEnabled()) {
 			_logger.debug("Created new REST Client for endpoint {}", target);
 		}
@@ -103,6 +109,19 @@ public class RESTClient {
 		return _execute(
 			HttpMethod.PATCH, _createBuilder(_getTargetURI()),
 			Entity.json(_jsonObjectToPrettyString(jsonObject)));
+	}
+
+	public Response executePostRequest(File file) throws ClientException {
+		FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
+
+		formDataMultiPart.bodyPart(
+			new FileDataBodyPart(
+				"file", file, MediaType.APPLICATION_OCTET_STREAM_TYPE));
+
+		return _execute(
+			HttpMethod.POST, _createBuilder(_getTargetURI()),
+			Entity.entity(
+				formDataMultiPart, MediaType.MULTIPART_FORM_DATA_TYPE));
 	}
 
 	public Response executePostRequest(JsonObject jsonObject)

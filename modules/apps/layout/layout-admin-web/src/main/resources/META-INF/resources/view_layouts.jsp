@@ -43,14 +43,6 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 
 <liferay-ui:error exception="<%= RequiredSegmentsExperienceException.MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments.class %>" message="this-page-cannot-be-deleted-because-it-has-ab-tests-in-progress" />
 
-<portlet:actionURL name="/layout/convert_layout" var="convertLayoutURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<portlet:actionURL name="/layout/delete_layout" var="deleteLayoutURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<c:choose>
 		<c:when test="<%= layoutsAdminDisplayContext.hasLayouts() %>">
@@ -91,15 +83,7 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 	</c:choose>
 </aui:form>
 
-<%
-Map<String, Object> context = new HashMap<>();
-
-context.put("convertLayoutURL", convertLayoutURL.toString());
-context.put("deleteLayoutURL", deleteLayoutURL.toString());
-%>
-
 <liferay-frontend:component
 	componentId="<%= layoutsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= context %>"
 	module="js/LayoutsManagementToolbarDefaultEventHandler.es"
 />

@@ -121,47 +121,50 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		sb.append(html);
 		sb.append("</div>");
 
-		boolean cssLoaded = false;
+		if (Validator.isNotNull(css)) {
+			boolean cssLoaded = false;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
-		OutputData outputData = null;
+			OutputData outputData = null;
 
-		String outputKey = fragmentEntryId + "_CSS";
+			String outputKey = fragmentEntryId + "_CSS";
 
-		if (serviceContext != null) {
-			outputData = (OutputData)serviceContext.getAttribute(
-				WebKeys.OUTPUT_DATA);
+			if (serviceContext != null) {
+				outputData = (OutputData)serviceContext.getAttribute(
+					WebKeys.OUTPUT_DATA);
 
-			if (outputData == null) {
-				outputData = new OutputData();
+				if (outputData == null) {
+					outputData = new OutputData();
+				}
+
+				Set<String> outputKeys = outputData.getOutputKeys();
+
+				StringBundler cssSB = outputData.getDataSB(
+					outputKey, StringPool.BLANK);
+
+				cssLoaded = outputKeys.contains(outputKey);
+
+				if (cssSB != null) {
+					cssLoaded = Objects.equals(cssSB.toString(), css);
+				}
 			}
 
-			Set<String> outputKeys = outputData.getOutputKeys();
+			if (!cssLoaded) {
+				sb.append("<style>");
+				sb.append(css);
+				sb.append("</style>");
 
-			StringBundler cssSB = outputData.getDataSB(
-				outputKey, StringPool.BLANK);
+				if (outputData != null) {
+					outputData.addOutputKey(outputKey);
 
-			cssLoaded = outputKeys.contains(outputKey);
+					outputData.setDataSB(
+						outputKey, StringPool.BLANK, new StringBundler(css));
 
-			if (cssSB != null) {
-				cssLoaded = Objects.equals(cssSB.toString(), css);
-			}
-		}
-
-		if (Validator.isNotNull(css) && !cssLoaded) {
-			sb.append("<style>");
-			sb.append(css);
-			sb.append("</style>");
-
-			if (outputData != null) {
-				outputData.addOutputKey(outputKey);
-
-				outputData.setDataSB(
-					outputKey, StringPool.BLANK, new StringBundler(css));
-
-				serviceContext.setAttribute(WebKeys.OUTPUT_DATA, outputData);
+					serviceContext.setAttribute(
+						WebKeys.OUTPUT_DATA, outputData);
+				}
 			}
 		}
 

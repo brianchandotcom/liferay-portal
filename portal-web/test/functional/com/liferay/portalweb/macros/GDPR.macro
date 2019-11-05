@@ -32,9 +32,11 @@ definition {
 			key_lastName = "${userLastName}",
 			locator1 = "ExportPersonalData#HEADER");
 
-		if (!(IsElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_IN_PROGRESS")||IsElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_APPLICATION_IN_PROGRESS"))) {
-			AssertElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_SUCCESSFUL");
+		while (IsElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_IN_PROGRESS")) {
+			Pause(locator1 = "3000");
 		}
+
+		AssertElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_SUCCESSFUL");
 
 		if (isSet(applications)) {
 			for (var application : list "${applications}") {

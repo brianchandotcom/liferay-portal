@@ -151,6 +151,10 @@ public class SAPEntryImpl extends SAPEntryBaseImpl {
 						_serviceReferenceMap.values()) {
 
 					removedSAPSystemEntries.removeAll(sapSystemEntries);
+
+					if (removedSAPSystemEntries.isEmpty()) {
+						return;
+					}
 				}
 
 				_sapSystemEntries.removeAll(removedSAPSystemEntries);

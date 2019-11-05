@@ -35,23 +35,20 @@ public class LiferayProfileDXPPlugin implements Plugin<Project> {
 		File portalRootDir = GradleUtil.getRootDir(
 			project.getRootProject(), "portal-impl");
 
-		if (!portalRootDir.exists()) {
-			throw new GradleException(
-				"The project path must not start with \":dxp:\"");
-		}
+		if (portalRootDir != null) {
+			File buildProfileDXPPropertiesFile = new File(
+				portalRootDir, "build.profile-dxp.properties");
 
-		File buildProfileDXPPropertiesFile = new File(
-			portalRootDir, "build.profile-dxp.properties");
+			if (!buildProfileDXPPropertiesFile.exists()) {
+				StringBuilder sb = new StringBuilder();
 
-		if (!buildProfileDXPPropertiesFile.exists()) {
-			StringBuilder sb = new StringBuilder();
+				sb.append("Please run the following command to setup the ");
+				sb.append("build profile for DXP:\n");
+				sb.append(portalRootDir);
+				sb.append("$ ant setup-profile-dxp");
 
-			sb.append("Please run the following command to setup the build ");
-			sb.append("profile for DXP:\n");
-			sb.append(portalRootDir);
-			sb.append("$ ant setup-profile-dxp");
-
-			throw new GradleException(sb.toString());
+				throw new GradleException(sb.toString());
+			}
 		}
 	}
 

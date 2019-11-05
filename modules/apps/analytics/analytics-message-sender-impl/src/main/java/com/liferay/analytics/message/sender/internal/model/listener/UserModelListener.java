@@ -15,7 +15,6 @@
 package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 
@@ -25,7 +24,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Rachael Koestartyo
  */
 @Component(immediate = true, service = ModelListener.class)
-public class UserModelListener extends BaseModelListener<User> {
+public class UserModelListener extends BaseEntityModelListener<User> {
+
+	@Override
+	public String getObjectType() {
+		return "user";
+	}
 
 	@Override
 	public void onAfterCreate(User user) throws ModelListenerException {

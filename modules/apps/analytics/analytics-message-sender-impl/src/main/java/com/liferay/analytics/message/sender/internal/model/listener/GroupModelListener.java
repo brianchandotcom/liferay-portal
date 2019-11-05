@@ -15,7 +15,6 @@
 package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 
@@ -25,7 +24,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Rachael Koestartyo
  */
 @Component(immediate = true, service = ModelListener.class)
-public class GroupModelListener extends BaseModelListener<Group> {
+public class GroupModelListener extends BaseEntityModelListener<Group> {
+
+	@Override
+	public String getObjectType() {
+		return "group";
+	}
 
 	@Override
 	public void onAfterCreate(Group group) throws ModelListenerException {

@@ -38,7 +38,7 @@ export default function PageContent(props) {
 	};
 
 	return (
-		<li className="page-editor-sidebar-panel__contents__content">
+		<li className="page-editor__contents__page-content">
 			<div className="d-flex pl-3 pr-2 py-3">
 				<div className="autofit-col autofit-col-expand">
 					<strong className="list-group-title text-truncate">

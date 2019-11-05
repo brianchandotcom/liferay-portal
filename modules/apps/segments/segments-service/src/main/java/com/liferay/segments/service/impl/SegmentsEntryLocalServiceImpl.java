@@ -290,6 +290,12 @@ public class SegmentsEntryLocalServiceImpl
 				_portal.getAncestorSiteGroupIds(groupId), groupId));
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #searchSegmentsEntries(long, long, String, boolean,
+	 *             LinkedHashMap, int, int, Sort)}
+	 */
+	@Deprecated
 	@Override
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
 			long companyId, long groupId, String keywords,

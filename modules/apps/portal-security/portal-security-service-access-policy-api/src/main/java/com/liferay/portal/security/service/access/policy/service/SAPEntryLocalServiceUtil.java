@@ -229,8 +229,7 @@ public class SAPEntryLocalServiceUtil {
 
 	public static
 		com.liferay.portal.security.service.access.policy.model.SAPEntry
-				fetchSAPEntry(long companyId, String name)
-			throws com.liferay.portal.kernel.exception.PortalException {
+			fetchSAPEntry(long companyId, String name) {
 
 		return getService().fetchSAPEntry(companyId, name);
 	}

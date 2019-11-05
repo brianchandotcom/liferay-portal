@@ -188,8 +188,7 @@ public interface SAPEntryLocalService
 	public SAPEntry fetchSAPEntry(long sapEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SAPEntry fetchSAPEntry(long companyId, String name)
-		throws PortalException;
+	public SAPEntry fetchSAPEntry(long companyId, String name);
 
 	/**
 	 * Returns the sap entry with the matching UUID and company.

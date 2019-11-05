@@ -228,8 +228,7 @@ public class SAPEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.security.service.access.policy.model.SAPEntry
-			fetchSAPEntry(long companyId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		fetchSAPEntry(long companyId, String name) {
 
 		return _sapEntryLocalService.fetchSAPEntry(companyId, name);
 	}

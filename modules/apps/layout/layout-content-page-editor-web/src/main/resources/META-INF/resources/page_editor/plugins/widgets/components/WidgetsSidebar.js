@@ -50,7 +50,7 @@ export default function WidgetsSidebar() {
 				{Liferay.Language.get('widgets')}
 			</SidebarPanelHeader>
 
-			<div className="page-editor-sidebar-panel">
+			<div>
 				<SearchForm onChange={setSearchValue} value={searchValue} />
 
 				{filteredWidgets.map(category => (

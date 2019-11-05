@@ -10,22 +10,22 @@
 <tbody>
 <tr>
 	<td>USER_AVATAR_DROPDOWN_ITEM</td>
-	<td>//div[@id='clay_dropdown_portal']//div[contains(@class,'show')]//a[contains(.,'${key_dropdownItem}')]</td>
+	<td>//div[contains(@class,'dropdown-menu-personal-menu') and contains(@class,'show')]//a[contains(.,'${key_dropdownItem}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_AVATAR_DROPDOWN_PORTAL_CLOSED</td>
-	<td>//div[@id='clay_dropdown_portal']//div[contains(@class,'dropdown-menu')]</td>
+	<td>//div[contains(@class,'dropdown-menu-personal-menu')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_AVATAR_DROPDOWN_PORTAL_OPEN</td>
-	<td>//div[@id='clay_dropdown_portal']//div[contains(@class,'show')]</td>
+	<td>//div[contains(@class,'dropdown-menu-personal-menu') and contains(@class,'show')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_AVATAR_DROPDOWN_SIGNOUT</td>
-	<td>//div[@id='clay_dropdown_portal']//div[contains(@class,'show')]//a[contains(.,'Sign Out') or contains(.,'Salir')]</td>
+	<td>//div[contains(@class,'dropdown-menu-personal-menu') and contains(@class,'show')]//a[contains(.,'Sign Out') or contains(.,'Salir')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>USER_FULL_NAME</td>
-	<td>//div[@id='clay_dropdown_portal']//li[@class='dropdown-subheader']</td>
+	<td>//li[@class='dropdown-subheader']</td>
 	<td></td>
 </tr>
 <tr>

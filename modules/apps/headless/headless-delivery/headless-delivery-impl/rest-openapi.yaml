@@ -267,6 +267,9 @@ components:
                 Represents a document (binary data and metadata) associated with structured content. Properties follow
                 the [Media Object](https://schema.org/MediaObject) specification.
             properties:
+                contentType:
+                    readOnly: true
+                    type: string
                 contentUrl:
                     description:
                         The document's relative URL.
@@ -378,6 +381,9 @@ components:
                             description:
                                 A link to structured content on the server.
                             properties:
+                                contentType:
+                                    readOnly: true
+                                    type: string
                                 id:
                                     description:
                                         The resource's ID.

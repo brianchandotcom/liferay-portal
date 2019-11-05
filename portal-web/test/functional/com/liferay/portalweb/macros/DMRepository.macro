@@ -23,6 +23,13 @@ definition {
 			locator1 = "DocumentsAndMediaEditRepository#REPOSITORY_TYPE_SELECT",
 			value1 = "${dmRepositoryName}");
 
+		if (isSet(dmServerVersion)) {
+			Type(
+				key_fieldLabel = "Server Version",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${dmServerVersion}");
+		}
+
 		if (isSet(dmRepositorySiteAbsoluteURL)) {
 			Type(
 				key_fieldLabel = "Site Absolute URL",

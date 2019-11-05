@@ -377,15 +377,15 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 					break;
 				}
 
-				Attribute curAttribute = enu.nextElement();
+				Attribute currentAttribute = enu.nextElement();
 
-				for (int i = 0; i < curAttribute.size(); i++) {
-					attribute.add(curAttribute.get(i));
+				for (int i = 0; i < currentAttribute.size(); i++) {
+					attribute.add(currentAttribute.get(i));
 				}
 
 				if (StringUtil.endsWith(
-						curAttribute.getID(), StringPool.STAR) ||
-					(curAttribute.size() <
+						currentAttribute.getID(), StringPool.STAR) ||
+					(currentAttribute.size() <
 						systemLDAPConfiguration.rangeSize())) {
 
 					break;

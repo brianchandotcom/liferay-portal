@@ -50,18 +50,18 @@ public class LiferayProxyConfig {
 	@Placement(order = 1, tab = _PROXY_CONFIG)
 	private String _proxyHost;
 
-	@DisplayName("Port")
-	@Optional
-	@Parameter
-	@Placement(order = 2, tab = _PROXY_CONFIG)
-	private Integer _proxyPort;
-
 	@DisplayName("Password")
 	@Optional
 	@Parameter
 	@Password
 	@Placement(order = 4, tab = _PROXY_CONFIG)
 	private String _proxyPassword;
+
+	@DisplayName("Port")
+	@Optional
+	@Parameter
+	@Placement(order = 2, tab = _PROXY_CONFIG)
+	private Integer _proxyPort;
 
 	@DisplayName("Username")
 	@Optional

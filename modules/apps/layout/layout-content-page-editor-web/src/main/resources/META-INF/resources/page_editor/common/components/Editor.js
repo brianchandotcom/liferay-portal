@@ -110,7 +110,7 @@ export default function Editor({
 	return (
 		<div className="alloy-editor-container" id={`${portletNamespace}${id}`}>
 			<div
-				className="alloy-editor alloy-editor-placeholder form-control form-control-sm fragments-editor__editor"
+				className="alloy-editor alloy-editor-placeholder form-control form-control-sm page-editor__editor"
 				contentEditable={false}
 				data-placeholder={placeholder}
 				data-required={false}

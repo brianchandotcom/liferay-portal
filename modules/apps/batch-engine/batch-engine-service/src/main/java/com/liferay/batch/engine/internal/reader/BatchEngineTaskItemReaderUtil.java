@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
+
 import java.lang.reflect.Field;
 
 import java.util.HashMap;
@@ -78,7 +80,7 @@ public class BatchEngineTaskItemReaderUtil {
 	}
 
 	public static Map<String, Object> mapFieldNames(
-		Map<String, String> fieldNameMappingMap,
+		Map<String, ? extends Serializable> fieldNameMappingMap,
 		Map<String, Object> fieldNameValueMap) {
 
 		if (fieldNameMappingMap.isEmpty()) {
@@ -88,7 +90,8 @@ public class BatchEngineTaskItemReaderUtil {
 		Map<String, Object> targetFieldNameValueMap = new HashMap<>();
 
 		for (Map.Entry<String, Object> entry : fieldNameValueMap.entrySet()) {
-			String targetFieldName = fieldNameMappingMap.get(entry.getKey());
+			String targetFieldName = (String)fieldNameMappingMap.get(
+				entry.getKey());
 
 			if (Validator.isNotNull(targetFieldName)) {
 				targetFieldNameValueMap.put(targetFieldName, entry.getValue());

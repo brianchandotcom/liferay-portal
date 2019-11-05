@@ -111,7 +111,6 @@ import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
-import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.SynchronousBundleListener;
 import org.osgi.framework.Version;
@@ -517,7 +516,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
 
-		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+		DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<>();
 
 		frameworkStartLevel.setStartLevel(
@@ -1339,19 +1338,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		FrameworkWiring frameworkWiring = _framework.adapt(
 			FrameworkWiring.class);
 
-		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+		DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<>();
 
 		frameworkWiring.refreshBundles(
 			refreshBundles,
-			new FrameworkListener() {
-
-				@Override
-				public void frameworkEvent(FrameworkEvent frameworkEvent) {
-					defaultNoticeableFuture.set(frameworkEvent);
-				}
-
-			});
+			frameworkEvent -> defaultNoticeableFuture.set(frameworkEvent));
 
 		try {
 			FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
@@ -1669,19 +1661,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
 
-		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+		DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<>();
 
 		frameworkStartLevel.setStartLevel(
 			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
-			new FrameworkListener() {
-
-				@Override
-				public void frameworkEvent(FrameworkEvent frameworkEvent) {
-					defaultNoticeableFuture.set(frameworkEvent);
-				}
-
-			});
+			frameworkEvent -> defaultNoticeableFuture.set(frameworkEvent));
 
 		FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
 
@@ -1825,19 +1810,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
 
-		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+		DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<>();
 
 		frameworkStartLevel.setStartLevel(
 			PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
-			new FrameworkListener() {
-
-				@Override
-				public void frameworkEvent(FrameworkEvent fe) {
-					defaultNoticeableFuture.set(fe);
-				}
-
-			});
+			frameworkEvent -> defaultNoticeableFuture.set(frameworkEvent));
 
 		FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
 

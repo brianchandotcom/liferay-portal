@@ -1,5 +1,6 @@
 <%@ page import="com.liferay.portal.security.ldap.SafeLdapFilterFactory" %>
-<%@ page import="com.liferay.portal.security.ldap.SafeLdapFilterConstraints" %><%--
+<%@ page import="com.liferay.portal.security.ldap.SafeLdapFilterConstraints" %>
+<%@ page import="com.liferay.portal.security.ldap.SafeLdapNameFactory" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -74,7 +75,7 @@ String[] attributeIds = StringUtil.split(StringUtil.merge(groupMappings.values()
 List<SearchResult> searchResults = new ArrayList<SearchResult>();
 
 try {
-	PortalLDAPUtil.getInstance().getGroups(themeDisplay.getCompanyId(), safeLdapContext, new byte[0], 20, SafeLdapName.fromUnsafe(baseDN), groupSafeLdapFilter, attributeIds, searchResults);
+	PortalLDAPUtil.getInstance().getGroups(themeDisplay.getCompanyId(), safeLdapContext, new byte[0], 20, SafeLdapNameFactory.fromUnsafe(baseDN), groupSafeLdapFilter, attributeIds, searchResults);
 }
 catch (NameNotFoundException | InvalidNameException nnfe) {
 %>
@@ -116,7 +117,7 @@ catch (NameNotFoundException | InvalidNameException nnfe) {
 			SafeLdapFilter safeLdapFilter = groupSafeLdapFilter.and(
 				SafeLdapFilterConstraints.eq(groupMappings.getProperty("groupName"), name));
 
-			attribute = PortalLDAPUtil.getInstance().getMultivaluedAttribute(themeDisplay.getCompanyId(), safeLdapContext, SafeLdapName.fromUnsafe(baseDN), safeLdapFilter, attribute);
+			attribute = PortalLDAPUtil.getInstance().getMultivaluedAttribute(themeDisplay.getCompanyId(), safeLdapContext, SafeLdapNameFactory.fromUnsafe(baseDN), safeLdapFilter, attribute);
 		}
 
 		if (counter == 0) {

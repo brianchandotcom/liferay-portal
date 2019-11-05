@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.SafeLdapContext;
 import com.liferay.portal.security.ldap.SafeLdapFilterTemplate;
-import com.liferay.portal.security.ldap.SafeLdapName;
+import com.liferay.portal.security.ldap.SafeLdapNameFactory;
 import com.liferay.portal.security.ldap.SafePortalLDAP;
 import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
@@ -365,7 +365,7 @@ public class LDAPAuth implements Authenticator {
 
 			Attributes attributes = _portalLDAP.getUserAttributes(
 				ldapServerId, companyId, safeLdapContext,
-				SafeLdapName.from(searchResult));
+				SafeLdapNameFactory.from(searchResult));
 
 			// Authenticate
 

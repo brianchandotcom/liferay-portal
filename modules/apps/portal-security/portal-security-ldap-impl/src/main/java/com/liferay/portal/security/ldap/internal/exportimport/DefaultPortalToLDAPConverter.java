@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.exportimport.UserOperation;
 import com.liferay.portal.security.ldap.GroupConverterKeys;
 import com.liferay.portal.security.ldap.SafeLdapName;
+import com.liferay.portal.security.ldap.SafeLdapNameFactory;
 import com.liferay.portal.security.ldap.SafePortalLDAP;
 import com.liferay.portal.security.ldap.UserConverterKeys;
 import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
@@ -130,7 +131,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			ldapServerId, userGroup.getCompanyId(), userGroup.getName());
 
 		if (groupBinding != null) {
-			return SafeLdapName.from(groupBinding);
+			return SafeLdapNameFactory.from(groupBinding);
 		}
 
 		String rdnType = GetterUtil.getString(
@@ -140,7 +141,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			_safePortalLDAP.getGroupsDNSafeLdapName(
 				ldapServerId, userGroup.getCompanyId());
 
-		return SafeLdapName.from(
+		return SafeLdapNameFactory.from(
 			rdnType, userGroup.getName(), groupsDNSafeLdapName);
 	}
 
@@ -443,7 +444,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			user.getEmailAddress());
 
 		if (userBinding != null) {
-			return SafeLdapName.from(userBinding);
+			return SafeLdapNameFactory.from(userBinding);
 		}
 
 		String rdnType = GetterUtil.getString(
@@ -454,7 +455,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			_safePortalLDAP.getUsersDNSafeLdapName(
 				ldapServerId, user.getCompanyId());
 
-		return SafeLdapName.from(rdnType, rdnValue, usersDNSafeLdapName);
+		return SafeLdapNameFactory.from(rdnType, rdnValue, usersDNSafeLdapName);
 	}
 
 	public void setContactReservedFieldNames(

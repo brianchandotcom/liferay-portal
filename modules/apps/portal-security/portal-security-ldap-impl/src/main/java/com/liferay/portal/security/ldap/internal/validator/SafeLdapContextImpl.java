@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.ldap.SafeLdapContext;
 import com.liferay.portal.security.ldap.SafeLdapFilter;
 import com.liferay.portal.security.ldap.SafeLdapName;
+import com.liferay.portal.security.ldap.SafeLdapNameFactory;
 
 import java.util.Hashtable;
 
@@ -94,7 +95,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		_ldapContext.bind(SafeLdapName.fromUnsafe(name), obj);
+		_ldapContext.bind(SafeLdapNameFactory.fromUnsafe(name), obj);
 	}
 
 	@Override
@@ -108,7 +109,8 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		_ldapContext.bind(SafeLdapName.fromUnsafe(name), obj, attributes);
+		_ldapContext.bind(
+			SafeLdapNameFactory.fromUnsafe(name), obj, attributes);
 	}
 
 	@Override
@@ -185,7 +187,8 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		return _ldapContext.createSubcontext(SafeLdapName.fromUnsafe(name));
+		return _ldapContext.createSubcontext(
+			SafeLdapNameFactory.fromUnsafe(name));
 	}
 
 	@Override
@@ -200,7 +203,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		}
 
 		return _ldapContext.createSubcontext(
-			SafeLdapName.fromUnsafe(name), attributes);
+			SafeLdapNameFactory.fromUnsafe(name), attributes);
 	}
 
 	@Override
@@ -226,7 +229,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		_ldapContext.destroySubcontext(SafeLdapName.fromUnsafe(name));
+		_ldapContext.destroySubcontext(SafeLdapNameFactory.fromUnsafe(name));
 	}
 
 	@Override
@@ -275,7 +278,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		return _ldapContext.getAttributes(SafeLdapName.fromUnsafe(name));
+		return _ldapContext.getAttributes(SafeLdapNameFactory.fromUnsafe(name));
 	}
 
 	@Override
@@ -290,7 +293,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		}
 
 		return _ldapContext.getAttributes(
-			SafeLdapName.fromUnsafe(name), attrIds);
+			SafeLdapNameFactory.fromUnsafe(name), attrIds);
 	}
 
 	@Override
@@ -331,7 +334,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		return _ldapContext.getNameParser(SafeLdapName.fromUnsafe(name));
+		return _ldapContext.getNameParser(SafeLdapNameFactory.fromUnsafe(name));
 	}
 
 	@Override
@@ -367,7 +370,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		return _ldapContext.getSchema(SafeLdapName.fromUnsafe(name));
+		return _ldapContext.getSchema(SafeLdapNameFactory.fromUnsafe(name));
 	}
 
 	@Override
@@ -398,7 +401,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		}
 
 		return _ldapContext.getSchemaClassDefinition(
-			SafeLdapName.fromUnsafe(name));
+			SafeLdapNameFactory.fromUnsafe(name));
 	}
 
 	@Override
@@ -428,7 +431,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		return _ldapContext.list(SafeLdapName.fromUnsafe(name));
+		return _ldapContext.list(SafeLdapNameFactory.fromUnsafe(name));
 	}
 
 	@Override
@@ -458,7 +461,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		return _ldapContext.listBindings(SafeLdapName.fromUnsafe(name));
+		return _ldapContext.listBindings(SafeLdapNameFactory.fromUnsafe(name));
 	}
 
 	@Override
@@ -484,7 +487,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		return _ldapContext.lookup(SafeLdapName.fromUnsafe(name));
+		return _ldapContext.lookup(SafeLdapNameFactory.fromUnsafe(name));
 	}
 
 	@Override
@@ -510,7 +513,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		return _ldapContext.lookupLink(SafeLdapName.fromUnsafe(name));
+		return _ldapContext.lookupLink(SafeLdapNameFactory.fromUnsafe(name));
 	}
 
 	@Override
@@ -557,7 +560,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		}
 
 		_ldapContext.modifyAttributes(
-			SafeLdapName.fromUnsafe(name), modOp, attributes);
+			SafeLdapNameFactory.fromUnsafe(name), modOp, attributes);
 	}
 
 	@Override
@@ -571,7 +574,8 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		_ldapContext.modifyAttributes(SafeLdapName.fromUnsafe(name), mods);
+		_ldapContext.modifyAttributes(
+			SafeLdapNameFactory.fromUnsafe(name), mods);
 	}
 
 	@Override
@@ -620,7 +624,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		_ldapContext.rebind(SafeLdapName.fromUnsafe(name), obj);
+		_ldapContext.rebind(SafeLdapNameFactory.fromUnsafe(name), obj);
 	}
 
 	@Override
@@ -634,7 +638,8 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		_ldapContext.rebind(SafeLdapName.fromUnsafe(name), obj, attributes);
+		_ldapContext.rebind(
+			SafeLdapNameFactory.fromUnsafe(name), obj, attributes);
 	}
 
 	@Override
@@ -675,7 +680,8 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		}
 
 		_ldapContext.rename(
-			SafeLdapName.fromUnsafe(oldName), SafeLdapName.fromUnsafe(newName));
+			SafeLdapNameFactory.fromUnsafe(oldName),
+			SafeLdapNameFactory.fromUnsafe(newName));
 	}
 
 	@Override
@@ -769,7 +775,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		}
 
 		return _ldapContext.search(
-			SafeLdapName.fromUnsafe(name), matchingAttributes);
+			SafeLdapNameFactory.fromUnsafe(name), matchingAttributes);
 	}
 
 	@Override
@@ -786,7 +792,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		}
 
 		return _ldapContext.search(
-			SafeLdapName.fromUnsafe(name), matchingAttributes,
+			SafeLdapNameFactory.fromUnsafe(name), matchingAttributes,
 			attributesToReturn);
 	}
 
@@ -804,7 +810,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		}
 
 		return _ldapContext.search(
-			SafeLdapName.fromUnsafe(name), filter, filterArgs, cons);
+			SafeLdapNameFactory.fromUnsafe(name), filter, filterArgs, cons);
 	}
 
 	@Override
@@ -819,7 +825,8 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		return _ldapContext.search(SafeLdapName.fromUnsafe(name), filter, cons);
+		return _ldapContext.search(
+			SafeLdapNameFactory.fromUnsafe(name), filter, cons);
 	}
 
 	@Override
@@ -857,7 +864,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			_log.warn("Unsafe LDAP method used");
 		}
 
-		_ldapContext.unbind(SafeLdapName.fromUnsafe(name));
+		_ldapContext.unbind(SafeLdapNameFactory.fromUnsafe(name));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

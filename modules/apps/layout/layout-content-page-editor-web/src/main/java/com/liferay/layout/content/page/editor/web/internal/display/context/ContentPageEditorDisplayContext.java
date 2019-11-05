@@ -114,6 +114,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -273,7 +274,7 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"imageSelectorURL", _getItemSelectorURL()
 		).put(
-			"infoItemSelectorURL", _getInfoItemSelectorURL()
+			"infoItemSelectorURL", _getInfoItemSelectorURL(null)
 		).put(
 			"languageId", themeDisplay.getLanguageId()
 		).put(
@@ -458,6 +459,38 @@ public class ContentPageEditorDisplayContext {
 	protected final InfoDisplayContributorTracker infoDisplayContributorTracker;
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
+
+	private void _addFragmentEntryLinkFieldsSelectorURL(JSONObject jsonObject) {
+		JSONArray fieldSetsJSONArray = jsonObject.getJSONArray("fieldSets");
+
+		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
+			JSONObject fieldSetsJSONObject = fieldSetsJSONArray.getJSONObject(
+				i);
+
+			JSONArray fieldsJSONArray = fieldSetsJSONObject.getJSONArray(
+				"fields");
+
+			for (int j = 0; j < fieldsJSONArray.length(); j++) {
+				JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(j);
+
+				if ((fieldJSONObject != null) &&
+					Objects.equals(
+						fieldJSONObject.getString("type"), "itemSelector") &&
+					fieldJSONObject.has("typeOptions")) {
+
+					JSONObject typeOptionsJSONObject =
+						fieldJSONObject.getJSONObject("typeOptions");
+
+					if (typeOptionsJSONObject.has("className")) {
+						typeOptionsJSONObject.put(
+							"itemSelectorUrl",
+							_getInfoItemSelectorURL(
+								typeOptionsJSONObject.getString("className")));
+					}
+				}
+			}
+		}
+	}
 
 	private SoyContext _getAvailableLanguagesSoyContext() {
 		SoyContext availableLanguagesSoyContext =
@@ -855,9 +888,13 @@ public class ContentPageEditorDisplayContext {
 					_fragmentRendererController.getConfiguration(
 						fragmentRendererContext);
 
+				JSONObject configurationJSONObject =
+					JSONFactoryUtil.createJSONObject(configuration);
+
+				_addFragmentEntryLinkFieldsSelectorURL(configurationJSONObject);
+
 				soyContext.put(
-					"configuration",
-					JSONFactoryUtil.createJSONObject(configuration)
+					"configuration", configurationJSONObject
 				).putHTML(
 					"content", content
 				).put(
@@ -981,9 +1018,13 @@ public class ContentPageEditorDisplayContext {
 		return _imageItemSelectorCriterion;
 	}
 
-	private String _getInfoItemSelectorURL() {
-		ItemSelectorCriterion itemSelectorCriterion =
+	private String _getInfoItemSelectorURL(String className) {
+		InfoItemItemSelectorCriterion itemSelectorCriterion =
 			new InfoItemItemSelectorCriterion();
+
+		if (Validator.isNotNull(className)) {
+			itemSelectorCriterion.setClassName(className);
+		}
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoItemItemSelectorReturnType());

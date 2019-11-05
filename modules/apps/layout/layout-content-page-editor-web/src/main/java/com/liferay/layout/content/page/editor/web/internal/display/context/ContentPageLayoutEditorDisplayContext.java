@@ -444,6 +444,29 @@ public class ContentPageLayoutEditorDisplayContext
 		return true;
 	}
 
+	private Boolean _isLockedSegmentsExperience(long segmentsExperienceId)
+		throws PortalException {
+
+		if (_lockedSegmentsExperience != null) {
+			return _lockedSegmentsExperience;
+		}
+
+		if (SegmentsExperienceConstants.ID_DEFAULT == segmentsExperienceId) {
+			_lockedSegmentsExperience =
+				_hasDefaultSegmentsExperienceLockedSegmentsExperiment();
+		}
+		else {
+			SegmentsExperience segmentsExperience =
+				SegmentsExperienceLocalServiceUtil.getSegmentsExperience(
+					segmentsExperienceId);
+
+			_lockedSegmentsExperience =
+				segmentsExperience.hasSegmentsExperiment();
+		}
+
+		return _lockedSegmentsExperience;
+	}
+
 	private boolean _isShowSegmentsExperiences() throws PortalException {
 		if (_showSegmentsExperiences != null) {
 			return _showSegmentsExperiences;
@@ -488,6 +511,9 @@ public class ContentPageLayoutEditorDisplayContext
 		).put(
 			"layoutDataList", _getLayoutDataListSoyContext()
 		).put(
+			"lockedSegmentsExperience",
+			_isLockedSegmentsExperience(getSegmentsExperienceId())
+		).put(
 			"segmentsExperienceId", String.valueOf(getSegmentsExperienceId())
 		).put(
 			"segmentsExperimentStatus",
@@ -502,6 +528,7 @@ public class ContentPageLayoutEditorDisplayContext
 	private SoyContext _editorSoyContext;
 	private String _editSegmentsEntryURL;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
+	private Boolean _lockedSegmentsExperience;
 	private Long _segmentsEntryId;
 	private Long _segmentsExperienceId;
 	private Boolean _showSegmentsExperiences;

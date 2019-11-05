@@ -36,15 +36,20 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -181,7 +186,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				StringUtil.upperCase(extension),
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				_toMap(fieldNameMappingString), batchEngineTaskOperation.name(),
-				version);
+				_toParameters(), version);
 
 		executorService.submit(
 			() -> _batchEngineImportTaskExecutor.execute(
@@ -228,6 +233,32 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		return fieldNameMappingMap;
 	}
+
+	private Map<String, Serializable> _toParameters() {
+		Map<String, Serializable> parameters = new HashMap<>();
+
+		MultivaluedMap<String, String> queryParameters =
+			contextUriInfo.getQueryParameters();
+
+		for (Map.Entry<String, List<String>> entry :
+				queryParameters.entrySet()) {
+
+			if (_ignoredParameters.contains(entry.getKey())) {
+				continue;
+			}
+
+			List<String> values = entry.getValue();
+
+			if (!values.isEmpty()) {
+				parameters.put(entry.getKey(), values.get(0));
+			}
+		}
+
+		return parameters;
+	}
+
+	private static final List<String> _ignoredParameters = Arrays.asList(
+		"callbackURL", "fieldNameMapping");
 
 	@Reference
 	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;

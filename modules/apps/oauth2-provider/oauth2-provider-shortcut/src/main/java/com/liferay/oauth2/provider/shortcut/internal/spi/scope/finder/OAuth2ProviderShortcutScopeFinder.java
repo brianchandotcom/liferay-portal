@@ -19,10 +19,6 @@ import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandler;
 import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandlerFactory;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -80,21 +76,9 @@ public class OAuth2ProviderShortcutScopeFinder
 
 		for (String scopeAlias : _scopeAliasesList) {
 			String name = "OAUTH2_" + scopeAlias;
-			SAPEntry sapEntry = null;
 
-			try {
-				sapEntry = _sapEntryLocalService.fetchSAPEntry(companyId, name);
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Scope alias ", name, " is not found: ",
-							pe.getMessage()));
-				}
-
-				continue;
-			}
+			SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
+				companyId, name);
 
 			if ((sapEntry != null) && sapEntry.isEnabled()) {
 				scopes.add(scopeAlias);
@@ -108,9 +92,6 @@ public class OAuth2ProviderShortcutScopeFinder
 	public Set<String> map(String scope) {
 		return Collections.singleton(scope);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OAuth2ProviderShortcutScopeFinder.class);
 
 	private static final List<String> _scopeAliasesList = Arrays.asList(
 		"analytics.read", "analytics.write");

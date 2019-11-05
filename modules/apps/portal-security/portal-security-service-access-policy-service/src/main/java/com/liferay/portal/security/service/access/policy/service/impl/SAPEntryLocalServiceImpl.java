@@ -185,9 +185,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public SAPEntry fetchSAPEntry(long companyId, String name)
-		throws PortalException {
-
+	public SAPEntry fetchSAPEntry(long companyId, String name) {
 		return sapEntryPersistence.fetchByC_N(companyId, name);
 	}
 

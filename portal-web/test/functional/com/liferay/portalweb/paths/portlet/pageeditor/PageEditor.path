@@ -176,7 +176,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_CHECKBOX_UNCHECKED</td>
-	<td>//label[contains(.,'Show Resolved Comments')]/input[@value='false']</td>
+	<td>//label/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

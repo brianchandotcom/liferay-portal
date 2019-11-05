@@ -19,6 +19,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -44,6 +46,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -78,6 +81,18 @@ public class ServicePreActionTest {
 
 		_request.setAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET, _group.getPublicLayoutSet());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ResourceAction resourceAction =
+			_resourceActionLocalService.getResourceAction(
+				Layout.class.getName(), ActionKeys.VIEW);
+
+		_resourcePermissionLocalService.addResourcePermissions(
+			Layout.class.getName(), RoleConstants.GUEST,
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			resourceAction.getBitwiseValue());
 	}
 
 	@Test
@@ -247,6 +262,9 @@ public class ServicePreActionTest {
 
 	private final MockHttpServletRequest _request =
 		new MockHttpServletRequest();
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

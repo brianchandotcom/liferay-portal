@@ -399,7 +399,8 @@ public class LibraryReferenceTest {
 							continue;
 						}
 
-						String[] dependencyArray = dependency.split(":");
+						String[] dependencyArray = StringUtil.split(
+							dependency, CharPool.COLON);
 
 						if (dependencyArray.length < 3) {
 							continue;

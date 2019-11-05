@@ -18,7 +18,7 @@ import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
-import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
+import com.liferay.batch.engine.configuration.BatchEngineImportTaskConfiguration;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegate;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegateFactory;
 import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReader;
@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  */
 @Component(
-	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
+	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineImportTaskConfiguration",
 	service = BatchEngineImportTaskExecutor.class
 )
 public class BatchEngineImportTaskExecutorImpl
@@ -110,14 +110,14 @@ public class BatchEngineImportTaskExecutorImpl
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
+		BatchEngineImportTaskConfiguration batchEngineImportTaskConfiguration =
 			ConfigurableUtil.createConfigurable(
-				BatchEngineTaskConfiguration.class, properties);
+				BatchEngineImportTaskConfiguration.class, properties);
 
 		_batchEngineImportTaskItemReaderFactory =
 			new BatchEngineImportTaskItemReaderFactory(
 				GetterUtil.getString(
-					batchEngineTaskConfiguration.csvFileColumnDelimiter(),
+					batchEngineImportTaskConfiguration.csvFileColumnDelimiter(),
 					StringPool.COMMA));
 
 		_batchEngineTaskItemResourceDelegateFactory =

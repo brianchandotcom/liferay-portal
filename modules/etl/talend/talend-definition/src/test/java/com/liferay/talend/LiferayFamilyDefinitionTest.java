@@ -15,6 +15,7 @@
 package com.liferay.talend;
 
 import com.liferay.talend.tliferaybatchfile.TLiferayBatchFileDefinition;
+import com.liferay.talend.tliferaybatchoutput.TLiferayBatchOutputDefinition;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.tliferayinput.TLiferayInputDefinition;
 import com.liferay.talend.tliferayoutput.TLiferayOutputDefinition;
@@ -51,6 +52,7 @@ public class LiferayFamilyDefinitionTest {
 		List<Class> expectedDefinitions = new ArrayList<>();
 
 		expectedDefinitions.add(TLiferayBatchFileDefinition.class);
+		expectedDefinitions.add(TLiferayBatchOutputDefinition.class);
 		expectedDefinitions.add(TLiferayConnectionDefinition.class);
 		expectedDefinitions.add(TLiferayInputDefinition.class);
 		expectedDefinitions.add(TLiferayOutputDefinition.class);

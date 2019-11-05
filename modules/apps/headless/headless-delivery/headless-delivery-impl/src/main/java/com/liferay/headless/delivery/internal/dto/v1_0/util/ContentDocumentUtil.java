@@ -29,6 +29,7 @@ public class ContentDocumentUtil {
 
 		return new ContentDocument() {
 			{
+				contentType = "Document";
 				contentUrl = dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null, "", false,
 					false);

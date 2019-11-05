@@ -95,6 +95,23 @@ class FragmentsEditor extends Component {
 		};
 	}
 
+	_addEditionListeners() {
+		document.addEventListener('click', this._handleDocumentClick, true);
+		document.addEventListener('keydown', this._handleDocumentKeyDown);
+		document.addEventListener('keyup', this._handleDocumentKeyUp);
+		document.addEventListener('mouseover', this._handleDocumentMouseOver);
+	}
+
+	_removeEditionListeners() {
+		document.removeEventListener('click', this._handleDocumentClick, true);
+		document.removeEventListener('keydown', this._handleDocumentKeyDown);
+		document.removeEventListener('keyup', this._handleDocumentKeyUp);
+		document.removeEventListener(
+			'mouseover',
+			this._handleDocumentMouseOver
+		);
+	}
+
 	/**
 	 * @inheritdoc
 	 * @review
@@ -107,10 +124,9 @@ class FragmentsEditor extends Component {
 			this
 		);
 
-		document.addEventListener('click', this._handleDocumentClick, true);
-		document.addEventListener('keydown', this._handleDocumentKeyDown);
-		document.addEventListener('keyup', this._handleDocumentKeyUp);
-		document.addEventListener('mouseover', this._handleDocumentMouseOver);
+		if (this.lockedSegmentsExperience) {
+			this._addEditionListeners();
+		}
 	}
 
 	/**
@@ -118,15 +134,26 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	disposed() {
-		document.removeEventListener('click', this._handleDocumentClick, true);
-		document.removeEventListener('keydown', this._handleDocumentKeyDown);
-		document.removeEventListener('keyup', this._handleDocumentKeyUp);
-		document.removeEventListener(
-			'mouseover',
-			this._handleDocumentMouseOver
-		);
+		this._removeEditionListeners();
 
 		stopListeningWidgetConfigurationChange();
+	}
+
+	/**
+	 * Listens for changes in the Experience lock status to hide edition features
+	 * @inheritdoc
+	 * @review
+	 */
+	syncLockedSegmentsExperience(value, previousValue) {
+		if (value && value !== previousValue) {
+			this.store.dispatch({
+				type: CLEAR_ACTIVE_ITEM
+			});
+
+			this._removeEditionListeners();
+		} else if (value !== previousValue) {
+			this._addEditionListeners();
+		}
 	}
 
 	/**

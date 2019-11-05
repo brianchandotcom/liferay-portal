@@ -118,12 +118,12 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 			SafeLdapFilter safeLdapFilter = SafeLdapFilterConstraints.eq(
 				groupMappings.getProperty("groupName"), groupName);
 
-			SafeLdapFilter groupLDAPFilter =
+			SafeLdapFilter groupSafeLdapFilter =
 				LDAPUtil.getGroupSearchSafeLdapFilter(
 					ldapServerConfiguration, _ldapFilterValidator);
 
-			if (groupLDAPFilter != null) {
-				safeLdapFilter = safeLdapFilter.and(groupLDAPFilter);
+			if (groupSafeLdapFilter != null) {
+				safeLdapFilter = safeLdapFilter.and(groupSafeLdapFilter);
 			}
 
 			SearchControls searchControls = new SearchControls(

@@ -28,10 +28,10 @@ import java.util.Map;
 /**
  * @author Ivica Cardic
  */
-public class JSONBatchEngineTaskItemReader
-	implements BatchEngineTaskItemReader {
+public class JSONBatchEngineImportTaskItemReader
+	implements BatchEngineImportTaskItemReader {
 
-	public JSONBatchEngineTaskItemReader(InputStream inputStream)
+	public JSONBatchEngineImportTaskItemReader(InputStream inputStream)
 		throws IOException {
 
 		_inputStream = inputStream;

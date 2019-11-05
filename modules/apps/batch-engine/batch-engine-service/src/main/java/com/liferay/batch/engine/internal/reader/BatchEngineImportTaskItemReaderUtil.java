@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * @author Ivica Cardic
  */
-public class BatchEngineTaskItemReaderUtil {
+public class BatchEngineImportTaskItemReaderUtil {
 
 	public static <T> T convertValue(
 			Class<T> itemClass, Map<String, Object> fieldNameValueMap)

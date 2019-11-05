@@ -23,9 +23,11 @@ import java.sql.Blob;
  * @author Shuyang Zhou
  * @author Ivica Cardic
  */
-public class BatchEngineTaskItemReaderFactory {
+public class BatchEngineImportTaskItemReaderFactory {
 
-	public BatchEngineTaskItemReaderFactory(String csvFileColumnDelimiter) {
+	public BatchEngineImportTaskItemReaderFactory(
+		String csvFileColumnDelimiter) {
+
 		_csvFileColumnDelimiter = csvFileColumnDelimiter;
 	}
 

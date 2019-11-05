@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * @author Ivica Cardic
  */
-public interface BatchEngineTaskItemReader extends Closeable {
+public interface BatchEngineImportTaskItemReader extends Closeable {
 
 	public Map<String, Object> read() throws Exception;
 

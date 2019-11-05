@@ -14,34 +14,28 @@
 
 package com.liferay.batch.engine.internal.reader;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Ivica Cardic
  */
-public class CSVBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
+public class JSONLBatchEngineImportTaskItemReader
+	implements BatchEngineImportTaskItemReader {
 
-	public CSVBatchEngineTaskItemReader(
-			String delimiter, InputStream inputStream)
-		throws IOException {
-
-		_delimiter = delimiter;
-
+	public JSONLBatchEngineImportTaskItemReader(InputStream inputStream) {
 		_inputStream = inputStream;
 
 		_unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(_inputStream));
-
-		_fieldNames = StringUtil.split(
-			_unsyncBufferedReader.readLine(), delimiter);
 	}
 
 	@Override
@@ -57,39 +51,14 @@ public class CSVBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 			return null;
 		}
 
-		Map<String, Object> fieldNameValueMap = new HashMap<>();
-
-		String[] values = StringUtil.split(line, _delimiter);
-
-		for (int i = 0; i < values.length; i++) {
-			String fieldName = _fieldNames[i];
-
-			if (fieldName == null) {
-				continue;
-			}
-
-			String value = values[i].trim();
-
-			if (value.isEmpty()) {
-				value = null;
-			}
-
-			int lastDelimiterIndex = fieldName.lastIndexOf('_');
-
-			if (lastDelimiterIndex == -1) {
-				fieldNameValueMap.put(fieldName, value);
-			}
-			else {
-				BatchEngineTaskItemReaderUtil.handleMapField(
-					fieldName, fieldNameValueMap, lastDelimiterIndex, value);
-			}
-		}
-
-		return fieldNameValueMap;
+		return _objectMapper.readValue(
+			line,
+			new TypeReference<Map<String, Object>>() {
+			});
 	}
 
-	private final String _delimiter;
-	private final String[] _fieldNames;
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
+
 	private final InputStream _inputStream;
 	private final UnsyncBufferedReader _unsyncBufferedReader;
 

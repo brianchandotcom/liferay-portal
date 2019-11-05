@@ -34,9 +34,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 /**
  * @author Ivica Cardic
  */
-public class XLSBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
+public class XLSBatchEngineImportTaskItemReader
+	implements BatchEngineImportTaskItemReader {
 
-	public XLSBatchEngineTaskItemReader(InputStream inputStream)
+	public XLSBatchEngineImportTaskItemReader(InputStream inputStream)
 		throws IOException {
 
 		_inputStream = inputStream;
@@ -110,7 +111,7 @@ public class XLSBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 					fieldNameValueMap.put(fieldName, value);
 				}
 				else {
-					BatchEngineTaskItemReaderUtil.handleMapField(
+					BatchEngineImportTaskItemReaderUtil.handleMapField(
 						fieldName, fieldNameValueMap, lastDelimiterIndex,
 						value);
 				}

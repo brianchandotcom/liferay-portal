@@ -34,8 +34,8 @@ import org.junit.Test;
 /**
  * @author Ivica Cardic
  */
-public class CSVBatchEngineTaskItemWriterTest
-	extends BaseBatchEngineTaskItemWriterTestCase {
+public class CSVBatchEngineExportTaskItemWriterTest
+	extends BaseBatchEngineExportTaskItemWriterTestCase {
 
 	@Test
 	public void testWriteRowsWithDefinedFieldNames1() throws Exception {
@@ -127,13 +127,14 @@ public class CSVBatchEngineTaskItemWriterTest
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		try (CSVBatchEngineTaskItemWriter csvBatchEngineTaskItemWriter =
-				new CSVBatchEngineTaskItemWriter(
-					StringPool.COMMA, fieldMap, fieldNames,
-					unsyncByteArrayOutputStream)) {
+		try (CSVBatchEngineExportTaskItemWriter
+				csvBatchEngineExportTaskItemWriter =
+					new CSVBatchEngineExportTaskItemWriter(
+						StringPool.COMMA, fieldMap, fieldNames,
+						unsyncByteArrayOutputStream)) {
 
 			for (Item[] items : getItemGroups()) {
-				csvBatchEngineTaskItemWriter.write(Arrays.asList(items));
+				csvBatchEngineExportTaskItemWriter.write(Arrays.asList(items));
 			}
 		}
 

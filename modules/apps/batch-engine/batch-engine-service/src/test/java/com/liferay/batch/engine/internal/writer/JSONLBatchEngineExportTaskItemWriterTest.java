@@ -29,8 +29,8 @@ import org.skyscreamer.jsonassert.JSONAssert;
 /**
  * @author Ivica Cardic
  */
-public class JSONBatchEngineTaskItemWriterTest
-	extends BaseBatchEngineTaskItemWriterTestCase {
+public class JSONLBatchEngineExportTaskItemWriterTest
+	extends BaseBatchEngineExportTaskItemWriterTestCase {
 
 	@Test
 	public void testWriteRowsWithDefinedFieldNames1() throws Exception {
@@ -68,16 +68,10 @@ public class JSONBatchEngineTaskItemWriterTest
 			fieldNames = jsonFieldNames;
 		}
 
-		sb.append("[");
-
 		for (Item item : items) {
 			sb.append(getItemJSONContent(fieldNames, item));
-			sb.append(StringPool.COMMA);
+			sb.append(StringPool.NEW_LINE);
 		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append("]");
 
 		return sb.toString();
 	}
@@ -86,13 +80,15 @@ public class JSONBatchEngineTaskItemWriterTest
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		try (JSONBatchEngineTaskItemWriter jsonBatchEngineTaskItemWriter =
-				new JSONBatchEngineTaskItemWriter(
-					fieldMap.keySet(), fieldNames,
-					unsyncByteArrayOutputStream)) {
+		try (JSONLBatchEngineExportTaskItemWriter
+				jsonlBatchEngineExportTaskItemWriter =
+					new JSONLBatchEngineExportTaskItemWriter(
+						fieldMap.keySet(), fieldNames,
+						unsyncByteArrayOutputStream)) {
 
 			for (Item[] items : getItemGroups()) {
-				jsonBatchEngineTaskItemWriter.write(Arrays.asList(items));
+				jsonlBatchEngineExportTaskItemWriter.write(
+					Arrays.asList(items));
 			}
 		}
 

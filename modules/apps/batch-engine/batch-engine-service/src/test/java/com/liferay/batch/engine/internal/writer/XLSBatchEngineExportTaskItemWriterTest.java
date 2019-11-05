@@ -47,8 +47,8 @@ import org.junit.Test;
 /**
  * @author Ivica Cardic
  */
-public class XLSBatchEngineTaskItemWriterTest
-	extends BaseBatchEngineTaskItemWriterTestCase {
+public class XLSBatchEngineExportTaskItemWriterTest
+	extends BaseBatchEngineExportTaskItemWriterTestCase {
 
 	@Test
 	public void testWriteRowsWithDefinedFieldNames1() throws Exception {
@@ -180,12 +180,13 @@ public class XLSBatchEngineTaskItemWriterTest
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		try (XLSBatchEngineTaskItemWriter xlsBatchEngineTaskItemWriter =
-				new XLSBatchEngineTaskItemWriter(
-					fieldMap, fieldNames, unsyncByteArrayOutputStream)) {
+		try (XLSBatchEngineExportTaskItemWriter
+				xlsBatchEngineExportTaskItemWriter =
+					new XLSBatchEngineExportTaskItemWriter(
+						fieldMap, fieldNames, unsyncByteArrayOutputStream)) {
 
 			for (Item[] items : getItemGroups()) {
-				xlsBatchEngineTaskItemWriter.write(Arrays.asList(items));
+				xlsBatchEngineExportTaskItemWriter.write(Arrays.asList(items));
 			}
 		}
 

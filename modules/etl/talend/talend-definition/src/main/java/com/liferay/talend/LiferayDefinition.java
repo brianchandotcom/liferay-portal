@@ -48,6 +48,9 @@ public abstract class LiferayDefinition extends AbstractComponentDefinition {
 	protected static final String BATCH_FILE_SINK_CLASS =
 		"com.liferay.talend.runtime.LiferayBatchFileSink";
 
+	protected static final String SINK_CLASS =
+		"com.liferay.talend.runtime.LiferaySink";
+
 	private static final String _MAVEN_GROUP_ID = "com.liferay";
 
 	private static final String _MAVEN_RUNTIME_ARTIFACT_ID =

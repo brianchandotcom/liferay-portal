@@ -19,6 +19,7 @@ import aQute.bnd.annotation.component.Component;
 import com.google.auto.service.AutoService;
 
 import com.liferay.talend.tliferaybatchfile.TLiferayBatchFileDefinition;
+import com.liferay.talend.tliferaybatchoutput.TLiferayBatchOutputDefinition;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.tliferayinput.TLiferayInputDefinition;
 import com.liferay.talend.tliferayoutput.TLiferayOutputDefinition;
@@ -34,6 +35,7 @@ import org.talend.components.api.Constants;
  * Install all of the definitions provided for the Liferay component family
  *
  * @author Zoltán Takács
+ * @author Igor Beslic
  * @review
  */
 @AutoService(ComponentInstaller.class)
@@ -49,6 +51,7 @@ public class LiferayFamilyDefinition
 	public LiferayFamilyDefinition() {
 		super(
 			NAME, new TLiferayBatchFileDefinition(),
+			new TLiferayBatchOutputDefinition(),
 			new TLiferayConnectionDefinition(), new TLiferayInputDefinition(),
 			new TLiferayOutputDefinition(),
 			new LiferayConnectionEditWizardDefinition(),

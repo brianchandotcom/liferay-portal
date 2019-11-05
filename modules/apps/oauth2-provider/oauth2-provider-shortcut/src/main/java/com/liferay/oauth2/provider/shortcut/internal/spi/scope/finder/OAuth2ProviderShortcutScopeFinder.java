@@ -76,7 +76,7 @@ public class OAuth2ProviderShortcutScopeFinder
 			return _scopeAliasesList;
 		}
 
-		ArrayList<String> scopes = new ArrayList<>();
+		List<String> scopes = new ArrayList<>();
 
 		for (String scopeAlias : _scopeAliasesList) {
 			String name = "OAUTH2_" + scopeAlias;

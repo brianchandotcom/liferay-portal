@@ -76,7 +76,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			analyticsMessageBuilder.action(eventType);
 			analyticsMessageBuilder.object(serialize(object));
 
-			_analyticsMessageSenderClient.send(
+			analyticsMessageSenderClient.send(
 				Collections.singletonList(analyticsMessageBuilder.build()));
 		}
 		catch (Exception e) {
@@ -89,7 +89,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 	protected String serialize(Object object) {
 		if (object instanceof User) {
-			return _userSerializer.serialize((User)object);
+			return userSerializer.serialize((User)object);
 		}
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
@@ -99,8 +99,8 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 			try {
 				JSONObject userJSONObject = JSONFactoryUtil.createJSONObject(
-					_userSerializer.serialize(
-						_userLocalService.getUser(contact.getUserId())));
+					userSerializer.serialize(
+						userLocalService.getUser(contact.getUserId())));
 
 				userJSONObject.put(
 					"contact",
@@ -126,6 +126,15 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		_configurationAdmin = configurationAdmin;
 	}
 
+	@Reference
+	protected AnalyticsMessageSenderClient analyticsMessageSenderClient;
+
+	@Reference
+	protected UserLocalService userLocalService;
+
+	@Reference
+	protected UserSerializer userSerializer;
+
 	private String _getDataSourceId() {
 		try {
 			return String.valueOf(_getProperty("dataSourceId"));
@@ -147,15 +156,6 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseEntityModelListener.class);
 
-	@Reference
-	private AnalyticsMessageSenderClient _analyticsMessageSenderClient;
-
 	private ConfigurationAdmin _configurationAdmin;
-
-	@Reference
-	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserSerializer _userSerializer;
 
 }

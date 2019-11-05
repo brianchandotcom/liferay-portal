@@ -17,13 +17,11 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.ArrayList;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rachael Koestartyo
@@ -49,7 +47,7 @@ public class UserModelListener extends BaseEntityModelListener<User> {
 	@Override
 	public void onBeforeUpdate(User newUser) throws ModelListenerException {
 		try {
-			User oldUser = _userLocalService.getUser(newUser.getUserId());
+			User oldUser = userLocalService.getUser(newUser.getUserId());
 
 			if (_equals(newUser, oldUser)) {
 				return;
@@ -89,8 +87,5 @@ public class UserModelListener extends BaseEntityModelListener<User> {
 
 		return true;
 	}
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

@@ -19,6 +19,7 @@ import com.liferay.talend.runtime.writer.LiferayBatchFileWriteOperation;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.avro.Schema;
@@ -42,7 +43,7 @@ public class LiferayBatchFileSink implements Sink {
 
 	@Override
 	public Schema getEndpointSchema(
-		RuntimeContainer container, String schemaName) {
+		RuntimeContainer runtimeContainer, String schemaName) {
 
 		return null;
 	}
@@ -52,21 +53,23 @@ public class LiferayBatchFileSink implements Sink {
 	}
 
 	@Override
-	public List<NamedThing> getSchemaNames(RuntimeContainer container) {
-		return null;
+	public List<NamedThing> getSchemaNames(RuntimeContainer runtimeContainer) {
+		return Collections.emptyList();
 	}
 
 	@Override
 	public ValidationResult initialize(
-		RuntimeContainer container, ComponentProperties properties) {
+		RuntimeContainer runtimeContainer,
+		ComponentProperties componentProperties) {
 
-		_liferayBatchFileProperties = (LiferayBatchFileProperties)properties;
+		_liferayBatchFileProperties =
+			(LiferayBatchFileProperties)componentProperties;
 
 		return ValidationResult.OK;
 	}
 
 	@Override
-	public ValidationResult validate(RuntimeContainer container) {
+	public ValidationResult validate(RuntimeContainer runtimeContainer) {
 		String batchFilePath = _liferayBatchFileProperties.getBatchFilePath();
 
 		if ((batchFilePath == null) || batchFilePath.isEmpty()) {

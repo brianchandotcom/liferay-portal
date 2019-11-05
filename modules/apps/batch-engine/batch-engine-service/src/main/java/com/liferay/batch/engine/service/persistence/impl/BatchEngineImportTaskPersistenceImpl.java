@@ -14,11 +14,11 @@
 
 package com.liferay.batch.engine.service.persistence.impl;
 
-import com.liferay.batch.engine.exception.NoSuchTaskException;
-import com.liferay.batch.engine.model.BatchEngineTask;
-import com.liferay.batch.engine.model.impl.BatchEngineTaskImpl;
-import com.liferay.batch.engine.model.impl.BatchEngineTaskModelImpl;
-import com.liferay.batch.engine.service.persistence.BatchEngineTaskPersistence;
+import com.liferay.batch.engine.exception.NoSuchImportTaskException;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.model.impl.BatchEngineImportTaskImpl;
+import com.liferay.batch.engine.model.impl.BatchEngineImportTaskModelImpl;
+import com.liferay.batch.engine.service.persistence.BatchEngineImportTaskPersistence;
 import com.liferay.batch.engine.service.persistence.impl.constants.BatchEnginePersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * The persistence implementation for the batch engine task service.
+ * The persistence implementation for the batch engine import task service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -71,18 +71,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  * @generated
  */
-@Component(service = BatchEngineTaskPersistence.class)
-public class BatchEngineTaskPersistenceImpl
-	extends BasePersistenceImpl<BatchEngineTask>
-	implements BatchEngineTaskPersistence {
+@Component(service = BatchEngineImportTaskPersistence.class)
+public class BatchEngineImportTaskPersistenceImpl
+	extends BasePersistenceImpl<BatchEngineImportTask>
+	implements BatchEngineImportTaskPersistence {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use <code>BatchEngineTaskUtil</code> to access the batch engine task persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use <code>BatchEngineImportTaskUtil</code> to access the batch engine import task persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY =
-		BatchEngineTaskImpl.class.getName();
+		BatchEngineImportTaskImpl.class.getName();
 
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List1";
@@ -98,72 +98,74 @@ public class BatchEngineTaskPersistenceImpl
 	private FinderPath _finderPathCountByUuid;
 
 	/**
-	 * Returns all the batch engine tasks where uuid = &#63;.
+	 * Returns all the batch engine import tasks where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the matching batch engine tasks
+	 * @return the matching batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByUuid(String uuid) {
+	public List<BatchEngineImportTask> findByUuid(String uuid) {
 		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the batch engine tasks where uuid = &#63;.
+	 * Returns a range of all the batch engine import tasks where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of batch engine tasks
-	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
-	 * @return the range of matching batch engine tasks
+	 * @param start the lower bound of the range of batch engine import tasks
+	 * @param end the upper bound of the range of batch engine import tasks (not inclusive)
+	 * @return the range of matching batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByUuid(String uuid, int start, int end) {
+	public List<BatchEngineImportTask> findByUuid(
+		String uuid, int start, int end) {
+
 		return findByUuid(uuid, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the batch engine tasks where uuid = &#63;.
+	 * Returns an ordered range of all the batch engine import tasks where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of batch engine tasks
-	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
+	 * @param start the lower bound of the range of batch engine import tasks
+	 * @param end the upper bound of the range of batch engine import tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching batch engine tasks
+	 * @return the ordered range of matching batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByUuid(
+	public List<BatchEngineImportTask> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<BatchEngineTask> orderByComparator) {
+		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
 		return findByUuid(uuid, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the batch engine tasks where uuid = &#63;.
+	 * Returns an ordered range of all the batch engine import tasks where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of batch engine tasks
-	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
+	 * @param start the lower bound of the range of batch engine import tasks
+	 * @param end the upper bound of the range of batch engine import tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching batch engine tasks
+	 * @return the ordered range of matching batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByUuid(
+	public List<BatchEngineImportTask> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<BatchEngineTask> orderByComparator,
+		OrderByComparator<BatchEngineImportTask> orderByComparator,
 		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
@@ -184,15 +186,15 @@ public class BatchEngineTaskPersistenceImpl
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<BatchEngineTask> list = null;
+		List<BatchEngineImportTask> list = null;
 
 		if (useFinderCache) {
-			list = (List<BatchEngineTask>)finderCache.getResult(
+			list = (List<BatchEngineImportTask>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
-				for (BatchEngineTask batchEngineTask : list) {
-					if (!uuid.equals(batchEngineTask.getUuid())) {
+				for (BatchEngineImportTask batchEngineImportTask : list) {
+					if (!uuid.equals(batchEngineImportTask.getUuid())) {
 						list = null;
 
 						break;
@@ -212,7 +214,7 @@ public class BatchEngineTaskPersistenceImpl
 				query = new StringBundler(3);
 			}
 
-			query.append(_SQL_SELECT_BATCHENGINETASK_WHERE);
+			query.append(_SQL_SELECT_BATCHENGINEIMPORTTASK_WHERE);
 
 			boolean bindUuid = false;
 
@@ -230,7 +232,7 @@ public class BatchEngineTaskPersistenceImpl
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
 			else {
-				query.append(BatchEngineTaskModelImpl.ORDER_BY_JPQL);
+				query.append(BatchEngineImportTaskModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = query.toString();
@@ -248,7 +250,7 @@ public class BatchEngineTaskPersistenceImpl
 					qPos.add(uuid);
 				}
 
-				list = (List<BatchEngineTask>)QueryUtil.list(
+				list = (List<BatchEngineImportTask>)QueryUtil.list(
 					q, getDialect(), start, end);
 
 				cacheResult(list);
@@ -273,23 +275,24 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the first batch engine task in the ordered set where uuid = &#63;.
+	 * Returns the first batch engine import task in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching batch engine task
-	 * @throws NoSuchTaskException if a matching batch engine task could not be found
+	 * @return the first matching batch engine import task
+	 * @throws NoSuchImportTaskException if a matching batch engine import task could not be found
 	 */
 	@Override
-	public BatchEngineTask findByUuid_First(
-			String uuid, OrderByComparator<BatchEngineTask> orderByComparator)
-		throws NoSuchTaskException {
+	public BatchEngineImportTask findByUuid_First(
+			String uuid,
+			OrderByComparator<BatchEngineImportTask> orderByComparator)
+		throws NoSuchImportTaskException {
 
-		BatchEngineTask batchEngineTask = fetchByUuid_First(
+		BatchEngineImportTask batchEngineImportTask = fetchByUuid_First(
 			uuid, orderByComparator);
 
-		if (batchEngineTask != null) {
-			return batchEngineTask;
+		if (batchEngineImportTask != null) {
+			return batchEngineImportTask;
 		}
 
 		StringBundler msg = new StringBundler(4);
@@ -301,21 +304,23 @@ public class BatchEngineTaskPersistenceImpl
 
 		msg.append("}");
 
-		throw new NoSuchTaskException(msg.toString());
+		throw new NoSuchImportTaskException(msg.toString());
 	}
 
 	/**
-	 * Returns the first batch engine task in the ordered set where uuid = &#63;.
+	 * Returns the first batch engine import task in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
+	 * @return the first matching batch engine import task, or <code>null</code> if a matching batch engine import task could not be found
 	 */
 	@Override
-	public BatchEngineTask fetchByUuid_First(
-		String uuid, OrderByComparator<BatchEngineTask> orderByComparator) {
+	public BatchEngineImportTask fetchByUuid_First(
+		String uuid,
+		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
-		List<BatchEngineTask> list = findByUuid(uuid, 0, 1, orderByComparator);
+		List<BatchEngineImportTask> list = findByUuid(
+			uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -325,23 +330,24 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the last batch engine task in the ordered set where uuid = &#63;.
+	 * Returns the last batch engine import task in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine task
-	 * @throws NoSuchTaskException if a matching batch engine task could not be found
+	 * @return the last matching batch engine import task
+	 * @throws NoSuchImportTaskException if a matching batch engine import task could not be found
 	 */
 	@Override
-	public BatchEngineTask findByUuid_Last(
-			String uuid, OrderByComparator<BatchEngineTask> orderByComparator)
-		throws NoSuchTaskException {
+	public BatchEngineImportTask findByUuid_Last(
+			String uuid,
+			OrderByComparator<BatchEngineImportTask> orderByComparator)
+		throws NoSuchImportTaskException {
 
-		BatchEngineTask batchEngineTask = fetchByUuid_Last(
+		BatchEngineImportTask batchEngineImportTask = fetchByUuid_Last(
 			uuid, orderByComparator);
 
-		if (batchEngineTask != null) {
-			return batchEngineTask;
+		if (batchEngineImportTask != null) {
+			return batchEngineImportTask;
 		}
 
 		StringBundler msg = new StringBundler(4);
@@ -353,19 +359,20 @@ public class BatchEngineTaskPersistenceImpl
 
 		msg.append("}");
 
-		throw new NoSuchTaskException(msg.toString());
+		throw new NoSuchImportTaskException(msg.toString());
 	}
 
 	/**
-	 * Returns the last batch engine task in the ordered set where uuid = &#63;.
+	 * Returns the last batch engine import task in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
+	 * @return the last matching batch engine import task, or <code>null</code> if a matching batch engine import task could not be found
 	 */
 	@Override
-	public BatchEngineTask fetchByUuid_Last(
-		String uuid, OrderByComparator<BatchEngineTask> orderByComparator) {
+	public BatchEngineImportTask fetchByUuid_Last(
+		String uuid,
+		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
 		int count = countByUuid(uuid);
 
@@ -373,7 +380,7 @@ public class BatchEngineTaskPersistenceImpl
 			return null;
 		}
 
-		List<BatchEngineTask> list = findByUuid(
+		List<BatchEngineImportTask> list = findByUuid(
 			uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -384,38 +391,39 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the batch engine tasks before and after the current batch engine task in the ordered set where uuid = &#63;.
+	 * Returns the batch engine import tasks before and after the current batch engine import task in the ordered set where uuid = &#63;.
 	 *
-	 * @param batchEngineTaskId the primary key of the current batch engine task
+	 * @param batchEngineImportTaskId the primary key of the current batch engine import task
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next batch engine task
-	 * @throws NoSuchTaskException if a batch engine task with the primary key could not be found
+	 * @return the previous, current, and next batch engine import task
+	 * @throws NoSuchImportTaskException if a batch engine import task with the primary key could not be found
 	 */
 	@Override
-	public BatchEngineTask[] findByUuid_PrevAndNext(
-			long batchEngineTaskId, String uuid,
-			OrderByComparator<BatchEngineTask> orderByComparator)
-		throws NoSuchTaskException {
+	public BatchEngineImportTask[] findByUuid_PrevAndNext(
+			long batchEngineImportTaskId, String uuid,
+			OrderByComparator<BatchEngineImportTask> orderByComparator)
+		throws NoSuchImportTaskException {
 
 		uuid = Objects.toString(uuid, "");
 
-		BatchEngineTask batchEngineTask = findByPrimaryKey(batchEngineTaskId);
+		BatchEngineImportTask batchEngineImportTask = findByPrimaryKey(
+			batchEngineImportTaskId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			BatchEngineTask[] array = new BatchEngineTaskImpl[3];
+			BatchEngineImportTask[] array = new BatchEngineImportTaskImpl[3];
 
 			array[0] = getByUuid_PrevAndNext(
-				session, batchEngineTask, uuid, orderByComparator, true);
+				session, batchEngineImportTask, uuid, orderByComparator, true);
 
-			array[1] = batchEngineTask;
+			array[1] = batchEngineImportTask;
 
 			array[2] = getByUuid_PrevAndNext(
-				session, batchEngineTask, uuid, orderByComparator, false);
+				session, batchEngineImportTask, uuid, orderByComparator, false);
 
 			return array;
 		}
@@ -427,9 +435,9 @@ public class BatchEngineTaskPersistenceImpl
 		}
 	}
 
-	protected BatchEngineTask getByUuid_PrevAndNext(
-		Session session, BatchEngineTask batchEngineTask, String uuid,
-		OrderByComparator<BatchEngineTask> orderByComparator,
+	protected BatchEngineImportTask getByUuid_PrevAndNext(
+		Session session, BatchEngineImportTask batchEngineImportTask,
+		String uuid, OrderByComparator<BatchEngineImportTask> orderByComparator,
 		boolean previous) {
 
 		StringBundler query = null;
@@ -443,7 +451,7 @@ public class BatchEngineTaskPersistenceImpl
 			query = new StringBundler(3);
 		}
 
-		query.append(_SQL_SELECT_BATCHENGINETASK_WHERE);
+		query.append(_SQL_SELECT_BATCHENGINEIMPORTTASK_WHERE);
 
 		boolean bindUuid = false;
 
@@ -513,7 +521,7 @@ public class BatchEngineTaskPersistenceImpl
 			}
 		}
 		else {
-			query.append(BatchEngineTaskModelImpl.ORDER_BY_JPQL);
+			query.append(BatchEngineImportTaskModelImpl.ORDER_BY_JPQL);
 		}
 
 		String sql = query.toString();
@@ -532,13 +540,13 @@ public class BatchEngineTaskPersistenceImpl
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
-						batchEngineTask)) {
+						batchEngineImportTask)) {
 
 				qPos.add(orderByConditionValue);
 			}
 		}
 
-		List<BatchEngineTask> list = q.list();
+		List<BatchEngineImportTask> list = q.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -549,24 +557,24 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Removes all the batch engine tasks where uuid = &#63; from the database.
+	 * Removes all the batch engine import tasks where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (BatchEngineTask batchEngineTask :
+		for (BatchEngineImportTask batchEngineImportTask :
 				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
-			remove(batchEngineTask);
+			remove(batchEngineImportTask);
 		}
 	}
 
 	/**
-	 * Returns the number of batch engine tasks where uuid = &#63;.
+	 * Returns the number of batch engine import tasks where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the number of matching batch engine tasks
+	 * @return the number of matching batch engine import tasks
 	 */
 	@Override
 	public int countByUuid(String uuid) {
@@ -581,7 +589,7 @@ public class BatchEngineTaskPersistenceImpl
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
 
-			query.append(_SQL_COUNT_BATCHENGINETASK_WHERE);
+			query.append(_SQL_COUNT_BATCHENGINEIMPORTTASK_WHERE);
 
 			boolean bindUuid = false;
 
@@ -627,90 +635,92 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"batchEngineTask.uuid = ?";
+		"batchEngineImportTask.uuid = ?";
 
 	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(batchEngineTask.uuid IS NULL OR batchEngineTask.uuid = '')";
+		"(batchEngineImportTask.uuid IS NULL OR batchEngineImportTask.uuid = '')";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
 
 	/**
-	 * Returns all the batch engine tasks where uuid = &#63; and companyId = &#63;.
+	 * Returns all the batch engine import tasks where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the matching batch engine tasks
+	 * @return the matching batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByUuid_C(String uuid, long companyId) {
+	public List<BatchEngineImportTask> findByUuid_C(
+		String uuid, long companyId) {
+
 		return findByUuid_C(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the batch engine tasks where uuid = &#63; and companyId = &#63;.
+	 * Returns a range of all the batch engine import tasks where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of batch engine tasks
-	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
-	 * @return the range of matching batch engine tasks
+	 * @param start the lower bound of the range of batch engine import tasks
+	 * @param end the upper bound of the range of batch engine import tasks (not inclusive)
+	 * @return the range of matching batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByUuid_C(
+	public List<BatchEngineImportTask> findByUuid_C(
 		String uuid, long companyId, int start, int end) {
 
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the batch engine tasks where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the batch engine import tasks where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of batch engine tasks
-	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
+	 * @param start the lower bound of the range of batch engine import tasks
+	 * @param end the upper bound of the range of batch engine import tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching batch engine tasks
+	 * @return the ordered range of matching batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByUuid_C(
+	public List<BatchEngineImportTask> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<BatchEngineTask> orderByComparator) {
+		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
 		return findByUuid_C(
 			uuid, companyId, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the batch engine tasks where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the batch engine import tasks where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of batch engine tasks
-	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
+	 * @param start the lower bound of the range of batch engine import tasks
+	 * @param end the upper bound of the range of batch engine import tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching batch engine tasks
+	 * @return the ordered range of matching batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByUuid_C(
+	public List<BatchEngineImportTask> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<BatchEngineTask> orderByComparator,
+		OrderByComparator<BatchEngineImportTask> orderByComparator,
 		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
@@ -733,16 +743,16 @@ public class BatchEngineTaskPersistenceImpl
 			};
 		}
 
-		List<BatchEngineTask> list = null;
+		List<BatchEngineImportTask> list = null;
 
 		if (useFinderCache) {
-			list = (List<BatchEngineTask>)finderCache.getResult(
+			list = (List<BatchEngineImportTask>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
-				for (BatchEngineTask batchEngineTask : list) {
-					if (!uuid.equals(batchEngineTask.getUuid()) ||
-						(companyId != batchEngineTask.getCompanyId())) {
+				for (BatchEngineImportTask batchEngineImportTask : list) {
+					if (!uuid.equals(batchEngineImportTask.getUuid()) ||
+						(companyId != batchEngineImportTask.getCompanyId())) {
 
 						list = null;
 
@@ -763,7 +773,7 @@ public class BatchEngineTaskPersistenceImpl
 				query = new StringBundler(4);
 			}
 
-			query.append(_SQL_SELECT_BATCHENGINETASK_WHERE);
+			query.append(_SQL_SELECT_BATCHENGINEIMPORTTASK_WHERE);
 
 			boolean bindUuid = false;
 
@@ -783,7 +793,7 @@ public class BatchEngineTaskPersistenceImpl
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
 			else {
-				query.append(BatchEngineTaskModelImpl.ORDER_BY_JPQL);
+				query.append(BatchEngineImportTaskModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = query.toString();
@@ -803,7 +813,7 @@ public class BatchEngineTaskPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<BatchEngineTask>)QueryUtil.list(
+				list = (List<BatchEngineImportTask>)QueryUtil.list(
 					q, getDialect(), start, end);
 
 				cacheResult(list);
@@ -828,25 +838,25 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the first batch engine task in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first batch engine import task in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching batch engine task
-	 * @throws NoSuchTaskException if a matching batch engine task could not be found
+	 * @return the first matching batch engine import task
+	 * @throws NoSuchImportTaskException if a matching batch engine import task could not be found
 	 */
 	@Override
-	public BatchEngineTask findByUuid_C_First(
+	public BatchEngineImportTask findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<BatchEngineTask> orderByComparator)
-		throws NoSuchTaskException {
+			OrderByComparator<BatchEngineImportTask> orderByComparator)
+		throws NoSuchImportTaskException {
 
-		BatchEngineTask batchEngineTask = fetchByUuid_C_First(
+		BatchEngineImportTask batchEngineImportTask = fetchByUuid_C_First(
 			uuid, companyId, orderByComparator);
 
-		if (batchEngineTask != null) {
-			return batchEngineTask;
+		if (batchEngineImportTask != null) {
+			return batchEngineImportTask;
 		}
 
 		StringBundler msg = new StringBundler(6);
@@ -861,23 +871,23 @@ public class BatchEngineTaskPersistenceImpl
 
 		msg.append("}");
 
-		throw new NoSuchTaskException(msg.toString());
+		throw new NoSuchImportTaskException(msg.toString());
 	}
 
 	/**
-	 * Returns the first batch engine task in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first batch engine import task in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
+	 * @return the first matching batch engine import task, or <code>null</code> if a matching batch engine import task could not be found
 	 */
 	@Override
-	public BatchEngineTask fetchByUuid_C_First(
+	public BatchEngineImportTask fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<BatchEngineTask> orderByComparator) {
+		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
-		List<BatchEngineTask> list = findByUuid_C(
+		List<BatchEngineImportTask> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -888,25 +898,25 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the last batch engine task in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last batch engine import task in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine task
-	 * @throws NoSuchTaskException if a matching batch engine task could not be found
+	 * @return the last matching batch engine import task
+	 * @throws NoSuchImportTaskException if a matching batch engine import task could not be found
 	 */
 	@Override
-	public BatchEngineTask findByUuid_C_Last(
+	public BatchEngineImportTask findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<BatchEngineTask> orderByComparator)
-		throws NoSuchTaskException {
+			OrderByComparator<BatchEngineImportTask> orderByComparator)
+		throws NoSuchImportTaskException {
 
-		BatchEngineTask batchEngineTask = fetchByUuid_C_Last(
+		BatchEngineImportTask batchEngineImportTask = fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 
-		if (batchEngineTask != null) {
-			return batchEngineTask;
+		if (batchEngineImportTask != null) {
+			return batchEngineImportTask;
 		}
 
 		StringBundler msg = new StringBundler(6);
@@ -921,21 +931,21 @@ public class BatchEngineTaskPersistenceImpl
 
 		msg.append("}");
 
-		throw new NoSuchTaskException(msg.toString());
+		throw new NoSuchImportTaskException(msg.toString());
 	}
 
 	/**
-	 * Returns the last batch engine task in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last batch engine import task in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
+	 * @return the last matching batch engine import task, or <code>null</code> if a matching batch engine import task could not be found
 	 */
 	@Override
-	public BatchEngineTask fetchByUuid_C_Last(
+	public BatchEngineImportTask fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<BatchEngineTask> orderByComparator) {
+		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
 		int count = countByUuid_C(uuid, companyId);
 
@@ -943,7 +953,7 @@ public class BatchEngineTaskPersistenceImpl
 			return null;
 		}
 
-		List<BatchEngineTask> list = findByUuid_C(
+		List<BatchEngineImportTask> list = findByUuid_C(
 			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -954,41 +964,42 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the batch engine tasks before and after the current batch engine task in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the batch engine import tasks before and after the current batch engine import task in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param batchEngineTaskId the primary key of the current batch engine task
+	 * @param batchEngineImportTaskId the primary key of the current batch engine import task
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next batch engine task
-	 * @throws NoSuchTaskException if a batch engine task with the primary key could not be found
+	 * @return the previous, current, and next batch engine import task
+	 * @throws NoSuchImportTaskException if a batch engine import task with the primary key could not be found
 	 */
 	@Override
-	public BatchEngineTask[] findByUuid_C_PrevAndNext(
-			long batchEngineTaskId, String uuid, long companyId,
-			OrderByComparator<BatchEngineTask> orderByComparator)
-		throws NoSuchTaskException {
+	public BatchEngineImportTask[] findByUuid_C_PrevAndNext(
+			long batchEngineImportTaskId, String uuid, long companyId,
+			OrderByComparator<BatchEngineImportTask> orderByComparator)
+		throws NoSuchImportTaskException {
 
 		uuid = Objects.toString(uuid, "");
 
-		BatchEngineTask batchEngineTask = findByPrimaryKey(batchEngineTaskId);
+		BatchEngineImportTask batchEngineImportTask = findByPrimaryKey(
+			batchEngineImportTaskId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			BatchEngineTask[] array = new BatchEngineTaskImpl[3];
+			BatchEngineImportTask[] array = new BatchEngineImportTaskImpl[3];
 
 			array[0] = getByUuid_C_PrevAndNext(
-				session, batchEngineTask, uuid, companyId, orderByComparator,
-				true);
+				session, batchEngineImportTask, uuid, companyId,
+				orderByComparator, true);
 
-			array[1] = batchEngineTask;
+			array[1] = batchEngineImportTask;
 
 			array[2] = getByUuid_C_PrevAndNext(
-				session, batchEngineTask, uuid, companyId, orderByComparator,
-				false);
+				session, batchEngineImportTask, uuid, companyId,
+				orderByComparator, false);
 
 			return array;
 		}
@@ -1000,9 +1011,10 @@ public class BatchEngineTaskPersistenceImpl
 		}
 	}
 
-	protected BatchEngineTask getByUuid_C_PrevAndNext(
-		Session session, BatchEngineTask batchEngineTask, String uuid,
-		long companyId, OrderByComparator<BatchEngineTask> orderByComparator,
+	protected BatchEngineImportTask getByUuid_C_PrevAndNext(
+		Session session, BatchEngineImportTask batchEngineImportTask,
+		String uuid, long companyId,
+		OrderByComparator<BatchEngineImportTask> orderByComparator,
 		boolean previous) {
 
 		StringBundler query = null;
@@ -1016,7 +1028,7 @@ public class BatchEngineTaskPersistenceImpl
 			query = new StringBundler(4);
 		}
 
-		query.append(_SQL_SELECT_BATCHENGINETASK_WHERE);
+		query.append(_SQL_SELECT_BATCHENGINEIMPORTTASK_WHERE);
 
 		boolean bindUuid = false;
 
@@ -1088,7 +1100,7 @@ public class BatchEngineTaskPersistenceImpl
 			}
 		}
 		else {
-			query.append(BatchEngineTaskModelImpl.ORDER_BY_JPQL);
+			query.append(BatchEngineImportTaskModelImpl.ORDER_BY_JPQL);
 		}
 
 		String sql = query.toString();
@@ -1109,13 +1121,13 @@ public class BatchEngineTaskPersistenceImpl
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
-						batchEngineTask)) {
+						batchEngineImportTask)) {
 
 				qPos.add(orderByConditionValue);
 			}
 		}
 
-		List<BatchEngineTask> list = q.list();
+		List<BatchEngineImportTask> list = q.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -1126,28 +1138,28 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Removes all the batch engine tasks where uuid = &#63; and companyId = &#63; from the database.
+	 * Removes all the batch engine import tasks where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (BatchEngineTask batchEngineTask :
+		for (BatchEngineImportTask batchEngineImportTask :
 				findByUuid_C(
 					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
-			remove(batchEngineTask);
+			remove(batchEngineImportTask);
 		}
 	}
 
 	/**
-	 * Returns the number of batch engine tasks where uuid = &#63; and companyId = &#63;.
+	 * Returns the number of batch engine import tasks where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the number of matching batch engine tasks
+	 * @return the number of matching batch engine import tasks
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
@@ -1162,7 +1174,7 @@ public class BatchEngineTaskPersistenceImpl
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
 
-			query.append(_SQL_COUNT_BATCHENGINETASK_WHERE);
+			query.append(_SQL_COUNT_BATCHENGINEIMPORTTASK_WHERE);
 
 			boolean bindUuid = false;
 
@@ -1212,89 +1224,91 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"batchEngineTask.uuid = ? AND ";
+		"batchEngineImportTask.uuid = ? AND ";
 
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(batchEngineTask.uuid IS NULL OR batchEngineTask.uuid = '') AND ";
+		"(batchEngineImportTask.uuid IS NULL OR batchEngineImportTask.uuid = '') AND ";
 
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"batchEngineTask.companyId = ?";
+		"batchEngineImportTask.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByExecuteStatus;
 	private FinderPath _finderPathWithoutPaginationFindByExecuteStatus;
 	private FinderPath _finderPathCountByExecuteStatus;
 
 	/**
-	 * Returns all the batch engine tasks where executeStatus = &#63;.
+	 * Returns all the batch engine import tasks where executeStatus = &#63;.
 	 *
 	 * @param executeStatus the execute status
-	 * @return the matching batch engine tasks
+	 * @return the matching batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByExecuteStatus(String executeStatus) {
+	public List<BatchEngineImportTask> findByExecuteStatus(
+		String executeStatus) {
+
 		return findByExecuteStatus(
 			executeStatus, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the batch engine tasks where executeStatus = &#63;.
+	 * Returns a range of all the batch engine import tasks where executeStatus = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
 	 * @param executeStatus the execute status
-	 * @param start the lower bound of the range of batch engine tasks
-	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
-	 * @return the range of matching batch engine tasks
+	 * @param start the lower bound of the range of batch engine import tasks
+	 * @param end the upper bound of the range of batch engine import tasks (not inclusive)
+	 * @return the range of matching batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByExecuteStatus(
+	public List<BatchEngineImportTask> findByExecuteStatus(
 		String executeStatus, int start, int end) {
 
 		return findByExecuteStatus(executeStatus, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the batch engine tasks where executeStatus = &#63;.
+	 * Returns an ordered range of all the batch engine import tasks where executeStatus = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
 	 * @param executeStatus the execute status
-	 * @param start the lower bound of the range of batch engine tasks
-	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
+	 * @param start the lower bound of the range of batch engine import tasks
+	 * @param end the upper bound of the range of batch engine import tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching batch engine tasks
+	 * @return the ordered range of matching batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByExecuteStatus(
+	public List<BatchEngineImportTask> findByExecuteStatus(
 		String executeStatus, int start, int end,
-		OrderByComparator<BatchEngineTask> orderByComparator) {
+		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
 		return findByExecuteStatus(
 			executeStatus, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the batch engine tasks where executeStatus = &#63;.
+	 * Returns an ordered range of all the batch engine import tasks where executeStatus = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
 	 * @param executeStatus the execute status
-	 * @param start the lower bound of the range of batch engine tasks
-	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
+	 * @param start the lower bound of the range of batch engine import tasks
+	 * @param end the upper bound of the range of batch engine import tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching batch engine tasks
+	 * @return the ordered range of matching batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByExecuteStatus(
+	public List<BatchEngineImportTask> findByExecuteStatus(
 		String executeStatus, int start, int end,
-		OrderByComparator<BatchEngineTask> orderByComparator,
+		OrderByComparator<BatchEngineImportTask> orderByComparator,
 		boolean useFinderCache) {
 
 		executeStatus = Objects.toString(executeStatus, "");
@@ -1317,16 +1331,16 @@ public class BatchEngineTaskPersistenceImpl
 			};
 		}
 
-		List<BatchEngineTask> list = null;
+		List<BatchEngineImportTask> list = null;
 
 		if (useFinderCache) {
-			list = (List<BatchEngineTask>)finderCache.getResult(
+			list = (List<BatchEngineImportTask>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
-				for (BatchEngineTask batchEngineTask : list) {
+				for (BatchEngineImportTask batchEngineImportTask : list) {
 					if (!executeStatus.equals(
-							batchEngineTask.getExecuteStatus())) {
+							batchEngineImportTask.getExecuteStatus())) {
 
 						list = null;
 
@@ -1347,7 +1361,7 @@ public class BatchEngineTaskPersistenceImpl
 				query = new StringBundler(3);
 			}
 
-			query.append(_SQL_SELECT_BATCHENGINETASK_WHERE);
+			query.append(_SQL_SELECT_BATCHENGINEIMPORTTASK_WHERE);
 
 			boolean bindExecuteStatus = false;
 
@@ -1365,7 +1379,7 @@ public class BatchEngineTaskPersistenceImpl
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
 			else {
-				query.append(BatchEngineTaskModelImpl.ORDER_BY_JPQL);
+				query.append(BatchEngineImportTaskModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = query.toString();
@@ -1383,7 +1397,7 @@ public class BatchEngineTaskPersistenceImpl
 					qPos.add(executeStatus);
 				}
 
-				list = (List<BatchEngineTask>)QueryUtil.list(
+				list = (List<BatchEngineImportTask>)QueryUtil.list(
 					q, getDialect(), start, end);
 
 				cacheResult(list);
@@ -1408,24 +1422,24 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the first batch engine task in the ordered set where executeStatus = &#63;.
+	 * Returns the first batch engine import task in the ordered set where executeStatus = &#63;.
 	 *
 	 * @param executeStatus the execute status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching batch engine task
-	 * @throws NoSuchTaskException if a matching batch engine task could not be found
+	 * @return the first matching batch engine import task
+	 * @throws NoSuchImportTaskException if a matching batch engine import task could not be found
 	 */
 	@Override
-	public BatchEngineTask findByExecuteStatus_First(
+	public BatchEngineImportTask findByExecuteStatus_First(
 			String executeStatus,
-			OrderByComparator<BatchEngineTask> orderByComparator)
-		throws NoSuchTaskException {
+			OrderByComparator<BatchEngineImportTask> orderByComparator)
+		throws NoSuchImportTaskException {
 
-		BatchEngineTask batchEngineTask = fetchByExecuteStatus_First(
-			executeStatus, orderByComparator);
+		BatchEngineImportTask batchEngineImportTask =
+			fetchByExecuteStatus_First(executeStatus, orderByComparator);
 
-		if (batchEngineTask != null) {
-			return batchEngineTask;
+		if (batchEngineImportTask != null) {
+			return batchEngineImportTask;
 		}
 
 		StringBundler msg = new StringBundler(4);
@@ -1437,22 +1451,22 @@ public class BatchEngineTaskPersistenceImpl
 
 		msg.append("}");
 
-		throw new NoSuchTaskException(msg.toString());
+		throw new NoSuchImportTaskException(msg.toString());
 	}
 
 	/**
-	 * Returns the first batch engine task in the ordered set where executeStatus = &#63;.
+	 * Returns the first batch engine import task in the ordered set where executeStatus = &#63;.
 	 *
 	 * @param executeStatus the execute status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
+	 * @return the first matching batch engine import task, or <code>null</code> if a matching batch engine import task could not be found
 	 */
 	@Override
-	public BatchEngineTask fetchByExecuteStatus_First(
+	public BatchEngineImportTask fetchByExecuteStatus_First(
 		String executeStatus,
-		OrderByComparator<BatchEngineTask> orderByComparator) {
+		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
-		List<BatchEngineTask> list = findByExecuteStatus(
+		List<BatchEngineImportTask> list = findByExecuteStatus(
 			executeStatus, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1463,24 +1477,24 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the last batch engine task in the ordered set where executeStatus = &#63;.
+	 * Returns the last batch engine import task in the ordered set where executeStatus = &#63;.
 	 *
 	 * @param executeStatus the execute status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine task
-	 * @throws NoSuchTaskException if a matching batch engine task could not be found
+	 * @return the last matching batch engine import task
+	 * @throws NoSuchImportTaskException if a matching batch engine import task could not be found
 	 */
 	@Override
-	public BatchEngineTask findByExecuteStatus_Last(
+	public BatchEngineImportTask findByExecuteStatus_Last(
 			String executeStatus,
-			OrderByComparator<BatchEngineTask> orderByComparator)
-		throws NoSuchTaskException {
+			OrderByComparator<BatchEngineImportTask> orderByComparator)
+		throws NoSuchImportTaskException {
 
-		BatchEngineTask batchEngineTask = fetchByExecuteStatus_Last(
+		BatchEngineImportTask batchEngineImportTask = fetchByExecuteStatus_Last(
 			executeStatus, orderByComparator);
 
-		if (batchEngineTask != null) {
-			return batchEngineTask;
+		if (batchEngineImportTask != null) {
+			return batchEngineImportTask;
 		}
 
 		StringBundler msg = new StringBundler(4);
@@ -1492,20 +1506,20 @@ public class BatchEngineTaskPersistenceImpl
 
 		msg.append("}");
 
-		throw new NoSuchTaskException(msg.toString());
+		throw new NoSuchImportTaskException(msg.toString());
 	}
 
 	/**
-	 * Returns the last batch engine task in the ordered set where executeStatus = &#63;.
+	 * Returns the last batch engine import task in the ordered set where executeStatus = &#63;.
 	 *
 	 * @param executeStatus the execute status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
+	 * @return the last matching batch engine import task, or <code>null</code> if a matching batch engine import task could not be found
 	 */
 	@Override
-	public BatchEngineTask fetchByExecuteStatus_Last(
+	public BatchEngineImportTask fetchByExecuteStatus_Last(
 		String executeStatus,
-		OrderByComparator<BatchEngineTask> orderByComparator) {
+		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
 		int count = countByExecuteStatus(executeStatus);
 
@@ -1513,7 +1527,7 @@ public class BatchEngineTaskPersistenceImpl
 			return null;
 		}
 
-		List<BatchEngineTask> list = findByExecuteStatus(
+		List<BatchEngineImportTask> list = findByExecuteStatus(
 			executeStatus, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1524,40 +1538,41 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the batch engine tasks before and after the current batch engine task in the ordered set where executeStatus = &#63;.
+	 * Returns the batch engine import tasks before and after the current batch engine import task in the ordered set where executeStatus = &#63;.
 	 *
-	 * @param batchEngineTaskId the primary key of the current batch engine task
+	 * @param batchEngineImportTaskId the primary key of the current batch engine import task
 	 * @param executeStatus the execute status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next batch engine task
-	 * @throws NoSuchTaskException if a batch engine task with the primary key could not be found
+	 * @return the previous, current, and next batch engine import task
+	 * @throws NoSuchImportTaskException if a batch engine import task with the primary key could not be found
 	 */
 	@Override
-	public BatchEngineTask[] findByExecuteStatus_PrevAndNext(
-			long batchEngineTaskId, String executeStatus,
-			OrderByComparator<BatchEngineTask> orderByComparator)
-		throws NoSuchTaskException {
+	public BatchEngineImportTask[] findByExecuteStatus_PrevAndNext(
+			long batchEngineImportTaskId, String executeStatus,
+			OrderByComparator<BatchEngineImportTask> orderByComparator)
+		throws NoSuchImportTaskException {
 
 		executeStatus = Objects.toString(executeStatus, "");
 
-		BatchEngineTask batchEngineTask = findByPrimaryKey(batchEngineTaskId);
+		BatchEngineImportTask batchEngineImportTask = findByPrimaryKey(
+			batchEngineImportTaskId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			BatchEngineTask[] array = new BatchEngineTaskImpl[3];
+			BatchEngineImportTask[] array = new BatchEngineImportTaskImpl[3];
 
 			array[0] = getByExecuteStatus_PrevAndNext(
-				session, batchEngineTask, executeStatus, orderByComparator,
-				true);
+				session, batchEngineImportTask, executeStatus,
+				orderByComparator, true);
 
-			array[1] = batchEngineTask;
+			array[1] = batchEngineImportTask;
 
 			array[2] = getByExecuteStatus_PrevAndNext(
-				session, batchEngineTask, executeStatus, orderByComparator,
-				false);
+				session, batchEngineImportTask, executeStatus,
+				orderByComparator, false);
 
 			return array;
 		}
@@ -1569,9 +1584,10 @@ public class BatchEngineTaskPersistenceImpl
 		}
 	}
 
-	protected BatchEngineTask getByExecuteStatus_PrevAndNext(
-		Session session, BatchEngineTask batchEngineTask, String executeStatus,
-		OrderByComparator<BatchEngineTask> orderByComparator,
+	protected BatchEngineImportTask getByExecuteStatus_PrevAndNext(
+		Session session, BatchEngineImportTask batchEngineImportTask,
+		String executeStatus,
+		OrderByComparator<BatchEngineImportTask> orderByComparator,
 		boolean previous) {
 
 		StringBundler query = null;
@@ -1585,7 +1601,7 @@ public class BatchEngineTaskPersistenceImpl
 			query = new StringBundler(3);
 		}
 
-		query.append(_SQL_SELECT_BATCHENGINETASK_WHERE);
+		query.append(_SQL_SELECT_BATCHENGINEIMPORTTASK_WHERE);
 
 		boolean bindExecuteStatus = false;
 
@@ -1655,7 +1671,7 @@ public class BatchEngineTaskPersistenceImpl
 			}
 		}
 		else {
-			query.append(BatchEngineTaskModelImpl.ORDER_BY_JPQL);
+			query.append(BatchEngineImportTaskModelImpl.ORDER_BY_JPQL);
 		}
 
 		String sql = query.toString();
@@ -1674,13 +1690,13 @@ public class BatchEngineTaskPersistenceImpl
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
-						batchEngineTask)) {
+						batchEngineImportTask)) {
 
 				qPos.add(orderByConditionValue);
 			}
 		}
 
-		List<BatchEngineTask> list = q.list();
+		List<BatchEngineImportTask> list = q.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -1691,26 +1707,26 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Removes all the batch engine tasks where executeStatus = &#63; from the database.
+	 * Removes all the batch engine import tasks where executeStatus = &#63; from the database.
 	 *
 	 * @param executeStatus the execute status
 	 */
 	@Override
 	public void removeByExecuteStatus(String executeStatus) {
-		for (BatchEngineTask batchEngineTask :
+		for (BatchEngineImportTask batchEngineImportTask :
 				findByExecuteStatus(
 					executeStatus, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
-			remove(batchEngineTask);
+			remove(batchEngineImportTask);
 		}
 	}
 
 	/**
-	 * Returns the number of batch engine tasks where executeStatus = &#63;.
+	 * Returns the number of batch engine import tasks where executeStatus = &#63;.
 	 *
 	 * @param executeStatus the execute status
-	 * @return the number of matching batch engine tasks
+	 * @return the number of matching batch engine import tasks
 	 */
 	@Override
 	public int countByExecuteStatus(String executeStatus) {
@@ -1725,7 +1741,7 @@ public class BatchEngineTaskPersistenceImpl
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
 
-			query.append(_SQL_COUNT_BATCHENGINETASK_WHERE);
+			query.append(_SQL_COUNT_BATCHENGINEIMPORTTASK_WHERE);
 
 			boolean bindExecuteStatus = false;
 
@@ -1771,15 +1787,15 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_EXECUTESTATUS_EXECUTESTATUS_2 =
-		"batchEngineTask.executeStatus = ?";
+		"batchEngineImportTask.executeStatus = ?";
 
 	private static final String _FINDER_COLUMN_EXECUTESTATUS_EXECUTESTATUS_3 =
-		"(batchEngineTask.executeStatus IS NULL OR batchEngineTask.executeStatus = '')";
+		"(batchEngineImportTask.executeStatus IS NULL OR batchEngineImportTask.executeStatus = '')";
 
-	public BatchEngineTaskPersistenceImpl() {
-		setModelClass(BatchEngineTask.class);
+	public BatchEngineImportTaskPersistenceImpl() {
+		setModelClass(BatchEngineImportTask.class);
 
-		setModelImplClass(BatchEngineTaskImpl.class);
+		setModelImplClass(BatchEngineImportTaskImpl.class);
 		setModelPKClass(long.class);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1790,41 +1806,45 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Caches the batch engine task in the entity cache if it is enabled.
+	 * Caches the batch engine import task in the entity cache if it is enabled.
 	 *
-	 * @param batchEngineTask the batch engine task
+	 * @param batchEngineImportTask the batch engine import task
 	 */
 	@Override
-	public void cacheResult(BatchEngineTask batchEngineTask) {
+	public void cacheResult(BatchEngineImportTask batchEngineImportTask) {
 		entityCache.putResult(
-			entityCacheEnabled, BatchEngineTaskImpl.class,
-			batchEngineTask.getPrimaryKey(), batchEngineTask);
+			entityCacheEnabled, BatchEngineImportTaskImpl.class,
+			batchEngineImportTask.getPrimaryKey(), batchEngineImportTask);
 
-		batchEngineTask.resetOriginalValues();
+		batchEngineImportTask.resetOriginalValues();
 	}
 
 	/**
-	 * Caches the batch engine tasks in the entity cache if it is enabled.
+	 * Caches the batch engine import tasks in the entity cache if it is enabled.
 	 *
-	 * @param batchEngineTasks the batch engine tasks
+	 * @param batchEngineImportTasks the batch engine import tasks
 	 */
 	@Override
-	public void cacheResult(List<BatchEngineTask> batchEngineTasks) {
-		for (BatchEngineTask batchEngineTask : batchEngineTasks) {
-			if (entityCache.getResult(
-					entityCacheEnabled, BatchEngineTaskImpl.class,
-					batchEngineTask.getPrimaryKey()) == null) {
+	public void cacheResult(
+		List<BatchEngineImportTask> batchEngineImportTasks) {
 
-				cacheResult(batchEngineTask);
+		for (BatchEngineImportTask batchEngineImportTask :
+				batchEngineImportTasks) {
+
+			if (entityCache.getResult(
+					entityCacheEnabled, BatchEngineImportTaskImpl.class,
+					batchEngineImportTask.getPrimaryKey()) == null) {
+
+				cacheResult(batchEngineImportTask);
 			}
 			else {
-				batchEngineTask.resetOriginalValues();
+				batchEngineImportTask.resetOriginalValues();
 			}
 		}
 	}
 
 	/**
-	 * Clears the cache for all batch engine tasks.
+	 * Clears the cache for all batch engine import tasks.
 	 *
 	 * <p>
 	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
@@ -1832,7 +1852,7 @@ public class BatchEngineTaskPersistenceImpl
 	 */
 	@Override
 	public void clearCache() {
-		entityCache.clearCache(BatchEngineTaskImpl.class);
+		entityCache.clearCache(BatchEngineImportTaskImpl.class);
 
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1840,101 +1860,105 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for the batch engine task.
+	 * Clears the cache for the batch engine import task.
 	 *
 	 * <p>
 	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
-	public void clearCache(BatchEngineTask batchEngineTask) {
+	public void clearCache(BatchEngineImportTask batchEngineImportTask) {
 		entityCache.removeResult(
-			entityCacheEnabled, BatchEngineTaskImpl.class,
-			batchEngineTask.getPrimaryKey());
+			entityCacheEnabled, BatchEngineImportTaskImpl.class,
+			batchEngineImportTask.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
-	public void clearCache(List<BatchEngineTask> batchEngineTasks) {
+	public void clearCache(List<BatchEngineImportTask> batchEngineImportTasks) {
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		for (BatchEngineTask batchEngineTask : batchEngineTasks) {
+		for (BatchEngineImportTask batchEngineImportTask :
+				batchEngineImportTasks) {
+
 			entityCache.removeResult(
-				entityCacheEnabled, BatchEngineTaskImpl.class,
-				batchEngineTask.getPrimaryKey());
+				entityCacheEnabled, BatchEngineImportTaskImpl.class,
+				batchEngineImportTask.getPrimaryKey());
 		}
 	}
 
 	/**
-	 * Creates a new batch engine task with the primary key. Does not add the batch engine task to the database.
+	 * Creates a new batch engine import task with the primary key. Does not add the batch engine import task to the database.
 	 *
-	 * @param batchEngineTaskId the primary key for the new batch engine task
-	 * @return the new batch engine task
+	 * @param batchEngineImportTaskId the primary key for the new batch engine import task
+	 * @return the new batch engine import task
 	 */
 	@Override
-	public BatchEngineTask create(long batchEngineTaskId) {
-		BatchEngineTask batchEngineTask = new BatchEngineTaskImpl();
+	public BatchEngineImportTask create(long batchEngineImportTaskId) {
+		BatchEngineImportTask batchEngineImportTask =
+			new BatchEngineImportTaskImpl();
 
-		batchEngineTask.setNew(true);
-		batchEngineTask.setPrimaryKey(batchEngineTaskId);
+		batchEngineImportTask.setNew(true);
+		batchEngineImportTask.setPrimaryKey(batchEngineImportTaskId);
 
 		String uuid = PortalUUIDUtil.generate();
 
-		batchEngineTask.setUuid(uuid);
+		batchEngineImportTask.setUuid(uuid);
 
-		batchEngineTask.setCompanyId(CompanyThreadLocal.getCompanyId());
+		batchEngineImportTask.setCompanyId(CompanyThreadLocal.getCompanyId());
 
-		return batchEngineTask;
+		return batchEngineImportTask;
 	}
 
 	/**
-	 * Removes the batch engine task with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the batch engine import task with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param batchEngineTaskId the primary key of the batch engine task
-	 * @return the batch engine task that was removed
-	 * @throws NoSuchTaskException if a batch engine task with the primary key could not be found
+	 * @param batchEngineImportTaskId the primary key of the batch engine import task
+	 * @return the batch engine import task that was removed
+	 * @throws NoSuchImportTaskException if a batch engine import task with the primary key could not be found
 	 */
 	@Override
-	public BatchEngineTask remove(long batchEngineTaskId)
-		throws NoSuchTaskException {
+	public BatchEngineImportTask remove(long batchEngineImportTaskId)
+		throws NoSuchImportTaskException {
 
-		return remove((Serializable)batchEngineTaskId);
+		return remove((Serializable)batchEngineImportTaskId);
 	}
 
 	/**
-	 * Removes the batch engine task with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the batch engine import task with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the batch engine task
-	 * @return the batch engine task that was removed
-	 * @throws NoSuchTaskException if a batch engine task with the primary key could not be found
+	 * @param primaryKey the primary key of the batch engine import task
+	 * @return the batch engine import task that was removed
+	 * @throws NoSuchImportTaskException if a batch engine import task with the primary key could not be found
 	 */
 	@Override
-	public BatchEngineTask remove(Serializable primaryKey)
-		throws NoSuchTaskException {
+	public BatchEngineImportTask remove(Serializable primaryKey)
+		throws NoSuchImportTaskException {
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			BatchEngineTask batchEngineTask = (BatchEngineTask)session.get(
-				BatchEngineTaskImpl.class, primaryKey);
+			BatchEngineImportTask batchEngineImportTask =
+				(BatchEngineImportTask)session.get(
+					BatchEngineImportTaskImpl.class, primaryKey);
 
-			if (batchEngineTask == null) {
+			if (batchEngineImportTask == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchTaskException(
+				throw new NoSuchImportTaskException(
 					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			return remove(batchEngineTask);
+			return remove(batchEngineImportTask);
 		}
-		catch (NoSuchTaskException nsee) {
+		catch (NoSuchImportTaskException nsee) {
 			throw nsee;
 		}
 		catch (Exception e) {
@@ -1946,20 +1970,22 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	@Override
-	protected BatchEngineTask removeImpl(BatchEngineTask batchEngineTask) {
+	protected BatchEngineImportTask removeImpl(
+		BatchEngineImportTask batchEngineImportTask) {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			if (!session.contains(batchEngineTask)) {
-				batchEngineTask = (BatchEngineTask)session.get(
-					BatchEngineTaskImpl.class,
-					batchEngineTask.getPrimaryKeyObj());
+			if (!session.contains(batchEngineImportTask)) {
+				batchEngineImportTask = (BatchEngineImportTask)session.get(
+					BatchEngineImportTaskImpl.class,
+					batchEngineImportTask.getPrimaryKeyObj());
 			}
 
-			if (batchEngineTask != null) {
-				session.delete(batchEngineTask);
+			if (batchEngineImportTask != null) {
+				session.delete(batchEngineImportTask);
 			}
 		}
 		catch (Exception e) {
@@ -1969,41 +1995,45 @@ public class BatchEngineTaskPersistenceImpl
 			closeSession(session);
 		}
 
-		if (batchEngineTask != null) {
-			clearCache(batchEngineTask);
+		if (batchEngineImportTask != null) {
+			clearCache(batchEngineImportTask);
 		}
 
-		return batchEngineTask;
+		return batchEngineImportTask;
 	}
 
 	@Override
-	public BatchEngineTask updateImpl(BatchEngineTask batchEngineTask) {
-		boolean isNew = batchEngineTask.isNew();
+	public BatchEngineImportTask updateImpl(
+		BatchEngineImportTask batchEngineImportTask) {
 
-		if (!(batchEngineTask instanceof BatchEngineTaskModelImpl)) {
+		boolean isNew = batchEngineImportTask.isNew();
+
+		if (!(batchEngineImportTask instanceof
+				BatchEngineImportTaskModelImpl)) {
+
 			InvocationHandler invocationHandler = null;
 
-			if (ProxyUtil.isProxyClass(batchEngineTask.getClass())) {
+			if (ProxyUtil.isProxyClass(batchEngineImportTask.getClass())) {
 				invocationHandler = ProxyUtil.getInvocationHandler(
-					batchEngineTask);
+					batchEngineImportTask);
 
 				throw new IllegalArgumentException(
-					"Implement ModelWrapper in batchEngineTask proxy " +
+					"Implement ModelWrapper in batchEngineImportTask proxy " +
 						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
-				"Implement ModelWrapper in custom BatchEngineTask implementation " +
-					batchEngineTask.getClass());
+				"Implement ModelWrapper in custom BatchEngineImportTask implementation " +
+					batchEngineImportTask.getClass());
 		}
 
-		BatchEngineTaskModelImpl batchEngineTaskModelImpl =
-			(BatchEngineTaskModelImpl)batchEngineTask;
+		BatchEngineImportTaskModelImpl batchEngineImportTaskModelImpl =
+			(BatchEngineImportTaskModelImpl)batchEngineImportTask;
 
-		if (Validator.isNull(batchEngineTask.getUuid())) {
+		if (Validator.isNull(batchEngineImportTask.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
 
-			batchEngineTask.setUuid(uuid);
+			batchEngineImportTask.setUuid(uuid);
 		}
 
 		ServiceContext serviceContext =
@@ -2011,22 +2041,22 @@ public class BatchEngineTaskPersistenceImpl
 
 		Date now = new Date();
 
-		if (isNew && (batchEngineTask.getCreateDate() == null)) {
+		if (isNew && (batchEngineImportTask.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				batchEngineTask.setCreateDate(now);
+				batchEngineImportTask.setCreateDate(now);
 			}
 			else {
-				batchEngineTask.setCreateDate(
+				batchEngineImportTask.setCreateDate(
 					serviceContext.getCreateDate(now));
 			}
 		}
 
-		if (!batchEngineTaskModelImpl.hasSetModifiedDate()) {
+		if (!batchEngineImportTaskModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				batchEngineTask.setModifiedDate(now);
+				batchEngineImportTask.setModifiedDate(now);
 			}
 			else {
-				batchEngineTask.setModifiedDate(
+				batchEngineImportTask.setModifiedDate(
 					serviceContext.getModifiedDate(now));
 			}
 		}
@@ -2036,14 +2066,14 @@ public class BatchEngineTaskPersistenceImpl
 		try {
 			session = openSession();
 
-			if (batchEngineTask.isNew()) {
-				session.save(batchEngineTask);
+			if (batchEngineImportTask.isNew()) {
+				session.save(batchEngineImportTask);
 
-				batchEngineTask.setNew(false);
+				batchEngineImportTask.setNew(false);
 			}
 			else {
-				session.evict(batchEngineTask);
-				session.saveOrUpdate(batchEngineTask);
+				session.evict(batchEngineImportTask);
+				session.saveOrUpdate(batchEngineImportTask);
 			}
 
 			session.flush();
@@ -2062,22 +2092,26 @@ public class BatchEngineTaskPersistenceImpl
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
-			Object[] args = new Object[] {batchEngineTaskModelImpl.getUuid()};
+			Object[] args = new Object[] {
+				batchEngineImportTaskModelImpl.getUuid()
+			};
 
 			finderCache.removeResult(_finderPathCountByUuid, args);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByUuid, args);
 
 			args = new Object[] {
-				batchEngineTaskModelImpl.getUuid(),
-				batchEngineTaskModelImpl.getCompanyId()
+				batchEngineImportTaskModelImpl.getUuid(),
+				batchEngineImportTaskModelImpl.getCompanyId()
 			};
 
 			finderCache.removeResult(_finderPathCountByUuid_C, args);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByUuid_C, args);
 
-			args = new Object[] {batchEngineTaskModelImpl.getExecuteStatus()};
+			args = new Object[] {
+				batchEngineImportTaskModelImpl.getExecuteStatus()
+			};
 
 			finderCache.removeResult(_finderPathCountByExecuteStatus, args);
 			finderCache.removeResult(
@@ -2088,32 +2122,32 @@ public class BatchEngineTaskPersistenceImpl
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
 		}
 		else {
-			if ((batchEngineTaskModelImpl.getColumnBitmask() &
+			if ((batchEngineImportTaskModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
 					 0) {
 
 				Object[] args = new Object[] {
-					batchEngineTaskModelImpl.getOriginalUuid()
+					batchEngineImportTaskModelImpl.getOriginalUuid()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByUuid, args);
 
-				args = new Object[] {batchEngineTaskModelImpl.getUuid()};
+				args = new Object[] {batchEngineImportTaskModelImpl.getUuid()};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByUuid, args);
 			}
 
-			if ((batchEngineTaskModelImpl.getColumnBitmask() &
+			if ((batchEngineImportTaskModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
 					 0) {
 
 				Object[] args = new Object[] {
-					batchEngineTaskModelImpl.getOriginalUuid(),
-					batchEngineTaskModelImpl.getOriginalCompanyId()
+					batchEngineImportTaskModelImpl.getOriginalUuid(),
+					batchEngineImportTaskModelImpl.getOriginalCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2121,8 +2155,8 @@ public class BatchEngineTaskPersistenceImpl
 					_finderPathWithoutPaginationFindByUuid_C, args);
 
 				args = new Object[] {
-					batchEngineTaskModelImpl.getUuid(),
-					batchEngineTaskModelImpl.getCompanyId()
+					batchEngineImportTaskModelImpl.getUuid(),
+					batchEngineImportTaskModelImpl.getCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2130,12 +2164,12 @@ public class BatchEngineTaskPersistenceImpl
 					_finderPathWithoutPaginationFindByUuid_C, args);
 			}
 
-			if ((batchEngineTaskModelImpl.getColumnBitmask() &
+			if ((batchEngineImportTaskModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByExecuteStatus.
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					batchEngineTaskModelImpl.getOriginalExecuteStatus()
+					batchEngineImportTaskModelImpl.getOriginalExecuteStatus()
 				};
 
 				finderCache.removeResult(_finderPathCountByExecuteStatus, args);
@@ -2143,7 +2177,7 @@ public class BatchEngineTaskPersistenceImpl
 					_finderPathWithoutPaginationFindByExecuteStatus, args);
 
 				args = new Object[] {
-					batchEngineTaskModelImpl.getExecuteStatus()
+					batchEngineImportTaskModelImpl.getExecuteStatus()
 				};
 
 				finderCache.removeResult(_finderPathCountByExecuteStatus, args);
@@ -2153,127 +2187,131 @@ public class BatchEngineTaskPersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, BatchEngineTaskImpl.class,
-			batchEngineTask.getPrimaryKey(), batchEngineTask, false);
+			entityCacheEnabled, BatchEngineImportTaskImpl.class,
+			batchEngineImportTask.getPrimaryKey(), batchEngineImportTask,
+			false);
 
-		batchEngineTask.resetOriginalValues();
+		batchEngineImportTask.resetOriginalValues();
 
-		return batchEngineTask;
+		return batchEngineImportTask;
 	}
 
 	/**
-	 * Returns the batch engine task with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
+	 * Returns the batch engine import task with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the batch engine task
-	 * @return the batch engine task
-	 * @throws NoSuchTaskException if a batch engine task with the primary key could not be found
+	 * @param primaryKey the primary key of the batch engine import task
+	 * @return the batch engine import task
+	 * @throws NoSuchImportTaskException if a batch engine import task with the primary key could not be found
 	 */
 	@Override
-	public BatchEngineTask findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTaskException {
+	public BatchEngineImportTask findByPrimaryKey(Serializable primaryKey)
+		throws NoSuchImportTaskException {
 
-		BatchEngineTask batchEngineTask = fetchByPrimaryKey(primaryKey);
+		BatchEngineImportTask batchEngineImportTask = fetchByPrimaryKey(
+			primaryKey);
 
-		if (batchEngineTask == null) {
+		if (batchEngineImportTask == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchTaskException(
+			throw new NoSuchImportTaskException(
 				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
-		return batchEngineTask;
+		return batchEngineImportTask;
 	}
 
 	/**
-	 * Returns the batch engine task with the primary key or throws a <code>NoSuchTaskException</code> if it could not be found.
+	 * Returns the batch engine import task with the primary key or throws a <code>NoSuchImportTaskException</code> if it could not be found.
 	 *
-	 * @param batchEngineTaskId the primary key of the batch engine task
-	 * @return the batch engine task
-	 * @throws NoSuchTaskException if a batch engine task with the primary key could not be found
+	 * @param batchEngineImportTaskId the primary key of the batch engine import task
+	 * @return the batch engine import task
+	 * @throws NoSuchImportTaskException if a batch engine import task with the primary key could not be found
 	 */
 	@Override
-	public BatchEngineTask findByPrimaryKey(long batchEngineTaskId)
-		throws NoSuchTaskException {
+	public BatchEngineImportTask findByPrimaryKey(long batchEngineImportTaskId)
+		throws NoSuchImportTaskException {
 
-		return findByPrimaryKey((Serializable)batchEngineTaskId);
+		return findByPrimaryKey((Serializable)batchEngineImportTaskId);
 	}
 
 	/**
-	 * Returns the batch engine task with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the batch engine import task with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param batchEngineTaskId the primary key of the batch engine task
-	 * @return the batch engine task, or <code>null</code> if a batch engine task with the primary key could not be found
+	 * @param batchEngineImportTaskId the primary key of the batch engine import task
+	 * @return the batch engine import task, or <code>null</code> if a batch engine import task with the primary key could not be found
 	 */
 	@Override
-	public BatchEngineTask fetchByPrimaryKey(long batchEngineTaskId) {
-		return fetchByPrimaryKey((Serializable)batchEngineTaskId);
+	public BatchEngineImportTask fetchByPrimaryKey(
+		long batchEngineImportTaskId) {
+
+		return fetchByPrimaryKey((Serializable)batchEngineImportTaskId);
 	}
 
 	/**
-	 * Returns all the batch engine tasks.
+	 * Returns all the batch engine import tasks.
 	 *
-	 * @return the batch engine tasks
+	 * @return the batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findAll() {
+	public List<BatchEngineImportTask> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the batch engine tasks.
+	 * Returns a range of all the batch engine import tasks.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of batch engine tasks
-	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
-	 * @return the range of batch engine tasks
+	 * @param start the lower bound of the range of batch engine import tasks
+	 * @param end the upper bound of the range of batch engine import tasks (not inclusive)
+	 * @return the range of batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findAll(int start, int end) {
+	public List<BatchEngineImportTask> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the batch engine tasks.
+	 * Returns an ordered range of all the batch engine import tasks.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of batch engine tasks
-	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
+	 * @param start the lower bound of the range of batch engine import tasks
+	 * @param end the upper bound of the range of batch engine import tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of batch engine tasks
+	 * @return the ordered range of batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findAll(
+	public List<BatchEngineImportTask> findAll(
 		int start, int end,
-		OrderByComparator<BatchEngineTask> orderByComparator) {
+		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
 		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the batch engine tasks.
+	 * Returns an ordered range of all the batch engine import tasks.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of batch engine tasks
-	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
+	 * @param start the lower bound of the range of batch engine import tasks
+	 * @param end the upper bound of the range of batch engine import tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of batch engine tasks
+	 * @return the ordered range of batch engine import tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findAll(
+	public List<BatchEngineImportTask> findAll(
 		int start, int end,
-		OrderByComparator<BatchEngineTask> orderByComparator,
+		OrderByComparator<BatchEngineImportTask> orderByComparator,
 		boolean useFinderCache) {
 
 		FinderPath finderPath = null;
@@ -2292,10 +2330,10 @@ public class BatchEngineTaskPersistenceImpl
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<BatchEngineTask> list = null;
+		List<BatchEngineImportTask> list = null;
 
 		if (useFinderCache) {
-			list = (List<BatchEngineTask>)finderCache.getResult(
+			list = (List<BatchEngineImportTask>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
 
@@ -2307,7 +2345,7 @@ public class BatchEngineTaskPersistenceImpl
 				query = new StringBundler(
 					2 + (orderByComparator.getOrderByFields().length * 2));
 
-				query.append(_SQL_SELECT_BATCHENGINETASK);
+				query.append(_SQL_SELECT_BATCHENGINEIMPORTTASK);
 
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
@@ -2315,9 +2353,9 @@ public class BatchEngineTaskPersistenceImpl
 				sql = query.toString();
 			}
 			else {
-				sql = _SQL_SELECT_BATCHENGINETASK;
+				sql = _SQL_SELECT_BATCHENGINEIMPORTTASK;
 
-				sql = sql.concat(BatchEngineTaskModelImpl.ORDER_BY_JPQL);
+				sql = sql.concat(BatchEngineImportTaskModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -2327,7 +2365,7 @@ public class BatchEngineTaskPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<BatchEngineTask>)QueryUtil.list(
+				list = (List<BatchEngineImportTask>)QueryUtil.list(
 					q, getDialect(), start, end);
 
 				cacheResult(list);
@@ -2352,20 +2390,20 @@ public class BatchEngineTaskPersistenceImpl
 	}
 
 	/**
-	 * Removes all the batch engine tasks from the database.
+	 * Removes all the batch engine import tasks from the database.
 	 *
 	 */
 	@Override
 	public void removeAll() {
-		for (BatchEngineTask batchEngineTask : findAll()) {
-			remove(batchEngineTask);
+		for (BatchEngineImportTask batchEngineImportTask : findAll()) {
+			remove(batchEngineImportTask);
 		}
 	}
 
 	/**
-	 * Returns the number of batch engine tasks.
+	 * Returns the number of batch engine import tasks.
 	 *
-	 * @return the number of batch engine tasks
+	 * @return the number of batch engine import tasks
 	 */
 	@Override
 	public int countAll() {
@@ -2378,7 +2416,7 @@ public class BatchEngineTaskPersistenceImpl
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(_SQL_COUNT_BATCHENGINETASK);
+				Query q = session.createQuery(_SQL_COUNT_BATCHENGINEIMPORTTASK);
 
 				count = (Long)q.uniqueResult();
 
@@ -2411,33 +2449,37 @@ public class BatchEngineTaskPersistenceImpl
 
 	@Override
 	protected String getPKDBName() {
-		return "batchEngineTaskId";
+		return "batchEngineImportTaskId";
 	}
 
 	@Override
 	protected String getSelectSQL() {
-		return _SQL_SELECT_BATCHENGINETASK;
+		return _SQL_SELECT_BATCHENGINEIMPORTTASK;
 	}
 
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
-		return BatchEngineTaskModelImpl.TABLE_COLUMNS_MAP;
+		return BatchEngineImportTaskModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**
-	 * Initializes the batch engine task persistence.
+	 * Initializes the batch engine import task persistence.
 	 */
 	@Activate
 	public void activate() {
-		BatchEngineTaskModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		BatchEngineTaskModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+		BatchEngineImportTaskModelImpl.setEntityCacheEnabled(
+			entityCacheEnabled);
+		BatchEngineImportTaskModelImpl.setFinderCacheEnabled(
+			finderCacheEnabled);
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, BatchEngineTaskImpl.class,
+			entityCacheEnabled, finderCacheEnabled,
+			BatchEngineImportTaskImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, BatchEngineTaskImpl.class,
+			entityCacheEnabled, finderCacheEnabled,
+			BatchEngineImportTaskImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
@@ -2447,7 +2489,8 @@ public class BatchEngineTaskPersistenceImpl
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, BatchEngineTaskImpl.class,
+			entityCacheEnabled, finderCacheEnabled,
+			BatchEngineImportTaskImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -2455,10 +2498,11 @@ public class BatchEngineTaskPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, BatchEngineTaskImpl.class,
+			entityCacheEnabled, finderCacheEnabled,
+			BatchEngineImportTaskImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			BatchEngineTaskModelImpl.UUID_COLUMN_BITMASK);
+			BatchEngineImportTaskModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
@@ -2466,7 +2510,8 @@ public class BatchEngineTaskPersistenceImpl
 			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, BatchEngineTaskImpl.class,
+			entityCacheEnabled, finderCacheEnabled,
+			BatchEngineImportTaskImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -2475,11 +2520,12 @@ public class BatchEngineTaskPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, BatchEngineTaskImpl.class,
+			entityCacheEnabled, finderCacheEnabled,
+			BatchEngineImportTaskImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			BatchEngineTaskModelImpl.UUID_COLUMN_BITMASK |
-			BatchEngineTaskModelImpl.COMPANYID_COLUMN_BITMASK);
+			BatchEngineImportTaskModelImpl.UUID_COLUMN_BITMASK |
+			BatchEngineImportTaskModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
@@ -2487,7 +2533,8 @@ public class BatchEngineTaskPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByExecuteStatus = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, BatchEngineTaskImpl.class,
+			entityCacheEnabled, finderCacheEnabled,
+			BatchEngineImportTaskImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByExecuteStatus",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -2495,10 +2542,11 @@ public class BatchEngineTaskPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByExecuteStatus = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, BatchEngineTaskImpl.class,
+			entityCacheEnabled, finderCacheEnabled,
+			BatchEngineImportTaskImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByExecuteStatus",
 			new String[] {String.class.getName()},
-			BatchEngineTaskModelImpl.EXECUTESTATUS_COLUMN_BITMASK);
+			BatchEngineImportTaskModelImpl.EXECUTESTATUS_COLUMN_BITMASK);
 
 		_finderPathCountByExecuteStatus = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
@@ -2508,7 +2556,7 @@ public class BatchEngineTaskPersistenceImpl
 
 	@Deactivate
 	public void deactivate() {
-		entityCache.removeCache(BatchEngineTaskImpl.class.getName());
+		entityCache.removeCache(BatchEngineImportTaskImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2524,7 +2572,7 @@ public class BatchEngineTaskPersistenceImpl
 
 		_columnBitmaskEnabled = GetterUtil.getBoolean(
 			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.batch.engine.model.BatchEngineTask"),
+				"value.object.column.bitmask.enabled.com.liferay.batch.engine.model.BatchEngineImportTask"),
 			true);
 	}
 
@@ -2554,28 +2602,29 @@ public class BatchEngineTaskPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _SQL_SELECT_BATCHENGINETASK =
-		"SELECT batchEngineTask FROM BatchEngineTask batchEngineTask";
+	private static final String _SQL_SELECT_BATCHENGINEIMPORTTASK =
+		"SELECT batchEngineImportTask FROM BatchEngineImportTask batchEngineImportTask";
 
-	private static final String _SQL_SELECT_BATCHENGINETASK_WHERE =
-		"SELECT batchEngineTask FROM BatchEngineTask batchEngineTask WHERE ";
+	private static final String _SQL_SELECT_BATCHENGINEIMPORTTASK_WHERE =
+		"SELECT batchEngineImportTask FROM BatchEngineImportTask batchEngineImportTask WHERE ";
 
-	private static final String _SQL_COUNT_BATCHENGINETASK =
-		"SELECT COUNT(batchEngineTask) FROM BatchEngineTask batchEngineTask";
+	private static final String _SQL_COUNT_BATCHENGINEIMPORTTASK =
+		"SELECT COUNT(batchEngineImportTask) FROM BatchEngineImportTask batchEngineImportTask";
 
-	private static final String _SQL_COUNT_BATCHENGINETASK_WHERE =
-		"SELECT COUNT(batchEngineTask) FROM BatchEngineTask batchEngineTask WHERE ";
+	private static final String _SQL_COUNT_BATCHENGINEIMPORTTASK_WHERE =
+		"SELECT COUNT(batchEngineImportTask) FROM BatchEngineImportTask batchEngineImportTask WHERE ";
 
-	private static final String _ORDER_BY_ENTITY_ALIAS = "batchEngineTask.";
+	private static final String _ORDER_BY_ENTITY_ALIAS =
+		"batchEngineImportTask.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No BatchEngineTask exists with the primary key ";
+		"No BatchEngineImportTask exists with the primary key ";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No BatchEngineTask exists with the key {";
+		"No BatchEngineImportTask exists with the key {";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BatchEngineTaskPersistenceImpl.class);
+		BatchEngineImportTaskPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});

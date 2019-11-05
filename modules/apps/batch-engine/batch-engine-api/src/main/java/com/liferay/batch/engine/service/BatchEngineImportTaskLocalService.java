@@ -14,8 +14,8 @@
 
 package com.liferay.batch.engine.service;
 
-import com.liferay.batch.engine.model.BatchEngineTask;
-import com.liferay.batch.engine.model.BatchEngineTaskContentBlobModel;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.model.BatchEngineImportTaskContentBlobModel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -42,13 +42,13 @@ import java.util.Map;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Provides the local service interface for BatchEngineTask. Methods of this
+ * Provides the local service interface for BatchEngineImportTask. Methods of this
  * service will not have security checks based on the propagated JAAS
  * credentials because this service can only be accessed from within the same
  * VM.
  *
  * @author Shuyang Zhou
- * @see BatchEngineTaskLocalServiceUtil
+ * @see BatchEngineImportTaskLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -56,58 +56,61 @@ import org.osgi.annotation.versioning.ProviderType;
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}
 )
-public interface BatchEngineTaskLocalService
+public interface BatchEngineImportTaskLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link BatchEngineTaskLocalServiceUtil} to access the batch engine task local service. Add custom service methods to <code>com.liferay.batch.engine.service.impl.BatchEngineTaskLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link BatchEngineImportTaskLocalServiceUtil} to access the batch engine import task local service. Add custom service methods to <code>com.liferay.batch.engine.service.impl.BatchEngineImportTaskLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	 * Adds the batch engine task to the database. Also notifies the appropriate model listeners.
+	 * Adds the batch engine import task to the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param batchEngineTask the batch engine task
-	 * @return the batch engine task that was added
+	 * @param batchEngineImportTask the batch engine import task
+	 * @return the batch engine import task that was added
 	 */
 	@Indexable(type = IndexableType.REINDEX)
-	public BatchEngineTask addBatchEngineTask(BatchEngineTask batchEngineTask);
+	public BatchEngineImportTask addBatchEngineImportTask(
+		BatchEngineImportTask batchEngineImportTask);
 
-	public BatchEngineTask addBatchEngineTask(
+	public BatchEngineImportTask addBatchEngineImportTask(
 		long companyId, long userId, long batchSize, String callbackURL,
 		String className, byte[] content, String contentType,
 		String executeStatus, Map<String, String> fieldNameMappingMap,
 		String operation, String version);
 
 	/**
-	 * Creates a new batch engine task with the primary key. Does not add the batch engine task to the database.
+	 * Creates a new batch engine import task with the primary key. Does not add the batch engine import task to the database.
 	 *
-	 * @param batchEngineTaskId the primary key for the new batch engine task
-	 * @return the new batch engine task
+	 * @param batchEngineImportTaskId the primary key for the new batch engine import task
+	 * @return the new batch engine import task
 	 */
 	@Transactional(enabled = false)
-	public BatchEngineTask createBatchEngineTask(long batchEngineTaskId);
+	public BatchEngineImportTask createBatchEngineImportTask(
+		long batchEngineImportTaskId);
 
 	/**
-	 * Deletes the batch engine task from the database. Also notifies the appropriate model listeners.
+	 * Deletes the batch engine import task from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param batchEngineTask the batch engine task
-	 * @return the batch engine task that was removed
+	 * @param batchEngineImportTask the batch engine import task
+	 * @return the batch engine import task that was removed
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public BatchEngineTask deleteBatchEngineTask(
-		BatchEngineTask batchEngineTask);
+	public BatchEngineImportTask deleteBatchEngineImportTask(
+		BatchEngineImportTask batchEngineImportTask);
 
 	/**
-	 * Deletes the batch engine task with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Deletes the batch engine import task with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param batchEngineTaskId the primary key of the batch engine task
-	 * @return the batch engine task that was removed
-	 * @throws PortalException if a batch engine task with the primary key could not be found
+	 * @param batchEngineImportTaskId the primary key of the batch engine import task
+	 * @return the batch engine import task that was removed
+	 * @throws PortalException if a batch engine import task with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public BatchEngineTask deleteBatchEngineTask(long batchEngineTaskId)
+	public BatchEngineImportTask deleteBatchEngineImportTask(
+			long batchEngineImportTaskId)
 		throws PortalException;
 
 	/**
@@ -133,7 +136,7 @@ public interface BatchEngineTaskLocalService
 	 * Performs a dynamic query on the database and returns a range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.engine.model.impl.BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.engine.model.impl.BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -149,7 +152,7 @@ public interface BatchEngineTaskLocalService
 	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.engine.model.impl.BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.engine.model.impl.BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -184,73 +187,77 @@ public interface BatchEngineTaskLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BatchEngineTask fetchBatchEngineTask(long batchEngineTaskId);
+	public BatchEngineImportTask fetchBatchEngineImportTask(
+		long batchEngineImportTaskId);
 
 	/**
-	 * Returns the batch engine task with the matching UUID and company.
+	 * Returns the batch engine import task with the matching UUID and company.
 	 *
-	 * @param uuid the batch engine task's UUID
+	 * @param uuid the batch engine import task's UUID
 	 * @param companyId the primary key of the company
-	 * @return the matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
+	 * @return the matching batch engine import task, or <code>null</code> if a matching batch engine import task could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BatchEngineTask fetchBatchEngineTaskByUuidAndCompanyId(
+	public BatchEngineImportTask fetchBatchEngineImportTaskByUuidAndCompanyId(
 		String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	 * Returns the batch engine task with the primary key.
+	 * Returns the batch engine import task with the primary key.
 	 *
-	 * @param batchEngineTaskId the primary key of the batch engine task
-	 * @return the batch engine task
-	 * @throws PortalException if a batch engine task with the primary key could not be found
+	 * @param batchEngineImportTaskId the primary key of the batch engine import task
+	 * @return the batch engine import task
+	 * @throws PortalException if a batch engine import task with the primary key could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BatchEngineTask getBatchEngineTask(long batchEngineTaskId)
+	public BatchEngineImportTask getBatchEngineImportTask(
+			long batchEngineImportTaskId)
 		throws PortalException;
 
 	/**
-	 * Returns the batch engine task with the matching UUID and company.
+	 * Returns the batch engine import task with the matching UUID and company.
 	 *
-	 * @param uuid the batch engine task's UUID
+	 * @param uuid the batch engine import task's UUID
 	 * @param companyId the primary key of the company
-	 * @return the matching batch engine task
-	 * @throws PortalException if a matching batch engine task could not be found
+	 * @return the matching batch engine import task
+	 * @throws PortalException if a matching batch engine import task could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BatchEngineTask getBatchEngineTaskByUuidAndCompanyId(
+	public BatchEngineImportTask getBatchEngineImportTaskByUuidAndCompanyId(
 			String uuid, long companyId)
 		throws PortalException;
 
 	/**
-	 * Returns a range of all the batch engine tasks.
+	 * Returns a range of all the batch engine import tasks.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.engine.model.impl.BatchEngineTaskModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.engine.model.impl.BatchEngineImportTaskModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of batch engine tasks
-	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
-	 * @return the range of batch engine tasks
+	 * @param start the lower bound of the range of batch engine import tasks
+	 * @param end the upper bound of the range of batch engine import tasks (not inclusive)
+	 * @return the range of batch engine import tasks
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BatchEngineTask> getBatchEngineTasks(int start, int end);
+	public List<BatchEngineImportTask> getBatchEngineImportTasks(
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BatchEngineTask> getBatchEngineTasks(String executeStatus);
+	public List<BatchEngineImportTask> getBatchEngineImportTasks(
+		String executeStatus);
 
 	/**
-	 * Returns the number of batch engine tasks.
+	 * Returns the number of batch engine import tasks.
 	 *
-	 * @return the number of batch engine tasks
+	 * @return the number of batch engine import tasks
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getBatchEngineTasksCount();
+	public int getBatchEngineImportTasksCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BatchEngineTaskContentBlobModel getContentBlobModel(
+	public BatchEngineImportTaskContentBlobModel getContentBlobModel(
 		Serializable primaryKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -273,13 +280,13 @@ public interface BatchEngineTaskLocalService
 		throws PortalException;
 
 	/**
-	 * Updates the batch engine task in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 * Updates the batch engine import task in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
-	 * @param batchEngineTask the batch engine task
-	 * @return the batch engine task that was updated
+	 * @param batchEngineImportTask the batch engine import task
+	 * @return the batch engine import task that was updated
 	 */
 	@Indexable(type = IndexableType.REINDEX)
-	public BatchEngineTask updateBatchEngineTask(
-		BatchEngineTask batchEngineTask);
+	public BatchEngineImportTask updateBatchEngineImportTask(
+		BatchEngineImportTask batchEngineImportTask);
 
 }

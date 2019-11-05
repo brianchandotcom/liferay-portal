@@ -29,14 +29,17 @@ import java.util.Map;
  * @author Shuyang Zhou
  * @generated
  */
-public class BatchEngineTaskSoap implements Serializable {
+public class BatchEngineImportTaskSoap implements Serializable {
 
-	public static BatchEngineTaskSoap toSoapModel(BatchEngineTask model) {
-		BatchEngineTaskSoap soapModel = new BatchEngineTaskSoap();
+	public static BatchEngineImportTaskSoap toSoapModel(
+		BatchEngineImportTask model) {
+
+		BatchEngineImportTaskSoap soapModel = new BatchEngineImportTaskSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
-		soapModel.setBatchEngineTaskId(model.getBatchEngineTaskId());
+		soapModel.setBatchEngineImportTaskId(
+			model.getBatchEngineImportTaskId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -57,9 +60,11 @@ public class BatchEngineTaskSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static BatchEngineTaskSoap[] toSoapModels(BatchEngineTask[] models) {
-		BatchEngineTaskSoap[] soapModels =
-			new BatchEngineTaskSoap[models.length];
+	public static BatchEngineImportTaskSoap[] toSoapModels(
+		BatchEngineImportTask[] models) {
+
+		BatchEngineImportTaskSoap[] soapModels =
+			new BatchEngineImportTaskSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -68,17 +73,17 @@ public class BatchEngineTaskSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static BatchEngineTaskSoap[][] toSoapModels(
-		BatchEngineTask[][] models) {
+	public static BatchEngineImportTaskSoap[][] toSoapModels(
+		BatchEngineImportTask[][] models) {
 
-		BatchEngineTaskSoap[][] soapModels = null;
+		BatchEngineImportTaskSoap[][] soapModels = null;
 
 		if (models.length > 0) {
 			soapModels =
-				new BatchEngineTaskSoap[models.length][models[0].length];
+				new BatchEngineImportTaskSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new BatchEngineTaskSoap[0][0];
+			soapModels = new BatchEngineImportTaskSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -88,28 +93,29 @@ public class BatchEngineTaskSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static BatchEngineTaskSoap[] toSoapModels(
-		List<BatchEngineTask> models) {
+	public static BatchEngineImportTaskSoap[] toSoapModels(
+		List<BatchEngineImportTask> models) {
 
-		List<BatchEngineTaskSoap> soapModels =
-			new ArrayList<BatchEngineTaskSoap>(models.size());
+		List<BatchEngineImportTaskSoap> soapModels =
+			new ArrayList<BatchEngineImportTaskSoap>(models.size());
 
-		for (BatchEngineTask model : models) {
+		for (BatchEngineImportTask model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new BatchEngineTaskSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new BatchEngineImportTaskSoap[soapModels.size()]);
 	}
 
-	public BatchEngineTaskSoap() {
+	public BatchEngineImportTaskSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _batchEngineTaskId;
+		return _batchEngineImportTaskId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setBatchEngineTaskId(pk);
+		setBatchEngineImportTaskId(pk);
 	}
 
 	public long getMvccVersion() {
@@ -128,12 +134,12 @@ public class BatchEngineTaskSoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getBatchEngineTaskId() {
-		return _batchEngineTaskId;
+	public long getBatchEngineImportTaskId() {
+		return _batchEngineImportTaskId;
 	}
 
-	public void setBatchEngineTaskId(long batchEngineTaskId) {
-		_batchEngineTaskId = batchEngineTaskId;
+	public void setBatchEngineImportTaskId(long batchEngineImportTaskId) {
+		_batchEngineImportTaskId = batchEngineImportTaskId;
 	}
 
 	public long getCompanyId() {
@@ -268,7 +274,7 @@ public class BatchEngineTaskSoap implements Serializable {
 
 	private long _mvccVersion;
 	private String _uuid;
-	private long _batchEngineTaskId;
+	private long _batchEngineImportTaskId;
 	private long _companyId;
 	private long _userId;
 	private Date _createDate;

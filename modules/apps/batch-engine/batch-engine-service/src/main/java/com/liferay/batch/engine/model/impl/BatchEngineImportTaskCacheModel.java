@@ -14,7 +14,7 @@
 
 package com.liferay.batch.engine.model.impl;
 
-import com.liferay.batch.engine.model.BatchEngineTask;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -30,13 +30,13 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * The cache model class for representing BatchEngineTask in entity cache.
+ * The cache model class for representing BatchEngineImportTask in entity cache.
  *
  * @author Shuyang Zhou
  * @generated
  */
-public class BatchEngineTaskCacheModel
-	implements CacheModel<BatchEngineTask>, Externalizable, MVCCModel {
+public class BatchEngineImportTaskCacheModel
+	implements CacheModel<BatchEngineImportTask>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -44,16 +44,16 @@ public class BatchEngineTaskCacheModel
 			return true;
 		}
 
-		if (!(obj instanceof BatchEngineTaskCacheModel)) {
+		if (!(obj instanceof BatchEngineImportTaskCacheModel)) {
 			return false;
 		}
 
-		BatchEngineTaskCacheModel batchEngineTaskCacheModel =
-			(BatchEngineTaskCacheModel)obj;
+		BatchEngineImportTaskCacheModel batchEngineImportTaskCacheModel =
+			(BatchEngineImportTaskCacheModel)obj;
 
-		if ((batchEngineTaskId ==
-				batchEngineTaskCacheModel.batchEngineTaskId) &&
-			(mvccVersion == batchEngineTaskCacheModel.mvccVersion)) {
+		if ((batchEngineImportTaskId ==
+				batchEngineImportTaskCacheModel.batchEngineImportTaskId) &&
+			(mvccVersion == batchEngineImportTaskCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -63,7 +63,7 @@ public class BatchEngineTaskCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, batchEngineTaskId);
+		int hashCode = HashUtil.hash(0, batchEngineImportTaskId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -86,8 +86,8 @@ public class BatchEngineTaskCacheModel
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
-		sb.append(", batchEngineTaskId=");
-		sb.append(batchEngineTaskId);
+		sb.append(", batchEngineImportTaskId=");
+		sb.append(batchEngineImportTaskId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -124,106 +124,108 @@ public class BatchEngineTaskCacheModel
 	}
 
 	@Override
-	public BatchEngineTask toEntityModel() {
-		BatchEngineTaskImpl batchEngineTaskImpl = new BatchEngineTaskImpl();
+	public BatchEngineImportTask toEntityModel() {
+		BatchEngineImportTaskImpl batchEngineImportTaskImpl =
+			new BatchEngineImportTaskImpl();
 
-		batchEngineTaskImpl.setMvccVersion(mvccVersion);
+		batchEngineImportTaskImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
-			batchEngineTaskImpl.setUuid("");
+			batchEngineImportTaskImpl.setUuid("");
 		}
 		else {
-			batchEngineTaskImpl.setUuid(uuid);
+			batchEngineImportTaskImpl.setUuid(uuid);
 		}
 
-		batchEngineTaskImpl.setBatchEngineTaskId(batchEngineTaskId);
-		batchEngineTaskImpl.setCompanyId(companyId);
-		batchEngineTaskImpl.setUserId(userId);
+		batchEngineImportTaskImpl.setBatchEngineImportTaskId(
+			batchEngineImportTaskId);
+		batchEngineImportTaskImpl.setCompanyId(companyId);
+		batchEngineImportTaskImpl.setUserId(userId);
 
 		if (createDate == Long.MIN_VALUE) {
-			batchEngineTaskImpl.setCreateDate(null);
+			batchEngineImportTaskImpl.setCreateDate(null);
 		}
 		else {
-			batchEngineTaskImpl.setCreateDate(new Date(createDate));
+			batchEngineImportTaskImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			batchEngineTaskImpl.setModifiedDate(null);
+			batchEngineImportTaskImpl.setModifiedDate(null);
 		}
 		else {
-			batchEngineTaskImpl.setModifiedDate(new Date(modifiedDate));
+			batchEngineImportTaskImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		batchEngineTaskImpl.setBatchSize(batchSize);
+		batchEngineImportTaskImpl.setBatchSize(batchSize);
 
 		if (callbackURL == null) {
-			batchEngineTaskImpl.setCallbackURL("");
+			batchEngineImportTaskImpl.setCallbackURL("");
 		}
 		else {
-			batchEngineTaskImpl.setCallbackURL(callbackURL);
+			batchEngineImportTaskImpl.setCallbackURL(callbackURL);
 		}
 
 		if (className == null) {
-			batchEngineTaskImpl.setClassName("");
+			batchEngineImportTaskImpl.setClassName("");
 		}
 		else {
-			batchEngineTaskImpl.setClassName(className);
+			batchEngineImportTaskImpl.setClassName(className);
 		}
 
 		if (contentType == null) {
-			batchEngineTaskImpl.setContentType("");
+			batchEngineImportTaskImpl.setContentType("");
 		}
 		else {
-			batchEngineTaskImpl.setContentType(contentType);
+			batchEngineImportTaskImpl.setContentType(contentType);
 		}
 
 		if (endTime == Long.MIN_VALUE) {
-			batchEngineTaskImpl.setEndTime(null);
+			batchEngineImportTaskImpl.setEndTime(null);
 		}
 		else {
-			batchEngineTaskImpl.setEndTime(new Date(endTime));
+			batchEngineImportTaskImpl.setEndTime(new Date(endTime));
 		}
 
 		if (errorMessage == null) {
-			batchEngineTaskImpl.setErrorMessage("");
+			batchEngineImportTaskImpl.setErrorMessage("");
 		}
 		else {
-			batchEngineTaskImpl.setErrorMessage(errorMessage);
+			batchEngineImportTaskImpl.setErrorMessage(errorMessage);
 		}
 
 		if (executeStatus == null) {
-			batchEngineTaskImpl.setExecuteStatus("");
+			batchEngineImportTaskImpl.setExecuteStatus("");
 		}
 		else {
-			batchEngineTaskImpl.setExecuteStatus(executeStatus);
+			batchEngineImportTaskImpl.setExecuteStatus(executeStatus);
 		}
 
-		batchEngineTaskImpl.setFieldNameMapping(fieldNameMapping);
+		batchEngineImportTaskImpl.setFieldNameMapping(fieldNameMapping);
 
 		if (operation == null) {
-			batchEngineTaskImpl.setOperation("");
+			batchEngineImportTaskImpl.setOperation("");
 		}
 		else {
-			batchEngineTaskImpl.setOperation(operation);
+			batchEngineImportTaskImpl.setOperation(operation);
 		}
 
 		if (startTime == Long.MIN_VALUE) {
-			batchEngineTaskImpl.setStartTime(null);
+			batchEngineImportTaskImpl.setStartTime(null);
 		}
 		else {
-			batchEngineTaskImpl.setStartTime(new Date(startTime));
+			batchEngineImportTaskImpl.setStartTime(new Date(startTime));
 		}
 
 		if (version == null) {
-			batchEngineTaskImpl.setVersion("");
+			batchEngineImportTaskImpl.setVersion("");
 		}
 		else {
-			batchEngineTaskImpl.setVersion(version);
+			batchEngineImportTaskImpl.setVersion(version);
 		}
 
-		batchEngineTaskImpl.resetOriginalValues();
+		batchEngineImportTaskImpl.resetOriginalValues();
 
-		return batchEngineTaskImpl;
+		return batchEngineImportTaskImpl;
 	}
 
 	@Override
@@ -233,7 +235,7 @@ public class BatchEngineTaskCacheModel
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
-		batchEngineTaskId = objectInput.readLong();
+		batchEngineImportTaskId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
@@ -265,7 +267,7 @@ public class BatchEngineTaskCacheModel
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(batchEngineTaskId);
+		objectOutput.writeLong(batchEngineImportTaskId);
 
 		objectOutput.writeLong(companyId);
 
@@ -333,7 +335,7 @@ public class BatchEngineTaskCacheModel
 
 	public long mvccVersion;
 	public String uuid;
-	public long batchEngineTaskId;
+	public long batchEngineImportTaskId;
 	public long companyId;
 	public long userId;
 	public long createDate;

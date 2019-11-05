@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.batch.engine.model.BatchEngineTask">
+	<model name="com.liferay.batch.engine.model.BatchEngineImportTask">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
-		<field name="batchEngineTaskId" type="long" />
+		<field name="batchEngineImportTaskId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />

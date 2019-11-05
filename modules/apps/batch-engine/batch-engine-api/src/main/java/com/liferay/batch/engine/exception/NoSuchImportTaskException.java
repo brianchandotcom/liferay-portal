@@ -11,7 +11,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
 package com.liferay.batch.engine.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -19,20 +18,20 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Shuyang Zhou
  */
-public class NoSuchTaskException extends NoSuchModelException {
+public class NoSuchImportTaskException extends NoSuchModelException {
 
-	public NoSuchTaskException() {
+	public NoSuchImportTaskException() {
 	}
 
-	public NoSuchTaskException(String msg) {
+	public NoSuchImportTaskException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchTaskException(String msg, Throwable cause) {
+	public NoSuchImportTaskException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchTaskException(Throwable cause) {
+	public NoSuchImportTaskException(Throwable cause) {
 		super(cause);
 	}
 

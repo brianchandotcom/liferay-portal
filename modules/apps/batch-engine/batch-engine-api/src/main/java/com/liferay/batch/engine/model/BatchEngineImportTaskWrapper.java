@@ -28,19 +28,21 @@ import java.util.Map;
 
 /**
  * <p>
- * This class is a wrapper for {@link BatchEngineTask}.
+ * This class is a wrapper for {@link BatchEngineImportTask}.
  * </p>
  *
  * @author Shuyang Zhou
- * @see BatchEngineTask
+ * @see BatchEngineImportTask
  * @generated
  */
-public class BatchEngineTaskWrapper
-	extends BaseModelWrapper<BatchEngineTask>
-	implements BatchEngineTask, ModelWrapper<BatchEngineTask> {
+public class BatchEngineImportTaskWrapper
+	extends BaseModelWrapper<BatchEngineImportTask>
+	implements BatchEngineImportTask, ModelWrapper<BatchEngineImportTask> {
 
-	public BatchEngineTaskWrapper(BatchEngineTask batchEngineTask) {
-		super(batchEngineTask);
+	public BatchEngineImportTaskWrapper(
+		BatchEngineImportTask batchEngineImportTask) {
+
+		super(batchEngineImportTask);
 	}
 
 	@Override
@@ -49,7 +51,7 @@ public class BatchEngineTaskWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
-		attributes.put("batchEngineTaskId", getBatchEngineTaskId());
+		attributes.put("batchEngineImportTaskId", getBatchEngineImportTaskId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
@@ -84,10 +86,11 @@ public class BatchEngineTaskWrapper
 			setUuid(uuid);
 		}
 
-		Long batchEngineTaskId = (Long)attributes.get("batchEngineTaskId");
+		Long batchEngineImportTaskId = (Long)attributes.get(
+			"batchEngineImportTaskId");
 
-		if (batchEngineTaskId != null) {
-			setBatchEngineTaskId(batchEngineTaskId);
+		if (batchEngineImportTaskId != null) {
+			setBatchEngineImportTaskId(batchEngineImportTaskId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -189,19 +192,19 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the batch engine task ID of this batch engine task.
+	 * Returns the batch engine import task ID of this batch engine import task.
 	 *
-	 * @return the batch engine task ID of this batch engine task
+	 * @return the batch engine import task ID of this batch engine import task
 	 */
 	@Override
-	public long getBatchEngineTaskId() {
-		return model.getBatchEngineTaskId();
+	public long getBatchEngineImportTaskId() {
+		return model.getBatchEngineImportTaskId();
 	}
 
 	/**
-	 * Returns the batch size of this batch engine task.
+	 * Returns the batch size of this batch engine import task.
 	 *
-	 * @return the batch size of this batch engine task
+	 * @return the batch size of this batch engine import task
 	 */
 	@Override
 	public long getBatchSize() {
@@ -209,9 +212,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the callback url of this batch engine task.
+	 * Returns the callback url of this batch engine import task.
 	 *
-	 * @return the callback url of this batch engine task
+	 * @return the callback url of this batch engine import task
 	 */
 	@Override
 	public String getCallbackURL() {
@@ -219,9 +222,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the class name of this batch engine task.
+	 * Returns the class name of this batch engine import task.
 	 *
-	 * @return the class name of this batch engine task
+	 * @return the class name of this batch engine import task
 	 */
 	@Override
 	public String getClassName() {
@@ -229,9 +232,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the company ID of this batch engine task.
+	 * Returns the company ID of this batch engine import task.
 	 *
-	 * @return the company ID of this batch engine task
+	 * @return the company ID of this batch engine import task
 	 */
 	@Override
 	public long getCompanyId() {
@@ -239,9 +242,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the content of this batch engine task.
+	 * Returns the content of this batch engine import task.
 	 *
-	 * @return the content of this batch engine task
+	 * @return the content of this batch engine import task
 	 */
 	@Override
 	public Blob getContent() {
@@ -249,9 +252,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the content type of this batch engine task.
+	 * Returns the content type of this batch engine import task.
 	 *
-	 * @return the content type of this batch engine task
+	 * @return the content type of this batch engine import task
 	 */
 	@Override
 	public String getContentType() {
@@ -259,9 +262,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the create date of this batch engine task.
+	 * Returns the create date of this batch engine import task.
 	 *
-	 * @return the create date of this batch engine task
+	 * @return the create date of this batch engine import task
 	 */
 	@Override
 	public Date getCreateDate() {
@@ -269,9 +272,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the end time of this batch engine task.
+	 * Returns the end time of this batch engine import task.
 	 *
-	 * @return the end time of this batch engine task
+	 * @return the end time of this batch engine import task
 	 */
 	@Override
 	public Date getEndTime() {
@@ -279,9 +282,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the error message of this batch engine task.
+	 * Returns the error message of this batch engine import task.
 	 *
-	 * @return the error message of this batch engine task
+	 * @return the error message of this batch engine import task
 	 */
 	@Override
 	public String getErrorMessage() {
@@ -289,9 +292,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the execute status of this batch engine task.
+	 * Returns the execute status of this batch engine import task.
 	 *
-	 * @return the execute status of this batch engine task
+	 * @return the execute status of this batch engine import task
 	 */
 	@Override
 	public String getExecuteStatus() {
@@ -299,9 +302,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the field name mapping of this batch engine task.
+	 * Returns the field name mapping of this batch engine import task.
 	 *
-	 * @return the field name mapping of this batch engine task
+	 * @return the field name mapping of this batch engine import task
 	 */
 	@Override
 	public Map<String, Serializable> getFieldNameMapping() {
@@ -309,9 +312,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the modified date of this batch engine task.
+	 * Returns the modified date of this batch engine import task.
 	 *
-	 * @return the modified date of this batch engine task
+	 * @return the modified date of this batch engine import task
 	 */
 	@Override
 	public Date getModifiedDate() {
@@ -319,9 +322,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the mvcc version of this batch engine task.
+	 * Returns the mvcc version of this batch engine import task.
 	 *
-	 * @return the mvcc version of this batch engine task
+	 * @return the mvcc version of this batch engine import task
 	 */
 	@Override
 	public long getMvccVersion() {
@@ -329,9 +332,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the operation of this batch engine task.
+	 * Returns the operation of this batch engine import task.
 	 *
-	 * @return the operation of this batch engine task
+	 * @return the operation of this batch engine import task
 	 */
 	@Override
 	public String getOperation() {
@@ -339,9 +342,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the primary key of this batch engine task.
+	 * Returns the primary key of this batch engine import task.
 	 *
-	 * @return the primary key of this batch engine task
+	 * @return the primary key of this batch engine import task
 	 */
 	@Override
 	public long getPrimaryKey() {
@@ -349,9 +352,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the start time of this batch engine task.
+	 * Returns the start time of this batch engine import task.
 	 *
-	 * @return the start time of this batch engine task
+	 * @return the start time of this batch engine import task
 	 */
 	@Override
 	public Date getStartTime() {
@@ -359,9 +362,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the user ID of this batch engine task.
+	 * Returns the user ID of this batch engine import task.
 	 *
-	 * @return the user ID of this batch engine task
+	 * @return the user ID of this batch engine import task
 	 */
 	@Override
 	public long getUserId() {
@@ -369,9 +372,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the user uuid of this batch engine task.
+	 * Returns the user uuid of this batch engine import task.
 	 *
-	 * @return the user uuid of this batch engine task
+	 * @return the user uuid of this batch engine import task
 	 */
 	@Override
 	public String getUserUuid() {
@@ -379,9 +382,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the uuid of this batch engine task.
+	 * Returns the uuid of this batch engine import task.
 	 *
-	 * @return the uuid of this batch engine task
+	 * @return the uuid of this batch engine import task
 	 */
 	@Override
 	public String getUuid() {
@@ -389,9 +392,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Returns the version of this batch engine task.
+	 * Returns the version of this batch engine import task.
 	 *
-	 * @return the version of this batch engine task
+	 * @return the version of this batch engine import task
 	 */
 	@Override
 	public String getVersion() {
@@ -401,7 +404,7 @@ public class BatchEngineTaskWrapper
 	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a batch engine task model instance should use the <code>BatchEngineTask</code> interface instead.
+	 * Never modify or reference this class directly. All methods that expect a batch engine import task model instance should use the <code>BatchEngineImportTask</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -409,19 +412,19 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the batch engine task ID of this batch engine task.
+	 * Sets the batch engine import task ID of this batch engine import task.
 	 *
-	 * @param batchEngineTaskId the batch engine task ID of this batch engine task
+	 * @param batchEngineImportTaskId the batch engine import task ID of this batch engine import task
 	 */
 	@Override
-	public void setBatchEngineTaskId(long batchEngineTaskId) {
-		model.setBatchEngineTaskId(batchEngineTaskId);
+	public void setBatchEngineImportTaskId(long batchEngineImportTaskId) {
+		model.setBatchEngineImportTaskId(batchEngineImportTaskId);
 	}
 
 	/**
-	 * Sets the batch size of this batch engine task.
+	 * Sets the batch size of this batch engine import task.
 	 *
-	 * @param batchSize the batch size of this batch engine task
+	 * @param batchSize the batch size of this batch engine import task
 	 */
 	@Override
 	public void setBatchSize(long batchSize) {
@@ -429,9 +432,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the callback url of this batch engine task.
+	 * Sets the callback url of this batch engine import task.
 	 *
-	 * @param callbackURL the callback url of this batch engine task
+	 * @param callbackURL the callback url of this batch engine import task
 	 */
 	@Override
 	public void setCallbackURL(String callbackURL) {
@@ -439,9 +442,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the class name of this batch engine task.
+	 * Sets the class name of this batch engine import task.
 	 *
-	 * @param className the class name of this batch engine task
+	 * @param className the class name of this batch engine import task
 	 */
 	@Override
 	public void setClassName(String className) {
@@ -449,9 +452,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the company ID of this batch engine task.
+	 * Sets the company ID of this batch engine import task.
 	 *
-	 * @param companyId the company ID of this batch engine task
+	 * @param companyId the company ID of this batch engine import task
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
@@ -459,9 +462,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the content of this batch engine task.
+	 * Sets the content of this batch engine import task.
 	 *
-	 * @param content the content of this batch engine task
+	 * @param content the content of this batch engine import task
 	 */
 	@Override
 	public void setContent(Blob content) {
@@ -469,9 +472,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the content type of this batch engine task.
+	 * Sets the content type of this batch engine import task.
 	 *
-	 * @param contentType the content type of this batch engine task
+	 * @param contentType the content type of this batch engine import task
 	 */
 	@Override
 	public void setContentType(String contentType) {
@@ -479,9 +482,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the create date of this batch engine task.
+	 * Sets the create date of this batch engine import task.
 	 *
-	 * @param createDate the create date of this batch engine task
+	 * @param createDate the create date of this batch engine import task
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
@@ -489,9 +492,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the end time of this batch engine task.
+	 * Sets the end time of this batch engine import task.
 	 *
-	 * @param endTime the end time of this batch engine task
+	 * @param endTime the end time of this batch engine import task
 	 */
 	@Override
 	public void setEndTime(Date endTime) {
@@ -499,9 +502,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the error message of this batch engine task.
+	 * Sets the error message of this batch engine import task.
 	 *
-	 * @param errorMessage the error message of this batch engine task
+	 * @param errorMessage the error message of this batch engine import task
 	 */
 	@Override
 	public void setErrorMessage(String errorMessage) {
@@ -509,9 +512,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the execute status of this batch engine task.
+	 * Sets the execute status of this batch engine import task.
 	 *
-	 * @param executeStatus the execute status of this batch engine task
+	 * @param executeStatus the execute status of this batch engine import task
 	 */
 	@Override
 	public void setExecuteStatus(String executeStatus) {
@@ -519,9 +522,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the field name mapping of this batch engine task.
+	 * Sets the field name mapping of this batch engine import task.
 	 *
-	 * @param fieldNameMapping the field name mapping of this batch engine task
+	 * @param fieldNameMapping the field name mapping of this batch engine import task
 	 */
 	@Override
 	public void setFieldNameMapping(
@@ -531,9 +534,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the modified date of this batch engine task.
+	 * Sets the modified date of this batch engine import task.
 	 *
-	 * @param modifiedDate the modified date of this batch engine task
+	 * @param modifiedDate the modified date of this batch engine import task
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
@@ -541,9 +544,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the mvcc version of this batch engine task.
+	 * Sets the mvcc version of this batch engine import task.
 	 *
-	 * @param mvccVersion the mvcc version of this batch engine task
+	 * @param mvccVersion the mvcc version of this batch engine import task
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
@@ -551,9 +554,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the operation of this batch engine task.
+	 * Sets the operation of this batch engine import task.
 	 *
-	 * @param operation the operation of this batch engine task
+	 * @param operation the operation of this batch engine import task
 	 */
 	@Override
 	public void setOperation(String operation) {
@@ -561,9 +564,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the primary key of this batch engine task.
+	 * Sets the primary key of this batch engine import task.
 	 *
-	 * @param primaryKey the primary key of this batch engine task
+	 * @param primaryKey the primary key of this batch engine import task
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -571,9 +574,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the start time of this batch engine task.
+	 * Sets the start time of this batch engine import task.
 	 *
-	 * @param startTime the start time of this batch engine task
+	 * @param startTime the start time of this batch engine import task
 	 */
 	@Override
 	public void setStartTime(Date startTime) {
@@ -581,9 +584,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the user ID of this batch engine task.
+	 * Sets the user ID of this batch engine import task.
 	 *
-	 * @param userId the user ID of this batch engine task
+	 * @param userId the user ID of this batch engine import task
 	 */
 	@Override
 	public void setUserId(long userId) {
@@ -591,9 +594,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the user uuid of this batch engine task.
+	 * Sets the user uuid of this batch engine import task.
 	 *
-	 * @param userUuid the user uuid of this batch engine task
+	 * @param userUuid the user uuid of this batch engine import task
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
@@ -601,9 +604,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the uuid of this batch engine task.
+	 * Sets the uuid of this batch engine import task.
 	 *
-	 * @param uuid the uuid of this batch engine task
+	 * @param uuid the uuid of this batch engine import task
 	 */
 	@Override
 	public void setUuid(String uuid) {
@@ -611,9 +614,9 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
-	 * Sets the version of this batch engine task.
+	 * Sets the version of this batch engine import task.
 	 *
-	 * @param version the version of this batch engine task
+	 * @param version the version of this batch engine import task
 	 */
 	@Override
 	public void setVersion(String version) {
@@ -626,8 +629,10 @@ public class BatchEngineTaskWrapper
 	}
 
 	@Override
-	protected BatchEngineTaskWrapper wrap(BatchEngineTask batchEngineTask) {
-		return new BatchEngineTaskWrapper(batchEngineTask);
+	protected BatchEngineImportTaskWrapper wrap(
+		BatchEngineImportTask batchEngineImportTask) {
+
+		return new BatchEngineImportTaskWrapper(batchEngineImportTask);
 	}
 
 }

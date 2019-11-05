@@ -17,34 +17,34 @@ package com.liferay.batch.engine.model;
 import java.sql.Blob;
 
 /**
- * The Blob model class for lazy loading the content column in BatchEngineTask.
+ * The Blob model class for lazy loading the content column in BatchEngineImportTask.
  *
  * @author Shuyang Zhou
- * @see BatchEngineTask
+ * @see BatchEngineImportTask
  * @generated
  */
-public class BatchEngineTaskContentBlobModel {
+public class BatchEngineImportTaskContentBlobModel {
 
-	public BatchEngineTaskContentBlobModel() {
+	public BatchEngineImportTaskContentBlobModel() {
 	}
 
-	public BatchEngineTaskContentBlobModel(long batchEngineTaskId) {
-		_batchEngineTaskId = batchEngineTaskId;
+	public BatchEngineImportTaskContentBlobModel(long batchEngineImportTaskId) {
+		_batchEngineImportTaskId = batchEngineImportTaskId;
 	}
 
-	public BatchEngineTaskContentBlobModel(
-		long batchEngineTaskId, Blob contentBlob) {
+	public BatchEngineImportTaskContentBlobModel(
+		long batchEngineImportTaskId, Blob contentBlob) {
 
-		_batchEngineTaskId = batchEngineTaskId;
+		_batchEngineImportTaskId = batchEngineImportTaskId;
 		_contentBlob = contentBlob;
 	}
 
-	public long getBatchEngineTaskId() {
-		return _batchEngineTaskId;
+	public long getBatchEngineImportTaskId() {
+		return _batchEngineImportTaskId;
 	}
 
-	public void setBatchEngineTaskId(long batchEngineTaskId) {
-		_batchEngineTaskId = batchEngineTaskId;
+	public void setBatchEngineImportTaskId(long batchEngineImportTaskId) {
+		_batchEngineImportTaskId = batchEngineImportTaskId;
 	}
 
 	public Blob getContentBlob() {
@@ -55,7 +55,7 @@ public class BatchEngineTaskContentBlobModel {
 		_contentBlob = contentBlob;
 	}
 
-	private long _batchEngineTaskId;
+	private long _batchEngineImportTaskId;
 	private Blob _contentBlob;
 
 }

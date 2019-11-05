@@ -1,7 +1,7 @@
-create table BatchEngineTask (
+create table BatchEngineImportTask (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	batchEngineTaskId LONG not null primary key,
+	batchEngineImportTaskId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	createDate DATE null,

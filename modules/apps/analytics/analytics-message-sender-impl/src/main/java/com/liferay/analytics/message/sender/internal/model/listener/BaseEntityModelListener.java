@@ -18,6 +18,7 @@ import com.liferay.analytics.message.sender.client.AnalyticsMessageSenderClient;
 import com.liferay.analytics.message.sender.model.AnalyticsMessage;
 import com.liferay.analytics.message.sender.util.UserSerializer;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -31,6 +32,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -43,6 +48,25 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	extends BaseModelListener<T> {
 
 	public abstract String getObjectType();
+
+	protected Set<String> getModifiedAttributes(
+		List<String> attributeNames, Object newObject, Object oldObject) {
+
+		Set<String> modifiedAttributes = new HashSet<>();
+
+		for (String attributeName : attributeNames) {
+			String newValue = String.valueOf(
+				BeanPropertiesUtil.getObject(newObject, attributeName));
+			String oldValue = String.valueOf(
+				BeanPropertiesUtil.getObject(oldObject, attributeName));
+
+			if (!Objects.equals(newValue, oldValue)) {
+				modifiedAttributes.add(attributeName);
+			}
+		}
+
+		return modifiedAttributes;
+	}
 
 	protected void send(String eventType, Object object) {
 		try {

@@ -63,10 +63,12 @@ class ItemSelectorField extends Component {
 		if (
 			this.configurationValues &&
 			this.configurationValues[this.field.name] &&
-			this.configurationValues[this.field.name].className
+			this.configurationValues[this.field.name].className &&
+			this.configurationValues[this.field.name].classPK
 		) {
 			getAvailableTemplates(
-				this.configurationValues[this.field.name].className
+				this.configurationValues[this.field.name].className,
+				this.configurationValues[this.field.name].classPK
 			).then(availableTemplates => {
 				this.availableTemplates = availableTemplates;
 			});
@@ -93,7 +95,7 @@ class ItemSelectorField extends Component {
 		const selectedItem = this.configurationValues[this.field.name];
 
 		selectedItem.template =
-			targetElement.options[targetElement.selectedIndex].value;
+			targetElement.options[targetElement.selectedIndex].dataset;
 
 		this.emit('fieldValueChanged', {
 			name: this.field.name,
@@ -144,7 +146,8 @@ ItemSelectorField.STATE = {
 	 */
 	availableTemplates: Config.arrayOf(
 		Config.shapeOf({
-			key: Config.string(),
+			ddmTemplateKey: Config.string().value(''),
+			infoItemRendererKey: Config.string().value(''),
 			label: Config.string()
 		})
 	)

@@ -193,10 +193,12 @@ function getAssetMappingFields(classNameId, classPK) {
 
 /**
  * @param {string} className
+ * @param {string} classPK
  */
-function getAvailableTemplates(className) {
+function getAvailableTemplates(className, classPK) {
 	return _fetch(getState().getAvailableTemplatesURL, {
-		className
+		className,
+		classPK
 	});
 }
 

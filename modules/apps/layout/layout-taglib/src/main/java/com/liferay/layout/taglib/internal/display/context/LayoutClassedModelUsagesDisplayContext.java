@@ -129,7 +129,7 @@ public class LayoutClassedModelUsagesDisplayContext {
 		}
 
 		return layoutClassedModelUsageActionMenuContributor.
-			getLayoutClassedModelUsageActionMenu(
+			getLayoutClassedModelUsageActionDropdownItems(
 				layoutClassedModelUsage,
 				PortalUtil.getHttpServletRequest(_renderRequest));
 	}

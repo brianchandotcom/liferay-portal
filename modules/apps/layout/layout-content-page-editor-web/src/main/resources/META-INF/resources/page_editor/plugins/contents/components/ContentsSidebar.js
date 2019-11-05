@@ -15,6 +15,7 @@
 import React, {useContext} from 'react';
 
 import {StoreContext} from '../../../app/store/index';
+import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
@@ -33,7 +34,7 @@ export default function ContentsSidebar() {
 				{Liferay.Language.get('contents')}
 			</SidebarPanelHeader>
 
-			{view}
+			<SidebarPanelContent padded={false}>{view}</SidebarPanelContent>
 		</>
 	);
 }

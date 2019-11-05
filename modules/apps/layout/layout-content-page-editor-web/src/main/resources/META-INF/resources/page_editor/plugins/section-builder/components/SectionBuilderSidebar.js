@@ -17,6 +17,7 @@ import React, {useContext, useMemo, useState} from 'react';
 import {StoreContext} from '../../../app/store/index';
 import Collapse from '../../../common/components/Collapse';
 import SearchForm from '../../../common/components/SearchForm';
+import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import FragmentCard from './FragmentCard';
 import Layouts from './Layouts';
@@ -51,7 +52,7 @@ export default function SectionBuilderSidebar() {
 				{Liferay.Language.get('section-builder')}
 			</SidebarPanelHeader>
 
-			<div>
+			<SidebarPanelContent>
 				<SearchForm onChange={setSearchValue} value={searchValue} />
 
 				{!searchValue.length && <Layouts />}
@@ -78,7 +79,7 @@ export default function SectionBuilderSidebar() {
 						</Collapse>
 					</div>
 				))}
-			</div>
+			</SidebarPanelContent>
 		</>
 	);
 }

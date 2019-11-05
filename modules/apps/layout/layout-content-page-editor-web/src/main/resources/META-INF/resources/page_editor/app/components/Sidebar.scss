@@ -46,7 +46,6 @@ $zIndexContent: 0;
 		border-left: 1px solid $sidebarBorderColor;
 		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
 		overflow-x: hidden;
-		padding: $pageEditorSpacing * 2;
 		position: fixed;
 		right: $sidebarButtonWidth;
 		transform: translateX(100%);

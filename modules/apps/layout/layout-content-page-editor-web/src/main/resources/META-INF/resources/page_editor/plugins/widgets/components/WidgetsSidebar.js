@@ -17,6 +17,7 @@ import React, {useContext, useMemo, useState} from 'react';
 import {StoreContext} from '../../../app/store/index';
 import Collapse from '../../../common/components/Collapse';
 import SearchForm from '../../../common/components/SearchForm';
+import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import Widget from './Widget';
 
@@ -50,7 +51,7 @@ export default function WidgetsSidebar() {
 				{Liferay.Language.get('widgets')}
 			</SidebarPanelHeader>
 
-			<div>
+			<SidebarPanelContent>
 				<SearchForm onChange={setSearchValue} value={searchValue} />
 
 				{filteredWidgets.map(category => (
@@ -70,7 +71,7 @@ export default function WidgetsSidebar() {
 						</Collapse>
 					</div>
 				))}
-			</div>
+			</SidebarPanelContent>
 		</>
 	);
 }

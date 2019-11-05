@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.ldap.SafeLdapFilter;
+import com.liferay.portal.security.ldap.SafeLdapFilterStringUtil;
 import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
@@ -73,9 +73,9 @@ public class DefaultLDAPSettings implements LDAPSettings {
 			},
 			new String[] {
 				String.valueOf(companyId),
-				SafeLdapFilter.rfc2254Escape(emailAddress),
-				SafeLdapFilter.rfc2254Escape(screenName),
-				SafeLdapFilter.rfc2254Escape(userId)
+				SafeLdapFilterStringUtil.rfc2254Escape(emailAddress),
+				SafeLdapFilterStringUtil.rfc2254Escape(screenName),
+				SafeLdapFilterStringUtil.rfc2254Escape(userId)
 			});
 
 		_ldapFilterValidator.validate(filter);

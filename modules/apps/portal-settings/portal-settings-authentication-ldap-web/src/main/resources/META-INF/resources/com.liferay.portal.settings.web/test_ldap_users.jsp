@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.liferay.portal.security.ldap.SafeLdapFilterFactory" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -83,7 +83,7 @@ List<SearchResult> searchResults = new ArrayList<SearchResult>();
 
 if (Validator.isNotNull(userFilter) && !userFilter.equals(StringPool.STAR)) {
 	try {
-		PortalLDAPUtil.getInstance().getUsers(themeDisplay.getCompanyId(), safeLdapContext, new byte[0], 20, SafeLdapName.fromUnsafe(baseDN), SafeLdapFilter.fromUnsafeFilter(userFilter, LDAPFilterValidatorUtil.getInstance()), attributeIds, searchResults);
+		PortalLDAPUtil.getInstance().getUsers(themeDisplay.getCompanyId(), safeLdapContext, new byte[0], 20, SafeLdapName.fromUnsafe(baseDN), SafeLdapFilterFactory.fromUnsafeFilter(userFilter, LDAPFilterValidatorUtil.getInstance()), attributeIds, searchResults);
 	}
 	catch (NameNotFoundException | InvalidNameException nnfe) {
 %>

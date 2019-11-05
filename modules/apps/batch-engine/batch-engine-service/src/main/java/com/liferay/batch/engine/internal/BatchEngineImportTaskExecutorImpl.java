@@ -14,16 +14,18 @@
 
 package com.liferay.batch.engine.internal;
 
+import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
+import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
-import com.liferay.batch.engine.BatchEngineTaskExecutor;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegate;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegateFactory;
-import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReader;
-import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReaderFactory;
-import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReaderUtil;
-import com.liferay.batch.engine.model.BatchEngineTask;
-import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
+import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReader;
+import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReaderFactory;
+import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReaderUtil;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -55,41 +57,52 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
-	service = BatchEngineTaskExecutor.class
+	service = BatchEngineImportTaskExecutor.class
 )
-public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
+public class BatchEngineImportTaskExecutorImpl
+	implements BatchEngineImportTaskExecutor {
 
 	@Override
-	public void execute(BatchEngineTask batchEngineTask) {
+	public void execute(BatchEngineImportTask batchEngineImportTask) {
 		try {
-			batchEngineTask.setExecuteStatus(
+			batchEngineImportTask.setExecuteStatus(
 				BatchEngineTaskExecuteStatus.STARTED.toString());
-			batchEngineTask.setStartTime(new Date());
+			batchEngineImportTask.setStartTime(new Date());
 
-			_batchEngineTaskLocalService.updateBatchEngineTask(batchEngineTask);
+			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
+				batchEngineImportTask);
 
-			_execute(batchEngineTask);
+			_execute(batchEngineImportTask);
 
-			batchEngineTask.setEndTime(new Date());
-			batchEngineTask.setExecuteStatus(
+			batchEngineImportTask.setEndTime(new Date());
+			batchEngineImportTask.setExecuteStatus(
 				BatchEngineTaskExecuteStatus.COMPLETED.toString());
 
-			_batchEngineTaskLocalService.updateBatchEngineTask(batchEngineTask);
+			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
+				batchEngineImportTask);
 
-			BatchEngineTaskCallbackUtil.sendCallback(batchEngineTask);
+			BatchEngineTaskCallbackUtil.sendCallback(
+				batchEngineImportTask.getCallbackURL(),
+				batchEngineImportTask.getExecuteStatus(),
+				batchEngineImportTask.getBatchEngineImportTaskId());
 		}
 		catch (Throwable t) {
 			_log.error(
-				"Unable to update batch engine task " + batchEngineTask, t);
+				"Unable to update batch engine task " + batchEngineImportTask,
+				t);
 
-			batchEngineTask.setEndTime(new Date());
-			batchEngineTask.setErrorMessage(t.getMessage());
-			batchEngineTask.setExecuteStatus(
+			batchEngineImportTask.setEndTime(new Date());
+			batchEngineImportTask.setErrorMessage(t.getMessage());
+			batchEngineImportTask.setExecuteStatus(
 				BatchEngineTaskExecuteStatus.FAILED.toString());
 
-			_batchEngineTaskLocalService.updateBatchEngineTask(batchEngineTask);
+			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
+				batchEngineImportTask);
 
-			BatchEngineTaskCallbackUtil.sendCallback(batchEngineTask);
+			BatchEngineTaskCallbackUtil.sendCallback(
+				batchEngineImportTask.getCallbackURL(),
+				batchEngineImportTask.getExecuteStatus(),
+				batchEngineImportTask.getBatchEngineImportTaskId());
 		}
 	}
 
@@ -101,8 +114,8 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 			ConfigurableUtil.createConfigurable(
 				BatchEngineTaskConfiguration.class, properties);
 
-		_batchEngineTaskItemReaderFactory =
-			new BatchEngineTaskItemReaderFactory(
+		_batchEngineImportTaskItemReaderFactory =
+			new BatchEngineImportTaskItemReaderFactory(
 				GetterUtil.getString(
 					batchEngineTaskConfiguration.csvFileColumnDelimiter(),
 					StringPool.COMMA));
@@ -114,7 +127,7 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 	}
 
 	private void _commitItems(
-			BatchEngineTask batchEngineTask,
+			BatchEngineImportTask batchEngineImportTask,
 			BatchEngineTaskItemResourceDelegate
 				batchEngineTaskItemResourceDelegate,
 			List<Object> items)
@@ -125,18 +138,21 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 			() -> {
 				batchEngineTaskItemResourceDelegate.addItems(items);
 
-				_batchEngineTaskLocalService.updateBatchEngineTask(
-					batchEngineTask);
+				_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
+					batchEngineImportTask);
 
 				return null;
 			});
 	}
 
-	private void _execute(BatchEngineTask batchEngineTask) throws Throwable {
+	private void _execute(BatchEngineImportTask batchEngineImportTask)
+		throws Throwable {
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		User user = _userLocalService.getUser(batchEngineTask.getUserId());
+		User user = _userLocalService.getUser(
+			batchEngineImportTask.getUserId());
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
@@ -145,17 +161,25 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		try (BatchEngineTaskItemReader batchEngineTaskItemReader =
-				_batchEngineTaskItemReaderFactory.create(batchEngineTask);
+		try (BatchEngineImportTaskItemReader batchEngineTaskItemReader =
+				_batchEngineImportTaskItemReaderFactory.create(
+					BatchEngineTaskContentType.valueOf(
+						batchEngineImportTask.getContentType()),
+					batchEngineImportTask.getContent());
 			BatchEngineTaskItemResourceDelegate
 				batchEngineTaskItemResourceDelegate =
 					_batchEngineTaskItemResourceDelegateFactory.create(
-						batchEngineTask)) {
+						BatchEngineTaskOperation.valueOf(
+							batchEngineImportTask.getOperation()),
+						batchEngineImportTask.getClassName(),
+						batchEngineImportTask.getCompanyId(),
+						batchEngineImportTask.getUserId(),
+						batchEngineImportTask.getVersion())) {
 
 			List<Object> items = new ArrayList<>();
 
 			Class<?> itemClass = _batchEngineTaskMethodRegistry.getItemClass(
-				batchEngineTask.getClassName());
+				batchEngineImportTask.getClassName());
 
 			Map<String, Object> fieldNameValueMap = null;
 
@@ -167,16 +191,16 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 				}
 
 				items.add(
-					BatchEngineTaskItemReaderUtil.convertValue(
+					BatchEngineImportTaskItemReaderUtil.convertValue(
 						itemClass,
-						BatchEngineTaskItemReaderUtil.mapFieldNames(
-							batchEngineTask.getFieldNameMapping(),
+						BatchEngineImportTaskItemReaderUtil.mapFieldNames(
+							batchEngineImportTask.getFieldNameMapping(),
 							fieldNameValueMap)));
 
-				if (items.size() == batchEngineTask.getBatchSize()) {
+				if (items.size() == batchEngineImportTask.getBatchSize()) {
 					_commitItems(
-						batchEngineTask, batchEngineTaskItemResourceDelegate,
-						items);
+						batchEngineImportTask,
+						batchEngineTaskItemResourceDelegate, items);
 
 					items.clear();
 				}
@@ -184,7 +208,7 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
 			if (!items.isEmpty()) {
 				_commitItems(
-					batchEngineTask, batchEngineTaskItemResourceDelegate,
+					batchEngineImportTask, batchEngineTaskItemResourceDelegate,
 					items);
 			}
 		}
@@ -195,18 +219,21 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BatchEngineTaskExecutorImpl.class);
+		BatchEngineImportTaskExecutorImpl.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
-	private BatchEngineTaskItemReaderFactory _batchEngineTaskItemReaderFactory;
-	private BatchEngineTaskItemResourceDelegateFactory
-		_batchEngineTaskItemResourceDelegateFactory;
+	private BatchEngineImportTaskItemReaderFactory
+		_batchEngineImportTaskItemReaderFactory;
 
 	@Reference
-	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
+	private BatchEngineImportTaskLocalService
+		_batchEngineImportTaskLocalService;
+
+	private BatchEngineTaskItemResourceDelegateFactory
+		_batchEngineTaskItemResourceDelegateFactory;
 
 	@Reference
 	private BatchEngineTaskMethodRegistry _batchEngineTaskMethodRegistry;

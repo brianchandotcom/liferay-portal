@@ -1,7 +1,7 @@
 components:
     schemas:
         ExportTask:
-            #@review
+            # @review
             properties:
                 className:
                     description:
@@ -50,7 +50,7 @@ components:
                     type: string
             type: object
         ImportTask:
-            #@review
+            # @review
             properties:
                 className:
                     description:
@@ -115,7 +115,7 @@ info:
 openapi: 3.0.1
 paths:
     /export-task/{className}/{version}:
-        #@review
+        # @review
         post:
             description:
                 Submits a request for exporting items to a file.
@@ -153,7 +153,7 @@ paths:
                         Async
             tags: ["ExportTask"]
     /export-task/{exportTaskId}/:
-        #@review
+        # @review
         get:
             description:
                 Retrieves the export task.
@@ -178,7 +178,7 @@ paths:
                         ""
             tags: ["ExportTask"]
     /import-task/{className}/{version}:
-        #@review
+        # @review
         delete:
             description:
                 Uploads a new file for deleting items in batch.
@@ -299,7 +299,7 @@ paths:
                         Async
             tags: ["ImportTask"]
     /import-task/{importTaskId}/:
-        #@review
+        # @review
         get:
             description:
                 Retrieves the import task.

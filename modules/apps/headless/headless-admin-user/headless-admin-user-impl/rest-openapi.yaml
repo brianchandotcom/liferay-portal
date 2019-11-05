@@ -516,7 +516,7 @@ components:
                     type: string
             type: object
         Site:
-            #@review
+            # @review
             description:
                 Represents the site where the content is created. Properties follow the
                 [WebSite](https://schema.org/WebSite) specification.
@@ -1487,7 +1487,7 @@ paths:
             tags: ["UserAccount"]
     "/sites/{siteId}/user-accounts/{userAccountId}/segments":
         get:
-            #review
+            # @review
             description:
                 "Gets a user's segments. The set of available headers are: Accept-Language (string), Host (string),
                 User-Agent (string), X-Browser (string), X-Cookies (collection string), X-Device-Brand (string),

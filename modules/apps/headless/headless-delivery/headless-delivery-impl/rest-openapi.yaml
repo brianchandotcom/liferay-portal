@@ -23,7 +23,7 @@ components:
                     readOnly: true
                     type: integer
                 ratingValue:
-                    #@review
+                    # @review
                     description:
                         The rating value.
                     format: double
@@ -1331,7 +1331,7 @@ components:
             required:
                 - title
             type: object
-        #@review
+        # @review
         MessageBoardThread:
             description:
                 Represents a discussion thread in a message board.
@@ -2446,7 +2446,7 @@ paths:
             tags: ["Comment"]
     "/content-sets/{contentSetId}/content-set-elements":
         get:
-            #review
+            # @review
             description:
                 "Retrieves the content set's elements (e.g., structured content, blogs, etc.). Results can be paginated.
                 The set of available headers are: Accept-Language (string), Host (string), User-Agent (string),

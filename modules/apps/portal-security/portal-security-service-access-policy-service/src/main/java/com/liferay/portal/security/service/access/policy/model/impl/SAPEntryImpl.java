@@ -73,7 +73,7 @@ public class SAPEntryImpl extends SAPEntryBaseImpl {
 			return true;
 		}
 
-		if (SAPSystemEntriesHolder._sapSystemEntries.contains(getName())) {
+		if (SAPSystemEntriesHolder.contains(getName())) {
 			return true;
 		}
 
@@ -81,6 +81,10 @@ public class SAPEntryImpl extends SAPEntryBaseImpl {
 	}
 
 	private static class SAPSystemEntriesHolder {
+
+		public static boolean contains(String name) {
+			return _sapSystemEntries.contains(name);
+		}
 
 		private static final Set<String> _sapSystemEntries =
 			Collections.newSetFromMap(new ConcurrentHashMap<>());

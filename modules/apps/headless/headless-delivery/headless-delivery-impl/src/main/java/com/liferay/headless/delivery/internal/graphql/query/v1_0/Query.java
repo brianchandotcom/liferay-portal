@@ -67,6 +67,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -2874,12 +2875,16 @@ public class Query {
 	public class BlogPostingPage {
 
 		public BlogPostingPage(Page blogPostingPage) {
+			actions = blogPostingPage.getActions();
 			items = blogPostingPage.getItems();
 			lastPage = blogPostingPage.getLastPage();
 			page = blogPostingPage.getPage();
 			pageSize = blogPostingPage.getPageSize();
 			totalCount = blogPostingPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<BlogPosting> items;
@@ -2902,12 +2907,16 @@ public class Query {
 	public class BlogPostingImagePage {
 
 		public BlogPostingImagePage(Page blogPostingImagePage) {
+			actions = blogPostingImagePage.getActions();
 			items = blogPostingImagePage.getItems();
 			lastPage = blogPostingImagePage.getLastPage();
 			page = blogPostingImagePage.getPage();
 			pageSize = blogPostingImagePage.getPageSize();
 			totalCount = blogPostingImagePage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<BlogPostingImage> items;
@@ -2930,12 +2939,16 @@ public class Query {
 	public class CommentPage {
 
 		public CommentPage(Page commentPage) {
+			actions = commentPage.getActions();
 			items = commentPage.getItems();
 			lastPage = commentPage.getLastPage();
 			page = commentPage.getPage();
 			pageSize = commentPage.getPageSize();
 			totalCount = commentPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<Comment> items;
@@ -2958,12 +2971,16 @@ public class Query {
 	public class ContentSetElementPage {
 
 		public ContentSetElementPage(Page contentSetElementPage) {
+			actions = contentSetElementPage.getActions();
 			items = contentSetElementPage.getItems();
 			lastPage = contentSetElementPage.getLastPage();
 			page = contentSetElementPage.getPage();
 			pageSize = contentSetElementPage.getPageSize();
 			totalCount = contentSetElementPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<ContentSetElement> items;
@@ -2986,12 +3003,16 @@ public class Query {
 	public class ContentStructurePage {
 
 		public ContentStructurePage(Page contentStructurePage) {
+			actions = contentStructurePage.getActions();
 			items = contentStructurePage.getItems();
 			lastPage = contentStructurePage.getLastPage();
 			page = contentStructurePage.getPage();
 			pageSize = contentStructurePage.getPageSize();
 			totalCount = contentStructurePage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<ContentStructure> items;
@@ -3014,12 +3035,16 @@ public class Query {
 	public class DocumentPage {
 
 		public DocumentPage(Page documentPage) {
+			actions = documentPage.getActions();
 			items = documentPage.getItems();
 			lastPage = documentPage.getLastPage();
 			page = documentPage.getPage();
 			pageSize = documentPage.getPageSize();
 			totalCount = documentPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<Document> items;
@@ -3042,12 +3067,16 @@ public class Query {
 	public class DocumentFolderPage {
 
 		public DocumentFolderPage(Page documentFolderPage) {
+			actions = documentFolderPage.getActions();
 			items = documentFolderPage.getItems();
 			lastPage = documentFolderPage.getLastPage();
 			page = documentFolderPage.getPage();
 			pageSize = documentFolderPage.getPageSize();
 			totalCount = documentFolderPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<DocumentFolder> items;
@@ -3070,12 +3099,16 @@ public class Query {
 	public class KnowledgeBaseArticlePage {
 
 		public KnowledgeBaseArticlePage(Page knowledgeBaseArticlePage) {
+			actions = knowledgeBaseArticlePage.getActions();
 			items = knowledgeBaseArticlePage.getItems();
 			lastPage = knowledgeBaseArticlePage.getLastPage();
 			page = knowledgeBaseArticlePage.getPage();
 			pageSize = knowledgeBaseArticlePage.getPageSize();
 			totalCount = knowledgeBaseArticlePage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<KnowledgeBaseArticle> items;
@@ -3098,12 +3131,16 @@ public class Query {
 	public class KnowledgeBaseAttachmentPage {
 
 		public KnowledgeBaseAttachmentPage(Page knowledgeBaseAttachmentPage) {
+			actions = knowledgeBaseAttachmentPage.getActions();
 			items = knowledgeBaseAttachmentPage.getItems();
 			lastPage = knowledgeBaseAttachmentPage.getLastPage();
 			page = knowledgeBaseAttachmentPage.getPage();
 			pageSize = knowledgeBaseAttachmentPage.getPageSize();
 			totalCount = knowledgeBaseAttachmentPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<KnowledgeBaseAttachment> items;
@@ -3126,12 +3163,16 @@ public class Query {
 	public class KnowledgeBaseFolderPage {
 
 		public KnowledgeBaseFolderPage(Page knowledgeBaseFolderPage) {
+			actions = knowledgeBaseFolderPage.getActions();
 			items = knowledgeBaseFolderPage.getItems();
 			lastPage = knowledgeBaseFolderPage.getLastPage();
 			page = knowledgeBaseFolderPage.getPage();
 			pageSize = knowledgeBaseFolderPage.getPageSize();
 			totalCount = knowledgeBaseFolderPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<KnowledgeBaseFolder> items;
@@ -3154,12 +3195,16 @@ public class Query {
 	public class MessageBoardAttachmentPage {
 
 		public MessageBoardAttachmentPage(Page messageBoardAttachmentPage) {
+			actions = messageBoardAttachmentPage.getActions();
 			items = messageBoardAttachmentPage.getItems();
 			lastPage = messageBoardAttachmentPage.getLastPage();
 			page = messageBoardAttachmentPage.getPage();
 			pageSize = messageBoardAttachmentPage.getPageSize();
 			totalCount = messageBoardAttachmentPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<MessageBoardAttachment> items;
@@ -3182,12 +3227,16 @@ public class Query {
 	public class MessageBoardMessagePage {
 
 		public MessageBoardMessagePage(Page messageBoardMessagePage) {
+			actions = messageBoardMessagePage.getActions();
 			items = messageBoardMessagePage.getItems();
 			lastPage = messageBoardMessagePage.getLastPage();
 			page = messageBoardMessagePage.getPage();
 			pageSize = messageBoardMessagePage.getPageSize();
 			totalCount = messageBoardMessagePage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<MessageBoardMessage> items;
@@ -3210,12 +3259,16 @@ public class Query {
 	public class MessageBoardSectionPage {
 
 		public MessageBoardSectionPage(Page messageBoardSectionPage) {
+			actions = messageBoardSectionPage.getActions();
 			items = messageBoardSectionPage.getItems();
 			lastPage = messageBoardSectionPage.getLastPage();
 			page = messageBoardSectionPage.getPage();
 			pageSize = messageBoardSectionPage.getPageSize();
 			totalCount = messageBoardSectionPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<MessageBoardSection> items;
@@ -3238,12 +3291,16 @@ public class Query {
 	public class MessageBoardThreadPage {
 
 		public MessageBoardThreadPage(Page messageBoardThreadPage) {
+			actions = messageBoardThreadPage.getActions();
 			items = messageBoardThreadPage.getItems();
 			lastPage = messageBoardThreadPage.getLastPage();
 			page = messageBoardThreadPage.getPage();
 			pageSize = messageBoardThreadPage.getPageSize();
 			totalCount = messageBoardThreadPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<MessageBoardThread> items;
@@ -3294,12 +3351,16 @@ public class Query {
 	public class StructuredContentPage {
 
 		public StructuredContentPage(Page structuredContentPage) {
+			actions = structuredContentPage.getActions();
 			items = structuredContentPage.getItems();
 			lastPage = structuredContentPage.getLastPage();
 			page = structuredContentPage.getPage();
 			pageSize = structuredContentPage.getPageSize();
 			totalCount = structuredContentPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<StructuredContent> items;
@@ -3322,12 +3383,16 @@ public class Query {
 	public class StructuredContentFolderPage {
 
 		public StructuredContentFolderPage(Page structuredContentFolderPage) {
+			actions = structuredContentFolderPage.getActions();
 			items = structuredContentFolderPage.getItems();
 			lastPage = structuredContentFolderPage.getLastPage();
 			page = structuredContentFolderPage.getPage();
 			pageSize = structuredContentFolderPage.getPageSize();
 			totalCount = structuredContentFolderPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<StructuredContentFolder> items;
@@ -3350,12 +3415,16 @@ public class Query {
 	public class WikiNodePage {
 
 		public WikiNodePage(Page wikiNodePage) {
+			actions = wikiNodePage.getActions();
 			items = wikiNodePage.getItems();
 			lastPage = wikiNodePage.getLastPage();
 			page = wikiNodePage.getPage();
 			pageSize = wikiNodePage.getPageSize();
 			totalCount = wikiNodePage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<WikiNode> items;
@@ -3378,12 +3447,16 @@ public class Query {
 	public class WikiPagePage {
 
 		public WikiPagePage(Page wikiPagePage) {
+			actions = wikiPagePage.getActions();
 			items = wikiPagePage.getItems();
 			lastPage = wikiPagePage.getLastPage();
 			page = wikiPagePage.getPage();
 			pageSize = wikiPagePage.getPageSize();
 			totalCount = wikiPagePage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<WikiPage> items;
@@ -3406,12 +3479,16 @@ public class Query {
 	public class WikiPageAttachmentPage {
 
 		public WikiPageAttachmentPage(Page wikiPageAttachmentPage) {
+			actions = wikiPageAttachmentPage.getActions();
 			items = wikiPageAttachmentPage.getItems();
 			lastPage = wikiPageAttachmentPage.getLastPage();
 			page = wikiPageAttachmentPage.getPage();
 			pageSize = wikiPageAttachmentPage.getPageSize();
 			totalCount = wikiPageAttachmentPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<WikiPageAttachment> items;

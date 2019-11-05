@@ -222,7 +222,7 @@ portletDisplay.setWebDAVEnabled(portlet.getWebDAVStorageInstance() != null);
 
 if (portlet.isActive() && portlet.isReady() && supportsMimeType && (invokerPortlet != null)) {
 	try {
-		if (!PortalUtil.isSkipPortletContentProcesssing(group, request, layoutTypePortlet, portletDisplay, portletDisplay.getPortletName())) {
+		if (!PortalUtil.isSkipPortletContentRendering(group, layoutTypePortlet, portletDisplay, portletDisplay.getPortletName())) {
 			if (invokerPortlet.isHeaderPortlet()) {
 				invokerPortlet.renderHeaders(liferayHeaderRequest, liferayHeaderResponse);
 

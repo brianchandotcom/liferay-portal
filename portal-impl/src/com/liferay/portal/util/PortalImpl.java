@@ -6321,23 +6321,6 @@ public class PortalImpl implements Portal {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #isSkipPortletContentRendering(Group, LayoutTypePortlet,
-	 *             PortletDisplay, String)}
-	 */
-	@Deprecated
-	@Override
-	public boolean isSkipPortletContentProcessing(
-			Group group, HttpServletRequest httpServletRequest,
-			LayoutTypePortlet layoutTypePortlet, PortletDisplay portletDisplay,
-			String portletName)
-		throws Exception {
-
-		return isSkipPortletContentRendering(
-			group, layoutTypePortlet, portletDisplay, portletName);
-	}
-
 	@Override
 	public boolean isSkipPortletContentRendering(
 		Group group, LayoutTypePortlet layoutTypePortlet,

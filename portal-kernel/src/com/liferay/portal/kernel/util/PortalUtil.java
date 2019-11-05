@@ -1971,23 +1971,6 @@ public class PortalUtil {
 		return getPortal().isSecure(httpServletRequest);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #isSkipPortletContentRendering(Group, LayoutTypePortlet,
-	 *             PortletDisplay, String)}
-	 */
-	@Deprecated
-	public static boolean isSkipPortletContentProcesssing(
-			Group group, HttpServletRequest httpServletRequest,
-			LayoutTypePortlet layoutTypePortlet, PortletDisplay portletDisplay,
-			String portletName)
-		throws Exception {
-
-		return getPortal().isSkipPortletContentProcessing(
-			group, httpServletRequest, layoutTypePortlet, portletDisplay,
-			portletName);
-	}
-
 	public static boolean isSkipPortletContentRendering(
 		Group group, LayoutTypePortlet layoutTypePortlet,
 		PortletDisplay portletDisplay, String portletName) {

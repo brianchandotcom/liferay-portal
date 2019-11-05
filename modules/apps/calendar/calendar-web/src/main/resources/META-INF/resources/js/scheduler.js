@@ -764,6 +764,20 @@ AUI.add(
 
 		Liferay.SchedulerWeekView = A.Component.create({
 			ATTRS: {
+				headerDateFormatter: {
+					validator: isFunction,
+					value(date) {
+						var instance = this;
+
+						var scheduler = instance.get('scheduler');
+
+						return A.DataType.Date.format(date, {
+							format: Liferay.Language.get('a-d'),
+							locale: scheduler.get('locale')
+						});
+					}
+				},
+
 				navigationDateFormatter: {
 					validator: isFunction,
 					value(date) {

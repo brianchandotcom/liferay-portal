@@ -96,11 +96,9 @@ public class UserGroupLocalServiceTest {
 				_permissionCheckerFactory.create(user));
 
 			LinkedHashMap<String, Object> userGroupParams =
-				new LinkedHashMap<>();
-
-			userGroupParams.put(
-				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS,
-				user.getUserId());
+				LinkedHashMapBuilder.<String, Object>put(
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS,
+					Long.valueOf(user.getUserId()));
 
 			List<UserGroup> userGroups = _search(null, userGroupParams);
 

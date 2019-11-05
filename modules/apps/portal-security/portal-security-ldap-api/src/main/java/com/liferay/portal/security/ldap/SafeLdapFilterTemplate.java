@@ -94,11 +94,10 @@ public class SafeLdapFilterTemplate extends SafeLdapFilter {
 		Arrays.fill(placeholderValues, ARGUMENT_PLACEHOLDER);
 
 		StringBundler oldFilterSB = getFilterStringBundler();
-		Object[] oldArguments = getArguments();
-
-		int argumentsPos = 0;
-		List<Object> newArguments = new ArrayList<>();
 		StringBundler newFilterSB = new StringBundler();
+		List<Object> newArguments = new ArrayList<>();
+		Object[] oldArguments = getArguments();
+		int argumentsPos = 0;
 
 		for (int i = 0; i < oldFilterSB.index(); i++) {
 			String filterString = oldFilterSB.stringAt(i);
@@ -140,8 +139,8 @@ public class SafeLdapFilterTemplate extends SafeLdapFilter {
 				String replacedKeys = StringUtil.replace(
 					filterString, keys, placeholderValues);
 
-				int lastPos = 0;
 				int pos = replacedKeys.indexOf(ARGUMENT_PLACEHOLDER);
+				int lastPos = 0;
 
 				while (pos > -1) {
 					newFilterSB.append(replacedKeys.substring(lastPos, pos));

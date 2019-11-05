@@ -140,6 +140,7 @@ public class SafeLdapFilterTemplate extends SafeLdapFilter {
 					filterString, keys, placeholderValues);
 
 				int pos = replacedKeys.indexOf(ARGUMENT_PLACEHOLDER);
+
 				int lastPos = 0;
 
 				while (pos > -1) {

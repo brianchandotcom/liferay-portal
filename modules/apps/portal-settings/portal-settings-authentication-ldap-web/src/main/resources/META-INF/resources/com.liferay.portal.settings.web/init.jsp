@@ -42,7 +42,6 @@ page import="com.liferay.portal.security.ldap.DuplicateLDAPServerNameException" 
 page import="com.liferay.portal.security.ldap.LDAPServerNameException" %><%@
 page import="com.liferay.portal.security.ldap.SafeLdapContext" %><%@
 page import="com.liferay.portal.security.ldap.SafeLdapFilter" %><%@
-page import="com.liferay.portal.security.ldap.SafeLdapName" %><%@
 page import="com.liferay.portal.security.ldap.configuration.ConfigurationProvider" %><%@
 page import="com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration" %><%@
 page import="com.liferay.portal.security.ldap.constants.LDAPConstants" %><%@

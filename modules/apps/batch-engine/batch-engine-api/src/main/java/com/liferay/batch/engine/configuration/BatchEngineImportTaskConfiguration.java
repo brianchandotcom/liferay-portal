@@ -23,10 +23,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "batch-engine")
 @Meta.OCD(
-	id = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
-	localization = "content/Language", name = "batch-engine-configuration-name"
+	id = "com.liferay.batch.engine.configuration.BatchEngineImportTaskConfiguration",
+	localization = "content/Language",
+	name = "batch-engine-import-configuration-name"
 )
-public interface BatchEngineTaskConfiguration {
+public interface BatchEngineImportTaskConfiguration {
 
 	@Meta.AD(deflt = "100", name = "batch-size", required = false)
 	public int batchSize();

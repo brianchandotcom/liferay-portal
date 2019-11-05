@@ -179,6 +179,7 @@
 		<check name="JavaReturnStatementCheck" />
 		<check name="JavaSeeAnnotationCheck" />
 		<check name="JavaServiceImplCheck" />
+		<check name="JavaSessionCheck" />
 		<check name="JavaStaticBlockCheck" />
 		<check name="JavaStaticImportsCheck" />
 		<check name="JavaStaticVariableDependencyCheck" />

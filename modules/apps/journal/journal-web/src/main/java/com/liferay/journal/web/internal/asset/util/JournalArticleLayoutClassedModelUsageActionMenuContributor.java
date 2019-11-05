@@ -63,7 +63,7 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 	implements LayoutClassedModelUsageActionMenuContributor {
 
 	@Override
-	public List<DropdownItem> getLayoutClassedModelUsageActionMenu(
+	public List<DropdownItem> getLayoutClassedModelUsageActionDropdownItems(
 		LayoutClassedModelUsage layoutClassedModelUsage,
 		HttpServletRequest httpServletRequest) {
 

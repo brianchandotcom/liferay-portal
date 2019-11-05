@@ -126,19 +126,22 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			OutputData outputData = (OutputData)httpServletRequest.getAttribute(
 				WebKeys.OUTPUT_DATA);
 
-			if (outputData == null) {
-				outputData = new OutputData();
+			boolean cssLoaded = false;
+
+			if (outputData != null) {
+				Set<String> outputKeys = outputData.getOutputKeys();
+
+				cssLoaded = outputKeys.contains(outputKey);
+
+				StringBundler cssSB = outputData.getDataSB(
+					outputKey, StringPool.BLANK);
+
+				if (cssSB != null) {
+					cssLoaded = Objects.equals(cssSB.toString(), css);
+				}
 			}
-
-			Set<String> outputKeys = outputData.getOutputKeys();
-
-			boolean cssLoaded = outputKeys.contains(outputKey);
-
-			StringBundler cssSB = outputData.getDataSB(
-				outputKey, StringPool.BLANK);
-
-			if (cssSB != null) {
-				cssLoaded = Objects.equals(cssSB.toString(), css);
+			else {
+				outputData = new OutputData();
 			}
 
 			if (!cssLoaded) {

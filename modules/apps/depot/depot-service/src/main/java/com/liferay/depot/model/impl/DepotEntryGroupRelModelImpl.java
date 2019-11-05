@@ -16,10 +16,12 @@ package com.liferay.depot.model.impl;
 
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.model.DepotEntryGroupRelModel;
+import com.liferay.depot.model.DepotEntryGroupRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -33,9 +35,11 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -51,6 +55,7 @@ import java.util.function.Function;
  * @see DepotEntryGroupRelImpl
  * @generated
  */
+@JSON(strict = true)
 public class DepotEntryGroupRelModelImpl
 	extends BaseModelImpl<DepotEntryGroupRel>
 	implements DepotEntryGroupRelModel {
@@ -106,6 +111,50 @@ public class DepotEntryGroupRelModelImpl
 
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
 		_finderCacheEnabled = finderCacheEnabled;
+	}
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static DepotEntryGroupRel toModel(DepotEntryGroupRelSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		DepotEntryGroupRel model = new DepotEntryGroupRelImpl();
+
+		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setDepotEntryGroupRelId(soapModel.getDepotEntryGroupRelId());
+		model.setDepotEntryId(soapModel.getDepotEntryId());
+		model.setToGroupId(soapModel.getToGroupId());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<DepotEntryGroupRel> toModels(
+		DepotEntryGroupRelSoap[] soapModels) {
+
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<DepotEntryGroupRel> models = new ArrayList<DepotEntryGroupRel>(
+			soapModels.length);
+
+		for (DepotEntryGroupRelSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
 	}
 
 	public DepotEntryGroupRelModelImpl() {
@@ -268,6 +317,7 @@ public class DepotEntryGroupRelModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -278,6 +328,7 @@ public class DepotEntryGroupRelModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public long getDepotEntryGroupRelId() {
 		return _depotEntryGroupRelId;
@@ -288,6 +339,7 @@ public class DepotEntryGroupRelModelImpl
 		_depotEntryGroupRelId = depotEntryGroupRelId;
 	}
 
+	@JSON
 	@Override
 	public long getDepotEntryId() {
 		return _depotEntryId;
@@ -310,6 +362,7 @@ public class DepotEntryGroupRelModelImpl
 		return _originalDepotEntryId;
 	}
 
+	@JSON
 	@Override
 	public long getToGroupId() {
 		return _toGroupId;

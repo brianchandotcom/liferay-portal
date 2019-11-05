@@ -79,51 +79,6 @@ definition {
 	}
 
 	@priority = "4"
-	test DeactivateAccount {
-		for (var accountNumber : list "1,2,3") {
-			ProductMenu.gotoPortlet(
-				category = "Accounts",
-				panel = "Control Panel",
-				portlet = "Accounts");
-
-			Accounts.addCP(
-				accountDescription = "Accounts Name ${accountNumber} Description",
-				accountName = "Accounts Name ${accountNumber} for Test");
-		}
-
-		ProductMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Accounts");
-
-		Accounts.deactivateAccount(accountName = "Accounts Name 1 for Test");
-
-		Accounts.viewDeactivateAccount(accountName = "Accounts Name 1 for Test");
-
-		ProductMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Accounts");
-
-		Accounts.deactivateAccount(
-			accountName = "Accounts Name 2 for Test",
-			deactivateType = "Hide Icon");
-
-		Accounts.viewDeactivateAccount(accountName = "Accounts Name 2 for Test");
-
-		ProductMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Accounts");
-
-		Accounts.deactivateAccount(
-			accountName = "Accounts Name 3 for Test",
-			deactivateType = "Management Toolbar");
-
-		Accounts.viewDeactivateAccount(accountName = "Accounts Name 3 for Test");
-	}
-
-	@priority = "4"
 	test DeleteAccount {
 		for (var accountNumber : list "1,2,3") {
 			ProductMenu.gotoPortlet(
@@ -181,7 +136,7 @@ definition {
 
 	@description = "This is a use case for LPS-101315."
 	@priority = "4"
-	test DeleteDeactivateAccount {
+	test DeleteInactiveAccount {
 		ProductMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -204,6 +159,51 @@ definition {
 		ManagementBar.viewFilterAndOrder(menuItem = "Inactive");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
+	}
+
+	@priority = "4"
+	test InactiveAccount {
+		for (var accountNumber : list "1,2,3") {
+			ProductMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Control Panel",
+				portlet = "Accounts");
+
+			Accounts.addCP(
+				accountDescription = "Accounts Name ${accountNumber} Description",
+				accountName = "Accounts Name ${accountNumber} for Test");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.inactiveAccount(accountName = "Accounts Name 1 for Test");
+
+		Accounts.viewInactiveAccount(accountName = "Accounts Name 1 for Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.inactiveAccount(
+			accountName = "Accounts Name 2 for Test",
+			deactivateType = "Hide Icon");
+
+		Accounts.viewInactiveAccount(accountName = "Accounts Name 2 for Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.inactiveAccount(
+			accountName = "Accounts Name 3 for Test",
+			deactivateType = "Management Toolbar");
+
+		Accounts.viewInactiveAccount(accountName = "Accounts Name 3 for Test");
 	}
 
 	@priority = "4"
@@ -346,7 +346,7 @@ definition {
 
 	@description = "This is a use case for LPS-101221."
 	@priority = "4"
-	test UpdateDeactivateAccountViaNameLink {
+	test UpdateInactiveAccountViaNameLink {
 		ProductMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",

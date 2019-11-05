@@ -50,42 +50,6 @@ definition {
 		}
 	}
 
-	macro deactivateAccount {
-		Search.searchCP(searchTerm = "${accountName}");
-
-		if ("${deactivateType}" == "Hide Icon") {
-			LexiconEntry.selectEntry(key_rowEntry = "${accountName}");
-
-			ClickNoError(locator1 = "Icon#DEACTIVATE");
-
-			AssertConfirm(value1 = "Are you sure you want to deactivate this?");
-
-			Alert.viewSuccessMessage();
-		}
-		else if ("${deactivateType}" == "Management Toolbar") {
-			LexiconEntry.selectEntry(key_rowEntry = "${accountName}");
-
-			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
-
-			MenuItem.clickNoError(menuItem = "Deactivate");
-
-			AssertConfirm(value1 = "Are you sure you want to deactivate this?");
-
-			Alert.viewSuccessMessage();
-		}
-		else {
-			LexiconEntry.gotoEntryMenuItemNoError(
-				menuItem = "Deactivate",
-				rowEntry = "${accountName}");
-
-			AssertConfirm(value1 = "Are you sure you want to deactivate this?");
-
-			Alert.viewSuccessMessage();
-		}
-
-		LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
-	}
-
 	macro deleteAccount {
 		Search.searchCP(searchTerm = "${accountName}");
 
@@ -157,6 +121,42 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro inactiveAccount {
+		Search.searchCP(searchTerm = "${accountName}");
+
+		if ("${deactivateType}" == "Hide Icon") {
+			LexiconEntry.selectEntry(key_rowEntry = "${accountName}");
+
+			ClickNoError(locator1 = "Icon#DEACTIVATE");
+
+			AssertConfirm(value1 = "Are you sure you want to deactivate this?");
+
+			Alert.viewSuccessMessage();
+		}
+		else if ("${deactivateType}" == "Management Toolbar") {
+			LexiconEntry.selectEntry(key_rowEntry = "${accountName}");
+
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Deactivate");
+
+			AssertConfirm(value1 = "Are you sure you want to deactivate this?");
+
+			Alert.viewSuccessMessage();
+		}
+		else {
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Deactivate",
+				rowEntry = "${accountName}");
+
+			AssertConfirm(value1 = "Are you sure you want to deactivate this?");
+
+			Alert.viewSuccessMessage();
+		}
+
+		LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
+	}
+
 	macro removeDomain {
 		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
 
@@ -186,7 +186,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewDeactivateAccount {
+	macro viewInactiveAccount {
 		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
 		Search.searchCP(searchTerm = "${accountName}");

@@ -21,6 +21,7 @@
 		<field name="executeStatus" type="String" />
 		<field name="fieldNameMapping" type="Map" />
 		<field name="operation" type="String" />
+		<field name="parameters" type="Map" />
 		<field name="startTime" type="Date" />
 		<field name="version" type="String" />
 	</model>

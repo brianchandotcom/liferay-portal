@@ -335,6 +335,20 @@ public interface BatchEngineImportTaskModel
 	public void setOperation(String operation);
 
 	/**
+	 * Returns the parameters of this batch engine import task.
+	 *
+	 * @return the parameters of this batch engine import task
+	 */
+	public Map<String, Serializable> getParameters();
+
+	/**
+	 * Sets the parameters of this batch engine import task.
+	 *
+	 * @param parameters the parameters of this batch engine import task
+	 */
+	public void setParameters(Map<String, Serializable> parameters);
+
+	/**
 	 * Returns the start time of this batch engine import task.
 	 *
 	 * @return the start time of this batch engine import task

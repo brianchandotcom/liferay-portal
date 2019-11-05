@@ -80,7 +80,7 @@ public class BatchEngineImportTaskCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -114,6 +114,8 @@ public class BatchEngineImportTaskCacheModel
 		sb.append(fieldNameMapping);
 		sb.append(", operation=");
 		sb.append(operation);
+		sb.append(", parameters=");
+		sb.append(parameters);
 		sb.append(", startTime=");
 		sb.append(startTime);
 		sb.append(", version=");
@@ -209,6 +211,8 @@ public class BatchEngineImportTaskCacheModel
 			batchEngineImportTaskImpl.setOperation(operation);
 		}
 
+		batchEngineImportTaskImpl.setParameters(parameters);
+
 		if (startTime == Long.MIN_VALUE) {
 			batchEngineImportTaskImpl.setStartTime(null);
 		}
@@ -252,6 +256,7 @@ public class BatchEngineImportTaskCacheModel
 		executeStatus = objectInput.readUTF();
 		fieldNameMapping = (Map<String, Serializable>)objectInput.readObject();
 		operation = objectInput.readUTF();
+		parameters = (Map<String, Serializable>)objectInput.readObject();
 		startTime = objectInput.readLong();
 		version = objectInput.readUTF();
 	}
@@ -323,6 +328,7 @@ public class BatchEngineImportTaskCacheModel
 			objectOutput.writeUTF(operation);
 		}
 
+		objectOutput.writeObject(parameters);
 		objectOutput.writeLong(startTime);
 
 		if (version == null) {
@@ -349,6 +355,7 @@ public class BatchEngineImportTaskCacheModel
 	public String executeStatus;
 	public Map<String, Serializable> fieldNameMapping;
 	public String operation;
+	public Map<String, Serializable> parameters;
 	public long startTime;
 	public String version;
 

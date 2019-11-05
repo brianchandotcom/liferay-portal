@@ -54,6 +54,7 @@ public class BatchEngineImportTaskSoap implements Serializable {
 		soapModel.setExecuteStatus(model.getExecuteStatus());
 		soapModel.setFieldNameMapping(model.getFieldNameMapping());
 		soapModel.setOperation(model.getOperation());
+		soapModel.setParameters(model.getParameters());
 		soapModel.setStartTime(model.getStartTime());
 		soapModel.setVersion(model.getVersion());
 
@@ -256,6 +257,14 @@ public class BatchEngineImportTaskSoap implements Serializable {
 		_operation = operation;
 	}
 
+	public Map<String, Serializable> getParameters() {
+		return _parameters;
+	}
+
+	public void setParameters(Map<String, Serializable> parameters) {
+		_parameters = parameters;
+	}
+
 	public Date getStartTime() {
 		return _startTime;
 	}
@@ -289,6 +298,7 @@ public class BatchEngineImportTaskSoap implements Serializable {
 	private String _executeStatus;
 	private Map<String, Serializable> _fieldNameMapping;
 	private String _operation;
+	private Map<String, Serializable> _parameters;
 	private Date _startTime;
 	private String _version;
 

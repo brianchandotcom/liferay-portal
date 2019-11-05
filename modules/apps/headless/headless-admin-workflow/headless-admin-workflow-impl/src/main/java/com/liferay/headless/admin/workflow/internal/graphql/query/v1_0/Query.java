@@ -38,6 +38,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -813,12 +814,16 @@ public class Query {
 	public class CreatorPage {
 
 		public CreatorPage(Page creatorPage) {
+			actions = creatorPage.getActions();
 			items = creatorPage.getItems();
 			lastPage = creatorPage.getLastPage();
 			page = creatorPage.getPage();
 			pageSize = creatorPage.getPageSize();
 			totalCount = creatorPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<Creator> items;
@@ -841,12 +846,16 @@ public class Query {
 	public class TransitionPage {
 
 		public TransitionPage(Page transitionPage) {
+			actions = transitionPage.getActions();
 			items = transitionPage.getItems();
 			lastPage = transitionPage.getLastPage();
 			page = transitionPage.getPage();
 			pageSize = transitionPage.getPageSize();
 			totalCount = transitionPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<Transition> items;
@@ -869,12 +878,16 @@ public class Query {
 	public class WorkflowDefinitionPage {
 
 		public WorkflowDefinitionPage(Page workflowDefinitionPage) {
+			actions = workflowDefinitionPage.getActions();
 			items = workflowDefinitionPage.getItems();
 			lastPage = workflowDefinitionPage.getLastPage();
 			page = workflowDefinitionPage.getPage();
 			pageSize = workflowDefinitionPage.getPageSize();
 			totalCount = workflowDefinitionPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<WorkflowDefinition> items;
@@ -897,12 +910,16 @@ public class Query {
 	public class WorkflowInstancePage {
 
 		public WorkflowInstancePage(Page workflowInstancePage) {
+			actions = workflowInstancePage.getActions();
 			items = workflowInstancePage.getItems();
 			lastPage = workflowInstancePage.getLastPage();
 			page = workflowInstancePage.getPage();
 			pageSize = workflowInstancePage.getPageSize();
 			totalCount = workflowInstancePage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<WorkflowInstance> items;
@@ -925,12 +942,16 @@ public class Query {
 	public class WorkflowLogPage {
 
 		public WorkflowLogPage(Page workflowLogPage) {
+			actions = workflowLogPage.getActions();
 			items = workflowLogPage.getItems();
 			lastPage = workflowLogPage.getLastPage();
 			page = workflowLogPage.getPage();
 			pageSize = workflowLogPage.getPageSize();
 			totalCount = workflowLogPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<WorkflowLog> items;
@@ -953,12 +974,16 @@ public class Query {
 	public class WorkflowTaskPage {
 
 		public WorkflowTaskPage(Page workflowTaskPage) {
+			actions = workflowTaskPage.getActions();
 			items = workflowTaskPage.getItems();
 			lastPage = workflowTaskPage.getLastPage();
 			page = workflowTaskPage.getPage();
 			pageSize = workflowTaskPage.getPageSize();
 			totalCount = workflowTaskPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<WorkflowTask> items;

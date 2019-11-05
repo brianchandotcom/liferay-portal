@@ -128,9 +128,9 @@ public class CTIndicatorProductNavigationControlMenuEntry
 		}
 
 		Map<String, String> values = HashMapBuilder.put(
-			"ctCollectionName", ctCollectionName
-		).put(
 			"changeTrackingURL", changeTrackingURL.toString()
+		).put(
+			"ctCollectionName", ctCollectionName
 		).build();
 
 		try {

@@ -1341,11 +1341,11 @@ public class ModulesStructureTest {
 		).put(
 			"testCompile", hasSrcTestDir
 		).put(
-			"testRuntime", hasSrcTestDir
-		).put(
 			"testIntegrationCompile", hasSrcTestIntegrationDir
 		).put(
 			"testIntegrationRuntime", hasSrcTestIntegrationDir
+		).put(
+			"testRuntime", hasSrcTestDir
 		).build();
 
 		for (GradleDependency gradleDependency : gradleDependencies) {

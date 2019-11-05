@@ -609,10 +609,10 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		String fieldsDisplay = "Text_INSTANCE_hcxo";
 
 		Map<String, String> expandoValuesMap = HashMapBuilder.put(
-			"Text", createLocalizationXML(new String[] {"Joe Bloggs"})
-		).put(
 			"_fieldsDisplay",
 			createLocalizationXML(new String[] {fieldsDisplay})
+		).put(
+			"Text", createLocalizationXML(new String[] {"Joe Bloggs"})
 		).build();
 
 		String xml = _upgradeDynamicDataMapping.toXML(expandoValuesMap);
@@ -640,12 +640,12 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 			"Text_INSTANCE_hcxo,Text_INSTANCE_vfqd,Text_INSTANCE_ycey";
 
 		Map<String, String> expandoValuesMap = HashMapBuilder.put(
+			"_fieldsDisplay",
+			createLocalizationXML(new String[] {fieldsDisplay})
+		).put(
 			"Text",
 			createLocalizationXML(
 				new String[] {"A", "B", "C"}, new String[] {"D", "E", "F"})
-		).put(
-			"_fieldsDisplay",
-			createLocalizationXML(new String[] {fieldsDisplay})
 		).build();
 
 		String xml = _upgradeDynamicDataMapping.toXML(expandoValuesMap);

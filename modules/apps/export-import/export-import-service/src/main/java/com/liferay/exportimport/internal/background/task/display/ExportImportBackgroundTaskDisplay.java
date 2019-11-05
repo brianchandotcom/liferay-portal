@@ -195,10 +195,10 @@ public class ExportImportBackgroundTaskDisplay
 			"exported",
 			MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "exported")
 		).put(
+			"htmlUtil", HtmlUtil.getHtml()
+		).put(
 			"validated",
 			MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "validated")
-		).put(
-			"htmlUtil", HtmlUtil.getHtml()
 		).build();
 	}
 

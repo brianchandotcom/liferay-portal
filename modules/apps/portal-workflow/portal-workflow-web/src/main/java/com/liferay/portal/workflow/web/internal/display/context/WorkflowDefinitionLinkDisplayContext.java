@@ -314,11 +314,6 @@ public class WorkflowDefinitionLinkDisplayContext {
 				"workflow-triggered-on-page-modification-in-the-stage-" +
 					"enviroment")
 		).put(
-			WorkflowDefinitionLinkResourcesConstants.WIKI_PAGE,
-			LanguageUtil.get(
-				getResourceBundle(),
-				"workflow-triggered-on-wiki-page-submission")
-		).put(
 			WorkflowDefinitionLinkResourcesConstants.USER,
 			LanguageUtil.get(
 				getResourceBundle(),
@@ -328,6 +323,11 @@ public class WorkflowDefinitionLinkDisplayContext {
 			LanguageUtil.get(
 				getResourceBundle(),
 				"workflow-triggered-on-web-content-submission")
+		).put(
+			WorkflowDefinitionLinkResourcesConstants.WIKI_PAGE,
+			LanguageUtil.get(
+				getResourceBundle(),
+				"workflow-triggered-on-wiki-page-submission")
 		).build();
 	}
 

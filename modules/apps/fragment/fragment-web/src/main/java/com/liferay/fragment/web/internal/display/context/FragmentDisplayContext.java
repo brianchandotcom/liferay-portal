@@ -312,11 +312,11 @@ public class FragmentDisplayContext {
 			"exportFragmentCollectionsURL",
 			exportFragmentCollectionsURL.toString()
 		).put(
-			"viewExportFragmentCollectionsURL",
-			viewExportFragmentCollectionsURL.toString()
-		).put(
 			"viewDeleteFragmentCollectionsURL",
 			viewDeleteFragmentCollectionsURL.toString()
+		).put(
+			"viewExportFragmentCollectionsURL",
+			viewExportFragmentCollectionsURL.toString()
 		).put(
 			"viewImportURL", viewImportURL.toString()
 		).build();

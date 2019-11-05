@@ -64,13 +64,13 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 			nestedFieldsMap, nestedFieldNames);
 
 		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
-			"nestedFields", nestedFields
-		).put(
 			"columnSize",
 			getColumnSize(
 				countVisibleNestedFields(nestedFields),
 				GetterUtil.getString(
 					ddmFormField.getProperty("orientation"), "horizontal"))
+		).put(
+			"nestedFields", nestedFields
 		).build();
 
 		LocalizedValue label = ddmFormField.getLabel();

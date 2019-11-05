@@ -221,9 +221,9 @@ public class JournalArticleStagedModelDataHandler
 		}
 
 		Map<String, String> referenceAttributes = HashMapBuilder.put(
-			"article-resource-uuid", articleResourceUuid
-		).put(
 			"article-id", article.getArticleId()
+		).put(
+			"article-resource-uuid", articleResourceUuid
 		).build();
 
 		long defaultUserId = 0;

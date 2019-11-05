@@ -608,9 +608,9 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		String hostId = getHostId(user, powwowServer);
 
 		Map<String, String> parameterMap = HashMapBuilder.put(
-			"id", String.valueOf(providerTypeMetadataMap.get("id"))
-		).put(
 			"host_id", hostId
+		).put(
+			"id", String.valueOf(providerTypeMetadataMap.get("id"))
 		).put(
 			"option_host_video",
 			options.get(PowwowMeetingConstants.OPTION_AUTO_START_VIDEO)

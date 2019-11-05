@@ -80,6 +80,8 @@ public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 
 		Map<String, Serializable> taskContextMap =
 			HashMapBuilder.<String, Serializable>put(
+				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
+			).put(
 				BulkSelectionBackgroundTaskConstants.
 					BULK_SELECTION_ACTION_CLASS_NAME,
 				bulkSelectionActionClass.getName()
@@ -91,8 +93,6 @@ public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 				BulkSelectionBackgroundTaskConstants.
 					BULK_SELECTION_FACTORY_CLASS_NAME,
 				bulkSelectionFactoryClass.getName()
-			).put(
-				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
 			).put(
 				BulkSelectionBackgroundTaskConstants.
 					BULK_SELECTION_PARAMETER_MAP,

@@ -6,7 +6,9 @@ Import-Package:\
 	\
 	!android.util,\
 	\
-	!com.google.errorprone.annotations.concurrent.*,\
+	!com.google.common.util.concurrent.*,\
+	\
+	!com.google.errorprone.annotations.*,\
 	\
 	!com.graphbuilder.*,\
 	\
@@ -28,6 +30,8 @@ Import-Package:\
 	!org.apache.poi.hwpf.extractor.*,\
 	\
 	!org.bouncycastle.*,\
+	\
+	!org.checkerframework.*,\
 	\
 	!org.conscrypt.*,\
 	\

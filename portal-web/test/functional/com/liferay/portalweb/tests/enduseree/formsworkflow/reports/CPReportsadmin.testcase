@@ -703,7 +703,7 @@ definition {
 
 		ReportsAdmin.gotoDefinitions();
 
-		LexiconEntry.gotoAddReport();
+		Click(locator1 = "Button#PLUS");
 
 		ReportsAdmin.viewDefinitionParameterFields();
 	}

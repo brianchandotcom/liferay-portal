@@ -1,7 +1,7 @@
 definition {
 
 	macro addReportDefinition {
-		LexiconEntry.gotoAddReport();
+		Click(locator1 = "Button#PLUS");
 
 		PortletEntry.inputName(name = "${reportsDefinitionName}");
 
@@ -110,7 +110,7 @@ definition {
 	}
 
 	macro addSource {
-		LexiconEntry.gotoAddReport();
+		Click(locator1 = "Button#PLUS");
 
 		Type(
 			locator1 = "ReportsAdminEditSource#DATA_SOURCE_NAME_FIELD",

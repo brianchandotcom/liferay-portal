@@ -127,6 +127,9 @@ public class SAPEntryImpl extends SAPEntryBaseImpl {
 
 					_reindexSAPSystemEntries(sapSystemEntries);
 				}
+
+				sapSystemEntries.clear();
+				sapSystemEntries.addAll(newSAPSystemEntries);
 			}
 
 			@Override

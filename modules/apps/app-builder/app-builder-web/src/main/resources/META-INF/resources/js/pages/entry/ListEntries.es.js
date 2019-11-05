@@ -56,6 +56,12 @@ const ListEntries = () => {
 	const {dataDefinitionId, dataLayoutId, dataListView, isLoading} = state;
 	const {fieldNames: columns} = dataListView;
 
+	const defaultDataRecordValues = {};
+
+	columns.forEach(column => {
+		defaultDataRecordValues[column] = '';
+	});
+
 	const getItemURL = (dataRecordId = 0) =>
 		Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
 			dataDefinitionId,
@@ -109,16 +115,21 @@ const ListEntries = () => {
 				endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-records`}
 			>
 				{item => {
-					const {dataRecordValues, id} = item;
-					const firstColumn = columns[0];
+					const {dataRecordValues = {}, id} = item;
+					const firstColumn = columns[0] || '';
+					const firstDataRecordValue = dataRecordValues[firstColumn];
 
-					dataRecordValues[firstColumn] = (
-						<a href={getItemURL(id)}>
-							{dataRecordValues[firstColumn]}
-						</a>
-					);
+					if (firstDataRecordValue) {
+						dataRecordValues[firstColumn] = (
+							<a href={getItemURL(id)}>{firstDataRecordValue}</a>
+						);
+					}
 
-					return {...item, ...dataRecordValues};
+					return {
+						...defaultDataRecordValues,
+						...dataRecordValues,
+						id
+					};
 				}}
 			</ListView>
 		</Loading>

@@ -372,7 +372,7 @@ public class SafeLdapFilterTest {
 	protected void test(
 		SafeLdapFilter safeLdapFilter, String filter, Object[] arguments) {
 
-		Assert.assertEquals(filter, safeLdapFilter.generateFilter());
+		Assert.assertEquals(filter, safeLdapFilter.getFilterString());
 		Assert.assertArrayEquals(arguments, safeLdapFilter.getArguments());
 	}
 

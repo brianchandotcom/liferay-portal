@@ -752,7 +752,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		throws NamingException {
 
 		return _ldapContext.search(
-			safeLdapName, safeLdapFilter.generateFilter(),
+			safeLdapName, safeLdapFilter.getFilterString(),
 			safeLdapFilter.getArguments(), searchControls);
 	}
 

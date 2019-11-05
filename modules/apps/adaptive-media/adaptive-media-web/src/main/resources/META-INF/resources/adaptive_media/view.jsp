@@ -161,21 +161,27 @@ PortletURL portletURL = renderResponse.createRenderURL();
 							<portlet:param name="entryUuid" value="<%= uuid %>" />
 						</portlet:resourceURL>
 
-						<%
-						Map<String, Object> context = new HashMap<>();
+						<portlet:actionURL name="/adaptive_media/optimize_images" var="optimizeImagesURL">
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="entryUuid" value="<%= uuid %>" />
+						</portlet:actionURL>
 
-						context.put("adaptedImages", Math.min(adaptedImages, totalImages));
-						context.put("autoStartProgress", ((optimizeImagesAllConfigurationsBackgroundTasksCount > 0) && amImageConfigurationEntry.isEnabled()) || currentBackgroundTaskConfigurationEntryUuids.contains(uuid));
-						context.put("disabled", !amImageConfigurationEntry.isEnabled());
-						context.put("percentageUrl", adaptedImagesPercentageURL.toString());
-						context.put("totalImages", totalImages);
-						context.put("uuid", uuid);
+						<%
+						Map<String, Object> data = new HashMap<>();
+
+						data.put("adaptedImages", Math.min(adaptedImages, totalImages));
+						data.put("autoStartProgress", ((optimizeImagesAllConfigurationsBackgroundTasksCount > 0) && amImageConfigurationEntry.isEnabled()) || currentBackgroundTaskConfigurationEntryUuids.contains(uuid));
+						data.put("disabled", !amImageConfigurationEntry.isEnabled());
+						data.put("namespace", liferayPortletResponse.getNamespace());
+						data.put("optimizeImagesURL", optimizeImagesURL.toString());
+						data.put("percentageUrl", adaptedImagesPercentageURL.toString());
+						data.put("totalImages", totalImages);
+						data.put("uuid", uuid);
 						%>
 
-						<liferay-frontend:component
+						<react:component
 							componentId='<%= renderResponse.getNamespace() + "AdaptRemaining" + uuid %>'
-							containerId='<%= "#" + renderResponse.getNamespace() + "AdaptRemainingContainer_" + rowId %>'
-							context="<%= context %>"
+							data="<%= data %>"
 							module="adaptive_media/js/AdaptiveMediaProgress.es"
 						/>
 					</liferay-ui:search-container-column-text>
@@ -219,13 +225,3 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		</aui:form>
 	</div>
 </div>
-
-<aui:script>
-	function <portlet:namespace />adaptRemaining(uuid, backgroundTaskUrl) {
-		var component = Liferay.component(
-			'<portlet:namespace />AdaptRemaining' + uuid
-		);
-
-		component.startProgress(backgroundTaskUrl);
-	}
-</aui:script>

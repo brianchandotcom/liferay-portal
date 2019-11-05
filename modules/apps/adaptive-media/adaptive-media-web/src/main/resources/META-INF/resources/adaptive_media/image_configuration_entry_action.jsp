@@ -108,8 +108,6 @@ String entryUuid = String.valueOf(amImageConfigurationEntry.getUUID());
 	</portlet:actionURL>
 
 	<%
-	String onClick = liferayPortletResponse.getNamespace() + "adaptRemaining('" + entryUuid + "', '" + optimizeImagesURL.toString() + "');";
-
 	int percentage = AMImageEntryLocalServiceUtil.getPercentage(themeDisplay.getCompanyId(), entryUuid);
 
 	String cssClass = (!amImageConfigurationEntry.isEnabled() || percentage == 100 || !optimizeImagesEnabled) ? "disabled" : StringPool.BLANK;
@@ -117,9 +115,8 @@ String entryUuid = String.valueOf(amImageConfigurationEntry.getUUID());
 
 	<liferay-ui:icon
 		cssClass="<%= cssClass %>"
-		id='<%= "icon-adapt-remaining" + entryUuid %>'
+		id='<%= "icon-adapt-remaining-" + entryUuid %>'
 		message="adapt-remaining"
-		onClick="<%= onClick %>"
 		url="javascript:;"
 	/>
 
@@ -150,9 +147,3 @@ Map<String, Object> context = new HashMap<>();
 
 context.put("uuid", entryUuid);
 %>
-
-<liferay-frontend:component
-	componentId='<%= liferayPortletResponse.getNamespace() + "OptionsHandler" + entryUuid %>'
-	context="<%= context %>"
-	module="adaptive_media/js/AdaptiveMediaOptionsHandler.es"
-/>

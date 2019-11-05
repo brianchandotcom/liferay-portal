@@ -55,12 +55,18 @@ class FragmentsEditorToolbar extends Component {
 		return nextState;
 	}
 
-	syncLastSaveDate() {
-		this._publishButtonEnabled =
-			this._online &&
-			Boolean(this.lastSaveDate) &&
-			(this.pageType !== PAGE_TYPES.master ||
-				this.layoutData.hasDropZone);
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	syncLayoutData() {
+		requestAnimationFrame(() => {
+			this._publishButtonEnabled =
+				this._online &&
+				(Boolean(this.lastSaveDate) || this.draft) &&
+				(this.pageType !== PAGE_TYPES.master ||
+					this.layoutData.hasDropZone);
+		});
 	}
 
 	/**
@@ -174,7 +180,16 @@ FragmentsEditorToolbar.STATE = {
 	 */
 	_publishButtonEnabled: Config.bool()
 		.internal()
-		.value(true)
+		.value(true),
+
+	/**
+	 * If the page is in Draft status
+	 * @instance
+	 * @memberof FragmentsEditorToolbar
+	 * @review
+	 * @type {boolean}
+	 */
+	draft: Config.bool()
 };
 
 const ConnectedFragmentsEditorToolbar = getConnectedComponent(

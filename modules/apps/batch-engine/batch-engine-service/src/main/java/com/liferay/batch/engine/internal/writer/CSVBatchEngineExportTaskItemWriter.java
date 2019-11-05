@@ -33,9 +33,10 @@ import java.util.Map;
 /**
  * @author Ivica cardic
  */
-public class CSVBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
+public class CSVBatchEngineExportTaskItemWriter
+	implements BatchEngineExportTaskItemWriter {
 
-	public CSVBatchEngineTaskItemWriter(
+	public CSVBatchEngineExportTaskItemWriter(
 		String delimiter, Map<String, Field> fieldMap, List<String> fieldNames,
 		OutputStream outputStream) {
 

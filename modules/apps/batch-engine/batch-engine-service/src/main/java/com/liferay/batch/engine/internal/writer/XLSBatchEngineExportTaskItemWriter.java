@@ -36,9 +36,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 /**
  * @author Ivica cardic
  */
-public class XLSBatchEngineTaskItemWriter implements BatchEngineTaskItemWriter {
+public class XLSBatchEngineExportTaskItemWriter
+	implements BatchEngineExportTaskItemWriter {
 
-	public XLSBatchEngineTaskItemWriter(
+	public XLSBatchEngineExportTaskItemWriter(
 		Map<String, Field> fieldMap, List<String> fieldNames,
 		OutputStream outputStream) {
 

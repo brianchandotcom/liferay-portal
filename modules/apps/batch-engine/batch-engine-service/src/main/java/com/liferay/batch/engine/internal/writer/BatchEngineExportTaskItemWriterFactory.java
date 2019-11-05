@@ -26,13 +26,15 @@ import java.util.Map;
 /**
  * @author Ivica Cardic
  */
-public class BatchEngineTaskItemWriterFactory {
+public class BatchEngineExportTaskItemWriterFactory {
 
-	public BatchEngineTaskItemWriterFactory(String csvFileColumnDelimiter) {
+	public BatchEngineExportTaskItemWriterFactory(
+		String csvFileColumnDelimiter) {
+
 		_csvFileColumnDelimiter = csvFileColumnDelimiter;
 	}
 
-	public BatchEngineTaskItemWriter create(
+	public BatchEngineExportTaskItemWriter create(
 			BatchEngineTaskContentType batchEngineTaskContentType,
 			List<String> fieldNames, Class<?> itemClass,
 			OutputStream outputStream)
@@ -41,24 +43,24 @@ public class BatchEngineTaskItemWriterFactory {
 		Map<String, Field> fieldMap = ItemClassIndexUtil.index(itemClass);
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
-			return new CSVBatchEngineTaskItemWriter(
+			return new CSVBatchEngineExportTaskItemWriter(
 				_csvFileColumnDelimiter, fieldMap, fieldNames, outputStream);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
-			return new JSONBatchEngineTaskItemWriter(
+			return new JSONBatchEngineExportTaskItemWriter(
 				fieldMap.keySet(), fieldNames, outputStream);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSONL) {
-			return new JSONLBatchEngineTaskItemWriter(
+			return new JSONLBatchEngineExportTaskItemWriter(
 				fieldMap.keySet(), fieldNames, outputStream);
 		}
 
 		if ((batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
 			(batchEngineTaskContentType == BatchEngineTaskContentType.XLSX)) {
 
-			return new XLSBatchEngineTaskItemWriter(
+			return new XLSBatchEngineExportTaskItemWriter(
 				fieldMap, fieldNames, outputStream);
 		}
 

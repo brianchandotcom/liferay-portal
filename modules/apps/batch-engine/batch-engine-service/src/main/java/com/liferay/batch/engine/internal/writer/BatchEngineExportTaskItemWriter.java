@@ -21,7 +21,7 @@ import java.util.Collection;
 /**
  * @author Ivica cardic
  */
-public interface BatchEngineTaskItemWriter extends Closeable {
+public interface BatchEngineExportTaskItemWriter extends Closeable {
 
 	public void write(Collection<?> items) throws Exception;
 

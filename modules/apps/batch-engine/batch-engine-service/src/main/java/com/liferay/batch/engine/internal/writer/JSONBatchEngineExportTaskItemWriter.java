@@ -15,9 +15,7 @@
 package com.liferay.batch.engine.internal.writer;
 
 import com.fasterxml.jackson.databind.ObjectWriter;
-
-import com.liferay.petra.io.unsync.UnsyncPrintWriter;
-import com.liferay.petra.string.StringPool;
+import com.fasterxml.jackson.databind.SequenceWriter;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -29,32 +27,35 @@ import java.util.Set;
 /**
  * @author Ivica cardic
  */
-public class JSONLBatchEngineTaskItemWriter
-	implements BatchEngineTaskItemWriter {
+public class JSONBatchEngineExportTaskItemWriter
+	implements BatchEngineExportTaskItemWriter {
 
-	public JSONLBatchEngineTaskItemWriter(
-		Set<String> allFieldNames, List<String> includeFieldNames,
-		OutputStream outputStream) {
+	public JSONBatchEngineExportTaskItemWriter(
+			Set<String> allFieldNames, List<String> includeFieldNames,
+			OutputStream outputStream)
+		throws IOException {
 
-		_objectWriter = ObjectWriterFactory.getObjectWriter(
+		_outputStream = outputStream;
+
+		ObjectWriter objectWriter = ObjectWriterFactory.getObjectWriter(
 			allFieldNames, includeFieldNames);
-		_unsyncPrintWriter = new UnsyncPrintWriter(outputStream);
+
+		_sequenceWriter = objectWriter.writeValuesAsArray(_outputStream);
 	}
 
 	@Override
 	public void close() throws IOException {
-		_unsyncPrintWriter.close();
+		_sequenceWriter.close();
+
+		_outputStream.close();
 	}
 
 	@Override
 	public void write(Collection<?> items) throws Exception {
-		for (Object item : items) {
-			_unsyncPrintWriter.write(_objectWriter.writeValueAsString(item));
-			_unsyncPrintWriter.write(StringPool.NEW_LINE);
-		}
+		_sequenceWriter.writeAll(items);
 	}
 
-	private final ObjectWriter _objectWriter;
-	private final UnsyncPrintWriter _unsyncPrintWriter;
+	private final OutputStream _outputStream;
+	private final SequenceWriter _sequenceWriter;
 
 }

@@ -173,8 +173,8 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 
 		List<String> mappedGroupAttributeIds = new ArrayList<>();
 
-		mappedGroupAttributeIds.add(groupMappings.getProperty("groupName"));
 		mappedGroupAttributeIds.add(groupMappings.getProperty("description"));
+		mappedGroupAttributeIds.add(groupMappings.getProperty("groupName"));
 
 		if (includeReferenceAttributes) {
 			mappedGroupAttributeIds.add(groupMappings.getProperty("user"));

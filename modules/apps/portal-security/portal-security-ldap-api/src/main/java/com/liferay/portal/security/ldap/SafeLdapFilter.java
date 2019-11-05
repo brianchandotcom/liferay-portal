@@ -103,27 +103,27 @@ public class SafeLdapFilter {
 			return this;
 		}
 
-		StringBundler filterSB = new StringBundler();
+		StringBundler sb = new StringBundler();
 
 		List<Object> arguments = new ArrayList<>(_arguments);
 
-		filterSB.append(StringPool.OPEN_PARENTHESIS);
-		filterSB.append(StringPool.AMPERSAND);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(StringPool.AMPERSAND);
 
-		filterSB.append(_filterSB);
+		sb.append(_filterSB);
 
 		for (SafeLdapFilter safeLdapFilter : safeLdapFilters) {
-			filterSB.append(safeLdapFilter._filterSB);
+			sb.append(safeLdapFilter._filterSB);
 
 			arguments.addAll(safeLdapFilter._arguments);
 		}
 
-		filterSB.append(StringPool.CLOSE_PARENTHESIS);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		return new SafeLdapFilter(filterSB, arguments);
+		return new SafeLdapFilter(sb, arguments);
 	}
 
-	public String generateFilter() {
+	public String getFilterString() {
 		if (_generatedFilter != null) {
 			return _generatedFilter;
 		}
@@ -157,14 +157,14 @@ public class SafeLdapFilter {
 	}
 
 	public SafeLdapFilter not() {
-		StringBundler filterSB = new StringBundler(_filterSB.index() + 3);
+		StringBundler sb = new StringBundler(_filterSB.index() + 3);
 
-		filterSB.append(StringPool.OPEN_PARENTHESIS);
-		filterSB.append(StringPool.EXCLAMATION);
-		filterSB.append(_filterSB);
-		filterSB.append(StringPool.CLOSE_PARENTHESIS);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(StringPool.EXCLAMATION);
+		sb.append(_filterSB);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		return new SafeLdapFilter(filterSB, new ArrayList<>(_arguments));
+		return new SafeLdapFilter(sb, new ArrayList<>(_arguments));
 	}
 
 	public SafeLdapFilter or(SafeLdapFilter... safeLdapFilters) {
@@ -172,29 +172,29 @@ public class SafeLdapFilter {
 			return this;
 		}
 
-		StringBundler filterSB = new StringBundler();
+		StringBundler sb = new StringBundler();
 
-		filterSB.append(StringPool.OPEN_PARENTHESIS);
-		filterSB.append(StringPool.PIPE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(StringPool.PIPE);
 
-		filterSB.append(_filterSB);
+		sb.append(_filterSB);
 
 		List<Object> arguments = new ArrayList<>(_arguments);
 
 		for (SafeLdapFilter safeLdapFilter : safeLdapFilters) {
-			filterSB.append(safeLdapFilter._filterSB);
+			sb.append(safeLdapFilter._filterSB);
 
 			arguments.addAll(safeLdapFilter._arguments);
 		}
 
-		filterSB.append(StringPool.CLOSE_PARENTHESIS);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		return new SafeLdapFilter(filterSB, arguments);
+		return new SafeLdapFilter(sb, arguments);
 	}
 
 	@Override
 	public String toString() {
-		return StringBundler.concat(generateFilter(), " ", _arguments);
+		return StringBundler.concat(getFilterString(), " ", _arguments);
 	}
 
 	protected SafeLdapFilter(StringBundler filterSB, List<Object> arguments) {

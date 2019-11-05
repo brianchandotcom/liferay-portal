@@ -206,6 +206,43 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
 	}
 
+	@priority = "4"
+	test RemoveDomain {
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "Remove Domain from the Account",
+			accountName = "Remove Account Domain",
+			domainNames = "liferay.com,Google.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.removeDomain(
+			accountName = "Remove Account Domain",
+			domainName = "Google.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Remove Account Domain");
+
+		AssertElementPresent(
+			key_domainName = "liferay.com",
+			locator1 = "Account#DOMAIN_TABLE_NAME");
+
+		AssertElementNotPresent(
+			key_domainName = "Google.com",
+			locator1 = "Account#DOMAIN_TABLE_NAME");
+	}
+
 	@priority = "5"
 	test Smoke {
 		ProductMenu.gotoPortlet(

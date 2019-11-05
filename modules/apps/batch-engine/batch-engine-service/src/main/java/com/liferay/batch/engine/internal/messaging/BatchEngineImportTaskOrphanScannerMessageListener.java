@@ -14,11 +14,11 @@
 
 package com.liferay.batch.engine.internal.messaging;
 
+import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
-import com.liferay.batch.engine.BatchEngineTaskExecutor;
 import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
-import com.liferay.batch.engine.model.BatchEngineTask;
-import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
 	immediate = true, service = MessageListener.class
 )
-public class BatchEngineTaskOrphanScannerMessageListener
+public class BatchEngineImportTaskOrphanScannerMessageListener
 	extends BaseMessageListener {
 
 	@Activate
@@ -62,7 +62,7 @@ public class BatchEngineTaskOrphanScannerMessageListener
 			batchEngineTaskConfiguration.orphanageThreshold() * Time.MINUTE;
 
 		String className =
-			BatchEngineTaskOrphanScannerMessageListener.class.getName();
+			BatchEngineImportTaskOrphanScannerMessageListener.class.getName();
 		int scanInterval = batchEngineTaskConfiguration.orphanScanInterval();
 
 		Trigger trigger = _triggerFactory.createTrigger(
@@ -79,7 +79,8 @@ public class BatchEngineTaskOrphanScannerMessageListener
 	protected void deactivate() {
 		ExecutorService executorService =
 			_portalExecutorManager.getPortalExecutor(
-				BatchEngineTaskOrphanScannerMessageListener.class.getName(),
+				BatchEngineImportTaskOrphanScannerMessageListener.class.
+					getName(),
 				false);
 
 		if (executorService != null) {
@@ -93,28 +94,31 @@ public class BatchEngineTaskOrphanScannerMessageListener
 	protected void doReceive(Message message) {
 		NoticeableExecutorService noticeableExecutorService =
 			_portalExecutorManager.getPortalExecutor(
-				BatchEngineTaskOrphanScannerMessageListener.class.getName());
+				BatchEngineImportTaskOrphanScannerMessageListener.class.
+					getName());
 
 		long time = System.currentTimeMillis();
 
-		for (BatchEngineTask batchEngineTask :
-				_batchEngineTaskLocalService.getBatchEngineTasks(
+		for (BatchEngineImportTask batchEngineImportTask :
+				_batchEngineImportTaskLocalService.getBatchEngineImportTasks(
 					BatchEngineTaskExecuteStatus.STARTED.toString())) {
 
-			Date modifiedDate = batchEngineTask.getModifiedDate();
+			Date modifiedDate = batchEngineImportTask.getModifiedDate();
 
 			if ((time - modifiedDate.getTime()) > _orphanageThreshold) {
 				noticeableExecutorService.submit(
-					() -> _batchEngineTaskExecutor.execute(batchEngineTask));
+					() -> _batchEngineImportTaskExecutor.execute(
+						batchEngineImportTask));
 			}
 		}
 	}
 
 	@Reference
-	private BatchEngineTaskExecutor _batchEngineTaskExecutor;
+	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 
 	@Reference
-	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
+	private BatchEngineImportTaskLocalService
+		_batchEngineImportTaskLocalService;
 
 	private long _orphanageThreshold;
 

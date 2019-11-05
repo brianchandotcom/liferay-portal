@@ -15,8 +15,8 @@
 package com.liferay.batch.engine.internal.messaging;
 
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
-import com.liferay.batch.engine.model.BatchEngineTask;
-import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -44,12 +44,13 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "scan.interval=14",
 	service = MessageListener.class
 )
-public class BatchEngineTaskCleanerMessageListener extends BaseMessageListener {
+public class BatchEngineImportTaskCleanerMessageListener
+	extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		String className =
-			BatchEngineTaskCleanerMessageListener.class.getName();
+			BatchEngineImportTaskCleanerMessageListener.class.getName();
 		int scanInterval = GetterUtil.getInteger(
 			properties.get("scan.interval"));
 
@@ -70,17 +71,18 @@ public class BatchEngineTaskCleanerMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		for (BatchEngineTask batchEngineTask :
-				_batchEngineTaskLocalService.getBatchEngineTasks(
+		for (BatchEngineImportTask batchEngineImportTask :
+				_batchEngineImportTaskLocalService.getBatchEngineImportTasks(
 					BatchEngineTaskExecuteStatus.COMPLETED.toString())) {
 
-			_batchEngineTaskLocalService.deleteBatchEngineTask(
-				batchEngineTask.getBatchEngineTaskId());
+			_batchEngineImportTaskLocalService.deleteBatchEngineImportTask(
+				batchEngineImportTask.getBatchEngineImportTaskId());
 		}
 	}
 
 	@Reference
-	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
+	private BatchEngineImportTaskLocalService
+		_batchEngineImportTaskLocalService;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

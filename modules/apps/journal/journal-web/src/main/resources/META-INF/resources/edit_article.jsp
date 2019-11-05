@@ -242,19 +242,25 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 				%>
 
 				<div class="article-content-content">
-					<liferay-ddm:html
-						checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
-						classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-						classPK="<%= ddmStructure.getStructureId() %>"
-						ddmFormValues="<%= journalEditArticleDisplayContext.getDDMFormValues(ddmStructure) %>"
-						defaultEditLocale="<%= LocaleUtil.fromLanguageId(journalEditArticleDisplayContext.getSelectedLanguageId()) %>"
-						defaultLocale="<%= LocaleUtil.fromLanguageId(journalEditArticleDisplayContext.getDefaultArticleLanguageId()) %>"
-						documentLibrarySelectorURL="<%= String.valueOf(journalItemSelectorHelper.getDocumentLibrarySelectorURL()) %>"
-						groupId="<%= journalEditArticleDisplayContext.getGroupId() %>"
-						ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
-						imageSelectorURL="<%= String.valueOf(journalItemSelectorHelper.getImageSelectorURL()) %>"
-						requestedLocale="<%= locale %>"
-					/>
+					<c:choose>
+						<c:when test="<%= journalDisplayContext.useDataEngineEditor() %>">
+						</c:when>
+						<c:otherwise>
+							<liferay-ddm:html
+								checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
+								classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+								classPK="<%= ddmStructure.getStructureId() %>"
+								ddmFormValues="<%= journalEditArticleDisplayContext.getDDMFormValues(ddmStructure) %>"
+								defaultEditLocale="<%= LocaleUtil.fromLanguageId(journalEditArticleDisplayContext.getSelectedLanguageId()) %>"
+								defaultLocale="<%= LocaleUtil.fromLanguageId(journalEditArticleDisplayContext.getDefaultArticleLanguageId()) %>"
+								documentLibrarySelectorURL="<%= String.valueOf(journalItemSelectorHelper.getDocumentLibrarySelectorURL()) %>"
+								groupId="<%= journalEditArticleDisplayContext.getGroupId() %>"
+								ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
+								imageSelectorURL="<%= String.valueOf(journalItemSelectorHelper.getImageSelectorURL()) %>"
+								requestedLocale="<%= locale %>"
+							/>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>

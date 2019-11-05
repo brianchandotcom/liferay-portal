@@ -174,7 +174,13 @@ if (ddmStructure != null) {
 					</div>
 				</c:if>
 
-				<%@ include file="/form_builder.jspf" %>
+				<c:choose>
+					<c:when test="<%= journalDisplayContext.useDataEngineEditor() %>">
+					</c:when>
+					<c:otherwise>
+						<%@ include file="/form_builder.jspf" %>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</div>

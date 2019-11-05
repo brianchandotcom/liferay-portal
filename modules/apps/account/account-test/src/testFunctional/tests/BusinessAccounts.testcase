@@ -22,6 +22,32 @@ definition {
 	}
 
 	@priority = "4"
+	test AddAccountWithMultiDomains {
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is an Account with Multi Domains",
+			accountName = "Account with Multi Domains",
+			domainNames = "liferay.com,Google.com,si-na.com,9teen.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account with Multi Domains");
+
+		for (var domainName : list "liferay.com,Google.com,si-na.com,9teen.com") {
+			AssertElementPresent(
+				key_domainName = "${domainName}",
+				locator1 = "Account#DOMAIN_TABLE_NAME");
+		}
+	}
+
+	@priority = "4"
 	test CancelAccountCreation {
 		ProductMenu.gotoPortlet(
 			category = "Accounts",

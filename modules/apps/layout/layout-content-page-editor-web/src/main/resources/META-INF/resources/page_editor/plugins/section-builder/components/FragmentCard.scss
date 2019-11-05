@@ -1,0 +1,34 @@
+@import './variables';
+@import '../../../app/components/variables';
+
+.page-editor__section-builder__fragment-card {
+	box-shadow: 0 0 0 1px $sectionBuilderLightColor;
+	margin-bottom: $pageEditorSpacing * 2;
+	width: calc(50% - #{$pageEditorSpacing});
+
+	&-preview img {
+		width: 100%;
+	}
+
+	&-no-preview {
+		background-color: $sectionBuilderLightColor;
+		color: #a7a9bc;
+		font-size: 24px;
+		line-height: 80px;
+		text-align: center;
+	}
+
+	.card-body {
+		padding: $pageEditorSpacing;
+		text-align: center;
+
+		.card-title {
+			color: $sectionBuilderGrayColor;
+			font-size: 12px;
+		}
+
+		.card-row {
+			min-height: 32px;
+		}
+	}
+}

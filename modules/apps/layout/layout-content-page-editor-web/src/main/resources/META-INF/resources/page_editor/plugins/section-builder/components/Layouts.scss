@@ -1,0 +1,25 @@
+@import './variables';
+@import '../../../app/components/variables';
+
+.page-editor__section-builder__layout-card-preview {
+	box-shadow: 0 0 0 1px $sectionBuilderLightColor;
+	display: flex;
+	flex-direction: row;
+	margin-bottom: $pageEditorSpacing * 2;
+	width: calc(50% - #{$pageEditorSpacing});
+
+	.row {
+		border: solid 2px $sectionBuilderGrayColor;
+		border-radius: 2px;
+		height: 40px;
+		margin: 0;
+		padding: 2px;
+	}
+
+	.col {
+		border: solid 1px $sectionBuilderGrayColor;
+		flex: 1;
+		margin: 2px;
+		padding: 0;
+	}
+}

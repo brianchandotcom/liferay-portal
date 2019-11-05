@@ -40,47 +40,33 @@ const layouts = [
 
 const LayoutCard = ({layoutColumns}) => {
 	return (
-		<div
-			aria-label={layoutColumns.join('-')}
+		<button
+			aria-label={Liferay.Util.sub(
+				Liferay.Language.get('layout-of-x'),
+				layoutColumns.join('-')
+			)}
 			className={classNames(
-				'page-editor-sidebar-panel__section-builder__card',
+				'page-editor__section-builder__layout-card-preview',
 				'card',
 				'card-interactive',
 				'card-interactive-secondary',
 				'selector-button'
 			)}
+			type="button"
 		>
-			<div className="card-body">
-				<div className="card-row">
-					<div className="autofit-col autofit-col-expand autofit-row-center">
-						<div
-							className={classNames(
-								'page-editor-sidebar-panel__section-builder__layouts__layout-preview',
-								'container'
-							)}
-						>
+			<div className="card-body px-2 py-3" role="image">
+				<div className="container p-0">
+					<div className="row">
+						{layoutColumns.map((column, index) => (
 							<div
-								className={classNames(
-									'page-editor-sidebar-panel__section-builder__layouts__layout-preview__row',
-									'row'
-								)}
-								role="image"
-							>
-								{layoutColumns.map((column, index) => (
-									<div
-										className={classNames(
-											'page-editor-sidebar-panel__section-builder__layouts__layout-preview__col',
-											`col-${column}`
-										)}
-										key={`${index}-${column}`}
-									></div>
-								))}
-							</div>
-						</div>
+								className={`col col-${column}`}
+								key={`${index}-${column}`}
+							></div>
+						))}
 					</div>
 				</div>
 			</div>
-		</div>
+		</button>
 	);
 };
 
@@ -88,11 +74,11 @@ export default function Layouts() {
 	return (
 		<>
 			<Collapse label={Liferay.Language.get('layouts')} open={false}>
-				<div className="page-editor-sidebar-panel__section-builder__layouts">
+				<div className="d-flex flex-wrap justify-content-between">
 					{layouts.map(layout => {
 						return (
 							<LayoutCard
-								key={`layout-of-${layout.columns.join('-')}`}
+								key={layout.columns.join()}
 								layoutColumns={layout.columns}
 							/>
 						);

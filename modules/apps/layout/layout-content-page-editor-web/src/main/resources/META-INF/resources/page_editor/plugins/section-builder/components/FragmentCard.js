@@ -20,14 +20,14 @@ import React from 'react';
 const ImagePreview = ({imagePreviewURL}) => {
 	if (imagePreviewURL) {
 		return (
-			<div className="page-editor-sidebar-panel__section-builder__card-image">
+			<div className="page-editor__section-builder__fragment-card-preview">
 				<img alt="thumbnail" src={imagePreviewURL} />
 			</div>
 		);
 	}
 
 	return (
-		<div className="page-editor-sidebar-panel__section-builder__card-no-preview">
+		<div className="page-editor__section-builder__fragment-card-no-preview">
 			<ClayIcon symbol="picture" />
 		</div>
 	);
@@ -37,7 +37,7 @@ export default function FragmentCard({imagePreviewURL, name}) {
 	return (
 		<div
 			className={classNames(
-				'page-editor-sidebar-panel__section-builder__card',
+				'page-editor__section-builder__fragment-card',
 				'card',
 				'card-interactive',
 				'card-interactive-secondary',

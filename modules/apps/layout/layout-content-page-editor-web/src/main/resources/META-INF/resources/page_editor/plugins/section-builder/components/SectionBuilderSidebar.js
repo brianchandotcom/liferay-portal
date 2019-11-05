@@ -51,7 +51,7 @@ export default function SectionBuilderSidebar() {
 				{Liferay.Language.get('section-builder')}
 			</SidebarPanelHeader>
 
-			<div className="page-editor-sidebar-panel page-editor-sidebar-panel__section-builder">
+			<div>
 				<SearchForm onChange={setSearchValue} value={searchValue} />
 
 				{!searchValue.length && <Layouts />}
@@ -62,7 +62,7 @@ export default function SectionBuilderSidebar() {
 							label={fragmentCollection.name}
 							open={searchValue.length > 0}
 						>
-							<div className="page-editor-sidebar-panel__section-builder__fragments">
+							<div className="align-items-start d-flex flex-wrap justify-content-between">
 								{fragmentCollection.fragmentEntries.map(
 									fragmentEntry => (
 										<FragmentCard

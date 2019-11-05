@@ -112,8 +112,7 @@ public class I18nServlet extends HttpServlet {
 			}
 
 			if (i18nLanguageId.contains(StringPool.UNDERLINE)) {
-				_sendRedirect(
-					httpServletRequest, httpServletResponse, i18nData);
+				sendRedirect(httpServletRequest, httpServletResponse, i18nData);
 			}
 			else {
 				_processI18nData(
@@ -240,6 +239,26 @@ public class I18nServlet extends HttpServlet {
 			i18nPath, locale.getLanguage(), languageId, StringPool.SLASH);
 	}
 
+	protected void sendRedirect(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, I18nData i18nData) {
+
+		_setRequestAttributes(
+			httpServletRequest, httpServletResponse, i18nData);
+
+		Locale locale = LocaleUtil.fromLanguageId(i18nData.getLanguageId());
+
+		httpServletResponse.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+
+		ServletContext servletContext = getServletContext();
+
+		httpServletResponse.setHeader(
+			"Location",
+			StringBundler.concat(
+				servletContext.getContextPath(), StringPool.SLASH,
+				locale.toLanguageTag(), i18nData.getPath()));
+	}
+
 	protected class I18nData {
 
 		public I18nData(
@@ -333,26 +352,6 @@ public class I18nServlet extends HttpServlet {
 		}
 
 		requestDispatcher.forward(httpServletRequest, httpServletResponse);
-	}
-
-	private void _sendRedirect(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, I18nData i18nData) {
-
-		_setRequestAttributes(
-			httpServletRequest, httpServletResponse, i18nData);
-
-		Locale locale = LocaleUtil.fromLanguageId(i18nData.getLanguageId());
-
-		httpServletResponse.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-
-		ServletContext servletContext = getServletContext();
-
-		httpServletResponse.setHeader(
-			"Location",
-			StringBundler.concat(
-				servletContext.getContextPath(), StringPool.SLASH,
-				locale.toLanguageTag(), i18nData.getPath()));
 	}
 
 	private void _setRequestAttributes(

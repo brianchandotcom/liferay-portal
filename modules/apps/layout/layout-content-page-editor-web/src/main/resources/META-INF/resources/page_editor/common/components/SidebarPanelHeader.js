@@ -20,7 +20,7 @@ export default function SidebarPanelHeader(props) {
 		<h1
 			{...props}
 			className={classNames(
-				'page-editor-sidebar-panel__header',
+				'page-editor__sidebar-panel-header',
 				'align-items-center',
 				'd-flex',
 				{[props.className]: !!props.className}

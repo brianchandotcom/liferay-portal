@@ -141,16 +141,16 @@ public class ComboServlet extends HttpServlet {
 
 			ServletContext servletContext = getServletContext();
 
-			String contextPath = servletContext.getContextPath();
-
-			if (name.startsWith(contextPath)) {
-				name = name.replaceFirst(contextPath, StringPool.BLANK);
-			}
-
 			String pathProxy = PortalUtil.getPathProxy();
 
 			if (name.startsWith(pathProxy)) {
 				name = name.replaceFirst(pathProxy, StringPool.BLANK);
+			}
+
+			String contextPath = servletContext.getContextPath();
+
+			if (name.startsWith(contextPath)) {
+				name = name.replaceFirst(contextPath, StringPool.BLANK);
 			}
 
 			modulePathsSet.add(name);

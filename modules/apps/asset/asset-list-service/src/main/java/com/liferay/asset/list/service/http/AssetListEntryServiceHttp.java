@@ -467,7 +467,8 @@ public class AssetListEntryServiceHttp {
 
 	public static java.util.List<com.liferay.asset.list.model.AssetListEntry>
 		getAssetListEntries(
-			HttpPrincipal httpPrincipal, long[] groupIds, int start, int end,
+			HttpPrincipal httpPrincipal, long groupId, String title, int start,
+			int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.asset.list.model.AssetListEntry>
 					orderByComparator) {
@@ -478,7 +479,7 @@ public class AssetListEntryServiceHttp {
 				_getAssetListEntriesParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupIds, start, end, orderByComparator);
+				methodKey, groupId, title, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -502,8 +503,7 @@ public class AssetListEntryServiceHttp {
 
 	public static java.util.List<com.liferay.asset.list.model.AssetListEntry>
 		getAssetListEntries(
-			HttpPrincipal httpPrincipal, long groupId, String title, int start,
-			int end,
+			HttpPrincipal httpPrincipal, long[] groupIds, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.asset.list.model.AssetListEntry>
 					orderByComparator) {
@@ -514,7 +514,7 @@ public class AssetListEntryServiceHttp {
 				_getAssetListEntriesParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, title, start, end, orderByComparator);
+				methodKey, groupIds, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -1001,12 +1001,12 @@ public class AssetListEntryServiceHttp {
 		};
 	private static final Class<?>[] _getAssetListEntriesParameterTypes11 =
 		new Class[] {
-			long[].class, int.class, int.class,
+			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getAssetListEntriesParameterTypes12 =
 		new Class[] {
-			long.class, String.class, int.class, int.class,
+			long[].class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getAssetListEntriesParameterTypes13 =

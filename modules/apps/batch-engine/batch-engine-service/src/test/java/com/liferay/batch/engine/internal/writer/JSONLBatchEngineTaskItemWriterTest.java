@@ -22,8 +22,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
+
+import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Ivica Cardic
@@ -91,8 +92,8 @@ public class JSONLBatchEngineTaskItemWriterTest
 
 		String content = unsyncByteArrayOutputStream.toString();
 
-		Assert.assertEquals(
-			_getExpectedContent(fieldNames, getItems()), content);
+		JSONAssert.assertEquals(
+			_getExpectedContent(fieldNames, getItems()), content, true);
 	}
 
 }

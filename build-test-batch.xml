@@ -3130,6 +3130,39 @@ log.sanitizer.enabled=false</echo>
 						</execute>
 					</then>
 				</elseif>
+				<elseif>
+					<equals arg1="${database.type}" arg2="postgresql" />
+					<then>
+						<property location="setup.sh" name="setup.sh.file" />
+
+						<get-database-property property.name="database.version" />
+
+						<echo file="${setup.sh.file}">
+							<![CDATA[
+								#!/bin/bash
+
+								while [[ "$(pg_isready | grep 'accepting connections')" == "" ]]
+								do
+									echo "Waiting for PostgreSQL ${database.version} to be ready"
+
+									sleep 10
+								done
+
+								pg_isready
+							]]>
+						</echo>
+
+						<get-database-property property.name="database.host" />
+
+						<execute failonerror="false">
+							<![CDATA[
+								docker cp ${setup.sh.file} ${database.host}:/tmp/setup.sh
+
+								docker exec ${database.host} /bin/bash /tmp/setup.sh
+							]]>
+						</execute>
+					</then>
+				</elseif>
 			</if>
 		</sequential>
 	</macrodef>

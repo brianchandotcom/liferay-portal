@@ -26,7 +26,7 @@ import org.junit.Before;
 /**
  * @author Ivica Cardic
  */
-public abstract class BaseBatchEngineTaskItemReaderTestCase {
+public abstract class BaseBatchEngineImportTaskItemReaderTestCase {
 
 	@Before
 	public void setUp() {
@@ -82,9 +82,9 @@ public abstract class BaseBatchEngineTaskItemReaderTestCase {
 			Map<String, Object> fieldNameValueMap, Map<String, String> nameMap)
 		throws ReflectiveOperationException {
 
-		Item item = BatchEngineTaskItemReaderUtil.convertValue(
+		Item item = BatchEngineImportTaskItemReaderUtil.convertValue(
 			Item.class,
-			BatchEngineTaskItemReaderUtil.mapFieldNames(
+			BatchEngineImportTaskItemReaderUtil.mapFieldNames(
 				fieldNameMappingMap, fieldNameValueMap));
 
 		if (createDateString == null) {

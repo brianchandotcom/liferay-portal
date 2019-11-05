@@ -36,23 +36,24 @@ import org.junit.Test;
 /**
  * @author Ivica Cardic
  */
-public class XLSBatchEngineTaskItemReaderTest
-	extends BaseBatchEngineTaskItemReaderTestCase {
+public class XLSBatchEngineImportTaskItemReaderTest
+	extends BaseBatchEngineImportTaskItemReaderTestCase {
 
 	@Test
 	public void testColumnMapping() throws Exception {
-		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
-				_getXLSBatchEngineTaskItemReader(
-					new String[] {
-						"createDate1", "description1", "id1", "name1_en",
-						"name1_hr"
-					},
-					new Object[][] {
-						{
-							createDateString, "sample description", 1,
-							"sample name", "naziv"
-						}
-					})) {
+		try (XLSBatchEngineImportTaskItemReader
+				xlsBatchEngineImportTaskItemReader =
+					_getXLSBatchEngineImportTaskItemReader(
+						new String[] {
+							"createDate1", "description1", "id1", "name1_en",
+							"name1_hr"
+						},
+						new Object[][] {
+							{
+								createDateString, "sample description", 1,
+								"sample name", "naziv"
+							}
+						})) {
 
 			validate(
 				createDateString, "sample description", 1L,
@@ -64,7 +65,7 @@ public class XLSBatchEngineTaskItemReaderTest
 						put("name1", "name");
 					}
 				},
-				xlsBatchEngineTaskItemReader.read(),
+				xlsBatchEngineImportTaskItemReader.read(),
 				new HashMap<String, String>() {
 					{
 						put("en", "sample name");
@@ -76,18 +77,19 @@ public class XLSBatchEngineTaskItemReaderTest
 
 	@Test
 	public void testColumnMappingWitUndefinedColumn() throws Exception {
-		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
-				_getXLSBatchEngineTaskItemReader(
-					new String[] {
-						"createDate1", "description1", "id1", "name1_en",
-						"name1_hr"
-					},
-					new Object[][] {
-						{
-							createDateString, "sample description", 1,
-							"sample name", "naziv"
-						}
-					})) {
+		try (XLSBatchEngineImportTaskItemReader
+				xlsBatchEngineImportTaskItemReader =
+					_getXLSBatchEngineImportTaskItemReader(
+						new String[] {
+							"createDate1", "description1", "id1", "name1_en",
+							"name1_hr"
+						},
+						new Object[][] {
+							{
+								createDateString, "sample description", 1,
+								"sample name", "naziv"
+							}
+						})) {
 
 			validate(
 				createDateString, "sample description", 1L,
@@ -98,24 +100,25 @@ public class XLSBatchEngineTaskItemReaderTest
 						put("id1", "id");
 					}
 				},
-				xlsBatchEngineTaskItemReader.read(), null);
+				xlsBatchEngineImportTaskItemReader.read(), null);
 		}
 	}
 
 	@Test
 	public void testColumnMappingWitUndefinedTargetColumn() throws Exception {
-		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
-				_getXLSBatchEngineTaskItemReader(
-					new String[] {
-						"createDate1", "description1", "id1", "name1_en",
-						"name1_hr"
-					},
-					new Object[][] {
-						{
-							createDateString, "sample description", 1,
-							"sample name", "naziv"
-						}
-					})) {
+		try (XLSBatchEngineImportTaskItemReader
+				xlsBatchEngineImportTaskItemReader =
+					_getXLSBatchEngineImportTaskItemReader(
+						new String[] {
+							"createDate1", "description1", "id1", "name1_en",
+							"name1_hr"
+						},
+						new Object[][] {
+							{
+								createDateString, "sample description", 1,
+								"sample name", "naziv"
+							}
+						})) {
 
 			validate(
 				createDateString, "sample description", 1L,
@@ -127,24 +130,25 @@ public class XLSBatchEngineTaskItemReaderTest
 						put("name1", null);
 					}
 				},
-				xlsBatchEngineTaskItemReader.read(), null);
+				xlsBatchEngineImportTaskItemReader.read(), null);
 		}
 	}
 
 	@Test
 	public void testInvalidColumnMapping() throws Exception {
-		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
-				_getXLSBatchEngineTaskItemReader(
-					new String[] {
-						"createDate1", "description1", "id1", "name1_en",
-						"name1_hr"
-					},
-					new Object[][] {
-						{
-							createDateString, "sample description", 1,
-							"sample name", "naziv"
-						}
-					})) {
+		try (XLSBatchEngineImportTaskItemReader
+				xlsBatchEngineImportTaskItemReader =
+					_getXLSBatchEngineImportTaskItemReader(
+						new String[] {
+							"createDate1", "description1", "id1", "name1_en",
+							"name1_hr"
+						},
+						new Object[][] {
+							{
+								createDateString, "sample description", 1,
+								"sample name", "naziv"
+							}
+						})) {
 
 			try {
 				validate(
@@ -157,7 +161,7 @@ public class XLSBatchEngineTaskItemReaderTest
 							put("name1", "name");
 						}
 					},
-					xlsBatchEngineTaskItemReader.read(),
+					xlsBatchEngineImportTaskItemReader.read(),
 					new HashMap<String, String>() {
 						{
 							put("en", "sample name");
@@ -174,18 +178,19 @@ public class XLSBatchEngineTaskItemReaderTest
 
 	@Test
 	public void testReadInvalidRow() throws Exception {
-		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
-				_getXLSBatchEngineTaskItemReader(
-					FIELD_NAMES,
-					new Object[][] {
-						{
-							new Date(), "sample description", 1L, "sample name",
-							"naziv", "unknown column"
-						}
-					})) {
+		try (XLSBatchEngineImportTaskItemReader
+				xlsBatchEngineImportTaskItemReader =
+					_getXLSBatchEngineImportTaskItemReader(
+						FIELD_NAMES,
+						new Object[][] {
+							{
+								new Date(), "sample description", 1L,
+								"sample name", "naziv", "unknown column"
+							}
+						})) {
 
 			try {
-				xlsBatchEngineTaskItemReader.read();
+				xlsBatchEngineImportTaskItemReader.read();
 
 				Assert.fail();
 			}
@@ -196,19 +201,20 @@ public class XLSBatchEngineTaskItemReaderTest
 
 	@Test
 	public void testReadMultipleRows() throws Exception {
-		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
-				_getXLSBatchEngineTaskItemReader(
-					FIELD_NAMES,
-					new Object[][] {
-						{
-							createDate, "sample description 1", 1L,
-							"sample name 1", "naziv 1"
-						},
-						{
-							createDate, "sample description 2", 2L,
-							"sample name 2", "naziv 2"
-						}
-					})) {
+		try (XLSBatchEngineImportTaskItemReader
+				xlsBatchEngineImportTaskItemReader =
+					_getXLSBatchEngineImportTaskItemReader(
+						FIELD_NAMES,
+						new Object[][] {
+							{
+								createDate, "sample description 1", 1L,
+								"sample name 1", "naziv 1"
+							},
+							{
+								createDate, "sample description 2", 2L,
+								"sample name 2", "naziv 2"
+							}
+						})) {
 
 			for (int i = 1; i < 3; i++) {
 				long rowCount = i;
@@ -216,7 +222,7 @@ public class XLSBatchEngineTaskItemReaderTest
 				validate(
 					createDateString, "sample description " + rowCount,
 					rowCount, Collections.emptyMap(),
-					xlsBatchEngineTaskItemReader.read(),
+					xlsBatchEngineImportTaskItemReader.read(),
 					new HashMap<String, String>() {
 						{
 							put("en", "sample name " + rowCount);
@@ -229,19 +235,21 @@ public class XLSBatchEngineTaskItemReaderTest
 
 	@Test
 	public void testReadRowsWithCommaInsideQuotes() throws Exception {
-		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
-				_getXLSBatchEngineTaskItemReader(
-					FIELD_NAMES,
-					new Object[][] {
-						{
-							createDate, "hey, here is comma inside", 1L,
-							"sample name", "naziv"
-						}
-					})) {
+		try (XLSBatchEngineImportTaskItemReader
+				xlsBatchEngineImportTaskItemReader =
+					_getXLSBatchEngineImportTaskItemReader(
+						FIELD_NAMES,
+						new Object[][] {
+							{
+								createDate, "hey, here is comma inside", 1L,
+								"sample name", "naziv"
+							}
+						})) {
 
 			validate(
 				createDateString, "hey, here is comma inside", 1L,
-				Collections.emptyMap(), xlsBatchEngineTaskItemReader.read(),
+				Collections.emptyMap(),
+				xlsBatchEngineImportTaskItemReader.read(),
 				new HashMap<String, String>() {
 					{
 						put("en", "sample name");
@@ -253,32 +261,34 @@ public class XLSBatchEngineTaskItemReaderTest
 
 	@Test
 	public void testReadRowsWithLessValues() throws Exception {
-		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
-				_getXLSBatchEngineTaskItemReader(
-					FIELD_NAMES, new Object[][] {{null, null, 1}})) {
+		try (XLSBatchEngineImportTaskItemReader
+				xlsBatchEngineImportTaskItemReader =
+					_getXLSBatchEngineImportTaskItemReader(
+						FIELD_NAMES, new Object[][] {{null, null, 1}})) {
 
 			validate(
 				null, null, 1L, Collections.emptyMap(),
-				xlsBatchEngineTaskItemReader.read(), null);
+				xlsBatchEngineImportTaskItemReader.read(), null);
 		}
 	}
 
 	@Test
 	public void testReadRowsWithNullValues() throws Exception {
-		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
-				_getXLSBatchEngineTaskItemReader(
-					FIELD_NAMES,
-					new Object[][] {
-						{createDate, null, 1L, null, "naziv"},
-						{
-							createDate, "sample description 2", 2L,
-							"sample name 2", "naziv 2"
-						}
-					})) {
+		try (XLSBatchEngineImportTaskItemReader
+				xlsBatchEngineImportTaskItemReader =
+					_getXLSBatchEngineImportTaskItemReader(
+						FIELD_NAMES,
+						new Object[][] {
+							{createDate, null, 1L, null, "naziv"},
+							{
+								createDate, "sample description 2", 2L,
+								"sample name 2", "naziv 2"
+							}
+						})) {
 
 			validate(
 				createDateString, null, 1L, Collections.emptyMap(),
-				xlsBatchEngineTaskItemReader.read(),
+				xlsBatchEngineImportTaskItemReader.read(),
 				new HashMap<String, String>() {
 					{
 						put("en", null);
@@ -288,7 +298,8 @@ public class XLSBatchEngineTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description 2", 2L,
-				Collections.emptyMap(), xlsBatchEngineTaskItemReader.read(),
+				Collections.emptyMap(),
+				xlsBatchEngineImportTaskItemReader.read(),
 				new HashMap<String, String>() {
 					{
 						put("en", "sample name 2");
@@ -320,11 +331,12 @@ public class XLSBatchEngineTaskItemReaderTest
 		}
 	}
 
-	private XLSBatchEngineTaskItemReader _getXLSBatchEngineTaskItemReader(
-			String[] cellNames, Object[][] rowValues)
+	private XLSBatchEngineImportTaskItemReader
+			_getXLSBatchEngineImportTaskItemReader(
+				String[] cellNames, Object[][] rowValues)
 		throws IOException {
 
-		return new XLSBatchEngineTaskItemReader(
+		return new XLSBatchEngineImportTaskItemReader(
 			new ByteArrayInputStream(_getContent(cellNames, rowValues)));
 	}
 

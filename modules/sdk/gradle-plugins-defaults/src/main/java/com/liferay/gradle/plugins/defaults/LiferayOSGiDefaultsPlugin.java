@@ -3054,8 +3054,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		String apiProjectPath = ':' + relativePath.replace('/', ':');
 
+		Project apiProject = rootProject.findProject(apiProjectPath);
+
+		if (apiProject == null) {
+			return;
+		}
+
 		buildServiceTask.finalizedBy(
-			apiProjectPath + ':' + BaselinePlugin.BASELINE_TASK_NAME);
+			apiProject.getPath() + ':' + BaselinePlugin.BASELINE_TASK_NAME);
 	}
 
 	private void _configureTaskBuildWSDD(final Project project) {

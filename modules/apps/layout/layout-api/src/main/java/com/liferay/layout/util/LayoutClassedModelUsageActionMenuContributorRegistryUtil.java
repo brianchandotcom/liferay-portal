@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.util;
+package com.liferay.layout.util;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -22,39 +22,39 @@ import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Pavel Savinov
- * @deprecated As of Mueller (7.2.x), replaced by {@link
- *             com.liferay.layout.util.LayoutClassedModelUsageActionMenuContributorRegistryUtil}
  */
-@Deprecated
-public class AssetEntryUsageActionMenuContributorRegistryUtil {
+public class LayoutClassedModelUsageActionMenuContributorRegistryUtil {
 
-	public static AssetEntryUsageActionMenuContributor
-		getAssetEntryUsageActionMenuContributor(String className) {
+	public static LayoutClassedModelUsageActionMenuContributor
+		getLayoutClassedModelUsageActionMenuContributor(String className) {
 
-		return _assetEntryUsageActionMenuContributorRegistryUtil.
-			_getAssetEntryUsageActionMenuContributor(className);
+		return _layoutClassedModelUsageActionMenuContributorRegistryUtil.
+			_getLayoutClassedModelUsageActionMenuContributor(className);
 	}
 
-	private AssetEntryUsageActionMenuContributorRegistryUtil() {
+	private LayoutClassedModelUsageActionMenuContributorRegistryUtil() {
 		Bundle bundle = FrameworkUtil.getBundle(
-			AssetEntryUsageActionMenuContributorRegistryUtil.class);
+			LayoutClassedModelUsageActionMenuContributorRegistryUtil.class);
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundle.getBundleContext(),
-			AssetEntryUsageActionMenuContributor.class, "model.class.name");
+			LayoutClassedModelUsageActionMenuContributor.class,
+			"model.class.name");
 	}
 
-	private AssetEntryUsageActionMenuContributor
-		_getAssetEntryUsageActionMenuContributor(String className) {
+	private LayoutClassedModelUsageActionMenuContributor
+		_getLayoutClassedModelUsageActionMenuContributor(String className) {
 
 		return _serviceTrackerMap.getService(className);
 	}
 
-	private static final AssetEntryUsageActionMenuContributorRegistryUtil
-		_assetEntryUsageActionMenuContributorRegistryUtil =
-			new AssetEntryUsageActionMenuContributorRegistryUtil();
+	private static final
+		LayoutClassedModelUsageActionMenuContributorRegistryUtil
+			_layoutClassedModelUsageActionMenuContributorRegistryUtil =
+				new LayoutClassedModelUsageActionMenuContributorRegistryUtil();
 
 	private final ServiceTrackerMap
-		<String, AssetEntryUsageActionMenuContributor> _serviceTrackerMap;
+		<String, LayoutClassedModelUsageActionMenuContributor>
+			_serviceTrackerMap;
 
 }

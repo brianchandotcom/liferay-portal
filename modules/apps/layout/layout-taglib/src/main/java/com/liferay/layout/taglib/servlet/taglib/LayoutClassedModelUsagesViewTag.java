@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.asset.taglib.servlet.taglib;
+package com.liferay.layout.taglib.servlet.taglib;
 
-import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,11 +22,8 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
- * @deprecated As of Mueller (7.2.x), replaced by {@link
- *             com.liferay.layout.taglib.servlet.taglib.LayoutClassedModelUsagesViewTag}
  */
-@Deprecated
-public class AssetViewUsagesTag<R> extends IncludeTag {
+public class LayoutClassedModelUsagesViewTag<R> extends IncludeTag {
 
 	public String getClassName() {
 		return _className;
@@ -67,13 +64,15 @@ public class AssetViewUsagesTag<R> extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
-			"liferay-asset:asset-view-usages:className", _className);
+			"liferay-layout:layout-classed-model-usages-view:className",
+			_className);
 		httpServletRequest.setAttribute(
-			"liferay-asset:asset-view-usages:classPK",
+			"liferay-layout:layout-classed-model-usages-view:classPK",
 			String.valueOf(_classPK));
 	}
 
-	private static final String _PAGE = "/asset_view_usages/page.jsp";
+	private static final String _PAGE =
+		"/layout_classed_model_usages_view/page.jsp";
 
 	private String _className;
 	private long _classPK;

@@ -42,6 +42,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-item-selector-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
+	compileOnly project(":apps:layout:layout-taglib")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")

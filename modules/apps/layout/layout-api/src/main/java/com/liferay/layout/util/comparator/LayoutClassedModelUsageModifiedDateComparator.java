@@ -12,44 +12,42 @@
  * details.
  */
 
-package com.liferay.asset.util.comparator;
+package com.liferay.layout.util.comparator;
 
-import com.liferay.asset.model.AssetEntryUsage;
+import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author     Pavel Savinov
- * @deprecated As of Mueller (7.2.x), replaced by {@link
- *             com.liferay.layout.util.comparator.LayoutClassedModelUsageModifiedDateComparator}
+ * @author Eudaldo Alonso
  */
-@Deprecated
-public class AssetEntryUsageModifiedDateComparator
-	extends OrderByComparator<AssetEntryUsage> {
+public class LayoutClassedModelUsageModifiedDateComparator
+	extends OrderByComparator<LayoutClassedModelUsage> {
 
 	public static final String ORDER_BY_ASC =
-		"AssetEntryUsage.modifiedDate ASC";
+		"LayoutClassedModelUsage.modifiedDate ASC";
 
 	public static final String ORDER_BY_DESC =
-		"AssetEntryUsage.modifiedDate DESC";
+		"LayoutClassedModelUsage.modifiedDate DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public AssetEntryUsageModifiedDateComparator() {
+	public LayoutClassedModelUsageModifiedDateComparator() {
 		this(true);
 	}
 
-	public AssetEntryUsageModifiedDateComparator(boolean ascending) {
+	public LayoutClassedModelUsageModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(
-		AssetEntryUsage assetEntryUsage1, AssetEntryUsage assetEntryUsage2) {
+		LayoutClassedModelUsage layoutClassedModelUsage1,
+		LayoutClassedModelUsage layoutClassedModelUsage2) {
 
 		int value = DateUtil.compareTo(
-			assetEntryUsage1.getModifiedDate(),
-			assetEntryUsage2.getModifiedDate());
+			layoutClassedModelUsage1.getModifiedDate(),
+			layoutClassedModelUsage2.getModifiedDate());
 
 		if (_ascending) {
 			return value;

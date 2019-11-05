@@ -12,24 +12,22 @@
  * details.
  */
 
-package com.liferay.asset.util;
+package com.liferay.layout.util;
 
-import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.layout.model.LayoutClassedModelUsage;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Pavel Savinov
- * @deprecated As of Mueller (7.2.x), replaced by {@link
- *             com.liferay.layout.util.LayoutClassedModelUsageActionMenuContributor}
+ * @author Eudaldo Alonso
  */
-@Deprecated
-public interface AssetEntryUsageActionMenuContributor {
+public interface LayoutClassedModelUsageActionMenuContributor {
 
-	public List<DropdownItem> getAssetEntryUsageActionMenu(
-		AssetEntryUsage assetEntryUsage, HttpServletRequest httpServletRequest);
+	public List<DropdownItem> getLayoutClassedModelUsageActionDropdownItems(
+		HttpServletRequest httpServletRequest,
+		LayoutClassedModelUsage layoutClassedModelUsage);
 
 }

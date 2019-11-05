@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.asset.taglib.servlet.taglib;
+package com.liferay.layout.taglib.servlet.taglib;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.asset.util.AssetEntryUsageRecorder;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.util.LayoutClassedModelUsageRecorder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Map;
@@ -34,34 +33,30 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
- * @deprecated As of Mueller (7.2.x), replaced by {@link
- *             com.liferay.layout.taglib.servlet.taglib.LayoutClassedModelUsagesAdminTag}
  */
-@Deprecated
-public class AssetEntryUsagesTag extends IncludeTag {
+public class LayoutClassedModelUsagesAdminTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			_className, _classPK);
-
 		try {
-			Map<String, AssetEntryUsageRecorder> assetEntryUsageRecorders =
-				ServletContextUtil.getAssetEntryUsageRecorders();
+			Map<String, LayoutClassedModelUsageRecorder>
+				layoutClassedModelUsageRecorders =
+					ServletContextUtil.getLayoutClassedModelUsageRecorders();
 
-			AssetEntryUsageRecorder assetEntryUsageRecorder =
-				assetEntryUsageRecorders.get(assetEntry.getClassName());
+			LayoutClassedModelUsageRecorder layoutClassedModelUsageRecorder =
+				layoutClassedModelUsageRecorders.get(getClassName());
 
-			if (assetEntryUsageRecorder != null) {
-				assetEntryUsageRecorder.record(assetEntry);
+			if (layoutClassedModelUsageRecorder != null) {
+				layoutClassedModelUsageRecorder.record(
+					PortalUtil.getClassNameId(getClassName()), getClassPK());
 			}
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Unable to check asset entry usages for class name ",
-						_className, " and class PK ", _classPK),
+						"Unable to check layout classed model usages for ",
+						"class name ", _className, " and class PK ", _classPK),
 					pe);
 			}
 		}
@@ -115,16 +110,18 @@ public class AssetEntryUsagesTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
-			"liferay-asset:asset-entry-usages:className", _className);
+			"liferay-layout:layout-classed-model-usages-admin:className",
+			_className);
 		httpServletRequest.setAttribute(
-			"liferay-asset:asset-entry-usages:classPK",
+			"liferay-layout:layout-classed-model-usages-admin:classPK",
 			String.valueOf(_classPK));
 	}
 
-	private static final String _PAGE = "/asset_entry_usages/page.jsp";
+	private static final String _PAGE =
+		"/layout_classed_model_usages_admin/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AssetEntryUsagesTag.class);
+		LayoutClassedModelUsagesAdminTag.class);
 
 	private String _className;
 	private long _classPK;

@@ -59,12 +59,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	@Override
 	public void bind(Name name, Object obj) throws NamingException {
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		_ldapContext.bind(name, obj);
@@ -75,12 +70,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		throws NamingException {
 
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		_ldapContext.bind(name, obj, attributes);
@@ -88,12 +78,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public void bind(String name, Object obj) throws NamingException {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		_ldapContext.bind(SafeLdapNameFactory.fromUnsafe(name), obj);
 	}
@@ -102,12 +87,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	public void bind(String name, Object obj, Attributes attributes)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		_ldapContext.bind(
 			SafeLdapNameFactory.fromUnsafe(name), obj, attributes);
@@ -123,12 +103,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		if (!(name instanceof SafeLdapName) ||
 			!(prefixName instanceof SafeLdapName)) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.composeName(name, prefixName);
@@ -138,12 +113,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	public String composeName(String name, String prefix)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.composeName(name, prefix);
 	}
@@ -151,12 +121,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	@Override
 	public Context createSubcontext(Name name) throws NamingException {
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.createSubcontext(name);
@@ -167,12 +132,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		throws NamingException {
 
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.createSubcontext(name, attributes);
@@ -180,12 +140,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public Context createSubcontext(String name) throws NamingException {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.createSubcontext(
 			SafeLdapNameFactory.fromUnsafe(name));
@@ -195,12 +150,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	public DirContext createSubcontext(String name, Attributes attributes)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.createSubcontext(
 			SafeLdapNameFactory.fromUnsafe(name), attributes);
@@ -209,12 +159,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	@Override
 	public void destroySubcontext(Name name) throws NamingException {
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		_ldapContext.destroySubcontext(name);
@@ -222,12 +167,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public void destroySubcontext(String name) throws NamingException {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		_ldapContext.destroySubcontext(SafeLdapNameFactory.fromUnsafe(name));
 	}
@@ -242,12 +182,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	@Override
 	public Attributes getAttributes(Name name) throws NamingException {
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.getAttributes(name);
@@ -258,12 +193,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		throws NamingException {
 
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.getAttributes(name, attrIds);
@@ -271,12 +201,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public Attributes getAttributes(String name) throws NamingException {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.getAttributes(SafeLdapNameFactory.fromUnsafe(name));
 	}
@@ -285,12 +210,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	public Attributes getAttributes(String name, String[] attrIds)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.getAttributes(
 			SafeLdapNameFactory.fromUnsafe(name), attrIds);
@@ -314,12 +234,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	@Override
 	public NameParser getNameParser(Name name) throws NamingException {
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.getNameParser(name);
@@ -327,12 +242,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public NameParser getNameParser(String name) throws NamingException {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.getNameParser(SafeLdapNameFactory.fromUnsafe(name));
 	}
@@ -350,12 +260,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	@Override
 	public DirContext getSchema(Name name) throws NamingException {
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.getSchema(name);
@@ -363,12 +268,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public DirContext getSchema(String name) throws NamingException {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.getSchema(SafeLdapNameFactory.fromUnsafe(name));
 	}
@@ -378,12 +278,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		throws NamingException {
 
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.getSchemaClassDefinition(name);
@@ -393,12 +288,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	public DirContext getSchemaClassDefinition(String name)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.getSchemaClassDefinition(
 			SafeLdapNameFactory.fromUnsafe(name));
@@ -409,12 +299,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		throws NamingException {
 
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.list(name);
@@ -424,12 +309,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	public NamingEnumeration<NameClassPair> list(String name)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.list(SafeLdapNameFactory.fromUnsafe(name));
 	}
@@ -439,12 +319,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		throws NamingException {
 
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.listBindings(name);
@@ -454,12 +329,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	public NamingEnumeration<Binding> listBindings(String name)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.listBindings(SafeLdapNameFactory.fromUnsafe(name));
 	}
@@ -467,12 +337,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	@Override
 	public Object lookup(Name name) throws NamingException {
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.lookup(name);
@@ -480,12 +345,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public Object lookup(String name) throws NamingException {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.lookup(SafeLdapNameFactory.fromUnsafe(name));
 	}
@@ -493,12 +353,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	@Override
 	public Object lookupLink(Name name) throws NamingException {
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.lookupLink(name);
@@ -506,12 +361,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public Object lookupLink(String name) throws NamingException {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.lookupLink(SafeLdapNameFactory.fromUnsafe(name));
 	}
@@ -521,12 +371,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		throws NamingException {
 
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		_ldapContext.modifyAttributes(name, modOp, attributes);
@@ -537,12 +382,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		throws NamingException {
 
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		_ldapContext.modifyAttributes(name, mods);
@@ -552,12 +392,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	public void modifyAttributes(String name, int modOp, Attributes attributes)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		_ldapContext.modifyAttributes(
 			SafeLdapNameFactory.fromUnsafe(name), modOp, attributes);
@@ -567,12 +402,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	public void modifyAttributes(String name, ModificationItem[] mods)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		_ldapContext.modifyAttributes(
 			SafeLdapNameFactory.fromUnsafe(name), mods);
@@ -588,12 +418,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	@Override
 	public void rebind(Name name, Object obj) throws NamingException {
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		_ldapContext.rebind(name, obj);
@@ -604,12 +429,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		throws NamingException {
 
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		_ldapContext.rebind(name, obj, attributes);
@@ -617,12 +437,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public void rebind(String name, Object obj) throws NamingException {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		_ldapContext.rebind(SafeLdapNameFactory.fromUnsafe(name), obj);
 	}
@@ -631,12 +446,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	public void rebind(String name, Object obj, Attributes attributes)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		_ldapContext.rebind(
 			SafeLdapNameFactory.fromUnsafe(name), obj, attributes);
@@ -659,12 +469,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		if (!(oldName instanceof SafeLdapName) ||
 			!(newName instanceof SafeLdapName)) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		_ldapContext.rename(oldName, newName);
@@ -672,12 +477,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public void rename(String oldName, String newName) throws NamingException {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		_ldapContext.rename(
 			SafeLdapNameFactory.fromUnsafe(oldName),
@@ -690,12 +490,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		throws NamingException {
 
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.search(name, matchingAttributes);
@@ -708,12 +503,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 		throws NamingException {
 
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		return _ldapContext.search(
@@ -726,12 +516,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			SearchControls cons)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.search(name, filterExpr, filterArgs, cons);
 	}
@@ -741,12 +526,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			Name name, String filter, SearchControls cons)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.search(name, filter, cons);
 	}
@@ -767,12 +547,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			String name, Attributes matchingAttributes)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.search(
 			SafeLdapNameFactory.fromUnsafe(name), matchingAttributes);
@@ -784,12 +559,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			String[] attributesToReturn)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.search(
 			SafeLdapNameFactory.fromUnsafe(name), matchingAttributes,
@@ -802,12 +572,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			SearchControls cons)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.search(
 			SafeLdapNameFactory.fromUnsafe(name), filter, filterArgs, cons);
@@ -818,12 +583,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			String name, String filter, SearchControls cons)
 		throws NamingException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		return _ldapContext.search(
 			SafeLdapNameFactory.fromUnsafe(name), filter, cons);
@@ -844,12 +604,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	@Override
 	public void unbind(Name name) throws NamingException {
 		if (!(name instanceof SafeLdapName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unsafe LDAP parameter used", new Exception());
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unsafe LDAP parameter used");
-			}
+			_logUnsafeParameter();
 		}
 
 		_ldapContext.unbind(name);
@@ -857,14 +612,26 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public void unbind(String name) throws NamingException {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unsafe LDAP method used", new Exception());
-		}
-		else if (_log.isWarnEnabled()) {
-			_log.warn("Unsafe LDAP method used");
-		}
+		_logUnsafeMethod();
 
 		_ldapContext.unbind(SafeLdapNameFactory.fromUnsafe(name));
+	}
+
+	private void _log(String s) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(s, new Exception());
+		}
+		else if (_log.isWarnEnabled()) {
+			_log.warn(s);
+		}
+	}
+
+	private void _logUnsafeMethod() {
+		_log("Unsafe LDAP method used");
+	}
+
+	private void _logUnsafeParameter() {
+		_log("Unsafe LDAP parameter used");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

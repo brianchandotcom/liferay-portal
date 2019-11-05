@@ -72,6 +72,18 @@ public class DBInitUtil {
 			try {
 				db.runSQL(
 					connection,
+					"alter table Release_ add mvccVersion LONG default 0 not " +
+						"null");
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e.getMessage());
+				}
+			}
+
+			try {
+				db.runSQL(
+					connection,
 					"alter table Release_ add schemaVersion VARCHAR(75) null");
 			}
 			catch (Exception e) {
@@ -130,8 +142,9 @@ public class DBInitUtil {
 
 	private static boolean _checkDefaultRelease(Connection connection) {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select buildNumber, schemaVersion, state_ from Release_ " +
-					"where releaseId = " + ReleaseConstants.DEFAULT_ID);
+				"select buildNumber, mvccVersion, schemaVersion, state_ from " +
+					"Release_ where releaseId = " +
+						ReleaseConstants.DEFAULT_ID);
 			ResultSet rs = ps.executeQuery()) {
 
 			if (!rs.next()) {

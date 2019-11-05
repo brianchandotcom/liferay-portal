@@ -14,13 +14,13 @@
 
 package com.liferay.headless.batch.engine.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
-import com.liferay.batch.engine.BatchEngineTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.ItemClassRegistry;
 import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
-import com.liferay.batch.engine.model.BatchEngineTask;
-import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.executor.PortalExecutorManager;
@@ -77,7 +77,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	@Override
 	public ImportTask getImportTask(Long importTaskId) throws Exception {
 		return _toImportTask(
-			_batchEngineTaskLocalService.getBatchEngineTask(importTaskId));
+			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
+				importTaskId));
 	}
 
 	@Override
@@ -172,8 +173,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			extension = _file.getExtension(binaryFile.getFileName());
 		}
 
-		BatchEngineTask batchEngineTask =
-			_batchEngineTaskLocalService.addBatchEngineTask(
+		BatchEngineImportTask batchEngineImportTask =
+			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				_itemClassBatchSizeMap.getOrDefault(className, _batchSize),
 				callbackURL, className, content,
@@ -183,25 +184,28 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				version);
 
 		executorService.submit(
-			() -> _batchEngineTaskExecutor.execute(batchEngineTask));
+			() -> _batchEngineImportTaskExecutor.execute(
+				batchEngineImportTask));
 
-		return _toImportTask(batchEngineTask);
+		return _toImportTask(batchEngineImportTask);
 	}
 
-	private ImportTask _toImportTask(BatchEngineTask batchEngineTask) {
+	private ImportTask _toImportTask(
+		BatchEngineImportTask batchEngineImportTask) {
+
 		return new ImportTask() {
 			{
-				className = batchEngineTask.getClassName();
-				contentType = batchEngineTask.getContentType();
-				endTime = batchEngineTask.getEndTime();
-				errorMessage = batchEngineTask.getErrorMessage();
+				className = batchEngineImportTask.getClassName();
+				contentType = batchEngineImportTask.getContentType();
+				endTime = batchEngineImportTask.getEndTime();
+				errorMessage = batchEngineImportTask.getErrorMessage();
 				executeStatus = ImportTask.ExecuteStatus.valueOf(
-					batchEngineTask.getExecuteStatus());
-				id = batchEngineTask.getBatchEngineTaskId();
+					batchEngineImportTask.getExecuteStatus());
+				id = batchEngineImportTask.getBatchEngineImportTaskId();
 				operation = ImportTask.Operation.valueOf(
-					batchEngineTask.getOperation());
-				startTime = batchEngineTask.getStartTime();
-				version = batchEngineTask.getVersion();
+					batchEngineImportTask.getOperation());
+				startTime = batchEngineImportTask.getStartTime();
+				version = batchEngineImportTask.getVersion();
 			}
 		};
 	}
@@ -226,10 +230,11 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	}
 
 	@Reference
-	private BatchEngineTaskExecutor _batchEngineTaskExecutor;
+	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 
 	@Reference
-	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
+	private BatchEngineImportTaskLocalService
+		_batchEngineImportTaskLocalService;
 
 	private int _batchSize;
 

@@ -16,13 +16,18 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.client.AnalyticsMessageSenderClient;
 import com.liferay.analytics.message.sender.model.AnalyticsMessage;
+import com.liferay.analytics.message.sender.util.UserSerializer;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Collections;
 import java.util.Dictionary;
@@ -59,7 +64,33 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	}
 
 	protected String serialize(Object object) {
+		if (object instanceof User) {
+			return _userSerializer.serialize((User)object);
+		}
+
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		if (object instanceof Contact) {
+			Contact contact = (Contact)object;
+
+			try {
+				JSONObject userJSONObject = JSONFactoryUtil.createJSONObject(
+					_userSerializer.serialize(
+						_userLocalService.getUser(contact.getUserId())));
+
+				userJSONObject.put(
+					"contact",
+					JSONFactoryUtil.createJSONObject(
+						jsonSerializer.serialize(contact)));
+
+				return userJSONObject.toString();
+			}
+			catch (Exception e) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to serialize contact");
+				}
+			}
+		}
 
 		return jsonSerializer.serialize(object);
 	}
@@ -96,5 +127,11 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	private AnalyticsMessageSenderClient _analyticsMessageSenderClient;
 
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserSerializer _userSerializer;
 
 }

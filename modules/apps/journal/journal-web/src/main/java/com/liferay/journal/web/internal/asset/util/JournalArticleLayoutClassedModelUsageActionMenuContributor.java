@@ -64,8 +64,8 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 
 	@Override
 	public List<DropdownItem> getLayoutClassedModelUsageActionDropdownItems(
-		LayoutClassedModelUsage layoutClassedModelUsage,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		LayoutClassedModelUsage layoutClassedModelUsage) {
 
 		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
 			layoutClassedModelUsage.getClassPK(), WorkflowConstants.STATUS_ANY,

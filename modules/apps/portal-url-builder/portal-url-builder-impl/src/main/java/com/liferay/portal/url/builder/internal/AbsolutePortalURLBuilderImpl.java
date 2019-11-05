@@ -222,14 +222,15 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		boolean ignoreCDNHost, boolean ignorePathProxy, String pathPrefix,
 		String relativeURL) {
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(6);
 
 		String cdnHost = _getCDNHost(_httpServletRequest);
 
 		if (!ignoreCDNHost && !Validator.isBlank(cdnHost)) {
 			sb.append(cdnHost);
 		}
-		else if (!ignorePathProxy) {
+
+		if (!ignorePathProxy) {
 			sb.append(_getPathProxy());
 		}
 

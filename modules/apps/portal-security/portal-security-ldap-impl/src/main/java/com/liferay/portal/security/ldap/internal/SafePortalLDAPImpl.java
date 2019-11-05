@@ -626,7 +626,7 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 
 		Collection<Object> values = userMappings.values();
 
-		values.removeIf(object -> Validator.isNull(object));
+		values.removeIf(Validator::isNull);
 
 		String[] mappedUserAttributeIds = ArrayUtil.toStringArray(
 			values.toArray(new Object[userMappings.size()]));

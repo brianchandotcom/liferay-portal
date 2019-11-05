@@ -357,8 +357,7 @@ definition {
 
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Image",
-			id = "image",
-			imageFrament = "Image");
+			id = "image");
 
 		PageEditorMapping.mapEditableFieldToAsset(
 			entryTitle = "WC WebContent Title",

@@ -11,12 +11,6 @@ definition {
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
-		if (isSet(imageFrament)) {
-			SelectFrameTop();
-
-			Click(locator1 = "Icon#CLOSE");
-		}
-
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON");
 	}
 

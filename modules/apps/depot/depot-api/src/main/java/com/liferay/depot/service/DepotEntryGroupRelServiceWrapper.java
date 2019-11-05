@@ -34,6 +34,19 @@ public class DepotEntryGroupRelServiceWrapper
 	}
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link DepotEntryGroupRelServiceUtil} to access the depot entry group rel remote service. Add custom service methods to <code>com.liferay.depot.service.impl.DepotEntryGroupRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 */
+	@Override
+	public java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
+			getDepotEntryGroupRels(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryGroupRelService.getDepotEntryGroupRels(groupId);
+	}
+
+	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier

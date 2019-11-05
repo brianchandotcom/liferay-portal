@@ -14,13 +14,21 @@
 
 package com.liferay.depot.service.http;
 
+import com.liferay.depot.service.DepotEntryGroupRelServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.depot.service.DepotEntryGroupRelServiceUtil</code> service
+ * <code>DepotEntryGroupRelServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -42,4 +50,49 @@ package com.liferay.depot.service.http;
  * @generated
  */
 public class DepotEntryGroupRelServiceHttp {
+
+	public static java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
+			getDepotEntryGroupRels(HttpPrincipal httpPrincipal, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DepotEntryGroupRelServiceUtil.class, "getDepotEntryGroupRels",
+				_getDepotEntryGroupRelsParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (java.util.List<com.liferay.depot.model.DepotEntryGroupRel>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DepotEntryGroupRelServiceHttp.class);
+
+	private static final Class<?>[] _getDepotEntryGroupRelsParameterTypes0 =
+		new Class[] {long.class};
+
 }

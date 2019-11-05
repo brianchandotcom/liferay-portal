@@ -82,16 +82,16 @@ public class PortalSettingsConfigurationScreen implements ConfigurationScreen {
 
 		try {
 			httpServletRequest.setAttribute(
-				PortalSettingsWebKeys.
-					PORTAL_SETTINGS_CONFIGURATION_SCREEN_CONTRIBUTOR,
-				_portalSettingsConfigurationScreenContributor);
-			httpServletRequest.setAttribute(
 				PortalSettingsWebKeys.DELETE_CONFIRMATION_TEXT,
 				UnicodeLanguageUtil.get(
 					ResourceBundleUtil.getBundle(
 						httpServletRequest.getLocale(),
 						PortalSettingsConfigurationScreen.class),
 					"are-you-sure-you-want-to-reset-the-configured-values"));
+			httpServletRequest.setAttribute(
+				PortalSettingsWebKeys.
+					PORTAL_SETTINGS_CONFIGURATION_SCREEN_CONTRIBUTOR,
+				_portalSettingsConfigurationScreenContributor);
 
 			_portalSettingsConfigurationScreenContributor.setAttributes(
 				httpServletRequest, httpServletResponse);

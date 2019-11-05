@@ -13,7 +13,8 @@
 	]}
 
 	{@param? availableTemplates: list<[
-		key: string,
+		ddmTemplateKey: string,
+		infoItemRendererKey: string,
 		label: string
 	]>}
 	{@param? enableSelectTemplate: bool}
@@ -98,11 +99,11 @@
 
 {template .templateSelector}
 	{@param availableTemplates: ?}
-	{@param? selectedTemplate: string}
+	{@param? selectedTemplate: ?}
 	{@param? handleSelectTemplateValueChanged: any}
 
 	<div class="form-group">
-		<label for="template">{msg desc=""}display-style{/msg}</label>
+		<label for="template">{msg desc=""}template{/msg}</label>
 
 		<select
 			class="form-control form-control-sm"
@@ -111,9 +112,18 @@
 		>
 			{foreach $option in $availableTemplates}
 				{let $optionAttributes kind="attributes"}
-					value="{$option.key}"
+					{if $option.ddmTemplateKey}
+						data-ddm-template-key="{$option.ddmTemplateKey}"
+					{/if}
 
-					{if $selectedTemplate and $selectedTemplate == $option.key}
+					{if $option.infoItemRendererKey}
+						data-info-item-renderer-key="{$option.infoItemRendererKey}"
+					{/if}
+
+					{if $selectedTemplate and
+						(($selectedTemplate.ddmTemplateKey and $selectedTemplate.ddmTemplateKey == $option.ddmTemplateKey) or
+						 ($selectedTemplate.infoItemRendererKey and $selectedTemplate.infoItemRendererKey == $option.infoItemRendererKey))
+					}
 						selected
 					{/if}
 				{/let}

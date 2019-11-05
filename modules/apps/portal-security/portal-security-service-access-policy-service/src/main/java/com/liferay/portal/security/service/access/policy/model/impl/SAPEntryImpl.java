@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.service.access.policy.model.impl;
 
+import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
@@ -22,10 +23,22 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.service.access.policy.configuration.SAPConfiguration;
 import com.liferay.portal.security.service.access.policy.constants.SAPConstants;
-import com.liferay.portal.security.service.access.policy.internal.tracker.SAPSystemEntryTracker;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -60,11 +73,110 @@ public class SAPEntryImpl extends SAPEntryBaseImpl {
 			return true;
 		}
 
-		if (SAPSystemEntryTracker.isSystemEntry(getName())) {
+		if (SAPSystemEntriesHolder._sapSystemEntries.contains(getName())) {
 			return true;
 		}
 
 		return false;
+	}
+
+	private static class SAPSystemEntriesHolder {
+
+		private static final Set<String> _sapSystemEntries =
+			Collections.newSetFromMap(new ConcurrentHashMap<>());
+
+		private static class SAPSystemEntryServiceTrackerCustomizer
+			implements ServiceTrackerCustomizer<Object, Set<String>> {
+
+			@Override
+			public Set<String> addingService(
+				ServiceReference<Object> serviceReference) {
+
+				Set<String> sapSystemEntries = new HashSet<>(
+					StringPlus.asList(
+						serviceReference.getProperty("sap.system.entry")));
+
+				synchronized (this) {
+					_serviceReferenceMap.put(
+						serviceReference, sapSystemEntries);
+
+					_sapSystemEntries.addAll(sapSystemEntries);
+				}
+
+				return sapSystemEntries;
+			}
+
+			@Override
+			public void modifiedService(
+				ServiceReference<Object> serviceReference,
+				Set<String> sapSystemEntries) {
+
+				Set<String> newSAPSystemEntries = new HashSet<>(
+					StringPlus.asList(
+						serviceReference.getProperty("sap.system.entry")));
+
+				if (newSAPSystemEntries.equals(sapSystemEntries)) {
+					return;
+				}
+
+				synchronized (this) {
+					_serviceReferenceMap.put(
+						serviceReference, newSAPSystemEntries);
+
+					_sapSystemEntries.addAll(newSAPSystemEntries);
+
+					_reindexSAPSystemEntries(sapSystemEntries);
+				}
+			}
+
+			@Override
+			public void removedService(
+				ServiceReference<Object> serviceReference,
+				Set<String> sapSystemEntries) {
+
+				synchronized (this) {
+					_serviceReferenceMap.remove(serviceReference);
+
+					_reindexSAPSystemEntries(sapSystemEntries);
+				}
+			}
+
+			private void _reindexSAPSystemEntries(
+				Set<String> removedSAPSystemEntries) {
+
+				for (Set<String> sapSystemEntries :
+						_serviceReferenceMap.values()) {
+
+					removedSAPSystemEntries.removeAll(sapSystemEntries);
+				}
+
+				_sapSystemEntries.removeAll(removedSAPSystemEntries);
+			}
+
+			private static final Map<Object, Set<String>> _serviceReferenceMap =
+				new ConcurrentHashMap<>();
+
+		}
+
+		static {
+			try {
+				Bundle bundle = FrameworkUtil.getBundle(SAPEntryImpl.class);
+
+				BundleContext bundleContext = bundle.getBundleContext();
+
+				ServiceTracker<Object, Set<String>> serviceTracker =
+					new ServiceTracker<>(
+						bundleContext,
+						bundleContext.createFilter("(sap.system.entry=*)"),
+						new SAPSystemEntryServiceTrackerCustomizer());
+
+				serviceTracker.open();
+			}
+			catch (InvalidSyntaxException ise) {
+				throw new ExceptionInInitializerError(ise);
+			}
+		}
+
 	}
 
 }

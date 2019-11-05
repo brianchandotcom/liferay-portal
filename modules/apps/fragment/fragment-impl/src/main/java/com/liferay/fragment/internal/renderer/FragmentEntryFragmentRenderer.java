@@ -27,8 +27,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -102,7 +100,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	private String _renderFragmentEntry(
 		long fragmentEntryId, String css, String html, String js,
-		String configuration, String namespace) {
+		String configuration, String namespace,
+		HttpServletRequest httpServletRequest) {
 
 		StringBundler sb = new StringBundler(16);
 
@@ -122,33 +121,24 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		sb.append("</div>");
 
 		if (Validator.isNotNull(css)) {
-			boolean cssLoaded = false;
-
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			OutputData outputData = null;
-
 			String outputKey = fragmentEntryId + "_CSS";
 
-			if (serviceContext != null) {
-				outputData = (OutputData)serviceContext.getAttribute(
-					WebKeys.OUTPUT_DATA);
+			OutputData outputData = (OutputData)httpServletRequest.getAttribute(
+				WebKeys.OUTPUT_DATA);
 
-				if (outputData == null) {
-					outputData = new OutputData();
-				}
+			if (outputData == null) {
+				outputData = new OutputData();
+			}
 
-				Set<String> outputKeys = outputData.getOutputKeys();
+			Set<String> outputKeys = outputData.getOutputKeys();
 
-				StringBundler cssSB = outputData.getDataSB(
-					outputKey, StringPool.BLANK);
+			boolean cssLoaded = outputKeys.contains(outputKey);
 
-				cssLoaded = outputKeys.contains(outputKey);
+			StringBundler cssSB = outputData.getDataSB(
+				outputKey, StringPool.BLANK);
 
-				if (cssSB != null) {
-					cssLoaded = Objects.equals(cssSB.toString(), css);
-				}
+			if (cssSB != null) {
+				cssLoaded = Objects.equals(cssSB.toString(), css);
 			}
 
 			if (!cssLoaded) {
@@ -156,15 +146,13 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				sb.append(css);
 				sb.append("</style>");
 
-				if (outputData != null) {
-					outputData.addOutputKey(outputKey);
+				outputData.addOutputKey(outputKey);
 
-					outputData.setDataSB(
-						outputKey, StringPool.BLANK, new StringBundler(css));
+				outputData.setDataSB(
+					outputKey, StringPool.BLANK, new StringBundler(css));
 
-					serviceContext.setAttribute(
-						WebKeys.OUTPUT_DATA, outputData);
-				}
+				httpServletRequest.setAttribute(
+					WebKeys.OUTPUT_DATA, outputData);
 			}
 		}
 
@@ -231,7 +219,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		return _renderFragmentEntry(
 			fragmentEntryLink.getFragmentEntryId(), css, html,
 			fragmentEntryLink.getJs(), configurationJSONObject.toString(),
-			fragmentEntryLink.getNamespace());
+			fragmentEntryLink.getNamespace(), httpServletRequest);
 	}
 
 	private String _writePortletPaths(

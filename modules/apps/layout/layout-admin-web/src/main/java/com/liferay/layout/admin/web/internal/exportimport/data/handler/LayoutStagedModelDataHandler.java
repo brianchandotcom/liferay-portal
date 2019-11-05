@@ -185,9 +185,9 @@ public class LayoutStagedModelDataHandler
 		try {
 			List<Layout> ancestors = layout.getAncestors();
 
-			Collections.reverse(ancestors);
-
 			StringBundler sb = new StringBundler(4 * ancestors.size() + 1);
+
+			Collections.reverse(ancestors);
 
 			for (Layout ancestor : ancestors) {
 				sb.append(ancestor.getNameCurrentValue());

@@ -186,31 +186,32 @@ public class JournalArticleStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(JournalArticle article) {
+		if (article.getFolderId() ==
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			return article.getTitleCurrentValue();
+		}
+
 		try {
-			StringBundler sb = new StringBundler();
+			JournalFolder folder = article.getFolder();
 
-			if (article.getFolderId() !=
-					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			List<JournalFolder> ancestors = folder.getAncestors();
 
-				JournalFolder folder = article.getFolder();
+			StringBundler sb = new StringBundler(4 * ancestors.size() + 5);
 
-				List<JournalFolder> ancestors = folder.getAncestors();
+			Collections.reverse(ancestors);
 
-				Collections.reverse(ancestors);
-
-				for (JournalFolder ancestor : ancestors) {
-					sb.append(ancestor.getName());
-					sb.append(StringPool.SPACE);
-					sb.append(StringPool.GREATER_THAN);
-					sb.append(StringPool.SPACE);
-				}
-
-				sb.append(folder.getName());
+			for (JournalFolder ancestor : ancestors) {
+				sb.append(ancestor.getName());
 				sb.append(StringPool.SPACE);
 				sb.append(StringPool.GREATER_THAN);
 				sb.append(StringPool.SPACE);
 			}
 
+			sb.append(folder.getName());
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.GREATER_THAN);
+			sb.append(StringPool.SPACE);
 			sb.append(article.getTitleCurrentValue());
 
 			return sb.toString();

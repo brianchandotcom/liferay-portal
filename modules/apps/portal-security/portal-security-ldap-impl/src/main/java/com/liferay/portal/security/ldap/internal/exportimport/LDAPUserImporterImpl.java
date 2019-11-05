@@ -65,6 +65,7 @@ import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.portal.security.ldap.ContactConverterKeys;
 import com.liferay.portal.security.ldap.SafeLdapContext;
 import com.liferay.portal.security.ldap.SafeLdapFilter;
+import com.liferay.portal.security.ldap.SafeLdapFilterConstraints;
 import com.liferay.portal.security.ldap.SafeLdapFilterTemplate;
 import com.liferay.portal.security.ldap.SafeLdapName;
 import com.liferay.portal.security.ldap.SafePortalLDAP;
@@ -763,7 +764,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			return null;
 		}
 
-		SafeLdapFilter safeLdapFilter = SafeLdapFilter.eq(
+		SafeLdapFilter safeLdapFilter = SafeLdapFilterConstraints.eq(
 			groupMappings.getProperty("groupName"), userGroup.getName());
 
 		SafeLdapFilter groupSearchSafeLdapFilter =
@@ -1026,7 +1027,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 			String fullUserDN = binding.getNameInNamespace();
 
-			SafeLdapFilter safeLdapFilter = SafeLdapFilter.eq(
+			SafeLdapFilter safeLdapFilter = SafeLdapFilterConstraints.eq(
 				groupMappingsUser, fullUserDN);
 
 			SafeLdapFilter groupSearchSafeLdapFilter =

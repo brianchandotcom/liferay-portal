@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.SafeLdapFilter;
+import com.liferay.portal.security.ldap.SafeLdapFilterFactory;
 import com.liferay.portal.security.ldap.SafeLdapFilterTemplate;
 import com.liferay.portal.security.ldap.SafeLdapName;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
@@ -268,7 +269,8 @@ public class LDAPUtil {
 		}
 
 		try {
-			return SafeLdapFilter.fromUnsafeFilter(filter, ldapFilterValidator);
+			return SafeLdapFilterFactory.fromUnsafeFilter(
+				filter, ldapFilterValidator);
 		}
 		catch (LDAPFilterException ldapfe) {
 			throw new LDAPFilterException(
@@ -298,7 +300,8 @@ public class LDAPUtil {
 		}
 
 		try {
-			return SafeLdapFilter.fromUnsafeFilter(filter, ldapFilterValidator);
+			return SafeLdapFilterFactory.fromUnsafeFilter(
+				filter, ldapFilterValidator);
 		}
 		catch (LDAPFilterException ldapfe) {
 			throw new LDAPFilterException(

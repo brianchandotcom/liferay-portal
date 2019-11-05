@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.SafeLdapContext;
 import com.liferay.portal.security.ldap.SafeLdapFilter;
+import com.liferay.portal.security.ldap.SafeLdapFilterConstraints;
 import com.liferay.portal.security.ldap.SafeLdapName;
 import com.liferay.portal.security.ldap.SafePortalLDAP;
 import com.liferay.portal.security.ldap.UserConverterKeys;
@@ -114,7 +115,7 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 			Properties groupMappings = _ldapSettings.getGroupMappings(
 				ldapServerId, companyId);
 
-			SafeLdapFilter safeLdapFilter = SafeLdapFilter.eq(
+			SafeLdapFilter safeLdapFilter = SafeLdapFilterConstraints.eq(
 				groupMappings.getProperty("groupName"), groupName);
 
 			SafeLdapFilter groupLDAPFilter =
@@ -545,7 +546,7 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 				return null;
 			}
 
-			SafeLdapFilter safeLdapFilter = SafeLdapFilter.eq(
+			SafeLdapFilter safeLdapFilter = SafeLdapFilterConstraints.eq(
 				loginMapping, login);
 
 			SafeLdapFilter userSearchSafeLdapFilter =
@@ -793,7 +794,7 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 			Properties groupMappings = _ldapSettings.getGroupMappings(
 				ldapServerId, companyId);
 
-			SafeLdapFilter safeLdapFilter = SafeLdapFilter.eq(
+			SafeLdapFilter safeLdapFilter = SafeLdapFilterConstraints.eq(
 				groupMappings.getProperty("user"), userSafeLdapName);
 
 			SearchControls searchControls = new SearchControls(
@@ -847,7 +848,7 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 			Properties userMappings = _ldapSettings.getUserMappings(
 				ldapServerId, companyId);
 
-			SafeLdapFilter safeLdapFilter = SafeLdapFilter.eq(
+			SafeLdapFilter safeLdapFilter = SafeLdapFilterConstraints.eq(
 				userMappings.getProperty(UserConverterKeys.GROUP),
 				groupSafeLdapName);
 

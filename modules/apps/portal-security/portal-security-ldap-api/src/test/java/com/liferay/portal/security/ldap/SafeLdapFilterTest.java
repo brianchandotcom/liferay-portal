@@ -31,33 +31,36 @@ public class SafeLdapFilterTest {
 
 	@Test
 	public void testAnd() {
-		SafeLdapFilter safeLdapFilter = SafeLdapFilter.eq("key1", "value1");
+		SafeLdapFilter safeLdapFilter = SafeLdapFilterConstraints.eq(
+			"key1", "value1");
 
 		test(
-			safeLdapFilter.and(SafeLdapFilter.eq("key2", "value2")),
+			safeLdapFilter.and(SafeLdapFilterConstraints.eq("key2", "value2")),
 			"(&(key1={0})(key2={1}))", new Object[] {"value1", "value2"});
 	}
 
 	@Test
 	public void testApprox() {
-		test(SafeLdapFilter.approx("key", "value"), "(key~={0})", "value");
+		test(
+			SafeLdapFilterConstraints.approx("key", "value"), "(key~={0})",
+			"value");
 	}
 
 	@Test
 	public void testComplexScenario() throws LDAPFilterException {
-		SafeLdapFilter safeLdapFilter = SafeLdapFilter.fromUnsafeFilter(
+		SafeLdapFilter safeLdapFilter = SafeLdapFilterFactory.fromUnsafeFilter(
 			"(|(key1={0})((key2={1})))", filter -> true);
 
 		safeLdapFilter = safeLdapFilter.and(
-			SafeLdapFilterTemplate.fromUnsafeFilter(
+			SafeLdapFilterFactory.fromUnsafeFilter(
 				"(|(key2={2})((key1={3})))", filter -> true));
 
 		safeLdapFilter = safeLdapFilter.and(
-			SafeLdapFilterTemplate.fromUnsafeFilter(
+			SafeLdapFilterFactory.fromUnsafeFilter(
 				"(|(key3={4})((key4={5})))", filter -> true));
 
 		safeLdapFilter = safeLdapFilter.and(
-			SafeLdapFilter.fromUnsafeFilter(
+			SafeLdapFilterFactory.fromUnsafeFilter(
 				"(keyInvalid={6})", filter -> true));
 
 		safeLdapFilter = safeLdapFilter.or(safeLdapFilter.not());
@@ -74,12 +77,13 @@ public class SafeLdapFilterTest {
 
 	@Test
 	public void testEq() {
-		test(SafeLdapFilter.eq("key", "value"), "(key={0})", "value");
+		test(
+			SafeLdapFilterConstraints.eq("key", "value"), "(key={0})", "value");
 	}
 
 	@Test
 	public void testEx() {
-		test(SafeLdapFilter.ex("key"), "(key=*)");
+		test(SafeLdapFilterConstraints.ex("key"), "(key=*)");
 	}
 
 	@Test
@@ -87,7 +91,7 @@ public class SafeLdapFilterTest {
 		String ldapFilter = "(key=value)";
 
 		try {
-			SafeLdapFilter.fromUnsafeFilter(
+			SafeLdapFilterFactory.fromUnsafeFilter(
 				ldapFilter,
 				filter -> {
 					Assert.assertEquals(ldapFilter, filter);
@@ -102,7 +106,9 @@ public class SafeLdapFilterTest {
 
 	@Test
 	public void testGe() {
-		test(SafeLdapFilter.ge("key", "value"), "(key>={0})", "value");
+		test(
+			SafeLdapFilterConstraints.ge("key", "value"), "(key>={0})",
+			"value");
 	}
 
 	@Test
@@ -146,31 +152,38 @@ public class SafeLdapFilterTest {
 			}
 
 			test(
-				SafeLdapFilter.approx("key" + operator + "value", "invalid"),
+				SafeLdapFilterConstraints.approx(
+					"key" + operator + "value", "invalid"),
 				"(key" + operatorEscaped + "value~={0})", "invalid");
 
 			test(
-				SafeLdapFilter.eq("key" + operator + "value", "invalid"),
+				SafeLdapFilterConstraints.eq(
+					"key" + operator + "value", "invalid"),
 				"(key" + operatorEscaped + "value={0})", "invalid");
 
 			test(
-				SafeLdapFilter.ge("key" + operator + "value", "invalid"),
+				SafeLdapFilterConstraints.ge(
+					"key" + operator + "value", "invalid"),
 				"(key" + operatorEscaped + "value>={0})", "invalid");
 
 			test(
-				SafeLdapFilter.le("key" + operator + "value", "invalid"),
+				SafeLdapFilterConstraints.le(
+					"key" + operator + "value", "invalid"),
 				"(key" + operatorEscaped + "value<={0})", "invalid");
 		}
 	}
 
 	@Test
 	public void testLe() {
-		test(SafeLdapFilter.le("key", "value"), "(key<={0})", "value");
+		test(
+			SafeLdapFilterConstraints.le("key", "value"), "(key<={0})",
+			"value");
 	}
 
 	@Test
 	public void testNot() {
-		SafeLdapFilter safeLdapFilter = SafeLdapFilter.eq("key", "value");
+		SafeLdapFilter safeLdapFilter = SafeLdapFilterConstraints.eq(
+			"key", "value");
 
 		test(safeLdapFilter.not(), "(!(key={0}))", "value");
 	}
@@ -178,15 +191,16 @@ public class SafeLdapFilterTest {
 	@Test
 	public void testOperatorsEscape() {
 		Assert.assertEquals(
-			"\\3c\\3d\\3e\\7e", SafeLdapFilter.rfc2254Escape("<=>~"));
+			"\\3c\\3d\\3e\\7e", SafeLdapFilterStringUtil.rfc2254Escape("<=>~"));
 	}
 
 	@Test
 	public void testOr() {
-		SafeLdapFilter safeLdapFilter = SafeLdapFilter.eq("key1", "value1");
+		SafeLdapFilter safeLdapFilter = SafeLdapFilterConstraints.eq(
+			"key1", "value1");
 
 		test(
-			safeLdapFilter.or(SafeLdapFilter.eq("key2", "value2")),
+			safeLdapFilter.or(SafeLdapFilterConstraints.eq("key2", "value2")),
 			"(|(key1={0})(key2={1}))", new Object[] {"value1", "value2"});
 	}
 
@@ -296,23 +310,26 @@ public class SafeLdapFilterTest {
 	public void testRfc2254Escape() {
 		Assert.assertEquals(
 			"C:\\5c\\2a \\28DOS\\29 \\00",
-			SafeLdapFilter.rfc2254Escape("C:\\* (DOS) \u0000"));
+			SafeLdapFilterStringUtil.rfc2254Escape("C:\\* (DOS) \u0000"));
 	}
 
 	@Test
 	public void testRfc2254EscapePreserveStar() {
 		Assert.assertEquals(
 			"C:\\5c* \\28DOS\\29 \\00",
-			SafeLdapFilter.rfc2254Escape("C:\\* (DOS) \u0000", true));
+			SafeLdapFilterStringUtil.rfc2254Escape("C:\\* (DOS) \u0000", true));
 
 		Assert.assertEquals(
 			"C:\\5c\\2a \\28DOS\\29 \\00",
-			SafeLdapFilter.rfc2254Escape("C:\\* (DOS) \u0000", false));
+			SafeLdapFilterStringUtil.rfc2254Escape(
+				"C:\\* (DOS) \u0000", false));
 	}
 
 	@Test
 	public void testSubstring() {
-		test(SafeLdapFilter.substring("key", "prefix*"), "(key=prefix*)");
+		test(
+			SafeLdapFilterConstraints.substring("key", "prefix*"),
+			"(key=prefix*)");
 	}
 
 	@Test

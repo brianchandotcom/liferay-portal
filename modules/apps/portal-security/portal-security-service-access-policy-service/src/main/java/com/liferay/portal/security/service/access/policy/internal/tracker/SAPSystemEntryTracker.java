@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class SAPSystemEntryTracker {
 
 	public static boolean isSystemEntry(String name) {
-		for (Set<String> values : _sapSystemEntryMap.values()) {
+		for (Set<String> values : _serviceReferences.values()) {
 			if (values.contains(name)) {
 				return true;
 			}
@@ -51,7 +51,7 @@ public class SAPSystemEntryTracker {
 	public void addSAPSystemEntry(
 		ServiceReference<SAPSystemEntry> serviceReference) {
 
-		_sapSystemEntryMap.put(
+		_serviceReferences.put(
 			serviceReference,
 			new HashSet<>(
 				StringPlus.asList(
@@ -61,7 +61,7 @@ public class SAPSystemEntryTracker {
 	public void removeSAPSystemEntry(
 		ServiceReference<SAPSystemEntry> serviceReference) {
 
-		_sapSystemEntryMap.remove(serviceReference);
+		_serviceReferences.remove(serviceReference);
 	}
 
 	public void updateSAPSystemEntry(
@@ -73,6 +73,6 @@ public class SAPSystemEntryTracker {
 	}
 
 	private static final Map<ServiceReference<SAPSystemEntry>, Set<String>>
-		_sapSystemEntryMap = new ConcurrentHashMap<>();
+		_serviceReferences = new ConcurrentHashMap<>();
 
 }

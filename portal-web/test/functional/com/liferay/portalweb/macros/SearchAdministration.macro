@@ -21,6 +21,22 @@ definition {
 	}
 
 	macro executeSearchActions {
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Search");
+
+		var searchClientVersion = selenium.getText("//div[contains(@class,'alert alert-info')]//strong[2]");
+		var searchEngineVendor = selenium.getText("//div[contains(@class,'alert alert-info')]//strong[1]");
+
+		if (contains("${searchEngineVendor}", "Elasticsearch")) {
+			if (contains("${searchClientVersion}", "7.") && contains("${searchEngineVendor}", "Embedded")) {
+				var curl = "http://localhost:9201/_tasks";
+			}
+			else {
+				var curl = "http://localhost:9200/_tasks";
+			}
+		}
+
 		Panel.expandPanel(panel = "Index Actions");
 
 		AssertClick.assertTextClickAtAndPause(
@@ -28,18 +44,36 @@ definition {
 			locator1 = "Button#EXECUTE_ACTION",
 			value1 = "Execute");
 
-		var pauseCount = "0";
+		var reindexElapsedTime = "0";
 
-		while ((IsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${pauseCount}" != "24")) {
-			Pause(locator1 = "5000");
+		if (contains("${searchEngineVendor}", "Elasticsearch")) {
+			echo("Current Elasticsearch Tasks:");
 
-			var pauseCount = ${pauseCount} + 1;
+			var elasticsearchTasks = JSONCurlUtil.get("${curl}");
 
-			echo("Pause count: ${pauseCount}");
+			while (contains("${elasticsearchTasks}", "indices:data/write/bulk") && ("${reindexElapsedTime}" != "120")) {
+				Pause(locator1 = "5000");
+
+				var reindexElapsedTime = ${reindexElapsedTime} + 5;
+
+				echo("Current Elasticsearch Tasks:");
+
+				elasticsearchTasks = JSONCurlUtil.get("${curl}");
+			}
+		}
+		else if (contains("${searchEngineVendor}", "Solr")) {
+			while (IsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")&& ("${reindexElapsedTime}" != "120")) {
+				Pause(locator1 = "5000");
+
+				var reindexElapsedTime = ${reindexElapsedTime} + 5;
+			}
 		}
 
-		if ("${pauseCount}" == "24") {
-			fail("Reindex timed out after 2 minutes.");
+		if ("${reindexElapsedTime}" == "120") {
+			fail("Reindex timed out after 120 seconds.");
+		}
+		else {
+			echo("Finished reindexing after ${reindexElapsedTime} seconds.");
 		}
 	}
 

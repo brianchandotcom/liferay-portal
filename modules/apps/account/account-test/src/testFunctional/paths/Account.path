@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOMAIN_REMOVE_DOMAIN</td>
+	<td>//tr[contains(.,'${key_domainName}')]//span[contains(@class,' lfr-portal-tooltip')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOMAIN_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_domainName}')]/td[1]</td>
 	<td></td>

@@ -157,6 +157,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro removeDomain {
+		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
+
+		Click(
+			key_domainName = "${domainName}",
+			locator1 = "Account#DOMAIN_REMOVE_DOMAIN");
+
+		PortletEntry.save();
+
+		AssertElementNotPresent(
+			key_domainName = "${domainName}",
+			locator1 = "Account#DOMAIN_REMOVE_DOMAIN");
+	}
+
 	macro tearDownCP {
 		ProductMenu.gotoPortlet(
 			category = "Accounts",

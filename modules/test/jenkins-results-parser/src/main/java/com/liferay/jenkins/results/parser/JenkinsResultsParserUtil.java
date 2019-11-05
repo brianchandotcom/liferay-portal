@@ -1457,7 +1457,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static int getRandomValue(int start, int end) {
-		int size = Math.abs(end - start);
+		int size = Math.abs(end - start) + 1;
 
 		double randomDouble = Math.random();
 

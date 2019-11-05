@@ -68,6 +68,7 @@ import com.liferay.portal.security.ldap.SafeLdapFilter;
 import com.liferay.portal.security.ldap.SafeLdapFilterConstraints;
 import com.liferay.portal.security.ldap.SafeLdapFilterTemplate;
 import com.liferay.portal.security.ldap.SafeLdapName;
+import com.liferay.portal.security.ldap.SafeLdapNameFactory;
 import com.liferay.portal.security.ldap.SafePortalLDAP;
 import com.liferay.portal.security.ldap.UserConverterKeys;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
@@ -273,7 +274,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 				Attributes attributes = _safePortalLDAP.getUserAttributes(
 					ldapServerId, companyId, safeLdapContext,
-					SafeLdapName.from(binding));
+					SafeLdapNameFactory.from(binding));
 
 				return importUser(
 					ldapServerId, companyId, safeLdapContext, attributes, null);
@@ -374,7 +375,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		SafeLdapContext safeLdapContext = _safePortalLDAP.getSafeLdapContext(
 			ldapServerId, companyId);
 
-		SafeLdapName fullUserDNSafeLdapName = SafeLdapName.from(result);
+		SafeLdapName fullUserDNSafeLdapName = SafeLdapNameFactory.from(result);
 
 		Attributes attributes = _safePortalLDAP.getUserAttributes(
 			ldapServerId, companyId, safeLdapContext, fullUserDNSafeLdapName);
@@ -811,7 +812,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 							ldapImportContext.getLdapServerId(),
 							ldapImportContext.getCompanyId(),
 							ldapImportContext.getSafeLdapContext(),
-							SafeLdapName.from(searchResult), true);
+							SafeLdapNameFactory.from(searchResult), true);
 
 					UserGroup userGroup = importUserGroup(
 						ldapImportContext.getCompanyId(), groupAttributes,
@@ -875,7 +876,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 							ldapImportContext.getLdapServerId(),
 							ldapImportContext.getCompanyId(),
 							ldapImportContext.getSafeLdapContext(),
-							SafeLdapName.from(searchResult));
+							SafeLdapNameFactory.from(searchResult));
 
 					User user = importUser(
 						ldapImportContext, fullUserDN, userAttributes, null);
@@ -1057,8 +1058,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 					searchResults);
 
 				for (SearchResult searchResult : searchResults) {
-					SafeLdapName userGroupSafeLdapName = SafeLdapName.from(
-						searchResult);
+					SafeLdapName userGroupSafeLdapName =
+						SafeLdapNameFactory.from(searchResult);
 
 					newUserGroupIds = importGroup(
 						ldapImportContext, userGroupSafeLdapName, user,
@@ -1090,7 +1091,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 
 			for (int i = 0; i < userGroupAttribute.size(); i++) {
-				SafeLdapName groupSafeLdapName = SafeLdapName.from(
+				SafeLdapName groupSafeLdapName = SafeLdapNameFactory.from(
 					userGroupAttribute, i);
 
 				newUserGroupIds = importGroup(
@@ -1307,7 +1308,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 						ldapImportContext.getLdapServerId(),
 						ldapImportContext.getCompanyId(),
 						ldapImportContext.getSafeLdapContext(),
-						SafeLdapName.from(usersLdapAttribute, i));
+						SafeLdapNameFactory.from(usersLdapAttribute, i));
 				}
 				catch (NameNotFoundException nnfe) {
 					_log.error(

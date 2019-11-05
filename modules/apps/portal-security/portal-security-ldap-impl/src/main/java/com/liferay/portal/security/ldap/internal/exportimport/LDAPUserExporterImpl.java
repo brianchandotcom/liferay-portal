@@ -29,6 +29,7 @@ import com.liferay.portal.security.exportimport.UserOperation;
 import com.liferay.portal.security.ldap.GroupConverterKeys;
 import com.liferay.portal.security.ldap.SafeLdapContext;
 import com.liferay.portal.security.ldap.SafeLdapName;
+import com.liferay.portal.security.ldap.SafeLdapNameFactory;
 import com.liferay.portal.security.ldap.SafePortalLDAP;
 import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
@@ -138,7 +139,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 			ModificationItem[] modificationItems = modifications.getItems();
 
 			safeLdapContext.modifyAttributes(
-				SafeLdapName.from(userBinding), modificationItems);
+				SafeLdapNameFactory.from(userBinding), modificationItems);
 		}
 		finally {
 			if (safeLdapContext != null) {
@@ -216,7 +217,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 			return;
 		}
 
-		SafeLdapName userGroupSafeLdapName = SafeLdapName.from(
+		SafeLdapName userGroupSafeLdapName = SafeLdapNameFactory.from(
 			userGroupBinding);
 
 		try {
@@ -307,7 +308,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 			else {
 				Attributes attributes = _safePortalLDAP.getUserAttributes(
 					ldapServerId, companyId, safeLdapContext,
-					SafeLdapName.from(userBinding));
+					SafeLdapNameFactory.from(userBinding));
 
 				String modifyTimestamp = LDAPUtil.getAttributeString(
 					attributes, "modifyTimestamp");
@@ -338,7 +339,8 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 			ModificationItem[] modificationItems = modifications.getItems();
 
-			SafeLdapName userSafeLdapName = SafeLdapName.from(userBinding);
+			SafeLdapName userSafeLdapName = SafeLdapNameFactory.from(
+				userBinding);
 
 			safeLdapContext.modifyAttributes(
 				userSafeLdapName, modificationItems);

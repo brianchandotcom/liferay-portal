@@ -12,8 +12,45 @@
  * details.
  */
 
-import React from 'react';
+import React, {useContext} from 'react';
 
-export default function CommentsSidebar({title}) {
-	return <h1>{title}</h1>;
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
+import {StoreContext} from '../../../app/store/index';
+import FragmentComments from './FragmentComments';
+import FragmentEntryLinksWithComments from './FragmentEntryLinksWithComments';
+
+function getActiveFragmentEntryLink(itemId, fragmentEntryLinks, layoutData) {
+	const item = layoutData.items[itemId];
+
+	if (item) {
+		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+			return fragmentEntryLinks[item.config.fragmentEntryLinkId];
+		} else if (item.parentId) {
+			return getActiveFragmentEntryLink(
+				item.parentId,
+				fragmentEntryLinks,
+				layoutData
+			);
+		}
+	}
+
+	return null;
+}
+
+export default function CommentsSidebar() {
+	const {activeItemId, fragmentEntryLinks, layoutData} = useContext(
+		StoreContext
+	);
+
+	const activeFragmentEntryLink = getActiveFragmentEntryLink(
+		activeItemId,
+		fragmentEntryLinks,
+		layoutData
+	);
+
+	return activeFragmentEntryLink ? (
+		<FragmentComments fragmentEntryLink={activeFragmentEntryLink} />
+	) : (
+		<FragmentEntryLinksWithComments />
+	);
 }

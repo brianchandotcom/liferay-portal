@@ -24,7 +24,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingEntryDisplayContext" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingPortletDisplayContext" %>
@@ -79,7 +78,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				<portlet:param name="aliases" value="<%= rankingEntryDisplayContext.getAliases() %>" />
 				<portlet:param name="companyId" value="<%= String.valueOf(themeDisplay.getCompanyId()) %>" />
 				<portlet:param name="keywords" value="<%= rankingEntryDisplayContext.getKeywords() %>" />
-				<portlet:param name="status" value="<%= ResultRankingsConstants.getStatusLabel(rankingEntryDisplayContext.getStatus()) %>" />
+				<portlet:param name="inactive" value="<%= String.valueOf(rankingEntryDisplayContext.getInactive()) %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
@@ -118,9 +117,9 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				cssClass="table-cell-expand-smallest table-cell-minw-150"
 				name="status"
 			>
-				<div class="label <%= rankingEntryDisplayContext.getStatus() == ResultRankingsConstants.STATUS_ACTIVE ? "label-success" : "label-secondary" %>">
+				<div class="label <%= rankingEntryDisplayContext.getInactive() ? "label-secondary" : "label-success" %>">
 					<span class="label-item label-item-expand">
-						<%= ResultRankingsConstants.getStatusLabel(rankingEntryDisplayContext.getStatus()) %>
+						<liferay-ui:message key='<%= rankingEntryDisplayContext.getInactive() ? "inactive" : "active" %>' />
 					</span>
 				</div>
 			</liferay-ui:search-container-column-text>

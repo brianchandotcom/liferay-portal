@@ -67,7 +67,7 @@ public class Ranking {
 	}
 
 	public String getNameForDisplay() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(_name);
 
@@ -75,10 +75,6 @@ public class Ranking {
 			sb.append(CharPool.OPEN_BRACKET);
 			sb.append(_queryString);
 			sb.append(CharPool.CLOSE_BRACKET);
-		}
-
-		if (_inactive) {
-			sb.append("{INACTIVE}");
 		}
 
 		return sb.toString();

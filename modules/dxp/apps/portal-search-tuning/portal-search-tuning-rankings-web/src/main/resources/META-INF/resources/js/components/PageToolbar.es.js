@@ -17,7 +17,7 @@ import React, {Component} from 'react';
 
 class PageToolbar extends Component {
 	static props = {
-		active: PropTypes.bool,
+		inactive: PropTypes.bool,
 		onCancel: PropTypes.string.isRequired,
 		onChangeActive: PropTypes.func,
 		onPublish: PropTypes.func.isRequired,
@@ -31,7 +31,7 @@ class PageToolbar extends Component {
 
 	render() {
 		const {
-			active,
+			inactive,
 			onCancel,
 			onChangeActive,
 			onPublish,
@@ -51,19 +51,21 @@ class PageToolbar extends Component {
 							htmlFor="active-switch-input"
 						>
 							<input
-								checked={active}
+								checked={!inactive}
 								className="toggle-switch-check"
 								id="active-switch-input"
 								onChange={onChangeActive}
 								type="checkbox"
 							/>
+
 							<span className="toggle-switch-bar">
 								<span className="toggle-switch-handle"></span>
 							</span>
+
 							<span className="toggle-switch-text-right">
-								{active
-									? Liferay.Language.get('active')
-									: Liferay.Language.get('inactive')}
+								{inactive
+									? Liferay.Language.get('inactive')
+									: Liferay.Language.get('active')}
 							</span>
 						</label>
 					</ClayManagementToolbar.Item>

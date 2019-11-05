@@ -20,7 +20,7 @@ describe('PageToolbar', () => {
 	it('disables the save button', () => {
 		const {getByText} = render(
 			<PageToolbar
-				active={true}
+				inactive={false}
 				onCancel={'cancel'}
 				onChangeActive={jest.fn()}
 				onPublish={jest.fn()}
@@ -34,7 +34,7 @@ describe('PageToolbar', () => {
 	it('enables the save button', () => {
 		const {getByText} = render(
 			<PageToolbar
-				active={true}
+				inactive={false}
 				onCancel={'cancel'}
 				onChangeActive={jest.fn()}
 				onPublish={jest.fn()}
@@ -48,7 +48,7 @@ describe('PageToolbar', () => {
 	it('shows the active state', () => {
 		const {getByLabelText} = render(
 			<PageToolbar
-				active={true}
+				inactive={false}
 				onCancel={'cancel'}
 				onChangeActive={jest.fn()}
 				onPublish={jest.fn()}
@@ -62,7 +62,7 @@ describe('PageToolbar', () => {
 	it('shows the inactive state', () => {
 		const {getByLabelText} = render(
 			<PageToolbar
-				active={false}
+				inactive={true}
 				onCancel={'cancel'}
 				onChangeActive={jest.fn()}
 				onPublish={jest.fn()}
@@ -78,7 +78,7 @@ describe('PageToolbar', () => {
 
 		const {getByLabelText} = render(
 			<PageToolbar
-				active={true}
+				inactive={false}
 				onCancel={'cancel'}
 				onChangeActive={onChangeActive}
 				onPublish={jest.fn()}

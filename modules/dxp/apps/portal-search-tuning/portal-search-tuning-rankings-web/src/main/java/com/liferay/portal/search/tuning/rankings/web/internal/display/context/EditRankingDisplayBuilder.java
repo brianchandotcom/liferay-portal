@@ -59,10 +59,10 @@ public class EditRankingDisplayBuilder {
 		_setCompanyId(editRankingDisplayContext);
 		_setData(editRankingDisplayContext);
 		_setFormName(editRankingDisplayContext);
+		_setInactive(editRankingDisplayContext);
 		_setKeywords(editRankingDisplayContext);
 		_setRedirect(editRankingDisplayContext);
 		_setResultsRankingUid(editRankingDisplayContext);
-		_setStatus(editRankingDisplayContext);
 
 		return editRankingDisplayContext;
 	}
@@ -110,6 +110,10 @@ public class EditRankingDisplayBuilder {
 		return resourceURL.toString();
 	}
 
+	private boolean _getInactive() {
+		return ParamUtil.getBoolean(_httpServletRequest, "inactive");
+	}
+
 	private String _getKeywords() {
 		return ParamUtil.getString(_httpServletRequest, "keywords");
 	}
@@ -128,9 +132,9 @@ public class EditRankingDisplayBuilder {
 		).put(
 			"initialAliases", _getAliases()
 		).put(
-			"searchQuery", _getKeywords()
+			"initialInactive", _getInactive()
 		).put(
-			"status", _getStatus()
+			"searchQuery", _getKeywords()
 		).build();
 	}
 
@@ -159,10 +163,6 @@ public class EditRankingDisplayBuilder {
 		resourceURL.setResourceID("/results_ranking/get_results");
 
 		return resourceURL.toString();
-	}
-
-	private int _getStatus() {
-		return ParamUtil.getInteger(_httpServletRequest, "status");
 	}
 
 	private String _getVisibleResultRankingsResourceURL() {
@@ -208,6 +208,12 @@ public class EditRankingDisplayBuilder {
 		editRankingDisplayContext.setFormName(_getFormName());
 	}
 
+	private void _setInactive(
+		EditRankingDisplayContext editRankingDisplayContext) {
+
+		editRankingDisplayContext.setInactive(_getInactive());
+	}
+
 	private void _setKeywords(
 		EditRankingDisplayContext editRankingDisplayContext) {
 
@@ -224,12 +230,6 @@ public class EditRankingDisplayBuilder {
 		EditRankingDisplayContext editRankingDisplayContext) {
 
 		editRankingDisplayContext.setResultsRankingUid(_getResultsRankingUid());
-	}
-
-	private void _setStatus(
-		EditRankingDisplayContext editRankingDisplayContext) {
-
-		editRankingDisplayContext.setStatus(_getStatus());
 	}
 
 	private final HttpServletRequest _httpServletRequest;

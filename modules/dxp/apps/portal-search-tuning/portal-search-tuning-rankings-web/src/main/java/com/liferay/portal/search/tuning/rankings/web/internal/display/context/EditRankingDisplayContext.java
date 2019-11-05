@@ -37,6 +37,10 @@ public class EditRankingDisplayContext {
 		return _formName;
 	}
 
+	public boolean getInactive() {
+		return _inactive;
+	}
+
 	public String getKeywords() {
 		return _keywords;
 	}
@@ -47,10 +51,6 @@ public class EditRankingDisplayContext {
 
 	public String getResultsRankingUid() {
 		return _resultsRankingUid;
-	}
-
-	public int getStatus() {
-		return _status;
 	}
 
 	public void setBackURL(String backURL) {
@@ -69,6 +69,10 @@ public class EditRankingDisplayContext {
 		_formName = formName;
 	}
 
+	public void setInactive(boolean inactive) {
+		_inactive = inactive;
+	}
+
 	public void setKeywords(String keywords) {
 		_keywords = keywords;
 	}
@@ -81,17 +85,13 @@ public class EditRankingDisplayContext {
 		_resultsRankingUid = resultsRankingUid;
 	}
 
-	public void setStatus(int status) {
-		_status = status;
-	}
-
 	private String _backURL;
 	private long _companyId;
 	private Map<String, Object> _data;
 	private String _formName;
+	private boolean _inactive;
 	private String _keywords;
 	private String _redirect;
 	private String _resultsRankingUid;
-	private int _status;
 
 }

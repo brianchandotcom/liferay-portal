@@ -204,14 +204,13 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "hiddenIdsAdded");
 		String[] hiddenIdsRemoved = ParamUtil.getStringValues(
 			actionRequest, "hiddenIdsRemoved");
-		int status = ParamUtil.getInteger(actionRequest, "status");
 
 		rankingBuilder.aliases(
 			_getAliases(editRankingMVCActionRequest)
 		).blocks(
 			_update(ranking.getBlockIds(), hiddenIdsAdded, hiddenIdsRemoved)
 		).inactive(
-			_isInactive(ranking.isInactive(), editRankingMVCActionRequest)
+			_isInactive(editRankingMVCActionRequest)
 		).index(
 			_getIndexName(actionRequest, editRankingMVCActionRequest)
 		).name(
@@ -457,7 +456,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private boolean _isInactive(
-		boolean currentValue,
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
 		List<String> aliases = editRankingMVCActionRequest.getAliases();
@@ -470,7 +468,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			return true;
 		}
 
-		return currentValue;
+		return editRankingMVCActionRequest.getInactive();
 	}
 
 	private boolean _isUpdateSpecial(String string) {
@@ -502,6 +500,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		public EditRankingMVCActionRequest(ActionRequest actionRequest) {
 			_cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 			_redirect = ParamUtil.getString(actionRequest, "redirect");
+			_inactive = ParamUtil.getBoolean(actionRequest, "inactive");
 			_indexName = ParamUtil.getString(actionRequest, "index-name");
 			_queryString = ParamUtil.getString(actionRequest, PARAM_KEYWORDS);
 			_resultsRankingUid = ParamUtil.getString(
@@ -513,6 +512,10 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 		public List<String> getAliases() {
 			return Collections.unmodifiableList(_aliases);
+		}
+
+		public boolean getInactive() {
+			return _inactive;
 		}
 
 		public String getIndexName() {
@@ -537,6 +540,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 		private final List<String> _aliases;
 		private final String _cmd;
+		private final boolean _inactive;
 		private final String _indexName;
 		private final String _queryString;
 		private final String _redirect;

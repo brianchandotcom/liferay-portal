@@ -213,7 +213,8 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 			return content;
 		}
 
-		Pattern pattern = Pattern.compile("\t(\\w+)\\." + methodName + "\\(");
+		Pattern pattern = Pattern.compile(
+			"\\W(\\w+)\\.(<[\\w\\[\\]\\?<>, ]*>)?" + methodName + "\\(");
 
 		Matcher matcher = pattern.matcher(content);
 

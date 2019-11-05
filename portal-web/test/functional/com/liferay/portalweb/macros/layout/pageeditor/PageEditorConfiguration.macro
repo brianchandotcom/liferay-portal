@@ -40,9 +40,11 @@ definition {
 
 		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 
-		FormFields.editText(
-			fieldName = "${textConfigName}",
-			fieldValue = "${editableText}");
+		while (!IsTextEqual(key_fieldName = "${textConfigName}", locator1 = "FormFields#TEXT_FIELD", value1 = "${editableText}")) {
+			FormFields.editText(
+				fieldName = "${textConfigName}",
+				fieldValue = "${editableText}");
+		}
 
 		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 	}

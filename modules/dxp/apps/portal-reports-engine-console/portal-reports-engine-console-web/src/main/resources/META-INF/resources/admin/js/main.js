@@ -17,7 +17,7 @@ AUI().use('escape', 'aui-lang', A => {
 		'<div class="form-inline {key}" >' +
 		'<input class="form-control" type="text" disabled="disabled" value="{parameterKey}" /> ' +
 		'<input class="form-control" type="text" disabled="disabled" value="{parameterValue}" /> ' +
-		'<button class="btn btn-default remove-parameter"' +
+		'<button class="btn btn-secondary remove-parameter"' +
 		' data-parameterKey="{parameterKey}"' +
 		' data-parameterValue="{parameterValue}"' +
 		' data-parameterType="{parameterType}"' +

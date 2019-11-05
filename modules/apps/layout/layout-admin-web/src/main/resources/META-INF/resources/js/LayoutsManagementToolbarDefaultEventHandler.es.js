@@ -19,7 +19,7 @@ class LayoutsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		if (
 			confirm(
 				Liferay.Language.get(
-					'are-you-sure-you-want-to-convert-the-pages-selected'
+					'are-you-sure-you-want-to-convert-the-selected-pages'
 				)
 			)
 		) {

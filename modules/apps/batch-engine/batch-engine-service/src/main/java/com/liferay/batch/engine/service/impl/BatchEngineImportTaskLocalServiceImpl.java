@@ -42,7 +42,8 @@ public class BatchEngineImportTaskLocalServiceImpl
 		long companyId, long userId, long batchSize, String callbackURL,
 		String className, byte[] content, String contentType,
 		String executeStatus, Map<String, String> fieldNameMappingMap,
-		String operation, String version) {
+		String operation, Map<String, Serializable> parameters,
+		String version) {
 
 		BatchEngineImportTask batchEngineImportTask =
 			batchEngineImportTaskPersistence.create(
@@ -62,6 +63,7 @@ public class BatchEngineImportTaskLocalServiceImpl
 		batchEngineImportTask.setFieldNameMapping(
 			(Map<String, Serializable>)(Map)fieldNameMappingMap);
 		batchEngineImportTask.setOperation(operation);
+		batchEngineImportTask.setParameters(parameters);
 		batchEngineImportTask.setVersion(version);
 
 		return batchEngineImportTaskPersistence.update(batchEngineImportTask);

@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.lang.reflect.Field;
 
@@ -28,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -112,9 +112,9 @@ public abstract class BaseBatchEngineTaskItemWriterTestCase {
 
 				item.setId((long)(i + j));
 
-				Map<String, String> name = new HashMap<>();
-
-				name.put("en", "sample name" + i + j);
+				Map<String, String> name = HashMapBuilder.put(
+					"en", "sample name" + i + j
+				).build();
 
 				if (j == 2) {
 					name.put("en", null);

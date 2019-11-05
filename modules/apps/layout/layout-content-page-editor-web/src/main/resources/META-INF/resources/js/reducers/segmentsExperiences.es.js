@@ -281,6 +281,10 @@ function createSegmentsExperienceReducer(state, action) {
 					fragmentEntryLinks
 				);
 
+				nextState = _setExperienceLock(nextState, {
+					hasLockedSegmentsExperiment: false
+				});
+
 				_switchLayoutDataList(nextState, segmentsExperienceId)
 					.then(newState => ({
 						...newState,
@@ -421,6 +425,13 @@ function deleteSegmentsExperienceReducer(state, action) {
 						experienceIdToSelect
 					);
 
+					nextState = _setExperienceLock(
+						nextState,
+						nextState.availableSegmentsExperiences[
+							experienceIdToSelect
+						]
+					);
+
 					return _setUsedWidgets(nextState, experienceIdToSelect);
 				})
 				.then(nextNewState => resolve(nextNewState))
@@ -431,6 +442,22 @@ function deleteSegmentsExperienceReducer(state, action) {
 			reject(e);
 		}
 	});
+}
+
+/**
+ * Sets `lockedSegmentsExperience` in the state, depending on the Experience
+ * @param {object} state
+ * @param {object} experience
+ * @param {boolean} experience.hasLockedSegmentsExperiment
+ * @return {object} nextState
+ */
+function _setExperienceLock(state, experience) {
+	const lockedSegmentsExperience = experience.hasLockedSegmentsExperiment;
+
+	return {
+		...state,
+		lockedSegmentsExperience
+	};
 }
 
 /**
@@ -453,19 +480,19 @@ function selectSegmentsExperienceReducer(state, action) {
 
 		_switchLayoutDataList(nextState, action.segmentsExperienceId)
 			.then(newState => {
-				const {
-					segmentsExperimentStatus
-				} = nextState.availableSegmentsExperiences[
-					action.segmentsExperienceId
-				];
+				const experience =
+					nextState.availableSegmentsExperiences[
+						action.segmentsExperienceId
+					];
 
 				const nextNewState = {
 					...newState,
 					segmentsExperienceId: action.segmentsExperienceId,
-					segmentsExperimentStatus
+					segmentsExperimentStatus:
+						experience.segmentsExperimentStatus
 				};
 
-				return nextNewState;
+				return _setExperienceLock(nextNewState, experience);
 			})
 			.then(nextNewState =>
 				_updateFragmentEntryLinks(

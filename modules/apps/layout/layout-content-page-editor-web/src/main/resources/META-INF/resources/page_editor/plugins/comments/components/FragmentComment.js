@@ -66,13 +66,13 @@ export default function FragmentComment({
 	const showModifiedDateTooltip = !!(edited && modifiedDateDescription);
 
 	const commentClassname = classNames('small', {
-		'fragments-editor__fragment-comment': true,
-		'fragments-editor__fragment-comment--hidden': hidden,
-		'fragments-editor__fragment-comment--highlighted': highlighted,
-		'fragments-editor__fragment-comment--reply': !!parentCommentId,
-		'fragments-editor__fragment-comment--resolved': resolved,
-		'fragments-editor__fragment-comment--with-delete-mask': showDeleteMask,
-		'fragments-editor__fragment-comment--with-resolve-mask': showResolveMask
+		'page-editor__fragment-comment': true,
+		'page-editor__fragment-comment--hidden': hidden,
+		'page-editor__fragment-comment--highlighted': highlighted,
+		'page-editor__fragment-comment--reply': !!parentCommentId,
+		'page-editor__fragment-comment--resolved': resolved,
+		'page-editor__fragment-comment--with-delete-mask': showDeleteMask,
+		'page-editor__fragment-comment--with-resolve-mask': showResolveMask
 	});
 
 	const handleResolveButtonClick = () => {
@@ -230,7 +230,7 @@ export default function FragmentComment({
 			{!parentCommentId &&
 				comment.children &&
 				Boolean(comment.children.length) && (
-					<footer className="fragments-editor__fragment-comment-replies mb-2">
+					<footer className="mb-2 page-editor__fragment-comment-replies">
 						{comment.children &&
 							comment.children.map(childComment => (
 								<FragmentComment

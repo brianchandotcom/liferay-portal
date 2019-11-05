@@ -364,6 +364,16 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 		public int compare(
 			String putOrSetParameterName1, String putOrSetParameterName2) {
 
+			Matcher matcher = _multipleLineConstantPattern.matcher(
+				putOrSetParameterName1);
+
+			putOrSetParameterName1 = matcher.replaceAll(".");
+
+			matcher = _multipleLineConstantPattern.matcher(
+				putOrSetParameterName2);
+
+			putOrSetParameterName2 = matcher.replaceAll(".");
+
 			String strippedParameterName1 = stripQuotes(putOrSetParameterName1);
 			String strippedParameterName2 = stripQuotes(putOrSetParameterName2);
 
@@ -373,7 +383,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 				return 0;
 			}
 
-			Matcher matcher = _multipleLineParameterNamePattern.matcher(
+			matcher = _multipleLineParameterNamePattern.matcher(
 				putOrSetParameterName1);
 
 			if (matcher.find()) {
@@ -410,6 +420,8 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 			return value;
 		}
 
+		private final Pattern _multipleLineConstantPattern = Pattern.compile(
+			"\\.\n\t+");
 		private final Pattern _multipleLineParameterNamePattern =
 			Pattern.compile("\" \\+\n\t+\"");
 

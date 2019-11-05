@@ -160,7 +160,6 @@ page import="com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryI
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.roles.admin.kernel.util.RolesAdminUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.taglib.search.SearchEntry" %><%@
 page import="com.liferay.users.admin.configuration.UserFileUploadsConfiguration" %><%@
 page import="com.liferay.users.admin.constants.UserScreenNavigationEntryConstants" %><%@
 page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %><%@

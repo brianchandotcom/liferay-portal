@@ -16,6 +16,7 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.client.AnalyticsMessageSenderClient;
 import com.liferay.analytics.message.sender.model.AnalyticsMessage;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.log.Log;
@@ -24,7 +25,10 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
 
 import java.util.Collections;
+import java.util.Dictionary;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -38,7 +42,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	protected void send(String eventType, Object object) {
 		try {
 			AnalyticsMessage.Builder analyticsMessageBuilder =
-				AnalyticsMessage.builder("", getObjectType());
+				AnalyticsMessage.builder(_getDataSourceId(), getObjectType());
 
 			analyticsMessageBuilder.action(eventType);
 			analyticsMessageBuilder.object(serialize(object));
@@ -60,10 +64,37 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		return jsonSerializer.serialize(object);
 	}
 
+	@Reference(unbind = "-")
+	protected void setConfigurationAdmin(
+		ConfigurationAdmin configurationAdmin) {
+
+		_configurationAdmin = configurationAdmin;
+	}
+
+	private String _getDataSourceId() {
+		try {
+			return String.valueOf(_getProperty("dataSourceId"));
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	private Object _getProperty(String key) throws Exception {
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			AnalyticsConfiguration.class.getName(), "?");
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		return properties.get(key);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseEntityModelListener.class);
 
 	@Reference
 	private AnalyticsMessageSenderClient _analyticsMessageSenderClient;
+
+	private ConfigurationAdmin _configurationAdmin;
 
 }

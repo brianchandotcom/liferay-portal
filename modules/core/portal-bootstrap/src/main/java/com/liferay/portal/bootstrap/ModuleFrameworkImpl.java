@@ -517,8 +517,18 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
 
+		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
 		frameworkStartLevel.setStartLevel(
-			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL);
+			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
+			frameworkEvent -> defaultNoticeableFuture.set(frameworkEvent));
+
+		FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
+
+		if (frameworkEvent.getType() != FrameworkEvent.STARTLEVEL_CHANGED) {
+			ReflectionUtil.throwException(frameworkEvent.getThrowable());
+		}
 	}
 
 	@Override

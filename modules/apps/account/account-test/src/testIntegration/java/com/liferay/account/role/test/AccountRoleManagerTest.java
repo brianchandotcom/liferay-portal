@@ -25,6 +25,9 @@ import com.liferay.account.service.test.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -98,7 +101,7 @@ public class AccountRoleManagerTest {
 				_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
 				user.getUserId()));
 
-		_accountRoleManager.addAccountRoleUser(
+		_accountRoleManager.addUser(
 			_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
 			user.getUserId());
 
@@ -107,7 +110,7 @@ public class AccountRoleManagerTest {
 				_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
 				user.getUserId()));
 
-		_accountRoleManager.removeAccountRoleUser(
+		_accountRoleManager.removeUser(
 			_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
 			user.getUserId());
 
@@ -115,6 +118,39 @@ public class AccountRoleManagerTest {
 			_hasUserAccountRole(
 				_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
 				user.getUserId()));
+	}
+
+	@Test
+	public void testAccountRoleUserHasPermission() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_users.add(user);
+
+		AccountRole accountRole = _addAccountRole(
+			_accountEntry1.getAccountEntryId(), RandomTestUtil.randomString());
+		AccountRole sharedAccountRole = _addAccountRole(
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString());
+
+		long[] roleIds = _getRoleIds(user);
+
+		Assert.assertFalse(
+			ArrayUtil.contains(roleIds, accountRole.getRoleId()));
+		Assert.assertFalse(
+			ArrayUtil.contains(roleIds, sharedAccountRole.getRoleId()));
+
+		_accountRoleManager.addUser(
+			_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
+			user.getUserId());
+		_accountRoleManager.addUser(
+			_accountEntry1.getAccountEntryId(), sharedAccountRole.getRoleId(),
+			user.getUserId());
+
+		roleIds = _getRoleIds(user);
+
+		Assert.assertTrue(ArrayUtil.contains(roleIds, accountRole.getRoleId()));
+		Assert.assertTrue(
+			ArrayUtil.contains(roleIds, sharedAccountRole.getRoleId()));
 	}
 
 	@Test
@@ -218,6 +254,14 @@ public class AccountRoleManagerTest {
 		return accountRole;
 	}
 
+	private long[] _getRoleIds(User user) throws Exception {
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		return permissionChecker.getRoleIds(
+			user.getUserId(), _accountEntry1.getAccountEntryGroupId());
+	}
+
 	private boolean _hasUserAccountRole(
 			long accountEntryId, long roleId, long accountUserId)
 		throws Exception {
@@ -249,6 +293,9 @@ public class AccountRoleManagerTest {
 	private AccountRoleManager _accountRoleManager;
 
 	private final List<String> _names = new ArrayList<>();
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

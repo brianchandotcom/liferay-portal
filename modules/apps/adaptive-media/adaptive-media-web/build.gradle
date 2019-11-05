@@ -20,6 +20,7 @@ dependencies {
 	compileOnly project(":apps:blogs:blogs-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:portal-background-task:portal-background-task-api")

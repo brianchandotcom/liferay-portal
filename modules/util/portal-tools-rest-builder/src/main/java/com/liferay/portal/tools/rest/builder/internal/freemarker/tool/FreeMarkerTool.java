@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
@@ -159,6 +160,32 @@ public class FreeMarkerTool {
 
 				return false;
 			});
+	}
+
+	public String getGraphQLJavaParameterName(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName,
+		JavaMethodParameter javaMethodParameter) {
+
+		Map<String, String> properties = getDTOProperties(
+			configYAML, openAPIYAML, schemaName);
+
+		String parameterName = StringUtil.toLowerCase(
+			javaMethodParameter.getParameterName());
+
+		schemaName = StringUtil.toLowerCase(schemaName);
+
+		String shortParameterName = StringUtil.replace(
+			parameterName, schemaName, StringPool.BLANK);
+
+		for (String propertyKey : properties.keySet()) {
+			if (StringUtil.equalsIgnoreCase(parameterName, propertyKey) ||
+				StringUtil.equalsIgnoreCase(shortParameterName, propertyKey)) {
+
+				return StringUtil.upperCaseFirstLetter(propertyKey);
+			}
+		}
+
+		return null;
 	}
 
 	public String getGraphQLMethodAnnotations(
@@ -770,15 +797,12 @@ public class FreeMarkerTool {
 	private JavaMethodSignature _getJavaMethodSignature(
 		JavaMethodSignature javaMethodSignature, String parentSchemaName) {
 
-		List<JavaMethodParameter> javaMethodParameters =
-			javaMethodSignature.getJavaMethodParameters();
-
 		return new JavaMethodSignature(
 			javaMethodSignature.getPath(), javaMethodSignature.getPathItem(),
 			javaMethodSignature.getOperation(),
 			javaMethodSignature.getRequestBodyMediaTypes(),
 			javaMethodSignature.getSchemaName(),
-			javaMethodParameters.subList(1, javaMethodParameters.size()),
+			javaMethodSignature.getJavaMethodParameters(),
 			javaMethodSignature.getMethodName(),
 			javaMethodSignature.getReturnType(), parentSchemaName);
 	}

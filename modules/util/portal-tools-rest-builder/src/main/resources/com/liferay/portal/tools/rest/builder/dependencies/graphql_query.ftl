@@ -98,8 +98,8 @@ public class Query {
 				${javaMethodSignature.returnType}
 			</#if>
 
-			${freeMarkerTool.getGraphQLRelationName(javaMethodSignature, javaMethodSignatures)}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
-				<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters, freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)) />
+			${freeMarkerTool.getGraphQLRelationName(javaMethodSignature, javaMethodSignatures)}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters[1..*(javaMethodSignature.javaMethodParameters?size - 1)], javaMethodSignature.operation, true)}) throws Exception {
+				<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters[1..*(javaMethodSignature.javaMethodParameters?size - 1)], freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)) />
 
 				<#if javaMethodSignature.returnType?contains("Collection<")>
 					return _applyComponentServiceObjects(
@@ -107,7 +107,7 @@ public class Query {
 						Query.this::_populateResourceContext,
 						${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource ->
 							new ${javaMethodSignature.schemaName}Page(
-								${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(_${javaMethodSignature.parentSchemaName?uncap_first}.getId()
+								${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(_${javaMethodSignature.parentSchemaName?uncap_first}.get${freeMarkerTool.getGraphQLJavaParameterName(configYAML, openAPIYAML, javaMethodSignature.parentSchemaName, javaMethodSignature.javaMethodParameters[0])}()
 
 								<#if arguments?has_content>
 									, ${arguments}
@@ -115,9 +115,9 @@ public class Query {
 				<#else>
 					return _applyComponentServiceObjects(_${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}ResourceComponentServiceObjects, Query.this::_populateResourceContext, ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource -> ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(
 						<#if javaMethodSignature.methodName?contains(javaMethodSignature.parentSchemaName)>
-							_${javaMethodSignature.parentSchemaName?uncap_first}.getId()
+							_${javaMethodSignature.parentSchemaName?uncap_first}.get${freeMarkerTool.getGraphQLJavaParameterName(configYAML, openAPIYAML, javaMethodSignature.parentSchemaName, javaMethodSignature.javaMethodParameters[0])}()
 						<#else>
-							_${javaMethodSignature.parentSchemaName?uncap_first}.${javaMethodSignature.methodName}Id()
+							_${javaMethodSignature.parentSchemaName?uncap_first}.${javaMethodSignature.methodName}${freeMarkerTool.getGraphQLJavaParameterName(configYAML, openAPIYAML, javaMethodSignature.parentSchemaName, javaMethodSignature.javaMethodParameters[0])}()
 						</#if>
 
 						<#if arguments?has_content>

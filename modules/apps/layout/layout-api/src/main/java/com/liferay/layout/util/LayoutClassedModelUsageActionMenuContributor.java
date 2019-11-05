@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface LayoutClassedModelUsageActionMenuContributor {
 
 	public List<DropdownItem> getLayoutClassedModelUsageActionDropdownItems(
-		LayoutClassedModelUsage layoutClassedModelUsage,
-		HttpServletRequest httpServletRequest);
+		HttpServletRequest httpServletRequest,
+		LayoutClassedModelUsage layoutClassedModelUsage);
 
 }

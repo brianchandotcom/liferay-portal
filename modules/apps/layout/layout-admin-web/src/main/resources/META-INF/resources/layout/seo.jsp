@@ -49,7 +49,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 				<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
 				<div id="<portlet:namespace />customCanonicalURLSettings">
-					<aui:input label="<%= StringPool.BLANK %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getCanonicalLayoutURL() %>">
+					<aui:input disabled="<%= !selLayoutSEOEntry.isCanonicalURLEnabled() %>" label="<%= StringPool.BLANK %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getCanonicalLayoutURL() %>">
 						<aui:validator name="url" />
 					</aui:input>
 				</div>
@@ -58,7 +58,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 				<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
 				<div id="<portlet:namespace />customCanonicalURLSettings">
-					<aui:input label="<%= StringPool.BLANK %>" localized="<%= true %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getCanonicalLayoutURL() %>" type="text">
+					<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getCanonicalLayoutURL() %>" type="text">
 						<aui:validator name="url" />
 					</aui:input>
 				</div>
@@ -308,10 +308,17 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	var canonicalURLField = document.getElementById(
 		'<portlet:namespace />canonicalURL'
 	);
+	var canonicalURLFieldDefaultLocale = document.getElementById(
+		'<portlet:namespace />canonicalURL_<%= themeDisplay.getLanguageId() %>'
+	);
 
 	if (canonicalURLEnabledCheck && canonicalURLField) {
 		canonicalURLEnabledCheck.addEventListener('click', function(event) {
 			Liferay.Util.toggleDisabled(canonicalURLField, !event.target.checked);
+			Liferay.Util.toggleDisabled(
+				canonicalURLFieldDefaultLocale,
+				!event.target.checked
+			);
 		});
 	}
 </aui:script>

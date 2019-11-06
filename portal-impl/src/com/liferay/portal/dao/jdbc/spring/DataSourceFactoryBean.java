@@ -31,6 +31,10 @@ public class DataSourceFactoryBean extends AbstractFactoryBean<DataSource> {
 
 	@Override
 	public DataSource createInstance() throws Exception {
+		if (_dataSource != null) {
+			return _dataSource;
+		}
+
 		Properties properties = _properties;
 
 		if (properties == null) {
@@ -54,6 +58,10 @@ public class DataSourceFactoryBean extends AbstractFactoryBean<DataSource> {
 		return DataSource.class;
 	}
 
+	public void setDataSource(DataSource dataSource) {
+		_dataSource = dataSource;
+	}
+
 	public void setProperties(Properties properties) {
 		_properties = properties;
 	}
@@ -66,6 +74,7 @@ public class DataSourceFactoryBean extends AbstractFactoryBean<DataSource> {
 		_propertyPrefix = PropsUtil.get(propertyPrefixLookup);
 	}
 
+	private DataSource _dataSource;
 	private Properties _properties;
 	private String _propertyPrefix;
 

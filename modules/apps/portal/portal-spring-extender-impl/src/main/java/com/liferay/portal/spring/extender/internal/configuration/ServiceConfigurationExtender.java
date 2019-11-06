@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 
@@ -214,9 +213,6 @@ public class ServiceConfigurationExtender
 		ServiceConfigurationExtender.class);
 
 	private BundleTracker<?> _bundleTracker;
-
-	@Reference(target = ModuleServiceLifecycle.DATABASE_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private ResourceActions _resourceActions;

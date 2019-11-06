@@ -15,13 +15,8 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.events.StartupHelperUtil;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.NoSuchReleaseException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -32,18 +27,9 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.service.base.ReleaseLocalServiceBaseImpl;
-import com.liferay.portal.upgrade.PortalUpgradeProcess;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.Date;
 import java.util.List;
@@ -122,30 +108,12 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		return release;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void createTablesAndPopulate() {
-		try {
-			if (_log.isInfoEnabled()) {
-				_log.info("Create tables and populate with default data");
-			}
-
-			DB db = DBManagerUtil.getDB();
-
-			db.runSQLTemplate("portal-tables.sql", false);
-			db.runSQLTemplate("portal-data-common.sql", false);
-			db.runSQLTemplate("portal-data-counter.sql", false);
-			db.runSQLTemplate("indexes.sql", false);
-			db.runSQLTemplate("sequences.sql", false);
-
-			addReleaseInfo();
-
-			StartupHelperUtil.setDbNew(true);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new SystemException(e);
-		}
 	}
 
 	@Override
@@ -170,90 +138,17 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		return release;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	@Transactional
 	public int getBuildNumberOrCreate() throws PortalException {
+		Release release = releasePersistence.fetchByPrimaryKey(
+			ReleaseConstants.DEFAULT_ID);
 
-		// Gracefully add version column
-
-		DB db = DBManagerUtil.getDB();
-
-		try {
-			db.runSQL(
-				"alter table Release_ add schemaVersion VARCHAR(75) null");
-
-			populateVersion();
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e.getMessage());
-			}
-		}
-
-		// Get release build number
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(_SQL_GET_BUILD_NUMBER);
-
-			ps.setLong(1, ReleaseConstants.DEFAULT_ID);
-
-			rs = ps.executeQuery();
-
-			int buildNumber = 0;
-
-			if (rs.next()) {
-				buildNumber = rs.getInt("buildNumber");
-			}
-			else {
-				buildNumber = addReleaseInfo();
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Build number " + buildNumber);
-			}
-
-			// Gracefully add state_ column
-
-			try {
-				db.runSQL("alter table Release_ add state_ INTEGER");
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e.getMessage());
-				}
-			}
-
-			testSupportsStringCaseSensitiveQuery();
-
-			return buildNumber;
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-
-		// Create tables and populate with default data
-
-		if (GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.SCHEMA_RUN_ENABLED))) {
-
-			releaseLocalService.createTablesAndPopulate();
-
-			testSupportsStringCaseSensitiveQuery();
-
-			Release release = fetchRelease(
-				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-
+		if (release != null) {
 			return release.getBuildNumber();
 		}
 
@@ -386,131 +281,6 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 		releasePersistence.update(release);
 	}
-
-	protected int addReleaseInfo() throws Exception {
-		try (Connection con = DataAccess.getConnection();
-			PreparedStatement ps = con.prepareStatement(_SQL_INSERT_RELEASE)) {
-
-			java.sql.Date now = new java.sql.Date(System.currentTimeMillis());
-
-			ps.setDate(1, now);
-			ps.setDate(2, now);
-
-			ps.setString(3, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-
-			Version latestSchemaVersion =
-				PortalUpgradeProcess.getLatestSchemaVersion();
-
-			ps.setString(4, latestSchemaVersion.toString());
-
-			ps.setInt(5, ReleaseInfo.getBuildNumber());
-			ps.setBoolean(6, false);
-
-			ps.executeUpdate();
-		}
-
-		return ReleaseInfo.getBuildNumber();
-	}
-
-	protected void populateVersion() {
-
-		// This method is called if and only if the version column did not
-		// previously exist and was safely added to the database
-
-	}
-
-	protected void testSupportsStringCaseSensitiveQuery() {
-		DB db = DBManagerUtil.getDB();
-
-		int count = testSupportsStringCaseSensitiveQuery(
-			ReleaseConstants.TEST_STRING);
-
-		if (count == 0) {
-			try {
-				db.runSQL(
-					"alter table Release_ add testString VARCHAR(1024) null");
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e.getMessage());
-				}
-			}
-
-			try {
-				db.runSQL(
-					"update Release_ set testString = '" +
-						ReleaseConstants.TEST_STRING + "'");
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e.getMessage());
-				}
-			}
-
-			count = testSupportsStringCaseSensitiveQuery(
-				ReleaseConstants.TEST_STRING);
-		}
-
-		if (count == 0) {
-			throw new SystemException(
-				"Release_ table was not initialized properly");
-		}
-
-		count = testSupportsStringCaseSensitiveQuery(
-			StringUtil.toUpperCase(ReleaseConstants.TEST_STRING));
-
-		if (count == 0) {
-			db.setSupportsStringCaseSensitiveQuery(true);
-		}
-		else {
-			db.setSupportsStringCaseSensitiveQuery(false);
-		}
-	}
-
-	protected int testSupportsStringCaseSensitiveQuery(String testString) {
-		int count = 0;
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
-				_SQL_TEST_DATABASE_STRING_CASE_SENSITIVITY);
-
-			ps.setLong(1, ReleaseConstants.DEFAULT_ID);
-			ps.setString(2, testString);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				count = rs.getInt(1);
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-
-		return count;
-	}
-
-	private static final String _SQL_GET_BUILD_NUMBER =
-		"select buildNumber from Release_ where releaseId = ?";
-
-	private static final String _SQL_INSERT_RELEASE =
-		"insert into Release_ (releaseId, createDate, modifiedDate, " +
-			"servletContextName, schemaVersion, buildNumber, verified) " +
-				"values (1, ?, ?, ?, ?, ?, ?)";
-
-	private static final String _SQL_TEST_DATABASE_STRING_CASE_SENSITIVITY =
-		"select count(*) from Release_ where releaseId = ? and testString = ?";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReleaseLocalServiceImpl.class);

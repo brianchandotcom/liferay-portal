@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.function.UnsafeSupplier;
+
 import java.util.TreeMap;
 
 /**
@@ -21,24 +23,93 @@ import java.util.TreeMap;
  */
 public class TreeMapBuilder<K, V> {
 
+	public static <K, V> TreeMapWrapper<K, V> put(
+		K key, UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
+
+		return new TreeMapWrapper<>(key, valueUnsafeSupplier);
+	}
+
 	public static <K, V> TreeMapWrapper<K, V> put(K key, V value) {
 		return new TreeMapWrapper<>(key, value);
 	}
 
-	public static final class TreeMapWrapper<K, V> {
+	public static <K, V> TreeMapWrapper<K, V> put(
+		UnsafeSupplier<K, Exception> keyUnsafeSupplier,
+		UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
+
+		return new TreeMapWrapper<>(keyUnsafeSupplier, valueUnsafeSupplier);
+	}
+
+	public static <K, V> TreeMapWrapper<K, V> put(
+		UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
+
+		return new TreeMapWrapper<>(keyUnsafeSupplier, value);
+	}
+
+	public static final class TreeMapWrapper<K, V>
+		extends BaseMapWrapper<K, V> {
+
+		public TreeMapWrapper(
+			K key, UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
+
+			doPut(key, valueUnsafeSupplier);
+		}
 
 		public TreeMapWrapper(K key, V value) {
 			_treeMap.put(key, value);
+		}
+
+		public TreeMapWrapper(
+			UnsafeSupplier<K, Exception> keyUnsafeSupplier,
+			UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
+
+			doPut(keyUnsafeSupplier, valueUnsafeSupplier);
+		}
+
+		public TreeMapWrapper(
+			UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
+
+			doPut(keyUnsafeSupplier, value);
 		}
 
 		public TreeMap<K, V> build() {
 			return _treeMap;
 		}
 
+		public TreeMapWrapper<K, V> put(
+			K key, UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
+
+			doPut(key, valueUnsafeSupplier);
+
+			return this;
+		}
+
 		public TreeMapWrapper<K, V> put(K key, V value) {
 			_treeMap.put(key, value);
 
 			return this;
+		}
+
+		public TreeMapWrapper<K, V> put(
+			UnsafeSupplier<K, Exception> keyUnsafeSupplier,
+			UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
+
+			doPut(keyUnsafeSupplier, valueUnsafeSupplier);
+
+			return this;
+		}
+
+		public TreeMapWrapper<K, V> put(
+			UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
+
+			doPut(keyUnsafeSupplier, value);
+
+			return this;
+		}
+
+		@Override
+		protected TreeMap<K, V> getMap() {
+			return _treeMap;
 		}
 
 		private final TreeMap<K, V> _treeMap = new TreeMap<>();

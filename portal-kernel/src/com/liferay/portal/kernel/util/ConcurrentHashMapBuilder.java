@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.function.UnsafeSupplier;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -21,24 +23,94 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ConcurrentHashMapBuilder<K, V> {
 
+	public static <K, V> ConcurrentHashMapWrapper<K, V> put(
+		K key, UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
+
+		return new ConcurrentHashMapWrapper<>(key, valueUnsafeSupplier);
+	}
+
 	public static <K, V> ConcurrentHashMapWrapper<K, V> put(K key, V value) {
 		return new ConcurrentHashMapWrapper<>(key, value);
 	}
 
-	public static final class ConcurrentHashMapWrapper<K, V> {
+	public static <K, V> ConcurrentHashMapWrapper<K, V> put(
+		UnsafeSupplier<K, Exception> keyUnsafeSupplier,
+		UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
+
+		return new ConcurrentHashMapWrapper<>(
+			keyUnsafeSupplier, valueUnsafeSupplier);
+	}
+
+	public static <K, V> ConcurrentHashMapWrapper<K, V> put(
+		UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
+
+		return new ConcurrentHashMapWrapper<>(keyUnsafeSupplier, value);
+	}
+
+	public static final class ConcurrentHashMapWrapper<K, V>
+		extends BaseMapWrapper<K, V> {
+
+		public ConcurrentHashMapWrapper(
+			K key, UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
+
+			doPut(key, valueUnsafeSupplier);
+		}
 
 		public ConcurrentHashMapWrapper(K key, V value) {
 			_concurrentHashMap.put(key, value);
+		}
+
+		public ConcurrentHashMapWrapper(
+			UnsafeSupplier<K, Exception> keyUnsafeSupplier,
+			UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
+
+			doPut(keyUnsafeSupplier, valueUnsafeSupplier);
+		}
+
+		public ConcurrentHashMapWrapper(
+			UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
+
+			doPut(keyUnsafeSupplier, value);
 		}
 
 		public ConcurrentHashMap<K, V> build() {
 			return _concurrentHashMap;
 		}
 
+		public ConcurrentHashMapWrapper<K, V> put(
+			K key, UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
+
+			doPut(key, valueUnsafeSupplier);
+
+			return this;
+		}
+
 		public ConcurrentHashMapWrapper<K, V> put(K key, V value) {
 			_concurrentHashMap.put(key, value);
 
 			return this;
+		}
+
+		public ConcurrentHashMapWrapper<K, V> put(
+			UnsafeSupplier<K, Exception> keyUnsafeSupplier,
+			UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
+
+			doPut(keyUnsafeSupplier, valueUnsafeSupplier);
+
+			return this;
+		}
+
+		public ConcurrentHashMapWrapper<K, V> put(
+			UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
+
+			doPut(keyUnsafeSupplier, value);
+
+			return this;
+		}
+
+		@Override
+		protected ConcurrentHashMap<K, V> getMap() {
+			return _concurrentHashMap;
 		}
 
 		private final ConcurrentHashMap<K, V> _concurrentHashMap =

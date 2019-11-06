@@ -32,6 +32,9 @@ public class TaskEntityModel implements EntityModel {
 
 	public TaskEntityModel() {
 		_entityFieldsMap = Stream.of(
+			new IntegerEntityField(
+				"breachedInstancePercentage",
+				locale -> "breachedInstancePercentage"),
 			new IntegerEntityField("durationAvg", locale -> "durationAvg"),
 			new IntegerEntityField("instanceCount", locale -> "instanceCount"),
 			new IntegerEntityField(

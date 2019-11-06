@@ -279,6 +279,9 @@ components:
                 breachedInstanceCount:
                     format: int64
                     type: integer
+                breachedInstancePercentage:
+                    format: double
+                    type: number
                 durationAvg:
                     format: int64
                     type: integer

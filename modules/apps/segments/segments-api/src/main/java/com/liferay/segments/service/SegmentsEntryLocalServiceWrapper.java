@@ -444,7 +444,7 @@ public class SegmentsEntryLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #searchSegmentsEntries(long, long, String, boolean,
 	 LinkedHashMap, int, int, Sort)}
 	 */

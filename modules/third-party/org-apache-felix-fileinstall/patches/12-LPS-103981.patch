@@ -1,0 +1,45 @@
+diff --git a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
+index 2be583c..4cd876d 100644
+--- a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
++++ b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
+@@ -809,7 +809,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
+     private void initializeCurrentManagedBundles()
+     {
+         Bundle[] bundles = this.context.getBundles();
+-        String watchedDirPath = watchedDirectory.toURI().normalize().toString();
++        String watchedDirPath = watchedDirectory.toURI().normalize().getPath();
+         Map<File, Long> checksums = new HashMap<File, Long>();
+         Pattern filePattern = filter == null || filter.isEmpty() ? null : Pattern.compile(filter);
+         for (Bundle bundle : bundles) {
+@@ -820,14 +820,23 @@ public class DirectoryWatcher extends Thread implements BundleListener
+             // /tmp/foo and /tmp//foo differently.
+             String location = bundle.getLocation();
+             String path = null;
+-            if (location != null && location.contains(watchedDirPath)) {
+-                URI uri;
+-                try {
+-                    uri = new URI(bundle.getLocation()).normalize();
+-                } catch (URISyntaxException e) {
+-                    // Let's try to interpret the location as a file path
+-                    uri = new File(location).toURI().normalize();
+-                }
++
++			URI uri = null;
++
++			try {
++				uri = new URI(location).normalize();
++			} catch (URISyntaxException e) {
++				// Let's try to interpret the location as a file path
++				uri = new File(location).toURI().normalize();
++			}
++
++			String locationPath = uri.getPath();
++
++			if (locationPath == null) {
++				continue;
++			}
++
++            if (location != null && locationPath.contains(watchedDirPath)) {
+                 if (uri.isOpaque() && uri.getSchemeSpecificPart() != null) {
+                     // blueprint:file:/tmp/foo/baa.jar -> file:/tmp/foo/baa.jar
+                     // blueprint:mvn:foo.baa/baa/0.0.1 -> mvn:foo.baa/baa/0.0.1

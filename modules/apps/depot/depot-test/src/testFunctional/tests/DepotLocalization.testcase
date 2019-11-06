@@ -1,0 +1,55 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Depot";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This ensures that the language can be set in a depot."
+	@priority = "5"
+	test Smoke {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoLanguages(depotName = "Test Depot Name");
+
+		Depot.viewDefaultLanguagesConfiguration();
+
+		Click(
+			key_languagesOption = "Define a custom default language and additional available languages for this repository.",
+			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
+
+		Depot.viewDefaultLanguage(defaultDepotLanguage = "English (United States)");
+
+		Depot.viewCurrentLanguages(currentLanguages = "English (United States),Catalan (Spain),Chinese (China),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Spanish (Spain),Swedish (Sweden),Arabic (Saudi Arabia)");
+	}
+
+}

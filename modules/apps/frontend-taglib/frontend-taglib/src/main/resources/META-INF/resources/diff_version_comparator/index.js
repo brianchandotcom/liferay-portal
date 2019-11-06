@@ -40,15 +40,19 @@ function Comparator({
 }) {
 	const isMounted = useIsMounted();
 
-	const selectableVersions = useMemo(
+	const availableVersions = useMemo(
 		() =>
 			diffVersions.filter(
 				diffVersion =>
-					diffVersion.inRange &&
 					sourceVersion !== diffVersion.version &&
 					targetVersion !== diffVersion.version
 			),
 		[diffVersions, sourceVersion, targetVersion]
+	);
+
+	const selectableVersions = useMemo(
+		() => availableVersions.filter(version => version.inRange),
+		[availableVersions]
 	);
 
 	const getDiffURL = useCallback(
@@ -111,21 +115,17 @@ function Comparator({
 				return version.version === currentTargetVersion;
 			});
 
-			if (isMounted()) {
-				setDiffURL(getDiffURL(currentTargetVersion || targetVersion));
-				setSelectedVersion(selectedVersion);
-			}
+			setDiffURL(getDiffURL(currentTargetVersion || targetVersion));
+			setSelectedVersion(selectedVersion);
 		},
-		[getDiffURL, isMounted, selectableVersions, targetVersion]
+		[getDiffURL, selectableVersions, targetVersion]
 	);
 
 	useEffect(() => {
 		const cached = diffCache.current[diffURL];
 
 		if (cached) {
-			if (isMounted()) {
-				setDiff(cached);
-			}
+			setDiff(cached);
 		} else {
 			fetch(diffURL)
 				.then(res => res.text())
@@ -186,7 +186,7 @@ function Comparator({
 										'first-version'
 									)}
 									urlSelector="sourceURL"
-									versions={selectableVersions}
+									versions={availableVersions}
 								/>
 							</div>
 						</div>
@@ -201,7 +201,7 @@ function Comparator({
 									'last-version'
 								)}
 								urlSelector="targetURL"
-								versions={selectableVersions}
+								versions={availableVersions}
 							/>
 						</div>
 					</ClayCard.Row>

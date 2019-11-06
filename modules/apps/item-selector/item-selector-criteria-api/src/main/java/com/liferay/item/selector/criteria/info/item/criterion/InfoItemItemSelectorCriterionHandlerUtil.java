@@ -19,10 +19,10 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Jürgen Kappler
@@ -42,31 +42,25 @@ public class InfoItemItemSelectorCriterionHandlerUtil {
 			return itemSelectorViews;
 		}
 
-		List<ItemSelectorView<InfoItemItemSelectorCriterion>>
-			visibleItemSelectorViews = new ArrayList<>();
+		Stream<ItemSelectorView<InfoItemItemSelectorCriterion>> stream =
+			itemSelectorViews.stream();
 
-		Iterator<ItemSelectorView<InfoItemItemSelectorCriterion>> iterator =
-			itemSelectorViews.iterator();
+		return stream.filter(
+			itemSelectorView -> {
+				if (!(itemSelectorView instanceof InfoItemSelectorView)) {
+					return false;
+				}
 
-		while (iterator.hasNext()) {
-			ItemSelectorView itemSelectorView = iterator.next();
+				InfoItemSelectorView infoItemSelectorView =
+					(InfoItemSelectorView)itemSelectorView;
 
-			if (!(itemSelectorView instanceof InfoItemSelectorView)) {
-				continue;
-			}
-
-			InfoItemSelectorView infoItemSelectorView =
-				(InfoItemSelectorView)itemSelectorView;
-
-			if (Objects.equals(
+				return Objects.equals(
 					infoItemSelectorView.getClassName(),
-					infoItemItemSelectorCriterion.getClassName())) {
-
-				visibleItemSelectorViews.add(itemSelectorView);
+					infoItemItemSelectorCriterion.getClassName());
 			}
-		}
-
-		return visibleItemSelectorViews;
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 }

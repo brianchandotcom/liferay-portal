@@ -76,7 +76,7 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 			if (e instanceof UserEmailAddressException ||
 				e instanceof UserScreenNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, e.getClass(), e);
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "/account_admin/add_account_user");
 			}

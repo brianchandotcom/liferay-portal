@@ -94,7 +94,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 					<div class="text-center">
 
 						<%
-						UserFileUploadsConfiguration userFileUploadsConfiguration = (UserFileUploadsConfiguration)renderRequest.getAttribute(UserFileUploadsConfiguration.class.getName());
+						UserFileUploadsConfiguration userFileUploadsConfiguration = (UserFileUploadsConfiguration)request.getAttribute(UserFileUploadsConfiguration.class.getName());
 						%>
 
 						<liferay-ui:logo-selector

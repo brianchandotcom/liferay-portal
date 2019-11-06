@@ -314,7 +314,10 @@ definition {
 		}
 
 		if (isSet(contentDateRange)) {
-			ContentConfiguration.contentDateRange(contentDateRange = "${contentDateRange}");
+			ContentConfiguration.contentDateRange(
+				contentDateRange = "${contentDateRange}",
+				dateRangeEndDate = "${dateRangeEndDate}",
+				dateRangeStartDate = "${dateRangeStartDate}");
 		}
 
 		if ("${contentDeletion}" == "true") {

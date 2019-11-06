@@ -66,7 +66,7 @@ definition {
 		}
 
 		if ("${contentDateRange}" == "Date Range") {
-			Click(locator1 = "StagingPublishToLive#CONTENT_DATE_RANGE");
+			Click(locator1 = "Radio#CHOOSE_CONTENT_DATE_RANGE_CHANGE");
 
 			var key_contentDateRange = "${contentDateRange}";
 

@@ -22,6 +22,8 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -119,7 +121,7 @@ public class FragmentEntryProcessorEditableTest {
 		Assert.assertEquals(
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink));
+				fragmentEntryLink, _getFragmentEntryProcessorContext()));
 	}
 
 	@Test
@@ -140,7 +142,7 @@ public class FragmentEntryProcessorEditableTest {
 		Assert.assertEquals(
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink));
+				fragmentEntryLink, _getFragmentEntryProcessorContext()));
 	}
 
 	@Test
@@ -231,8 +233,9 @@ public class FragmentEntryProcessorEditableTest {
 		Assert.assertEquals(
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.CHINESE, new long[] {2L, 0L}));
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.CHINESE, new long[] {2L, 0L})));
 	}
 
 	@Test
@@ -254,8 +257,9 @@ public class FragmentEntryProcessorEditableTest {
 		Assert.assertEquals(
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.CHINESE, new long[] {1L, 0L}));
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.CHINESE, new long[] {1L, 0L})));
 	}
 
 	@Test
@@ -277,8 +281,9 @@ public class FragmentEntryProcessorEditableTest {
 		Assert.assertEquals(
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.US, new long[] {1L, 0L}));
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.US, new long[] {1L, 0L})));
 	}
 
 	@Test
@@ -299,8 +304,9 @@ public class FragmentEntryProcessorEditableTest {
 		Assert.assertEquals(
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.US, new long[] {0L}));
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.US, new long[] {0L})));
 	}
 
 	@Test
@@ -322,8 +328,8 @@ public class FragmentEntryProcessorEditableTest {
 		Assert.assertEquals(
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.US));
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(LocaleUtil.US)));
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
@@ -360,8 +366,8 @@ public class FragmentEntryProcessorEditableTest {
 		Assert.assertEquals(
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.CHINESE));
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(LocaleUtil.CHINESE)));
 	}
 
 	@Test
@@ -383,8 +389,8 @@ public class FragmentEntryProcessorEditableTest {
 		Assert.assertEquals(
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.CHINESE));
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(LocaleUtil.CHINESE)));
 	}
 
 	private FragmentEntry _addFragmentEntry(String htmlFile)
@@ -414,6 +420,31 @@ public class FragmentEntryProcessorEditableTest {
 			clazz.getClassLoader(),
 			"com/liferay/fragment/entry/processor/editable/test/dependencies/" +
 				fileName);
+	}
+
+	private FragmentEntryProcessorContext _getFragmentEntryProcessorContext() {
+		return _getFragmentEntryProcessorContext(
+			LocaleUtil.getMostRelevantLocale());
+	}
+
+	private FragmentEntryProcessorContext _getFragmentEntryProcessorContext(
+		Locale locale) {
+
+		return _getFragmentEntryProcessorContext(locale, new long[0]);
+	}
+
+	private FragmentEntryProcessorContext _getFragmentEntryProcessorContext(
+		Locale locale, long[] segmentsExperienceIds) {
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					null, null, FragmentEntryLinkConstants.EDIT, locale);
+
+		defaultFragmentEntryProcessorContext.setSegmentsExperienceIds(
+			segmentsExperienceIds);
+
+		return defaultFragmentEntryProcessorContext;
 	}
 
 	private String _getJsonFileAsString(String jsonFileName)

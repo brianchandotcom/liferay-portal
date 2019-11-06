@@ -15,6 +15,8 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
+import '@testing-library/jest-dom/extend-expect';
+
 import Treeview from '../../src/main/resources/META-INF/resources/treeview/Treeview';
 
 const nodes = [
@@ -47,16 +49,17 @@ const nodes = [
 describe('Treeview', () => {
 	beforeEach(cleanup);
 
-	it('renders', () => {
-		const treeView = render(<Treeview nodes={[]} />);
-		expect(treeView);
+	it('renders empty', () => {
+		const {container} = render(<Treeview nodes={[]} />);
+		const treeview = container.querySelector('.lfr-treeview-node-list');
+		expect(treeview).toBeVisible();
 	});
 
 	it('renders a list of nodes', () => {
 		const {getByText} = render(<Treeview nodes={nodes} />);
 
-		expect(getByText('Sandro'));
-		expect(getByText('Victor'));
+		expect(getByText('Sandro')).toBeVisible();
+		expect(getByText('Victor')).toBeVisible();
 	});
 
 	it('calls the onSelectedNode callback if nodes are selected', () => {
@@ -96,7 +99,7 @@ describe('Treeview', () => {
 		);
 
 		expect(getByLabelText('Pablictor').checked).toBe(true);
-		expect(queryByLabelText('Eudaldo')).toBe(null);
+		expect(queryByLabelText('Eudaldo')).not.toBeInTheDocument();
 	});
 
 	it('allow selecting several nodes by default', async () => {
@@ -128,8 +131,8 @@ describe('Treeview', () => {
 
 		fireEvent.click(getByLabelText('Expand Sandro'));
 
-		expect(queryByLabelText('Pablictor'));
-		expect(queryByLabelText('Pabla'));
+		expect(queryByLabelText('Pablictor')).toBeInTheDocument();
+		expect(queryByLabelText('Pabla')).toBeInTheDocument();
 	});
 
 	it('allows collapsing nodes on click', () => {
@@ -139,8 +142,8 @@ describe('Treeview', () => {
 
 		fireEvent.click(getByLabelText('Collapse Sandro'));
 
-		expect(queryByLabelText('Pablictor')).toBe(null);
-		expect(queryByLabelText('Pabla')).toBe(null);
+		expect(queryByLabelText('Pablictor')).not.toBeInTheDocument();
+		expect(queryByLabelText('Pabla')).not.toBeInTheDocument();
 	});
 
 	it('allows specifying a custom NodeComponent', () => {

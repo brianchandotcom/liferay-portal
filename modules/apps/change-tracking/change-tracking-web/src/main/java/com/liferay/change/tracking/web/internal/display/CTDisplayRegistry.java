@@ -25,7 +25,6 @@ import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -56,7 +55,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class CTDisplayRegistry {
 
 	public <T extends CTModel<T>> String getEditURL(
-		HttpServletRequest httpServletRequest, CTEntry ctEntry) {
+			HttpServletRequest httpServletRequest, CTEntry ctEntry)
+		throws Exception {
 
 		CTDisplayRenderer<T> ctDisplayRenderer =
 			_ctDisplayServiceTrackerMap.getService(
@@ -70,19 +70,10 @@ public class CTDisplayRegistry {
 			ctEntry.getModelClassNameId());
 
 		T ctModel = ctService.updateWithUnsafeFunction(
-			ctPersistence -> ctPersistence.fetchByPrimaryKey(
+			ctPersistence -> ctPersistence.findByPrimaryKey(
 				ctEntry.getModelClassPK()));
 
-		String editURL = null;
-
-		try {
-			editURL = ctDisplayRenderer.getEditURL(httpServletRequest, ctModel);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return editURL;
+		return ctDisplayRenderer.getEditURL(httpServletRequest, ctModel);
 	}
 
 	public String getTypeName(Locale locale, CTEntry ctEntry) {
@@ -122,7 +113,7 @@ public class CTDisplayRegistry {
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			T ctModel = ctService.updateWithUnsafeFunction(
-				ctPersistence -> ctPersistence.fetchByPrimaryKey(
+				ctPersistence -> ctPersistence.findByPrimaryKey(
 					ctEntry.getModelClassPK()));
 
 			CTDisplayRenderer<T> ctDisplayRenderer =
@@ -191,9 +182,6 @@ public class CTDisplayRegistry {
 	private ServiceTrackerMap<Long, CTDisplayRenderer>
 		_ctDisplayServiceTrackerMap;
 	private ServiceTrackerMap<Long, CTService> _ctServiceServiceTrackerMap;
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Portal _portal;

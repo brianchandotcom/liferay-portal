@@ -335,6 +335,58 @@ public class TableMapperTest {
 	}
 
 	@Test
+	public void testCachelessTableMapper() {
+		_tableMapperImpl = new TableMapperImpl<>(
+			_TABLE_NAME, _COMPANY_COLUMN_NAME, _LEFT_COLUMN_NAME,
+			_RIGHT_COLUMN_NAME, Left.class, Right.class, _leftBasePersistence,
+			_rightBasePersistence, true);
+
+		long leftPrimaryKey = 1;
+		long rightPrimaryKey = 2;
+
+		Assert.assertFalse(
+			_tableMapperImpl.containsTableMapping(
+				leftPrimaryKey, rightPrimaryKey));
+
+		// Contains table mapping
+
+		_mappingStore.put(leftPrimaryKey, new long[] {rightPrimaryKey});
+
+		Assert.assertTrue(
+			_tableMapperImpl.containsTableMapping(
+				leftPrimaryKey, rightPrimaryKey));
+
+		MockContainsTableMappingSQLQuery mockContainsTableMappingSQLQuery =
+			(MockContainsTableMappingSQLQuery)
+				_tableMapperImpl.containsTableMappingSQL;
+
+		mockContainsTableMappingSQLQuery.setDatabaseError(true);
+
+		try {
+			_tableMapperImpl.containsTableMapping(
+				leftPrimaryKey, rightPrimaryKey);
+
+			Assert.fail();
+		}
+		catch (SystemException se) {
+			Throwable cause = se.getCause();
+
+			Assert.assertSame(RuntimeException.class, cause.getClass());
+
+			Assert.assertEquals("Database error", cause.getMessage());
+		}
+		finally {
+			mockContainsTableMappingSQLQuery.setDatabaseError(false);
+		}
+
+		mockContainsTableMappingSQLQuery.setEmptyResultSet(true);
+
+		Assert.assertFalse(
+			_tableMapperImpl.containsTableMapping(
+				leftPrimaryKey, rightPrimaryKey));
+	}
+
+	@Test
 	public void testConstructor() {
 		new TableMapperFactory();
 
@@ -1906,15 +1958,9 @@ public class TableMapperTest {
 	private class MockAddMappingSqlUpdate implements SqlUpdate {
 
 		public MockAddMappingSqlUpdate(
-			DataSource dataSource, String sql, ParamSetter... paramSetters) {
+			DataSource dataSource, ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertEquals(
-				StringBundler.concat(
-					"INSERT INTO ", _TABLE_NAME, " (", _COMPANY_COLUMN_NAME,
-					", ", _LEFT_COLUMN_NAME, ", ", _RIGHT_COLUMN_NAME,
-					") VALUES (?, ?, ?)"),
-				sql);
 			Assert.assertArrayEquals(
 				new ParamSetter[] {
 					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT
@@ -1992,18 +2038,64 @@ public class TableMapperTest {
 
 	}
 
+	private class MockContainsTableMappingSQLQuery
+		implements MappingSqlQuery<Integer> {
+
+		public MockContainsTableMappingSQLQuery(
+			DataSource dataSource, ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT, ParamSetter.BIGINT},
+				paramSetters);
+		}
+
+		@Override
+		public List<Integer> execute(Object... params) {
+			Assert.assertEquals(2, params.length);
+			Assert.assertSame(Long.class, params[0].getClass());
+			Assert.assertSame(Long.class, params[1].getClass());
+
+			if (_databaseError) {
+				throw new RuntimeException("Database error");
+			}
+
+			if (_emptyResultSet) {
+				return Collections.emptyList();
+			}
+
+			Long leftPrimaryKey = (Long)params[0];
+			Long rightPrimaryKey = (Long)params[1];
+
+			long[] rightPrimaryKeys = _mappingStore.get(leftPrimaryKey);
+
+			if (ArrayUtil.contains(rightPrimaryKeys, rightPrimaryKey)) {
+				return Collections.singletonList(1);
+			}
+
+			return Collections.singletonList(0);
+		}
+
+		public void setDatabaseError(boolean databaseError) {
+			_databaseError = databaseError;
+		}
+
+		public void setEmptyResultSet(boolean emptyResultSet) {
+			_emptyResultSet = emptyResultSet;
+		}
+
+		private boolean _databaseError;
+		private boolean _emptyResultSet;
+
+	}
+
 	private class MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate
 		implements SqlUpdate {
 
 		public MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
-			DataSource dataSource, String sql, ParamSetter... paramSetters) {
+			DataSource dataSource, ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertEquals(
-				StringBundler.concat(
-					"DELETE FROM ", _TABLE_NAME, " WHERE ", _LEFT_COLUMN_NAME,
-					" = ?"),
-				sql);
 			Assert.assertArrayEquals(
 				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
 		}
@@ -2039,14 +2131,9 @@ public class TableMapperTest {
 	private class MockDeleteMappingSqlUpdate implements SqlUpdate {
 
 		public MockDeleteMappingSqlUpdate(
-			DataSource dataSource, String sql, ParamSetter... paramSetters) {
+			DataSource dataSource, ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertEquals(
-				StringBundler.concat(
-					"DELETE FROM ", _TABLE_NAME, " WHERE ", _LEFT_COLUMN_NAME,
-					" = ? AND ", _RIGHT_COLUMN_NAME, " = ?"),
-				sql);
 			Assert.assertArrayEquals(
 				new ParamSetter[] {ParamSetter.BIGINT, ParamSetter.BIGINT},
 				paramSetters);
@@ -2096,14 +2183,9 @@ public class TableMapperTest {
 		implements SqlUpdate {
 
 		public MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
-			DataSource dataSource, String sql, ParamSetter... paramSetters) {
+			DataSource dataSource, ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertEquals(
-				StringBundler.concat(
-					"DELETE FROM ", _TABLE_NAME, " WHERE ", _RIGHT_COLUMN_NAME,
-					" = ?"),
-				sql);
 			Assert.assertArrayEquals(
 				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
 		}
@@ -2149,15 +2231,10 @@ public class TableMapperTest {
 		implements MappingSqlQuery<Long> {
 
 		public MockGetLeftPrimaryKeysSqlQuery(
-			DataSource dataSource, String sql, RowMapper<Long> rowMapper,
+			DataSource dataSource, RowMapper<Long> rowMapper,
 			ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertEquals(
-				StringBundler.concat(
-					"SELECT ", _LEFT_COLUMN_NAME, " FROM ", _TABLE_NAME,
-					" WHERE ", _RIGHT_COLUMN_NAME, " = ?"),
-				sql);
 			Assert.assertArrayEquals(
 				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
 			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
@@ -2199,15 +2276,10 @@ public class TableMapperTest {
 		implements MappingSqlQuery<Long> {
 
 		public MockGetRightPrimaryKeysSqlQuery(
-			DataSource dataSource, String sql, RowMapper<Long> rowMapper,
+			DataSource dataSource, RowMapper<Long> rowMapper,
 			ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertEquals(
-				StringBundler.concat(
-					"SELECT ", _RIGHT_COLUMN_NAME, " FROM ", _TABLE_NAME,
-					" WHERE ", _LEFT_COLUMN_NAME, " = ?"),
-				sql);
 			Assert.assertArrayEquals(
 				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
 			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
@@ -2255,22 +2327,36 @@ public class TableMapperTest {
 			DataSource dataSource, String sql, RowMapper<T> rowMapper,
 			ParamSetter... paramSetters) {
 
-			int count = _counter++;
+			if (sql.equals(
+					StringBundler.concat(
+						"SELECT ", _LEFT_COLUMN_NAME, " FROM ", _TABLE_NAME,
+						" WHERE ", _RIGHT_COLUMN_NAME, " = ?"))) {
 
-			if (count == 0) {
 				return (MappingSqlQuery<T>)new MockGetLeftPrimaryKeysSqlQuery(
-					dataSource, sql, RowMapper.PRIMARY_KEY, paramSetters);
+					dataSource, RowMapper.PRIMARY_KEY, paramSetters);
 			}
 
-			if (count == 1) {
+			if (sql.equals(
+					StringBundler.concat(
+						"SELECT ", _RIGHT_COLUMN_NAME, " FROM ", _TABLE_NAME,
+						" WHERE ", _LEFT_COLUMN_NAME, " = ?"))) {
+
 				return (MappingSqlQuery<T>)new MockGetRightPrimaryKeysSqlQuery(
-					dataSource, sql, RowMapper.PRIMARY_KEY, paramSetters);
+					dataSource, RowMapper.PRIMARY_KEY, paramSetters);
 			}
 
-			return null;
-		}
+			if (sql.equals(
+					StringBundler.concat(
+						"SELECT * FROM ", _TABLE_NAME, " WHERE ",
+						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
+						" = ?"))) {
 
-		private int _counter;
+				return (MappingSqlQuery<T>)new MockContainsTableMappingSQLQuery(
+					dataSource, paramSetters);
+			}
+
+			throw new UnsupportedOperationException(sql);
+		}
 
 	}
 
@@ -2280,32 +2366,62 @@ public class TableMapperTest {
 		public SqlUpdate getSqlUpdate(
 			DataSource dataSource, String sql, ParamSetter... paramSetters) {
 
-			int count = _count++;
+			if (sql.equals(
+					StringBundler.concat(
+						"INSERT INTO ", _TABLE_NAME, " (", _COMPANY_COLUMN_NAME,
+						", ", _LEFT_COLUMN_NAME, ", ", _RIGHT_COLUMN_NAME,
+						") VALUES (?, ?, ?)"))) {
 
-			if (count == 0) {
-				return new MockAddMappingSqlUpdate(
-					dataSource, sql, paramSetters);
+				return new MockAddMappingSqlUpdate(dataSource, paramSetters);
 			}
 
-			if (count == 1) {
+			if (sql.equals(
+					StringBundler.concat(
+						"INSERT INTO ", _TABLE_NAME, " (", _COMPANY_COLUMN_NAME,
+						", ", _RIGHT_COLUMN_NAME, ", ", _LEFT_COLUMN_NAME,
+						") VALUES (?, ?, ?)"))) {
+
+				return null;
+			}
+
+			if (sql.equals(
+					StringBundler.concat(
+						"DELETE FROM ", _TABLE_NAME, " WHERE ",
+						_LEFT_COLUMN_NAME, " = ?"))) {
+
 				return new MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
-					dataSource, sql, paramSetters);
+					dataSource, paramSetters);
 			}
 
-			if (count == 2) {
+			if (sql.equals(
+					StringBundler.concat(
+						"DELETE FROM ", _TABLE_NAME, " WHERE ",
+						_RIGHT_COLUMN_NAME, " = ?"))) {
+
 				return new MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
-					dataSource, sql, paramSetters);
+					dataSource, paramSetters);
 			}
 
-			if (count == 3) {
-				return new MockDeleteMappingSqlUpdate(
-					dataSource, sql, paramSetters);
+			if (sql.equals(
+					StringBundler.concat(
+						"DELETE FROM ", _TABLE_NAME, " WHERE ",
+						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
+						" = ?"))) {
+
+				return new MockDeleteMappingSqlUpdate(dataSource, paramSetters);
 			}
 
-			return null;
+			if (sql.equals(
+					StringBundler.concat(
+						"DELETE FROM ", _TABLE_NAME, " WHERE ",
+						_RIGHT_COLUMN_NAME, " = ? AND ", _LEFT_COLUMN_NAME,
+						" = ?"))) {
+
+				return null;
+			}
+
+			throw new UnsupportedOperationException(sql);
 		}
-
-		private int _count;
 
 	}
 

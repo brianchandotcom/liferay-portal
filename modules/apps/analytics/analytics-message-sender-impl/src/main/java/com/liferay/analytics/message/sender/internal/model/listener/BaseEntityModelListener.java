@@ -77,6 +77,33 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 	protected abstract List<String> getAttributes();
 
+	protected abstract Object getOldObject(T model) throws Exception;
+
+	@Reference(unbind = "-")
+	protected void setConfigurationAdmin(
+		ConfigurationAdmin configurationAdmin) {
+
+		_configurationAdmin = configurationAdmin;
+	}
+
+	@Reference
+	protected AnalyticsMessageSenderClient analyticsMessageSenderClient;
+
+	@Reference
+	protected UserLocalService userLocalService;
+
+	@Reference
+	protected UserSerializer userSerializer;
+
+	private String _getDataSourceId() {
+		try {
+			return String.valueOf(_getProperty("dataSourceId"));
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
 	private Set<String> _getModifiedAttributes(
 		List<String> attributeNames, Object newObject, Object oldObject) {
 
@@ -96,7 +123,14 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		return modifiedAttributes;
 	}
 
-	protected abstract Object getOldObject(T model) throws Exception;
+	private Object _getProperty(String key) throws Exception {
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			AnalyticsConfiguration.class.getName(), "?");
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		return properties.get(key);
+	}
 
 	private void _send(String eventType, Object object) {
 		try {
@@ -149,40 +183,6 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		}
 
 		return jsonSerializer.serialize(object);
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationAdmin(
-		ConfigurationAdmin configurationAdmin) {
-
-		_configurationAdmin = configurationAdmin;
-	}
-
-	@Reference
-	protected AnalyticsMessageSenderClient analyticsMessageSenderClient;
-
-	@Reference
-	protected UserLocalService userLocalService;
-
-	@Reference
-	protected UserSerializer userSerializer;
-
-	private String _getDataSourceId() {
-		try {
-			return String.valueOf(_getProperty("dataSourceId"));
-		}
-		catch (Exception e) {
-			return null;
-		}
-	}
-
-	private Object _getProperty(String key) throws Exception {
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			AnalyticsConfiguration.class.getName(), "?");
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		return properties.get(key);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

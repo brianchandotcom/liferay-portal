@@ -294,16 +294,22 @@ mariadb.executable=${mariadb.executable}]]></echo>
 			<database-test-action database.type="@{database.type}">
 				<action>
 					<if>
-						<equals arg1="${database.type}" arg2="db2" />
+						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 						<then>
-							<echo></echo>
-							<echo>##</echo>
-							<echo>## ${database.version.cmd}</echo>
-							<echo>##</echo>
-							<echo></echo>
-
-							<exec executable="${database.version.cmd}" />
+							<echo>Using Docker for ${database.type}.</echo>
 						</then>
+						<elseif>
+							<equals arg1="${database.type}" arg2="db2" />
+							<then>
+								<echo></echo>
+								<echo>##</echo>
+								<echo>## ${database.version.cmd}</echo>
+								<echo>##</echo>
+								<echo></echo>
+
+								<exec executable="${database.version.cmd}" />
+							</then>
+						</elseif>
 						<else>
 							<local name="database.executable" />
 
@@ -317,28 +323,15 @@ mariadb.executable=${mariadb.executable}]]></echo>
 								</else>
 							</if>
 
-							<if>
-								<and>
-									<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
-									<not>
-										<equals arg1="${database.type}" arg2="hypersonic" />
-									</not>
-								</and>
-								<then>
-									<echo>Using Docker for ${database.type}.</echo>
-								</then>
-								<else>
-									<echo></echo>
-									<echo>##</echo>
-									<echo>## ${database.executable} ${database.version.cmd}</echo>
-									<echo>##</echo>
-									<echo></echo>
+							<echo></echo>
+							<echo>##</echo>
+							<echo>## ${database.executable} ${database.version.cmd}</echo>
+							<echo>##</echo>
+							<echo></echo>
 
-									<exec executable="${database.executable}">
-										<arg line="${database.version.cmd}" />
-									</exec>
-								</else>
-							</if>
+							<exec executable="${database.executable}">
+								<arg line="${database.version.cmd}" />
+							</exec>
 						</else>
 					</if>
 				</action>

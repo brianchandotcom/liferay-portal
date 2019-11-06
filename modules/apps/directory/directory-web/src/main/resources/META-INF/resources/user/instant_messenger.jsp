@@ -41,8 +41,7 @@ String skypeSn = selContact.getSkypeSn();
 				<liferay-ui:message key="skype" />
 			</dt>
 			<dd>
-				<%= HtmlUtil.escape(skypeSn) %>
-				<a href="callto://<%= HtmlUtil.escapeAttribute(skypeSn) %>"><img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="call-this-user" />" class="instant-messenger-logo" src="http://mystatus.skype.com/smallicon/<%= HtmlUtil.escapeAttribute(skypeSn) %>" /></a>
+				<a href="skype:<%= HtmlUtil.escapeAttribute(skypeSn) %>?chat"><%= HtmlUtil.escape(skypeSn) %></a>
 			</dd>
 		</c:if>
 	</dl>

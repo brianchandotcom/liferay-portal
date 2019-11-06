@@ -25,7 +25,7 @@ import PromisesResolver from '../../shared/components/request/PromisesResolver.e
 import Request from '../../shared/components/request/Request.es';
 import ResultsBar from '../../shared/components/results-bar/ResultsBar.es';
 import {formatDuration} from '../../shared/util/duration.es';
-import {getFormattedPercentage} from '../../shared/util/util.es';
+import {formatNumber} from '../../shared/util/numeral.es';
 import {AppContext} from '../AppContext.es';
 import {TimeRangeFilter} from '../process-metrics/filter/TimeRangeFilter.es';
 import {TimeRangeProvider} from '../process-metrics/filter/store/TimeRangeStore.es';
@@ -191,12 +191,16 @@ const Body = ({page, pageSize, processId, query, search, sort}) => {
 	);
 };
 
-const Item = ({durationAvg, instanceCount, name, overdueInstanceCount}) => {
+const Item = ({
+	breachedInstanceCount,
+	breachedInstancePercentage,
+	durationAvg,
+	name
+}) => {
 	const formattedDuration = formatDuration(durationAvg);
-	const formattedPercentage = getFormattedPercentage(
-		overdueInstanceCount,
-		instanceCount
-	);
+	const getFormattedPercentage = () => {
+		return formatNumber(breachedInstancePercentage, '0[.]00') + '%';
+	};
 
 	return (
 		<tr>
@@ -208,7 +212,7 @@ const Item = ({durationAvg, instanceCount, name, overdueInstanceCount}) => {
 			</td>
 
 			<td className="text-right">
-				{overdueInstanceCount} {`(${formattedPercentage})`}
+				{breachedInstanceCount} ({getFormattedPercentage()})
 			</td>
 
 			<td className="text-right">{formattedDuration}</td>
@@ -231,7 +235,7 @@ const Table = ({items}) => {
 
 						<th className="text-right" style={{width: '20%'}}>
 							<ListHeadItem
-								name="overdueInstanceCount"
+								name="breachedInstancePercentage"
 								title={Liferay.Language.get(
 									'sla-breached-percent'
 								)}

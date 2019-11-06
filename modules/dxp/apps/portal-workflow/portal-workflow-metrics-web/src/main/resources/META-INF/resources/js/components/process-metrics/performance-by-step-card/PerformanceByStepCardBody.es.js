@@ -31,7 +31,7 @@ const Body = ({data, processId, timeRange}) => {
 				}
 		  }
 		: {};
-	const viewAllStepsUrl = `/performance/${processId}/${defaultDelta}/1/overdueInstanceCount:desc`;
+	const viewAllStepsUrl = `/performance/${processId}/${defaultDelta}/1/breachedInstancePercentage:desc`;
 
 	return (
 		<Panel.Body>

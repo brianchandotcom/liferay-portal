@@ -40,8 +40,18 @@ definition {
 			value1 = "${customObjectName}");
 	}
 
-	macro gotoAddCustomObject {
+	macro add {
 		Click(locator1 = "AppBuilder#BUTTON_ADD");
+	}
+
+	macro gotoAddCustomObject {
+		AppBuilderAdmin.add();
+	}
+
+	macro setName {
+		Type(
+			locator1 = "FormViewBuilder#FORM_VIEW_NAME",
+			value1 = "${title}");
 	}
 
 	macro gotoAddItemViaNewButton {

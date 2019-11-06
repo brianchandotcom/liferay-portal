@@ -25,12 +25,7 @@ renderResponse.setTitle(dlEditFileShortcutDisplayContext.getTitle());
 %>
 
 <div class="container-fluid-1280">
-	<portlet:actionURL name="/document_library/edit_file_shortcut" var="editFileShortcutURL">
-		<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
-	</portlet:actionURL>
-
-	<aui:form action="<%= editFileShortcutURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileShortcut();" %>'>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:form action="<%= dlEditFileShortcutDisplayContext.getEditFileShortcutURL() %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="fileShortcutId" type="hidden" value="<%= dlEditFileShortcutDisplayContext.getFileShortcutId() %>" />
 		<aui:input name="repositoryId" type="hidden" value="<%= dlEditFileShortcutDisplayContext.getRepositoryId() %>" />
@@ -113,16 +108,3 @@ renderResponse.setTitle(dlEditFileShortcutDisplayContext.getTitle());
 		});
 	}
 </aui:script>
-
-<script>
-	var form = document.<portlet:namespace />fm;
-
-	function <portlet:namespace />saveFileShortcut() {
-		Liferay.Util.postForm(form, {
-			data: {
-				<%= Constants.CMD %>:
-					'<%= (fileShortcut == null) ? Constants.ADD : Constants.UPDATE %>'
-			}
-		});
-	}
-</script>

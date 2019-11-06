@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 /**
@@ -48,6 +50,22 @@ public class DLEditFileShortcutDisplayContext {
 		_language = language;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+	}
+
+	public String getEditFileShortcutURL() {
+		PortletURL portletURL = _liferayPortletResponse.createActionURL();
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "/document_library/edit_file_shortcut");
+
+		if (_getFileShortcut() == null) {
+			portletURL.setParameter(Constants.CMD, Constants.ADD);
+		}
+		else {
+			portletURL.setParameter(Constants.CMD, Constants.UPDATE);
+		}
+
+		return portletURL.toString();
 	}
 
 	public long getFileShortcutId() {

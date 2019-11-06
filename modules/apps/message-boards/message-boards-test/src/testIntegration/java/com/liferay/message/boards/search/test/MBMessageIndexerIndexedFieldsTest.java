@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -44,6 +45,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -197,6 +200,7 @@ public class MBMessageIndexerIndexedFieldsTest {
 		_populateDates(mbMessage, map);
 		_populateRoles(mbMessage, map);
 		_populateTitleContent(mbMessage, map);
+		_populateTreePath(mbMessage, map);
 
 		return map;
 	}
@@ -241,6 +245,21 @@ public class MBMessageIndexerIndexedFieldsTest {
 			map.put(key, title);
 			map.put("localized_title", title);
 			map.put(key.concat("_sortable"), title);
+		}
+	}
+
+	private void _populateTreePath(
+		MBMessage mbMessage, Map<String, String> map) {
+
+		List<String> treePathValues = new ArrayList<>(
+			Arrays.asList(
+				StringUtil.split(mbMessage.getTreePath(), CharPool.SLASH)));
+
+		if (treePathValues.size() == 1) {
+			map.put(Field.TREE_PATH, treePathValues.get(0));
+		}
+		else if (treePathValues.size() > 1) {
+			map.put(Field.TREE_PATH, treePathValues.toString());
 		}
 	}
 

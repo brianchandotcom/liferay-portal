@@ -24,4 +24,13 @@ public class HSQLDialect extends org.hibernate.dialect.HSQLDialect {
 		return " for update";
 	}
 
+	@Override
+	public String getLimitString(String sql, boolean hasOffset) {
+		if (hasOffset) {
+			return sql.concat(" limit ?, ?");
+		}
+
+		return sql.concat(" limit ?");
+	}
+
 }

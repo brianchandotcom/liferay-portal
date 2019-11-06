@@ -39,7 +39,7 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
-			collectionName = "Basic Sections",
+			collectionName = "Featured Content",
 			fragmentName = "Banner Center");
 
 		PageEditorEditableLink.gotoEditableFieldLink(
@@ -74,7 +74,7 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
-			collectionName = "Basic Sections",
+			collectionName = "Featured Content",
 			fragmentName = "Banner Center");
 
 		PageEditorEditableLink.gotoEditableFieldLink(

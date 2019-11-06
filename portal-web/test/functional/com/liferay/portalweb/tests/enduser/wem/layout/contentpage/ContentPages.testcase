@@ -173,7 +173,7 @@ definition {
 
 		task ("Add a Title fragment to the content page") {
 			PageEditor.addFragment(
-				collectionName = "Basic Sections",
+				collectionName = "Featured Content",
 				fragmentName = "Banner Center");
 		}
 

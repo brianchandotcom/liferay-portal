@@ -689,7 +689,7 @@ definition {
 			FragmentsAdmin.viewEntryPresent(entry = "Button");
 		}
 
-		FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Sections");
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Featured Content");
 
 		task ("Assert a fragment appears in Fragments Admin") {
 			FragmentsAdmin.viewEntryPresent(entry = "Banner Center");

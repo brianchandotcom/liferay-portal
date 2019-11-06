@@ -34,7 +34,7 @@ definition {
 		property portal.acceptance = "true";
 
 		PageEditor.addFragment(
-			collectionName = "Basic Sections",
+			collectionName = "Featured Content",
 			fragmentName = "Banner Center");
 
 		PageEditorEditableLink.gotoEditableFieldLink(

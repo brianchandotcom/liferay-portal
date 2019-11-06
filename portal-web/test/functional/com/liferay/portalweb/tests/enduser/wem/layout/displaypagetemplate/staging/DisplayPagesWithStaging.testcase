@@ -62,7 +62,7 @@ definition {
 		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
-			collectionName = "Basic Sections",
+			collectionName = "Featured Content",
 			fragmentName = "Banner Center");
 
 		Button.clickPublish();

@@ -52,6 +52,8 @@ class ItemSelectorDialog extends Component {
 									selectedItem: this.selectedItem
 								});
 							}
+
+							this.emit('visibleChange', {visible: event.newVal});
 						}
 					},
 					'toolbars.footer': [

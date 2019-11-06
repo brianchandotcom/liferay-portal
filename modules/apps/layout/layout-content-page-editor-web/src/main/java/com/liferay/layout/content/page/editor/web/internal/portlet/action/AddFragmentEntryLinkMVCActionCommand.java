@@ -198,7 +198,8 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 					_portal.getLiferayPortletResponse(actionResponse),
 					configurationJSONObject);
 
-			jsonObject.put("configuration", configurationJSONObject
+			jsonObject.put(
+				"configuration", configurationJSONObject
 			).put(
 				"content",
 				_fragmentRendererController.render(

@@ -271,7 +271,10 @@ definition {
 	@description = "Edits to display pages should not reflect in the live site until published."
 	@priority = "5"
 	test PublishEditedDisplayPage {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until LRQA-53356 resolved
+
+		property portal.acceptance = "false";
 
 		task ("Mark the display page as default") {
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");

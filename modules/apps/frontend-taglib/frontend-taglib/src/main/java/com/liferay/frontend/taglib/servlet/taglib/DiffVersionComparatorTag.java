@@ -198,13 +198,13 @@ public class DiffVersionComparatorTag extends IncludeTag {
 			_resourceURL.setParameter("languageId", _languageId);
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		Map<String, Object> data = new HashMap<>();
 
 		try {
 			if (_availableLocales != null) {
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 				JSONArray availableLocalesJSONArray =
 					JSONFactoryUtil.createJSONArray();
 
@@ -260,23 +260,16 @@ public class DiffVersionComparatorTag extends IncludeTag {
 			data.put("diffVersions", diffVersionsJSONArray);
 
 			data.put("diffVersionsCount", diffVersionsCount);
-
 			data.put("languageId", _languageId);
-
 			data.put(
 				"nextVersion",
 				String.valueOf(_diffVersionsInfo.getNextVersion()));
-
 			data.put("portletURL", _portletURL.toString());
-
 			data.put(
 				"previousVersion",
 				String.valueOf(_diffVersionsInfo.getPreviousVersion()));
-
 			data.put("resourceURL", _resourceURL.toString());
-
 			data.put("sourceVersion", String.valueOf(_sourceVersion));
-
 			data.put("targetVersion", String.valueOf(_targetVersion));
 		}
 		catch (PortalException | PortletException e) {

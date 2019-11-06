@@ -74,14 +74,14 @@ public class DepotAdminDisplayContext {
 
 	public GroupSearch getGroupSearch() {
 		GroupSearch groupSearch = _depotAdminGroupSearchProvider.getGroupSearch(
-			_liferayPortletRequest, getPortletURL());
+			_liferayPortletRequest, _getPortletURL());
 
 		groupSearch.setId("depotEntries");
 
 		return groupSearch;
 	}
 
-	public PortletURL getPortletURL() {
+	private PortletURL _getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("displayStyle", getDisplayStyle());

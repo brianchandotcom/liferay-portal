@@ -262,11 +262,30 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+		var fieldType = "Text Field";
 
-		FormViewBuilder.setName(formViewName = "My Form View");
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		FormViewBuilder.setName(title = "My Form View");
 
 		FormViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Text Field");
+		
+		TableViewBuilder.setName(title = "My Table View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Table View");
+
+		AppBuilderAdmin.openItem(customObjectName = "My Table View");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+
 	}
 
 	@description = "Attempt to add a Custom Object without a valid name"

@@ -29,6 +29,22 @@
 	<td>//select[contains(@id,'displayStyle')]</td>
 	<td></td>
 </tr>
+<!--DEPOT-->
+<tr>
+	<td>DEPOT_MUTED_DEFAULT_LANGUAGE</td>
+	<td>//div[@class='sheet-section']//fieldset[@class='fieldset']//fieldset[contains(@class,'default-language')]//p[contains(.,'${key_language}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEPOT_MUTED_TITLE</td>
+	<td>//div[@class='sheet-section']//fieldset[@class='fieldset']//h4[@class='text-muted' and contains(.,'${key_titleName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEPOT_MUTED_AVAILABLE_LANGUAGES</td>
+	<td>//div[@class='sheet-section']//fieldset[@class='fieldset']//fieldset[contains(@class,'available-languages')]//p[contains(.,'${key_languages}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

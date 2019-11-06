@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
@@ -313,6 +314,21 @@ public class LayoutCTTest {
 		layout = layouts.get(0);
 
 		Assert.assertEquals(description, layout.getDescription());
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			Layout newLayout = LayoutTestUtil.addLayout(_group);
+
+			layouts = _layoutLocalService.getLayouts(
+				_group.getGroupId(), layout.isPrivateLayout(), 1, 2,
+				OrderByComparatorFactoryUtil.create("Layout", "plid", true));
+
+			Assert.assertEquals(layouts.toString(), 1, layouts.size());
+
+			Assert.assertEquals(newLayout, layouts.get(0));
+		}
 	}
 
 	@Test

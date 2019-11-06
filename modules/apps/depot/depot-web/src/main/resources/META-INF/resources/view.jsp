@@ -38,26 +38,70 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.Group"
+					cssClass="entry-display-style"
 					escapedModel="<%= true %>"
 					keyProperty="groupId"
 					modelVar="curGroup"
 					rowIdProperty="groupId"
 				>
+					<c:choose>
+						<c:when test='<%= Objects.equals(depotAdminDisplayContext.getDisplayStyle(), "descriptive") %>'>
+							<liferay-ui:search-container-column-text>
+								<liferay-ui:search-container-column-icon
+									icon="repository"
+								/>
+							</liferay-ui:search-container-column-text>
 
-					<%
-					row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-					%>
+							<liferay-ui:search-container-column-text
+								colspan="<%= 2 %>"
+							>
+								<h5>
+									<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>
+								</h5>
+							</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text>
-						<clay:vertical-card
-							verticalCard="<%= new DepotEntryVerticalCard(curGroup, liferayPortletRequest, liferayPortletResponse, searchContainer.getRowChecker()) %>"
-						/>
-					</liferay-ui:search-container-column-text>
+							<liferay-ui:search-container-column-text>
+								<clay:dropdown-actions
+									defaultEventHandler="<%= DepotAdminWebKeys.DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+									dropdownItems="<%= depotAdminDisplayContext.getActionDropdownItems(curGroup) %>"
+								/>
+							</liferay-ui:search-container-column-text>
+						</c:when>
+						<c:when test='<%= Objects.equals(depotAdminDisplayContext.getDisplayStyle(), "icon") %>'>
+
+							<%
+							row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
+							%>
+
+							<liferay-ui:search-container-column-text>
+								<clay:vertical-card
+									verticalCard="<%= new DepotEntryVerticalCard(curGroup, liferayPortletRequest, liferayPortletResponse, searchContainer.getRowChecker()) %>"
+								/>
+							</liferay-ui:search-container-column-text>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand table-cell-minw-200 table-title"
+								name="name"
+								orderable="<%= true %>"
+							>
+								<aui:a href="javascript:;" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+							</liferay-ui:search-container-column-text>
+
+							<liferay-ui:search-container-column-text>
+								<clay:dropdown-actions
+									defaultEventHandler="<%= DepotAdminWebKeys.DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+									dropdownItems="<%= depotAdminDisplayContext.getActionDropdownItems(curGroup) %>"
+								/>
+							</liferay-ui:search-container-column-text>
+						</c:otherwise>
+					</c:choose>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator
 					displayStyle="<%= depotAdminDisplayContext.getDisplayStyle() %>"
 					markupView="lexicon"
+					searchContainer="<%= searchContainer %>"
 				/>
 			</liferay-ui:search-container>
 		</aui:form>

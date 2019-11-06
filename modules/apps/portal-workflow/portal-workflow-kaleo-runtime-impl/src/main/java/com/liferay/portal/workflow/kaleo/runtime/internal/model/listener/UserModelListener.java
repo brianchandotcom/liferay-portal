@@ -23,25 +23,27 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
+import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
+import com.liferay.portal.workflow.kaleo.runtime.action.KaleoActionExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
+import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -84,20 +86,30 @@ public class UserModelListener extends BaseModelListener<User> {
 		}
 	}
 
-	private void _addKaleoTaskAssignmentInstances(
-			Map<String, Serializable> workflowContext,
-			KaleoInstanceToken kaleoInstanceToken, KaleoTask kaleoTask,
-			KaleoTaskInstanceToken kaleoTaskInstanceToken)
+	private void _reassignKaleoTaskInstance(
+			KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance)
 		throws PortalException {
 
+		KaleoTask kaleoTask = _kaleoTaskLocalService.getKaleoTask(
+			kaleoTaskAssignmentInstance.getKaleoTaskId());
+
+		KaleoInstanceToken kaleoInstanceToken =
+			_kaleoInstanceTokenLocalService.getKaleoInstanceToken(
+				kaleoTaskAssignmentInstance.getKaleoInstanceTokenId());
+
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
+				kaleoTaskAssignmentInstance.getKaleoTaskInstanceTokenId());
+
 		ExecutionContext executionContext = new ExecutionContext(
-			kaleoInstanceToken, kaleoTaskInstanceToken, workflowContext,
+			kaleoInstanceToken, kaleoTaskInstanceToken,
+			WorkflowContextUtil.convert(
+				kaleoTaskInstanceToken.getWorkflowContext()),
 			new ServiceContext() {
 				{
-					setCompanyId(
-						kaleoTaskInstanceToken.getKaleoInstanceTokenId());
-					setScopeGroupId(kaleoTaskInstanceToken.getGroupId());
-					setUserId(kaleoTaskInstanceToken.getUserId());
+					setCompanyId(kaleoInstanceToken.getCompanyId());
+					setScopeGroupId(kaleoInstanceToken.getGroupId());
+					setUserId(kaleoInstanceToken.getUserId());
 				}
 			});
 
@@ -115,35 +127,45 @@ public class UserModelListener extends BaseModelListener<User> {
 					kaleoTaskAssignment, executionContext));
 		}
 
-		_kaleoTaskAssignmentInstanceLocalService.addTaskAssignmentInstances(
-			kaleoTaskInstanceToken, kaleoTaskAssignments, workflowContext,
+		List<KaleoTaskAssignmentInstance> previousTaskAssignmentInstances =
+			kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances();
+
+		kaleoTaskInstanceToken =
+			_kaleoTaskInstanceTokenLocalService.deleteKaleoTaskInstanceToken(
+				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
+
+		kaleoTaskInstanceToken =
+			_kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
+				kaleoInstanceToken.getKaleoInstanceTokenId(),
+				kaleoTask.getKaleoTaskId(), kaleoTask.getName(),
+				kaleoTaskAssignments, kaleoTaskInstanceToken.getDueDate(),
+				executionContext.getWorkflowContext(),
+				executionContext.getServiceContext());
+
+		executionContext.setKaleoTaskInstanceToken(kaleoTaskInstanceToken);
+
+		_kaleoActionExecutor.executeKaleoActions(
+			KaleoNode.class.getName(), kaleoTask.getKaleoNodeId(),
+			ExecutionType.ON_ASSIGNMENT, executionContext);
+
+		_notificationHelper.sendKaleoNotifications(
+			KaleoNode.class.getName(), kaleoTask.getKaleoNodeId(),
+			ExecutionType.ON_ASSIGNMENT, executionContext);
+
+		_kaleoLogLocalService.addTaskAssignmentKaleoLog(
+			previousTaskAssignmentInstances, kaleoTaskInstanceToken, null,
+			executionContext.getWorkflowContext(),
 			executionContext.getServiceContext());
 	}
 
-	private void _reassignKaleoTaskInstance(
-			KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance)
-		throws PortalException {
-
-		_kaleoTaskAssignmentInstanceLocalService.
-			deleteKaleoTaskAssignmentInstance(
-				kaleoTaskAssignmentInstance.getKaleoTaskAssignmentInstanceId());
-
-		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
-				kaleoTaskAssignmentInstance.getKaleoTaskInstanceTokenId());
-
-		_addKaleoTaskAssignmentInstances(
-			WorkflowContextUtil.convert(
-				kaleoTaskInstanceToken.getWorkflowContext()),
-			_kaleoInstanceTokenLocalService.getKaleoInstanceToken(
-				kaleoTaskAssignmentInstance.getKaleoInstanceTokenId()),
-			_kaleoTaskLocalService.getKaleoTask(
-				kaleoTaskAssignmentInstance.getKaleoTaskId()),
-			kaleoTaskInstanceToken);
-	}
+	@Reference
+	private KaleoActionExecutor _kaleoActionExecutor;
 
 	@Reference
 	private KaleoInstanceTokenLocalService _kaleoInstanceTokenLocalService;
+
+	@Reference
+	private KaleoLogLocalService _kaleoLogLocalService;
 
 	@Reference
 	private KaleoTaskAssignmentInstanceLocalService
@@ -155,6 +177,9 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	@Reference
 	private KaleoTaskLocalService _kaleoTaskLocalService;
+
+	@Reference
+	private NotificationHelper _notificationHelper;
 
 	@Reference
 	private TaskAssignmentSelectorRegistry _taskAssignmentSelectorRegistry;

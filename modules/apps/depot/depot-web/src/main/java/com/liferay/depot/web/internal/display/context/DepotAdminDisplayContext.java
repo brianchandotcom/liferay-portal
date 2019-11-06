@@ -18,11 +18,14 @@ import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.servlet.taglib.util.DepotActionDropdownItemsProvider;
 import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.sitesadmin.search.SiteChecker;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 
 import java.util.List;
@@ -41,6 +44,7 @@ public class DepotAdminDisplayContext {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -76,9 +80,33 @@ public class DepotAdminDisplayContext {
 		GroupSearch groupSearch = _depotAdminGroupSearchProvider.getGroupSearch(
 			_liferayPortletRequest, _getPortletURL());
 
-		groupSearch.setId("depotEntries");
+		groupSearch.setId("repositories");
+
+		SiteChecker siteChecker = new SiteChecker(_liferayPortletResponse);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("^(?!.*");
+		sb.append(_liferayPortletResponse.getNamespace());
+		sb.append("redirect).*(groupId=");
+		sb.append(_getGroupId());
+		sb.append(")");
+
+		siteChecker.setRememberCheckBoxStateURLRegex(sb.toString());
+
+		groupSearch.setRowChecker(siteChecker);
 
 		return groupSearch;
+	}
+
+	private long _getGroupId() {
+		if (_groupId <= 0) {
+			_groupId = ParamUtil.getLong(
+				_httpServletRequest, "groupId",
+				GroupConstants.DEFAULT_PARENT_GROUP_ID);
+		}
+
+		return _groupId;
 	}
 
 	private PortletURL _getPortletURL() {
@@ -91,6 +119,8 @@ public class DepotAdminDisplayContext {
 
 	private final DepotAdminGroupSearchProvider _depotAdminGroupSearchProvider;
 	private String _displayStyle;
+	private long _groupId;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 

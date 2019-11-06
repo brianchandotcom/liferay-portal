@@ -24,13 +24,14 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 
 <clay:management-toolbar
 	displayContext="<%= depotAdminManagementToolbarDisplayContext %>"
+	searchContainerId="<%= depotAdminManagementToolbarDisplayContext.getSearchContainerId() %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right">
 	<div class="sidenav-content">
 		<portlet:actionURL name="deleteGroups" var="deleteGroupsURL" />
 
-		<aui:form action="<%= deleteGroupsURL %>" name="fm">
+		<aui:form action="<%= deleteGroupsURL %>" cssClass="container-fluid-1280" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<liferay-ui:search-container
@@ -44,11 +45,21 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 					modelVar="curGroup"
 					rowIdProperty="groupId"
 				>
+
+					<%
+					Map<String, Object> rowData = new HashMap<>();
+
+					rowData.put("actions", StringUtil.merge(depotAdminManagementToolbarDisplayContext.getAvailableActions(curGroup)));
+
+					row.setData(rowData);
+					%>
+
 					<c:choose>
 						<c:when test='<%= Objects.equals(depotAdminDisplayContext.getDisplayStyle(), "descriptive") %>'>
 							<liferay-ui:search-container-column-text>
 								<liferay-ui:search-container-column-icon
 									icon="repository"
+									toggleRowChecker="<%= true %>"
 								/>
 							</liferay-ui:search-container-column-text>
 

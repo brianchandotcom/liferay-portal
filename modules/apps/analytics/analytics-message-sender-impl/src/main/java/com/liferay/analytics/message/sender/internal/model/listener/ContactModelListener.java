@@ -14,13 +14,12 @@
 
 package com.liferay.analytics.message.sender.internal.model.listener;
 
-import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ContactLocalService;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,70 +31,20 @@ import org.osgi.service.component.annotations.Reference;
 public class ContactModelListener extends BaseEntityModelListener<Contact> {
 
 	@Override
-	public String getObjectType() {
-		return "user";
+	protected List<String> getAttributes() {
+		return _attributes;
 	}
 
 	@Override
-	public void onAfterCreate(Contact contact) throws ModelListenerException {
-		send("add", contact);
+	protected Object getOldObject(Contact contact) throws Exception {
+		return _contactLocalService.getContact(contact.getContactId());
 	}
 
-	@Override
-	public void onBeforeRemove(Contact contact) throws ModelListenerException {
-		send("delete", contact);
-	}
-
-	@Override
-	public void onBeforeUpdate(Contact newContact)
-		throws ModelListenerException {
-
-		try {
-			Contact oldContact = _contactLocalService.getContact(
-				newContact.getContactId());
-
-			if (_equals(newContact, oldContact)) {
-				return;
-			}
-
-			send("update", newContact);
-		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
-		}
-	}
-
-	private boolean _equals(Contact newContact, Contact oldContact) {
-		Set<String> modifiedAttributes = getModifiedAttributes(
-			new ArrayList<String>() {
-				{
-					add("birthday");
-					add("employeeNumber");
-					add("employeeStatusId");
-					add("facebookSn");
-					add("firstName");
-					add("hoursOfOperation");
-					add("jabberSn");
-					add("jobClass");
-					add("jobTitle");
-					add("lastName");
-					add("male");
-					add("middleName");
-					add("prefixId");
-					add("skypeSn");
-					add("smsSn");
-					add("suffixId");
-					add("twitterSn");
-				}
-			},
-			newContact, oldContact);
-
-		if (!modifiedAttributes.isEmpty()) {
-			return false;
-		}
-
-		return true;
-	}
+	private static final List<String> _attributes = Arrays.asList(
+		"birthday", "employeeNumber", "employeeStatusId", "facebookSn",
+		"firstName", "hoursOfOperation", "jabberSn", "jobClass", "jobTitle",
+		"lastName", "male", "middleName", "prefixId", "skypeSn", "smsSn",
+		"suffixId", "twitterSn");
 
 	@Reference
 	private ContactLocalService _contactLocalService;

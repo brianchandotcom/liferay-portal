@@ -14,13 +14,12 @@
 
 package com.liferay.analytics.message.sender.internal.model.listener;
 
-import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,54 +31,17 @@ import org.osgi.service.component.annotations.Reference;
 public class GroupModelListener extends BaseEntityModelListener<Group> {
 
 	@Override
-	public String getObjectType() {
-		return "group";
+	protected List<String> getAttributes() {
+		return _attributes;
 	}
 
 	@Override
-	public void onAfterCreate(Group group) throws ModelListenerException {
-		send("add", group);
+	protected Object getOldObject(Group group) throws Exception {
+		return _groupLocalService.getGroup(group.getGroupId());
 	}
 
-	@Override
-	public void onBeforeRemove(Group group) throws ModelListenerException {
-		send("delete", group);
-	}
-
-	@Override
-	public void onBeforeUpdate(Group newGroup) throws ModelListenerException {
-		try {
-			Group oldGroup = _groupLocalService.getGroup(newGroup.getGroupId());
-
-			if (_equals(newGroup, oldGroup)) {
-				return;
-			}
-
-			send("update", newGroup);
-		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
-		}
-	}
-
-	private boolean _equals(Group newGroup, Group oldGroup) {
-		Set<String> modifiedAttributes = getModifiedAttributes(
-			new ArrayList<String>() {
-				{
-					add("description");
-					add("descriptiveName");
-					add("friendlyURL");
-					add("name");
-				}
-			},
-			newGroup, oldGroup);
-
-		if (!modifiedAttributes.isEmpty()) {
-			return false;
-		}
-
-		return true;
-	}
+	private static final List<String> _attributes = Arrays.asList(
+		"description", "descriptiveName", "friendlyURL", "name");
 
 	@Reference
 	private GroupLocalService _groupLocalService;

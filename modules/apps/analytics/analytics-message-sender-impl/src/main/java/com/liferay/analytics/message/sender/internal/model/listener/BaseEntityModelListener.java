@@ -19,6 +19,7 @@ import com.liferay.analytics.message.sender.model.AnalyticsMessage;
 import com.liferay.analytics.message.sender.util.UserSerializer;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -47,7 +48,34 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	extends BaseModelListener<T> {
 
-	public abstract String getObjectType();
+	@Override
+	public void onAfterCreate(T model) throws ModelListenerException {
+		send("add", model);
+	}
+
+	@Override
+	public void onBeforeRemove(T model) throws ModelListenerException {
+		send("delete", model);
+	}
+
+	@Override
+	public void onBeforeUpdate(T model) throws ModelListenerException {
+		try {
+			Set<String> modifiedAttributes = getModifiedAttributes(
+				getAttributes(), model, getOldObject(model));
+
+			if (modifiedAttributes.isEmpty()) {
+				return;
+			}
+
+			send("update", model);
+		}
+		catch (Exception e) {
+			throw new ModelListenerException(e);
+		}
+	}
+
+	protected abstract List<String> getAttributes();
 
 	protected Set<String> getModifiedAttributes(
 		List<String> attributeNames, Object newObject, Object oldObject) {
@@ -68,10 +96,14 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		return modifiedAttributes;
 	}
 
+	protected abstract Object getOldObject(T model) throws Exception;
+
 	protected void send(String eventType, Object object) {
 		try {
+			Class<?> clazz = object.getClass();
+
 			AnalyticsMessage.Builder analyticsMessageBuilder =
-				AnalyticsMessage.builder(_getDataSourceId(), getObjectType());
+				AnalyticsMessage.builder(_getDataSourceId(), clazz.getName());
 
 			analyticsMessageBuilder.action(eventType);
 			analyticsMessageBuilder.object(serialize(object));

@@ -14,13 +14,12 @@
 
 package com.liferay.analytics.message.sender.internal.model.listener;
 
-import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,65 +32,18 @@ public class OrganizationModelListener
 	extends BaseEntityModelListener<Organization> {
 
 	@Override
-	public String getObjectType() {
-		return "organization";
+	protected List<String> getAttributes() {
+		return _attributes;
 	}
 
 	@Override
-	public void onAfterCreate(Organization organization)
-		throws ModelListenerException {
-
-		send("add", organization);
+	protected Object getOldObject(Organization organization) throws Exception {
+		return _organizationLocalService.getOrganization(
+			organization.getOrganizationId());
 	}
 
-	@Override
-	public void onBeforeRemove(Organization organization)
-		throws ModelListenerException {
-
-		send("delete", organization);
-	}
-
-	@Override
-	public void onBeforeUpdate(Organization newOrganization)
-		throws ModelListenerException {
-
-		try {
-			Organization oldOrganization =
-				_organizationLocalService.getOrganization(
-					newOrganization.getOrganizationId());
-
-			if (_equals(newOrganization, oldOrganization)) {
-				return;
-			}
-
-			send("update", newOrganization);
-		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
-		}
-	}
-
-	private boolean _equals(
-		Organization newOrganization, Organization oldOrganization) {
-
-		Set<String> modifiedAttributes = getModifiedAttributes(
-			new ArrayList<String>() {
-				{
-					add("comments");
-					add("countryId");
-					add("name");
-					add("parentOrganizationId");
-					add("regionId");
-				}
-			},
-			newOrganization, oldOrganization);
-
-		if (!modifiedAttributes.isEmpty()) {
-			return false;
-		}
-
-		return true;
-	}
+	private static final List<String> _attributes = Arrays.asList(
+		"comments", "countryId", "name", "parentOrganizationId", "regionId");
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

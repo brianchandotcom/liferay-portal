@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
-import com.liferay.portal.kernel.internal.service.persistence.ReverseTableMapper;
 import com.liferay.portal.kernel.internal.service.persistence.TableMapperImpl;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -77,17 +76,12 @@ public class TableMapperFactory {
 		TableMapper<?, ?> tableMapper = _tableMappers.get(tableMapperKey);
 
 		if (tableMapper == null) {
-			TableMapperImpl<L, R> tableMapperImpl = new TableMapperImpl<>(
+			tableMapper = new TableMapperImpl<>(
 				tableName, companyColumnName, leftColumnName, rightColumnName,
 				leftPersistence.getModelClass(),
 				rightPersistence.getModelClass(), leftPersistence,
 				rightPersistence,
 				_cachelessMappingTableNames.contains(tableName));
-
-			tableMapperImpl.setReverseTableMapper(
-				new ReverseTableMapper<>(tableMapperImpl));
-
-			tableMapper = tableMapperImpl;
 
 			_tableMappers.put(tableMapperKey, tableMapper);
 		}

@@ -1386,17 +1386,6 @@ public class TableMapperTest {
 	}
 
 	@Test
-	public void testGetSetReverseTableMapper() {
-		TableMapper<Right, Left> tableMapper = new ReverseTableMapper<>(
-			_tableMapperImpl);
-
-		_tableMapperImpl.setReverseTableMapper(tableMapper);
-
-		Assert.assertSame(
-			tableMapper, _tableMapperImpl.getReverseTableMapper());
-	}
-
-	@Test
 	public void testMatches() {
 		Assert.assertTrue(
 			_tableMapperImpl.matches(_LEFT_COLUMN_NAME, _RIGHT_COLUMN_NAME));

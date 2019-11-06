@@ -63,60 +63,6 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		this.rightBasePersistence = rightBasePersistence;
 		this.cacheless = cacheless;
 
-		DataSource dataSource = leftBasePersistence.getDataSource();
-
-		addTableMappingSqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-			dataSource,
-			StringBundler.concat(
-				"INSERT INTO ", tableName, " (", companyColumnName, ", ",
-				leftColumnName, ", ", rightColumnName, ") VALUES (?, ?, ?)"),
-			ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT);
-
-		if (cacheless) {
-			containsTableMappingSQL =
-				MappingSqlQueryFactoryUtil.getMappingSqlQuery(
-					dataSource,
-					StringBundler.concat(
-						"SELECT * FROM ", tableName, " WHERE ", leftColumnName,
-						" = ? AND ", rightColumnName, " = ?"),
-					RowMapper.COUNT, ParamSetter.BIGINT, ParamSetter.BIGINT);
-		}
-
-		deleteLeftPrimaryKeyTableMappingsSqlUpdate =
-			SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource,
-				StringBundler.concat(
-					"DELETE FROM ", tableName, " WHERE ", leftColumnName,
-					" = ?"),
-				ParamSetter.BIGINT);
-		deleteRightPrimaryKeyTableMappingsSqlUpdate =
-			SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource,
-				StringBundler.concat(
-					"DELETE FROM ", tableName, " WHERE ", rightColumnName,
-					" = ?"),
-				ParamSetter.BIGINT);
-		deleteTableMappingSqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-			dataSource,
-			StringBundler.concat(
-				"DELETE FROM ", tableName, " WHERE ", leftColumnName,
-				" = ? AND ", rightColumnName, " = ?"),
-			ParamSetter.BIGINT, ParamSetter.BIGINT);
-		getLeftPrimaryKeysSqlQuery =
-			MappingSqlQueryFactoryUtil.getMappingSqlQuery(
-				dataSource,
-				StringBundler.concat(
-					"SELECT ", leftColumnName, " FROM ", tableName, " WHERE ",
-					rightColumnName, " = ?"),
-				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT);
-		getRightPrimaryKeysSqlQuery =
-			MappingSqlQueryFactoryUtil.getMappingSqlQuery(
-				dataSource,
-				StringBundler.concat(
-					"SELECT ", rightColumnName, " FROM ", tableName, " WHERE ",
-					leftColumnName, " = ?"),
-				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT);
-
 		String leftToRightPortalCacheName = StringBundler.concat(
 			TableMapper.class.getName(), "-", tableName, "-", leftColumnName,
 			"-To-", rightColumnName);
@@ -136,6 +82,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 			rightToLeftPortalCache = PortalCacheHelperUtil.getPortalCache(
 				PortalCacheManagerNames.MULTI_VM, rightToLeftPortalCacheName);
 		}
+
+		init(tableName, companyColumnName, leftColumnName, rightColumnName);
 	}
 
 	@Override
@@ -367,10 +315,6 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		return false;
 	}
 
-	public void setReverseTableMapper(TableMapper<R, L> reverseTableMapper) {
-		this.reverseTableMapper = reverseTableMapper;
-	}
-
 	protected static <M extends BaseModel<M>, S extends BaseModel<S>> int
 		deleteTableMappings(
 			Class<M> masterModelClass, Class<S> slaveModelClass,
@@ -551,6 +495,67 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		}
 
 		return true;
+	}
+
+	protected void init(
+		String tableName, String companyColumnName, String leftColumnName,
+		String rightColumnName) {
+
+		DataSource dataSource = leftBasePersistence.getDataSource();
+
+		addTableMappingSqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+			dataSource,
+			StringBundler.concat(
+				"INSERT INTO ", tableName, " (", companyColumnName, ", ",
+				leftColumnName, ", ", rightColumnName, ") VALUES (?, ?, ?)"),
+			ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT);
+
+		if (cacheless) {
+			containsTableMappingSQL =
+				MappingSqlQueryFactoryUtil.getMappingSqlQuery(
+					dataSource,
+					StringBundler.concat(
+						"SELECT * FROM ", tableName, " WHERE ", leftColumnName,
+						" = ? AND ", rightColumnName, " = ?"),
+					RowMapper.COUNT, ParamSetter.BIGINT, ParamSetter.BIGINT);
+		}
+
+		deleteLeftPrimaryKeyTableMappingsSqlUpdate =
+			SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource,
+				StringBundler.concat(
+					"DELETE FROM ", tableName, " WHERE ", leftColumnName,
+					" = ?"),
+				ParamSetter.BIGINT);
+		deleteRightPrimaryKeyTableMappingsSqlUpdate =
+			SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource,
+				StringBundler.concat(
+					"DELETE FROM ", tableName, " WHERE ", rightColumnName,
+					" = ?"),
+				ParamSetter.BIGINT);
+		deleteTableMappingSqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+			dataSource,
+			StringBundler.concat(
+				"DELETE FROM ", tableName, " WHERE ", leftColumnName,
+				" = ? AND ", rightColumnName, " = ?"),
+			ParamSetter.BIGINT, ParamSetter.BIGINT);
+		getLeftPrimaryKeysSqlQuery =
+			MappingSqlQueryFactoryUtil.getMappingSqlQuery(
+				dataSource,
+				StringBundler.concat(
+					"SELECT ", leftColumnName, " FROM ", tableName, " WHERE ",
+					rightColumnName, " = ?"),
+				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT);
+		getRightPrimaryKeysSqlQuery =
+			MappingSqlQueryFactoryUtil.getMappingSqlQuery(
+				dataSource,
+				StringBundler.concat(
+					"SELECT ", rightColumnName, " FROM ", tableName, " WHERE ",
+					leftColumnName, " = ?"),
+				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT);
+
+		reverseTableMapper = new ReverseTableMapper<>(this);
 	}
 
 	protected SqlUpdate addTableMappingSqlUpdate;

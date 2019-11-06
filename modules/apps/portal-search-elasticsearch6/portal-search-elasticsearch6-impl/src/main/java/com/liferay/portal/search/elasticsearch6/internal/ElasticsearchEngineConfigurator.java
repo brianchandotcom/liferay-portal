@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch6.internal;
 
+import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.search.BaseSearchEngineConfigurator;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
@@ -141,6 +143,9 @@ public class ElasticsearchEngineConfigurator
 	protected SearchEngineHelper searchEngineHelper;
 
 	@Reference
+	private DestinationFactory _destinationFactory;
+
+	@Reference
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 
 	@Reference(target = "(!(search.engine.impl=*))")
@@ -148,6 +153,9 @@ public class ElasticsearchEngineConfigurator
 
 	@Reference(target = "(!(search.engine.impl=*))")
 	private IndexWriter _indexWriter;
+
+	@Reference
+	private MessageBus _messageBus;
 
 	private final Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<>();

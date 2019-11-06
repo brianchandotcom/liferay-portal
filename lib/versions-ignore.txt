@@ -4,7 +4,6 @@ lib/development/com.liferay.ant.heap.dump.jar
 lib/development/com.liferay.ant.mirrors.get.jar
 lib/development/com.liferay.ant.sync.dir.jar
 lib/development/com.liferay.bnd.invoker.jar
-lib/development/com.liferay.util.taglib.compat.jar
 lib/portal/portal-client.jar
 tmp/lib-pre/com.liferay.petra.concurrent.jar
 tmp/lib-pre/com.liferay.petra.content.jar
@@ -22,13 +21,5 @@ tmp/lib-pre/com.liferay.petra.reflect.jar
 tmp/lib-pre/com.liferay.petra.string.jar
 tmp/lib-pre/com.liferay.petra.test.util.jar
 tmp/lib-pre/com.liferay.petra.xml.jar
-tmp/lib-pre/com.liferay.portal.impl.blogs.compat.jar
-tmp/lib-pre/com.liferay.portal.impl.document.library.compat.jar
-tmp/lib-pre/com.liferay.portal.impl.message.boards.compat.jar
 tmp/lib-pre/com.liferay.portal.impl.trash.compat.jar
-tmp/lib-pre/com.liferay.portal.kernel.blogs.compat.jar
-tmp/lib-pre/com.liferay.portal.kernel.document.library.compat.jar
-tmp/lib-pre/com.liferay.portal.kernel.message.boards.compat.jar
 tmp/lib-pre/com.liferay.registry.api.jar
-tmp/lib-pre/com.liferay.util.java.compat.jar
-tmp/lib-pre/com.liferay.util.taglib.compat.jar

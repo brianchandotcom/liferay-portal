@@ -80,10 +80,64 @@ definition {
 		}
 	}
 
+	macro viewCurrentLanguages {
+		AssertTextEquals(
+			key_title = "Available Languages",
+			locator1 = "Header#H4_SPECIFIC_TITLE",
+			value1 = "Available Languages");
+
+		for (var currentLanguage : list "${currentLanguages}") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
+				value1 = "${currentLanguage}");
+		}
+	}
+
 	macro viewDefaultCP {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No repositories were found.");
+	}
+
+	macro viewDefaultLanguage {
+		AssertTextEquals(
+			key_title = "Default Language",
+			locator1 = "Header#H4_SPECIFIC_TITLE",
+			value1 = "Default Language");
+
+		PortalSettings.viewDefaultLanguageCP(defaultPortalLanguage = "${defaultDepotLanguage}");
+	}
+
+	macro viewDefaultLanguagesConfiguration {
+		AssertChecked.assertCheckedNotVisible(
+			key_languagesOption = "Use the default language options.",
+			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			key_languagesOption = "Define a custom default language and additional available languages for this repository.",
+			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
+
+		AssertTextEquals(
+			key_titleName = "Default Language",
+			locator1 = "LanguageConfiguration#DEPOT_MUTED_TITLE",
+			value1 = "Default Language");
+
+		AssertTextEquals(
+			key_language = "English (United States)",
+			locator1 = "LanguageConfiguration#DEPOT_MUTED_DEFAULT_LANGUAGE",
+			value1 = "English (United States)");
+
+		AssertTextEquals(
+			key_titleName = "Available Languages",
+			locator1 = "LanguageConfiguration#DEPOT_MUTED_TITLE",
+			value1 = "Available Languages");
+
+		AssertTextEquals(
+			key_languages = "English (United States), Arabic (Saudi Arabia), Catalan (Spain), Chinese (China), Dutch (Netherlands), Finnish (Finland), French (France), German (Germany), Hungarian (Hungary), Japanese (Japan), Portuguese (Brazil), Spanish (Spain), Swedish (Sweden)",
+			locator1 = "LanguageConfiguration#DEPOT_MUTED_AVAILABLE_LANGUAGES",
+			value1 = "English (United States), Arabic (Saudi Arabia), Catalan (Spain), Chinese (China), Dutch (Netherlands), Finnish (Finland), French (France), German (Germany), Hungarian (Hungary), Japanese (Japan), Portuguese (Brazil), Spanish (Spain), Swedish (Sweden)");
+
+		AssertElementPresent(locator1 = "Button#SAVE");
 	}
 
 	macro viewSearchResult {

@@ -26,12 +26,12 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 <c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">
 	<div class="icon-sites">
 		<liferay-ui:icon
-			icon="sites"
+			icon="change"
 			id="manageSitesLink"
 			label="<%= false %>"
 			linkCssClass="icon-monospaced"
 			markupView="lexicon"
-			message="go-to-other-site"
+			message="go-to-other-space"
 			url="javascript:;"
 		/>
 	</div>
@@ -59,7 +59,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 					},
 					eventName: '<%= eventName %>',
 					id: '<portlet:namespace />selectSite',
-					title: '<liferay-ui:message key="select-site" />',
+					title: '<liferay-ui:message key="select-space" />',
 					uri: '<%= itemSelectorURL.toString() %>'
 				},
 				function(event) {
@@ -104,7 +104,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 	<c:when test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">
 		<div class="collapsed panel-toggler">
 			<span class="site-name">
-				<liferay-ui:message key="choose-a-site" />
+				<liferay-ui:message key="choose-a-space" />
 			</span>
 		</div>
 	</c:when>

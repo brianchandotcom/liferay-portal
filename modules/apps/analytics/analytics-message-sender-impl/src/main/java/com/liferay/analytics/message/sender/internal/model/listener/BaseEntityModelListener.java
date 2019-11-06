@@ -50,25 +50,25 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 	@Override
 	public void onAfterCreate(T model) throws ModelListenerException {
-		send("add", model);
+		_send("add", model);
 	}
 
 	@Override
 	public void onBeforeRemove(T model) throws ModelListenerException {
-		send("delete", model);
+		_send("delete", model);
 	}
 
 	@Override
 	public void onBeforeUpdate(T model) throws ModelListenerException {
 		try {
-			Set<String> modifiedAttributes = getModifiedAttributes(
+			Set<String> modifiedAttributes = _getModifiedAttributes(
 				getAttributes(), model, getOldObject(model));
 
 			if (modifiedAttributes.isEmpty()) {
 				return;
 			}
 
-			send("update", model);
+			_send("update", model);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -77,7 +77,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 	protected abstract List<String> getAttributes();
 
-	protected Set<String> getModifiedAttributes(
+	private Set<String> _getModifiedAttributes(
 		List<String> attributeNames, Object newObject, Object oldObject) {
 
 		Set<String> modifiedAttributes = new HashSet<>();
@@ -98,7 +98,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 	protected abstract Object getOldObject(T model) throws Exception;
 
-	protected void send(String eventType, Object object) {
+	private void _send(String eventType, Object object) {
 		try {
 			Class<?> clazz = object.getClass();
 
@@ -106,7 +106,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 				AnalyticsMessage.builder(_getDataSourceId(), clazz.getName());
 
 			analyticsMessageBuilder.action(eventType);
-			analyticsMessageBuilder.object(serialize(object));
+			analyticsMessageBuilder.object(_serialize(object));
 
 			analyticsMessageSenderClient.send(
 				Collections.singletonList(analyticsMessageBuilder.build()));
@@ -114,12 +114,12 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		catch (Exception e) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Unable to send analytics message " + serialize(object));
+					"Unable to send analytics message " + _serialize(object));
 			}
 		}
 	}
 
-	protected String serialize(Object object) {
+	private String _serialize(Object object) {
 		if (object instanceof User) {
 			return userSerializer.serialize((User)object);
 		}

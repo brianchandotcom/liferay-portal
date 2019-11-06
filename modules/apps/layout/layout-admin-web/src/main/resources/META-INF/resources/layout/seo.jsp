@@ -190,7 +190,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-open-graph-description" name="openGraphDescriptionEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
-				<aui:input disabled="<%= !selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="<%= selLayout.getDescription(themeDisplay.getLocale()) %>"/>
+				<aui:input disabled="<%= !selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="<%= selLayout.getDescription(themeDisplay.getLocale()) %>" />
 
 				<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 			</div>
@@ -203,7 +203,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-open-graph-description" name="openGraphDescriptionEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
-				<aui:input  id="openGraphDescription" disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphDescription" type="textarea" placeholder="description" />
+				<aui:input disabled="<%= true %>" id="openGraphDescription" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphDescription" placeholder="description" type="textarea" />
 
 				<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 			</div>
@@ -265,13 +265,9 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			'<portlet:namespace />openGraphTitle_<%= themeDisplay.getLanguageId() %>'
 		);
 
-
-		if (openGraphTitleEnabledCheck && openGraphTitleEnabledCheckField) {
+		if (openGraphTitleEnabledCheck && openGraphTitleField) {
 			openGraphTitleEnabledCheck.addEventListener('click', function(event) {
-				Liferay.Util.toggleDisabled(
-					openGraphTitleField,
-					!event.target.checked
-				);
+				Liferay.Util.toggleDisabled(openGraphTitleField, !event.target.checked);
 				Liferay.Util.toggleDisabled(
 					openGraphTitleFieldDefaultLocale,
 					!event.target.checked
@@ -300,7 +296,6 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 					openGraphDescriptionFieldDefaultLocale,
 					!event.target.checked
 				);
-
 			});
 		}
 	</aui:script>

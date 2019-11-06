@@ -91,10 +91,15 @@ function openImageSelector(callback, destroyedCallback = null) {
 }
 
 /**
+ * @param String infoItemSelectorURL
  * @param {function} callback
  * @param {function} [destroyedCallback=null]
  */
-function openItemSelector(callback, destroyedCallback = null) {
+function openInfoItemSelector(
+	infoItemSelectorURL,
+	callback,
+	destroyedCallback = null
+) {
 	const state = getState();
 
 	AUI().use('liferay-item-selector-dialog', A => {
@@ -124,11 +129,25 @@ function openItemSelector(callback, destroyedCallback = null) {
 			},
 			'strings.add': Liferay.Language.get('done'),
 			title: Liferay.Language.get('select'),
-			url: state.infoItemSelectorURL
+			url: infoItemSelectorURL
 		});
 
 		itemSelector.open();
 	});
+}
+
+/**
+ * @param {function} callback
+ * @param {function} [destroyedCallback=null]
+ */
+function openItemSelector(callback, destroyedCallback = null) {
+	const state = getState();
+
+	openInfoItemSelector(
+		state.infoItemSelectorURL,
+		callback,
+		destroyedCallback
+	);
 }
 
 /**
@@ -176,6 +195,7 @@ function stopListeningWidgetConfigurationChange() {
 export {
 	openCreateContentDialog,
 	openImageSelector,
+	openInfoItemSelector,
 	openItemSelector,
 	startListeningWidgetConfigurationChange,
 	stopListeningWidgetConfigurationChange

@@ -20,7 +20,7 @@ import '../../../common/InfoItemSelector.es';
 
 import './ItemSelectorFieldDelegateTemplate.soy';
 import getConnectedComponent from '../../../../store/ConnectedComponent.es';
-import {openItemSelector} from '../../../../utils/FragmentsEditorDialogUtils';
+import {openInfoItemSelector} from '../../../../utils/FragmentsEditorDialogUtils';
 import {getAvailableTemplates} from '../../../../utils/FragmentsEditorFetchUtils.es';
 import {setIn} from '../../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './ItemSelectorField.soy';
@@ -80,7 +80,7 @@ class ItemSelectorField extends Component {
 	 * @review
 	 */
 	_handleItemSelectClick() {
-		this._openItemSelector();
+		this._openInfoItemSelector();
 	}
 
 	/**
@@ -106,15 +106,21 @@ class ItemSelectorField extends Component {
 	 * @review
 	 */
 	_handleItemTypeClick() {
-		this._openItemSelector();
+		this._openInfoItemSelector();
 	}
 
 	/**
 	 * Opens item selector
 	 * @review
 	 */
-	_openItemSelector() {
-		openItemSelector(selectedInfoItem => {
+	_openInfoItemSelector() {
+		let itemSelectorUrl = this.infoItemSelectorURL;
+
+		if (this.field.typeOptions && this.field.typeOptions.itemSelectorUrl) {
+			itemSelectorUrl = this.field.typeOptions.itemSelectorUrl;
+		}
+
+		openInfoItemSelector(itemSelectorUrl, selectedInfoItem => {
 			this.emit('fieldValueChanged', {
 				name: this.field.name,
 				value: {
@@ -171,6 +177,7 @@ ItemSelectorField.STATE = {
 
 const ConnectedItemSelectorField = getConnectedComponent(ItemSelectorField, [
 	'getAvailableTemplatesURL',
+	'infoItemSelectorURL',
 	'spritemap'
 ]);
 

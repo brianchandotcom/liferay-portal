@@ -44,6 +44,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -148,7 +150,8 @@ public class LibraryReferenceTest {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Wrong version for ", jar, " in ", _VERSIONS_EXT_FILE_NAME),
-				libDependencyJarsVersion, versionsJarsVersion);
+				_normalizeVersion(libDependencyJarsVersion),
+				versionsJarsVersion);
 		}
 	}
 
@@ -569,6 +572,36 @@ public class LibraryReferenceTest {
 		}
 	}
 
+	private String _normalizeVersion(String version) {
+		if (Validator.isNull(version)) {
+			return StringPool.BLANK;
+		}
+
+		Matcher matcher = _versionPattern.matcher(version);
+
+		matcher.matches();
+
+		String numericVersion = matcher.group(1);
+		String separator = matcher.group(2);
+		String suffix = matcher.group(3);
+
+		if (Validator.isNull(numericVersion)) {
+			return suffix;
+		}
+
+		if (Validator.isNull(suffix)) {
+			return numericVersion;
+		}
+
+		if (!Objects.equals(separator, ".")) {
+			separator = StringPool.SPACE;
+
+			suffix = StringUtil.toUpperCase(suffix);
+		}
+
+		return numericVersion + separator + suffix;
+	}
+
 	private static final String _ECLIPSE_FILE_NAME = ".classpath";
 
 	private static final String _GIT_IGNORE_FILE_NAME =
@@ -612,6 +645,8 @@ public class LibraryReferenceTest {
 	private static final Set<String> _netBeansModuleSourceDirs =
 		new HashSet<>();
 	private static Path _portalPath;
+	private static final Pattern _versionPattern = Pattern.compile(
+		"(\\d+(?:\\.\\d+)+)?(\\W)?(.*)");
 	private static final Set<String> _versionsExtJars = new HashSet<>();
 	private static final Set<String> _versionsJars = new HashSet<>();
 	private static final Map<String, String> _versionsJarsVersions =

@@ -52,7 +52,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 
 <aui:input checked="<%= !inheritLocales %>" id="customLocales" label="define-a-custom-default-language-and-additional-available-languages-for-this-repository" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= false %>" />
 
-<aui:fieldset id='<%= renderResponse.getNamespace() + "inheritLocalesFieldset" %>'>
+<aui:fieldset cssClass='<%= !inheritLocales ? " hide ": StringPool.BLANK %>' id='<%= renderResponse.getNamespace() + "inheritLocalesFieldset" %>'>
 	<aui:fieldset cssClass="default-language">
 		<h4 class="text-muted"><liferay-ui:message key="default-language" /></h4>
 
@@ -76,7 +76,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 	</aui:fieldset>
 </aui:fieldset>
 
-<aui:fieldset id='<%= renderResponse.getNamespace() + "customLocalesFieldset" %>'>
+<aui:fieldset cssClass='<%= inheritLocales ? " hide ": StringPool.BLANK %>' id='<%= renderResponse.getNamespace() + "customLocalesFieldset" %>'>
 
 	<%
 	Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(group.getGroupId());

@@ -15,23 +15,16 @@
 package com.liferay.portal.kernel.internal.service.persistence;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheListener;
-import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
-import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
-import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.ParamSetter;
 import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.internal.cache.DummyPortalCache;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -97,88 +90,5 @@ public class CachelessTableMapperImpl
 	}
 
 	protected final MappingSqlQuery<Integer> getTableMappingSqlQuery;
-
-	protected static class DummyPortalCache<K extends Serializable, V>
-		implements PortalCache<K, V> {
-
-		@Override
-		public V get(K key) {
-			return null;
-		}
-
-		@Override
-		public List<K> getKeys() {
-			return Collections.emptyList();
-		}
-
-		@Override
-		public PortalCacheManager<K, V> getPortalCacheManager() {
-			return (PortalCacheManager<K, V>)
-				PortalCacheManagerProvider.getPortalCacheManager(
-					_portalCacheManagerName);
-		}
-
-		@Override
-		public String getPortalCacheName() {
-			return _portalCacheName;
-		}
-
-		@Override
-		public boolean isBlocking() {
-			return false;
-		}
-
-		@Override
-		public boolean isMVCC() {
-			return false;
-		}
-
-		@Override
-		public void put(K key, V value) {
-		}
-
-		@Override
-		public void put(K key, V value, int timeToLive) {
-		}
-
-		@Override
-		public void registerPortalCacheListener(
-			PortalCacheListener<K, V> portalCacheListener) {
-		}
-
-		@Override
-		public void registerPortalCacheListener(
-			PortalCacheListener<K, V> portalCacheListener,
-			PortalCacheListenerScope portalCacheListenerScope) {
-		}
-
-		@Override
-		public void remove(K key) {
-		}
-
-		@Override
-		public void removeAll() {
-		}
-
-		@Override
-		public void unregisterPortalCacheListener(
-			PortalCacheListener<K, V> portalCacheListener) {
-		}
-
-		@Override
-		public void unregisterPortalCacheListeners() {
-		}
-
-		protected DummyPortalCache(
-			String portalCacheManagerName, String portalCacheName) {
-
-			_portalCacheManagerName = portalCacheManagerName;
-			_portalCacheName = portalCacheName;
-		}
-
-		private final String _portalCacheManagerName;
-		private final String _portalCacheName;
-
-	}
 
 }

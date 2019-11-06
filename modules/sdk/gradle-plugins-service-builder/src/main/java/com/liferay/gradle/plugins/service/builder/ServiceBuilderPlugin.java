@@ -14,7 +14,8 @@
 
 package com.liferay.gradle.plugins.service.builder;
 
-import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.plugins.service.builder.internal.util.GradleUtil;
+import com.liferay.gradle.util.FileUtil;
 
 import java.io.File;
 
@@ -52,9 +53,19 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 		Configuration serviceBuilderConfiguration =
 			addConfigurationServiceBuilder(project);
 
-		addTaskBuildService(project);
+		final BuildServiceTask buildServiceTask = addTaskBuildService(project);
 
 		configureTasksBuildService(project, serviceBuilderConfiguration);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					configureTaskBuildService(buildServiceTask);
+				}
+
+			});
 	}
 
 	protected Configuration addConfigurationServiceBuilder(
@@ -224,11 +235,74 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 		return buildServiceTask;
 	}
 
+	@SuppressWarnings("rawtypes")
+	protected void configureTaskBuildService(
+		final BuildServiceTask buildServiceTask) {
+
+		Project project = buildServiceTask.getProject();
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withId(
+			"com.liferay.defaults.plugin",
+			new Action<Plugin>() {
+
+				@Override
+				public void execute(Plugin plugin) {
+					configureTaskBuildServiceForLiferayDefaultsPlugin(
+						buildServiceTask);
+				}
+
+			});
+	}
+
 	protected void configureTaskBuildServiceClasspath(
 		BuildServiceTask buildServiceTask,
 		Configuration serviceBuilderConfiguration) {
 
 		buildServiceTask.setClasspath(serviceBuilderConfiguration);
+	}
+
+	protected void configureTaskBuildServiceForLiferayDefaultsPlugin(
+		BuildServiceTask buildServiceTask) {
+
+		File apiDir = buildServiceTask.getApiDir();
+
+		if (apiDir == null) {
+			return;
+		}
+
+		Project project = buildServiceTask.getProject();
+
+		File apiProjectDir = GradleUtil.getRootDir(
+			project.file(apiDir), "bnd.bnd");
+
+		if (apiProjectDir == null) {
+			return;
+		}
+
+		Project rootProject = project.getRootProject();
+
+		String relativePath = FileUtil.relativize(
+			apiProjectDir, rootProject.getProjectDir());
+
+		relativePath = relativePath.replace(File.separatorChar, '/');
+
+		String apiProjectPath = ':' + relativePath.replace('/', ':');
+
+		Project apiProject = rootProject.findProject(apiProjectPath);
+
+		if (apiProject == null) {
+			String apiProjectName = apiProjectDir.getName();
+
+			apiProject = GradleUtil.findProject(rootProject, apiProjectName);
+		}
+
+		if (apiProject == null) {
+			return;
+		}
+
+		buildServiceTask.finalizedBy(apiProject.getPath() + ":baseline");
 	}
 
 	protected void configureTaskBuildServiceForWarPlugin(

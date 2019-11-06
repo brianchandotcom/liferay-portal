@@ -560,7 +560,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						project, jarJSDocTask, jarJSPsTask, jarJavadocTask,
 						jarSourcesTask, jarSourcesCommercialTask,
 						jarTLDDocTask);
-					_configureTaskBuildServiceAfterEvaluate(project);
 					_configureTaskJarSources(jarSourcesTask);
 					_configureTaskJarSources(jarSourcesCommercialTask);
 					_configureTaskUpdateFileVersions(
@@ -3021,53 +3020,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME);
 
 		buildServiceTask.setBuildNumberIncrement(false);
-	}
-
-	private void _configureTaskBuildServiceAfterEvaluate(Project project) {
-		if (!FileUtil.exists(project, "service.xml")) {
-			return;
-		}
-
-		BuildServiceTask buildServiceTask =
-			(BuildServiceTask)GradleUtil.getTask(
-				project, ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME);
-
-		File apiDir = buildServiceTask.getApiDir();
-
-		if (apiDir == null) {
-			return;
-		}
-
-		File apiProjectDir = GradleUtil.getRootDir(
-			project.file(apiDir), "bnd.bnd");
-
-		if (apiProjectDir == null) {
-			return;
-		}
-
-		Project rootProject = project.getRootProject();
-
-		String relativePath = FileUtil.relativize(
-			apiProjectDir, rootProject.getProjectDir());
-
-		relativePath = relativePath.replace(File.separatorChar, '/');
-
-		String apiProjectPath = ':' + relativePath.replace('/', ':');
-
-		Project apiProject = rootProject.findProject(apiProjectPath);
-
-		if (apiProject == null) {
-			String apiProjectName = apiProjectDir.getName();
-
-			apiProject = GradleUtil.getProject(rootProject, apiProjectName);
-		}
-
-		if (apiProject == null) {
-			return;
-		}
-
-		buildServiceTask.finalizedBy(
-			apiProject.getPath() + ':' + BaselinePlugin.BASELINE_TASK_NAME);
 	}
 
 	private void _configureTaskBuildWSDD(final Project project) {

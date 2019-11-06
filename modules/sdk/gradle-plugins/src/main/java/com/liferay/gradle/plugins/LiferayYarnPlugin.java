@@ -16,7 +16,6 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.internal.util.StringUtil;
-import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
@@ -61,9 +60,6 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
 
-		final NodeExtension nodeExtension = GradleUtil.getExtension(
-			project, NodeExtension.class);
-
 		Task yarnInstallTask = _addTaskYarnInstall(project);
 
 		_addTaskYarnCheckFormat(project);
@@ -75,9 +71,17 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		StartParameter startParameter = gradle.getStartParameter();
 
 		if (!startParameter.isParallelProjectExecutionEnabled()) {
-			for (Project subproject : project.getSubprojects()) {
-				_configureTasksNpmInstall(
-					subproject, yarnInstallTask, nodeExtension);
+			for (final Project subproject : project.getSubprojects()) {
+				subproject.afterEvaluate(
+					new Action<Project>() {
+
+						@Override
+						public void execute(Project project) {
+							_configureTasksNpmInstall(
+								subproject, yarnInstallTask);
+						}
+
+					});
 			}
 		}
 	}
@@ -296,27 +300,15 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskNpmInstall(
-		NpmInstallTask npmInstallTask, Task yarnInstallTask,
-		NodeExtension nodeExtension) {
+		NpmInstallTask npmInstallTask, Task yarnInstallTask) {
 
-		File scriptFile = nodeExtension.getScriptFile();
-
-		if (scriptFile == null) {
-			return;
+		if (!npmInstallTask.isUseNpm()) {
+			npmInstallTask.finalizedBy(yarnInstallTask);
 		}
-
-		String fileName = scriptFile.getName();
-
-		if (!fileName.startsWith("yarn-") || !fileName.endsWith(".js")) {
-			return;
-		}
-
-		npmInstallTask.finalizedBy(yarnInstallTask);
 	}
 
 	private void _configureTasksNpmInstall(
-		Project project, final Task yarnInstallTask,
-		final NodeExtension nodeExtension) {
+		Project project, final Task yarnInstallTask) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -326,8 +318,7 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(NpmInstallTask npmInstallTask) {
-					_configureTaskNpmInstall(
-						npmInstallTask, yarnInstallTask, nodeExtension);
+					_configureTaskNpmInstall(npmInstallTask, yarnInstallTask);
 				}
 
 			});

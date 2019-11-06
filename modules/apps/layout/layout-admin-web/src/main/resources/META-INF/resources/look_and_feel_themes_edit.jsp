@@ -94,7 +94,6 @@ else {
 							return response.text();
 						})
 						.then(function(responseData) {
-							debugger;
 							themeContainer.plug(A.Plugin.ParseContent);
 
 							themeContainer.setContent(responseData);

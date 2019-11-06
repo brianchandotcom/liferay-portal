@@ -14,6 +14,8 @@
 
 package com.liferay.analytics.message.sender.model;
 
+import com.liferay.portal.kernel.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -41,7 +43,7 @@ public final class AnalyticsMessage implements Serializable {
 		return _dataSourceId;
 	}
 
-	public String getObject() {
+	public JSONObject getObject() {
 		return _object;
 	}
 
@@ -61,8 +63,8 @@ public final class AnalyticsMessage implements Serializable {
 			return _analyticsMessage;
 		}
 
-		public Builder object(String object) {
-			_analyticsMessage._object = object;
+		public Builder object(JSONObject jsonObject) {
+			_analyticsMessage._object = jsonObject;
 
 			return this;
 		}
@@ -90,7 +92,7 @@ public final class AnalyticsMessage implements Serializable {
 
 	private String _action;
 	private String _dataSourceId;
-	private String _object;
+	private JSONObject _object;
 	private String _type;
 
 }

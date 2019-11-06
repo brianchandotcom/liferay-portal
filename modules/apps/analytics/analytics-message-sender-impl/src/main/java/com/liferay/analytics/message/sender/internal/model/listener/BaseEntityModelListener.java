@@ -138,7 +138,8 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 					_getDataSourceId(), model.getModelClassName());
 
 			analyticsMessageBuilder.action(eventType);
-			analyticsMessageBuilder.object(objectString);
+			analyticsMessageBuilder.object(
+				JSONFactoryUtil.createJSONObject(objectString));
 
 			analyticsMessageSenderClient.send(
 				Collections.singletonList(analyticsMessageBuilder.build()));

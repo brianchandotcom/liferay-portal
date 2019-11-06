@@ -18,6 +18,7 @@ import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
+import com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
@@ -27,7 +28,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.io.IOException;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -114,8 +115,9 @@ public class JournalArticleItemSelectorView
 	}
 
 	private static final List<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.singletonList(
-			new InfoItemItemSelectorReturnType());
+		_supportedItemSelectorReturnTypes = Arrays.asList(
+			new InfoItemItemSelectorReturnType(),
+			new JournalArticleItemSelectorReturnType());
 
 	@Reference
 	private Language _language;

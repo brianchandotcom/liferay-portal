@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEPOT_LANGUAGES_OPTION</td>
+	<td>//div[@class='radio']/label[contains(.,'${key_languagesOption}')]/input[@type='radio']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIRST_400_ABSTRACT</td>
 	<td>//label[contains(.,'first 400 characters')]/input[contains(@id,'customAbstract')]</td>
 	<td></td>

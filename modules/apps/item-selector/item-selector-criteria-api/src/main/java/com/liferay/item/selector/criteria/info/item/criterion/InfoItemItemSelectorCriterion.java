@@ -20,4 +20,15 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  * @author Eudaldo Alonso
  */
 public class InfoItemItemSelectorCriterion extends BaseItemSelectorCriterion {
+
+	public String getClassName() {
+		return _className;
+	}
+
+	public void setClassName(String className) {
+		_className = className;
+	}
+
+	private String _className;
+
 }

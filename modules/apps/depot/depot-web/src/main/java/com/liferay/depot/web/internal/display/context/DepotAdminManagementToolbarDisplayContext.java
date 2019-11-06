@@ -45,6 +45,8 @@ public class DepotAdminManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			depotAdminDisplayContext.getGroupSearch());
+
+		_depotAdminDisplayContext = depotAdminDisplayContext;
 	}
 
 	@Override
@@ -136,6 +138,11 @@ public class DepotAdminManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getDefaultDisplayStyle() {
+		return _depotAdminDisplayContext.getDefaultDisplayStyle();
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list", "descriptive", "icon"};
 	}
@@ -149,5 +156,7 @@ public class DepotAdminManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"descriptive-name"};
 	}
+
+	private final DepotAdminDisplayContext _depotAdminDisplayContext;
 
 }

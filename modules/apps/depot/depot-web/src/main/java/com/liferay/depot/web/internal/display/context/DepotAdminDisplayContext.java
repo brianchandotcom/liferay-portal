@@ -57,13 +57,17 @@ public class DepotAdminDisplayContext {
 		return depotActionDropdownItemsProvider.getActionDropdownItems();
 	}
 
+	public String getDefaultDisplayStyle() {
+		return "icon";
+	}
+
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
 		}
 
 		_displayStyle = ParamUtil.getString(
-			_liferayPortletRequest, "displayStyle", "icon");
+			_liferayPortletRequest, "displayStyle", getDefaultDisplayStyle());
 
 		return _displayStyle;
 	}

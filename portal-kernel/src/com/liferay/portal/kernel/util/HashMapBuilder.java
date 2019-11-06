@@ -46,12 +46,13 @@ public class HashMapBuilder<K, V> {
 		return new HashMapWrapper<>(keyUnsafeSupplier, value);
 	}
 
-	public static final class HashMapWrapper<K, V> {
+	public static final class HashMapWrapper<K, V>
+		extends BaseMapWrapper<K, V> {
 
 		public HashMapWrapper(
 			K key, UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
 
-			_put(key, valueUnsafeSupplier);
+			doPut(key, valueUnsafeSupplier);
 		}
 
 		public HashMapWrapper(K key, V value) {
@@ -62,13 +63,13 @@ public class HashMapBuilder<K, V> {
 			UnsafeSupplier<K, Exception> keyUnsafeSupplier,
 			UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
 
-			_put(keyUnsafeSupplier, valueUnsafeSupplier);
+			doPut(keyUnsafeSupplier, valueUnsafeSupplier);
 		}
 
 		public HashMapWrapper(
 			UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
 
-			_put(keyUnsafeSupplier, value);
+			doPut(keyUnsafeSupplier, value);
 		}
 
 		public HashMap<K, V> build() {
@@ -78,7 +79,7 @@ public class HashMapBuilder<K, V> {
 		public HashMapWrapper<K, V> put(
 			K key, UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
 
-			_put(key, valueUnsafeSupplier);
+			doPut(key, valueUnsafeSupplier);
 
 			return this;
 		}
@@ -93,7 +94,7 @@ public class HashMapBuilder<K, V> {
 			UnsafeSupplier<K, Exception> keyUnsafeSupplier,
 			UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
 
-			_put(keyUnsafeSupplier, valueUnsafeSupplier);
+			doPut(keyUnsafeSupplier, valueUnsafeSupplier);
 
 			return this;
 		}
@@ -101,56 +102,14 @@ public class HashMapBuilder<K, V> {
 		public HashMapWrapper<K, V> put(
 			UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
 
-			_put(keyUnsafeSupplier, value);
+			doPut(keyUnsafeSupplier, value);
 
 			return this;
 		}
 
-		private void _put(
-			K key, UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
-
-			try {
-				V value = valueUnsafeSupplier.get();
-
-				if (value != null) {
-					_hashMap.put(key, value);
-				}
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-		private void _put(
-			UnsafeSupplier<K, Exception> keyUnsafeSupplier,
-			UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
-
-			try {
-				K key = keyUnsafeSupplier.get();
-				V value = valueUnsafeSupplier.get();
-
-				if ((key != null) && (value != null)) {
-					_hashMap.put(key, value);
-				}
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-		private void _put(
-			UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
-
-			try {
-				K key = keyUnsafeSupplier.get();
-
-				if (key != null) {
-					_hashMap.put(key, value);
-				}
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+		@Override
+		protected HashMap<K, V> getMap() {
+			return _hashMap;
 		}
 
 		private final HashMap<K, V> _hashMap = new HashMap<>();

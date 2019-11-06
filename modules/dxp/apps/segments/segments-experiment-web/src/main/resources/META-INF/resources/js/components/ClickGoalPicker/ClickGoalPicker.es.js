@@ -358,10 +358,6 @@ function Target({allowEdit, element, geometry, mode, selector}) {
 		});
 
 		stopImmediatePropagation(event);
-
-		// TODO: replace this hack; needed because we have to stop propagation
-		// and that means the tooltip stays on screen.
-		Liferay.Data.LFR_PORTAL_TOOLTIP.getTooltip().hide();
 	};
 
 	// At this point we don't know the dimensions of our children, but we do

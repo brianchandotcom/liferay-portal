@@ -34,8 +34,8 @@ public class UserModelListener extends BaseEntityModelListener<User> {
 	}
 
 	@Override
-	protected Object getOldObject(User newUser) throws Exception {
-		return userLocalService.getUser(newUser.getUserId());
+	protected User getOriginalModel(User user) throws Exception {
+		return userLocalService.getUser(user.getUserId());
 	}
 
 	private static final List<String> _attributes = Arrays.asList(

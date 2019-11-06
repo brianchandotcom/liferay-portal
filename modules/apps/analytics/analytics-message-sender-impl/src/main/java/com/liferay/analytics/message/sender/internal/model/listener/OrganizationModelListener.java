@@ -37,7 +37,9 @@ public class OrganizationModelListener
 	}
 
 	@Override
-	protected Object getOldObject(Organization organization) throws Exception {
+	protected Organization getOriginalModel(Organization organization)
+		throws Exception {
+
 		return _organizationLocalService.getOrganization(
 			organization.getOrganizationId());
 	}

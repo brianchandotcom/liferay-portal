@@ -36,7 +36,7 @@ public class ContactModelListener extends BaseEntityModelListener<Contact> {
 	}
 
 	@Override
-	protected Object getOldObject(Contact contact) throws Exception {
+	protected Contact getOriginalModel(Contact contact) throws Exception {
 		return _contactLocalService.getContact(contact.getContactId());
 	}
 

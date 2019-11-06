@@ -36,7 +36,7 @@ public class GroupModelListener extends BaseEntityModelListener<Group> {
 	}
 
 	@Override
-	protected Object getOldObject(Group group) throws Exception {
+	protected Group getOriginalModel(Group group) throws Exception {
 		return _groupLocalService.getGroup(group.getGroupId());
 	}
 

@@ -62,7 +62,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	public void onBeforeUpdate(T model) throws ModelListenerException {
 		try {
 			Set<String> modifiedAttributes = _getModifiedAttributes(
-				getAttributes(), model, getOldObject(model));
+				getAttributes(), model, getOriginalModel(model));
 
 			if (modifiedAttributes.isEmpty()) {
 				return;
@@ -77,7 +77,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 	protected abstract List<String> getAttributes();
 
-	protected abstract Object getOldObject(T model) throws Exception;
+	protected abstract T getOriginalModel(T model) throws Exception;
 
 	@Reference(unbind = "-")
 	protected void setConfigurationAdmin(
@@ -105,17 +105,17 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	}
 
 	private Set<String> _getModifiedAttributes(
-		List<String> attributeNames, Object newObject, Object oldObject) {
+		List<String> attributeNames, T model, T originalModel) {
 
 		Set<String> modifiedAttributes = new HashSet<>();
 
 		for (String attributeName : attributeNames) {
-			String newValue = String.valueOf(
-				BeanPropertiesUtil.getObject(newObject, attributeName));
-			String oldValue = String.valueOf(
-				BeanPropertiesUtil.getObject(oldObject, attributeName));
+			String value = String.valueOf(
+				BeanPropertiesUtil.getObject(model, attributeName));
+			String originalValue = String.valueOf(
+				BeanPropertiesUtil.getObject(originalModel, attributeName));
 
-			if (!Objects.equals(newValue, oldValue)) {
+			if (!Objects.equals(value, originalValue)) {
 				modifiedAttributes.add(attributeName);
 			}
 		}
@@ -132,15 +132,14 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		return properties.get(key);
 	}
 
-	private void _send(String eventType, Object object) {
+	private void _send(String eventType, T model) {
 		try {
-			Class<?> clazz = object.getClass();
-
 			AnalyticsMessage.Builder analyticsMessageBuilder =
-				AnalyticsMessage.builder(_getDataSourceId(), clazz.getName());
+				AnalyticsMessage.builder(
+					_getDataSourceId(), model.getModelClassName());
 
 			analyticsMessageBuilder.action(eventType);
-			analyticsMessageBuilder.object(_serialize(object));
+			analyticsMessageBuilder.object(_serialize(model));
 
 			analyticsMessageSenderClient.send(
 				Collections.singletonList(analyticsMessageBuilder.build()));
@@ -148,20 +147,20 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		catch (Exception e) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Unable to send analytics message " + _serialize(object));
+					"Unable to send analytics message " + _serialize(model));
 			}
 		}
 	}
 
-	private String _serialize(Object object) {
-		if (object instanceof User) {
-			return userSerializer.serialize((User)object);
+	private String _serialize(T model) {
+		if (model instanceof User) {
+			return userSerializer.serialize((User)model);
 		}
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
-		if (object instanceof Contact) {
-			Contact contact = (Contact)object;
+		if (model instanceof Contact) {
+			Contact contact = (Contact)model;
 
 			try {
 				JSONObject userJSONObject = JSONFactoryUtil.createJSONObject(
@@ -182,7 +181,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			}
 		}
 
-		return jsonSerializer.serialize(object);
+		return jsonSerializer.serialize(model);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

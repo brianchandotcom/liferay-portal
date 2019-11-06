@@ -14,7 +14,6 @@
 
 package com.liferay.analytics.message.sender.internal.util;
 
-import com.liferay.analytics.message.sender.util.UserSerializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.model.User;

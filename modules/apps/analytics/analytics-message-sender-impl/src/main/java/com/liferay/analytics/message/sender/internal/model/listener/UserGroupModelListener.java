@@ -36,7 +36,7 @@ public class UserGroupModelListener extends BaseEntityModelListener<UserGroup> {
 	}
 
 	@Override
-	protected Object getOldObject(UserGroup userGroup) throws Exception {
+	protected UserGroup getOriginalModel(UserGroup userGroup) throws Exception {
 		return _userGroupLocalService.getUserGroup(userGroup.getUserGroupId());
 	}
 

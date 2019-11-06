@@ -120,6 +120,9 @@ public interface KaleoTaskFormInstanceLocalService
 			long kaleoTaskFormInstanceId)
 		throws PortalException;
 
+	public void deleteKaleoTaskInstanceTokenKaleoTaskFormInstances(
+		long kaleoTaskInstanceTokenId);
+
 	/**
 	 * @throws PortalException
 	 */

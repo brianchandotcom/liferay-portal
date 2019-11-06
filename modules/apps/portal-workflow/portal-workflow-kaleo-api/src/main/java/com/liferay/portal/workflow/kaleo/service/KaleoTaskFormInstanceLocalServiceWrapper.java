@@ -138,6 +138,15 @@ public class KaleoTaskFormInstanceLocalServiceWrapper
 			kaleoTaskFormInstanceId);
 	}
 
+	@Override
+	public void deleteKaleoTaskInstanceTokenKaleoTaskFormInstances(
+		long kaleoTaskInstanceTokenId) {
+
+		_kaleoTaskFormInstanceLocalService.
+			deleteKaleoTaskInstanceTokenKaleoTaskFormInstances(
+				kaleoTaskInstanceTokenId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

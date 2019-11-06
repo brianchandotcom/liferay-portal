@@ -131,6 +131,13 @@ public class KaleoTaskFormInstanceLocalServiceUtil {
 			kaleoTaskFormInstanceId);
 	}
 
+	public static void deleteKaleoTaskInstanceTokenKaleoTaskFormInstances(
+		long kaleoTaskInstanceTokenId) {
+
+		getService().deleteKaleoTaskInstanceTokenKaleoTaskFormInstances(
+			kaleoTaskInstanceTokenId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

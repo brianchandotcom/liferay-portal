@@ -174,7 +174,7 @@ public class PageEditorCommentMentionsStrategyTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "mentions.strategy=pageEditorCommentEditor")
+	@Inject(filter = "mentions.strategy=pageEditorCommentStrategy")
 	private MentionsStrategy _mentionsStrategy;
 
 	@Inject

@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(
-	property = "mentions.strategy=pageEditorCommentEditor",
+	property = "mentions.strategy=pageEditorCommentStrategy",
 	service = MentionsStrategy.class
 )
 public class PageEditorCommentMentionsStrategy implements MentionsStrategy {

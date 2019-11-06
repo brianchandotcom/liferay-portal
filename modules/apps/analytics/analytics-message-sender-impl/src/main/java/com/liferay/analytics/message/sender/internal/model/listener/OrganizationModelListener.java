@@ -44,6 +44,11 @@ public class OrganizationModelListener
 			organization.getOrganizationId());
 	}
 
+	@Override
+	protected String getPrimaryKeyName() {
+		return "organizationId";
+	}
+
 	private static final List<String> _attributes = Arrays.asList(
 		"comments", "countryId", "name", "parentOrganizationId", "regionId");
 

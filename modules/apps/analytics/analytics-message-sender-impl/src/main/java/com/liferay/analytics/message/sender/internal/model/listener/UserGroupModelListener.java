@@ -40,6 +40,11 @@ public class UserGroupModelListener extends BaseEntityModelListener<UserGroup> {
 		return _userGroupLocalService.getUserGroup(userGroup.getUserGroupId());
 	}
 
+	@Override
+	protected String getPrimaryKeyName() {
+		return "userGroupId";
+	}
+
 	private static final List<String> _attributes = Arrays.asList(
 		"description", "name");
 

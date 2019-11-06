@@ -16,27 +16,23 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.client.AnalyticsMessageSenderClient;
 import com.liferay.analytics.message.sender.model.AnalyticsMessage;
-import com.liferay.analytics.message.sender.util.UserSerializer;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+import java.util.stream.Stream;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -50,25 +46,25 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 	@Override
 	public void onAfterCreate(T model) throws ModelListenerException {
-		_send("add", model);
+		_send("add", getAttributes(), model);
 	}
 
 	@Override
 	public void onBeforeRemove(T model) throws ModelListenerException {
-		_send("delete", model);
+		_send("delete", new ArrayList<>(), model);
 	}
 
 	@Override
 	public void onBeforeUpdate(T model) throws ModelListenerException {
 		try {
-			Set<String> modifiedAttributes = _getModifiedAttributes(
+			List<String> modifiedAttributes = _getModifiedAttributes(
 				getAttributes(), model, getOriginalModel(model));
 
 			if (modifiedAttributes.isEmpty()) {
 				return;
 			}
 
-			_send("update", model);
+			_send("update", modifiedAttributes, model);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -78,6 +74,8 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	protected abstract List<String> getAttributes();
 
 	protected abstract T getOriginalModel(T model) throws Exception;
+
+	protected abstract String getPrimaryKeyName();
 
 	@Reference(unbind = "-")
 	protected void setConfigurationAdmin(
@@ -92,9 +90,6 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	@Reference
 	protected UserLocalService userLocalService;
 
-	@Reference
-	protected UserSerializer userSerializer;
-
 	private String _getDataSourceId() {
 		try {
 			return String.valueOf(_getProperty("dataSourceId"));
@@ -104,10 +99,10 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		}
 	}
 
-	private Set<String> _getModifiedAttributes(
+	private List<String> _getModifiedAttributes(
 		List<String> attributeNames, T model, T originalModel) {
 
-		Set<String> modifiedAttributes = new HashSet<>();
+		List<String> modifiedAttributes = new ArrayList<>();
 
 		for (String attributeName : attributeNames) {
 			String value = String.valueOf(
@@ -132,54 +127,37 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		return properties.get(key);
 	}
 
-	private void _send(String eventType, T model) {
+	private void _send(
+		String eventType, List<String> includeAttributes, T model) {
+
+		String objectString = _serialize(includeAttributes, model);
+
 		try {
 			AnalyticsMessage.Builder analyticsMessageBuilder =
 				AnalyticsMessage.builder(
 					_getDataSourceId(), model.getModelClassName());
 
 			analyticsMessageBuilder.action(eventType);
-			analyticsMessageBuilder.object(_serialize(model));
+			analyticsMessageBuilder.object(objectString);
 
 			analyticsMessageSenderClient.send(
 				Collections.singletonList(analyticsMessageBuilder.build()));
 		}
 		catch (Exception e) {
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Unable to send analytics message " + _serialize(model));
+				_log.info("Unable to send analytics message " + objectString);
 			}
 		}
 	}
 
-	private String _serialize(T model) {
-		if (model instanceof User) {
-			return userSerializer.serialize((User)model);
-		}
-
+	private String _serialize(List<String> includeAttributes, T model) {
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
-		if (model instanceof Contact) {
-			Contact contact = (Contact)model;
+		includeAttributes.add(getPrimaryKeyName());
 
-			try {
-				JSONObject userJSONObject = JSONFactoryUtil.createJSONObject(
-					userSerializer.serialize(
-						userLocalService.getUser(contact.getUserId())));
+		Stream<String> stream = includeAttributes.stream();
 
-				userJSONObject.put(
-					"contact",
-					JSONFactoryUtil.createJSONObject(
-						jsonSerializer.serialize(contact)));
-
-				return userJSONObject.toString();
-			}
-			catch (Exception e) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Unable to serialize contact");
-				}
-			}
-		}
+		jsonSerializer.include(stream.toArray(String[]::new));
 
 		return jsonSerializer.serialize(model);
 	}

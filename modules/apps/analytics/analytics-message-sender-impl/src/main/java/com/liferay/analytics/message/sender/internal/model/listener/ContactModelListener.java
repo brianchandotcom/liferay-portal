@@ -40,6 +40,11 @@ public class ContactModelListener extends BaseEntityModelListener<Contact> {
 		return _contactLocalService.getContact(contact.getContactId());
 	}
 
+	@Override
+	protected String getPrimaryKeyName() {
+		return "contactId";
+	}
+
 	private static final List<String> _attributes = Arrays.asList(
 		"birthday", "employeeNumber", "employeeStatusId", "facebookSn",
 		"firstName", "hoursOfOperation", "jabberSn", "jobClass", "jobTitle",

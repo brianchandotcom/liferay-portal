@@ -40,6 +40,11 @@ public class GroupModelListener extends BaseEntityModelListener<Group> {
 		return _groupLocalService.getGroup(group.getGroupId());
 	}
 
+	@Override
+	protected String getPrimaryKeyName() {
+		return "groupId";
+	}
+
 	private static final List<String> _attributes = Arrays.asList(
 		"description", "descriptiveName", "friendlyURL", "name");
 

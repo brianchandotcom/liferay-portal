@@ -38,6 +38,11 @@ public class UserModelListener extends BaseEntityModelListener<User> {
 		return userLocalService.getUser(user.getUserId());
 	}
 
+	@Override
+	protected String getPrimaryKeyName() {
+		return "userId";
+	}
+
 	private static final List<String> _attributes = Arrays.asList(
 		"active", "agreedToTermsOfUse", "comments", "emailAddress",
 		"languageId", "reminderQueryAnswer", "reminderQueryQuestion",

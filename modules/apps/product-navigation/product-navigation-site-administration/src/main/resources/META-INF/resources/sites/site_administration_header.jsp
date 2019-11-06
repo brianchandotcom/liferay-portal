@@ -84,13 +84,18 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 				</c:otherwise>
 			</c:choose>
 
-			<span class="site-name text-truncate">
-				<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
+			<div class="autofit-col">
+				<span class="text-uppercase">
+					<liferay-ui:message key='<%= (group.getType() == GroupConstants.TYPE_DEPOT) ? "repository" : "site" %>' />
+				</span>
+				<span class="site-name text-truncate">
+					<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
 
-				<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() && !group.isStagedRemotely() %>">
-					<span class="site-sub-name"> - <liferay-ui:message key="<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>" /></span>
-				</c:if>
-			</span>
+					<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() && !group.isStagedRemotely() %>">
+						<span class="site-sub-name"> - <liferay-ui:message key="<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>" /></span>
+					</c:if>
+				</span>
+			</div>
 
 			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
 				<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %></span>

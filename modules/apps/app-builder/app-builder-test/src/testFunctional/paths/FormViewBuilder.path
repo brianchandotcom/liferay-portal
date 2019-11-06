@@ -24,7 +24,7 @@
 
 <tr>
 	<td>FORM_VIEW_NAME</td>
-	<td>//input[@placeholder='Untitled Form View']</td>
+	<td>//input[contains(@placeholder,'Untitled')]</td>
 	<td></td>
 </tr>
 

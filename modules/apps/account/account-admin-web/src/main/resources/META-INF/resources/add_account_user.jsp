@@ -17,18 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_DISPLAY);
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 
 PortletURL backURL = renderResponse.createRenderURL();
 
 backURL.setParameter("mvcRenderCommandName", "/account_admin/edit_account_entry");
 backURL.setParameter("screenNavigationCategoryKey", AccountScreenNavigationEntryConstants.CATEGORY_KEY_USERS);
-backURL.setParameter("accountEntryId", String.valueOf(accountDisplay.getAccountId()));
+backURL.setParameter("accountEntryId", String.valueOf(accountEntryDisplay.getAccountEntryId()));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(String.valueOf(backURL));
 
-renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accountDisplay.getName(), false));
+renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accountEntryDisplay.getName(), false));
 %>
 
 <portlet:actionURL name="/account_admin/add_account_user" var="addAccountUsersURL" />
@@ -38,7 +38,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 >
 	<liferay-frontend:edit-form-body>
 		<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
-		<aui:input name="accountEntryId" type="hidden" value="<%= String.valueOf(accountDisplay.getAccountId()) %>" />
+		<aui:input name="accountEntryId" type="hidden" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
 
 		<h2 class="sheet-title">
 			<%= LanguageUtil.get(request, "information") %>

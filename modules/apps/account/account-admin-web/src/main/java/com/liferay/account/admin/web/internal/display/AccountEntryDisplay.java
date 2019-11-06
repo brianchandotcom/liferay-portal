@@ -28,25 +28,25 @@ import java.util.List;
 /**
  * @author Pei-Jung Lan
  */
-public class AccountDisplay {
+public class AccountEntryDisplay {
 
-	public static AccountDisplay of(AccountEntry accountEntry) {
-		return new AccountDisplay(accountEntry);
+	public static AccountEntryDisplay of(AccountEntry accountEntry) {
+		return new AccountEntryDisplay(accountEntry);
 	}
 
-	public static AccountDisplay of(long accountEntryId) {
+	public static AccountEntryDisplay of(long accountEntryId) {
 		AccountEntry accountEntry =
 			AccountEntryLocalServiceUtil.fetchAccountEntry(accountEntryId);
 
 		if (accountEntry != null) {
-			return new AccountDisplay(accountEntry);
+			return new AccountEntryDisplay(accountEntry);
 		}
 
 		return null;
 	}
 
-	public long getAccountId() {
-		return _accountId;
+	public long getAccountEntryId() {
+		return _accountEntryId;
 	}
 
 	public String getDescription() {
@@ -77,8 +77,8 @@ public class AccountDisplay {
 		return _name;
 	}
 
-	public String getParentAccountName() {
-		return _parentAccountName;
+	public String getParentAccountEntryName() {
+		return _parentAccountEntryName;
 	}
 
 	public String getStatusLabel() {
@@ -93,14 +93,14 @@ public class AccountDisplay {
 		return _active;
 	}
 
-	private AccountDisplay(AccountEntry accountEntry) {
-		_accountId = accountEntry.getAccountEntryId();
+	private AccountEntryDisplay(AccountEntry accountEntry) {
+		_accountEntryId = accountEntry.getAccountEntryId();
 		_active = _isActive(accountEntry);
 		_description = accountEntry.getDescription();
 		_domains = _getDomains(accountEntry);
 		_logoId = accountEntry.getLogoId();
 		_name = accountEntry.getName();
-		_parentAccountName = _getParentAccountName(accountEntry);
+		_parentAccountEntryName = _getParentAccountEntryName(accountEntry);
 		_statusLabel = _getStatusLabel(accountEntry);
 		_statusLabelStyle = _getStatusLabelStyle(accountEntry);
 	}
@@ -109,7 +109,7 @@ public class AccountDisplay {
 		return StringUtil.split(accountEntry.getDomains());
 	}
 
-	private String _getParentAccountName(AccountEntry accountEntry) {
+	private String _getParentAccountEntryName(AccountEntry accountEntry) {
 		long parentAccountEntryId = accountEntry.getParentAccountEntryId();
 
 		if (parentAccountEntryId == 0) {
@@ -165,13 +165,13 @@ public class AccountDisplay {
 		return false;
 	}
 
-	private final long _accountId;
+	private final long _accountEntryId;
 	private final boolean _active;
 	private final String _description;
 	private final List<String> _domains;
 	private final long _logoId;
 	private final String _name;
-	private final String _parentAccountName;
+	private final String _parentAccountEntryName;
 	private final String _statusLabel;
 	private final String _statusLabelStyle;
 

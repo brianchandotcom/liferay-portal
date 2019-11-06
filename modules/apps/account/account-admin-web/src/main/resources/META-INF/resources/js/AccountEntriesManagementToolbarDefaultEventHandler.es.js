@@ -14,32 +14,32 @@
 
 import {DefaultEventHandler} from 'frontend-js-web';
 
-class AccountsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	activateAccounts(itemData) {
-		this._updateAccounts(itemData.activateAccountsURL);
+class AccountEntriesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
+	activateAccountEntries(itemData) {
+		this._updateAccountEntries(itemData.activateAccountEntriesURL);
 	}
 
-	deactivateAccounts(itemData) {
+	deactivateAccountEntries(itemData) {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-deactivate-this')
 			)
 		) {
-			this._updateAccounts(itemData.deactivateAccountsURL);
+			this._updateAccountEntries(itemData.deactivateAccountEntriesURL);
 		}
 	}
 
-	deleteAccounts(itemData) {
+	deleteAccountEntries(itemData) {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			this._updateAccounts(itemData.deleteAccountsURL);
+			this._updateAccountEntries(itemData.deleteAccountEntriesURL);
 		}
 	}
 
-	_updateAccounts(url) {
+	_updateAccountEntries(url) {
 		const form = this.one('#fm');
 
 		Liferay.Util.postForm(form, {
@@ -54,4 +54,4 @@ class AccountsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	}
 }
 
-export default AccountsManagementToolbarDefaultEventHandler;
+export default AccountEntriesManagementToolbarDefaultEventHandler;

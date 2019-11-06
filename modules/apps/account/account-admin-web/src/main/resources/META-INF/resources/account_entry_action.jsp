@@ -21,9 +21,9 @@ String navigation = ParamUtil.getString(request, "navigation", "active");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-AccountDisplay accountDisplay = (AccountDisplay)row.getObject();
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)row.getObject();
 
-long accountEntryId = accountDisplay.getAccountId();
+long accountEntryId = accountEntryDisplay.getAccountEntryId();
 %>
 
 <liferay-ui:icon-menu
@@ -61,7 +61,7 @@ long accountEntryId = accountDisplay.getAccountId();
 	</c:if>
 
 	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.DELETE) %>">
-		<c:if test='<%= Objects.equals(accountDisplay.getStatusLabel(), "active") %>'>
+		<c:if test='<%= Objects.equals(accountEntryDisplay.getStatusLabel(), "active") %>'>
 			<portlet:actionURL name="/account_admin/update_account_entry_status" var="deactivateAccountURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DEACTIVATE %>" />
 				<portlet:param name="navigation" value="<%= navigation %>" />
@@ -73,7 +73,7 @@ long accountEntryId = accountDisplay.getAccountId();
 			/>
 		</c:if>
 
-		<c:if test='<%= Objects.equals(accountDisplay.getStatusLabel(), "inactive") %>'>
+		<c:if test='<%= Objects.equals(accountEntryDisplay.getStatusLabel(), "inactive") %>'>
 			<portlet:actionURL name="/account_admin/update_account_entry_status" var="activateAccountURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 				<portlet:param name="navigation" value="<%= navigation %>" />

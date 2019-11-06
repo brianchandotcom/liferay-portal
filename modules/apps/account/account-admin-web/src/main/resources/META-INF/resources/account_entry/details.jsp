@@ -17,14 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_DISPLAY);
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle((accountDisplay == null) ? LanguageUtil.get(request, "add-account") : LanguageUtil.format(request, "edit-x", accountDisplay.getName(), false));
+renderResponse.setTitle((accountEntryDisplay == null) ? LanguageUtil.get(request, "add-account") : LanguageUtil.format(request, "edit-x", accountEntryDisplay.getName(), false));
 %>
 
 <portlet:actionURL name="/account_admin/edit_account_entry" var="editAccountURL" />
@@ -32,9 +32,9 @@ renderResponse.setTitle((accountDisplay == null) ? LanguageUtil.get(request, "ad
 <liferay-frontend:edit-form
 	action="<%= editAccountURL %>"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (accountDisplay == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (accountEntryDisplay == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="accountEntryId" type="hidden" value='<%= (accountDisplay == null) ? "0" : String.valueOf(accountDisplay.getAccountId()) %>' />
+	<aui:input name="accountEntryId" type="hidden" value='<%= (accountEntryDisplay == null) ? "0" : String.valueOf(accountEntryDisplay.getAccountEntryId()) %>' />
 
 	<liferay-frontend:edit-form-body>
 		<h2 class="sheet-title">
@@ -42,9 +42,9 @@ renderResponse.setTitle((accountDisplay == null) ? LanguageUtil.get(request, "ad
 		</h2>
 
 		<liferay-frontend:fieldset-group>
-			<liferay-util:include page="/account/account_display_data.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/account_entry/display_data.jsp" servletContext="<%= application %>" />
 
-			<liferay-util:include page="/account/domains.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/account_entry/domains.jsp" servletContext="<%= application %>" />
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

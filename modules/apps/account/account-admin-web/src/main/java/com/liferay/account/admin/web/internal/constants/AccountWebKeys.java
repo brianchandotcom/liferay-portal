@@ -19,6 +19,6 @@ package com.liferay.account.admin.web.internal.constants;
  */
 public class AccountWebKeys {
 
-	public static final String ACCOUNT_DISPLAY = "ACCOUNT_DISPLAY";
+	public static final String ACCOUNT_ENTRY_DISPLAY = "ACCOUNT_ENTRY_DISPLAY";
 
 }

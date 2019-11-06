@@ -33,8 +33,8 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class AccountDetailsScreenNavigationCategory
-	extends BaseAccountScreenNavigationEntry
+public class AccountEntryDetailsScreenNavigationCategory
+	extends BaseAccountEntryScreenNavigationEntry
 	implements ScreenNavigationCategory {
 
 	@Override
@@ -49,7 +49,7 @@ public class AccountDetailsScreenNavigationCategory
 
 	@Override
 	public String getJspPath() {
-		return "/account/details.jsp";
+		return "/account_entry/details.jsp";
 	}
 
 	@Override

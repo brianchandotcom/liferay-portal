@@ -42,10 +42,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Albert Lee
  */
-public class ViewUsersManagementToolbarDisplayContext
+public class AccountUsersAdminManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public ViewUsersManagementToolbarDisplayContext(
+	public AccountUsersAdminManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -70,7 +70,7 @@ public class ViewUsersManagementToolbarDisplayContext
 
 	@Override
 	public String getDefaultEventHandler() {
-		return "USERS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+		return "ACCOUNT_USERS_ADMIN_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
 
 	@Override
@@ -78,15 +78,15 @@ public class ViewUsersManagementToolbarDisplayContext
 		DropdownItemList filterDropdownItems = new DropdownItemList() {
 			{
 				List<DropdownItem> filterAccountsDropdownItems =
-					_getFilterAccountsDropdownItems();
+					_getFilterByAccountsDropdownItems();
 
 				if (filterAccountsDropdownItems != null) {
 					addGroup(
 						dropdownGroupItem -> {
 							dropdownGroupItem.setDropdownItems(
-								_getFilterAccountsDropdownItems());
+								_getFilterByAccountsDropdownItems());
 							dropdownGroupItem.setLabel(
-								_getFilterAccountsDropdownItemsLabel());
+								_getFilterByAccountsDropdownItemsLabel());
 						});
 				}
 			}
@@ -177,7 +177,7 @@ public class ViewUsersManagementToolbarDisplayContext
 			liferayPortletRequest, "accountNavigation", "all");
 	}
 
-	private List<DropdownItem> _getFilterAccountsDropdownItems() {
+	private List<DropdownItem> _getFilterByAccountsDropdownItems() {
 		return new DropdownItemList() {
 			{
 				add(
@@ -203,7 +203,8 @@ public class ViewUsersManagementToolbarDisplayContext
 							liferayPortletResponse.createRenderURL();
 
 						accountSelectorURL.setParameter(
-							"mvcPath", "/select_account_entries.jsp");
+							"mvcPath",
+							"/account_users_admin/select_account_entries.jsp");
 						accountSelectorURL.setParameter(
 							"accountNavigation", "accounts");
 						accountSelectorURL.setWindowState(
@@ -212,9 +213,9 @@ public class ViewUsersManagementToolbarDisplayContext
 						dropdownItem.putData(
 							"redirectURL", currentURLObj.toString());
 						dropdownItem.putData(
-							"accountSelectorURL",
+							"accountEntrySelectorURL",
 							accountSelectorURL.toString());
-						dropdownItem.putData("action", "selectAccount");
+						dropdownItem.putData("action", "selectAccountEntries");
 
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "accounts"));
@@ -239,11 +240,11 @@ public class ViewUsersManagementToolbarDisplayContext
 		};
 	}
 
-	private String _getFilterAccountsDropdownItemsLabel() {
+	private String _getFilterByAccountsDropdownItemsLabel() {
 		return LanguageUtil.get(request, "filter-by-accounts");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ViewUsersManagementToolbarDisplayContext.class);
+		AccountUsersAdminManagementToolbarDisplayContext.class);
 
 }

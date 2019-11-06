@@ -15,7 +15,7 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.account.admin.web.internal.display.AccountDisplay;
+import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class AccountUsersScreenNavigationCategory
-	extends BaseAccountScreenNavigationEntry
+	extends BaseAccountEntryScreenNavigationEntry
 	implements ScreenNavigationCategory {
 
 	@Override
@@ -51,7 +51,7 @@ public class AccountUsersScreenNavigationCategory
 
 	@Override
 	public String getJspPath() {
-		return "/view_account_users.jsp";
+		return "/account_entry/view_account_users.jsp";
 	}
 
 	@Override
@@ -60,8 +60,10 @@ public class AccountUsersScreenNavigationCategory
 	}
 
 	@Override
-	public boolean isVisible(User user, AccountDisplay accountDisplay) {
-		if (accountDisplay != null) {
+	public boolean isVisible(
+		User user, AccountEntryDisplay accountEntryDisplay) {
+
+		if (accountEntryDisplay != null) {
 			return true;
 		}
 

@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchContainer accountDisplaySearchContainer = AccountDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
+SearchContainer accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
 
-ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplayContext = new ViewAccountsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountDisplaySearchContainer);
+ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementToolbarDisplayContext = new ViewAccountEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer);
 %>
 
 <clay:management-toolbar
-	displayContext="<%= viewAccountsManagementToolbarDisplayContext %>"
+	displayContext="<%= viewAccountEntriesManagementToolbarDisplayContext %>"
 />
 
 <div class="container-fluid container-fluid-max-xl">
@@ -31,18 +31,18 @@ ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplay
 		<aui:input name="accountEntryIds" type="hidden" />
 
 		<liferay-ui:search-container
-			searchContainer="<%= accountDisplaySearchContainer %>"
+			searchContainer="<%= accountEntryDisplaySearchContainer %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.account.admin.web.internal.display.AccountDisplay"
-				keyProperty="accountId"
-				modelVar="accountDisplay"
+				className="com.liferay.account.admin.web.internal.display.AccountEntryDisplay"
+				keyProperty="accountEntryId"
+				modelVar="accountEntryDisplay"
 			>
 
 				<%
 				Map<String, Object> rowData = new HashMap<>();
 
-				rowData.put("actions", StringUtil.merge(viewAccountsManagementToolbarDisplayContext.getAvailableActions(accountDisplay)));
+				rowData.put("actions", StringUtil.merge(viewAccountEntriesManagementToolbarDisplayContext.getAvailableActions(accountEntryDisplay)));
 
 				row.setData(rowData);
 				%>
@@ -50,11 +50,11 @@ ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplay
 				<portlet:renderURL var="rowURL">
 					<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_entry" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />
-					<portlet:param name="accountEntryId" value="<%= String.valueOf(accountDisplay.getAccountId()) %>" />
+					<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
 				</portlet:renderURL>
 
 				<%
-				if (!AccountEntryPermission.contains(permissionChecker, accountDisplay.getAccountId(), ActionKeys.UPDATE)) {
+				if (!AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.UPDATE)) {
 					rowURL = null;
 				}
 				%>
@@ -70,7 +70,7 @@ ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplay
 					cssClass="table-cell-expand"
 					href="<%= rowURL %>"
 					name="parent-account"
-					property="parentAccountName"
+					property="parentAccountEntryName"
 				/>
 
 				<liferay-ui:search-container-column-text
@@ -85,8 +85,8 @@ ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplay
 					name="status"
 				>
 					<clay:label
-						label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountDisplay.getStatusLabel()), locale) %>"
-						style="<%= accountDisplay.getStatusLabelStyle() %>"
+						label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountEntryDisplay.getStatusLabel()), locale) %>"
+						style="<%= accountEntryDisplay.getStatusLabelStyle() %>"
 					/>
 				</liferay-ui:search-container-column-text>
 
@@ -103,6 +103,6 @@ ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplay
 </div>
 
 <liferay-frontend:component
-	componentId="<%= viewAccountsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/AccountsManagementToolbarDefaultEventHandler.es"
+	componentId="<%= viewAccountEntriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/AccountEntriesManagementToolbarDefaultEventHandler.es"
 />

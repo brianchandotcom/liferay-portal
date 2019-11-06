@@ -17,21 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_DISPLAY);
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-if (accountDisplay != null) {
+if (accountEntryDisplay != null) {
 	portletURL.setParameter("mvcRenderCommandName", "/account_admin/edit_account_entry");
-	portletURL.setParameter("accountEntryId", String.valueOf(accountDisplay.getAccountId()));
+	portletURL.setParameter("accountEntryId", String.valueOf(accountEntryDisplay.getAccountEntryId()));
 }
 %>
 
 <liferay-frontend:screen-navigation
 	containerWrapperCssClass=""
-	context="<%= accountDisplay %>"
+	context="<%= accountEntryDisplay %>"
 	headerContainerCssClass=""
 	inverted="<%= true %>"
-	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT %>"
+	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY %>"
 	portletURL="<%= portletURL %>"
 />

@@ -17,34 +17,26 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_DISPLAY);
+SearchContainer accountUsersDisplaySearchContainer = AccountUserDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
 
-SearchContainer accountUserDisplaySearchContainer = AccountUserDisplaySearchContainerFactory.create(accountDisplay.getAccountId(), liferayPortletRequest, liferayPortletResponse);
-
-ViewAccountUsersManagementToolbarDisplayContext viewAccountUsersManagementToolbarDisplayContext = new ViewAccountUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountUserDisplaySearchContainer);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
-
-renderResponse.setTitle((accountDisplay == null) ? "" : accountDisplay.getName());
+AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementToolbarDisplayContext = new AccountUsersAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountUsersDisplaySearchContainer);
 %>
 
 <clay:management-toolbar
-	displayContext="<%= viewAccountUsersManagementToolbarDisplayContext %>"
+	displayContext="<%= accountUsersAdminManagementToolbarDisplayContext %>"
 />
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">
 	<aui:form method="post" name="fm">
-		<aui:input name="accountEntryId" type="hidden" value="<%= accountDisplay.getAccountId() %>" />
-		<aui:input name="accountUserIds" type="hidden" />
+		<aui:input name="userId" type="hidden" />
 
 		<liferay-ui:search-container
-			searchContainer="<%= accountUserDisplaySearchContainer %>"
+			searchContainer="<%= accountUsersDisplaySearchContainer %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.account.admin.web.internal.display.AccountUserDisplay"
 				keyProperty="userId"
-				modelVar="accountUser"
+				modelVar="accountUserDisplay"
 			>
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
@@ -54,7 +46,7 @@ renderResponse.setTitle((accountDisplay == null) ? "" : accountDisplay.getName()
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
-					name="email-address"
+					name="email"
 					property="emailAddress"
 				/>
 
@@ -65,14 +57,20 @@ renderResponse.setTitle((accountDisplay == null) ? "" : accountDisplay.getName()
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand-small table-cell-minw-150"
-					name="account-roles"
-					property="accountRoles"
+					cssClass='<%= "table-cell-expand-small table-cell-minw-150 " + accountUserDisplay.getAccountNamesStyle() %>'
+					name="accounts"
+					value="<%= accountUserDisplay.getAccountNames(request) %>"
 				/>
 
-				<liferay-ui:search-container-column-jsp
-					path="/account_user_action.jsp"
-				/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="status"
+				>
+					<clay:label
+						label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountUserDisplay.getStatusLabel()), locale) %>"
+						style="<%= accountUserDisplay.getStatusLabelStyle() %>"
+					/>
+				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator
@@ -83,6 +81,6 @@ renderResponse.setTitle((accountDisplay == null) ? "" : accountDisplay.getName()
 </aui:container>
 
 <liferay-frontend:component
-	componentId="<%= viewAccountUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/AccountUsersManagementToolbarDefaultEventHandler.es"
+	componentId="<%= accountUsersAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="account_users_admin/js/ManagementToolbarDefaultEventHandler.es"
 />

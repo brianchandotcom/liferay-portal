@@ -14,7 +14,7 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
-import com.liferay.account.admin.web.internal.display.AccountDisplay;
+import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountPermission;
 import com.liferay.account.constants.AccountActionKeys;
@@ -49,10 +49,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Pei-Jung Lan
  */
-public class ViewAccountsManagementToolbarDisplayContext
+public class ViewAccountEntriesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public ViewAccountsManagementToolbarDisplayContext(
+	public ViewAccountEntriesManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -72,7 +72,7 @@ public class ViewAccountsManagementToolbarDisplayContext
 
 				DropdownItem dropdownItem = new DropdownItem();
 
-				dropdownItem.putData("action", "deactivateAccounts");
+				dropdownItem.putData("action", "deactivateAccountEntries");
 
 				PortletURL deactivateAccountsURL =
 					liferayPortletResponse.createActionURL();
@@ -86,7 +86,8 @@ public class ViewAccountsManagementToolbarDisplayContext
 					"navigation", getNavigation());
 
 				dropdownItem.putData(
-					"deactivateAccountsURL", deactivateAccountsURL.toString());
+					"deactivateAccountEntriesURL",
+					deactivateAccountsURL.toString());
 
 				dropdownItem.setIcon("hidden");
 				dropdownItem.setLabel(LanguageUtil.get(request, "deactivate"));
@@ -101,7 +102,7 @@ public class ViewAccountsManagementToolbarDisplayContext
 
 				DropdownItem dropdownItem = new DropdownItem();
 
-				dropdownItem.putData("action", "activateAccounts");
+				dropdownItem.putData("action", "activateAccountEntries");
 
 				PortletURL activateAccountsURL =
 					liferayPortletResponse.createActionURL();
@@ -114,7 +115,8 @@ public class ViewAccountsManagementToolbarDisplayContext
 				activateAccountsURL.setParameter("navigation", getNavigation());
 
 				dropdownItem.putData(
-					"activateAccountsURL", activateAccountsURL.toString());
+					"activateAccountEntriesURL",
+					activateAccountsURL.toString());
 
 				dropdownItem.setIcon("undo");
 				dropdownItem.setLabel(LanguageUtil.get(request, "activate"));
@@ -125,7 +127,7 @@ public class ViewAccountsManagementToolbarDisplayContext
 			() -> {
 				DropdownItem dropdownItem = new DropdownItem();
 
-				dropdownItem.putData("action", "deleteAccounts");
+				dropdownItem.putData("action", "deleteAccountEntries");
 
 				PortletURL deleteAccountsURL =
 					liferayPortletResponse.createActionURL();
@@ -136,7 +138,7 @@ public class ViewAccountsManagementToolbarDisplayContext
 				deleteAccountsURL.setParameter("navigation", getNavigation());
 
 				dropdownItem.putData(
-					"deleteAccountsURL", deleteAccountsURL.toString());
+					"deleteAccountEntriesURL", deleteAccountsURL.toString());
 
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
@@ -146,7 +148,8 @@ public class ViewAccountsManagementToolbarDisplayContext
 			});
 	}
 
-	public List<String> getAvailableActions(AccountDisplay accountDisplay)
+	public List<String> getAvailableActions(
+			AccountEntryDisplay accountEntryDisplay)
 		throws PortalException {
 
 		List<String> availableActions = new ArrayList<>();
@@ -156,19 +159,19 @@ public class ViewAccountsManagementToolbarDisplayContext
 
 		if (!AccountEntryPermission.contains(
 				themeDisplay.getPermissionChecker(),
-				accountDisplay.getAccountId(), ActionKeys.DELETE)) {
+				accountEntryDisplay.getAccountEntryId(), ActionKeys.DELETE)) {
 
 			return availableActions;
 		}
 
-		if (accountDisplay.isActive()) {
-			availableActions.add("deactivateAccounts");
+		if (accountEntryDisplay.isActive()) {
+			availableActions.add("deactivateAccountEntries");
 		}
 		else {
-			availableActions.add("activateAccounts");
+			availableActions.add("activateAccountEntries");
 		}
 
-		availableActions.add("deleteAccounts");
+		availableActions.add("deleteAccountEntries");
 
 		return availableActions;
 	}
@@ -185,7 +188,7 @@ public class ViewAccountsManagementToolbarDisplayContext
 
 	@Override
 	public String getComponentId() {
-		return "accountsManagementToolbar";
+		return "accountEntriesManagementToolbar";
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -207,7 +210,7 @@ public class ViewAccountsManagementToolbarDisplayContext
 
 	@Override
 	public String getDefaultEventHandler() {
-		return "ACCOUNTS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+		return "ACCOUNT_ENTRIES_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
 
 	@Override
@@ -263,6 +266,6 @@ public class ViewAccountsManagementToolbarDisplayContext
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ViewAccountsManagementToolbarDisplayContext.class);
+		ViewAccountEntriesManagementToolbarDisplayContext.class);
 
 }

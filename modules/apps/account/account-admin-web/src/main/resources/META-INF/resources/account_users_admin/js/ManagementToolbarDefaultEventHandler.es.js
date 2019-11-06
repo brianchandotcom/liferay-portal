@@ -14,13 +14,13 @@
 
 import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 
-class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	selectAccount(itemData) {
-		this._openAccountSelector(
+class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
+	selectAccountEntries(itemData) {
+		this._openAccountEntrySelector(
 			Liferay.Language.get('select'),
-			this.ns('selectAccounts'),
+			this.ns('selectAccountEntries'),
 			Liferay.Language.get('select-accounts'),
-			itemData.accountSelectorURL,
+			itemData.accountEntrySelectorURL,
 			selectedItems => {
 				var redirectURL = Liferay.Util.PortletURL.createPortletURL(
 					itemData.redirectURL,
@@ -35,18 +35,18 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		);
 	}
 
-	_openAccountSelector(
+	_openAccountEntrySelector(
 		dialogButtonLabel,
 		dialogEventName,
 		dialogTitle,
-		accountSelectorURL,
+		accountEntrySelectorURL,
 		callback
 	) {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: dialogButtonLabel,
 			eventName: dialogEventName,
 			title: dialogTitle,
-			url: accountSelectorURL
+			url: accountEntrySelectorURL
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {
@@ -59,4 +59,4 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	}
 }
 
-export default UsersManagementToolbarDefaultEventHandler;
+export default ManagementToolbarDefaultEventHandler;

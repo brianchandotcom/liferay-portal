@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_DISPLAY);
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 
 List<String> domains = Collections.emptyList();
 
-if (accountDisplay != null) {
-	domains = accountDisplay.getDomains();
+if (accountEntryDisplay != null) {
+	domains = accountEntryDisplay.getDomains();
 }
 %>
 
@@ -148,7 +148,7 @@ if (accountDisplay != null) {
 					<%
 					PortletURL addDomainsURL = renderResponse.createRenderURL();
 
-					addDomainsURL.setParameter("mvcPath", "/account/add_domains.jsp");
+					addDomainsURL.setParameter("mvcPath", "/account_entry/add_domains.jsp");
 					addDomainsURL.setWindowState(LiferayWindowState.POP_UP);
 					%>
 

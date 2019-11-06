@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchContainer accountDisplaySearchContainer = AccountDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
+SearchContainer accountDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
 
-SelectAccountsManagementToolbarDisplayContext selectAccountsManagementToolbarDisplayContext = new SelectAccountsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountDisplaySearchContainer);
+SelectAccountEntriesManagementToolbarDisplayContext selectAccountEntriesManagementToolbarDisplayContext = new SelectAccountEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountDisplaySearchContainer);
 %>
 
 <clay:management-toolbar
-	displayContext="<%= selectAccountsManagementToolbarDisplayContext %>"
+	displayContext="<%= selectAccountEntriesManagementToolbarDisplayContext %>"
 />
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">
@@ -34,9 +34,9 @@ SelectAccountsManagementToolbarDisplayContext selectAccountsManagementToolbarDis
 			searchContainer="<%= accountDisplaySearchContainer %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.account.admin.web.internal.display.AccountDisplay"
-				keyProperty="accountId"
-				modelVar="accountDisplay"
+				className="com.liferay.account.admin.web.internal.display.AccountEntryDisplay"
+				keyProperty="accountEntryId"
+				modelVar="accountEntryDisplay"
 			>
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-title"
@@ -47,7 +47,7 @@ SelectAccountsManagementToolbarDisplayContext selectAccountsManagementToolbarDis
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					name="parent-account"
-					property="parentAccountName"
+					property="parentAccountEntryName"
 				/>
 
 				<liferay-ui:search-container-column-text
@@ -55,8 +55,8 @@ SelectAccountsManagementToolbarDisplayContext selectAccountsManagementToolbarDis
 					name="status"
 				>
 					<clay:label
-						label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountDisplay.getStatusLabel()), locale) %>"
-						style="<%= accountDisplay.getStatusLabelStyle() %>"
+						label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountEntryDisplay.getStatusLabel()), locale) %>"
+						style="<%= accountEntryDisplay.getStatusLabelStyle() %>"
 					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
@@ -69,13 +69,13 @@ SelectAccountsManagementToolbarDisplayContext selectAccountsManagementToolbarDis
 </aui:container>
 
 <liferay-frontend:component
-	componentId="<%= selectAccountsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/AccountsManagementToolbarDefaultEventHandler.es"
+	componentId="<%= selectAccountEntriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/AccountEntriesManagementToolbarDefaultEventHandler.es"
 />
 
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />accounts'
+		'<portlet:namespace />accountEntries'
 	);
 
 	searchContainer.on('rowToggled', function(event) {
@@ -92,7 +92,7 @@ SelectAccountsManagementToolbarDisplayContext selectAccountsManagementToolbarDis
 		}
 
 		Liferay.Util.getOpener().Liferay.fire(
-			'<%= HtmlUtil.escapeJS(renderResponse.getNamespace() + "selectAccounts") %>',
+			'<%= HtmlUtil.escapeJS(renderResponse.getNamespace() + "selectAccountEntries") %>',
 			result
 		);
 	});

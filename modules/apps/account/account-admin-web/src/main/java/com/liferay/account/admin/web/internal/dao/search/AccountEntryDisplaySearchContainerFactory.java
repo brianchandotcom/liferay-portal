@@ -14,7 +14,7 @@
 
 package com.liferay.account.admin.web.internal.dao.search;
 
-import com.liferay.account.admin.web.internal.display.AccountDisplay;
+import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -35,32 +35,33 @@ import java.util.Objects;
 /**
  * @author Pei-Jung Lan
  */
-public class AccountDisplaySearchContainerFactory {
+public class AccountEntryDisplaySearchContainerFactory {
 
 	public static SearchContainer create(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		SearchContainer accountDisplaySearchContainer = new SearchContainer(
-			liferayPortletRequest, liferayPortletResponse.createRenderURL(),
-			null, "no-accounts-were-found");
+		SearchContainer accountEntryDisplaySearchContainer =
+			new SearchContainer(
+				liferayPortletRequest, liferayPortletResponse.createRenderURL(),
+				null, "no-accounts-were-found");
 
-		accountDisplaySearchContainer.setId("accounts");
+		accountEntryDisplaySearchContainer.setId("accountEntries");
 
 		String orderByCol = ParamUtil.getString(
 			liferayPortletRequest, "orderByCol", "name");
 
-		accountDisplaySearchContainer.setOrderByCol(orderByCol);
+		accountEntryDisplaySearchContainer.setOrderByCol(orderByCol);
 
 		String orderByType = ParamUtil.getString(
 			liferayPortletRequest, "orderByType", "asc");
 
-		accountDisplaySearchContainer.setOrderByType(orderByType);
+		accountEntryDisplaySearchContainer.setOrderByType(orderByType);
 
-		accountDisplaySearchContainer.setOrderByComparator(
+		accountEntryDisplaySearchContainer.setOrderByComparator(
 			_getOrderByComparator(orderByCol, orderByType));
 
-		accountDisplaySearchContainer.setRowChecker(
+		accountEntryDisplaySearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
 
 		ThemeDisplay themeDisplay =
@@ -73,20 +74,20 @@ public class AccountDisplaySearchContainerFactory {
 		List<AccountEntry> accountEntries =
 			AccountEntryLocalServiceUtil.getAccountEntries(
 				themeDisplay.getCompanyId(), _getStatus(navigation),
-				accountDisplaySearchContainer.getStart(),
-				accountDisplaySearchContainer.getEnd(),
-				accountDisplaySearchContainer.getOrderByComparator());
+				accountEntryDisplaySearchContainer.getStart(),
+				accountEntryDisplaySearchContainer.getEnd(),
+				accountEntryDisplaySearchContainer.getOrderByComparator());
 
-		List<AccountDisplay> accountDisplays = TransformUtil.transform(
-			accountEntries, AccountDisplay::of);
+		List<AccountEntryDisplay> accountEntryDisplays =
+			TransformUtil.transform(accountEntries, AccountEntryDisplay::of);
 
-		accountDisplaySearchContainer.setResults(accountDisplays);
+		accountEntryDisplaySearchContainer.setResults(accountEntryDisplays);
 
-		accountDisplaySearchContainer.setTotal(
+		accountEntryDisplaySearchContainer.setTotal(
 			AccountEntryLocalServiceUtil.getAccountEntriesCount(
 				themeDisplay.getCompanyId(), _getStatus(navigation)));
 
-		return accountDisplaySearchContainer;
+		return accountEntryDisplaySearchContainer;
 	}
 
 	private static OrderByComparator _getOrderByComparator(

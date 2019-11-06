@@ -15,7 +15,7 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
-import com.liferay.account.admin.web.internal.display.AccountDisplay;
+import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.constants.AccountsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -48,7 +48,8 @@ public class AddAccountUserMVCRenderCommand implements MVCRenderCommand {
 			renderRequest, "accountEntryId");
 
 		renderRequest.setAttribute(
-			AccountWebKeys.ACCOUNT_DISPLAY, AccountDisplay.of(accountEntryId));
+			AccountWebKeys.ACCOUNT_ENTRY_DISPLAY,
+			AccountEntryDisplay.of(accountEntryId));
 
 		return "/add_account_user.jsp";
 	}

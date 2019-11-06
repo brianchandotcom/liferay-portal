@@ -26,10 +26,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Albert Lee
  */
-public class SelectAccountsManagementToolbarDisplayContext
-	extends ViewAccountsManagementToolbarDisplayContext {
+public class SelectAccountEntriesManagementToolbarDisplayContext
+	extends ViewAccountEntriesManagementToolbarDisplayContext {
 
-	public SelectAccountsManagementToolbarDisplayContext(
+	public SelectAccountEntriesManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,

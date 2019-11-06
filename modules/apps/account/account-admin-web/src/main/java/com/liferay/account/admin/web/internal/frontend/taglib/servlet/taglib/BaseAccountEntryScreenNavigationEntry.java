@@ -16,7 +16,7 @@ package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
-import com.liferay.account.admin.web.internal.display.AccountDisplay;
+import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -31,15 +31,15 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Albert Lee
  */
-public abstract class BaseAccountScreenNavigationEntry
-	implements ScreenNavigationEntry<AccountDisplay> {
+public abstract class BaseAccountEntryScreenNavigationEntry
+	implements ScreenNavigationEntry<AccountEntryDisplay> {
 
 	public abstract String getJspPath();
 
 	@Override
 	public String getScreenNavigationKey() {
 		return AccountScreenNavigationEntryConstants.
-			SCREEN_NAVIGATION_KEY_ACCOUNT;
+			SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY;
 	}
 
 	@Override
@@ -52,7 +52,8 @@ public abstract class BaseAccountScreenNavigationEntry
 			httpServletRequest, "accountEntryId");
 
 		httpServletRequest.setAttribute(
-			AccountWebKeys.ACCOUNT_DISPLAY, AccountDisplay.of(accountEntryId));
+			AccountWebKeys.ACCOUNT_ENTRY_DISPLAY,
+			AccountEntryDisplay.of(accountEntryId));
 
 		jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse, getJspPath());

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_DISPLAY);
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 AccountUserDisplay accountUserDisplay = (AccountUserDisplay)row.getObject();
@@ -32,7 +32,7 @@ AccountUserDisplay accountUserDisplay = (AccountUserDisplay)row.getObject();
 >
 	<portlet:actionURL name="/account_admin/remove_account_users" var="removeAccountUsersURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="accountEntryId" value="<%= String.valueOf(accountDisplay.getAccountId()) %>" />
+		<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
 		<portlet:param name="accountUserIds" value="<%= String.valueOf(accountUserDisplay.getUserId()) %>" />
 	</portlet:actionURL>
 

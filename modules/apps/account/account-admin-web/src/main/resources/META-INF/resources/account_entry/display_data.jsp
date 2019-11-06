@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_DISPLAY);
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 %>
 
 <div class="sheet-section">
@@ -28,7 +28,7 @@ AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebK
 	<aui:row>
 		<aui:col width="<%= 50 %>">
 			<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-				<aui:input label="account-name" name="name" required="<%= true %>" type="text" value="<%= (accountDisplay == null) ? StringPool.BLANK : accountDisplay.getName() %>">
+				<aui:input label="account-name" name="name" required="<%= true %>" type="text" value="<%= (accountEntryDisplay == null) ? StringPool.BLANK : accountEntryDisplay.getName() %>">
 					<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountEntry.class.getName(), "name") %></aui:validator>
 				</aui:input>
 			</aui:field-wrapper>
@@ -37,20 +37,20 @@ AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebK
 		<aui:col width="<%= 40 %>">
 			<div class="text-center">
 				<liferay-ui:logo-selector
-					currentLogoURL='<%= ((accountDisplay == null) || (accountDisplay.getLogoId() == 0)) ? themeDisplay.getPathImage() + "/organization_logo?img_id=0" : accountDisplay.getLogoURL(themeDisplay) %>'
-					defaultLogo="<%= (accountDisplay == null) || (accountDisplay.getLogoId() == 0) %>"
+					currentLogoURL='<%= ((accountEntryDisplay == null) || (accountEntryDisplay.getLogoId() == 0)) ? themeDisplay.getPathImage() + "/organization_logo?img_id=0" : accountEntryDisplay.getLogoURL(themeDisplay) %>'
+					defaultLogo="<%= (accountEntryDisplay == null) || (accountEntryDisplay.getLogoId() == 0) %>"
 					defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
-					tempImageFileName='<%= (accountDisplay == null) ? "0" : String.valueOf(accountDisplay.getAccountId()) %>'
+					tempImageFileName='<%= (accountEntryDisplay == null) ? "0" : String.valueOf(accountEntryDisplay.getAccountEntryId()) %>'
 				/>
 			</div>
 		</aui:col>
 	</aui:row>
 
 	<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-		<aui:input name="description" type="textarea" value="<%= (accountDisplay == null) ? StringPool.BLANK : accountDisplay.getDescription() %>" />
+		<aui:input name="description" type="textarea" value="<%= (accountEntryDisplay == null) ? StringPool.BLANK : accountEntryDisplay.getDescription() %>" />
 	</aui:field-wrapper>
 
 	<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-		<aui:input label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= (accountDisplay == null) ? true : accountDisplay.isActive() %>" />
+		<aui:input label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= (accountEntryDisplay == null) ? true : accountEntryDisplay.isActive() %>" />
 	</aui:field-wrapper>
 </div>

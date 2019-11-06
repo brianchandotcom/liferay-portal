@@ -18,13 +18,20 @@ import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -47,6 +54,18 @@ public class DepotAdminManagementToolbarDisplayContext
 			depotAdminDisplayContext.getGroupSearch());
 
 		_depotAdminDisplayContext = depotAdminDisplayContext;
+	}
+
+	public List<String> getAvailableActions(Group group)
+		throws PortalException {
+
+		List<String> availableActions = new ArrayList<>();
+
+		if (_hasDeleteGroupPermission(group)) {
+			availableActions.add("deleteSelectedDepotEntries");
+		}
+
+		return availableActions;
 	}
 
 	@Override
@@ -118,8 +137,8 @@ public class DepotAdminManagementToolbarDisplayContext
 	}
 
 	@Override
-	public Boolean isSelectable() {
-		return false;
+	public String getSearchContainerId() {
+		return "repositories";
 	}
 
 	@Override
@@ -155,6 +174,30 @@ public class DepotAdminManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"descriptive-name"};
+	}
+
+	private boolean _hasDeleteGroupPermission(Group group)
+		throws PortalException {
+
+		if (group.isCompany()) {
+			return false;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!GroupPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), group,
+				ActionKeys.DELETE)) {
+
+			return false;
+		}
+
+		if (PortalUtil.isSystemGroup(group.getGroupKey())) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private final DepotAdminDisplayContext _depotAdminDisplayContext;

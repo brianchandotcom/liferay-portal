@@ -93,7 +93,7 @@ public class DepotEntryVerticalCard
 
 	@Override
 	public boolean isSelectable() {
-		return false;
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

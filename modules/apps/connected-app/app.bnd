@@ -1,5 +1,5 @@
 Liferay-Releng-App-Description:
-Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Liferay Connected App
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Connected App
 Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Communication
 Liferay-Releng-Demo-Url:

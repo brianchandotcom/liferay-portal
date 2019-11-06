@@ -35,6 +35,17 @@ definition {
 			value1 = "Edit");
 	}
 
+	macro gotoLanguages {
+		Click(
+			key_tab = "Languages",
+			locator1 = "NavTab#TAB_LINK");
+
+		AssertTextEquals(
+			key_title = "Languages",
+			locator1 = "Header#H2_TITLE",
+			value1 = "Languages");
+	}
+
 	macro gotoSites {
 		Click(
 			key_tab = "Sites",

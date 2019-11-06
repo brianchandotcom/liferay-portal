@@ -99,7 +99,7 @@ FragmentsEditorSidebarContent.STATE = {
 
 const ConnectedFragmentsEditorSidebarContent = getConnectedComponent(
 	FragmentsEditorSidebarContent,
-	['lookAndFeelURL', 'sidebarPanels', 'spritemap']
+	['lockedSegmentsExperience', 'lookAndFeelURL', 'sidebarPanels', 'spritemap']
 );
 
 Soy.register(ConnectedFragmentsEditorSidebarContent, templates);

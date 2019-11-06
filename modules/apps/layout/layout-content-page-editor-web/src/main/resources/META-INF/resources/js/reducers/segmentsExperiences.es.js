@@ -447,16 +447,21 @@ function deleteSegmentsExperienceReducer(state, action) {
 /**
  * Sets `lockedSegmentsExperience` in the state, depending on the Experience
  * @param {object} state
+ * @param {string | null} state.selectedSidebarPanelId
  * @param {object} experience
  * @param {boolean} experience.hasLockedSegmentsExperiment
  * @return {object} nextState
  */
 function _setExperienceLock(state, experience) {
 	const lockedSegmentsExperience = experience.hasLockedSegmentsExperiment;
+	const selectedSidebarPanelId = lockedSegmentsExperience
+		? null
+		: state.selectedSidebarPanelId;
 
 	return {
 		...state,
-		lockedSegmentsExperience
+		lockedSegmentsExperience,
+		selectedSidebarPanelId
 	};
 }
 

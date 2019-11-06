@@ -6,6 +6,7 @@
 {template .render}
 	{@param? _handleLookAndFeeldButtonClick: any}
 	{@param? _handlePanelButtonClick: any}
+	{@param? lockedSegmentsExperience: bool }
 	{@param? selectedSidebarPanel: [
 		icon: string,
 		label: string,
@@ -73,6 +74,7 @@
 							class="{$sectionButtonClasses}"
 							data-sidebar-panel-id="{$sidebarPanel.sidebarPanelId}"
 							data-title="{$sidebarPanel.label}"
+							disabled="{$lockedSegmentsExperience}"
 							type="button"
 
 							{if $sidebarPanel.sidebarPanelId == 'lookAndFeel'}

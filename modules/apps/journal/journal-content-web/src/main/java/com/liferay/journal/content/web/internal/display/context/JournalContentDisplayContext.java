@@ -24,6 +24,9 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.content.asset.addon.entry.ContentMetadataAssetAddonEntry;
@@ -45,9 +48,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
+import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry;
@@ -67,6 +74,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.trash.constants.TrashActionKeys;
@@ -495,6 +503,33 @@ public class JournalContentDisplayContext {
 		}
 
 		return groupId;
+	}
+
+	public PortletURL getItemSelectorURL() throws PortalException {
+		LiferayRenderRequest liferayRenderRequest =
+			(LiferayRenderRequest)LiferayPortletUtil.getLiferayPortletRequest(
+				_portletRequest);
+
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(liferayRenderRequest);
+
+		LiferayRenderResponse liferayRenderResponse =
+			(LiferayRenderResponse)LiferayPortletUtil.getLiferayPortletResponse(
+				_portletResponse);
+
+		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
+			new InfoItemItemSelectorCriterion();
+
+		infoItemItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new JournalArticleItemSelectorReturnType());
+
+		ItemSelector itemSelector = (ItemSelector)_portletRequest.getAttribute(
+			JournalWebKeys.ITEM_SELECTOR);
+
+		return itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory,
+			liferayRenderResponse.getNamespace() + "selectedItem",
+			infoItemItemSelectorCriterion);
 	}
 
 	public JournalArticle getLatestArticle() throws PortalException {

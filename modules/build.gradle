@@ -269,6 +269,12 @@ gradle.beforeProject {
 			}
 		}
 
+		pluginManager.withPlugin("com.liferay.css.builder") {
+			buildCSS {
+				rtlExcludedPathRegexps = [".+"]
+			}
+		}
+
 		pluginManager.withPlugin("com.liferay.js.module.config.generator") {
 			downloadLiferayModuleConfigGenerator {
 				enabled = false

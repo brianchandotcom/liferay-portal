@@ -1461,7 +1461,7 @@ public class JenkinsResultsParserUtil {
 
 		double randomDouble = Math.random();
 
-		return start + (int)Math.round(size * randomDouble);
+		return Math.min(start, end) + (int)Math.round(size * randomDouble);
 	}
 
 	public static String getRegexLiteral(String string) {

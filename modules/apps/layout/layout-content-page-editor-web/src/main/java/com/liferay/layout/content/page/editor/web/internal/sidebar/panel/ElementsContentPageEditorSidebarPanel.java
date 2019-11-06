@@ -53,7 +53,7 @@ public class ElementsContentPageEditorSidebarPanel
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "section-builder");
+		return LanguageUtil.get(resourceBundle, "fragments");
 	}
 
 	@Override

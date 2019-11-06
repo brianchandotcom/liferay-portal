@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-public class FragmentEntryLinkConfigurationUtil {
+public class FragmentEntryLinkItemSelectorUtil {
 
 	public static void addFragmentEntryLinkFieldsSelectorURL(
 		ItemSelector itemSelector, HttpServletRequest httpServletRequest,

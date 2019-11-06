@@ -49,7 +49,7 @@ import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorTypeConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentCreationContentPageEditorConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
-import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkConfigurationUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -863,7 +863,7 @@ public class ContentPageEditorDisplayContext {
 				JSONObject configurationJSONObject =
 					JSONFactoryUtil.createJSONObject(configuration);
 
-				FragmentEntryLinkConfigurationUtil.
+				FragmentEntryLinkItemSelectorUtil.
 					addFragmentEntryLinkFieldsSelectorURL(
 						_itemSelector, request, liferayPortletResponse,
 						configurationJSONObject);

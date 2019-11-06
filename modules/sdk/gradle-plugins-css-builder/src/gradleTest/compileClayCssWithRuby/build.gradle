@@ -28,6 +28,10 @@ apply plugin: "com.liferay.css.builder"
 apply plugin: "com.liferay.node"
 apply plugin: "java"
 
+node {
+	useNpm = true
+}
+
 task runGradleTest
 
 buildCSS {
@@ -40,10 +44,6 @@ buildCSS {
 	excludes "**/common_main.scss"
 
 	sassCompilerClassName = "ruby"
-}
-
-node {
-	useNpm = true
 }
 
 repositories {

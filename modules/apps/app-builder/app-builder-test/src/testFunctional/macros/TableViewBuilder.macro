@@ -1,0 +1,23 @@
+definition {
+
+    macro addColumnByDoubleClick {
+
+		DoubleClick(locator1 = "FormViewBuilder#ADD_FIELD_TYPE");
+
+		TableViewBuilder.validateColumnLabel();
+	}
+
+    macro validateColumnLabel {
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldType}");
+	}
+
+
+	macro setName {
+
+        AppBuilderAdmin.setName();
+	}
+    
+}

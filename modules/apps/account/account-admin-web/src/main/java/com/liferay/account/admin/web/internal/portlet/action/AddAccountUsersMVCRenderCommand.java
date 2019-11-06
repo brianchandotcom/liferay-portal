@@ -17,22 +17,28 @@ package com.liferay.account.admin.web.internal.portlet.action;
 import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
 import com.liferay.account.admin.web.internal.display.AccountDisplay;
 import com.liferay.account.constants.AccountsPortletKeys;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
+
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Albert Lee
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.users.admin.configuration.UserFileUploadsConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"javax.portlet.name=" + AccountsPortletKeys.ACCOUNTS_ADMIN,
 		"mvc.command.name=/account_admin/add_account_user"
@@ -59,7 +65,13 @@ public class AddAccountUsersMVCRenderCommand implements MVCRenderCommand {
 		return "/add_account_user.jsp";
 	}
 
-	@Reference
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_userFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
+			UserFileUploadsConfiguration.class, properties);
+	}
+
 	private volatile UserFileUploadsConfiguration _userFileUploadsConfiguration;
 
 }

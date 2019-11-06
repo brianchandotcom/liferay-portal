@@ -292,16 +292,3 @@ renderResponse.setTitle(headerTitle);
 		}
 	}
 </script>
-
-<%
-if (fileShortcut != null) {
-	DLBreadcrumbUtil.addPortletBreadcrumbEntries(fileShortcut, request, renderResponse);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
-}
-else {
-	DLBreadcrumbUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-file-shortcut"), currentURL);
-}
-%>

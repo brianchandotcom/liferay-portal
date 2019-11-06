@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
-import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
+import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -25,29 +25,21 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.IncludeTag;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
+
 /**
  * @author Carlos Lancha
  * @author Diego Nascimento
  */
-public class TranslationManagerTag extends ComponentTag {
-
-	@Override
-	public int doStartTag() {
-		setData(new HashMap<String, Object>());
-
-		return super.doStartTag();
-	}
-
-	@Override
-	public String getModule() {
-		return "frontend-taglib/translation_manager/TranslationManager.es";
-	}
+public class TranslationManagerTag extends IncludeTag {
 
 	public void setAvailableLocales(Locale[] availableLocales) {
 		_availableLocales = availableLocales;
@@ -71,6 +63,13 @@ public class TranslationManagerTag extends ComponentTag {
 		_editingLanguageId = editingLanguageId;
 	}
 
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
+	}
+
 	public void setId(String id) {
 		_id = id;
 	}
@@ -84,7 +83,26 @@ public class TranslationManagerTag extends ComponentTag {
 	}
 
 	@Override
-	protected void prepareData(Map<String, Object> data) {
+	protected void cleanUp() {
+		super.cleanUp();
+
+	 	_availableLocales = null;
+	 	_changeableDefaultLanguage = false;
+	 	_cssClass = null;
+	 	_defaultLanguageId = null;
+	 	_editingLanguageId = null;
+	 	_id = null;
+	 	_initialize = false;
+	 	_readOnly = false;
+	}
+
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		JSONArray availableLocalesJSONArray = JSONFactoryUtil.createJSONArray();
 		JSONArray localesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -116,6 +134,8 @@ public class TranslationManagerTag extends ComponentTag {
 			localesJSONArray.put(localeJSONObject);
 		}
 
+		Map<String, Object> data = new HashMap<>();
+
 		data.put("availableLocales", availableLocalesJSONArray);
 		data.put("changeableDefaultLanguage", _changeableDefaultLanguage);
 		data.put("cssClass", _cssClass);
@@ -125,7 +145,12 @@ public class TranslationManagerTag extends ComponentTag {
 		data.put("initialize", _initialize);
 		data.put("locales", localesJSONArray);
 		data.put("readOnly", _readOnly);
+
+		httpServletRequest.setAttribute(
+			"liferay-frontend:translation-manager:data", data);
 	}
+
+	private static final String _PAGE = "/translation_manager/page.jsp";
 
 	private Locale[] _availableLocales;
 	private boolean _changeableDefaultLanguage;

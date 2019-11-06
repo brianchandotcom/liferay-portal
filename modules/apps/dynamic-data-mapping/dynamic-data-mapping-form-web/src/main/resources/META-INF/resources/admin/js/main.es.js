@@ -85,74 +85,81 @@ class Form extends Component {
 				return editor;
 			}),
 			this._createEditor('descriptionEditor'),
-			this._getTranslationManager()
+			Liferay.componentReady('translationManager')
 		];
 
 		if (this.isFormBuilderView()) {
 			dependencies.push(this._getSettingsDDMForm());
 		}
 
-		Promise.all(dependencies).then(results => {
-			this._translationManager = results[2];
+		Promise.all(dependencies).then(
+			([
+				nameEditor,
+				descriptionEditor,
+				translationManager,
+				settingsDDMForm
+			]) => {
+				if (translationManager) {
+					this.props.defaultLanguageId = translationManager.get(
+						'defaultLocale'
+					);
 
-			const translationManager = this._translationManager;
+					this.props.editingLanguageId = translationManager.get(
+						'editingLocale'
+					);
 
-			if (this._translationManager) {
-				this.props.defaultLanguageId = translationManager.get(
-					'defaultLocale'
+					this._translationManagerHandles = [
+						translationManager.on('editingLocale', ({newValue}) => {
+							this.props.editingLanguageId = newValue;
+
+							if (
+								translationManager.get('defaultLocale') ===
+								newValue
+							) {
+								this.showAddButton();
+							} else {
+								this.hideAddButton();
+							}
+						}),
+						translationManager.on(
+							'availableLocales',
+							this.onAvailableLocalesRemoved.bind(this)
+						)
+					];
+				}
+
+				this._stateSyncronizer = new StateSyncronizer(
+					{
+						descriptionEditor,
+						localizedDescription,
+						localizedName,
+						nameEditor,
+						namespace,
+						paginationMode,
+						published,
+						settingsDDMForm,
+						store,
+						translationManager
+					},
+					this.element
 				);
 
-				this.props.editingLanguageId = translationManager.get(
-					'editingLocale'
+				this._autoSave = new AutoSave(
+					{
+						form: document.querySelector(`#${namespace}editForm`),
+						interval: Liferay.DDM.FormSettings.autosaveInterval,
+						namespace,
+						stateSyncronizer: this._stateSyncronizer,
+						url: Liferay.DDM.FormSettings.autosaveURL
+					},
+					this.element
 				);
 
-				this._translationManager.on('editingLocale', ({newValue}) => {
-					this.props.editingLanguageId = newValue;
-
-					if (translationManager.get('defaultLocale') === newValue) {
-						this.showAddButton();
-					} else {
-						this.hideAddButton();
-					}
-				});
-
-				this._translationManager.on(
-					'availableLocales',
-					this.onAvailableLocalesRemoved.bind(this)
+				this._eventHandler.add(
+					this._autoSave.on('autosaved', this._updateAutoSaveMessage)
 				);
 			}
-
-			this._stateSyncronizer = new StateSyncronizer(
-				{
-					descriptionEditor: results[1],
-					localizedDescription,
-					localizedName,
-					nameEditor: results[0],
-					namespace,
-					paginationMode,
-					published,
-					settingsDDMForm: results[3],
-					store,
-					translationManager
-				},
-				this.element
-			);
-
-			this._autoSave = new AutoSave(
-				{
-					form: document.querySelector(`#${namespace}editForm`),
-					interval: Liferay.DDM.FormSettings.autosaveInterval,
-					namespace,
-					stateSyncronizer: this._stateSyncronizer,
-					url: Liferay.DDM.FormSettings.autosaveURL
-				},
-				this.element
-			);
-
-			this._eventHandler.add(
-				this._autoSave.on('autosaved', this._updateAutoSaveMessage)
-			);
-		});
+		);
 
 		this._eventHandler.add(
 			dom.on(
@@ -260,14 +267,17 @@ class Form extends Component {
 			this._autoSave.dispose();
 		}
 
+		if (this._stateSyncronizer) {
+			this._stateSyncronizer.dispose();
+		}
+
 		Notifications.closeAlert();
 
 		this._eventHandler.removeAllListeners();
 
-		this._translationManager.detach(
-			'availableLocales',
-			this.onAvailableLocalesRemoved.bind(this)
-		);
+		if (this._translationManagerHandles) {
+			this._translationManagerHandles.forEach(handle => handle.detach());
+		}
 	}
 
 	hideAddButton() {
@@ -689,10 +699,6 @@ class Form extends Component {
 		}
 
 		return promise;
-	}
-
-	_getTranslationManager() {
-		return Liferay.componentReady('translationManager');
 	}
 
 	_handleBackButtonClicked(event) {

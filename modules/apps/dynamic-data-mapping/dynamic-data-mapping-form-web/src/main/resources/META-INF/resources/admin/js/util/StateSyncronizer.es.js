@@ -33,13 +33,15 @@ class StateSyncronizer extends Component {
 		);
 
 		if (translationManager) {
-			translationManager.on(
-				'availableLocales',
-				this.onRemoveAvailableLocales.bind(this)
-			);
-			translationManager.on('editingLocale', ({newValue}) => {
-				this.syncEditors(newValue);
-			});
+			this._translationManagerHandles = [
+				translationManager.on(
+					'availableLocales',
+					this.onRemoveAvailableLocales.bind(this)
+				),
+				translationManager.on('editingLocale', ({newValue}) => {
+					this.syncEditors(newValue);
+				})
+			];
 		}
 	}
 
@@ -53,15 +55,13 @@ class StateSyncronizer extends Component {
 	}
 
 	disposeInternal() {
-		const {translationManager} = this.props;
 		super.disposeInternal();
 
 		this._eventHandler.removeAllListeners();
 
-		translationManager.detach(
-			'availableLocales',
-			this.onRemoveAvailableLocales.bind(this)
-		);
+		if (this._translationManagerHandles) {
+			this._translationManagerHandles.forEach(handle => handle.detach());
+		}
 	}
 
 	getAvailableLanguageIds() {
@@ -69,7 +69,10 @@ class StateSyncronizer extends Component {
 		let availableLanguageIds = [{id: this.getDefaultLanguageId()}];
 
 		if (translationManager) {
-			const availableLocalesMap = translationManager.get('availableLocales');
+			const availableLocalesMap = translationManager.get(
+				'availableLocales'
+			);
+
 			availableLanguageIds = [...availableLocalesMap.keys()];
 		}
 

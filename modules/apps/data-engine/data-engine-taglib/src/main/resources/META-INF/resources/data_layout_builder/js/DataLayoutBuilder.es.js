@@ -28,22 +28,27 @@ class DataLayoutBuilder extends Component {
 		const {localizable} = this.props;
 
 		if (localizable) {
-			const translationManagerPromise = this._getTranslationManager();
-
-			translationManagerPromise.then(translationManager => {
-				translationManager.on('availableLocales', ({newValue}) => {
-					this.props.availableLanguageIds = [...newValue.keys()];
-				});
-
-				translationManager.on('editingLocale', ({newValue}) => {
-					this.props.editingLanguageId = newValue;
-				});
-
-				translationManager.on(
-					'availableLocales',
-					this.onAvailableLocalesRemoved.bind(this)
-				);
-			});
+			Liferay.componentReady('translationManager').then(
+				translationManager => {
+					this._translationManagerHandles = [
+						translationManager.on(
+							'availableLocales',
+							({newValue}) => {
+								this.props.availableLanguageIds = [
+									...newValue.keys()
+								];
+							}
+						),
+						translationManager.on('editingLocale', ({newValue}) => {
+							this.props.editingLanguageId = newValue;
+						}),
+						translationManager.on(
+							'availableLocales',
+							this.onAvailableLocalesRemoved.bind(this)
+						)
+					];
+				}
+			);
 		}
 	}
 
@@ -52,13 +57,8 @@ class DataLayoutBuilder extends Component {
 	}
 
 	disposed() {
-		if (this._translationManager) {
-			this._translationManager.detach(
-				'availableLocales',
-				this.onAvailableLocalesRemoved.bind(this)
-			);
-
-			this._translationManager = null;
+		if (this._translationManagerHandles) {
+			this._translationManagerHandles.forEach(handle => handle.detach());
 		}
 	}
 
@@ -267,10 +267,6 @@ class DataLayoutBuilder extends Component {
 			definition: JSON.stringify(definition),
 			layout: JSON.stringify(layout)
 		};
-	}
-
-	_getTranslationManager() {
-		return Liferay.componentReady('translationManager');
 	}
 
 	_handlePagesChanged({newVal}) {

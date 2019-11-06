@@ -77,10 +77,10 @@ String userTokenName = tokenConfiguration.userTokenName();
 </aui:fieldset>
 
 <aui:script use="liferay-auto-fields,liferay-dynamic-select">
-	new Liferay.AutoFields(
-	{
+	new Liferay.AutoFields({
 		contentBox: '#<portlet:namespace />authenticationCookies',
-		fieldIndexes: '<portlet:namespace /><%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE %>authenticationCookiesIndexes',
+		fieldIndexes:
+			'<portlet:namespace /><%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE %>authenticationCookiesIndexes',
 		namespace: '<portlet:namespace />'
 	}).render();
 </aui:script>

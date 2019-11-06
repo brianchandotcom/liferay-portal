@@ -9,6 +9,7 @@ definition {
 		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
 	}
 
+
 	macro addFieldByDragAndDrop {
 
 		Pause(locator1 = "10000");
@@ -29,9 +30,8 @@ definition {
 
 	macro setName {
 
-		Type(
-			locator1 = "FormViewBuilder#FORM_VIEW_NAME",
-			value1 = "${formViewName}");
+
+        AppBuilderAdmin.setName();
 	}
 
 	macro validateFieldLabel {

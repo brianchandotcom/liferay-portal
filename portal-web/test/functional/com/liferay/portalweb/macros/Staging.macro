@@ -1158,6 +1158,16 @@ definition {
 		AssertVisible(locator1 = "Button#PLUS");
 	}
 
+	macro viewDateRange {
+		AssertElementPresent(
+			key_dateRangeStartDate = "${dateRangeStartDate}",
+			locator1 = "Select#DATE_RANGE_START_DATE_VALUE");
+
+		AssertElementPresent(
+			key_dateRangeEndDate = "${dateRangeEndDate}",
+			locator1 = "Select#DATE_RANGE_END_DATE_VALUE");
+	}
+
 	macro viewEditedSitePagesVariationPG {
 		var key_sitePagesVariationName = "${sitePagesVariationName}";
 

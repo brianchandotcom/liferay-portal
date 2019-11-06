@@ -15,10 +15,10 @@
 import PropTypes from 'prop-types';
 import React, {useState, useCallback, useEffect, useRef} from 'react';
 
-import NodeList from './NodeList.es';
-import TreeviewCard from './TreeviewCard.es';
-import TreeviewContext from './TreeviewContext.es';
-import TreeviewLabel from './TreeviewLabel.es';
+import NodeList from './NodeList';
+import TreeviewCard from './TreeviewCard';
+import TreeviewContext from './TreeviewContext';
+import TreeviewLabel from './TreeviewLabel';
 
 const flattenNodes = (nodes, nodeList = []) => {
 	nodes.forEach(node => {

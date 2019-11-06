@@ -15,7 +15,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import NodeListItem from './NodeListItem.es';
+import NodeListItem from './NodeListItem';
 
 export default function NodeList({
 	NodeComponent,

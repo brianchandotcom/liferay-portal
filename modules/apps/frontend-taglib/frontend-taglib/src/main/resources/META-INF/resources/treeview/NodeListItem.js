@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState, useEffect} from 'react';
 
-import NodeList from './NodeList.es';
+import NodeList from './NodeList';
 
 function hasToBeExpanded(selectedNodeIds, node) {
 	if (!node.children || node.children.length === 0) {

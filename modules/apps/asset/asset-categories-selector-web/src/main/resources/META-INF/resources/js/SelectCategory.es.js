@@ -16,7 +16,7 @@ import 'metal';
 
 import 'metal-component';
 import ClayIcon from '@clayui/icon';
-import Treeview from 'frontend-taglib/treeview/Treeview.es';
+import Treeview from 'frontend-taglib/treeview/Treeview';
 import React, {useState, useEffect, useCallback} from 'react';
 
 const filterNodes = (nodes, filterValue) => {

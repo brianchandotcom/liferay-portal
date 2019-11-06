@@ -19,7 +19,7 @@ import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import TreeviewContext from './TreeviewContext.es';
+import TreeviewContext from './TreeviewContext';
 
 export default function TreeviewCard({node, onNodeSelected, selectedNodeIds}) {
 	const {filterQuery} = useContext(TreeviewContext);

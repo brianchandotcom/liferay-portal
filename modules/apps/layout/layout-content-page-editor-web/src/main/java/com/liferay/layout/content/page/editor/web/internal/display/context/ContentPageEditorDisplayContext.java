@@ -49,6 +49,7 @@ import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorTypeConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentCreationContentPageEditorConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkConfigurationUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -73,6 +74,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -114,7 +116,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -459,38 +460,6 @@ public class ContentPageEditorDisplayContext {
 	protected final InfoDisplayContributorTracker infoDisplayContributorTracker;
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
-
-	private void _addFragmentEntryLinkFieldsSelectorURL(JSONObject jsonObject) {
-		JSONArray fieldSetsJSONArray = jsonObject.getJSONArray("fieldSets");
-
-		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
-			JSONObject fieldSetsJSONObject = fieldSetsJSONArray.getJSONObject(
-				i);
-
-			JSONArray fieldsJSONArray = fieldSetsJSONObject.getJSONArray(
-				"fields");
-
-			for (int j = 0; j < fieldsJSONArray.length(); j++) {
-				JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(j);
-
-				if ((fieldJSONObject != null) &&
-					Objects.equals(
-						fieldJSONObject.getString("type"), "itemSelector") &&
-					fieldJSONObject.has("typeOptions")) {
-
-					JSONObject typeOptionsJSONObject =
-						fieldJSONObject.getJSONObject("typeOptions");
-
-					if (typeOptionsJSONObject.has("className")) {
-						typeOptionsJSONObject.put(
-							"itemSelectorUrl",
-							_getInfoItemSelectorURL(
-								typeOptionsJSONObject.getString("className")));
-					}
-				}
-			}
-		}
-	}
 
 	private SoyContext _getAvailableLanguagesSoyContext() {
 		SoyContext availableLanguagesSoyContext =
@@ -842,6 +811,9 @@ public class ContentPageEditorDisplayContext {
 
 		themeDisplay.setIsolated(true);
 
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_renderResponse);
+
 		long[] segmentsExperienceIds = {getSegmentsExperienceId()};
 
 		try {
@@ -891,7 +863,10 @@ public class ContentPageEditorDisplayContext {
 				JSONObject configurationJSONObject =
 					JSONFactoryUtil.createJSONObject(configuration);
 
-				_addFragmentEntryLinkFieldsSelectorURL(configurationJSONObject);
+				FragmentEntryLinkConfigurationUtil.
+					addFragmentEntryLinkFieldsSelectorURL(
+						request, liferayPortletResponse,
+						configurationJSONObject);
 
 				soyContext.put(
 					"configuration", configurationJSONObject

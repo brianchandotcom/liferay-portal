@@ -27,6 +27,7 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkConfigurationUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -188,8 +189,16 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 			String configuration = _fragmentRendererController.getConfiguration(
 				defaultFragmentRendererContext);
 
-			jsonObject.put(
-				"configuration", JSONFactoryUtil.createJSONObject(configuration)
+			JSONObject configurationJSONObject =
+				JSONFactoryUtil.createJSONObject(configuration);
+
+			FragmentEntryLinkConfigurationUtil.
+				addFragmentEntryLinkFieldsSelectorURL(
+					_portal.getHttpServletRequest(actionRequest),
+					_portal.getLiferayPortletResponse(actionResponse),
+					configurationJSONObject);
+
+			jsonObject.put("configuration", configurationJSONObject
 			).put(
 				"content",
 				_fragmentRendererController.render(

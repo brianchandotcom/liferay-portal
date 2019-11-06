@@ -12,7 +12,11 @@
  * details.
  */
 
-import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	ItemSelectorDialog,
+	openSimpleInputModal
+} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class MasterPageDropdownDefaultEventHandler extends DefaultEventHandler {
@@ -50,32 +54,29 @@ class MasterPageDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	updateMasterPagePreview(itemData) {
-		AUI().use('liferay-item-selector-dialog', A => {
-			const itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: this.ns('changePreview'),
-				on: {
-					selectedItemChange: function(event) {
-						const selectedItem = event.newVal;
-
-						if (selectedItem) {
-							const itemValue = JSON.parse(selectedItem.value);
-
-							this.one('#layoutPageTemplateEntryId').value =
-								itemData.layoutPageTemplateEntryId;
-							this.one('#fileEntryId').value =
-								itemValue.fileEntryId;
-
-							submitForm(this.one('#masterPagePreviewFm'));
-						}
-					}.bind(this)
-				},
-				'strings.add': Liferay.Language.get('ok'),
-				title: Liferay.Language.get('master-page-thumbnail'),
-				url: itemData.itemSelectorURL
-			});
-
-			itemSelectorDialog.open();
+		const itemSelectorDialog = new ItemSelectorDialog({
+			buttonAddLabel: Liferay.Language.get('ok'),
+			eventName: this.ns('changePreview'),
+			title: Liferay.Language.get('master-page-thumbnail'),
+			url: itemData.itemSelectorURL
 		});
+
+		itemSelectorDialog.on('selectedItemChange', event => {
+			const selectedItem = event.selectedItem;
+
+			if (selectedItem) {
+				const itemValue = JSON.parse(selectedItem.value);
+
+				this.one('#layoutPageTemplateEntryId').value =
+					itemData.layoutPageTemplateEntryId;
+				this.one('#fileEntryId').value =
+					itemValue.fileEntryId;
+
+				submitForm(this.one('#masterPagePreviewFm'));
+			}
+		});
+
+		itemSelectorDialog.open();
 	}
 
 	_send(url) {

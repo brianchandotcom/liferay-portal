@@ -245,6 +245,12 @@ public class DepotEntryGroupRelLocalServiceUtil {
 		return getService().getDepotEntryGroupRels(start, end);
 	}
 
+	public static java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
+		getDepotEntryGroupRels(long groupId) {
+
+		return getService().getDepotEntryGroupRels(groupId);
+	}
+
 	/**
 	 * Returns the number of depot entry group rels.
 	 *

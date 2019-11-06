@@ -865,7 +865,7 @@ public class ContentPageEditorDisplayContext {
 
 				FragmentEntryLinkConfigurationUtil.
 					addFragmentEntryLinkFieldsSelectorURL(
-						request, liferayPortletResponse,
+						_itemSelector, request, liferayPortletResponse,
 						configurationJSONObject);
 
 				soyContext.put(

@@ -30,17 +30,13 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(service = {})
 public class FragmentEntryLinkConfigurationUtil {
 
 	public static void addFragmentEntryLinkFieldsSelectorURL(
-		HttpServletRequest httpServletRequest,
+		ItemSelector itemSelector, HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse, JSONObject jsonObject) {
 
 		JSONArray fieldSetsJSONArray = jsonObject.getJSONArray("fieldSets");
@@ -67,7 +63,8 @@ public class FragmentEntryLinkConfigurationUtil {
 						typeOptionsJSONObject.put(
 							"itemSelectorUrl",
 							_getInfoItemSelectorURL(
-								httpServletRequest, liferayPortletResponse,
+								itemSelector, httpServletRequest,
+								liferayPortletResponse,
 								typeOptionsJSONObject.getString("className")));
 					}
 				}
@@ -75,13 +72,8 @@ public class FragmentEntryLinkConfigurationUtil {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
 	private static String _getInfoItemSelectorURL(
-		HttpServletRequest httpServletRequest,
+		ItemSelector itemSelector, HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse, String className) {
 
 		InfoItemItemSelectorCriterion itemSelectorCriterion =
@@ -94,7 +86,7 @@ public class FragmentEntryLinkConfigurationUtil {
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoItemItemSelectorReturnType());
 
-		PortletURL infoItemSelectorURL = _itemSelector.getItemSelectorURL(
+		PortletURL infoItemSelectorURL = itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 			liferayPortletResponse.getNamespace() + "selectInfoItem",
 			itemSelectorCriterion);
@@ -105,7 +97,5 @@ public class FragmentEntryLinkConfigurationUtil {
 
 		return infoItemSelectorURL.toString();
 	}
-
-	private static ItemSelector _itemSelector;
 
 }

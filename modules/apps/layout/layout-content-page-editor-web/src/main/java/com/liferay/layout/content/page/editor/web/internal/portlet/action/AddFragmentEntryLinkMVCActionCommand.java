@@ -26,6 +26,7 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkConfigurationUtil;
 import com.liferay.petra.string.StringPool;
@@ -194,7 +195,7 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 
 			FragmentEntryLinkConfigurationUtil.
 				addFragmentEntryLinkFieldsSelectorURL(
-					_portal.getHttpServletRequest(actionRequest),
+					_itemSelector, _portal.getHttpServletRequest(actionRequest),
 					_portal.getLiferayPortletResponse(actionResponse),
 					configurationJSONObject);
 
@@ -262,6 +263,9 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

@@ -49,14 +49,9 @@ const PreviewSeoContainer = ({portletNamespace, targets, titleSuffix}) => {
 	const [url, setUrl] = useState('');
 
 	useEffect(() => {
-		const setPreviewState = ({
-			placeholder = '',
-			type,
-			usePlaceholderAsFallback,
-			value
-		}) => {
-			if (value === '' && usePlaceholderAsFallback) {
-				value = placeholder;
+		const setPreviewState = ({defaultValue = '', type, value}) => {
+			if (value === '' && defaultValue) {
+				value = defaultValue;
 			}
 
 			if (type === 'description') {
@@ -68,7 +63,7 @@ const PreviewSeoContainer = ({portletNamespace, targets, titleSuffix}) => {
 			}
 		};
 
-		const handleInputChange = ({event, type, usePlaceholderAsFallback}) => {
+		const handleInputChange = ({defaultValue, event, type}) => {
 			const target = event.target;
 
 			if (!target) {
@@ -76,19 +71,18 @@ const PreviewSeoContainer = ({portletNamespace, targets, titleSuffix}) => {
 			}
 
 			setPreviewState({
-				placeholder: target.placeholder,
+				defaultValue,
 				type,
-				usePlaceholderAsFallback,
 				value: target.value
 			});
 		};
 
-		const inputs = targets.map(({id, type, usePlaceholderAsFallback}) => {
+		const inputs = targets.map(({defaultValue, id, type}) => {
 			const listener = event => {
 				handleInputChange({
+					defaultValue,
 					event,
-					type,
-					usePlaceholderAsFallback
+					type
 				});
 			};
 
@@ -97,9 +91,8 @@ const PreviewSeoContainer = ({portletNamespace, targets, titleSuffix}) => {
 			node.addEventListener('input', listener);
 
 			setPreviewState({
-				placeholder: node.placeholder,
+				defaultValue,
 				type,
-				usePlaceholderAsFallback,
 				value: node.value
 			});
 
@@ -126,9 +119,9 @@ const PreviewSeoContainer = ({portletNamespace, targets, titleSuffix}) => {
 PreviewSeoContainer.propTypes = {
 	targets: PropTypes.arrayOf(
 		PropTypes.shape({
+			defaultValue: PropTypes.string,
 			id: PropTypes.string.isRequired,
-			type: PropTypes.string.isRequired,
-			usePlaceholderAsFallback: PropTypes.bool
+			type: PropTypes.string.isRequired
 		})
 	).isRequired
 };

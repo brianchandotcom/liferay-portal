@@ -30,7 +30,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 <c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
-	<aui:input id="title" label="html-title" name="title" placeholder="<%= layoutsAdminDisplayContext.getPageTitle() %>" />
+	<aui:input id="title" label="html-title" name="title" placeholder="title" />
 
 	<h4><liferay-ui:message key="meta-tags" /></h4>
 
@@ -80,25 +80,23 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 				"targets",
 				JSONUtil.putAll(
 					JSONUtil.put(
+						"defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURL()
+					).put(
 						"id", "canonicalURL"
 					).put(
 						"type", "canonicalURL"
-					).put(
-						"usePlaceholderAsFallback", true
 					),
 					JSONUtil.put(
 						"id", "descriptionSEO"
 					).put(
 						"type", "description"
-					).put(
-						"usePlaceholderAsFallback", false
 					),
 					JSONUtil.put(
+						"defaultValue", layoutsAdminDisplayContext.getPageTitle()
+					).put(
 						"id", "title"
 					).put(
 						"type", "title"
-					).put(
-						"usePlaceholderAsFallback", true
 					)));
 
 			data.put("titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix());
@@ -186,11 +184,11 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<div id="<portlet:namespace />openGraphSettings">
 				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-open-graph-title" name="openGraphTitleEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
-				<aui:input disabled="<%= !selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphTitle" placeholder="<%= layoutsAdminDisplayContext.getPageTitle() %>" />
+				<aui:input disabled="<%= !selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphTitle" placeholder="title" />
 
 				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-open-graph-description" name="openGraphDescriptionEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
-				<aui:input disabled="<%= !selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="<%= selLayout.getDescription(themeDisplay.getLocale()) %>" />
+				<aui:input disabled="<%= !selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="descripton" />
 
 				<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 			</div>
@@ -199,7 +197,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<div id="<portlet:namespace />openGraphSettings">
 				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-open-graph-title" name="openGraphTitleEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
-				<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphTitle" placeholder="<%= layoutsAdminDisplayContext.getPageTitle() %>" type="text" />
+				<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphTitle" placeholder="title" type="text" />
 
 				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-open-graph-description" name="openGraphDescriptionEnabled" type="checkbox" wrapperCssClass="mb-1" />
 

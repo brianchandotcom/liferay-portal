@@ -364,9 +364,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		List<String> strings = new ArrayList<>(
 			editRankingMVCActionRequest.getAliases());
 
-		strings.remove(_ACTIVATE_SPECIAL);
-		strings.remove(_DEACTIVATE_SPECIAL);
-
 		Stream<String> stream = strings.stream();
 
 		Predicate<String> predicate = this::_isUpdateSpecial;
@@ -458,16 +455,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 	private boolean _isInactive(
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
-		List<String> aliases = editRankingMVCActionRequest.getAliases();
-
-		if (aliases.contains(_ACTIVATE_SPECIAL)) {
-			return false;
-		}
-
-		if (aliases.contains(_DEACTIVATE_SPECIAL)) {
-			return true;
-		}
-
 		return editRankingMVCActionRequest.getInactive();
 	}
 
@@ -478,10 +465,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 	private String _stripUpdateSpecial(String string) {
 		return string.substring(_UPDATE_SPECIAL.length());
 	}
-
-	private static final String _ACTIVATE_SPECIAL = StringPool.PLUS;
-
-	private static final String _DEACTIVATE_SPECIAL = StringPool.MINUS;
 
 	private static final String _UPDATE_SPECIAL = StringPool.GREATER_THAN;
 

@@ -13,23 +13,23 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useState, useCallback, useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import NodeList from './NodeList';
 import TreeviewCard from './TreeviewCard';
 import TreeviewContext from './TreeviewContext';
 import TreeviewLabel from './TreeviewLabel';
 
-const flattenNodes = (nodes, nodeList = []) => {
+const flattenNodes = (nodes, nodeMap = {}) => {
 	nodes.forEach(node => {
-		nodeList.push(node);
+		nodeMap[node.id] = node;
 
 		if (node.children) {
-			flattenNodes(node.children, nodeList);
+			flattenNodes(node.children, nodeMap);
 		}
 	});
 
-	return nodeList;
+	return nodeMap;
 };
 
 function Treeview({
@@ -40,7 +40,8 @@ function Treeview({
 	nodes,
 	onSelectedNodesChange
 }) {
-	const nodeList = useRef([]);
+	const nodeMap = useMemo(() => flattenNodes(nodes), [nodes]);
+
 	const [selectedNodeIds, setSelectedNodesIds] = useState(
 		initialSelectedNodeIds
 	);
@@ -61,18 +62,17 @@ function Treeview({
 	);
 
 	useEffect(() => {
-		nodeList.current = flattenNodes(nodes);
-	}, [nodes]);
-
-	useEffect(() => {
 		if (selectedNodeIds !== initialSelectedNodeIds) {
 			onSelectedNodesChange(
-				selectedNodeIds.map(nodeId =>
-					nodeList.current.find(node => node.id === nodeId)
-				)
+				selectedNodeIds.map(nodeId => nodeMap[nodeId])
 			);
 		}
-	}, [initialSelectedNodeIds, nodes, onSelectedNodesChange, selectedNodeIds]);
+	}, [
+		initialSelectedNodeIds,
+		nodeMap,
+		onSelectedNodesChange,
+		selectedNodeIds
+	]);
 
 	return (
 		<TreeviewContext.Provider value={{filterQuery}}>

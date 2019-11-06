@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
+import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.ParamSetter;
@@ -26,6 +28,8 @@ import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.List;
@@ -57,12 +61,12 @@ public class CachelessTableMapperImpl
 
 		destroy();
 
-		leftToRightPortalCache = new DummyPortalCache(
-			leftToRightPortalCache.getPortalCacheName(),
-			leftToRightPortalCache.getPortalCacheManager());
-		rightToLeftPortalCache = new DummyPortalCache(
-			rightToLeftPortalCache.getPortalCacheName(),
-			rightToLeftPortalCache.getPortalCacheManager());
+		leftToRightPortalCache = new DummyPortalCache<>(
+			PortalCacheManagerNames.MULTI_VM,
+			leftToRightPortalCache.getPortalCacheName());
+		rightToLeftPortalCache = new DummyPortalCache<>(
+			PortalCacheManagerNames.MULTI_VM,
+			rightToLeftPortalCache.getPortalCacheName());
 	}
 
 	@Override
@@ -94,58 +98,62 @@ public class CachelessTableMapperImpl
 
 	protected final MappingSqlQuery<Integer> getTableMappingSqlQuery;
 
-	protected static class DummyPortalCache
-		implements PortalCache<Long, long[]> {
+	protected static class DummyPortalCache<K extends Serializable, V>
+		implements PortalCache<K, V> {
 
 		@Override
-		public long[] get(Long key) {
+		public V get(K key) {
 			return null;
 		}
 
 		@Override
-		public List<Long> getKeys() {
+		public List<K> getKeys() {
 			return Collections.emptyList();
 		}
 
 		@Override
-		public PortalCacheManager<Long, long[]> getPortalCacheManager() {
-			return portalCacheManager;
+		public PortalCacheManager<K, V> getPortalCacheManager() {
+			return (PortalCacheManager<K, V>)
+				PortalCacheManagerProvider.getPortalCacheManager(
+					_portalCacheManagerName);
 		}
 
 		@Override
 		public String getPortalCacheName() {
-			return portalCacheName;
+			return _portalCacheName;
 		}
 
+		@Override
 		public boolean isBlocking() {
 			return false;
 		}
 
+		@Override
 		public boolean isMVCC() {
 			return false;
 		}
 
 		@Override
-		public void put(Long key, long[] value) {
+		public void put(K key, V value) {
 		}
 
 		@Override
-		public void put(Long key, long[] value, int timeToLive) {
-		}
-
-		@Override
-		public void registerPortalCacheListener(
-			PortalCacheListener<Long, long[]> portalCacheListener) {
+		public void put(K key, V value, int timeToLive) {
 		}
 
 		@Override
 		public void registerPortalCacheListener(
-			PortalCacheListener<Long, long[]> portalCacheListener,
+			PortalCacheListener<K, V> portalCacheListener) {
+		}
+
+		@Override
+		public void registerPortalCacheListener(
+			PortalCacheListener<K, V> portalCacheListener,
 			PortalCacheListenerScope portalCacheListenerScope) {
 		}
 
 		@Override
-		public void remove(Long key) {
+		public void remove(K key) {
 		}
 
 		@Override
@@ -154,7 +162,7 @@ public class CachelessTableMapperImpl
 
 		@Override
 		public void unregisterPortalCacheListener(
-			PortalCacheListener<Long, long[]> portalCacheListener) {
+			PortalCacheListener<K, V> portalCacheListener) {
 		}
 
 		@Override
@@ -162,15 +170,14 @@ public class CachelessTableMapperImpl
 		}
 
 		protected DummyPortalCache(
-			String portalCacheName,
-			PortalCacheManager<Long, long[]> portalCacheManager) {
+			String portalCacheManagerName, String portalCacheName) {
 
-			this.portalCacheName = portalCacheName;
-			this.portalCacheManager = portalCacheManager;
+			_portalCacheManagerName = portalCacheManagerName;
+			_portalCacheName = portalCacheName;
 		}
 
-		protected final PortalCacheManager<Long, long[]> portalCacheManager;
-		protected final String portalCacheName;
+		private final String _portalCacheManagerName;
+		private final String _portalCacheName;
 
 	}
 

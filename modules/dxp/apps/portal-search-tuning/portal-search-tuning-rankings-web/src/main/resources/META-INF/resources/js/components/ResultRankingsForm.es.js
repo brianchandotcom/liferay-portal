@@ -11,7 +11,7 @@
 
 import ClayTabs from '@clayui/tabs';
 import {PropTypes} from 'prop-types';
-import React, {Component} from 'react';
+import React, {Component, useContext} from 'react';
 
 import ThemeContext from '../ThemeContext.es';
 import FormValueDebugger from '../utils/FormValueDebugger.es';
@@ -63,9 +63,19 @@ class ErrorBoundary extends Component {
 	}
 }
 
-const HiddenInput = ({name, value}) => (
-	<input id={name} name={name} type="hidden" value={value} />
-);
+const HiddenInputs = ({valueMap}) => {
+	const {namespace} = useContext(ThemeContext);
+
+	return Object.keys(valueMap).map(key => (
+		<input
+			id={`${namespace}${key}`}
+			key={key}
+			name={`${namespace}${key}`}
+			type="hidden"
+			value={valueMap[key]}
+		/>
+	));
+};
 
 class ResultRankingsForm extends Component {
 	static contextType = ThemeContext;
@@ -710,38 +720,17 @@ class ResultRankingsForm extends Component {
 
 		return (
 			<div className="results-ranking-form-root">
-				<HiddenInput name={`${namespace}aliases`} value={aliases} />
-
-				<HiddenInput
-					name={`${namespace}hiddenIdsAdded`}
-					value={this._getHiddenAdded()}
-				/>
-
-				<HiddenInput
-					name={`${namespace}hiddenIdsRemoved`}
-					value={this._getHiddenRemoved()}
-				/>
-
-				<HiddenInput
-					name={`${namespace}pinnedIds`}
-					value={resultIdsPinned}
-				/>
-
-				<HiddenInput
-					name={`${namespace}pinnedIdsEndIndex`}
-					value={dataLoadIndex.pinned.end}
-				/>
-
-				<HiddenInput
-					name={`${namespace}pinnedIdsStartIndex`}
-					value={dataLoadIndex.pinned.start}
-				/>
-
-				<HiddenInput name={`${namespace}inactive`} value={inactive} />
-
-				<HiddenInput
-					name={`${namespace}workflowAction`}
-					value={workflowAction}
+				<HiddenInputs
+					valueMap={{
+						aliases,
+						hiddenIdsAdded: this._getHiddenAdded(),
+						hiddenIdsRemoved: this._getHiddenRemoved(),
+						inactive,
+						pinnedIds: resultIdsPinned,
+						pinnedIdsEndIndex: dataLoadIndex.pinned.end,
+						pinnedIdsStartIndex: dataLoadIndex.pinned.start,
+						workflowAction
+					}}
 				/>
 
 				<PageToolbar

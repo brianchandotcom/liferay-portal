@@ -15,23 +15,17 @@
 package com.liferay.depot.web.internal.servlet.taglib.clay;
 
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
-import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
+import com.liferay.depot.web.internal.servlet.taglib.util.DepotActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.RowChecker;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -39,8 +33,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.util.GroupURLProvider;
 
 import java.util.List;
-
-import javax.portlet.ActionURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -73,45 +65,11 @@ public class DepotEntryVerticalCard
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(_liferayPortletRequest);
+		DepotActionDropdownItemsProvider depotActionDropdownItemsProvider =
+			new DepotActionDropdownItemsProvider(
+				_group, _liferayPortletRequest, _liferayPortletResponse);
 
-		return new DropdownItemList() {
-			{
-				if (_hasUpdatePermission()) {
-					add(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								DepotEntryURLUtil.getEditDepotEntryPortletURL(
-									_group, _themeDisplay.getURLCurrent(),
-									_liferayPortletRequest));
-
-							dropdownItem.setLabel(
-								LanguageUtil.get(httpServletRequest, "edit"));
-						});
-				}
-
-				if (_hasDeletePermission()) {
-					add(
-						dropdownItem -> {
-							ActionURL deleteDepotEntryActionURL =
-								DepotEntryURLUtil.getDeleteDepotEntryActionURL(
-									_group.getClassPK(),
-									_themeDisplay.getURLCurrent(),
-									_liferayPortletResponse);
-
-							dropdownItem.putData("action", "deleteDepotEntry");
-
-							dropdownItem.putData(
-								"deleteDepotEntryURL",
-								deleteDepotEntryActionURL.toString());
-
-							dropdownItem.setLabel(
-								LanguageUtil.get(httpServletRequest, "delete"));
-						});
-				}
-			}
-		};
+		return depotActionDropdownItemsProvider.getActionDropdownItems();
 	}
 
 	@Override
@@ -145,33 +103,6 @@ public class DepotEntryVerticalCard
 	@Override
 	public boolean isSelectable() {
 		return false;
-	}
-
-	private boolean _hasDeletePermission() {
-		try {
-			if (!GroupPermissionUtil.contains(
-					_themeDisplay.getPermissionChecker(), _group,
-					ActionKeys.DELETE)) {
-
-				return false;
-			}
-
-			return true;
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
-	}
-
-	private boolean _hasUpdatePermission() {
-		try {
-			return GroupPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), _group,
-				ActionKeys.UPDATE);
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

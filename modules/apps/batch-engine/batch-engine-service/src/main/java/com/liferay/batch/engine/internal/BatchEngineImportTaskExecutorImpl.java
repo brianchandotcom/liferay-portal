@@ -161,7 +161,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		try (BatchEngineImportTaskItemReader batchEngineTaskItemReader =
+		try (BatchEngineImportTaskItemReader batchEngineImportTaskItemReader =
 				_batchEngineImportTaskItemReaderFactory.create(
 					BatchEngineTaskContentType.valueOf(
 						batchEngineImportTask.getContentType()),
@@ -183,8 +183,8 @@ public class BatchEngineImportTaskExecutorImpl
 
 			Map<String, Object> fieldNameValueMap = null;
 
-			while ((fieldNameValueMap = batchEngineTaskItemReader.read()) !=
-						null) {
+			while ((fieldNameValueMap =
+						batchEngineImportTaskItemReader.read()) != null) {
 
 				if (Thread.interrupted()) {
 					throw new InterruptedException();

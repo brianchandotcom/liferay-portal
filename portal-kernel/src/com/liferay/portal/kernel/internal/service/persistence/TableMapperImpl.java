@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.internal.cache.DummyPortalCache;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
@@ -52,7 +53,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		String tableName, String companyColumnName, String leftColumnName,
 		String rightColumnName, Class<L> leftModelClass,
 		Class<R> rightModelClass, BasePersistence<L> leftBasePersistence,
-		BasePersistence<R> rightBasePersistence) {
+		BasePersistence<R> rightBasePersistence, boolean cacheless) {
 
 		this.leftColumnName = leftColumnName;
 		this.rightColumnName = rightColumnName;
@@ -60,6 +61,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		this.rightModelClass = rightModelClass;
 		this.leftBasePersistence = leftBasePersistence;
 		this.rightBasePersistence = rightBasePersistence;
+		this.cacheless = cacheless;
 
 		DataSource dataSource = leftBasePersistence.getDataSource();
 
@@ -69,6 +71,17 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 				"INSERT INTO ", tableName, " (", companyColumnName, ", ",
 				leftColumnName, ", ", rightColumnName, ") VALUES (?, ?, ?)"),
 			ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT);
+
+		if (cacheless) {
+			containsTableMappingSQL =
+				MappingSqlQueryFactoryUtil.getMappingSqlQuery(
+					dataSource,
+					StringBundler.concat(
+						"SELECT * FROM ", tableName, " WHERE ", leftColumnName,
+						" = ? AND ", rightColumnName, " = ?"),
+					RowMapper.COUNT, ParamSetter.BIGINT, ParamSetter.BIGINT);
+		}
+
 		deleteLeftPrimaryKeyTableMappingsSqlUpdate =
 			SqlUpdateFactoryUtil.getSqlUpdate(
 				dataSource,
@@ -104,16 +117,25 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 					leftColumnName, " = ?"),
 				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT);
 
-		leftToRightPortalCache = PortalCacheHelperUtil.getPortalCache(
-			PortalCacheManagerNames.MULTI_VM,
-			StringBundler.concat(
-				TableMapper.class.getName(), "-", tableName, "-",
-				leftColumnName, "-To-", rightColumnName));
-		rightToLeftPortalCache = PortalCacheHelperUtil.getPortalCache(
-			PortalCacheManagerNames.MULTI_VM,
-			StringBundler.concat(
-				TableMapper.class.getName(), "-", tableName, "-",
-				rightColumnName, "-To-", leftColumnName));
+		String leftToRightPortalCacheName = StringBundler.concat(
+			TableMapper.class.getName(), "-", tableName, "-", leftColumnName,
+			"-To-", rightColumnName);
+		String rightToLeftPortalCacheName = StringBundler.concat(
+			TableMapper.class.getName(), "-", tableName, "-", rightColumnName,
+			"-To-", leftColumnName);
+
+		if (cacheless) {
+			leftToRightPortalCache = new DummyPortalCache<>(
+				PortalCacheManagerNames.MULTI_VM, leftToRightPortalCacheName);
+			rightToLeftPortalCache = new DummyPortalCache<>(
+				PortalCacheManagerNames.MULTI_VM, rightToLeftPortalCacheName);
+		}
+		else {
+			leftToRightPortalCache = PortalCacheHelperUtil.getPortalCache(
+				PortalCacheManagerNames.MULTI_VM, leftToRightPortalCacheName);
+			rightToLeftPortalCache = PortalCacheHelperUtil.getPortalCache(
+				PortalCacheManagerNames.MULTI_VM, rightToLeftPortalCacheName);
+		}
 	}
 
 	@Override
@@ -496,6 +518,30 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	protected boolean containsTableMapping(
 		long leftPrimaryKey, long rightPrimaryKey, boolean updateCache) {
 
+		if (cacheless) {
+			List<Integer> counts = null;
+
+			try {
+				counts = containsTableMappingSQL.execute(
+					leftPrimaryKey, rightPrimaryKey);
+			}
+			catch (Exception e) {
+				throw new SystemException(e);
+			}
+
+			if (counts.isEmpty()) {
+				return false;
+			}
+
+			int count = counts.get(0);
+
+			if (count == 0) {
+				return false;
+			}
+
+			return true;
+		}
+
 		long[] rightPrimaryKeys = getPrimaryKeys(
 			leftToRightPortalCache, getRightPrimaryKeysSqlQuery, leftPrimaryKey,
 			updateCache);
@@ -508,20 +554,22 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	}
 
 	protected SqlUpdate addTableMappingSqlUpdate;
+	protected final boolean cacheless;
+	protected MappingSqlQuery<Integer> containsTableMappingSQL;
 	protected SqlUpdate deleteLeftPrimaryKeyTableMappingsSqlUpdate;
 	protected SqlUpdate deleteRightPrimaryKeyTableMappingsSqlUpdate;
 	protected SqlUpdate deleteTableMappingSqlUpdate;
 	protected MappingSqlQuery<Long> getLeftPrimaryKeysSqlQuery;
 	protected MappingSqlQuery<Long> getRightPrimaryKeysSqlQuery;
-	protected BasePersistence<L> leftBasePersistence;
-	protected String leftColumnName;
+	protected final BasePersistence<L> leftBasePersistence;
+	protected final String leftColumnName;
 	protected final Class<L> leftModelClass;
-	protected PortalCache<Long, long[]> leftToRightPortalCache;
+	protected final PortalCache<Long, long[]> leftToRightPortalCache;
 	protected TableMapper<R, L> reverseTableMapper;
-	protected BasePersistence<R> rightBasePersistence;
-	protected String rightColumnName;
+	protected final BasePersistence<R> rightBasePersistence;
+	protected final String rightColumnName;
 	protected final Class<R> rightModelClass;
-	protected PortalCache<Long, long[]> rightToLeftPortalCache;
+	protected final PortalCache<Long, long[]> rightToLeftPortalCache;
 
 	private void _addTableMapping(
 		long companyId, long leftPrimaryKey, long rightPrimaryKey) {

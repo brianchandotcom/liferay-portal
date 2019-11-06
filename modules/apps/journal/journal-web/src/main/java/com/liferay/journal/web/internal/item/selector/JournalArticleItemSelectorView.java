@@ -14,10 +14,12 @@
 
 package com.liferay.journal.web.internal.item.selector;
 
+import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
 import com.liferay.journal.web.internal.display.context.JournalArticleItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.language.Language;
@@ -49,7 +51,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = ItemSelectorView.class
 )
 public class JournalArticleItemSelectorView
-	implements ItemSelectorView<InfoItemItemSelectorCriterion> {
+	implements InfoItemSelectorView,
+			   ItemSelectorView<InfoItemItemSelectorCriterion> {
+
+	@Override
+	public String getClassName() {
+		return JournalArticle.class.getName();
+	}
 
 	@Override
 	public Class<InfoItemItemSelectorCriterion>

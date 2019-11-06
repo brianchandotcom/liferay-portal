@@ -14,8 +14,10 @@
 
 package com.liferay.blogs.web.internal.item.selector;
 
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.constants.BlogsWebKeys;
 import com.liferay.blogs.web.internal.display.context.BlogEntriesItemSelectorDisplayContext;
+import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
@@ -49,7 +51,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = ItemSelectorView.class
 )
 public class BlogsEntryItemSelectorView
-	implements ItemSelectorView<InfoItemItemSelectorCriterion> {
+	implements InfoItemSelectorView,
+			   ItemSelectorView<InfoItemItemSelectorCriterion> {
+
+	@Override
+	public String getClassName() {
+		return BlogsEntry.class.getName();
+	}
 
 	@Override
 	public Class<InfoItemItemSelectorCriterion>

@@ -17,11 +17,13 @@ package com.liferay.document.library.item.selector.web.internal.info.item;
 import com.liferay.document.library.item.selector.web.internal.BaseDLItemSelectorView;
 import com.liferay.document.library.item.selector.web.internal.configuration.DLImageItemSelectorViewConfiguration;
 import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorViewConstants;
+import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
@@ -44,7 +46,13 @@ import org.osgi.service.component.annotations.Modified;
 	service = ItemSelectorView.class
 )
 public class DLInfoItemItemSelectorView
-	extends BaseDLItemSelectorView<InfoItemItemSelectorCriterion> {
+	extends BaseDLItemSelectorView<InfoItemItemSelectorCriterion>
+	implements InfoItemSelectorView {
+
+	@Override
+	public String getClassName() {
+		return FileEntry.class.getName();
+	}
 
 	@Override
 	public String[] getExtensions() {

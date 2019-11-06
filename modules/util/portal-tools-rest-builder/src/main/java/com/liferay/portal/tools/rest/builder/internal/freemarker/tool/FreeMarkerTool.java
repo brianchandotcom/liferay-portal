@@ -177,6 +177,9 @@ public class FreeMarkerTool {
 		String shortParameterName = StringUtil.replace(
 			parameterName, schemaName, StringPool.BLANK);
 
+		shortParameterName = StringUtil.replace(
+			shortParameterName, "parent", StringPool.BLANK);
+
 		for (String propertyKey : properties.keySet()) {
 			if (StringUtil.equalsIgnoreCase(parameterName, propertyKey) ||
 				StringUtil.equalsIgnoreCase(shortParameterName, propertyKey)) {

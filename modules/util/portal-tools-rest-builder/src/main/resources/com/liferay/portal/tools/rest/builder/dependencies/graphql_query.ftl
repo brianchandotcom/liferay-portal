@@ -114,11 +114,7 @@ public class Query {
 								</#if>)));
 				<#else>
 					return _applyComponentServiceObjects(_${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}ResourceComponentServiceObjects, Query.this::_populateResourceContext, ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource -> ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(
-						<#if javaMethodSignature.methodName?contains(javaMethodSignature.parentSchemaName)>
-							_${javaMethodSignature.parentSchemaName?uncap_first}.get${freeMarkerTool.getGraphQLJavaParameterName(configYAML, openAPIYAML, javaMethodSignature.parentSchemaName, javaMethodSignature.javaMethodParameters[0])}()
-						<#else>
-							_${javaMethodSignature.parentSchemaName?uncap_first}.${javaMethodSignature.methodName}${freeMarkerTool.getGraphQLJavaParameterName(configYAML, openAPIYAML, javaMethodSignature.parentSchemaName, javaMethodSignature.javaMethodParameters[0])}()
-						</#if>
+						_${javaMethodSignature.parentSchemaName?uncap_first}.get${freeMarkerTool.getGraphQLJavaParameterName(configYAML, openAPIYAML, javaMethodSignature.parentSchemaName, javaMethodSignature.javaMethodParameters[0])}()
 
 						<#if arguments?has_content>
 							, ${arguments}

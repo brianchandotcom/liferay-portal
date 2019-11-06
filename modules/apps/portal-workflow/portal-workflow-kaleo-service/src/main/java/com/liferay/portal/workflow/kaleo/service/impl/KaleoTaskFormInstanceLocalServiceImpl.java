@@ -117,6 +117,14 @@ public class KaleoTaskFormInstanceLocalServiceImpl
 	}
 
 	@Override
+	public void deleteKaleoTaskInstanceTokenKaleoTaskFormInstances(
+		long kaleoTaskInstanceTokenId) {
+
+		kaleoTaskFormInstancePersistence.removeByKaleoTaskInstanceTokenId(
+			kaleoTaskInstanceTokenId);
+	}
+
+	@Override
 	public KaleoTaskFormInstance fetchKaleoTaskFormKaleoTaskFormInstance(
 		long kaleoTaskFormId) {
 

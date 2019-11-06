@@ -3057,6 +3057,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Project apiProject = rootProject.findProject(apiProjectPath);
 
 		if (apiProject == null) {
+			String apiProjectName = apiProjectDir.getName();
+
+			apiProject = GradleUtil.getProject(rootProject, apiProjectName);
+		}
+
+		if (apiProject == null) {
 			return;
 		}
 

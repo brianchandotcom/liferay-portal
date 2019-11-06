@@ -136,6 +136,11 @@ public class DepotAdminManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive", "icon"};
+	}
+
+	@Override
 	protected String[] getNavigationKeys() {
 		return new String[] {"all"};
 	}

@@ -63,6 +63,16 @@ public class TaskSerDes {
 			sb.append(task.getBreachedInstanceCount());
 		}
 
+		if (task.getBreachedInstancePercentage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"breachedInstancePercentage\": ");
+
+			sb.append(task.getBreachedInstancePercentage());
+		}
+
 		if (task.getDurationAvg() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -158,6 +168,15 @@ public class TaskSerDes {
 				String.valueOf(task.getBreachedInstanceCount()));
 		}
 
+		if (task.getBreachedInstancePercentage() == null) {
+			map.put("breachedInstancePercentage", null);
+		}
+		else {
+			map.put(
+				"breachedInstancePercentage",
+				String.valueOf(task.getBreachedInstancePercentage()));
+		}
+
 		if (task.getDurationAvg() == null) {
 			map.put("durationAvg", null);
 		}
@@ -228,6 +247,14 @@ public class TaskSerDes {
 				if (jsonParserFieldValue != null) {
 					task.setBreachedInstanceCount(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "breachedInstancePercentage")) {
+
+				if (jsonParserFieldValue != null) {
+					task.setBreachedInstancePercentage(
+						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "durationAvg")) {

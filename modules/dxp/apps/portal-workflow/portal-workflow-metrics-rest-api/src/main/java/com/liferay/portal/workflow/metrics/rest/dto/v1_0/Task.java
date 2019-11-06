@@ -73,6 +73,38 @@ public class Task {
 	protected Long breachedInstanceCount;
 
 	@Schema
+	public Double getBreachedInstancePercentage() {
+		return breachedInstancePercentage;
+	}
+
+	public void setBreachedInstancePercentage(
+		Double breachedInstancePercentage) {
+
+		this.breachedInstancePercentage = breachedInstancePercentage;
+	}
+
+	@JsonIgnore
+	public void setBreachedInstancePercentage(
+		UnsafeSupplier<Double, Exception>
+			breachedInstancePercentageUnsafeSupplier) {
+
+		try {
+			breachedInstancePercentage =
+				breachedInstancePercentageUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Double breachedInstancePercentage;
+
+	@Schema
 	public Long getDurationAvg() {
 		return durationAvg;
 	}
@@ -271,6 +303,16 @@ public class Task {
 			sb.append("\"breachedInstanceCount\": ");
 
 			sb.append(breachedInstanceCount);
+		}
+
+		if (breachedInstancePercentage != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"breachedInstancePercentage\": ");
+
+			sb.append(breachedInstancePercentage);
 		}
 
 		if (durationAvg != null) {

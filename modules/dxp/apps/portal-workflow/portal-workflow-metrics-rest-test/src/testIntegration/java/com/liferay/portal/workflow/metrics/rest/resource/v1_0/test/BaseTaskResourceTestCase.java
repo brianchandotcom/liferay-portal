@@ -458,6 +458,16 @@ public abstract class BaseTaskResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"breachedInstancePercentage", additionalAssertFieldName)) {
+
+				if (task.getBreachedInstancePercentage() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("durationAvg", additionalAssertFieldName)) {
 				if (task.getDurationAvg() == null) {
 					valid = false;
@@ -576,6 +586,19 @@ public abstract class BaseTaskResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"breachedInstancePercentage", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						task1.getBreachedInstancePercentage(),
+						task2.getBreachedInstancePercentage())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("durationAvg", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						task1.getDurationAvg(), task2.getDurationAvg())) {
@@ -652,6 +675,17 @@ public abstract class BaseTaskResourceTestCase {
 				if (!Objects.deepEquals(
 						task.getBreachedInstanceCount(),
 						jsonObject.getLong("breachedInstanceCount"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("breachedInstancePercentage", fieldName)) {
+				if (!Objects.deepEquals(
+						task.getBreachedInstancePercentage(),
+						jsonObject.getDouble("breachedInstancePercentage"))) {
 
 					return false;
 				}
@@ -785,6 +819,11 @@ public abstract class BaseTaskResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("breachedInstancePercentage")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("durationAvg")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -846,6 +885,7 @@ public abstract class BaseTaskResourceTestCase {
 		return new Task() {
 			{
 				breachedInstanceCount = RandomTestUtil.randomLong();
+				breachedInstancePercentage = RandomTestUtil.randomDouble();
 				durationAvg = RandomTestUtil.randomLong();
 				instanceCount = RandomTestUtil.randomLong();
 				key = RandomTestUtil.randomString();

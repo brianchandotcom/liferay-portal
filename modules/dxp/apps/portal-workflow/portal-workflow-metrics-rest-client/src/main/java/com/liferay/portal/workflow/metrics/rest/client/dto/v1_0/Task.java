@@ -49,6 +49,31 @@ public class Task {
 
 	protected Long breachedInstanceCount;
 
+	public Double getBreachedInstancePercentage() {
+		return breachedInstancePercentage;
+	}
+
+	public void setBreachedInstancePercentage(
+		Double breachedInstancePercentage) {
+
+		this.breachedInstancePercentage = breachedInstancePercentage;
+	}
+
+	public void setBreachedInstancePercentage(
+		UnsafeSupplier<Double, Exception>
+			breachedInstancePercentageUnsafeSupplier) {
+
+		try {
+			breachedInstancePercentage =
+				breachedInstancePercentageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double breachedInstancePercentage;
+
 	public Long getDurationAvg() {
 		return durationAvg;
 	}

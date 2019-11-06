@@ -19,22 +19,22 @@ import {MockRouter} from '../../../mock/MockRouter.es';
 
 const items = [
 	{
+		breachedInstanceCount: 3,
+		breachedInstancePercentage: 30,
 		durationAvg: 10800000,
-		instanceCount: 10,
-		name: 'Review',
-		overdueInstanceCount: 3
+		name: 'Review'
 	},
 	{
+		breachedInstanceCount: 7,
+		breachedInstancePercentage: 22.5806,
 		durationAvg: 475200000,
-		instanceCount: 31,
-		name: 'Update',
-		overdueInstanceCount: 7
+		name: 'Update'
 	},
 	{
+		breachedInstanceCount: 0,
+		breachedInstancePercentage: 0,
 		durationAvg: 0,
-		instanceCount: 0,
-		name: 'Translate',
-		overdueInstanceCount: 0
+		name: 'Translate'
 	}
 ];
 

@@ -18,16 +18,16 @@ describe('The performance by step table component should', () => {
 	let getAllByTestId;
 	const items = [
 		{
+			breachedInstanceCount: 3,
+			breachedInstancePercentage: 30,
 			durationAvg: 10800000,
-			instanceCount: 10,
-			name: 'Review',
-			overdueInstanceCount: 3
+			name: 'Review'
 		},
 		{
+			breachedInstanceCount: 7,
+			breachedInstancePercentage: 22.5806,
 			durationAvg: 475200000,
-			instanceCount: 31,
-			name: 'Update',
-			overdueInstanceCount: 7
+			name: 'Update'
 		}
 	];
 
@@ -67,16 +67,16 @@ describe('The performance by step table component, when duration has less than 6
 	let getAllByTestId;
 	const items = [
 		{
+			breachedInstanceCount: 3,
+			breachedInstancePercentage: 30,
 			durationAvg: 58000,
-			instanceCount: 10,
-			name: 'Review',
-			overdueInstanceCount: 3
+			name: 'Review'
 		},
 		{
+			breachedInstanceCount: 7,
+			breachedInstancePercentage: 22.5806,
 			durationAvg: 0,
-			instanceCount: 31,
-			name: 'Update',
-			overdueInstanceCount: 7
+			name: 'Update'
 		}
 	];
 

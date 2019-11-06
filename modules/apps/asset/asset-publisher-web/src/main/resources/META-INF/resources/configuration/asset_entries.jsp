@@ -265,7 +265,7 @@ for (long groupId : groupIds) {
 
 			itemSelectorDialog.open();
 
-			itemSelectorDialog.on('selectedItemChange', event => {
+			itemSelectorDialog.on('selectedItemChange', function(event) {
 				const selectedItems = event.selectedItem;
 
 				if (selectedItems) {

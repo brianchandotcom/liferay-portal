@@ -174,7 +174,7 @@ renderResponse.setTitle(title);
 
 									itemSelectorDialog.open();
 
-									itemSelectorDialog.on('selectedItemChange', event => {
+									itemSelectorDialog.on('selectedItemChange', function(event) {
 										const selectedItem = event.selectedItem;
 
 										if (selectedItem) {

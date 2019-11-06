@@ -145,6 +145,10 @@ public class LibraryReferenceTest {
 
 			String libDependencyJarsVersion = _libDependencyJarsVersions.get(
 				jar);
+
+			Assert.assertNotNull(
+				jar + " does not have a version", libDependencyJarsVersion);
+
 			String versionsJarsVersion = _versionsJarsVersions.get(jar);
 
 			Assert.assertEquals(
@@ -573,10 +577,6 @@ public class LibraryReferenceTest {
 	}
 
 	private String _normalizeVersion(String version) {
-		if (Validator.isNull(version)) {
-			return StringPool.BLANK;
-		}
-
 		Matcher matcher = _versionPattern.matcher(version);
 
 		matcher.matches();

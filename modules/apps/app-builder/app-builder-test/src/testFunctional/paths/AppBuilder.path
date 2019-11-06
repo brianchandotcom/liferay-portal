@@ -104,6 +104,13 @@
 	<td></td>
 </tr>
 
+<!--EMPTY_FORM_TABLE_VIEW-->
+<tr>
+	<td>EMPTY_DROP_ZONE</td>
+	<td>//div[(@class='empty-drop-zone') or contains(@class,'ddm-empty-page')]</td>
+	<td></td>
+</tr>
+
 
 </tbody>
 </table>

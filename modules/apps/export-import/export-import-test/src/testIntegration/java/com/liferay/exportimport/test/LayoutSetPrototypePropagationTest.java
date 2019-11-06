@@ -285,6 +285,12 @@ public class LayoutSetPrototypePropagationTest
 		doTestLayoutPropagation(true);
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testLayoutTypePropagationWithLinkEnabled() throws Exception {
+	}
+
 	@Test
 	public void testPortletDataPropagationWithLinkDisabled() throws Exception {
 		doTestPortletDataPropagation(false);

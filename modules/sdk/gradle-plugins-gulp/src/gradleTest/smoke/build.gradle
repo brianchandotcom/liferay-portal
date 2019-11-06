@@ -2,11 +2,11 @@ import com.liferay.gradle.plugins.gulp.ExecuteGulpTask
 
 apply plugin: "com.liferay.gulp"
 
-task runGradleTest
-
 node {
 	useNpm = true
 }
+
+task runGradleTest
 
 runGradleTest {
 	dependsOn gulpHello

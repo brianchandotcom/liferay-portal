@@ -4,11 +4,11 @@ import java.util.jar.JarFile
 apply plugin: "com.liferay.node"
 apply plugin: "java"
 
-task runGradleTest
-
 node {
 	useNpm = true
 }
+
+task runGradleTest
 
 runGradleTest {
 	dependsOn jar

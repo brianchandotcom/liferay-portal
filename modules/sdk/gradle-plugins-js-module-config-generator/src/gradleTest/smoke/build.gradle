@@ -1,14 +1,14 @@
 apply plugin: "com.liferay.js.module.config.generator"
 apply plugin: "java"
 
+node {
+	useNpm = true
+}
+
 task runGradleTest
 
 configJSModules {
 	include "**/*.js"
-}
-
-node {
-	useNpm = true
 }
 
 runGradleTest {

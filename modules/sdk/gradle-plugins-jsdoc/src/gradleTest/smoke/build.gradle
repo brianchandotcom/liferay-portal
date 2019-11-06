@@ -1,12 +1,12 @@
 apply plugin: "com.liferay.jsdoc"
 apply plugin: "java"
 
-task runGradleTest
-
 node {
 	nodeVersion = "8.9.0"
 	useNpm = true
 }
+
+task runGradleTest
 
 runGradleTest {
 	dependsOn jsdoc

@@ -1,14 +1,14 @@
 apply plugin: "com.liferay.js.transpiler"
 apply plugin: "java"
 
+node {
+	useNpm = true
+}
+
 task runGradleTest
 
 dependencies {
 	jsCompile group: "com.liferay", name: "com.liferay.frontend.js.web", version: "1.0.20"
-}
-
-node {
-	useNpm = true
 }
 
 repositories {

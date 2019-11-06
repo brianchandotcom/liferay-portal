@@ -160,11 +160,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_DATE_RANGE</td>
-	<td>//span[contains(@class,'custom-control-label-text') and contains(.,'Date Range')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_ALL</td>
 	<td>//span[contains(.,'All')]</td>
 	<td></td>

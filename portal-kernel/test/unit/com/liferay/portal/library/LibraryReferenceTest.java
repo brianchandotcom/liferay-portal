@@ -579,7 +579,9 @@ public class LibraryReferenceTest {
 	private String _normalizeVersion(String version) {
 		Matcher matcher = _versionPattern.matcher(version);
 
-		matcher.matches();
+		Assert.assertTrue(
+			_versionPattern.pattern() + " does not match " + version,
+			matcher.matches());
 
 		String numericVersion = matcher.group(1);
 		String separator = matcher.group(3);

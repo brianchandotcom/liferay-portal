@@ -371,9 +371,21 @@ body {
 			}
 
 			.category-name,
-			.user-name,
-			.site-name {
+			.depot-type,
+			.site-name,
+			.user-name {
 				color: $product-menu-panel-title-color;
+			}
+
+			.depot-type,
+			.site-name {
+				line-height: 1.25;
+			}
+
+			.depot-type {
+				font-size: 0.75rem;
+				font-weight: normal;
+				text-transform: uppercase;
 			}
 		}
 	}

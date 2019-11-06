@@ -73,28 +73,33 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 <c:choose>
 	<c:when test="<%= group != null %>">
 		<a aria-controls="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler <%= (group != null) ? "collapse-icon collapse-icon-middle " : StringPool.BLANK %> <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %> site-administration-toggler" data-parent="#<portlet:namespace />Accordion" data-qa-id="productMenuSiteAdministrationPanelCategory" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" <%= (group != null) ? "role=\"button\"" : StringPool.BLANK %>>
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getLogoURL()) %>">
-					<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
-				</c:when>
-				<c:otherwise>
-					<div class="sticker sticker-default">
-						<aui:icon image="<%= group.getIconCssClass() %>" markupView="lexicon" />
+			<div class="autofit-row autofit-row-center">
+				<div class="autofit-col">
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getLogoURL()) %>">
+							<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
+						</c:when>
+						<c:otherwise>
+							<div class="sticker sticker-default">
+								<aui:icon image="<%= group.getIconCssClass() %>" markupView="lexicon" />
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</div>
+
+				<div class="autofit-col autofit-col-expand">
+					<div class="depot-type">
+						<liferay-ui:message key='<%= (group.getType() == GroupConstants.TYPE_DEPOT) ? "repository" : "site" %>' />
 					</div>
-				</c:otherwise>
-			</c:choose>
 
-			<div class="autofit-col">
-				<span class="text-uppercase">
-					<liferay-ui:message key='<%= (group.getType() == GroupConstants.TYPE_DEPOT) ? "repository" : "site" %>' />
-				</span>
-				<span class="site-name text-truncate">
-					<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
+					<div class="site-name text-truncate">
+						<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
 
-					<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() && !group.isStagedRemotely() %>">
-						<span class="site-sub-name"> - <liferay-ui:message key="<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>" /></span>
-					</c:if>
-				</span>
+						<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() && !group.isStagedRemotely() %>">
+							<span class="site-sub-name"> - <liferay-ui:message key="<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>" /></span>
+						</c:if>
+					</div>
+				</div>
 			</div>
 
 			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">

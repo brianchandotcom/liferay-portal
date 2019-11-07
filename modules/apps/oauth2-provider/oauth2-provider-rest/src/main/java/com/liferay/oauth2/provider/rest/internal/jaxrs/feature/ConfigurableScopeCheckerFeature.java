@@ -233,7 +233,7 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 			ContainerRequestContext containerRequestContext) {
 
 			boolean anyMatch = false;
-			String path = StringPool.SLASH + _uriInfo.getPath();
+			String path = _getPath();
 			Request request = containerRequestContext.getRequest();
 
 			for (CheckPattern checkPattern : _checkPatterns) {
@@ -332,6 +332,16 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 			}
 
 			return false;
+		}
+
+		private String _getPath() {
+			String uriInfoPath = _uriInfo.getPath();
+
+			if (uriInfoPath.startsWith("/")) {
+				return uriInfoPath;
+			}
+
+			return StringPool.SLASH + uriInfoPath;
 		}
 
 		@Context

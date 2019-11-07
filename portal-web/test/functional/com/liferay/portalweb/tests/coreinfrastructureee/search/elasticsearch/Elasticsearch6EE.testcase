@@ -53,14 +53,22 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "movies");
+		SearchPortlets.searchEmbedded(searchTerm = "alien");
 
-		Pagination.viewResults(results = "Showing 1 to 8 of 8 entries.");
-
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER",
-			resultOrder = "8",
-			value1 = "Alaska");
+			resultOrder = "1",
+			value1 = "Alien³");
+
+		AssertTextEquals(
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER",
+			resultOrder = "2",
+			value1 = "Alien");
+
+		AssertTextEquals(
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER",
+			resultOrder = "3",
+			value1 = "Alien Nation");
 	}
 
 	@priority = "5"

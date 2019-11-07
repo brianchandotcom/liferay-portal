@@ -98,6 +98,8 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			return;
 		}
 
+		_checkNullValues(methodCallDetailAST, className);
+
 		DetailAST parentDetailAST = methodCallDetailAST.getParent();
 
 		while ((parentDetailAST.getType() == TokenTypes.DOT) ||
@@ -213,6 +215,34 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 		}
 	}
 
+	private void _checkNullValues(
+		DetailAST methodCallDetailAST, String className) {
+
+		while (true) {
+			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+				TokenTypes.ELIST);
+
+			List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+				elistDetailAST, false, TokenTypes.EXPR);
+
+			for (DetailAST exprDetailAST : exprDetailASTList) {
+				DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
+
+				if (firstChildDetailAST.getType() == TokenTypes.LITERAL_NULL) {
+					log(firstChildDetailAST, _MSG_CAST_NULL_VALUE, className);
+				}
+			}
+
+			DetailAST parentDetailAST = methodCallDetailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.DOT) {
+				return;
+			}
+
+			methodCallDetailAST = parentDetailAST.getParent();
+		}
+	}
+
 	private String _getNewInstanceTypeName(
 		DetailAST assignDetailAST, DetailAST parentDetailAST) {
 
@@ -296,6 +326,8 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 	}
 
 	private static final String _MAP_TYPE_NAMES_KEY = "mapTypeNames";
+
+	private static final String _MSG_CAST_NULL_VALUE = "null.value.cast";
 
 	private static final String _MSG_INCLUDE_MAP_BUILDER =
 		"map.builder.include";

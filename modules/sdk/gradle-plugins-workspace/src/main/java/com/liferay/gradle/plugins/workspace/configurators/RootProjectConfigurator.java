@@ -48,6 +48,7 @@ import java.net.URI;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -257,14 +258,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Project project, WorkspaceExtension workspaceExtension,
 		Configuration providedModulesConfiguration) {
 
+		Copy copyDockerDeploy = _addTaskDockerDeploy(
+			project, workspaceExtension, providedModulesConfiguration);
+
 		Dockerfile dockerfile = _addTaskCreateDockerfile(
 			project, workspaceExtension);
 
 		_addTaskBuildDockerImage(dockerfile, workspaceExtension);
 
 		_addTaskCreateDockerContainer(project, workspaceExtension);
-		_addTaskDockerDeploy(
-			project, workspaceExtension, providedModulesConfiguration);
+
 		_addTaskLogsDockerContainer(project);
 		_addTaskPullDockerImage(project, workspaceExtension);
 		_addTaskRemoveDockerContainer(project);
@@ -611,6 +614,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return task;
 	}
 
+	@SuppressWarnings("serial")
 	private Copy _addTaskDockerDeploy(
 		Project project, final WorkspaceExtension workspaceExtension,
 		Configuration providedModulesConfiguration) {
@@ -619,68 +623,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, DOCKER_DEPLOY_TASK_NAME, Copy.class);
 
 		copy.setDescription(
-			"Copy the Docker configs and provided configurations to the " +
-				"docker directory.");
+			"Copy the Liferay configs and provided configurations to the " +
+				"docker build directory.");
 
 		copy.setDestinationDir(workspaceExtension.getDockerDir());
-
-		copy.from(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						workspaceExtension.getConfigsDir(), "common");
-				}
-
-			},
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.into("files");
-				}
-
-			});
-
-		copy.from(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						workspaceExtension.getConfigsDir(), "docker");
-				}
-
-			},
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.into("files");
-				}
-
-			});
-
-		copy.from(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						workspaceExtension.getConfigsDir(),
-						workspaceExtension.getEnvironment());
-				}
-
-			},
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.into("files");
-				}
-
-			});
 
 		copy.from(
 			providedModulesConfiguration,
@@ -692,6 +638,58 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
+
+		File configsDir = workspaceExtension.getConfigsDir();
+
+		if (configsDir.exists()) {
+			List<String> commonConfigNames = Arrays.asList("common", "docker");
+
+			copy.from(
+				new Callable<File>() {
+
+					@Override
+					public File call() throws Exception {
+						return configsDir;
+					}
+
+				},
+				new Closure<Void>(project) {
+
+					@SuppressWarnings("unused")
+					public void doCall(CopySpec copySpec) {
+						copySpec.exclude(commonConfigNames);
+						copySpec.into(_LIFERAY_CONFIGS_DIR_NAME);
+					}
+
+				});
+
+			for (String commonConfigName : commonConfigNames) {
+				for (File configDir :
+						configsDir.listFiles(
+							(dir, name) -> !commonConfigNames.contains(name))) {
+
+					copy.from(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								return new File(configsDir, commonConfigName);
+							}
+
+						},
+						new Closure<Void>(project) {
+
+							@SuppressWarnings("unused")
+							public void doCall(CopySpec copySpec) {
+								copySpec.into(
+									_LIFERAY_CONFIGS_DIR_NAME + "/" +
+										configDir.getName());
+							}
+
+						});
+				}
+			}
+		}
 
 		Task deployTask = GradleUtil.addTask(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME, Copy.class);
@@ -914,6 +912,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerPullImage;
 	}
 
+	@SuppressWarnings("serial")
 	private DockerRemoveContainer _addTaskRemoveDockerContainer(
 		Project project) {
 
@@ -994,6 +993,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerStopContainer;
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureTaskCopyBundleFromConfig(
 		Copy copy, Callable<File> dir) {
 
@@ -1009,6 +1009,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureTaskCopyBundleFromDownload(
 		Copy copy, final Download download) {
 
@@ -1168,6 +1169,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
+
+	private static final String _LIFERAY_CONFIGS_DIR_NAME = "configs";
 
 	private boolean _defaultRepositoryEnabled;
 

@@ -100,7 +100,7 @@ if (selLayout != null) {
 				});
 
 				itemSelectorDialog.on('selectedItemChange', function(event) {
-					var assetEntryIds = event.selectedItem;
+					var selectedItem = event.selectedItem;
 
 					if (selectedItem) {
 							groupId.val(selectedItem.groupId);

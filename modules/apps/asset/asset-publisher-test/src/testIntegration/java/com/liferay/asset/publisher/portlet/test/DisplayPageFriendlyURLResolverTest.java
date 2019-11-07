@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalInstances;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -78,7 +79,9 @@ public class DisplayPageFriendlyURLResolverTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ServiceTestUtil.initPermissions();
+		PortalInstances.addCompanyId(TestPropsValues.getCompanyId());
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		_group = GroupTestUtil.addGroup();
 

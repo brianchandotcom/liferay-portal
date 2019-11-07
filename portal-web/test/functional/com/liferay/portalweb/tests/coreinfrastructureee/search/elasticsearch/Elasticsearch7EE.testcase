@@ -31,7 +31,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test LearningToRankSmoke {
 		property osgi.module.configuration.file.names = "com.liferay.portal.search.learning.to.rank.configuration.LearningToRankConfiguration.config";

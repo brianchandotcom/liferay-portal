@@ -47,8 +47,7 @@ definition {
 
 		FormViewBuilder.addFormView(
 			formViewName = "${formViewName}",
-			fieldType = "${fieldType}"));
-		)
+			fieldType = "${fieldType}");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "${formViewName}");
 

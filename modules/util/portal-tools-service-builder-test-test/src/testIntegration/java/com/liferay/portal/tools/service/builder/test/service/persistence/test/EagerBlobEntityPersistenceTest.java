@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -142,6 +143,12 @@ public class EagerBlobEntityPersistenceTest {
 		newEagerBlobEntity.setBlob(newBlobBlob);
 
 		_eagerBlobEntities.add(_persistence.update(newEagerBlobEntity));
+
+		Session session = _persistence.openSession();
+
+		session.flush();
+
+		session.clear();
 
 		EagerBlobEntity existingEagerBlobEntity = _persistence.findByPrimaryKey(
 			newEagerBlobEntity.getPrimaryKey());

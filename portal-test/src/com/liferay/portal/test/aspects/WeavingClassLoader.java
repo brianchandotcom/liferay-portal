@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.aspectj;
+package com.liferay.portal.test.aspects;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;

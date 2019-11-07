@@ -1159,10 +1159,6 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		return DDLRecord.class.getName();
 	}
 
-	/**
-	 * See <code>DLFileVersionPolicyImpl#isKeepFileVersionLabel</code> in the
-	 * <code>com.liferay.document.library.service</code> module.
-	 */
 	protected boolean isKeepRecordVersionLabel(
 			DDLRecordVersion lastRecordVersion,
 			DDLRecordVersion latestRecordVersion, ServiceContext serviceContext)

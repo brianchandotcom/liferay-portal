@@ -25,7 +25,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -271,7 +270,7 @@ public class FragmentEntryProcessorHelperImpl
 			String value = _getSegmentsExperienceValue(
 				jsonObject, locale, segmentsExperienceId);
 
-			if (Validator.isNotNull(value)) {
+			if (value != null) {
 				return value;
 			}
 		}
@@ -286,13 +285,13 @@ public class FragmentEntryProcessorHelperImpl
 			SegmentsExperienceConstants.ID_PREFIX + segmentsExperienceId);
 
 		if (segmentsExperienceJSONObject == null) {
-			return StringPool.BLANK;
+			return null;
 		}
 
 		String value = segmentsExperienceJSONObject.getString(
-			LanguageUtil.getLanguageId(locale));
+			LanguageUtil.getLanguageId(locale), null);
 
-		if (Validator.isNotNull(value)) {
+		if (value != null) {
 			return value;
 		}
 
@@ -303,7 +302,7 @@ public class FragmentEntryProcessorHelperImpl
 			return value;
 		}
 
-		return StringPool.BLANK;
+		return null;
 	}
 
 	private boolean _isPersonalizationSupported(JSONObject jsonObject) {

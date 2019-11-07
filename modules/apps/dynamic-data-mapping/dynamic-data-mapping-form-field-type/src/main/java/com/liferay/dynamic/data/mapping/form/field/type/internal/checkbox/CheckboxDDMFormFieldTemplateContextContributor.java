@@ -47,16 +47,13 @@ public class CheckboxDDMFormFieldTemplateContextContributor
 			"predefinedValue",
 			GetterUtil.getBoolean(
 				getPredefinedValue(ddmFormField, ddmFormFieldRenderingContext))
-		).build();
-
-		boolean showAsSwitcher = GetterUtil.getBoolean(
-			ddmFormField.getProperty("showAsSwitcher"));
-
-		parameters.put("showAsSwitcher", showAsSwitcher);
-
-		parameters.put(
+		).put(
+			"showAsSwitcher",
+			GetterUtil.getBoolean(ddmFormField.getProperty("showAsSwitcher"))
+		).put(
 			"value",
-			GetterUtil.getBoolean(ddmFormFieldRenderingContext.getValue()));
+			GetterUtil.getBoolean(ddmFormFieldRenderingContext.getValue())
+		).build();
 
 		return parameters;
 	}

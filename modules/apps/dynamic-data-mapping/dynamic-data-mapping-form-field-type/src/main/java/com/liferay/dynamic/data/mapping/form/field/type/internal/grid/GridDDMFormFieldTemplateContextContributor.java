@@ -46,21 +46,21 @@ public class GridDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
-			"columns",
-			getOptions("columns", ddmFormField, ddmFormFieldRenderingContext)
-		).put(
-			"rows",
-			getOptions("rows", ddmFormField, ddmFormFieldRenderingContext)
-		).build();
-
 		String value = ddmFormFieldRenderingContext.getValue();
 
 		if (Validator.isNull(value)) {
 			value = "{}";
 		}
 
-		parameters.put("value", jsonFactory.looseDeserialize(value));
+		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+			"columns",
+			getOptions("columns", ddmFormField, ddmFormFieldRenderingContext)
+		).put(
+			"rows",
+			getOptions("rows", ddmFormField, ddmFormFieldRenderingContext)
+		).put(
+			"value", jsonFactory.looseDeserialize(value)
+		).build();
 
 		return parameters;
 	}

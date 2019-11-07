@@ -197,6 +197,8 @@ public class UserIndexerIndexedFieldsTest {
 	private Map<String, String> _expectedValues(User user) throws Exception {
 		String groupId = String.valueOf(user.getGroupIds()[0]);
 
+		long[] organizationIds = user.getOrganizationIds();
+
 		Map<String, String> map = HashMapBuilder.put(
 			Field.COMPANY_ID, String.valueOf(user.getCompanyId())
 		).put(
@@ -229,17 +231,15 @@ public class UserIndexerIndexedFieldsTest {
 			"lastName", user.getLastName()
 		).put(
 			"lastName_sortable", StringUtil.toLowerCase(user.getLastName())
+		).put(
+			"organizationCount", String.valueOf(organizationIds.length)
+		).put(
+			"roleIds", _getValues(user.getRoleIds())
+		).put(
+			"screenName", user.getScreenName()
+		).put(
+			"screenName_sortable", StringUtil.toLowerCase(user.getScreenName())
 		).build();
-
-		long[] organizationIds = user.getOrganizationIds();
-
-		map.put("organizationCount", String.valueOf(organizationIds.length));
-
-		map.put("roleIds", _getValues(user.getRoleIds()));
-		map.put("screenName", user.getScreenName());
-		map.put(
-			"screenName_sortable",
-			StringUtil.toLowerCase(user.getScreenName()));
 
 		indexedFieldsFixture.populateUID(
 			User.class.getName(), user.getUserId(), map);

@@ -175,16 +175,17 @@ public class FlagsTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, Object> props = HashMapBuilder.<String, Object>put(
-			"baseData", _getDataJSONObject(themeDisplay)
-		).build();
-
 		Company company = themeDisplay.getCompany();
 
-		props.put("companyName", company.getName());
-
-		props.put("disabled", !_enabled);
-		props.put("forceLogin", !FlagsTagUtil.isFlagsEnabled(themeDisplay));
+		Map<String, Object> props = HashMapBuilder.<String, Object>put(
+			"baseData", _getDataJSONObject(themeDisplay)
+		).put(
+			"companyName", company.getName()
+		).put(
+			"disabled", !_enabled
+		).put(
+			"forceLogin", !FlagsTagUtil.isFlagsEnabled(themeDisplay)
+		).build();
 
 		if (Validator.isNotNull(message)) {
 			props.put("message", message);

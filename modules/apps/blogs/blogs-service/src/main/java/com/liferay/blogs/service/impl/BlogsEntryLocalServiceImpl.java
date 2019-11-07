@@ -2088,12 +2088,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			long userId, BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<String, Serializable> workflowContext =
-			HashMapBuilder.<String, Serializable>put(
-				WorkflowConstants.CONTEXT_URL,
-				getEntryURL(entry, serviceContext)
-			).build();
-
 		String userPortraitURL = StringPool.BLANK;
 		String userURL = StringPool.BLANK;
 
@@ -2105,9 +2099,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userURL = user.getDisplayURL(serviceContext.getThemeDisplay());
 		}
 
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_USER_PORTRAIT_URL, userPortraitURL);
-		workflowContext.put(WorkflowConstants.CONTEXT_USER_URL, userURL);
+		Map<String, Serializable> workflowContext =
+			HashMapBuilder.<String, Serializable>put(
+				WorkflowConstants.CONTEXT_URL,
+				getEntryURL(entry, serviceContext)
+			).put(
+				WorkflowConstants.CONTEXT_USER_PORTRAIT_URL, userPortraitURL
+			).put(
+				WorkflowConstants.CONTEXT_USER_URL, userURL
+			).build();
 
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			entry.getCompanyId(), entry.getGroupId(), userId,

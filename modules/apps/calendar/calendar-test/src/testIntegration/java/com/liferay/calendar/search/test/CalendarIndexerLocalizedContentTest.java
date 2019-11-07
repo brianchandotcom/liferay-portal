@@ -23,13 +23,13 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -87,21 +87,21 @@ public class CalendarIndexerLocalizedContentTest
 				}
 			});
 
-		Map<String, String> nameMap = new HashMap<String, String>() {
-			{
-				put("name", originalName);
-				put("name_en_US", originalName);
-				put("name_ja_JP", japaneseName);
-			}
-		};
+		Map<String, String> nameMap = HashMapBuilder.<String, String>put(
+			"name", originalName
+		).put(
+			"name_en_US", originalName
+		).put(
+			"name_ja_JP", japaneseName
+		).build();
 
-		Map<String, String> descriptionMap = new HashMap<String, String>() {
-			{
-				put("description", description);
-				put("description_en_US", description);
-				put("description_ja_JP", description);
-			}
-		};
+		Map<String, String> descriptionMap = HashMapBuilder.<String, String>put(
+			"description", description
+		).put(
+			"description_en_US", description
+		).put(
+			"description_ja_JP", description
+		).build();
 
 		String word1 = "新規";
 		String word2 = "作成";
@@ -154,13 +154,13 @@ public class CalendarIndexerLocalizedContentTest
 				})
 		);
 
-		Map<String, String> nameMap = new HashMap<String, String>() {
-			{
-				put("name", originalName);
-				put("name_en_US", originalName);
-				put("name_ja_JP", full);
-			}
-		};
+		Map<String, String> nameMap = HashMapBuilder.<String, String>put(
+			"name", originalName
+		).put(
+			"name_en_US", originalName
+		).put(
+			"name_ja_JP", full
+		).build();
 
 		String word1 = "新規";
 		String word2 = "作成";

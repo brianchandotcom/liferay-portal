@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,7 +31,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,13 +61,13 @@ public class RoleSearch extends SearchContainer<Role> {
 	};
 
 	public static Map<String, String> orderableHeaders =
-		new HashMap<String, String>() {
-			{
-				put("description", "description");
-				put("title", "title");
-				put("type", "type");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"description", "description"
+		).put(
+			"title", "title"
+		).put(
+			"type", "type"
+		).build();
 
 	public RoleSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

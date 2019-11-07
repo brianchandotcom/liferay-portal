@@ -17,12 +17,12 @@ package com.liferay.batch.engine.internal.reader;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import java.util.Collections;
-import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -51,21 +51,21 @@ public class CSVBatchEngineTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				new HashMap<String, String>() {
-					{
-						put("createDate1", "createDate");
-						put("description1", "description");
-						put("id1", "id");
-						put("name1", "name");
-					}
-				},
+				HashMapBuilder.<String, String>put(
+					"createDate1", "createDate"
+				).put(
+					"description1", "description"
+				).put(
+					"id1", "id"
+				).put(
+					"name1", "name"
+				).build(),
 				csvBatchEngineTaskItemReader.read(),
-				new HashMap<String, String>() {
-					{
-						put("en", "sample name");
-						put("hr", "naziv");
-					}
-				});
+				HashMapBuilder.<String, String>put(
+					"en", "sample name"
+				).put(
+					"hr", "naziv"
+				).build());
 		}
 	}
 
@@ -87,13 +87,13 @@ public class CSVBatchEngineTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				new HashMap<String, String>() {
-					{
-						put("createDate1", "createDate");
-						put("description1", "description");
-						put("id1", "id");
-					}
-				},
+				HashMapBuilder.<String, String>put(
+					"createDate1", "createDate"
+				).put(
+					"description1", "description"
+				).put(
+					"id1", "id"
+				).build(),
 				csvBatchEngineTaskItemReader.read(), null);
 		}
 	}
@@ -116,14 +116,15 @@ public class CSVBatchEngineTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				new HashMap<String, String>() {
-					{
-						put("createDate1", "createDate");
-						put("description1", "description");
-						put("id1", "id");
-						put("name1", null);
-					}
-				},
+				HashMapBuilder.<String, String>put(
+					"createDate1", "createDate"
+				).put(
+					"description1", "description"
+				).put(
+					"id1", "id"
+				).put(
+					"name1", null
+				).build(),
 				csvBatchEngineTaskItemReader.read(), null);
 		}
 	}
@@ -147,21 +148,21 @@ public class CSVBatchEngineTaskItemReaderTest
 			try {
 				validate(
 					createDateString, "sample description", null,
-					new HashMap<String, String>() {
-						{
-							put("createDate1", "description");
-							put("description1", "createDate");
-							put("id1", "id");
-							put("name1", "name");
-						}
-					},
+					HashMapBuilder.<String, String>put(
+						"createDate1", "description"
+					).put(
+						"description1", "createDate"
+					).put(
+						"id1", "id"
+					).put(
+						"name1", "name"
+					).build(),
 					csvBatchEngineTaskItemReader.read(),
-					new HashMap<String, String>() {
-						{
-							put("en", "sample name");
-							put("hr", "naziv");
-						}
-					});
+					HashMapBuilder.<String, String>put(
+						"en", "sample name"
+					).put(
+						"hr", "naziv"
+					).build());
 
 				Assert.fail();
 			}
@@ -215,12 +216,11 @@ public class CSVBatchEngineTaskItemReaderTest
 					createDateString, "sample description " + rowCount,
 					rowCount, Collections.emptyMap(),
 					csvBatchEngineTaskItemReader.read(),
-					new HashMap<String, String>() {
-						{
-							put("en", "sample name " + rowCount);
-							put("hr", "naziv " + rowCount);
-						}
-					});
+					HashMapBuilder.<String, String>put(
+						"en", "sample name " + rowCount
+					).put(
+						"hr", "naziv " + rowCount
+					).build());
 			}
 		}
 	}
@@ -240,12 +240,11 @@ public class CSVBatchEngineTaskItemReaderTest
 			validate(
 				createDateString, "hey, here is comma inside", 1L,
 				Collections.emptyMap(), csvBatchEngineTaskItemReader.read(),
-				new HashMap<String, String>() {
-					{
-						put("en", "sample name");
-						put("hr", "naziv");
-					}
-				});
+				HashMapBuilder.<String, String>put(
+					"en", "sample name"
+				).put(
+					"hr", "naziv"
+				).build());
 		}
 	}
 
@@ -278,22 +277,20 @@ public class CSVBatchEngineTaskItemReaderTest
 			validate(
 				createDateString, null, 1L, Collections.emptyMap(),
 				csvBatchEngineTaskItemReader.read(),
-				new HashMap<String, String>() {
-					{
-						put("en", null);
-						put("hr", "naziv 1");
-					}
-				});
+				HashMapBuilder.<String, String>put(
+					"en", null
+				).put(
+					"hr", "naziv 1"
+				).build());
 
 			validate(
 				createDateString, "sample description 2", 2L,
 				Collections.emptyMap(), csvBatchEngineTaskItemReader.read(),
-				new HashMap<String, String>() {
-					{
-						put("en", "sample name 2");
-						put("hr", "naziv 2");
-					}
-				});
+				HashMapBuilder.<String, String>put(
+					"en", "sample name 2"
+				).put(
+					"hr", "naziv 2"
+				).build());
 		}
 	}
 

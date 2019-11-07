@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -209,23 +209,17 @@ public class DataDefinitionResourceTest
 				dataDefinitionFields = new DataDefinitionField[] {
 					new DataDefinitionField() {
 						{
-							description = new HashMap<String, Object>() {
-								{
-									put("en_US", RandomTestUtil.randomString());
-								}
-							};
+							description = HashMapBuilder.<String, Object>put(
+								"en_US", RandomTestUtil.randomString()
+							).build();
 							fieldType = "text";
-							label = new HashMap<String, Object>() {
-								{
-									put("label", RandomTestUtil.randomString());
-								}
-							};
+							label = HashMapBuilder.<String, Object>put(
+								"label", RandomTestUtil.randomString()
+							).build();
 							name = RandomTestUtil.randomString();
-							tip = new HashMap<String, Object>() {
-								{
-									put("tip", RandomTestUtil.randomString());
-								}
-							};
+							tip = HashMapBuilder.<String, Object>put(
+								"tip", RandomTestUtil.randomString()
+							).build();
 						}
 					}
 				};
@@ -237,17 +231,13 @@ public class DataDefinitionResourceTest
 		};
 
 		dataDefinition.setDescription(
-			new HashMap<String, Object>() {
-				{
-					put("en_US", description);
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"en_US", description
+			).build());
 		dataDefinition.setName(
-			new HashMap<String, Object>() {
-				{
-					put("en_US", name);
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"en_US", name
+			).build());
 
 		return dataDefinition;
 	}

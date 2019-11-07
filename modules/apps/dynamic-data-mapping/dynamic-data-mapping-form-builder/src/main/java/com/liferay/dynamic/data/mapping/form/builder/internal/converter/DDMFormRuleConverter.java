@@ -27,10 +27,10 @@ import com.liferay.dynamic.data.mapping.form.builder.internal.converter.visitor.
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.visitor.ConditionExpressionVisitor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -303,25 +303,30 @@ public class DDMFormRuleConverter {
 	private static final String _NOT_EXPRESSION_FORMAT = "not(%s)";
 
 	private static final Map<String, String> _operatorFunctionNameMap =
-		new HashMap<String, String>() {
-			{
-				put("belongs-to", "belongsTo");
-				put("contains", "contains");
-				put("equals-to", "equals");
-				put("is-empty", "isEmpty");
-				put("not-contains", "contains");
-				put("not-equals-to", "equals");
-				put("not-is-empty", "isEmpty");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"belongs-to", "belongsTo"
+		).put(
+			"contains", "contains"
+		).put(
+			"equals-to", "equals"
+		).put(
+			"is-empty", "isEmpty"
+		).put(
+			"not-contains", "contains"
+		).put(
+			"not-equals-to", "equals"
+		).put(
+			"not-is-empty", "isEmpty"
+		).build();
 	private static final Map<String, String> _operatorMap =
-		new HashMap<String, String>() {
-			{
-				put("greater-than", ">");
-				put("greater-than-equals", ">=");
-				put("less-than", "<");
-				put("less-than-equals", "<=");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"greater-than", ">"
+		).put(
+			"greater-than-equals", ">="
+		).put(
+			"less-than", "<"
+		).put(
+			"less-than-equals", "<="
+		).build();
 
 }

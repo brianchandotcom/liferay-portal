@@ -26,12 +26,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -166,49 +166,86 @@ public abstract class BaseTinyMCEEditorConfigContributor
 		"font[face|size|color|style],span[class|align|style]");
 
 	private static final Map<String, String> _tinyMCELanguages =
-		new HashMap<String, String>() {
-			{
-				put("ar_SA", "ar");
-				put("bg_BG", "bg_BG");
-				put("ca_ES", "ca");
-				put("cs_CZ", "cs");
-				put("de_DE", "de");
-				put("el_GR", "el");
-				put("en_AU", "en_GB");
-				put("en_GB", "en_GB");
-				put("en_US", "en_GB");
-				put("es_ES", "es");
-				put("et_EE", "et");
-				put("eu_ES", "eu");
-				put("fa_IR", "fa");
-				put("fi_FI", "fi");
-				put("fr_FR", "fr_FR");
-				put("gl_ES", "gl");
-				put("hr_HR", "hr");
-				put("hu_HU", "hu_HU");
-				put("in_ID", "id");
-				put("it_IT", "it");
-				put("iw_IL", "he_IL");
-				put("ja_JP", "ja");
-				put("ko_KR", "ko_KR");
-				put("lt_LT", "lt");
-				put("nb_NO", "nb_NO");
-				put("nl_NL", "nl");
-				put("pl_PL", "pl");
-				put("pt_BR", "pt_BR");
-				put("pt_PT", "pt_PT");
-				put("ro_RO", "ro");
-				put("ru_RU", "ru");
-				put("sk_SK", "sk");
-				put("sl_SI", "sl_SI");
-				put("sr_RS", "sr");
-				put("sv_SE", "sv_SE");
-				put("tr_TR", "tr_TR");
-				put("uk_UA", "uk");
-				put("vi_VN", "vi");
-				put("zh_CN", "zh_CN");
-				put("zh_TW", "zh_TW");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"ar_SA", "ar"
+		).put(
+			"bg_BG", "bg_BG"
+		).put(
+			"ca_ES", "ca"
+		).put(
+			"cs_CZ", "cs"
+		).put(
+			"de_DE", "de"
+		).put(
+			"el_GR", "el"
+		).put(
+			"en_AU", "en_GB"
+		).put(
+			"en_GB", "en_GB"
+		).put(
+			"en_US", "en_GB"
+		).put(
+			"es_ES", "es"
+		).put(
+			"et_EE", "et"
+		).put(
+			"eu_ES", "eu"
+		).put(
+			"fa_IR", "fa"
+		).put(
+			"fi_FI", "fi"
+		).put(
+			"fr_FR", "fr_FR"
+		).put(
+			"gl_ES", "gl"
+		).put(
+			"hr_HR", "hr"
+		).put(
+			"hu_HU", "hu_HU"
+		).put(
+			"in_ID", "id"
+		).put(
+			"it_IT", "it"
+		).put(
+			"iw_IL", "he_IL"
+		).put(
+			"ja_JP", "ja"
+		).put(
+			"ko_KR", "ko_KR"
+		).put(
+			"lt_LT", "lt"
+		).put(
+			"nb_NO", "nb_NO"
+		).put(
+			"nl_NL", "nl"
+		).put(
+			"pl_PL", "pl"
+		).put(
+			"pt_BR", "pt_BR"
+		).put(
+			"pt_PT", "pt_PT"
+		).put(
+			"ro_RO", "ro"
+		).put(
+			"ru_RU", "ru"
+		).put(
+			"sk_SK", "sk"
+		).put(
+			"sl_SI", "sl_SI"
+		).put(
+			"sr_RS", "sr"
+		).put(
+			"sv_SE", "sv_SE"
+		).put(
+			"tr_TR", "tr_TR"
+		).put(
+			"uk_UA", "uk"
+		).put(
+			"vi_VN", "vi"
+		).put(
+			"zh_CN", "zh_CN"
+		).put(
+			"zh_TW", "zh_TW"
+		).build();
 
 }

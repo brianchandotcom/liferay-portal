@@ -23,12 +23,12 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -269,13 +269,13 @@ public class LayoutSEOLinkManagerTest {
 			"LayoutSEOCompanyConfiguration";
 
 	private final Map<Locale, String> _alternateURLs =
-		new HashMap<Locale, String>() {
-			{
-				put(LocaleUtil.GERMAN, "germanURL");
-				put(LocaleUtil.SPAIN, "spanishURL");
-				put(LocaleUtil.US, _CANONICAL_URL);
-			}
-		};
+		HashMapBuilder.<Locale, String>put(
+			LocaleUtil.GERMAN, "germanURL"
+		).put(
+			LocaleUtil.SPAIN, "spanishURL"
+		).put(
+			LocaleUtil.US, _CANONICAL_URL
+		).build();
 	private Layout _layout;
 
 	@Inject

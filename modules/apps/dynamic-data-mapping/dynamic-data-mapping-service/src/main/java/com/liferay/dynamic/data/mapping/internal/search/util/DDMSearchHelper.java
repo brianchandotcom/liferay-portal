@@ -30,12 +30,12 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -263,21 +263,22 @@ public class DDMSearchHelper {
 		DDMSearchHelper.class);
 
 	private static final Map<String, String> _fieldNameOrderByCols =
-		new HashMap<String, String>() {
-			{
-				put("createDate", Field.CREATE_DATE);
-				put("modifiedDate", Field.MODIFIED_DATE);
-				put("structureId", Field.ENTRY_CLASS_PK);
-				put("templateId", Field.ENTRY_CLASS_PK);
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"createDate", Field.CREATE_DATE
+		).put(
+			"modifiedDate", Field.MODIFIED_DATE
+		).put(
+			"structureId", Field.ENTRY_CLASS_PK
+		).put(
+			"templateId", Field.ENTRY_CLASS_PK
+		).build();
 	private static final Map<String, Integer> _fieldNameSortTypes =
-		new HashMap<String, Integer>() {
-			{
-				put(Field.CREATE_DATE, Sort.LONG_TYPE);
-				put(Field.ENTRY_CLASS_PK, Sort.LONG_TYPE);
-				put(Field.MODIFIED_DATE, Sort.LONG_TYPE);
-			}
-		};
+		HashMapBuilder.<String, Integer>put(
+			Field.CREATE_DATE, Sort.LONG_TYPE
+		).put(
+			Field.ENTRY_CLASS_PK, Sort.LONG_TYPE
+		).put(
+			Field.MODIFIED_DATE, Sort.LONG_TYPE
+		).build();
 
 }

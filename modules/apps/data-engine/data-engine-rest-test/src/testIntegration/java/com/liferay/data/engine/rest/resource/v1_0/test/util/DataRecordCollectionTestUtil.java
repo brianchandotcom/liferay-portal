@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -50,11 +50,9 @@ public class DataRecordCollectionTestUtil {
 			ResourceLocalService resourceLocalService, int scope)
 		throws Exception {
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>() {
-			{
-				put(LocaleUtil.US, RandomTestUtil.randomString());
-			}
-		};
+		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());

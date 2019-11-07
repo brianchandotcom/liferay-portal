@@ -28,10 +28,10 @@ import com.liferay.dynamic.data.mapping.expression.model.OrExpression;
 import com.liferay.dynamic.data.mapping.expression.model.StringLiteral;
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.model.DDMFormRuleCondition;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -181,23 +181,25 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 	}
 
 	private static final Map<String, String> _functionNameOperatorMap =
-		new HashMap<String, String>() {
-			{
-				put("belongsTo", "belongs-to");
-				put("contains", "contains");
-				put("equals", "equals-to");
-				put("isEmpty", "is-empty");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"belongsTo", "belongs-to"
+		).put(
+			"contains", "contains"
+		).put(
+			"equals", "equals-to"
+		).put(
+			"isEmpty", "is-empty"
+		).build();
 	private static final Map<String, String> _operatorMap =
-		new HashMap<String, String>() {
-			{
-				put("<", "less-than");
-				put("<=", "less-than-equals");
-				put(">", "greater-than");
-				put(">=", "greater-than-equals");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"<", "less-than"
+		).put(
+			"<=", "less-than-equals"
+		).put(
+			">", "greater-than"
+		).put(
+			">=", "greater-than-equals"
+		).build();
 
 	private boolean _andOperator = true;
 	private final Stack<DDMFormRuleCondition> _conditions = new Stack<>();

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -127,14 +127,11 @@ public class UserGroupMultiLanguageSearchTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private Map<String, String> _getMapResult(String keywords) {
-		return new HashMap<String, String>() {
-			{
-				put(_NAME, keywords);
-				put(
-					_NAME + StringPool.UNDERLINE + Field.SORTABLE_FIELD_SUFFIX,
-					keywords);
-			}
-		};
+		return HashMapBuilder.<String, String>put(
+			_NAME, keywords
+		).put(
+			_NAME + StringPool.UNDERLINE + Field.SORTABLE_FIELD_SUFFIX, keywords
+		).build();
 	}
 
 	private void _testLocaleKeywords(Locale locale, String keywords)

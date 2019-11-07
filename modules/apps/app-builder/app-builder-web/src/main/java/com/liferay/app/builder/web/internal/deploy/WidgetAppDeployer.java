@@ -20,9 +20,9 @@ import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.web.internal.constants.AppBuilderPortletKeys;
 import com.liferay.app.builder.web.internal.portlet.AppPortlet;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.Portlet;
@@ -92,13 +92,10 @@ public class WidgetAppDeployer implements AppDeployer {
 			Portlet.class, new AppPortlet(appId),
 			AppPortlet.getProperties(
 				appName, portletName,
-				new HashMap<String, Object>() {
-					{
-						put(
-							"com.liferay.portlet.display-category",
-							"category.collaboration");
-					}
-				}));
+				HashMapBuilder.<String, Object>put(
+					"com.liferay.portlet.display-category",
+					"category.collaboration"
+				).build()));
 	}
 
 	@Reference

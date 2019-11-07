@@ -21,6 +21,7 @@ import com.liferay.document.library.web.internal.settings.DLPortletInstanceSetti
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -443,13 +443,13 @@ public class DLPortletInstanceSettingsHelper {
 	}
 
 	private static final Map<String, String> _displayViews =
-		new HashMap<String, String>() {
-			{
-				put("descriptive", "list");
-				put("icon", "cards");
-				put("list", "table");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"descriptive", "list"
+		).put(
+			"icon", "cards"
+		).put(
+			"list", "table"
+		).build();
 
 	private List<KeyValuePair> _availableDisplayViews;
 	private List<KeyValuePair> _availableEntryColumns;

@@ -22,8 +22,8 @@ import com.liferay.dynamic.data.mapping.expression.model.IntegerLiteral;
 import com.liferay.dynamic.data.mapping.expression.model.StringLiteral;
 import com.liferay.dynamic.data.mapping.expression.model.Term;
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.DDMFormRuleActionFactory;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,16 +68,20 @@ public class ActionExpressionVisitor extends ExpressionVisitor<Object> {
 	}
 
 	private static final Map<String, String> _functionToActionMap =
-		new HashMap<String, String>() {
-			{
-				put("calculate", "calculate");
-				put("call", "auto-fill");
-				put("jumpPage", "jump-to-page");
-				put("setEnabled", "enable");
-				put("setInvalid", "invalidate");
-				put("setRequired", "require");
-				put("setVisible", "show");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"calculate", "calculate"
+		).put(
+			"call", "auto-fill"
+		).put(
+			"jumpPage", "jump-to-page"
+		).put(
+			"setEnabled", "enable"
+		).put(
+			"setInvalid", "invalidate"
+		).put(
+			"setRequired", "require"
+		).put(
+			"setVisible", "show"
+		).build();
 
 }

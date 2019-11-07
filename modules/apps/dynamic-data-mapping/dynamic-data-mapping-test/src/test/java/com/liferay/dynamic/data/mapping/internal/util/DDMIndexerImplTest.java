@@ -33,6 +33,7 @@ import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -43,7 +44,6 @@ import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -211,12 +211,11 @@ public class DDMIndexerImplTest {
 		ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues);
 
 		Map<String, String> map = _withSortableValues(
-			new HashMap<String, String>() {
-				{
-					put("ddm__text__NNNNN__text1_en_US", fieldValueUS);
-					put("ddm__text__NNNNN__text1_ja_JP", fieldValueJP);
-				}
-			});
+			HashMapBuilder.<String, String>put(
+				"ddm__text__NNNNN__text1_en_US", fieldValueUS
+			).put(
+				"ddm__text__NNNNN__text1_ja_JP", fieldValueJP
+			).build());
 
 		FieldValuesAssert.assertFieldValues(
 			_replaceKeys(

@@ -25,13 +25,13 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -96,12 +96,11 @@ public class CalendarBookingIndexerLocalizedContentTest
 				}
 			});
 
-		Map<String, String> titleMap = new HashMap<String, String>() {
-			{
-				put("title_en_US", originalName);
-				put("title_ja_JP", japaneseName);
-			}
-		};
+		Map<String, String> titleMap = HashMapBuilder.<String, String>put(
+			"title_en_US", originalName
+		).put(
+			"title_ja_JP", japaneseName
+		).build();
 
 		String word1 = "新規";
 		String word2 = "作成";
@@ -148,11 +147,9 @@ public class CalendarBookingIndexerLocalizedContentTest
 				})
 		);
 
-		Map<String, String> titleMap = new HashMap<String, String>() {
-			{
-				put("title_ja_JP", "新規作成");
-			}
-		};
+		Map<String, String> titleMap = HashMapBuilder.<String, String>put(
+			"title_ja_JP", "新規作成"
+		).build();
 
 		String word1 = "新規";
 		String word2 = "作成";

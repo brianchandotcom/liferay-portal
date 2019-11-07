@@ -14,6 +14,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
@@ -210,15 +211,12 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			new SecurityConfigurationBootstrap();
 
 		securityConfigurationBootstrap.activate(
-			new HashMap<String, Object>() {
-				{
-					put(
-						"blacklisted.algorithms",
-						new String[] {
-							"http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"
-						});
+			HashMapBuilder.<String, Object>put(
+				"blacklisted.algorithms",
+				new String[] {
+					"http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"
 				}
-			});
+			).build());
 
 		assertion = OpenSamlUtil.buildAssertion();
 

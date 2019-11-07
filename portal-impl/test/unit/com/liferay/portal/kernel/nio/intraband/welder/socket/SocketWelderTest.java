@@ -22,13 +22,13 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.net.ServerSocket;
 
 import java.nio.channels.ServerSocketChannel;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
@@ -53,31 +53,25 @@ public class SocketWelderTest {
 
 	@Before
 	public void setUp() {
-		_properties = new HashMap<String, Object>() {
-			{
-				put(
-					PropsKeys.INTRABAND_WELDER_SOCKET_BUFFER_SIZE,
-					String.valueOf(8192));
-				put(
-					PropsKeys.INTRABAND_WELDER_SOCKET_KEEP_ALIVE,
-					Boolean.toString(false));
-				put(
-					PropsKeys.INTRABAND_WELDER_SOCKET_REUSE_ADDRESS,
-					Boolean.toString(false));
-				put(
-					PropsKeys.INTRABAND_WELDER_SOCKET_SERVER_START_PORT,
-					String.valueOf(3414));
-				put(
-					PropsKeys.INTRABAND_WELDER_SOCKET_SO_LINGER,
-					String.valueOf(0));
-				put(
-					PropsKeys.INTRABAND_WELDER_SOCKET_SO_TIMEOUT,
-					String.valueOf(0));
-				put(
-					PropsKeys.INTRABAND_WELDER_SOCKET_TCP_NO_DELAY,
-					Boolean.toString(false));
-			}
-		};
+		_properties = HashMapBuilder.<String, Object>put(
+			PropsKeys.INTRABAND_WELDER_SOCKET_BUFFER_SIZE, String.valueOf(8192)
+		).put(
+			PropsKeys.INTRABAND_WELDER_SOCKET_KEEP_ALIVE,
+			Boolean.toString(false)
+		).put(
+			PropsKeys.INTRABAND_WELDER_SOCKET_REUSE_ADDRESS,
+			Boolean.toString(false)
+		).put(
+			PropsKeys.INTRABAND_WELDER_SOCKET_SERVER_START_PORT,
+			String.valueOf(3414)
+		).put(
+			PropsKeys.INTRABAND_WELDER_SOCKET_SO_LINGER, String.valueOf(0)
+		).put(
+			PropsKeys.INTRABAND_WELDER_SOCKET_SO_TIMEOUT, String.valueOf(0)
+		).put(
+			PropsKeys.INTRABAND_WELDER_SOCKET_TCP_NO_DELAY,
+			Boolean.toString(false)
+		).build();
 
 		PropsTestUtil.setProps(_properties);
 	}

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -66,7 +67,6 @@ import java.security.Key;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -1700,13 +1700,13 @@ public class PortletURLImpl
 	private static final Log _log = LogFactoryUtil.getLog(PortletURLImpl.class);
 
 	private static final Map<String, String> _cacheabilities =
-		new HashMap<String, String>() {
-			{
-				put("FULL", ResourceURL.FULL);
-				put("PAGE", ResourceURL.PAGE);
-				put("PORTLET", ResourceURL.PORTLET);
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"FULL", ResourceURL.FULL
+		).put(
+			"PAGE", ResourceURL.PAGE
+		).put(
+			"PORTLET", ResourceURL.PORTLET
+		).build();
 
 	private boolean _anchor = true;
 	private String _cacheability = ResourceURL.PAGE;

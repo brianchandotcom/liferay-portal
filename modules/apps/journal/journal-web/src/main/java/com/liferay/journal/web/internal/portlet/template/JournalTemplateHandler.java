@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -144,26 +145,23 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		JournalTemplateHandler.class);
 
 	private static final Map<String, String> _templatesHelpPaths =
-		new HashMap<String, String>() {
-			{
-				put(
-					"css",
-					"com/liferay/journal/web/portlet/template/dependencies" +
-						"/template.css");
-				put(
-					"ftl",
-					"com/liferay/journal/web/portlet/template/dependencies" +
-						"/template.ftl");
-				put(
-					"vm",
-					"com/liferay/journal/web/portlet/template/dependencies" +
-						"/template.vm");
-				put(
-					"xsl",
-					"com/liferay/journal/web/portlet/template/dependencies" +
-						"/template.xsl");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"css",
+			"com/liferay/journal/web/portlet/template/dependencies" +
+				"/template.css"
+		).put(
+			"ftl",
+			"com/liferay/journal/web/portlet/template/dependencies" +
+				"/template.ftl"
+		).put(
+			"vm",
+			"com/liferay/journal/web/portlet/template/dependencies" +
+				"/template.vm"
+		).put(
+			"xsl",
+			"com/liferay/journal/web/portlet/template/dependencies" +
+				"/template.xsl"
+		).build();
 
 	private JournalContent _journalContent;
 

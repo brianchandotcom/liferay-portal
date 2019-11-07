@@ -15,8 +15,8 @@
 package com.liferay.dynamic.data.mapping.form.builder.internal.converter.serializer;
 
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.model.action.DefaultDDMFormRuleAction;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -46,14 +46,15 @@ public class DefaultDDMFormRuleActionSerializer
 	private static final String _SET_BOOLEAN_PROPERTY_FORMAT = "%s('%s', true)";
 
 	private static final Map<String, String> _actionBooleanFunctionNameMap =
-		new HashMap<String, String>() {
-			{
-				put("enable", "setEnabled");
-				put("invalidate", "setInvalid");
-				put("require", "setRequired");
-				put("show", "setVisible");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"enable", "setEnabled"
+		).put(
+			"invalidate", "setInvalid"
+		).put(
+			"require", "setRequired"
+		).put(
+			"show", "setVisible"
+		).build();
 
 	private final DefaultDDMFormRuleAction _defaultDefaultDDMFormRuleAction;
 

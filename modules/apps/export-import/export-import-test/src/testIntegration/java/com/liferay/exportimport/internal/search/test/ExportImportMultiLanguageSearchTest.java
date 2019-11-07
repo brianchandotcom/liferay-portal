@@ -147,12 +147,11 @@ public class ExportImportMultiLanguageSearchTest {
 	}
 
 	private Map<String, String> _getMapResult(String keywords) {
-		return new HashMap<String, String>() {
-			{
-				put(_PREFIX, keywords);
-				put(Field.getSortableFieldName(_PREFIX), keywords);
-			}
-		};
+		return HashMapBuilder.<String, String>put(
+			_PREFIX, keywords
+		).put(
+			Field.getSortableFieldName(_PREFIX), keywords
+		).build();
 	}
 
 	private void _testKeywordsLocale(Locale locale, String keywords)

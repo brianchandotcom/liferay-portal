@@ -14,10 +14,10 @@
 
 package com.liferay.portal.vulcan.util;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.AbstractMap;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -43,11 +43,9 @@ public class LocalizedMapUtilTest {
 		// Null entry
 
 		map = LocalizedMapUtil.merge(
-			new HashMap<Locale, String>() {
-				{
-					put(LocaleUtil.US, "hello");
-				}
-			},
+			HashMapBuilder.<Locale, String>put(
+				LocaleUtil.US, "hello"
+			).build(),
 			null);
 
 		Assert.assertEquals(map.toString(), 1, map.size());
@@ -56,11 +54,9 @@ public class LocalizedMapUtilTest {
 		// Entry hello null
 
 		map = LocalizedMapUtil.merge(
-			new HashMap<Locale, String>() {
-				{
-					put(LocaleUtil.US, "hello");
-				}
-			},
+			HashMapBuilder.<Locale, String>put(
+				LocaleUtil.US, "hello"
+			).build(),
 			new AbstractMap.SimpleEntry<>(LocaleUtil.US, null));
 
 		Assert.assertEquals(map.toString(), 0, map.size());
@@ -69,11 +65,9 @@ public class LocalizedMapUtilTest {
 		// Merge map
 
 		map = LocalizedMapUtil.merge(
-			new HashMap<Locale, String>() {
-				{
-					put(LocaleUtil.US, "hello");
-				}
-			},
+			HashMapBuilder.<Locale, String>put(
+				LocaleUtil.US, "hello"
+			).build(),
 			new AbstractMap.SimpleEntry<>(LocaleUtil.FRANCE, "bonjour"));
 
 		Assert.assertEquals(map.toString(), 2, map.size());

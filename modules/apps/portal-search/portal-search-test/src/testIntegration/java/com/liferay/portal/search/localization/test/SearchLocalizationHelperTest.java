@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
@@ -39,7 +40,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -78,12 +78,11 @@ public class SearchLocalizationHelperTest {
 
 	@Test
 	public void testAddLocalizedField() {
-		Map<Locale, String> map = new HashMap<Locale, String>() {
-			{
-				put(LocaleUtil.BRAZIL, "exemplo");
-				put(LocaleUtil.SPAIN, "ejemplo");
-			}
-		};
+		Map<Locale, String> map = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.BRAZIL, "exemplo"
+		).put(
+			LocaleUtil.SPAIN, "ejemplo"
+		).build();
 		Document document = new DocumentImpl();
 
 		searchLocalizationHelper.addLocalizedField(

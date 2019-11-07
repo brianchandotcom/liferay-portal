@@ -15,9 +15,8 @@
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
-
-import java.util.HashMap;
 
 import org.junit.After;
 import org.junit.Before;
@@ -54,13 +53,13 @@ public class LiferayTypeMappingsPortugueseTest {
 		String field_pt_PT = RandomTestUtil.randomString() + "_pt_PT";
 
 		_liferayIndexFixture.index(
-			new HashMap<String, Object>() {
-				{
-					put(field_pt, RandomTestUtil.randomString());
-					put(field_pt_BR, RandomTestUtil.randomString());
-					put(field_pt_PT, RandomTestUtil.randomString());
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				field_pt, RandomTestUtil.randomString()
+			).put(
+				field_pt_BR, RandomTestUtil.randomString()
+			).put(
+				field_pt_PT, RandomTestUtil.randomString()
+			).build());
 
 		assertAnalyzer(field_pt, "portuguese");
 		assertAnalyzer(field_pt_BR, "brazilian");

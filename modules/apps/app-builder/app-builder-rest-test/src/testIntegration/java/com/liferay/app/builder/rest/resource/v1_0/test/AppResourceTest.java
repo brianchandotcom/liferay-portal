@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -113,13 +114,9 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 				appDeployments = new AppDeployment[] {
 					new AppDeployment() {
 						{
-							settings = new HashMap<String, Object>() {
-								{
-									put(
-										"scope",
-										new String[] {"control_panel"});
-								}
-							};
+							settings = HashMapBuilder.<String, Object>put(
+								"scope", new String[] {"control_panel"}
+							).build();
 							type = "productMenu";
 						}
 					},

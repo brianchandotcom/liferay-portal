@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
@@ -34,7 +35,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -179,14 +179,15 @@ public class OrganizationMultiLanguageSearchTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private Map<String, String> _getMapResult(String keywords) {
-		return new HashMap<String, String>() {
-			{
-				put("name", keywords);
-				put("name_sortable", keywords);
-				put("nameTreePath", keywords);
-				put("nameTreePath_String_sortable", keywords);
-			}
-		};
+		return HashMapBuilder.<String, String>put(
+			"name", keywords
+		).put(
+			"name_sortable", keywords
+		).put(
+			"nameTreePath", keywords
+		).put(
+			"nameTreePath_String_sortable", keywords
+		).build();
 	}
 
 	private static final String _PREFIX = "name";

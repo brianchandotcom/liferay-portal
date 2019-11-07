@@ -17,9 +17,9 @@ package com.liferay.dynamic.data.mapping.internal.io.exporter;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRequest;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterResponse;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,23 +111,25 @@ public class DDMFormInstanceRecordCSVWriterTest {
 		List<Map<String, String>> ddmFormFieldValues =
 			new ArrayList<Map<String, String>>() {
 				{
-					Map<String, String> map1 = new HashMap<String, String>() {
-						{
-							put("field1", "1");
-							put("field1AfterChangeName", "");
-							put("field2", "esta é uma 'string'");
-						}
-					};
+					Map<String, String> map1 =
+						HashMapBuilder.<String, String>put(
+							"field1", "1"
+						).put(
+							"field1AfterChangeName", ""
+						).put(
+							"field2", "esta é uma 'string'"
+						).build();
 
 					add(map1);
 
-					Map<String, String> map2 = new HashMap<String, String>() {
-						{
-							put("field1", "");
-							put("field1AfterChangeName", "2");
-							put("field2", "esta é uma 'string'");
-						}
-					};
+					Map<String, String> map2 =
+						HashMapBuilder.<String, String>put(
+							"field1", ""
+						).put(
+							"field1AfterChangeName", "2"
+						).put(
+							"field2", "esta é uma 'string'"
+						).build();
 
 					add(map2);
 				}

@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockFeature;
@@ -27,7 +28,6 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
 import javax.ws.rs.core.Feature;
 
@@ -68,14 +68,11 @@ public class SortContextProviderTest {
 
 		_serviceRegistration = registry.registerService(
 			EntityModelResource.class, _mockResource,
-			new HashMap<String, Object>() {
-				{
-					put(
-						"component.name",
-						MockResource.class.getCanonicalName());
-					put("osgi.jaxrs.resource", "true");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"component.name", MockResource.class.getCanonicalName()
+			).put(
+				"osgi.jaxrs.resource", "true"
+			).build());
 	}
 
 	@After

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.odata.internal.filter;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,14 +48,11 @@ public class EntityModelSchemaBasedEdmProviderTest {
 
 					@Override
 					public Map<String, EntityField> getEntityFieldsMap() {
-						return new HashMap<String, EntityField>() {
-							{
-								put(
-									fieldName,
-									new StringEntityField(
-										fieldName, locale -> fieldName));
-							}
-						};
+						return HashMapBuilder.<String, EntityField>put(
+							fieldName,
+							new StringEntityField(
+								fieldName, locale -> fieldName)
+						).build();
 					}
 
 					@Override

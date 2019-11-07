@@ -17,10 +17,10 @@ package com.liferay.knowledge.base.internal.upgrade.v1_1_0;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.CamelCaseUpgradePortletPreferences;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -125,122 +125,171 @@ public class UpgradePortletPreferences
 	};
 
 	private static final Map<String, String> _adminDefaultPreferencesMap =
-		new HashMap<String, String>() {
-			{
-				put("enableKBArticleAssetCategories", "false");
-				put("enableKBArticleAssetTags", "true");
-				put("enableKBArticleDescription", "false");
-				put("enableKBArticleKBComments", "true");
-				put("enableKBArticleRatings", "false");
-				put("enableKBArticleViewCountIncrement", "true");
-				put("enableKBStructureKBComments", "true");
-				put("enableKBTemplateKBComments", "true");
-				put("kbArticlesOrderByCol", "priority");
-				put("kbArticlesOrderByType", "desc");
-				put("showKBArticleAssetEntries", "true");
-				put("showKBArticleKBComments", "true");
-				put("showKBStructureKBComments", "true");
-				put("showKBTemplateKBComments", "true");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"enableKBArticleAssetCategories", "false"
+		).put(
+			"enableKBArticleAssetTags", "true"
+		).put(
+			"enableKBArticleDescription", "false"
+		).put(
+			"enableKBArticleKBComments", "true"
+		).put(
+			"enableKBArticleRatings", "false"
+		).put(
+			"enableKBArticleViewCountIncrement", "true"
+		).put(
+			"enableKBStructureKBComments", "true"
+		).put(
+			"enableKBTemplateKBComments", "true"
+		).put(
+			"kbArticlesOrderByCol", "priority"
+		).put(
+			"kbArticlesOrderByType", "desc"
+		).put(
+			"showKBArticleAssetEntries", "true"
+		).put(
+			"showKBArticleKBComments", "true"
+		).put(
+			"showKBStructureKBComments", "true"
+		).put(
+			"showKBTemplateKBComments", "true"
+		).build();
 	private static final Map<String, String> _articleDefaultPreferencesMap =
-		new HashMap<String, String>() {
-			{
-				put("enableKBArticleAssetCategories", "false");
-				put("enableKBArticleAssetTags", "true");
-				put("enableKBArticleDescription", "false");
-				put("enableKBArticleKBComments", "true");
-				put("enableKBArticleRatings", "false");
-				put("enableKBArticleViewCountIncrement", "true");
-				put("resourcePrimKey", "0");
-				put("rssDelta", "20");
-				put("rssDisplayStyle", "full-content");
-				put("rssFormat", "atom10");
-				put("showKBArticleAssetEntries", "true");
-				put("showKBArticleKBComments", "true");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"enableKBArticleAssetCategories", "false"
+		).put(
+			"enableKBArticleAssetTags", "true"
+		).put(
+			"enableKBArticleDescription", "false"
+		).put(
+			"enableKBArticleKBComments", "true"
+		).put(
+			"enableKBArticleRatings", "false"
+		).put(
+			"enableKBArticleViewCountIncrement", "true"
+		).put(
+			"resourcePrimKey", "0"
+		).put(
+			"rssDelta", "20"
+		).put(
+			"rssDisplayStyle", "full-content"
+		).put(
+			"rssFormat", "atom10"
+		).put(
+			"showKBArticleAssetEntries", "true"
+		).put(
+			"showKBArticleKBComments", "true"
+		).build();
 	private static final Map<String, String> _displayDefaultPreferencesMap =
-		new HashMap<String, String>() {
-			{
-				put("enableKBArticleAssetCategories", "false");
-				put("enableKBArticleAssetTags", "true");
-				put("enableKBArticleDescription", "false");
-				put("enableKBArticleKBComments", "true");
-				put("enableKBArticleRatings", "false");
-				put("enableKBArticleViewCountIncrement", "true");
-				put("enableKBTemplateKBComments", "true");
-				put("kbArticlesOrderByCol", "priority");
-				put("kbArticlesOrderByType", "desc");
-				put("rssDelta", "20");
-				put("rssDisplayStyle", "full-content");
-				put("rssFormat", "atom10");
-				put("showKBArticleAssetEntries", "true");
-				put("showKBArticleAuthorColumn", "true");
-				put("showKBArticleCreateDateColumn", "true");
-				put("showKBArticleKBComments", "true");
-				put("showKBArticleModifiedDateColumn", "true");
-				put("showKBArticlePriorityColumn", "true");
-				put("showKBArticleStatusColumn", "true");
-				put("showKBArticleViewsColumn", "true");
-				put("showKBTemplateKBComments", "true");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"enableKBArticleAssetCategories", "false"
+		).put(
+			"enableKBArticleAssetTags", "true"
+		).put(
+			"enableKBArticleDescription", "false"
+		).put(
+			"enableKBArticleKBComments", "true"
+		).put(
+			"enableKBArticleRatings", "false"
+		).put(
+			"enableKBArticleViewCountIncrement", "true"
+		).put(
+			"enableKBTemplateKBComments", "true"
+		).put(
+			"kbArticlesOrderByCol", "priority"
+		).put(
+			"kbArticlesOrderByType", "desc"
+		).put(
+			"rssDelta", "20"
+		).put(
+			"rssDisplayStyle", "full-content"
+		).put(
+			"rssFormat", "atom10"
+		).put(
+			"showKBArticleAssetEntries", "true"
+		).put(
+			"showKBArticleAuthorColumn", "true"
+		).put(
+			"showKBArticleCreateDateColumn", "true"
+		).put(
+			"showKBArticleKBComments", "true"
+		).put(
+			"showKBArticleModifiedDateColumn", "true"
+		).put(
+			"showKBArticlePriorityColumn", "true"
+		).put(
+			"showKBArticleStatusColumn", "true"
+		).put(
+			"showKBArticleViewsColumn", "true"
+		).put(
+			"showKBTemplateKBComments", "true"
+		).build();
 	private static final Map<String, String> _oldAdminPreferenceNamesMap =
-		new HashMap<String, String>() {
-			{
-				put("articlesOrderByCol", "kbArticlesOrderByCol");
-				put("articlesOrderByType", "kbArticlesOrderByType");
-				put(
-					"enableArticleAssetCategories",
-					"enableKBArticleAssetCategories");
-				put("enableArticleAssetTags", "enableKBArticleAssetTags");
-				put("enableArticleComments", "enableKBArticleKBComments");
-				put("enableArticleDescription", "enableKBArticleDescription");
-				put("enableArticleRatings", "enableKBArticleRatings");
-				put(
-					"enableArticleViewCountIncrement",
-					"enableKBArticleViewCountIncrement");
-				put("enableTemplateComments", "enableKBTemplateKBComments");
-				put("showArticleComments", "showKBArticleKBComments");
-				put("showTemplateComments", "showKBTemplateKBComments");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"articlesOrderByCol", "kbArticlesOrderByCol"
+		).put(
+			"articlesOrderByType", "kbArticlesOrderByType"
+		).put(
+			"enableArticleAssetCategories", "enableKBArticleAssetCategories"
+		).put(
+			"enableArticleAssetTags", "enableKBArticleAssetTags"
+		).put(
+			"enableArticleComments", "enableKBArticleKBComments"
+		).put(
+			"enableArticleDescription", "enableKBArticleDescription"
+		).put(
+			"enableArticleRatings", "enableKBArticleRatings"
+		).put(
+			"enableArticleViewCountIncrement",
+			"enableKBArticleViewCountIncrement"
+		).put(
+			"enableTemplateComments", "enableKBTemplateKBComments"
+		).put(
+			"showArticleComments", "showKBArticleKBComments"
+		).put(
+			"showTemplateComments", "showKBTemplateKBComments"
+		).build();
 	private static final Map<String, String> _oldArticlePreferenceNamesMap =
-		new HashMap<String, String>() {
-			{
-				put(
-					"enableArticleAssetCategories",
-					"enableKBArticleAssetCategories");
-				put("enableArticleAssetTags", "enableKBArticleAssetTags");
-				put("enableArticleComments", "enableKBArticleKBComments");
-				put("enableArticleDescription", "enableKBArticleDescription");
-				put("enableArticleRatings", "enableKBArticleRatings");
-				put(
-					"enableArticleViewCountIncrement",
-					"enableKBArticleViewCountIncrement");
-				put("showArticleComments", "showKBArticleKBComments");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"enableArticleAssetCategories", "enableKBArticleAssetCategories"
+		).put(
+			"enableArticleAssetTags", "enableKBArticleAssetTags"
+		).put(
+			"enableArticleComments", "enableKBArticleKBComments"
+		).put(
+			"enableArticleDescription", "enableKBArticleDescription"
+		).put(
+			"enableArticleRatings", "enableKBArticleRatings"
+		).put(
+			"enableArticleViewCountIncrement",
+			"enableKBArticleViewCountIncrement"
+		).put(
+			"showArticleComments", "showKBArticleKBComments"
+		).build();
 	private static final Map<String, String> _oldDisplayPreferenceNamesMap =
-		new HashMap<String, String>() {
-			{
-				put("articlesOrderByCol", "kbArticlesOrderByCol");
-				put("articlesOrderByType", "kbArticlesOrderByType");
-				put(
-					"enableArticleAssetCategories",
-					"enableKBArticleAssetCategories");
-				put("enableArticleAssetTags", "enableKBArticleAssetTags");
-				put("enableArticleComments", "enableKBArticleKBComments");
-				put("enableArticleDescription", "enableKBArticleDescription");
-				put("enableArticleRatings", "enableKBArticleRatings");
-				put(
-					"enableArticleViewCountIncrement",
-					"enableKBArticleViewCountIncrement");
-				put("enableTemplateComments", "enableKBTemplateKBComments");
-				put("showArticleComments", "showKBArticleKBComments");
-				put("showTemplateComments", "showKBTemplateKBComments");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"articlesOrderByCol", "kbArticlesOrderByCol"
+		).put(
+			"articlesOrderByType", "kbArticlesOrderByType"
+		).put(
+			"enableArticleAssetCategories", "enableKBArticleAssetCategories"
+		).put(
+			"enableArticleAssetTags", "enableKBArticleAssetTags"
+		).put(
+			"enableArticleComments", "enableKBArticleKBComments"
+		).put(
+			"enableArticleDescription", "enableKBArticleDescription"
+		).put(
+			"enableArticleRatings", "enableKBArticleRatings"
+		).put(
+			"enableArticleViewCountIncrement",
+			"enableKBArticleViewCountIncrement"
+		).put(
+			"enableTemplateComments", "enableKBTemplateKBComments"
+		).put(
+			"showArticleComments", "showKBArticleKBComments"
+		).put(
+			"showTemplateComments", "showKBTemplateKBComments"
+		).build();
 
 }

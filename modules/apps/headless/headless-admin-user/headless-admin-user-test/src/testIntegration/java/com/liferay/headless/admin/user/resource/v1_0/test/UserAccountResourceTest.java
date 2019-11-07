@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -217,12 +217,11 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			"query",
 			new GraphQLField(
 				"userAccounts",
-				new HashMap<String, Object>() {
-					{
-						put("page", 1);
-						put("pageSize", 3);
-					}
-				},
+				HashMapBuilder.<String, Object>put(
+					"page", 1
+				).put(
+					"pageSize", 3
+				).build(),
 				graphQLFields.toArray(new GraphQLField[0])));
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(

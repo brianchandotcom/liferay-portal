@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -56,7 +57,6 @@ import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -508,25 +508,25 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	private static final Map<String, String> _assetTypeTypeToClassNames =
-		new HashMap<String, String>() {
-			{
-				put("BlogPosting", "com.liferay.blogs.model.BlogsEntry");
-				put(
-					"Document",
-					"com.liferay.document.library.kernel.model.DLFileEntry");
-				put(
-					"KnowledgeBaseArticle",
-					"com.liferay.knowledge.base.model.KBArticle");
-				put("Organization", Organization.class.getName());
-				put(
-					"StructuredContent",
-					"com.liferay.journal.model.JournalArticle");
-				put("UserAccount", User.class.getName());
-				put("WebPage", Layout.class.getName());
-				put("WebSite", Group.class.getName());
-				put("WikiPage", "com.liferay.wiki.model.WikiPage");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"BlogPosting", "com.liferay.blogs.model.BlogsEntry"
+		).put(
+			"Document", "com.liferay.document.library.kernel.model.DLFileEntry"
+		).put(
+			"KnowledgeBaseArticle", "com.liferay.knowledge.base.model.KBArticle"
+		).put(
+			"Organization", Organization.class.getName()
+		).put(
+			"StructuredContent", "com.liferay.journal.model.JournalArticle"
+		).put(
+			"UserAccount", User.class.getName()
+		).put(
+			"WebPage", Layout.class.getName()
+		).put(
+			"WebSite", Group.class.getName()
+		).put(
+			"WikiPage", "com.liferay.wiki.model.WikiPage"
+		).build();
 	private static final Map<String, String> _classNameToAssetTypeTypes =
 		MapUtils.invertMap(_assetTypeTypeToClassNames);
 	private static final EntityModel _entityModel = new VocabularyEntityModel();

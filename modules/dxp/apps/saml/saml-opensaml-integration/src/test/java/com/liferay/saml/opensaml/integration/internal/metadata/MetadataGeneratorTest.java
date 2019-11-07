@@ -14,11 +14,11 @@
 
 package com.liferay.saml.opensaml.integration.internal.metadata;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -107,15 +107,12 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 			new SecurityConfigurationBootstrap();
 
 		securityConfigurationBootstrap.activate(
-			new HashMap<String, Object>() {
-				{
-					put(
-						"blacklisted.algorithms",
-						new String[] {
-							"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"
-						});
+			HashMapBuilder.<String, Object>put(
+				"blacklisted.algorithms",
+				new String[] {
+					"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"
 				}
-			});
+			).build());
 
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(

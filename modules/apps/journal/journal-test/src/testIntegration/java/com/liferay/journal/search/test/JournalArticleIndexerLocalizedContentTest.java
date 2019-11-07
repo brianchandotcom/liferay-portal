@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
@@ -121,19 +122,17 @@ public class JournalArticleIndexerLocalizedContentTest {
 				}
 			});
 
-		Map<String, String> titleStrings = new HashMap<String, String>() {
-			{
-				put("title_en_US", originalTitle);
-				put("title_hu_HU", translatedTitle);
-			}
-		};
+		Map<String, String> titleStrings = HashMapBuilder.<String, String>put(
+			"title_en_US", originalTitle
+		).put(
+			"title_hu_HU", translatedTitle
+		).build();
 
-		Map<String, String> contentStrings = new HashMap<String, String>() {
-			{
-				put("content_en_US", originalContent);
-				put("content_hu_HU", translatedContent);
-			}
-		};
+		Map<String, String> contentStrings = HashMapBuilder.<String, String>put(
+			"content_en_US", originalContent
+		).put(
+			"content_hu_HU", translatedContent
+		).build();
 
 		Map<String, String> localizedTitleStrings = _withSortableValues(
 			new HashMap<String, String>() {
@@ -378,11 +377,9 @@ public class JournalArticleIndexerLocalizedContentTest {
 				})
 		);
 
-		Map<String, String> titleStrings = new HashMap<String, String>() {
-			{
-				put("title_ja_JP", full);
-			}
-		};
+		Map<String, String> titleStrings = HashMapBuilder.<String, String>put(
+			"title_ja_JP", full
+		).build();
 
 		String word1 = "新規";
 		String word2 = "作成";

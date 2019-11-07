@@ -18,11 +18,11 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -382,31 +382,28 @@ public class JSONUtilTest {
 			JSONUtil.toJSONObjectMap(_createJSONArray(), null));
 
 		Map<String, JSONObject> expectedJSONObjects =
-			new HashMap<String, JSONObject>() {
-				{
-					put(
-						"1",
-						JSONUtil.put(
-							"alpha", 1
-						).put(
-							"key", "1"
-						));
-					put(
-						"2",
-						JSONUtil.put(
-							"beta", 1
-						).put(
-							"key", "2"
-						));
-					put(
-						"3",
-						JSONUtil.put(
-							"gamma", 1
-						).put(
-							"key", "3"
-						));
-				}
-			};
+			HashMapBuilder.<String, JSONObject>put(
+				"1",
+				JSONUtil.put(
+					"alpha", 1
+				).put(
+					"key", "1"
+				)
+			).put(
+				"2",
+				JSONUtil.put(
+					"beta", 1
+				).put(
+					"key", "2"
+				)
+			).put(
+				"3",
+				JSONUtil.put(
+					"gamma", 1
+				).put(
+					"key", "3"
+				)
+			).build();
 
 		Map<String, JSONObject> actualJSONObjects = JSONUtil.toJSONObjectMap(
 			JSONUtil.putAll(

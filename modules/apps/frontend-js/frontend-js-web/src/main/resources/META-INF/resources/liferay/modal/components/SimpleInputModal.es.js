@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -24,6 +25,7 @@ import React, {useState} from 'react';
  * Manipulates small amounts of data with a form shown inside a modal.
  */
 const SimpleInputModal = ({
+	alert,
 	checkboxFieldLabel,
 	checkboxFieldName,
 	checkboxFieldValue,
@@ -88,6 +90,15 @@ const SimpleInputModal = ({
 
 				<form id={`${namespace}form`} onSubmit={_handleSubmit}>
 					<ClayModal.Body>
+						{alert && alert.message && alert.title && (
+							<ClayAlert
+								displayType={alert.style}
+								title={alert.title}
+							>
+								{alert.message}
+							</ClayAlert>
+						)}
+
 						<input
 							name={`${namespace}${idFieldName}`}
 							type="hidden"

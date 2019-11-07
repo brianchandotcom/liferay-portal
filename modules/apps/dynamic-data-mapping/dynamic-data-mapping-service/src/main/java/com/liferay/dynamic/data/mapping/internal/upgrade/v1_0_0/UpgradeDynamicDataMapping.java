@@ -2427,12 +2427,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			dlFileEntry.setFileEntryTypeId(fileEntryTypeId);
 			dlFileEntry.setVersion(version);
 			dlFileEntry.setSize(size);
-			dlFileEntry.setReadCount(readCount);
 			dlFileEntry.setSmallImageId(smallImageId);
 			dlFileEntry.setLargeImageId(largeImageId);
 			dlFileEntry.setCustom1ImageId(custom1ImageId);
 			dlFileEntry.setCustom2ImageId(custom2ImageId);
 			dlFileEntry.setManualCheckInRequired(manualCheckInRequired);
+
+			_viewCountEntryLocalService.incrementViewCount(
+				dlFileEntry.getCompanyId(),
+				_classNameLocalService.getClassNameId(DLFileEntry.class),
+				dlFileEntry.getFileEntryId(), readCount);
 
 			return dlFileEntry;
 		}

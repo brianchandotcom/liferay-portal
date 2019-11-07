@@ -156,9 +156,9 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	}
 
 	private JSONObject _serialize(List<String> includeAttributes, T model) {
-		Map<String, Object> modelAttributes = model.getModelAttributes();
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		Map<String, Object> modelAttributes = model.getModelAttributes();
 
 		for (String includeAttribute : includeAttributes) {
 			jsonObject.put(

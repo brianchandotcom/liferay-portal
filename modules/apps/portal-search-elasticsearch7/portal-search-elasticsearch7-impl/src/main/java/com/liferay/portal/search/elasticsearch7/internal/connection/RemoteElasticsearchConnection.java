@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.util.ClassLoaderUtil;
 
 import java.io.InputStream;
 
@@ -113,7 +114,10 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 			configureSecurity(restClientBuilder);
 		}
 
-		return new RestHighLevelClient(restClientBuilder);
+		Class<? extends RemoteElasticsearchConnection> clazz = getClass();
+
+		return ClassLoaderUtil.getWithContextClassLoader(
+			() -> new RestHighLevelClient(restClientBuilder), clazz);
 	}
 
 	protected SSLContext createSSLContext() {

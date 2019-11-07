@@ -12,10 +12,11 @@
  * details.
  */
 
+import {ItemSelectorDialog} from 'frontend-js-web';
+
 import {UPDATE_LAST_SAVE_DATE} from '../actions/actions.es';
 import CreateContentDialog from '../components/content/CreateContentDialog.es';
 import {getState} from '../store/store.es';
-import {ItemSelectorDialog} from 'frontend-js-web';
 
 /**
  * @private

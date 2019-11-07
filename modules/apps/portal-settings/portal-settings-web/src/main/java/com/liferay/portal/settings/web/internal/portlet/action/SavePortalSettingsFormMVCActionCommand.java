@@ -31,6 +31,11 @@ import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
 import java.io.IOException;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Stream;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.ValidatorException;
@@ -95,6 +100,24 @@ public class SavePortalSettingsFormMVCActionCommand
 			actionRequest, getParameterNamespace() + name);
 	}
 
+	protected String[] getStrings(ActionRequest actionRequest, String name) {
+		String value = getString(actionRequest, name + "Indexes");
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		Stream<String> stream = Arrays.stream(value.split(","));
+
+		return stream.map(
+			index -> getString(actionRequest, name.concat(index))
+		).filter(
+			Validator::isNotNull
+		).toArray(
+			String[]::new
+		);
+	}
+
 	protected void storeSettings(
 			ActionRequest actionRequest, ThemeDisplay themeDisplay)
 		throws IOException, SettingsException, ValidatorException {
@@ -109,7 +132,17 @@ public class SavePortalSettingsFormMVCActionCommand
 		SettingsDescriptor settingsDescriptor =
 			SettingsFactoryUtil.getSettingsDescriptor(getSettingsId());
 
+		Set<String> multiValuedKeys = new HashSet<>(
+			settingsDescriptor.getMultiValuedKeys());
+
 		for (String name : settingsDescriptor.getAllKeys()) {
+			if (multiValuedKeys.remove(name)) {
+				modifiableSettings.setValues(
+					name, getStrings(actionRequest, name));
+
+				continue;
+			}
+
 			String value = getString(actionRequest, name);
 
 			if (value.equals(Portal.TEMP_OBFUSCATION_VALUE)) {

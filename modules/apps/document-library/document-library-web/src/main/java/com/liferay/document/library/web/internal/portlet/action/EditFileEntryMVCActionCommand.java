@@ -411,7 +411,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				serviceContext);
 
 			_assetDisplayPageEntryFormProcessor.process(
-				DLFileEntry.class.getName(), fileEntry.getFileEntryId(),
+				FileEntry.class.getName(), fileEntry.getFileEntryId(),
 				actionRequest);
 
 			validFileNameKVPs.add(
@@ -1013,7 +1013,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			_assetDisplayPageEntryFormProcessor.process(
-				DLFileEntry.class.getName(), fileEntry.getFileEntryId(),
+				FileEntry.class.getName(), fileEntry.getFileEntryId(),
 				actionRequest);
 
 			String portletResource = ParamUtil.getString(

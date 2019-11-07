@@ -309,7 +309,7 @@ else {
 		>
 			<aui:fieldset>
 				<liferay-asset:select-asset-display-page
-					classNameId="<%= PortalUtil.getClassNameId(DLFileEntry.class) %>"
+					classNameId="<%= PortalUtil.getClassNameId(FileEntry.class) %>"
 					classPK="<%= 0 %>"
 					groupId="<%= scopeGroupId %>"
 					showPortletLayouts="<%= true %>"

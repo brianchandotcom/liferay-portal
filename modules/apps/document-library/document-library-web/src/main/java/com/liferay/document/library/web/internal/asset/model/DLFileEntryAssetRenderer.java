@@ -320,7 +320,7 @@ public class DLFileEntryAssetRenderer
 
 			String friendlyURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					getClassName(), getClassPK(), themeDisplay);
+					FileEntry.class.getName(), getClassPK(), themeDisplay);
 
 			if (Validator.isNotNull(friendlyURL)) {
 				return friendlyURL;

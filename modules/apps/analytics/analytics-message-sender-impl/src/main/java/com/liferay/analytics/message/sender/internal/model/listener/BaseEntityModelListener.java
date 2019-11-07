@@ -40,8 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-public abstract class BaseEntityModelListener
-	<T extends BaseModel<T> & ShardedModel> extends BaseModelListener<T> {
+public abstract class BaseEntityModelListener<T extends BaseModel<T>>
+	extends BaseModelListener<T> {
 
 	@Override
 	public void onAfterCreate(T model) throws ModelListenerException {
@@ -132,10 +132,12 @@ public abstract class BaseEntityModelListener
 
 		JSONObject jsonObject = _serialize(includeAttributes, model);
 
+		ShardedModel shardedModel = (ShardedModel)model;
+
 		try {
 			AnalyticsMessage.Builder analyticsMessageBuilder =
 				AnalyticsMessage.builder(
-					_getDataSourceId(model.getCompanyId()),
+					_getDataSourceId(shardedModel.getCompanyId()),
 					model.getModelClassName());
 
 			analyticsMessageBuilder.action(eventType);

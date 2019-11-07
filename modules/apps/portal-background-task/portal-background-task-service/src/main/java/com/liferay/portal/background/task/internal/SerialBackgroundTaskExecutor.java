@@ -71,10 +71,8 @@ public class SerialBackgroundTaskExecutor
 	protected Lock acquireLock(BackgroundTask backgroundTask)
 		throws DuplicateLockException {
 
-		BackgroundTaskLockHelper backgroundTaskLockHelper =
-			new BackgroundTaskLockHelper(_lockManager);
-
-		Lock lock = backgroundTaskLockHelper.lockBackgroundTask(backgroundTask);
+		Lock lock = _backgroundTaskLockHelper.lockBackgroundTask(
+			backgroundTask);
 
 		if (!lock.isNew()) {
 			throw new DuplicateLockException(lock);

@@ -275,7 +275,7 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"imageSelectorURL", _getItemSelectorURL()
 		).put(
-			"infoItemSelectorURL", _getInfoItemSelectorURL(null)
+			"infoItemSelectorURL", _getInfoItemSelectorURL()
 		).put(
 			"languageId", themeDisplay.getLanguageId()
 		).put(
@@ -993,13 +993,9 @@ public class ContentPageEditorDisplayContext {
 		return _imageItemSelectorCriterion;
 	}
 
-	private String _getInfoItemSelectorURL(String className) {
+	private String _getInfoItemSelectorURL() {
 		InfoItemItemSelectorCriterion itemSelectorCriterion =
 			new InfoItemItemSelectorCriterion();
-
-		if (Validator.isNotNull(className)) {
-			itemSelectorCriterion.setClassName(className);
-		}
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoItemItemSelectorReturnType());

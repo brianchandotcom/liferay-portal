@@ -91,6 +91,7 @@ public class LayoutClassedModelUsagesDisplayContext {
 		_fragmentRendererTracker =
 			(FragmentRendererTracker)renderRequest.getAttribute(
 				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER);
+
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

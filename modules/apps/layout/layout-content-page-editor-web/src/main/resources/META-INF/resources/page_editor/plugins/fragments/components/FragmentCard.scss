@@ -1,7 +1,7 @@
 @import './variables';
 @import '../../../app/components/variables';
 
-.page-editor__section-builder__fragment-card {
+.page-editor__fragments__fragment-card {
 	box-shadow: 0 0 0 1px $sectionBuilderLightColor;
 	margin-bottom: $pageEditorSpacing * 2;
 	width: calc(50% - #{$pageEditorSpacing});

@@ -15,7 +15,7 @@
 import React from 'react';
 
 import {Component} from '../../core/AppContext';
-import SectionBuilderSidebar from './components/SectionBuilderSidebar';
+import FragmentsSidebar from './components/FragmentsSidebar';
 /**
  * Entry-point for "Section Builder" (sidebar pane) functionality.
  */
@@ -30,7 +30,7 @@ export default class SectionBuilder {
 
 		return (
 			<Component>
-				<SectionBuilderSidebar title={this.title} />
+				<FragmentsSidebar title={this.title} />
 			</Component>
 		);
 	}

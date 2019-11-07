@@ -69,7 +69,7 @@ export function getConfig(data) {
  * plugin names.
  */
 const SIDEBAR_PANEL_IDS_TO_PLUGINS = {
-	elements: 'section-builder',
+	elements: 'fragments',
 
 	lookAndFeel: 'look-and-feel'
 };

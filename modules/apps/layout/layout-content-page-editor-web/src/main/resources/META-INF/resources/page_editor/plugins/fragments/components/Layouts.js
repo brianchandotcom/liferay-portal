@@ -46,7 +46,7 @@ const LayoutCard = ({layoutColumns}) => {
 				layoutColumns.join('-')
 			)}
 			className={classNames(
-				'page-editor__section-builder__layout-card-preview',
+				'page-editor__fragments__layout-card-preview',
 				'card',
 				'card-interactive',
 				'card-interactive-secondary',

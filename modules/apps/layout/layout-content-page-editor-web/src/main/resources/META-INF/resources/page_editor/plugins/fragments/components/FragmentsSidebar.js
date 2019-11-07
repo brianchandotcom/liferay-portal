@@ -22,7 +22,7 @@ import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import FragmentCard from './FragmentCard';
 import Layouts from './Layouts';
 
-export default function SectionBuilderSidebar() {
+export default function FragmentsSidebar() {
 	const {fragments} = useContext(StoreContext);
 	const [searchValue, setSearchValue] = useState('');
 

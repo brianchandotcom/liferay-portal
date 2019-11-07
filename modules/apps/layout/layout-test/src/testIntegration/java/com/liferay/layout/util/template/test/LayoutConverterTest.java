@@ -100,8 +100,7 @@ public class LayoutConverterTest {
 		Map<String, String[]> portletIdsMap = HashMapBuilder.put(
 			"column-1",
 			new String[] {
-				"com_liferay_hello_velocity_web_portlet_" +
-					"HelloVelocityPortlet",
+				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet",
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
 				"hello_soy_portlet"
 			}

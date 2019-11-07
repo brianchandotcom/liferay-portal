@@ -147,20 +147,16 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 	private static final Map<String, String> _templatesHelpPaths =
 		HashMapBuilder.put(
 			"css",
-			"com/liferay/journal/web/portlet/template/dependencies" +
-				"/template.css"
+			"com/liferay/journal/web/portlet/template/dependencies/template.css"
 		).put(
 			"ftl",
-			"com/liferay/journal/web/portlet/template/dependencies" +
-				"/template.ftl"
+			"com/liferay/journal/web/portlet/template/dependencies/template.ftl"
 		).put(
 			"vm",
-			"com/liferay/journal/web/portlet/template/dependencies" +
-				"/template.vm"
+			"com/liferay/journal/web/portlet/template/dependencies/template.vm"
 		).put(
 			"xsl",
-			"com/liferay/journal/web/portlet/template/dependencies" +
-				"/template.xsl"
+			"com/liferay/journal/web/portlet/template/dependencies/template.xsl"
 		).build();
 
 	private JournalContent _journalContent;

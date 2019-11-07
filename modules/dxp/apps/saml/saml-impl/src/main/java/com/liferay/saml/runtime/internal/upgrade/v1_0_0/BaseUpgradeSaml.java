@@ -65,7 +65,7 @@ public abstract class BaseUpgradeSaml extends UpgradeProcess {
 			LegacySamlPropsKeys.SAML_IDP_SSO_SESSION_MAX_AGE, "86400000"
 		).put(
 			LegacySamlPropsKeys.SAML_KEYSTORE_MANAGER_IMPL,
-			"com.liferay.saml.credential." + "FileSystemKeyStoreManagerImpl"
+			"com.liferay.saml.credential.FileSystemKeyStoreManagerImpl"
 		).put(
 			LegacySamlPropsKeys.SAML_KEYSTORE_PASSWORD, "liferay"
 		).put(

@@ -28,8 +28,6 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">
 	<aui:form method="post" name="fm">
-		<aui:input name="userId" type="hidden" />
-
 		<liferay-ui:search-container
 			searchContainer="<%= accountUsersDisplaySearchContainer %>"
 		>

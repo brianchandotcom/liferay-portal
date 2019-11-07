@@ -27,45 +27,41 @@ SelectAccountEntriesManagementToolbarDisplayContext selectAccountEntriesManageme
 />
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">
-	<aui:form method="post" name="fm">
-		<aui:input name="accountEntryIds" type="hidden" />
-
-		<liferay-ui:search-container
-			searchContainer="<%= accountDisplaySearchContainer %>"
+	<liferay-ui:search-container
+		searchContainer="<%= accountDisplaySearchContainer %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.account.admin.web.internal.display.AccountEntryDisplay"
+			keyProperty="accountEntryId"
+			modelVar="accountEntryDisplay"
 		>
-			<liferay-ui:search-container-row
-				className="com.liferay.account.admin.web.internal.display.AccountEntryDisplay"
-				keyProperty="accountEntryId"
-				modelVar="accountEntryDisplay"
-			>
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand table-title"
-					name="name"
-					property="name"
-				/>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					name="parent-account"
-					property="parentAccountEntryName"
-				/>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					name="status"
-				>
-					<clay:label
-						label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountEntryDisplay.getStatusLabel()), locale) %>"
-						style="<%= accountEntryDisplay.getStatusLabelStyle() %>"
-					/>
-				</liferay-ui:search-container-column-text>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator
-				markupView="lexicon"
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-title"
+				name="name"
+				property="name"
 			/>
-		</liferay-ui:search-container>
-	</aui:form>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				name="parent-account"
+				property="parentAccountEntryName"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				name="status"
+			>
+				<clay:label
+					label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountEntryDisplay.getStatusLabel()), locale) %>"
+					style="<%= accountEntryDisplay.getStatusLabelStyle() %>"
+				/>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
 </aui:container>
 
 <liferay-frontend:component

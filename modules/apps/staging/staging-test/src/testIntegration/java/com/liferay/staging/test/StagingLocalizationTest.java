@@ -305,7 +305,7 @@ public class StagingLocalizationTest {
 		return HashMapBuilder.put(
 			LocaleUtil.GERMANY, StringPool.BLANK
 		).put(
-			LocaleUtil.SPAIN, null
+			LocaleUtil.SPAIN, (String)null
 		).put(
 			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();

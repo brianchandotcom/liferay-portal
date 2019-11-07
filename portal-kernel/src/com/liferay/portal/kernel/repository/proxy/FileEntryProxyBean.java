@@ -236,7 +236,7 @@ public class FileEntryProxyBean
 	}
 
 	@Override
-	public int getReadCount() {
+	public long getReadCount() {
 		return _fileEntry.getReadCount();
 	}
 

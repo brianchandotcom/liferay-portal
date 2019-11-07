@@ -241,7 +241,7 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	}
 
 	@Override
-	public int getReadCount() {
+	public long getReadCount() {
 		return _fileEntry.getReadCount();
 	}
 

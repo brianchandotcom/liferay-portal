@@ -290,7 +290,7 @@ public class ExtRepositoryFileEntryAdapter
 	}
 
 	@Override
-	public int getReadCount() {
+	public long getReadCount() {
 		return 0;
 	}
 

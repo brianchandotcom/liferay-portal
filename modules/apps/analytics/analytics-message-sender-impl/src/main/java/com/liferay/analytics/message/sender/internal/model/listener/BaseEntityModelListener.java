@@ -40,8 +40,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-public abstract class BaseEntityModelListener<T extends BaseModel<T>>
-	extends BaseModelListener<T> {
+public abstract class BaseEntityModelListener
+	<T extends BaseModel<T> & ShardedModel>
+		extends BaseModelListener<T> {
 
 	@Override
 	public void onAfterCreate(T model) throws ModelListenerException {
@@ -100,7 +101,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		catch (Exception e) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Unable to find analytics configuration for companyId " +
+					"Unable to find analytics configuration for company ID " +
 						companyId);
 			}
 
@@ -130,14 +131,12 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	private void _send(
 		String eventType, List<String> includeAttributes, T model) {
 
-		ShardedModel shardedModel = (ShardedModel)model;
-
 		String objectString = _serialize(includeAttributes, model);
 
 		try {
 			AnalyticsMessage.Builder analyticsMessageBuilder =
 				AnalyticsMessage.builder(
-					_getDataSourceId(shardedModel.getCompanyId()),
+					_getDataSourceId(model.getCompanyId()),
 					model.getModelClassName());
 
 			analyticsMessageBuilder.action(eventType);

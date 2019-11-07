@@ -7,7 +7,7 @@ components:
                 comment:
                     type: string
                     writeOnly: true
-                transition:
+                transitionName:
                     type: string
                     writeOnly: true
             type: object
@@ -123,11 +123,11 @@ components:
                     readOnly: true
                     type: string
             type: object
-        Transitions:
+        Transition:
             description:
                 Represents the transition to be launched by the task's workflow.
             properties:
-                name:
+                transitionName:
                     readOnly: true
                     type: string
             type: object
@@ -190,7 +190,7 @@ components:
                     format: int64
                     type: integer
                     writeOnly: true
-                transition:
+                transitionName:
                     type: string
                     writeOnly: true
             type: object
@@ -567,16 +567,16 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Transitions"
+                                    $ref: "#/components/schemas/Transition"
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Transitions"
+                                    $ref: "#/components/schemas/Transition"
                                 type: array
                     description:
                         ""
-            tags: ["Transitions"]
+            tags: ["Transition"]
     "/workflow-instances/{workflowInstanceId}/workflow-logs":
         get:
             operationId: getWorkflowInstanceWorkflowLogsPage
@@ -1157,16 +1157,16 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Transitions"
+                                    $ref: "#/components/schemas/Transition"
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Transitions"
+                                    $ref: "#/components/schemas/Transition"
                                 type: array
                     description:
                         ""
-            tags: ["Transitions"]
+            tags: ["Transition"]
     "/workflow-tasks/{workflowTaskId}/update-due-date":
         post:
             operationId: postWorkflowTaskUpdateDueDate

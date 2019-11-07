@@ -126,7 +126,7 @@ public class CSVBatchEngineImportTaskItemReaderTest
 				).put(
 					"id1", "id"
 				).put(
-					"name1", null
+					"name1", (String)null
 				).build(),
 				csvBatchEngineImportTaskItemReader.read(), null);
 		}
@@ -288,7 +288,7 @@ public class CSVBatchEngineImportTaskItemReaderTest
 				createDateString, null, 1L, Collections.emptyMap(),
 				csvBatchEngineImportTaskItemReader.read(),
 				HashMapBuilder.put(
-					"en", null
+					"en", (String)null
 				).put(
 					"hr", "naziv 1"
 				).build());

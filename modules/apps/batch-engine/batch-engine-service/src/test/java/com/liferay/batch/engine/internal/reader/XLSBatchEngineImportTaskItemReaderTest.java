@@ -130,7 +130,7 @@ public class XLSBatchEngineImportTaskItemReaderTest
 				).put(
 					"id1", "id"
 				).put(
-					"name1", null
+					"name1", (String)null
 				).build(),
 				xlsBatchEngineImportTaskItemReader.read(), null);
 		}
@@ -290,7 +290,7 @@ public class XLSBatchEngineImportTaskItemReaderTest
 				createDateString, null, 1L, Collections.emptyMap(),
 				xlsBatchEngineImportTaskItemReader.read(),
 				HashMapBuilder.put(
-					"en", null
+					"en", (String)null
 				).put(
 					"hr", "naziv"
 				).build());

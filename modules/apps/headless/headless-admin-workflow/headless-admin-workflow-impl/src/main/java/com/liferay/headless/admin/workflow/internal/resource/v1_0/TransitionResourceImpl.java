@@ -52,7 +52,7 @@ public class TransitionResourceImpl extends BaseTransitionResourceImpl {
 				ListUtil.subList(
 					nextTransitionNames, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				this::_toTransitions),
+				this::_toTransition),
 			pagination, nextTransitionNames.size());
 	}
 
@@ -71,16 +71,16 @@ public class TransitionResourceImpl extends BaseTransitionResourceImpl {
 				ListUtil.subList(
 					nextTransitionNames, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				this::_toTransitions),
+				this::_toTransition),
 			pagination, nextTransitionNames.size());
 	}
 
-	private Transitions _toTransitions(String transitionName) {
-		return new Transitions() {
-			{
-				name = transitionName;
-			}
-		};
+	private Transition _toTransition(String transitionName) {
+		Transition transition = new Transition();
+
+		transition.setTransitionName(transitionName);
+
+		return transition;
 	}
 
 	@Reference

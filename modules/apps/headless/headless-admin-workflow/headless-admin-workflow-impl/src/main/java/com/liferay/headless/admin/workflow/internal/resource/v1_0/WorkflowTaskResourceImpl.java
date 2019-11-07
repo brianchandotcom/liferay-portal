@@ -262,7 +262,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 		return _toWorkflowTask(
 			_workflowTaskManager.completeWorkflowTask(
 				contextUser.getCompanyId(), contextUser.getUserId(),
-				workflowTaskId, changeTransition.getTransition(),
+				workflowTaskId, changeTransition.getTransitionName(),
 				changeTransition.getComment(), null));
 	}
 

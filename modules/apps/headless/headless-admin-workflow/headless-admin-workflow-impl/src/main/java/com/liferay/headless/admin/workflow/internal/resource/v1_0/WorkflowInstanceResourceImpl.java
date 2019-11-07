@@ -89,7 +89,8 @@ public class WorkflowInstanceResourceImpl
 		return _toWorkflowInstance(
 			_workflowInstanceManager.signalWorkflowInstance(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
-				workflowInstanceId, changeTransition.getTransition(), null));
+				workflowInstanceId, changeTransition.getTransitionName(),
+				null));
 	}
 
 	@Override
@@ -104,7 +105,7 @@ public class WorkflowInstanceResourceImpl
 				workflowInstanceSubmit.getDefinitionName(),
 				GetterUtil.getInteger(
 					workflowInstanceSubmit.getDefinitionVersion()),
-				workflowInstanceSubmit.getTransition(),
+				workflowInstanceSubmit.getTransitionName(),
 				_toWorkflowContext(workflowInstanceSubmit.getContext())));
 	}
 

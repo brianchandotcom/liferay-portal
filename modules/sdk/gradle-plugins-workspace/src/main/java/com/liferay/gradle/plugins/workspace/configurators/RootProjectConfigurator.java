@@ -200,19 +200,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, downloadBundleTask, workspaceExtension,
 			bundleSupportConfiguration, providedModulesConfiguration);
 
-		Dockerfile dockerfile = _addTaskCreateDockerfile(
-			project, workspaceExtension);
-
-		_addTaskBuildDockerImage(dockerfile, workspaceExtension);
-
-		_addTaskCreateDockerContainer(project, workspaceExtension);
-		_addTaskDockerDeploy(
+		_addDockerTasks(
 			project, workspaceExtension, providedModulesConfiguration);
-		_addTaskLogsDockerContainer(project);
-		_addTaskPullDockerImage(project, workspaceExtension);
-		_addTaskRemoveDockerContainer(project);
-		_addTaskStartDockerContainer(project);
-		_addTaskStopDockerContainer(project);
 	}
 
 	public boolean isDefaultRepositoryEnabled() {
@@ -262,6 +251,25 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, BUNDLE_SUPPORT_CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.portal.tools.bundle.support", "latest.release");
+	}
+
+	private void _addDockerTasks(
+		Project project, WorkspaceExtension workspaceExtension,
+		Configuration providedModulesConfiguration) {
+
+		Dockerfile dockerfile = _addTaskCreateDockerfile(
+			project, workspaceExtension);
+
+		_addTaskBuildDockerImage(dockerfile, workspaceExtension);
+
+		_addTaskCreateDockerContainer(project, workspaceExtension);
+		_addTaskDockerDeploy(
+			project, workspaceExtension, providedModulesConfiguration);
+		_addTaskLogsDockerContainer(project);
+		_addTaskPullDockerImage(project, workspaceExtension);
+		_addTaskRemoveDockerContainer(project);
+		_addTaskStartDockerContainer(project);
+		_addTaskStopDockerContainer(project);
 	}
 
 	private DockerBuildImage _addTaskBuildDockerImage(

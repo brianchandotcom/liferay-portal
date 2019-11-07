@@ -239,7 +239,7 @@ public class TestFileEntry implements FileEntry {
 	}
 
 	@Override
-	public int getReadCount() {
+	public long getReadCount() {
 		return 0;
 	}
 

@@ -332,7 +332,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
-	public int getReadCount() {
+	public long getReadCount() {
 		return _dlFileEntry.getReadCount();
 	}
 

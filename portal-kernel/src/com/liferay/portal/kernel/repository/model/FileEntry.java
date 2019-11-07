@@ -150,7 +150,7 @@ public interface FileEntry extends RepositoryEntry, RepositoryModel<FileEntry> {
 	@Override
 	public Date getModifiedDate();
 
-	public int getReadCount();
+	public long getReadCount();
 
 	public <T extends Capability> T getRepositoryCapability(
 		Class<T> capabilityClass);

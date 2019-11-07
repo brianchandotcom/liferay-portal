@@ -14,8 +14,8 @@
 
 package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
-import com.liferay.headless.admin.workflow.dto.v1_0.Transitions;
-import com.liferay.headless.admin.workflow.resource.v1_0.TransitionsResource;
+import com.liferay.headless.admin.workflow.dto.v1_0.Transition;
+import com.liferay.headless.admin.workflow.resource.v1_0.TransitionResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -53,8 +53,7 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseTransitionsResourceImpl
-	implements TransitionsResource {
+public abstract class BaseTransitionResourceImpl implements TransitionResource {
 
 	/**
 	 * Invoke this method with the command line:
@@ -72,8 +71,8 @@ public abstract class BaseTransitionsResourceImpl
 	)
 	@Path("/workflow-instances/{workflowInstanceId}/next-transitions")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Transitions")})
-	public Page<Transitions> getWorkflowInstanceNextTransitionsPage(
+	@Tags(value = {@Tag(name = "Transition")})
+	public Page<Transition> getWorkflowInstanceNextTransitionsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("workflowInstanceId")
 				Long workflowInstanceId,
 			@Context Pagination pagination)
@@ -98,8 +97,8 @@ public abstract class BaseTransitionsResourceImpl
 	)
 	@Path("/workflow-tasks/{workflowTaskId}/next-transitions")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Transitions")})
-	public Page<Transitions> getWorkflowTaskNextTransitionsPage(
+	@Tags(value = {@Tag(name = "Transition")})
+	public Page<Transition> getWorkflowTaskNextTransitionsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("workflowTaskId") Long
 				workflowTaskId,
 			@Context Pagination pagination)
@@ -137,7 +136,7 @@ public abstract class BaseTransitionsResourceImpl
 	}
 
 	protected void preparePatch(
-		Transitions transitions, Transitions existingTransitions) {
+		Transition transition, Transition existingTransition) {
 	}
 
 	protected <T, R> List<R> transform(

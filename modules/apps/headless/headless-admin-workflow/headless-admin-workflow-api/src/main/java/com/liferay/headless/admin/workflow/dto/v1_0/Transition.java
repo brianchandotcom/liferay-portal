@@ -39,24 +39,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Transitions")
+@GraphQLName("Transition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Transitions")
-public class Transitions {
+@XmlRootElement(name = "Transition")
+public class Transition {
 
 	@Schema
-	public String getName() {
-		return name;
+	public String getTransitionName() {
+		return transitionName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTransitionName(String transitionName) {
+		this.transitionName = transitionName;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setTransitionName(
+		UnsafeSupplier<String, Exception> transitionNameUnsafeSupplier) {
+
 		try {
-			name = nameUnsafeSupplier.get();
+			transitionName = transitionNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -68,7 +70,7 @@ public class Transitions {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String name;
+	protected String transitionName;
 
 	@Override
 	public boolean equals(Object object) {
@@ -76,13 +78,13 @@ public class Transitions {
 			return true;
 		}
 
-		if (!(object instanceof Transitions)) {
+		if (!(object instanceof Transition)) {
 			return false;
 		}
 
-		Transitions transitions = (Transitions)object;
+		Transition transition = (Transition)object;
 
-		return Objects.equals(toString(), transitions.toString());
+		return Objects.equals(toString(), transition.toString());
 	}
 
 	@Override
@@ -97,16 +99,16 @@ public class Transitions {
 
 		sb.append("{");
 
-		if (name != null) {
+		if (transitionName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"transitionName\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(name));
+			sb.append(_escape(transitionName));
 
 			sb.append("\"");
 		}
@@ -117,7 +119,7 @@ public class Transitions {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.Transitions",
+		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.Transition",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -69,16 +69,16 @@ public class ChangeTransitionSerDes {
 			sb.append("\"");
 		}
 
-		if (changeTransition.getTransition() != null) {
+		if (changeTransition.getTransitionName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"transition\": ");
+			sb.append("\"transitionName\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(changeTransition.getTransition()));
+			sb.append(_escape(changeTransition.getTransitionName()));
 
 			sb.append("\"");
 		}
@@ -109,12 +109,13 @@ public class ChangeTransitionSerDes {
 			map.put("comment", String.valueOf(changeTransition.getComment()));
 		}
 
-		if (changeTransition.getTransition() == null) {
-			map.put("transition", null);
+		if (changeTransition.getTransitionName() == null) {
+			map.put("transitionName", null);
 		}
 		else {
 			map.put(
-				"transition", String.valueOf(changeTransition.getTransition()));
+				"transitionName",
+				String.valueOf(changeTransition.getTransitionName()));
 		}
 
 		return map;
@@ -143,9 +144,9 @@ public class ChangeTransitionSerDes {
 					changeTransition.setComment((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "transition")) {
+			else if (Objects.equals(jsonParserFieldName, "transitionName")) {
 				if (jsonParserFieldValue != null) {
-					changeTransition.setTransition(
+					changeTransition.setTransitionName(
 						(String)jsonParserFieldValue);
 				}
 			}

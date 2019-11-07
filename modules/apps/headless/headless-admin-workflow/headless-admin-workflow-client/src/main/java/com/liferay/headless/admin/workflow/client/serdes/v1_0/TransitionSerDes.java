@@ -14,7 +14,7 @@
 
 package com.liferay.headless.admin.workflow.client.serdes.v1_0;
 
-import com.liferay.headless.admin.workflow.client.dto.v1_0.Transitions;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class TransitionsSerDes {
+public class TransitionSerDes {
 
-	public static Transitions toDTO(String json) {
-		TransitionsJSONParser transitionsJSONParser =
-			new TransitionsJSONParser();
+	public static Transition toDTO(String json) {
+		TransitionJSONParser transitionJSONParser = new TransitionJSONParser();
 
-		return transitionsJSONParser.parseToDTO(json);
+		return transitionJSONParser.parseToDTO(json);
 	}
 
-	public static Transitions[] toDTOs(String json) {
-		TransitionsJSONParser transitionsJSONParser =
-			new TransitionsJSONParser();
+	public static Transition[] toDTOs(String json) {
+		TransitionJSONParser transitionJSONParser = new TransitionJSONParser();
 
-		return transitionsJSONParser.parseToDTOs(json);
+		return transitionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Transitions transitions) {
-		if (transitions == null) {
+	public static String toJSON(Transition transition) {
+		if (transition == null) {
 			return "null";
 		}
 
@@ -55,16 +53,16 @@ public class TransitionsSerDes {
 
 		sb.append("{");
 
-		if (transitions.getName() != null) {
+		if (transition.getTransitionName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"transitionName\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(transitions.getName()));
+			sb.append(_escape(transition.getTransitionName()));
 
 			sb.append("\"");
 		}
@@ -75,50 +73,51 @@ public class TransitionsSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		TransitionsJSONParser transitionsJSONParser =
-			new TransitionsJSONParser();
+		TransitionJSONParser transitionJSONParser = new TransitionJSONParser();
 
-		return transitionsJSONParser.parseToMap(json);
+		return transitionJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Transitions transitions) {
-		if (transitions == null) {
+	public static Map<String, String> toMap(Transition transition) {
+		if (transition == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (transitions.getName() == null) {
-			map.put("name", null);
+		if (transition.getTransitionName() == null) {
+			map.put("transitionName", null);
 		}
 		else {
-			map.put("name", String.valueOf(transitions.getName()));
+			map.put(
+				"transitionName",
+				String.valueOf(transition.getTransitionName()));
 		}
 
 		return map;
 	}
 
-	public static class TransitionsJSONParser
-		extends BaseJSONParser<Transitions> {
+	public static class TransitionJSONParser
+		extends BaseJSONParser<Transition> {
 
 		@Override
-		protected Transitions createDTO() {
-			return new Transitions();
+		protected Transition createDTO() {
+			return new Transition();
 		}
 
 		@Override
-		protected Transitions[] createDTOArray(int size) {
-			return new Transitions[size];
+		protected Transition[] createDTOArray(int size) {
+			return new Transition[size];
 		}
 
 		@Override
 		protected void setField(
-			Transitions transitions, String jsonParserFieldName,
+			Transition transition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "name")) {
+			if (Objects.equals(jsonParserFieldName, "transitionName")) {
 				if (jsonParserFieldValue != null) {
-					transitions.setName((String)jsonParserFieldValue);
+					transition.setTransitionName((String)jsonParserFieldValue);
 				}
 			}
 			else {

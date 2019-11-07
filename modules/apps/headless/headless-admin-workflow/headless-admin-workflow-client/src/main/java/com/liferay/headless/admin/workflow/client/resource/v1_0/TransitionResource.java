@@ -14,11 +14,11 @@
 
 package com.liferay.headless.admin.workflow.client.resource.v1_0;
 
-import com.liferay.headless.admin.workflow.client.dto.v1_0.Transitions;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.client.http.HttpInvoker;
 import com.liferay.headless.admin.workflow.client.pagination.Page;
 import com.liferay.headless.admin.workflow.client.pagination.Pagination;
-import com.liferay.headless.admin.workflow.client.serdes.v1_0.TransitionsSerDes;
+import com.liferay.headless.admin.workflow.client.serdes.v1_0.TransitionSerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -32,13 +32,13 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface TransitionsResource {
+public interface TransitionResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Page<Transitions> getWorkflowInstanceNextTransitionsPage(
+	public Page<Transition> getWorkflowInstanceNextTransitionsPage(
 			Long workflowInstanceId, Pagination pagination)
 		throws Exception;
 
@@ -47,7 +47,7 @@ public interface TransitionsResource {
 				Long workflowInstanceId, Pagination pagination)
 		throws Exception;
 
-	public Page<Transitions> getWorkflowTaskNextTransitionsPage(
+	public Page<Transition> getWorkflowTaskNextTransitionsPage(
 			Long workflowTaskId, Pagination pagination)
 		throws Exception;
 
@@ -65,8 +65,8 @@ public interface TransitionsResource {
 			return this;
 		}
 
-		public TransitionsResource build() {
-			return new TransitionsResourceImpl(this);
+		public TransitionResource build() {
+			return new TransitionResourceImpl(this);
 		}
 
 		public Builder endpoint(String host, int port, String scheme) {
@@ -109,9 +109,9 @@ public interface TransitionsResource {
 
 	}
 
-	public static class TransitionsResourceImpl implements TransitionsResource {
+	public static class TransitionResourceImpl implements TransitionResource {
 
-		public Page<Transitions> getWorkflowInstanceNextTransitionsPage(
+		public Page<Transition> getWorkflowInstanceNextTransitionsPage(
 				Long workflowInstanceId, Pagination pagination)
 			throws Exception {
 
@@ -127,7 +127,7 @@ public interface TransitionsResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
-			return Page.of(content, TransitionsSerDes::toDTO);
+			return Page.of(content, TransitionSerDes::toDTO);
 		}
 
 		public HttpInvoker.HttpResponse
@@ -175,7 +175,7 @@ public interface TransitionsResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Transitions> getWorkflowTaskNextTransitionsPage(
+		public Page<Transition> getWorkflowTaskNextTransitionsPage(
 				Long workflowTaskId, Pagination pagination)
 			throws Exception {
 
@@ -191,7 +191,7 @@ public interface TransitionsResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
-			return Page.of(content, TransitionsSerDes::toDTO);
+			return Page.of(content, TransitionSerDes::toDTO);
 		}
 
 		public HttpInvoker.HttpResponse
@@ -239,12 +239,12 @@ public interface TransitionsResource {
 			return httpInvoker.invoke();
 		}
 
-		private TransitionsResourceImpl(Builder builder) {
+		private TransitionResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			TransitionsResource.class.getName());
+			TransitionResource.class.getName());
 
 		private Builder _builder;
 

@@ -15,7 +15,7 @@
 package com.liferay.headless.admin.workflow.client.dto.v1_0;
 
 import com.liferay.headless.admin.workflow.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.workflow.client.serdes.v1_0.TransitionsSerDes;
+import com.liferay.headless.admin.workflow.client.serdes.v1_0.TransitionSerDes;
 
 import java.util.Objects;
 
@@ -26,26 +26,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Transitions {
+public class Transition {
 
-	public String getName() {
-		return name;
+	public String getTransitionName() {
+		return transitionName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTransitionName(String transitionName) {
+		this.transitionName = transitionName;
 	}
 
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setTransitionName(
+		UnsafeSupplier<String, Exception> transitionNameUnsafeSupplier) {
+
 		try {
-			name = nameUnsafeSupplier.get();
+			transitionName = transitionNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String name;
+	protected String transitionName;
 
 	@Override
 	public boolean equals(Object object) {
@@ -53,13 +55,13 @@ public class Transitions {
 			return true;
 		}
 
-		if (!(object instanceof Transitions)) {
+		if (!(object instanceof Transition)) {
 			return false;
 		}
 
-		Transitions transitions = (Transitions)object;
+		Transition transition = (Transition)object;
 
-		return Objects.equals(toString(), transitions.toString());
+		return Objects.equals(toString(), transition.toString());
 	}
 
 	@Override
@@ -70,7 +72,7 @@ public class Transitions {
 	}
 
 	public String toString() {
-		return TransitionsSerDes.toJSON(this);
+		return TransitionSerDes.toJSON(this);
 	}
 
 }

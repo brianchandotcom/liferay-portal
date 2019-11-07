@@ -14,7 +14,7 @@
 
 package com.liferay.headless.admin.workflow.resource.v1_0;
 
-import com.liferay.headless.admin.workflow.dto.v1_0.Transitions;
+import com.liferay.headless.admin.workflow.dto.v1_0.Transition;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -40,13 +40,13 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface TransitionsResource {
+public interface TransitionResource {
 
-	public Page<Transitions> getWorkflowInstanceNextTransitionsPage(
+	public Page<Transition> getWorkflowInstanceNextTransitionsPage(
 			Long workflowInstanceId, Pagination pagination)
 		throws Exception;
 
-	public Page<Transitions> getWorkflowTaskNextTransitionsPage(
+	public Page<Transition> getWorkflowTaskNextTransitionsPage(
 			Long workflowTaskId, Pagination pagination)
 		throws Exception;
 

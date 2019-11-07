@@ -66,7 +66,7 @@ public class OpenAPIResourceImpl {
 		{
 			add(CreatorResourceImpl.class);
 
-			add(TransitionsResourceImpl.class);
+			add(TransitionResourceImpl.class);
 
 			add(WorkflowInstanceResourceImpl.class);
 

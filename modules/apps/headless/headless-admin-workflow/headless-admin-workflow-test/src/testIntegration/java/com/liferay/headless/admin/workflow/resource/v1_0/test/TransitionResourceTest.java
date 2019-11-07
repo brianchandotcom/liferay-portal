@@ -24,5 +24,5 @@ import org.junit.runner.RunWith;
  */
 @Ignore
 @RunWith(Arquillian.class)
-public class TransitionsResourceTest extends BaseTransitionsResourceTestCase {
+public class TransitionResourceTest extends BaseTransitionResourceTestCase {
 }

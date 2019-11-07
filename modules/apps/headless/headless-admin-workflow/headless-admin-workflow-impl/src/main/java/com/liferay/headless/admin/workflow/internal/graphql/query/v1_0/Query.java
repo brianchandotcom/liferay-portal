@@ -15,12 +15,12 @@
 package com.liferay.headless.admin.workflow.internal.graphql.query.v1_0;
 
 import com.liferay.headless.admin.workflow.dto.v1_0.Creator;
-import com.liferay.headless.admin.workflow.dto.v1_0.Transitions;
+import com.liferay.headless.admin.workflow.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstance;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowLog;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.resource.v1_0.CreatorResource;
-import com.liferay.headless.admin.workflow.resource.v1_0.TransitionsResource;
+import com.liferay.headless.admin.workflow.resource.v1_0.TransitionResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowInstanceResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowLogResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
@@ -64,12 +64,12 @@ public class Query {
 			creatorResourceComponentServiceObjects;
 	}
 
-	public static void setTransitionsResourceComponentServiceObjects(
-		ComponentServiceObjects<TransitionsResource>
-			transitionsResourceComponentServiceObjects) {
+	public static void setTransitionResourceComponentServiceObjects(
+		ComponentServiceObjects<TransitionResource>
+			transitionResourceComponentServiceObjects) {
 
-		_transitionsResourceComponentServiceObjects =
-			transitionsResourceComponentServiceObjects;
+		_transitionResourceComponentServiceObjects =
+			transitionResourceComponentServiceObjects;
 	}
 
 	public static void setWorkflowInstanceResourceComponentServiceObjects(
@@ -122,17 +122,17 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowInstanceNextTransitions(page: ___, pageSize: ___, workflowInstanceId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public TransitionsPage workflowInstanceNextTransitions(
+	public TransitionPage workflowInstanceNextTransitions(
 			@GraphQLName("workflowInstanceId") Long workflowInstanceId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_transitionsResourceComponentServiceObjects,
+			_transitionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			transitionsResource -> new TransitionsPage(
-				transitionsResource.getWorkflowInstanceNextTransitionsPage(
+			transitionResource -> new TransitionPage(
+				transitionResource.getWorkflowInstanceNextTransitionsPage(
 					workflowInstanceId, Pagination.of(page, pageSize))));
 	}
 
@@ -142,17 +142,17 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTaskNextTransitions(page: ___, pageSize: ___, workflowTaskId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public TransitionsPage workflowTaskNextTransitions(
+	public TransitionPage workflowTaskNextTransitions(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_transitionsResourceComponentServiceObjects,
+			_transitionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			transitionsResource -> new TransitionsPage(
-				transitionsResource.getWorkflowTaskNextTransitionsPage(
+			transitionResource -> new TransitionPage(
+				transitionResource.getWorkflowTaskNextTransitionsPage(
 					workflowTaskId, Pagination.of(page, pageSize))));
 	}
 
@@ -556,16 +556,16 @@ public class Query {
 		}
 
 		@GraphQLField
-		public TransitionsPage nextTransitions(
+		public TransitionPage nextTransitions(
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_transitionsResourceComponentServiceObjects,
+				_transitionResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				transitionsResource -> new TransitionsPage(
-					transitionsResource.getWorkflowTaskNextTransitionsPage(
+				transitionResource -> new TransitionPage(
+					transitionResource.getWorkflowTaskNextTransitionsPage(
 						_workflowTask.getId(), Pagination.of(page, pageSize))));
 		}
 
@@ -583,16 +583,16 @@ public class Query {
 		}
 
 		@GraphQLField
-		public TransitionsPage nextTransitions(
+		public TransitionPage nextTransitions(
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
-				_transitionsResourceComponentServiceObjects,
+				_transitionResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				transitionsResource -> new TransitionsPage(
-					transitionsResource.getWorkflowInstanceNextTransitionsPage(
+				transitionResource -> new TransitionPage(
+					transitionResource.getWorkflowInstanceNextTransitionsPage(
 						_workflowInstance.getId(),
 						Pagination.of(page, pageSize))));
 		}
@@ -677,18 +677,18 @@ public class Query {
 
 	}
 
-	@GraphQLName("TransitionsPage")
-	public class TransitionsPage {
+	@GraphQLName("TransitionPage")
+	public class TransitionPage {
 
-		public TransitionsPage(Page transitionsPage) {
-			items = transitionsPage.getItems();
-			page = transitionsPage.getPage();
-			pageSize = transitionsPage.getPageSize();
-			totalCount = transitionsPage.getTotalCount();
+		public TransitionPage(Page transitionPage) {
+			items = transitionPage.getItems();
+			page = transitionPage.getPage();
+			pageSize = transitionPage.getPageSize();
+			totalCount = transitionPage.getTotalCount();
 		}
 
 		@GraphQLField
-		protected java.util.Collection<Transitions> items;
+		protected java.util.Collection<Transition> items;
 
 		@GraphQLField
 		protected long page;
@@ -803,16 +803,15 @@ public class Query {
 		creatorResource.setContextUser(_user);
 	}
 
-	private void _populateResourceContext(
-			TransitionsResource transitionsResource)
+	private void _populateResourceContext(TransitionResource transitionResource)
 		throws Exception {
 
-		transitionsResource.setContextAcceptLanguage(_acceptLanguage);
-		transitionsResource.setContextCompany(_company);
-		transitionsResource.setContextHttpServletRequest(_httpServletRequest);
-		transitionsResource.setContextHttpServletResponse(_httpServletResponse);
-		transitionsResource.setContextUriInfo(_uriInfo);
-		transitionsResource.setContextUser(_user);
+		transitionResource.setContextAcceptLanguage(_acceptLanguage);
+		transitionResource.setContextCompany(_company);
+		transitionResource.setContextHttpServletRequest(_httpServletRequest);
+		transitionResource.setContextHttpServletResponse(_httpServletResponse);
+		transitionResource.setContextUriInfo(_uriInfo);
+		transitionResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -856,8 +855,8 @@ public class Query {
 
 	private static ComponentServiceObjects<CreatorResource>
 		_creatorResourceComponentServiceObjects;
-	private static ComponentServiceObjects<TransitionsResource>
-		_transitionsResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TransitionResource>
+		_transitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WorkflowInstanceResource>
 		_workflowInstanceResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WorkflowLogResource>

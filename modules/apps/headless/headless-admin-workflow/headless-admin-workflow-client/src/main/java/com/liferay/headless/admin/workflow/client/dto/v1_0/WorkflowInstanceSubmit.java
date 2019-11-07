@@ -113,26 +113,26 @@ public class WorkflowInstanceSubmit {
 
 	protected Long siteId;
 
-	public String getTransition() {
-		return transition;
+	public String getTransitionName() {
+		return transitionName;
 	}
 
-	public void setTransition(String transition) {
-		this.transition = transition;
+	public void setTransitionName(String transitionName) {
+		this.transitionName = transitionName;
 	}
 
-	public void setTransition(
-		UnsafeSupplier<String, Exception> transitionUnsafeSupplier) {
+	public void setTransitionName(
+		UnsafeSupplier<String, Exception> transitionNameUnsafeSupplier) {
 
 		try {
-			transition = transitionUnsafeSupplier.get();
+			transitionName = transitionNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String transition;
+	protected String transitionName;
 
 	@Override
 	public boolean equals(Object object) {

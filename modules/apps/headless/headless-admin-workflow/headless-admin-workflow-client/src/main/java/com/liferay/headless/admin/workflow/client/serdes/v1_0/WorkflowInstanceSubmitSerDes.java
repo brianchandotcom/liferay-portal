@@ -103,16 +103,16 @@ public class WorkflowInstanceSubmitSerDes {
 			sb.append(workflowInstanceSubmit.getSiteId());
 		}
 
-		if (workflowInstanceSubmit.getTransition() != null) {
+		if (workflowInstanceSubmit.getTransitionName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"transition\": ");
+			sb.append("\"transitionName\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(workflowInstanceSubmit.getTransition()));
+			sb.append(_escape(workflowInstanceSubmit.getTransitionName()));
 
 			sb.append("\"");
 		}
@@ -172,13 +172,13 @@ public class WorkflowInstanceSubmitSerDes {
 				"siteId", String.valueOf(workflowInstanceSubmit.getSiteId()));
 		}
 
-		if (workflowInstanceSubmit.getTransition() == null) {
-			map.put("transition", null);
+		if (workflowInstanceSubmit.getTransitionName() == null) {
+			map.put("transitionName", null);
 		}
 		else {
 			map.put(
-				"transition",
-				String.valueOf(workflowInstanceSubmit.getTransition()));
+				"transitionName",
+				String.valueOf(workflowInstanceSubmit.getTransitionName()));
 		}
 
 		return map;
@@ -227,9 +227,9 @@ public class WorkflowInstanceSubmitSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "transition")) {
+			else if (Objects.equals(jsonParserFieldName, "transitionName")) {
 				if (jsonParserFieldValue != null) {
-					workflowInstanceSubmit.setTransition(
+					workflowInstanceSubmit.setTransitionName(
 						(String)jsonParserFieldValue);
 				}
 			}

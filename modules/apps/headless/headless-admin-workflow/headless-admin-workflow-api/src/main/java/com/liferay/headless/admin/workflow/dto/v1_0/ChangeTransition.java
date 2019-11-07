@@ -73,20 +73,20 @@ public class ChangeTransition {
 	protected String comment;
 
 	@Schema
-	public String getTransition() {
-		return transition;
+	public String getTransitionName() {
+		return transitionName;
 	}
 
-	public void setTransition(String transition) {
-		this.transition = transition;
+	public void setTransitionName(String transitionName) {
+		this.transitionName = transitionName;
 	}
 
 	@JsonIgnore
-	public void setTransition(
-		UnsafeSupplier<String, Exception> transitionUnsafeSupplier) {
+	public void setTransitionName(
+		UnsafeSupplier<String, Exception> transitionNameUnsafeSupplier) {
 
 		try {
-			transition = transitionUnsafeSupplier.get();
+			transitionName = transitionNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -98,7 +98,7 @@ public class ChangeTransition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected String transition;
+	protected String transitionName;
 
 	@Override
 	public boolean equals(Object object) {
@@ -141,16 +141,16 @@ public class ChangeTransition {
 			sb.append("\"");
 		}
 
-		if (transition != null) {
+		if (transitionName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"transition\": ");
+			sb.append("\"transitionName\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(transition));
+			sb.append(_escape(transitionName));
 
 			sb.append("\"");
 		}

@@ -14,8 +14,8 @@
 
 package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
-import com.liferay.headless.admin.workflow.dto.v1_0.Transitions;
-import com.liferay.headless.admin.workflow.resource.v1_0.TransitionsResource;
+import com.liferay.headless.admin.workflow.dto.v1_0.Transition;
+import com.liferay.headless.admin.workflow.resource.v1_0.TransitionResource;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -32,13 +32,13 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Javier Gamarra
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/transitions.properties",
-	scope = ServiceScope.PROTOTYPE, service = TransitionsResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/transition.properties",
+	scope = ServiceScope.PROTOTYPE, service = TransitionResource.class
 )
-public class TransitionsResourceImpl extends BaseTransitionsResourceImpl {
+public class TransitionResourceImpl extends BaseTransitionResourceImpl {
 
 	@Override
-	public Page<Transitions> getWorkflowInstanceNextTransitionsPage(
+	public Page<Transition> getWorkflowInstanceNextTransitionsPage(
 			Long workflowInstanceId, Pagination pagination)
 		throws Exception {
 
@@ -57,7 +57,7 @@ public class TransitionsResourceImpl extends BaseTransitionsResourceImpl {
 	}
 
 	@Override
-	public Page<Transitions> getWorkflowTaskNextTransitionsPage(
+	public Page<Transition> getWorkflowTaskNextTransitionsPage(
 			Long workflowTaskId, Pagination pagination)
 		throws Exception {
 

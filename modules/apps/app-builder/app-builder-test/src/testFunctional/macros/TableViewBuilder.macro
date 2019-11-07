@@ -2,6 +2,8 @@ definition {
 
     macro addColumnByDoubleClick {
 
+		var key_fieldType = "${fieldType}";
+
 		DoubleClick(locator1 = "FormViewBuilder#ADD_FIELD_TYPE");
 
 		TableViewBuilder.validateColumnLabel();

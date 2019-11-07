@@ -77,6 +77,9 @@ export default function PageContent(props) {
 								className="btn-monospaced btn-sm text-secondary"
 								displayType="unstyled"
 							>
+								<span className="sr-only">
+									{Liferay.Language.get('open-actions-menu')}
+								</span>
 								<ClayIcon symbol="ellipsis-v" />
 							</ClayButton>
 						}

@@ -65,6 +65,10 @@
 							{sp}text-center
 							{sp}fragments-editor-sidebar-sections-buttons__btn
 
+							{if $lockedSegmentsExperience == true }
+								{sp}disabled
+							{/if}
+
 							{if $selectedSidebarPanel and ($sidebarPanel.sidebarPanelId == $selectedSidebarPanel.sidebarPanelId)}
 								{sp}fragments-editor-sidebar-sections-buttons__btn--active
 							{/if}
@@ -73,14 +77,22 @@
 						{let $sectionButtonAttributes kind="attributes"}
 							class="{$sectionButtonClasses}"
 							data-sidebar-panel-id="{$sidebarPanel.sidebarPanelId}"
-							data-title="{$sidebarPanel.label}"
-							disabled="{$lockedSegmentsExperience}"
+							{if $lockedSegmentsExperience != true }
+								data-title="{$sidebarPanel.label}"
+							{else}
+								data-title="{msg desc=""}edit-is-not-allowed-for-this-experience{/msg}"
+							{/if}
+
 							type="button"
 
-							{if $sidebarPanel.sidebarPanelId == 'lookAndFeel'}
-								data-onclick="{$_handleLookAndFeeldButtonClick}"
+							{if $lockedSegmentsExperience != true}
+								{if $sidebarPanel.sidebarPanelId == 'lookAndFeel'}
+									data-onclick="{$_handleLookAndFeeldButtonClick}"
+								{else}
+									data-onclick="{$_handlePanelButtonClick}"
+								{/if}
 							{else}
-								data-onclick="{$_handlePanelButtonClick}"
+								aria-disabled="true"
 							{/if}
 						{/let}
 

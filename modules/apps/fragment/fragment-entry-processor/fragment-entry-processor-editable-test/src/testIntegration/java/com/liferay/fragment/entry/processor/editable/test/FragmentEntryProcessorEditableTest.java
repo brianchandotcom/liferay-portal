@@ -206,6 +206,29 @@ public class FragmentEntryProcessorEditableTest {
 		_addFragmentEntry("fragment_entry_with_duplicate_editable_ids.html");
 	}
 
+	@Test
+	public void testFragmentEntryProcessorEditableWithEmptyString()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		fragmentEntryLink.setEditableValues(
+			_getJsonFileAsString(
+				"fragment_entry_link_editable_values_empty_string.json"));
+
+		Assert.assertEquals(
+			_getProcessedHTML("processed_fragment_entry_empty_string.html"),
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.US, new long[] {0L})));
+	}
+
 	@Test(expected = FragmentEntryContentException.class)
 	public void testFragmentEntryProcessorEditableWithInvalidTypeAttribute()
 		throws Exception {
@@ -457,8 +480,11 @@ public class FragmentEntryProcessorEditableTest {
 	}
 
 	private String _getProcessedHTML() throws IOException {
-		Document document = Jsoup.parseBodyFragment(
-			_getFileAsString("processed_fragment_entry.html"));
+		return _getFileAsString("processed_fragment_entry.html");
+	}
+
+	private String _getProcessedHTML(String fileName) throws IOException {
+		Document document = Jsoup.parseBodyFragment(_getFileAsString(fileName));
 
 		document.outputSettings(
 			new Document.OutputSettings() {

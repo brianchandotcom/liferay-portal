@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryRequestState;
 
@@ -37,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "path=/document_library/sharepoint/oauth2",
 	service = StrutsAction.class
 )
-public class SharepointOAuth2StrutsAction extends BaseStrutsAction {
+public class SharepointOAuth2StrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(

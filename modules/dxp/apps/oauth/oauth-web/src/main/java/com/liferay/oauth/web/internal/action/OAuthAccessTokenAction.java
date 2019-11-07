@@ -22,7 +22,6 @@ import com.liferay.oauth.util.OAuthUtil;
 import com.liferay.oauth.util.WebServerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -45,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "path=" + OAuthConstants.PUBLIC_PATH_ACCESS_TOKEN,
 	service = StrutsAction.class
 )
-public class OAuthAccessTokenAction extends BaseStrutsAction {
+public class OAuthAccessTokenAction implements StrutsAction {
 
 	@Override
 	public String execute(

@@ -16,7 +16,6 @@ package com.liferay.saml.addon.keep.alive.web.internal.struts.action;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -56,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "path=/portal/saml/keep_alive",
 	service = StrutsAction.class
 )
-public class KeepAliveAction extends BaseStrutsAction {
+public class KeepAliveAction implements StrutsAction {
 
 	@Override
 	public String execute(

@@ -17,7 +17,7 @@ package com.liferay.saml.web.internal.portlet.action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.exception.StatusException;
 import com.liferay.saml.util.JspUtil;
@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Mika Koivisto
  */
-public abstract class BaseSamlStrutsAction extends BaseStrutsAction {
+public abstract class BaseSamlStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(

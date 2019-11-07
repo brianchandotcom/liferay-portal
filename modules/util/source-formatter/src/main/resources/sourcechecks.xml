@@ -169,6 +169,7 @@
 		<check name="JavaIOExceptionCheck" />
 		<check name="JavaLocalSensitiveComparisonCheck" />
 		<check name="JavaLongLinesCheck" />
+		<check name="JavaMapBuilderGenericsCheck" />
 		<check name="JavaMetaAnnotationsCheck" />
 		<check name="JavaModifiedServiceMethodCheck" />
 		<check name="JavaPackagePathCheck" />

@@ -23,19 +23,6 @@ definition {
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 		}
 
-		task ("Enable Content Page Comments at the instance level") {
-			SystemSettings.openSystemSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Content Page Editor",
-				configurationScope = "Virtual Instance Scope");
-
-			FormFields.enableCheckbox(fieldName = "Comments Enabled");
-
-			SystemSettings.saveConfiguration();
-		}
-
 		task ("Add second user") {
 			JSONUser.addUser(
 				userEmailAddress = "user2@liferay.com",

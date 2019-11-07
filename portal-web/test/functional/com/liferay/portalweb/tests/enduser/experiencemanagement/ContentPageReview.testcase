@@ -21,19 +21,6 @@ definition {
 
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 		}
-
-		task ("Enable Content Page Comments at the instance level") {
-			SystemSettings.openSystemSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Content Page Editor",
-				configurationScope = "Virtual Instance Scope");
-
-			FormFields.enableCheckbox(fieldName = "Comments Enabled");
-
-			SystemSettings.saveConfiguration();
-		}
 	}
 
 	tearDown {
@@ -136,54 +123,6 @@ definition {
 			user = "Test Test");
 
 		PageEditor.deleteComment(fragmentComment = "This is a fragment comment.");
-	}
-
-	@description = "This test ensures that Content Page Comments can be disabled at the instance level."
-	@priority = "4"
-	test DisableContentPageCommentsAtInstanceScope {
-		property test.name.skip.portal.instance = "ContentPageReview#DisableContentPageCommentsAtInstanceScope";
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Title");
-
-		PageEditor.addComment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "header",
-			fragmentComment = "This is a fragment comment.",
-			fragmentName = "Title",
-			position = "1");
-
-		PageEditor.clickPublish();
-
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Content Page Editor",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.disableCheckbox(fieldName = "Comments Enabled");
-
-		SystemSettings.saveConfiguration();
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
-
-		AssertElementNotPresent(locator1 = "Fragment#FRAGMENT_COMMENT_ICON");
-
-		AssertElementNotPresent(
-			key_tabName = "Comments",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
-
-		AssertElementNotPresent(
-			key_fragmentComment = "This is a fragment comment.",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY");
 	}
 
 	@description = "This case ensures a user can reopen a resolved comment after publishing a content page."
@@ -811,83 +750,6 @@ definition {
 				commentReply = "Fragment Comment ${commentReplyNumber}",
 				user = "Test Test");
 		}
-	}
-
-	@description = "This test ensures that set the value of Content Page Comments from system settings will act as the default value for a virtual instance."
-	@priority = "4"
-	test ViewVirtualInstanceCommentInheritsSystemConfiguration {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewVirtualInstanceCommentInheritsSystemConfiguration";
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
-
-		PortalInstances.addCP(
-			mailDomain = "www.able.com",
-			virtualHost = "www.able.com",
-			webId = "www.able.com");
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
-
-		Navigator.openSpecificURL(url = "http://www.able.com:8080/group/guest/~/control_panel/manage/-/fragments");
-
-		FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
-
-		Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Title");
-
-		PageEditor.addComment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "header",
-			fragmentComment = "This is a fragment comment.",
-			fragmentName = "Title",
-			position = "1");
-
-		PageEditor.clickPublish();
-
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Content Page Editor",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.disableCheckbox(fieldName = "Comments Enabled");
-
-		SystemSettings.saveConfiguration();
-
-		Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-		AssertClick.assertPartialTextClickAt(
-			key_pageName = "Test Content Page Name",
-			locator1 = "Home#PAGE",
-			value1 = "Test Content Page Name");
-
-		ContentPages.clickPencil();
-
-		AssertElementNotPresent(locator1 = "Fragment#FRAGMENT_COMMENT_ICON");
-
-		AssertElementNotPresent(
-			key_tabName = "Comments",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
-
-		AssertElementNotPresent(
-			key_fragmentComment = "This is a fragment comment.",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY");
 	}
 
 }

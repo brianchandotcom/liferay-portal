@@ -54,12 +54,11 @@ public class OrganizationSearch extends SearchContainer<Organization> {
 			add("country");
 		}
 	};
-	public static Map<String, String> orderableHeaders =
-		HashMapBuilder.<String, String>put(
-			"name", "name"
-		).put(
-			"type", "type"
-		).build();
+	public static Map<String, String> orderableHeaders = HashMapBuilder.put(
+		"name", "name"
+	).put(
+		"type", "type"
+	).build();
 
 	public OrganizationSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

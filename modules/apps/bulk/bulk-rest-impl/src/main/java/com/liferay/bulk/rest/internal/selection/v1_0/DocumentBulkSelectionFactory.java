@@ -54,7 +54,7 @@ public class DocumentBulkSelectionFactory {
 			return Collections.singletonMap("rowIdsFileEntry", rowIdsFileEntry);
 		}
 
-		return HashMapBuilder.<String, String[]>put(
+		return HashMapBuilder.put(
 			"folderId",
 			new String[] {String.valueOf(selectionScope.getFolderId())}
 		).put(

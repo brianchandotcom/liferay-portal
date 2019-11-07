@@ -46,7 +46,7 @@ public class DefaultDDMFormRuleActionSerializer
 	private static final String _SET_BOOLEAN_PROPERTY_FORMAT = "%s('%s', true)";
 
 	private static final Map<String, String> _actionBooleanFunctionNameMap =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"enable", "setEnabled"
 		).put(
 			"invalidate", "setInvalid"

@@ -160,7 +160,7 @@ public class UserMultiLanguageSearchTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private Map<String, String> _getMapResult(String keywords) {
-		return HashMapBuilder.<String, String>put(
+		return HashMapBuilder.put(
 			_PREFIX, keywords
 		).put(
 			_PREFIX + "_sortable", keywords

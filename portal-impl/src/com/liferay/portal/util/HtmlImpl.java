@@ -1036,38 +1036,37 @@ public class HtmlImpl implements Html {
 	};
 
 	private static final Pattern _pattern = Pattern.compile("([\\s<&]|$)");
-	private static final Map<String, String> _unescapeMap =
-		HashMapBuilder.<String, String>put(
-			"#34", "\""
-		).put(
-			"#35", "#"
-		).put(
-			"#37", "%"
-		).put(
-			"#39", "'"
-		).put(
-			"#40", "("
-		).put(
-			"#41", ")"
-		).put(
-			"#43", "+"
-		).put(
-			"#44", ","
-		).put(
-			"#45", "-"
-		).put(
-			"#59", ";"
-		).put(
-			"#61", "="
-		).put(
-			"amp", "&"
-		).put(
-			"gt", ">"
-		).put(
-			"lt", "<"
-		).put(
-			"rsquo", "\u2019"
-		).build();
+	private static final Map<String, String> _unescapeMap = HashMapBuilder.put(
+		"#34", "\""
+	).put(
+		"#35", "#"
+	).put(
+		"#37", "%"
+	).put(
+		"#39", "'"
+	).put(
+		"#40", "("
+	).put(
+		"#41", ")"
+	).put(
+		"#43", "+"
+	).put(
+		"#44", ","
+	).put(
+		"#45", "-"
+	).put(
+		"#59", ";"
+	).put(
+		"#61", "="
+	).put(
+		"amp", "&"
+	).put(
+		"gt", ">"
+	).put(
+		"lt", "<"
+	).put(
+		"rsquo", "\u2019"
+	).build();
 
 	static {
 		for (int i = 0; i < 256; i++) {

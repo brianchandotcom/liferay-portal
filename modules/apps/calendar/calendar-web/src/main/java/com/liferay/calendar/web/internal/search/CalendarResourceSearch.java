@@ -52,12 +52,11 @@ public class CalendarResourceSearch extends SearchContainer<CalendarResource> {
 			add("active");
 		}
 	};
-	public static Map<String, String> orderableHeaders =
-		HashMapBuilder.<String, String>put(
-			"code", "code"
-		).put(
-			"name", "name"
-		).build();
+	public static Map<String, String> orderableHeaders = HashMapBuilder.put(
+		"code", "code"
+	).put(
+		"name", "name"
+	).build();
 
 	public CalendarResourceSearch(
 		PortletRequest portletRequest, String curParam,

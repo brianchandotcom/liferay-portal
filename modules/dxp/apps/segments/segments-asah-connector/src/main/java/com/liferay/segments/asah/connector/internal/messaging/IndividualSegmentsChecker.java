@@ -128,7 +128,7 @@ public class IndividualSegmentsChecker {
 	}
 
 	private void _addSegmentsEntry(IndividualSegment individualSegment) {
-		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+		Map<Locale, String> nameMap = HashMapBuilder.put(
 			LocaleUtil.getDefault(), individualSegment.getName()
 		).build();
 

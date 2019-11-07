@@ -413,7 +413,7 @@ public class AssetDisplayPageFormProcessorTest {
 				WebKeys.THEME_DISPLAY, _getThemeDisplay()
 			).build();
 
-			_parameters = HashMapBuilder.<String, String[]>put(
+			_parameters = HashMapBuilder.put(
 				Constants.CMD, new String[] {RandomTestUtil.randomString()}
 			).put(
 				"assetDisplayPageId", new String[] {assetDisplayPageId}

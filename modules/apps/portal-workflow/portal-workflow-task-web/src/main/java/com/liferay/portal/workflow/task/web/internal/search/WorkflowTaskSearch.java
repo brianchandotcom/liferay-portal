@@ -47,12 +47,11 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 			add("due-date");
 		}
 	};
-	public static Map<String, String> orderableHeaders =
-		HashMapBuilder.<String, String>put(
-			"due-date", "due-date"
-		).put(
-			"last-activity-date", "last-activity-date"
-		).build();
+	public static Map<String, String> orderableHeaders = HashMapBuilder.put(
+		"due-date", "due-date"
+	).put(
+		"last-activity-date", "last-activity-date"
+	).build();
 
 	public WorkflowTaskSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

@@ -84,7 +84,7 @@ public class ContactMultiLanguageSearchTest {
 
 		Contact contact = contactFixture.addContact(keywords);
 
-		Map<String, String> map = HashMapBuilder.<String, String>put(
+		Map<String, String> map = HashMapBuilder.put(
 			_PREFIX, contact.getFullName()
 		).build();
 
@@ -101,7 +101,7 @@ public class ContactMultiLanguageSearchTest {
 
 		String keywords = contact.getFullName();
 
-		Map<String, String> map = HashMapBuilder.<String, String>put(
+		Map<String, String> map = HashMapBuilder.put(
 			_PREFIX, keywords
 		).build();
 
@@ -118,7 +118,7 @@ public class ContactMultiLanguageSearchTest {
 
 		Contact contact = contactFixture.addContact(keywords);
 
-		Map<String, String> map = HashMapBuilder.<String, String>put(
+		Map<String, String> map = HashMapBuilder.put(
 			_PREFIX, contact.getFullName()
 		).build();
 

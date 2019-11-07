@@ -303,7 +303,7 @@ public class DDMFormRuleConverter {
 	private static final String _NOT_EXPRESSION_FORMAT = "not(%s)";
 
 	private static final Map<String, String> _operatorFunctionNameMap =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"belongs-to", "belongsTo"
 		).put(
 			"contains", "contains"
@@ -318,15 +318,14 @@ public class DDMFormRuleConverter {
 		).put(
 			"not-is-empty", "isEmpty"
 		).build();
-	private static final Map<String, String> _operatorMap =
-		HashMapBuilder.<String, String>put(
-			"greater-than", ">"
-		).put(
-			"greater-than-equals", ">="
-		).put(
-			"less-than", "<"
-		).put(
-			"less-than-equals", "<="
-		).build();
+	private static final Map<String, String> _operatorMap = HashMapBuilder.put(
+		"greater-than", ">"
+	).put(
+		"greater-than-equals", ">="
+	).put(
+		"less-than", "<"
+	).put(
+		"less-than-equals", "<="
+	).build();
 
 }

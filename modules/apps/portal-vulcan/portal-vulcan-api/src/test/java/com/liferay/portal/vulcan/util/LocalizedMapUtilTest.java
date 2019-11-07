@@ -43,7 +43,7 @@ public class LocalizedMapUtilTest {
 		// Null entry
 
 		map = LocalizedMapUtil.merge(
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.US, "hello"
 			).build(),
 			null);
@@ -54,7 +54,7 @@ public class LocalizedMapUtilTest {
 		// Entry hello null
 
 		map = LocalizedMapUtil.merge(
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.US, "hello"
 			).build(),
 			new AbstractMap.SimpleEntry<>(LocaleUtil.US, null));
@@ -65,7 +65,7 @@ public class LocalizedMapUtilTest {
 		// Merge map
 
 		map = LocalizedMapUtil.merge(
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.US, "hello"
 			).build(),
 			new AbstractMap.SimpleEntry<>(LocaleUtil.FRANCE, "bonjour"));

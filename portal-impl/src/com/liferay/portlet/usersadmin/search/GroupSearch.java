@@ -55,12 +55,11 @@ public class GroupSearch extends SearchContainer<Group> {
 			add("type");
 		}
 	};
-	public static Map<String, String> orderableHeaders =
-		HashMapBuilder.<String, String>put(
-			"name", "name"
-		).put(
-			"type", "type"
-		).build();
+	public static Map<String, String> orderableHeaders = HashMapBuilder.put(
+		"name", "name"
+	).put(
+		"type", "type"
+	).build();
 
 	public GroupSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

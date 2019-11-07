@@ -189,7 +189,7 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 
 	@Test
 	public void testGroupByDocsStart() throws Exception {
-		Map<String, Integer> map1 = HashMapBuilder.<String, Integer>put(
+		Map<String, Integer> map1 = HashMapBuilder.put(
 			"one", 1
 		).put(
 			"two", 2
@@ -227,7 +227,7 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 
 	@Test
 	public void testGroupByTermsSizeDefault() throws Exception {
-		Map<String, Integer> map1 = HashMapBuilder.<String, Integer>put(
+		Map<String, Integer> map1 = HashMapBuilder.put(
 			"eight", 2
 		).put(
 			"eleven", 2
@@ -324,7 +324,7 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 
 	@Test
 	public void testGroupByTermsSizeMoreThanDefault() throws Exception {
-		Map<String, Integer> map1 = HashMapBuilder.<String, Integer>put(
+		Map<String, Integer> map1 = HashMapBuilder.put(
 			"eight", 2
 		).put(
 			"eleven", 2

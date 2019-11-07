@@ -295,11 +295,9 @@ public class DefaultPortalKaleoManager
 
 	private final Map<String, String> _defaultRoles = new HashMap<>();
 	private final Map<String, String> _definitionAssets = new HashMap<>();
-	private final Map<String, String> _definitionFiles =
-		HashMapBuilder.<String, String>put(
-			_DEFINITION_NAME,
-			"META-INF/definitions/single-approver-definition.xml"
-		).build();
+	private final Map<String, String> _definitionFiles = HashMapBuilder.put(
+		_DEFINITION_NAME, "META-INF/definitions/single-approver-definition.xml"
+	).build();
 
 	@Reference(target = "(proxy.bean=false)")
 	private WorkflowDefinitionManager _workflowDefinitionManager;

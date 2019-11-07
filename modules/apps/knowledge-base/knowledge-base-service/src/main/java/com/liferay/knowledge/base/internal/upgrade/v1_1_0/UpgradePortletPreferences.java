@@ -125,7 +125,7 @@ public class UpgradePortletPreferences
 	};
 
 	private static final Map<String, String> _adminDefaultPreferencesMap =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"enableKBArticleAssetCategories", "false"
 		).put(
 			"enableKBArticleAssetTags", "true"
@@ -155,7 +155,7 @@ public class UpgradePortletPreferences
 			"showKBTemplateKBComments", "true"
 		).build();
 	private static final Map<String, String> _articleDefaultPreferencesMap =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"enableKBArticleAssetCategories", "false"
 		).put(
 			"enableKBArticleAssetTags", "true"
@@ -181,7 +181,7 @@ public class UpgradePortletPreferences
 			"showKBArticleKBComments", "true"
 		).build();
 	private static final Map<String, String> _displayDefaultPreferencesMap =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"enableKBArticleAssetCategories", "false"
 		).put(
 			"enableKBArticleAssetTags", "true"
@@ -225,7 +225,7 @@ public class UpgradePortletPreferences
 			"showKBTemplateKBComments", "true"
 		).build();
 	private static final Map<String, String> _oldAdminPreferenceNamesMap =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"articlesOrderByCol", "kbArticlesOrderByCol"
 		).put(
 			"articlesOrderByType", "kbArticlesOrderByType"
@@ -250,7 +250,7 @@ public class UpgradePortletPreferences
 			"showTemplateComments", "showKBTemplateKBComments"
 		).build();
 	private static final Map<String, String> _oldArticlePreferenceNamesMap =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"enableArticleAssetCategories", "enableKBArticleAssetCategories"
 		).put(
 			"enableArticleAssetTags", "enableKBArticleAssetTags"
@@ -267,7 +267,7 @@ public class UpgradePortletPreferences
 			"showArticleComments", "showKBArticleKBComments"
 		).build();
 	private static final Map<String, String> _oldDisplayPreferenceNamesMap =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"articlesOrderByCol", "kbArticlesOrderByCol"
 		).put(
 			"articlesOrderByType", "kbArticlesOrderByType"

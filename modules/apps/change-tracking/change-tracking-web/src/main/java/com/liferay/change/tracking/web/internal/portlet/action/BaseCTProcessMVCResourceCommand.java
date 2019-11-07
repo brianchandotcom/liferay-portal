@@ -31,15 +31,14 @@ public abstract class BaseCTProcessMVCResourceCommand
 		return _statuses.getOrDefault(type, 0);
 	}
 
-	private static final Map<String, Integer> _statuses =
-		HashMapBuilder.<String, Integer>put(
-			"all", WorkflowConstants.STATUS_ANY
-		).put(
-			"failed", BackgroundTaskConstants.STATUS_FAILED
-		).put(
-			"in-progress", BackgroundTaskConstants.STATUS_IN_PROGRESS
-		).put(
-			"published", BackgroundTaskConstants.STATUS_SUCCESSFUL
-		).build();
+	private static final Map<String, Integer> _statuses = HashMapBuilder.put(
+		"all", WorkflowConstants.STATUS_ANY
+	).put(
+		"failed", BackgroundTaskConstants.STATUS_FAILED
+	).put(
+		"in-progress", BackgroundTaskConstants.STATUS_IN_PROGRESS
+	).put(
+		"published", BackgroundTaskConstants.STATUS_SUCCESSFUL
+	).build();
 
 }

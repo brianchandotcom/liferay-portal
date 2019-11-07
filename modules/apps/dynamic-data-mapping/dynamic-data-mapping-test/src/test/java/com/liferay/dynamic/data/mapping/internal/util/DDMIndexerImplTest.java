@@ -211,7 +211,7 @@ public class DDMIndexerImplTest {
 		ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues);
 
 		Map<String, String> map = _withSortableValues(
-			HashMapBuilder.<String, String>put(
+			HashMapBuilder.put(
 				"ddm__text__NNNNN__text1_en_US", fieldValueUS
 			).put(
 				"ddm__text__NNNNN__text1_ja_JP", fieldValueJP

@@ -60,16 +60,15 @@ public class EntrySearch extends SearchContainer<TrashEntry> {
 			add("removed-by");
 		}
 	};
-	public static Map<String, String> orderableHeaders =
-		HashMapBuilder.<String, String>put(
-			"name", "name"
-		).put(
-			"removed-by", "removed-by"
-		).put(
-			"removed-date", "removed-date"
-		).put(
-			"type", "type"
-		).build();
+	public static Map<String, String> orderableHeaders = HashMapBuilder.put(
+		"name", "name"
+	).put(
+		"removed-by", "removed-by"
+	).put(
+		"removed-date", "removed-date"
+	).put(
+		"type", "type"
+	).build();
 
 	public EntrySearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

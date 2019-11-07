@@ -40,10 +40,9 @@ public class WorkflowDefinitionSearch
 			add("modifiedDate");
 		}
 	};
-	public static Map<String, String> orderableHeaders =
-		HashMapBuilder.<String, String>put(
-			"title", "modifiedDate"
-		).build();
+	public static Map<String, String> orderableHeaders = HashMapBuilder.put(
+		"title", "modifiedDate"
+	).build();
 
 	public WorkflowDefinitionSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

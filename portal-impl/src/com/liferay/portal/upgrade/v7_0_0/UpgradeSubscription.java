@@ -216,7 +216,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 		UpgradeSubscription.class);
 
 	private static final Map<String, String> _getGroupIdSQLPartsMap =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			DLFileEntry.class.getName(), "DLFileEntry,groupId,fileEntryId"
 		).put(
 			DLFileEntryType.class.getName(),

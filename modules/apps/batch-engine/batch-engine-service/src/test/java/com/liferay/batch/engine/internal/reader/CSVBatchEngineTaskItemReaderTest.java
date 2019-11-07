@@ -51,7 +51,7 @@ public class CSVBatchEngineTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"createDate1", "createDate"
 				).put(
 					"description1", "description"
@@ -61,7 +61,7 @@ public class CSVBatchEngineTaskItemReaderTest
 					"name1", "name"
 				).build(),
 				csvBatchEngineTaskItemReader.read(),
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"en", "sample name"
 				).put(
 					"hr", "naziv"
@@ -87,7 +87,7 @@ public class CSVBatchEngineTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"createDate1", "createDate"
 				).put(
 					"description1", "description"
@@ -116,7 +116,7 @@ public class CSVBatchEngineTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"createDate1", "createDate"
 				).put(
 					"description1", "description"
@@ -148,7 +148,7 @@ public class CSVBatchEngineTaskItemReaderTest
 			try {
 				validate(
 					createDateString, "sample description", null,
-					HashMapBuilder.<String, String>put(
+					HashMapBuilder.put(
 						"createDate1", "description"
 					).put(
 						"description1", "createDate"
@@ -158,7 +158,7 @@ public class CSVBatchEngineTaskItemReaderTest
 						"name1", "name"
 					).build(),
 					csvBatchEngineTaskItemReader.read(),
-					HashMapBuilder.<String, String>put(
+					HashMapBuilder.put(
 						"en", "sample name"
 					).put(
 						"hr", "naziv"
@@ -216,7 +216,7 @@ public class CSVBatchEngineTaskItemReaderTest
 					createDateString, "sample description " + rowCount,
 					rowCount, Collections.emptyMap(),
 					csvBatchEngineTaskItemReader.read(),
-					HashMapBuilder.<String, String>put(
+					HashMapBuilder.put(
 						"en", "sample name " + rowCount
 					).put(
 						"hr", "naziv " + rowCount
@@ -240,7 +240,7 @@ public class CSVBatchEngineTaskItemReaderTest
 			validate(
 				createDateString, "hey, here is comma inside", 1L,
 				Collections.emptyMap(), csvBatchEngineTaskItemReader.read(),
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"en", "sample name"
 				).put(
 					"hr", "naziv"
@@ -277,7 +277,7 @@ public class CSVBatchEngineTaskItemReaderTest
 			validate(
 				createDateString, null, 1L, Collections.emptyMap(),
 				csvBatchEngineTaskItemReader.read(),
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"en", null
 				).put(
 					"hr", "naziv 1"
@@ -286,7 +286,7 @@ public class CSVBatchEngineTaskItemReaderTest
 			validate(
 				createDateString, "sample description 2", 2L,
 				Collections.emptyMap(), csvBatchEngineTaskItemReader.read(),
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"en", "sample name 2"
 				).put(
 					"hr", "naziv 2"

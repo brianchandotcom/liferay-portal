@@ -545,11 +545,11 @@ public class StructuredContentResourceImpl
 		return _toStructuredContent(
 			_journalArticleService.addArticle(
 				siteId, parentStructuredContentFolderId, 0, 0, null, true,
-				HashMapBuilder.<Locale, String>put(
+				HashMapBuilder.put(
 					contextAcceptLanguage.getPreferredLocale(),
 					structuredContent.getTitle()
 				).build(),
-				HashMapBuilder.<Locale, String>put(
+				HashMapBuilder.put(
 					contextAcceptLanguage.getPreferredLocale(),
 					structuredContent.getDescription()
 				).build(),

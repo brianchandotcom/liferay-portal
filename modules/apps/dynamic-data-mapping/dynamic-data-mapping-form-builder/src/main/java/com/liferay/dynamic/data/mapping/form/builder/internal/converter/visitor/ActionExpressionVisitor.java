@@ -68,7 +68,7 @@ public class ActionExpressionVisitor extends ExpressionVisitor<Object> {
 	}
 
 	private static final Map<String, String> _functionToActionMap =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"calculate", "calculate"
 		).put(
 			"call", "auto-fill"

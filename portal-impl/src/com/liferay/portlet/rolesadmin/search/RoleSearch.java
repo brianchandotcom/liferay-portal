@@ -60,14 +60,13 @@ public class RoleSearch extends SearchContainer<Role> {
 		}
 	};
 
-	public static Map<String, String> orderableHeaders =
-		HashMapBuilder.<String, String>put(
-			"description", "description"
-		).put(
-			"title", "title"
-		).put(
-			"type", "type"
-		).build();
+	public static Map<String, String> orderableHeaders = HashMapBuilder.put(
+		"description", "description"
+	).put(
+		"title", "title"
+	).put(
+		"type", "type"
+	).build();
 
 	public RoleSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

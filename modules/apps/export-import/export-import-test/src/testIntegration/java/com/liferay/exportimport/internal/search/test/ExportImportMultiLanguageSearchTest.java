@@ -147,7 +147,7 @@ public class ExportImportMultiLanguageSearchTest {
 	}
 
 	private Map<String, String> _getMapResult(String keywords) {
-		return HashMapBuilder.<String, String>put(
+		return HashMapBuilder.put(
 			_PREFIX, keywords
 		).put(
 			Field.getSortableFieldName(_PREFIX), keywords

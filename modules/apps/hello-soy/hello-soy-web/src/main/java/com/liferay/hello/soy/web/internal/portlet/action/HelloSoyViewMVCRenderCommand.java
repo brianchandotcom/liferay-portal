@@ -62,7 +62,7 @@ public class HelloSoyViewMVCRenderCommand implements MVCRenderCommand {
 		template.put(
 			"layouts",
 			layoutStream.map(
-				layout -> HashMapBuilder.<String, String>put(
+				layout -> HashMapBuilder.put(
 					"friendlyURL", layout.getFriendlyURL()
 				).put(
 					"nameCurrentValue", layout.getNameCurrentValue()

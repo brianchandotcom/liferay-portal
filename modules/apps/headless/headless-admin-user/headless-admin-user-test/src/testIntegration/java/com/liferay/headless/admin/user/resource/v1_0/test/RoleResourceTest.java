@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -129,7 +128,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		com.liferay.portal.kernel.model.Role serviceBuilderRole =
 			RoleLocalServiceUtil.addRole(
 				_user.getUserId(), null, 0, role.getName(),
-				HashMapBuilder.<Locale, String>put(
+				HashMapBuilder.put(
 					LocaleUtil.getDefault(), role.getName()
 				).build(),
 				null, _toRoleType(role.getRoleType()), null,

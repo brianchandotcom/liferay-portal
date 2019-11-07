@@ -96,7 +96,7 @@ public class CalendarBookingIndexerLocalizedContentTest
 				}
 			});
 
-		Map<String, String> titleMap = HashMapBuilder.<String, String>put(
+		Map<String, String> titleMap = HashMapBuilder.put(
 			"title_en_US", originalName
 		).put(
 			"title_ja_JP", japaneseName
@@ -147,7 +147,7 @@ public class CalendarBookingIndexerLocalizedContentTest
 				})
 		);
 
-		Map<String, String> titleMap = HashMapBuilder.<String, String>put(
+		Map<String, String> titleMap = HashMapBuilder.put(
 			"title_ja_JP", "新規作成"
 		).build();
 

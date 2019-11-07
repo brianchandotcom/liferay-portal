@@ -459,7 +459,7 @@ public class CSSRTLConverter {
 		"(\\d+)([a-z]{2}|%)");
 	private static final Pattern _percentPattern = Pattern.compile("\\d+%");
 	private static final Map<String, String> _replacementIcons =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"\"\\f0a4\"", "\"\\f0a5\""
 		).put(
 			"\"\\f0a5\"", "\"\\f0a4\""
@@ -517,7 +517,7 @@ public class CSSRTLConverter {
 		Arrays.asList(
 			"-moz-border-radius", "-webkit-border-radius", "border-radius");
 	private static final Map<String, String> _yui3ReplacementCursors =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"e-resize", "w-resize"
 		).put(
 			"ne-resize", "nw-resize"

@@ -53,6 +53,8 @@ definition {
 
 		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
 
+		Pause(locator1 = "10000");
+
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Checkbox Fragment Example");
@@ -105,6 +107,8 @@ definition {
 		Navigator.gotoNavNested(navNested = "Page Template Collection");
 
 		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+
+		Pause(locator1 = "10000");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",

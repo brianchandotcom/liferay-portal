@@ -40,7 +40,7 @@ definition {
 	}
 
 	macro navigateToFormViewTab {
-		AppBuilderAdmin.openItem(customObjectName = "${customObjectName}");
+		AppBuilderAdmin.openItem(itemName = "${customObjectName}");
 
 	}
 
@@ -58,7 +58,7 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "${formViewName}");
 
-		AppBuilderAdmin.openItem(customObjectName = "${formViewName}");
+		AppBuilderAdmin.openItem(itemName = "${formViewName}");
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
 

@@ -204,7 +204,18 @@
 										type="button"
 									>
 										<span class="d-flex flex-column flex-grow-1 text-truncate">
-											<strong class="text-truncate">{$experience.name}</strong>
+											<strong class="text-truncate">
+												{$experience.name}
+												{sp}
+
+												{if $experience.hasLockedSegmentsExperiment}
+													{call ClayIcon.render}
+														{param elementClasses: 'small text-secondary' /}
+														{param spritemap: $spritemap /}
+														{param symbol: 'lock' /}
+													{/call}
+												{/if}
+											</strong>
 
 											<span class="audience d-block text-truncate">
 												<span class="text-secondary">

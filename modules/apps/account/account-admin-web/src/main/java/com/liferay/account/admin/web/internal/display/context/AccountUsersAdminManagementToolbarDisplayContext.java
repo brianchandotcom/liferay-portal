@@ -17,6 +17,7 @@ package com.liferay.account.admin.web.internal.display.context;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -66,6 +67,52 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getCreationMenu() {
+		return new CreationMenu() {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						PortletURL accountEntrySelectorURL =
+							liferayPortletResponse.createRenderURL();
+
+						accountEntrySelectorURL.setParameter(
+							"mvcPath",
+							"/account_users_admin/select_account_entry.jsp");
+						accountEntrySelectorURL.setWindowState(
+							LiferayWindowState.POP_UP);
+
+						dropdownItem.putData(
+							"accountEntrySelectorURL",
+							accountEntrySelectorURL.toString());
+
+						dropdownItem.putData("action", "selectAccountEntry");
+
+						dropdownItem.putData(
+							"dialogTitle",
+							LanguageUtil.get(request, "select-an-account"));
+
+						PortletURL redirectURL =
+							liferayPortletResponse.createRenderURL();
+
+						redirectURL.setParameter(
+							"mvcRenderCommandName",
+							"/account_admin/add_account_user");
+
+						PortletURL backURL =
+							liferayPortletResponse.createRenderURL();
+
+						redirectURL.setParameter("backURL", backURL.toString());
+
+						dropdownItem.putData(
+							"redirectURL", redirectURL.toString());
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "add-user"));
+					});
+			}
+		};
 	}
 
 	@Override
@@ -218,6 +265,9 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 						dropdownItem.putData(
 							"accountEntrySelectorURL",
 							accountEntriesSelectorURL.toString());
+						dropdownItem.putData(
+							"dialogTitle",
+							LanguageUtil.get(request, "select-accounts"));
 						dropdownItem.putData("action", "selectAccountEntries");
 
 						dropdownItem.setLabel(

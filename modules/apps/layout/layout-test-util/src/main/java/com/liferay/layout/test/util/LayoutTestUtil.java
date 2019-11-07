@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -98,7 +97,7 @@ public class LayoutTestUtil {
 		return addLayout(
 			groupId,
 			RandomTestUtil.randomString(
-				FriendlyURLRandomizerBumper.INSTANCE,
+				LayoutFriendlyURLRandomizerBumper.INSTANCE,
 				NumericStringRandomizerBumper.INSTANCE,
 				UniqueStringRandomizerBumper.INSTANCE),
 			privateLayout, layoutPrototype, linkEnabled);

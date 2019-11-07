@@ -54,16 +54,7 @@ if (toFileEntryId > 0) {
 	}
 }
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
-portletURL.setParameter("redirect", redirect);
-portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
-
 String headerTitle = (fileShortcut != null) ? LanguageUtil.format(request, "shortcut-to-x", fileShortcut.getToTitle(), false) : LanguageUtil.get(request, "new-file-shortcut");
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(headerTitle);
 %>

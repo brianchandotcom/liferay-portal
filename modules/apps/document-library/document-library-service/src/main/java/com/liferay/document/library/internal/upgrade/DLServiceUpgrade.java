@@ -20,10 +20,13 @@ import com.liferay.document.library.internal.upgrade.v1_0_1.UpgradeDLFileEntryCo
 import com.liferay.document.library.internal.upgrade.v1_0_2.UpgradeDLFileShortcut;
 import com.liferay.document.library.internal.upgrade.v1_1_0.UpgradeSchema;
 import com.liferay.document.library.internal.upgrade.v2_0_0.UpgradeCompanyId;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.view.count.service.ViewCountEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,6 +54,11 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register("1.0.2", "1.1.0", new UpgradeSchema());
 
 		registry.register("1.1.0", "2.0.0", new UpgradeCompanyId());
+
+		registry.register(
+			"2.0.0", "2.0.1",
+			new UpgradeViewCount(
+				"DlFileEntry", DLFileEntry.class, "fileEntryId", "readCount"));
 	}
 
 	@Reference
@@ -59,5 +67,10 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference(target = "(dl.store.upgrade=true)")
 	private Store _store;
+
+	// See LPS-101083. The ViewCount table needs to exist.
+
+	@Reference
+	private ViewCountEntryLocalService _viewCountEntryLocalService;
 
 }

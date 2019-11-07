@@ -62,8 +62,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
-import com.liferay.portal.kernel.increment.BufferedIncrement;
-import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.InvalidLockException;
@@ -93,6 +91,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -106,6 +105,7 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -666,6 +666,13 @@ public class DLFileEntryLocalServiceImpl
 
 		ratingsStatsLocalService.deleteStats(
 			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+
+		// View count
+
+		_viewCountManager.deleteViewCount(
+			dlFileEntry.getCompanyId(),
+			classNameLocalService.getClassNameId(DLFileEntry.class),
+			dlFileEntry.getFileEntryId());
 
 		// Lock
 
@@ -1382,26 +1389,17 @@ public class DLFileEntryLocalServiceImpl
 		return dlFolderLocalService.hasInheritableLock(folderId);
 	}
 
-	@BufferedIncrement(
-		configuration = "DLFileEntry", incrementClass = NumberIncrement.class
-	)
 	@Override
+	@Transactional(enabled = false)
 	public void incrementViewCounter(DLFileEntry dlFileEntry, int increment) {
 		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
 		}
 
-		dlFileEntry = dlFileEntryPersistence.fetchByPrimaryKey(
-			dlFileEntry.getFileEntryId());
-
-		if (dlFileEntry == null) {
-			return;
-		}
-
-		dlFileEntry.setModifiedDate(dlFileEntry.getModifiedDate());
-		dlFileEntry.setReadCount(dlFileEntry.getReadCount() + increment);
-
-		dlFileEntryPersistence.update(dlFileEntry);
+		_viewCountManager.incrementViewCount(
+			dlFileEntry.getCompanyId(),
+			classNameLocalService.getClassNameId(DLFileEntry.class),
+			dlFileEntry.getFileEntryId(), increment);
 	}
 
 	@Override
@@ -2868,5 +2866,9 @@ public class DLFileEntryLocalServiceImpl
 		ServiceProxyFactory.newServiceTrackedInstance(
 			VersioningStrategy.class, DLFileEntryLocalServiceImpl.class,
 			"_versioningStrategy", false, true);
+	private static volatile ViewCountManager _viewCountManager =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			ViewCountManager.class, DLFileEntryLocalServiceImpl.class,
+			"_viewCountManager", false, true);
 
 }

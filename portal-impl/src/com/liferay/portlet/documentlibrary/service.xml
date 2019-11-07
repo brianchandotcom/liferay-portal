@@ -66,7 +66,6 @@
 		<column name="fileEntryTypeId" type="long" />
 		<column name="version" type="String" />
 		<column name="size" type="long" />
-		<column name="readCount" type="int" />
 		<column name="smallImageId" type="long" />
 		<column name="largeImageId" type="long" />
 		<column name="custom1ImageId" type="long" />

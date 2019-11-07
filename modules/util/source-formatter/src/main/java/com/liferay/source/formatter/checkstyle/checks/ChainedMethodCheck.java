@@ -35,9 +35,23 @@ public abstract class ChainedMethodCheck extends BaseCheck {
 			detailAST, true, TokenTypes.IDENT);
 
 		for (DetailAST identDetailAST : identDetailASTList) {
-			if (variableName.equals(identDetailAST.getText())) {
-				return true;
+			if (!variableName.equals(identDetailAST.getText())) {
+				continue;
 			}
+
+			DetailAST nextSiblingDetailAST = identDetailAST.getNextSibling();
+
+			if ((nextSiblingDetailAST != null) &&
+				(nextSiblingDetailAST.getType() == TokenTypes.IDENT)) {
+
+				String s = nextSiblingDetailAST.getText();
+
+				if (s.startsWith("get")) {
+					continue;
+				}
+			}
+
+			return true;
 		}
 
 		return false;

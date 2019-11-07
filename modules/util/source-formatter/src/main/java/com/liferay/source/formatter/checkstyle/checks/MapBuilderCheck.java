@@ -250,7 +250,10 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 			DetailAST parentDetailAST = identDetailAST.getParent();
 
-			if (parentDetailAST.getType() == TokenTypes.EXPR) {
+			if ((parentDetailAST.getType() == TokenTypes.ASSIGN) ||
+				(parentDetailAST.getType() == TokenTypes.EXPR) ||
+				(parentDetailAST.getType() == TokenTypes.TYPECAST)) {
+
 				variableNames.add(variableName);
 			}
 			else if (parentDetailAST.getType() == TokenTypes.DOT) {

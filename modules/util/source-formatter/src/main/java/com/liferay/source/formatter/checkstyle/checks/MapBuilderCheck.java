@@ -30,12 +30,18 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.ASSIGN};
+		return new int[] {TokenTypes.ASSIGN, TokenTypes.METHOD_CALL};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
 		if (isExcludedPath(_RUN_OUTSIDE_PORTAL_EXCLUDES)) {
+			return;
+		}
+
+		if (detailAST.getType() == TokenTypes.METHOD_CALL) {
+			_checkMapBuilder(detailAST);
+
 			return;
 		}
 
@@ -61,43 +67,18 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			return;
 		}
 
-		_checkMapBuilder(detailAST, parentDetailAST);
-
 		_checkNewInstance(
 			detailAST, variableName, parentDetailAST, nextSiblingDetailAST);
 	}
 
-	private void _checkMapBuilder(
-		DetailAST assignDetailAST, DetailAST parentDetailAST) {
+	private void _checkMapBuilder(DetailAST methodCallDetailAST) {
+		DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
 
-		DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
-
-		DetailAST assignValueDetailAST = null;
-
-		if (parentDetailAST.getType() == TokenTypes.EXPR) {
-			assignValueDetailAST = firstChildDetailAST.getNextSibling();
-		}
-		else {
-			assignValueDetailAST = firstChildDetailAST.getFirstChild();
-		}
-
-		if ((assignValueDetailAST == null) ||
-			(assignValueDetailAST.getType() != TokenTypes.METHOD_CALL)) {
-
+		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
 			return;
 		}
 
-		firstChildDetailAST = assignValueDetailAST.getFirstChild();
-
-		while (true) {
-			if ((firstChildDetailAST.getType() != TokenTypes.DOT) &&
-				(firstChildDetailAST.getType() != TokenTypes.METHOD_CALL)) {
-
-				break;
-			}
-
-			firstChildDetailAST = firstChildDetailAST.getFirstChild();
-		}
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
 		if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
 			return;
@@ -116,6 +97,42 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 			return;
 		}
+
+		DetailAST parentDetailAST = methodCallDetailAST.getParent();
+
+		while ((parentDetailAST.getType() == TokenTypes.DOT) ||
+			   (parentDetailAST.getType() == TokenTypes.EXPR) ||
+			   (parentDetailAST.getType() == TokenTypes.METHOD_CALL)) {
+
+			parentDetailAST = parentDetailAST.getParent();
+		}
+
+		if (parentDetailAST.getType() != TokenTypes.ASSIGN) {
+			return;
+		}
+
+		DetailAST assignDetailAST = parentDetailAST;
+
+		parentDetailAST = assignDetailAST.getParent();
+
+		firstChildDetailAST = assignDetailAST.getFirstChild();
+
+		DetailAST assignValueDetailAST = null;
+
+		if (parentDetailAST.getType() == TokenTypes.EXPR) {
+			assignValueDetailAST = firstChildDetailAST.getNextSibling();
+		}
+		else {
+			assignValueDetailAST = firstChildDetailAST.getFirstChild();
+		}
+
+		if ((assignValueDetailAST == null) ||
+			(assignValueDetailAST.getType() != TokenTypes.METHOD_CALL)) {
+
+			return;
+		}
+
+		firstChildDetailAST = assignValueDetailAST.getFirstChild();
 
 		List<String> variableNames = _getVariableNames(parentDetailAST);
 

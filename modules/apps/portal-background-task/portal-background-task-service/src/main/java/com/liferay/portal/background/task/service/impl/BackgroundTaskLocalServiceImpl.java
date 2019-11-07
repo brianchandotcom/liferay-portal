@@ -72,11 +72,6 @@ import org.osgi.service.component.annotations.Reference;
 public class BackgroundTaskLocalServiceImpl
 	extends BackgroundTaskLocalServiceBaseImpl {
 
-	@Activate
-	public void activate() {
-		_backgroundTaskLockHelper = new BackgroundTaskLockHelper(_lockManager);
-	}
-
 	@Override
 	public BackgroundTask addBackgroundTask(BackgroundTask backgroundTask) {
 		Map<String, Serializable> taskContextMap =
@@ -684,6 +679,11 @@ public class BackgroundTaskLocalServiceImpl
 			BackgroundTaskConstants.BACKGROUND_TASK_ID, backgroundTaskId);
 
 		_messageBus.sendMessage(DestinationNames.BACKGROUND_TASK, message);
+	}
+
+	@Activate
+	protected void activate() {
+		_backgroundTaskLockHelper = new BackgroundTaskLockHelper(_lockManager);
 	}
 
 	protected BackgroundTask addBackgroundTask(

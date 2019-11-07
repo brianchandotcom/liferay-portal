@@ -15,9 +15,13 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
@@ -51,8 +55,7 @@ public class UpgradeCTModel extends UpgradeProcess {
 		String primaryKeyColumnName = null;
 
 		try (ResultSet rs = databaseMetaData.getPrimaryKeys(
-				dbInspector.getCatalog(), dbInspector.getSchema(),
-				tableName)) {
+				dbInspector.getCatalog(), dbInspector.getSchema(), tableName)) {
 
 			if (rs.next()) {
 				primaryKeyColumnName = rs.getString("COLUMN_NAME");
@@ -75,9 +78,41 @@ public class UpgradeCTModel extends UpgradeProcess {
 				"alter table ", tableName,
 				" add ctCollectionId LONG default 0 not null"));
 
-		runSQL(
-			StringBundler.concat(
-				"alter table ", tableName, " drop primary key"));
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() == DBType.SYBASE) {
+			String primaryKeyConstraintName = null;
+
+			try (PreparedStatement ps = connection.prepareStatement(
+					"sp_helpconstraint " + tableName);
+				ResultSet rs = ps.executeQuery()) {
+
+				while (rs.next()) {
+					String definition = rs.getString("definition");
+
+					if (definition.startsWith("PRIMARY KEY INDEX")) {
+						primaryKeyConstraintName = rs.getString("name");
+
+						break;
+					}
+				}
+			}
+
+			if (primaryKeyConstraintName == null) {
+				throw new UpgradeException(
+					"No primary key constraint found for " + tableName);
+			}
+
+			runSQL(
+				StringBundler.concat(
+					"sp_dropkey primary ", tableName, " ",
+					primaryKeyConstraintName));
+		}
+		else {
+			runSQL(
+				StringBundler.concat(
+					"alter table ", tableName, " drop primary key"));
+		}
 
 		runSQL(
 			StringBundler.concat(

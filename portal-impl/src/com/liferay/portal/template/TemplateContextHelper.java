@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.util.SessionClicks_IW;
 import com.liferay.portal.kernel.util.StaticFieldGetter;
 import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.kernel.util.TimeZoneUtil_IW;
+import com.liferay.portal.kernel.util.URLCodec_IW;
 import com.liferay.portal.kernel.util.UnicodeFormatter_IW;
 import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -683,6 +684,10 @@ public class TemplateContextHelper {
 		// Unicode formatter
 
 		variables.put("unicodeFormatter", UnicodeFormatter_IW.getInstance());
+
+		// URL codec
+
+		variables.put("urlCodec", URLCodec_IW.getInstance());
 
 		// Validator
 

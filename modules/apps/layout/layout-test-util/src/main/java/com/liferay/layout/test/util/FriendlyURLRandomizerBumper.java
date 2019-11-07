@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test.randomizerbumpers;
+package com.liferay.layout.test.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;

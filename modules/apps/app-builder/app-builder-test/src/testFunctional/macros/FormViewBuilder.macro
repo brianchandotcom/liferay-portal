@@ -9,7 +9,6 @@ definition {
 		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
 	}
 
-
 	macro addFieldByDragAndDrop {
 
 		Pause(locator1 = "10000");
@@ -24,42 +23,9 @@ definition {
 		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
 	}
 
-	macro save {
-		AppBuilderAdmin.save();
-	}
-
-	macro setName {
-
-        AppBuilderAdmin.setName(title = "${formViewName}");
-	}
-
-	macro validateFieldLabel {
-		AssertTextEquals(
-			locator1 = "FormViewBuilder#FIELD_LABEL",
-			value1 = "${fieldLabel}");
-	}
-
-	macro switchToFormViewTab {
-		AppBuilderAdmin.switchTab(tabName = "Form Views");
-	}
-
-	macro addFormViewAndValidateFieldLabel {
-
-		FormViewBuilder.addFormView(
-			formViewName = "${formViewName}",
-			fieldType = "${fieldType}");
-
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "${formViewName}");
-
-		AppBuilderAdmin.openItem(itemName = "${formViewName}");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
-
-	}
-
 	macro addFormView {
 
-		if (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_FIELDS_TAB")){
+		if (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_FIELDS_TAB")) {
 			FormViewBuilder.switchToFormViewTab();
 			AppBuilderAdmin.add();
 		}
@@ -70,4 +36,37 @@ definition {
 
 		FormViewBuilder.save();
 	}
+
+	macro addFormViewAndValidateFieldLabel {
+
+		FormViewBuilder.addFormView(
+			fieldType = "${fieldType}",
+			formViewName = "${formViewName}");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "${formViewName}");
+
+		AppBuilderAdmin.openItem(itemName = "${formViewName}");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+	}
+
+	macro save {
+		AppBuilderAdmin.save();
+	}
+
+	macro setName {
+
+		AppBuilderAdmin.setName(title = "${formViewName}");
+	}
+
+	macro switchToFormViewTab {
+		AppBuilderAdmin.switchTab(tabName = "Form Views");
+	}
+
+	macro validateFieldLabel {
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldLabel}");
+	}
+
 }

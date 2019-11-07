@@ -1,6 +1,6 @@
 definition {
 
-    macro addColumnByDoubleClick {
+	macro addColumnByDoubleClick {
 
 		var key_fieldType = "${fieldType}";
 
@@ -9,18 +9,18 @@ definition {
 		TableViewBuilder.validateColumnLabel(columnLabel = "${fieldType}");
 	}
 
-    macro validateColumnLabel {
+	macro save {
+		AppBuilderAdmin.save();
+	}
+
+	macro setName {
+		AppBuilderAdmin.setName(title = "${tableViewName}");
+	}
+
+	macro validateColumnLabel {
 		AssertTextEquals(
 			locator1 = "TableViewBuilder#COLUMN_LABEL",
 			value1 = "${columnLabel}");
 	}
 
-	macro setName {
-        AppBuilderAdmin.setName(title = "${tableViewName}");
-	}
-
-	macro save {
-		AppBuilderAdmin.save();
-	}
-    
 }

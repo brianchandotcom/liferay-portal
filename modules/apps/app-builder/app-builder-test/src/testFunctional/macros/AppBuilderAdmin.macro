@@ -1,5 +1,9 @@
 definition {
 
+	macro add {
+		Click(locator1 = "AppBuilder#BUTTON_ADD");
+	}
+
 	macro addCustomObject {
 
 		if ("${isCreatingViaPlusIcon}" == "false") {
@@ -40,18 +44,8 @@ definition {
 			value1 = "${customObjectName}");
 	}
 
-	macro add {
-		Click(locator1 = "AppBuilder#BUTTON_ADD");
-	}
-
 	macro gotoAddCustomObject {
 		AppBuilderAdmin.add();
-	}
-
-	macro setName {
-		Type(
-			locator1 = "FormViewBuilder#FORM_VIEW_NAME",
-			value1 = "${title}");
 	}
 
 	macro gotoAddItemViaNewButton {
@@ -72,6 +66,16 @@ definition {
 		Click(
 			key_ItemName = "${itemName}",
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+	}
+
+	macro save {
+		Click(locator1 = "AppBuilder#SAVE_BUTTON");
+	}
+
+	macro setName {
+		Type(
+			locator1 = "FormViewBuilder#FORM_VIEW_NAME",
+			value1 = "${title}");
 	}
 
 	macro switchTab {
@@ -127,10 +131,6 @@ definition {
 
 	macro viewCheckboxChecked {
 		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
-	}
-
-	macro save {
-		Click(locator1 = "AppBuilder#SAVE_BUTTON");
 	}
 
 }

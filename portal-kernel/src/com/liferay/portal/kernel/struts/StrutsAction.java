@@ -28,18 +28,4 @@ public interface StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #execute(HttpServletRequest, HttpServletResponse)}
-	 */
-	@Deprecated
-	public default String execute(
-			StrutsAction originalStrutsAction,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		return execute(httpServletRequest, httpServletResponse);
-	}
-
 }

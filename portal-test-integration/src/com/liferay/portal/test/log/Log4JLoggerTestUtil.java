@@ -17,7 +17,7 @@ package com.liferay.portal.test.log;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogWrapper;
-import com.liferay.portal.log.Log4jLogImpl;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -34,14 +34,15 @@ public class Log4JLoggerTestUtil {
 
 		Log log = logWrapper.getWrappedLog();
 
-		if (!(log instanceof Log4jLogImpl)) {
+		Logger logger = null;
+
+		try {
+			logger = ReflectionTestUtil.getFieldValue(log, "_logger");
+		}
+		catch (Exception e) {
 			throw new IllegalStateException(
 				"Log " + name + " is not a Log4j logger");
 		}
-
-		Log4jLogImpl log4jLogImpl = (Log4jLogImpl)log;
-
-		Logger logger = log4jLogImpl.getWrappedLogger();
 
 		CaptureAppender captureAppender = new CaptureAppender(logger);
 
@@ -57,14 +58,15 @@ public class Log4JLoggerTestUtil {
 
 		Log log = logWrapper.getWrappedLog();
 
-		if (!(log instanceof Log4jLogImpl)) {
+		Logger logger = null;
+
+		try {
+			logger = ReflectionTestUtil.getFieldValue(log, "_logger");
+		}
+		catch (Exception e) {
 			throw new IllegalStateException(
 				"Log " + name + " is not a Log4j logger");
 		}
-
-		Log4jLogImpl log4jLogImpl = (Log4jLogImpl)log;
-
-		Logger logger = log4jLogImpl.getWrappedLogger();
 
 		Level oldLevel = logger.getLevel();
 

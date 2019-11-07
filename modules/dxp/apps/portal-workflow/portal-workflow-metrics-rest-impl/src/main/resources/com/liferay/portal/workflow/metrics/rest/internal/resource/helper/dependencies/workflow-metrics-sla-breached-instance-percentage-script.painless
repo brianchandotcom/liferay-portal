@@ -1,0 +1,5 @@
+if (params.instanceCount == 0) {
+	return 0.0;
+}
+
+return (params.breachedInstanceCount / params.instanceCount) * 100

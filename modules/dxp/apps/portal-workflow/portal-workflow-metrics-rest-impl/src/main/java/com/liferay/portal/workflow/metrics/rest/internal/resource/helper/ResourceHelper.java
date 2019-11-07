@@ -28,6 +28,8 @@ import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregation;
 import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregationResult;
+import com.liferay.portal.search.aggregation.pipeline.BucketScriptPipelineAggregation;
+import com.liferay.portal.search.aggregation.pipeline.BucketScriptPipelineAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.GapPolicy;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
@@ -79,6 +81,22 @@ public class ResourceHelper {
 			_workflowMetricsSlaBreachedReduceScript);
 
 		return scriptedMetricAggregation;
+	}
+
+	public BucketScriptPipelineAggregation
+		createBucketScriptPipelineAggregation() {
+
+		BucketScriptPipelineAggregation bucketScriptPipelineAggregation =
+			_aggregations.bucketScript(
+				"breachedInstancePercentage",
+				_workflowMetricsSlaBreachedInstancePercentageScript);
+
+		bucketScriptPipelineAggregation.addBucketPath(
+			"breachedInstanceCount", "breached>breachedInstanceCount.value");
+		bucketScriptPipelineAggregation.addBucketPath(
+			"instanceCount", "countFilter>instanceCount.value");
+
+		return bucketScriptPipelineAggregation;
 	}
 
 	public BucketSortPipelineAggregation createBucketSortPipelineAggregation(
@@ -267,6 +285,16 @@ public class ResourceHelper {
 		return GetterUtil.getLong(scriptedMetricAggregationResult.getValue());
 	}
 
+	public double getBreachedInstancePercentage(Bucket bucket) {
+		BucketScriptPipelineAggregationResult
+			bucketScriptPipelineAggregationResult =
+				(BucketScriptPipelineAggregationResult)
+					bucket.getChildAggregationResult(
+						"breachedInstancePercentage");
+
+		return bucketScriptPipelineAggregationResult.getValue();
+	}
+
 	public String getLatestProcessVersion(long companyId, long processId) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -369,6 +397,10 @@ public class ResourceHelper {
 		_workflowMetricsInstanceCountReduceScript = createScript(
 			getClass(),
 			"workflow-metrics-instance-count-reduce-script.painless");
+		_workflowMetricsSlaBreachedInstancePercentageScript = createScript(
+			getClass(),
+			"workflow-metrics-sla-breached-instance-percentage-script." +
+				"painless");
 		_workflowMetricsSlaBreachedReduceScript = createScript(
 			getClass(), "workflow-metrics-sla-breached-reduce-script.painless");
 		_workflowMetricsSlaCombineScript = createScript(
@@ -420,6 +452,7 @@ public class ResourceHelper {
 	private Script _workflowMetricsInstanceCountInitScript;
 	private Script _workflowMetricsInstanceCountMapScript;
 	private Script _workflowMetricsInstanceCountReduceScript;
+	private Script _workflowMetricsSlaBreachedInstancePercentageScript;
 	private Script _workflowMetricsSlaBreachedReduceScript;
 	private Script _workflowMetricsSlaCombineScript;
 	private Script _workflowMetricsSlaInitScript;

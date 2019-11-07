@@ -406,6 +406,9 @@ public class TaskResourceImpl
 			breachedFilterAggregation, countFilterAggregation,
 			onTimeFilterAggregation, overdueFilterAggregation);
 
+		termsAggregation.addPipelineAggregation(
+			_resourceHelper.createBucketScriptPipelineAggregation());
+
 		if (fieldSort != null) {
 			termsAggregation.addPipelineAggregation(
 				_resourceHelper.createBucketSortPipelineAggregation(
@@ -555,6 +558,15 @@ public class TaskResourceImpl
 
 		task.setBreachedInstanceCount(
 			_resourceHelper.getBreachedInstanceCount(bucket));
+	}
+
+	private void _setBreachedInstancePercentage(Bucket bucket, Task task) {
+		if (bucket == null) {
+			return;
+		}
+
+		task.setBreachedInstancePercentage(
+			_resourceHelper.getBreachedInstancePercentage(bucket));
 	}
 
 	private void _setDurationAvg(Bucket bucket, Task task) {

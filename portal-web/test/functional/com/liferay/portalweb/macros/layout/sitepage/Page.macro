@@ -21,7 +21,9 @@ definition {
 
 		Click(locator1 = "SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX");
 
-		AssertChecked.assertCheckedNotVisible(locator1 = "SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX_INPUT");
+		var key_componentOrPortletName = StringUtil.lowerCase("${componentName}");
+
+		AssertElementPresent(locator1 = "SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX_INPUT");
 	}
 
 	macro addCategory {

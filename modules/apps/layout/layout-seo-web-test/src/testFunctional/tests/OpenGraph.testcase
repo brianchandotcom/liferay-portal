@@ -47,7 +47,7 @@ definition {
 			configurationName = "SEO",
 			configurationScope = "Virtual Instance Scope");
 
-		FormFields.disableCheckbox(fieldName = "Enable");
+		FormFields.disableCheckbox(fieldName = "Enable Open Graph");
 
 		SystemSettings.saveConfiguration();
 

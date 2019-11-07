@@ -19,7 +19,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		this._openAccountEntrySelector(
 			Liferay.Language.get('select'),
 			this.ns('selectAccountEntries'),
-			Liferay.Language.get('select-accounts'),
+			Liferay.Language.get(itemData.dialogTitle),
 			itemData.accountEntrySelectorURL,
 			selectedItems => {
 				var redirectURL = Liferay.Util.PortletURL.createPortletURL(

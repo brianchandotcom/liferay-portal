@@ -25,8 +25,8 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				var redirectURL = Liferay.Util.PortletURL.createPortletURL(
 					itemData.redirectURL,
 					{
-						accountEntryIds: selectedItems.value,
-						accountNavigation: 'accounts'
+						accountEntriesNavigation: 'accounts',
+						accountEntryIds: selectedItems.value
 					}
 				);
 

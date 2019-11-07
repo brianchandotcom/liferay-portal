@@ -16,14 +16,17 @@ package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanPropertiesImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsImpl;
 
 import java.util.HashMap;
@@ -54,6 +57,12 @@ public class DLEditFileShortcutDisplayContextTest {
 		_dlAppService = Mockito.mock(DLAppService.class);
 
 		_itemSelector = Mockito.mock(ItemSelector.class);
+
+		_language = Mockito.mock(Language.class);
+
+		LanguageResources languageResources = new LanguageResources();
+
+		languageResources.setConfig(StringPool.BLANK);
 
 		PropsUtil.setProps(new PropsImpl());
 	}
@@ -148,6 +157,44 @@ public class DLEditFileShortcutDisplayContextTest {
 			56789L, dlEditFileShortcutDisplayContext.getToFileEntryId());
 	}
 
+	@Test
+	public void testGetTitleWithAttribute() {
+		FileShortcut fileShortcut = _addRandomFileShortcut();
+
+		DLEditFileShortcutDisplayContext dlEditFileShortcutDisplayContext =
+			_getDLEditFileShortcutDisplayContext(
+				new MockHttpServletRequestBuilder().withAttribute(
+					WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT, fileShortcut
+				).build());
+
+		Mockito.when(
+			_language.get(
+				Mockito.any(HttpServletRequest.class),
+				Mockito.eq("shortcut-to-x"), Mockito.anyString())
+		).thenReturn(
+			"Short Cut To X"
+		);
+
+		Assert.assertEquals(
+			"Short Cut To X", dlEditFileShortcutDisplayContext.getTitle());
+	}
+
+	@Test
+	public void testGetTitleWithoutAttribute() {
+		DLEditFileShortcutDisplayContext dlEditFileShortcutDisplayContext =
+			_getDLEditFileShortcutDisplayContext(new MockHttpServletRequest());
+
+		Mockito.when(
+			_language.get(
+				Mockito.any(HttpServletRequest.class),
+				Mockito.eq("new-file-shortcut"))
+		).thenReturn(
+			"New"
+		);
+
+		Assert.assertEquals("New", dlEditFileShortcutDisplayContext.getTitle());
+	}
+
 	public static class MockHttpServletRequestBuilder {
 
 		public MockHttpServletRequestBuilder() {
@@ -226,13 +273,14 @@ public class DLEditFileShortcutDisplayContextTest {
 			HttpServletRequest httpServletRequest) {
 
 		return new DLEditFileShortcutDisplayContext(
-			_dlAppService, _itemSelector,
+			_dlAppService, _itemSelector, _language,
 			new MockPortletRenderRequest(httpServletRequest),
 			new MockLiferayPortletRenderResponse());
 	}
 
 	private DLAppService _dlAppService;
 	private ItemSelector _itemSelector;
+	private Language _language;
 
 	private class MockPortletRenderRequest
 		extends MockLiferayPortletRenderRequest {

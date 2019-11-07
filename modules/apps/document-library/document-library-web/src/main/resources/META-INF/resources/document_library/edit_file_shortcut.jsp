@@ -17,19 +17,13 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
+DLEditFileShortcutDisplayContext dlEditFileShortcutDisplayContext = (DLEditFileShortcutDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_FILE_SHORTCUT_DISPLAY_CONTEXT);
 
 String redirect = ParamUtil.getString(request, "redirect");
 
 FileShortcut fileShortcut = (FileShortcut)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT);
 
 long fileShortcutId = BeanParamUtil.getLong(fileShortcut, request, "fileShortcutId");
-
-long toGroupId = ParamUtil.getLong(request, "toGroupId", themeDisplay.getScopeGroupId());
-
-Group toGroup = GroupServiceUtil.getGroup(toGroupId);
-
-toGroup = toGroup.toEscapedModel();
 
 long repositoryId = BeanParamUtil.getLong(fileShortcut, request, "repositoryId");
 long folderId = BeanParamUtil.getLong(fileShortcut, request, "folderId");
@@ -43,12 +37,6 @@ if (toFileEntryId > 0) {
 		toFileEntry = DLAppServiceUtil.getFileEntry(toFileEntryId);
 
 		toFileEntry = toFileEntry.toEscapedModel();
-
-		toGroupId = toFileEntry.getRepositoryId();
-
-		toGroup = GroupServiceUtil.getGroup(toGroupId);
-
-		toGroup = toGroup.toEscapedModel();
 	}
 	catch (Exception e) {
 	}
@@ -70,7 +58,6 @@ renderResponse.setTitle(headerTitle);
 		<aui:input name="fileShortcutId" type="hidden" value="<%= fileShortcutId %>" />
 		<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
 		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
-		<aui:input name="toGroupId" type="hidden" value="<%= toGroupId %>" />
 		<aui:input name="toFileEntryId" type="hidden" value="<%= toFileEntryId %>" />
 
 		<liferay-ui:error exception="<%= FileShortcutPermissionException.class %>" message="you-do-not-have-permission-to-create-a-shortcut-to-the-selected-document" />
@@ -80,16 +67,6 @@ renderResponse.setTitle(headerTitle);
 			<aui:fieldset>
 				<div class="alert alert-info">
 					<liferay-ui:message key="you-can-create-a-shortcut-to-any-document-that-you-have-read-access-for" />
-				</div>
-
-				<%
-				String toGroupName = toGroup.getDescriptiveName(locale);
-				%>
-
-				<div class="form-group">
-					<aui:input label="site-or-repository" name="toGroupName" type="resource" value="<%= toGroupName %>" />
-
-					<aui:button name="selectGroupButton" value="select" />
 				</div>
 
 				<%
@@ -120,139 +97,52 @@ renderResponse.setTitle(headerTitle);
 	</aui:form>
 </div>
 
-<script>
-	var form = document.<portlet:namespace />fm;
-
-	var selectGroupButton = document.getElementById(
-		'<portlet:namespace />selectGroupButton'
-	);
-
-	if (selectGroupButton) {
-		selectGroupButton.addEventListener('click', function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
-					},
-					id: '<portlet:namespace />selectGroup',
-					title: '<liferay-ui:message arguments="site" key="select-x" />',
-
-					<portlet:renderURL var="selectGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcPath" value="/document_library/select_group.jsp" />
-					</portlet:renderURL>
-
-					uri: '<%= selectGroupURL.toString() %>'
-				},
-				function(event) {
-					var toGroupIdElement = Liferay.Util.getFormElement(
-						form,
-						'toGroupId'
-					);
-
-					if (
-						toGroupIdElement &&
-						toGroupIdElement.value != event.groupid
-					) {
-						<portlet:namespace />selectFileEntry('', '');
-					}
-
-					Liferay.Util.setFormValues(form, {
-						toGroupId: event.groupid,
-						toFileEntryId: 0
-					});
-
-					var toGroupNameElement = document.getElementById(
-						'<portlet:namespace />toGroupName'
-					);
-
-					if (toGroupNameElement) {
-						toGroupNameElement.value = event.groupdescriptivename;
-					}
-
-					Liferay.Util.toggleDisabled(
-						'#<portlet:namespace />selectToFileEntryButton',
-						false
-					);
-				}
-			);
-		});
-	}
-
+<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 	var selectToFileEntryButton = document.getElementById(
 		'<portlet:namespace />selectToFileEntryButton'
 	);
 
 	if (selectToFileEntryButton) {
-		selectToFileEntryButton.addEventListener('click', function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
-					},
-					id: <portlet:namespace />createSelectFileEntryId(),
-					title: '<liferay-ui:message arguments="file" key="select-x" />',
+		var itemSelectorDialog = new ItemSelectorDialog.default({
+			buttonAddLabel: '<liferay-ui:message key="done" />',
+			eventName: '<portlet:namespace />toFileEntrySelectedItem',
+			title: '<liferay-ui:message arguments="file" key="select-x" />',
+			url: '<%= dlEditFileShortcutDisplayContext.getItemSelectorURL() %>'
+		});
 
-					<portlet:renderURL var="selectFileEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcRenderCommandName" value="/document_library/select_file_entry" />
-					</portlet:renderURL>
+		itemSelectorDialog.on('selectedItemChange', function(event) {
+			var selectedItem = event.selectedItem;
 
-					uri: <portlet:namespace />createSelectFileEntryURL(
-						'<%= selectFileEntryURL.toString() %>'
-					)
-				},
-				function(event) {
-					<portlet:namespace />selectFileEntry(
-						event.entryid,
-						event.entryname
-					);
+			if (selectedItem) {
+				var itemValue = JSON.parse(selectedItem.value);
+
+				var toFileEntryId = document.getElementById(
+					'<portlet:namespace />toFileEntryId'
+				);
+
+				if (toFileEntryId) {
+					toFileEntryId.value = itemValue.fileEntryId;
 				}
-			);
+
+				var toFileEntryTitle = document.getElementById(
+					'<portlet:namespace />toFileEntryTitle'
+				);
+
+				if (toFileEntryTitle) {
+					toFileEntryTitle.value = itemValue.title;
+				}
+			}
+		});
+
+		selectToFileEntryButton.addEventListener('click', function(event) {
+			event.preventDefault();
+			itemSelectorDialog.open();
 		});
 	}
+</aui:script>
 
-	function <portlet:namespace />createSelectFileEntryId() {
-		var selectFileEntryId = '';
-
-		var toGroupIdElement = Liferay.Util.getFormElement(form, 'toGroupId');
-
-		if (toGroupIdElement) {
-			selectFileEntryId =
-				'<portlet:namespace />selectFileEntry_' + toGroupIdElement.value;
-		}
-
-		return selectFileEntryId;
-	}
-
-	function <portlet:namespace />createSelectFileEntryURL(url) {
-		var toGroupIdElement = Liferay.Util.getFormElement(form, 'toGroupId');
-
-		if (toGroupIdElement) {
-			url += '&<portlet:namespace />groupId=' + toGroupIdElement.value;
-		}
-
-		var scopeGroupId = <%= themeDisplay.getScopeGroupId() %>;
-
-		if (scopeGroupId != toGroupIdElement.value) {
-			url +=
-				'&<portlet:namespace />folderId=<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>';
-		}
-
-		var toFileEntryIdElement = Liferay.Util.getFormElement(
-			form,
-			'toFileEntryId'
-		);
-
-		if (toFileEntryIdElement) {
-			url +=
-				'&<portlet:namespace />fileEntryId=' + toFileEntryIdElement.value;
-		}
-
-		return url;
-	}
+<script>
+	var form = document.<portlet:namespace />fm;
 
 	function <portlet:namespace />saveFileShortcut() {
 		Liferay.Util.postForm(form, {
@@ -261,25 +151,5 @@ renderResponse.setTitle(headerTitle);
 					'<%= (fileShortcut == null) ? Constants.ADD : Constants.UPDATE %>'
 			}
 		});
-	}
-
-	function <portlet:namespace />selectFileEntry(fileEntryId, title) {
-		var toFileEntryIdElement = Liferay.Util.getFormElement(
-			form,
-			'toFileEntryId'
-		);
-
-		if (toFileEntryIdElement) {
-			toFileEntryIdElement.value = fileEntryId;
-		}
-
-		var toFileEntryTitleElement = Liferay.Util.getFormElement(
-			form,
-			'toFileEntryTitle'
-		);
-
-		if (toFileEntryTitleElement) {
-			toFileEntryTitleElement.value = title;
-		}
 	}
 </script>

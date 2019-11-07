@@ -18,6 +18,7 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.DLEditFileShortcutDisplayContext;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -60,6 +61,7 @@ public class EditFileShortcutMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_EDIT_FILE_SHORTCUT_DISPLAY_CONTEXT,
 				new DLEditFileShortcutDisplayContext(
+					_itemSelector,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
 
@@ -95,6 +97,9 @@ public class EditFileShortcutMVCRenderCommand implements MVCRenderCommand {
 	)
 	private volatile ModelResourcePermission<FileShortcut>
 		_fileShortcutModelResourcePermission;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

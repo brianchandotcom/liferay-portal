@@ -21,6 +21,9 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.aop.AopService;
@@ -191,6 +194,46 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		long groupId, long classNameId, long classPK,
 		long layoutPageTemplateEntryId) {
 
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
+				_portal.getClassName(classNameId));
+
+		if (infoDisplayContributor == null) {
+			return LayoutConstants.DEFAULT_PLID;
+		}
+
+		InfoDisplayObjectProvider infoDisplayObjectProvider = null;
+
+		try {
+			infoDisplayObjectProvider =
+				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+		}
+
+		if (infoDisplayObjectProvider == null) {
+			return LayoutConstants.DEFAULT_PLID;
+		}
+
+		long classTypeId = infoDisplayObjectProvider.getClassTypeId();
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry = Optional.ofNullable(
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId)
+		).orElseGet(
+			() ->
+				_layoutPageTemplateEntryLocalService.
+					fetchDefaultLayoutPageTemplateEntry(
+						groupId, classNameId, classTypeId)
+		);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry.getPlid();
+		}
+
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
 				getAssetRendererFactoryByClassNameId(classNameId);
@@ -217,22 +260,6 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			return LayoutConstants.DEFAULT_PLID;
 		}
 
-		long classTypeId = assetEntry.getClassTypeId();
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry = Optional.ofNullable(
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId)
-		).orElseGet(
-			() ->
-				_layoutPageTemplateEntryLocalService.
-					fetchDefaultLayoutPageTemplateEntry(
-						groupId, classNameId, classTypeId)
-		);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry.getPlid();
-		}
-
 		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			assetEntry.getLayoutUuid(), assetEntry.getGroupId(), false);
 
@@ -255,6 +282,9 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

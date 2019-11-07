@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_PANEL_CHECKBOX_INPUT</td>
-	<td>//span[contains(.,'${key_componentOrPortletName}')]/../span[contains(@class,'tree-node-checkbox')]/input</td>
+	<td>//input[@type="hidden"][contains(@id,'panelSelectedPortlets')][contains(@value,'${key_componentOrPortletName}')]</td>
 	<td></td>
 </tr>
 <tr>

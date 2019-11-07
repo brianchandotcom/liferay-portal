@@ -54,7 +54,12 @@ const SELECTOR_TRIGGER = `
 	.upper-tbar [title]:not(.lfr-portal-tooltip)
 `;
 
-const TRIGGER_HIDE_EVENTS = ['click', 'mouseleave', 'MSPointerUp', 'touchend'];
+const TRIGGER_HIDE_EVENTS = [
+	'mouseleave',
+	'mouseup',
+	'MSPointerUp',
+	'touchend'
+];
 const TRIGGER_SHOW_EVENTS = [
 	'mouseenter',
 	'mouseup',

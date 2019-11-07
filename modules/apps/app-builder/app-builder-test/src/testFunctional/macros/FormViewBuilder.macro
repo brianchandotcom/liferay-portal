@@ -39,4 +39,29 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
+	macro navigateToFormViewTab {
+		AppBuilderAdmin.openItem(customObjectName = "${customObjectName}");
+
+	}
+
+	macro addFormView {
+
+		if (IsElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB")){
+			FormViewBuilder.navigateToFormViewTab();
+		}
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		FormViewBuilder.setName(formViewName = "${formViewName}");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "${formViewName}");
+
+		AppBuilderAdmin.openItem(customObjectName = "${formViewName}");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+
+	}
+
 }

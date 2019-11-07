@@ -212,19 +212,10 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		var fieldType = "Text Field";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+		FormViewBuilder.addFormView(
+			customObjectName = "my custom object",
+			formViewName = "My Form View",
+			fieldType = "Text Field");
 	}
 
 	@description = "Add a Form View with a Upload field"

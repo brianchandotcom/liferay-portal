@@ -125,6 +125,15 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 			return _hasPrivateAppsDir;
 		}
 
+		File dxpAppsDir = getFile(
+			"modules/dxp/apps", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (dxpAppsDir != null) {
+			_hasPrivateAppsDir = true;
+
+			return _hasPrivateAppsDir;
+		}
+
 		File privateAppsDir = getFile(
 			"modules/private/apps", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 

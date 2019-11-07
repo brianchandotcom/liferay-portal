@@ -627,6 +627,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		if (_projectPathPrefix.startsWith(":private:apps") ||
+			_projectPathPrefix.startsWith(":dxp:apps") ||
 			(!privateOnly && _projectPathPrefix.startsWith(":apps:"))) {
 
 			return true;

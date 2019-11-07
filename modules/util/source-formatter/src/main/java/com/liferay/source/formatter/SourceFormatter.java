@@ -642,6 +642,7 @@ public class SourceFormatter {
 			_allFileNames, new String[0],
 			new String[] {
 				"**/modules/apps/**/build.xml",
+				"**/modules/dxp/apps/**/build.xml",
 				"**/modules/private/apps/**/build.xml"
 			},
 			_sourceFormatterExcludes, true);
@@ -654,6 +655,10 @@ public class SourceFormatter {
 				pluginBuildFileName);
 
 			int x = absolutePath.indexOf("/modules/apps/");
+
+			if (x == -1) {
+				x = absolutePath.indexOf("/modules/dxp/apps/");
+			}
 
 			if (x == -1) {
 				x = absolutePath.indexOf("/modules/private/apps/");

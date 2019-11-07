@@ -24,16 +24,26 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsImpl;
+import com.liferay.portlet.internal.PortalContextImpl;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.assertj.core.api.AbstractUriAssert;
+import org.assertj.core.api.Assertions;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,6 +52,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.portlet.MockPortletURL;
 
 /**
  * @author Cristina González
@@ -65,6 +76,37 @@ public class DLEditFileShortcutDisplayContextTest {
 		languageResources.setConfig(StringPool.BLANK);
 
 		PropsUtil.setProps(new PropsImpl());
+	}
+
+	@Test
+	public void testGetEditFileShortcutURLWithAttribute()
+		throws URISyntaxException {
+
+		FileShortcut fileShortcut = _addRandomFileShortcut();
+
+		DLEditFileShortcutDisplayContext dlEditFileShortcutDisplayContext =
+			_getDLEditFileShortcutDisplayContext(
+				new MockHttpServletRequestBuilder().withAttribute(
+					WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT, fileShortcut
+				).build());
+
+		AbstractUriAssert<?> abstractUriAssert = Assertions.assertThat(
+			new URI(dlEditFileShortcutDisplayContext.getEditFileShortcutURL()));
+
+		abstractUriAssert.hasParameter(Constants.CMD, Constants.UPDATE);
+	}
+
+	@Test
+	public void testGetEditFileShortcutURLWithoutAttribute()
+		throws URISyntaxException {
+
+		DLEditFileShortcutDisplayContext dlEditFileShortcutDisplayContext =
+			_getDLEditFileShortcutDisplayContext(new MockHttpServletRequest());
+
+		AbstractUriAssert<?> abstractUriAssert = Assertions.assertThat(
+			new URI(dlEditFileShortcutDisplayContext.getEditFileShortcutURL()));
+
+		abstractUriAssert.hasParameter(Constants.CMD, Constants.ADD);
 	}
 
 	@Test
@@ -275,12 +317,38 @@ public class DLEditFileShortcutDisplayContextTest {
 		return new DLEditFileShortcutDisplayContext(
 			_dlAppService, _itemSelector, _language,
 			new MockPortletRenderRequest(httpServletRequest),
-			new MockLiferayPortletRenderResponse());
+			new MockPortletRenderResponse());
 	}
 
 	private DLAppService _dlAppService;
 	private ItemSelector _itemSelector;
 	private Language _language;
+
+	private class MockActionPortletURL extends MockPortletURL {
+
+		public MockActionPortletURL() {
+			super(new PortalContextImpl(), "urlType");
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+
+			Map<String, String[]> parameterMap = getParameterMap();
+
+			for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+				sb.append(entry.getKey());
+				sb.append("=");
+				sb.append(entry.getValue()[0]);
+				sb.append("&");
+			}
+
+			sb.setLength(sb.length() - 1);
+
+			return "http://localhost/mockportlet?" + sb.toString();
+		}
+
+	}
 
 	private class MockPortletRenderRequest
 		extends MockLiferayPortletRenderRequest {
@@ -305,6 +373,16 @@ public class DLEditFileShortcutDisplayContextTest {
 		}
 
 		private final HttpServletRequest _httpServletRequest;
+
+	}
+
+	private class MockPortletRenderResponse
+		extends MockLiferayPortletRenderResponse {
+
+		@Override
+		public PortletURL createActionURL() {
+			return new MockActionPortletURL();
+		}
 
 	}
 

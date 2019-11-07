@@ -38,4 +38,26 @@
 			font-size: 1rem;
 		}
 	}
+
+	&-og {
+		width: 535px;
+
+		#{$component}-image {
+			margin-bottom: 0.75rem;
+		}
+
+		#{$component}-url {
+			color: $secondary;
+			text-transform: uppercase;
+		}
+
+		#{$component}-title {
+			color: $dark;
+			font-weight: 600;
+		}
+	}
+}
+
+.aspect-ratio-191-to-100 {
+	@include clay-aspect-ratio(1.91, 1);
 }

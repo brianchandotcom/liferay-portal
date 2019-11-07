@@ -208,6 +208,55 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		</c:otherwise>
 	</c:choose>
 
+	<div class="form-group">
+		<label><liferay-ui:message key="preview" /></label>
+
+		<div>
+
+			<%
+			Map<String, Object> dataOG = new HashMap<>();
+
+			dataOG.put(
+				"targets",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"defaultValue", layoutsAdminDisplayContext.getOpenGraphImageURL()
+					).put(
+						"id", "openGraphImageURL"
+					).put(
+						"type", "imgUrl"
+					),
+					JSONUtil.put(
+						"defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURL()
+					).put(
+						"id", "canonicalURL"
+					).put(
+						"type", "canonicalURL"
+					),
+					JSONUtil.put(
+						"id", "openGraphDescription"
+					).put(
+						"type", "description"
+					),
+					JSONUtil.put(
+						"defaultValue", layoutsAdminDisplayContext.getPageTitle()
+					).put(
+						"id", "openGraphTitle"
+					).put(
+						"type", "title"
+					)));
+
+			dataOG.put("displayType", "og");
+			dataOG.put("titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix());
+			%>
+
+			<react:component
+				data="<%= dataOG %>"
+				module="js/seo/PreviewSeo.es"
+			/>
+		</div>
+	</div>
+
 	<portlet:actionURL name="/layout/upload_open_graph_image" var="uploadOpenGraphImageURL" />
 
 	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">

@@ -19,34 +19,61 @@ const MAX_LENGTH_DESCIPTION = 160;
 
 const PreviewSeo = ({
 	description = '',
+	displayType = 'serp',
+	imgUrl = '',
 	title = '',
 	titleSuffix = '',
 	url = ''
-}) => (
-	<div className="preview-seo preview-seo-serp">
-		<div className="preview-seo-title text-truncate">
+}) => {
+	const titleUrl = [
+		<div className="preview-seo-title text-truncate" key="title">
 			{title}
 			{titleSuffix && ` - ${titleSuffix}`}
+		</div>,
+		<div className="preview-seo-url text-truncate" key="url">
+			{url}
 		</div>
-		<div className="preview-seo-url text-truncate">{url}</div>
-		<div className="preview-seo-description">
-			{description.length < MAX_LENGTH_DESCIPTION
-				? description
-				: `${description.slice(0, MAX_LENGTH_DESCIPTION)}\u2026`}
+	];
+
+	return (
+		<div className={`preview-seo preview-seo-${displayType}`}>
+			{imgUrl && (
+				<div className="aspect-ratio aspect-ratio-191-to-100 preview-seo-image">
+					<img
+						alt=""
+						className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-flush"
+						src={imgUrl}
+					/>
+				</div>
+			)}
+			{displayType === 'og' ? titleUrl.reverse() : titleUrl}
+			<div className="preview-seo-description">
+				{description.length < MAX_LENGTH_DESCIPTION
+					? description
+					: `${description.slice(0, MAX_LENGTH_DESCIPTION)}\u2026`}
+			</div>
 		</div>
-	</div>
-);
+	);
+};
 PreviewSeo.propTypes = {
 	description: PropTypes.string,
+	displayType: PropTypes.string,
+	imgUrl: PropTypes.string,
 	title: PropTypes.string,
 	titleSuffix: PropTypes.string,
 	url: PropTypes.string
 };
 
-const PreviewSeoContainer = ({portletNamespace, targets, titleSuffix}) => {
+const PreviewSeoContainer = ({
+	displayType,
+	portletNamespace,
+	targets,
+	titleSuffix
+}) => {
 	const [description, setDescription] = useState('');
 	const [title, setTitle] = useState('');
 	const [url, setUrl] = useState('');
+	const [imgUrl, setImgUrl] = useState('');
 
 	useEffect(() => {
 		const setPreviewState = ({defaultValue = '', type, value}) => {
@@ -60,6 +87,8 @@ const PreviewSeoContainer = ({portletNamespace, targets, titleSuffix}) => {
 				setTitle(value);
 			} else if (type === 'canonicalURL') {
 				setUrl(value);
+			} else if (type === 'imgUrl') {
+				setImgUrl(value);
 			}
 		};
 
@@ -109,6 +138,8 @@ const PreviewSeoContainer = ({portletNamespace, targets, titleSuffix}) => {
 	return (
 		<PreviewSeo
 			description={description}
+			displayType={displayType}
+			imgUrl={imgUrl}
 			title={title}
 			titleSuffix={titleSuffix}
 			url={url}

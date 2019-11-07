@@ -14,10 +14,12 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.util.comparator.FolderArticleModifiedDateComparator;
@@ -57,11 +59,14 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalArticleItemSelectorViewDisplayContext {
 
 	public JournalArticleItemSelectorViewDisplayContext(
-		HttpServletRequest httpServletRequest, String itemSelectedEventName,
+		HttpServletRequest httpServletRequest,
+		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
+		String itemSelectedEventName,
 		JournalArticleItemSelectorView journalArticleItemSelectorView,
 		PortletURL portletURL, boolean search) {
 
 		_httpServletRequest = httpServletRequest;
+		_infoItemItemSelectorCriterion = infoItemItemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
 		_journalArticleItemSelectorView = journalArticleItemSelectorView;
 		_portletURL = portletURL;
@@ -73,6 +78,24 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public String getDDMStructureKey() {
+		if (_ddmStructureKey != null) {
+			return _ddmStructureKey;
+		}
+
+		String ddmStructureKey = ParamUtil.getString(
+			_httpServletRequest, "ddmStructureKey");
+
+		if (Validator.isNull(ddmStructureKey)) {
+			ddmStructureKey = ParamUtil.getString(
+				_httpServletRequest, "itemSubtype");
+		}
+
+		_ddmStructureKey = ddmStructureKey;
+
+		return _ddmStructureKey;
 	}
 
 	public String getDisplayStyle() {
@@ -207,19 +230,37 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		articleSearchContainer.setOrderByComparator(folderOrderByComparator);
 		articleSearchContainer.setOrderByType(_getOrderByType());
 
-		int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(
-			_themeDisplay.getScopeGroupId(), 0, _getFolderId(),
-			WorkflowConstants.STATUS_APPROVED);
+		if (Validator.isNotNull(getDDMStructureKey())) {
+			int total = JournalArticleServiceUtil.getArticlesCountByStructureId(
+				_themeDisplay.getScopeGroupId(), getDDMStructureKey(),
+				WorkflowConstants.STATUS_APPROVED);
 
-		articleSearchContainer.setTotal(total);
+			articleSearchContainer.setTotal(total);
 
-		List results = JournalFolderServiceUtil.getFoldersAndArticles(
-			_themeDisplay.getScopeGroupId(), 0, _getFolderId(),
-			WorkflowConstants.STATUS_APPROVED, _themeDisplay.getLocale(),
-			articleSearchContainer.getStart(), articleSearchContainer.getEnd(),
-			folderOrderByComparator);
+			List results = JournalArticleServiceUtil.getArticlesByStructureId(
+				_themeDisplay.getScopeGroupId(), getDDMStructureKey(),
+				WorkflowConstants.STATUS_APPROVED,
+				articleSearchContainer.getStart(),
+				articleSearchContainer.getEnd(),
+				articleSearchContainer.getOrderByComparator());
 
-		articleSearchContainer.setResults(results);
+			articleSearchContainer.setResults(results);
+		}
+		else {
+			int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(
+				_themeDisplay.getScopeGroupId(), 0, _getFolderId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+			articleSearchContainer.setTotal(total);
+
+			List results = JournalFolderServiceUtil.getFoldersAndArticles(
+				_themeDisplay.getScopeGroupId(), 0, _getFolderId(),
+				WorkflowConstants.STATUS_APPROVED, _themeDisplay.getLocale(),
+				articleSearchContainer.getStart(),
+				articleSearchContainer.getEnd(), folderOrderByComparator);
+
+			articleSearchContainer.setResults(results);
+		}
 
 		_articleSearchContainer = articleSearchContainer;
 
@@ -291,10 +332,12 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	}
 
 	private SearchContainer _articleSearchContainer;
+	private String _ddmStructureKey;
 	private String _displayStyle;
 	private JournalFolder _folder;
 	private Long _folderId;
 	private final HttpServletRequest _httpServletRequest;
+	private final InfoItemItemSelectorCriterion _infoItemItemSelectorCriterion;
 	private final String _itemSelectedEventName;
 	private final JournalArticleItemSelectorView
 		_journalArticleItemSelectorView;

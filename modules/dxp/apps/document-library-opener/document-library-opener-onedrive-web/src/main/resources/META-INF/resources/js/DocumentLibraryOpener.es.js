@@ -115,17 +115,18 @@ class DocumentLibraryOpener {
 			mainFieldLabel: Liferay.Language.get('title'),
 			mainFieldName: 'title',
 			namespace: this._namespace,
+			onFormSuccess: serverResponseContent => {
+				if (serverResponseContent.oneDriveBackgroundTaskStatusURL) {
+					this.open({
+						dialogMessage: serverResponseContent.dialogMessage,
+						refresh: true,
+						statusURL:
+							serverResponseContent.oneDriveBackgroundTaskStatusURL
+					});
+				}
+			},
 			spritemap:
 				Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg'
-		}).on('formSuccess', serverResponseContent => {
-			if (serverResponseContent.oneDriveBackgroundTaskStatusURL) {
-				this.open({
-					dialogMessage: serverResponseContent.dialogMessage,
-					refresh: true,
-					statusURL:
-						serverResponseContent.oneDriveBackgroundTaskStatusURL
-				});
-			}
 		});
 	}
 

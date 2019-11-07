@@ -38,6 +38,7 @@ const SimpleInputModal = ({
 	mainFieldLabel,
 	mainFieldName,
 	namespace,
+	onFormSuccess,
 	placeholder
 }) => {
 	const isMounted = useIsMounted();
@@ -74,7 +75,17 @@ const SimpleInputModal = ({
 
 						closeModal();
 
-						navigate(responseContent.redirectURL);
+						if (responseContent.redirectURL) {
+							navigate(responseContent.redirectURL);
+						} else {
+							if (onFormSuccess) {
+								onFormSuccess({
+									...responseContent,
+									redirectURL:
+										responseContent.redirectURL || ''
+								});
+							}
+						}
 					}
 				}
 			})
@@ -148,7 +159,10 @@ const SimpleInputModal = ({
 
 							{errorMessage && (
 								<div className="form-feedback-item">
-									<ClayIcon symbol="exclamation-full" />
+									<ClayIcon
+										className="inline-item inline-item-before"
+										symbol="exclamation-full"
+									/>
 
 									{errorMessage}
 								</div>

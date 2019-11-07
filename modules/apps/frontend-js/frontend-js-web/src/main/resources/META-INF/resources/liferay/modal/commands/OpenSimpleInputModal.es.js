@@ -24,7 +24,7 @@ const DEFAULT_RENDER_DATA = {
 	portletId: 'UNKNOWN_PORTLET_ID'
 };
 
-const getDefaultModalContainer = () => {
+function getDefaultModalContainer() {
 	let container = document.getElementById(DEFAULT_MODAL_CONTAINER_ID);
 
 	if (!container) {
@@ -34,39 +34,58 @@ const getDefaultModalContainer = () => {
 	}
 
 	return container;
-};
+}
 
-function openSimpleInputModalImplementation(data) {
-	const container = getDefaultModalContainer();
+function dispose() {
+	unmountComponentAtNode(getDefaultModalContainer());
+}
 
-	unmountComponentAtNode(container);
-
-	const closeModal = () => {
-		unmountComponentAtNode(container);
-	};
-
-	const SimpleInputModalComponent = () => (
+function SimpleInputModalComponent({
+	alert,
+	checkboxFieldLabel,
+	checkboxFieldName,
+	checkboxFieldValue,
+	dialogTitle,
+	formSubmitURL,
+	idFieldName,
+	idFieldValue,
+	mainFieldLabel,
+	mainFieldName,
+	namespace,
+	onFormSuccess,
+	placeholder
+}) {
+	return (
 		<SimpleInputModal
-			alert={data.alert}
-			checkboxFieldLabel={data.checkboxFieldLabel}
-			checkboxFieldName={data.checkboxFieldName}
-			checkboxFieldValue={data.checkboxFieldValue}
-			closeModal={closeModal}
-			dialogTitle={data.dialogTitle}
-			formSubmitURL={data.formSubmitURL}
-			idFieldName={data.idFieldName}
-			idFieldValue={data.idFieldValue}
+			alert={alert}
+			checkboxFieldLabel={checkboxFieldLabel}
+			checkboxFieldName={checkboxFieldName}
+			checkboxFieldValue={checkboxFieldValue}
+			closeModal={dispose}
+			dialogTitle={dialogTitle}
+			formSubmitURL={formSubmitURL}
+			idFieldName={idFieldName}
+			idFieldValue={idFieldValue}
 			initialVisible="true"
-			mainFieldLabel={data.mainFieldLabel}
-			mainFieldName={data.mainFieldName}
-			namespace={data.namespace}
-			placeholder={data.placeholder}
+			mainFieldLabel={mainFieldLabel}
+			mainFieldName={mainFieldName}
+			namespace={namespace}
+			onFormSuccess={onFormSuccess}
+			placeholder={placeholder}
 		/>
 	);
+}
+
+function openSimpleInputModalImplementation(data) {
+	dispose();
 
 	const renderData = DEFAULT_RENDER_DATA;
 
-	render(SimpleInputModalComponent, {...data, ...renderData}, container);
+	render(
+		SimpleInputModalComponent,
+		{...data, ...renderData},
+		getDefaultModalContainer()
+	);
 }
 
 let didEmitDeprecationWarning = false;

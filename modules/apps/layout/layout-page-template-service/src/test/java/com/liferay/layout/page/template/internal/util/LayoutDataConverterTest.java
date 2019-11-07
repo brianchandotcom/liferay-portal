@@ -16,10 +16,14 @@ package com.liferay.layout.page.template.internal.util;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.FileImpl;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * @author Rubén Pulido
@@ -31,6 +35,30 @@ public class LayoutDataConverterTest {
 		new FileUtil().setFile(new FileImpl());
 
 		new JSONFactoryUtil().setJSONFactory(new JSONFactoryImpl());
+	}
+
+	@Test
+	public void testConvertEmpty() throws Exception {
+		String actualLayoutData = LayoutDataConverter.convert(
+			_read("layout_data_v0_empty.json"));
+
+		JSONObject actualLayoutDataJSONObject =
+			JSONFactoryUtil.createJSONObject(actualLayoutData);
+
+		JSONObject rootItemsJSONObject =
+			actualLayoutDataJSONObject.getJSONObject("rootItems");
+
+		String mainUUID = rootItemsJSONObject.getString("main");
+
+		String expectedLayoutData = StringUtil.replace(
+			_read("expected_layout_data_v1_empty.json"), "MAIN-UUID", mainUUID);
+
+		JSONObject expectedLayoutDataJSONObject =
+			JSONFactoryUtil.createJSONObject(expectedLayoutData);
+
+		Assert.assertEquals(
+			expectedLayoutDataJSONObject.toJSONString(),
+			actualLayoutDataJSONObject.toJSONString());
 	}
 
 	private String _read(String fileName) throws Exception {

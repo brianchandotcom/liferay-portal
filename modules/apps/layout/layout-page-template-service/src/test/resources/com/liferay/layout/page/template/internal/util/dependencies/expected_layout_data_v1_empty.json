@@ -1,0 +1,15 @@
+{
+	"items": {
+		"MAIN-UUID": {
+			"children": [],
+			"config": {},
+			"itemId": "MAIN-UUID",
+			"parentId": "",
+			"type": "root"
+		}
+	},
+	"rootItems": {
+		"main": "MAIN-UUID"
+	},
+	"version": 1
+}

@@ -108,9 +108,17 @@ class DocumentLibrary extends Component {
 	}
 
 	_handleClearButtonClicked() {
-		this.setState({
-			value: ''
-		});
+		this.setState(
+			{
+				value: ''
+			},
+			() => {
+				this.emit('fieldEdited', {
+					fieldInstance: this,
+					value: ''
+				});
+			}
+		);
 	}
 
 	_handleFieldChanged(event) {

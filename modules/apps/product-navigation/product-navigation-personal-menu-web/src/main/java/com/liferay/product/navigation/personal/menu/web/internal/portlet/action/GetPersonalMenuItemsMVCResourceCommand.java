@@ -147,9 +147,9 @@ public class GetPersonalMenuItemsMVCResourceCommand
 					ParamUtil.getString(portletRequest, "currentURL"),
 					"doAsUserLanguageId", doAsUserLanguageId)
 			).put(
-				"symbolRight", "globe"
-			).put(
 				"label", changeLanguageLabel
+			).put(
+				"symbolRight", "globe"
 			);
 
 			jsonArray.put(jsonObject2);

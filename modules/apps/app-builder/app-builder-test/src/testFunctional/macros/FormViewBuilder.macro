@@ -43,6 +43,21 @@ definition {
 		AppBuilderAdmin.switchTab(tabName = "Form Views");
 	}
 
+	macro addFormViewAndValidateFieldLabel {
+
+		FormViewBuilder.addFormView(
+			formViewName = "${formViewName}",
+			fieldType = "${fieldType}"));
+		)
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "${formViewName}");
+
+		AppBuilderAdmin.openItem(itemName = "${formViewName}");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+
+	}
+
 	macro addFormView {
 
 		if (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_FIELDS_TAB")){
@@ -55,13 +70,5 @@ definition {
 		FormViewBuilder.setName(formViewName = "${formViewName}");
 
 		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "${formViewName}");
-
-		AppBuilderAdmin.openItem(itemName = "${formViewName}");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
-
 	}
-
 }

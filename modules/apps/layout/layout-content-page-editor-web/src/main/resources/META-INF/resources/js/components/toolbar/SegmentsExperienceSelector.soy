@@ -46,6 +46,7 @@
 		segmentsEntryId: string,
 		name: string
 	]>}
+	{@param? lockedActiveSegmentsExperience: bool }
 	{@param? segmentsExperienceId: string}
 	{@param? openDropdown: bool}
 	{@param? portletNamespace: string}
@@ -84,13 +85,20 @@
 			</label>
 
 			<button
-				class="btn btn-sm btn-secondary form-control-select mr-2 text-left text-truncate"
+				class="align-items-end btn btn-sm btn-secondary d-inline-flex form-control-select justify-content-between mr-2 text-left text-truncate"
 				data-onclick="{$_handleDropdownButtonClick}"
 				data-onblur="{$_handleDropdownBlur}"
 				type="button"
 				id="{$portletNamespace}SegmentsExperienceSelector"
 			>
-				{$activeSegmentsExperienceName}
+			  <span>{$activeSegmentsExperienceName}</span>
+
+				{if $lockedActiveSegmentsExperience}
+					{call ClayIcon.render}
+						{param spritemap: $spritemap /}
+						{param symbol: 'lock' /}
+					{/call}
+				{/if}
 			</button>
 
 			<div

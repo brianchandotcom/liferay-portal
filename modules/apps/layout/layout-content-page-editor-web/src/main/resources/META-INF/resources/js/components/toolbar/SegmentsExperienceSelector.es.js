@@ -208,6 +208,9 @@ class SegmentsExperienceSelector extends Component {
 			availableSegmentsEntriesList,
 			availableSegmentsExperiencesList,
 			classPK: state.classPK,
+			lockedActiveSegmentsExperience:
+				activeExperience &&
+				activeExperience.hasLockedSegmentsExperiment,
 			segmentsExperienceId: selectedSegmentsExperienceId
 		};
 

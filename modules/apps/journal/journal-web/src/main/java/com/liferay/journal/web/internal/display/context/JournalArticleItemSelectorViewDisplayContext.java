@@ -25,6 +25,7 @@ import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.util.comparator.FolderArticleModifiedDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleTitleComparator;
 import com.liferay.journal.web.internal.item.selector.JournalArticleItemSelectorView;
+import com.liferay.journal.web.internal.util.JournalPortletUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -89,8 +90,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			_httpServletRequest, "ddmStructureKey");
 
 		if (Validator.isNull(ddmStructureKey)) {
-			ddmStructureKey = ParamUtil.getString(
-				_httpServletRequest, "itemSubtype");
+			ddmStructureKey = _infoItemItemSelectorCriterion.getItemSubtype();
 		}
 
 		_ddmStructureKey = ddmStructureKey;
@@ -209,28 +209,19 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		SearchContainer articleSearchContainer = new SearchContainer(
 			_portletRequest, getPortletURL(), null, null);
 
-		OrderByComparator<Object> folderOrderByComparator = null;
-
-		boolean orderByAsc = false;
-
-		if (Objects.equals(_getOrderByType(), "asc")) {
-			orderByAsc = true;
-		}
-
-		if (Objects.equals(_getOrderByCol(), "modified-date")) {
-			folderOrderByComparator = new FolderArticleModifiedDateComparator(
-				orderByAsc);
-		}
-		else if (Objects.equals(_getOrderByCol(), "title")) {
-			folderOrderByComparator = new FolderArticleTitleComparator(
-				orderByAsc);
-		}
+		OrderByComparator<JournalArticle> orderByComparator =
+			JournalPortletUtil.getArticleOrderByComparator(
+				_getOrderByCol(), _getOrderByType());
 
 		articleSearchContainer.setOrderByCol(_getOrderByCol());
-		articleSearchContainer.setOrderByComparator(folderOrderByComparator);
+		articleSearchContainer.setOrderByComparator(orderByComparator);
 		articleSearchContainer.setOrderByType(_getOrderByType());
 
 		if (Validator.isNotNull(getDDMStructureKey())) {
+			OrderByComparator<JournalArticle> structuresOrderByComparator =
+				JournalPortletUtil.getArticleOrderByComparator(
+					_getOrderByCol(), _getOrderByType());
+
 			int total = JournalArticleServiceUtil.getArticlesCountByStructureId(
 				_themeDisplay.getScopeGroupId(), getDDMStructureKey(),
 				WorkflowConstants.STATUS_APPROVED);
@@ -241,8 +232,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				_themeDisplay.getScopeGroupId(), getDDMStructureKey(),
 				WorkflowConstants.STATUS_APPROVED,
 				articleSearchContainer.getStart(),
-				articleSearchContainer.getEnd(),
-				articleSearchContainer.getOrderByComparator());
+				articleSearchContainer.getEnd(), structuresOrderByComparator);
 
 			articleSearchContainer.setResults(results);
 		}
@@ -252,6 +242,23 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				WorkflowConstants.STATUS_APPROVED);
 
 			articleSearchContainer.setTotal(total);
+
+			OrderByComparator<Object> folderOrderByComparator = null;
+
+			boolean orderByAsc = false;
+
+			if (Objects.equals(_getOrderByType(), "asc")) {
+				orderByAsc = true;
+			}
+
+			if (Objects.equals(_getOrderByCol(), "modified-date")) {
+				folderOrderByComparator =
+					new FolderArticleModifiedDateComparator(orderByAsc);
+			}
+			else if (Objects.equals(_getOrderByCol(), "title")) {
+				folderOrderByComparator = new FolderArticleTitleComparator(
+					orderByAsc);
+			}
 
 			List results = JournalFolderServiceUtil.getFoldersAndArticles(
 				_themeDisplay.getScopeGroupId(), 0, _getFolderId(),

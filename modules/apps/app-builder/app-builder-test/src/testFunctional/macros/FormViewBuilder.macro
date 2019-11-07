@@ -56,7 +56,7 @@ definition {
 
 		FormViewBuilder.save();
 
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "${formViewName}");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "${formViewName}");
 
 		AppBuilderAdmin.openItem(itemName = "${formViewName}");
 

@@ -49,7 +49,7 @@ definition {
 
 		AppBuilderAdmin.gotoBack();
 
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "my custom object");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "my custom object");
 	}
 
 	@description = "Add a Form View with a Date field"

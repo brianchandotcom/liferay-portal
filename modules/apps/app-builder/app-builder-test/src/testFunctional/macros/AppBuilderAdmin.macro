@@ -115,7 +115,7 @@ definition {
 	macro validateItemNameOnTable {
 		AssertTextEquals(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
-			value1 = "${customObjectName}");
+			value1 = "${itemName}");
 	}
 
 	macro validateRequiredValidNameMessage {

@@ -186,6 +186,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
 		guardDuplicateAlias(actionRequest, editRankingMVCActionRequest);
+		guardDuplicateQueryString(actionRequest, editRankingMVCActionRequest);
 
 		String id = editRankingMVCActionRequest.getResultsRankingUid();
 

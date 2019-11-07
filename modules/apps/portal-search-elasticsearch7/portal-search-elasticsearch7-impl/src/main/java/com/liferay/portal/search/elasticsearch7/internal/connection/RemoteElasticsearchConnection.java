@@ -35,7 +35,6 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 
@@ -72,22 +71,15 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 	protected void configureSecurity(RestClientBuilder restClientBuilder) {
 		restClientBuilder.setHttpClientConfigCallback(
-			new RestClientBuilder.HttpClientConfigCallback() {
+			httpClientBuilder -> {
+				httpClientBuilder.setDefaultCredentialsProvider(
+					createCredentialsProvider());
 
-				@Override
-				public HttpAsyncClientBuilder customizeHttpClient(
-					HttpAsyncClientBuilder httpClientBuilder) {
-
-					httpClientBuilder.setDefaultCredentialsProvider(
-						createCredentialsProvider());
-
-					if (elasticsearchConfiguration.httpSSLEnabled()) {
-						httpClientBuilder.setSSLContext(createSSLContext());
-					}
-
-					return httpClientBuilder;
+				if (elasticsearchConfiguration.httpSSLEnabled()) {
+					httpClientBuilder.setSSLContext(createSSLContext());
 				}
 
+				return httpClientBuilder;
 			});
 	}
 
@@ -104,6 +96,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		return credentialsProvider;
 	}
 
+	@Override
 	protected RestHighLevelClient createRestHighLevelClient() {
 		String[] networkHostAddresses =
 			elasticsearchConfiguration.networkHostAddresses();

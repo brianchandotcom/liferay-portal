@@ -90,8 +90,7 @@ public class RemoteElasticsearchConnectionTest {
 
 	protected void assertNetworkHostAddress(String hostString, int port) {
 		RestHighLevelClient restHighLevelClient =
-			(RestHighLevelClient)
-				_remoteElasticsearchConnection.getRestHighLevelClient();
+			_remoteElasticsearchConnection.getRestHighLevelClient();
 
 		RestClient restClient = restHighLevelClient.getLowLevelClient();
 

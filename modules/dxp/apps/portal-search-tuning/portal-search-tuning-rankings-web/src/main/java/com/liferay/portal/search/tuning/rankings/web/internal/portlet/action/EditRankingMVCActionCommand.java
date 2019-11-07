@@ -440,12 +440,15 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		String index = _getIndexName(
 			actionRequest, editRankingMVCActionRequest);
 
+		String resultsRankingUid = ParamUtil.getString(
+			actionRequest, "resultsRankingUid");
+
 		if (duplicateQueryStringsDetector.detect(
 				duplicateQueryStringsDetector.builder().index(
 					index).queryStrings(
 						Arrays.asList(
 							editRankingMVCActionRequest.getQueryString())).
-								build())) {
+								unlessRankingId(resultsRankingUid).build())) {
 
 			return true;
 		}

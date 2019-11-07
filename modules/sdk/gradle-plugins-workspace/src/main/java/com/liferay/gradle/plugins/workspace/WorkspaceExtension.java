@@ -24,6 +24,7 @@ import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
 
+import groovy.lang.Closure;
 import groovy.lang.MissingPropertyException;
 
 import java.io.File;
@@ -43,6 +44,7 @@ import org.gradle.api.invocation.Gradle;
  */
 public class WorkspaceExtension {
 
+	@SuppressWarnings("serial")
 	public WorkspaceExtension(Settings settings) {
 		_gradle = settings.getGradle();
 
@@ -75,6 +77,28 @@ public class WorkspaceExtension {
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
 		_dockerImageLiferay = _getProperty(
 			settings, "docker.image.liferay", _DOCKER_IMAGE_LIFERAY);
+		_dockerImageId = new Closure<Void>(_gradle) {
+
+			@SuppressWarnings("unused")
+			public String doCall() {
+				Project rootProject = _gradle.getRootProject();
+
+				return String.format(
+					"%s-liferay:%s", rootProject.getName(),
+					rootProject.getVersion());
+			}
+
+		};
+		_dockerContainerId = new Closure<Void>(_gradle) {
+
+			@SuppressWarnings("unused")
+			public String doCall() {
+				Project rootProject = _gradle.getRootProject();
+
+				return rootProject.getName() + "-liferay";
+			}
+
+		};
 		_dockerDir = _getProperty(settings, "docker.dir", _DOCKER_DIR);
 		_environment = _getProperty(
 			settings, "environment",
@@ -117,8 +141,16 @@ public class WorkspaceExtension {
 		return GradleUtil.toFile(_gradle.getRootProject(), _configsDir);
 	}
 
+	public String getDockerContainerId() {
+		return GradleUtil.toString(_dockerContainerId);
+	}
+
 	public File getDockerDir() {
 		return GradleUtil.toFile(_gradle.getRootProject(), _dockerDir);
+	}
+
+	public String getDockerImageId() {
+		return GradleUtil.toString(_dockerImageId);
 	}
 
 	public String getDockerImageLiferay() {
@@ -199,8 +231,16 @@ public class WorkspaceExtension {
 		_configsDir = configsDir;
 	}
 
+	public void setDockerContainerId(Object dockerContainerId) {
+		_dockerContainerId = dockerContainerId;
+	}
+
 	public void setDockerDir(Object dockerDir) {
 		_dockerDir = dockerDir;
+	}
+
+	public void setDockerImageId(Object dockerImageId) {
+		_dockerImageId = dockerImageId;
 	}
 
 	public void setDockerImageLiferay(Object dockerImageLiferay) {
@@ -281,7 +321,9 @@ public class WorkspaceExtension {
 	private Object _bundleTokenPasswordFile;
 	private Object _bundleUrl;
 	private Object _configsDir;
+	private Object _dockerContainerId;
 	private Object _dockerDir;
+	private Object _dockerImageId;
 	private Object _dockerImageLiferay;
 	private Object _environment;
 	private final Gradle _gradle;

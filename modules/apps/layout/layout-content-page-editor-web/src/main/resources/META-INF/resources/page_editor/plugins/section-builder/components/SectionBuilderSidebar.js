@@ -49,7 +49,7 @@ export default function SectionBuilderSidebar() {
 	return (
 		<>
 			<SidebarPanelHeader>
-				{Liferay.Language.get('section-builder')}
+				{Liferay.Language.get('fragments')}
 			</SidebarPanelHeader>
 
 			<SidebarPanelContent>

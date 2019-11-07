@@ -58,9 +58,7 @@ const SidebarElements = () => {
 
 	return (
 		<>
-			<SidebarHeader>
-				{Liferay.Language.get('section-builder')}
-			</SidebarHeader>
+			<SidebarHeader>{Liferay.Language.get('fragments')}</SidebarHeader>
 
 			<div className="fragments-editor-sidebar-section__elements-panel fragments-editor-sidebar-section__panel p-3">
 				<SearchForm onChange={setSearchValue} value={searchValue} />

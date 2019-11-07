@@ -244,7 +244,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 			"com.liferay.portlet.bookmarks.model.BookmarksFolder",
 			"BookmarksFolder,groupId,folderId"
 		).put(
-			"com.liferay.portlet.dynamic.data.mapping.kernel." + "DDMStructure",
+			"com.liferay.portlet.dynamic.data.mapping.kernel.DDMStructure",
 			"DDMStructure,groupId,structureId"
 		).put(
 			"com.liferay.portlet.journal.model.JournalFolder",

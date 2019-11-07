@@ -45,10 +45,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
@@ -263,6 +265,14 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	public long getReadCount() {
+		return ViewCountManagerUtil.getViewCount(
+			getCompanyId(),
+			ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class),
+			getPrimaryKey());
 	}
 
 	@Override

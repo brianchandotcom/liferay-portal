@@ -134,8 +134,6 @@ public class MBThreadLocalServiceTest {
 
 		int expandoCount = ExpandoValueLocalServiceUtil.getExpandoValuesCount();
 
-		Assert.assertEquals(0, expandoCount);
-
 		MBMessage message = _addMessageWithExpando();
 
 		ExpandoBridge expandoBridge = message.getExpandoBridge();
@@ -145,15 +143,14 @@ public class MBThreadLocalServiceTest {
 
 		Assert.assertEquals("testExpandoValue", attributeValue);
 
-		expandoCount = ExpandoValueLocalServiceUtil.getExpandoValuesCount();
-
-		Assert.assertEquals(1, expandoCount);
+		Assert.assertEquals(
+			expandoCount + 1,
+			ExpandoValueLocalServiceUtil.getExpandoValuesCount());
 
 		MBThreadLocalServiceUtil.deleteThread(message.getThreadId());
 
-		expandoCount = ExpandoValueLocalServiceUtil.getExpandoValuesCount();
-
-		Assert.assertEquals(0, expandoCount);
+		Assert.assertEquals(
+			expandoCount, ExpandoValueLocalServiceUtil.getExpandoValuesCount());
 
 		ExpandoTableLocalServiceUtil.deleteTables(
 			PortalUtil.getDefaultCompanyId(), MBMessage.class.getName());

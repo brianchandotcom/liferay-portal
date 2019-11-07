@@ -79,12 +79,9 @@ class LayoutPageTemplateEntryDropdownDefaultEventHandler extends DefaultEventHan
 
 				this.one('#layoutPageTemplateEntryId').value =
 					itemData.layoutPageTemplateEntryId;
-				this.one('#fileEntryId').value =
-					itemValue.fileEntryId;
+				this.one('#fileEntryId').value = itemValue.fileEntryId;
 
-				submitForm(
-					this.one('#layoutPageTemplateEntryPreviewFm')
-				);
+				submitForm(this.one('#layoutPageTemplateEntryPreviewFm'));
 			}
 		});
 

@@ -23,25 +23,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 FileShortcut fileShortcut = (FileShortcut)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT);
 
-long fileShortcutId = BeanParamUtil.getLong(fileShortcut, request, "fileShortcutId");
-
-long repositoryId = BeanParamUtil.getLong(fileShortcut, request, "repositoryId");
-long folderId = BeanParamUtil.getLong(fileShortcut, request, "folderId");
-
-long toFileEntryId = BeanParamUtil.getLong(fileShortcut, request, "toFileEntryId");
-
-FileEntry toFileEntry = null;
-
-if (toFileEntryId > 0) {
-	try {
-		toFileEntry = DLAppServiceUtil.getFileEntry(toFileEntryId);
-
-		toFileEntry = toFileEntry.toEscapedModel();
-	}
-	catch (Exception e) {
-	}
-}
-
 String headerTitle = (fileShortcut != null) ? LanguageUtil.format(request, "shortcut-to-x", fileShortcut.getToTitle(), false) : LanguageUtil.get(request, "new-file-shortcut");
 
 renderResponse.setTitle(headerTitle);
@@ -55,10 +36,10 @@ renderResponse.setTitle(headerTitle);
 	<aui:form action="<%= editFileShortcutURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileShortcut();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="fileShortcutId" type="hidden" value="<%= fileShortcutId %>" />
-		<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
-		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
-		<aui:input name="toFileEntryId" type="hidden" value="<%= toFileEntryId %>" />
+		<aui:input name="fileShortcutId" type="hidden" value="<%= dlEditFileShortcutDisplayContext.getFileShortcutId() %>" />
+		<aui:input name="repositoryId" type="hidden" value="<%= dlEditFileShortcutDisplayContext.getRepositoryId() %>" />
+		<aui:input name="folderId" type="hidden" value="<%= dlEditFileShortcutDisplayContext.getFolderId() %>" />
+		<aui:input name="toFileEntryId" type="hidden" value="<%= dlEditFileShortcutDisplayContext.getToFileEntryId() %>" />
 
 		<liferay-ui:error exception="<%= FileShortcutPermissionException.class %>" message="you-do-not-have-permission-to-create-a-shortcut-to-the-selected-document" />
 		<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="the-document-could-not-be-found" />
@@ -69,18 +50,14 @@ renderResponse.setTitle(headerTitle);
 					<liferay-ui:message key="you-can-create-a-shortcut-to-any-document-that-you-have-read-access-for" />
 				</div>
 
-				<%
-				String toFileEntryTitle = BeanPropertiesUtil.getString(toFileEntry, "title");
-				%>
-
 				<div class="form-group">
-					<aui:input label="document" name="toFileEntryTitle" type="resource" value="<%= HtmlUtil.unescape(toFileEntryTitle) %>" />
+					<aui:input label="document" name="toFileEntryTitle" type="resource" value="<%= dlEditFileShortcutDisplayContext.getToFileEntryTitle() %>" />
 
 					<aui:button name="selectToFileEntryButton" value="select" />
 				</div>
 			</aui:fieldset>
 
-			<c:if test="<%= fileShortcut == null %>">
+			<c:if test="<%= dlEditFileShortcutDisplayContext.isPermissionConfigurable() %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 					<liferay-ui:input-permissions
 						modelName="<%= DLFileShortcutConstants.getClassName() %>"

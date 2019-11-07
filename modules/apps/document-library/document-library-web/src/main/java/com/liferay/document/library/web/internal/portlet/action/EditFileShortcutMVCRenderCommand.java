@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.DLEditFileShortcutDisplayContext;
 import com.liferay.item.selector.ItemSelector;
@@ -61,7 +62,7 @@ public class EditFileShortcutMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_EDIT_FILE_SHORTCUT_DISPLAY_CONTEXT,
 				new DLEditFileShortcutDisplayContext(
-					_itemSelector,
+					_dlAppService, _itemSelector,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
 
@@ -91,6 +92,9 @@ public class EditFileShortcutMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(pe);
 		}
 	}
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileShortcut)"

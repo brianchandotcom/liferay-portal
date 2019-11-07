@@ -14,13 +14,21 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
 
@@ -30,12 +38,24 @@ import javax.portlet.PortletURL;
 public class DLEditFileShortcutDisplayContext {
 
 	public DLEditFileShortcutDisplayContext(
-		ItemSelector itemSelector, LiferayPortletRequest liferayPortletRequest,
+		DLAppService dlAppService, ItemSelector itemSelector,
+		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
+		_dlAppService = dlAppService;
 		_itemSelector = itemSelector;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+	}
+
+	public long getFileShortcutId() {
+		return BeanParamUtil.getLong(
+			_getFileShortcut(), _liferayPortletRequest, "fileShortcutId");
+	}
+
+	public long getFolderId() {
+		return BeanParamUtil.getLong(
+			_getFileShortcut(), _liferayPortletRequest, "folderId");
 	}
 
 	public String getItemSelectorURL() {
@@ -53,6 +73,50 @@ public class DLEditFileShortcutDisplayContext {
 		return itemSelectorURL.toString();
 	}
 
+	public long getRepositoryId() {
+		return BeanParamUtil.getLong(
+			_getFileShortcut(), _liferayPortletRequest, "repositoryId");
+	}
+
+	public long getToFileEntryId() {
+		return BeanParamUtil.getLong(
+			_getFileShortcut(), _liferayPortletRequest, "toFileEntryId");
+	}
+
+	public String getToFileEntryTitle() {
+		long toFileEntryId = getToFileEntryId();
+
+		if (toFileEntryId > 0) {
+			try {
+				FileEntry fileEntry = _dlAppService.getFileEntry(toFileEntryId);
+
+				return fileEntry.getTitle();
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	public boolean isPermissionConfigurable() {
+		if (_getFileShortcut() != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private FileShortcut _getFileShortcut() {
+		return (FileShortcut)_liferayPortletRequest.getAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLEditFileShortcutDisplayContext.class);
+
+	private final DLAppService _dlAppService;
 	private final ItemSelector _itemSelector;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

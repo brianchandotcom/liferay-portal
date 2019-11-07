@@ -20,11 +20,11 @@ import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.SQLStateAcceptor;
-import com.liferay.portal.kernel.service.view.count.ViewCountService;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.view.count.model.ViewCountEntry;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
 import com.liferay.view.count.service.base.ViewCountEntryLocalServiceBaseImpl;
@@ -40,12 +40,12 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class ViewCountEntryLocalServiceImpl
-	extends ViewCountEntryLocalServiceBaseImpl implements ViewCountService {
+	extends ViewCountEntryLocalServiceBaseImpl implements ViewCountManager {
 
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
-			ViewCountService.class, ViewCountEntryLocalService.class,
+			ViewCountManager.class, ViewCountEntryLocalService.class,
 			IdentifiableOSGiService.class, PersistedModelLocalService.class
 		};
 	}

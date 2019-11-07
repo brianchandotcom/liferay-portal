@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.service.view.count;
+package com.liferay.portal.kernel.view.count;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -20,18 +20,18 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 /**
  * @author Preston Crary
  */
-public class ViewCountServiceUtil {
+public class ViewCountManagerUtil {
 
 	public static long getViewCount(
 		long companyId, long classNameId, long classPK) {
 
-		return _viewCountService.getViewCount(companyId, classNameId, classPK);
+		return _viewCountManager.getViewCount(companyId, classNameId, classPK);
 	}
 
 	public static void incrementViewCount(
 		long companyId, long classNameId, long classPK, int increment) {
 
-		_viewCountService.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			companyId, classNameId, classPK, increment);
 	}
 
@@ -39,12 +39,12 @@ public class ViewCountServiceUtil {
 			long companyId, long classNameId, long classPK)
 		throws PortalException {
 
-		_viewCountService.removeViewCount(companyId, classNameId, classPK);
+		_viewCountManager.removeViewCount(companyId, classNameId, classPK);
 	}
 
-	private static volatile ViewCountService _viewCountService =
+	private static volatile ViewCountManager _viewCountManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
-			ViewCountService.class, ViewCountServiceUtil.class,
-			"_viewCountService", true);
+			ViewCountManager.class, ViewCountManagerUtil.class,
+			"_viewCountManager", true);
 
 }

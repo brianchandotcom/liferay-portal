@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.service.view.count;
+package com.liferay.portal.kernel.view.count;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -22,7 +22,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Preston Crary
  */
 @ProviderType
-public interface ViewCountService {
+public interface ViewCountManager {
 
 	public long getViewCount(long companyId, long classNameId, long classPK);
 

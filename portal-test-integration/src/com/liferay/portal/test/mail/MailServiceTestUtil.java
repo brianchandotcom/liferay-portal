@@ -19,11 +19,13 @@ import com.dumbster.smtp.SmtpServerFactory;
 import com.dumbster.smtp.mailstores.RollingMailStore;
 
 import com.liferay.mail.kernel.service.MailServiceUtil;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.test.mail.impl.MailMessageImpl;
-import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.io.IOException;
 
@@ -207,7 +209,8 @@ public class MailServiceTestUtil {
 			throws Exception {
 
 			PortletPreferences portletPreferences =
-				PrefsPropsUtil.getPreferences(0, false);
+				PortalPreferencesLocalServiceUtil.getPreferences(
+					0, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
 			_setTemporaryValue(
 				portletPreferences, firstKey, String.valueOf(firstValue));
@@ -225,7 +228,8 @@ public class MailServiceTestUtil {
 		@Override
 		public void close() throws Exception {
 			PortletPreferences portletPreferences =
-				PrefsPropsUtil.getPreferences(0, false);
+				PortalPreferencesLocalServiceUtil.getPreferences(
+					0, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
 			for (Map.Entry<String, String> entry : _oldValues.entrySet()) {
 				portletPreferences.setValue(entry.getKey(), entry.getValue());
@@ -238,7 +242,11 @@ public class MailServiceTestUtil {
 				PortletPreferences portletPreferences, String key, String value)
 			throws ReadOnlyException {
 
-			_oldValues.put(key, PrefsPropsUtil.getString(key));
+			PortletPreferences preferences =
+				PortalPreferencesLocalServiceUtil.getPreferences(
+					0, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+			_oldValues.put(key, preferences.getValue(key, PropsUtil.get(key)));
 
 			portletPreferences.setValue(key, value);
 		}

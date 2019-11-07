@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.util.ClassLoaderUtil;
 import com.liferay.portal.search.elasticsearch7.internal.util.LogUtil;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexResponse;
@@ -63,9 +64,13 @@ public class CreateIndexRequestExecutorImpl
 				new org.elasticsearch.action.admin.indices.create.
 					CreateIndexRequest(createIndexRequest.getIndexName());
 
+		Class<? extends CreateIndexRequestExecutorImpl> clazz = getClass();
+
 		if (createIndexRequest.getSource() != null) {
-			elasticsearchCreateIndexRequest.source(
-				createIndexRequest.getSource(), XContentType.JSON);
+			ClassLoaderUtil.getWithContextClassLoader(
+				() -> elasticsearchCreateIndexRequest.source(
+					createIndexRequest.getSource(), XContentType.JSON),
+				clazz);
 		}
 
 		return elasticsearchCreateIndexRequest;

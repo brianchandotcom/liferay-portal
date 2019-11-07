@@ -43,7 +43,7 @@ public class CheckboxDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+		return HashMapBuilder.<String, Object>put(
 			"predefinedValue",
 			GetterUtil.getBoolean(
 				getPredefinedValue(ddmFormField, ddmFormFieldRenderingContext))
@@ -54,8 +54,6 @@ public class CheckboxDDMFormFieldTemplateContextContributor
 			"value",
 			GetterUtil.getBoolean(ddmFormFieldRenderingContext.getValue())
 		).build();
-
-		return parameters;
 	}
 
 	protected String getPredefinedValue(

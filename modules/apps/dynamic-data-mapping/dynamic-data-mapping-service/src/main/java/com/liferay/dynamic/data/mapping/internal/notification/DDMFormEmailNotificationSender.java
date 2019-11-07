@@ -339,15 +339,13 @@ public class DDMFormEmailNotificationSender {
 
 		LocalizedValue title = ddmFormLayoutPage.getTitle();
 
-		Map<String, Object> pageMap = HashMapBuilder.<String, Object>put(
+		return HashMapBuilder.<String, Object>put(
 			"fields",
 			getFields(
 				getFieldNames(ddmFormLayoutPage), ddmFormFieldValuesMap, locale)
 		).put(
 			"title", title.getString(locale)
 		).build();
-
-		return pageMap;
 	}
 
 	protected List<Object> getPages(

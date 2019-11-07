@@ -52,7 +52,7 @@ public class GridDDMFormFieldTemplateContextContributor
 			value = "{}";
 		}
 
-		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+		return HashMapBuilder.<String, Object>put(
 			"columns",
 			getOptions("columns", ddmFormField, ddmFormFieldRenderingContext)
 		).put(
@@ -61,8 +61,6 @@ public class GridDDMFormFieldTemplateContextContributor
 		).put(
 			"value", jsonFactory.looseDeserialize(value)
 		).build();
-
-		return parameters;
 	}
 
 	protected DDMFormFieldOptions getDDMFormFieldOptions(

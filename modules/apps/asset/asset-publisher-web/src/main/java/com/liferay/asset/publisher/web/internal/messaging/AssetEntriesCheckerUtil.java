@@ -269,6 +269,7 @@ public class AssetEntriesCheckerUtil {
 				assetEntries, AssetEntry::getTitle,
 				StringPool.COMMA_AND_SPACE));
 		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setGroupId(assetEntry.getGroupId());
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
 		subscriptionSender.setLocalizedPortletTitleMap(

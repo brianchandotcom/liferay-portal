@@ -26,6 +26,10 @@ class DisplayPageDropdownDefaultEventHandler extends DefaultEventHandler {
 		}
 	}
 
+	deleteLayoutPageTemplateEntryPreview(itemData) {
+		this._send(itemData.deleteLayoutPageTemplateEntryPreviewURL);
+	}
+
 	markAsDefaultDisplayPage(itemData) {
 		if (itemData.message !== '') {
 			if (confirm(Liferay.Language.get(itemData.message))) {
@@ -69,6 +73,37 @@ class DisplayPageDropdownDefaultEventHandler extends DefaultEventHandler {
 		if (confirm(Liferay.Language.get('unmark-default-confirmation'))) {
 			this._send(itemData.unmarkAsDefaultDisplayPageURL);
 		}
+	}
+
+	updateLayoutPageTemplateEntryPreview(itemData) {
+		AUI().use('liferay-item-selector-dialog', A => {
+			const itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: this.ns('changePreview'),
+				on: {
+					selectedItemChange: function(event) {
+						const selectedItem = event.newVal;
+
+						if (selectedItem) {
+							const itemValue = JSON.parse(selectedItem.value);
+
+							this.one('#layoutPageTemplateEntryId').value =
+								itemData.layoutPageTemplateEntryId;
+							this.one('#fileEntryId').value =
+								itemValue.fileEntryId;
+
+							submitForm(
+								this.one('#layoutPageTemplateEntryPreviewFm')
+							);
+						}
+					}.bind(this)
+				},
+				'strings.add': Liferay.Language.get('ok'),
+				title: Liferay.Language.get('page-template-thumbnail'),
+				url: itemData.itemSelectorURL
+			});
+
+			itemSelectorDialog.open();
+		});
 	}
 
 	_send(url) {

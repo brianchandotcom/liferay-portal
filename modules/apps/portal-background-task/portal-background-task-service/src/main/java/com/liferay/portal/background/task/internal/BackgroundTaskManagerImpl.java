@@ -626,7 +626,7 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 		BackgroundTaskQueuingMessageListener
 			backgroundTaskQueuingMessageListener =
-				new BackgroundTaskQueuingMessageListener(this);
+				new BackgroundTaskQueuingMessageListener(this, _lockManager);
 
 		backgroundTaskStatusDestination.register(
 			backgroundTaskQueuingMessageListener);

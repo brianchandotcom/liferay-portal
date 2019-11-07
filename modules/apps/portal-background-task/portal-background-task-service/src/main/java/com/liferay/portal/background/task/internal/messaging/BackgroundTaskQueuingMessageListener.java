@@ -25,21 +25,16 @@ import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.Validator;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = {})
 public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 
 	public BackgroundTaskQueuingMessageListener(
-		BackgroundTaskManager backgroundTaskManager) {
+		BackgroundTaskManager backgroundTaskManager, LockManager lockManager) {
 
 		_backgroundTaskManager = backgroundTaskManager;
-
-		_backgroundTaskLockHelper = new BackgroundTaskLockHelper(_lockManager);
+		_backgroundTaskLockHelper = new BackgroundTaskLockHelper(lockManager);
 	}
 
 	@Override
@@ -110,8 +105,5 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 
 	private final BackgroundTaskLockHelper _backgroundTaskLockHelper;
 	private final BackgroundTaskManager _backgroundTaskManager;
-
-	@Reference
-	private LockManager _lockManager;
 
 }

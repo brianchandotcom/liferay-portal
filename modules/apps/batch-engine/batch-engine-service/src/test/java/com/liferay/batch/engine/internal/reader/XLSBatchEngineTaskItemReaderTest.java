@@ -127,7 +127,7 @@ public class XLSBatchEngineTaskItemReaderTest
 				).put(
 					"id1", "id"
 				).put(
-					"name1", null
+					"name1", (String)null
 				).build(),
 				xlsBatchEngineTaskItemReader.read(), null);
 		}
@@ -280,7 +280,7 @@ public class XLSBatchEngineTaskItemReaderTest
 				createDateString, null, 1L, Collections.emptyMap(),
 				xlsBatchEngineTaskItemReader.read(),
 				HashMapBuilder.put(
-					"en", null
+					"en", (String)null
 				).put(
 					"hr", "naziv"
 				).build());

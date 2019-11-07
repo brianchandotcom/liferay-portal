@@ -118,7 +118,7 @@ public class JSONBatchEngineTaskItemReaderTest
 				).put(
 					"id1", "id"
 				).put(
-					"name1", null
+					"name1", (String)null
 				).build(),
 				jsonBatchEngineTaskItemReader.read(), null);
 		}

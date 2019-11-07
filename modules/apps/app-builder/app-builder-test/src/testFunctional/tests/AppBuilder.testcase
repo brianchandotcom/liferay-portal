@@ -62,19 +62,10 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		var fieldType = "Date";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+		FormViewBuilder.addFormView(
+			customObjectName = "my custom object",
+			formViewName = "My Form View",
+			fieldType = "Date");
 	}
 
 	@description = "Add a Form View with a Grid field"
@@ -87,19 +78,10 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		var fieldType = "Grid";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+		FormViewBuilder.addFormView(
+			customObjectName = "my custom object",
+			formViewName = "My Form View",
+			fieldType = "Grid");
 	}
 
 	@description = "Add a Form View with a Multiple Selection field"
@@ -112,19 +94,10 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		var fieldType = "Multiple Selection";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+		FormViewBuilder.addFormView(
+			customObjectName = "my custom object",
+			formViewName = "My Form View",
+			fieldType = "Multiple Selection");
 	}
 
 	@description = "Add a Form View with a Numeric field"
@@ -137,19 +110,10 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		var fieldType = "Numeric";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+		FormViewBuilder.addFormView(
+			customObjectName = "my custom object",
+			formViewName = "My Form View",
+			fieldType = "Numeric");
 	}
 
 	@description = "Add a Form View with a Select From List field"
@@ -162,19 +126,10 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		var fieldType = "Select from List";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+		FormViewBuilder.addFormView(
+			customObjectName = "my custom object",
+			formViewName = "My Form View",
+			fieldType = "Select from List");
 	}
 
 	@description = "Add a Form View with a Single Selection field"
@@ -187,19 +142,10 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		var fieldType = "Single Selection";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+		FormViewBuilder.addFormView(
+			customObjectName = "my custom object",
+			formViewName = "My Form View",
+			fieldType = "Single Selection");
 	}
 
 	@description = "Add a Form View with a Text Field"
@@ -228,19 +174,10 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		var fieldType = "Upload";
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Form View");
-
-		AppBuilderAdmin.openItem(customObjectName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+		FormViewBuilder.addFormView(
+			customObjectName = "my custom object",
+			formViewName = "My Form View",
+			fieldType = "Upload");
 	}
 
 	@description = "Add a Table View"

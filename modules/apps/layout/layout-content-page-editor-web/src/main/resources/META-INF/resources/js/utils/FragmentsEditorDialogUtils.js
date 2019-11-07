@@ -12,10 +12,11 @@
  * details.
  */
 
+import {ItemSelectorDialog} from 'frontend-js-web';
+
 import {UPDATE_LAST_SAVE_DATE} from '../actions/actions.es';
 import CreateContentDialog from '../components/content/CreateContentDialog.es';
 import {getState} from '../store/store.es';
-import {ItemSelectorDialog} from 'frontend-js-web';
 
 /**
  * @private
@@ -64,10 +65,7 @@ function openImageSelector(callback, destroyedCallback = null) {
 			selectedImage.url = value;
 		}
 
-		if (
-			returnType ===
-			DOWNLOAD_FILE_ENTRY_IMAGE_SELECTOR_RETURN_TYPE
-		) {
+		if (returnType === DOWNLOAD_FILE_ENTRY_IMAGE_SELECTOR_RETURN_TYPE) {
 			const fileEntry = JSON.parse(value);
 
 			selectedImage.title = fileEntry.title;

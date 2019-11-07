@@ -173,15 +173,12 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 							'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />'
 						)
 					) {
-						Array.prototype.forEach.call(
-							selectedItems,
-							function(item, index) {
-								dom.append(
-									layoutPageTemplateCollectionsFm,
-									item
-								);
-							}
-						);
+						Array.prototype.forEach.call(selectedItems, function(
+							item,
+							index
+						) {
+							dom.append(layoutPageTemplateCollectionsFm, item);
+						});
 
 						<portlet:renderURL var="redirectURL">
 							<portlet:param name="tabs1" value="page-templates" />

@@ -32,7 +32,10 @@ import {
 } from '../../actions/saveChanges.es';
 import {updateActiveItemAction} from '../../actions/updateActiveItem.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
-import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
+import {
+	shouldUpdatePureComponent,
+	onPropertiesChanged
+} from '../../utils/FragmentsEditorComponentUtils.es';
 import {
 	getFragmentColumn,
 	getFragmentRowIndex,
@@ -66,6 +69,27 @@ class FragmentEntryLink extends Component {
 	 * @inheritdoc
 	 */
 	created() {
+		onPropertiesChanged(
+			this,
+			[
+				'hasUpdatePermissions',
+				'fragmentEntryLinkId',
+				'activeItemId',
+				'activeItemType'
+			],
+			() => {
+				if (
+					this.hasUpdatePermissions &&
+					this.fragmentEntryLinkId === this.activeItemId &&
+					this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+				) {
+					this._createFloatingToolbar();
+				} else {
+					this._disposeFloatingToolbar();
+				}
+			}
+		);
+
 		this._handleFloatingToolbarButtonClicked = this._handleFloatingToolbarButtonClicked.bind(
 			this
 		);
@@ -108,21 +132,6 @@ class FragmentEntryLink extends Component {
 				sidebarPanel => sidebarPanel.sidebarPanelId === 'comments'
 			)
 		};
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	rendered() {
-		if (
-			this.hasUpdatePermissions &&
-			this.fragmentEntryLinkId === this.activeItemId &&
-			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-		) {
-			this._createFloatingToolbar();
-		} else {
-			this._disposeFloatingToolbar();
-		}
 	}
 
 	/**

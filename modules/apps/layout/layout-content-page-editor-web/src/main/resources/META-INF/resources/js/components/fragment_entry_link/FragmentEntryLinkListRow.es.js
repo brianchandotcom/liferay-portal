@@ -30,7 +30,10 @@ import './FragmentEntryLink.es';
 import {removeRowAction} from '../../actions/removeRow.es';
 import {updateRowColumnsAction} from '../../actions/updateRowColumns.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
-import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
+import {
+	shouldUpdatePureComponent,
+	onPropertiesChanged
+} from '../../utils/FragmentsEditorComponentUtils.es';
 import {getAssetFieldValue} from '../../utils/FragmentsEditorFetchUtils.es';
 import {
 	getItemMoveDirection,
@@ -147,6 +150,35 @@ class FragmentEntryLinkListRow extends Component {
 			this._handleBodyMouseLeave
 		);
 		document.body.addEventListener('mouseup', this._handleBodyMouseUp);
+
+		onPropertiesChanged(
+			this,
+			[
+				'hasUpdatePermissions',
+				'rowId',
+				'activeItemId',
+				'activeItemType',
+				'_resizing',
+				'row'
+			],
+			() => {
+				if (
+					this.hasUpdatePermissions &&
+					this.rowId === this.activeItemId &&
+					this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row &&
+					!this._resizing &&
+					this.row.type !== FRAGMENTS_EDITOR_ROW_TYPES.sectionRow
+				) {
+					this._createFloatingToolbar();
+				} else {
+					this._disposeFloatingToolbar();
+				}
+
+				if (this._resizing) {
+					this.element.focus();
+				}
+			}
+		);
 	}
 
 	/**
@@ -217,27 +249,6 @@ class FragmentEntryLinkListRow extends Component {
 		}
 
 		return nextState;
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	rendered() {
-		if (
-			this.hasUpdatePermissions &&
-			this.rowId === this.activeItemId &&
-			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row &&
-			!this._resizing &&
-			this.row.type !== FRAGMENTS_EDITOR_ROW_TYPES.sectionRow
-		) {
-			this._createFloatingToolbar();
-		} else {
-			this._disposeFloatingToolbar();
-		}
-
-		if (this._resizing) {
-			this.element.focus();
-		}
 	}
 
 	/**

@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchContainer accountDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
+SearchContainer accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
 
-SelectAccountEntriesManagementToolbarDisplayContext selectAccountEntriesManagementToolbarDisplayContext = new SelectAccountEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountDisplaySearchContainer);
+SelectAccountEntriesManagementToolbarDisplayContext selectAccountEntriesManagementToolbarDisplayContext = new SelectAccountEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer);
 %>
 
 <clay:management-toolbar
@@ -28,7 +28,7 @@ SelectAccountEntriesManagementToolbarDisplayContext selectAccountEntriesManageme
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">
 	<liferay-ui:search-container
-		searchContainer="<%= accountDisplaySearchContainer %>"
+		searchContainer="<%= accountEntryDisplaySearchContainer %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.account.admin.web.internal.display.AccountEntryDisplay"

@@ -52,12 +52,12 @@ public class AccountUserDisplaySearchContainerFactory {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		String accountNavigation = ParamUtil.getString(
-			liferayPortletRequest, "accountNavigation", "all");
+		String accountEntriesNavigation = ParamUtil.getString(
+			liferayPortletRequest, "accountEntriesNavigation", "all");
 
 		long[] accountEntryIds = null;
 
-		if (accountNavigation.equals("all")) {
+		if (accountEntriesNavigation.equals("all")) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)liferayPortletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
@@ -75,11 +75,11 @@ public class AccountUserDisplaySearchContainerFactory {
 
 			accountEntryIds = ArrayUtil.toLongArray(accountEntryIdsList);
 		}
-		else if (accountNavigation.equals("accounts")) {
+		else if (accountEntriesNavigation.equals("accounts")) {
 			accountEntryIds = ParamUtil.getLongValues(
 				liferayPortletRequest, "accountEntryIds");
 		}
-		else if (accountNavigation.equals("no-assigned-account")) {
+		else if (accountEntriesNavigation.equals("no-assigned-account")) {
 			accountEntryIds = new long[] {
 				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
 			};

@@ -61,7 +61,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 		PortletURL clearResultsURL = getPortletURL();
 
 		clearResultsURL.setParameter("navigation", (String)null);
-		clearResultsURL.setParameter("accountNavigation", "all");
+		clearResultsURL.setParameter("accountEntriesNavigation", "all");
 		clearResultsURL.setParameter("accountEntryIds", StringPool.BLANK);
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
@@ -105,7 +105,9 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 	public List<LabelItem> getFilterLabelItems() {
 		return new LabelItemList() {
 			{
-				if (Objects.equals(_getAccountNavigation(), "accounts")) {
+				if (Objects.equals(
+						_getAccountEntriesNavigation(), "accounts")) {
+
 					long[] accountEntryIds = ParamUtil.getLongValues(
 						request, "accountEntryIds");
 
@@ -172,9 +174,9 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 		return new String[] {"first-name", "last-name", "email-address"};
 	}
 
-	private String _getAccountNavigation() {
+	private String _getAccountEntriesNavigation() {
 		return ParamUtil.getString(
-			liferayPortletRequest, "accountNavigation", "all");
+			liferayPortletRequest, "accountEntriesNavigation", "all");
 	}
 
 	private List<DropdownItem> _getFilterByAccountsDropdownItems() {
@@ -183,21 +185,22 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							Objects.equals(_getAccountNavigation(), "all"));
+							Objects.equals(
+								_getAccountEntriesNavigation(), "all"));
 
 						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
 
 						dropdownItem.setHref(
 							PortletURLUtil.clone(
 								currentURLObj, liferayPortletResponse),
-							"accountNavigation", "all");
+							"accountEntriesNavigation", "all");
 					});
 
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
 							Objects.equals(
-								_getAccountNavigation(), "accounts"));
+								_getAccountEntriesNavigation(), "accounts"));
 
 						PortletURL accountSelectorURL =
 							liferayPortletResponse.createRenderURL();
@@ -206,7 +209,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 							"mvcPath",
 							"/account_users_admin/select_account_entries.jsp");
 						accountSelectorURL.setParameter(
-							"accountNavigation", "accounts");
+							"accountEntriesNavigation", "accounts");
 						accountSelectorURL.setWindowState(
 							LiferayWindowState.POP_UP);
 
@@ -225,7 +228,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 					dropdownItem -> {
 						dropdownItem.setActive(
 							Objects.equals(
-								_getAccountNavigation(),
+								_getAccountEntriesNavigation(),
 								"no-assigned-account"));
 
 						dropdownItem.setLabel(
@@ -234,7 +237,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 						dropdownItem.setHref(
 							PortletURLUtil.clone(
 								currentURLObj, liferayPortletResponse),
-							"accountNavigation", "no-assigned-account");
+							"accountEntriesNavigation", "no-assigned-account");
 					});
 			}
 		};

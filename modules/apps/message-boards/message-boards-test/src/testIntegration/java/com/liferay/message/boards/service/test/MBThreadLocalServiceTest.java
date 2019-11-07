@@ -70,8 +70,8 @@ public class MBThreadLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-				new LiferayIntegrationTestRule(),
-				PermissionCheckerMethodTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -133,7 +133,6 @@ public class MBThreadLocalServiceTest {
 
 	@Test
 	public void testDeleteThreadWithExpandoMessages() throws Exception {
-
 		int expandoCount = ExpandoValueLocalServiceUtil.getExpandoValuesCount();
 
 		String expandoName = StringUtil.randomString();
@@ -292,8 +291,8 @@ public class MBThreadLocalServiceTest {
 				PortalUtil.getDefaultCompanyId(), MBMessage.class.getName());
 
 		ExpandoColumnLocalServiceUtil.addColumn(
-			expandoTable.getTableId(), name,
-			ExpandoColumnConstants.STRING, StringPool.BLANK);
+			expandoTable.getTableId(), name, ExpandoColumnConstants.STRING,
+			StringPool.BLANK);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -311,8 +310,8 @@ public class MBThreadLocalServiceTest {
 			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			0L, MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			MBMessageConstants.DEFAULT_FORMAT, null, false, 0.0,
-			false, serviceContext);
+			MBMessageConstants.DEFAULT_FORMAT, null, false, 0.0, false,
+			serviceContext);
 	}
 
 	@DeleteAfterTestRun

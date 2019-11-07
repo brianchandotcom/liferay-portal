@@ -284,7 +284,9 @@ definition {
 
 		AppBuilderAdmin.openItem(customObjectName = "My Table View");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+		TableViewBuilder.validateColumnLabel(columnLabel = "${fieldType}");
+
+		FormViewBuilder.save();
 
 	}
 

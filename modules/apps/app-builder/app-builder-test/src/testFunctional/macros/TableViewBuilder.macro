@@ -12,13 +12,11 @@ definition {
     macro validateColumnLabel {
 
 		AssertTextEquals(
-			locator1 = "FormViewBuilder#FIELD_LABEL",
-			value1 = "${fieldType}");
+			locator1 = "TableViewBuilder#COLUMN_LABEL",
+			value1 = "${columnLabel}");
 	}
 
-
 	macro setName {
-
         AppBuilderAdmin.setName();
 	}
     

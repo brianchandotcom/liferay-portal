@@ -4109,9 +4109,39 @@ AUI.add(
 				},
 
 				moveField(parentField, oldIndex, newIndex) {
+					var instance = this;
+
 					var fields = parentField.get('fields');
 
 					fields.splice(newIndex, 0, fields.splice(oldIndex, 1)[0]);
+
+					var fieldInstance = fields[newIndex];
+
+					var field = fieldInstance.getFieldDefinition();
+
+					if (field) {
+						var type = field.type;
+
+						if (type === 'ddm-text-html') {
+							var editor = fieldInstance.getEditor();
+
+							var usingCKEditor =
+								CKEDITOR &&
+								CKEDITOR.instances &&
+								CKEDITOR.instances[
+									fieldInstance.getInputName() + 'Editor'
+								];
+
+							var usingAlloyEditor =
+								editor.getNativeEditor()._editor &&
+								editor.getNativeEditor()._editor.window.$
+									.AlloyEditor;
+
+							if (usingCKEditor && !usingAlloyEditor) {
+								instance.recreateEditor(editor);
+							}
+						}
+					}
 				},
 
 				populateBlankLocalizationMap(
@@ -4177,6 +4207,16 @@ AUI.add(
 							newNestedFields[i]
 						);
 					}
+				},
+
+				recreateEditor(editor) {
+					var html = editor.getHTML();
+
+					editor.dispose();
+
+					editor.create();
+
+					editor.setHTML(html);
 				},
 
 				registerRepeatable(field) {

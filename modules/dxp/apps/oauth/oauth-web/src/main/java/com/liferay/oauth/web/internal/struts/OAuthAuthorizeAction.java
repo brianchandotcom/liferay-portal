@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.oauth.web.internal.action;
+package com.liferay.oauth.web.internal.struts;
 
 import com.liferay.oauth.constants.OAuthConstants;
 import com.liferay.oauth.constants.OAuthPortletKeys;

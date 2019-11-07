@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.saml.addon.keep.alive.web.internal.struts.action;
+package com.liferay.saml.addon.keep.alive.web.internal.struts;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.servlet.HttpHeaders;

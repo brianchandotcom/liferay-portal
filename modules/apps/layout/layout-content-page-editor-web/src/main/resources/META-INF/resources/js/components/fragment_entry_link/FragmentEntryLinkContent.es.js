@@ -129,14 +129,6 @@ class FragmentEntryLinkContent extends Component {
 					editable.editableValues = editableValues;
 				});
 			}
-
-			this._update({
-				defaultLanguageId: this.defaultLanguageId,
-				defaultSegmentsExperienceId: this.defaultSegmentsExperienceId,
-				languageId: this.languageId,
-				segmentsExperienceId: this.segmentsExperienceId,
-				updateFunctions: []
-			});
 		}
 	}
 
@@ -272,56 +264,8 @@ class FragmentEntryLinkContent extends Component {
 
 			if (this.editableValues) {
 				this._createEditables();
-
-				this._update({
-					defaultLanguageId: this.defaultLanguageId,
-					defaultSegmentsExperienceId: this
-						.defaultSegmentsExperienceId,
-					languageId: this.languageId,
-					segmentsExperienceId: this.segmentsExperienceId,
-					updateFunctions: []
-				});
 			}
 		}
-	}
-
-	/**
-	 * Runs a set of update functions through the editable values inside this
-	 * fragment entry link.
-	 * @param {string} languageId The current language ID.
-	 * @param {string} defaultLanguageId The default language ID.
-	 * @param {Array<Function>} updateFunctions The set of update functions to
-	 * execute for each editable value.
-	 * @private
-	 */
-	_update({
-		defaultLanguageId,
-		defaultSegmentsExperienceId: _defaultSegmentsExperienceId,
-		languageId,
-		segmentsExperienceId,
-		updateFunctions
-	}) {
-		const editableValues =
-			this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] || {};
-
-		Object.keys(editableValues).forEach(editableId => {
-			const editableValue = editableValues[editableId];
-
-			const {defaultValue, value} = getComputedEditableValue(
-				editableValue,
-				{
-					defaultLanguageId,
-					selectedExperienceId: segmentsExperienceId,
-					selectedLanguageId: languageId
-				}
-			);
-
-			const mappedField = editableValue.mappedField || '';
-
-			updateFunctions.forEach(updateFunction =>
-				updateFunction(editableId, value, defaultValue, mappedField)
-			);
-		});
 	}
 }
 

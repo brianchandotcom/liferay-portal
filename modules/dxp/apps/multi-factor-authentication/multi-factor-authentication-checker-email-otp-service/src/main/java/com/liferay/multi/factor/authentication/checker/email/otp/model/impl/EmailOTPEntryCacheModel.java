@@ -30,7 +30,7 @@ import java.util.Date;
 /**
  * The cache model class for representing EmailOTPEntry in entity cache.
  *
- * @author arthurchan35
+ * @author Arthur Chan
  * @generated
  */
 public class EmailOTPEntryCacheModel

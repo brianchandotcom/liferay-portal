@@ -26,7 +26,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * based on the propagated JAAS credentials because this service can only be
  * accessed from within the same VM.
  *
- * @author arthurchan35
+ * @author Arthur Chan
  * @see EmailOTPEntryLocalService
  * @generated
  */

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link EmailOTPEntryLocalService}.
  *
- * @author arthurchan35
+ * @author Arthur Chan
  * @see EmailOTPEntryLocalService
  * @generated
  */

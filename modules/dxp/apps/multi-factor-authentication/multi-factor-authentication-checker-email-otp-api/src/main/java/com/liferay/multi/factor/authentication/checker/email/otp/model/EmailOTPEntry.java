@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * The extended model interface for the EmailOTPEntry service. Represents a row in the &quot;MFAEmailOTPEntry&quot; database table, with each column mapped to a property of this class.
  *
- * @author arthurchan35
+ * @author Arthur Chan
  * @see EmailOTPEntryModel
  * @generated
  */

@@ -21,7 +21,7 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 
 /**
- * @author arthurchan35
+ * @author Arthur Chan
  * @generated
  */
 public class MFAEmailOTPPersistenceConstants {

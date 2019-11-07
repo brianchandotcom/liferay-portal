@@ -17,7 +17,7 @@ package com.liferay.multi.factor.authentication.checker.email.otp.exception;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
- * @author arthurchan35
+ * @author Arthur Chan
  */
 public class NoSuchEmailOTPEntryException extends NoSuchModelException {
 

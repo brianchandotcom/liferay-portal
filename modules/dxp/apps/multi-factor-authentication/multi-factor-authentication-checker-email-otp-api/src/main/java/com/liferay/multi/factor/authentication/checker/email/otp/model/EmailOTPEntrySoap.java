@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services.
  *
- * @author arthurchan35
+ * @author Arthur Chan
  * @generated
  */
 public class EmailOTPEntrySoap implements Serializable {

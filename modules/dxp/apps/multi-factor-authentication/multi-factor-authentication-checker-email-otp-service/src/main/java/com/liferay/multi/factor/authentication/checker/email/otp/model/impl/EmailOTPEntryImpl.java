@@ -21,7 +21,7 @@ package com.liferay.multi.factor.authentication.checker.email.otp.model.impl;
  * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.multi.factor.authentication.checker.email.otp.model.EmailOTPEntry</code> interface.
  * </p>
  *
- * @author arthurchan35
+ * @author Arthur Chan
  */
 public class EmailOTPEntryImpl extends EmailOTPEntryBaseImpl {
 

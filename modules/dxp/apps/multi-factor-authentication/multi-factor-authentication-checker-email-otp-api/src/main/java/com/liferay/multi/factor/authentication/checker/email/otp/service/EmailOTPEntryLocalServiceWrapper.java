@@ -48,6 +48,14 @@ public class EmailOTPEntryLocalServiceWrapper
 		return _emailOTPEntryLocalService.addEmailOTPEntry(emailOTPEntry);
 	}
 
+	@Override
+	public com.liferay.multi.factor.authentication.checker.email.otp.model.
+		EmailOTPEntry addEmailOTPEntry(long userId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _emailOTPEntryLocalService.addEmailOTPEntry(userId);
+	}
+
 	/**
 	 * Creates a new email otp entry with the primary key. Does not add the email otp entry to the database.
 	 *
@@ -201,6 +209,13 @@ public class EmailOTPEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.multi.factor.authentication.checker.email.otp.model.
+		EmailOTPEntry fetchEntryByUserId(long userId) {
+
+		return _emailOTPEntryLocalService.fetchEntryByUserId(userId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -274,6 +289,16 @@ public class EmailOTPEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailOTPEntryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public void resetFailedAttempts(long userId) {
+		_emailOTPEntryLocalService.resetFailedAttempts(userId);
+	}
+
+	@Override
+	public void updateAttempts(long userId, String userIP, boolean success) {
+		_emailOTPEntryLocalService.updateAttempts(userId, userIP, success);
 	}
 
 	/**

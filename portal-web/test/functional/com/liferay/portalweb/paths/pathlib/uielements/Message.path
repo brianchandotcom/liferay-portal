@@ -315,7 +315,7 @@
 </tr>
 <tr>
 	<td>TOOLTIP</td>
-	<td>//div[contains(@class,'tooltip-content')]</td>
+	<td>//div[contains(@class,'tooltip') and contains(@class,'show')]</td>
 	<td></td>
 </tr>
 <tr>

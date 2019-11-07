@@ -9383,13 +9383,35 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					<elseif>
 						<matches pattern="https?://" string="${test.build.portal.osgi.zip.url}" />
 						<then>
+							<local name="bundle.base.url" />
+
 							<propertyregex
 								input="${test.build.portal.osgi.zip.url}"
 								override="true"
-								property="bundle.zip.url"
-								regexp="osgi"
-								replace="tomcat"
+								property="bundle.base.url"
+								regexp="(.+/)[^/]+"
+								replace="\1"
 							/>
+
+							<local name="bundle.content" />
+
+							<exec executable="curl" outputproperty="bundle.content">
+								<arg value="${bundle.base.url}" />
+							</exec>
+
+							<local name="bundle.zip.name" />
+
+							<propertyregex
+								input="${bundle.content}"
+								override="true"
+								property="bundle.zip.name"
+								regexp="[\S\s]*href=\&quot;(liferay-[^\&quot;]+tomcat[^\&quot;]+\.(7z|zip))\&quot;[\S\s]*"
+								replace="\1"
+							/>
+
+							<antelope:stringutil property="bundle.zip.url" string="${bundle.base.url}${bundle.zip.name}">
+								<antelope:replace regex="-slim" replacement="" />
+							</antelope:stringutil>
 						</then>
 					</elseif>
 				</if>

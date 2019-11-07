@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -247,6 +248,8 @@ public class ${entity.name}PersistenceTest {
 
 		${entity.name} new${entity.name} = _persistence.create(pk);
 
+		<#assign hasEagerBlob = false />
+
 		<#list entity.regularEntityColumns as entityColumn>
 			<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name))>
 				<#if stringUtil.equals(entityColumn.type, "Blob")>
@@ -255,6 +258,10 @@ public class ${entity.name}PersistenceTest {
 					byte[] new${entityColumn.methodName}Bytes = new${entityColumn.methodName}String.getBytes("UTF-8");
 
 					Blob new${entityColumn.methodName}Blob = new OutputBlob(new ByteArrayInputStream(new${entityColumn.methodName}Bytes), new${entityColumn.methodName}Bytes.length);
+
+					<#if !entityColumn.isLazy()>
+						<#assign hasEagerBlob = true />
+					</#if>
 				</#if>
 
 				new${entity.name}.set${entityColumn.methodName}(
@@ -290,6 +297,14 @@ public class ${entity.name}PersistenceTest {
 		</#list>
 
 		_${entity.varNames}.add(_persistence.update(new${entity.name}));
+
+		<#if hasEagerBlob>
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		</#if>
 
 		${entity.name} existing${entity.name} = _persistence.findByPrimaryKey(new${entity.name}.getPrimaryKey());
 

@@ -26,9 +26,11 @@ definition {
 
 		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 
-		Select(
-			locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT",
-			value1 = "${optionValue}");
+		while (!IsTextEqual(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT", value1 = "${optionValue}")) {
+			Select(
+				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT",
+				value1 = "${optionValue}");
+		}
 
 		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 	}

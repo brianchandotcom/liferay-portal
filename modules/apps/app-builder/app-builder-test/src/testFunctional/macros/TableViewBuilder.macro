@@ -6,18 +6,21 @@ definition {
 
 		DoubleClick(locator1 = "FormViewBuilder#ADD_FIELD_TYPE");
 
-		TableViewBuilder.validateColumnLabel();
+		TableViewBuilder.validateColumnLabel(columnLabel = "${fieldType}");
 	}
 
     macro validateColumnLabel {
-
 		AssertTextEquals(
 			locator1 = "TableViewBuilder#COLUMN_LABEL",
 			value1 = "${columnLabel}");
 	}
 
 	macro setName {
-        AppBuilderAdmin.setName();
+        AppBuilderAdmin.setName(title = "${tableViewName}");
+	}
+
+	macro save {
+		AppBuilderAdmin.save();
 	}
     
 }

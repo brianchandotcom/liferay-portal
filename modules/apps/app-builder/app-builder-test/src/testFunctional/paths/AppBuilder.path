@@ -111,6 +111,12 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//div[contains(@class,'input-group-item')]//button[contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+
 
 </tbody>
 </table>

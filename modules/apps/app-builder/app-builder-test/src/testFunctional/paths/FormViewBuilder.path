@@ -29,12 +29,6 @@
 </tr>
 
 <tr>
-	<td>SAVE_FORM_VIEW_BUTTON</td>
-	<td>//div[contains(@class,'input-group-item')]//button[contains(@class,'btn-primary')]</td>
-	<td></td>
-</tr>
-
-<tr>
 	<td>FIELD_LABEL</td>
 	<td>//label[contains(text(),'${fieldLabel}')]</td>
 	<td></td>

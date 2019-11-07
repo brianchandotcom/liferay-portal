@@ -276,9 +276,9 @@ definition {
 
 		TableViewBuilder.addColumnByDoubleClick(fieldType = "Text Field");
 		
-		TableViewBuilder.setName(title = "My Table View");
+		TableViewBuilder.setName(tableViewName = "My Table View");
 
-		FormViewBuilder.save();
+		TableViewBuilder.save();
 
 		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Table View");
 
@@ -286,7 +286,7 @@ definition {
 
 		TableViewBuilder.validateColumnLabel(columnLabel = "${fieldType}");
 
-		FormViewBuilder.save();
+		TableViewBuilder.save();
 
 	}
 

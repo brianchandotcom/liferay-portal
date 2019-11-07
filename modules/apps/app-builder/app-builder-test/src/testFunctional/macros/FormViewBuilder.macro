@@ -25,7 +25,7 @@ definition {
 	}
 
 	macro save {
-		Click(locator1 = "FormViewBuilder#SAVE_FORM_VIEW_BUTTON");
+		AppBuilderAdmin.save();
 	}
 
 	macro setName {

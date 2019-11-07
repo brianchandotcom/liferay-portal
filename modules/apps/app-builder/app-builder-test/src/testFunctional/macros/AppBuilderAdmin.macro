@@ -129,4 +129,8 @@ definition {
 		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
 	}
 
+	macro save {
+		Click(locator1 = "AppBuilder#SAVE_BUTTON");
+	}
+
 }

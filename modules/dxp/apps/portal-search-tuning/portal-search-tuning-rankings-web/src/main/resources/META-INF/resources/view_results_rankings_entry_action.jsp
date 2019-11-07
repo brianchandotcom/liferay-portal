@@ -33,7 +33,7 @@ page import="com.liferay.portal.search.tuning.rankings.web.internal.display.cont
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-RankingEntryDisplayContext resultsRankingEntryDisplayContext = (RankingEntryDisplayContext)row.getObject();
+RankingEntryDisplayContext rankingEntryDisplayContext = (RankingEntryDisplayContext)row.getObject();
 %>
 
 <liferay-ui:icon-menu
@@ -46,10 +46,11 @@ RankingEntryDisplayContext resultsRankingEntryDisplayContext = (RankingEntryDisp
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editResultsRankingEntry" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="resultsRankingUid" value="<%= resultsRankingEntryDisplayContext.getUid() %>" />
-		<portlet:param name="aliases" value="<%= resultsRankingEntryDisplayContext.getAliases() %>" />
+		<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
+		<portlet:param name="aliases" value="<%= rankingEntryDisplayContext.getAliases() %>" />
 		<portlet:param name="companyId" value="<%= String.valueOf(themeDisplay.getCompanyId()) %>" />
-		<portlet:param name="keywords" value="<%= resultsRankingEntryDisplayContext.getKeywords() %>" />
+		<portlet:param name="keywords" value="<%= rankingEntryDisplayContext.getKeywords() %>" />
+		<portlet:param name="inactive" value="<%= String.valueOf(rankingEntryDisplayContext.getInactive()) %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon
@@ -60,7 +61,7 @@ RankingEntryDisplayContext resultsRankingEntryDisplayContext = (RankingEntryDisp
 	<portlet:actionURL name="/results_ranking/edit" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="resultsRankingUid" value="<%= resultsRankingEntryDisplayContext.getUid() %>" />
+		<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete

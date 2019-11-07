@@ -240,7 +240,6 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntry.setFileEntryTypeId(fileEntryTypeId);
 		dlFileEntry.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
 		dlFileEntry.setSize(size);
-		dlFileEntry.setReadCount(DLFileEntryConstants.DEFAULT_READ_COUNT);
 
 		dlFileEntryPersistence.update(dlFileEntry);
 

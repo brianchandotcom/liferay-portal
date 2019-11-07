@@ -60,17 +60,16 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 		try {
 			long fileEntryId = increment();
 
-			StringBundler sb = new StringBundler(9);
+			StringBundler sb = new StringBundler(8);
 
 			sb.append("insert into DLFileEntry (uuid_, fileEntryId, groupId, ");
 			sb.append("companyId, userId, userName, createDate, ");
 			sb.append("modifiedDate, classNameId, classPK, repositoryId, ");
 			sb.append("folderId, name, extension, mimeType, title, ");
 			sb.append("description, extraSettings, fileEntryTypeId, version, ");
-			sb.append("size_, readCount, smallImageId, largeImageId, ");
-			sb.append("custom1ImageId, custom2ImageId) values (?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?)");
+			sb.append("size_, smallImageId, largeImageId, custom1ImageId, ");
+			sb.append("custom2ImageId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			String sql = sb.toString();
 
@@ -101,7 +100,6 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			ps.setLong(23, 0);
 			ps.setLong(24, 0);
 			ps.setLong(25, 0);
-			ps.setLong(26, 0);
 
 			ps.executeUpdate();
 

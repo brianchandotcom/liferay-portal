@@ -459,7 +459,7 @@
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findF_ByG_M_F">
 		<![CDATA[
 			SELECT
-				DISTINCT folderId AS modelFolderId, DLFolder.createDate AS createDate, DLFolder.modifiedDate AS modifiedDate, DLFolder.name AS name, DLFolder.name AS title, 0 AS size_, 0 AS readCount, 0 AS fileShortcutId, 1 AS modelFolder
+				DISTINCT folderId AS modelFolderId, DLFolder.createDate AS createDate, DLFolder.modifiedDate AS modifiedDate, DLFolder.name AS name, DLFolder.name AS title, 0 AS size_, 0 AS fileShortcutId, 1 AS modelFolder
 			FROM
 				DLFolder
 			WHERE
@@ -472,7 +472,7 @@
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFE_ByG_F">
 		<![CDATA[
 			SELECT
-				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, 0 AS fileShortcutId, 0 AS modelFolder
+				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, 0 AS fileShortcutId, 0 AS modelFolder
 			FROM
 				DLFileEntry
 			[$JOIN$]
@@ -485,7 +485,7 @@
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFS_ByG_F_A">
 		<![CDATA[
 			SELECT
-				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, fileShortcutId AS fileShortcutId, 0 AS modelFolder
+				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, fileShortcutId AS fileShortcutId, 0 AS modelFolder
 			FROM
 				DLFileShortcut
 			INNER JOIN

@@ -37,6 +37,11 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testReviewTags() throws Exception {
+		test("ReviewTags.testyaml");
+	}
+
+	@Test
 	public void testSortDefinitionsAndWhitespaceCheck() throws Exception {
 		test("SortDefinitionsAndWhitespace.testyaml");
 	}
@@ -49,11 +54,6 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testSortSpecificDefinitions() throws Exception {
 		test("SortSpecificDefinitions.testyaml");
-	}
-
-	@Test
-	public void testStandardizeOnReview() throws Exception {
-		test("StandardizeOnReview.testyaml");
 	}
 
 	@Test

@@ -70,6 +70,8 @@ public interface EmailOTPEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public EmailOTPEntry addEmailOTPEntry(EmailOTPEntry emailOTPEntry);
 
+	public EmailOTPEntry addEmailOTPEntry(long userId) throws PortalException;
+
 	/**
 	 * Creates a new email otp entry with the primary key. Does not add the email otp entry to the database.
 	 *
@@ -176,6 +178,9 @@ public interface EmailOTPEntryLocalService
 	public EmailOTPEntry fetchEmailOTPEntry(long entryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public EmailOTPEntry fetchEntryByUserId(long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -224,6 +229,10 @@ public interface EmailOTPEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void resetFailedAttempts(long userId);
+
+	public void updateAttempts(long userId, String userIP, boolean success);
 
 	/**
 	 * Updates the email otp entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

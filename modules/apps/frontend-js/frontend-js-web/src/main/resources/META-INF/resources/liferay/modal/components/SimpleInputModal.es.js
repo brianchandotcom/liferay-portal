@@ -41,10 +41,15 @@ const SimpleInputModal = ({
 	placeholder
 }) => {
 	const isMounted = useIsMounted();
+	const [errorMessage, setErrorMessage] = useState();
 	const [loadingResponse, setLoadingResponse] = useState(false);
 	const [visible, setVisible] = useState(initialVisible);
 	const [inputValue, setInputValue] = useState('');
 	const [isChecked, setChecked] = useState(checkboxFieldValue);
+
+	const handleFormError = responseContent => {
+		setErrorMessage(responseContent.error || '');
+	};
 
 	const _handleSubmit = event => {
 		event.preventDefault();
@@ -62,6 +67,8 @@ const SimpleInputModal = ({
 				if (isMounted()) {
 					if (responseContent.error) {
 						setLoadingResponse(false);
+
+						handleFormError(responseContent);
 					} else {
 						setVisible(false);
 
@@ -70,6 +77,9 @@ const SimpleInputModal = ({
 						navigate(responseContent.redirectURL);
 					}
 				}
+			})
+			.catch(response => {
+				handleFormError(response);
 			});
 
 		setLoadingResponse(true);
@@ -105,31 +115,45 @@ const SimpleInputModal = ({
 							value={idFieldValue}
 						/>
 
-						<label
-							className="control-label"
-							htmlFor={`${namespace}${mainFieldName}`}
+						<div
+							className={`form-group ${
+								errorMessage ? 'has-error' : ''
+							}`}
 						>
-							{mainFieldLabel}
+							<label
+								className="control-label"
+								htmlFor={`${namespace}${mainFieldName}`}
+							>
+								{mainFieldLabel}
 
-							<span className="reference-mark">
-								<ClayIcon symbol="asterisk" />
-							</span>
-						</label>
+								<span className="reference-mark">
+									<ClayIcon symbol="asterisk" />
+								</span>
+							</label>
 
-						<input
-							autoFocus
-							className="form-control"
-							disabled={loadingResponse}
-							id={`${namespace}${mainFieldName}`}
-							name={`${namespace}${mainFieldName}`}
-							onChange={event =>
-								setInputValue(event.target.value)
-							}
-							placeholder={placeholder}
-							required
-							type="text"
-							value={inputValue}
-						/>
+							<input
+								autoFocus
+								className="form-control"
+								disabled={loadingResponse}
+								id={`${namespace}${mainFieldName}`}
+								name={`${namespace}${mainFieldName}`}
+								onChange={event =>
+									setInputValue(event.target.value)
+								}
+								placeholder={placeholder}
+								required
+								type="text"
+								value={inputValue}
+							/>
+
+							{errorMessage && (
+								<div className="form-feedback-item">
+									<ClayIcon symbol="exclamation-full" />
+
+									{errorMessage}
+								</div>
+							)}
+						</div>
 
 						{checkboxFieldName && checkboxFieldLabel && (
 							<div className="form-check">

@@ -43,6 +43,358 @@ definition {
 		}
 	}
 
+	test AssertBasicFacetSelection {
+		var webContentserviceContext1 = '''{"assetTagNames": ["fruit"]}''';
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content 1",
+			groupName = "Guest",
+			serviceContext = "${webContentserviceContext1}",
+			title = "apple");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blog Entry Content",
+			entryTitle = "apple");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Options",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertNotChecked(
+			checkboxName = "Basic Facet Selection",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		IFrame.closeFrame();
+
+		AssertElementPresent(
+			checkboxName = "fruit",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		SearchFacetPortlet.checkFacet(facetValueName = "Blogs Entry");
+
+		AssertElementNotPresent(
+			checkboxName = "fruit",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Refresh();
+
+		FormFields.viewCheckboxChecked(fieldName = "Blogs Entry");
+
+		AssertElementNotPresent(
+			checkboxName = "fruit",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		SearchFacetPortlet.uncheckFacet(facetValueName = "Blogs Entry");
+
+		AssertElementPresent(
+			checkboxName = "fruit",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		SearchPortlets.configureSearchOptions(basicFacetSelection = "true");
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		AssertElementPresent(
+			checkboxName = "fruit",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		SearchFacetPortlet.checkFacet(facetValueName = "Blogs Entry");
+
+		AssertElementPresent(
+			checkboxName = "fruit",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		SearchFacetPortlet.checkFacet(facetValueName = "fruit");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
+
+		Refresh();
+
+		FormFields.viewCheckboxChecked(fieldName = "Blogs Entry");
+
+		FormFields.viewCheckboxChecked(fieldName = "fruit");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
+	}
+
+	@description = "This is a use case for LPS-92008."
+	@priority = "3"
+	test AssertGuestCannotSeeEmptySearchWidgets {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search Page");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
+
+		SearchPortlets.addWidgets(searchPortletList = "Category Facet,Custom Facet,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet,Search Results,Search Bar");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
+
+		// Workaround: Removed assertions for Suggestions, Sort, Search Results, and Modified Facet portlets until LPS-92008 is fixed. See LRQA-47720.
+
+		for (var portletName : list "Category Facet,Custom Facet,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet") {
+			Portlet.viewNoSpecificPG(portletName = "${portletName}");
+		}
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
+
+		for (var portletName : list "Category Facet,Custom Facet,Folder Facet,Low Level Search Options,Search Insights,Search Options,Site Facet,Tag Facet,Type Facet,User Facet") {
+			Portlet.viewNoSpecificPG(portletName = "${portletName}");
+		}
+	}
+
+	test AssertNonAdminsCannotAddCertainWidgets {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONRole.addRegularRole(
+			roleKey = "Can Add Widgets",
+			roleTitle = "Can Add Widgets");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "MANAGE_LAYOUTS",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Can Add Widgets");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Can Add Widgets",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
+
+		Portlet.viewCannotAddPG(portletName = "Low Level Search Options");
+
+		Refresh();
+
+		Portlet.viewCannotAddPG(portletName = "Search Insights");
+	}
+
+	@description = "This is a use case for LPS-89561."
+	@priority = "4"
+	test AssertSearchURLWhenModifyingPagination {
+		property custom.properties = "search.container.page.default.delta=10";
+
+		for (var count : list "1,2,3,4,5,6,7,8,9,10,11") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content ${count}",
+				groupName = "Guest",
+				title = "WC Title ${count}");
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		SearchResultPortlet.paginateAndViewSearchResults(
+			searchAssetTitle = "WC Title 11",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
+
+		Pagination.changePagination(itemsPerPage = "5");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		echo("Current URL: ${currentURL} ");
+
+		if ((!(contains("${currentURL}","delta=5"))) || (contains("${currentURL}", "start"))) {
+			fail("URL should preserve delta, but not contain start.");
+		}
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		echo("Current URL: ${currentURL} ");
+
+		if ((!(contains("${currentURL}", "delta=5"))) || (!(contains("${currentURL}", "start=2")))) {
+			fail("URL should preserve delta and add start.");
+		}
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		echo("Current URL: ${currentURL} ");
+
+		if ((!(contains("${currentURL}", "delta=5"))) && (!(contains("${currentURL}", "start=3")))) {
+			fail("URL should preserve delta and modify start.");
+		}
+
+		Pagination.changePagination(itemsPerPage = "10");
+
+		//Workaround LPS-98391
+
+		/*var currentURL = selenium.getCurrentUrl();
+
+		echo("Current URL: ${currentURL} ");
+
+		if ((!(contains("${currentURL}", "delta"))) && (!(contains("${currentURL}", "start")))) {
+			fail("Delta and start should be removed from URL.");
+		}
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		echo("Current URL: ${currentURL} ");
+
+		if ((!(contains("${currentURL}", "delta"))) && (contains("${currentURL}", "start=2"))) {
+			fail("URL should preserve abscence of delta and start should be added.");
+		}
+
+		Click(locator1 = "Pagination#PREVIOUS_LINK");
+
+		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		echo("Current URL: ${currentURL} ");
+
+		if ((!(contains("${currentURL}", "delta"))) && (contains("${currentURL}", "start=1"))) {
+			fail("URL should preserve abscence of delta and modify start.");
+		}*/
+	}
+
+	@description = "This is a use case for LPS-95670."
+	@priority = "4"
+	test AssertSuggestionsCannotOfferInvalidWordsAsSuggestion {
+		property custom.properties = "locales.enabled=de_DE,en_US${line.separator}locales=de_DE,en_US${line.separator}index.search.spell.checker.dictionary[de_DE]=spellchecker/dictionary_de_DE.txt${line.separator}index.search.spell.checker.supported.locales=en_US,es_ES,de_DE";
+		property index.search.spell.checker.enabled = "true";
+		property test.name.skip.portal.instance = "SolrSearch#AssertSuggestionsCannotOfferInvalidWordsAsSuggestion";
+
+		JSONWebcontent.addBasicWebContentLocalized(
+			contentMap = "en_US:WC Content,de_DE:ächten angreifen anmarschieren",
+			groupName = "Guest",
+			titleMap = "en_US:WC Title,de_DE:WC Titel");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
+
+		Portlet.addPG(portletName = "Suggestions");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Suggestions",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		FormFields.enableCheckbox(fieldName = "spellCheckSuggestionEnabled");
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all spell check indexes.");
+
+		AssertConsoleTextPresent(value1 = "Finished indexing dictionary for spellchecker/dictionary_de_DE.txt");
+
+		Navigator.openURL();
+
+		Portlet.addPG(portletName = "Language Selector");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "de-DE",
+			textIcon = "deutsch-Deutschland");
+
+		for (var searchTerm : list "ächten,angreifen,anmarschieren") {
+			SearchPortlets.searchEmbedded(searchTerm = "${searchTerm}");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "WC Titel",
+				searchAssetType = "Webcontent, Artikel",
+				searchTerm = "${searchTerm}");
+
+			AssertElementNotPresent(locator1 = "Search#SEARCH_SUGGESTED_SPELLING");
+		}
+	}
+
+	@description = "This is a use case for LPS-90078."
+	@priority = "4"
+	test ModifyPaginationPortalProperties {
+		property custom.properties = "search.container.page.default.delta=2";
+
+		Portlet.addPG(portletName = "Search Results");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Results",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertTextEquals(
+			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
+			value1 = "2");
+
+		IFrame.closeFrame();
+
+		for (var count : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content ${count}",
+				groupName = "Guest",
+				title = "WC Title ${count}");
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Results",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertTextEquals(
+			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
+			value1 = "2");
+
+		IFrame.closeFrame();
+
+		SearchResultPortlet.paginateAndViewSearchResults(
+			searchAssetTitle = "WC Title 3",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
+	}
+
 	@priority = "4"
 	test NavigateToSearchResultsViaURL {
 		ProductMenu.gotoPortlet(
@@ -96,6 +448,31 @@ definition {
 			searchAssetType = "Blogs Entry");
 
 		FormFields.viewCheckboxChecked(fieldName = "Blogs Entry");
+	}
+
+	test SearchAfterViewingResultDetails {
+		JSONWebcontent.addWebContent(
+			content = "Web Content",
+			groupName = "Guest",
+			title = "First WC");
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content",
+			groupName = "Guest",
+			title = "Second WC");
+
+		SearchPortlets.searchEmbedded(searchTerm = "First");
+
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "First WC");
+
+		SearchPortlets.viewResultDetails(searchAssetTitle = "First WC");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Second");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Second WC",
+			searchAssetType = "Web Content Article",
+			searchTerm = "Second");
 	}
 
 	@priority = "4"
@@ -497,6 +874,68 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "&quot;name1&quot;");
 	}
 
+	test SearchBlogsScopedToPage {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.configureScopePG(
+			portletName = "Blogs",
+			scopeSelection = "Blogs Page (Create New)");
+
+		IFrame.closeFrame();
+
+		Blogs.addEntry(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Entry Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Entry Title",
+			searchAssetType = "Blogs Entry",
+			searchTerm = "Entry Title");
+	}
+
+	@priority = "4"
+	test SearchContentPagesSmoke {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		for (var portletName : list "Search Bar,Search Results") {
+			PageEditor.addWidget(portletName = "${portletName}");
+		}
+
+		PageEditor.clickPublish();
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content",
+			groupName = "Site Name",
+			title = "WC Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Site Name");
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
+	}
+
 	@priority = "4"
 	test SearchDeletedWebContent {
 		JSONWebcontent.addWebContent(
@@ -685,8 +1124,6 @@ definition {
 
 	@priority = "5"
 	test SearchDocumentsAndMediaDocument {
-		property testray.component.names = "Training";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -935,6 +1372,7 @@ definition {
 			searchAssetType = "User");
 	}
 
+	@priority = "4"
 	test SearchUsingCustomFacet {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -1486,6 +1924,7 @@ definition {
 	@description = "This is a use case for LPS-74299."
 	@priority = "3"
 	test ViewFacetPersistence {
+		property test.name.skip.portal.instance = "SolrSearch#ViewFacetPersistence";
 
 		// Workaround for LPS-89026
 
@@ -1926,7 +2365,7 @@ definition {
 	@priority = "5"
 	test ViewSearchResultDetails {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SearchUsecase#ViewSearchResultDetails";
+		property test.name.skip.portal.instance = "SolrSearch#ViewSearchResultDetails";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -1948,6 +2387,39 @@ definition {
 		SearchPortlets.viewUserResultDetails(
 			pageName = "My Profile",
 			userName = "Test Test");
+	}
+
+	test ViewSortedSearchResults {
+		JSONWebcontent.addWebContent(
+			content = "Content",
+			groupName = "Guest",
+			title = "Apple");
+
+		JSONWebcontent.addWebContent(
+			content = "Content",
+			groupName = "Guest",
+			title = "Banana");
+
+		JSONWebcontent.addWebContent(
+			content = "Content",
+			groupName = "Guest",
+			title = "Cantaloupe");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Content");
+
+		Portlet.addPG(portletName = "Sort");
+
+		SearchPortlets.chooseSortOption(sortOption = "Title");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Apple,Banana,Cantaloupe");
+
+		SearchPortlets.chooseSortOption(sortOption = "Created");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Cantaloupe,Banana,Apple");
+
+		SearchPortlets.chooseSortOption(sortOption = "Created (oldest first)");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Apple,Banana,Cantaloupe");
 	}
 
 	@priority = "4"

@@ -39,15 +39,15 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
-	macro navigateToFormViewTab {
-		AppBuilderAdmin.openItem(itemName = "${customObjectName}");
-
+	macro switchToFormViewTab {
+		AppBuilderAdmin.switchTab(tabName = "Form Views");
 	}
 
 	macro addFormView {
 
-		if (IsElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB")){
-			FormViewBuilder.navigateToFormViewTab();
+		if (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_FIELDS_TAB")){
+			FormViewBuilder.switchToFormViewTab();
+			AppBuilderAdmin.add();
 		}
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");

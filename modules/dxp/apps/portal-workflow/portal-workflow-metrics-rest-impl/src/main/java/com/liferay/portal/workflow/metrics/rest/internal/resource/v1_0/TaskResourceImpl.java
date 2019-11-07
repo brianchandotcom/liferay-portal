@@ -276,16 +276,11 @@ public class TaskResourceImpl
 	private Task _createTask(String taskName) {
 		return new Task() {
 			{
-				breachedInstanceCount = 0L;
-				durationAvg = 0L;
-				instanceCount = 0L;
 				key = taskName;
 				name = _language.get(
 					_resourceHelper.getResourceBundle(
 						contextAcceptLanguage.getPreferredLocale()),
 					taskName);
-				onTimeInstanceCount = 0L;
-				overdueInstanceCount = 0L;
 			}
 		};
 	}
@@ -440,7 +435,7 @@ public class TaskResourceImpl
 			bucket -> {
 				Task task = tasksMap.remove(bucket.getKey());
 
-				_populateTaskWithSLAMetrics(bucket, task);
+				_populateTaskWithSLAMetrics(bucket, completed, task);
 				_setDurationAvg(bucket, task);
 				_setInstanceCount(bucket, task);
 
@@ -545,10 +540,17 @@ public class TaskResourceImpl
 		return false;
 	}
 
-	private void _populateTaskWithSLAMetrics(Bucket bucket, Task task) {
-		_setBreachedInstanceCount(bucket, task);
-		_setOnTimeInstanceCount(bucket, task);
-		_setOverdueInstanceCount(bucket, task);
+	private void _populateTaskWithSLAMetrics(
+		Bucket bucket, boolean completed, Task task) {
+
+		if (completed) {
+			_setBreachedInstanceCount(bucket, task);
+			_setBreachedInstancePercentage(bucket, task);
+		}
+		else {
+			_setOnTimeInstanceCount(bucket, task);
+			_setOverdueInstanceCount(bucket, task);
+		}
 	}
 
 	private void _setBreachedInstanceCount(Bucket bucket, Task task) {

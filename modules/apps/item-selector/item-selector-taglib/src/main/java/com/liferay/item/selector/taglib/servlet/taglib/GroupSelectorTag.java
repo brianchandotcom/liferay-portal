@@ -80,7 +80,7 @@ public class GroupSelectorTag extends IncludeTag {
 		}
 
 		if (_groups == null) {
-			_search(httpServletRequest);
+			_searchSites(httpServletRequest);
 		}
 
 		return _groups;
@@ -92,7 +92,7 @@ public class GroupSelectorTag extends IncludeTag {
 		}
 
 		if (_groupsCount < 0) {
-			_search(httpServletRequest);
+			_searchSites(httpServletRequest);
 		}
 
 		return _groupsCount;
@@ -202,7 +202,7 @@ public class GroupSelectorTag extends IncludeTag {
 			getSitesURL(httpServletRequest, itemSelector));
 	}
 
-	private void _search(HttpServletRequest httpServletRequest) {
+	private void _searchSites(HttpServletRequest httpServletRequest) {
 		try {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(

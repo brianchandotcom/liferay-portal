@@ -64,8 +64,7 @@ public class FragmentEntryLinkItemSelectorUtil {
 							"itemSelectorUrl",
 							_getInfoItemSelectorURL(
 								itemSelector, httpServletRequest,
-								liferayPortletResponse,
-								typeOptionsJSONObject.getString("itemType")));
+								liferayPortletResponse, typeOptionsJSONObject));
 					}
 				}
 			}
@@ -74,13 +73,22 @@ public class FragmentEntryLinkItemSelectorUtil {
 
 	private static String _getInfoItemSelectorURL(
 		ItemSelector itemSelector, HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse, String itemType) {
+		LiferayPortletResponse liferayPortletResponse,
+		JSONObject typeOptionsJSONObject) {
 
 		InfoItemItemSelectorCriterion itemSelectorCriterion =
 			new InfoItemItemSelectorCriterion();
 
+		String itemType = typeOptionsJSONObject.getString("itemType");
+
 		if (Validator.isNotNull(itemType)) {
 			itemSelectorCriterion.setItemType(itemType);
+
+			String itemSubtype = typeOptionsJSONObject.getString("itemSubtype");
+
+			if (Validator.isNotNull(itemSubtype)) {
+				itemSelectorCriterion.setItemSubtype(itemSubtype);
+			}
 		}
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(

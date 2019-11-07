@@ -38,7 +38,7 @@ public class InfoItemItemSelectorCriterionHandlerUtil {
 		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
 			(InfoItemItemSelectorCriterion)itemSelectorCriterion;
 
-		if (Validator.isNull(infoItemItemSelectorCriterion.getClassName())) {
+		if (Validator.isNull(infoItemItemSelectorCriterion.getItemType())) {
 			return itemSelectorViews;
 		}
 
@@ -56,7 +56,7 @@ public class InfoItemItemSelectorCriterionHandlerUtil {
 
 				return Objects.equals(
 					infoItemSelectorView.getClassName(),
-					infoItemItemSelectorCriterion.getClassName());
+					infoItemItemSelectorCriterion.getItemType());
 			}
 		).collect(
 			Collectors.toList()

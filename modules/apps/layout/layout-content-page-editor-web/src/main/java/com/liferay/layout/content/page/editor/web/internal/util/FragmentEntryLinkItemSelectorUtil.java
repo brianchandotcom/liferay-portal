@@ -59,13 +59,13 @@ public class FragmentEntryLinkItemSelectorUtil {
 					JSONObject typeOptionsJSONObject =
 						fieldJSONObject.getJSONObject("typeOptions");
 
-					if (typeOptionsJSONObject.has("className")) {
+					if (typeOptionsJSONObject.has("itemType")) {
 						typeOptionsJSONObject.put(
 							"itemSelectorUrl",
 							_getInfoItemSelectorURL(
 								itemSelector, httpServletRequest,
 								liferayPortletResponse,
-								typeOptionsJSONObject.getString("className")));
+								typeOptionsJSONObject.getString("itemType")));
 					}
 				}
 			}
@@ -74,13 +74,13 @@ public class FragmentEntryLinkItemSelectorUtil {
 
 	private static String _getInfoItemSelectorURL(
 		ItemSelector itemSelector, HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse, String className) {
+		LiferayPortletResponse liferayPortletResponse, String itemType) {
 
 		InfoItemItemSelectorCriterion itemSelectorCriterion =
 			new InfoItemItemSelectorCriterion();
 
-		if (Validator.isNotNull(className)) {
-			itemSelectorCriterion.setClassName(className);
+		if (Validator.isNotNull(itemType)) {
+			itemSelectorCriterion.setItemType(itemType);
 		}
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(

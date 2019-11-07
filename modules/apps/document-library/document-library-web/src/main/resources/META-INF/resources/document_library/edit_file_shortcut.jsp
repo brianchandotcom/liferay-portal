@@ -21,11 +21,7 @@ DLEditFileShortcutDisplayContext dlEditFileShortcutDisplayContext = (DLEditFileS
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-FileShortcut fileShortcut = (FileShortcut)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT);
-
-String headerTitle = (fileShortcut != null) ? LanguageUtil.format(request, "shortcut-to-x", fileShortcut.getToTitle(), false) : LanguageUtil.get(request, "new-file-shortcut");
-
-renderResponse.setTitle(headerTitle);
+renderResponse.setTitle(dlEditFileShortcutDisplayContext.getTitle());
 %>
 
 <div class="container-fluid-1280">

@@ -21,6 +21,7 @@ import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.DLEditFileShortcutDisplayContext;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -62,7 +63,7 @@ public class EditFileShortcutMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_EDIT_FILE_SHORTCUT_DISPLAY_CONTEXT,
 				new DLEditFileShortcutDisplayContext(
-					_dlAppService, _itemSelector,
+					_dlAppService, _itemSelector, _language,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
 
@@ -104,6 +105,9 @@ public class EditFileShortcutMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

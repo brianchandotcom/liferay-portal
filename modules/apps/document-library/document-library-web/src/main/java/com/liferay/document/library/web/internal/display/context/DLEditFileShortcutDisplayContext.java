@@ -21,6 +21,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -38,12 +39,13 @@ import javax.portlet.PortletURL;
 public class DLEditFileShortcutDisplayContext {
 
 	public DLEditFileShortcutDisplayContext(
-		DLAppService dlAppService, ItemSelector itemSelector,
+		DLAppService dlAppService, ItemSelector itemSelector, Language language,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_dlAppService = dlAppService;
 		_itemSelector = itemSelector;
+		_language = language;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 	}
@@ -76,6 +78,20 @@ public class DLEditFileShortcutDisplayContext {
 	public long getRepositoryId() {
 		return BeanParamUtil.getLong(
 			_getFileShortcut(), _liferayPortletRequest, "repositoryId");
+	}
+
+	public String getTitle() {
+		FileShortcut fileShortcut = _getFileShortcut();
+
+		if (fileShortcut != null) {
+			return _language.get(
+				_liferayPortletRequest.getHttpServletRequest(), "shortcut-to-x",
+				fileShortcut.getToTitle());
+		}
+
+		return _language.get(
+			_liferayPortletRequest.getHttpServletRequest(),
+			"new-file-shortcut");
 	}
 
 	public long getToFileEntryId() {
@@ -118,6 +134,7 @@ public class DLEditFileShortcutDisplayContext {
 
 	private final DLAppService _dlAppService;
 	private final ItemSelector _itemSelector;
+	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 

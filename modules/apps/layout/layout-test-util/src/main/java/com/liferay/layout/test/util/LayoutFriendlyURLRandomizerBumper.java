@@ -23,10 +23,11 @@ import com.liferay.portal.model.impl.LayoutImpl;
 /**
  * @author Shuyang Zhou
  */
-public class FriendlyURLRandomizerBumper implements RandomizerBumper<String> {
+public class LayoutFriendlyURLRandomizerBumper
+	implements RandomizerBumper<String> {
 
-	public static final FriendlyURLRandomizerBumper INSTANCE =
-		new FriendlyURLRandomizerBumper();
+	public static final LayoutFriendlyURLRandomizerBumper INSTANCE =
+		new LayoutFriendlyURLRandomizerBumper();
 
 	@Override
 	public boolean accept(String randomValue) {

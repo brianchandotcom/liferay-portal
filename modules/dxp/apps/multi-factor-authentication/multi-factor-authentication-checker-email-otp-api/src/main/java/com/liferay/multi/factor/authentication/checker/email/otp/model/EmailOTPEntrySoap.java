@@ -1,0 +1,208 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+
+package com.liferay.multi.factor.authentication.checker.email.otp.model;
+
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * This class is used by SOAP remote services.
+ *
+ * @author arthurchan35
+ * @generated
+ */
+public class EmailOTPEntrySoap implements Serializable {
+
+	public static EmailOTPEntrySoap toSoapModel(EmailOTPEntry model) {
+		EmailOTPEntrySoap soapModel = new EmailOTPEntrySoap();
+
+		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setEntryId(model.getEntryId());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setFailedAttempts(model.getFailedAttempts());
+		soapModel.setLastSuccessDate(model.getLastSuccessDate());
+		soapModel.setLastSuccessIP(model.getLastSuccessIP());
+		soapModel.setLastFailDate(model.getLastFailDate());
+		soapModel.setLastFailIP(model.getLastFailIP());
+
+		return soapModel;
+	}
+
+	public static EmailOTPEntrySoap[] toSoapModels(EmailOTPEntry[] models) {
+		EmailOTPEntrySoap[] soapModels = new EmailOTPEntrySoap[models.length];
+
+		for (int i = 0; i < models.length; i++) {
+			soapModels[i] = toSoapModel(models[i]);
+		}
+
+		return soapModels;
+	}
+
+	public static EmailOTPEntrySoap[][] toSoapModels(EmailOTPEntry[][] models) {
+		EmailOTPEntrySoap[][] soapModels = null;
+
+		if (models.length > 0) {
+			soapModels = new EmailOTPEntrySoap[models.length][models[0].length];
+		}
+		else {
+			soapModels = new EmailOTPEntrySoap[0][0];
+		}
+
+		for (int i = 0; i < models.length; i++) {
+			soapModels[i] = toSoapModels(models[i]);
+		}
+
+		return soapModels;
+	}
+
+	public static EmailOTPEntrySoap[] toSoapModels(List<EmailOTPEntry> models) {
+		List<EmailOTPEntrySoap> soapModels = new ArrayList<EmailOTPEntrySoap>(
+			models.size());
+
+		for (EmailOTPEntry model : models) {
+			soapModels.add(toSoapModel(model));
+		}
+
+		return soapModels.toArray(new EmailOTPEntrySoap[soapModels.size()]);
+	}
+
+	public EmailOTPEntrySoap() {
+	}
+
+	public long getPrimaryKey() {
+		return _entryId;
+	}
+
+	public void setPrimaryKey(long pk) {
+		setEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
+	public long getEntryId() {
+		return _entryId;
+	}
+
+	public void setEntryId(long entryId) {
+		_entryId = entryId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
+	public int getFailedAttempts() {
+		return _failedAttempts;
+	}
+
+	public void setFailedAttempts(int failedAttempts) {
+		_failedAttempts = failedAttempts;
+	}
+
+	public Date getLastSuccessDate() {
+		return _lastSuccessDate;
+	}
+
+	public void setLastSuccessDate(Date lastSuccessDate) {
+		_lastSuccessDate = lastSuccessDate;
+	}
+
+	public String getLastSuccessIP() {
+		return _lastSuccessIP;
+	}
+
+	public void setLastSuccessIP(String lastSuccessIP) {
+		_lastSuccessIP = lastSuccessIP;
+	}
+
+	public Date getLastFailDate() {
+		return _lastFailDate;
+	}
+
+	public void setLastFailDate(Date lastFailDate) {
+		_lastFailDate = lastFailDate;
+	}
+
+	public String getLastFailIP() {
+		return _lastFailIP;
+	}
+
+	public void setLastFailIP(String lastFailIP) {
+		_lastFailIP = lastFailIP;
+	}
+
+	private long _mvccVersion;
+	private long _entryId;
+	private long _companyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
+	private int _failedAttempts;
+	private Date _lastSuccessDate;
+	private String _lastSuccessIP;
+	private Date _lastFailDate;
+	private String _lastFailIP;
+
+}

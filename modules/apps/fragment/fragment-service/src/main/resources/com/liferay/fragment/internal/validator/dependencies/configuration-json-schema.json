@@ -198,6 +198,14 @@
 						"enableSelectTemplate": {
 							"title": "The EnableSelectTemplate Schema",
 							"type": "boolean"
+						},
+						"itemSubtype": {
+							"title": "The ItemSubtype Schema",
+							"type": "string"
+						},
+						"itemType": {
+							"title": "The ItemType Schema",
+							"type": "string"
 						}
 					},
 					"title": "The Typeoptions Schema",

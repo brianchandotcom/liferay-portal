@@ -30,8 +30,7 @@ definition {
 
 	macro setName {
 
-
-        AppBuilderAdmin.setName();
+        AppBuilderAdmin.setName(title = "${formViewName}");
 	}
 
 	macro validateFieldLabel {

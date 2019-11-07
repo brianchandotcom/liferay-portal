@@ -266,7 +266,7 @@ definition {
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
 
-		FormViewBuilder.setName(title = "My Form View");
+		FormViewBuilder.setName(formViewName = "My Form View");
 
 		FormViewBuilder.save();
 

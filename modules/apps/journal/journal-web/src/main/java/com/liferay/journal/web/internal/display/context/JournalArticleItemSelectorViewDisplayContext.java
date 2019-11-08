@@ -239,7 +239,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		else {
 			int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(
 				_themeDisplay.getScopeGroupId(), 0, _getFolderId(),
-				WorkflowConstants.STATUS_APPROVED);
+				_infoItemItemSelectorCriterion.getStatus());
 
 			articleSearchContainer.setTotal(total);
 
@@ -262,8 +262,8 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 			List results = JournalFolderServiceUtil.getFoldersAndArticles(
 				_themeDisplay.getScopeGroupId(), 0, _getFolderId(),
-				WorkflowConstants.STATUS_APPROVED, _themeDisplay.getLocale(),
-				articleSearchContainer.getStart(),
+				_infoItemItemSelectorCriterion.getStatus(),
+				_themeDisplay.getLocale(), articleSearchContainer.getStart(),
 				articleSearchContainer.getEnd(), folderOrderByComparator);
 
 			articleSearchContainer.setResults(results);

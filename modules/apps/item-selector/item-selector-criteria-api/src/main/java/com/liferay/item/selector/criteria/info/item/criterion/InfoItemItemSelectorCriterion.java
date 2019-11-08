@@ -29,6 +29,10 @@ public class InfoItemItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _itemType;
 	}
 
+	public int getStatus() {
+		return _status;
+	}
+
 	public void setItemSubtype(String itemSubtype) {
 		_itemSubtype = itemSubtype;
 	}
@@ -37,7 +41,12 @@ public class InfoItemItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_itemType = itemType;
 	}
 
+	public void setStatus(int status) {
+		_status = status;
+	}
+
 	private String _itemSubtype;
 	private String _itemType;
+	private int _status;
 
 }

@@ -1,0 +1,284 @@
+{
+	"items": {
+		"CONTAINER0-UUID": {
+			"children": [
+				"ROW0-UUID"
+			],
+			"config": {
+				"backgroundColorCssClass": "danger",
+				"backgroundImage": {
+					"title": "https://media.gettyimages.com/photos/three-lions-running-zimbabwe-picture-id974056938",
+					"url": "https://media.gettyimages.com/photos/three-lions-running-zimbabwe-picture-id974056938"
+				},
+				"paddingHorizontal": 4,
+				"paddingVertical": 4,
+				"type": "fluid"
+			},
+			"itemId": "CONTAINER0-UUID",
+			"parentId": "MAIN-UUID",
+			"type": "container"
+		},
+		"CONTAINER1-UUID": {
+			"children": [
+				"ROW1-UUID"
+			],
+			"config": {
+				"backgroundColorCssClass": "success",
+				"paddingHorizontal": 3,
+				"paddingVertical": 3
+			},
+			"itemId": "CONTAINER1-UUID",
+			"parentId": "MAIN-UUID",
+			"type": "container"
+		},
+		"CONTAINER2-UUID": {
+			"children": [
+				"ROW2-UUID"
+			],
+			"config": {
+				"backgroundImage": {
+					"title": "pexels-photo-255379.jpeg",
+					"url": "/documents/20118/0/pexels-photo-255379.jpeg/cfbc6f74-db17-9786-6102-d94835d8ef23?version=1.0&t=1573045173699&download=true"
+				},
+				"paddingHorizontal": 3,
+				"paddingVertical": 3
+			},
+			"itemId": "CONTAINER2-UUID",
+			"parentId": "MAIN-UUID",
+			"type": "container"
+		},
+		"CONTAINER3-UUID": {
+			"children": [
+				"ROW3-UUID"
+			],
+			"config": {
+				"backgroundImage": {
+					"classNameId": "30601",
+					"classPK": "38526",
+					"fieldId": "smallImage"
+				},
+				"paddingHorizontal": 3,
+				"paddingVertical": 3
+			},
+			"itemId": "CONTAINER3-UUID",
+			"parentId": "MAIN-UUID",
+			"type": "container"
+		},
+		"FRAGMENT0-UUID": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "fragmentEntryLinkId0"
+			},
+			"itemId": "FRAGMENT0-UUID",
+			"parentId": "ROW0-COLUMN0-UUID",
+			"type": "fragment"
+		},
+		"FRAGMENT1-UUID": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "fragmentEntryLinkId1"
+			},
+			"itemId": "FRAGMENT1-UUID",
+			"parentId": "ROW0-COLUMN0-UUID",
+			"type": "fragment"
+		},
+		"FRAGMENT2-UUID": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "fragmentEntryLinkId2"
+			},
+			"itemId": "FRAGMENT2-UUID",
+			"parentId": "ROW0-COLUMN1-UUID",
+			"type": "fragment"
+		},
+		"FRAGMENT3-UUID": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "fragmentEntryLinkId3"
+			},
+			"itemId": "FRAGMENT3-UUID",
+			"parentId": "ROW0-COLUMN1-UUID",
+			"type": "fragment"
+		},
+		"FRAGMENT4-UUID": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "fragmentEntryLinkId4"
+			},
+			"itemId": "FRAGMENT4-UUID",
+			"parentId": "ROW1-COLUMN0-UUID",
+			"type": "fragment"
+		},
+		"FRAGMENT5-UUID": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "fragmentEntryLinkId5"
+			},
+			"itemId": "FRAGMENT5-UUID",
+			"parentId": "ROW1-COLUMN0-UUID",
+			"type": "fragment"
+		},
+		"FRAGMENT6-UUID": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "fragmentEntryLinkId6"
+			},
+			"itemId": "FRAGMENT6-UUID",
+			"parentId": "ROW1-COLUMN1-UUID",
+			"type": "fragment"
+		},
+		"FRAGMENT7-UUID": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "fragmentEntryLinkId7"
+			},
+			"itemId": "FRAGMENT7-UUID",
+			"parentId": "ROW1-COLUMN1-UUID",
+			"type": "fragment"
+		},
+		"FRAGMENT8-UUID": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "fragmentEntryLinkId8"
+			},
+			"itemId": "FRAGMENT8-UUID",
+			"parentId": "MAIN-UUID",
+			"type": "fragment"
+		},
+		"MAIN-UUID": {
+			"children": [
+				"CONTAINER0-UUID",
+				"CONTAINER1-UUID",
+				"CONTAINER2-UUID",
+				"CONTAINER3-UUID",
+				"FRAGMENT8-UUID"
+			],
+			"config": {},
+			"itemId": "MAIN-UUID",
+			"parentId": "",
+			"type": "root"
+		},
+		"ROW0-COLUMN0-UUID": {
+			"children": [
+				"FRAGMENT0-UUID",
+				"FRAGMENT1-UUID"
+			],
+			"config": {
+				"size": 8
+			},
+			"itemId": "ROW0-COLUMN0-UUID",
+			"parentId": "ROW0-UUID",
+			"type": "column"
+		},
+		"ROW0-COLUMN1-UUID": {
+			"children": [
+				"FRAGMENT2-UUID",
+				"FRAGMENT3-UUID"
+			],
+			"config": {
+				"size": 4
+			},
+			"itemId": "ROW0-COLUMN1-UUID",
+			"parentId": "ROW0-UUID",
+			"type": "column"
+		},
+		"ROW0-UUID": {
+			"children": [
+				"ROW0-COLUMN0-UUID",
+				"ROW0-COLUMN1-UUID"
+			],
+			"config": {
+				"gutters": false,
+				"verticalAlign": "top"
+			},
+			"itemId": "ROW0-UUID",
+			"parentId": "CONTAINER0-UUID",
+			"type": "row"
+		},
+		"ROW1-COLUMN0-UUID": {
+			"children": [
+				"FRAGMENT4-UUID",
+				"FRAGMENT5-UUID"
+			],
+			"config": {
+				"size": 6
+			},
+			"itemId": "ROW1-COLUMN0-UUID",
+			"parentId": "ROW1-UUID",
+			"type": "column"
+		},
+		"ROW1-COLUMN1-UUID": {
+			"children": [
+				"FRAGMENT6-UUID",
+				"FRAGMENT7-UUID"
+			],
+			"config": {
+				"size": 6
+			},
+			"itemId": "ROW1-COLUMN1-UUID",
+			"parentId": "ROW1-UUID",
+			"type": "column"
+		},
+		"ROW1-UUID": {
+			"children": [
+				"ROW1-COLUMN0-UUID",
+				"ROW1-COLUMN1-UUID"
+			],
+			"config": {
+				"gutters": true,
+				"verticalAlign": "top"
+			},
+			"itemId": "ROW1-UUID",
+			"parentId": "CONTAINER1-UUID",
+			"type": "row"
+		},
+		"ROW2-COLUMN0-UUID": {
+			"children": [
+			],
+			"config": {
+				"size": 12
+			},
+			"itemId": "ROW2-COLUMN0-UUID",
+			"parentId": "ROW2-UUID",
+			"type": "column"
+		},
+		"ROW2-UUID": {
+			"children": [
+				"ROW2-COLUMN0-UUID"
+			],
+			"config": {
+				"gutters": true,
+				"verticalAlign": "top"
+			},
+			"itemId": "ROW2-UUID",
+			"parentId": "CONTAINER2-UUID",
+			"type": "row"
+		},
+		"ROW3-COLUMN0-UUID": {
+			"children": [
+			],
+			"config": {
+				"size": 12
+			},
+			"itemId": "ROW3-COLUMN0-UUID",
+			"parentId": "ROW3-UUID",
+			"type": "column"
+		},
+		"ROW3-UUID": {
+			"children": [
+				"ROW3-COLUMN0-UUID"
+			],
+			"config": {
+				"gutters": true,
+				"verticalAlign": "top"
+			},
+			"itemId": "ROW3-UUID",
+			"parentId": "CONTAINER3-UUID",
+			"type": "row"
+		}
+	},
+	"rootItems": {
+		"main": "MAIN-UUID"
+	},
+	"version": 1
+}

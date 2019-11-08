@@ -1,0 +1,135 @@
+{
+	"config": {},
+	"nextColumnId": 10,
+	"nextRowId": 6,
+	"structure": [
+		{
+			"columns": [
+				{
+					"columnId": "0",
+					"config": {
+					},
+					"fragmentEntryLinkIds": [
+						"fragmentEntryLinkId0",
+						"fragmentEntryLinkId1"
+					],
+					"size": "8"
+				},
+				{
+					"columnId": "1",
+					"config": {
+					},
+					"fragmentEntryLinkIds": [
+						"fragmentEntryLinkId2",
+						"fragmentEntryLinkId3"
+					],
+					"size": "4"
+				}
+			],
+			"config": {
+				"backgroundColorCssClass": "danger",
+				"backgroundImage": {
+					"title": "https://media.gettyimages.com/photos/three-lions-running-zimbabwe-picture-id974056938",
+					"url": "https://media.gettyimages.com/photos/three-lions-running-zimbabwe-picture-id974056938"
+				},
+				"columnSpacing": false,
+				"containerType": "fluid",
+				"paddingHorizontal": "4",
+				"paddingVertical": "4"
+			},
+			"rowId": "0",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "2",
+					"config": {
+					},
+					"fragmentEntryLinkIds": [
+						"fragmentEntryLinkId4",
+						"fragmentEntryLinkId5"
+					],
+					"size": "6"
+				},
+				{
+					"columnId": "3",
+					"config": {
+					},
+					"fragmentEntryLinkIds": [
+						"fragmentEntryLinkId6",
+						"fragmentEntryLinkId7"
+					],
+					"size": "6"
+				}
+			],
+			"config": {
+				"backgroundColorCssClass": "success",
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "3"
+			},
+			"rowId": "1",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "4",
+					"fragmentEntryLinkIds": [],
+					"size": "12"
+				}
+			],
+			"config": {
+				"backgroundImage": {
+					"title": "pexels-photo-255379.jpeg",
+					"url": "/documents/20118/0/pexels-photo-255379.jpeg/cfbc6f74-db17-9786-6102-d94835d8ef23?version=1.0&t=1573045173699&download=true"
+				},
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "3"
+			},
+			"rowId": "2",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "5",
+					"fragmentEntryLinkIds": [],
+					"size": "12"
+				}
+			],
+			"config": {
+				"backgroundImage": {
+					"classNameId": "30601",
+					"classPK": "38526",
+					"fieldId": "smallImage"
+				},
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "3"
+			},
+			"rowId": "3",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "6",
+					"fragmentEntryLinkIds": [
+						"fragmentEntryLinkId8"
+					],
+					"size": "12"
+				}
+			],
+			"config": {
+				"columnSpacing": true,
+				"paddingHorizontal": "0",
+				"paddingVertical": "0"
+			},
+			"rowId": "4",
+			"type": "0"
+		}
+	]
+}

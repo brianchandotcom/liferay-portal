@@ -14,7 +14,7 @@
 		<#list assetCategoryIds as assetCategoryId>
 			<#local assetEntryAssetCategoryRelId = dataFactory.getCounterNext()>
 
-			insert into AssetEntryAssetCategoryRel values (0, ${assetEntryAssetCategoryRelId}, ${assetEntryModel.entryId}, ${assetCategoryId}, 0);
+			insert into AssetEntryAssetCategoryRel values (0, ${assetEntryAssetCategoryRelId}, ${assetEntryModel.companyId}, ${assetEntryModel.entryId}, ${assetCategoryId}, 0);
 		</#list>
 
 		<#local assetTagIds = dataFactory.getAssetTagIds(assetEntryModel)>

@@ -306,11 +306,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		DockerStopContainer dockerStopContainer = _addTaskStopDockerContainer(
 			project);
 
+		DockerRemoveContainer dockerRemoveContainer =
+			_addTaskRemoveDockerContainer(dockerStopContainer, project);
+
 		_addTaskCreateDockerContainer(project, workspaceExtension);
 
 		_addTaskLogsDockerContainer(project);
 		_addTaskPullDockerImage(project, workspaceExtension);
-		_addTaskRemoveDockerContainer(project);
 		_addTaskStartDockerContainer(project);
 	}
 
@@ -1008,7 +1010,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	@SuppressWarnings("serial")
 	private DockerRemoveContainer _addTaskRemoveDockerContainer(
-		Project project) {
+		DockerStopContainer stopDockerContainer, Project project) {
 
 		DockerRemoveContainer dockerRemoveContainer = GradleUtil.addTask(
 			project, REMOVE_DOCKER_CONTAINER_TASK_NAME,
@@ -1023,10 +1025,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return project.getName() + "-liferayapp";
+					return _getDockerContainerId(project);
 				}
 
 			});
+
+		dockerRemoveContainer.dependsOn(stopDockerContainer);
 
 		dockerRemoveContainer.setOnError(
 			new Closure<Void>(project) {
@@ -1037,8 +1041,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 					if (logger.isWarnEnabled()) {
 						logger.warn(
-							"No container with ID '" + project.getName() +
-								"-liferayapp' found.");
+							"No container with ID '" +
+								_getDockerContainerId(project) + "' found.");
 					}
 				}
 

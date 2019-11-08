@@ -40,10 +40,11 @@ public class DepotEntryGroupRelServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
-			getDepotEntryGroupRels(long groupId)
+			getDepotEntryGroupRels(long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _depotEntryGroupRelService.getDepotEntryGroupRels(groupId);
+		return _depotEntryGroupRelService.getDepotEntryGroupRels(
+			groupId, start, end);
 	}
 
 	/**

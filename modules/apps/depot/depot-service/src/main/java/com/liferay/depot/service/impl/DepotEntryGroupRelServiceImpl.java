@@ -40,13 +40,15 @@ public class DepotEntryGroupRelServiceImpl
 	extends DepotEntryGroupRelServiceBaseImpl {
 
 	@Override
-	public List<DepotEntryGroupRel> getDepotEntryGroupRels(long groupId)
+	public List<DepotEntryGroupRel> getDepotEntryGroupRels(
+			long groupId, int start, int end)
 		throws PortalException {
 
 		_groupPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
-		return depotEntryGroupRelLocalService.getDepotEntryGroupRels(groupId);
+		return depotEntryGroupRelLocalService.getDepotEntryGroupRels(
+			groupId, start, end);
 	}
 
 	@Reference

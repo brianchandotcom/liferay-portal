@@ -101,13 +101,10 @@ public class JSONWebServiceServiceActionTest
 	public void testInvokerNullCall() throws Exception {
 		registerActionClass(FooService.class);
 
-		Map<String, Object> params = new LinkedHashMap<>();
-
-		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
-			"/foo/null-return", params
-		).build();
-
-		String json = toJSON(map);
+		String json = toJSON(
+			LinkedHashMapBuilder.<String, Object>put(
+				"/foo/null-return", new LinkedHashMap<>()
+			).build());
 
 		MockHttpServletRequest mockHttpServletRequest =
 			createInvokerHttpServletRequest(json);

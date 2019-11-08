@@ -304,13 +304,10 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 	@Test
 	public void testFilteringList() throws Exception {
-		Map<String, Object> params = new LinkedHashMap<>();
-
-		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
-			"$datas[id] = /foo/get-foo-datas2", params
-		).build();
-
-		String json = toJSON(map);
+		String json = toJSON(
+			LinkedHashMapBuilder.<String, Object>put(
+				"$datas[id] = /foo/get-foo-datas2", new LinkedHashMap<>()
+			).build());
 
 		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
 
@@ -328,13 +325,10 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 	@Test
 	public void testFilteringPrimitivesList() throws Exception {
-		Map<String, Object> params = new LinkedHashMap<>();
-
-		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
-			"$datas[id] = /foo/get-foo-datas3", params
-		).build();
-
-		String json = toJSON(map);
+		String json = toJSON(
+			LinkedHashMapBuilder.<String, Object>put(
+				"$datas[id] = /foo/get-foo-datas3", new LinkedHashMap<>()
+			).build());
 
 		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
 
@@ -439,13 +433,10 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 	@Test
 	public void testListFiltering() throws Exception {
-		Map<String, Object> params = new LinkedHashMap<>();
-
-		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
-			"$world[id] = /foo/get-foo-datas", params
-		).build();
-
-		String json = toJSON(map);
+		String json = toJSON(
+			LinkedHashMapBuilder.<String, Object>put(
+				"$world[id] = /foo/get-foo-datas", new LinkedHashMap<>()
+			).build());
 
 		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
 
@@ -497,13 +488,10 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 	@Test
 	public void testNoProperty() throws Exception {
-		Map<String, Object> params = new LinkedHashMap<>();
-
-		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
-			"/foo/bar", params
-		).build();
-
-		String json = toJSON(map);
+		String json = toJSON(
+			LinkedHashMapBuilder.<String, Object>put(
+				"/foo/bar", new LinkedHashMap<>()
+			).build());
 
 		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
 

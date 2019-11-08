@@ -257,6 +257,7 @@ public class SiteActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(_group.getDisplayURL(_themeDisplay, false));
+			dropdownItem.setIcon("shortcut");
 			dropdownItem.setTarget("_blank");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "go-to-public-pages"));
@@ -272,6 +273,7 @@ public class SiteActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(viewSiteSettingsURL);
+			dropdownItem.setIcon("shortcut");
 			dropdownItem.setTarget("_blank");
 			dropdownItem.setLabel(
 				LanguageUtil.format(

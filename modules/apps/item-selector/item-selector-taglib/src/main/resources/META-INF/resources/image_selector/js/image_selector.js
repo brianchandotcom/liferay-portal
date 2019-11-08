@@ -661,7 +661,6 @@ AUI.add(
 		requires: [
 			'aui-base',
 			'aui-progressbar',
-			'liferay-item-selector-dialog',
 			'liferay-portlet-base',
 			'uploader'
 		]

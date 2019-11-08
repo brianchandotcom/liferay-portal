@@ -1,12 +1,12 @@
 {
 	"dependencies": {
 		"classnames": "2.2.6",
-		"clay-alert": "2.18.4",
-		"clay-checkbox": "2.18.4",
-		"clay-icon": "2.18.4",
-		"clay-management-toolbar": "2.18.4",
-		"clay-modal": "2.18.4",
-		"clay-radio": "2.18.4",
+		"clay-alert": "2.18.5",
+		"clay-checkbox": "2.18.5",
+		"clay-icon": "2.18.5",
+		"clay-management-toolbar": "2.18.5",
+		"clay-modal": "2.18.5",
+		"clay-radio": "2.18.5",
 		"clipboard": "2.0.4",
 		"metal-dom": "2.16.8",
 		"metal-drag-drop": "3.3.1",

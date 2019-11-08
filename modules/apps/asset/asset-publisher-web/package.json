@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"clay-multi-select": "2.18.4",
+		"clay-multi-select": "2.18.5",
 		"metal": "2.16.8",
 		"metal-dom": "2.16.8",
 		"metal-soy": "2.16.8",

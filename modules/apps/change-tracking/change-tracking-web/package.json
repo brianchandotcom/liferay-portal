@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"clay-label": "2.18.4",
-		"clay-progress-bar": "2.18.4",
-		"clay-sticker": "2.18.4",
+		"clay-label": "2.18.5",
+		"clay-progress-bar": "2.18.5",
+		"clay-sticker": "2.18.5",
 		"frontend-js-web": "*",
 		"metal-soy": "2.16.8",
 		"metal-state": "2.16.8"

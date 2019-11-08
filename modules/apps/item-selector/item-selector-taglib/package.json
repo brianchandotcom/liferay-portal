@@ -4,7 +4,7 @@
 		"@clayui/icon": "3.0.1",
 		"@clayui/navigation-bar": "3.0.3",
 		"@clayui/tabs": "3.0.3",
-		"clay-alert": "2.18.4",
+		"clay-alert": "2.18.5",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",
 		"metal-dom": "2.16.8",

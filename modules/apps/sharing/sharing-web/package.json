@@ -1,10 +1,10 @@
 {
 	"dependencies": {
-		"clay-alert": "2.18.4",
-		"clay-button": "2.18.4",
-		"clay-multi-select": "2.18.4",
-		"clay-select": "2.18.4",
-		"clay-sticker": "2.18.4",
+		"clay-alert": "2.18.5",
+		"clay-button": "2.18.5",
+		"clay-multi-select": "2.18.5",
+		"clay-select": "2.18.5",
+		"clay-sticker": "2.18.5",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",
 		"metal-dom": "2.16.8",

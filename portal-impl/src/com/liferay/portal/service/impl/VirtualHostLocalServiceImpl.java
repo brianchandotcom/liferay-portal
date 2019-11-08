@@ -49,10 +49,8 @@ public class VirtualHostLocalServiceImpl
 			hostname);
 
 		if ((virtualHost == null) && hostname.startsWith("xn--")) {
-			String hostnameUnicode = IDN.toUnicode(hostname);
-
 			virtualHost = virtualHostPersistence.fetchByHostname(
-				hostnameUnicode);
+				IDN.toUnicode(hostname));
 		}
 
 		return virtualHost;
@@ -67,24 +65,17 @@ public class VirtualHostLocalServiceImpl
 
 	@Override
 	public VirtualHost getVirtualHost(String hostname) throws PortalException {
-		VirtualHost virtualHost;
-
 		try {
-			virtualHost = virtualHostPersistence.findByHostname(hostname);
+			return virtualHostPersistence.findByHostname(hostname);
 		}
 		catch (NoSuchVirtualHostException nsvhe) {
 			if (hostname.startsWith("xn--")) {
-				String hostnameUnicode = IDN.toUnicode(hostname);
+				return virtualHostPersistence.findByHostname(
+					IDN.toUnicode(hostname));
+			}
 
-				virtualHost = virtualHostPersistence.findByHostname(
-					hostnameUnicode);
-			}
-			else {
-				throw nsvhe;
-			}
+			throw nsvhe;
 		}
-
-		return virtualHost;
 	}
 
 	@Override

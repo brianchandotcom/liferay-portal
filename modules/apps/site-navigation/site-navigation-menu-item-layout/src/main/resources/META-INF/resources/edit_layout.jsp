@@ -94,7 +94,7 @@ if (selLayout != null) {
 			function(ItemSelectorDialog) {
 				const itemSelectorDialog = new ItemSelectorDialog.default({
 					buttonAddLabel: '<liferay-ui:message key="done" />',
-					eventName:'<%= eventName %>',
+					eventName: '<%= eventName %>',
 					title: '<liferay-ui:message key="select-layout" />',
 					url: '<%= itemSelectorURL.toString() %>'
 				});
@@ -103,17 +103,17 @@ if (selLayout != null) {
 					var selectedItem = event.selectedItem;
 
 					if (selectedItem) {
-							groupId.val(selectedItem.groupId);
+						groupId.val(selectedItem.groupId);
 
-							layoutUuid.val(selectedItem.id);
+						layoutUuid.val(selectedItem.id);
 
-							privateLayout.val(selectedItem.privateLayout);
+						privateLayout.val(selectedItem.privateLayout);
 
-							layoutNameInput.html(selectedItem.name);
-							layoutNameInput.simulate('change');
+						layoutNameInput.html(selectedItem.name);
+						layoutNameInput.simulate('change');
 
-							layoutItemRemove.removeClass('hide');
-						}
+						layoutItemRemove.removeClass('hide');
+					}
 				});
 
 				itemSelectorDialog.open();

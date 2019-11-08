@@ -232,14 +232,8 @@ else {
 	form.addEventListener('select', <portlet:namespace/>resetPreview);
 
 	function <portlet:namespace/>resetPreview() {
-		var displayDepthSelect = Liferay.Util.getFormElement(
-			form,
-			'displayDepth'
-		);
-		var displayStyleSelect = Liferay.Util.getFormElement(
-			form,
-			'displayStyle'
-		);
+		var displayDepthSelect = Liferay.Util.getFormElement(form, 'displayDepth');
+		var displayStyleSelect = Liferay.Util.getFormElement(form, 'displayStyle');
 		var expandedLevelsSelect = Liferay.Util.getFormElement(
 			form,
 			'expandedLevels'
@@ -289,10 +283,7 @@ else {
 			data.siteNavigationMenuType = siteNavigationMenuTypeInput.value;
 		}
 
-		data = Liferay.Util.ns(
-			'_<%= HtmlUtil.escapeJS(portletResource) %>_',
-			data
-		);
+		data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
 
 		Liferay.Portlet.refresh(
 			'#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_',
@@ -342,8 +333,10 @@ else {
 
 			const itemSelectorDialog = new ItemSelectorDialog.default({
 				buttonAddLabel: '<liferay-ui:message key="done" />',
-				eventName: '<%= siteNavigationMenuDisplayContext.getRootMenuItemEventName() %>',
-				title: '<liferay-ui:message key="select-site-navigation-menu-item" />',
+				eventName:
+					'<%= siteNavigationMenuDisplayContext.getRootMenuItemEventName() %>',
+				title:
+					'<liferay-ui:message key="select-site-navigation-menu-item" />',
 				url: uri
 			});
 
@@ -382,9 +375,7 @@ else {
 		rootMenuItemNameSpan &&
 		siteNavigationMenuIdInput
 	) {
-		chooseSiteNavigationMenuButton.addEventListener('click', function(
-			event
-		) {
+		chooseSiteNavigationMenuButton.addEventListener('click', function(event) {
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -428,9 +419,7 @@ else {
 		rootMenuItemNameSpan &&
 		siteNavigationMenuIdInput
 	) {
-		removeSiteNavigationMenuButton.addEventListener('click', function(
-			event
-		) {
+		removeSiteNavigationMenuButton.addEventListener('click', function(event) {
 			navigationMenuName.innerText = '';
 			rootMenuItemIdInput.value = '0';
 			rootMenuItemNameSpan.innerText = '';
@@ -465,22 +454,18 @@ else {
 		selectSiteNavigationMenuTypeSelect &&
 		siteNavigationMenuType
 	) {
-		selectSiteNavigationMenuTypeSelect.addEventListener(
-			'change',
-			function() {
-				var selectedSelectSiteNavigationMenuType = document.querySelector(
-					'#<portlet:namespace />selectSiteNavigationMenuType option:checked'
-				);
+		selectSiteNavigationMenuTypeSelect.addEventListener('change', function() {
+			var selectedSelectSiteNavigationMenuType = document.querySelector(
+				'#<portlet:namespace />selectSiteNavigationMenuType option:checked'
+			);
 
-				if (selectedSelectSiteNavigationMenuType) {
-					rootMenuItemNameSpan.innerText =
-						selectedSelectSiteNavigationMenuType.innerText;
-				}
-
-				siteNavigationMenuType.value =
-					selectSiteNavigationMenuTypeSelect.value;
+			if (selectedSelectSiteNavigationMenuType) {
+				rootMenuItemNameSpan.innerText =
+					selectedSelectSiteNavigationMenuType.innerText;
 			}
-		);
+
+			siteNavigationMenuType.value = selectSiteNavigationMenuTypeSelect.value;
+		});
 	}
 
 	var chooseSiteNavigationMenu = document.getElementById(

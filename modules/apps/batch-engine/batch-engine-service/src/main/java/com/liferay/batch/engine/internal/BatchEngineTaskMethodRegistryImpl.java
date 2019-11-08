@@ -304,6 +304,8 @@ public class BatchEngineTaskMethodRegistryImpl
 						resourceMethodArgNameTypeEntries[i] =
 							new AbstractMap.SimpleImmutableEntry<>(
 								parameter.getName(), parameterType);
+
+						continue;
 					}
 
 					PathParam pathParam = parameter.getAnnotation(
@@ -313,6 +315,8 @@ public class BatchEngineTaskMethodRegistryImpl
 						resourceMethodArgNameTypeEntries[i] =
 							new AbstractMap.SimpleImmutableEntry<>(
 								pathParam.value(), parameterType);
+
+						continue;
 					}
 
 					QueryParam queryParam = parameter.getAnnotation(

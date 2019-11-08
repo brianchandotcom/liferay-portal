@@ -187,7 +187,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 		List<DepotEntryGroupRel> depotEntryGroupRels =
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
-				_group.getGroupId());
+				_group.getGroupId(), 0, 20);
 
 		Assert.assertEquals(
 			depotEntryGroupRels.toString(), depotEntryGroupRels.size(), 1);

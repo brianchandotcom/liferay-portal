@@ -21,6 +21,8 @@ import java.nio.charset.Charset;
  */
 public class StringPool {
 
+	public static final String ACE_PREFIX = "xn--";
+
 	public static final String AMPERSAND = "&";
 
 	public static final String AMPERSAND_ENCODED = "&amp;";

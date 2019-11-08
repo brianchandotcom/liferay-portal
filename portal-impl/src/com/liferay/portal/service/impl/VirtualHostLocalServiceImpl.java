@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,7 +49,9 @@ public class VirtualHostLocalServiceImpl
 		VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
 			hostname);
 
-		if ((virtualHost == null) && hostname.startsWith("xn--")) {
+		if ((virtualHost == null) &&
+			hostname.startsWith(StringPool.ACE_PREFIX)) {
+
 			virtualHost = virtualHostPersistence.fetchByHostname(
 				IDN.toUnicode(hostname));
 		}
@@ -69,7 +72,7 @@ public class VirtualHostLocalServiceImpl
 			return virtualHostPersistence.findByHostname(hostname);
 		}
 		catch (NoSuchVirtualHostException nsvhe) {
-			if (hostname.startsWith("xn--")) {
+			if (hostname.startsWith(StringPool.ACE_PREFIX)) {
 				return virtualHostPersistence.findByHostname(
 					IDN.toUnicode(hostname));
 			}

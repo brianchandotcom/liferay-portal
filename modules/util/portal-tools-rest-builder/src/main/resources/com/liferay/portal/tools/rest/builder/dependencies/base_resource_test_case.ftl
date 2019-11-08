@@ -1117,42 +1117,46 @@ public abstract class Base${schemaName}ResourceTestCase {
 		<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete") && stringUtil.equals(freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures), "delete" + schemaName)>
 			@Test
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
-				${schemaName} ${schemaVarName} = testGraphQL${schemaName}_add${schemaName}();
+				<#if !properties?keys?seq_contains("id")>
+					Assert.assertTrue(false);
+				<#else>
+					${schemaName} ${schemaVarName} = testGraphQL${schemaName}_add${schemaName}();
 
-				GraphQLField graphQLField = new GraphQLField(
-					"mutation",
-					new GraphQLField(
-						"delete${schemaName}",
-						new HashMap<String, Object>() {
-							{
-								put("${schemaVarName}Id", ${schemaVarName}.getId());
-							}
-						}));
-
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(invoke(graphQLField.toString()));
-
-				JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-				Assert.assertTrue(dataJSONObject.getBoolean("delete${schemaName}"));
-
-				try (CaptureAppender captureAppender = Log4JLoggerTestUtil.configureLog4JLogger("graphql.execution.SimpleDataFetcherExceptionHandler", Level.WARN)) {
-					graphQLField = new GraphQLField(
-						"query",
+					GraphQLField graphQLField = new GraphQLField(
+						"mutation",
 						new GraphQLField(
-							"${schemaVarName}",
+							"delete${schemaName}",
 							new HashMap<String, Object>() {
 								{
 									put("${schemaVarName}Id", ${schemaVarName}.getId());
 								}
-							},
-							new GraphQLField("id")));
+							}));
 
-					jsonObject = JSONFactoryUtil.createJSONObject(invoke(graphQLField.toString()));
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(invoke(graphQLField.toString()));
 
-					JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+					JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
-					Assert.assertTrue(errorsJSONArray.length() > 0);
-				}
+					Assert.assertTrue(dataJSONObject.getBoolean("delete${schemaName}"));
+
+					try (CaptureAppender captureAppender = Log4JLoggerTestUtil.configureLog4JLogger("graphql.execution.SimpleDataFetcherExceptionHandler", Level.WARN)) {
+						graphQLField = new GraphQLField(
+							"query",
+							new GraphQLField(
+								"${schemaVarName}",
+								new HashMap<String, Object>() {
+									{
+										put("${schemaVarName}Id", ${schemaVarName}.getId());
+									}
+								},
+								new GraphQLField("id")));
+
+						jsonObject = JSONFactoryUtil.createJSONObject(invoke(graphQLField.toString()));
+
+						JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+						Assert.assertTrue(errorsJSONArray.length() > 0);
+					}
+				</#if>
 			}
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?contains("Page<") && stringUtil.equals(freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures), schemaVarNames)>
 			@Test

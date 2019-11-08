@@ -24,7 +24,7 @@ import {
 	TimeRangeContext,
 	TimeRangeProvider
 } from '../filter/store/TimeRangeStore.es';
-import {Body, Empty} from './PerformanceByStepCardBody.es';
+import {Body, Empty, Footer} from './PerformanceByStepCardBody.es';
 import {Item, Table} from './PerformanceByStepCardTable.es';
 
 const Container = ({processId, query}) => {
@@ -72,7 +72,7 @@ const ErrorView = () => {
 	return (
 		<EmptyState
 			actionButton={<ReloadButton />}
-			className="border-0"
+			className="border-0 mt-7"
 			hideAnimation={true}
 			message={Liferay.Language.get(
 				'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
@@ -122,7 +122,10 @@ const Header = ({totalCount}) => (
 
 const LoadingView = () => {
 	return (
-		<div className={`border-0 pb-6 pt-6 sheet`} data-testid="loadingView">
+		<div
+			className="border-0 mt-8 pb-5 pt-5 sheet"
+			data-testid="loadingView"
+		>
 			<LoadingState />
 		</div>
 	);
@@ -134,7 +137,7 @@ const PerformanceByStepCard = ({processId, query}) => {
 	return (
 		<Request>
 			<TimeRangeProvider timeRangeKeys={performanceTimeRange}>
-				<Panel>
+				<Panel elementClasses="dashboard-card">
 					<PerformanceByStepCard.Container
 						processId={processId}
 						query={query}
@@ -149,6 +152,7 @@ PerformanceByStepCard.Body = Body;
 PerformanceByStepCard.Container = Container;
 PerformanceByStepCard.Empty = Empty;
 PerformanceByStepCard.ErrorView = ErrorView;
+PerformanceByStepCard.Footer = Footer;
 PerformanceByStepCard.Header = Header;
 PerformanceByStepCard.Item = Item;
 PerformanceByStepCard.LoadingView = LoadingView;

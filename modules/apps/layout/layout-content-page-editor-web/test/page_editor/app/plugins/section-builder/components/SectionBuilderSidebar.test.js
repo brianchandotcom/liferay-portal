@@ -17,7 +17,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {StoreContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
-import SectionBuilderSidebar from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/section-builder/components/SectionBuilderSidebar';
+import FragmentsSidebar from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments/components/FragmentsSidebar';
 
 import '@testing-library/jest-dom/extend-expect';
 
@@ -45,20 +45,20 @@ const fragments = [
 	}
 ];
 
-const RenderSectionBuilderSidebar = () => {
+const RenderFragmentsSidebar = () => {
 	return (
 		<StoreContext.Provider value={{fragments}}>
-			<SectionBuilderSidebar />
+			<FragmentsSidebar />
 		</StoreContext.Provider>
 	);
 };
 
-describe('SectionBuilderSidebar', () => {
+describe('FragmentsSidebar', () => {
 	afterEach(cleanup);
 
 	it('renders the categories collapsed', () => {
 		const {getByLabelText, getByText, queryByText} = render(
-			<RenderSectionBuilderSidebar />
+			<RenderFragmentsSidebar />
 		);
 
 		expect(getByText('Basic Components')).toBeInTheDocument();
@@ -69,9 +69,7 @@ describe('SectionBuilderSidebar', () => {
 	});
 
 	it('expands a category on click and closes it when clicking it again', () => {
-		const {getByText, queryByText} = render(
-			<RenderSectionBuilderSidebar />
-		);
+		const {getByText, queryByText} = render(<RenderFragmentsSidebar />);
 		const basicComponentsCollapse = getByText('Basic Components');
 
 		fireEvent.click(basicComponentsCollapse);
@@ -93,7 +91,7 @@ describe('SectionBuilderSidebar', () => {
 
 	it('finds an element when you search it', () => {
 		const {getByLabelText, getByText, queryByText} = render(
-			<RenderSectionBuilderSidebar />
+			<RenderFragmentsSidebar />
 		);
 		const searchFormInput = getByLabelText('search-form');
 
@@ -106,7 +104,7 @@ describe('SectionBuilderSidebar', () => {
 
 	it('expands all categories when you type something in search form and hides layouts', () => {
 		const {getByLabelText, getByText, queryByText} = render(
-			<RenderSectionBuilderSidebar />
+			<RenderFragmentsSidebar />
 		);
 
 		userEvent.type(getByLabelText('search-form'), 'a');

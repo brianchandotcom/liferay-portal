@@ -22,11 +22,6 @@ export {default as AOP} from './liferay/aop/AOP.es';
 
 export {cancelDebounce, debounce} from './liferay/debounce/debounce.es';
 
-// Compat API
-
-export {default as Modal} from './liferay/compat/modal/Modal.es';
-export {default as Treeview} from './liferay/compat/treeview/Treeview.es';
-
 // Form API
 
 export {

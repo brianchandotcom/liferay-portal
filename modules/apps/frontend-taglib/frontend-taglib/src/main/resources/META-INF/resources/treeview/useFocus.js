@@ -12,31 +12,22 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import {useContext, useEffect, useRef} from 'react';
 
 import TreeviewContext from './TreeviewContext';
 
-export default function TreeviewLabel({node}) {
-	const {dispatch} = useContext(TreeviewContext);
+export default function useFocus(nodeId) {
+	const {state} = useContext(TreeviewContext);
 
-	const inputId = `${node.id}-treeview-label-input`;
+	const {active, focusedNodeId} = state;
 
-	return (
-		<div className="lfr-treeview-label">
-			<input
-				checked={node.selected}
-				className="sr-only"
-				id={inputId}
-				onChange={() => dispatch({type: 'TOGGLE_SELECT', nodeId: node.id})}
-				type="checkbox"
-			/>
+	const focusable = useRef();
 
-			<label
-				className={node.selected ? 'font-weight-bold' : 'font-weight-normal'}
-				htmlFor={inputId}
-			>
-				{node.name}
-			</label>
-		</div>
-	);
+	useEffect(() => {
+		if (active && nodeId === focusedNodeId && focusable.current) {
+			focusable.current.focus();
+		}
+	}, [active, focusedNodeId, nodeId]);
+
+	return focusable;
 }

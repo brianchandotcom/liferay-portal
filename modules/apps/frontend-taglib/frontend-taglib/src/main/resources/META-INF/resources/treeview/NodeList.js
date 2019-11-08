@@ -13,27 +13,56 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
 
 import NodeListItem from './NodeListItem';
+import TreeviewContext from './TreeviewContext';
+import useFocus from './useFocus';
+import useKeyboardNavigation from './useKeyboardNavigation';
 
 export default function NodeList({
 	NodeComponent,
-	initialSelectedNodeIds,
 	nodes,
-	onNodeSelected,
-	selectedNodeIds
+	onBlur,
+	onFocus,
+	tabIndex = -1
 }) {
+	const {dispatch, state} = useContext(TreeviewContext);
+
+	const {focusedNodeId} = state;
+
+	const rootNodeId = nodes[0] && nodes[0].id;
+
+	const focusable = useFocus(rootNodeId);
+
+	const handleKeyDown = useKeyboardNavigation(rootNodeId);
+
+	if (!rootNodeId) {
+		// All nodes have been filtered.
+		return null;
+	}
+
 	return (
-		<div className="lfr-treeview-node-list">
+		<div
+			className="lfr-treeview-node-list"
+			onBlur={() => {
+				onBlur && onBlur(event);
+			}}
+			onDoubleClick={() =>
+				dispatch({type: 'TOGGLE_EXPANDED', nodeId: rootNodeId})
+			}
+			onFocus={event => {
+				onFocus && onFocus(event);
+			}}
+			onKeyDown={handleKeyDown}
+			ref={focusable}
+			tabIndex={tabIndex}
+		>
 			{nodes.map(node => (
 				<NodeListItem
 					NodeComponent={NodeComponent}
-					initialSelectedNodeIds={initialSelectedNodeIds}
 					key={node.id}
 					node={node}
-					onNodeSelected={onNodeSelected}
-					selectedNodeIds={selectedNodeIds}
 				/>
 			))}
 		</div>
@@ -49,6 +78,7 @@ NodeList.propTypes = {
 			name: PropTypes.string.isRequired
 		})
 	).isRequired,
-	onNodeSelected: PropTypes.func.isRequired,
-	selectedNodeIds: PropTypes.arrayOf(PropTypes.string).isRequired
+	onBlur: PropTypes.func,
+	onFocus: PropTypes.func,
+	tabIndex: PropTypes.number
 };

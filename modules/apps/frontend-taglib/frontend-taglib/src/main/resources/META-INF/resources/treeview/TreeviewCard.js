@@ -16,13 +16,21 @@ import ClayCard from '@clayui/card';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
+// import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import TreeviewContext from './TreeviewContext';
 
-export default function TreeviewCard({node, onNodeSelected, selectedNodeIds}) {
-	const {filterQuery} = useContext(TreeviewContext);
+// BUG: the classNames import above isn't working:
+//  Error: Unsatisfied dependency: frontend-js-react-web$classnames found in module frontend-taglib@5.0.0/treeview/TreeviewCard
+function classNames({focused, selected}) {
+	return [focused && 'focused', selected && 'selected'].filter(Boolean).join(' ');
+}
+
+export default function TreeviewCard({node}) {
+	const {dispatch, state} = useContext(TreeviewContext);
+	const {filterQuery, focusedNodeId} = state;
 
 	const path =
 		node.nodePath && filterQuery ? (
@@ -33,11 +41,18 @@ export default function TreeviewCard({node, onNodeSelected, selectedNodeIds}) {
 
 	return (
 		<div className="p-2">
-			<ClayCard horizontal selectable={true}>
-				<ClayCheckbox
-					checked={selectedNodeIds.includes(node.id)}
-					onChange={() => onNodeSelected(node.id)}
-				>
+			<ClayCard
+				className={classNames({
+					focused: node.id === focusedNodeId,
+					selected: node.selected
+				})}
+				horizontal
+				onClick={() => {
+					dispatch({type: 'TOGGLE_SELECT', nodeId: node.id});
+				}}
+				role="treeitem"
+				selectable={true}
+			>
 					<ClayCard.Body>
 						<ClayCard.Row>
 							<div className="autofit-col">
@@ -54,7 +69,6 @@ export default function TreeviewCard({node, onNodeSelected, selectedNodeIds}) {
 						</div>
 						{path}
 					</ClayCard.Body>
-				</ClayCheckbox>
 			</ClayCard>
 		</div>
 	);
@@ -65,7 +79,5 @@ TreeviewCard.propTypes = {
 		icon: PropTypes.string,
 		name: PropTypes.string.isRequired,
 		nodePath: PropTypes.string
-	}).isRequired,
-	onNodeSelected: PropTypes.func.isRequired,
-	selectedNodeIds: PropTypes.arrayOf(PropTypes.string).isRequired
+	}).isRequired
 };

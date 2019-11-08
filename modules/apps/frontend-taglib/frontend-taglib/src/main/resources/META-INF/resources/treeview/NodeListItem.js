@@ -15,34 +15,24 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import NodeList from './NodeList';
-
-function hasToBeExpanded(selectedNodeIds, node) {
-	if (!node.children || node.children.length === 0) {
-		return false;
-	}
-
-	if (node.children.some(child => selectedNodeIds.includes(child.id))) {
-		return true;
-	}
-
-	return node.children.some(child => hasToBeExpanded(selectedNodeIds, child));
-}
+import TreeviewContext from './TreeviewContext';
+import useFocus from './useFocus';
+import useKeyboardNavigation from './useKeyboardNavigation';
 
 export default function NodeListItem({
 	NodeComponent,
-	initialSelectedNodeIds,
-	node,
-	onNodeSelected,
-	selectedNodeIds
+	node
 }) {
-	const [expanded, setExpanded] = useState(false);
+	const {dispatch, state} = useContext(TreeviewContext);
 
-	useEffect(() => {
-		setExpanded(hasToBeExpanded(initialSelectedNodeIds, node));
-	}, [initialSelectedNodeIds, node]);
+	const {focusedNodeId} = state;
+
+	const focusable = useFocus(node.id);
+
+	const handleKeyDown = useKeyboardNavigation(node.id);
 
 	const children = node.children || [];
 
@@ -52,20 +42,40 @@ export default function NodeListItem({
 
 	const childrenId = `node-list-item-${node.id}-children`;
 
-	const symbol = expanded ? 'hr' : 'plus';
+	const symbol = node.expanded ? 'hr' : 'plus';
+
+	const toggleExpanded = () => {
+		dispatch({type: 'TOGGLE_EXPANDED', nodeId: node.id});
+	};
 
 	return (
 		<>
-			<div className={nodeListItemClassNames}>
-				{children.length > 0 && (
+			<div
+				className={nodeListItemClassNames}
+				onBlur={() => {
+					return;
+				}}
+				onDoubleClick={toggleExpanded}
+				onFocus={event => {
+					return;
+					// event.stopPropagation();
+					// if (focusedNodeId && focusedNodeId !== node.id) {
+					// 	dispatch({type: 'FOCUS', nodeId: node.id});
+					// }
+				}}
+				onKeyDown={handleKeyDown}
+				ref={focusable}
+				tabIndex="-1"
+			>
+				{children.length ? (
 					<button
 						aria-controls={childrenId}
-						aria-expanded={expanded}
-						aria-label={`${expanded ? 'Collapse' : 'Expand'} ${
+						aria-expanded={node.expanded}
+						aria-label={`${node.expanded ? 'Collapse' : 'Expand'} ${
 							node.name
 						}`}
 						className="lfr-treeview-node-list-item__button"
-						onClick={() => setExpanded(expanded => !expanded)}
+						onClick={toggleExpanded}
 						type="button"
 					>
 						<ClayIcon
@@ -74,28 +84,21 @@ export default function NodeListItem({
 							symbol={symbol}
 						/>
 					</button>
-				)}
+				) : null}
 
 				<div className="lfr-treeview-node-list-item__node">
-					<NodeComponent
-						node={node}
-						onNodeSelected={onNodeSelected}
-						selectedNodeIds={selectedNodeIds}
-					/>
+					<NodeComponent node={node} />
 				</div>
 			</div>
 
-			{expanded && (
+			{node.expanded && (
 				<div
 					className="lfr-treeview-node-list-item__children"
 					id={childrenId}
 				>
 					<NodeList
 						NodeComponent={NodeComponent}
-						initialSelectedNodeIds={initialSelectedNodeIds}
 						nodes={children}
-						onNodeSelected={onNodeSelected}
-						selectedNodeIds={selectedNodeIds}
 					/>
 				</div>
 			)}
@@ -105,7 +108,5 @@ export default function NodeListItem({
 
 NodeListItem.propTypes = {
 	NodeComponent: PropTypes.func.isRequired,
-	node: PropTypes.shape({children: PropTypes.array}),
-	onNodeSelected: PropTypes.func.isRequired,
-	selectedNodeIds: PropTypes.arrayOf(PropTypes.string).isRequired
+	node: PropTypes.shape({children: PropTypes.array})
 };

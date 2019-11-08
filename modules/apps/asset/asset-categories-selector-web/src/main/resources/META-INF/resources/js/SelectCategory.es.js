@@ -17,45 +17,58 @@ import 'metal';
 import 'metal-component';
 import ClayIcon from '@clayui/icon';
 import Treeview from 'frontend-taglib/treeview/Treeview';
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useCallback, useRef} from 'react';
 
-const filterNodes = (nodes, filterValue) => {
-	if (!filterValue) {
-		return nodes;
-	}
-
-	const filteredNodes = [];
-
-	nodes.forEach(node => {
-		if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
-			filteredNodes.push({...node, children: []});
-		}
-
-		if (node.children) {
-			filteredNodes.push(...filterNodes(node.children, filterValue));
-		}
-	});
-
-	return filteredNodes;
-};
-
-function SelectCategory({multiSelection, namespace, nodes}) {
+function SelectCategory({itemSelectorSaveEvent, multiSelection, namespace, nodes}) {
 	const [filterQuery, setFilterQuery] = useState('');
-	const [filteredNodes, setFilteredNodes] = useState(nodes);
 
-	useEffect(() => {
-		setFilteredNodes(nodes);
-	}, [nodes]);
+	const selectedNodesRef = useRef(null);
 
-	const handleOnChange = useCallback(
+	const handleQueryChange = useCallback(
 		event => {
 			const value = event.target.value;
 
 			setFilterQuery(value);
-			setFilteredNodes(filterNodes(nodes, value.toLowerCase()));
-		},
-		[nodes]
+		}, []
 	);
+
+	const handleSelectionChange = selectedNodes => {
+		const data = {};
+
+		// Mark unselected nodes as unchecked.
+		if (selectedNodesRef.current) {
+			Object.entries(selectedNodesRef.current).forEach(([id, node]) => {
+				if (!selectedNodes.has(id)) {
+					data[id] = {
+						...node,
+						unchecked: true,
+					};
+				}
+			});
+		}
+
+		const visit = node => {
+			// Mark newly selected nodes as selected.
+			if (selectedNodes.has(node.id)) {
+				data[node.id] = {
+					categoryId: node.vocabulary ? 0 : node.id,
+					nodePath: node.nodePath,
+					value: node.name,
+					vocabularyId: node.vocabulary ? node.id : 0,
+				};
+
+				if (node.children) {
+					node.children.forEach(visit);
+				}
+			}
+		};
+
+		nodes.forEach(visit);
+
+		selectedNodesRef.current = data;
+
+		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {data});
+	};
 
 	return (
 		<div className="select-category">
@@ -65,7 +78,7 @@ function SelectCategory({multiSelection, namespace, nodes}) {
 						<div className="input-group-item">
 							<input
 								className="form-control input-group-inset input-group-inset-after"
-								onChange={handleOnChange}
+								onChange={handleQueryChange}
 								placeholder={Liferay.Language.get('search')}
 								type="text"
 							/>
@@ -88,7 +101,8 @@ function SelectCategory({multiSelection, namespace, nodes}) {
 							NodeComponent={Treeview.Card}
 							filterQuery={filterQuery}
 							multiSelection={multiSelection}
-							nodes={filteredNodes}
+							nodes={nodes}
+							onSelectedNodesChange={handleSelectionChange}
 						/>
 					</div>
 				</fieldset>

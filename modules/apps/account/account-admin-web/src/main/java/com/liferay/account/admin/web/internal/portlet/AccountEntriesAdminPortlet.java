@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Accounts",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.init-param.view-template=/account_entries_admin/view.jsp",
 		"javax.portlet.name=" + AccountsPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator"

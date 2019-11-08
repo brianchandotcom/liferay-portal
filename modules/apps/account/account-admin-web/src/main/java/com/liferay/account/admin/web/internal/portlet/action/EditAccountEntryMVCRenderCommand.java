@@ -51,7 +51,7 @@ public class EditAccountEntryMVCRenderCommand implements MVCRenderCommand {
 			AccountWebKeys.ACCOUNT_ENTRY_DISPLAY,
 			AccountEntryDisplay.of(accountEntryId));
 
-		return "/edit_account_entry.jsp";
+		return "/account_entries_admin/edit_account_entry.jsp";
 	}
 
 }

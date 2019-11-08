@@ -49,7 +49,7 @@ public class AccountEntryDetailsScreenNavigationCategory
 
 	@Override
 	public String getJspPath() {
-		return "/account_entry/details.jsp";
+		return "/account_entries_admin/account_entry/details.jsp";
 	}
 
 	@Override

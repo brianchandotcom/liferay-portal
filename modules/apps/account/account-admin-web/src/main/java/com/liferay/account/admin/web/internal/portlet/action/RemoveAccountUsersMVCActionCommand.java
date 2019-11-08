@@ -70,7 +70,8 @@ public class RemoveAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 				throw e;
 			}
 
-			actionResponse.setRenderParameter("mvcPath", "/view.jsp");
+			actionResponse.setRenderParameter(
+				"mvcPath", "/account_entries_admin/view.jsp");
 		}
 	}
 

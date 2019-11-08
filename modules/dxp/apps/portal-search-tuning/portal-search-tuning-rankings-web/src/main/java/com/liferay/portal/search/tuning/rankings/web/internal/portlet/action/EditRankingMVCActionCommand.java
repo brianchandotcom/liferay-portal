@@ -285,7 +285,11 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		ActionRequest actionRequest,
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
-		if (_resultRankingsConfiguration.allowDuplicateQueryStrings()) {
+		boolean inactive = ParamUtil.getBoolean(actionRequest, "inactive");
+
+		if (_resultRankingsConfiguration.allowDuplicateQueryStrings() ||
+			inactive) {
+
 			return;
 		}
 
@@ -298,7 +302,11 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		ActionRequest actionRequest,
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
-		if (_resultRankingsConfiguration.allowDuplicateQueryStrings()) {
+		boolean inactive = ParamUtil.getBoolean(actionRequest, "inactive");
+
+		if (_resultRankingsConfiguration.allowDuplicateQueryStrings() ||
+			inactive) {
+
 			return;
 		}
 

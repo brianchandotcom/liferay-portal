@@ -70,6 +70,7 @@ public class WorkflowDefinitionResourceImpl
 				contextCompany.getCompanyId()));
 	}
 
+	@Override
 	public WorkflowDefinition postWorkflowDefinitionDeploy(
 			WorkflowDefinition workflowDefinition)
 		throws Exception {
@@ -83,6 +84,7 @@ public class WorkflowDefinitionResourceImpl
 				content.getBytes()));
 	}
 
+	@Override
 	public WorkflowDefinition postWorkflowDefinitionSave(
 			WorkflowDefinition workflowDefinition)
 		throws Exception {
@@ -101,14 +103,10 @@ public class WorkflowDefinitionResourceImpl
 			Boolean active, String name, String version)
 		throws Exception {
 
-		_workflowDefinitionManager.updateActive(
-			contextCompany.getCompanyId(), contextUser.getUserId(), name,
-			GetterUtil.getInteger(version), active);
-
 		return _toWorkflowDefinition(
-			_workflowDefinitionManager.getWorkflowDefinition(
-				contextCompany.getCompanyId(), name,
-				GetterUtil.getInteger(version)));
+			_workflowDefinitionManager.updateActive(
+				contextCompany.getCompanyId(), contextUser.getUserId(), name,
+				GetterUtil.getInteger(version), active));
 	}
 
 	@Override
@@ -116,20 +114,15 @@ public class WorkflowDefinitionResourceImpl
 			String name, String title, String version)
 		throws Exception {
 
-		_workflowDefinitionManager.updateTitle(
-			contextCompany.getCompanyId(), contextUser.getUserId(), name,
-			GetterUtil.getInteger(version), title);
-
 		return _toWorkflowDefinition(
-			_workflowDefinitionManager.getWorkflowDefinition(
-				contextCompany.getCompanyId(), name,
-				GetterUtil.getInteger(version)));
+			_workflowDefinitionManager.updateTitle(
+				contextCompany.getCompanyId(), contextUser.getUserId(), name,
+				GetterUtil.getInteger(version), title));
 	}
 
 	private WorkflowDefinition _toWorkflowDefinition(
-			com.liferay.portal.kernel.workflow.WorkflowDefinition
-				workflowDefinition)
-		throws Exception {
+		com.liferay.portal.kernel.workflow.WorkflowDefinition
+			workflowDefinition) {
 
 		return new WorkflowDefinition() {
 			{

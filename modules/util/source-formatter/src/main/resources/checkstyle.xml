@@ -227,7 +227,7 @@
 			<property name="enabled" value="false" />
 			<property name="mapTypeNames" value="ConcurrentHashMap,HashMap,LinkedHashMap,TreeMap" />
 			<message key="map.builder.include" value="Include method call ''{0}'' ({1}) in ''{2}'' ({3}). See " />
-			<message key="map.builder.use" value="Use ''{0}'' ({1}, {2}). See " />
+			<message key="map.builder.use" value="Use ''{0}'' ({1}, {2}). See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/map_builders.markdown" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MapIterationCheck">
 			<message key="entry.set.use" value="Use Map.entrySet() to retrieve values. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/map_iteration.markdown" />

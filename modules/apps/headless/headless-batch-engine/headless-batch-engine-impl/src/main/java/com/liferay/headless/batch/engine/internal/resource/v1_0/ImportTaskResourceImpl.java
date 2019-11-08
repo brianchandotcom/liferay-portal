@@ -145,6 +145,31 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			_file.getExtension(zipEntry.getName()));
 	}
 
+	private Map<String, Serializable> _getParameters() {
+		Map<String, Serializable> parameters = new HashMap<>();
+
+		MultivaluedMap<String, String> queryParameters =
+			contextUriInfo.getQueryParameters();
+
+		for (Map.Entry<String, List<String>> entry :
+				queryParameters.entrySet()) {
+
+			String key = entry.getKey();
+
+			if (_ignoredParameters.contains(key)) {
+				continue;
+			}
+
+			List<String> values = entry.getValue();
+
+			if (!values.isEmpty()) {
+				parameters.put(key, values.get(0));
+			}
+		}
+
+		return parameters;
+	}
+
 	private ImportTask _importFile(
 			BatchEngineTaskOperation batchEngineTaskOperation,
 			BinaryFile binaryFile, String callbackURL, String className,
@@ -186,7 +211,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				StringUtil.upperCase(extension),
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				_toMap(fieldNameMappingString), batchEngineTaskOperation.name(),
-				_toParameters(), version);
+				_getParameters(), version);
 
 		executorService.submit(
 			() -> _batchEngineImportTaskExecutor.execute(
@@ -232,29 +257,6 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		}
 
 		return fieldNameMappingMap;
-	}
-
-	private Map<String, Serializable> _toParameters() {
-		Map<String, Serializable> parameters = new HashMap<>();
-
-		MultivaluedMap<String, String> queryParameters =
-			contextUriInfo.getQueryParameters();
-
-		for (Map.Entry<String, List<String>> entry :
-				queryParameters.entrySet()) {
-
-			if (_ignoredParameters.contains(entry.getKey())) {
-				continue;
-			}
-
-			List<String> values = entry.getValue();
-
-			if (!values.isEmpty()) {
-				parameters.put(entry.getKey(), values.get(0));
-			}
-		}
-
-		return parameters;
 	}
 
 	private static final List<String> _ignoredParameters = Arrays.asList(

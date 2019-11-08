@@ -314,9 +314,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				project, workspaceExtension, dockerBuildImage,
 				dockerRemoveContainer);
 
+		_addTaskStartDockerContainer(dockerCreateContainer, project);
+
 		_addTaskLogsDockerContainer(project);
 		_addTaskPullDockerImage(project, workspaceExtension);
-		_addTaskStartDockerContainer(project);
 	}
 
 	@SuppressWarnings("serial")
@@ -1073,10 +1074,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerRemoveContainer;
 	}
 
-	private DockerStartContainer _addTaskStartDockerContainer(Project project) {
+	private DockerStartContainer _addTaskStartDockerContainer(
+		DockerCreateContainer dockerCreateContainer, Project project) {
+
 		DockerStartContainer dockerStartContainer = GradleUtil.addTask(
 			project, START_DOCKER_CONTAINER_TASK_NAME,
 			DockerStartContainer.class);
+
+		dockerStartContainer.dependsOn(dockerCreateContainer);
 
 		dockerStartContainer.setDescription("Starts the Docker container.");
 
@@ -1085,7 +1090,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return project.getName() + "-liferayapp";
+					return _getDockerContainerId(project);
 				}
 
 			});

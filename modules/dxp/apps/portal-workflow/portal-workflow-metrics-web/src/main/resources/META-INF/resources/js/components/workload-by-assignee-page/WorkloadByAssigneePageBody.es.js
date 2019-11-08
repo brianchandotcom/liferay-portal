@@ -18,7 +18,7 @@ import PaginationBar from '../../shared/components/pagination/PaginationBar.es';
 import PromisesResolver from '../../shared/components/request/PromisesResolver.es';
 import WorkloadByAssigneePage from './WorkloadByAssigneePage.es';
 
-const Body = ({data, page, pageSize}) => {
+const Body = ({data, processId}) => {
 	return (
 		<>
 			<PromisesResolver.Pending>
@@ -34,9 +34,9 @@ const Body = ({data, page, pageSize}) => {
 						/>
 
 						<PaginationBar
-							page={page}
+							page={data.page}
 							pageCount={data.items.length}
-							pageSize={pageSize}
+							pageSize={data.pageSize}
 							totalCount={data.totalCount}
 						/>
 					</>

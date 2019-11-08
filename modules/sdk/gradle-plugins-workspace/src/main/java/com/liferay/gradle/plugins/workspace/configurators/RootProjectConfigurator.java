@@ -30,6 +30,7 @@ import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.configurators.TargetPlatformRootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.plugins.workspace.tasks.CreateTokenTask;
 import com.liferay.gradle.plugins.workspace.tasks.InitBundleTask;
 import com.liferay.gradle.util.OSDetector;
@@ -42,10 +43,13 @@ import groovy.lang.Closure;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+
+import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -213,6 +217,17 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
+	private static String _loadTemplate(String name) {
+		try (InputStream inputStream =
+				RootProjectConfigurator.class.getResourceAsStream(name)) {
+
+			return StringUtil.read(inputStream);
+		}
+		catch (Exception e) {
+			throw new GradleException("Unable to read template " + name, e);
+		}
+	}
+
 	private Configuration _addConfigurationBundleSupport(
 		final Project project) {
 
@@ -262,7 +277,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, workspaceExtension, providedModulesConfiguration);
 
 		Dockerfile dockerfile = _addTaskCreateDockerfile(
-			project, workspaceExtension);
+			project, workspaceExtension, copyDockerDeploy);
 
 		_addTaskBuildDockerImage(dockerfile, workspaceExtension);
 
@@ -422,22 +437,33 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private Dockerfile _addTaskCreateDockerfile(
-		Project project, final WorkspaceExtension workspaceExtension) {
+		Project project, final WorkspaceExtension workspaceExtension,
+		Copy dockerDeploy) {
 
 		Dockerfile dockerfile = GradleUtil.addTask(
 			project, CREATE_DOCKERFILE_TASK_NAME, Dockerfile.class);
 
-		dockerfile.dependsOn(DOCKER_DEPLOY_TASK_NAME);
+		dockerfile.dependsOn(dockerDeploy);
 
 		dockerfile.from(workspaceExtension.getDockerImageLiferay());
 
 		dockerfile.instruction(
+			"ENV LIFERAY_WORKSPACE_ENVIRONMENT=" +
+				workspaceExtension.getEnvironment());
+
+		dockerfile.instruction(
 			"COPY --chown=liferay:liferay deploy /etc/liferay/mount/deploy");
 		dockerfile.instruction(
-			"COPY --chown=liferay:liferay files /etc/liferay/mount/files");
+			"COPY --chown=liferay:liferay " + _LIFERAY_CONFIGS_DIR_NAME +
+				" /home/liferay/configs");
+		dockerfile.instruction(
+			"COPY --chown=liferay:liferay " + _LIFERAY_IMAGE_SETUP_SCRIPT +
+				" /usr/local/liferay/scripts/pre-configure/" +
+					_LIFERAY_IMAGE_SETUP_SCRIPT);
 
 		dockerfile.setDescription(
-			"Creates a dockerfile to build the Docker image.");
+			"Creates a Dockerfile to build the Liferay Workspace Docker " +
+				"image.");
 		dockerfile.setGroup(DOCKER_GROUP);
 
 		dockerfile.doFirst(
@@ -448,11 +474,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					try {
 						File destinationDir = workspaceExtension.getDockerDir();
 
-						destinationDir.delete();
-
-						destinationDir.mkdirs();
-
-						File dir = new File(destinationDir, "files");
+						File dir = new File(destinationDir, "deploy");
 
 						if (!dir.exists()) {
 							dir.mkdirs();
@@ -462,15 +484,21 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 						file.createNewFile();
 
-						dir = new File(destinationDir, "deploy");
+						file = new File(
+							destinationDir, _LIFERAY_IMAGE_SETUP_SCRIPT);
 
-						if (!dir.exists()) {
-							dir.mkdirs();
+						try {
+							String template = _loadTemplate(
+								_LIFERAY_IMAGE_SETUP_SCRIPT + ".tpl");
+
+							Files.write(file.toPath(), template.getBytes());
 						}
-
-						file = new File(dir, ".touch");
-
-						file.createNewFile();
+						catch (IOException ioe) {
+							throw new GradleException(
+								"Unable to write script file: " +
+									file.getAbsolutePath(),
+								ioe);
+						}
 					}
 					catch (IOException ioe) {
 						Logger logger = dockerfile.getLogger();
@@ -1171,6 +1199,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
 
 	private static final String _LIFERAY_CONFIGS_DIR_NAME = "configs";
+
+	private static final String _LIFERAY_IMAGE_SETUP_SCRIPT =
+		"100_liferay_image_setup.sh";
 
 	private boolean _defaultRepositoryEnabled;
 

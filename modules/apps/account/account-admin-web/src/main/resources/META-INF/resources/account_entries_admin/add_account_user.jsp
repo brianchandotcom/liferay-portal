@@ -19,14 +19,20 @@
 <%
 AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 
-PortletURL backURL = renderResponse.createRenderURL();
+String backURL = ParamUtil.getString(request, "backURL");
 
-backURL.setParameter("mvcRenderCommandName", "/account_admin/edit_account_entry");
-backURL.setParameter("screenNavigationCategoryKey", AccountScreenNavigationEntryConstants.CATEGORY_KEY_USERS);
-backURL.setParameter("accountEntryId", String.valueOf(accountEntryDisplay.getAccountEntryId()));
+if (Validator.isNull(backURL)) {
+	PortletURL viewAccountUserURL = renderResponse.createRenderURL();
+
+	viewAccountUserURL.setParameter("mvcRenderCommandName", "/account_admin/edit_account_entry");
+	viewAccountUserURL.setParameter("screenNavigationCategoryKey", AccountScreenNavigationEntryConstants.CATEGORY_KEY_USERS);
+	viewAccountUserURL.setParameter("accountEntryId", String.valueOf(accountEntryDisplay.getAccountEntryId()));
+
+	backURL = viewAccountUserURL.toString();
+}
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(String.valueOf(backURL));
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accountEntryDisplay.getName(), false));
 %>
@@ -75,6 +81,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
-		<aui:button href="<%= String.valueOf(backURL) %>" type="cancel" />
+		<aui:button href="<%= backURL %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

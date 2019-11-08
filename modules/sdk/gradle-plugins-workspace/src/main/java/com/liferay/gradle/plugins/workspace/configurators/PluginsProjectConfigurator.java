@@ -202,6 +202,7 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 		return task;
 	}
 
+	@SuppressWarnings("serial")
 	private Copy _addRootTaskUpgradePluginsSDK(
 		final Project project, String taskName, File dir,
 		final Configuration pluginsSDKConfiguration) {
@@ -283,6 +284,7 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 		antBuilder.importBuild("build.xml");
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureRootTaskDistBundle(final Task warTask) {
 		Project project = warTask.getProject();
 

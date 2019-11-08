@@ -144,6 +144,7 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 		return copy;
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureRootTaskDistBundle(final War war) {
 		Project project = war.getProject();
 

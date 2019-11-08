@@ -134,6 +134,7 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 		liferayExtension.setAppServerParentDir(workspaceExtension.getHomeDir());
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureRootTaskDistBundle(
 		Project project, boolean extPlugin) {
 

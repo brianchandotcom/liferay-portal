@@ -382,6 +382,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerBuildImage;
 	}
 
+	@SuppressWarnings("serial")
 	private Copy _addTaskCopyBundle(
 		Project project, String taskName, Download downloadBundleTask,
 		final WorkspaceExtension workspaceExtension,
@@ -691,6 +692,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return copy;
 	}
 
+	@SuppressWarnings("serial")
 	private <T extends AbstractArchiveTask> T _addTaskDistBundle(
 		Project project, String taskName, Class<T> clazz,
 		final Copy distBundleTask,

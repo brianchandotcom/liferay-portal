@@ -205,6 +205,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 			});
 	}
 
+	@SuppressWarnings("unchecked")
 	private void _configureTaskBuildTheme(Project project) {
 		File packageJsonFile = project.file("package.json");
 

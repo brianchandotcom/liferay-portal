@@ -43,6 +43,7 @@ public class WorkspacePlugin implements Plugin<Settings> {
 	public static final String PROPERTY_PREFIX = "liferay.workspace.";
 
 	@Override
+	@SuppressWarnings("serial")
 	public void apply(Settings settings) {
 		Gradle gradle = settings.getGradle();
 

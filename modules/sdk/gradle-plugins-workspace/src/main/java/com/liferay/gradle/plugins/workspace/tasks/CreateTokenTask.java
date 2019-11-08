@@ -139,6 +139,7 @@ public class CreateTokenTask extends DefaultTask {
 		_tokenUrl = tokenUrl;
 	}
 
+	@SuppressWarnings("serial")
 	private String _readInput(
 		final AntBuilder antBuilder, String message, String propertySuffix,
 		final boolean secure) {

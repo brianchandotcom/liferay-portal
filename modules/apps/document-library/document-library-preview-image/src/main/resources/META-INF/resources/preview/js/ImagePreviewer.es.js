@@ -96,8 +96,6 @@ const ImagePreviewer = ({imageURL}) => {
 		if (currentZoom === 1) {
 			setImageHeight(null);
 			setImageWidth(null);
-
-			updateToolbar(getFittingZoom());
 		} else {
 			applyZoom(1);
 		}
@@ -155,6 +153,9 @@ const ImagePreviewer = ({imageURL}) => {
 			setZoomRatio(null);
 		}
 
+		if (!image.current.style.width) {
+			updateToolbar(getFittingZoom());
+		}
 	}, [imageHeight, imageWidth, zoomRatio, imageMargin]);
 
 	return (

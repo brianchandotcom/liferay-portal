@@ -151,14 +151,14 @@ public class VerifyProcessTrackerOSGiCommands {
 			true);
 	}
 
-	@Descriptor("Execute all registered verify processes")
+	@Descriptor("List all registered verify processes")
 	public void list() {
 		for (String verifyProcessName : _verifyProcesses.keySet()) {
 			show(verifyProcessName);
 		}
 	}
 
-	@Descriptor("Show all registered verify processes")
+	@Descriptor("Show all verify processes for a specific verify process name")
 	public void show(String verifyProcessName) {
 		try {
 			getVerifyProcesses(_verifyProcesses, verifyProcessName);

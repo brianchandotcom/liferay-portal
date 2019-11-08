@@ -216,6 +216,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PAGE_IMAGE_CONTENT</td>
+	<td>//section[@class='bg-']//div[contains(@style,'${key_imageFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PAGE_TEXT_CONTENT</td>
+	<td>//section[@class='bg-']//p | //section[@class='bg-']//div[contains(@class,'asset-summary')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

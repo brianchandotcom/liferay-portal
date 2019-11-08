@@ -12,37 +12,32 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 import dom from 'metal-dom';
 
 class EditTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	selectUserGroup(itemData) {
-		AUI().use('liferay-item-selector-dialog', A => {
-			const itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: this.ns('selectUserGroup'),
-				on: {
-					selectedItemChange: function(event) {
-						const selectedItem = event.newVal;
-
-						if (selectedItem) {
-							const addTeamUserGroupsFm = this.one(
-								'#addTeamUserGroupsFm'
-							);
-
-							selectedItem.forEach(item => {
-								dom.append(addTeamUserGroupsFm, item);
-							});
-
-							submitForm(addTeamUserGroupsFm);
-						}
-					}.bind(this)
-				},
-				title: itemData.title,
-				url: itemData.selectUserGroupURL
-			});
-
-			itemSelectorDialog.open();
+		const itemSelectorDialog = new ItemSelectorDialog({
+			eventName: this.ns('selectUserGroup'),
+			title: itemData.title,
+			url: itemData.selectUserGroupURL
 		});
+
+		itemSelectorDialog.on('selectedItemChange', event => {
+			const selectedItem = event.selectedItem;
+
+			if (selectedItem) {
+				const addTeamUserGroupsFm = this.one('#addTeamUserGroupsFm');
+
+				selectedItem.forEach(item => {
+					dom.append(addTeamUserGroupsFm, item);
+				});
+
+				submitForm(addTeamUserGroupsFm);
+			}
+		});
+
+		itemSelectorDialog.open();
 	}
 
 	deleteUserGroups() {

@@ -107,41 +107,12 @@ renderResponse.setTitle(role.getTitle(locale));
 	<portlet:param name="tabs1" value="assignees" />
 </portlet:actionURL>
 
-<aui:script use="liferay-item-selector-dialog">
+<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 	var form = document.<portlet:namespace />fm;
 
 	var addAssignees = function(event) {
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+		var itemSelectorDialog = new ItemSelectorDialog.default({
 			eventName: '<portlet:namespace />selectAssignees',
-			on: {
-				selectedItemChange: function(event) {
-					var selectedItem = event.newVal;
-
-					if (selectedItem) {
-						var assignmentsRedirect = Liferay.Util.PortletURL.createPortletURL(
-							'<%= portletURL.toString() %>',
-							{
-								tabs2: selectedItem.type
-							}
-						);
-
-						var data = {
-							redirect: assignmentsRedirect.toString()
-						};
-
-						if (selectedItem.type === 'users') {
-							data.addUserIds = selectedItem.value;
-						} else {
-							data.addGroupIds = selectedItem.value;
-						}
-
-						Liferay.Util.postForm(form, {
-							data: data,
-							url: '<%= editRoleAssignmentsURL %>'
-						});
-					}
-				}
-			},
 			title:
 				'<liferay-ui:message arguments="<%= HtmlUtil.escape(role.getName()) %>" key="add-assignees-to-x" />',
 
@@ -153,6 +124,34 @@ renderResponse.setTitle(role.getTitle(locale));
 			</portlet:renderURL>
 
 			url: '<%= selectAssigneesURL %>'
+		});
+
+		itemSelectorDialog.on('selectedItemChange', function(event) {
+			var selectedItem = event.selectedItem;
+
+			if (selectedItem) {
+				var assignmentsRedirect = Liferay.Util.PortletURL.createPortletURL(
+					'<%= portletURL.toString() %>',
+					{
+						tabs2: selectedItem.type
+					}
+				);
+
+				var data = {
+					redirect: assignmentsRedirect.toString()
+				};
+
+				if (selectedItem.type === 'users') {
+					data.addUserIds = selectedItem.value;
+				} else {
+					data.addGroupIds = selectedItem.value;
+				}
+
+				Liferay.Util.postForm(form, {
+					data: data,
+					url: '<%= editRoleAssignmentsURL %>'
+				});
+			}
 		});
 
 		itemSelectorDialog.open();

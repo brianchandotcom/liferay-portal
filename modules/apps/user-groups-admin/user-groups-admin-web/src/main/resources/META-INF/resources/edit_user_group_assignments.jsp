@@ -138,7 +138,7 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="liferay-item-selector-dialog">
+<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 	var form = document.<portlet:namespace />fm;
 
 	<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -147,26 +147,25 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 	</portlet:renderURL>
 
 	function <portlet:namespace />addUsers(event) {
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+		var itemSelectorDialog = new ItemSelectorDialog.default({
 			eventName: '<portlet:namespace />selectUsers',
-			on: {
-				selectedItemChange: function(event) {
-					var selectedItem = event.newVal;
-
-					if (selectedItem) {
-						Liferay.Util.postForm(form, {
-							data: {
-								addUserIds: selectedItem
-							},
-							url:
-								'<portlet:actionURL name="editUserGroupAssignments" />'
-						});
-					}
-				}
-			},
 			title:
 				'<liferay-ui:message arguments="<%= HtmlUtil.escape(userGroup.getName()) %>" key="add-users-to-x" />',
 			url: '<%= selectUsersURL %>'
+		});
+
+		itemSelectorDialog.on('selectedItemChange', function(event) {
+			var selectedItems = event.selectedItem;
+
+			if (selectedItem) {
+				Liferay.Util.postForm(form, {
+					data: {
+						addUserIds: selectedItem
+					},
+					url:
+						'<portlet:actionURL name="editUserGroupAssignments" />'
+				});
+			}
 		});
 
 		itemSelectorDialog.open();

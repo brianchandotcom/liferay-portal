@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 import dom from 'metal-dom';
 
 class OrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
@@ -27,35 +27,30 @@ class OrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHand
 	}
 
 	selectOrganizations(itemData) {
-		AUI().use('liferay-item-selector-dialog', A => {
-			const itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: this.ns('selectOrganizations'),
-				on: {
-					selectedItemChange: function(event) {
-						const selectedItem = event.newVal;
-
-						if (selectedItem) {
-							const addGroupOrganizationsFm = this.one(
-								'#addGroupOrganizationsFm'
-							);
-
-							selectedItem.forEach(item => {
-								dom.append(addGroupOrganizationsFm, item);
-							});
-
-							submitForm(addGroupOrganizationsFm);
-						}
-					}.bind(this)
-				},
-				'strings.add': Liferay.Language.get('done'),
-				title: Liferay.Language.get(
-					'assign-organizations-to-this-site'
-				),
-				url: itemData.selectOrganizationsURL
-			});
-
-			itemSelectorDialog.open();
+		const itemSelectorDialog = new ItemSelectorDialog({
+			buttonAddLabel: Liferay.Language.get('done'),
+			eventName: this.ns('selectOrganizations'),
+			title: Liferay.Language.get('assign-organizations-to-this-site'),
+			url: itemData.selectOrganizationsURL
 		});
+
+		itemSelectorDialog.on('selectedItemChange', event => {
+			const selectedItem = event.selectedItem;
+
+			if (selectedItem) {
+				const addGroupOrganizationsFm = this.one(
+					'#addGroupOrganizationsFm'
+				);
+
+				selectedItem.forEach(item => {
+					dom.append(addGroupOrganizationsFm, item);
+				});
+
+				submitForm(addGroupOrganizationsFm);
+			}
+		});
+
+		itemSelectorDialog.open();
 	}
 }
 

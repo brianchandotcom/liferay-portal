@@ -88,110 +88,98 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	</c:if>
 </liferay-ui:icon-menu>
 
-<aui:script require="metal-dom/src/dom as dom">
-	AUI().use('liferay-item-selector-dialog', function(A) {
-		var assignSiteRolesLink = document.getElementById(
-			'<portlet:namespace /><%= row.getRowId() %>assignSiteRoles'
-		);
+<aui:script require="metal-dom/src/dom as dom, frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+	var assignSiteRolesLink = document.getElementById(
+		'<portlet:namespace /><%= row.getRowId() %>assignSiteRoles'
+	);
 
-		if (assignSiteRolesLink) {
-			assignSiteRolesLink.addEventListener('click', function(event) {
-				event.preventDefault();
+	if (assignSiteRolesLink) {
+		assignSiteRolesLink.addEventListener('click', function(event) {
+			event.preventDefault();
 
-				var target = event.target;
+			var target = event.target;
 
-				if (!target.dataset.href) {
-					target = target.parentElement;
-				}
+			if (!target.dataset.href) {
+				target = target.parentElement;
+			}
 
-				var addUserGroupGroupRoleFm =
-					document.<portlet:namespace />addUserGroupGroupRoleFm;
+			var addUserGroupGroupRoleFm =
+				document.<portlet:namespace />addUserGroupGroupRoleFm;
 
-				Liferay.Util.setFormValues(addUserGroupGroupRoleFm, {
-					userGroupId: target.dataset.usergroupid
-				});
-
-				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-					eventName: '<portlet:namespace />selectUserGroupsRoles',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItems = event.newVal;
-
-							if (selectedItems) {
-								Array.prototype.forEach.call(
-									selectedItems,
-									function(selectedItem, index) {
-										dom.append(
-											addUserGroupGroupRoleFm,
-											selectedItem
-										);
-									}
-								);
-
-								submitForm(addUserGroupGroupRoleFm);
-							}
-						}
-					},
-					'strings.add': '<liferay-ui:message key="done" />',
-					title: '<liferay-ui:message key="assign-site-roles" />',
-					url: target.dataset.href
-				});
-
-				itemSelectorDialog.open();
+			Liferay.Util.setFormValues(addUserGroupGroupRoleFm, {
+				userGroupId: target.dataset.usergroupid
 			});
-		}
-	});
 
-	AUI().use('liferay-item-selector-dialog', function(A) {
-		var unassignSiteRolesLink = document.getElementById(
-			'<portlet:namespace /><%= row.getRowId() %>unassignSiteRoles'
-		);
-
-		if (unassignSiteRolesLink) {
-			unassignSiteRolesLink.addEventListener('click', function(event) {
-				event.preventDefault();
-
-				var target = event.target;
-
-				if (!target.dataset.href) {
-					target = target.parentElement;
-				}
-
-				var unassignUserGroupGroupRoleFm =
-					document.<portlet:namespace />unassignUserGroupGroupRoleFm;
-
-				Liferay.Util.setFormValues(unassignUserGroupGroupRoleFm, {
-					userGroupId: target.dataset.usergroupid
-				});
-
-				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-					eventName: '<portlet:namespace />selectUserGroupsRoles',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItems = event.newVal;
-
-							if (selectedItems) {
-								Array.prototype.forEach.call(
-									selectedItems,
-									function(selectedItem, index) {
-										dom.append(
-											unassignUserGroupGroupRoleFm,
-											selectedItem
-										);
-									}
-								);
-
-								submitForm(unassignUserGroupGroupRoleFm);
-							}
-						}
-					},
-					'strings.add': '<liferay-ui:message key="done" />',
-					title: '<liferay-ui:message key="unassign-site-roles" />',
-					url: target.dataset.href
-				});
-
-				itemSelectorDialog.open();
+			var itemSelectorDialog = new ItemSelectorDialog.default({
+				buttonAddLabel: '<liferay-ui:message key="done" />',
+				eventName: '<portlet:namespace />selectUserGroupsRoles',
+				title: '<liferay-ui:message key="assign-site-roles" />',
+				url: target.dataset.href
 			});
-		}
-	});
+
+			itemSelectorDialog.on('selectedItemChange', function(event) {
+				var selectedItems = event.selectedItem;
+
+				if (selectedItems) {
+					Array.prototype.forEach.call(selectedItems, function(
+						selectedItem,
+						index
+					) {
+						dom.append(addUserGroupGroupRoleFm, selectedItem);
+					});
+
+					submitForm(addUserGroupGroupRoleFm);
+				}
+			});
+
+			itemSelectorDialog.open();
+		});
+	}
+
+	var unassignSiteRolesLink = document.getElementById(
+		'<portlet:namespace /><%= row.getRowId() %>unassignSiteRoles'
+	);
+
+	if (unassignSiteRolesLink) {
+		unassignSiteRolesLink.addEventListener('click', function(event) {
+			event.preventDefault();
+
+			var target = event.target;
+
+			if (!target.dataset.href) {
+				target = target.parentElement;
+			}
+
+			var unassignUserGroupGroupRoleFm =
+				document.<portlet:namespace />unassignUserGroupGroupRoleFm;
+
+			Liferay.Util.setFormValues(unassignUserGroupGroupRoleFm, {
+				userGroupId: target.dataset.usergroupid
+			});
+
+			var itemSelectorDialog = new ItemSelectorDialog.default({
+				buttonAddLabel: '<liferay-ui:message key="done" />',
+				eventName: '<portlet:namespace />selectUserGroupsRoles',
+				title: '<liferay-ui:message key="unassign-site-roles" />',
+				url: target.dataset.href
+			});
+
+			itemSelectorDialog.on('selectedItemChange', function(event) {
+				var selectedItems = event.selectedItem;
+
+				if (selectedItems) {
+					Array.prototype.forEach.call(selectedItems, function(
+						selectedItem,
+						index
+					) {
+						dom.append(unassignUserGroupGroupRoleFm, selectedItem);
+					});
+
+					submitForm(unassignUserGroupGroupRoleFm);
+				}
+			});
+
+			itemSelectorDialog.open();
+		});
+	}
 </aui:script>

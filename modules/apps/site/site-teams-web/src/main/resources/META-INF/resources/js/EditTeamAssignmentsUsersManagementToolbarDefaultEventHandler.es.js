@@ -12,35 +12,32 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 import dom from 'metal-dom';
 
 class EditTeamAssignmentsUsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	selectUser(itemData) {
-		AUI().use('liferay-item-selector-dialog', A => {
-			const itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: this.ns('selectUser'),
-				on: {
-					selectedItemChange: function(event) {
-						const selectedItem = event.newVal;
-
-						if (selectedItem) {
-							const addTeamUsersFm = this.one('#addTeamUsersFm');
-
-							selectedItem.forEach(item => {
-								dom.append(addTeamUsersFm, item);
-							});
-
-							submitForm(addTeamUsersFm);
-						}
-					}.bind(this)
-				},
-				title: itemData.title,
-				url: itemData.selectUserURL
-			});
-
-			itemSelectorDialog.open();
+		const itemSelectorDialog = new ItemSelectorDialog({
+			eventName: this.ns('selectUser'),
+			title: itemData.title,
+			url: itemData.selectUserURL
 		});
+
+		itemSelectorDialog.on('selectedItemChange', event => {
+			const selectedItem = event.selectedItem;
+
+			if (selectedItem) {
+				const addTeamUsersFm = this.one('#addTeamUsersFm');
+
+				selectedItem.forEach(item => {
+					dom.append(addTeamUsersFm, item);
+				});
+
+				submitForm(addTeamUsersFm);
+			}
+		});
+
+		itemSelectorDialog.open();
 	}
 
 	deleteUsers() {

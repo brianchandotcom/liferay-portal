@@ -24,10 +24,6 @@ classes {
 }
 
 dependencies {
-	compile group: "com.liferay.commerce", name: "com.liferay.commerce.currency.api", version: "2.0.0"
-	compile group: "com.liferay.commerce", name: "com.liferay.commerce.currency.service", version: "1.0.13"
-	compile group: "com.liferay.commerce", name: "com.liferay.commerce.product.api", version: "10.0.0"
-	compile group: "com.liferay.commerce", name: "com.liferay.commerce.product.service", version: "2.0.0"
 	compile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	compile group: "javax.portlet", name: "portlet-api", transitive: false, version: "3.0.1"
 	compile project(":apps:asset:asset-entry-rel-service")
@@ -51,6 +47,11 @@ dependencies {
 	compile project(":apps:view-count:view-count-service")
 	compile project(":apps:wiki:wiki-api")
 	compile project(":apps:wiki:wiki-service")
+
+	compileInclude group: "com.liferay.commerce", name: "com.liferay.commerce.currency.api", version: "2.0.0"
+	compileInclude group: "com.liferay.commerce", name: "com.liferay.commerce.currency.service", version: "1.0.13"
+	compileInclude group: "com.liferay.commerce", name: "com.liferay.commerce.product.api", version: "10.0.0"
+	compileInclude group: "com.liferay.commerce", name: "com.liferay.commerce.product.service", version: "2.0.0"
 
 	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.23.LIFERAY-PATCHED-4"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

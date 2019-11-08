@@ -97,10 +97,6 @@ public class BatchEngineTaskItemResourceDelegate implements Closeable {
 			Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry)
 		throws IllegalAccessException {
 
-		if (resourceMethodArgNameTypeEntry == null) {
-			return null;
-		}
-
 		Serializable parameter = _parameters.get(
 			resourceMethodArgNameTypeEntry.getKey());
 

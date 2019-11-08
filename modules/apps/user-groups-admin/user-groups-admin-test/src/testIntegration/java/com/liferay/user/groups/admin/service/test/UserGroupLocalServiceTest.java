@@ -98,7 +98,8 @@ public class UserGroupLocalServiceTest {
 			LinkedHashMap<String, Object> userGroupParams =
 				LinkedHashMapBuilder.<String, Object>put(
 					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS,
-					Long.valueOf(user.getUserId()));
+					Long.valueOf(user.getUserId())
+				).build();
 
 			List<UserGroup> userGroups = _search(null, userGroupParams);
 

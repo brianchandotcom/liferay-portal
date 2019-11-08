@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -194,7 +195,8 @@ public class UserGroupServiceTest {
 		LinkedHashMap<String, Object> userGroupParams =
 			LinkedHashMapBuilder.<String, Object>put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS,
-				Long.valueOf(user.getUserId()));
+				Long.valueOf(user.getUserId())
+			).build();
 
 		List<UserGroup> userGroups = _userGroupService.search(
 			user.getCompanyId(), null, userGroupParams, QueryUtil.ALL_POS,

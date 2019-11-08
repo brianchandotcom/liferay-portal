@@ -48,7 +48,8 @@ public class AccountPortletResourcePermissionRegistrar {
 			PortletResourcePermissionFactory.create(
 				AccountConstants.RESOURCE_NAME,
 				new StagedPortletPermissionLogic(
-					_stagingPermission, AccountsPortletKeys.ACCOUNTS_ADMIN)),
+					_stagingPermission,
+					AccountsPortletKeys.ACCOUNT_ENTRIES_ADMIN)),
 			properties);
 	}
 

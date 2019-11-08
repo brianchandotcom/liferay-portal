@@ -45,6 +45,7 @@ const ImagePreviewer = ({imageURL}) => {
 	const [currentZoom, setCurrentZoom] = useState(1);
 	const [imageHeight, setImageHeight] = useState(null);
 	const [imageWidth, setImageWidth] = useState(null);
+	const [imageMargin, setImageMargin] = useState(null);
 	const [zoomInDisabled, setZoomInDisabled] = useState(true);
 	const [zoomOutDisabled, setZoomOutDisabled] = useState(false);
 	const [zoomRatio, setZoomRatio] = useState(false);
@@ -78,6 +79,10 @@ const ImagePreviewer = ({imageURL}) => {
 			imageStyles.maxHeight = `${imageHeight}px`;
 			imageStyles.maxWidth = `${imageWidth}px`;
 			imageStyles.width = `${imageWidth}px`;
+		}
+
+		if (imageMargin) {
+			imageStyles.margin = imageMargin;
 		}
 
 		return imageStyles;
@@ -115,6 +120,12 @@ const ImagePreviewer = ({imageURL}) => {
 	useLayoutEffect(() => {
 		const imageContainerElement = imageContainer.current;
 
+		setImageMargin(
+			`${imageHeight > imageContainerElement.clientHeight ? 0 : 'auto'} ${
+				imageWidth > imageContainerElement.clientWidth ? 0 : 'auto'
+			}`
+		);
+
 		if (
 			zoomRatio &&
 			imageContainerElement.clientWidth < image.current.naturalWidth
@@ -141,7 +152,8 @@ const ImagePreviewer = ({imageURL}) => {
 
 			setZoomRatio(null);
 		}
-	}, [imageHeight, imageWidth, zoomRatio]);
+
+	}, [imageHeight, imageWidth, zoomRatio, imageMargin]);
 
 	return (
 		<div className="preview-file">

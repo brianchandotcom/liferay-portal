@@ -95,6 +95,13 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 							UserServiceWhenPortalSendsPasswordEmailTest.class.
 								getClassLoader());
 					}
+					else if (Objects.equals(
+								method.getName(), "getLocalization") &&
+							 (args.length == 2)) {
+
+						return _localization.getLocalization(
+							(String)args[0], (String)args[1]);
+					}
 
 					throw new UnsupportedOperationException();
 				}));

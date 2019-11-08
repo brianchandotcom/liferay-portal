@@ -47,7 +47,7 @@ const PerformanceByAssigneeCard = ({processId, query}) => {
 	);
 
 	return (
-		<Panel>
+		<Panel elementClasses="dashboard-card">
 			<Request>
 				<ProcessStepProvider
 					processId={processId}

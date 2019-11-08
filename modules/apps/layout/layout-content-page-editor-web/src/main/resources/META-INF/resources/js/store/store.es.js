@@ -105,13 +105,20 @@ const getState = function() {
 const syncStoreState = function(component, store) {
 	const state = store.getState();
 
-	component
+	const changedKeys = component
 		.getStateKeys()
 		.filter(key => key in state)
-		.filter(key => component[key] !== state[key])
-		.forEach(key => {
-			component[key] = state[key];
+		.filter(key => component[key] !== state[key]);
+
+	if (changedKeys.length) {
+		const newState = {};
+
+		changedKeys.forEach(key => {
+			newState[key] = state[key];
 		});
+
+		component.setState(newState);
+	}
 };
 
 /**

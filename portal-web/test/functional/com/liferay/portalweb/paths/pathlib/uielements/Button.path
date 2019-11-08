@@ -349,6 +349,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LANGUAGE_DROPDOWN</td>
+	<td>//button[contains(@id,'${key_portletName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LEAVE</td>
 	<td>//button[contains(.,'Leave')]</td>
 	<td></td>

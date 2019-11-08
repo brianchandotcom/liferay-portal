@@ -77,6 +77,11 @@ public class WorkflowDefinitionManagerProxyBean
 	}
 
 	@Override
+	public int getLatestWorkflowDefinitionCount(long companyId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public List<WorkflowDefinition> getLatestWorkflowDefinitions(
 		long companyId, int start, int end,
 		OrderByComparator<WorkflowDefinition> orderByComparator) {
@@ -91,6 +96,10 @@ public class WorkflowDefinitionManagerProxyBean
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public int getWorkflowDefinitionCount(long companyId) {
 		throw new UnsupportedOperationException();
@@ -101,6 +110,10 @@ public class WorkflowDefinitionManagerProxyBean
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 		long companyId, int start, int end,

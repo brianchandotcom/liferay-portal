@@ -78,6 +78,13 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, name);
 	}
 
+	public static int getLatestWorkflowDefinitionCount(long companyId)
+		throws WorkflowException {
+
+		return getWorkflowDefinitionManager().getLatestWorkflowDefinitionCount(
+			companyId);
+	}
+
 	public static List<WorkflowDefinition> getLatestWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
@@ -95,6 +102,10 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, name, version);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static int getWorkflowDefinitionCount(long companyId)
 		throws WorkflowException {
 
@@ -113,6 +124,10 @@ public class WorkflowDefinitionManagerUtil {
 		return _workflowDefinitionManager;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)

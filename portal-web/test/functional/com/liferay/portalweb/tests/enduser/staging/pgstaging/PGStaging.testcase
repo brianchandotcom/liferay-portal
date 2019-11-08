@@ -170,7 +170,7 @@ definition {
 
 	@priority = "5"
 	test AddDMDocumentWCArticleStagingLocalLive {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -307,7 +307,7 @@ definition {
 
 	@priority = "5"
 	test AssertNoEditLink {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(

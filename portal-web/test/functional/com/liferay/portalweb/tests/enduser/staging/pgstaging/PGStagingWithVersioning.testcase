@@ -52,7 +52,7 @@ definition {
 
 	@priority = "5"
 	test AddPageVariation {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 		property testray.component.names = "Training";
 

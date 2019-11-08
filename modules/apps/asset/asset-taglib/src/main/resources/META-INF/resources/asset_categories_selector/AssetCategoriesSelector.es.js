@@ -49,9 +49,6 @@ function AssetCategoriesSelector({
 						onSelectedItemsChange={selectedItems => {
 							const newVocabulary = {
 								...vocabulary,
-								selectedCategoryIds: selectedItems.map(
-									item => item.value
-								),
 								selectedItems
 							};
 
@@ -75,14 +72,13 @@ function AssetCategoriesSelector({
 }
 
 AssetCategoriesSelector.propTypes = {
-	eventName: PropTypes.string,
-	groupIds: PropTypes.array,
-	id: PropTypes.string,
-	inputName: PropTypes.string,
+	eventName: PropTypes.string.isRequired,
+	groupIds: PropTypes.array.isRequired,
+	id: PropTypes.string.isRequired,
+	inputName: PropTypes.string.isRequired,
 	label: PropTypes.string,
-	onSelectedItemsChange: PropTypes.func,
 	onVocabulariesChange: PropTypes.func.isRequired,
-	portletURL: PropTypes.string,
+	portletURL: PropTypes.string.isRequired,
 	useFallbackInput: PropTypes.bool
 };
 

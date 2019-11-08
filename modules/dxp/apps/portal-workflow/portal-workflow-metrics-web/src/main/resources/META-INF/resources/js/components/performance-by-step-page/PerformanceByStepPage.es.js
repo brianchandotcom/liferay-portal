@@ -25,7 +25,7 @@ import PromisesResolver from '../../shared/components/request/PromisesResolver.e
 import Request from '../../shared/components/request/Request.es';
 import ResultsBar from '../../shared/components/results-bar/ResultsBar.es';
 import {formatDuration} from '../../shared/util/duration.es';
-import {formatNumber} from '../../shared/util/numeral.es';
+import {getFormattedPercentage} from '../../shared/util/util.es';
 import {AppContext} from '../AppContext.es';
 import {TimeRangeFilter} from '../process-metrics/filter/TimeRangeFilter.es';
 import {TimeRangeProvider} from '../process-metrics/filter/store/TimeRangeStore.es';
@@ -198,9 +198,10 @@ const Item = ({
 	name
 }) => {
 	const formattedDuration = formatDuration(durationAvg);
-	const getFormattedPercentage = () => {
-		return formatNumber(breachedInstancePercentage, '0[.]00') + '%';
-	};
+	const formattedPercentage = getFormattedPercentage(
+		breachedInstancePercentage,
+		100
+	);
 
 	return (
 		<tr>
@@ -212,7 +213,7 @@ const Item = ({
 			</td>
 
 			<td className="text-right">
-				{breachedInstanceCount} ({getFormattedPercentage()})
+				{breachedInstanceCount} ({formattedPercentage})
 			</td>
 
 			<td className="text-right">{formattedDuration}</td>

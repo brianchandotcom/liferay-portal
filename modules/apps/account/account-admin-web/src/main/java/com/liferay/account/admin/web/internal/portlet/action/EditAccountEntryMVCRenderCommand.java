@@ -16,7 +16,7 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
-import com.liferay.account.constants.AccountsPortletKeys;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + AccountsPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 		"mvc.command.name=/account_admin/edit_account_entry"
 	},
 	service = MVCRenderCommand.class

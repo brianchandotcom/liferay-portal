@@ -14,8 +14,8 @@
 
 package com.liferay.account.admin.web.internal.application.list;
 
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.constants.AccountsPanelCategoryKeys;
-import com.liferay.account.constants.AccountsPortletKeys;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.portal.kernel.model.Portlet;
@@ -38,12 +38,12 @@ public class AccountUsersAdminPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return AccountsPortletKeys.ACCOUNT_USERS_ADMIN;
+		return AccountPortletKeys.ACCOUNT_USERS_ADMIN;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + AccountsPortletKeys.ACCOUNT_USERS_ADMIN + ")",
+		target = "(javax.portlet.name=" + AccountPortletKeys.ACCOUNT_USERS_ADMIN + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

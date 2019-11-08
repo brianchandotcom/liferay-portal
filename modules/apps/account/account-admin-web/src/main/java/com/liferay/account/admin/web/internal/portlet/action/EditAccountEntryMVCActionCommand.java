@@ -14,7 +14,7 @@
 
 package com.liferay.account.admin.web.internal.portlet.action;
 
-import com.liferay.account.constants.AccountsPortletKeys;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + AccountsPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 		"mvc.command.name=/account_admin/edit_account_entry"
 	},
 	service = MVCActionCommand.class

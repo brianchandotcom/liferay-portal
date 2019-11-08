@@ -15,7 +15,7 @@
 package com.liferay.account.internal.security.permission.resource;
 
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.constants.AccountsPortletKeys;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
@@ -49,7 +49,7 @@ public class AccountPortletResourcePermissionRegistrar {
 				AccountConstants.RESOURCE_NAME,
 				new StagedPortletPermissionLogic(
 					_stagingPermission,
-					AccountsPortletKeys.ACCOUNT_ENTRIES_ADMIN)),
+					AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN)),
 			properties);
 	}
 

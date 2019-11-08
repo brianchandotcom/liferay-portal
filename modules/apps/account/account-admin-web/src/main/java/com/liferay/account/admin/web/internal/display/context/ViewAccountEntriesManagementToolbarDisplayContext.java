@@ -74,20 +74,20 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "deactivateAccountEntries");
 
-				PortletURL deactivateAccountsURL =
+				PortletURL deactivateAccountEntriesURL =
 					liferayPortletResponse.createActionURL();
 
-				deactivateAccountsURL.setParameter(
+				deactivateAccountEntriesURL.setParameter(
 					ActionRequest.ACTION_NAME,
 					"/account_admin/update_account_entry_status");
-				deactivateAccountsURL.setParameter(
+				deactivateAccountEntriesURL.setParameter(
 					Constants.CMD, Constants.DEACTIVATE);
-				deactivateAccountsURL.setParameter(
+				deactivateAccountEntriesURL.setParameter(
 					"navigation", getNavigation());
 
 				dropdownItem.putData(
 					"deactivateAccountEntriesURL",
-					deactivateAccountsURL.toString());
+					deactivateAccountEntriesURL.toString());
 
 				dropdownItem.setIcon("hidden");
 				dropdownItem.setLabel(LanguageUtil.get(request, "deactivate"));
@@ -104,19 +104,20 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "activateAccountEntries");
 
-				PortletURL activateAccountsURL =
+				PortletURL activateAccountEntriesURL =
 					liferayPortletResponse.createActionURL();
 
-				activateAccountsURL.setParameter(
+				activateAccountEntriesURL.setParameter(
 					ActionRequest.ACTION_NAME,
 					"/account_admin/update_account_entry_status");
-				activateAccountsURL.setParameter(
+				activateAccountEntriesURL.setParameter(
 					Constants.CMD, Constants.RESTORE);
-				activateAccountsURL.setParameter("navigation", getNavigation());
+				activateAccountEntriesURL.setParameter(
+					"navigation", getNavigation());
 
 				dropdownItem.putData(
 					"activateAccountEntriesURL",
-					activateAccountsURL.toString());
+					activateAccountEntriesURL.toString());
 
 				dropdownItem.setIcon("undo");
 				dropdownItem.setLabel(LanguageUtil.get(request, "activate"));
@@ -129,16 +130,18 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "deleteAccountEntries");
 
-				PortletURL deleteAccountsURL =
+				PortletURL deleteAccountEntriesURL =
 					liferayPortletResponse.createActionURL();
 
-				deleteAccountsURL.setParameter(
+				deleteAccountEntriesURL.setParameter(
 					ActionRequest.ACTION_NAME,
 					"/account_admin/delete_account_entry");
-				deleteAccountsURL.setParameter("navigation", getNavigation());
+				deleteAccountEntriesURL.setParameter(
+					"navigation", getNavigation());
 
 				dropdownItem.putData(
-					"deleteAccountEntriesURL", deleteAccountsURL.toString());
+					"deleteAccountEntriesURL",
+					deleteAccountEntriesURL.toString());
 
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));

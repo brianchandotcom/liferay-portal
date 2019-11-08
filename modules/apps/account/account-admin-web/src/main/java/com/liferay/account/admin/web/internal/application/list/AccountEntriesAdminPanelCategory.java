@@ -14,7 +14,7 @@
 
 package com.liferay.account.admin.web.internal.application.list;
 
-import com.liferay.account.constants.AccountsPanelCategoryKeys;
+import com.liferay.account.constants.AccountPanelCategoryKeys;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
@@ -35,11 +35,11 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PanelCategory.class
 )
-public class AccountsAdminPanelCategory extends BasePanelCategory {
+public class AccountEntriesAdminPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return AccountsPanelCategoryKeys.CONTROL_PANEL_ACCOUNTS_ADMIN;
+		return AccountPanelCategoryKeys.CONTROL_PANEL_ACCOUNT_ENTRIES_ADMIN;
 	}
 
 	@Override

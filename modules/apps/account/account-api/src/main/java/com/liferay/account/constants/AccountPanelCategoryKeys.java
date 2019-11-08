@@ -17,9 +17,9 @@ package com.liferay.account.constants;
 /**
  * @author Pei-Jung Lan
  */
-public class AccountsPanelCategoryKeys {
+public class AccountPanelCategoryKeys {
 
-	public static final String CONTROL_PANEL_ACCOUNTS_ADMIN =
-		"control_panel.accounts_admin";
+	public static final String CONTROL_PANEL_ACCOUNT_ENTRIES_ADMIN =
+		"control_panel.account_entries_admin";
 
 }

@@ -14,8 +14,8 @@
 
 package com.liferay.account.admin.web.internal.application.list;
 
+import com.liferay.account.constants.AccountPanelCategoryKeys;
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.constants.AccountsPanelCategoryKeys;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.portal.kernel.model.Portlet;
@@ -30,11 +30,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.app.order:Integer=100",
-		"panel.category.key=" + AccountsPanelCategoryKeys.CONTROL_PANEL_ACCOUNTS_ADMIN
+		"panel.category.key=" + AccountPanelCategoryKeys.CONTROL_PANEL_ACCOUNT_ENTRIES_ADMIN
 	},
 	service = PanelApp.class
 )
-public class AccountsAdminPanelApp extends BasePanelApp {
+public class AccountEntriesAdminPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {

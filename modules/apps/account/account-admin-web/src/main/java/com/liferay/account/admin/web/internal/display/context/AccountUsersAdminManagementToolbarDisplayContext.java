@@ -77,16 +77,16 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 	public List<DropdownItem> getFilterDropdownItems() {
 		DropdownItemList filterDropdownItems = new DropdownItemList() {
 			{
-				List<DropdownItem> filterAccountsDropdownItems =
-					_getFilterByAccountsDropdownItems();
+				List<DropdownItem> filterAccountEntriesDropdownItems =
+					_getFilterByAccountEntriesDropdownItems();
 
-				if (filterAccountsDropdownItems != null) {
+				if (filterAccountEntriesDropdownItems != null) {
 					addGroup(
 						dropdownGroupItem -> {
 							dropdownGroupItem.setDropdownItems(
-								_getFilterByAccountsDropdownItems());
+								_getFilterByAccountEntriesDropdownItems());
 							dropdownGroupItem.setLabel(
-								_getFilterByAccountsDropdownItemsLabel());
+								_getFilterByAccountEntriesDropdownItemsLabel());
 						});
 				}
 			}
@@ -179,7 +179,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 			liferayPortletRequest, "accountEntriesNavigation", "all");
 	}
 
-	private List<DropdownItem> _getFilterByAccountsDropdownItems() {
+	private List<DropdownItem> _getFilterByAccountEntriesDropdownItems() {
 		return new DropdownItemList() {
 			{
 				add(
@@ -202,22 +202,22 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 							Objects.equals(
 								_getAccountEntriesNavigation(), "accounts"));
 
-						PortletURL accountSelectorURL =
+						PortletURL accountEntriesSelectorURL =
 							liferayPortletResponse.createRenderURL();
 
-						accountSelectorURL.setParameter(
+						accountEntriesSelectorURL.setParameter(
 							"mvcPath",
 							"/account_users_admin/select_account_entries.jsp");
-						accountSelectorURL.setParameter(
+						accountEntriesSelectorURL.setParameter(
 							"accountEntriesNavigation", "accounts");
-						accountSelectorURL.setWindowState(
+						accountEntriesSelectorURL.setWindowState(
 							LiferayWindowState.POP_UP);
 
 						dropdownItem.putData(
 							"redirectURL", currentURLObj.toString());
 						dropdownItem.putData(
 							"accountEntrySelectorURL",
-							accountSelectorURL.toString());
+							accountEntriesSelectorURL.toString());
 						dropdownItem.putData("action", "selectAccountEntries");
 
 						dropdownItem.setLabel(
@@ -243,7 +243,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 		};
 	}
 
-	private String _getFilterByAccountsDropdownItemsLabel() {
+	private String _getFilterByAccountEntriesDropdownItemsLabel() {
 		return LanguageUtil.get(request, "filter-by-accounts");
 	}
 

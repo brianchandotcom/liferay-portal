@@ -59,8 +59,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITES_COMPASS</td>
-	<td>//a[span/*[name()='svg'][contains(@class,'sites')]]</td>
+	<td>CHANGE_SPACE_ICON</td>
+	<td>//div[contains(@class,'icon-sites')]//a</td>
 	<td></td>
 </tr>
 <tr>

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 
 class AccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	removeUsers(itemData) {
@@ -35,6 +35,35 @@ class AccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandl
 				url: itemData.removeUsersURL
 			});
 		}
+	}
+
+	selectAccountUsers(itemData) {
+		const itemSelectorDialog = new ItemSelectorDialog({
+			buttonAddLabel: Liferay.Language.get('assign'),
+			eventName: this.ns('assignAccountUsers'),
+			title: Liferay.Util.sub(
+				Liferay.Language.get('assign-users-to-x'),
+				itemData.accountEntryName
+			),
+			url: itemData.selectAccountUsersURL
+		});
+
+		itemSelectorDialog.open();
+
+		itemSelectorDialog.on('selectedItemChange', event => {
+			const selectedItem = event.selectedItem;
+
+			if (selectedItem) {
+				const form = this.one('#fm');
+
+				Liferay.Util.postForm(form, {
+					data: {
+						accountUserIds: selectedItem.value
+					},
+					url: itemData.assignAccountUsersURL
+				});
+			}
+		});
 	}
 }
 

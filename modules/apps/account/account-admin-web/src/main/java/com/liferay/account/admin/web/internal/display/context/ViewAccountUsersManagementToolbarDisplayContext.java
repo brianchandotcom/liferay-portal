@@ -14,6 +14,8 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
@@ -107,6 +110,54 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 								liferayPortletRequest, "accountEntryId"));
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "add-user"));
+					});
+
+				addDropdownItem(
+					dropdownItem -> {
+						dropdownItem.putData("action", "selectAccountUsers");
+
+						long accountEntryId = ParamUtil.getLong(
+							request, "accountEntryId");
+
+						AccountEntry accountEntry =
+							AccountEntryLocalServiceUtil.fetchAccountEntry(
+								accountEntryId);
+
+						if (accountEntry != null) {
+							dropdownItem.putData(
+								"accountEntryName", accountEntry.getName());
+						}
+
+						PortletURL assignAccountUsersURL =
+							liferayPortletResponse.createActionURL();
+
+						assignAccountUsersURL.setParameter(
+							ActionRequest.ACTION_NAME,
+							"/account_admin/assign_account_users");
+						assignAccountUsersURL.setParameter(
+							"redirect", currentURLObj.toString());
+
+						dropdownItem.putData(
+							"assignAccountUsersURL",
+							assignAccountUsersURL.toString());
+
+						PortletURL selectAccountUsersURL =
+							liferayPortletResponse.createRenderURL();
+
+						selectAccountUsersURL.setParameter(
+							"mvcPath",
+							"/account_entries_admin/select_account_users.jsp");
+						selectAccountUsersURL.setParameter(
+							"accountEntryId", String.valueOf(accountEntryId));
+						selectAccountUsersURL.setWindowState(
+							LiferayWindowState.POP_UP);
+
+						dropdownItem.putData(
+							"selectAccountUsersURL",
+							selectAccountUsersURL.toString());
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "assign-users"));
 					});
 			}
 		};

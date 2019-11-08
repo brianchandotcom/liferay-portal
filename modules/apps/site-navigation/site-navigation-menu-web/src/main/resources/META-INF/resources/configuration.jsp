@@ -225,7 +225,7 @@ else {
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script require="metal-dom/src/dom as dom">
+<aui:script require="metal-dom/src/dom as dom, frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 	var form = document.<portlet:namespace />fm;
 
 	form.addEventListener('change', <portlet:namespace/>resetPreview);
@@ -340,27 +340,24 @@ else {
 				uri
 			);
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName:
-					'<%= siteNavigationMenuDisplayContext.getRootMenuItemEventName() %>',
-				on: {
-					selectedItemChange: function(event) {
-						var selectedItem = event.newVal;
-
-						if (selectedItem) {
-							rootMenuItemIdInput.value =
-								selectedItem.selectSiteNavigationMenuItemId;
-							rootMenuItemNameSpan.innerText =
-								selectedItem.selectSiteNavigationMenuItemName;
-
-							<portlet:namespace/>resetPreview();
-						}
-					}
-				},
-				'strings.add': '<liferay-ui:message key="done" />',
-				title:
-					'<liferay-ui:message key="select-site-navigation-menu-item" />',
+			const itemSelectorDialog = new ItemSelectorDialog.default({
+				buttonAddLabel: '<liferay-ui:message key="done" />',
+				eventName: '<%= siteNavigationMenuDisplayContext.getRootMenuItemEventName() %>',
+				title: '<liferay-ui:message key="select-site-navigation-menu-item" />',
 				url: uri
+			});
+
+			itemSelectorDialog.on('selectedItemChange', function(event) {
+				const selectedItem = event.selectedItem;
+
+				if (selectedItem) {
+					rootMenuItemIdInput.value =
+						selectedItem.selectSiteNavigationMenuItemId;
+					rootMenuItemNameSpan.innerText =
+						selectedItem.selectSiteNavigationMenuItemName;
+
+					<portlet:namespace/>resetPreview();
+				}
 			});
 
 			itemSelectorDialog.open();

@@ -31,6 +31,11 @@ $spacer: 1rem;
 		padding: 8px 12px;
 	}
 
+	.focused .card {
+		box-shadow: 0 0 0 2px white, 0 0 0 4px #80afff;
+		color: #272833;
+	}
+
 	.selected .card {
 		background-color: #80acff;
 		border-color: #80acff;

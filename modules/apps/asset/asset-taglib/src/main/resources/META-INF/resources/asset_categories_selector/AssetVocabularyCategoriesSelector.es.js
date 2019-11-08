@@ -48,6 +48,7 @@ function AssetVocabulariesCategoriesSelector({
 	useFallbackInput
 }) {
 	const [inputValue, setInputValue] = useState('');
+
 	const [invalidItems, setInvalidItems] = useState([]);
 
 	const {refetch, resource} = useResource({
@@ -273,13 +274,13 @@ function AssetVocabulariesCategoriesSelector({
 }
 
 AssetVocabulariesCategoriesSelector.propTypes = {
-	eventName: PropTypes.string,
-	groupIds: PropTypes.array,
+	eventName: PropTypes.string.isRequired,
+	groupIds: PropTypes.array.isRequired,
 	id: PropTypes.string,
-	inputName: PropTypes.string,
+	inputName: PropTypes.string.isRequired,
 	label: PropTypes.string,
 	onSelectedItemsChange: PropTypes.func,
-	portletURL: PropTypes.string,
+	portletURL: PropTypes.string.isRequired,
 	required: PropTypes.bool,
 	selectedItems: PropTypes.array,
 	singleSelect: PropTypes.bool,

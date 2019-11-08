@@ -143,15 +143,13 @@ name = HtmlUtil.escapeJS(name);
 
 			if (url) {
 				var openItemSelectorDialog = function(itemSelectorDialog) {
-					itemSelectorDialog.set('eventName', '<%= name %>selectItem');
-					itemSelectorDialog.set('url', url);
-					itemSelectorDialog.set(
-						'zIndex',
-						tinymce.activeEditor.windowManager.windows[0].zIndex + 10
-					);
+					itemSelectorDialog.eventName = '<%= name %>selectItem';
+					itemSelectorDialog.url = url;
+					itemSelectorDialog.zIndex =
+						tinymce.activeEditor.windowManager.windows[0].zIndex + 10;
 
-					itemSelectorDialog.once('selectedItemChange', function(event) {
-						var selectedItem = event.newVal ? event.newVal : value;
+					itemSelectorDialog.on('selectedItemChange', function(event) {
+						var selectedItem = event.selectedItem ? event.selectedItem : value;
 
 						if (
 							selectedItem.returnType ===
@@ -183,15 +181,18 @@ name = HtmlUtil.escapeJS(name);
 				if (itemSelectorDialog) {
 					openItemSelectorDialog(itemSelectorDialog);
 				} else {
-					AUI().use('liferay-item-selector-dialog', function(A) {
-						var itemSelectorDialog = new A.LiferayItemSelectorDialog();
+					Liferay.Loader.require(
+						'frontend-js-web/liferay/ItemSelectorDialog.es',
+						function(ItemSelectorDialog) {
+							var itemSelectorDialog = new ItemSelectorDialog.default();
 
-						window[
-							'<%= name %>'
-						]._itemSelectorDialog = itemSelectorDialog;
+							window[
+								'<%= name %>'
+							]._itemSelectorDialog = itemSelectorDialog;
 
-						openItemSelectorDialog(itemSelectorDialog);
-					});
+							openItemSelectorDialog(itemSelectorDialog);
+						}
+					);
 				}
 			}
 		},

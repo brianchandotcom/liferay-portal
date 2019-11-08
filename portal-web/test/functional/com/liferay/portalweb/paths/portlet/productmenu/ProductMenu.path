@@ -136,7 +136,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME</td>
-	<td>//span[contains(@class,'site-name')]</td>
+	<td>//div[contains(@class,'site-name')]</td>
 	<td></td>
 </tr>
 </tbody>

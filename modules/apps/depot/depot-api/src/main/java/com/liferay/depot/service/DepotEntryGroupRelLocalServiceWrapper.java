@@ -268,9 +268,10 @@ public class DepotEntryGroupRelLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
-		getDepotEntryGroupRels(long groupId) {
+		getDepotEntryGroupRels(long groupId, int start, int end) {
 
-		return _depotEntryGroupRelLocalService.getDepotEntryGroupRels(groupId);
+		return _depotEntryGroupRelLocalService.getDepotEntryGroupRels(
+			groupId, start, end);
 	}
 
 	/**

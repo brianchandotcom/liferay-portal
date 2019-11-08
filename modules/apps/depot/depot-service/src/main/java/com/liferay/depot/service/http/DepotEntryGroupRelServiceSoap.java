@@ -62,14 +62,14 @@ import java.rmi.RemoteException;
 public class DepotEntryGroupRelServiceSoap {
 
 	public static com.liferay.depot.model.DepotEntryGroupRelSoap[]
-			getDepotEntryGroupRels(long groupId)
+			getDepotEntryGroupRels(long groupId, int start, int end)
 		throws RemoteException {
 
 		try {
 			java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
 				returnValue =
 					DepotEntryGroupRelServiceUtil.getDepotEntryGroupRels(
-						groupId);
+						groupId, start, end);
 
 			return com.liferay.depot.model.DepotEntryGroupRelSoap.toSoapModels(
 				returnValue);

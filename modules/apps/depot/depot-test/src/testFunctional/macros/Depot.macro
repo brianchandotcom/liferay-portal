@@ -140,7 +140,7 @@ definition {
 		AssertElementPresent(locator1 = "Button#SAVE");
 	}
 
-	macro viewLanguageOptionsInGeneral {
+	macro viewGeneralLanguageOptions {
 		Page.viewFriendlyURLLanguageOptionsPG(
 			currentLanguageList = "${currentLanguageList}",
 			fieldName = "Name");

@@ -73,7 +73,7 @@ definition {
 
 		Depot.viewDefaultLanguage(defaultDepotLanguage = "English (United States)");
 
-		Depot.moveDepotLanguagesToAvailable();
+		LanguagePortlet.moveAllLanguagesToAvailable();
 
 		LanguagePortlet.moveLanguagesToCurrent(currentLanguages = "English (United States),Japanese (Japan),Spanish (Spain)");
 
@@ -83,7 +83,7 @@ definition {
 
 		DepotNavigator.gotoGeneral(depotName = "Test Depot Name");
 
-		Depot.viewLanguageOptionsInGeneral(currentLanguageList = "en_US,ja_JP,es_ES");
+		Depot.viewGeneralLanguageOptions(currentLanguageList = "en_US,ja_JP,es_ES");
 
 		DepotNavigator.openDepotAdmin();
 

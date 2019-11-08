@@ -104,40 +104,28 @@ public class LayoutDataConverter {
 
 						columnChildrenJSONArray.put(fragmentUUID.toString());
 
-						JSONObject fragmentJSONObject = JSONUtil.put(
-							"children", JSONFactoryUtil.createJSONArray()
-						).put(
-							"config",
-							JSONUtil.put(
-								"fragmentEntryLinkId", fragmentEntryLinkId)
-						).put(
-							"itemId", fragmentUUID.toString()
-						).put(
-							"parentId", columnUUID.toString()
-						).put(
-							"type",
-							LayoutDataItemTypesConstants.ITEM_TYPE_FRAGMENT
-						);
+						JSONObject fragmentConfigJSONObject = JSONUtil.put(
+							"fragmentEntryLinkId", fragmentEntryLinkId);
+
+						JSONObject fragmentJSONObject = _getItemJSONObject(
+							JSONFactoryUtil.createJSONArray(),
+							fragmentConfigJSONObject, fragmentUUID.toString(),
+							columnUUID.toString(),
+							LayoutDataItemTypesConstants.ITEM_TYPE_FRAGMENT);
 
 						itemsJSONObject.put(
 							fragmentUUID.toString(), fragmentJSONObject);
 					}
 
-					JSONObject columnJSONObject = JSONUtil.put(
-						"children", columnChildrenJSONArray
-					).put(
-						"config",
-						JSONUtil.put(
-							"size",
-							Integer.valueOf(
-								inputColumnJSONObject.getString("size")))
-					).put(
-						"itemId", columnUUID.toString()
-					).put(
-						"parentId", rowUUID.toString()
-					).put(
-						"type", LayoutDataItemTypesConstants.ITEM_TYPE_COLUMN
-					);
+					JSONObject columnConfigJSONObject = JSONUtil.put(
+						"size",
+						Integer.valueOf(
+							inputColumnJSONObject.getString("size")));
+
+					JSONObject columnJSONObject = _getItemJSONObject(
+						columnChildrenJSONArray, columnConfigJSONObject,
+						columnUUID.toString(), rowUUID.toString(),
+						LayoutDataItemTypesConstants.ITEM_TYPE_COLUMN);
 
 					itemsJSONObject.put(
 						columnUUID.toString(), columnJSONObject);
@@ -146,57 +134,42 @@ public class LayoutDataConverter {
 				JSONObject inputRowConfigJSONObject =
 					inputRowJSONObject.getJSONObject("config");
 
-				JSONObject rowJSONObject = JSONUtil.put(
-					"children", rowChildrenJSONArray
+				JSONObject rowConfigJSONObject = JSONUtil.put(
+					"gutters", inputRowConfigJSONObject.get("columnSpacing")
 				).put(
-					"config",
-					JSONUtil.put(
-						"gutters", inputRowConfigJSONObject.get("columnSpacing")
-					).put(
-						"verticalAlign", "top"
-					)
-				).put(
-					"itemId", rowUUID.toString()
-				).put(
-					"parentId", containerUUID.toString()
-				).put(
-					"type", LayoutDataItemTypesConstants.ITEM_TYPE_ROW
+					"verticalAlign", "top"
 				);
+
+				JSONObject rowJSONObject = _getItemJSONObject(
+					rowChildrenJSONArray, rowConfigJSONObject,
+					rowUUID.toString(), containerUUID.toString(),
+					LayoutDataItemTypesConstants.ITEM_TYPE_ROW);
 
 				itemsJSONObject.put(rowUUID.toString(), rowJSONObject);
 
-				JSONObject containerJSONObject = JSONUtil.put(
-					"children", JSONUtil.put(rowUUID.toString())
+				JSONObject containerConfigJSONObject = JSONUtil.put(
+					"backgroundColorCssClass",
+					inputRowConfigJSONObject.get("backgroundColorCssClass")
 				).put(
-					"config",
-					JSONUtil.put(
-						"backgroundColorCssClass",
-						inputRowConfigJSONObject.get("backgroundColorCssClass")
-					).put(
-						"backgroundImage",
-						inputRowConfigJSONObject.get("backgroundImage")
-					).put(
-						"paddingHorizontal",
-						Integer.valueOf(
-							inputRowConfigJSONObject.getString(
-								"paddingHorizontal"))
-					).put(
-						"paddingVertical",
-						Integer.valueOf(
-							inputRowConfigJSONObject.getString(
-								"paddingVertical"))
-					).put(
-						"type",
-						inputRowConfigJSONObject.getString(
-							"containerType", null)
-					)
+					"backgroundImage",
+					inputRowConfigJSONObject.get("backgroundImage")
 				).put(
-					"itemId", containerUUID.toString()
+					"paddingHorizontal",
+					Integer.valueOf(
+						inputRowConfigJSONObject.getString("paddingHorizontal"))
 				).put(
-					"parentId", mainUUID.toString()
+					"paddingVertical",
+					Integer.valueOf(
+						inputRowConfigJSONObject.getString("paddingVertical"))
 				).put(
-					"type", LayoutDataItemTypesConstants.ITEM_TYPE_CONTAINER
+					"type",
+					inputRowConfigJSONObject.getString("containerType", null)
 				);
+
+				JSONObject containerJSONObject = _getItemJSONObject(
+					JSONUtil.put(rowUUID.toString()), containerConfigJSONObject,
+					containerUUID.toString(), mainUUID.toString(),
+					LayoutDataItemTypesConstants.ITEM_TYPE_CONTAINER);
 
 				itemsJSONObject.put(
 					containerUUID.toString(), containerJSONObject);
@@ -211,37 +184,24 @@ public class LayoutDataConverter {
 				JSONArray fragmentEntryLinkIdsJSONArray =
 					columnJSONObject.getJSONArray("fragmentEntryLinkIds");
 
-				JSONObject fragmentJSONObject = JSONUtil.put(
-					"children", JSONFactoryUtil.createJSONArray()
-				).put(
-					"config",
-					JSONUtil.put(
-						"fragmentEntryLinkId",
-						fragmentEntryLinkIdsJSONArray.get(0))
-				).put(
-					"itemId", fragmentUUID.toString()
-				).put(
-					"parentId", mainUUID
-				).put(
-					"type", LayoutDataItemTypesConstants.ITEM_TYPE_FRAGMENT
-				);
+				JSONObject fragmentConfigJSONObject = JSONUtil.put(
+					"fragmentEntryLinkId",
+					fragmentEntryLinkIdsJSONArray.get(0));
+
+				JSONObject fragmentJSONObject = _getItemJSONObject(
+					JSONFactoryUtil.createJSONArray(), fragmentConfigJSONObject,
+					fragmentUUID.toString(), mainUUID.toString(),
+					LayoutDataItemTypesConstants.ITEM_TYPE_FRAGMENT);
 
 				itemsJSONObject.put(
 					fragmentUUID.toString(), fragmentJSONObject);
 			}
 		}
 
-		JSONObject mainJSONObject = JSONUtil.put(
-			"children", mainChildrenJSONArray
-		).put(
-			"config", JSONFactoryUtil.createJSONObject()
-		).put(
-			"itemId", mainUUID.toString()
-		).put(
-			"parentId", StringPool.BLANK
-		).put(
-			"type", LayoutDataItemTypesConstants.ITEM_TYPE_ROOT
-		);
+		JSONObject mainJSONObject = _getItemJSONObject(
+			mainChildrenJSONArray, JSONFactoryUtil.createJSONObject(),
+			mainUUID.toString(), StringPool.BLANK,
+			LayoutDataItemTypesConstants.ITEM_TYPE_ROOT);
 
 		itemsJSONObject.put(mainUUID.toString(), mainJSONObject);
 

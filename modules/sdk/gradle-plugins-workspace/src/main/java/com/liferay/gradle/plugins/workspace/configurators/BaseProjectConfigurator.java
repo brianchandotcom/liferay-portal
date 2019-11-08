@@ -112,22 +112,16 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 
 		copy.setGroup(RootProjectConfigurator.DOCKER_GROUP);
 
-		Task buildDockerImageTask = GradleUtil.getTask(
-			project.getRootProject(),
-			RootProjectConfigurator.BUILD_DOCKER_IMAGE_TASK_NAME);
-
-		buildDockerImageTask.dependsOn(copy);
-
-		Task createDockerContainerTask = GradleUtil.getTask(
-			project.getRootProject(),
-			RootProjectConfigurator.CREATE_DOCKER_CONTAINER_TASK_NAME);
-
-		createDockerContainerTask.dependsOn(copy);
-
 		Task deployTask = GradleUtil.getTask(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
 
 		deployTask.finalizedBy(copy);
+
+		Task buildDockerImageTask = GradleUtil.getTask(
+			project.getRootProject(),
+			RootProjectConfigurator.BUILD_DOCKER_IMAGE_TASK_NAME);
+
+		buildDockerImageTask.dependsOn(deployTask);
 
 		return copy;
 	}

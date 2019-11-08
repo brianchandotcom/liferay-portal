@@ -56,6 +56,9 @@ public interface DepotEntryGroupRelService extends BaseService {
 			long groupId, int start, int end)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDepotEntryGroupRelsCount(long groupId) throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -65,7 +65,7 @@ public class BatchEngineTaskMethodRegistryImpl
 			String itemClassName) {
 
 		return _batchEngineTaskItemResourceDelegateCreators.get(
-			new FactoryKey(
+			new CreatorKey(
 				apiVersion, batchEngineTaskOperation, itemClassName));
 	}
 
@@ -100,18 +100,18 @@ public class BatchEngineTaskMethodRegistryImpl
 		_serviceTracker.close();
 	}
 
-	private final Map<FactoryKey, BatchEngineTaskItemResourceDelegateCreator>
+	private final Map<CreatorKey, BatchEngineTaskItemResourceDelegateCreator>
 		_batchEngineTaskItemResourceDelegateCreators =
 			new ConcurrentHashMap<>();
 	private final Map<String, Map.Entry<Class<?>, AtomicInteger>> _itemClasses =
 		new ConcurrentHashMap<>();
-	private ServiceTracker<Object, List<FactoryKey>> _serviceTracker;
+	private ServiceTracker<Object, List<CreatorKey>> _serviceTracker;
 
-	private static class FactoryKey {
+	private static class CreatorKey {
 
 		@Override
 		public boolean equals(Object obj) {
-			FactoryKey factoryKey = (FactoryKey)obj;
+			CreatorKey factoryKey = (CreatorKey)obj;
 
 			if (Objects.equals(factoryKey._apiVersion, _apiVersion) &&
 				Objects.equals(
@@ -135,7 +135,7 @@ public class BatchEngineTaskMethodRegistryImpl
 			return hashCode;
 		}
 
-		private FactoryKey(
+		private CreatorKey(
 			String apiVersion,
 			BatchEngineTaskOperation batchEngineTaskOperation,
 			String itemClassName) {
@@ -152,17 +152,17 @@ public class BatchEngineTaskMethodRegistryImpl
 	}
 
 	private class BatchEngineTaskMethodServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, List<FactoryKey>> {
+		implements ServiceTrackerCustomizer<Object, List<CreatorKey>> {
 
 		@Override
-		public List<FactoryKey> addingService(
+		public List<CreatorKey> addingService(
 			ServiceReference<Object> serviceReference) {
 
 			Object resource = _bundleContext.getService(serviceReference);
 
 			Class<?> resourceClass = resource.getClass();
 
-			List<FactoryKey> factoryKeys = null;
+			List<CreatorKey> factoryKeys = null;
 
 			for (Method resourceMethod : resourceClass.getMethods()) {
 				BatchEngineTaskMethod batchEngineTaskMethod =
@@ -174,7 +174,7 @@ public class BatchEngineTaskMethodRegistryImpl
 
 				Class<?> itemClass = batchEngineTaskMethod.itemClass();
 
-				FactoryKey factoryKey = new FactoryKey(
+				CreatorKey factoryKey = new CreatorKey(
 					String.valueOf(serviceReference.getProperty("api.version")),
 					batchEngineTaskMethod.batchEngineTaskOperation(),
 					itemClass.getName());
@@ -229,15 +229,15 @@ public class BatchEngineTaskMethodRegistryImpl
 		@Override
 		public void modifiedService(
 			ServiceReference<Object> serviceReference,
-			List<FactoryKey> factoryKeys) {
+			List<CreatorKey> factoryKeys) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<Object> serviceReference,
-			List<FactoryKey> factoryKeys) {
+			List<CreatorKey> factoryKeys) {
 
-			for (FactoryKey factoryKey : factoryKeys) {
+			for (CreatorKey factoryKey : factoryKeys) {
 				_batchEngineTaskItemResourceDelegateCreators.remove(factoryKey);
 
 				_itemClasses.compute(

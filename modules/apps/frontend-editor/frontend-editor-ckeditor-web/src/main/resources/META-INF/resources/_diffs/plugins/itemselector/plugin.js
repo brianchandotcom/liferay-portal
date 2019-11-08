@@ -198,7 +198,7 @@
 			} else {
 				Liferay.Loader.require(
 					'frontend-js-web/liferay/ItemSelectorDialog.es',
-					function(ItemSelectorDialog) {
+					ItemSelectorDialog => {
 						itemSelectorDialog = new ItemSelectorDialog.default({
 							eventName,
 							url,

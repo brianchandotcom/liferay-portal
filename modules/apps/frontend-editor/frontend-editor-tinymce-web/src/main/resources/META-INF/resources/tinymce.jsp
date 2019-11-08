@@ -149,7 +149,9 @@ name = HtmlUtil.escapeJS(name);
 						tinymce.activeEditor.windowManager.windows[0].zIndex + 10;
 
 					itemSelectorDialog.on('selectedItemChange', function(event) {
-						var selectedItem = event.selectedItem ? event.selectedItem : value;
+						var selectedItem = event.selectedItem
+							? event.selectedItem
+							: value;
 
 						if (
 							selectedItem.returnType ===

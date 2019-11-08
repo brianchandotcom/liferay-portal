@@ -24,11 +24,13 @@ import java.util.regex.Pattern;
  */
 public class OASURLParser {
 
-	public OASURLParser(String oasURL) {
+	public OASURLParser(String oasURL) throws MalformedURLException {
+		_validate(oasURL);
+
 		_oasURL = oasURL;
 	}
 
-	public String getAuthorityWithScheme() throws MalformedURLException {
+	public String getAuthorityWithScheme() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(getScheme());
@@ -39,23 +41,23 @@ public class OASURLParser {
 		return sb.toString();
 	}
 
-	public String getHost() throws MalformedURLException {
+	public String getHost() {
 		return _getGroup(2);
 	}
 
-	public String getJaxRSAppBase() throws MalformedURLException {
+	public String getJaxRSAppBase() {
 		return _getGroup(4);
 	}
 
-	public String getPort() throws MalformedURLException {
+	public String getPort() {
 		return _getGroup(3);
 	}
 
-	public String getScheme() throws MalformedURLException {
+	public String getScheme() {
 		return _getGroup(1);
 	}
 
-	public String getServerBaseURL() throws MalformedURLException {
+	public String getServerBaseURL() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(getAuthorityWithScheme());
@@ -65,16 +67,22 @@ public class OASURLParser {
 		return sb.toString();
 	}
 
-	private String _getGroup(int group) throws MalformedURLException {
+	private String _getGroup(int group) {
 		Matcher matcher = _oasURLPattern.matcher(_oasURL);
+
+		matcher.matches();
+
+		return matcher.group(group);
+	}
+
+	private void _validate(String oasURL) throws MalformedURLException {
+		Matcher matcher = _oasURLPattern.matcher(oasURL);
 
 		if (!matcher.matches()) {
 			throw new MalformedURLException(
 				"Unable to parse OpenAPI specification endpoint URL: " +
-					_oasURL);
+					oasURL);
 		}
-
-		return matcher.group(group);
 	}
 
 	private static final Pattern _oasURLPattern = Pattern.compile(

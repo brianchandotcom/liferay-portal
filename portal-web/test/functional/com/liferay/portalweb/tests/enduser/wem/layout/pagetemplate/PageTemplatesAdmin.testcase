@@ -1,0 +1,47 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Page Templates";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-102190. In Page Templates is its own application with tabs Masters, Page Templates, and Display Page Templates."
+	@priority = "5"
+	test AssertPageTemplatesTabsAreVisible {
+		property portal.acceptance = "true";
+
+		PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+
+		AssertVisible(
+			key_navItem = "Masters",
+			locator1 = "NavBar#NAV_ITEM_LINK");
+
+		AssertVisible(
+			key_navItem = "Page Templates",
+			locator1 = "NavBar#NAV_ITEM_LINK");
+
+		AssertVisible(
+			key_navItem = "Display Page Templates",
+			locator1 = "NavBar#NAV_ITEM_LINK");
+	}
+
+}

@@ -20,6 +20,8 @@ import com.fasterxml.jackson.databind.node.NullNode;
 
 import java.io.IOException;
 
+import java.util.Objects;
+
 import org.mule.runtime.http.api.domain.entity.HttpEntity;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 
@@ -55,6 +57,8 @@ public class JsonNodeReader {
 
 		for (String pathPart : pathParts) {
 			jsonNode = jsonNode.get(pathPart);
+
+			Objects.requireNonNull(jsonNode);
 		}
 
 		return jsonNode;

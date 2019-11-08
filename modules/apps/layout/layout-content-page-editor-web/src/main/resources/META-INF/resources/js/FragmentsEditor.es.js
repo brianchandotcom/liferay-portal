@@ -95,21 +95,47 @@ class FragmentsEditor extends Component {
 		};
 	}
 
+	/**
+	 * Adds edition listeners
+	 * @review
+	 */
 	_addEditionListeners() {
-		document.addEventListener('click', this._handleDocumentClick, true);
-		document.addEventListener('keydown', this._handleDocumentKeyDown);
-		document.addEventListener('keyup', this._handleDocumentKeyUp);
-		document.addEventListener('mouseover', this._handleDocumentMouseOver);
+		if (!this._activeEditionListeners) {
+			this._activeEditionListeners = true;
+
+			document.addEventListener('click', this._handleDocumentClick, true);
+			document.addEventListener('keydown', this._handleDocumentKeyDown);
+			document.addEventListener('keyup', this._handleDocumentKeyUp);
+			document.addEventListener(
+				'mouseover',
+				this._handleDocumentMouseOver
+			);
+		}
 	}
 
+	/**
+	 * Removes edition listeners
+	 * @review
+	 */
 	_removeEditionListeners() {
-		document.removeEventListener('click', this._handleDocumentClick, true);
-		document.removeEventListener('keydown', this._handleDocumentKeyDown);
-		document.removeEventListener('keyup', this._handleDocumentKeyUp);
-		document.removeEventListener(
-			'mouseover',
-			this._handleDocumentMouseOver
-		);
+		if (this._activeEditionListeners) {
+			this._activeEditionListeners = false;
+
+			document.removeEventListener(
+				'click',
+				this._handleDocumentClick,
+				true
+			);
+			document.removeEventListener(
+				'keydown',
+				this._handleDocumentKeyDown
+			);
+			document.removeEventListener('keyup', this._handleDocumentKeyUp);
+			document.removeEventListener(
+				'mouseover',
+				this._handleDocumentMouseOver
+			);
+		}
 	}
 
 	/**
@@ -124,7 +150,7 @@ class FragmentsEditor extends Component {
 			this
 		);
 
-		if (this.lockedSegmentsExperience) {
+		if (!this.lockedSegmentsExperience) {
 			this._addEditionListeners();
 		}
 	}
@@ -146,9 +172,11 @@ class FragmentsEditor extends Component {
 	 */
 	syncLockedSegmentsExperience(value, previousValue) {
 		if (value && value !== previousValue) {
-			this.store.dispatch({
-				type: CLEAR_ACTIVE_ITEM
-			});
+			if (this.store) {
+				this.store.dispatch({
+					type: CLEAR_ACTIVE_ITEM
+				});
+			}
 
 			this._removeEditionListeners();
 		} else if (value !== previousValue) {

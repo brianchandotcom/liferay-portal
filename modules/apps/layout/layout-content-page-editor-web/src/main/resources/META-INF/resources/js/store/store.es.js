@@ -276,7 +276,10 @@ class Store extends State {
 
 		this._state = this._getFrozenState({
 			...DEFAULT_INITIAL_STATE,
-			...initialState
+			...initialState,
+			selectedSidebarPanelId: initialState.lockedSegmentsExperience
+				? null
+				: initialState.selectedSidebarPanelId
 		});
 
 		return this._state;

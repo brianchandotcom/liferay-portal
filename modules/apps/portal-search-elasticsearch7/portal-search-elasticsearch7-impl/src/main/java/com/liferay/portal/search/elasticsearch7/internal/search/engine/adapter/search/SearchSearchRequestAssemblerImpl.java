@@ -88,9 +88,21 @@ public class SearchSearchRequestAssemblerImpl
 		SearchSourceBuilder searchSourceBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
-		if (searchSearchRequest.getFetchSource() != null) {
+		if ((searchSearchRequest.getFetchSource() != null) ||
+			(searchSearchRequest.getFetchSourceExcludes() != null) ||
+			(searchSearchRequest.getFetchSourceIncludes() != null)) {
+
+			if (searchSearchRequest.getFetchSource() == null) {
+				searchSourceBuilder.fetchSource(true);
+			}
+			else {
+				searchSourceBuilder.fetchSource(
+					searchSearchRequest.getFetchSource());
+			}
+
 			searchSourceBuilder.fetchSource(
-				searchSearchRequest.getFetchSource());
+				searchSearchRequest.getFetchSourceIncludes(),
+				searchSearchRequest.getFetchSourceExcludes());
 		}
 	}
 

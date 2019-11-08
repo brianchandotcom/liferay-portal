@@ -282,6 +282,11 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		searchSearchRequest.putAllFacets(searchContext.getFacets());
 
+		searchSearchRequest.setFetchSource(searchRequest.getFetchSource());
+		searchSearchRequest.setFetchSourceExcludes(
+			searchRequest.getFetchSourceExcludes());
+		searchSearchRequest.setFetchSourceIncludes(
+			searchRequest.getFetchSourceIncludes());
 		searchSearchRequest.setGroupBy(searchContext.getGroupBy());
 		searchSearchRequest.setGroupByRequests(
 			searchRequest.getGroupByRequests());

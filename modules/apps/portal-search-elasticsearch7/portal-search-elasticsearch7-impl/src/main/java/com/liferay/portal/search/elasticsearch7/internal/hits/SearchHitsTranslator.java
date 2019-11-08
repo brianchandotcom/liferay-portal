@@ -159,6 +159,18 @@ public class SearchHitsTranslator {
 			if (fetchSource != null) {
 				useSource = fetchSource.booleanValue();
 			}
+			else {
+				String[] fetchSourceExcludes =
+					searchSearchRequest.getFetchSourceExcludes();
+				String[] fetchSourceIncludes =
+					searchSearchRequest.getFetchSourceIncludes();
+
+				if ((fetchSourceExcludes != null) ||
+					(fetchSourceIncludes != null)) {
+
+					useSource = true;
+				}
+			}
 		}
 
 		if (useSource) {

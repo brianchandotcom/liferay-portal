@@ -81,7 +81,7 @@ if (selLayout != null) {
 }
 %>
 
-<aui:script use="aui-base,liferay-item-selector-dialog,node-event-simulate">
+<aui:script use="aui-base,node-event-simulate">
 	var groupId = A.one('#<portlet:namespace />groupId');
 	var layoutItemRemove = A.one('#<portlet:namespace />layoutItemRemove');
 	var layoutNameInput = A.one('#<portlet:namespace />layoutNameInput');

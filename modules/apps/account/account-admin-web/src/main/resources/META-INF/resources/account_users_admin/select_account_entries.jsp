@@ -64,11 +64,6 @@ SelectAccountEntriesManagementToolbarDisplayContext selectAccountEntriesManageme
 	</liferay-ui:search-container>
 </aui:container>
 
-<liferay-frontend:component
-	componentId="<%= selectAccountEntriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/AccountEntriesManagementToolbarDefaultEventHandler.es"
-/>
-
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get(
 		'<portlet:namespace />accountEntries'

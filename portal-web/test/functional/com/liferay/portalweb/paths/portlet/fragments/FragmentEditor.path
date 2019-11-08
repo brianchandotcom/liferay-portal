@@ -69,8 +69,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT</td>
+	<td>//div[contains(@class,'floating-toolbar')]//input[contains(@value,'${key_contentName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PALETTE_SELECT</td>
 	<td>//button[contains(@class,'${colorPalette}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PLUS_BUTTON</td>
+	<td>//div[contains(@class,'floating-toolbar')]//div[@class='btn-group']/button[contains(@class,'btn-secondary')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -13,7 +13,7 @@ definition {
 	macro gotoLocalizedSite {
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		ProductMenuHelper.openSitesPopup();
+		ProductMenuHelper.openWorkspace();
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -65,7 +65,7 @@ definition {
 	macro gotoSite {
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		ProductMenuHelper.openSitesPopup();
+		ProductMenuHelper.openWorkspace();
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 

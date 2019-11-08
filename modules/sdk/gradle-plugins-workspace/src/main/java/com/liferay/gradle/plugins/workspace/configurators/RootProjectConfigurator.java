@@ -218,6 +218,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
+	private static String _getDockerContainerId(Project project) {
+		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
+			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
+
+		return workspaceExtension.getDockerContainerId();
+	}
+
 	private static String _getDockerImageId(Project project) {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
@@ -296,13 +303,15 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		DockerBuildImage dockerBuildImage = _addTaskBuildDockerImage(
 			dockerfile, workspaceExtension);
 
+		DockerStopContainer dockerStopContainer = _addTaskStopDockerContainer(
+			project);
+
 		_addTaskCreateDockerContainer(project, workspaceExtension);
 
 		_addTaskLogsDockerContainer(project);
 		_addTaskPullDockerImage(project, workspaceExtension);
 		_addTaskRemoveDockerContainer(project);
 		_addTaskStartDockerContainer(project);
-		_addTaskStopDockerContainer(project);
 	}
 
 	@SuppressWarnings("serial")
@@ -1058,6 +1067,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerStartContainer;
 	}
 
+	@SuppressWarnings("serial")
 	private DockerStopContainer _addTaskStopDockerContainer(Project project) {
 		DockerStopContainer dockerStopContainer = GradleUtil.addTask(
 			project, STOP_DOCKER_CONTAINER_TASK_NAME,
@@ -1070,7 +1080,23 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return project.getName() + "-liferayapp";
+					return _getDockerContainerId(project);
+				}
+
+			});
+
+		dockerStopContainer.setOnError(
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(Exception e) {
+					Logger logger = project.getLogger();
+
+					if (logger.isWarnEnabled()) {
+						logger.warn(
+							"No container with ID '" +
+								_getDockerContainerId(project) + "' running.");
+					}
 				}
 
 			});

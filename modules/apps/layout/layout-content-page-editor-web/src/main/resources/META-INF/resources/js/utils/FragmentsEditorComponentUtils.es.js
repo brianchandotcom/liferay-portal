@@ -37,12 +37,13 @@ const onPropertiesChanged = (component, properties, callback) => {
 /**
  * Returns true if any change is different
  * @param {object} changes
+ * @param {string[]} [ignoredProperties=['events']]
  * @return {boolean}
  * @review
  */
-const shouldUpdatePureComponent = changes => {
+const shouldUpdatePureComponent = (changes, ignoredProperties = ['events']) => {
 	return Object.values(changes)
-		.filter(change => change.key !== 'events')
+		.filter(change => !ignoredProperties.includes(change.key))
 		.some(change => change.newVal !== change.prevVal);
 };
 

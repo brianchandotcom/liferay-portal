@@ -75,11 +75,12 @@ String navigation = ParamUtil.getString(request, "navigation");
 		context.put("portletNamespace", liferayPortletResponse.getNamespace());
 		%>
 
-		<soy:component-renderer
-			context="<%= context %>"
-			module="document_library/js/bulk/BulkStatus.es"
-			templateNamespace="com.liferay.document.library.web.BulkStatus.render"
-		/>
+		<div id="<portlet:namespace/>bulkStatus-root">
+			<react:component
+				data="<%= context %>"
+				module="document_library/js/bulk/BulkStatus.es"
+			/>
+		</div>
 
 		<div id="<portlet:namespace />documentLibraryContainer">
 

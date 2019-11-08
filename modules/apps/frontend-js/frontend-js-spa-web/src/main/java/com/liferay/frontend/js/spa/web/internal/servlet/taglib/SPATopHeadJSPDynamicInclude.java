@@ -60,8 +60,6 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			return;
 		}
 
-		ScriptData scriptData = new ScriptData();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -107,17 +105,30 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			"validStatusCodes", _spaUtil.getValidStatusCodes()
 		).build();
 
+		ScriptData configScriptData = new ScriptData();
+
+		configScriptData.append(
+			null,
+			StringUtil.replaceToStringBundler(
+				_CONFIG_TMPL_CONTENT, StringPool.POUND, StringPool.POUND,
+				values),
+			null, null);
+
+		configScriptData.writeTo(httpServletResponse.getWriter());
+
 		String initModuleName = _npmResolver.resolveModuleName(
 			"frontend-js-spa-web/liferay/init.es");
 
-		scriptData.append(
+		ScriptData initScriptData = new ScriptData();
+
+		initScriptData.append(
 			null,
 			StringUtil.replaceToStringBundler(
-				_TMPL_CONTENT, StringPool.POUND, StringPool.POUND, values),
+				_INIT_TMPL_CONTENT, StringPool.POUND, StringPool.POUND, values),
 			initModuleName + " as frontendJsSpaWebLiferayInitEs",
 			ScriptData.ModulesType.ES6);
 
-		scriptData.writeTo(httpServletResponse.getWriter());
+		initScriptData.writeTo(httpServletResponse.getWriter());
 	}
 
 	@Override
@@ -141,7 +152,10 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return null;
 	}
 
-	private static final String _TMPL_CONTENT = StringUtil.read(
+	private static final String _CONFIG_TMPL_CONTENT = StringUtil.read(
+		SPATopHeadJSPDynamicInclude.class, "/META-INF/resources/config.tmpl");
+
+	private static final String _INIT_TMPL_CONTENT = StringUtil.read(
 		SPATopHeadJSPDynamicInclude.class, "/META-INF/resources/init.tmpl");
 
 	@Reference

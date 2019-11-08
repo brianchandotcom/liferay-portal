@@ -38,12 +38,12 @@ public class AccountsAdminPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return AccountsPortletKeys.ACCOUNTS_ADMIN;
+		return AccountsPortletKeys.ACCOUNT_ENTRIES_ADMIN;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + AccountsPortletKeys.ACCOUNTS_ADMIN + ")",
+		target = "(javax.portlet.name=" + AccountsPortletKeys.ACCOUNT_ENTRIES_ADMIN + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

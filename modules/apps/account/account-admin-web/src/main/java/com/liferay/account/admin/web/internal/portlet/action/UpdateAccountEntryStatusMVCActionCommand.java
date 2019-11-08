@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + AccountsPortletKeys.ACCOUNTS_ADMIN,
+		"javax.portlet.name=" + AccountsPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 		"mvc.command.name=/account_admin/update_account_entry_status"
 	},
 	service = MVCActionCommand.class

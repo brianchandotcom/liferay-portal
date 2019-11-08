@@ -51,14 +51,6 @@ import javax.servlet.jsp.PageContext;
  */
 public class GroupSelectorTag extends IncludeTag {
 
-	public void setGroups(List<Group> groups) {
-		_groups = groups;
-	}
-
-	public void setGroupsCount(int groupsCount) {
-		_groupsCount = groupsCount;
-	}
-
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);

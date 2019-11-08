@@ -162,8 +162,7 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 					data: {
 						addUserIds: selectedItem
 					},
-					url:
-						'<portlet:actionURL name="editUserGroupAssignments" />'
+					url: '<portlet:actionURL name="editUserGroupAssignments" />'
 				});
 			}
 		});

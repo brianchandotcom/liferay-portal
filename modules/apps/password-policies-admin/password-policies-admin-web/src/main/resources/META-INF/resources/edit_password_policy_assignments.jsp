@@ -139,9 +139,7 @@ SearchContainer searchContainer = editPasswordPolicyAssignmentsManagementToolbar
 			var result = event.selectedItem;
 
 			if (result && result.item) {
-				var form = document.getElementById(
-					'<portlet:namespace />fm'
-				);
+				var form = document.getElementById('<portlet:namespace />fm');
 
 				if (form) {
 					if (result.memberType == 'users') {
@@ -150,10 +148,7 @@ SearchContainer searchContainer = editPasswordPolicyAssignmentsManagementToolbar
 						);
 
 						if (addUserIdsInput) {
-							addUserIdsInput.setAttribute(
-								'value',
-								result.item
-							);
+							addUserIdsInput.setAttribute('value', result.item);
 						}
 					} else if (result.memberType == 'organizations') {
 						var addOrganizationIdsInput = form.querySelector(

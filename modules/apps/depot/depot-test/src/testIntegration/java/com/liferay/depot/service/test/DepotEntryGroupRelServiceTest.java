@@ -95,7 +95,7 @@ public class DepotEntryGroupRelServiceTest {
 				_permissionCheckerFactory.create(user));
 
 			_depotEntryGroupRelService.getDepotEntryGroupRels(
-				group.getGroupId());
+				group.getGroupId(), 0, 20);
 		}
 		catch (PrincipalException.MustHavePermission mhp) {
 			String message = mhp.getMessage();
@@ -134,7 +134,7 @@ public class DepotEntryGroupRelServiceTest {
 		try {
 			List<DepotEntryGroupRel> depotEntryGroupRels =
 				_depotEntryGroupRelService.getDepotEntryGroupRels(
-					group.getGroupId());
+					group.getGroupId(), 0, 20);
 
 			Assert.assertEquals(
 				depotEntryGroupRels.toString(), 1, depotEntryGroupRels.size());

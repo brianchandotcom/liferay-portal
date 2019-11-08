@@ -260,6 +260,10 @@ public class DepotEntryGroupRelLocalServiceUtil {
 		return getService().getDepotEntryGroupRelsCount();
 	}
 
+	public static int getDepotEntryGroupRelsCount(long groupId) {
+		return getService().getDepotEntryGroupRelsCount(groupId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

@@ -37,12 +37,6 @@ public interface TemplateConstants {
 
 	public static final String DEFAUT_ENCODING = StringPool.UTF8;
 
-	/**
-	 * @deprecated As of Newton (6.2.x)
-	 */
-	@Deprecated
-	public static final String JOURNAL_SEPARATOR = "_JOURNAL_CONTEXT_";
-
 	public static final String LANG_TYPE_CSS = "css";
 
 	public static final String LANG_TYPE_FTL = "ftl";

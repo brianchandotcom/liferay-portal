@@ -49,9 +49,6 @@ public class ClassLoaderResourceParserTest {
 
 		Assert.assertNull(
 			classLoaderResourceParser.getURL(
-				TemplateConstants.JOURNAL_SEPARATOR));
-		Assert.assertNull(
-			classLoaderResourceParser.getURL(
 				TemplateConstants.SERVLET_SEPARATOR));
 		Assert.assertNull(
 			classLoaderResourceParser.getURL(

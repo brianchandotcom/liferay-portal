@@ -44,8 +44,7 @@ public class ClassLoaderResourceParser extends URLResourceParser {
 	@Override
 	@SuppressWarnings("deprecation")
 	public URL getURL(String templateId) {
-		if (templateId.contains(TemplateConstants.JOURNAL_SEPARATOR) ||
-			templateId.contains(TemplateConstants.SERVLET_SEPARATOR) ||
+		if (templateId.contains(TemplateConstants.SERVLET_SEPARATOR) ||
 			templateId.contains(TemplateConstants.TEMPLATE_SEPARATOR) ||
 			templateId.contains(TemplateConstants.THEME_LOADER_SEPARATOR)) {
 

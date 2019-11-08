@@ -51,6 +51,17 @@ public class DepotEntryGroupRelServiceImpl
 			groupId, start, end);
 	}
 
+	@Override
+	public int getDepotEntryGroupRelsCount(long groupId)
+		throws PortalException {
+
+		_groupPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.VIEW);
+
+		return depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
+			groupId);
+	}
+
 	@Reference
 	private GroupPermission _groupPermission;
 

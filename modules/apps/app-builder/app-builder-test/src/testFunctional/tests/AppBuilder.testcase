@@ -182,10 +182,8 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		var fieldType = "Text Field";
-
 		FormViewBuilder.addFormView(
-			fieldType = "Upload",
+			fieldType = "Text Field",
 			formViewName = "My Form View");
 
 		AppBuilderAdmin.switchTab(tabName = "Table Views");

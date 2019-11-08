@@ -36,6 +36,7 @@ public class OASURLParser {
 		sb.append(getScheme());
 		sb.append("://");
 		sb.append(getHost());
+		sb.append(":");
 		sb.append(getPort());
 
 		return sb.toString();
@@ -86,7 +87,7 @@ public class OASURLParser {
 	}
 
 	private static final Pattern _oasURLPattern = Pattern.compile(
-		"(.*)://(.+)(:\\d+)/o/(.+)/v(.+)/openapi\\.(yaml|json)");
+		"(.*)://(.+):(\\d+)/o/(.+)/v(.+)/openapi\\.(yaml|json)");
 
 	private final String _oasURL;
 

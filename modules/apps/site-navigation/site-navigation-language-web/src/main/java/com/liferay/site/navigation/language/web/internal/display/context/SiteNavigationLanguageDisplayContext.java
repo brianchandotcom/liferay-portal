@@ -158,6 +158,17 @@ public class SiteNavigationLanguageDisplayContext {
 		if (ArrayUtil.isEmpty(_languageIds)) {
 			_languageIds = getAvailableLanguageIds();
 		}
+		else {
+			List<String> filteredLanguageIds = new ArrayList<>();
+
+			for (String languageId : _languageIds) {
+				if (ArrayUtil.contains(getAvailableLanguageIds(), languageId)) {
+					filteredLanguageIds.add(languageId);
+				}
+			}
+
+			_languageIds = ArrayUtil.toStringArray(filteredLanguageIds);
+		}
 
 		return _languageIds;
 	}

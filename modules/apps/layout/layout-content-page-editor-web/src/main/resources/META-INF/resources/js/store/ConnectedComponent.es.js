@@ -24,9 +24,15 @@ import {connect, disconnect, Store} from './store.es';
  * to a Store parameter.
  * @param {Component} Component
  * @param {string[]} [properties=[]] List of properties to be fetched from store
+ * @param {function} [mapStateToProps] Function to map store state to
+ *  component props
  * @return {Component}
  */
-const getConnectedComponent = (Component, properties) => {
+const getConnectedComponent = (
+	Component,
+	properties,
+	mapStateToProps = state => state
+) => {
 	/**
 	 * ConnectedComponent
 	 */
@@ -49,7 +55,8 @@ const getConnectedComponent = (Component, properties) => {
 					if (newStore instanceof Store) {
 						connect(
 							this,
-							newStore
+							newStore,
+							mapStateToProps
 						);
 					}
 				}
@@ -62,7 +69,8 @@ const getConnectedComponent = (Component, properties) => {
 			if (props.store instanceof Store) {
 				connect(
 					this,
-					props.store
+					props.store,
+					mapStateToProps
 				);
 			}
 		}

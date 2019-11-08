@@ -40,14 +40,15 @@ let _store;
  * Connects a given component to a given store, syncing it's properties with it.
  * @param {Component} component
  * @param {Store} store
+ * @param {function} mapStateToProps
  * @review
  */
-const connect = function(component, store) {
+const connect = function(component, store, mapStateToProps) {
 	component._storeChangeListener = store.on('change', () =>
-		syncStoreState(component, store)
+		syncStoreState(component, store, mapStateToProps)
 	);
 
-	syncStoreState(component, store);
+	syncStoreState(component, store, mapStateToProps);
 };
 
 /**
@@ -80,7 +81,8 @@ const createStore = function(initialState, reducer, componentIds = []) {
 
 			connect(
 				component,
-				_store
+				_store,
+				state => state
 			);
 		});
 	});
@@ -101,9 +103,10 @@ const getState = function() {
 /**
  * @param {ConnectedComponent} component
  * @param {Store} store
+ * @param {function} mapStateToProps
  */
-const syncStoreState = function(component, store) {
-	const state = store.getState();
+const syncStoreState = function(component, store, mapStateToProps) {
+	const state = mapStateToProps(store.getState(), component);
 
 	const changedKeys = component
 		.getStateKeys()
@@ -117,7 +120,7 @@ const syncStoreState = function(component, store) {
 			newState[key] = state[key];
 		});
 
-		component.setState(newState);
+		component.setState(state);
 	}
 };
 

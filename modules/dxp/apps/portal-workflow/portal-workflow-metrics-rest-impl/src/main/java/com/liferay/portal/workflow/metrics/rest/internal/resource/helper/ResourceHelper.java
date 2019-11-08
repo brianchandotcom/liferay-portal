@@ -292,7 +292,8 @@ public class ResourceHelper {
 					bucket.getChildAggregationResult(
 						"breachedInstancePercentage");
 
-		return bucketScriptPipelineAggregationResult.getValue();
+		return GetterUtil.getDouble(
+			bucketScriptPipelineAggregationResult.getValue());
 	}
 
 	public String getLatestProcessVersion(long companyId, long processId) {

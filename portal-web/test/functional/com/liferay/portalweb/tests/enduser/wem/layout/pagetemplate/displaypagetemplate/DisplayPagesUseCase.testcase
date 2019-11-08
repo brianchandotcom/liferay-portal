@@ -230,6 +230,68 @@ definition {
 		}
 	}
 
+	@description = "This case ensures that a user can map image to fragment via the content display."
+	@priority = "5"
+	test MapBlogContentViaContentDisplay {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		Blogs.addEntry(
+			entryContent = "This content maps from blog content",
+			entryTitle = "Blogs Entry Title");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Page Name");
+
+		PageEditor.addContentDisplay(fragmentName = "Content");
+
+		PageEditor.editContentDisplay(
+			blogs = "true",
+			entryContent = "This content maps from blog content",
+			entryTitle = "Blogs Entry Title");
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
+			value1 = "This content maps from blog content");
+	}
+
+	@description = "This case ensures that a user can map image to fragment via the content display."
+	@priority = "5"
+	test MapImageViaContentDisplay {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Page Name");
+
+		PageEditor.addContentDisplay(fragmentName = "Content");
+
+		PageEditor.editContentDisplay(
+			documentandmedia = "true",
+			imageFileName = "Document_1.jpg");
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssertVisible(
+			key_imageFileName = "Document_1.jpg",
+			locator1 = "PageEditor#CONTENT_PAGE_IMAGE_CONTENT");
+	}
+
 	@description = "This is a test for LPS-86550. Users should be able to map author name and author profile image to a fragment editable field in a display page."
 	@priority = "5"
 	test MapWebContentAuthor {
@@ -300,6 +362,41 @@ definition {
 
 			SikuliAssertElementPresent(locator1 = "Fragment#MARKETPLACE_ICON_PNG");
 		}
+	}
+
+	@description = "This case ensures that a user can map content from web content to fragment via the content display."
+	@priority = "5"
+	test MapWebContentContentViaContentDisplay {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "This content maps from web content",
+			webContentTitle = "Webcontent Title");
+
+		PortletEntry.publish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Page Name");
+
+		PageEditor.addContentDisplay(fragmentName = "Content");
+
+		PageEditor.editContentDisplay(
+			webcontent = "true",
+			webContentContent = "This content maps from web content",
+			webContentTitle = "Webcontent Title");
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssertTextEquals.assertPartialTextAceEditor(
+			locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
+			value1 = "This content maps from web content");
 	}
 
 	@description = "This case ensures a user can map the editable background image of a fragment to an existing image content."

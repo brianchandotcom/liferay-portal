@@ -52,7 +52,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class DepotEntryGroupRelServiceHttp {
 
 	public static java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
-			getDepotEntryGroupRels(HttpPrincipal httpPrincipal, long groupId)
+			getDepotEntryGroupRels(
+				HttpPrincipal httpPrincipal, long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -60,7 +61,8 @@ public class DepotEntryGroupRelServiceHttp {
 				DepotEntryGroupRelServiceUtil.class, "getDepotEntryGroupRels",
 				_getDepotEntryGroupRelsParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, start, end);
 
 			Object returnObj = null;
 
@@ -93,6 +95,6 @@ public class DepotEntryGroupRelServiceHttp {
 		DepotEntryGroupRelServiceHttp.class);
 
 	private static final Class<?>[] _getDepotEntryGroupRelsParameterTypes0 =
-		new Class[] {long.class};
+		new Class[] {long.class, int.class, int.class};
 
 }

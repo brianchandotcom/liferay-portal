@@ -246,9 +246,9 @@ public class DepotEntryGroupRelLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
-		getDepotEntryGroupRels(long groupId) {
+		getDepotEntryGroupRels(long groupId, int start, int end) {
 
-		return getService().getDepotEntryGroupRels(groupId);
+		return getService().getDepotEntryGroupRels(groupId, start, end);
 	}
 
 	/**

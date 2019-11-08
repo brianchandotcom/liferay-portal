@@ -44,10 +44,10 @@ public class DepotEntryGroupRelServiceUtil {
 	 * Never modify or reference this interface directly. Always use {@link DepotEntryGroupRelServiceUtil} to access the depot entry group rel remote service. Add custom service methods to <code>com.liferay.depot.service.impl.DepotEntryGroupRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
-			getDepotEntryGroupRels(long groupId)
+			getDepotEntryGroupRels(long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getDepotEntryGroupRels(groupId);
+		return getService().getDepotEntryGroupRels(groupId, start, end);
 	}
 
 	/**

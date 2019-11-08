@@ -309,7 +309,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		DockerRemoveContainer dockerRemoveContainer =
 			_addTaskRemoveDockerContainer(dockerStopContainer, project);
 
-		_addTaskCreateDockerContainer(project, workspaceExtension);
+		DockerCreateContainer dockerCreateContainer =
+			_addTaskCreateDockerContainer(
+				project, workspaceExtension, dockerBuildImage,
+				dockerRemoveContainer);
 
 		_addTaskLogsDockerContainer(project);
 		_addTaskPullDockerImage(project, workspaceExtension);
@@ -447,15 +450,15 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private DockerCreateContainer _addTaskCreateDockerContainer(
-		Project project, WorkspaceExtension workspaceExtension) {
+		Project project, WorkspaceExtension workspaceExtension,
+		DockerBuildImage dockerBuildImage,
+		DockerRemoveContainer dockerRemoveContainer) {
 
 		DockerCreateContainer dockerCreateContainer = GradleUtil.addTask(
 			project, CREATE_DOCKER_CONTAINER_TASK_NAME,
 			DockerCreateContainer.class);
 
-		dockerCreateContainer.dependsOn(
-			REMOVE_DOCKER_CONTAINER_TASK_NAME, DOCKER_DEPLOY_TASK_NAME,
-			PULL_DOCKER_IMAGE_TASK_NAME);
+		dockerCreateContainer.dependsOn(dockerBuildImage);
 
 		File dockerDir = workspaceExtension.getDockerDir();
 
@@ -477,12 +480,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		dockerCreateContainer.setBinds(binds);
 
-		dockerCreateContainer.setContainerName(
-			project.getName() + "-liferayapp");
-
 		dockerCreateContainer.setDescription(
-			"Creates a Docker container from your liferay image and mounts " +
-				dockerPath + " to /etc/liferay.");
+			"Creates a Docker container from your built image and mounts " +
+				dockerPath + " to /etc/liferay/mount.");
 
 		List<String> portBindings = new ArrayList<>();
 
@@ -496,10 +496,32 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return workspaceExtension.getDockerImageLiferay();
+					return _getDockerImageId(project);
 				}
 
 			});
+
+		dockerCreateContainer.withEnvVar(
+			"LIFERAY_WORKSPACE_ENVIRONMENT",
+			workspaceExtension.getEnvironment());
+
+		Project rootProject = project.getRootProject();
+
+		rootProject.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project p) {
+					dockerCreateContainer.setContainerName(
+						_getDockerContainerId(project));
+				}
+
+			});
+
+		Task cleanTask = GradleUtil.getTask(
+			project, LifecycleBasePlugin.CLEAN_TASK_NAME);
+
+		cleanTask.dependsOn(dockerRemoveContainer);
 
 		return dockerCreateContainer;
 	}

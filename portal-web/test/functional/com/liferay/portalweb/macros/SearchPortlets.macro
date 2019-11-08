@@ -173,6 +173,38 @@ definition {
 		IFrame.closeFrame();
 	}
 
+	macro configureSimilarResults {
+		Portlet.gotoPortletOptions(
+			portletName = "Similar Results",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(displayTemplate)) {
+			Select(
+				locator1 = "Select#DISPLAY_TEMPLATE",
+				value1 = "${displayTemplate}");
+		}
+
+		if (isSet(minimumDocumentFrequency)) {
+			Type(
+				key_fieldLabel = "Minimum Document Frequency",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${minimumDocumentFrequency}");
+		}
+
+		if (isSet(minimumTermFrequency)) {
+			Type(
+				key_fieldLabel = "Minimum Document Frequency",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${minimumTermFrequency}");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
 	macro configureWidgetParameterNames {
 		SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
 

@@ -12,8 +12,7 @@
 import React, {useContext} from 'react';
 
 import {ChildLink} from '../../../shared/components/router/routerWrapper.es';
-import {formatNumber} from '../../../shared/util/numeral.es';
-import {getPercentage} from '../../../shared/util/util.es';
+import {getFormattedPercentage} from '../../../shared/util/util.es';
 import {AppContext} from '../../AppContext.es';
 import {filterConstants} from '../../instance-list-page/store/InstanceListPageStore.es';
 import {processStatusConstants} from '../filter/store/ProcessStatusStore.es';
@@ -38,11 +37,7 @@ const Item = ({
 			: taskCount;
 	const {defaultDelta} = useContext(AppContext);
 
-	const getFormattedPercentage = () => {
-		const percentage = getPercentage(currentCount, taskCount);
-
-		return formatNumber(percentage, '0[.]00%');
-	};
+	const formattedPercentage = getFormattedPercentage(currentCount, taskCount);
 
 	const getFiltersQuery = () => {
 		const filterParams = {
@@ -87,7 +82,7 @@ const Item = ({
 					>
 						{' / '}
 
-						{getFormattedPercentage()}
+						{formattedPercentage}
 					</span>
 				)}
 			</td>

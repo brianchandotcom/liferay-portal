@@ -101,21 +101,18 @@ public class BatchEngineTaskItemResourceDelegate implements Closeable {
 			return null;
 		}
 
-		Object argValue = null;
+		Serializable parameter = _parameters.get(
+			resourceMethodArgNameTypeEntry.getKey());
 
-		if (_parameters.containsKey(resourceMethodArgNameTypeEntry.getKey())) {
-			argValue = _objectMapper.convertValue(
-				_parameters.get(resourceMethodArgNameTypeEntry.getKey()),
-				resourceMethodArgNameTypeEntry.getValue());
-		}
-		else {
+		if (parameter == null) {
 			Field field = _fieldMap.get(
 				resourceMethodArgNameTypeEntry.getKey());
 
-			argValue = field.get(item);
+			return field.get(item);
 		}
 
-		return argValue;
+		return _objectMapper.convertValue(
+			parameter, resourceMethodArgNameTypeEntry.getValue());
 	}
 
 	private Object _getResource() throws ReflectiveOperationException {

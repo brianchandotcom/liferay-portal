@@ -31,6 +31,7 @@ import java.io.File;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.gradle.api.Plugin;
@@ -83,9 +84,21 @@ public class WorkspaceExtension {
 			public String doCall() {
 				Project rootProject = _gradle.getRootProject();
 
+				Object version = rootProject.getVersion();
+
+				if (Objects.equals(version, "unspecified")) {
+					String dockerImageLiferay = getDockerImageLiferay();
+
+					int index = dockerImageLiferay.indexOf(":");
+
+					version = dockerImageLiferay.substring(index + 1);
+				}
+				else {
+					version = rootProject.getVersion();
+				}
+
 				return String.format(
-					"%s-liferay:%s", rootProject.getName(),
-					rootProject.getVersion());
+					"%s-liferay:%s", rootProject.getName(), version);
 			}
 
 		};

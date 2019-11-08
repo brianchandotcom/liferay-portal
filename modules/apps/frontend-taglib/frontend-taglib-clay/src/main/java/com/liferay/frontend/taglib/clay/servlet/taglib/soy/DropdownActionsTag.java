@@ -100,6 +100,10 @@ public class DropdownActionsTag extends BaseClayTag {
 		putValue("helpText", helpText);
 	}
 
+	public void setItemsIconAlignment(String itemsIconAlignment) {
+		putValue("itemsIconAlignment", itemsIconAlignment);
+	}
+	
 	public void setTriggerCssClasses(String triggerCssClasses) {
 		putValue("triggerClasses", triggerCssClasses);
 	}

@@ -52,7 +52,8 @@ public interface DepotEntryGroupRelService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link DepotEntryGroupRelServiceUtil} to access the depot entry group rel remote service. Add custom service methods to <code>com.liferay.depot.service.impl.DepotEntryGroupRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DepotEntryGroupRel> getDepotEntryGroupRels(long groupId)
+	public List<DepotEntryGroupRel> getDepotEntryGroupRels(
+			long groupId, int start, int end)
 		throws PortalException;
 
 	/**

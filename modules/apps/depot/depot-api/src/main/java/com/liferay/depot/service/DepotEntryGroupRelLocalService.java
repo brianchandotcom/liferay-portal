@@ -219,7 +219,8 @@ public interface DepotEntryGroupRelLocalService
 	public List<DepotEntryGroupRel> getDepotEntryGroupRels(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DepotEntryGroupRel> getDepotEntryGroupRels(long groupId);
+	public List<DepotEntryGroupRel> getDepotEntryGroupRels(
+		long groupId, int start, int end);
 
 	/**
 	 * Returns the number of depot entry group rels.

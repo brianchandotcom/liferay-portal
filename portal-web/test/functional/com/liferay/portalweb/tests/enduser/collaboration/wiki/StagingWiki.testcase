@@ -295,7 +295,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-73471."
-	@ignore = "true"
 	@priority = "5"
 	test RenameChildPageNameCP {
 		Navigator.gotoStagedSitePage(

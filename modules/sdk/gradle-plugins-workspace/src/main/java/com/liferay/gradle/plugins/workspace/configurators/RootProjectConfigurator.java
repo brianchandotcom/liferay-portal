@@ -1007,7 +1007,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return project.getName() + "-liferayapp";
+					return _getDockerContainerId(project);
 				}
 
 			});

@@ -70,13 +70,13 @@ public class BatchEngineTaskItemResourceDelegate implements Closeable {
 					args[i] = item;
 				}
 				else {
-					if (_resourceMethodArgNameTypeEntries[i] == null) {
+					Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry =
+						_resourceMethodArgNameTypeEntries[i];
+
+					if (resourceMethodArgNameTypeEntry == null) {
 						throw new IllegalArgumentException(
 							"Unable to find method argument name");
 					}
-
-					Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry =
-						_resourceMethodArgNameTypeEntries[i];
 
 					args[i] = _getMethodArgValue(
 						item, resourceMethodArgNameTypeEntry);

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
@@ -34,7 +35,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -83,13 +83,13 @@ public class AssetCategoryMultiLanguageSearchTest {
 
 		_addAssetCategoryMultiLanguage();
 
-		Map<String, String> descriptionMap = new HashMap<String, String>() {
-			{
-				put("description", _ENGLISH_DESCRIPTION);
-				put("description_en_US", _ENGLISH_DESCRIPTION);
-				put("description_ja_JP", _JAPANESE_DESCRIPTION);
-			}
-		};
+		Map<String, String> descriptionMap = HashMapBuilder.<String, String>put(
+			"description", _ENGLISH_DESCRIPTION
+		).put(
+			"description_en_US", _ENGLISH_DESCRIPTION
+		).put(
+			"description_ja_JP", _JAPANESE_DESCRIPTION
+		).build();
 
 		String keyword = "description";
 
@@ -103,14 +103,15 @@ public class AssetCategoryMultiLanguageSearchTest {
 
 		_addAssetCategoryMultiLanguage();
 
-		Map<String, String> titleMap = new HashMap<String, String>() {
-			{
-				put("title", _ENGLISH_TITLE);
-				put("title_en_US", _ENGLISH_TITLE);
-				put("title_ja_JP", _JAPANESE_TITLE);
-				put("title_sortable", _ENGLISH_TITLE);
-			}
-		};
+		Map<String, String> titleMap = HashMapBuilder.<String, String>put(
+			"title", _ENGLISH_TITLE
+		).put(
+			"title_en_US", _ENGLISH_TITLE
+		).put(
+			"title_ja_JP", _JAPANESE_TITLE
+		).put(
+			"title_sortable", _ENGLISH_TITLE
+		).build();
 
 		String word1 = "title";
 		String word2 = "tit";
@@ -129,13 +130,13 @@ public class AssetCategoryMultiLanguageSearchTest {
 
 		_addAssetCategoryMultiLanguage();
 
-		Map<String, String> descriptionMap = new HashMap<String, String>() {
-			{
-				put("description", _JAPANESE_DESCRIPTION);
-				put("description_en_US", _ENGLISH_DESCRIPTION);
-				put("description_ja_JP", _JAPANESE_DESCRIPTION);
-			}
-		};
+		Map<String, String> descriptionMap = HashMapBuilder.<String, String>put(
+			"description", _JAPANESE_DESCRIPTION
+		).put(
+			"description_en_US", _ENGLISH_DESCRIPTION
+		).put(
+			"description_ja_JP", _JAPANESE_DESCRIPTION
+		).build();
 
 		String word1 = "新規";
 		String word2 = "作成";
@@ -156,14 +157,15 @@ public class AssetCategoryMultiLanguageSearchTest {
 
 		_addAssetCategoryMultiLanguage();
 
-		Map<String, String> titleMap = new HashMap<String, String>() {
-			{
-				put("title", _JAPANESE_TITLE);
-				put("title_en_US", _ENGLISH_TITLE);
-				put("title_ja_JP", _JAPANESE_TITLE);
-				put("title_sortable", _JAPANESE_TITLE);
-			}
-		};
+		Map<String, String> titleMap = HashMapBuilder.<String, String>put(
+			"title", _JAPANESE_TITLE
+		).put(
+			"title_en_US", _ENGLISH_TITLE
+		).put(
+			"title_ja_JP", _JAPANESE_TITLE
+		).put(
+			"title_sortable", _JAPANESE_TITLE
+		).build();
 
 		String word1 = "新規";
 		String word2 = "作成";

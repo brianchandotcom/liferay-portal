@@ -15,11 +15,11 @@
 package com.liferay.batch.engine.internal.reader;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.ByteArrayInputStream;
 
 import java.util.Collections;
-import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -48,21 +48,21 @@ public class JSONLBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				new HashMap<String, String>() {
-					{
-						put("createDate1", "createDate");
-						put("description1", "description");
-						put("id1", "id");
-						put("name1", "name");
-					}
-				},
+				HashMapBuilder.<String, String>put(
+					"createDate1", "createDate"
+				).put(
+					"description1", "description"
+				).put(
+					"id1", "id"
+				).put(
+					"name1", "name"
+				).build(),
 				jsonlBatchEngineImportTaskItemReader.read(),
-				new HashMap<String, String>() {
-					{
-						put("en", "sample name");
-						put("hr", "naziv");
-					}
-				});
+				HashMapBuilder.<String, String>put(
+					"en", "sample name"
+				).put(
+					"hr", "naziv"
+				).build());
 		}
 	}
 
@@ -84,13 +84,13 @@ public class JSONLBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				new HashMap<String, String>() {
-					{
-						put("createDate1", "createDate");
-						put("description1", "description");
-						put("id1", "id");
-					}
-				},
+				HashMapBuilder.<String, String>put(
+					"createDate1", "createDate"
+				).put(
+					"description1", "description"
+				).put(
+					"id1", "id"
+				).build(),
 				jsonlBatchEngineImportTaskItemReader.read(), null);
 		}
 	}
@@ -113,14 +113,15 @@ public class JSONLBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				new HashMap<String, String>() {
-					{
-						put("createDate1", "createDate");
-						put("description1", "description");
-						put("id1", "id");
-						put("name1", null);
-					}
-				},
+				HashMapBuilder.<String, String>put(
+					"createDate1", "createDate"
+				).put(
+					"description1", "description"
+				).put(
+					"id1", "id"
+				).put(
+					"name1", null
+				).build(),
 				jsonlBatchEngineImportTaskItemReader.read(), null);
 		}
 	}
@@ -144,21 +145,21 @@ public class JSONLBatchEngineImportTaskItemReaderTest
 			try {
 				validate(
 					createDateString, "sample description", null,
-					new HashMap<String, String>() {
-						{
-							put("createDate1", "description");
-							put("description1", "createDate");
-							put("id1", "id");
-							put("name1", "name");
-						}
-					},
+					HashMapBuilder.<String, String>put(
+						"createDate1", "description"
+					).put(
+						"description1", "createDate"
+					).put(
+						"id1", "id"
+					).put(
+						"name1", "name"
+					).build(),
 					jsonlBatchEngineImportTaskItemReader.read(),
-					new HashMap<String, String>() {
-						{
-							put("en", "sample name");
-							put("hr", "naziv");
-						}
-					});
+					HashMapBuilder.<String, String>put(
+						"en", "sample name"
+					).put(
+						"hr", "naziv"
+					).build());
 
 				Assert.fail();
 			}
@@ -186,12 +187,11 @@ public class JSONLBatchEngineImportTaskItemReaderTest
 					createDateString, "sample description", null,
 					Collections.emptyMap(),
 					jsonlBatchEngineImportTaskItemReader.read(),
-					new HashMap<String, String>() {
-						{
-							put("en", "sample name");
-							put("hr", "naziv");
-						}
-					});
+					HashMapBuilder.<String, String>put(
+						"en", "sample name"
+					).put(
+						"hr", "naziv"
+					).build());
 
 				Assert.fail();
 			}
@@ -228,12 +228,11 @@ public class JSONLBatchEngineImportTaskItemReaderTest
 					createDateString, "sample description " + rowCount,
 					rowCount, Collections.emptyMap(),
 					jsonlBatchEngineImportTaskItemReader.read(),
-					new HashMap<String, String>() {
-						{
-							put("en", "sample name " + rowCount);
-							put("hr", "naziv " + rowCount);
-						}
-					});
+					HashMapBuilder.<String, String>put(
+						"en", "sample name " + rowCount
+					).put(
+						"hr", "naziv " + rowCount
+					).build());
 			}
 		}
 	}
@@ -256,12 +255,11 @@ public class JSONLBatchEngineImportTaskItemReaderTest
 				createDateString, "hey, here is comma inside", 1L,
 				Collections.emptyMap(),
 				jsonlBatchEngineImportTaskItemReader.read(),
-				new HashMap<String, String>() {
-					{
-						put("en", "sample name");
-						put("hr", "naziv");
-					}
-				});
+				HashMapBuilder.<String, String>put(
+					"en", "sample name"
+				).put(
+					"hr", "naziv"
+				).build());
 		}
 	}
 
@@ -300,22 +298,19 @@ public class JSONLBatchEngineImportTaskItemReaderTest
 			validate(
 				createDateString, null, 1L, Collections.emptyMap(),
 				jsonlBatchEngineImportTaskItemReader.read(),
-				new HashMap<String, String>() {
-					{
-						put("hr", "naziv 1");
-					}
-				});
+				HashMapBuilder.<String, String>put(
+					"hr", "naziv 1"
+				).build());
 
 			validate(
 				createDateString, "sample description 2", 2L,
 				Collections.emptyMap(),
 				jsonlBatchEngineImportTaskItemReader.read(),
-				new HashMap<String, String>() {
-					{
-						put("en", "sample name 2");
-						put("hr", "naziv 2");
-					}
-				});
+				HashMapBuilder.<String, String>put(
+					"en", "sample name 2"
+				).put(
+					"hr", "naziv 2"
+				).build());
 		}
 	}
 

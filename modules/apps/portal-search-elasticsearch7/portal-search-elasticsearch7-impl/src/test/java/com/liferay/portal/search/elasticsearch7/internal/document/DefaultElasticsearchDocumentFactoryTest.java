@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch7.internal.document;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.internal.document.DocumentBuilderImpl;
@@ -92,36 +93,32 @@ public class DefaultElasticsearchDocumentFactoryTest {
 			).field(
 				"user",
 				Arrays.asList(
-					new HashMap<String, Object>() {
-						{
-							put("first", "John");
-							put("last", "Smith");
-						}
-					},
-					new HashMap<String, Object>() {
-						{
-							put("first", "Alice");
-							put("last", "White");
-						}
-					})
+					HashMapBuilder.<String, Object>put(
+						"first", "John"
+					).put(
+						"last", "Smith"
+					).build(),
+					HashMapBuilder.<String, Object>put(
+						"first", "Alice"
+					).put(
+						"last", "White"
+					).build())
 			),
 			documentBuilder -> documentBuilder.setString(
 				"group", "fans"
 			).setValue(
 				"user",
 				Arrays.asList(
-					new HashMap<String, Object>() {
-						{
-							put("first", "John");
-							put("last", "Smith");
-						}
-					},
-					new HashMap<String, Object>() {
-						{
-							put("first", "Alice");
-							put("last", "White");
-						}
-					})
+					HashMapBuilder.<String, Object>put(
+						"first", "John"
+					).put(
+						"last", "Smith"
+					).build(),
+					HashMapBuilder.<String, Object>put(
+						"first", "Alice"
+					).put(
+						"last", "White"
+					).build())
 			));
 	}
 

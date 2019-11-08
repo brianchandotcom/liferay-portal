@@ -24,11 +24,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,11 +44,9 @@ public class FormInstanceRecordSearch
 	public static final String EMPTY_RESULTS_MESSAGE = "no-entries-were-found";
 
 	public static Map<String, String> orderableHeaders =
-		new HashMap<String, String>() {
-			{
-				put("modified-date", "modified-date");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"modified-date", "modified-date"
+		).build();
 
 	public static OrderByComparator<DDMFormInstanceRecord>
 		getDDMFormInstanceRecordOrderByComparator(

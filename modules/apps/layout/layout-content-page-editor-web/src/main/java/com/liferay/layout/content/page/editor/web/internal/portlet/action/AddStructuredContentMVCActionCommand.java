@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -64,7 +65,6 @@ import java.io.IOException;
 
 import java.net.URL;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -215,14 +215,11 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 
 		String content = _journalConverter.getContent(ddmStructure, fields);
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>() {
-			{
-				put(
-					LocaleUtil.fromLanguageId(
-						LocalizationUtil.getDefaultLanguageId(content)),
-					title);
-			}
-		};
+		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.fromLanguageId(
+				LocalizationUtil.getDefaultLanguageId(content)),
+			title
+		).build();
 
 		return _journalArticleService.addArticle(
 			themeDisplay.getScopeGroupId(),

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -67,11 +68,9 @@ public class DepotPanelAppControllerTest {
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
-			new HashMap<Locale, String>() {
-				{
-					put(LocaleUtil.getDefault(), "name");
-				}
-			},
+			HashMapBuilder.<Locale, String>put(
+				LocaleUtil.getDefault(), "name"
+			).build(),
 			new HashMap<>(), ServiceContextTestUtil.getServiceContext());
 	}
 

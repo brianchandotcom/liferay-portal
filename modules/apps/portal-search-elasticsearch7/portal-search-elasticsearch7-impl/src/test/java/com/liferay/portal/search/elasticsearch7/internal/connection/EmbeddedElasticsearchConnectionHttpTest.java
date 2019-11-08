@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 
 import java.net.URL;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -58,12 +58,11 @@ public class EmbeddedElasticsearchConnectionHttpTest {
 
 		_clusterName = RandomTestUtil.randomString();
 
-		Map<String, Object> properties = new HashMap<String, Object>() {
-			{
-				put("clusterName", _clusterName);
-				put("networkHost", "_site_");
-			}
-		};
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"clusterName", _clusterName
+		).put(
+			"networkHost", "_site_"
+		).build();
 
 		_elasticsearchFixture = new ElasticsearchFixture(
 			EmbeddedElasticsearchConnectionHttpTest.class.getSimpleName(),

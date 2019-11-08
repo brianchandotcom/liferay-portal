@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.CustomJspRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.util.CustomJspRegistryImpl;
 import com.liferay.portal.util.FileImpl;
@@ -33,7 +34,6 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -74,12 +74,11 @@ public class CustomJspBagRegistryUtilTest {
 		ServiceRegistration<CustomJspBag> serviceRegistration =
 			registry.registerService(
 				CustomJspBag.class, testCustomJspBag,
-				new HashMap<String, Object>() {
-					{
-						put("context.id", _TEST_CUSTOM_JSP_BAG);
-						put("context.name", "Test Custom JSP Bag");
-					}
-				});
+				HashMapBuilder.<String, Object>put(
+					"context.id", _TEST_CUSTOM_JSP_BAG
+				).put(
+					"context.name", "Test Custom JSP Bag"
+				).build());
 
 		try {
 			Assert.assertSame(
@@ -107,12 +106,11 @@ public class CustomJspBagRegistryUtilTest {
 		ServiceRegistration<CustomJspBag> serviceRegistration =
 			registry.registerService(
 				CustomJspBag.class, testCustomJspBag,
-				new HashMap<String, Object>() {
-					{
-						put("context.id", _TEST_GLOBAL_CUSTOM_JSP_BAG);
-						put("context.name", "Test Global Custom JSP Bag");
-					}
-				});
+				HashMapBuilder.<String, Object>put(
+					"context.id", _TEST_GLOBAL_CUSTOM_JSP_BAG
+				).put(
+					"context.name", "Test Global Custom JSP Bag"
+				).build());
 
 		try {
 			Assert.assertSame(

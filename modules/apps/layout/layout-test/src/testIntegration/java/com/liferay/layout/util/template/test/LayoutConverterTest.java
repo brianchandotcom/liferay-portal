@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -96,18 +97,16 @@ public class LayoutConverterTest {
 
 	@Test
 	public void testConvertOneColumnMultiplePortlets() throws Exception {
-		Map<String, String[]> portletIdsMap = new HashMap<String, String[]>() {
-			{
-				put(
-					"column-1",
-					new String[] {
-						"com_liferay_hello_velocity_web_portlet_" +
-							"HelloVelocityPortlet",
-						"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
-						"hello_soy_portlet"
-					});
-			}
-		};
+		Map<String, String[]> portletIdsMap =
+			HashMapBuilder.<String, String[]>put(
+				"column-1",
+				new String[] {
+					"com_liferay_hello_velocity_web_portlet_" +
+						"HelloVelocityPortlet",
+					"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
+					"hello_soy_portlet"
+				}
+			).build();
 
 		List<Map<String, String[]>> portletIdsMaps =
 			new ArrayList<Map<String, String[]>>() {
@@ -126,15 +125,13 @@ public class LayoutConverterTest {
 
 	@Test
 	public void testConvertOneColumnSinglePortlet() throws Exception {
-		Map<String, String[]> portletIdsMap = new HashMap<String, String[]>() {
-			{
-				put(
-					"column-1",
-					new String[] {
-						"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
-					});
-			}
-		};
+		Map<String, String[]> portletIdsMap =
+			HashMapBuilder.<String, String[]>put(
+				"column-1",
+				new String[] {
+					"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
+				}
+			).build();
 
 		List<Map<String, String[]>> portletIdsMaps =
 			new ArrayList<Map<String, String[]>>() {

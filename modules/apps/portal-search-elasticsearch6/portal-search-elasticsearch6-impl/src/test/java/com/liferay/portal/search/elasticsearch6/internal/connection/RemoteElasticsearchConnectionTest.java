@@ -44,16 +44,12 @@ public class RemoteElasticsearchConnectionTest {
 		_remoteElasticsearchConnection = new RemoteElasticsearchConnection();
 
 		_remoteElasticsearchConnection.props = PropsTestUtil.setProps(
-			new HashMap<String, Object>() {
-				{
-					put(
-						PropsKeys.DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS,
-						String.valueOf(2));
-					put(
-						PropsKeys.DNS_SECURITY_THREAD_LIMIT,
-						String.valueOf(10));
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				PropsKeys.DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS,
+				String.valueOf(2)
+			).put(
+				PropsKeys.DNS_SECURITY_THREAD_LIMIT, String.valueOf(10)
+			).build());
 	}
 
 	@Test

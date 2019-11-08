@@ -17,13 +17,13 @@ package com.liferay.portal.search.elasticsearch6.internal.connection;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Path;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.elasticsearch.Version;
@@ -162,19 +162,14 @@ public class EmbeddedElasticsearchPluginManager {
 	private final String _pluginsPathString;
 	private final PluginZipFactory _pluginZipFactory;
 	private final Map<String, String> _pluginZipFileNames =
-		new HashMap<String, String>() {
-			{
-				put("analysis-icu", "org.elasticsearch.plugin.analysis.icu");
-				put(
-					"analysis-kuromoji",
-					"org.elasticsearch.plugin.analysis.kuromoji");
-				put(
-					"analysis-smartcn",
-					"org.elasticsearch.plugin.analysis.smartcn");
-				put(
-					"analysis-stempel",
-					"org.elasticsearch.plugin.analysis.stempel");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"analysis-icu", "org.elasticsearch.plugin.analysis.icu"
+		).put(
+			"analysis-kuromoji", "org.elasticsearch.plugin.analysis.kuromoji"
+		).put(
+			"analysis-smartcn", "org.elasticsearch.plugin.analysis.smartcn"
+		).put(
+			"analysis-stempel", "org.elasticsearch.plugin.analysis.stempel"
+		).build();
 
 }

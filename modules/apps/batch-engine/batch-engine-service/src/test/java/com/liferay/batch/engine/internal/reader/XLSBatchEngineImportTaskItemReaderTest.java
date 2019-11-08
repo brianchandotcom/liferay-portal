@@ -14,13 +14,14 @@
 
 package com.liferay.batch.engine.internal.reader;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -57,21 +58,21 @@ public class XLSBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				new HashMap<String, String>() {
-					{
-						put("createDate1", "createDate");
-						put("description1", "description");
-						put("id1", "id");
-						put("name1", "name");
-					}
-				},
+				HashMapBuilder.<String, String>put(
+					"createDate1", "createDate"
+				).put(
+					"description1", "description"
+				).put(
+					"id1", "id"
+				).put(
+					"name1", "name"
+				).build(),
 				xlsBatchEngineImportTaskItemReader.read(),
-				new HashMap<String, String>() {
-					{
-						put("en", "sample name");
-						put("hr", "naziv");
-					}
-				});
+				HashMapBuilder.<String, String>put(
+					"en", "sample name"
+				).put(
+					"hr", "naziv"
+				).build());
 		}
 	}
 
@@ -93,13 +94,13 @@ public class XLSBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				new HashMap<String, String>() {
-					{
-						put("createDate1", "createDate");
-						put("description1", "description");
-						put("id1", "id");
-					}
-				},
+				HashMapBuilder.<String, String>put(
+					"createDate1", "createDate"
+				).put(
+					"description1", "description"
+				).put(
+					"id1", "id"
+				).build(),
 				xlsBatchEngineImportTaskItemReader.read(), null);
 		}
 	}
@@ -122,14 +123,15 @@ public class XLSBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				new HashMap<String, String>() {
-					{
-						put("createDate1", "createDate");
-						put("description1", "description");
-						put("id1", "id");
-						put("name1", null);
-					}
-				},
+				HashMapBuilder.<String, String>put(
+					"createDate1", "createDate"
+				).put(
+					"description1", "description"
+				).put(
+					"id1", "id"
+				).put(
+					"name1", null
+				).build(),
 				xlsBatchEngineImportTaskItemReader.read(), null);
 		}
 	}
@@ -153,21 +155,21 @@ public class XLSBatchEngineImportTaskItemReaderTest
 			try {
 				validate(
 					createDateString, "sample description", null,
-					new HashMap<String, String>() {
-						{
-							put("createDate1", "description");
-							put("description1", "createDate");
-							put("id1", "id");
-							put("name1", "name");
-						}
-					},
+					HashMapBuilder.<String, String>put(
+						"createDate1", "description"
+					).put(
+						"description1", "createDate"
+					).put(
+						"id1", "id"
+					).put(
+						"name1", "name"
+					).build(),
 					xlsBatchEngineImportTaskItemReader.read(),
-					new HashMap<String, String>() {
-						{
-							put("en", "sample name");
-							put("hr", "naziv");
-						}
-					});
+					HashMapBuilder.<String, String>put(
+						"en", "sample name"
+					).put(
+						"hr", "naziv"
+					).build());
 
 				Assert.fail();
 			}
@@ -223,12 +225,11 @@ public class XLSBatchEngineImportTaskItemReaderTest
 					createDateString, "sample description " + rowCount,
 					rowCount, Collections.emptyMap(),
 					xlsBatchEngineImportTaskItemReader.read(),
-					new HashMap<String, String>() {
-						{
-							put("en", "sample name " + rowCount);
-							put("hr", "naziv " + rowCount);
-						}
-					});
+					HashMapBuilder.<String, String>put(
+						"en", "sample name " + rowCount
+					).put(
+						"hr", "naziv " + rowCount
+					).build());
 			}
 		}
 	}
@@ -250,12 +251,11 @@ public class XLSBatchEngineImportTaskItemReaderTest
 				createDateString, "hey, here is comma inside", 1L,
 				Collections.emptyMap(),
 				xlsBatchEngineImportTaskItemReader.read(),
-				new HashMap<String, String>() {
-					{
-						put("en", "sample name");
-						put("hr", "naziv");
-					}
-				});
+				HashMapBuilder.<String, String>put(
+					"en", "sample name"
+				).put(
+					"hr", "naziv"
+				).build());
 		}
 	}
 
@@ -289,23 +289,21 @@ public class XLSBatchEngineImportTaskItemReaderTest
 			validate(
 				createDateString, null, 1L, Collections.emptyMap(),
 				xlsBatchEngineImportTaskItemReader.read(),
-				new HashMap<String, String>() {
-					{
-						put("en", null);
-						put("hr", "naziv");
-					}
-				});
+				HashMapBuilder.<String, String>put(
+					"en", null
+				).put(
+					"hr", "naziv"
+				).build());
 
 			validate(
 				createDateString, "sample description 2", 2L,
 				Collections.emptyMap(),
 				xlsBatchEngineImportTaskItemReader.read(),
-				new HashMap<String, String>() {
-					{
-						put("en", "sample name 2");
-						put("hr", "naziv 2");
-					}
-				});
+				HashMapBuilder.<String, String>put(
+					"en", "sample name 2"
+				).put(
+					"hr", "naziv 2"
+				).build());
 		}
 	}
 

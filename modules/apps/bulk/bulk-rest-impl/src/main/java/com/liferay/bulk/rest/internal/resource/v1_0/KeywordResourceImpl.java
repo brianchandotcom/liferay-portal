@@ -30,13 +30,13 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -141,20 +141,15 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		_bulkSelectionRunner.run(
 			contextUser, bulkSelection.toAssetEntryBulkSelection(),
 			_editTagsBulkSelectionAction,
-			new HashMap<String, Serializable>() {
-				{
-					put(
-						BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION,
-						true);
-					put("append", append);
-					put(
-						"toAddTagNames",
-						keywordBulkSelection.getKeywordsToAdd());
-					put(
-						"toRemoveTagNames",
-						keywordBulkSelection.getKeywordsToRemove());
-				}
-			});
+			HashMapBuilder.<String, Serializable>put(
+				BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION, true
+			).put(
+				"append", append
+			).put(
+				"toAddTagNames", keywordBulkSelection.getKeywordsToAdd()
+			).put(
+				"toRemoveTagNames", keywordBulkSelection.getKeywordsToRemove()
+			).build());
 	}
 
 	@Reference

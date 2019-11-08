@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -52,7 +53,6 @@ import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -203,13 +203,10 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		return _segmentsExperienceService.addSegmentsExperience(
 			segmentsEntryId, classNameId, classPK,
-			new HashMap<Locale, String>() {
-				{
-					put(
-						LocaleUtil.getSiteDefault(),
-						ParamUtil.getString(actionRequest, "name"));
-				}
-			},
+			HashMapBuilder.<Locale, String>put(
+				LocaleUtil.getSiteDefault(),
+				ParamUtil.getString(actionRequest, "name")
+			).build(),
 			active, ServiceContextFactory.getInstance(actionRequest));
 	}
 

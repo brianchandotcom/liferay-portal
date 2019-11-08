@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -54,7 +55,6 @@ import java.security.Principal;
 
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -404,35 +404,27 @@ public class AssetDisplayPageFormProcessorTest {
 				String displayPageType, String assetDisplayPageId)
 			throws PortalException {
 
-			_attributes = new HashMap<String, Object>() {
-				{
-					put(
-						PortletServlet.PORTLET_SERVLET_REQUEST,
-						new MockHttpServletRequest());
-					put(WebKeys.CURRENT_URL, RandomTestUtil.randomString());
-					put(WebKeys.THEME_DISPLAY, _getThemeDisplay());
-				}
-			};
+			_attributes = HashMapBuilder.<String, Object>put(
+				PortletServlet.PORTLET_SERVLET_REQUEST,
+				new MockHttpServletRequest()
+			).put(
+				WebKeys.CURRENT_URL, RandomTestUtil.randomString()
+			).put(
+				WebKeys.THEME_DISPLAY, _getThemeDisplay()
+			).build();
 
-			_parameters = new HashMap<String, String[]>() {
-				{
-					put(
-						Constants.CMD,
-						new String[] {RandomTestUtil.randomString()});
-					put(
-						"assetDisplayPageId",
-						new String[] {assetDisplayPageId});
-					put(
-						"assetEntryVisible",
-						new String[] {String.valueOf(Boolean.TRUE)});
-					put("displayPageType", new String[] {displayPageType});
-					put(
-						"formDate",
-						new String[] {
-							String.valueOf(RandomTestUtil.randomLong())
-						});
-				}
-			};
+			_parameters = HashMapBuilder.<String, String[]>put(
+				Constants.CMD, new String[] {RandomTestUtil.randomString()}
+			).put(
+				"assetDisplayPageId", new String[] {assetDisplayPageId}
+			).put(
+				"assetEntryVisible", new String[] {String.valueOf(Boolean.TRUE)}
+			).put(
+				"displayPageType", new String[] {displayPageType}
+			).put(
+				"formDate",
+				new String[] {String.valueOf(RandomTestUtil.randomLong())}
+			).build();
 		}
 
 		@Override

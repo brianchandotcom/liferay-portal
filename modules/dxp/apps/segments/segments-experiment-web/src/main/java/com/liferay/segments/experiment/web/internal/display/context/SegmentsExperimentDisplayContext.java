@@ -53,7 +53,6 @@ import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -111,51 +110,44 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	protected Map<String, Object> getContext() throws PortalException {
-		return new HashMap<String, Object>() {
-			{
-				put("assetsPath", _getAssetsPath());
-				put(
-					"contentPageEditorNamespace",
-					_getContentPageEditorPortletNamespace());
-				put("endpoints", _getEndpoints());
-				put("namespace", _getSegmentsExperimentPortletNamespace());
-				put("page", _getPage());
-			}
-		};
+		return HashMapBuilder.<String, Object>put(
+			"assetsPath", _getAssetsPath()
+		).put(
+			"contentPageEditorNamespace",
+			_getContentPageEditorPortletNamespace()
+		).put(
+			"endpoints", _getEndpoints()
+		).put(
+			"namespace", _getSegmentsExperimentPortletNamespace()
+		).put(
+			"page", _getPage()
+		).build();
 	}
 
 	protected Map<String, Object> getProps() throws PortalException {
 		Locale locale = _themeDisplay.getLocale();
 
-		return new HashMap<String, Object>() {
-			{
-				put(
-					"historySegmentsExperiments",
-					_getHistorySegmentsExperimentsJSONArray(locale));
-				put(
-					"initialSegmentsVariants",
-					_getSegmentsExperimentRelsJSONArray(locale));
-				put(
-					"segmentsExperiences",
-					_getSegmentsExperiencesJSONArray(locale));
-				put(
-					"segmentsExperiment",
-					_getSegmentsExperimentJSONObject(locale));
-				put(
-					"segmentsExperimentGoals",
-					_getSegmentsExperimentGoalsJSONArray(locale));
-
-				put(
-					"selectedSegmentsExperienceId",
-					_getSelectedSegmentsExperienceId());
-				put(
-					"viewSegmentsExperimentDetailsURL",
-					_getViewSegmentsExperimentDetailsURL());
-				put(
-					"winnerSegmentsVariantId",
-					_getWinnerSegmentsExperienceId());
-			}
-		};
+		return HashMapBuilder.<String, Object>put(
+			"historySegmentsExperiments",
+			_getHistorySegmentsExperimentsJSONArray(locale)
+		).put(
+			"initialSegmentsVariants",
+			_getSegmentsExperimentRelsJSONArray(locale)
+		).put(
+			"segmentsExperiences", _getSegmentsExperiencesJSONArray(locale)
+		).put(
+			"segmentsExperiment", _getSegmentsExperimentJSONObject(locale)
+		).put(
+			"segmentsExperimentGoals",
+			_getSegmentsExperimentGoalsJSONArray(locale)
+		).put(
+			"selectedSegmentsExperienceId", _getSelectedSegmentsExperienceId()
+		).put(
+			"viewSegmentsExperimentDetailsURL",
+			_getViewSegmentsExperimentDetailsURL()
+		).put(
+			"winnerSegmentsVariantId", _getWinnerSegmentsExperienceId()
+		).build();
 	}
 
 	private Optional<SegmentsExperiment> _getActiveSegmentsExperimentOptional(
@@ -253,34 +245,29 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private Map<String, Object> _getEndpoints() throws PortalException {
-		return new HashMap<String, Object>() {
-			{
-				put(
-					"calculateSegmentsExperimentEstimatedDurationURL",
-					_getCalculateSegmentsExperimentEstimatedDurationURL());
-				put(
-					"createSegmentsExperimentURL",
-					_getCreateSegmentsExperimentURL());
-				put("createSegmentsVariantURL", _getCreateSegmentsVariantURL());
-				put(
-					"deleteSegmentsExperimentURL",
-					_getDeleteSegmentsExperimentURL());
-				put("deleteSegmentsVariantURL", _getDeleteSegmentsVariantURL());
-				put(
-					"editSegmentsExperimentStatusURL",
-					_getEditSegmentsExperimentStatusURL());
-				put(
-					"editSegmentsExperimentURL",
-					_getEditSegmentsExperimentURL());
-				put(
-					"editSegmentsVariantLayoutURL",
-					_getEditSegmentsVariantLayoutURL());
-				put("editSegmentsVariantURL", _getEditSegmentsVariantURL());
-				put(
-					"runSegmentsExperimentURL",
-					_getRunSegmentsExperimenttURL());
-			}
-		};
+		return HashMapBuilder.<String, Object>put(
+			"calculateSegmentsExperimentEstimatedDurationURL",
+			_getCalculateSegmentsExperimentEstimatedDurationURL()
+		).put(
+			"createSegmentsExperimentURL", _getCreateSegmentsExperimentURL()
+		).put(
+			"createSegmentsVariantURL", _getCreateSegmentsVariantURL()
+		).put(
+			"deleteSegmentsExperimentURL", _getDeleteSegmentsExperimentURL()
+		).put(
+			"deleteSegmentsVariantURL", _getDeleteSegmentsVariantURL()
+		).put(
+			"editSegmentsExperimentStatusURL",
+			_getEditSegmentsExperimentStatusURL()
+		).put(
+			"editSegmentsExperimentURL", _getEditSegmentsExperimentURL()
+		).put(
+			"editSegmentsVariantLayoutURL", _getEditSegmentsVariantLayoutURL()
+		).put(
+			"editSegmentsVariantURL", _getEditSegmentsVariantURL()
+		).put(
+			"runSegmentsExperimentURL", _getRunSegmentsExperimenttURL()
+		).build();
 	}
 
 	private JSONArray _getHistorySegmentsExperimentsJSONArray(Locale locale)

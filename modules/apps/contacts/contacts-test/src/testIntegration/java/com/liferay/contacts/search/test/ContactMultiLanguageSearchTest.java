@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
@@ -33,7 +34,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -84,11 +84,9 @@ public class ContactMultiLanguageSearchTest {
 
 		Contact contact = contactFixture.addContact(keywords);
 
-		Map<String, String> map = new HashMap<String, String>() {
-			{
-				put(_PREFIX, contact.getFullName());
-			}
-		};
+		Map<String, String> map = HashMapBuilder.<String, String>put(
+			_PREFIX, contact.getFullName()
+		).build();
 
 		assertFieldValues(_PREFIX, locale, map, keywords);
 	}
@@ -103,11 +101,9 @@ public class ContactMultiLanguageSearchTest {
 
 		String keywords = contact.getFullName();
 
-		Map<String, String> map = new HashMap<String, String>() {
-			{
-				put(_PREFIX, keywords);
-			}
-		};
+		Map<String, String> map = HashMapBuilder.<String, String>put(
+			_PREFIX, keywords
+		).build();
 
 		assertFieldValues(_PREFIX, locale, map, keywords);
 	}
@@ -122,11 +118,9 @@ public class ContactMultiLanguageSearchTest {
 
 		Contact contact = contactFixture.addContact(keywords);
 
-		Map<String, String> map = new HashMap<String, String>() {
-			{
-				put(_PREFIX, contact.getFullName());
-			}
-		};
+		Map<String, String> map = HashMapBuilder.<String, String>put(
+			_PREFIX, contact.getFullName()
+		).build();
 
 		assertFieldValues(_PREFIX, locale, map, keywords);
 	}

@@ -31,10 +31,10 @@ import com.helger.css.reader.errorhandler.DoNothingCSSParseErrorHandler;
 import com.helger.css.writer.CSSWriter;
 import com.helger.css.writer.CSSWriterSettings;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -459,28 +459,43 @@ public class CSSRTLConverter {
 		"(\\d+)([a-z]{2}|%)");
 	private static final Pattern _percentPattern = Pattern.compile("\\d+%");
 	private static final Map<String, String> _replacementIcons =
-		new HashMap<String, String>() {
-			{
-				put("\"\\f0a4\"", "\"\\f0a5\"");
-				put("\"\\f0a5\"", "\"\\f0a4\"");
-				put("\"\\f0a8\"", "\"\\f0a9\"");
-				put("\"\\f0a9\"", "\"\\f0a8\"");
-				put("\"\\f0d9\"", "\"\\f0da\"");
-				put("\"\\f0da\"", "\"\\f0d9\"");
-				put("\"\\f053\"", "\"\\f054\"");
-				put("\"\\f054\"", "\"\\f053\"");
-				put("\"\\f060\"", "\"\\f061\"");
-				put("\"\\f061\"", "\"\\f060\"");
-				put("\"\\f100\"", "\"\\f101\"");
-				put("\"\\f101\"", "\"\\f100\"");
-				put("\"\\f104\"", "\"\\f105\"");
-				put("\"\\f105\"", "\"\\f104\"");
-				put("\"\\f137\"", "\"\\f138\"");
-				put("\"\\f138\"", "\"\\f137\"");
-				put("\"\\f177\"", "\"\\f178\"");
-				put("\"\\f178\"", "\"\\f177\"");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"\"\\f0a4\"", "\"\\f0a5\""
+		).put(
+			"\"\\f0a5\"", "\"\\f0a4\""
+		).put(
+			"\"\\f0a8\"", "\"\\f0a9\""
+		).put(
+			"\"\\f0a9\"", "\"\\f0a8\""
+		).put(
+			"\"\\f0d9\"", "\"\\f0da\""
+		).put(
+			"\"\\f0da\"", "\"\\f0d9\""
+		).put(
+			"\"\\f053\"", "\"\\f054\""
+		).put(
+			"\"\\f054\"", "\"\\f053\""
+		).put(
+			"\"\\f060\"", "\"\\f061\""
+		).put(
+			"\"\\f061\"", "\"\\f060\""
+		).put(
+			"\"\\f100\"", "\"\\f101\""
+		).put(
+			"\"\\f101\"", "\"\\f100\""
+		).put(
+			"\"\\f104\"", "\"\\f105\""
+		).put(
+			"\"\\f105\"", "\"\\f104\""
+		).put(
+			"\"\\f137\"", "\"\\f138\""
+		).put(
+			"\"\\f138\"", "\"\\f137\""
+		).put(
+			"\"\\f177\"", "\"\\f178\""
+		).put(
+			"\"\\f178\"", "\"\\f177\""
+		).build();
 	private static final List<String> _reverseProperties = Arrays.asList(
 		"-moz-border-radius-bottomleft", "-moz-border-radius-bottomright",
 		"-moz-border-radius-topleft", "-moz-border-radius-topright",
@@ -502,16 +517,19 @@ public class CSSRTLConverter {
 		Arrays.asList(
 			"-moz-border-radius", "-webkit-border-radius", "border-radius");
 	private static final Map<String, String> _yui3ReplacementCursors =
-		new HashMap<String, String>() {
-			{
-				put("e-resize", "w-resize");
-				put("ne-resize", "nw-resize");
-				put("nw-resize", "ne-resize");
-				put("se-resize", "sw-resize");
-				put("sw-resize", "se-resize");
-				put("w-resize", "e-resize");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"e-resize", "w-resize"
+		).put(
+			"ne-resize", "nw-resize"
+		).put(
+			"nw-resize", "ne-resize"
+		).put(
+			"se-resize", "sw-resize"
+		).put(
+			"sw-resize", "se-resize"
+		).put(
+			"w-resize", "e-resize"
+		).build();
 	private static final Pattern _yui3ResizeHandleInnerPattern =
 		Pattern.compile("\\.yui3-resize-handle-inner-(tr|tl|br|bl)");
 

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.kernel.util.comparator.GroupTypeComparator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -56,12 +56,11 @@ public class GroupSearch extends SearchContainer<Group> {
 		}
 	};
 	public static Map<String, String> orderableHeaders =
-		new HashMap<String, String>() {
-			{
-				put("name", "name");
-				put("type", "type");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"name", "name"
+		).put(
+			"type", "type"
+		).build();
 
 	public GroupSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

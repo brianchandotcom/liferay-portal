@@ -20,9 +20,9 @@ import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.bulk.selection.BulkSelectionFactoryRegistry;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,26 +54,18 @@ public class DocumentBulkSelectionFactory {
 			return Collections.singletonMap("rowIdsFileEntry", rowIdsFileEntry);
 		}
 
-		return new HashMap<String, String[]>() {
-			{
-				put(
-					"folderId",
-					new String[] {
-						String.valueOf(selectionScope.getFolderId())
-					});
-				put(
-					"repositoryId",
-					new String[] {
-						String.valueOf(selectionScope.getRepositoryId())
-					});
-				put("rowIdsFileEntry", rowIdsFileEntry);
-				put(
-					"selectAll",
-					new String[] {
-						Boolean.toString(selectionScope.getSelectAll())
-					});
-			}
-		};
+		return HashMapBuilder.<String, String[]>put(
+			"folderId",
+			new String[] {String.valueOf(selectionScope.getFolderId())}
+		).put(
+			"repositoryId",
+			new String[] {String.valueOf(selectionScope.getRepositoryId())}
+		).put(
+			"rowIdsFileEntry", rowIdsFileEntry
+		).put(
+			"selectAll",
+			new String[] {Boolean.toString(selectionScope.getSelectAll())}
+		).build();
 	}
 
 	@Reference

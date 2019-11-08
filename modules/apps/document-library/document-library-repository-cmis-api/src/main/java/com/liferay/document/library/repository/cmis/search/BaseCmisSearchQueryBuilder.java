@@ -41,10 +41,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -501,16 +501,19 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 		BaseCmisSearchQueryBuilder.class);
 
 	private static final Map<String, String> _cmisFields =
-		new HashMap<String, String>() {
-			{
-				put(Field.CREATE_DATE, "cmis:creationDate");
-				put(Field.MODIFIED_DATE, "cmis:lastModificationDate");
-				put(Field.NAME, "cmis:name");
-				put(Field.TITLE, "cmis:name");
-				put(Field.USER_ID, "cmis:createdBy");
-				put(Field.USER_NAME, "cmis:createdBy");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			Field.CREATE_DATE, "cmis:creationDate"
+		).put(
+			Field.MODIFIED_DATE, "cmis:lastModificationDate"
+		).put(
+			Field.NAME, "cmis:name"
+		).put(
+			Field.TITLE, "cmis:name"
+		).put(
+			Field.USER_ID, "cmis:createdBy"
+		).put(
+			Field.USER_NAME, "cmis:createdBy"
+		).build();
 	private static final Set<String> _supportedFields = new HashSet<>(
 		Arrays.asList(
 			Field.CREATE_DATE, Field.FOLDER_ID, Field.MODIFIED_DATE, Field.NAME,

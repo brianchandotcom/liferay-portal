@@ -15,10 +15,10 @@
 package com.liferay.portal.workflow.kaleo.designer.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,11 +41,9 @@ public class KaleoDefinitionVersionSearch
 		}
 	};
 	public static Map<String, String> orderableHeaders =
-		new HashMap<String, String>() {
-			{
-				put("title", "modifiedDate");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"title", "modifiedDate"
+		).build();
 
 	public KaleoDefinitionVersionSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -47,7 +48,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -114,11 +114,9 @@ public class JournalContentTest {
 	}
 
 	protected static String getXML() {
-		Map<Locale, String> content = new HashMap<Locale, String>() {
-			{
-				put(LocaleUtil.US, "example");
-			}
-		};
+		Map<Locale, String> content = HashMapBuilder.<Locale, String>put(
+			LocaleUtil.US, "example"
+		).build();
 
 		return DDMStructureTestUtil.getSampleStructuredContent(
 			"content", Collections.singletonList(content),

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -84,12 +84,11 @@ public class BookmarksFolderMultiLanguageSearchTest {
 
 		bookmarksFixture.createBookmarksFolder(keyWords);
 
-		Map<String, String> map = new HashMap<String, String>() {
-			{
-				put(_PREFIX, keyWords);
-				put(_PREFIX + "_sortable", keyWords);
-			}
-		};
+		Map<String, String> map = HashMapBuilder.<String, String>put(
+			_PREFIX, keyWords
+		).put(
+			_PREFIX + "_sortable", keyWords
+		).build();
 
 		assertFieldValues(_PREFIX, locale, map, keyWords);
 	}
@@ -104,12 +103,11 @@ public class BookmarksFolderMultiLanguageSearchTest {
 
 		bookmarksFixture.createBookmarksFolder(keyWords);
 
-		Map<String, String> map = new HashMap<String, String>() {
-			{
-				put(_PREFIX, keyWords);
-				put(_PREFIX + "_sortable", keyWords);
-			}
-		};
+		Map<String, String> map = HashMapBuilder.<String, String>put(
+			_PREFIX, keyWords
+		).put(
+			_PREFIX + "_sortable", keyWords
+		).build();
 
 		assertFieldValues(_PREFIX, locale, map, keyWords);
 	}
@@ -124,12 +122,11 @@ public class BookmarksFolderMultiLanguageSearchTest {
 
 		bookmarksFixture.createBookmarksFolder(keyWords);
 
-		Map<String, String> map = new HashMap<String, String>() {
-			{
-				put(_PREFIX, keyWords);
-				put(_PREFIX + "_sortable", keyWords);
-			}
-		};
+		Map<String, String> map = HashMapBuilder.<String, String>put(
+			_PREFIX, keyWords
+		).put(
+			_PREFIX + "_sortable", keyWords
+		).build();
 
 		assertFieldValues(_PREFIX, locale, map, keyWords);
 	}

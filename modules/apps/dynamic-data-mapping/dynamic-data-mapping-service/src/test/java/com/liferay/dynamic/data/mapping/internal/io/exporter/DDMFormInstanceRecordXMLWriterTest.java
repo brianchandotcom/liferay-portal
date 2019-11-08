@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.internal.io.exporter;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRequest;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -191,25 +191,29 @@ public class DDMFormInstanceRecordXMLWriterTest extends PowerMockito {
 		List<Map<String, String>> ddmFormFieldValues =
 			new ArrayList<Map<String, String>>() {
 				{
-					Map<String, String> map1 = new HashMap<String, String>() {
-						{
-							put("field1", "2");
-							put("field2", "esta é uma 'string'");
-							put("field3", "false");
-							put("field4", "11.7");
-						}
-					};
+					Map<String, String> map1 =
+						HashMapBuilder.<String, String>put(
+							"field1", "2"
+						).put(
+							"field2", "esta é uma 'string'"
+						).put(
+							"field3", "false"
+						).put(
+							"field4", "11.7"
+						).build();
 
 					add(map1);
 
-					Map<String, String> map2 = new HashMap<String, String>() {
-						{
-							put("field1", "1");
-							put("field2", "esta é uma 'string'");
-							put("field3", "");
-							put("field4", "10");
-						}
-					};
+					Map<String, String> map2 =
+						HashMapBuilder.<String, String>put(
+							"field1", "1"
+						).put(
+							"field2", "esta é uma 'string'"
+						).put(
+							"field3", ""
+						).put(
+							"field4", "10"
+						).build();
 
 					add(map2);
 				}

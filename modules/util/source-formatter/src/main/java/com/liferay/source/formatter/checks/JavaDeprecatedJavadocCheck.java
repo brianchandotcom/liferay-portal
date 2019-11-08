@@ -17,13 +17,13 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -193,17 +193,21 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 			"(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
 	private static final Map<String, String> _releaseInfoMap =
-		new HashMap<String, String>() {
-			{
-				put("Athanasius", "7.3.x");
-				put("Bunyan", "6.0.x");
-				put("Judson", "7.1.x");
-				put("Mueller", "7.2.x");
-				put("Newton", "6.2.x");
-				put("Paton", "6.1.x");
-				put("Wilberforce", "7.0.x");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"Athanasius", "7.3.x"
+		).put(
+			"Bunyan", "6.0.x"
+		).put(
+			"Judson", "7.1.x"
+		).put(
+			"Mueller", "7.2.x"
+		).put(
+			"Newton", "6.2.x"
+		).put(
+			"Paton", "6.1.x"
+		).put(
+			"Wilberforce", "7.0.x"
+		).build();
 
 	private String _nextReleaseCodeName;
 	private String _nextReleaseVersion;

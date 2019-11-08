@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.workflow.task.web.internal.util.WorkflowTaskPortletUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,12 +48,11 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 		}
 	};
 	public static Map<String, String> orderableHeaders =
-		new HashMap<String, String>() {
-			{
-				put("due-date", "due-date");
-				put("last-activity-date", "last-activity-date");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"due-date", "due-date"
+		).put(
+			"last-activity-date", "last-activity-date"
+		).build();
 
 	public WorkflowTaskSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

@@ -15,10 +15,10 @@
 package com.liferay.portal.workflow.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,11 +41,9 @@ public class WorkflowDefinitionSearch
 		}
 	};
 	public static Map<String, String> orderableHeaders =
-		new HashMap<String, String>() {
-			{
-				put("title", "modifiedDate");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"title", "modifiedDate"
+		).build();
 
 	public WorkflowDefinitionSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

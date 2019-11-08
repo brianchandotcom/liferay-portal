@@ -74,7 +74,6 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -509,11 +508,9 @@ public class UIItemsBuilder {
 		URLToolbarItem urlToolbarItem = new URLToolbarItem();
 
 		urlToolbarItem.setData(
-			new HashMap<String, Object>() {
-				{
-					put("analytics-file-entry-id", _fileEntry.getFileEntryId());
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"analytics-file-entry-id", _fileEntry.getFileEntryId()
+			).build());
 
 		_addURLUIItem(
 			urlToolbarItem, toolbarItems, DLUIItemKeys.DOWNLOAD,

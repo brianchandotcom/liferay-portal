@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.sla.processor;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
@@ -30,7 +31,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -61,59 +61,41 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		_assertIsBreached(
 			false,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put("createDate", _format(nowLocalDateTime));
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"createDate", _format(nowLocalDateTime)
+				).build()),
 			nowLocalDateTime, nowLocalDateTime.plusHours(1));
 		_assertIsBreached(
 			false,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put(
-							"createDate",
-							_format(nowLocalDateTime.minusHours(1)));
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"createDate", _format(nowLocalDateTime.minusHours(1))
+				).build()),
 			nowLocalDateTime, nowLocalDateTime.minusHours(2));
 		_assertIsBreached(
 			false,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put(
-							"completionDate",
-							_format(nowLocalDateTime.minusHours(1)));
-						put(
-							"createDate",
-							_format(nowLocalDateTime.minusHours(2)));
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"completionDate", _format(nowLocalDateTime.minusHours(1))
+				).put(
+					"createDate", _format(nowLocalDateTime.minusHours(2))
+				).build()),
 			nowLocalDateTime, nowLocalDateTime.minusHours(1));
 		_assertIsBreached(
 			true,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put(
-							"createDate",
-							_format(nowLocalDateTime.minusHours(2)));
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"createDate", _format(nowLocalDateTime.minusHours(2))
+				).build()),
 			nowLocalDateTime, nowLocalDateTime.minusHours(1));
 		_assertIsBreached(
 			true,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put("completionDate", _format(nowLocalDateTime));
-						put(
-							"createDate",
-							_format(nowLocalDateTime.minusHours(2)));
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"completionDate", _format(nowLocalDateTime)
+				).put(
+					"createDate", _format(nowLocalDateTime.minusHours(2))
+				).build()),
 			nowLocalDateTime, nowLocalDateTime.minusHours(1));
 	}
 
@@ -124,59 +106,41 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		_assertIsOnTime(
 			true,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put("createDate", _format(nowLocalDateTime));
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"createDate", _format(nowLocalDateTime)
+				).build()),
 			nowLocalDateTime, nowLocalDateTime.plusHours(1));
 		_assertIsOnTime(
 			true,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put(
-							"completionDate",
-							_format(nowLocalDateTime.minusHours(1)));
-						put(
-							"createDate",
-							_format(nowLocalDateTime.minusHours(2)));
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"completionDate", _format(nowLocalDateTime.minusHours(1))
+				).put(
+					"createDate", _format(nowLocalDateTime.minusHours(2))
+				).build()),
 			nowLocalDateTime, nowLocalDateTime.minusHours(1));
 		_assertIsOnTime(
 			false,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put(
-							"createDate",
-							_format(nowLocalDateTime.minusHours(1)));
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"createDate", _format(nowLocalDateTime.minusHours(1))
+				).build()),
 			nowLocalDateTime, nowLocalDateTime.minusHours(2));
 		_assertIsOnTime(
 			false,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put(
-							"createDate",
-							_format(nowLocalDateTime.minusHours(2)));
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"createDate", _format(nowLocalDateTime.minusHours(2))
+				).build()),
 			nowLocalDateTime, nowLocalDateTime.minusHours(1));
 		_assertIsOnTime(
 			false,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put("completionDate", _format(nowLocalDateTime));
-						put(
-							"createDate",
-							_format(nowLocalDateTime.minusHours(2)));
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"completionDate", _format(nowLocalDateTime)
+				).put(
+					"createDate", _format(nowLocalDateTime.minusHours(2))
+				).build()),
 			nowLocalDateTime, nowLocalDateTime.minusHours(1));
 	}
 
@@ -191,13 +155,13 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			createLocalDateTime, 5000, 5000, nowLocalDateTime, true, 0,
 			WorkflowMetricsSLAStatus.RUNNING,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put("createDate", _format(createLocalDateTime));
-						put("taskId", 1);
-						put("tokenId", 1);
-					}
-				}));
+				HashMapBuilder.<String, Object>put(
+					"createDate", _format(createLocalDateTime)
+				).put(
+					"taskId", 1
+				).put(
+					"tokenId", 1
+				).build()));
 	}
 
 	@Test
@@ -211,28 +175,25 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			createLocalDateTime, 10000, 10000, nowLocalDateTime, true, 0,
 			WorkflowMetricsSLAStatus.RUNNING,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put(
-							"completionDate",
-							_format(
-								nowLocalDateTime.minus(4, ChronoUnit.SECONDS)));
-						put("createDate", _format(createLocalDateTime));
-						put("taskId", 1);
-						put("tokenId", 1);
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"completionDate",
+					_format(nowLocalDateTime.minus(4, ChronoUnit.SECONDS))
+				).put(
+					"createDate", _format(createLocalDateTime)
+				).put(
+					"taskId", 1
+				).put(
+					"tokenId", 1
+				).build()),
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put(
-							"createDate",
-							_format(
-								nowLocalDateTime.minus(5, ChronoUnit.SECONDS)));
-						put("taskId", 2);
-						put("tokenId", 2);
-					}
-				}));
+				HashMapBuilder.<String, Object>put(
+					"createDate",
+					_format(nowLocalDateTime.minus(5, ChronoUnit.SECONDS))
+				).put(
+					"taskId", 2
+				).put(
+					"tokenId", 2
+				).build()));
 	}
 
 	@Test
@@ -256,13 +217,13 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			createdLocalDateTime, 0, null, nowLocalDateTime, true, 0, 0,
 			workflowMetricsSLADefinitionVersion, WorkflowMetricsSLAStatus.NEW,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put("createDate", _format(createdLocalDateTime));
-						put("taskId", 1);
-						put("tokenId", 1);
-					}
-				}));
+				HashMapBuilder.<String, Object>put(
+					"createDate", _format(createdLocalDateTime)
+				).put(
+					"taskId", 1
+				).put(
+					"tokenId", 1
+				).build()));
 	}
 
 	@Test
@@ -299,28 +260,25 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			workflowMetricsSLADefinitionVersion,
 			WorkflowMetricsSLAStatus.PAUSED,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put(
-							"completionDate",
-							_format(
-								nowLocalDateTime.minus(5, ChronoUnit.SECONDS)));
-						put("createDate", _format(createLocalDateTime));
-						put("taskId", 1);
-						put("tokenId", 1);
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"completionDate",
+					_format(nowLocalDateTime.minus(5, ChronoUnit.SECONDS))
+				).put(
+					"createDate", _format(createLocalDateTime)
+				).put(
+					"taskId", 1
+				).put(
+					"tokenId", 1
+				).build()),
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put(
-							"createDate",
-							_format(
-								nowLocalDateTime.minus(5, ChronoUnit.SECONDS)));
-						put("taskId", 2);
-						put("tokenId", 2);
-					}
-				}));
+				HashMapBuilder.<String, Object>put(
+					"createDate",
+					_format(nowLocalDateTime.minus(5, ChronoUnit.SECONDS))
+				).put(
+					"taskId", 2
+				).put(
+					"tokenId", 2
+				).build()));
 	}
 
 	@Test
@@ -363,29 +321,27 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			workflowMetricsSLADefinitionVersion,
 			WorkflowMetricsSLAStatus.STOPPED,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put(
-							"completionDate",
-							_format(
-								nowLocalDateTime.minus(5, ChronoUnit.SECONDS)));
-						put("createDate", _format(createLocalDateTime));
-						put("taskId", 1);
-						put("tokenId", 1);
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"completionDate",
+					_format(nowLocalDateTime.minus(5, ChronoUnit.SECONDS))
+				).put(
+					"createDate", _format(createLocalDateTime)
+				).put(
+					"taskId", 1
+				).put(
+					"tokenId", 1
+				).build()),
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put("completionDate", _format(nowLocalDateTime));
-						put(
-							"createDate",
-							_format(
-								nowLocalDateTime.minus(5, ChronoUnit.SECONDS)));
-						put("taskId", 2);
-						put("tokenId", 2);
-					}
-				}));
+				HashMapBuilder.<String, Object>put(
+					"completionDate", _format(nowLocalDateTime)
+				).put(
+					"createDate",
+					_format(nowLocalDateTime.minus(5, ChronoUnit.SECONDS))
+				).put(
+					"taskId", 2
+				).put(
+					"tokenId", 2
+				).build()));
 	}
 
 	@Test
@@ -422,17 +378,16 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			workflowMetricsSLADefinitionVersion,
 			WorkflowMetricsSLAStatus.STOPPED,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put(
-							"completionDate",
-							_format(
-								nowLocalDateTime.minus(5, ChronoUnit.SECONDS)));
-						put("createDate", _format(createLocalDateTime));
-						put("taskId", 1);
-						put("tokenId", 1);
-					}
-				}));
+				HashMapBuilder.<String, Object>put(
+					"completionDate",
+					_format(nowLocalDateTime.minus(5, ChronoUnit.SECONDS))
+				).put(
+					"createDate", _format(createLocalDateTime)
+				).put(
+					"taskId", 1
+				).put(
+					"tokenId", 1
+				).build()));
 	}
 
 	@Test
@@ -446,13 +401,13 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			createLocalDateTime, 5000, 6000, nowLocalDateTime, false, -1000,
 			WorkflowMetricsSLAStatus.RUNNING,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put("createDate", _format(createLocalDateTime));
-						put("taskId", 1);
-						put("tokenId", 1);
-					}
-				}));
+				HashMapBuilder.<String, Object>put(
+					"createDate", _format(createLocalDateTime)
+				).put(
+					"taskId", 1
+				).put(
+					"tokenId", 1
+				).build()));
 	}
 
 	@Test
@@ -466,25 +421,24 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			createLocalDateTime, 5000, 10000, nowLocalDateTime, false, -5000,
 			WorkflowMetricsSLAStatus.RUNNING,
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put(
-							"completionDate",
-							_format(
-								nowLocalDateTime.minus(4, ChronoUnit.SECONDS)));
-						put("createDate", _format(createLocalDateTime));
-						put("taskId", 1);
-						put("tokenId", 1);
-					}
-				}),
+				HashMapBuilder.<String, Object>put(
+					"completionDate",
+					_format(nowLocalDateTime.minus(4, ChronoUnit.SECONDS))
+				).put(
+					"createDate", _format(createLocalDateTime)
+				).put(
+					"taskId", 1
+				).put(
+					"tokenId", 1
+				).build()),
 			_createDocument(
-				new HashMap<String, Object>() {
-					{
-						put("createDate", _format(createLocalDateTime));
-						put("taskId", 2);
-						put("tokenId", 2);
-					}
-				}));
+				HashMapBuilder.<String, Object>put(
+					"createDate", _format(createLocalDateTime)
+				).put(
+					"taskId", 2
+				).put(
+					"tokenId", 2
+				).build()));
 	}
 
 	@Test

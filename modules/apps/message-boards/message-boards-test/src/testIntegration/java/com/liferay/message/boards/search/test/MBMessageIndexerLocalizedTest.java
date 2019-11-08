@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -42,7 +43,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -95,11 +95,9 @@ public class MBMessageIndexerLocalizedTest {
 
 		Document document = _search(searchTerm, LocaleUtil.JAPAN);
 
-		Map<String, String> titleStrings = new HashMap<String, String>() {
-			{
-				put(Field.CONTENT + "_ja_JP", "諸行無常");
-			}
-		};
+		Map<String, String> titleStrings = HashMapBuilder.<String, String>put(
+			Field.CONTENT + "_ja_JP", "諸行無常"
+		).build();
 
 		FieldValuesAssert.assertFieldValues(
 			titleStrings, Field.CONTENT + "_ja_JP", document, searchTerm);
@@ -123,11 +121,9 @@ public class MBMessageIndexerLocalizedTest {
 
 		Document document = _search(searchTerm, LocaleUtil.JAPAN);
 
-		Map<String, String> titleStrings = new HashMap<String, String>() {
-			{
-				put(Field.TITLE + "_ja_JP", "東京都");
-			}
-		};
+		Map<String, String> titleStrings = HashMapBuilder.<String, String>put(
+			Field.TITLE + "_ja_JP", "東京都"
+		).build();
 
 		FieldValuesAssert.assertFieldValues(
 			titleStrings, Field.TITLE + "_ja_JP", document, searchTerm);

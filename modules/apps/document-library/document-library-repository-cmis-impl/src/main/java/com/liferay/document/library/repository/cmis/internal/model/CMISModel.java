@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -135,20 +135,27 @@ public abstract class CMISModel {
 	}
 
 	private static final Map<String, Action> _mappedActionKeys =
-		new HashMap<String, Action>() {
-			{
-				put(ActionKeys.ACCESS, Action.CAN_GET_FOLDER_TREE);
-				put(ActionKeys.ADD_DISCUSSION, Action.CAN_GET_PROPERTIES);
-				put(ActionKeys.ADD_DOCUMENT, Action.CAN_CREATE_DOCUMENT);
-				put(ActionKeys.ADD_FOLDER, Action.CAN_CREATE_FOLDER);
-				put(ActionKeys.ADD_SUBFOLDER, Action.CAN_CREATE_FOLDER);
-				put(ActionKeys.DELETE, Action.CAN_DELETE_OBJECT);
-				put(ActionKeys.DELETE_DISCUSSION, Action.CAN_DELETE_OBJECT);
-				put(ActionKeys.UPDATE, Action.CAN_UPDATE_PROPERTIES);
-				put(ActionKeys.UPDATE_DISCUSSION, Action.CAN_UPDATE_PROPERTIES);
-				put(ActionKeys.VIEW, Action.CAN_GET_PROPERTIES);
-			}
-		};
+		HashMapBuilder.<String, Action>put(
+			ActionKeys.ACCESS, Action.CAN_GET_FOLDER_TREE
+		).put(
+			ActionKeys.ADD_DISCUSSION, Action.CAN_GET_PROPERTIES
+		).put(
+			ActionKeys.ADD_DOCUMENT, Action.CAN_CREATE_DOCUMENT
+		).put(
+			ActionKeys.ADD_FOLDER, Action.CAN_CREATE_FOLDER
+		).put(
+			ActionKeys.ADD_SUBFOLDER, Action.CAN_CREATE_FOLDER
+		).put(
+			ActionKeys.DELETE, Action.CAN_DELETE_OBJECT
+		).put(
+			ActionKeys.DELETE_DISCUSSION, Action.CAN_DELETE_OBJECT
+		).put(
+			ActionKeys.UPDATE, Action.CAN_UPDATE_PROPERTIES
+		).put(
+			ActionKeys.UPDATE_DISCUSSION, Action.CAN_UPDATE_PROPERTIES
+		).put(
+			ActionKeys.VIEW, Action.CAN_GET_PROPERTIES
+		).build();
 	private static final Set<String> _unsupportedActionKeys = new HashSet<>(
 		Arrays.asList(
 			ActionKeys.ADD_SHORTCUT, ActionKeys.OVERRIDE_CHECKOUT,

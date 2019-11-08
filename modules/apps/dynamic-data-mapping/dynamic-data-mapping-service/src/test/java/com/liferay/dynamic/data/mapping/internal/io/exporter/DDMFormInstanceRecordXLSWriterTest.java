@@ -16,13 +16,13 @@ package com.liferay.dynamic.data.mapping.internal.io.exporter;
 
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRequest;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterResponse;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.ByteArrayOutputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -200,19 +200,17 @@ public class DDMFormInstanceRecordXLSWriterTest extends PowerMockito {
 		List<Map<String, String>> ddmFormFieldValues =
 			new ArrayList<Map<String, String>>() {
 				{
-					Map<String, String> map1 = new HashMap<String, String>() {
-						{
-							put("field1", "2");
-						}
-					};
+					Map<String, String> map1 =
+						HashMapBuilder.<String, String>put(
+							"field1", "2"
+						).build();
 
 					add(map1);
 
-					Map<String, String> map2 = new HashMap<String, String>() {
-						{
-							put("field1", "1");
-						}
-					};
+					Map<String, String> map2 =
+						HashMapBuilder.<String, String>put(
+							"field1", "1"
+						).build();
 
 					add(map2);
 				}

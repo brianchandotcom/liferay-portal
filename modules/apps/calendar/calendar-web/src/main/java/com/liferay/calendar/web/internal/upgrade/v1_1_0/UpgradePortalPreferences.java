@@ -16,6 +16,7 @@ package com.liferay.calendar.web.internal.upgrade.v1_1_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.RenameUpgradePortalPreferences;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -142,18 +143,15 @@ public class UpgradePortalPreferences extends RenameUpgradePortalPreferences {
 
 	private static final Pattern _idPattern = Pattern.compile("[0-9]+");
 	private static final Map<String, String> _newPreferencePatternsMap =
-		new HashMap<String, String>() {
-			{
-				put(
-					"color",
-					_NAMESPACE_NEW_SESSION_CLICKS +
-						"com.liferay.calendar.web_calendar{calendarId}Color");
-				put(
-					"visible",
-					_NAMESPACE_NEW_SESSION_CLICKS +
-						"com.liferay.calendar.web_calendar{calendarId}Visible");
-			}
-		};
+		HashMapBuilder.<String, String>put(
+			"color",
+			_NAMESPACE_NEW_SESSION_CLICKS +
+				"com.liferay.calendar.web_calendar{calendarId}Color"
+		).put(
+			"visible",
+			_NAMESPACE_NEW_SESSION_CLICKS +
+				"com.liferay.calendar.web_calendar{calendarId}Visible"
+		).build();
 	private static final Pattern[] _oldPreferencePatterns = {
 		Pattern.compile(
 			_NAMESPACE_OLD_SESSION_CLICKS +

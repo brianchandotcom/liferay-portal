@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -129,11 +129,9 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		com.liferay.portal.kernel.model.Role serviceBuilderRole =
 			RoleLocalServiceUtil.addRole(
 				_user.getUserId(), null, 0, role.getName(),
-				new HashMap<Locale, String>() {
-					{
-						put(LocaleUtil.getDefault(), role.getName());
-					}
-				},
+				HashMapBuilder.<Locale, String>put(
+					LocaleUtil.getDefault(), role.getName()
+				).build(),
 				null, _toRoleType(role.getRoleType()), null,
 				new ServiceContext() {
 					{

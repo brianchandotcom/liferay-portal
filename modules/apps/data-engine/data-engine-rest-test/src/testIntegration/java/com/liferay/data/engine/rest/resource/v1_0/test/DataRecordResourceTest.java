@@ -22,9 +22,8 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
-
-import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -164,11 +163,9 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 		return new DataRecord() {
 			{
 				dataRecordCollectionId = _ddlRecordSet.getRecordSetId();
-				dataRecordValues = new HashMap<String, Object>() {
-					{
-						put(fieldName, RandomTestUtil.randomString());
-					}
-				};
+				dataRecordValues = HashMapBuilder.<String, Object>put(
+					fieldName, RandomTestUtil.randomString()
+				).build();
 			}
 		};
 	}

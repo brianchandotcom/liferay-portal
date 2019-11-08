@@ -34,13 +34,13 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -245,13 +245,10 @@ public class StandaloneAppDeployer implements AppDeployer {
 			Portlet.class, new AppPortlet(appId),
 			AppPortlet.getProperties(
 				appName, portletName,
-				new HashMap<String, Object>() {
-					{
-						put(
-							"com.liferay.portlet.application-type",
-							"full-page-application");
-					}
-				}));
+				HashMapBuilder.<String, Object>put(
+					"com.liferay.portlet.application-type",
+					"full-page-application"
+				).build()));
 	}
 
 	private String _getGroupFriendlyURL(long appId) {

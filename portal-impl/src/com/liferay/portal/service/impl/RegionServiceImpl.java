@@ -22,13 +22,13 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.RegionModelImpl;
 import com.liferay.portal.service.base.RegionServiceBaseImpl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -129,13 +129,11 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 	}
 
 	private static final Map<String, OrderByComparator<Region>>
-		_orderByComparators = new HashMap<String, OrderByComparator<Region>>() {
-			{
-				put(
-					"JP",
-					OrderByComparatorFactoryUtil.create(
-						RegionModelImpl.TABLE_NAME, "regionCode", true));
-			}
-		};
+		_orderByComparators =
+			HashMapBuilder.<String, OrderByComparator<Region>>put(
+				"JP",
+				OrderByComparatorFactoryUtil.create(
+					RegionModelImpl.TABLE_NAME, "regionCode", true)
+			).build();
 
 }

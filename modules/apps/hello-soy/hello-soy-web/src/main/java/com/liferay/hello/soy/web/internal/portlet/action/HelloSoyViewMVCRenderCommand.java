@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -62,12 +62,11 @@ public class HelloSoyViewMVCRenderCommand implements MVCRenderCommand {
 		template.put(
 			"layouts",
 			layoutStream.map(
-				layout -> new HashMap<String, String>() {
-					{
-						put("friendlyURL", layout.getFriendlyURL());
-						put("nameCurrentValue", layout.getNameCurrentValue());
-					}
-				}
+				layout -> HashMapBuilder.<String, String>put(
+					"friendlyURL", layout.getFriendlyURL()
+				).put(
+					"nameCurrentValue", layout.getNameCurrentValue()
+				).build()
 			).collect(
 				Collectors.toList()
 			));

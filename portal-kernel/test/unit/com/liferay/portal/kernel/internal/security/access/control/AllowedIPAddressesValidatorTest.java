@@ -15,9 +15,8 @@
 package com.liferay.portal.kernel.internal.security.access.control;
 
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
-
-import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -31,16 +30,12 @@ public class AllowedIPAddressesValidatorTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		PropsTestUtil.setProps(
-			new HashMap<String, Object>() {
-				{
-					put(
-						PropsKeys.DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS,
-						String.valueOf(2));
-					put(
-						PropsKeys.DNS_SECURITY_THREAD_LIMIT,
-						String.valueOf(10));
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				PropsKeys.DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS,
+				String.valueOf(2)
+			).put(
+				PropsKeys.DNS_SECURITY_THREAD_LIMIT, String.valueOf(10)
+			).build());
 	}
 
 	@Test

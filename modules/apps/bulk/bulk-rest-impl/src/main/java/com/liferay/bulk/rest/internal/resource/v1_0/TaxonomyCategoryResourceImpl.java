@@ -22,10 +22,9 @@ import com.liferay.bulk.selection.BulkSelectionInputParameters;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.document.library.bulk.selection.EditCategoriesBulkSelectionAction;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.Serializable;
-
-import java.util.HashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,22 +67,17 @@ public class TaxonomyCategoryResourceImpl
 		_bulkSelectionRunner.run(
 			contextUser, bulkSelection.toAssetEntryBulkSelection(),
 			_editCategoriesBulkSelectionAction,
-			new HashMap<String, Serializable>() {
-				{
-					put(
-						BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION,
-						true);
-					put("append", append);
-					put(
-						"toAddCategoryIds",
-						taxonomyCategoryBulkSelection.
-							getTaxonomyCategoryIdsToAdd());
-					put(
-						"toRemoveCategoryIds",
-						taxonomyCategoryBulkSelection.
-							getTaxonomyCategoryIdsToRemove());
-				}
-			});
+			HashMapBuilder.<String, Serializable>put(
+				BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION, true
+			).put(
+				"append", append
+			).put(
+				"toAddCategoryIds",
+				taxonomyCategoryBulkSelection.getTaxonomyCategoryIdsToAdd()
+			).put(
+				"toRemoveCategoryIds",
+				taxonomyCategoryBulkSelection.getTaxonomyCategoryIdsToRemove()
+			).build());
 	}
 
 	@Reference

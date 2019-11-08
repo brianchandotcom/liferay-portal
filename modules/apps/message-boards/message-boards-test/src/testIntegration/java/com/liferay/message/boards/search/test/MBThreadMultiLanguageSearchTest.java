@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
@@ -34,7 +35,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -139,13 +139,9 @@ public class MBThreadMultiLanguageSearchTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private Map<String, String> _getResultMap(MBThread mbThread) {
-		return new HashMap<String, String>() {
-			{
-				put(
-					Field.ENTRY_CLASS_PK,
-					String.valueOf(mbThread.getThreadId()));
-			}
-		};
+		return HashMapBuilder.<String, String>put(
+			Field.ENTRY_CLASS_PK, String.valueOf(mbThread.getThreadId())
+		).build();
 	}
 
 	private void _testLocaleKeywords(Locale locale, String keywords)

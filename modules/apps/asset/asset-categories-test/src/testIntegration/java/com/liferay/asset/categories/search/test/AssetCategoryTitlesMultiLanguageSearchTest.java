@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -296,11 +297,9 @@ public class AssetCategoryTitlesMultiLanguageSearchTest {
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), _user.getUserId());
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>() {
-			{
-				put(locale, title);
-			}
-		};
+		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+			locale, title
+		).build();
 
 		Locale previousLocale = LocaleThreadLocal.getSiteDefaultLocale();
 

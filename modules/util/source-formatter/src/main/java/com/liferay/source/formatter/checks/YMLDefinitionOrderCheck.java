@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.YMLSourceUtil;
@@ -23,7 +24,6 @@ import com.liferay.source.formatter.checks.util.YMLSourceUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -322,25 +322,28 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 	}
 
 	private static final Map<String, Integer> _parameterTypesWeightMap =
-		new HashMap<String, Integer>() {
-			{
-				put("cookie", 4);
-				put("header", 3);
-				put("path", 1);
-				put("query", 2);
-			}
-		};
+		HashMapBuilder.<String, Integer>put(
+			"cookie", 4
+		).put(
+			"header", 3
+		).put(
+			"path", 1
+		).put(
+			"query", 2
+		).build();
 	private static final Pattern _pathPattern = Pattern.compile(
 		"(?<=\n)( *)\"([^{}\"]*\\{[^}]+\\}[^{}\"]*){2,}\":(\n\\1 .*)*");
 	private static final Map<String, Integer> _specialQueriesKeyWeightMap =
-		new HashMap<String, Integer>() {
-			{
-				put("filter", 1);
-				put("page", 2);
-				put("pageSize", 3);
-				put("search", 4);
-				put("sort", 5);
-			}
-		};
+		HashMapBuilder.<String, Integer>put(
+			"filter", 1
+		).put(
+			"page", 2
+		).put(
+			"pageSize", 3
+		).put(
+			"search", 4
+		).put(
+			"sort", 5
+		).build();
 
 }

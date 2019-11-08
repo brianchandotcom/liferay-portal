@@ -18,10 +18,10 @@ import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterR
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterResponse;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,23 +43,25 @@ public class DDMFormInstanceRecordJSONWriterTest {
 		List<Map<String, String>> ddmFormFieldValues =
 			new ArrayList<Map<String, String>>() {
 				{
-					Map<String, String> map1 = new HashMap<String, String>() {
-						{
-							put("field1", "2");
-							put("field2", "false");
-							put("field3", "11.7");
-						}
-					};
+					Map<String, String> map1 =
+						HashMapBuilder.<String, String>put(
+							"field1", "2"
+						).put(
+							"field2", "false"
+						).put(
+							"field3", "11.7"
+						).build();
 
 					add(map1);
 
-					Map<String, String> map2 = new HashMap<String, String>() {
-						{
-							put("field1", "1");
-							put("field2", "");
-							put("field3", "10");
-						}
-					};
+					Map<String, String> map2 =
+						HashMapBuilder.<String, String>put(
+							"field1", "1"
+						).put(
+							"field2", ""
+						).put(
+							"field3", "10"
+						).build();
 
 					add(map2);
 				}

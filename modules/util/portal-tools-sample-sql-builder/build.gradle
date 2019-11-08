@@ -90,7 +90,7 @@ writeReleases {
 		releasesTxtFile.withWriter("UTF-8") {
 			Writer writer ->
 
-			configurations.compile.each {
+			(configurations.compile + configurations.compileInclude).each {
 				println "Adding release information from ${it} into ${releasesTxtFile}"
 
 				JarFile jarFile = new JarFile(it)
@@ -107,6 +107,7 @@ writeReleases {
 
 				writer.writeLine "${symbolicName}:${schemaVersion}"
 			}
+
 		}
 	}
 }

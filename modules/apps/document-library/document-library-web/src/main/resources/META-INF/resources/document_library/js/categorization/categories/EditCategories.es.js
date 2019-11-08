@@ -33,14 +33,20 @@ function EditCategories(props) {
 	});
 
 	if (!Liferay.component(props.componentId)) {
-		Liferay.component(props.componentId, {
-			open: (fileEntries, selectAll, folderId) => {
-				setFileEntries(fileEntries);
-				setSelectAll(selectAll);
-				setFolderId(folderId);
-				setShowModal(true);
+		Liferay.component(
+			props.componentId,
+			{
+				open: (fileEntries, selectAll, folderId) => {
+					setFileEntries(fileEntries);
+					setSelectAll(selectAll);
+					setFolderId(folderId);
+					setShowModal(true);
+				}
+			},
+			{
+				destroyOnNavigate: true
 			}
-		});
+		);
 	}
 
 	return (

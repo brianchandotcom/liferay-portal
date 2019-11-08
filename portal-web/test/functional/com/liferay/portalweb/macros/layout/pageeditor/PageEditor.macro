@@ -90,8 +90,8 @@ definition {
 	}
 
 	macro addFragment {
-		if (IsElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE", key_sidebarButton = "Section Builder")) {
-			PageEditor.gotoTab(tabName = "Section Builder");
+		if (IsElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE", key_sidebarButton = "Fragments")) {
+			PageEditor.gotoTab(tabName = "Fragments");
 		}
 
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");

@@ -61,6 +61,22 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY_INPUT");
 	}
 
+	macro addContentDisplay {
+		PageEditor.gotoTab(tabName = "Fragments");
+
+		PageEditor.expandFragmentCollection(collectionName = "Content Display");
+
+		DragAndDrop(
+			fragmentName = "${fragmentName}",
+			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+			value1 = "");
+
+		AssertTextEquals(
+			locator1 = "Fragment#CONFIGURABLE_FIELD",
+			value1 = "The selected content will be shown here.");
+	}
+
 	macro addExperience {
 		var key_experienceName = "${experienceName}";
 
@@ -335,6 +351,72 @@ definition {
 			value1 = "${fragmentCommentEdit}");
 
 		Click(locator1 = "Button#UPDATE");
+	}
+
+	macro editContentDisplay {
+		Click(locator1 = "Fragment#CONFIGURABLE_FIELD");
+
+		Click.clickNoMouseOver(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION");
+
+		Click(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PLUS_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		if (isSet(documentandmedia)) {
+			NavItem.click(navItem = "Documents and Media");
+
+			LexiconCard.clickCard(card = "${imageFileName}");
+
+			SelectFrame(value1 = "relative=top");
+
+			Click(locator1 = "Button#DONE");
+
+			AssertElementPresent(
+				key_contentName = "${imageFileName}",
+				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+
+			AssertElementPresent(
+				key_imageName = "${imageFileName}",
+				locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
+		}
+
+		if (isSet(blogs)) {
+			NavItem.click(navItem = "Blogs");
+
+			LexiconCard.clickCard(card = "${entryTitle}");
+
+			SelectFrame(value1 = "relative=top");
+
+			Click(locator1 = "Button#DONE");
+
+			AssertElementPresent(
+				key_contentName = "${entryTitle}",
+				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+
+			AssertTextEquals(
+				locator1 = "Fragment#CONFIGURABLE_FIELD",
+				value1 = "${entryContent}");
+		}
+
+		if (isSet(webcontent)) {
+			NavItem.click(navItem = "Web Content");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+			LexiconCard.clickCard(card = "${webContentTitle}");
+
+			SelectFrame(value1 = "relative=top");
+
+			Click(locator1 = "Button#DONE");
+
+			AssertElementPresent(
+				key_contentName = "${webContentTitle}",
+				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+
+			AssertTextEquals(
+				locator1 = "Fragment#CONFIGURABLE_FIELD",
+				value1 = "${webContentContent}");
+		}
 	}
 
 	macro editFragmentHTML {

@@ -14,6 +14,10 @@
 
 package com.liferay.item.selector.taglib.servlet.taglib;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryGroupRel;
+import com.liferay.depot.service.DepotEntryGroupRelLocalServiceUtil;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
@@ -29,6 +33,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -37,6 +42,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -62,29 +68,22 @@ public class GroupSelectorTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_groups = null;
 		_groupsCount = -1;
+		_repositories = null;
+		_sites = null;
 	}
 
 	protected List<Group> getGroups(HttpServletRequest httpServletRequest) {
 		if (isRepositories(httpServletRequest)) {
-			return Collections.emptyList();
+			return _getRepositories(httpServletRequest);
 		}
 
-		if (_groups == null) {
-			_searchSites(httpServletRequest);
-		}
-
-		return _groups;
+		return _getSites(httpServletRequest);
 	}
 
 	protected int getGroupsCount(HttpServletRequest httpServletRequest) {
-		if (isRepositories(httpServletRequest)) {
-			return 0;
-		}
-
 		if (_groupsCount < 0) {
-			_searchSites(httpServletRequest);
+			getGroups(httpServletRequest);
 		}
 
 		return _groupsCount;
@@ -194,6 +193,66 @@ public class GroupSelectorTag extends IncludeTag {
 			getSitesURL(httpServletRequest, itemSelector));
 	}
 
+	private List<Group> _getRepositories(
+		HttpServletRequest httpServletRequest) {
+
+		if (_repositories == null) {
+			_searchRepositories(httpServletRequest);
+		}
+
+		return _repositories;
+	}
+
+	private List<Group> _getSites(HttpServletRequest httpServletRequest) {
+		if (_sites == null) {
+			_searchSites(httpServletRequest);
+		}
+
+		return _sites;
+	}
+
+	private void _searchRepositories(HttpServletRequest httpServletRequest) {
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			int cur = ParamUtil.getInteger(
+				httpServletRequest, SearchContainer.DEFAULT_CUR_PARAM,
+				SearchContainer.DEFAULT_CUR);
+			int delta = ParamUtil.getInteger(
+				httpServletRequest, SearchContainer.DEFAULT_DELTA_PARAM,
+				SearchContainer.DEFAULT_DELTA);
+
+			int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+				cur, delta);
+
+			List<DepotEntryGroupRel> depotEntryGroupRels = ListUtil.subList(
+				DepotEntryGroupRelLocalServiceUtil.getDepotEntryGroupRels(
+					themeDisplay.getScopeGroupId()),
+				startAndEnd[0], startAndEnd[1]);
+
+			_repositories = new ArrayList<>();
+
+			for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
+				DepotEntry depotEntry =
+					DepotEntryLocalServiceUtil.getDepotEntry(
+						depotEntryGroupRel.getDepotEntryId());
+
+				_repositories.add(
+					GroupLocalServiceUtil.getGroup(depotEntry.getGroupId()));
+			}
+
+			_groupsCount = _repositories.size();
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+
+			_sites = Collections.emptyList();
+			_groupsCount = 0;
+		}
+	}
+
 	private void _searchSites(HttpServletRequest httpServletRequest) {
 		try {
 			ThemeDisplay themeDisplay =
@@ -222,14 +281,14 @@ public class GroupSelectorTag extends IncludeTag {
 			int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
 				cur, delta);
 
-			_groups = ListUtil.subList(groups, startAndEnd[0], startAndEnd[1]);
+			_sites = ListUtil.subList(groups, startAndEnd[0], startAndEnd[1]);
 
 			_groupsCount = groups.size();
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
 
-			_groups = Collections.emptyList();
+			_sites = Collections.emptyList();
 			_groupsCount = 0;
 		}
 	}
@@ -243,7 +302,8 @@ public class GroupSelectorTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupSelectorTag.class);
 
-	private List<Group> _groups;
 	private int _groupsCount = -1;
+	private List<Group> _repositories;
+	private List<Group> _sites;
 
 }

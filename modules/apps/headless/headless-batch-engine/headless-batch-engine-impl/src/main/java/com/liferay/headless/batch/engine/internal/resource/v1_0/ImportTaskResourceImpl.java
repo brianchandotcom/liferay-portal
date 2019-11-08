@@ -42,9 +42,11 @@ import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -259,8 +261,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return fieldNameMappingMap;
 	}
 
-	private static final List<String> _ignoredParameters = Arrays.asList(
-		"callbackURL", "fieldNameMapping");
+	private static final Set<String> _ignoredParameters = new HashSet<>(
+		Arrays.asList("callbackURL", "fieldNameMapping"));
 
 	@Reference
 	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;

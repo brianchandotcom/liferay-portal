@@ -167,13 +167,6 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
-	public boolean isVisibleRelatedEntry(long classPK, int status)
-		throws Exception {
-
-		return _indexer.isVisibleRelatedEntry(classPK, status);
-	}
-
-	@Override
 	public void postProcessContextBooleanFilter(
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {

@@ -72,6 +72,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro moveDepotLanguagesToAvailable {
+		while (IsElementPresent(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT")) {
+			Click(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT");
+
+			Click(locator1 = "Button#MOVE_CURRENT_TO_AVAILABLE");
+		}
+	}
+
 	macro viewConnectedSite {
 		for (var siteName : list "${siteList}") {
 			AssertElementPresent(
@@ -138,6 +146,54 @@ definition {
 			value1 = "English (United States), Arabic (Saudi Arabia), Catalan (Spain), Chinese (China), Dutch (Netherlands), Finnish (Finland), French (France), German (Germany), Hungarian (Hungary), Japanese (Japan), Portuguese (Brazil), Spanish (Spain), Swedish (Sweden)");
 
 		AssertElementPresent(locator1 = "Button#SAVE");
+	}
+
+	macro viewLanguageOptionsInGeneral {
+		Page.viewFriendlyURLLanguageOptionsPG(
+			currentLanguageList = "${currentLanguageList}",
+			fieldName = "Name");
+
+		Page.viewFriendlyURLLanguageOptionsPG(
+			currentLanguageList = "${currentLanguageList}",
+			fieldName = "Description");
+	}
+
+	macro viewLanguageOptionsInWebContent {
+		Click(locator1 = "Button#LOCALIZATION_GENERIC");
+
+		for (var locale : list "${currentLanguageList}") {
+			AssertElementPresent(
+				key_locale = "${locale}",
+				locator1 = "Translation#LOCALIZATION_NAME");
+		}
+
+		Click(
+			key_portletName = "JournalPortlet_Menu",
+			locator1 = "Button#LANGUAGE_DROPDOWN");
+
+		for (var locale : list "${currentLanguageList}") {
+			AssertElementPresent(
+				key_locale = "${locale}",
+				locator1 = "Translation#LOCALIZATION_NAME");
+		}
+
+		Panel.expandPanel(panel = "Basic Information");
+
+		Page.viewFriendlyURLLanguageOptionsPG(
+			currentLanguageList = "${currentLanguageList}",
+			fieldName = "Summary");
+
+		Panel.expandPanel(panel = "Friendly URL");
+
+		Click(
+			key_portletName = "JournalPortlet_friendlyURLMenu",
+			locator1 = "Button#LANGUAGE_DROPDOWN");
+
+		for (var locale : list "${currentLanguageList}") {
+			AssertElementPresent(
+				key_locale = "${locale}",
+				locator1 = "Translation#LOCALIZATION_NAME");
+		}
 	}
 
 	macro viewSearchResult {

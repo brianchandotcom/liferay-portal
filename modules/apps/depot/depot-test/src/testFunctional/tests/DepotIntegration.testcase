@@ -30,6 +30,114 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a depot can be connected to different types of sites."
+	@priority = "5"
+	test AddMultipleSites {
+		Site.openSitesAdmin();
+
+		Site.addBlankCP(
+			membershipType = "Private",
+			siteName = "Private Site Name");
+
+		Site.openSitesAdmin();
+
+		Site.addBlankCP(
+			membershipType = "Restricted",
+			siteName = "Restricted Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(
+			connectSite = "true",
+			siteList = "Site Name,Private Site Name,Restricted Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.viewConnectedSite(
+			depotName = "Test Depot Name",
+			siteList = "Site Name,Private Site Name,Restricted Site Name");
+	}
+
+	@description = "This asserts that a deactivated site is still shown in connected sites and a deleted site is removed from connected sites."
+	@priority = "4"
+	test DeactivateAndDeleteSite {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(
+			connectSite = "true",
+			siteList = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.viewConnectedSite(
+			depotName = "Test Depot Name",
+			siteList = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.deactivateCP(
+			siteName = "Site Name",
+			successMessage = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		// we need to add an assertion for the label that will later be developed and update the test description
+
+		Depot.viewConnectedSite(
+			depotName = "Test Depot Name",
+			siteList = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.deleteCP(siteName = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.viewNoConnetctedSiteCP();
+	}
+
 	@description = "This ensures that a depot can be connected to the site."
 	@priority = "5"
 	test Smoke {

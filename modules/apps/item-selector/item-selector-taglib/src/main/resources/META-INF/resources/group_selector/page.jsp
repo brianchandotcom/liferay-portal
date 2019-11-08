@@ -78,7 +78,7 @@ SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iterato
 				>
 					<liferay-frontend:horizontal-card-col>
 						<liferay-frontend:horizontal-card-icon
-							icon="folder"
+							icon='<%= repositories? "repository" : "folder" %>'
 						/>
 					</liferay-frontend:horizontal-card-col>
 				</liferay-frontend:horizontal-card>

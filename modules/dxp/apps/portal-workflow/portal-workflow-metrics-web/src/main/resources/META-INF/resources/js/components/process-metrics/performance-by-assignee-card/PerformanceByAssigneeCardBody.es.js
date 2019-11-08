@@ -23,64 +23,68 @@ const Body = ({data}) => {
 	const {items, totalCount} = data;
 
 	return (
-		<Panel.Body>
-			<PromisesResolver.Pending>
-				<div className={`border-1 pb-6 pt-6 sheet`}>
-					<LoadingState />
-				</div>
-			</PromisesResolver.Pending>
+		<>
+			<Panel.Body>
+				<PromisesResolver.Pending>
+					<div className="border-0 mt-8 pb-5 pt-5 sheet">
+						<LoadingState />
+					</div>
+				</PromisesResolver.Pending>
 
-			<PromisesResolver.Resolved>
-				{data && items && items.length > 0 ? (
-					<>
+				<PromisesResolver.Resolved>
+					{items && items.length > 0 ? (
 						<PerformanceByAssigneeCard.Table items={items} />
-
-						<PerformanceByAssigneeCard.Footer
-							totalCount={totalCount}
+					) : (
+						<EmptyState
+							className="border-0 mt-8"
+							data-testid="emptyState"
+							hideAnimation={true}
+							message={Liferay.Language.get(
+								'there-is-no-data-at-the-moment'
+							)}
+							messageClassName="small"
 						/>
-					</>
-				) : (
+					)}
+				</PromisesResolver.Resolved>
+
+				<PromisesResolver.Rejected>
 					<EmptyState
-						className="border-0"
-						data-testid="emptyState"
+						actionButton={<ReloadButton />}
+						className="border-0 mt-7"
 						hideAnimation={true}
 						message={Liferay.Language.get(
-							'there-is-no-data-at-the-moment'
+							'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
 						)}
 						messageClassName="small"
+						type="error"
 					/>
-				)}
-			</PromisesResolver.Resolved>
+				</PromisesResolver.Rejected>
+			</Panel.Body>
 
-			<PromisesResolver.Rejected>
-				<EmptyState
-					actionButton={<ReloadButton />}
-					className="border-0"
-					hideAnimation={true}
-					message={Liferay.Language.get(
-						'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
-					)}
-					messageClassName="small"
-					type="error"
-				/>
-			</PromisesResolver.Rejected>
-		</Panel.Body>
+			<PromisesResolver.Resolved>
+				{items && items.length > 0 ? (
+					<PerformanceByAssigneeCard.Footer totalCount={totalCount} />
+				) : null}
+			</PromisesResolver.Resolved>
+		</>
 	);
 };
 
 const Footer = ({totalCount}) => {
 	return (
-		<div className="mb-1 text-right">
-			<button className="border-0 btn btn-secondary btn-sm">
-				<span className="mr-2" data-testid="viewAllAssignees">
-					{`${Liferay.Language.get(
-						'view-all-assignees'
-					)} (${totalCount})`}
-				</span>
+		<Panel.Footer elementClasses="fixed-bottom">
+			<div className="mb-1 text-right">
+				<button className="border-0 btn btn-secondary btn-sm">
+					<span className="mr-2" data-testid="viewAllAssignees">
+						{`${Liferay.Language.get(
+							'view-all-assignees'
+						)} (${totalCount})`}
+					</span>
 
-				<Icon iconName="caret-right-l" />
-			</button>
-		</div>
+					<Icon iconName="caret-right-l" />
+				</button>
+			</div>
+		</Panel.Footer>
 	);
 };
 

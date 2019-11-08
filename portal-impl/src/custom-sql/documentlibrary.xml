@@ -414,6 +414,19 @@
 				[$FILE_VERSION_FOLDER_ID$]
 		]]>
 	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.countFE_ByG_F_FETI">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
+			FROM
+				DLFileVersion
+			WHERE
+				(DLFileVersion.groupId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
+				[$FILE_VERSION_FOLDER_ID$] AND
+				(DLFileVersion.fileEntryTypeId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.countFS_ByG_F_A">
 		<![CDATA[
 			SELECT
@@ -480,6 +493,20 @@
 				(DLFileEntry.groupId = ?) AND
 				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
 				[$FILE_ENTRY_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFE_ByG_F_FETI">
+		<![CDATA[
+			SELECT
+				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, 0 AS fileShortcutId, 0 AS modelFolder
+			FROM
+				DLFileEntry
+			[$JOIN$]
+			WHERE
+				(DLFileEntry.groupId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
+				[$FILE_ENTRY_FOLDER_ID$] AND
+				(DLFileEntry.fileEntryTypeId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFS_ByG_F_A">

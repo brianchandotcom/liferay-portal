@@ -95,7 +95,7 @@ class FragmentEditableField extends PortletBase {
 	 */
 	disposed() {
 		this._destroyProcessors();
-		this._disposeFloatingToolbar(true);
+		this._disposeFloatingToolbar();
 		this.element.removeEventListener('click', this._createProcessor);
 	}
 
@@ -326,19 +326,15 @@ class FragmentEditableField extends PortletBase {
 	 * @private
 	 * @review
 	 */
-	_disposeFloatingToolbar(disposeImmediately) {
-		const disposeFn = () => {
-			if (this._floatingToolbar) {
-				this._floatingToolbar.dispose();
+	_disposeFloatingToolbar() {
+		if (this._floatingToolbar) {
+			const floatingToolbar = this._floatingToolbar;
 
-				this._floatingToolbar = null;
-			}
-		};
+			this._floatingToolbar = null;
 
-		if (disposeImmediately) {
-			disposeFn();
-		} else {
-			requestAnimationFrame(() => disposeFn());
+			requestAnimationFrame(() => {
+				floatingToolbar.dispose();
+			});
 		}
 	}
 

@@ -206,7 +206,7 @@
 					/>
 				</waitfor>
 
-				<fail if="gogoshell.timeout" message="The Gogo shell connection did not fail as expected." />
+				<fail if="gogoshell.timeout" message="The Gogo shell connection did not connect as expected." />
 			</sequential>
 		</parallel>
 	</target>
@@ -279,6 +279,49 @@
 		<clean-database-upgrade-client />
 	</target>
 
+	<target name="check-upgrade-client-second-process">
+		<get-database-upgrade-client-paths />
+
+		<parallel failonany="true">
+			<exec executable="/bin/bash" spawn="true">
+				<arg value="-c" />
+				<arg value="${db.upgrade.client.home}/db_upgrade${file.suffix.bat}" />
+			</exec>
+
+			<waitfor maxwait="3000" maxwaitunit="second" timeoutproperty="upgrade.secondprocess">
+				<resourcecontains
+					resource="temp.log"
+					substring="Database upgrade client is already running"
+				/>
+			</waitfor>
+
+			<if>
+				<isset property="upgrade.secondprocess" />
+				<then>
+					<fail message="FAILED. Upgrade Client is attempting to start a second upgrade process." />
+				</then>
+				<else>
+					<echo message="PASSED. Second Upgrade process is denied from starting." />
+				</else>
+			</if>
+
+			<sequential>
+				<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.startfailed">
+					<available file="${db.upgrade.client.log}" />
+				</waitfor>
+
+				<fail if="upgrade.startfailed" message="Upgrade has failed to start." />
+
+				<exec executable="/bin/bash">
+					<arg value="-c" />
+					<arg value="${db.upgrade.client.home}/db_upgrade${file.suffix.bat} > temp.log" />
+				</exec>
+			</sequential>
+		</parallel>
+
+		<clean-database-upgrade-client />
+	</target>
+
 	<target name="check-upgrade-client-sh-disconnect">
 		<get-database-upgrade-client-paths />
 
@@ -312,49 +355,6 @@
 				<echo message="${upgrade.log.contents}" />
 
 				<fail if="upgrade.failed" message="Upgrade has failed." />
-			</sequential>
-		</parallel>
-
-		<clean-database-upgrade-client />
-	</target>
-
-	<target name="check-upgrade-client-sh-disconnect-reconnect">
-		<get-database-upgrade-client-paths />
-
-		<parallel failonany="true">
-			<exec executable="/bin/bash" spawn="true">
-				<arg value="-c" />
-				<arg value="${db.upgrade.client.home}/db_upgrade${file.suffix.bat}" />
-			</exec>
-
-			<waitfor maxwait="3000" maxwaitunit="second" timeoutproperty="upgrade.secondprocess">
-				<resourcecontains
-					resource="temp.log"
-					substring="Database upgrade client is already running"
-				/>
-			</waitfor>
-
-			<if>
-				<isset property= "upgrade.secondprocess" />
-					<then>
-						<fail message="FAILED. Upgrade Client is attempting to start a second upgrade process." />
-					</then>
-					<else>
-						<echo message="PASSED. Second Upgrade process is denied from starting." />
-					</else>
-			</if>
-
-			<sequential>
-				<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.startfailed">
-					<available file="${db.upgrade.client.log}" />
-				</waitfor>
-
-				<fail if="upgrade.startfailed" message="Upgrade has failed to start." />
-
-				<exec executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="${db.upgrade.client.home}/db_upgrade${file.suffix.bat} > temp.log" />
-				</exec>
 			</sequential>
 		</parallel>
 

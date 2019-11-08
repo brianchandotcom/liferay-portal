@@ -488,6 +488,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		List<String> portBindings = new ArrayList<>();
 
+		portBindings.add("8000:8000");
 		portBindings.add("8080:8080");
 		portBindings.add("11311:11311");
 
@@ -503,6 +504,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 
+		dockerCreateContainer.withEnvVar("JPDA_ADDRESS", "0.0.0.0:8000");
+		dockerCreateContainer.withEnvVar("LIFERAY_JPDA_ENABLED", "true");
+		dockerCreateContainer.withEnvVar(
+			_makeEnvOverride("module.framework.properties.osgi.console"),
+			"0.0.0.0:11311");
 		dockerCreateContainer.withEnvVar(
 			"LIFERAY_WORKSPACE_ENVIRONMENT",
 			workspaceExtension.getEnvironment());
@@ -1310,6 +1316,24 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		}
 
 		return Collections.singletonList(src);
+	}
+
+	private String _makeEnvOverride(String string) {
+		String[] segments = string.split("\\.");
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("LIFERAY_");
+
+		for (int i = 0; i < segments.length; i++) {
+			sb.append(segments[i].toUpperCase());
+
+			if (i < (segments.length - 1)) {
+				sb.append("_PERIOD_");
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;

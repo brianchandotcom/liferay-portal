@@ -200,6 +200,32 @@ public class DepotEntryGroupRelLocalServiceTest {
 			_group.getGroupId(), depotEntryGroupRel.getToGroupId());
 	}
 
+	@Test
+	public void testgetDepotEntryGroupRelsCount() throws Exception {
+		DepotEntry depotEntry1 = _addDepotEntry();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry1.getDepotEntryId(), _group.getGroupId());
+
+		DepotEntry depotEntry2 = _addDepotEntry();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry2.getDepotEntryId(), _group.getGroupId());
+
+		Assert.assertEquals(
+			2,
+			_depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
+				_group.getGroupId()));
+	}
+
+	@Test
+	public void testgetDepotEntryGroupRelsCountWithoutGroup() throws Exception {
+		Assert.assertEquals(
+			0,
+			_depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
+				RandomTestUtil.randomInt()));
+	}
+
 	private DepotEntry _addDepotEntry() throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(

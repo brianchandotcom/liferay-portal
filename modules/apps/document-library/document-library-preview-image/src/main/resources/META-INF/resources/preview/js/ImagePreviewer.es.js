@@ -128,7 +128,9 @@ const ImagePreviewer = ({imageURL}) => {
 
 		if (
 			zoomRatio &&
-			imageContainerElement.clientWidth < image.current.naturalWidth
+			(imageContainerElement.clientWidth < image.current.naturalWidth ||
+				imageContainerElement.clientHeight <
+					image.current.naturalHeight)
 		) {
 			let scrollLeft;
 			let scrollTop;

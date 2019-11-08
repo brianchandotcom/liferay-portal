@@ -1,3 +1,8 @@
+.dropdown.open > .dropdown-menu,
+.overlay-content .open > .dropdown-menu {
+	display: block;
+}
+
 @if $compat-dropdowns {
 	// Moved .caret to .dropdown-toggle:after in BS4
 
@@ -37,11 +42,6 @@
 	.dropup .dropdown-toggle:after {
 		border-width: 0;
 		content: normal;
-	}
-
-	.dropdown.open > .dropdown-menu,
-	.overlay-content .open > .dropdown-menu {
-		display: block;
 	}
 
 	.dropdown > .dropdown-menu {

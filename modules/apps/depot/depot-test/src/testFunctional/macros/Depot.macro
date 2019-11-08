@@ -72,14 +72,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro moveDepotLanguagesToAvailable {
-		while (IsElementPresent(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT")) {
-			Click(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT");
-
-			Click(locator1 = "Button#MOVE_CURRENT_TO_AVAILABLE");
-		}
-	}
-
 	macro viewConnectedSite {
 		for (var siteName : list "${siteList}") {
 			AssertElementPresent(

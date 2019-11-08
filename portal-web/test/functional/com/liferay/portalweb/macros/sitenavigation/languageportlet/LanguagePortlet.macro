@@ -14,6 +14,14 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro moveAllLanguagesToAvailable {
+		while (IsElementPresent(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT")) {
+			Click(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT");
+
+			Click(locator1 = "Button#MOVE_CURRENT_TO_AVAILABLE");
+		}
+	}
+	
 	macro moveLanguagesToAvailable {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

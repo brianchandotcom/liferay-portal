@@ -50,6 +50,12 @@ public class DepotEntryGroupRelServiceUtil {
 		return getService().getDepotEntryGroupRels(groupId, start, end);
 	}
 
+	public static int getDepotEntryGroupRelsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getDepotEntryGroupRelsCount(groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

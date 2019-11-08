@@ -285,6 +285,12 @@ public class DepotEntryGroupRelLocalServiceWrapper
 	}
 
 	@Override
+	public int getDepotEntryGroupRelsCount(long groupId) {
+		return _depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
+			groupId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

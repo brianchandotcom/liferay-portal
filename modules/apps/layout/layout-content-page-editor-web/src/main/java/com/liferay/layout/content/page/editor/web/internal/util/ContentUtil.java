@@ -502,7 +502,17 @@ public class ContentUtil {
 					layoutClassedModelUsage.getClassNameId());
 
 		if (assetRendererFactory == null) {
-			return JSONFactoryUtil.createJSONObject();
+			return JSONUtil.put(
+				"hasApprovedVersion", false
+			).put(
+				"label",
+				WorkflowConstants.getStatusLabel(
+					WorkflowConstants.STATUS_APPROVED)
+			).put(
+				"style",
+				LabelItem.getStyleFromWorkflowStatus(
+					WorkflowConstants.STATUS_APPROVED)
+			);
 		}
 
 		AssetRenderer latestAssetRenderer =

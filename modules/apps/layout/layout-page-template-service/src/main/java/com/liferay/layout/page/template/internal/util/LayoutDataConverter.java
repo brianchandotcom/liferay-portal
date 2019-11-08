@@ -256,4 +256,21 @@ public class LayoutDataConverter {
 		return outputDataJSONObject.toJSONString();
 	}
 
+	private static JSONObject _getItemJSONObject(
+		JSONArray childrenJSONArray, JSONObject configJSONObject, String itemId,
+		String parentId, String type) {
+
+		return JSONUtil.put(
+			"children", childrenJSONArray
+		).put(
+			"config", configJSONObject
+		).put(
+			"itemId", itemId
+		).put(
+			"parentId", parentId
+		).put(
+			"type", type
+		);
+	}
+
 }

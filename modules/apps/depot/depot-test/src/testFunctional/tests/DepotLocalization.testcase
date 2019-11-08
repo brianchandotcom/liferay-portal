@@ -52,4 +52,56 @@ definition {
 		Depot.viewCurrentLanguages(currentLanguages = "English (United States),Catalan (Spain),Chinese (China),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Spanish (Spain),Swedish (Sweden),Arabic (Saudi Arabia)");
 	}
 
+	@description = "This ensures that the web content language can be set in a depot."
+	@priority = "5"
+	test ViewCustomLanguagesForWebContent {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoLanguages(depotName = "Test Depot Name");
+
+		Click(
+			key_languagesOption = "Define a custom default language and additional available languages for this repository.",
+			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
+
+		Depot.viewDefaultLanguage(defaultDepotLanguage = "English (United States)");
+
+		Depot.moveDepotLanguagesToAvailable();
+
+		LanguagePortlet.moveLanguagesToCurrent(currentLanguages = "English (United States),Japanese (Japan),Spanish (Spain)");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoGeneral(depotName = "Test Depot Name");
+
+		Depot.viewLanguageOptionsInGeneral(currentLanguageList = "en_US,ja_JP,es_ES");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		Depot.viewLanguageOptionsInWebContent(currentLanguageList = "en_US,ja_JP,es_ES");
+	}
+
 }

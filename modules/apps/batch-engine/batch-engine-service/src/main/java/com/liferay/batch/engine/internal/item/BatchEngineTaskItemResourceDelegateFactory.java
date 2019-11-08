@@ -25,7 +25,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * @author Ivica cardic
+ * @author Ivica Cardic
  */
 public class BatchEngineTaskItemResourceDelegateFactory {
 

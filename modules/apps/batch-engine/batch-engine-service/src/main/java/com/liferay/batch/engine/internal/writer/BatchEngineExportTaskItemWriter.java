@@ -19,7 +19,7 @@ import java.io.Closeable;
 import java.util.Collection;
 
 /**
- * @author Ivica cardic
+ * @author Ivica Cardic
  */
 public interface BatchEngineExportTaskItemWriter extends Closeable {
 

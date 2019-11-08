@@ -35,7 +35,7 @@ import java.util.Map;
 import org.osgi.framework.ServiceObjects;
 
 /**
- * @author Ivica cardic
+ * @author Ivica Cardic
  */
 public class BatchEngineTaskItemResourceDelegate implements Closeable {
 

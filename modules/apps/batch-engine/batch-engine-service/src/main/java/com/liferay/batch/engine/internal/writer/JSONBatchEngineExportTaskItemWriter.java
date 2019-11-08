@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author Ivica cardic
+ * @author Ivica Cardic
  */
 public class JSONBatchEngineExportTaskItemWriter
 	implements BatchEngineExportTaskItemWriter {

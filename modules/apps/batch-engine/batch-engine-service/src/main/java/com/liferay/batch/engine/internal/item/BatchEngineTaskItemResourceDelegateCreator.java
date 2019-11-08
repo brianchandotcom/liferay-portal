@@ -22,7 +22,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * @author Ivica cardic
+ * @author Ivica Cardic
  */
 @FunctionalInterface
 public interface BatchEngineTaskItemResourceDelegateCreator {

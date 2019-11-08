@@ -34,7 +34,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
- * @author Ivica cardic
+ * @author Ivica Cardic
  */
 public class XLSBatchEngineExportTaskItemWriter
 	implements BatchEngineExportTaskItemWriter {

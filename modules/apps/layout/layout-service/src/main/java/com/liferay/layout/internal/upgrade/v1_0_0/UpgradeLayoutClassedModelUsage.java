@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.Date;
@@ -45,6 +46,12 @@ public class UpgradeLayoutClassedModelUsage extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_upgradeSchema();
+
+		_upgradeLayoutClassedModelUsage();
+	}
+
+	private void _upgradeLayoutClassedModelUsage() throws Exception {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("insert into LayoutClassedModelUsage (mvccVersion, uuid_, ");
@@ -88,6 +95,14 @@ public class UpgradeLayoutClassedModelUsage extends UpgradeProcess {
 
 			ps.executeBatch();
 		}
+	}
+
+	private void _upgradeSchema() throws Exception {
+		String template = StringUtil.read(
+			UpgradeLayoutClassedModelUsage.class.getResourceAsStream(
+				"dependencies/update.sql"));
+
+		runSQLTemplateString(template, false, false);
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;

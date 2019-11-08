@@ -1700,7 +1700,7 @@ public class PortletURLImpl
 	private static final Log _log = LogFactoryUtil.getLog(PortletURLImpl.class);
 
 	private static final Map<String, String> _cacheabilities =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"FULL", ResourceURL.FULL
 		).put(
 			"PAGE", ResourceURL.PAGE

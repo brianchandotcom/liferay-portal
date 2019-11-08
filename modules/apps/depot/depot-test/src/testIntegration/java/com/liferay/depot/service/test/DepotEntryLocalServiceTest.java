@@ -112,10 +112,10 @@ public class DepotEntryLocalServiceTest {
 
 		_depotEntryLocalService.updateDepotEntry(
 			depotEntry.getDepotEntryId(),
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newName"
 			).build(),
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newDescription"
 			).build(),
 			formTypeSettingsProperties,
@@ -146,12 +146,12 @@ public class DepotEntryLocalServiceTest {
 
 		_depotEntryLocalService.updateDepotEntry(
 			depotEntry.getDepotEntryId(),
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newName"
 			).put(
 				LocaleUtil.fromLanguageId("es_ES"), "nuevoNombre"
 			).build(),
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newDescription"
 			).put(
 				LocaleUtil.fromLanguageId("es_ES"), "nuevaDescripcion"
@@ -178,10 +178,10 @@ public class DepotEntryLocalServiceTest {
 
 		_depotEntryLocalService.updateDepotEntry(
 			depotEntry.getDepotEntryId(),
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newName"
 			).build(),
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newDescription"
 			).build(),
 			formTypeSettingsProperties,
@@ -214,7 +214,7 @@ public class DepotEntryLocalServiceTest {
 
 		_depotEntryLocalService.updateDepotEntry(
 			depotEntry.getDepotEntryId(),
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newName"
 			).build(),
 			new HashMap<>(), formTypeSettingsProperties,
@@ -255,12 +255,12 @@ public class DepotEntryLocalServiceTest {
 
 		_depotEntryLocalService.updateDepotEntry(
 			depotEntry.getDepotEntryId(),
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newName"
 			).put(
 				LocaleUtil.fromLanguageId("es_ES"), "nuevoNombre"
 			).build(),
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newDescription"
 			).put(
 				LocaleUtil.fromLanguageId("es_ES"), "descripcion"
@@ -273,10 +273,10 @@ public class DepotEntryLocalServiceTest {
 		throws Exception {
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.getDefault(), name
 			).build(),
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.getDefault(), description
 			).build(),
 			ServiceContextTestUtil.getServiceContext());

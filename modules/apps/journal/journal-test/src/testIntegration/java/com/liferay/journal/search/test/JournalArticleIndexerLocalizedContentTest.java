@@ -122,13 +122,13 @@ public class JournalArticleIndexerLocalizedContentTest {
 				}
 			});
 
-		Map<String, String> titleStrings = HashMapBuilder.<String, String>put(
+		Map<String, String> titleStrings = HashMapBuilder.put(
 			"title_en_US", originalTitle
 		).put(
 			"title_hu_HU", translatedTitle
 		).build();
 
-		Map<String, String> contentStrings = HashMapBuilder.<String, String>put(
+		Map<String, String> contentStrings = HashMapBuilder.put(
 			"content_en_US", originalContent
 		).put(
 			"content_hu_HU", translatedContent
@@ -377,7 +377,7 @@ public class JournalArticleIndexerLocalizedContentTest {
 				})
 		);
 
-		Map<String, String> titleStrings = HashMapBuilder.<String, String>put(
+		Map<String, String> titleStrings = HashMapBuilder.put(
 			"title_ja_JP", full
 		).build();
 

@@ -115,7 +115,7 @@ public class WorkflowContextUpgradeHelper {
 		WorkflowContextUpgradeHelper.class);
 
 	private static final Map<String, String> _classNamesMap =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"com.liferay.portal.model.Company",
 			"com.liferay.portal.kernel.model.Company"
 		).put(

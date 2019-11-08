@@ -871,7 +871,7 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		KaleoTaskInstanceTokenLocalServiceImpl.class);
 
 	private static final Map<String, String> _fieldNameOrderByCols =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"completed",
 			_getSortableFieldName(
 				KaleoTaskInstanceTokenField.COMPLETED, "String")
@@ -904,7 +904,7 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 			"userId", _getSortableFieldName(Field.USER_ID, "Number")
 		).build();
 	private static final Map<String, Integer> _fieldNameSortTypes =
-		HashMapBuilder.<String, Integer>put(
+		HashMapBuilder.put(
 			Field.CREATE_DATE, Sort.LONG_TYPE
 		).put(
 			Field.MODIFIED_DATE, Sort.LONG_TYPE

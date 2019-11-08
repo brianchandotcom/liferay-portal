@@ -78,7 +78,7 @@ public class SearchLocalizationHelperTest {
 
 	@Test
 	public void testAddLocalizedField() {
-		Map<Locale, String> map = HashMapBuilder.<Locale, String>put(
+		Map<Locale, String> map = HashMapBuilder.put(
 			LocaleUtil.BRAZIL, "exemplo"
 		).put(
 			LocaleUtil.SPAIN, "ejemplo"

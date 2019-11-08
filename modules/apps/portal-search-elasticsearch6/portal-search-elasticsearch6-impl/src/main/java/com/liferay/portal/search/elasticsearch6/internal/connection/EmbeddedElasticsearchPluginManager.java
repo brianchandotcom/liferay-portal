@@ -161,15 +161,14 @@ public class EmbeddedElasticsearchPluginManager {
 	private final String _pluginName;
 	private final String _pluginsPathString;
 	private final PluginZipFactory _pluginZipFactory;
-	private final Map<String, String> _pluginZipFileNames =
-		HashMapBuilder.<String, String>put(
-			"analysis-icu", "org.elasticsearch.plugin.analysis.icu"
-		).put(
-			"analysis-kuromoji", "org.elasticsearch.plugin.analysis.kuromoji"
-		).put(
-			"analysis-smartcn", "org.elasticsearch.plugin.analysis.smartcn"
-		).put(
-			"analysis-stempel", "org.elasticsearch.plugin.analysis.stempel"
-		).build();
+	private final Map<String, String> _pluginZipFileNames = HashMapBuilder.put(
+		"analysis-icu", "org.elasticsearch.plugin.analysis.icu"
+	).put(
+		"analysis-kuromoji", "org.elasticsearch.plugin.analysis.kuromoji"
+	).put(
+		"analysis-smartcn", "org.elasticsearch.plugin.analysis.smartcn"
+	).put(
+		"analysis-stempel", "org.elasticsearch.plugin.analysis.stempel"
+	).build();
 
 }

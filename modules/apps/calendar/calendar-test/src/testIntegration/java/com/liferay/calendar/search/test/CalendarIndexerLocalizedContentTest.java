@@ -87,7 +87,7 @@ public class CalendarIndexerLocalizedContentTest
 				}
 			});
 
-		Map<String, String> nameMap = HashMapBuilder.<String, String>put(
+		Map<String, String> nameMap = HashMapBuilder.put(
 			"name", originalName
 		).put(
 			"name_en_US", originalName
@@ -95,7 +95,7 @@ public class CalendarIndexerLocalizedContentTest
 			"name_ja_JP", japaneseName
 		).build();
 
-		Map<String, String> descriptionMap = HashMapBuilder.<String, String>put(
+		Map<String, String> descriptionMap = HashMapBuilder.put(
 			"description", description
 		).put(
 			"description_en_US", description
@@ -154,7 +154,7 @@ public class CalendarIndexerLocalizedContentTest
 				})
 		);
 
-		Map<String, String> nameMap = HashMapBuilder.<String, String>put(
+		Map<String, String> nameMap = HashMapBuilder.put(
 			"name", originalName
 		).put(
 			"name_en_US", originalName

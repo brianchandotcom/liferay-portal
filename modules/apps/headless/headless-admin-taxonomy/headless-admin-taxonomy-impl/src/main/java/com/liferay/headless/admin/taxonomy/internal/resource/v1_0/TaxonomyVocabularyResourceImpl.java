@@ -508,7 +508,7 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	private static final Map<String, String> _assetTypeTypeToClassNames =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"BlogPosting", "com.liferay.blogs.model.BlogsEntry"
 		).put(
 			"Document", "com.liferay.document.library.kernel.model.DLFileEntry"

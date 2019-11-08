@@ -49,7 +49,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"createDate1", "createDate"
 				).put(
 					"description1", "description"
@@ -59,7 +59,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 					"name1", "name"
 				).build(),
 				jsonBatchEngineImportTaskItemReader.read(),
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"en", "sample name"
 				).put(
 					"hr", "naziv"
@@ -85,7 +85,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"createDate1", "createDate"
 				).put(
 					"description1", "description"
@@ -114,7 +114,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"createDate1", "createDate"
 				).put(
 					"description1", "description"
@@ -146,7 +146,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 			try {
 				validate(
 					createDateString, "sample description", null,
-					HashMapBuilder.<String, String>put(
+					HashMapBuilder.put(
 						"createDate1", "description"
 					).put(
 						"description1", "createDate"
@@ -156,7 +156,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 						"name1", "name"
 					).build(),
 					jsonBatchEngineImportTaskItemReader.read(),
-					HashMapBuilder.<String, String>put(
+					HashMapBuilder.put(
 						"en", "sample name"
 					).put(
 						"hr", "naziv"
@@ -188,7 +188,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 					createDateString, "sample description", null,
 					Collections.emptyMap(),
 					jsonBatchEngineImportTaskItemReader.read(),
-					HashMapBuilder.<String, String>put(
+					HashMapBuilder.put(
 						"en", "sample name"
 					).put(
 						"hr", "naziv"
@@ -229,7 +229,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 					createDateString, "sample description " + rowCount,
 					rowCount, Collections.emptyMap(),
 					jsonBatchEngineImportTaskItemReader.read(),
-					HashMapBuilder.<String, String>put(
+					HashMapBuilder.put(
 						"en", "sample name " + rowCount
 					).put(
 						"hr", "naziv " + rowCount
@@ -256,7 +256,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 				createDateString, "hey, here is comma inside", 1L,
 				Collections.emptyMap(),
 				jsonBatchEngineImportTaskItemReader.read(),
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"en", "sample name"
 				).put(
 					"hr", "naziv"
@@ -299,7 +299,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 			validate(
 				createDateString, null, 1L, Collections.emptyMap(),
 				jsonBatchEngineImportTaskItemReader.read(),
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"hr", "naziv 1"
 				).build());
 
@@ -307,7 +307,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 				createDateString, "sample description 2", 2L,
 				Collections.emptyMap(),
 				jsonBatchEngineImportTaskItemReader.read(),
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"en", "sample name 2"
 				).put(
 					"hr", "naziv 2"

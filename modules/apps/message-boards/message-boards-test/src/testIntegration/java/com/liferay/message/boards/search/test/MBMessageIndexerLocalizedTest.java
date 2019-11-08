@@ -95,7 +95,7 @@ public class MBMessageIndexerLocalizedTest {
 
 		Document document = _search(searchTerm, LocaleUtil.JAPAN);
 
-		Map<String, String> titleStrings = HashMapBuilder.<String, String>put(
+		Map<String, String> titleStrings = HashMapBuilder.put(
 			Field.CONTENT + "_ja_JP", "諸行無常"
 		).build();
 
@@ -121,7 +121,7 @@ public class MBMessageIndexerLocalizedTest {
 
 		Document document = _search(searchTerm, LocaleUtil.JAPAN);
 
-		Map<String, String> titleStrings = HashMapBuilder.<String, String>put(
+		Map<String, String> titleStrings = HashMapBuilder.put(
 			Field.TITLE + "_ja_JP", "東京都"
 		).build();
 

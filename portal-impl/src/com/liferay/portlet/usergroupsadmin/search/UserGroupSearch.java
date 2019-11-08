@@ -50,12 +50,11 @@ public class UserGroupSearch extends SearchContainer<UserGroup> {
 			add("description");
 		}
 	};
-	public static Map<String, String> orderableHeaders =
-		HashMapBuilder.<String, String>put(
-			"description", "description"
-		).put(
-			"name", "name"
-		).build();
+	public static Map<String, String> orderableHeaders = HashMapBuilder.put(
+		"description", "description"
+	).put(
+		"name", "name"
+	).build();
 
 	public UserGroupSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

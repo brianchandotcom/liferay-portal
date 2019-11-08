@@ -145,7 +145,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		JournalTemplateHandler.class);
 
 	private static final Map<String, String> _templatesHelpPaths =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"css",
 			"com/liferay/journal/web/portlet/template/dependencies" +
 				"/template.css"

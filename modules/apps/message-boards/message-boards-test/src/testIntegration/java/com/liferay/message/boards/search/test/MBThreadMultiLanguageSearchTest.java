@@ -139,7 +139,7 @@ public class MBThreadMultiLanguageSearchTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private Map<String, String> _getResultMap(MBThread mbThread) {
-		return HashMapBuilder.<String, String>put(
+		return HashMapBuilder.put(
 			Field.ENTRY_CLASS_PK, String.valueOf(mbThread.getThreadId())
 		).build();
 	}

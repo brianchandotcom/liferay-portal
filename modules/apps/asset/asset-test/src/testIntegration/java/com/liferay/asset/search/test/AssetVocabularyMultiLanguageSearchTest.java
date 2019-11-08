@@ -83,7 +83,7 @@ public class AssetVocabularyMultiLanguageSearchTest {
 
 		_addAssetVocabularyMultiLanguage();
 
-		Map<String, String> descriptionMap = HashMapBuilder.<String, String>put(
+		Map<String, String> descriptionMap = HashMapBuilder.put(
 			"description", _ENGLISH_DESCRIPTION
 		).put(
 			"description_en_US", _ENGLISH_DESCRIPTION
@@ -103,7 +103,7 @@ public class AssetVocabularyMultiLanguageSearchTest {
 
 		_addAssetVocabularyMultiLanguage();
 
-		Map<String, String> titleMap = HashMapBuilder.<String, String>put(
+		Map<String, String> titleMap = HashMapBuilder.put(
 			"title", _ENGLISH_TITLE
 		).put(
 			"title_en_US", _ENGLISH_TITLE
@@ -130,7 +130,7 @@ public class AssetVocabularyMultiLanguageSearchTest {
 
 		_addAssetVocabularyMultiLanguage();
 
-		Map<String, String> descriptionMap = HashMapBuilder.<String, String>put(
+		Map<String, String> descriptionMap = HashMapBuilder.put(
 			"description", _JAPANESE_DESCRIPTION
 		).put(
 			"description_en_US", _ENGLISH_DESCRIPTION
@@ -157,7 +157,7 @@ public class AssetVocabularyMultiLanguageSearchTest {
 
 		_addAssetVocabularyMultiLanguage();
 
-		Map<String, String> titleMap = HashMapBuilder.<String, String>put(
+		Map<String, String> titleMap = HashMapBuilder.put(
 			"title", _JAPANESE_TITLE
 		).put(
 			"title_en_US", _ENGLISH_TITLE

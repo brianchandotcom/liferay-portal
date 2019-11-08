@@ -143,7 +143,7 @@ public class UpgradePortalPreferences extends RenameUpgradePortalPreferences {
 
 	private static final Pattern _idPattern = Pattern.compile("[0-9]+");
 	private static final Map<String, String> _newPreferencePatternsMap =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"color",
 			_NAMESPACE_NEW_SESSION_CLICKS +
 				"com.liferay.calendar.web_calendar{calendarId}Color"

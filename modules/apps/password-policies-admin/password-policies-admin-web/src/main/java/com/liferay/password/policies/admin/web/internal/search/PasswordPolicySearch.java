@@ -49,12 +49,11 @@ public class PasswordPolicySearch extends SearchContainer<PasswordPolicy> {
 			add("description");
 		}
 	};
-	public static Map<String, String> orderableHeaders =
-		HashMapBuilder.<String, String>put(
-			"description", "description"
-		).put(
-			"name", "name"
-		).build();
+	public static Map<String, String> orderableHeaders = HashMapBuilder.put(
+		"description", "description"
+	).put(
+		"name", "name"
+	).build();
 
 	public PasswordPolicySearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

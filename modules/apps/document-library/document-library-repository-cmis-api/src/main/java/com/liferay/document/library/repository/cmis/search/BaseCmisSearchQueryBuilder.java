@@ -500,20 +500,19 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCmisSearchQueryBuilder.class);
 
-	private static final Map<String, String> _cmisFields =
-		HashMapBuilder.<String, String>put(
-			Field.CREATE_DATE, "cmis:creationDate"
-		).put(
-			Field.MODIFIED_DATE, "cmis:lastModificationDate"
-		).put(
-			Field.NAME, "cmis:name"
-		).put(
-			Field.TITLE, "cmis:name"
-		).put(
-			Field.USER_ID, "cmis:createdBy"
-		).put(
-			Field.USER_NAME, "cmis:createdBy"
-		).build();
+	private static final Map<String, String> _cmisFields = HashMapBuilder.put(
+		Field.CREATE_DATE, "cmis:creationDate"
+	).put(
+		Field.MODIFIED_DATE, "cmis:lastModificationDate"
+	).put(
+		Field.NAME, "cmis:name"
+	).put(
+		Field.TITLE, "cmis:name"
+	).put(
+		Field.USER_ID, "cmis:createdBy"
+	).put(
+		Field.USER_NAME, "cmis:createdBy"
+	).build();
 	private static final Set<String> _supportedFields = new HashSet<>(
 		Arrays.asList(
 			Field.CREATE_DATE, Field.FOLDER_ID, Field.MODIFIED_DATE, Field.NAME,

@@ -215,7 +215,7 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 
 		String content = _journalConverter.getContent(ddmStructure, fields);
 
-		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+		Map<Locale, String> titleMap = HashMapBuilder.put(
 			LocaleUtil.fromLanguageId(
 				LocalizationUtil.getDefaultLanguageId(content)),
 			title

@@ -85,7 +85,7 @@ public class BookmarksEntryMultiLanguageSearchTest {
 
 		bookmarksFixture.createBookmarksEntry(keyWords);
 
-		Map<String, String> map = HashMapBuilder.<String, String>put(
+		Map<String, String> map = HashMapBuilder.put(
 			_PREFIX, keyWords
 		).put(
 			_PREFIX + "_sortable", keyWords
@@ -104,7 +104,7 @@ public class BookmarksEntryMultiLanguageSearchTest {
 
 		bookmarksFixture.createBookmarksEntry(keyWords);
 
-		Map<String, String> map = HashMapBuilder.<String, String>put(
+		Map<String, String> map = HashMapBuilder.put(
 			_PREFIX, keyWords
 		).put(
 			_PREFIX + "_sortable", keyWords
@@ -123,7 +123,7 @@ public class BookmarksEntryMultiLanguageSearchTest {
 
 		bookmarksFixture.createBookmarksEntry(keyWords);
 
-		Map<String, String> map = HashMapBuilder.<String, String>put(
+		Map<String, String> map = HashMapBuilder.put(
 			_PREFIX, keyWords
 		).put(
 			_PREFIX + "_sortable", keyWords

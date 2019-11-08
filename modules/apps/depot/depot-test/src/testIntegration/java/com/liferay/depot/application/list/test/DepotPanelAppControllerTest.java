@@ -38,7 +38,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -68,7 +67,7 @@ public class DepotPanelAppControllerTest {
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "name"
 			).build(),
 			new HashMap<>(), ServiceContextTestUtil.getServiceContext());

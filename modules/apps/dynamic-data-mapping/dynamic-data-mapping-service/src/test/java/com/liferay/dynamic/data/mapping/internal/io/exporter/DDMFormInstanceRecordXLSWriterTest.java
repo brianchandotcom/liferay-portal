@@ -200,17 +200,15 @@ public class DDMFormInstanceRecordXLSWriterTest extends PowerMockito {
 		List<Map<String, String>> ddmFormFieldValues =
 			new ArrayList<Map<String, String>>() {
 				{
-					Map<String, String> map1 =
-						HashMapBuilder.<String, String>put(
-							"field1", "2"
-						).build();
+					Map<String, String> map1 = HashMapBuilder.put(
+						"field1", "2"
+					).build();
 
 					add(map1);
 
-					Map<String, String> map2 =
-						HashMapBuilder.<String, String>put(
-							"field1", "1"
-						).build();
+					Map<String, String> map2 = HashMapBuilder.put(
+						"field1", "1"
+					).build();
 
 					add(map2);
 				}

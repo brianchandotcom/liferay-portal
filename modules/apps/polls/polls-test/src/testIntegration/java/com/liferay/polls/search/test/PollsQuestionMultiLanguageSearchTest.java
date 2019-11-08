@@ -138,12 +138,12 @@ public class PollsQuestionMultiLanguageSearchTest {
 
 	private void _createPollsQuestionMultiLanguage() throws Exception {
 		pollsQuestionFixture.createPollsQuestion(
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.JAPAN, _KEYWORD_JP
 			).put(
 				LocaleUtil.US, _KEYWORD_US
 			).build(),
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.JAPAN, _KEYWORD_JP
 			).put(
 				LocaleUtil.US, _KEYWORD_US

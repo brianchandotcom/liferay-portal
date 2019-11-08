@@ -166,7 +166,7 @@ public abstract class BaseTinyMCEEditorConfigContributor
 		"font[face|size|color|style],span[class|align|style]");
 
 	private static final Map<String, String> _tinyMCELanguages =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"ar_SA", "ar"
 		).put(
 			"bg_BG", "bg_BG"

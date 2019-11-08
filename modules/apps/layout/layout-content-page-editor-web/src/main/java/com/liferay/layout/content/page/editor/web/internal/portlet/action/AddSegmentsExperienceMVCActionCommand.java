@@ -203,7 +203,7 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		return _segmentsExperienceService.addSegmentsExperience(
 			segmentsEntryId, classNameId, classPK,
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(),
 				ParamUtil.getString(actionRequest, "name")
 			).build(),

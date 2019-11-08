@@ -51,7 +51,7 @@ public abstract class BaseUpgradeSaml extends UpgradeProcess {
 	}
 
 	private static final Map<String, String> _defaultValues =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			LegacySamlPropsKeys.SAML_IDP_ASSERTION_LIFETIME, "1800"
 		).put(
 			LegacySamlPropsKeys.SAML_IDP_METADATA_NAME_ID_ATTRIBUTE,

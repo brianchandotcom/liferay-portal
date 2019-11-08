@@ -322,7 +322,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 	}
 
 	private static final Map<String, Integer> _parameterTypesWeightMap =
-		HashMapBuilder.<String, Integer>put(
+		HashMapBuilder.put(
 			"cookie", 4
 		).put(
 			"header", 3
@@ -334,7 +334,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 	private static final Pattern _pathPattern = Pattern.compile(
 		"(?<=\n)( *)\"([^{}\"]*\\{[^}]+\\}[^{}\"]*){2,}\":(\n\\1 .*)*");
 	private static final Map<String, Integer> _specialQueriesKeyWeightMap =
-		HashMapBuilder.<String, Integer>put(
+		HashMapBuilder.put(
 			"filter", 1
 		).put(
 			"page", 2

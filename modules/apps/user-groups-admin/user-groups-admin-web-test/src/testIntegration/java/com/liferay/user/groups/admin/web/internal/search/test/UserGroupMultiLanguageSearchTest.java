@@ -127,7 +127,7 @@ public class UserGroupMultiLanguageSearchTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private Map<String, String> _getMapResult(String keywords) {
-		return HashMapBuilder.<String, String>put(
+		return HashMapBuilder.put(
 			_NAME, keywords
 		).put(
 			_NAME + StringPool.UNDERLINE + Field.SORTABLE_FIELD_SUFFIX, keywords

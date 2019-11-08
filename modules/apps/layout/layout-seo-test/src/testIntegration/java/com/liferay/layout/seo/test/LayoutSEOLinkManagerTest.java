@@ -268,14 +268,13 @@ public class LayoutSEOLinkManagerTest {
 		"com.liferay.layout.seo.internal.configuration." +
 			"LayoutSEOCompanyConfiguration";
 
-	private final Map<Locale, String> _alternateURLs =
-		HashMapBuilder.<Locale, String>put(
-			LocaleUtil.GERMAN, "germanURL"
-		).put(
-			LocaleUtil.SPAIN, "spanishURL"
-		).put(
-			LocaleUtil.US, _CANONICAL_URL
-		).build();
+	private final Map<Locale, String> _alternateURLs = HashMapBuilder.put(
+		LocaleUtil.GERMAN, "germanURL"
+	).put(
+		LocaleUtil.SPAIN, "spanishURL"
+	).put(
+		LocaleUtil.US, _CANONICAL_URL
+	).build();
 	private Layout _layout;
 
 	@Inject

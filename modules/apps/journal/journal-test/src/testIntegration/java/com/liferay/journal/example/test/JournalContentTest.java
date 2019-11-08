@@ -114,7 +114,7 @@ public class JournalContentTest {
 	}
 
 	protected static String getXML() {
-		Map<Locale, String> content = HashMapBuilder.<Locale, String>put(
+		Map<Locale, String> content = HashMapBuilder.put(
 			LocaleUtil.US, "example"
 		).build();
 

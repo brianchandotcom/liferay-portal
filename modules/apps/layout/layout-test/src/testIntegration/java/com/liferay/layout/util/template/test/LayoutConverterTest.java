@@ -97,16 +97,15 @@ public class LayoutConverterTest {
 
 	@Test
 	public void testConvertOneColumnMultiplePortlets() throws Exception {
-		Map<String, String[]> portletIdsMap =
-			HashMapBuilder.<String, String[]>put(
-				"column-1",
-				new String[] {
-					"com_liferay_hello_velocity_web_portlet_" +
-						"HelloVelocityPortlet",
-					"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
-					"hello_soy_portlet"
-				}
-			).build();
+		Map<String, String[]> portletIdsMap = HashMapBuilder.put(
+			"column-1",
+			new String[] {
+				"com_liferay_hello_velocity_web_portlet_" +
+					"HelloVelocityPortlet",
+				"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
+				"hello_soy_portlet"
+			}
+		).build();
 
 		List<Map<String, String[]>> portletIdsMaps =
 			new ArrayList<Map<String, String[]>>() {
@@ -125,13 +124,12 @@ public class LayoutConverterTest {
 
 	@Test
 	public void testConvertOneColumnSinglePortlet() throws Exception {
-		Map<String, String[]> portletIdsMap =
-			HashMapBuilder.<String, String[]>put(
-				"column-1",
-				new String[] {
-					"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
-				}
-			).build();
+		Map<String, String[]> portletIdsMap = HashMapBuilder.put(
+			"column-1",
+			new String[] {
+				"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
+			}
+		).build();
 
 		List<Map<String, String[]>> portletIdsMaps =
 			new ArrayList<Map<String, String[]>>() {

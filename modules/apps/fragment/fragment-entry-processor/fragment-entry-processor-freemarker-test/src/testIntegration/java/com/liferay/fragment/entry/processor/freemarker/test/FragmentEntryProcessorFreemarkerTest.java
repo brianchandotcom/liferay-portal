@@ -159,13 +159,13 @@ public class FragmentEntryProcessorFreemarkerTest {
 	public void testProcessFragmentEntryLinkHTMLWithConfigurationItemSelector()
 		throws Exception {
 
-		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+		Map<Locale, String> titleMap = HashMapBuilder.put(
 			LocaleUtil.SPAIN, "t1-es"
 		).put(
 			LocaleUtil.US, "t1"
 		).build();
 
-		Map<Locale, String> contentMap = HashMapBuilder.<Locale, String>put(
+		Map<Locale, String> contentMap = HashMapBuilder.put(
 			LocaleUtil.SPAIN, "c1-es"
 		).put(
 			LocaleUtil.US, "c1"
@@ -181,12 +181,11 @@ public class FragmentEntryProcessorFreemarkerTest {
 			contentMap, LocaleUtil.getSiteDefault(), false, true,
 			serviceContext);
 
-		Map<String, String> configurationDefaultValues =
-			HashMapBuilder.<String, String>put(
-				"classNameId", String.valueOf(journalArticle.getClassNameId())
-			).put(
-				"classPK", String.valueOf(journalArticle.getResourcePrimKey())
-			).build();
+		Map<String, String> configurationDefaultValues = HashMapBuilder.put(
+			"classNameId", String.valueOf(journalArticle.getClassNameId())
+		).put(
+			"classPK", String.valueOf(journalArticle.getResourcePrimKey())
+		).build();
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			"fragment_entry_with_configuration_itemselector.html",
@@ -212,7 +211,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, defaultFragmentEntryProcessorContext));
 
-		Map<String, String> expectedValues = HashMapBuilder.<String, String>put(
+		Map<String, String> expectedValues = HashMapBuilder.put(
 			"classNameId", String.valueOf(journalArticle.getClassNameId())
 		).put(
 			"classPK", String.valueOf(journalArticle.getResourcePrimKey())
@@ -239,25 +238,25 @@ public class FragmentEntryProcessorFreemarkerTest {
 	public void testProcessFragmentEntryLinkHTMLWithConfigurationItemSelectorNondefaultSegmentId()
 		throws Exception {
 
-		Map<Locale, String> titleMap = HashMapBuilder.<Locale, String>put(
+		Map<Locale, String> titleMap = HashMapBuilder.put(
 			LocaleUtil.SPAIN, RandomTestUtil.randomString(10)
 		).put(
 			LocaleUtil.US, RandomTestUtil.randomString(10)
 		).build();
 
-		Map<Locale, String> contentMap = HashMapBuilder.<Locale, String>put(
+		Map<Locale, String> contentMap = HashMapBuilder.put(
 			LocaleUtil.SPAIN, RandomTestUtil.randomString(10)
 		).put(
 			LocaleUtil.US, RandomTestUtil.randomString(10)
 		).build();
 
-		Map<Locale, String> titleMap2 = HashMapBuilder.<Locale, String>put(
+		Map<Locale, String> titleMap2 = HashMapBuilder.put(
 			LocaleUtil.SPAIN, "t2-es"
 		).put(
 			LocaleUtil.US, "t2"
 		).build();
 
-		Map<Locale, String> contentMap2 = HashMapBuilder.<Locale, String>put(
+		Map<Locale, String> contentMap2 = HashMapBuilder.put(
 			LocaleUtil.SPAIN, "c2-es"
 		).put(
 			LocaleUtil.US, "c2"
@@ -279,19 +278,17 @@ public class FragmentEntryProcessorFreemarkerTest {
 			contentMap2, LocaleUtil.getSiteDefault(), false, true,
 			serviceContext);
 
-		Map<String, String> configurationDefaultValues =
-			HashMapBuilder.<String, String>put(
-				"classNameId", String.valueOf(journalArticle1.getClassNameId())
-			).put(
-				"classPK", String.valueOf(journalArticle1.getResourcePrimKey())
-			).build();
+		Map<String, String> configurationDefaultValues = HashMapBuilder.put(
+			"classNameId", String.valueOf(journalArticle1.getClassNameId())
+		).put(
+			"classPK", String.valueOf(journalArticle1.getResourcePrimKey())
+		).build();
 
-		Map<String, String> editableValuesValues =
-			HashMapBuilder.<String, String>put(
-				"classNameId", String.valueOf(journalArticle2.getClassNameId())
-			).put(
-				"classPK", String.valueOf(journalArticle2.getResourcePrimKey())
-			).build();
+		Map<String, String> editableValuesValues = HashMapBuilder.put(
+			"classNameId", String.valueOf(journalArticle2.getClassNameId())
+		).put(
+			"classPK", String.valueOf(journalArticle2.getResourcePrimKey())
+		).build();
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			"fragment_entry_with_configuration_itemselector.html",
@@ -321,7 +318,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, defaultFragmentEntryProcessorContext));
 
-		Map<String, String> expectedValues = HashMapBuilder.<String, String>put(
+		Map<String, String> expectedValues = HashMapBuilder.put(
 			"classNameId", String.valueOf(journalArticle2.getClassNameId())
 		).put(
 			"classPK", String.valueOf(journalArticle2.getResourcePrimKey())

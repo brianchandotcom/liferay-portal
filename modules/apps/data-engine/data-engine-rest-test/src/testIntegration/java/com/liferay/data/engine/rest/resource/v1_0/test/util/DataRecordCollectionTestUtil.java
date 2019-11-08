@@ -50,7 +50,7 @@ public class DataRecordCollectionTestUtil {
 			ResourceLocalService resourceLocalService, int scope)
 		throws Exception {
 
-		Map<Locale, String> nameMap = HashMapBuilder.<Locale, String>put(
+		Map<Locale, String> nameMap = HashMapBuilder.put(
 			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
 

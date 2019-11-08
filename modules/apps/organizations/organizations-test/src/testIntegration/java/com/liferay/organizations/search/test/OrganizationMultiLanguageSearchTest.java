@@ -179,7 +179,7 @@ public class OrganizationMultiLanguageSearchTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private Map<String, String> _getMapResult(String keywords) {
-		return HashMapBuilder.<String, String>put(
+		return HashMapBuilder.put(
 			"name", keywords
 		).put(
 			"name_sortable", keywords

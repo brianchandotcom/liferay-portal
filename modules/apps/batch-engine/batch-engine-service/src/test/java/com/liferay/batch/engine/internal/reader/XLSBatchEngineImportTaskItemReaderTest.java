@@ -58,7 +58,7 @@ public class XLSBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"createDate1", "createDate"
 				).put(
 					"description1", "description"
@@ -68,7 +68,7 @@ public class XLSBatchEngineImportTaskItemReaderTest
 					"name1", "name"
 				).build(),
 				xlsBatchEngineImportTaskItemReader.read(),
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"en", "sample name"
 				).put(
 					"hr", "naziv"
@@ -94,7 +94,7 @@ public class XLSBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"createDate1", "createDate"
 				).put(
 					"description1", "description"
@@ -123,7 +123,7 @@ public class XLSBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"createDate1", "createDate"
 				).put(
 					"description1", "description"
@@ -155,7 +155,7 @@ public class XLSBatchEngineImportTaskItemReaderTest
 			try {
 				validate(
 					createDateString, "sample description", null,
-					HashMapBuilder.<String, String>put(
+					HashMapBuilder.put(
 						"createDate1", "description"
 					).put(
 						"description1", "createDate"
@@ -165,7 +165,7 @@ public class XLSBatchEngineImportTaskItemReaderTest
 						"name1", "name"
 					).build(),
 					xlsBatchEngineImportTaskItemReader.read(),
-					HashMapBuilder.<String, String>put(
+					HashMapBuilder.put(
 						"en", "sample name"
 					).put(
 						"hr", "naziv"
@@ -225,7 +225,7 @@ public class XLSBatchEngineImportTaskItemReaderTest
 					createDateString, "sample description " + rowCount,
 					rowCount, Collections.emptyMap(),
 					xlsBatchEngineImportTaskItemReader.read(),
-					HashMapBuilder.<String, String>put(
+					HashMapBuilder.put(
 						"en", "sample name " + rowCount
 					).put(
 						"hr", "naziv " + rowCount
@@ -251,7 +251,7 @@ public class XLSBatchEngineImportTaskItemReaderTest
 				createDateString, "hey, here is comma inside", 1L,
 				Collections.emptyMap(),
 				xlsBatchEngineImportTaskItemReader.read(),
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"en", "sample name"
 				).put(
 					"hr", "naziv"
@@ -289,7 +289,7 @@ public class XLSBatchEngineImportTaskItemReaderTest
 			validate(
 				createDateString, null, 1L, Collections.emptyMap(),
 				xlsBatchEngineImportTaskItemReader.read(),
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"en", null
 				).put(
 					"hr", "naziv"
@@ -299,7 +299,7 @@ public class XLSBatchEngineImportTaskItemReaderTest
 				createDateString, "sample description 2", 2L,
 				Collections.emptyMap(),
 				xlsBatchEngineImportTaskItemReader.read(),
-				HashMapBuilder.<String, String>put(
+				HashMapBuilder.put(
 					"en", "sample name 2"
 				).put(
 					"hr", "naziv 2"

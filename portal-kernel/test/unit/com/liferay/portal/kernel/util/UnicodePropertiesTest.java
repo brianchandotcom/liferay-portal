@@ -126,7 +126,7 @@ public class UnicodePropertiesTest {
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 		unicodeProperties.putAll(
-			HashMapBuilder.<String, String>put(
+			HashMapBuilder.put(
 				_TEST_KEY_1, _TEST_VALUE_1
 			).put(
 				_TEST_KEY_2, _TEST_VALUE_2

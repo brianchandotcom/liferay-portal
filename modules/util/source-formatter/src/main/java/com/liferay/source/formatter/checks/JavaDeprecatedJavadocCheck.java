@@ -193,7 +193,7 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 			"(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
 	private static final Map<String, String> _releaseInfoMap =
-		HashMapBuilder.<String, String>put(
+		HashMapBuilder.put(
 			"Athanasius", "7.3.x"
 		).put(
 			"Bunyan", "6.0.x"

@@ -147,7 +147,7 @@ public abstract class ExtRepositoryObjectAdapter<T>
 	}
 
 	private static final Map<String, Boolean> _unsupportedActionIds =
-		HashMapBuilder.<String, Boolean>put(
+		HashMapBuilder.put(
 			ActionKeys.OVERRIDE_CHECKOUT, Boolean.FALSE
 		).put(
 			ActionKeys.SUBSCRIBE, Boolean.FALSE

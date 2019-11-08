@@ -190,23 +190,26 @@
 			var itemSelectorDialog = instance._itemSelectorDialog;
 
 			if (itemSelectorDialog) {
-				itemSelectorDialog.set('eventName', eventName);
-				itemSelectorDialog.set('url', url);
-				itemSelectorDialog.set('zIndex', CKEDITOR.getNextZIndex());
+				itemSelectorDialog.eventName = eventName;
+				itemSelectorDialog.url = url;
+				itemSelectorDialog.zIndex = CKEDITOR.getNextZIndex();
 
 				callback(itemSelectorDialog);
 			} else {
-				AUI().use('liferay-item-selector-dialog', A => {
-					itemSelectorDialog = new A.LiferayItemSelectorDialog({
-						eventName,
-						url,
-						zIndex: CKEDITOR.getNextZIndex()
-					});
+				Liferay.Loader.require(
+					'frontend-js-web/liferay/ItemSelectorDialog.es',
+					function(ItemSelectorDialog) {
+						itemSelectorDialog = new ItemSelectorDialog.default({
+							eventName,
+							url,
+							zIndex: CKEDITOR.getNextZIndex()
+						});
 
-					instance._itemSelectorDialog = itemSelectorDialog;
+						instance._itemSelectorDialog = itemSelectorDialog;
 
-					callback(itemSelectorDialog);
-				});
+						callback(itemSelectorDialog);
+					}
+				);
 			}
 		},
 
@@ -241,7 +244,7 @@
 		_onSelectedAudioChange(editor, callback, event) {
 			var instance = this;
 
-			var selectedItem = event.newVal;
+			var selectedItem = event.selectedItem;
 
 			if (selectedItem) {
 				var audioSrc = instance._getItemSrc(editor, selectedItem);
@@ -259,7 +262,7 @@
 		_onSelectedImageChange(editor, callback, event) {
 			var instance = this;
 
-			var selectedItem = event.newVal;
+			var selectedItem = event.selectedItem;
 
 			if (selectedItem) {
 				var eventName = editor.name + 'selectItem';
@@ -318,7 +321,7 @@
 		},
 
 		_onSelectedLinkChange(editor, callback, event) {
-			var selectedItem = event.newVal;
+			var selectedItem = event.selectedItem;
 
 			if (selectedItem) {
 				var eventName = editor.name + 'selectItem';
@@ -336,7 +339,7 @@
 		_onSelectedVideoChange(editor, callback, event) {
 			var instance = this;
 
-			var selectedItem = event.newVal;
+			var selectedItem = event.selectedItem;
 
 			if (selectedItem) {
 				var videoSrc = instance._getItemSrc(editor, selectedItem);

@@ -32,6 +32,18 @@ $c: '.workflow-process-dashboard';
 				padding: 0.5rem !important;
 			}
 		}
+
+		.panel-footer {
+			&.fixed-bottom {
+				bottom: 0;
+				position: absolute;
+				right: 0;
+			}
+		}
+
+		&.dashboard-card {
+			height: 504px;
+		}
 	}
 
 	.process-dashboard-summary-card {

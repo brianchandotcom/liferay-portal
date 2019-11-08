@@ -67,8 +67,9 @@ public class DepotEntryGroupRelLocalServiceImpl
 	}
 
 	@Override
-	public List<DepotEntryGroupRel> getDepotEntryGroupRels(long groupId) {
-		return depotEntryGroupRelPersistence.findByToGroupId(groupId);
+	public List<DepotEntryGroupRel> getDepotEntryGroupRels(
+			long groupId, int start, int end) {
+		return depotEntryGroupRelPersistence.findByToGroupId(groupId, start, end);
 	}
 
 }

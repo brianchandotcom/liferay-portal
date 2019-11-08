@@ -165,19 +165,19 @@ else {
 
 			<ul class="dropdown-menu dropdown-menu-right" role="menu">
 				<li>
-					<a href="javascript:;" id="manageLayoutSetRevisions" onclick="<%= renderResponse.getNamespace() + "openSitePagesVariationsDialog();" %>">
+					<a class="dropdown-item" href="javascript:;" id="manageLayoutSetRevisions" onclick="<%= renderResponse.getNamespace() + "openSitePagesVariationsDialog();" %>">
 						<liferay-ui:message key="site-pages-variation" />
 					</a>
 				</li>
 
 				<c:if test="<%= !layoutRevision.isIncomplete() %>">
 					<li>
-						<a href="javascript:;" id="manageLayoutRevisions" onclick="<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>">
+						<a class="dropdown-item" href="javascript:;" id="manageLayoutRevisions" onclick="<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>">
 							<liferay-ui:message key="page-variations" />
 						</a>
 					</li>
 					<li>
-						<a href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>viewHistory', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);" id="viewHistoryLink">
+						<a class="dropdown-item" href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>viewHistory', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);" id="viewHistoryLink">
 							<liferay-ui:message key="history" />
 						</a>
 					</li>
@@ -186,7 +186,7 @@ else {
 				<c:if test="<%= !hasWorkflowTask %>">
 					<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
 						<li>
-							<a href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>undo', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);" id="undoLink">
+							<a class="dropdown-item" href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>undo', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);" id="undoLink">
 								<liferay-ui:message key="undo" />
 							</a>
 						</li>
@@ -203,7 +203,7 @@ else {
 						%>
 
 						<li>
-							<a href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>redo', {layoutRevisionId: '<%= firstChildLayoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= firstChildLayoutRevision.getLayoutSetBranchId() %>'}); void(0);" id="redoLink">
+							<a class="dropdown-item" href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>redo', {layoutRevisionId: '<%= firstChildLayoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= firstChildLayoutRevision.getLayoutSetBranchId() %>'}); void(0);" id="redoLink">
 								<liferay-ui:message key="redo" />
 							</a>
 						</li>

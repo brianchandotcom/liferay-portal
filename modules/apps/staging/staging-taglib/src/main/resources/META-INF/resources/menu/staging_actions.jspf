@@ -154,7 +154,7 @@
 							<ul class="dropdown-menu" role="menu">
 								<c:if test="<%= !layoutRevision.isIncomplete() %>">
 									<li>
-										<a href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>viewHistory', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);">
+										<a class="dropdown-icon" href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>viewHistory', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);">
 											<liferay-ui:message key="history" />
 										</a>
 									</li>
@@ -163,7 +163,7 @@
 								<c:if test="<%= !hasWorkflowTask %>">
 									<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
 										<li>
-											<a href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>undo', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);">
+											<a class="dropdown-icon" href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>undo', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);">
 												<liferay-ui:message key="undo" />
 											</a>
 										</li>
@@ -180,7 +180,7 @@
 										%>
 
 											<li>
-												<a href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>redo', {layoutRevisionId: '<%= firstChildLayoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= firstChildLayoutRevision.getLayoutSetBranchId() %>'}); void(0);">
+												<a class="dropdown-icon" href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>redo', {layoutRevisionId: '<%= firstChildLayoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= firstChildLayoutRevision.getLayoutSetBranchId() %>'}); void(0);">
 													<liferay-ui:message key="redo" />
 												</a>
 											</li>

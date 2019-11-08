@@ -161,7 +161,7 @@ data.put("qa-id", "customizations");
 
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<aui:a href="<%= resetCustomizationsViewURLString %>" label="reset-my-customizations" />
+									<aui:a cssClass="dropdown-item" href="<%= resetCustomizationsViewURLString %>" label="reset-my-customizations" />
 								</li>
 							</ul>
 						</c:if>

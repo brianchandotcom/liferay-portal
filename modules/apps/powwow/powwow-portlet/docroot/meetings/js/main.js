@@ -290,12 +290,12 @@
 					'</a>' +
 					'<ul class="dropdown-menu lfr-menu-list direction-down">' +
 						'<li>' +
-							'<a class="taglib-icon icon-ok make-host-participant" href="javascript:{namespace}makeHostParticipant({participantNumber})" > ' +
+							'<a class="dropdown-item taglib-icon icon-ok make-host-participant" href="javascript:{namespace}makeHostParticipant({participantNumber})" > ' +
 								Liferay.Language.get('make-host') +
 							'</a>' +
 						'</li>' +
 						'<li>' +
-							'<a class="taglib-icon icon-remove remove-participant" href="javascript:{namespace}removeParticipant({participantNumber})"> ' +
+							'<a class="dropdown-item taglib-icon icon-remove remove-participant" href="javascript:{namespace}removeParticipant({participantNumber})"> ' +
 								Liferay.Language.get('delete') +
 							'</a>' +
 						'</li>' +

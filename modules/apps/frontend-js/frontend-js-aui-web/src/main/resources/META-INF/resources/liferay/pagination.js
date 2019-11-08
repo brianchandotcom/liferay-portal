@@ -276,7 +276,7 @@ AUI.add(
 
 				TPL_ITEM:
 					'<li id="{idLi}" role="presentation">' +
-					'<a class="lfr-pagination-link taglib-icon" href="javascript:;" id="{idLink}" role="menuitem">' +
+					'<a class="dropdown-item lfr-pagination-link taglib-icon" href="javascript:;" id="{idLink}" role="menuitem">' +
 					'<span class="taglib-text-icon" data-index="{index}" data-value="{value}">{value}</span>' +
 					'</a>' +
 					'</li>',

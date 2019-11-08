@@ -44,7 +44,7 @@ String value = (String)request.getAttribute("liferay-frontend:management-bar-fil
 			%>
 
 				<li class="<%= managementBarFilterItem.isActive() ? "active" : StringPool.BLANK %>">
-					<aui:a href="<%= managementBarFilterItem.getUrl() %>" id="<%= Validator.isNotNull(managementBarFilterItem.getId()) ? managementBarFilterItem.getId() : StringPool.BLANK %>" label="<%= managementBarFilterItem.getLabel() %>" />
+					<aui:a cssClass="dropdown-item" href="<%= managementBarFilterItem.getUrl() %>" id="<%= Validator.isNotNull(managementBarFilterItem.getId()) ? managementBarFilterItem.getId() : StringPool.BLANK %>" label="<%= managementBarFilterItem.getLabel() %>" />
 				</li>
 
 			<%

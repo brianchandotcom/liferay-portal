@@ -56,14 +56,14 @@ if (liveLayout != null) {
 
 				<ul class="dropdown-menu">
 					<li>
-						<a href="#" id="viewPageStagingOptions">
+						<a class="dropdown-icon" href="#" id="viewPageStagingOptions">
 							<liferay-ui:message key="view-page-staging-options" />
 						</a>
 					</li>
 
 					<c:if test="<%= !group.isStagingGroup() && !group.isStagedRemotely() && (stagingGroup != null) %>">
 						<li>
-							<a href="<%= HtmlUtil.escape(stagingURL) %>">
+							<a class="dropdown-icon" href="<%= HtmlUtil.escape(stagingURL) %>">
 								<liferay-ui:message key="go-to-staging" />
 							</a>
 						</li>
@@ -73,14 +73,14 @@ if (liveLayout != null) {
 						<c:choose>
 							<c:when test="<%= group.isStagedRemotely() %>">
 								<li>
-									<a href="<%= HtmlUtil.escape(remoteURL) %>">
+									<a class="dropdown-icon" href="<%= HtmlUtil.escape(remoteURL) %>">
 										<liferay-ui:message key="go-to-remote-live" />
 									</a>
 								</li>
 							</c:when>
 							<c:when test="<%= group.isStagingGroup() && Validator.isNotNull(liveURL) %>">
 								<li>
-									<a href="<%= HtmlUtil.escape(liveURL) %>">
+									<a class="dropdown-icon" href="<%= HtmlUtil.escape(liveURL) %>">
 										<liferay-ui:message key="go-to-live" />
 									</a>
 								</li>

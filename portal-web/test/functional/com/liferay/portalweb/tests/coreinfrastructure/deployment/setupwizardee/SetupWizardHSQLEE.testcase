@@ -1,6 +1,7 @@
 @component-name = "portal-deployment-hypersonic-ee"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property setup.wizard.enabled = "true";
@@ -12,7 +13,6 @@ definition {
 	@priority = "4"
 	test HSQLtoDB2 {
 		property database.types = "db2";
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoDB2";
 
 		SetupWizard.configurePG(
@@ -84,7 +84,6 @@ definition {
 	@priority = "4"
 	test HSQLtoOracle {
 		property database.types = "oracle";
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoOracle";
 
 		SetupWizard.configurePG(
@@ -108,7 +107,6 @@ definition {
 	test HSQLtoOracleSampleDataDisabled {
 		property custom.properties = "setup.wizard.add.sample.data=true";
 		property database.types = "oracle";
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoOracleSampleDataDisabled";
 
 		SetupWizard.configurePG(
@@ -180,7 +178,6 @@ definition {
 	test HSQLtoSybaseSampleDataDisabled {
 		property custom.properties = "setup.wizard.add.sample.data=true";
 		property database.types = "sybase";
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSybaseSampleDataDisabled";
 
 		SetupWizard.configurePG(
@@ -203,7 +200,6 @@ definition {
 	test HSQLtoSybaseSampleDataEnabled {
 		property databases.size = "1";
 		property database.types = "sybase";
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSybaseSampleDataEnabled";
 
 		SetupWizard.configurePG(

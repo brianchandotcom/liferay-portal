@@ -41,12 +41,20 @@ public class FragmentEntryLinkItemSelectorUtil {
 
 		JSONArray fieldSetsJSONArray = jsonObject.getJSONArray("fieldSets");
 
+		if (fieldSetsJSONArray == null) {
+			return;
+		}
+
 		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
 			JSONObject fieldSetsJSONObject = fieldSetsJSONArray.getJSONObject(
 				i);
 
 			JSONArray fieldsJSONArray = fieldSetsJSONObject.getJSONArray(
 				"fields");
+
+			if (fieldsJSONArray == null) {
+				continue;
+			}
 
 			for (int j = 0; j < fieldsJSONArray.length(); j++) {
 				JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(j);

@@ -40,7 +40,6 @@ class PreviewButton extends Component {
 
 		return (
 			<ClayButton
-				elementClasses={'btn-secondary'}
 				events={{
 					click: this._handleButtonClicked.bind(this)
 				}}

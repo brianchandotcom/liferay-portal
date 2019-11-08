@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.internal.exportimport.data.handler;
 
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -34,6 +35,8 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pavel Savinov
@@ -92,6 +95,14 @@ public class FragmentEntryStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_WEAK);
 		}
 
+		String html =
+			_fragmentEntryLinkExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, fragmentEntry, fragmentEntry.getHtml(),
+					true, false);
+
+		fragmentEntry.setHtml(html);
+
 		Element entryElement = portletDataContext.getExportDataElement(
 			fragmentEntry);
 
@@ -140,6 +151,13 @@ public class FragmentEntryStagedModelDataHandler
 		importedFragmentEntry.setGroupId(portletDataContext.getScopeGroupId());
 		importedFragmentEntry.setFragmentCollectionId(fragmentCollectionId);
 
+		String html =
+			_fragmentEntryLinkExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, fragmentEntry, fragmentEntry.getHtml());
+
+		importedFragmentEntry.setHtml(html);
+
 		FragmentEntry existingFragmentEntry =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
 				fragmentEntry.getUuid(), portletDataContext.getScopeGroupId());
@@ -186,6 +204,14 @@ public class FragmentEntryStagedModelDataHandler
 
 	@Reference
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.fragment.model.FragmentEntryLink)"
+	)
+	private volatile ExportImportContentProcessor<String>
+		_fragmentEntryLinkExportImportContentProcessor;
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;

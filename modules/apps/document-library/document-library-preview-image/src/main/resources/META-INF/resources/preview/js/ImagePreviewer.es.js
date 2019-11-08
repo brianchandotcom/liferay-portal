@@ -75,10 +75,10 @@ const ImagePreviewer = ({imageURL}) => {
 		const imageStyles = {};
 
 		if (imageHeight && imageWidth) {
-			imageStyles.height = `${imageHeight}px`;
-			imageStyles.maxHeight = `${imageHeight}px`;
-			imageStyles.maxWidth = `${imageWidth}px`;
-			imageStyles.width = `${imageWidth}px`;
+			imageStyles.height = imageHeight;
+			imageStyles.maxHeight = imageHeight;
+			imageStyles.maxWidth = imageWidth;
+			imageStyles.width = imageWidth;
 		}
 
 		if (imageMargin) {

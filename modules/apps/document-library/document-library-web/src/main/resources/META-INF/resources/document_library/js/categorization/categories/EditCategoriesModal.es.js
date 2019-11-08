@@ -29,20 +29,21 @@ const URL_SELECTION = '/bulk/v1.0/bulk-selection';
 const URL_UPDATE_CATEGORIES = '/bulk/v1.0/taxonomy-categories/batch';
 
 const EditCategoriesModal = ({
-	fileEntries = [],
-	folderId = '',
-	groupIds = [],
+	fileEntries,
+	folderId,
+	groupIds,
 	hiddenInput = 'assetCategoriesIds_',
 	observer,
 	onModalClose,
-	pathModule = '',
-	repositoryId = '',
+	pathModule,
+	repositoryId,
 	selectAll = false,
-	selectCategoriesUrl = ''
+	selectCategoriesUrl
 }) => {
 	const {namespace} = useContext(EditCategoriesContext);
 
 	const [append, setAppend] = useState(true);
+
 	const [description, setDescription] = useState('');
 
 	const [initialCategories, setInitialCategories] = useState([]);
@@ -50,6 +51,7 @@ const EditCategoriesModal = ({
 	const [isValid, setIsValid] = useState(true);
 
 	const [loading, setLoading] = useState(false);
+
 	const [multiple, setMultiple] = useState(false);
 
 	const [vocabularies, setVocabularies] = useState([]);
@@ -345,16 +347,16 @@ const EditCategoriesModal = ({
 };
 
 EditCategoriesModal.propTypes = {
-	fileEntries: PropTypes.array,
-	folderId: PropTypes.string,
-	groupIds: PropTypes.array,
+	fileEntries: PropTypes.array.isRequired,
+	folderId: PropTypes.string.isRequired,
+	groupIds: PropTypes.array.isRequired,
 	hiddenInput: PropTypes.string,
-	observer: PropTypes.object,
-	onModalClose: PropTypes.func,
-	pathModule: PropTypes.string,
-	repositoryId: PropTypes.string,
+	observer: PropTypes.object.isRequired,
+	onModalClose: PropTypes.func.isRequired,
+	pathModule: PropTypes.string.isRequired,
+	repositoryId: PropTypes.string.isRequired,
 	selectAll: PropTypes.bool,
-	selectCategoriesUrl: PropTypes.string
+	selectCategoriesUrl: PropTypes.string.isRequired
 };
 
 export default EditCategoriesModal;

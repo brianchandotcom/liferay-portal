@@ -39,7 +39,10 @@ function updateActiveItemReducer(state, action) {
 	if (action.type === CLEAR_ACTIVE_ITEM) {
 		nextState = setIn(nextState, ['activeItemId'], null);
 		nextState = setIn(nextState, ['activeItemType'], null);
-		nextState = setIn(nextState, ['selectedItems'], []);
+
+		if (nextState.selectedItems && nextState.selectedItems.length) {
+			nextState = setIn(nextState, ['selectedItems'], []);
+		}
 	} else if (action.type === UPDATE_ACTIVE_ITEM) {
 		nextState = setIn(nextState, ['activeItemId'], action.activeItemId);
 		nextState = setIn(nextState, ['activeItemType'], action.activeItemType);

@@ -877,14 +877,19 @@ definition {
 			Click(locator1 = "SitePages#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW");
 		}
 
-		var key_componentOrPortletName = "${componentName}";
-
-		AssertChecked.assertCheckedNotVisible(locator1 = "SitePages#DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT");
+		AssertElementPresent(locator1 = "SitePages#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_EXPANDED");
 
 		for (var portletName : list "${portletNameList}") {
-			var key_componentOrPortletName = "${portletName}";
 
-			AssertChecked.assertCheckedNotVisible(locator1 = "SitePages#DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT");
+			if ("${portletName}" == "Portal Directory") {
+				var key_componentOrPortletName ="Directory";
+			}
+
+			else {
+				var key_componentOrPortletName = StringUtil.extractChars("${portletName}");
+			}
+
+			AssertElementPresent(locator1 = "SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX_INPUT");
 		}
 	}
 

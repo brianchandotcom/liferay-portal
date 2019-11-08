@@ -14,7 +14,9 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -26,6 +28,8 @@ import com.liferay.portal.model.impl.LayoutSetImpl;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import com.liferay.portal.service.base.VirtualHostLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
+
+import java.net.IDN;
 
 import java.util.concurrent.Callable;
 
@@ -42,7 +46,17 @@ public class VirtualHostLocalServiceImpl
 
 	@Override
 	public VirtualHost fetchVirtualHost(String hostname) {
-		return virtualHostPersistence.fetchByHostname(hostname);
+		VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
+			hostname);
+
+		if ((virtualHost == null) &&
+			hostname.startsWith(StringPool.ACE_PREFIX)) {
+
+			virtualHost = virtualHostPersistence.fetchByHostname(
+				IDN.toUnicode(hostname));
+		}
+
+		return virtualHost;
 	}
 
 	@Override
@@ -54,7 +68,17 @@ public class VirtualHostLocalServiceImpl
 
 	@Override
 	public VirtualHost getVirtualHost(String hostname) throws PortalException {
-		return virtualHostPersistence.findByHostname(hostname);
+		try {
+			return virtualHostPersistence.findByHostname(hostname);
+		}
+		catch (NoSuchVirtualHostException nsvhe) {
+			if (hostname.startsWith(StringPool.ACE_PREFIX)) {
+				return virtualHostPersistence.findByHostname(
+					IDN.toUnicode(hostname));
+			}
+
+			throw nsvhe;
+		}
 	}
 
 	@Override

@@ -20,6 +20,38 @@ import {formatQueryDate} from '../util/timeRangeUtil.es';
 import PerformanceByStepCard from './PerformanceByStepCard.es';
 
 const Body = ({data, processId, timeRange}) => {
+	return (
+		<>
+			<Panel.Body>
+				{data.totalCount ? (
+					<PerformanceByStepCard.Table items={data.items} />
+				) : (
+					<PerformanceByStepCard.Empty />
+				)}
+			</Panel.Body>
+			{data.totalCount && (
+				<PerformanceByStepCard.Footer
+					processId={processId}
+					timeRange={timeRange}
+					totalCount={data.totalCount}
+				/>
+			)}
+		</>
+	);
+};
+
+const Empty = () => {
+	return (
+		<EmptyState
+			className="border-0 mt-8"
+			hideAnimation={true}
+			message={Liferay.Language.get('there-is-no-data-at-the-moment')}
+			messageClassName="small"
+		/>
+	);
+};
+
+const Footer = ({processId, timeRange, totalCount}) => {
 	const {defaultDelta} = useContext(AppContext);
 
 	const viewAllStepsQuery = timeRange
@@ -31,46 +63,25 @@ const Body = ({data, processId, timeRange}) => {
 				}
 		  }
 		: {};
+
 	const viewAllStepsUrl = `/performance/${processId}/${defaultDelta}/1/breachedInstancePercentage:desc`;
 
 	return (
-		<Panel.Body>
-			{data.totalCount ? (
-				<>
-					<PerformanceByStepCard.Table items={data.items} />
+		<Panel.Footer elementClasses="fixed-bottom">
+			<div className="mb-1 text-right">
+				<ChildLink query={viewAllStepsQuery} to={viewAllStepsUrl}>
+					<button className="border-0 btn btn-secondary btn-sm">
+						<span data-testid="viewAllSteps">
+							{Liferay.Language.get('view-all-steps') +
+								` (${totalCount})`}
+						</span>
 
-					<div className="mb-1 text-right">
-						<ChildLink
-							query={viewAllStepsQuery}
-							to={viewAllStepsUrl}
-						>
-							<button className="border-0 btn btn-secondary btn-sm">
-								<span data-testid="viewAllSteps">
-									{Liferay.Language.get('view-all-steps') +
-										` (${data.totalCount})`}
-								</span>
-
-								<Icon iconName="caret-right-l" />
-							</button>
-						</ChildLink>
-					</div>
-				</>
-			) : (
-				<PerformanceByStepCard.Empty />
-			)}
-		</Panel.Body>
+						<Icon iconName="caret-right-l" />
+					</button>
+				</ChildLink>
+			</div>
+		</Panel.Footer>
 	);
 };
 
-const Empty = () => {
-	return (
-		<EmptyState
-			className="border-0"
-			hideAnimation={true}
-			message={Liferay.Language.get('there-is-no-data-at-the-moment')}
-			messageClassName="small"
-		/>
-	);
-};
-
-export {Body, Empty};
+export {Body, Empty, Footer};

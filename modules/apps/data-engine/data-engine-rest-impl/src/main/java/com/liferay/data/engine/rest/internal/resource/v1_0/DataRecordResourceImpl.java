@@ -35,6 +35,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
@@ -135,7 +136,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			dataRecordCollectionId, DataActionKeys.EXPORT_DATA_RECORDS);
 
 		DataRecordExporter dataRecordExporter = new DataRecordExporter(
-			_ddlRecordSetLocalService);
+			_ddlRecordSetLocalService, _ddmFormFieldTypeServicesTracker);
 
 		return dataRecordExporter.export(
 			transform(
@@ -198,7 +199,9 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
 		_validate(
-			DataDefinitionUtil.toDataDefinition(ddmStructure), dataRecord);
+			DataDefinitionUtil.toDataDefinition(
+				_ddmFormFieldTypeServicesTracker, ddmStructure),
+			dataRecord);
 
 		DataStorage dataStorage = _getDataStorage(
 			ddmStructure.getStorageType());
@@ -243,7 +246,9 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
 		_validate(
-			DataDefinitionUtil.toDataDefinition(ddmStructure), dataRecord);
+			DataDefinitionUtil.toDataDefinition(
+				_ddmFormFieldTypeServicesTracker, ddmStructure),
+			dataRecord);
 
 		DataStorage dataStorage = _getDataStorage(
 			ddmStructure.getStorageType());
@@ -428,6 +433,9 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	@Reference
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 	@Reference
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;

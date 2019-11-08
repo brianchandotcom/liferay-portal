@@ -21,6 +21,7 @@ import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordCollectionU
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordValuesUtil;
 import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -62,6 +63,7 @@ public class JSONDataStorage implements DataStorage {
 
 		return DataRecordValuesUtil.toDataRecordValues(
 			DataDefinitionUtil.toDataDefinition(
+				_ddmFormFieldTypeServicesTracker,
 				_ddmStructureLocalService.getStructure(dataDefinitionId)),
 			ddmContent.getData());
 	}
@@ -81,6 +83,7 @@ public class JSONDataStorage implements DataStorage {
 			DataRecord.class.getName(), null,
 			DataRecordValuesUtil.toJSON(
 				DataDefinitionUtil.toDataDefinition(
+					_ddmFormFieldTypeServicesTracker,
 					_ddmStructureLocalService.getStructure(
 						dataRecordCollection.getDataDefinitionId())),
 				dataRecordValues),
@@ -99,6 +102,9 @@ public class JSONDataStorage implements DataStorage {
 
 	@Reference
 	private DDMContentLocalService _ddmContentLocalService;
+
+	@Reference
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

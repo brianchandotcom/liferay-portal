@@ -164,6 +164,7 @@ public class DataDefinitionResourceImpl
 			ActionKeys.VIEW);
 
 		return DataDefinitionUtil.toDataDefinition(
+			_ddmFormFieldTypeServicesTracker,
 			_ddmStructureLocalService.getStructure(dataDefinitionId));
 	}
 
@@ -245,6 +246,7 @@ public class DataDefinitionResourceImpl
 		throws Exception {
 
 		return DataDefinitionUtil.toDataDefinition(
+			_ddmFormFieldTypeServicesTracker,
 			_ddmStructureLocalService.getStructure(
 				siteId,
 				Optional.ofNullable(
@@ -313,6 +315,7 @@ public class DataDefinitionResourceImpl
 				searchContext.setGroupIds(new long[] {siteId});
 			},
 			document -> DataDefinitionUtil.toDataDefinition(
+				_ddmFormFieldTypeServicesTracker,
 				_ddmStructureLocalService.getStructure(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			sorts);
@@ -380,6 +383,7 @@ public class DataDefinitionResourceImpl
 		);
 
 		dataDefinition = DataDefinitionUtil.toDataDefinition(
+			_ddmFormFieldTypeServicesTracker,
 			_ddmStructureLocalService.addStructure(
 				PrincipalThreadLocal.getUserId(), siteId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
@@ -466,6 +470,7 @@ public class DataDefinitionResourceImpl
 			_ddmFormSerializer.serialize(builder.build());
 
 		return DataDefinitionUtil.toDataDefinition(
+			_ddmFormFieldTypeServicesTracker,
 			_ddmStructureLocalService.updateStructure(
 				PrincipalThreadLocal.getUserId(), dataDefinitionId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
@@ -626,7 +631,8 @@ public class DataDefinitionResourceImpl
 	private DataDefinition _toDataDefinition(DDMStructure ddmStructure)
 		throws Exception {
 
-		return DataDefinitionUtil.toDataDefinition(ddmStructure);
+		return DataDefinitionUtil.toDataDefinition(
+			_ddmFormFieldTypeServicesTracker, ddmStructure);
 	}
 
 	private OrderByComparator<DDMStructure> _toOrderByComparator(Sort sort) {

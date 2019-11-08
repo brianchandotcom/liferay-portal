@@ -148,7 +148,7 @@ if (accountEntryDisplay != null) {
 					<%
 					PortletURL addDomainsURL = renderResponse.createRenderURL();
 
-					addDomainsURL.setParameter("mvcPath", "/account_entry/add_domains.jsp");
+					addDomainsURL.setParameter("mvcPath", "/account_entries_admin/account_entry/add_domains.jsp");
 					addDomainsURL.setWindowState(LiferayWindowState.POP_UP);
 					%>
 

@@ -91,7 +91,7 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-jsp
-					path="/account_entry_action.jsp"
+					path="/account_entries_admin/account_entry_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 
@@ -104,5 +104,5 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 
 <liferay-frontend:component
 	componentId="<%= viewAccountEntriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/AccountEntriesManagementToolbarDefaultEventHandler.es"
+	module="account_entries_admin/js/AccountEntriesManagementToolbarDefaultEventHandler.es"
 />

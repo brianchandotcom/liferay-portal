@@ -97,12 +97,12 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception e) {
-			String mvcPath = "/edit_account_entry.jsp";
+			String mvcPath = "/account_entries_admin/edit_account_entry.jsp";
 
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				mvcPath = "/error.jsp";
+				mvcPath = "/account_entries_admin/error.jsp";
 			}
 			else if (e instanceof AccountEntryDomainsException) {
 				SessionErrors.add(actionRequest, e.getClass());

@@ -71,7 +71,7 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 				/>
 
 				<liferay-ui:search-container-column-jsp
-					path="/account_user_action.jsp"
+					path="/account_entries_admin/account_user_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 
@@ -84,5 +84,5 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 
 <liferay-frontend:component
 	componentId="<%= viewAccountUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/AccountUsersManagementToolbarDefaultEventHandler.es"
+	module="account_entries_admin/js/AccountUsersManagementToolbarDefaultEventHandler.es"
 />

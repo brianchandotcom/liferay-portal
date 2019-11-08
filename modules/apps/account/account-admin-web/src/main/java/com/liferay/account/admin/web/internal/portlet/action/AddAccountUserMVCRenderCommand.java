@@ -51,7 +51,7 @@ public class AddAccountUserMVCRenderCommand implements MVCRenderCommand {
 			AccountWebKeys.ACCOUNT_ENTRY_DISPLAY,
 			AccountEntryDisplay.of(accountEntryId));
 
-		return "/add_account_user.jsp";
+		return "/account_entries_admin/add_account_user.jsp";
 	}
 
 }

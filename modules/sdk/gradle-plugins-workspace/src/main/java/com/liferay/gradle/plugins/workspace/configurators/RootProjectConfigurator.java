@@ -22,6 +22,7 @@ import com.bmuschko.gradle.docker.tasks.container.DockerStartContainer;
 import com.bmuschko.gradle.docker.tasks.container.DockerStopContainer;
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage;
 import com.bmuschko.gradle.docker.tasks.image.DockerPullImage;
+import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage;
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
@@ -217,6 +218,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
+	private static String _getDockerImageId(Project project) {
+		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
+			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
+
+		return workspaceExtension.getDockerImageId();
+	}
+
 	private static String _loadTemplate(String name) {
 		try (InputStream inputStream =
 				RootProjectConfigurator.class.getResourceAsStream(name)) {
@@ -226,6 +234,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		catch (Exception e) {
 			throw new GradleException("Unable to read template " + name, e);
 		}
+	}
+
+	private static String _makeCleanTaskName(String taskName) {
+		String firstChar = taskName.substring(0, 1);
+
+		return "clean" + firstChar.toUpperCase() + taskName.substring(1);
 	}
 
 	private Configuration _addConfigurationBundleSupport(
@@ -279,7 +293,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Dockerfile dockerfile = _addTaskCreateDockerfile(
 			project, workspaceExtension, copyDockerDeploy);
 
-		_addTaskBuildDockerImage(dockerfile, workspaceExtension);
+		DockerBuildImage dockerBuildImage = _addTaskBuildDockerImage(
+			dockerfile, workspaceExtension);
 
 		_addTaskCreateDockerContainer(project, workspaceExtension);
 
@@ -290,6 +305,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_addTaskStopDockerContainer(project);
 	}
 
+	@SuppressWarnings("serial")
 	private DockerBuildImage _addTaskBuildDockerImage(
 		Dockerfile dockerfile, WorkspaceExtension workspaceExtension) {
 
@@ -298,14 +314,55 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		DockerBuildImage dockerBuildImage = GradleUtil.addTask(
 			project, BUILD_DOCKER_IMAGE_TASK_NAME, DockerBuildImage.class);
 
-		dockerBuildImage.dependsOn(dockerfile, PULL_DOCKER_IMAGE_TASK_NAME);
+		dockerBuildImage.dependsOn(dockerfile);
 
 		dockerBuildImage.setDescription(
-			"Builds the Docker image with all modules/configs deployed.");
+			"Builds a child docker image from Liferay base image with all " +
+				"configs deployed.");
 		dockerBuildImage.setGroup(DOCKER_GROUP);
 		dockerBuildImage.setInputDir(workspaceExtension.getDockerDir());
-		dockerBuildImage.setTag(
-			project.getName() + ":" + workspaceExtension.getEnvironment());
+
+		DockerRemoveImage removeDockerImage = GradleUtil.addTask(
+			project, _makeCleanTaskName(BUILD_DOCKER_IMAGE_TASK_NAME),
+			DockerRemoveImage.class);
+
+		removeDockerImage.dependsOn(REMOVE_DOCKER_CONTAINER_TASK_NAME);
+
+		removeDockerImage.setOnError(
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(Exception e) {
+					Logger logger = project.getLogger();
+
+					if (logger.isWarnEnabled()) {
+						logger.warn(
+							"No image with ID '" + _getDockerImageId(project) +
+								"' found.");
+					}
+				}
+
+			});
+
+		Project rootProject = project.getRootProject();
+
+		rootProject.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project p) {
+					String dockerImageId = _getDockerImageId(project);
+
+					dockerBuildImage.setTag(dockerImageId);
+					removeDockerImage.setImageId(dockerImageId);
+				}
+
+			});
+
+		Task cleanTask = GradleUtil.getTask(
+			project, LifecycleBasePlugin.CLEAN_TASK_NAME);
+
+		cleanTask.dependsOn(removeDockerImage);
 
 		return dockerBuildImage;
 	}

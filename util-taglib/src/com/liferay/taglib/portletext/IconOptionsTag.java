@@ -184,7 +184,8 @@ public class IconOptionsTag extends IconTag {
 					iconTag.setLabel(portletConfigurationIcon.isLabel());
 					iconTag.setLang(portletConfigurationIcon.getLang());
 					iconTag.setLinkCssClass(
-						"dropdown-item " + portletConfigurationIcon.getLinkCssClass());
+						"dropdown-item " +
+							portletConfigurationIcon.getLinkCssClass());
 					iconTag.setLocalizeMessage(false);
 					iconTag.setMessage(
 						portletConfigurationIcon.getMessage(portletRequest));

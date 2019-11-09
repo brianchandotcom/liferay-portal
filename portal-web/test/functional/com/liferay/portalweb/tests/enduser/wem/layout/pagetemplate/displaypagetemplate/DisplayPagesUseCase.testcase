@@ -230,7 +230,7 @@ definition {
 		}
 	}
 
-	@description = "This case ensures that a user can map image to fragment via the content display."
+	@description = "This case ensures that a user can map a blogs content field to a fragment via the content display."
 	@priority = "5"
 	test MapBlogContentViaContentDisplay {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
@@ -261,7 +261,7 @@ definition {
 			value1 = "This content maps from blog content");
 	}
 
-	@description = "This case ensures that a user can map image to fragment via the content display."
+	@description = "This case ensures that a user can map an image to a fragment via the content display."
 	@priority = "5"
 	test MapImageViaContentDisplay {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
@@ -364,7 +364,7 @@ definition {
 		}
 	}
 
-	@description = "This case ensures that a user can map content from web content to fragment via the content display."
+	@description = "This case ensures that a user can map the content field from web content to a fragment via the content display."
 	@priority = "5"
 	test MapWebContentContentViaContentDisplay {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

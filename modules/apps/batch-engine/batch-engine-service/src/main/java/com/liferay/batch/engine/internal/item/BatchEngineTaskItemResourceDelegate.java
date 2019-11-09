@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.io.Closeable;
 import java.io.Serializable;
@@ -79,7 +81,8 @@ public class BatchEngineTaskItemResourceDelegate implements Closeable {
 					}
 
 					args[i] = _getMethodArgValue(
-						item, resourceMethodArgNameTypeEntry);
+						item, resourceMethodArgNameTypeEntry.getKey(),
+						resourceMethodArgNameTypeEntry.getValue());
 				}
 			}
 
@@ -92,27 +95,58 @@ public class BatchEngineTaskItemResourceDelegate implements Closeable {
 		_resourceServiceObjects.ungetService(_resource);
 	}
 
+	public Page<?> getItems(int page, int pageSize) throws Exception {
+		Object[] args = new Object[_resourceMethod.getParameterCount()];
+
+		for (int i = 0; i < _resourceMethodArgNameTypeEntries.length; i++) {
+			Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry =
+				_resourceMethodArgNameTypeEntries[i];
+
+			if (resourceMethodArgNameTypeEntry == null) {
+				continue;
+			}
+
+			Class<?> resourceMethodArgType =
+				resourceMethodArgNameTypeEntry.getValue();
+
+			if (resourceMethodArgType == Pagination.class) {
+				args[i] = Pagination.of(page, pageSize);
+			}
+			else {
+				args[i] = _getMethodArgValue(
+					null, resourceMethodArgNameTypeEntry.getKey(),
+					resourceMethodArgType);
+			}
+		}
+
+		return (Page<?>)_resourceMethod.invoke(_resource, args);
+	}
+
 	private Object _getMethodArgValue(
-			Object item,
-			Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry)
+			Object item, String resourceMethodArgName,
+			Class<?> resourceMethodArgType)
 		throws IllegalAccessException {
 
 		Serializable parameter = null;
 
 		if (_parameters != null) {
-			parameter = _parameters.get(
-				resourceMethodArgNameTypeEntry.getKey());
+			parameter = _parameters.get(resourceMethodArgName);
 		}
 
-		if (parameter == null) {
-			Field field = _fieldMap.get(
-				resourceMethodArgNameTypeEntry.getKey());
+		if ((item != null) && (parameter == null)) {
+			Field field = _fieldMap.get(resourceMethodArgName);
+
+			if (field == null) {
+				return null;
+			}
 
 			return field.get(item);
 		}
+		else if (parameter != null) {
+			return _objectMapper.convertValue(parameter, resourceMethodArgType);
+		}
 
-		return _objectMapper.convertValue(
-			parameter, resourceMethodArgNameTypeEntry.getValue());
+		return null;
 	}
 
 	private Object _getResource() throws ReflectiveOperationException {

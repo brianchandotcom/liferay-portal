@@ -106,6 +106,7 @@ import graphql.schema.GraphQLFieldsContainer;
 import graphql.schema.GraphQLInputType;
 import graphql.schema.GraphQLInterfaceType;
 import graphql.schema.GraphQLList;
+import graphql.schema.GraphQLNonNull;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLOutputType;
 import graphql.schema.GraphQLScalarType;
@@ -161,6 +162,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import javax.validation.ValidationException;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.BadRequestException;
@@ -269,7 +271,27 @@ public class GraphQLServletExtender {
 				{
 					setGraphQLTypeRetriever(graphQLTypeRetriever);
 				}
-			});
+			}) {
+
+			@Override
+			public GraphQLType buildType(
+				boolean input, Class<?> clazz, AnnotatedType annotatedType,
+				ProcessingElementsContainer processingElementsContainer) {
+
+				GraphQLType graphQLType = super.buildType(
+					input, clazz, annotatedType, processingElementsContainer);
+
+				if ((annotatedType != null) &&
+					(annotatedType.isAnnotationPresent(NotEmpty.class) ||
+					 annotatedType.isAnnotationPresent(NotNull.class))) {
+
+					graphQLType = new GraphQLNonNull(graphQLType);
+				}
+
+				return graphQLType;
+			}
+
+		};
 
 		_defaultTypeFunction.register(new DateTypeFunction());
 		_defaultTypeFunction.register(new ObjectTypeFunction());

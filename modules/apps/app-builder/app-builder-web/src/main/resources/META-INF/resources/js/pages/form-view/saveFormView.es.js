@@ -20,26 +20,25 @@ export default ({
 	dataLayout,
 	dataLayoutId
 }) => {
-	const updateDefinition = updateItem(
-		`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`,
-		dataDefinition
-	);
+	const updateDefinition = () =>
+		updateItem(
+			`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`,
+			dataDefinition
+		);
 
 	if (dataLayoutId) {
-		return Promise.all([
+		return updateDefinition().then(() =>
 			updateItem(
 				`/o/data-engine/v1.0/data-layouts/${dataLayoutId}`,
 				dataLayout
-			),
-			updateDefinition
-		]);
-	} else {
-		return Promise.all([
-			addItem(
-				`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-layouts`,
-				dataLayout
-			),
-			updateDefinition
-		]);
+			)
+		);
 	}
+
+	return updateDefinition().then(() =>
+		addItem(
+			`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-layouts`,
+			dataLayout
+		)
+	);
 };

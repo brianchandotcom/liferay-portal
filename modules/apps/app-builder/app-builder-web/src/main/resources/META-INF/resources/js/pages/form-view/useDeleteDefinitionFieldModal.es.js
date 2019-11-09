@@ -100,7 +100,10 @@ export default callback => {
 									<ClayPanel.Body>
 										{dataLayouts.map(
 											(dataLayoutName, index) => (
-												<label key={index}>{`${index +
+												<label
+													className="d-block"
+													key={index}
+												>{`${index +
 													1}. ${dataLayoutName}`}</label>
 											)
 										)}
@@ -119,7 +122,10 @@ export default callback => {
 									<ClayPanel.Body>
 										{dataListViews.map(
 											(dataListViewName, index) => (
-												<label key={index}>{`${index +
+												<label
+													className="d-block"
+													key={index}
+												>{`${index +
 													1}. ${dataListViewName}`}</label>
 											)
 										)}

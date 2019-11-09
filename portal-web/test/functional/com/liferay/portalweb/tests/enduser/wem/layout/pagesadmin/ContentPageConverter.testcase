@@ -1,0 +1,52 @@
+@component-name = "portal-wcm"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration.config";
+	property osgi.module.configurations = "enabled=B&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-98303. Assert that a page that uses a default layout template, does not have a 'Nested Application' Widget, and is not set as customizable can be converted to a Content Page by default."
+	@priority = "5"
+	test ConvertBasicWidgetPageToContentPage {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Asset Publisher");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Convert to Content Page",
+			pageName = "Test Page Name");
+
+		AssertElementPresent(
+			key_pageType = "Content Page",
+			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+	}
+
+}

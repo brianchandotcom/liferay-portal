@@ -200,6 +200,22 @@ public class BaseBatchEngineTaskExecutorTest {
 			return null;
 		}
 
+		@BatchEngineTaskMethod(
+			batchEngineTaskOperation = BatchEngineTaskOperation.READ,
+			itemClass = BlogPosting.class
+		)
+		@Override
+		public Page<BlogPosting> getSiteBlogPostingsPage(
+				Long siteId, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
+			throws Exception {
+
+			_initContextFields();
+
+			return blogPostingResource.getSiteBlogPostingsPage(
+				siteId, search, filter, pagination, sorts);
+		}
+
 		@Override
 		public BlogPosting patchBlogPosting(
 				Long blogPostingId, BlogPosting blogPosting)

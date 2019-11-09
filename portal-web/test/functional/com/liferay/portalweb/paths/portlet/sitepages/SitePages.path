@@ -35,6 +35,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_GROUP_ITEM_PAGE_TYPE</td>
+	<td>//li[contains(@class,'list-group-item')]//h6[contains(.,'${key_pageType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_GROUP_ITEM_PLUS_ICON</td>
 	<td>//li[contains(.,'${key_pageName}')]//*[*[name()='svg'][contains(@class,'icon-plus')]]</td>
 	<td></td>

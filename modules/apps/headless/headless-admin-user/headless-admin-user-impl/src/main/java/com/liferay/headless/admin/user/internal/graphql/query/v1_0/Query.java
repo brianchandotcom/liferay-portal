@@ -49,6 +49,7 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -1077,11 +1078,15 @@ public class Query {
 	public class EmailAddressPage {
 
 		public EmailAddressPage(Page emailAddressPage) {
+			actions = emailAddressPage.getActions();
 			items = emailAddressPage.getItems();
 			page = emailAddressPage.getPage();
 			pageSize = emailAddressPage.getPageSize();
 			totalCount = emailAddressPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<EmailAddress> items;
@@ -1101,11 +1106,15 @@ public class Query {
 	public class OrganizationPage {
 
 		public OrganizationPage(Page organizationPage) {
+			actions = organizationPage.getActions();
 			items = organizationPage.getItems();
 			page = organizationPage.getPage();
 			pageSize = organizationPage.getPageSize();
 			totalCount = organizationPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<Organization> items;
@@ -1125,11 +1134,15 @@ public class Query {
 	public class PhonePage {
 
 		public PhonePage(Page phonePage) {
+			actions = phonePage.getActions();
 			items = phonePage.getItems();
 			page = phonePage.getPage();
 			pageSize = phonePage.getPageSize();
 			totalCount = phonePage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<Phone> items;
@@ -1149,11 +1162,15 @@ public class Query {
 	public class PostalAddressPage {
 
 		public PostalAddressPage(Page postalAddressPage) {
+			actions = postalAddressPage.getActions();
 			items = postalAddressPage.getItems();
 			page = postalAddressPage.getPage();
 			pageSize = postalAddressPage.getPageSize();
 			totalCount = postalAddressPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<PostalAddress> items;
@@ -1173,11 +1190,15 @@ public class Query {
 	public class RolePage {
 
 		public RolePage(Page rolePage) {
+			actions = rolePage.getActions();
 			items = rolePage.getItems();
 			page = rolePage.getPage();
 			pageSize = rolePage.getPageSize();
 			totalCount = rolePage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<Role> items;
@@ -1197,11 +1218,15 @@ public class Query {
 	public class SegmentPage {
 
 		public SegmentPage(Page segmentPage) {
+			actions = segmentPage.getActions();
 			items = segmentPage.getItems();
 			page = segmentPage.getPage();
 			pageSize = segmentPage.getPageSize();
 			totalCount = segmentPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<Segment> items;
@@ -1221,11 +1246,15 @@ public class Query {
 	public class SegmentUserPage {
 
 		public SegmentUserPage(Page segmentUserPage) {
+			actions = segmentUserPage.getActions();
 			items = segmentUserPage.getItems();
 			page = segmentUserPage.getPage();
 			pageSize = segmentUserPage.getPageSize();
 			totalCount = segmentUserPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<SegmentUser> items;
@@ -1245,11 +1274,15 @@ public class Query {
 	public class SitePage {
 
 		public SitePage(Page sitePage) {
+			actions = sitePage.getActions();
 			items = sitePage.getItems();
 			page = sitePage.getPage();
 			pageSize = sitePage.getPageSize();
 			totalCount = sitePage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<Site> items;
@@ -1269,11 +1302,15 @@ public class Query {
 	public class SubscriptionPage {
 
 		public SubscriptionPage(Page subscriptionPage) {
+			actions = subscriptionPage.getActions();
 			items = subscriptionPage.getItems();
 			page = subscriptionPage.getPage();
 			pageSize = subscriptionPage.getPageSize();
 			totalCount = subscriptionPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<Subscription> items;
@@ -1293,11 +1330,15 @@ public class Query {
 	public class UserAccountPage {
 
 		public UserAccountPage(Page userAccountPage) {
+			actions = userAccountPage.getActions();
 			items = userAccountPage.getItems();
 			page = userAccountPage.getPage();
 			pageSize = userAccountPage.getPageSize();
 			totalCount = userAccountPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<UserAccount> items;
@@ -1317,11 +1358,15 @@ public class Query {
 	public class WebUrlPage {
 
 		public WebUrlPage(Page webUrlPage) {
+			actions = webUrlPage.getActions();
 			items = webUrlPage.getItems();
 			page = webUrlPage.getPage();
 			pageSize = webUrlPage.getPageSize();
 			totalCount = webUrlPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<WebUrl> items;

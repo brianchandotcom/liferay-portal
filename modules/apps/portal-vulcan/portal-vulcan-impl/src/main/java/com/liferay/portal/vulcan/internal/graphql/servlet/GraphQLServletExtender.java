@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.internal.graphql.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
@@ -272,6 +273,7 @@ public class GraphQLServletExtender {
 			});
 
 		_defaultTypeFunction.register(new DateTypeFunction());
+		_defaultTypeFunction.register(new MapTypeFunction());
 		_defaultTypeFunction.register(new ObjectTypeFunction());
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
@@ -727,6 +729,11 @@ public class GraphQLServletExtender {
 
 				field.set(instance, httpServletResponseOptional.orElse(null));
 			}
+			else if (fieldClass.isAssignableFrom(ScopeChecker.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, _scopeChecker);
+			}
 			else if (fieldClass.isAssignableFrom(UriInfo.class)) {
 				field.setAccessible(true);
 
@@ -1148,6 +1155,7 @@ public class GraphQLServletExtender {
 	}
 
 	private static final GraphQLScalarType _dateGraphQLScalarType;
+	private static final GraphQLType _mapScalarType;
 	private static final GraphQLScalarType _objectGraphQLScalarType;
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
@@ -1302,6 +1310,37 @@ public class GraphQLServletExtender {
 
 			}
 		).build();
+
+		_mapScalarType = objectBuilder.name(
+			"Map"
+		).description(
+			"Any kind of object supported by a Map"
+		).coercing(
+			new Coercing<Object, Object>() {
+
+				@Override
+				public Object parseLiteral(Object value)
+					throws CoercingParseLiteralException {
+
+					return value;
+				}
+
+				@Override
+				public Object parseValue(Object value)
+					throws CoercingParseValueException {
+
+					return value;
+				}
+
+				@Override
+				public Object serialize(Object value)
+					throws CoercingSerializeException {
+
+					return value;
+				}
+
+			}
+		).build();
 	}
 
 	private BundleContext _bundleContext;
@@ -1332,6 +1371,9 @@ public class GraphQLServletExtender {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ScopeChecker _scopeChecker;
 
 	private volatile Servlet _servlet;
 	private ServiceRegistration<ServletContextHelper>
@@ -1589,6 +1631,29 @@ public class GraphQLServletExtender {
 
 	}
 
+	private static class MapTypeFunction implements TypeFunction {
+
+		@Override
+		public GraphQLType buildType(
+			boolean input, Class<?> clazz, AnnotatedType annotatedType,
+			ProcessingElementsContainer processingElementsContainer) {
+
+			return _mapScalarType;
+		}
+
+		@Override
+		public boolean canBuildType(
+			Class<?> clazz, AnnotatedType annotatedType) {
+
+			if (clazz == Map.class) {
+				return true;
+			}
+
+			return false;
+		}
+
+	}
+
 	private static class NodeDataFetcher implements DataFetcher<Object> {
 
 		@Override
@@ -1660,8 +1725,8 @@ public class GraphQLServletExtender {
 		public boolean canBuildType(
 			Class<?> clazz, AnnotatedType annotatedType) {
 
-			if ((clazz == Map.class) || (clazz == MultipartBody.class) ||
-				(clazz == Object.class) || (clazz == Response.class)) {
+			if ((clazz == MultipartBody.class) || (clazz == Object.class) ||
+				(clazz == Response.class)) {
 
 				return true;
 			}

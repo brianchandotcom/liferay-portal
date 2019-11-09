@@ -72,7 +72,7 @@ export const dropLayoutBuilderField = ({
 	};
 };
 
-export const deleteDefinitionField = ({fieldName}) => ({
+export const deleteDefinitionField = fieldName => ({
 	payload: {fieldName},
 	type: DELETE_DATA_DEFINITION_FIELD
 });

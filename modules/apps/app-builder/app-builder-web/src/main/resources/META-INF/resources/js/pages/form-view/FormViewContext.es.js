@@ -73,7 +73,7 @@ const deleteDataDefinitionField = (dataDefinition, fieldName) => {
 	return {
 		...dataDefinition,
 		dataDefinitionFields: dataDefinition.dataDefinitionFields.filter(
-			field => field.fieldName !== fieldName
+			field => field.name !== fieldName
 		)
 	};
 };

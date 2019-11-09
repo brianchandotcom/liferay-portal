@@ -1,0 +1,809 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.batch.engine.internal.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
+import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.test.rule.Inject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import java.nio.charset.StandardCharsets;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Ivica Cardic
+ */
+@RunWith(Arquillian.class)
+public class BatchEngineImportTaskExecutorTest
+	extends BaseBatchEngineTaskExecutorTest {
+
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		if (_batchEngineImportTask != null) {
+			_batchEngineImportTaskLocalService.deleteBatchEngineImportTask(
+				_batchEngineImportTask.getBatchEngineImportTaskId());
+		}
+	}
+
+	@Test
+	public void testCreateBlogPostingsFromCSVFile() {
+		_importBlogPostings(
+			BatchEngineTaskOperation.CREATE,
+			_getBlogPostingsCSVCreateContent(group.getGroupId(), FIELD_NAMES),
+			"CSV", Collections.emptyMap());
+
+		_assertCreatedBlogPostings();
+	}
+
+	@Test
+	public void testCreateBlogPostingsFromCSVFileWithFieldMappings() {
+		_importBlogPostings(
+			BatchEngineTaskOperation.CREATE,
+			_getBlogPostingsCSVCreateContent(
+				group.getGroupId(), _ALTERNATE_FIELD_NAMES),
+			"CSV", _fieldNamesMappingMap);
+
+		_assertCreatedBlogPostings();
+	}
+
+	@Test
+	public void testCreateBlogPostingsFromInvalidCSVFile() {
+		StringBundler sb = new StringBundler();
+
+		_createCSVRow(
+			sb, FIELD_NAMES[0], FIELD_NAMES[1], FIELD_NAMES[2], FIELD_NAMES[3],
+			FIELD_NAMES[4], "unknownColumn");
+
+		_createCSVRow(
+			sb, "alternativeHeadline", "articleBody",
+			dateFormat.format(new Date(baseDate.getTime())), "headline",
+			String.valueOf(group.getGroupId()), "unknownValue");
+
+		String content = sb.toString();
+
+		try {
+			_importBlogPostings(
+				BatchEngineTaskOperation.CREATE,
+				content.getBytes(StandardCharsets.UTF_8), "CSV",
+				Collections.emptyMap());
+
+			Assert.fail();
+		}
+		catch (AssertionError ae) {
+		}
+	}
+
+	@Test
+	public void testCreateBlogPostingsFromInvalidJSONFile() {
+		StringBundler sb = new StringBundler();
+
+		sb.append(StringPool.OPEN_BRACKET);
+
+		_createJSONRow(
+			sb, FIELD_NAMES[0], _toJSONValue("alternativeHeadline"),
+			FIELD_NAMES[1], _toJSONValue("articleBody"), FIELD_NAMES[2],
+			_toJSONValue(dateFormat.format(new Date(baseDate.getTime()))),
+			FIELD_NAMES[3], _toJSONValue("headline"), FIELD_NAMES[4],
+			String.valueOf(group.getGroupId()), "unknownColumn",
+			_toJSONValue("unknownValue"));
+
+		sb.append(StringPool.CLOSE_BRACKET);
+
+		String content = sb.toString();
+
+		try {
+			_importBlogPostings(
+				BatchEngineTaskOperation.CREATE,
+				content.getBytes(StandardCharsets.UTF_8), "JSON",
+				Collections.emptyMap());
+
+			Assert.fail();
+		}
+		catch (AssertionError ae) {
+		}
+	}
+
+	@Test
+	public void testCreateBlogPostingsFromInvalidJSONLFile() {
+		StringBundler sb = new StringBundler();
+
+		_createJSONRow(
+			sb, FIELD_NAMES[0], _toJSONValue("alternativeHeadline"),
+			FIELD_NAMES[1], _toJSONValue("articleBody"), FIELD_NAMES[2],
+			_toJSONValue(dateFormat.format(new Date(baseDate.getTime()))),
+			FIELD_NAMES[3], _toJSONValue("headline"), FIELD_NAMES[4],
+			String.valueOf(group.getGroupId()), "unknownColumn",
+			_toJSONValue("unknownValue"));
+
+		String content = sb.toString();
+
+		try {
+			_importBlogPostings(
+				BatchEngineTaskOperation.CREATE,
+				content.getBytes(StandardCharsets.UTF_8), "JSONL",
+				Collections.emptyMap());
+
+			Assert.fail();
+		}
+		catch (AssertionError ae) {
+		}
+	}
+
+	@Test
+	public void testCreateBlogPostingsFromInvalidXLSFile() throws Exception {
+		XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
+
+		Sheet sheet = xssfWorkbook.createSheet();
+
+		_createXLSRow(
+			sheet.createRow(0), FIELD_NAMES[0], FIELD_NAMES[1], FIELD_NAMES[2],
+			FIELD_NAMES[3], FIELD_NAMES[4], "unknownColumn");
+
+		_createXLSRow(
+			sheet.createRow(1), "alternativeHeadline", "articleBody",
+			dateFormat.format(new Date(baseDate.getTime())), "headline",
+			group.getGroupId(), "unknownValue");
+
+		try {
+			_importBlogPostings(
+				BatchEngineTaskOperation.CREATE, _toContent(xssfWorkbook),
+				"XLS", Collections.emptyMap());
+
+			Assert.fail();
+		}
+		catch (AssertionError ae) {
+		}
+	}
+
+	@Test
+	public void testCreateBlogPostingsFromJSONFile() {
+		_importBlogPostings(
+			BatchEngineTaskOperation.CREATE,
+			_getBlogPostingsJSONCreateContent(group.getGroupId(), FIELD_NAMES),
+			"JSON", Collections.emptyMap());
+
+		_assertCreatedBlogPostings();
+	}
+
+	@Test
+	public void testCreateBlogPostingsFromJSONFileWithFieldMappings() {
+		_importBlogPostings(
+			BatchEngineTaskOperation.CREATE,
+			_getBlogPostingsJSONCreateContent(
+				group.getGroupId(), _ALTERNATE_FIELD_NAMES),
+			"JSON", _fieldNamesMappingMap);
+
+		_assertCreatedBlogPostings();
+	}
+
+	@Test
+	public void testCreateBlogPostingsFromJSONLFile() {
+		_importBlogPostings(
+			BatchEngineTaskOperation.CREATE,
+			_getBlogPostingsJSONLCreateContent(group.getGroupId(), FIELD_NAMES),
+			"JSONL", Collections.emptyMap());
+
+		_assertCreatedBlogPostings();
+	}
+
+	@Test
+	public void testCreateBlogPostingsFromJSONLFileWithFieldMappings() {
+		_importBlogPostings(
+			BatchEngineTaskOperation.CREATE,
+			_getBlogPostingsJSONLCreateContent(
+				group.getGroupId(), _ALTERNATE_FIELD_NAMES),
+			"JSONL", _fieldNamesMappingMap);
+
+		_assertCreatedBlogPostings();
+	}
+
+	@Test
+	public void testCreateBlogPostingsFromXLSFile() throws Exception {
+		_importBlogPostings(
+			BatchEngineTaskOperation.CREATE,
+			_getBlogPostingsXLSCreateContent(group.getGroupId(), FIELD_NAMES),
+			"XLS", Collections.emptyMap());
+
+		_assertCreatedBlogPostings();
+	}
+
+	@Test
+	public void testCreateBlogPostingsFromXLSFileWithFieldMappings()
+		throws Exception {
+
+		_importBlogPostings(
+			BatchEngineTaskOperation.CREATE,
+			_getBlogPostingsXLSCreateContent(
+				group.getGroupId(), _ALTERNATE_FIELD_NAMES),
+			"XLS", _fieldNamesMappingMap);
+
+		_assertCreatedBlogPostings();
+	}
+
+	@Test
+	public void testDeleteBlogPostingsFromCSVFile() throws Exception {
+		List<BlogsEntry> blogsEntries = addBlogsEntries();
+
+		Assert.assertEquals(
+			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		_importBlogPostings(
+			BatchEngineTaskOperation.DELETE,
+			_getBlogPostingsCSVDeleteContent(blogsEntries), "CSV",
+			Collections.emptyMap());
+
+		Assert.assertEquals(0, blogsEntryLocalService.getBlogsEntriesCount());
+	}
+
+	@Test
+	public void testDeleteBlogPostingsFromJSONFile() throws Exception {
+		List<BlogsEntry> blogsEntries = addBlogsEntries();
+
+		Assert.assertEquals(
+			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		_importBlogPostings(
+			BatchEngineTaskOperation.DELETE,
+			_getBlogPostingsJSONDeleteContent(blogsEntries), "JSON",
+			Collections.emptyMap());
+
+		Assert.assertEquals(0, blogsEntryLocalService.getBlogsEntriesCount());
+	}
+
+	@Test
+	public void testDeleteBlogPostingsFromJSONLFile() throws Exception {
+		List<BlogsEntry> blogsEntries = addBlogsEntries();
+
+		Assert.assertEquals(
+			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		_importBlogPostings(
+			BatchEngineTaskOperation.DELETE,
+			_getBlogPostingsJSONLDeleteContent(blogsEntries), "JSONL",
+			Collections.emptyMap());
+
+		Assert.assertEquals(0, blogsEntryLocalService.getBlogsEntriesCount());
+	}
+
+	@Test
+	public void testDeleteBlogPostingsFromXLSFile() throws Exception {
+		List<BlogsEntry> blogsEntries = addBlogsEntries();
+
+		Assert.assertEquals(
+			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		_importBlogPostings(
+			BatchEngineTaskOperation.DELETE,
+			_getBlogPostingsXLSDeleteContent(blogsEntries), "XLS",
+			Collections.emptyMap());
+
+		Assert.assertEquals(0, blogsEntryLocalService.getBlogsEntriesCount());
+	}
+
+	@Test
+	public void testUpdateBlogPostingsFromCSVFile() throws Exception {
+		List<BlogsEntry> blogsEntries = addBlogsEntries();
+
+		Assert.assertEquals(
+			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		_importBlogPostings(
+			BatchEngineTaskOperation.UPDATE,
+			_getBlogPostingsCSVUpdateContent(blogsEntries), "CSV",
+			Collections.emptyMap());
+
+		_assertUpdatedBlogPostings();
+	}
+
+	@Test
+	public void testUpdateBlogPostingsFromJSONFile() throws Exception {
+		List<BlogsEntry> blogsEntries = addBlogsEntries();
+
+		Assert.assertEquals(
+			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		_importBlogPostings(
+			BatchEngineTaskOperation.UPDATE,
+			_getBlogPostingsJSONUpdateContent(blogsEntries), "JSON",
+			Collections.emptyMap());
+
+		_assertUpdatedBlogPostings();
+	}
+
+	@Test
+	public void testUpdateBlogPostingsFromJSONLFile() throws Exception {
+		List<BlogsEntry> blogsEntries = addBlogsEntries();
+
+		Assert.assertEquals(
+			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		_importBlogPostings(
+			BatchEngineTaskOperation.UPDATE,
+			_getBlogPostingsJSONLUpdateContent(blogsEntries), "JSONL",
+			Collections.emptyMap());
+
+		_assertUpdatedBlogPostings();
+	}
+
+	@Test
+	public void testUpdateBlogPostingsFromXLSFile() throws Exception {
+		List<BlogsEntry> blogsEntries = addBlogsEntries();
+
+		Assert.assertEquals(
+			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		_importBlogPostings(
+			BatchEngineTaskOperation.UPDATE,
+			_getBlogPostingsXLSUpdateContent(blogsEntries), "XLS",
+			Collections.emptyMap());
+
+		_assertUpdatedBlogPostings();
+	}
+
+	private void _assertCreatedBlogPostings() {
+		Assert.assertEquals(
+			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		List<BlogsEntry> blogsEntries = new ArrayList<>(
+			blogsEntryLocalService.getBlogsEntries(
+				0, blogsEntryLocalService.getBlogsEntriesCount()));
+
+		blogsEntries.sort(Comparator.comparingLong(BlogsEntry::getEntryId));
+
+		for (int i = 0; i < blogsEntries.size(); i++) {
+			BlogsEntry blogsEntry = blogsEntries.get(i);
+
+			Assert.assertEquals(
+				"alternativeHeadline" + i, blogsEntry.getSubtitle());
+			Assert.assertEquals("articleBody" + i, blogsEntry.getContent());
+			Assert.assertEquals(
+				_toTime(baseDate, i), _toTime(blogsEntry.getDisplayDate(), 0));
+			Assert.assertEquals("headline" + i, blogsEntry.getTitle());
+		}
+	}
+
+	private void _assertUpdatedBlogPostings() {
+		Assert.assertEquals(
+			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		List<BlogsEntry> blogsEntries = new ArrayList<>(
+			blogsEntryLocalService.getBlogsEntries(
+				0, blogsEntryLocalService.getBlogsEntriesCount()));
+
+		blogsEntries.sort(Comparator.comparingLong(BlogsEntry::getEntryId));
+
+		for (int i = 0; i < blogsEntries.size(); i++) {
+			BlogsEntry blogsEntry = blogsEntries.get(i);
+
+			Assert.assertEquals(
+				"alternativeHeadline" + i + i, blogsEntry.getSubtitle());
+			Assert.assertEquals("articleBody" + i + i, blogsEntry.getContent());
+			Assert.assertEquals(
+				_toTime(baseDate, i), _toTime(blogsEntry.getDisplayDate(), 0));
+			Assert.assertEquals("headline" + i + i, blogsEntry.getTitle());
+		}
+	}
+
+	private void _createCSVRow(StringBundler sb, String... values) {
+		for (String value : values) {
+			sb.append(value);
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.NEW_LINE);
+	}
+
+	private void _createJSONRow(StringBundler sb, String... values) {
+		sb.append(StringPool.OPEN_CURLY_BRACE);
+
+		for (int i = 0; i < values.length; i = i + 2) {
+			sb.append(StringPool.QUOTE);
+			sb.append(values[i]);
+			sb.append(StringPool.QUOTE);
+			sb.append(StringPool.COLON);
+			sb.append(StringPool.SPACE);
+			sb.append(values[i + 1]);
+
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.CLOSE_CURLY_BRACE);
+	}
+
+	private void _createXLSRow(Row row, Object... values) {
+		for (int i = 0; i < values.length; i++) {
+			Cell cell = row.createCell(i);
+
+			if (values[i] instanceof Boolean) {
+				cell.setCellValue((Boolean)values[i]);
+			}
+			else if (values[i] instanceof Date) {
+				cell.setCellValue((Date)values[i]);
+			}
+			else if (values[i] instanceof Number) {
+				Number value = (Number)values[i];
+
+				cell.setCellValue(value.doubleValue());
+			}
+			else {
+				cell.setCellValue((String)values[i]);
+			}
+		}
+	}
+
+	private byte[] _getBlogPostingsCSVCreateContent(
+		long siteId, String[] fieldNames) {
+
+		StringBundler sb = new StringBundler();
+
+		_createCSVRow(sb, fieldNames);
+
+		for (int i = 0; i < ROWS_COUNT; i++) {
+			_createCSVRow(
+				sb, "alternativeHeadline" + i, "articleBody" + i,
+				dateFormat.format(new Date(_toTime(baseDate, i))),
+				"headline" + i, String.valueOf(siteId));
+		}
+
+		return _toContent(sb);
+	}
+
+	private byte[] _getBlogPostingsCSVDeleteContent(
+		List<BlogsEntry> blogsEntries) {
+
+		StringBundler sb = new StringBundler();
+
+		_createCSVRow(sb, "id");
+
+		for (BlogsEntry blogsEntry : blogsEntries) {
+			_createCSVRow(sb, String.valueOf(blogsEntry.getEntryId()));
+		}
+
+		return _toContent(sb);
+	}
+
+	private byte[] _getBlogPostingsCSVUpdateContent(
+		List<BlogsEntry> blogsEntries) {
+
+		StringBundler sb = new StringBundler();
+
+		_createCSVRow(
+			sb, "alternativeHeadline", "articleBody", "datePublished",
+			"headline", "id");
+
+		for (int i = 0; i < blogsEntries.size(); i++) {
+			BlogsEntry blogsEntry = blogsEntries.get(i);
+
+			_createCSVRow(
+				sb, blogsEntry.getSubtitle() + i, blogsEntry.getContent() + i,
+				dateFormat.format(
+					new Date(_toTime(blogsEntry.getDisplayDate(), i))),
+				blogsEntry.getTitle() + i,
+				String.valueOf(blogsEntry.getEntryId()));
+		}
+
+		return _toContent(sb);
+	}
+
+	private byte[] _getBlogPostingsJSONCreateContent(
+		long siteId, String[] fieldNames) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(StringPool.OPEN_BRACKET);
+
+		for (int i = 0; i < ROWS_COUNT; i++) {
+			_createJSONRow(
+				sb, fieldNames[0], _toJSONValue("alternativeHeadline" + i),
+				fieldNames[1], _toJSONValue("articleBody" + i), fieldNames[2],
+				_toJSONValue(dateFormat.format(new Date(_toTime(baseDate, i)))),
+				fieldNames[3], _toJSONValue("headline" + i), fieldNames[4],
+				String.valueOf(siteId));
+
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.CLOSE_BRACKET);
+
+		return _toContent(sb);
+	}
+
+	private byte[] _getBlogPostingsJSONDeleteContent(
+		List<BlogsEntry> blogsEntries) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(StringPool.OPEN_BRACKET);
+
+		for (BlogsEntry blogsEntry : blogsEntries) {
+			_createJSONRow(sb, "id", String.valueOf(blogsEntry.getEntryId()));
+
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.CLOSE_BRACKET);
+
+		return _toContent(sb);
+	}
+
+	private byte[] _getBlogPostingsJSONLCreateContent(
+		long siteId, String[] fieldNames) {
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < ROWS_COUNT; i++) {
+			_createJSONRow(
+				sb, fieldNames[0], _toJSONValue("alternativeHeadline" + i),
+				fieldNames[1], _toJSONValue("articleBody" + i), fieldNames[2],
+				_toJSONValue(dateFormat.format(new Date(_toTime(baseDate, i)))),
+				fieldNames[3], _toJSONValue("headline" + i), fieldNames[4],
+				String.valueOf(siteId));
+
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return _toContent(sb);
+	}
+
+	private byte[] _getBlogPostingsJSONLDeleteContent(
+		List<BlogsEntry> blogsEntries) {
+
+		StringBundler sb = new StringBundler();
+
+		for (BlogsEntry blogsEntry : blogsEntries) {
+			_createJSONRow(sb, "id", String.valueOf(blogsEntry.getEntryId()));
+
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return _toContent(sb);
+	}
+
+	private byte[] _getBlogPostingsJSONLUpdateContent(
+		List<BlogsEntry> blogsEntries) {
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < blogsEntries.size(); i++) {
+			BlogsEntry blogsEntry = blogsEntries.get(i);
+
+			_createJSONRow(
+				sb, FIELD_NAMES[0], _toJSONValue(blogsEntry.getSubtitle() + i),
+				FIELD_NAMES[1], _toJSONValue(blogsEntry.getContent() + i),
+				FIELD_NAMES[2],
+				_toJSONValue(
+					dateFormat.format(
+						new Date(_toTime(blogsEntry.getDisplayDate(), i)))),
+				FIELD_NAMES[3], _toJSONValue(blogsEntry.getTitle() + i), "id",
+				String.valueOf(blogsEntry.getEntryId()));
+
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return _toContent(sb);
+	}
+
+	private byte[] _getBlogPostingsJSONUpdateContent(
+		List<BlogsEntry> blogsEntries) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(StringPool.OPEN_BRACKET);
+
+		for (int i = 0; i < blogsEntries.size(); i++) {
+			BlogsEntry blogsEntry = blogsEntries.get(i);
+
+			_createJSONRow(
+				sb, FIELD_NAMES[0], _toJSONValue(blogsEntry.getSubtitle() + i),
+				FIELD_NAMES[1], _toJSONValue(blogsEntry.getContent() + i),
+				FIELD_NAMES[2],
+				_toJSONValue(
+					dateFormat.format(
+						new Date(_toTime(blogsEntry.getDisplayDate(), i)))),
+				FIELD_NAMES[3], _toJSONValue(blogsEntry.getTitle() + i), "id",
+				String.valueOf(blogsEntry.getEntryId()));
+
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.CLOSE_BRACKET);
+
+		return _toContent(sb);
+	}
+
+	private byte[] _getBlogPostingsXLSCreateContent(
+			long siteId, String[] fieldNames)
+		throws IOException {
+
+		XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
+
+		Sheet sheet = xssfWorkbook.createSheet();
+
+		_createXLSRow(
+			sheet.createRow(0), fieldNames[0], fieldNames[1], fieldNames[2],
+			fieldNames[3], fieldNames[4]);
+
+		for (int i = 0; i < ROWS_COUNT; i++) {
+			_createXLSRow(
+				sheet.createRow(i + 1), "alternativeHeadline" + i,
+				"articleBody" + i,
+				dateFormat.format(new Date(_toTime(baseDate, i))),
+				"headline" + i, siteId);
+		}
+
+		return _toContent(xssfWorkbook);
+	}
+
+	private byte[] _getBlogPostingsXLSDeleteContent(
+			List<BlogsEntry> blogsEntries)
+		throws IOException {
+
+		XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
+
+		Sheet sheet = xssfWorkbook.createSheet();
+
+		_createXLSRow(sheet.createRow(0), "id");
+
+		for (int i = 0; i < blogsEntries.size(); i++) {
+			BlogsEntry blogsEntry = blogsEntries.get(i);
+
+			_createXLSRow(sheet.createRow(i + 1), blogsEntry.getEntryId());
+		}
+
+		return _toContent(xssfWorkbook);
+	}
+
+	private byte[] _getBlogPostingsXLSUpdateContent(
+			List<BlogsEntry> blogsEntries)
+		throws IOException {
+
+		XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
+
+		Sheet sheet = xssfWorkbook.createSheet();
+
+		_createXLSRow(
+			sheet.createRow(0), FIELD_NAMES[0], FIELD_NAMES[1], FIELD_NAMES[2],
+			FIELD_NAMES[3], "id");
+
+		for (int i = 0; i < blogsEntries.size(); i++) {
+			BlogsEntry blogsEntry = blogsEntries.get(i);
+
+			_createXLSRow(
+				sheet.createRow(i + 1), blogsEntry.getSubtitle() + i,
+				blogsEntry.getContent() + i,
+				dateFormat.format(
+					new Date(_toTime(blogsEntry.getDisplayDate(), i))),
+				blogsEntry.getTitle() + i, blogsEntry.getEntryId());
+		}
+
+		return _toContent(xssfWorkbook);
+	}
+
+	private void _importBlogPostings(
+		BatchEngineTaskOperation batchEngineTaskOperation, byte[] content,
+		String contentType, Map<String, String> fieldNameMappingMap) {
+
+		_batchEngineImportTask =
+			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
+				user.getCompanyId(), user.getUserId(), 10, null,
+				BlogPosting.class.getName(), content, contentType,
+				BatchEngineTaskExecuteStatus.INITIAL.name(),
+				fieldNameMappingMap, batchEngineTaskOperation.name(),
+				Collections.emptyMap(), "v1.0");
+
+		_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
+	}
+
+	private byte[] _toContent(StringBundler sb) {
+		String content = sb.toString();
+
+		return content.getBytes(StandardCharsets.UTF_8);
+	}
+
+	private byte[] _toContent(XSSFWorkbook xssfWorkbook) throws IOException {
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		xssfWorkbook.write(byteArrayOutputStream);
+
+		xssfWorkbook.close();
+
+		try {
+			return byteArrayOutputStream.toByteArray();
+		}
+		finally {
+			byteArrayOutputStream.close();
+		}
+	}
+
+	private String _toJSONValue(String value) {
+		return StringPool.QUOTE + value + StringPool.QUOTE;
+	}
+
+	private long _toTime(Date date, int index) {
+		return date.getTime() + index * Time.MINUTE;
+	}
+
+	private static final String[] _ALTERNATE_FIELD_NAMES = {
+		"alternativeHeadline1", "articleBody1", "datePublished1", "headline1",
+		"siteId1"
+	};
+
+	private static final Map<String, String> _fieldNamesMappingMap =
+		new HashMap<String, String>() {
+			{
+				put("alternativeHeadline1", "alternativeHeadline");
+				put("articleBody1", "articleBody");
+				put("datePublished1", "datePublished");
+				put("headline1", "headline");
+				put("siteId1", "siteId");
+			}
+		};
+
+	private BatchEngineImportTask _batchEngineImportTask;
+
+	@Inject
+	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
+
+	@Inject
+	private BatchEngineImportTaskLocalService
+		_batchEngineImportTaskLocalService;
+
+}

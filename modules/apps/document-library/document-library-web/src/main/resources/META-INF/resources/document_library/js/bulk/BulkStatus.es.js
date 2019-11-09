@@ -15,14 +15,9 @@
 import {useResource} from '@clayui/data-provider';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {fetch, openToast} from 'frontend-js-web';
+import {useTimeout} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState, useCallback} from 'react';
-
-function _delay(fn, duration) {
-	return setTimeout(() => {
-		fn();
-	}, duration);
-}
 
 /**
  * Shows a toast notification.
@@ -62,28 +57,27 @@ function BulkStatus({
 	portletNamespace,
 	waitingTime = 1000
 }) {
+	const delay = useTimeout();
+
 	const [isBulkInProgress, setIsBulkInProgress] = useState(bulkInProgress);
 	const [
 		isBulkLoadingIndicatorVisible,
 		setIsBulkLoadingIndicatorVisible
 	] = useState(false);
 	const isBulkHappened = useRef(false);
-	const timerIdRef = useRef(null);
 
 	useEffect(() => {
+		let dispose;
+
 		if (waitingTime) {
 			if (isBulkInProgress && !isBulkLoadingIndicatorVisible) {
-				timerIdRef.current = _delay(() => {
+				dispoe = delay(() => {
 					setIsBulkLoadingIndicatorVisible(true);
 				}, waitingTime);
 			}
 		}
 
-		return () => {
-			if (timerIdRef.current) {
-				clearTimeout(timerIdRef.current);
-			}
-		};
+		return dispose;
 	}, [waitingTime, isBulkInProgress, isBulkLoadingIndicatorVisible]);
 
 	const [networkState, setNetworkState] = useState({

@@ -31,6 +31,18 @@ definition {
 			value1 = "${assetType}");
 	}
 
+	macro removeAsset {
+		Panel.expandPanel(panel = "Related Assets");
+
+		for (var removeAssetTitle : list "${removeAssetTitle}") {
+			var key_assetTitle = "${removeAssetTitle}";
+
+			Click(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_REMOVE_LINK");
+
+			AssertElementNotPresent(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_REMOVE_LINK");
+		}
+	}
+
 	macro selectAsset {
 		Panel.expandPanel(panel = "Related Assets");
 

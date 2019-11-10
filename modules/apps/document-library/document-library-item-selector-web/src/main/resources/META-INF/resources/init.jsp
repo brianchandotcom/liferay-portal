@@ -21,28 +21,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorWebKeys" %><%@
 page import="com.liferay.document.library.item.selector.web.internal.display.context.DLItemSelectorViewDisplayContext" %><%@
-page import="com.liferay.document.library.kernel.model.DLFileEntryConstants" %><%@
-page import="com.liferay.document.library.kernel.model.DLFileShortcutConstants" %><%@
-page import="com.liferay.document.library.kernel.model.DLFolderConstants" %><%@
-page import="com.liferay.document.library.kernel.service.DLAppServiceUtil" %><%@
-page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
 page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@
-page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.kernel.dao.search.SearchPaginationUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
-page import="com.liferay.portal.kernel.search.Document" %><%@
-page import="com.liferay.portal.kernel.search.Hits" %><%@
-page import="com.liferay.portal.kernel.search.SearchContext" %><%@
-page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
-page import="com.liferay.portal.kernel.search.SearchResult" %><%@
-page import="com.liferay.portal.kernel.search.SearchResultUtil" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
-
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.List" %>
+page import="com.liferay.portal.kernel.util.ListUtil" %>
 
 <liferay-theme:defineObjects />
 

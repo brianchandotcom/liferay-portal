@@ -38,6 +38,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -90,10 +91,10 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext =
 			new DLItemSelectorViewDisplayContext(
-				t, this, _itemSelectorReturnTypeResolverHandler,
-				itemSelectedEventName, search, portletURL,
-				_assetVocabularyService, _classNameLocalService,
-				stagingGroupHelper);
+				(HttpServletRequest)servletRequest, t, this,
+				_itemSelectorReturnTypeResolverHandler, itemSelectedEventName,
+				search, portletURL, _assetVocabularyService,
+				_classNameLocalService, stagingGroupHelper);
 
 		servletRequest.setAttribute(
 			DLItemSelectorWebKeys.DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,

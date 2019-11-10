@@ -51,7 +51,6 @@ import com.liferay.staging.StagingGroupHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
@@ -132,9 +131,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			_portletURL, liferayPortletResponse);
 
 		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
-		portletURL.setParameter(
-			"selectedTab",
-			String.valueOf(getTitle(_httpServletRequest.getLocale())));
+		portletURL.setParameter("selectedTab", String.valueOf(getTitle()));
 
 		return portletURL;
 	}
@@ -242,8 +239,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		return groupId;
 	}
 
-	public String getTitle(Locale locale) {
-		return _dlItemSelectorView.getTitle(locale);
+	public String getTitle() {
+		return _dlItemSelectorView.getTitle(_themeDisplay.getLocale());
 	}
 
 	public PortletURL getUploadURL(

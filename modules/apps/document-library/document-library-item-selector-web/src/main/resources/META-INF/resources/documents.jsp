@@ -30,6 +30,6 @@ DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext = (DLItemSelec
 	repositoryEntries="<%= dlItemSelectorViewDisplayContext.getRepositoryEntries() %>"
 	repositoryEntriesCount="<%= dlItemSelectorViewDisplayContext.getRepositoryEntriesCount() %>"
 	showBreadcrumb="<%= true %>"
-	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
+	tabName="<%= dlItemSelectorViewDisplayContext.getTitle() %>"
 	uploadURL="<%= dlItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
 />

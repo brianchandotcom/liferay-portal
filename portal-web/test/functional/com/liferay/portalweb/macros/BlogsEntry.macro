@@ -836,6 +836,14 @@ definition {
 			locator1 = "BlogsEntry#TITLE");
 	}
 
+	macro viewNoRelatedAssetPG {
+		var key_assetTitle = "${assetTitle}";
+
+		AssertElementNotPresent(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TITLE");
+
+		AssertElementNotPresent(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_REMOVE_LINK");
+	}
+
 	macro viewNoTag {
 		var key_entryTitle = "${entryTitle}";
 

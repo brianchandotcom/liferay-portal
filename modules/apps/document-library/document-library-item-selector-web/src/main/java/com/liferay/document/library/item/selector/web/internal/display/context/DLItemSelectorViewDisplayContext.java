@@ -125,7 +125,6 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	}
 
 	public PortletURL getPortletURL(
-			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {
 
@@ -135,7 +134,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
 		portletURL.setParameter(
 			"selectedTab",
-			String.valueOf(getTitle(httpServletRequest.getLocale())));
+			String.valueOf(getTitle(_httpServletRequest.getLocale())));
 
 		return portletURL;
 	}
@@ -248,7 +247,6 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	}
 
 	public PortletURL getUploadURL(
-			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 

@@ -20,22 +20,36 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.item.selector.web.internal.DLItemSelectorView;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.StagingGroupHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,7 +65,8 @@ import javax.servlet.http.HttpServletRequest;
 public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	public DLItemSelectorViewDisplayContext(
-		T itemSelectorCriterion, DLItemSelectorView<T> dlItemSelectorView,
+		HttpServletRequest httpServletRequest, T itemSelectorCriterion,
+		DLItemSelectorView<T> dlItemSelectorView,
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler,
 		String itemSelectedEventName, boolean search, PortletURL portletURL,
@@ -59,6 +74,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		ClassNameLocalService classNameLocalService,
 		StagingGroupHelper stagingGroupHelper) {
 
+		_httpServletRequest = httpServletRequest;
 		_itemSelectorCriterion = itemSelectorCriterion;
 		_dlItemSelectorView = dlItemSelectorView;
 		_itemSelectorReturnTypeResolverHandler =
@@ -69,16 +85,25 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		_assetVocabularyService = assetVocabularyService;
 		_classNameLocalService = classNameLocalService;
 		_stagingGroupHelper = stagingGroupHelper;
+
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public String[] getExtensions() {
 		return _dlItemSelectorView.getExtensions();
 	}
 
-	public long getFolderId(HttpServletRequest httpServletRequest) {
-		return ParamUtil.getLong(
-			httpServletRequest, "folderId",
+	public long getFolderId() {
+		if (_folderId != null) {
+			return _folderId;
+		}
+
+		_folderId = ParamUtil.getLong(
+			_httpServletRequest, "folderId",
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		return _folderId;
 	}
 
 	public String getItemSelectedEventName() {
@@ -107,8 +132,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		PortletURL portletURL = PortletURLUtil.clone(
 			_portletURL, liferayPortletResponse);
 
-		portletURL.setParameter(
-			"folderId", String.valueOf(getFolderId(httpServletRequest)));
+		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
 		portletURL.setParameter(
 			"selectedTab",
 			String.valueOf(getTitle(httpServletRequest.getLocale())));
@@ -116,19 +140,105 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		return portletURL;
 	}
 
-	public long getStagingAwareGroupId(long scopeGroupId) {
-		long groupId = scopeGroupId;
+	public List<Object> getRepositoryEntries() throws Exception {
+		List<Object> repositoryEntries = null;
 
-		if (_stagingGroupHelper.isStagingGroup(scopeGroupId) &&
+		long folderId = getFolderId();
+		String[] mimeTypes = getMimeTypes();
+
+		if (isSearch()) {
+			Hits hits = _getHits();
+
+			Document[] docs = hits.getDocs();
+
+			repositoryEntries = new ArrayList(docs.length);
+
+			List<SearchResult> searchResults =
+				SearchResultUtil.getSearchResults(
+					hits, _themeDisplay.getLocale());
+
+			for (SearchResult searchResult : searchResults) {
+				String className = searchResult.getClassName();
+
+				if (className.equals(DLFileEntryConstants.getClassName()) ||
+					FileEntry.class.isAssignableFrom(
+						Class.forName(className))) {
+
+					repositoryEntries.add(
+						DLAppServiceUtil.getFileEntry(
+							searchResult.getClassPK()));
+				}
+				else if (className.equals(
+							DLFileShortcutConstants.getClassName())) {
+
+					repositoryEntries.add(
+						DLAppServiceUtil.getFileShortcut(
+							searchResult.getClassPK()));
+				}
+				else if (className.equals(DLFolderConstants.getClassName())) {
+					repositoryEntries.add(
+						DLAppServiceUtil.getFolder(searchResult.getClassPK()));
+				}
+			}
+		}
+		else {
+			String orderByCol = ParamUtil.getString(
+				_httpServletRequest, "orderByCol", "title");
+			String orderByType = ParamUtil.getString(
+				_httpServletRequest, "orderByType", "asc");
+
+			int[] startAndEnd = _getStartAndEnd();
+
+			repositoryEntries =
+				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+					getStagingAwareGroupId(), folderId,
+					WorkflowConstants.STATUS_APPROVED, mimeTypes, false, false,
+					startAndEnd[0], startAndEnd[1],
+					DLUtil.getRepositoryModelOrderByComparator(
+						orderByCol, orderByType, true));
+		}
+
+		return repositoryEntries;
+	}
+
+	public int getRepositoryEntriesCount() throws PortalException {
+		int repositoryEntriesCount = 0;
+
+		if (isSearch()) {
+			Hits hits = _getHits();
+
+			repositoryEntriesCount = hits.getLength();
+		}
+		else {
+			repositoryEntriesCount =
+				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
+					getStagingAwareGroupId(), getFolderId(),
+					WorkflowConstants.STATUS_APPROVED, getMimeTypes(), false,
+					false);
+		}
+
+		return repositoryEntriesCount;
+	}
+
+	public long getStagingAwareGroupId() {
+		if (_groupId != null) {
+			return _groupId;
+		}
+
+		long groupId = _themeDisplay.getScopeGroupId();
+
+		if (_stagingGroupHelper.isStagingGroup(groupId) &&
 			!_stagingGroupHelper.isStagedPortlet(
-				scopeGroupId, DLPortletKeys.DOCUMENT_LIBRARY)) {
+				groupId, DLPortletKeys.DOCUMENT_LIBRARY)) {
 
-			Group group = _stagingGroupHelper.fetchLiveGroup(scopeGroupId);
+			Group group = _stagingGroupHelper.fetchLiveGroup(groupId);
 
 			if (group != null) {
 				groupId = group.getGroupId();
 			}
 		}
+
+		_groupId = groupId;
 
 		return groupId;
 	}
@@ -142,13 +252,9 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyService.getGroupVocabularies(
-				getStagingAwareGroupId(themeDisplay.getScopeGroupId()));
+				getStagingAwareGroupId());
 
 		if (!assetVocabularies.isEmpty()) {
 			long classNameId = _classNameLocalService.getClassNameId(
@@ -170,8 +276,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/document_library/upload_file_entry");
-		portletURL.setParameter(
-			"folderId", String.valueOf(getFolderId(httpServletRequest)));
+		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
 
 		return portletURL;
 	}
@@ -180,15 +285,75 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		return _search;
 	}
 
+	private Hits _getHits() throws SearchException {
+		if (_hits != null) {
+			return _hits;
+		}
+
+		_hits = DLAppServiceUtil.search(
+			getStagingAwareGroupId(), _getSearchContext());
+
+		return _hits;
+	}
+
+	private SearchContext _getSearchContext() {
+		if (_searchContext != null) {
+			return _searchContext;
+		}
+
+		long groupId = getStagingAwareGroupId();
+		long folderId = getFolderId();
+		String[] mimeTypes = getMimeTypes();
+
+		int[] startAndEnd = _getStartAndEnd();
+
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			_httpServletRequest);
+
+		searchContext.setAttribute("mimeTypes", mimeTypes);
+		searchContext.setEnd(startAndEnd[1]);
+		searchContext.setFolderIds(new long[] {folderId});
+		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setStart(startAndEnd[0]);
+
+		_searchContext = searchContext;
+
+		return _searchContext;
+	}
+
+	private int[] _getStartAndEnd() {
+		if (_startAndEnd != null) {
+			return _startAndEnd;
+		}
+
+		int cur = ParamUtil.getInteger(
+			_httpServletRequest, SearchContainer.DEFAULT_CUR_PARAM,
+			SearchContainer.DEFAULT_CUR);
+		int delta = ParamUtil.getInteger(
+			_httpServletRequest, SearchContainer.DEFAULT_DELTA_PARAM,
+			SearchContainer.DEFAULT_DELTA);
+
+		_startAndEnd = SearchPaginationUtil.calculateStartAndEnd(cur, delta);
+
+		return _startAndEnd;
+	}
+
 	private final AssetVocabularyService _assetVocabularyService;
 	private final ClassNameLocalService _classNameLocalService;
 	private final DLItemSelectorView<T> _dlItemSelectorView;
+	private Long _folderId;
+	private Long _groupId;
+	private Hits _hits;
+	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
 	private final T _itemSelectorCriterion;
 	private final ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 	private final PortletURL _portletURL;
 	private final boolean _search;
+	private SearchContext _searchContext;
 	private final StagingGroupHelper _stagingGroupHelper;
+	private int[] _startAndEnd;
+	private final ThemeDisplay _themeDisplay;
 
 }

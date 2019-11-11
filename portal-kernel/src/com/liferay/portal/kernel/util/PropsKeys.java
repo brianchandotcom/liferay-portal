@@ -1291,13 +1291,6 @@ public interface PropsKeys {
 	public static final String INDEX_SEARCH_ENGINE_ID =
 		"index.search.engine.id";
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String INDEX_SEARCH_HIGHLIGHT_ENABLED =
-		"index.search.highlight.enabled";
-
 	public static final String INDEX_SEARCH_HIGHLIGHT_FRAGMENT_SIZE =
 		"index.search.highlight.fragment.size";
 

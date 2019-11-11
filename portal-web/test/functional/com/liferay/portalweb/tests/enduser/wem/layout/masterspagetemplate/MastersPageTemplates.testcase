@@ -1,0 +1,44 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Page Templates";
+	property testray.main.component.name = "Page Templates";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is for LPS-103687. Validate if there is a page template entry called Blank in Masters tab."
+	@priority = "5"
+	test ViewBlankPageTemplateExistInMastersTabInNewSite {
+		task ("Assert the Blank page template exist in the Masters tab") {
+			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Masters");
+
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Blank");
+		}
+	}
+
+}

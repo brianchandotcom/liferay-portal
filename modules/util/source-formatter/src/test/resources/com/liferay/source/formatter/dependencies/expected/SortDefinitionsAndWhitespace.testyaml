@@ -1,16 +1,11 @@
-#
-# See http://elasticsearch.org/guide/en/elasticsearch/reference/current/setup-configuration.html
-# For more information.
-#
-http.host: _local_
 # ZZZZZ
     # CCCC
     # BBBB
         # AAAA
 cachepool:
     bulk:
-        # bbbbb
         request_size: 200
+        # bbbbb
         response_size: 100
         # aaaaa
 components:
@@ -37,6 +32,11 @@ components:
                 urlType:
                     type: string
             type: object
+#
+# See http://elasticsearch.org/guide/en/elasticsearch/reference/current/setup-configuration.html
+# For more information.
+#
+http.host: _local_
 info:
     description:
         ""

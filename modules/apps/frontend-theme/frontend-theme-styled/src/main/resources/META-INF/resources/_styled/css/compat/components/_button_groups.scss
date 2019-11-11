@@ -1,21 +1,21 @@
+.button-holder {
+	display: flex;
+	margin: 20px 0;
+
+	.btn:not(:last-child) {
+		margin-right: 12px;
+	}
+
+	&.btn-group {
+		display: inline-flex;
+	}
+}
+
 @if $compat-button_groups {
 	.btn-group {
 		flex-flow: wrap;
 
 		&.dropdown {
-			display: inline-flex;
-		}
-	}
-
-	.button-holder {
-		display: flex;
-		margin: 20px 0;
-
-		.btn:not(:last-child) {
-			margin-right: 12px;
-		}
-
-		&.btn-group {
 			display: inline-flex;
 		}
 	}

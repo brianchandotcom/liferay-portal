@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.util.regex.Pattern;
-
 /**
  * @author Julio Camarero
  * @author Samuel Kong
@@ -24,17 +22,6 @@ public class FriendlyURLNormalizerUtil {
 
 	public static String normalize(String friendlyURL) {
 		return _friendlyURLNormalizer.normalize(friendlyURL);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String normalize(
-		String friendlyURL, Pattern friendlyURLPattern) {
-
-		return _friendlyURLNormalizer.normalize(
-			friendlyURL, friendlyURLPattern);
 	}
 
 	public static String normalizeWithEncoding(String friendlyURL) {

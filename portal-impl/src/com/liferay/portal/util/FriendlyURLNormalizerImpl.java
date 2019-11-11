@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.Normalizer;
 
@@ -29,8 +28,6 @@ import java.nio.CharBuffer;
 import java.nio.charset.CharsetEncoder;
 
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
@@ -42,45 +39,6 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 	@Override
 	public String normalize(String friendlyURL) {
 		return normalize(friendlyURL, false);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String normalize(String friendlyURL, Pattern friendlyURLPattern) {
-		if (Validator.isNull(friendlyURL)) {
-			return friendlyURL;
-		}
-
-		friendlyURL = StringUtil.toLowerCase(friendlyURL);
-		friendlyURL = Normalizer.normalizeToAscii(friendlyURL);
-
-		Matcher matcher = friendlyURLPattern.matcher(friendlyURL);
-
-		friendlyURL = matcher.replaceAll(StringPool.DASH);
-
-		StringBuilder sb = new StringBuilder(friendlyURL.length());
-
-		for (int i = 0; i < friendlyURL.length(); i++) {
-			char c = friendlyURL.charAt(i);
-
-			if (c == CharPool.DASH) {
-				if ((i == 0) || (CharPool.DASH != sb.charAt(sb.length() - 1))) {
-					sb.append(CharPool.DASH);
-				}
-			}
-			else {
-				sb.append(c);
-			}
-		}
-
-		if (sb.length() == friendlyURL.length()) {
-			return friendlyURL;
-		}
-
-		return sb.toString();
 	}
 
 	@Override

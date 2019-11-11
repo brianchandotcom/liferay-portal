@@ -29,6 +29,30 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-103687. Validate if the Blank page template can not be deleted."
+	@priority = "5"
+	test CannotDeleteBlankPageTemplate {
+		task ("Assert the Blank page template exist") {
+			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Masters");
+
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Blank");
+		}
+
+		task ("Assert the Blank page template without ellipsis icon button") {
+			AssertElementNotPresent(
+				key_card = "Blank",
+				locator1 = "LexiconCard#CARD_ELLIPSIS");
+		}
+
+		task ("Assert the Blank page template without checkbox") {
+			AssertElementNotPresent(
+				key_card = "Blank",
+				locator1 = "LexiconCard#CARD_CHECKBOX");
+		}
+	}
+
 	@description = "This is for LPS-103687. Validate if the Blank page template can not be edited."
 	@priority = "5"
 	test CannotEditBlankPageTemplate {

@@ -138,7 +138,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		return new Role() {
 			{
 				id = role.getRoleId();
-				name = role.getName();
+				name = role.getTitle(
+					contextAcceptLanguage.getPreferredLocale());
 			}
 		};
 	}

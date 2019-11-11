@@ -77,22 +77,22 @@
 						{let $sectionButtonAttributes kind="attributes"}
 							class="{$sectionButtonClasses}"
 							data-sidebar-panel-id="{$sidebarPanel.sidebarPanelId}"
-							{if $lockedSegmentsExperience != true }
-								data-title="{$sidebarPanel.label}"
-							{else}
+							{if $lockedSegmentsExperience}
 								data-title="{msg desc=""}edit-is-not-allowed-for-this-experience{/msg}"
+							{else}
+								data-title="{$sidebarPanel.label}"
 							{/if}
 
 							type="button"
 
-							{if $lockedSegmentsExperience != true}
+							{if $lockedSegmentsExperience}
+								aria-disabled="true"
+							{else}
 								{if $sidebarPanel.sidebarPanelId == 'lookAndFeel'}
 									data-onclick="{$_handleLookAndFeeldButtonClick}"
 								{else}
 									data-onclick="{$_handlePanelButtonClick}"
 								{/if}
-							{else}
-								aria-disabled="true"
 							{/if}
 						{/let}
 

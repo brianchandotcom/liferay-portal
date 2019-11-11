@@ -115,7 +115,7 @@ info:
 openapi: 3.0.1
 paths:
     /export-task/{className}/{contentType}/{version}:
-        #@review
+        # @review
         post:
             description:
                 Submits a request for exporting items to a file.
@@ -182,7 +182,7 @@ paths:
                         ""
             tags: ["ExportTask"]
     /export-task/{exportTaskId}/content/:
-        #@review
+        # @review
         get:
             description:
                 Retrieves the exported content.

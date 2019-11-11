@@ -2346,7 +2346,7 @@ definition {
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Select",
-			fieldValue = "Select 3, Select 4");
+			fieldValue = "Select3, Select4");
 	}
 
 	@priority = "5"

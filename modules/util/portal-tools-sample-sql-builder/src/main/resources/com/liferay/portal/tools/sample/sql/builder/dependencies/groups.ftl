@@ -42,6 +42,16 @@
 		<@insertLayout _layoutModel=publicLayoutModel />
 	</#list>
 
+	<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
+
+	${dataFactory.toInsertSQL(fragmentCollectionModel)}
+
+	<#assign fragmentEntryModels = dataFactory.newFragmentEntryModels(groupId, fragmentCollectionModel) />
+
+	<#list fragmentEntryModels?keys as fragmentEntryModelName>
+		${dataFactory.toInsertSQL(fragmentEntryModels["${fragmentEntryModelName}"])}
+	</#list>
+
 	<#assign contentLayoutModels = dataFactory.newContentLayoutModels(groupId) />
 
 	<#list contentLayoutModels as contentLayoutModel>

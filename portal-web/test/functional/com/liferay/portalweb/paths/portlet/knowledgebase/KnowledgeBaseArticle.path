@@ -140,7 +140,7 @@
 <!--HISTORY-->
 <tr>
 	<td>HISTORY_CONTENT_ADDED_DIFF</td>
-	<td>//div[@class='panel-body']//p//span[contains(@id,'added-diff')]</td>
+	<td>//div[@class='card-body']//p//span[contains(@id,'added-diff')]</td>
 	<td></td>
 </tr>
 <tr>

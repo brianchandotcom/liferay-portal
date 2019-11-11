@@ -135,7 +135,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.viewNoConnetctedSiteCP();
+		Depot.viewNoConnectedSiteCP();
 	}
 
 	@description = "This ensures that a depot can be connected to the site."

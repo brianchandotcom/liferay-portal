@@ -186,6 +186,11 @@ definition {
 				key_locale = "${locale}",
 				locator1 = "Translation#LOCALIZATION_NAME");
 		}
+
+	macro viewNoConnectedSiteCP {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO_DEPOT",
+			value1 = "No sites are connected yet.");
 	}
 
 	macro viewSearchResult {

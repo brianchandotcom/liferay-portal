@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_INFO_DEPOT</td>
+	<td>//p[contains(@class,'text-muted')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_INFO_TAGLIB</td>
 	<td>//div[contains(@class,'taglib-empty-result-message')]</td>
 	<td></td>

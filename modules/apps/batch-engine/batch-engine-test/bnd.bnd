@@ -15,7 +15,6 @@ Import-Package:\
 	!org.apache.batik.*,\
 	!org.apache.commons.math3.*,\
 	!org.apache.jcp.*,\
-	!org.apache.xmlbeans.*,\
 	\
 	!org.bouncycastle.*,\
 	\

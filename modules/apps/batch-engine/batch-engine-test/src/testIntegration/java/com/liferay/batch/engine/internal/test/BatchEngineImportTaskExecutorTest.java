@@ -23,6 +23,7 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.Inject;
@@ -55,16 +56,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class BatchEngineImportTaskExecutorTest
 	extends BaseBatchEngineTaskExecutorTest {
-
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		if (_batchEngineImportTask != null) {
-			_batchEngineImportTaskLocalService.deleteBatchEngineImportTask(
-				_batchEngineImportTask.getBatchEngineImportTaskId());
-		}
-	}
 
 	@Test
 	public void testCreateBlogPostingsFromCSVFile() {
@@ -797,6 +788,7 @@ public class BatchEngineImportTaskExecutorTest
 			}
 		};
 
+	@DeleteAfterTestRun
 	private BatchEngineImportTask _batchEngineImportTask;
 
 	@Inject

@@ -166,14 +166,12 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	}
 
 	public List<Object> getRepositoryEntries() throws Exception {
-		List<Object> repositoryEntries = null;
-
 		if (isSearch()) {
 			Hits hits = _getHits();
 
 			Document[] docs = hits.getDocs();
 
-			repositoryEntries = new ArrayList(docs.length);
+			List<Object> repositoryEntries = new ArrayList<>(docs.length);
 
 			List<SearchResult> searchResults =
 				SearchResultUtil.getSearchResults(
@@ -202,82 +200,69 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 						DLAppServiceUtil.getFolder(searchResult.getClassPK()));
 				}
 			}
+
+			return repositoryEntries;
 		}
-		else {
-			String orderByCol = ParamUtil.getString(
-				_httpServletRequest, "orderByCol", "title");
-			String orderByType = ParamUtil.getString(
-				_httpServletRequest, "orderByType", "asc");
 
-			int[] startAndEnd = _getStartAndEnd();
+		String orderByCol = ParamUtil.getString(
+			_httpServletRequest, "orderByCol", "title");
+		String orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
-			Repository repository = _getRepository();
+		int[] startAndEnd = _getStartAndEnd();
 
-			if (_isFilterByFileEntryType() &&
-				repository.isCapabilityProvided(
-					FileEntryTypeCapability.class)) {
+		Repository repository = _getRepository();
 
-				FileEntryTypeCapability fileEntryTypeCapability =
-					repository.getCapability(FileEntryTypeCapability.class);
+		if (_isFilterByFileEntryType() &&
+			repository.isCapabilityProvided(FileEntryTypeCapability.class)) {
 
-				repositoryEntries =
-					(List)
-						fileEntryTypeCapability.
-							getFoldersAndFileEntriesAndFileShortcuts(
-								getStagingAwareGroupId(), getFolderId(),
-								getMimeTypes(), _getFileEntryTypeId(), false,
-								WorkflowConstants.STATUS_APPROVED,
-								startAndEnd[0], startAndEnd[1],
-								DLUtil.getRepositoryModelOrderByComparator(
-									orderByCol, orderByType, true));
-			}
-			else {
-				repositoryEntries =
-					DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
-						getStagingAwareGroupId(), getFolderId(),
-						WorkflowConstants.STATUS_APPROVED, getMimeTypes(),
-						false, false, startAndEnd[0], startAndEnd[1],
+			FileEntryTypeCapability fileEntryTypeCapability =
+				repository.getCapability(FileEntryTypeCapability.class);
+
+			return (List)
+				fileEntryTypeCapability.
+					getFoldersAndFileEntriesAndFileShortcuts(
+						getStagingAwareGroupId(), getFolderId(), getMimeTypes(),
+						_getFileEntryTypeId(), false,
+						WorkflowConstants.STATUS_APPROVED, startAndEnd[0],
+						startAndEnd[1],
 						DLUtil.getRepositoryModelOrderByComparator(
 							orderByCol, orderByType, true));
-			}
 		}
 
-		return repositoryEntries;
+		return DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+			getStagingAwareGroupId(), getFolderId(),
+			WorkflowConstants.STATUS_APPROVED, getMimeTypes(), false, false,
+			startAndEnd[0], startAndEnd[1],
+			DLUtil.getRepositoryModelOrderByComparator(
+				orderByCol, orderByType, true));
 	}
 
 	public int getRepositoryEntriesCount() throws PortalException {
-		int repositoryEntriesCount = 0;
-
 		if (isSearch()) {
 			Hits hits = _getHits();
 
-			repositoryEntriesCount = hits.getLength();
-		}
-		else {
-			Repository repository = _getRepository();
-
-			if (_isFilterByFileEntryType() &&
-				repository.isCapabilityProvided(
-					FileEntryTypeCapability.class)) {
-
-				FileEntryTypeCapability fileEntryTypeCapability =
-					repository.getCapability(FileEntryTypeCapability.class);
-
-				return fileEntryTypeCapability.
-					getFoldersAndFileEntriesAndFileShortcutsCount(
-						getStagingAwareGroupId(), getFolderId(), getMimeTypes(),
-						_getFileEntryTypeId(), false,
-						WorkflowConstants.STATUS_APPROVED);
-			}
-
-			repositoryEntriesCount =
-				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
-					getStagingAwareGroupId(), getFolderId(),
-					WorkflowConstants.STATUS_APPROVED, getMimeTypes(), false,
-					false);
+			return hits.getLength();
 		}
 
-		return repositoryEntriesCount;
+		Repository repository = _getRepository();
+
+		if (_isFilterByFileEntryType() &&
+			repository.isCapabilityProvided(FileEntryTypeCapability.class)) {
+
+			FileEntryTypeCapability fileEntryTypeCapability =
+				repository.getCapability(FileEntryTypeCapability.class);
+
+			return fileEntryTypeCapability.
+				getFoldersAndFileEntriesAndFileShortcutsCount(
+					getStagingAwareGroupId(), getFolderId(), getMimeTypes(),
+					_getFileEntryTypeId(), false,
+					WorkflowConstants.STATUS_APPROVED);
+		}
+
+		return DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
+			getStagingAwareGroupId(), getFolderId(),
+			WorkflowConstants.STATUS_APPROVED, getMimeTypes(), false, false);
 	}
 
 	public long getStagingAwareGroupId() {

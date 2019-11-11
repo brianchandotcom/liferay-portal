@@ -59,6 +59,8 @@
 			_fragmentEntryModels=fragmentEntryModels
 			_layoutModel=contentLayoutModel
 		/>
+
+		${dataFactory.getCSVWriter("layout").write(contentLayoutModel.friendlyURL + "\n")}
 	</#list>
 
 	<@insertGroup _groupModel=groupModel />

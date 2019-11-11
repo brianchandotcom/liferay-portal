@@ -128,6 +128,8 @@ import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
 import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructureModel;
+import com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureModelImpl;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
@@ -313,6 +315,8 @@ public class DataFactory {
 		_userScreenNameCounter = new SimpleCounter();
 
 		List<String> models = ModelHintsUtil.getModels();
+
+		models.add(Layout.class.getName());
 
 		models.add(UserPersonalSite.class.getName());
 
@@ -2633,6 +2637,31 @@ public class DataFactory {
 		layoutModel.setLastPublishDate(new Date());
 
 		return layoutModel;
+	}
+
+	public LayoutPageTemplateStructureModel newLayoutPageTemplateStructureModel(
+		LayoutModel layoutModel) {
+
+		LayoutPageTemplateStructureModel layoutPageTemplateStructureModel =
+			new LayoutPageTemplateStructureModelImpl();
+
+		layoutPageTemplateStructureModel.setUuid(SequentialUUID.generate());
+
+		layoutPageTemplateStructureModel.setLayoutPageTemplateStructureId(
+			_counter.get());
+
+		layoutPageTemplateStructureModel.setGroupId(layoutModel.getGroupId());
+		layoutPageTemplateStructureModel.setCompanyId(_companyId);
+		layoutPageTemplateStructureModel.setUserId(_sampleUserId);
+		layoutPageTemplateStructureModel.setUserName(_SAMPLE_USER_NAME);
+		layoutPageTemplateStructureModel.setCreateDate(new Date());
+		layoutPageTemplateStructureModel.setModifiedDate(new Date());
+
+		layoutPageTemplateStructureModel.setClassNameId(
+			getClassNameId(Layout.class));
+		layoutPageTemplateStructureModel.setClassPK(layoutModel.getPlid());
+
+		return layoutPageTemplateStructureModel;
 	}
 
 	public List<LayoutSetModel> newLayoutSetModels(long groupId) {

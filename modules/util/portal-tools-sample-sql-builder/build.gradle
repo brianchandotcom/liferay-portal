@@ -45,6 +45,8 @@ dependencies {
 	compile project(":apps:friendly-url:friendly-url-service")
 	compile project(":apps:journal:journal-api")
 	compile project(":apps:journal:journal-service")
+	compile project(":apps:layout:layout-page-template-api")
+	compile project(":apps:layout:layout-page-template-service")
 	compile project(":apps:message-boards:message-boards-api")
 	compile project(":apps:message-boards:message-boards-service")
 	compile project(":apps:subscription:subscription-api")

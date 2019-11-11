@@ -12,6 +12,7 @@
  * details.
  */
 
+import {debounce} from 'frontend-js-web';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
@@ -146,8 +147,9 @@ class FragmentsEditor extends Component {
 		this._handleDocumentClick = this._handleDocumentClick.bind(this);
 		this._handleDocumentKeyDown = this._handleDocumentKeyDown.bind(this);
 		this._handleDocumentKeyUp = this._handleDocumentKeyUp.bind(this);
-		this._handleDocumentMouseOver = this._handleDocumentMouseOver.bind(
-			this
+		this._handleDocumentMouseOver = debounce(
+			this._handleDocumentMouseOver.bind(this),
+			100
 		);
 
 		if (!this.lockedSegmentsExperience) {

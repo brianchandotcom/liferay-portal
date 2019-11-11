@@ -206,6 +206,10 @@
 						"itemType": {
 							"title": "The ItemType Schema",
 							"type": "string"
+						},
+						"mimeTypes": {
+							"title": "The MimeTypes Schema",
+							"type": "array"
 						}
 					},
 					"title": "The Typeoptions Schema",

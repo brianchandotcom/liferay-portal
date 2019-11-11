@@ -56,7 +56,9 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 								colspan="<%= 2 %>"
 							>
 								<h5>
-									<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>
+									<aui:a cssClass="selector-button" href="<%= depotAdminDisplayContext.getHref(curGroup) %>">
+										<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>
+									</aui:a>
 								</h5>
 							</liferay-ui:search-container-column-text>
 
@@ -85,7 +87,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 								name="name"
 								orderable="<%= true %>"
 							>
-								<aui:a href="javascript:;" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+								<aui:a href="<%= depotAdminDisplayContext.getHref(curGroup) %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text>

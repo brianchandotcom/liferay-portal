@@ -91,35 +91,22 @@ definition {
 	macro addDMShortcutCP {
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Shortcut");
 
-		Click(locator1 = "DocumentsAndMediaAddShortcut#SELECT_SITE_BUTTON");
+		Click(locator1 = "DocumentsAndMediaAddShortcut#SELECT_DOCUMENT_BUTTON");
 
 		var key_siteName = "${siteName}";
 
-		IFrame.selectModalFrame();
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		AssertClick(
-			locator1 = "SitesSelectSite#SELECT_BUTTON",
-			value1 = "Select");
-
-		SelectFrameTop(value1 = "relative=top");
-
-		Click(locator1 = "DocumentsAndMediaAddShortcut#SELECT_DOCUMENT_BUTTON");
-
-		IFrame.selectModalFrame();
-
-		if (isSet(dmFolderName)) {
-			var key_dmFolderName = "${dmFolderName}";
-
+		if (isSet(siteName)) {
 			AssertClick(
-				locator1 = "DocumentsAndMediaAddShortcut#SELECT_FILE_FOLDER_NAME",
-				value1 = "${dmFolderName}");
+				key_breadcrumbName = "Sites", 
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Sites");
+
+			LexiconCard.clickCard(card = "${siteName}");
 		}
 
-		var key_dmDocumentTitle = "${dmDocumentTitle}";
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "DocumentsAndMediaAddShortcut#SELECT_FILE_DOCUMENT_TITLE",
-			value1 = "${dmDocumentTitle}");
+		LexiconCard.clickCard(card = "${dmDocumentTitle}");
 
 		SelectFrameTop(value1 = "relative=top");
 

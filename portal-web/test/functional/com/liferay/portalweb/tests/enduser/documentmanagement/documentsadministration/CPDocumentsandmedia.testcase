@@ -51,14 +51,12 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addDMShortcutCP(
-			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
 			siteName = "Site Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(
-			dmDocumentSize = "259 B",
 			dmDocumentTitle = "DM Document Title");
 	}
 

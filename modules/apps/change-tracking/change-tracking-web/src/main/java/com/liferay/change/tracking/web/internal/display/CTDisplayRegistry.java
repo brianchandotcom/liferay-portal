@@ -69,11 +69,16 @@ public class CTDisplayRegistry {
 		CTService<T> ctService = _ctServiceServiceTrackerMap.getService(
 			ctEntry.getModelClassNameId());
 
-		T ctModel = ctService.updateWithUnsafeFunction(
-			ctPersistence -> ctPersistence.findByPrimaryKey(
-				ctEntry.getModelClassPK()));
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					ctEntry.getCtCollectionId())) {
 
-		return ctDisplayRenderer.getEditURL(httpServletRequest, ctModel);
+			T ctModel = ctService.updateWithUnsafeFunction(
+				ctPersistence -> ctPersistence.findByPrimaryKey(
+					ctEntry.getModelClassPK()));
+
+			return ctDisplayRenderer.getEditURL(httpServletRequest, ctModel);
+		}
 	}
 
 	public String getTypeName(Locale locale, CTEntry ctEntry) {

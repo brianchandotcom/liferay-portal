@@ -193,6 +193,33 @@ definition {
 			value1 = "There are no structures.");
 	}
 
+	@description = "This ensures that a web content folder can be edited in a depot."
+	@priority = "3"
+	test EditFolder {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name");
+
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "WC Folder Name",
+			menuItem = "Edit");
+
+		PortletEntry.inputName(name = "WC Folder Name Edit");
+
+		PortletEntry.save();
+
+		AssertTextEquals.assertPartialText(
+			key_webContentTitle = "WC Folder Name Edit",
+			locator1 = "WC#ENTRY_LIST_TITLE",
+			value1 = "WC Folder Name Edit");
+	}
+
 	@description = "This test edits template and structure in a depot."
 	@priority = "5"
 	test EditTemplateAndStructure {
@@ -340,6 +367,38 @@ definition {
 			portlet = "Web Content");
 
 		WebContent.viewTitle(webContentTitle = "Web Content Title");
+	}
+
+	@description = "This ensures that web content can be moved to a folder in a depot."
+	@priority = "3"
+	test MoveWebContentToFolder {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name");
+
+		WebContent.moveToFolderCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC WebContent Title");
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that web content with structure can be restored to a depot."

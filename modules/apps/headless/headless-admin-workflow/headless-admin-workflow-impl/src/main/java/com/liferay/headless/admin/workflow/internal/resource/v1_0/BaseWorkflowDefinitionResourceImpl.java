@@ -45,6 +45,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -85,6 +86,24 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-definitions/by-name/{name}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "name")})
+	@Path("/workflow-definitions/by-name/{name}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "WorkflowDefinition")})
+	public WorkflowDefinition getWorkflowDefinitionByName(
+			@NotNull @Parameter(hidden = true) @PathParam("name") String name)
+		throws Exception {
+
+		return new WorkflowDefinition();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-definitions/deploy'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -95,24 +114,6 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 	@Tags(value = {@Tag(name = "WorkflowDefinition")})
 	public WorkflowDefinition postWorkflowDefinitionDeploy(
 			WorkflowDefinition workflowDefinition)
-		throws Exception {
-
-		return new WorkflowDefinition();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-definitions/find-by-name'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.QUERY, name = "name")})
-	@Path("/workflow-definitions/find-by-name")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "WorkflowDefinition")})
-	public WorkflowDefinition getWorkflowDefinitionFindByName(
-			@Parameter(hidden = true) @QueryParam("name") String name)
 		throws Exception {
 
 		return new WorkflowDefinition();

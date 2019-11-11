@@ -206,6 +206,16 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testGetWorkflowDefinitionByName() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetWorkflowDefinitionByName() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testPostWorkflowDefinitionDeploy() throws Exception {
 		WorkflowDefinition randomWorkflowDefinition =
 			randomWorkflowDefinition();
@@ -225,16 +235,6 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetWorkflowDefinitionFindByName() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetWorkflowDefinitionFindByName() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test

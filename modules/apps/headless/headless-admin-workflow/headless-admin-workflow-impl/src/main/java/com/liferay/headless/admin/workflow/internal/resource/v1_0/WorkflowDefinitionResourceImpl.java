@@ -45,7 +45,7 @@ public class WorkflowDefinitionResourceImpl
 	}
 
 	@Override
-	public WorkflowDefinition getWorkflowDefinitionFindByName(String name)
+	public WorkflowDefinition getWorkflowDefinitionByName(String name)
 		throws Exception {
 
 		return _toWorkflowDefinition(

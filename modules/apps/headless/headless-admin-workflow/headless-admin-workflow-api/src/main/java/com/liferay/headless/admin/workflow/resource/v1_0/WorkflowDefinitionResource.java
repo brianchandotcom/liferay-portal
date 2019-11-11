@@ -46,11 +46,11 @@ public interface WorkflowDefinitionResource {
 			Pagination pagination)
 		throws Exception;
 
-	public WorkflowDefinition postWorkflowDefinitionDeploy(
-			WorkflowDefinition workflowDefinition)
+	public WorkflowDefinition getWorkflowDefinitionByName(String name)
 		throws Exception;
 
-	public WorkflowDefinition getWorkflowDefinitionFindByName(String name)
+	public WorkflowDefinition postWorkflowDefinitionDeploy(
+			WorkflowDefinition workflowDefinition)
 		throws Exception;
 
 	public WorkflowDefinition postWorkflowDefinitionSave(

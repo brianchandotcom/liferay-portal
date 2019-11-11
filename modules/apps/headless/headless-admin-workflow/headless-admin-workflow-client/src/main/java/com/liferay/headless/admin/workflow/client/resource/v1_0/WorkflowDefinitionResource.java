@@ -47,19 +47,19 @@ public interface WorkflowDefinitionResource {
 			Pagination pagination)
 		throws Exception;
 
+	public WorkflowDefinition getWorkflowDefinitionByName(String name)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getWorkflowDefinitionByNameHttpResponse(
+			String name)
+		throws Exception;
+
 	public WorkflowDefinition postWorkflowDefinitionDeploy(
 			WorkflowDefinition workflowDefinition)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postWorkflowDefinitionDeployHttpResponse(
 			WorkflowDefinition workflowDefinition)
-		throws Exception;
-
-	public WorkflowDefinition getWorkflowDefinitionFindByName(String name)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getWorkflowDefinitionFindByNameHttpResponse(
-			String name)
 		throws Exception;
 
 	public WorkflowDefinition postWorkflowDefinitionSave(
@@ -213,6 +213,69 @@ public interface WorkflowDefinitionResource {
 			return httpInvoker.invoke();
 		}
 
+		public WorkflowDefinition getWorkflowDefinitionByName(String name)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getWorkflowDefinitionByNameHttpResponse(name);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return WorkflowDefinitionSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse getWorkflowDefinitionByNameHttpResponse(
+				String name)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-workflow/v1.0/workflow-definitions/by-name/{name}",
+				name);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
 		public WorkflowDefinition postWorkflowDefinitionDeploy(
 				WorkflowDefinition workflowDefinition)
 			throws Exception {
@@ -272,72 +335,6 @@ public interface WorkflowDefinitionResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-admin-workflow/v1.0/workflow-definitions/deploy");
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public WorkflowDefinition getWorkflowDefinitionFindByName(String name)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getWorkflowDefinitionFindByNameHttpResponse(name);
-
-			String content = httpResponse.getContent();
-
-			_logger.fine("HTTP response content: " + content);
-
-			_logger.fine("HTTP response message: " + httpResponse.getMessage());
-			_logger.fine(
-				"HTTP response status code: " + httpResponse.getStatusCode());
-
-			try {
-				return WorkflowDefinitionSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw e;
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getWorkflowDefinitionFindByNameHttpResponse(String name)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (name != null) {
-				httpInvoker.parameter("name", String.valueOf(name));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-definitions/find-by-name");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

@@ -17,7 +17,9 @@ package com.liferay.document.library.internal.repository.capabilities;
 import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.FileEntryTypeCapability;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 
 import java.util.List;
 
@@ -31,15 +33,16 @@ public class LiferayFileEntryTypeCapability implements FileEntryTypeCapability {
 	}
 
 	@Override
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, String[] mimeTypes,
 			long fileEntryTypeId, boolean includeMountFolders, int status,
 			int start, int end, OrderByComparator<?> obc)
 		throws PortalException {
 
-		return _dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
-			groupId, folderId, mimeTypes, fileEntryTypeId, includeMountFolders,
-			status, start, end, obc);
+		return RepositoryModelUtil.toRepositoryEntries(
+			_dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
+				groupId, folderId, mimeTypes, fileEntryTypeId,
+				includeMountFolders, status, start, end, obc));
 	}
 
 	@Override

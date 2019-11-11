@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.repository.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
  */
 public interface FileEntryTypeCapability extends Capability {
 
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
 			long repositoryId, long folderId, String[] mimeTypes,
 			long fileEntryTypeId, boolean includeMountFolders, int status,
 			int start, int end, OrderByComparator<?> obc)

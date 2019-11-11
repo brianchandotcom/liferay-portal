@@ -138,6 +138,50 @@ definition {
 		Depot.viewNoConnectedSiteCP();
 	}
 
+	@description = "This ensures that the disconnected site can not access the the depot."
+	@priority = "5"
+	test DisconnectFromSite {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(
+			connectSite = "true",
+			siteList = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.viewConnectedSite(
+			depotName = "Test Depot Name",
+			siteList = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.disconnectSite(siteList = "Site Name");
+
+		Depot.viewNoConnectedSiteCP();
+
+		DepotNavigator.openDepotAdmin();
+	}
+
 	@description = "This ensures that a depot can be connected to the site."
 	@priority = "5"
 	test Smoke {
@@ -166,6 +210,116 @@ definition {
 		Depot.viewConnectedSite(
 			depotName = "Test Depot Name",
 			siteList = "Site Name");
+	}
+
+	@description = "This ensures that a connected site can access the depot document."
+	@priority = "5"
+	test ViewDocumentFromAnotherSite {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(
+			connectSite = "true",
+			siteList = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.viewConnectedSite(
+			depotName = "Test Depot Name",
+			siteList = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This ensures that a connected child site can access the depot image."
+	@priority = "5"
+	test ViewImageFromChildSite {
+		JSONGroup.addChildSite(
+			groupName = "Child Site Name",
+			parentGroupName = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(
+			connectSite = "true",
+			siteList = "Child Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.viewConnectedSite(
+			depotName = "Test Depot Name",
+			siteList = "Site Name");
+
+		ProductMenu.gotoSite(site = "Child Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
 	}
 
 }

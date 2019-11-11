@@ -72,8 +72,12 @@ const Body = ({currentTab, processId, query}) => {
 							className="border-0 btn btn-secondary btn-sm"
 							to={`/assignees/${processId}/${defaultDelta}/1/overdueTaskCount:desc`}
 						>
-							<span className="mr-2" data-testid="viewAllSteps">
-								{Liferay.Language.get('view-all-assignees')}
+							<span
+								className="mr-2"
+								data-testid="viewAllAssignees"
+							>
+								{Liferay.Language.get('view-all-assignees') +
+									` (${data.totalCount})`}
 							</span>
 
 							<Icon iconName="caret-right-l" />

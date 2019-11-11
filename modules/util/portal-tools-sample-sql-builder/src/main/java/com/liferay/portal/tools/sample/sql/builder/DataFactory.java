@@ -117,6 +117,7 @@ import com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationModelImpl
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingModelImpl;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl;
 import com.liferay.journal.constants.JournalActivityKeys;
+import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -2524,6 +2525,10 @@ public class DataFactory {
 		journalArticleModel.setLastPublishDate(new Date());
 		journalArticleModel.setStatusDate(new Date());
 
+		if (Validator.isNull(_defaultJournalArticleId)) {
+			_defaultJournalArticleId = journalArticleModel.getArticleId();
+		}
+
 		return journalArticleModel;
 	}
 
@@ -2545,6 +2550,33 @@ public class DataFactory {
 			journalArticleResourceModel.getUuid());
 
 		return journalArticleResourceModel;
+	}
+
+	public PortletPreferencesModel newJournalContentPortletPreferencesModel(
+			FragmentEntryLinkModel fragmentEntryLinkModel)
+		throws Exception {
+
+		String portletId = PortletIdCodec.encode(
+			JournalContentPortletKeys.JOURNAL_CONTENT,
+			fragmentEntryLinkModel.getNamespace());
+
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
+
+		portletPreferences.setValue("articleId", _defaultJournalArticleId);
+
+		PortletPreferencesModel portletPreferencesModel =
+			new PortletPreferencesModelImpl();
+
+		portletPreferencesModel.setPortletPreferencesId(_counter.get());
+		portletPreferencesModel.setOwnerId(PortletKeys.PREFS_OWNER_ID_DEFAULT);
+		portletPreferencesModel.setOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+		portletPreferencesModel.setPlid(fragmentEntryLinkModel.getClassPK());
+		portletPreferencesModel.setPortletId(portletId);
+		portletPreferencesModel.setPreferences(
+			_portletPreferencesFactory.toXML(portletPreferences));
+
+		return portletPreferencesModel;
 	}
 
 	public JournalContentSearchModel newJournalContentSearchModel(
@@ -4670,6 +4702,7 @@ public class DataFactory {
 	private DDMStructureModel _defaultDLDDMStructureModel;
 	private DDMStructureVersionModel _defaultDLDDMStructureVersionModel;
 	private DLFileEntryTypeModel _defaultDLFileEntryTypeModel;
+	private String _defaultJournalArticleId;
 	private DDMStructureLayoutModel _defaultJournalDDMStructureLayoutModel;
 	private DDMStructureModel _defaultJournalDDMStructureModel;
 	private DDMStructureVersionModel _defaultJournalDDMStructureVersionModel;

@@ -37,6 +37,10 @@
 
 	<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
 		${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
+
+		<#if fragmentEntryLinkModel.getHtml()?contains("lfr-widget-web-content")>
+			${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferencesModel(fragmentEntryLinkModel))}
+		</#if>
 	</#list>
 
 	<#local layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(_layoutModel)>

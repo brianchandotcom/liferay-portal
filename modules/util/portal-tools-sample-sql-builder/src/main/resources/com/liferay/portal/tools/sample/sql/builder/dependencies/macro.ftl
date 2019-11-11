@@ -26,11 +26,18 @@
 </#macro>
 
 <#macro insertContentLayout
-		_layoutModel
+	_layoutModel
+	_fragmentEntryModels
 >
 	${dataFactory.toInsertSQL(_layoutModel)}
 
 	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(_layoutModel))}
+
+	<#local fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(_layoutModel, _fragmentEntryModels)>
+
+	<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
+		${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
+	</#list>
 </#macro>
 
 <#macro insertDDMContent

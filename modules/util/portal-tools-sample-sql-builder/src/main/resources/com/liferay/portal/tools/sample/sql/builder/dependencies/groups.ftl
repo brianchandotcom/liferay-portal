@@ -55,7 +55,10 @@
 	<#assign contentLayoutModels = dataFactory.newContentLayoutModels(groupId) />
 
 	<#list contentLayoutModels as contentLayoutModel>
-		<@insertContentLayout _layoutModel=contentLayoutModel />
+		<@insertContentLayout
+			_layoutModel=contentLayoutModel
+			_fragmentEntryModels=fragmentEntryModels
+		/>
 	</#list>
 
 	<@insertGroup _groupModel=groupModel />

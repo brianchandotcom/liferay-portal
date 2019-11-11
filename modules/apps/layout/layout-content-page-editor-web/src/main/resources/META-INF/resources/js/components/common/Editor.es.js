@@ -69,6 +69,7 @@ const Editor = props => {
 	useEffect(() => {
 		const newEditor = AlloyEditor.editable(wrapperRef.current, {
 			...editorConfig,
+			title: false,
 			enterMode: 1,
 			startupFocus: autoFocus
 		});

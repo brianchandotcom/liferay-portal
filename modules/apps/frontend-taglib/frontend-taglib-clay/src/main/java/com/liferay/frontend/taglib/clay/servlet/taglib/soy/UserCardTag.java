@@ -87,7 +87,7 @@ public class UserCardTag extends BaseClayCardTag {
 			setSubtitle(_userCard.getSubtitle());
 		}
 
-		if (context.get("userCssColorClass") == null) {
+		if (context.get("userColorClass") == null) {
 			setUserColorCssClass(_userCard.getUserColorCssClass());
 		}
 	}

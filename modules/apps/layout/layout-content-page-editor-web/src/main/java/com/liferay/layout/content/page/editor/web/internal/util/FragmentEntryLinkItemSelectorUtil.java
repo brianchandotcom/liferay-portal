@@ -103,7 +103,7 @@ public class FragmentEntryLinkItemSelectorUtil {
 			JSONArray mimeTypesJSONArray = typeOptionsJSONObject.getJSONArray(
 				"mimeTypes");
 
-			if (Validator.isNotNull(mimeTypesJSONArray)) {
+			if (mimeTypesJSONArray != null) {
 				List<String> mimeTypes = new ArrayList<>();
 
 				for (int i = 0; i < mimeTypesJSONArray.length(); i++) {

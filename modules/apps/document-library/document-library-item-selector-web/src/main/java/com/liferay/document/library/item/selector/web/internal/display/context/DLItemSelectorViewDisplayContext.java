@@ -142,9 +142,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			String[] infoItemSelectorMimeTypes =
 				infoItemItemSelectorCriterion.getMimeTypes();
 
-			if ((infoItemSelectorMimeTypes != null) &&
-				ArrayUtil.isNotEmpty(infoItemSelectorMimeTypes)) {
-
+			if (ArrayUtil.isNotEmpty(infoItemSelectorMimeTypes)) {
 				mimeTypes = infoItemItemSelectorCriterion.getMimeTypes();
 			}
 		}

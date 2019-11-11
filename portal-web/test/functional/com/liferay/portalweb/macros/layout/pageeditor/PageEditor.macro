@@ -110,7 +110,7 @@ definition {
 	}
 
 	macro addLayoutSection {
-		PageEditor.gotoTab(tabName = "Section Builder");
+		PageEditor.gotoTab(tabName = "Fragments");
 
 		PageEditor.expandFragmentCollection(collectionName = "Layouts");
 

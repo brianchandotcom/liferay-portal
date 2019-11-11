@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -111,7 +112,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.TreeMap;
 import java.util.concurrent.Callable;
 
 import javax.portlet.PortletException;
@@ -1541,12 +1541,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				virtualHostname);
 
 			if (virtualHost == null) {
-				TreeMap<String, String> virtualHostnames = new TreeMap<>();
-
-				virtualHostnames.put(virtualHostname, StringPool.BLANK);
-
 				virtualHostLocalService.updateVirtualHosts(
-					companyId, 0, virtualHostnames);
+					companyId, 0,
+					TreeMapBuilder.put(
+						virtualHostname, StringPool.BLANK
+					).build());
 			}
 			else {
 				if ((virtualHost.getCompanyId() != companyId) ||

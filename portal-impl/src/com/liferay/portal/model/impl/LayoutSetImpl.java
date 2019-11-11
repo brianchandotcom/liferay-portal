@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -364,11 +365,9 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	@Deprecated
 	@Override
 	public void setVirtualHostname(final String virtualHostname) {
-		TreeMap<String, String> virtualHostnames = new TreeMap<>();
-
-		virtualHostnames.put(virtualHostname, StringPool.BLANK);
-
-		_virtualHostnames = virtualHostnames;
+		_virtualHostnames = TreeMapBuilder.put(
+			virtualHostname, StringPool.BLANK
+		).build();
 	}
 
 	/**

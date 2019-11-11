@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.WebKeys;
@@ -43,6 +45,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -201,8 +204,17 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 		viewGroupSelectorURL.setParameter(
 			"showGroupSelector", Boolean.TRUE.toString());
 
+		ResourceBundleLoader resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					"com.liferay.item.selector.taglib");
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			PortalUtil.getLocale(httpServletRequest));
+
 		PortalUtil.addPortletBreadcrumbEntry(
-			httpServletRequest, "sites", viewGroupSelectorURL.toString());
+			httpServletRequest, LanguageUtil.get(resourceBundle, "workspaces"),
+			viewGroupSelectorURL.toString());
 	}
 
 	protected static void addPortletBreadcrumbEntry(

@@ -81,6 +81,23 @@ public class DepotEntryGroupRelServiceSoap {
 		}
 	}
 
+	public static int getDepotEntryGroupRelsCount(long groupId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				DepotEntryGroupRelServiceUtil.getDepotEntryGroupRelsCount(
+					groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		DepotEntryGroupRelServiceSoap.class);
 

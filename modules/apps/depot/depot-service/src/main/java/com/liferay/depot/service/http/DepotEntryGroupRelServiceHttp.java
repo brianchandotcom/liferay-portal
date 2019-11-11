@@ -91,10 +91,50 @@ public class DepotEntryGroupRelServiceHttp {
 		}
 	}
 
+	public static int getDepotEntryGroupRelsCount(
+			HttpPrincipal httpPrincipal, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DepotEntryGroupRelServiceUtil.class,
+				"getDepotEntryGroupRelsCount",
+				_getDepotEntryGroupRelsCountParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		DepotEntryGroupRelServiceHttp.class);
 
 	private static final Class<?>[] _getDepotEntryGroupRelsParameterTypes0 =
 		new Class[] {long.class, int.class, int.class};
+	private static final Class<?>[]
+		_getDepotEntryGroupRelsCountParameterTypes1 = new Class[] {long.class};
 
 }

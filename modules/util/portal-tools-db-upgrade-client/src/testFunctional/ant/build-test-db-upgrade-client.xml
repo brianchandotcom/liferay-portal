@@ -209,6 +209,8 @@
 				<fail if="gogoshell.timeout" message="The Gogo shell connection did not connect as expected." />
 			</sequential>
 		</parallel>
+
+		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-help">

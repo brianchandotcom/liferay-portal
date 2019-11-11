@@ -29,6 +29,7 @@ import com.liferay.portlet.sitesadmin.search.SiteChecker;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -97,6 +98,14 @@ public class DepotAdminDisplayContext {
 		groupSearch.setRowChecker(siteChecker);
 
 		return groupSearch;
+	}
+
+	public boolean isDisplayStyleDescriptive() {
+		return Objects.equals(getDisplayStyle(), "descriptive");
+	}
+
+	public boolean isDisplayStyleIcon() {
+		return Objects.equals(getDisplayStyle(), "icon");
 	}
 
 	private long _getGroupId() {

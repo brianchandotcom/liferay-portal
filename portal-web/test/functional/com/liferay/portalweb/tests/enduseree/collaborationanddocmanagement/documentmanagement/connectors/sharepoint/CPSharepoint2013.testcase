@@ -58,8 +58,8 @@ definition {
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryName = "Documents",
 			dmRepositoryName = "Sharepoint",
-			dmRepositorySiteURL = "http://${sharepointVMHostName}"),
-			dmServerVersion = "2013";
+			dmRepositorySiteURL = "http://${sharepointVMHostName}",
+			dmServerVersion = "2013");
 
 		PortletEntry.save();
 	}

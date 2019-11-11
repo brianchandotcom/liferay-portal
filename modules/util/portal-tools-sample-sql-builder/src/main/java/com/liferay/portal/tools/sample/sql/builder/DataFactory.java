@@ -102,6 +102,11 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.model.FragmentCollectionModel;
+import com.liferay.fragment.model.FragmentEntryModel;
+import com.liferay.fragment.model.impl.FragmentCollectionModelImpl;
+import com.liferay.fragment.model.impl.FragmentEntryModelImpl;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationModel;
 import com.liferay.friendly.url.model.FriendlyURLEntryMappingModel;
@@ -194,6 +199,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -2196,6 +2202,93 @@ public class DataFactory {
 		}
 
 		return dlFolderModels;
+	}
+
+	public FragmentCollectionModel newFragmentCollectionModel(long groupId) {
+		FragmentCollectionModel fragmentCollectionModel =
+			new FragmentCollectionModelImpl();
+
+		fragmentCollectionModel.setUuid(SequentialUUID.generate());
+		fragmentCollectionModel.setFragmentCollectionId(_counter.get());
+		fragmentCollectionModel.setGroupId(groupId);
+		fragmentCollectionModel.setCompanyId(_companyId);
+		fragmentCollectionModel.setUserId(_sampleUserId);
+		fragmentCollectionModel.setCreateDate(new Date());
+		fragmentCollectionModel.setModifiedDate(new Date());
+		fragmentCollectionModel.setFragmentCollectionKey("fragmentcollection");
+		fragmentCollectionModel.setName("fragmentcollection");
+
+		return fragmentCollectionModel;
+	}
+
+	public FragmentEntryModel newFragmentEntryModel(
+			long groupId, String fragmentName,
+			FragmentCollectionModel fragmentCollectionModel)
+		throws Exception {
+
+		FragmentEntryModel fragmentEntryModel = new FragmentEntryModelImpl();
+
+		fragmentEntryModel.setUuid(SequentialUUID.generate());
+		fragmentEntryModel.setFragmentEntryId(_counter.get());
+		fragmentEntryModel.setFragmentCollectionId(
+			fragmentCollectionModel.getFragmentCollectionId());
+		fragmentEntryModel.setGroupId(groupId);
+		fragmentEntryModel.setCompanyId(_companyId);
+		fragmentEntryModel.setUserId(_sampleUserId);
+		fragmentEntryModel.setUserName(_SAMPLE_USER_NAME);
+		fragmentEntryModel.setCreateDate(new Date());
+		fragmentEntryModel.setModifiedDate(new Date());
+
+		fragmentEntryModel.setName(fragmentName);
+		fragmentEntryModel.setCss(StringPool.BLANK);
+		fragmentEntryModel.setJs(StringPool.BLANK);
+		fragmentEntryModel.setFragmentEntryKey(fragmentName);
+		fragmentEntryModel.setType(FragmentConstants.TYPE_COMPONENT);
+		fragmentEntryModel.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		List<String> lines = new ArrayList<>();
+
+		StringUtil.readLines(
+			getResourceInputStream("fragments/" + fragmentName + ".html"),
+			lines);
+
+		String html = StringUtil.merge(lines, StringPool.SPACE);
+
+		fragmentEntryModel.setHtml(html);
+
+		return fragmentEntryModel;
+	}
+
+	public Map<String, FragmentEntryModel> newFragmentEntryModels(
+			long groupId, FragmentCollectionModel fragmentCollectionModel)
+		throws Exception {
+
+		return HashMapBuilder.put(
+			"asset_list",
+			newFragmentEntryModel(
+				groupId, "asset_list", fragmentCollectionModel)
+		).put(
+			"footer",
+			newFragmentEntryModel(groupId, "footer", fragmentCollectionModel)
+		).put(
+			"header",
+			newFragmentEntryModel(groupId, "header", fragmentCollectionModel)
+		).put(
+			"media_gallery",
+			newFragmentEntryModel(
+				groupId, "media_gallery", fragmentCollectionModel)
+		).put(
+			"navigation",
+			newFragmentEntryModel(
+				groupId, "navigation", fragmentCollectionModel)
+		).put(
+			"site_map",
+			newFragmentEntryModel(groupId, "site_map", fragmentCollectionModel)
+		).put(
+			"web_content",
+			newFragmentEntryModel(
+				groupId, "web_content", fragmentCollectionModel)
+		).build();
 	}
 
 	public FriendlyURLEntryLocalizationModel

@@ -39,6 +39,8 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-web")
+	compile project(":apps:fragment:fragment-api")
+	compile project(":apps:fragment:fragment-service")
 	compile project(":apps:friendly-url:friendly-url-api")
 	compile project(":apps:friendly-url:friendly-url-service")
 	compile project(":apps:journal:journal-api")

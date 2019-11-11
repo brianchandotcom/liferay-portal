@@ -104,8 +104,10 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollectionModel;
+import com.liferay.fragment.model.FragmentEntryLinkModel;
 import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.model.impl.FragmentCollectionModelImpl;
+import com.liferay.fragment.model.impl.FragmentEntryLinkModelImpl;
 import com.liferay.fragment.model.impl.FragmentEntryModelImpl;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationModel;
@@ -2219,6 +2221,72 @@ public class DataFactory {
 		fragmentCollectionModel.setName("fragmentcollection");
 
 		return fragmentCollectionModel;
+	}
+
+	public FragmentEntryLinkModel newFragmentEntryLinkModel(
+			LayoutModel layoutModel, FragmentEntryModel fragmentEntryModel,
+			int position)
+		throws Exception {
+
+		FragmentEntryLinkModel fragmentEntryLinkModel =
+			new FragmentEntryLinkModelImpl();
+
+		fragmentEntryLinkModel.setUuid(SequentialUUID.generate());
+		fragmentEntryLinkModel.setFragmentEntryLinkId(_counter.get());
+		fragmentEntryLinkModel.setFragmentEntryId(
+			fragmentEntryModel.getFragmentEntryId());
+		fragmentEntryLinkModel.setGroupId(fragmentEntryModel.getGroupId());
+		fragmentEntryLinkModel.setCompanyId(_companyId);
+		fragmentEntryLinkModel.setUserId(_sampleUserId);
+		fragmentEntryLinkModel.setUserName(_SAMPLE_USER_NAME);
+		fragmentEntryLinkModel.setCreateDate(new Date());
+		fragmentEntryLinkModel.setModifiedDate(new Date());
+
+		fragmentEntryLinkModel.setClassNameId(getClassNameId(Layout.class));
+		fragmentEntryLinkModel.setClassPK(layoutModel.getPlid());
+		fragmentEntryLinkModel.setCss(fragmentEntryModel.getCss());
+		fragmentEntryLinkModel.setJs(fragmentEntryModel.getJs());
+		fragmentEntryLinkModel.setHtml(fragmentEntryModel.getHtml());
+		fragmentEntryLinkModel.setEditableValues(StringPool.BLANK);
+		fragmentEntryLinkModel.setNamespace(StringUtil.randomId());
+		fragmentEntryLinkModel.setPosition(position);
+
+		return fragmentEntryLinkModel;
+	}
+
+	public List<FragmentEntryLinkModel> newFragmentEntryLinkModels(
+			LayoutModel layoutModel,
+			Map<String, FragmentEntryModel> fragmentEntryModels)
+		throws Exception {
+
+		List<FragmentEntryLinkModel> fragmentEntryLinkModels =
+			new ArrayList<>();
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.fastLoad(layoutModel.getTypeSettings());
+
+		String fragmentEntries = typeSettingsProperties.getProperty(
+			"fragmentEntries");
+
+		fragmentEntries = fragmentEntries.substring(
+			0, fragmentEntries.length() - 2);
+
+		String[] fragmentEntryNames = fragmentEntries.split(StringPool.COMMA);
+
+		int position = 0;
+
+		for (String fragmentEntryName : fragmentEntryNames) {
+			fragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					layoutModel,
+					fragmentEntryModels.get(fragmentEntryName.trim()),
+					position));
+
+			position++;
+		}
+
+		return fragmentEntryLinkModels;
 	}
 
 	public FragmentEntryModel newFragmentEntryModel(

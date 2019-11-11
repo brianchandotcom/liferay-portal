@@ -28,13 +28,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.util.GroupURLProvider;
 
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alejandro Tardín
@@ -44,7 +41,8 @@ public class DepotEntryVerticalCard
 
 	public DepotEntryVerticalCard(
 		BaseModel<?> baseModel, LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, RowChecker rowChecker) {
+		LiferayPortletResponse liferayPortletResponse, RowChecker rowChecker,
+		GroupURLProvider groupURLProvider) {
 
 		super(baseModel, rowChecker);
 
@@ -52,13 +50,7 @@ public class DepotEntryVerticalCard
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_group = (Group)baseModel;
-
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(_liferayPortletRequest);
-
-		_groupURLProvider = (GroupURLProvider)httpServletRequest.getAttribute(
-			DepotAdminWebKeys.DEPOT_ADMIN_GROUP_URL_PROVIDER);
-
+		_groupURLProvider = groupURLProvider;
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

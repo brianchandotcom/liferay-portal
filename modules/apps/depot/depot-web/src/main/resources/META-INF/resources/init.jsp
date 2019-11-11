@@ -34,7 +34,6 @@ page import="com.liferay.depot.web.internal.constants.DepotPortletKeys" %><%@
 page import="com.liferay.depot.web.internal.constants.DepotScreenNavigationEntryConstants" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminManagementToolbarDisplayContext" %><%@
-page import="com.liferay.depot.web.internal.servlet.taglib.clay.DepotEntryVerticalCard" %><%@
 page import="com.liferay.depot.web.internal.util.DepotEntryURLUtil" %><%@
 page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.ItemSelectorCriterion" %><%@

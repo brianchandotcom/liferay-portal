@@ -75,7 +75,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 
 							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
-									verticalCard="<%= new DepotEntryVerticalCard(curGroup, liferayPortletRequest, liferayPortletResponse, searchContainer.getRowChecker()) %>"
+									verticalCard="<%= depotAdminDisplayContext.getDepotEntryVerticalCard(curGroup) %>"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>

@@ -15,6 +15,7 @@
 package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
+import com.liferay.depot.web.internal.servlet.taglib.clay.DepotEntryVerticalCard;
 import com.liferay.depot.web.internal.servlet.taglib.util.DepotActionDropdownItemsProvider;
 import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
+import com.liferay.site.util.GroupURLProvider;
 
 import java.util.List;
 
@@ -47,6 +49,8 @@ public class DepotAdminDisplayContext {
 		_depotAdminGroupSearchProvider =
 			(DepotAdminGroupSearchProvider)httpServletRequest.getAttribute(
 				DepotAdminWebKeys.DEPOT_ADMIN_GROUP_SEARCH_PROVIDER);
+		_groupURLProvider = (GroupURLProvider)httpServletRequest.getAttribute(
+			DepotAdminWebKeys.DEPOT_ADMIN_GROUP_URL_PROVIDER);
 	}
 
 	public List<DropdownItem> getActionDropdownItems(Group group) {
@@ -59,6 +63,12 @@ public class DepotAdminDisplayContext {
 
 	public String getDefaultDisplayStyle() {
 		return "icon";
+	}
+
+	public DepotEntryVerticalCard getDepotEntryVerticalCard(Group curGroup) {
+		return new DepotEntryVerticalCard(
+			curGroup, _liferayPortletRequest, _liferayPortletResponse,
+			getGroupSearch().getRowChecker(), _groupURLProvider);
 	}
 
 	public String getDisplayStyle() {
@@ -91,6 +101,7 @@ public class DepotAdminDisplayContext {
 
 	private final DepotAdminGroupSearchProvider _depotAdminGroupSearchProvider;
 	private String _displayStyle;
+	private final GroupURLProvider _groupURLProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 

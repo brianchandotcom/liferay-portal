@@ -23,8 +23,10 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.test.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -167,6 +169,38 @@ public class AccountRoleManagerTest {
 		Assert.assertTrue(ArrayUtil.contains(roleIds, accountRole.getRoleId()));
 		Assert.assertTrue(
 			ArrayUtil.contains(roleIds, defaultAccountRole.getRoleId()));
+
+		_assertHasPermission(user, ActionKeys.DELETE, false);
+		_assertHasPermission(user, ActionKeys.MANAGE_USERS, false);
+		_assertHasPermission(user, ActionKeys.UPDATE, false);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			accountRole.getRoleId(), ActionKeys.DELETE);
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_GROUP,
+			String.valueOf(_accountEntry1.getAccountEntryGroupId()),
+			accountRole.getRoleId(), ActionKeys.MANAGE_USERS);
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			defaultAccountRole.getRoleId(), ActionKeys.UPDATE);
+
+		_assertHasPermission(user, ActionKeys.DELETE, true);
+		_assertHasPermission(user, ActionKeys.MANAGE_USERS, true);
+		_assertHasPermission(user, ActionKeys.UPDATE, true);
+
+		_accountEntryUserRelLocalService.deleteAccountEntryUserRel(
+			accountEntryUserRel);
+
+		_accountEntryUserRels.remove(accountEntryUserRel);
+
+		_assertHasPermission(user, ActionKeys.DELETE, true);
+		_assertHasPermission(user, ActionKeys.MANAGE_USERS, true);
+		_assertHasPermission(user, ActionKeys.UPDATE, true);
 	}
 
 	@Test
@@ -245,6 +279,20 @@ public class AccountRoleManagerTest {
 		_names.add(accountRole.getName());
 
 		return accountRole;
+	}
+
+	private void _assertHasPermission(
+		User user, String actionKey, boolean hasPermission) {
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		Assert.assertEquals(
+			hasPermission,
+			permissionChecker.hasPermission(
+				_accountEntry1.getAccountEntryGroup(),
+				AccountEntry.class.getName(),
+				_accountEntry1.getAccountEntryId(), actionKey));
 	}
 
 	private long[] _getRoleIds(User user) throws Exception {

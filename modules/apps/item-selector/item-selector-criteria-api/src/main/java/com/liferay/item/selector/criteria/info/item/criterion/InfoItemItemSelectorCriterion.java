@@ -30,6 +30,10 @@ public class InfoItemItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _itemType;
 	}
 
+	public String[] getMimeTypes() {
+		return _mimeTypes;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -42,12 +46,17 @@ public class InfoItemItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_itemType = itemType;
 	}
 
+	public void setMimeTypes(String[] mimeTypes) {
+		_mimeTypes = mimeTypes;
+	}
+
 	public void setStatus(int status) {
 		_status = status;
 	}
 
 	private String _itemSubtype;
 	private String _itemType;
+	private String[] _mimeTypes;
 	private int _status = WorkflowConstants.STATUS_APPROVED;
 
 }

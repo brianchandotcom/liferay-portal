@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_DELETE</td>
+	<td>//div[contains(@class,'table')]//tr[contains(.,'${key_entryName}')]//*[*[name()='svg'][contains(@class,'times-circle')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_TITLE</td>
 	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'table-title')]</td>
 	<td></td>

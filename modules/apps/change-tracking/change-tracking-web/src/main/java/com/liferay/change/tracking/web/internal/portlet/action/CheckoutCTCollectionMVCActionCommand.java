@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,7 +59,9 @@ public class CheckoutCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			CTCollection ctCollection =
 				_ctCollectionLocalService.fetchCTCollection(ctCollectionId);
 
-			if (ctCollection == null) {
+			if ((ctCollection == null) ||
+				(ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT)) {
+
 				return;
 			}
 		}

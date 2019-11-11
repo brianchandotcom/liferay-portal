@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.ExpectedDBType;
@@ -87,6 +88,7 @@ public class LayoutCTTest {
 
 		_ctCollection.setUserId(TestPropsValues.getUserId());
 		_ctCollection.setName(String.valueOf(ctCollectionId));
+		_ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		_ctCollection = _ctCollectionLocalService.updateCTCollection(
 			_ctCollection);

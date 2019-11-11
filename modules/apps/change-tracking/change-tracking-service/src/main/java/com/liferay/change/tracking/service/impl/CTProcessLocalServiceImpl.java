@@ -14,10 +14,13 @@
 
 package com.liferay.change.tracking.service.impl;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.internal.background.task.CTPublishBackgroundTaskExecutor;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.base.CTProcessLocalServiceBaseImpl;
+import com.liferay.change.tracking.service.persistence.CTPreferencesPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
@@ -27,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -53,6 +57,19 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
 		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
 			ctCollectionId);
+
+		ctCollection.setStatus(WorkflowConstants.STATUS_PENDING);
+
+		ctCollectionPersistence.update(ctCollection);
+
+		for (CTPreferences ctPreferences :
+				_ctPreferencesPersistence.findByCollectionId(ctCollectionId)) {
+
+			ctPreferences.setCtCollectionId(
+				CTConstants.CT_COLLECTION_ID_PRODUCTION);
+
+			_ctPreferencesPersistence.update(ctPreferences);
+		}
 
 		long ctProcessId = counterLocalService.increment(
 			CTProcess.class.getName());
@@ -128,5 +145,8 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
+
+	@Reference
+	private CTPreferencesPersistence _ctPreferencesPersistence;
 
 }

@@ -15,7 +15,9 @@
 package com.liferay.change.tracking.internal;
 
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,6 +50,8 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			return ctModel.isNew();
 		}
+
+		_validateCTCollectionStatus(ctCollectionId);
 
 		long modelClassNameId = _classNameLocalService.getClassNameId(
 			ctModel.getModelClass());
@@ -128,6 +133,8 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 			return true;
 		}
 
+		_validateCTCollectionStatus(ctCollectionId);
+
 		long modelClassNameId = _classNameLocalService.getClassNameId(
 			ctModel.getModelClass());
 
@@ -171,8 +178,23 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 		return false;
 	}
 
+	private void _validateCTCollectionStatus(long ctCollectionId) {
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
+
+		if ((ctCollection == null) ||
+			(ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT)) {
+
+			throw new IllegalStateException(
+				"CTCollection is read only " + String.valueOf(ctCollection));
+		}
+	}
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

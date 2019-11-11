@@ -14,9 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -74,15 +72,6 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 		catch (PortalException pe) {
 			SessionErrors.add(actionRequest, pe.getClass());
 		}
-
-		CTPreferences ctPreferences =
-			_ctPreferencesLocalService.getCTPreferences(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId());
-
-		ctPreferences.setCtCollectionId(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION);
-
-		_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
 
 		hideDefaultSuccessMessage(actionRequest);
 

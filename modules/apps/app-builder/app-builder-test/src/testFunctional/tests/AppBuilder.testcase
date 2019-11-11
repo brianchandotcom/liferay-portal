@@ -196,11 +196,11 @@ definition {
 
 		TableViewBuilder.save();
 
-		AppBuilderAdmin.validateItemNameOnTable(customObjectName = "My Table View");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "My Table View");
 
-		AppBuilderAdmin.openItem(customObjectName = "My Table View");
+		AppBuilderAdmin.openItem(itemName = "My Table View");
 
-		TableViewBuilder.validateColumnLabel(columnLabel = "${fieldType}");
+		TableViewBuilder.validateColumnLabel(columnLabel = "Text Field");
 
 		TableViewBuilder.save();
 	}

@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -126,7 +127,32 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	}
 
 	public String[] getMimeTypes() {
-		return _dlItemSelectorView.getMimeTypes();
+		if (_mimeTypes != null) {
+			return _mimeTypes;
+		}
+
+		String[] mimeTypes = _dlItemSelectorView.getMimeTypes();
+
+		ItemSelectorCriterion itemSelectorCriterion =
+			getItemSelectorCriterion();
+
+		if (itemSelectorCriterion instanceof InfoItemItemSelectorCriterion) {
+			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
+				(InfoItemItemSelectorCriterion)itemSelectorCriterion;
+
+			String[] infoItemSelectorMimeTypes =
+				infoItemItemSelectorCriterion.getMimeTypes();
+
+			if ((infoItemSelectorMimeTypes != null) &&
+				ArrayUtil.isNotEmpty(infoItemSelectorMimeTypes)) {
+
+				mimeTypes = infoItemItemSelectorCriterion.getMimeTypes();
+			}
+		}
+
+		_mimeTypes = mimeTypes;
+
+		return _mimeTypes;
 	}
 
 	public PortletURL getPortletURL(
@@ -464,6 +490,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	private final T _itemSelectorCriterion;
 	private final ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
+	private String[] _mimeTypes;
 	private final PortletURL _portletURL;
 	private Repository _repository;
 	private final boolean _search;

@@ -149,7 +149,7 @@ data.put("qa-id", "customizations");
 					</liferay-ui:icon-menu>
 				</li>
 				<li class="control-menu-nav-item d-block d-sm-none">
-					<div class="btn-group dropdown">
+					<div class="btn-group btn-group-item dropdown">
 						<aui:a cssClass="btn btn-primary" href="<%= toggleCustomizationViewURL %>" label="<%= toggleCustomizedViewMessage %>" />
 
 						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">

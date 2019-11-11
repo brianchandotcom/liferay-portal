@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/aui/button/init.jsp" %>
 
 <c:if test="<%= dropdown %>">
-	<div class="btn-group dropdown" id="<%= id %>BtnGroup">
+	<div class="btn-group btn-group-item dropdown" id="<%= id %>BtnGroup">
 </c:if>
 
 <c:choose>

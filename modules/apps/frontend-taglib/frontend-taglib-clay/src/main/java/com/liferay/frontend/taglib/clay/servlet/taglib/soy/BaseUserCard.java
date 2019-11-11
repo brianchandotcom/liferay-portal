@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.LexiconUtil;
 
 import javax.portlet.RenderRequest;
 
@@ -65,6 +66,11 @@ public abstract class BaseUserCard
 	@Override
 	public String getSubtitle() {
 		return user.getScreenName();
+	}
+
+	@Override
+	public String getUserColorCssClass() {
+		return "user-icon " + LexiconUtil.getUserColorCssClass(user);
 	}
 
 	protected final RenderRequest renderRequest;

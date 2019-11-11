@@ -1025,6 +1025,14 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					project, dependencyProject.getProjectDir(),
 					artifactPropertiesFile)) {
 
+				Logger logger = project.getLogger();
+
+				if (logger.isLifecycleEnabled()) {
+					logger.lifecycle(
+						"{} has stale project dependency {}.", project,
+						dependencyProject.getName());
+				}
+
 				return true;
 			}
 		}
@@ -1049,6 +1057,14 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					dir.getParent(), sb.toString());
 
 				if (_isStale(project, dir, artifactPropertiesFile)) {
+					Logger logger = project.getLogger();
+
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle(
+							"{} has stale project dependency {}.", project,
+							dir.getName());
+					}
+
 					return true;
 				}
 			}

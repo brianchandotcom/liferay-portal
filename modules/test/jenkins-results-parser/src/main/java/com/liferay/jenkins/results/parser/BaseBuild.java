@@ -763,7 +763,7 @@ public abstract class BaseBuild implements Build {
 			String downstreamBuildJobVariant = downstreamBuild.getJobVariant();
 
 			for (String jobVariant : jobVariants) {
-				if (downstreamBuildJobVariant.contains(jobVariant)) {
+				if (downstreamBuildJobVariant.startsWith(jobVariant)) {
 					jobVariantsDownstreamBuilds.add(downstreamBuild);
 
 					break;

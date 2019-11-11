@@ -42,6 +42,12 @@
 		<@insertLayout _layoutModel=publicLayoutModel />
 	</#list>
 
+	<#assign contentLayoutModels = dataFactory.newContentLayoutModels(groupId) />
+
+	<#list contentLayoutModels as contentLayoutModel>
+		<@insertContentLayout _layoutModel=contentLayoutModel />
+	</#list>
+
 	<@insertGroup _groupModel=groupModel />
 
 	${dataFactory.getCSVWriter("repository").write(groupId + ", " + groupModel.name + "\n")}

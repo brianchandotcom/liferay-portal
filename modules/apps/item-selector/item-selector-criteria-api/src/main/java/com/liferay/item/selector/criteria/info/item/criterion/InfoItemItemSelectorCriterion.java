@@ -29,6 +29,10 @@ public class InfoItemItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _itemType;
 	}
 
+	public String[] getMimeTypes() {
+		return _mimeTypes;
+	}
+
 	public void setItemSubtype(String itemSubtype) {
 		_itemSubtype = itemSubtype;
 	}
@@ -37,7 +41,12 @@ public class InfoItemItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_itemType = itemType;
 	}
 
+	public void setMimeTypes(String[] mimeTypes) {
+		_mimeTypes = mimeTypes;
+	}
+
 	private String _itemSubtype;
 	private String _itemType;
+	private String[] _mimeTypes;
 
 }

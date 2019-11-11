@@ -358,7 +358,8 @@ definition {
 
 		CalendarScheduler.viewNoRSVP(
 			eventTitle = "Edited Event Title",
-			eventToday = "false");
+			eventToday = "false",
+			setDates = "true");
 	}
 
 	@priority = "4"

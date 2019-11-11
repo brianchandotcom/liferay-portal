@@ -96,7 +96,6 @@ class FragmentsEditorToolbar extends Component {
 		requestAnimationFrame(() => {
 			this._publishButtonEnabled =
 				this._online &&
-				(Boolean(this.lastSaveDate) || this.draft) &&
 				(this.pageType !== PAGE_TYPES.master ||
 					this.layoutData.hasDropZone);
 		});

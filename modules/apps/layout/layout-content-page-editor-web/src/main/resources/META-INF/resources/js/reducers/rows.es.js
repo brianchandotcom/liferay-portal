@@ -106,12 +106,24 @@ function moveRowReducer(state, action) {
 function removeRowReducer(state, action) {
 	let nextState = state;
 
+	const structure = state.layoutData.structure;
+	const row = structure.find(row => row.rowId === action.rowId);
+
 	nextState = updateIn(
 		nextState,
 		['layoutData', 'structure'],
 		structure => remove(structure, getRowIndex(structure, action.rowId)),
 		[]
 	);
+
+	if (row.columns.some(column => column.config && column.config.isDropZone)) {
+		nextState = updateIn(
+			nextState,
+			['layoutData'],
+			layoutData => ({...layoutData, hasDropZone: false}),
+			{}
+		);
+	}
 
 	return nextState;
 }

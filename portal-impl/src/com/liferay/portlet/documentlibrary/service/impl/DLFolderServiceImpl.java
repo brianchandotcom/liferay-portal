@@ -280,6 +280,28 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	}
 
 	@Override
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long groupId, long folderId, String[] mimeTypes,
+			long fileEntryTypeId, boolean includeMountFolders, int status,
+			int start, int end, OrderByComparator<?> obc)
+		throws PortalException {
+
+		if (!ModelResourcePermissionHelper.contains(
+				_dlFolderModelResourcePermission, getPermissionChecker(),
+				groupId, folderId, ActionKeys.VIEW)) {
+
+			return Collections.emptyList();
+		}
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, start, end, (OrderByComparator<Object>)obc);
+
+		return dlFolderFinder.filterFindF_FE_FS_ByG_F_M_FETI_M(
+			groupId, folderId, mimeTypes, fileEntryTypeId, includeMountFolders,
+			queryDefinition);
+	}
+
+	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status,
 			boolean includeMountFolders)
@@ -338,6 +360,26 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		return dlFolderFinder.filterCountF_FE_FS_ByG_F_M_M(
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
+	}
+
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, String[] mimeTypes,
+			long fileEntryTypeId, boolean includeMountFolders, int status)
+		throws PortalException {
+
+		if (!ModelResourcePermissionHelper.contains(
+				_dlFolderModelResourcePermission, getPermissionChecker(),
+				groupId, folderId, ActionKeys.VIEW)) {
+
+			return 0;
+		}
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
+
+		return dlFolderFinder.filterCountF_FE_FS_ByG_F_M_FETI_M(
+			groupId, folderId, mimeTypes, fileEntryTypeId, includeMountFolders,
+			queryDefinition);
 	}
 
 	@Override

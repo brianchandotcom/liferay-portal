@@ -11,6 +11,7 @@ exports[`document-library-preview-image renders an image previewer 1`] = `
       <img
         class="preview-file-image"
         src="image.jpg"
+        style="margin: auto auto;"
       />
     </div>
     <div
@@ -36,18 +37,17 @@ exports[`document-library-preview-image renders an image previewer 1`] = `
         </button>
         <button
           class="btn-floating-bar btn-floating-bar-text btn"
-          title="zoom-to-fit"
+          title="real-size"
           type="button"
         >
           <span
             class="preview-toolbar-label-percent"
           >
-            100%
+            0%
           </span>
         </button>
         <button
           class="btn-floating-bar btn btn-monospaced"
-          disabled=""
           title="zoom-in"
           type="button"
         >

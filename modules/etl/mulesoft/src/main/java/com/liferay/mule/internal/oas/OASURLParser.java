@@ -26,8 +26,6 @@ public class OASURLParser {
 
 	public OASURLParser(String oasURL) throws MalformedURLException {
 		_validate(oasURL);
-
-		_oasURL = oasURL;
 	}
 
 	public String getAuthorityWithScheme() {
@@ -43,19 +41,19 @@ public class OASURLParser {
 	}
 
 	public String getHost() {
-		return _getGroup(2);
+		return _oasURLMatcher.group(2);
 	}
 
 	public String getJaxRSAppBase() {
-		return _getGroup(4);
+		return _oasURLMatcher.group(4);
 	}
 
 	public String getPort() {
-		return _getGroup(3);
+		return _oasURLMatcher.group(3);
 	}
 
 	public String getScheme() {
-		return _getGroup(1);
+		return _oasURLMatcher.group(1);
 	}
 
 	public String getServerBaseURL() {
@@ -68,18 +66,10 @@ public class OASURLParser {
 		return sb.toString();
 	}
 
-	private String _getGroup(int group) {
-		Matcher matcher = _oasURLPattern.matcher(_oasURL);
-
-		matcher.matches();
-
-		return matcher.group(group);
-	}
-
 	private void _validate(String oasURL) throws MalformedURLException {
-		Matcher matcher = _oasURLPattern.matcher(oasURL);
+		_oasURLMatcher = _oasURLPattern.matcher(oasURL);
 
-		if (!matcher.matches()) {
+		if (!_oasURLMatcher.matches()) {
 			throw new MalformedURLException(
 				"Unable to parse OpenAPI specification endpoint URL: " +
 					oasURL);
@@ -89,6 +79,6 @@ public class OASURLParser {
 	private static final Pattern _oasURLPattern = Pattern.compile(
 		"(.*)://(.+):(\\d+)/o/(.+)/v(.+)/openapi\\.(yaml|json)");
 
-	private final String _oasURL;
+	private Matcher _oasURLMatcher;
 
 }

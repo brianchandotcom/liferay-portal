@@ -4603,6 +4603,12 @@ public class DataFactory {
 					sb.append(method.invoke(baseModel));
 				}
 				else {
+					if (StringUtil.equals(
+							name, "LPageTemplateStructureRelId")) {
+
+						name = "LayoutPageTemplateStructureRelId";
+					}
+
 					Method method = clazz.getMethod("get".concat(name));
 
 					sb.append(method.invoke(baseModel));

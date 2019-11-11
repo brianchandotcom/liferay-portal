@@ -75,6 +75,9 @@ function addRow(
 	layoutColumns.forEach(columnSize => {
 		columns.push({
 			columnId: `${nextColumnId}`,
+			config: {
+				isDropZone: fragmentEntryLinks.some(isDropZoneFragment)
+			},
 			fragmentEntryLinkIds: fragmentEntryLinks.map(
 				fragmentEntryLink => fragmentEntryLink.fragmentEntryLinkId
 			),
@@ -107,10 +110,12 @@ function addRow(
 	nextData = setIn(nextData, ['structure'], nextStructure);
 	nextData = setIn(nextData, ['nextRowId'], nextRowId + 1);
 
-	nextData = {
-		...nextData,
-		hasDropZone: fragmentEntryLinks.some(isDropZoneFragment)
-	};
+	if (!nextData.hasDropZone && fragmentEntryLinks.some(isDropZoneFragment)) {
+		nextData = {
+			...nextData,
+			hasDropZone: true
+		};
+	}
 
 	return nextData;
 }

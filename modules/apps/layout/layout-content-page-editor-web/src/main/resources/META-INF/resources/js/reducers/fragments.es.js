@@ -706,10 +706,12 @@ function _addFragmentToColumn(
 		})
 	);
 
-	newLayoutData = {
-		...newLayoutData,
-		hasDropZone: isDropZoneFragment(fragmentEntryLink)
-	};
+	if (!newLayoutData.hasDropZone && isDropZoneFragment(fragmentEntryLink)) {
+		newLayoutData = {
+			...newLayoutData,
+			hasDropZone: true
+		};
+	}
 
 	return updateIn(
 		newLayoutData,

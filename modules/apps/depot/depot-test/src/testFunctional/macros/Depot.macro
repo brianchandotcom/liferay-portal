@@ -188,6 +188,12 @@ definition {
 		}
 	}
 
+	macro viewNoConnectedSiteCP {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO_DEPOT",
+			value1 = "No sites are connected yet.");
+	}
+
 	macro viewSearchResult {
 		if ("${resultCount}" != "1") {
 			AssertTextEquals.assertPartialText(

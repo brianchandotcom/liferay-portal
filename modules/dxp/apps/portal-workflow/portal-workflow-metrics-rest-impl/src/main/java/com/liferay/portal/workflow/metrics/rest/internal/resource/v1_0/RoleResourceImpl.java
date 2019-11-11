@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
@@ -38,6 +37,7 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.RoleResource;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -58,7 +58,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Override
 	public Page<Role> getProcessRolesPage(Long processId) throws Exception {
-		return Page.of(transform(_getRoles(processId), this::_toRole));
+		return Page.of(_getRoles(processId));
 	}
 
 	private BooleanQuery _createTokensBooleanQuery(long processId) {
@@ -106,17 +106,15 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		);
 	}
 
-	private Set<com.liferay.portal.kernel.model.Role> _getRoles(Long processId)
-		throws PortalException {
-
+	private Set<Role> _getRoles(Long processId) throws PortalException {
 		Set<Long> assigneeIds = _getAssigneeIds(processId);
 
 		if (assigneeIds.isEmpty()) {
 			return Collections.emptySet();
 		}
 
-		Set<com.liferay.portal.kernel.model.Role> roles = new TreeSet<>(
-			new RoleNameComparator(true));
+		Set<Role> roles = new TreeSet<>(
+			Comparator.comparing(Role::getName, String::compareToIgnoreCase));
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_userLocalService.getActionableDynamicQuery();
@@ -128,7 +126,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				dynamicQuery.add(userIdProperty.in(assigneeIds));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			(User user) -> roles.addAll(user.getRoles()));
+			(User user) -> roles.addAll(
+				transform(user.getRoles(), this::_toRole)));
 
 		actionableDynamicQuery.performActions();
 

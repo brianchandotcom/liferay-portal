@@ -460,17 +460,15 @@ paths:
                     description:
                         ""
             tags: ["WorkflowDefinition"]
-    "/workflow-definitions/deploy":
-        post:
-            operationId: postWorkflowDefinitionDeploy
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/WorkflowDefinition"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/WorkflowDefinition"
+    "/workflow-definitions/by-name/{name}":
+        get:
+            operationId: getWorkflowDefinitionByName
+            parameters:
+                - in: path
+                  name: name
+                  required: true
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -483,15 +481,17 @@ paths:
                     description:
                         ""
             tags: ["WorkflowDefinition"]
-    "/workflow-definitions/find-by-name":
-        get:
-            operationId: getWorkflowDefinitionFindByName
-            parameters:
-                - in: query
-                  name: name
-                  required: false
-                  schema:
-                      type: string
+    "/workflow-definitions/deploy":
+        post:
+            operationId: postWorkflowDefinitionDeploy
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowDefinition"
             responses:
                 200:
                     content:

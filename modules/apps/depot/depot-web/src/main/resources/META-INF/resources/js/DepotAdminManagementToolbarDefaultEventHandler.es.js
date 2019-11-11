@@ -26,6 +26,18 @@ class DepotAdminManagementToolbarDefaultEventHandler extends DefaultEventHandler
 			spritemap: this.spritemap
 		});
 	}
+
+	deleteSelectedDepotEntries() {
+		if (
+			confirm(
+				Liferay.Language.get(
+					'removing-a-repository-can-affect-sites-that-use-the-contents-stored-in-it.-are-you-sure-you-want-to-continue-removing-this-repository'
+				)
+			)
+		) {
+			submitForm(this.one('#fm'));
+		}
+	}
 }
 
 DepotAdminManagementToolbarDefaultEventHandler.STATE = {

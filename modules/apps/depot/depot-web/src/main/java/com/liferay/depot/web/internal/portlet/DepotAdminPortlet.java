@@ -14,12 +14,19 @@
 
 package com.liferay.depot.web.internal.portlet;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.ParamUtil;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -46,4 +53,32 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class DepotAdminPortlet extends MVCPortlet {
+
+	public void deleteGroups(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortalException {
+
+		long[] deleteGroupIds = null;
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		if (groupId > 0) {
+			deleteGroupIds = new long[] {groupId};
+		}
+		else {
+			deleteGroupIds = ParamUtil.getLongValues(actionRequest, "rowIds");
+		}
+
+		for (long deleteGroupId : deleteGroupIds) {
+			DepotEntry depotEntry =
+				_depotEntryLocalService.getDepotEntryByGroupId(deleteGroupId);
+
+			_depotEntryLocalService.deleteDepotEntry(
+				depotEntry.getDepotEntryId());
+		}
+	}
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
 }

@@ -75,7 +75,7 @@ describe('The subcomponents from workload by assignee page body should', () => {
 		const emptyStateDiv = getByTestId('emptyState');
 
 		expect(emptyStateDiv.children[1].children[0].innerHTML).toBe(
-			'once-there-are-active-processes-metrics-will-appear-here'
+			'no-results-were-found'
 		);
 	});
 

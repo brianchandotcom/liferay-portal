@@ -58,7 +58,7 @@ const EmptyView = () => {
 			className="border-1"
 			hideAnimation={false}
 			message={Liferay.Language.get(
-				'once-there-are-active-processes-metrics-will-appear-here'
+				'no-results-were-found'
 			)}
 			type="not-found"
 		/>

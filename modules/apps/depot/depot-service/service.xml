@@ -19,6 +19,9 @@
 		<column name="userId" type="long" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
+		<finder name="GroupId" return-type="DepotEntry" unique="true">
+			<finder-column name="groupId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="DepotEntryGroupRel" remote-service="true">
 

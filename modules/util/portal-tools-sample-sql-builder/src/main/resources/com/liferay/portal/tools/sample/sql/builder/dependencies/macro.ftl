@@ -38,6 +38,11 @@
 	<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
 		${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
 	</#list>
+
+	<#local layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(_layoutModel)>
+
+	${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
+
 </#macro>
 
 <#macro insertDDMContent

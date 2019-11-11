@@ -56,8 +56,8 @@
 
 	<#list contentLayoutModels as contentLayoutModel>
 		<@insertContentLayout
-			_layoutModel=contentLayoutModel
 			_fragmentEntryModels=fragmentEntryModels
+			_layoutModel=contentLayoutModel
 		/>
 	</#list>
 

@@ -43,6 +43,9 @@
 
 	${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 
+	<#local layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(_layoutModel, layoutPageTemplateStructureModel, fragmentEntryLinkModels)>
+
+	${dataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
 </#macro>
 
 <#macro insertDDMContent

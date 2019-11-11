@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.LayoutSetImpl;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
@@ -117,12 +118,11 @@ public class VirtualHostLocalServiceImpl
 	public VirtualHost updateVirtualHost(
 		long companyId, final long layoutSetId, String hostname) {
 
-		TreeMap<String, String> hostnameMap = new TreeMap<>();
-
-		hostnameMap.put(hostname, StringPool.BLANK);
-
 		List<VirtualHost> virtualHosts = updateVirtualHosts(
-			companyId, layoutSetId, hostnameMap);
+			companyId, layoutSetId,
+			TreeMapBuilder.put(
+				hostname, StringPool.BLANK
+			).build());
 
 		if (virtualHosts.isEmpty()) {
 			return null;

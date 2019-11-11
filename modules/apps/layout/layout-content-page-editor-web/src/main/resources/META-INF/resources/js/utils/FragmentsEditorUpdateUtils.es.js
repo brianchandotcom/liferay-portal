@@ -89,15 +89,12 @@ function addRow(
 			? DEFAULT_SECTION_ROW_CONFIG
 			: DEFAULT_COMPONENT_ROW_CONFIG;
 
-	const dropZonePresent = fragmentEntryLinks.some(isDropZoneFragment);
-
 	const nextStructure = add(
 		layoutData.structure,
 		{
 			columns,
 			config: {
-				...defaultConfig,
-				isDropZone: dropZonePresent
+				...defaultConfig
 			},
 			rowId: `${nextRowId}`,
 			type
@@ -112,7 +109,7 @@ function addRow(
 
 	nextData = {
 		...nextData,
-		hasDropZone: dropZonePresent
+		hasDropZone: fragmentEntryLinks.some(isDropZoneFragment)
 	};
 
 	return nextData;

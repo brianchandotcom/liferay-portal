@@ -25,6 +25,14 @@
 	</#if>
 </#macro>
 
+<#macro insertContentLayout
+		_layoutModel
+>
+	${dataFactory.toInsertSQL(_layoutModel)}
+
+	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(_layoutModel))}
+</#macro>
+
 <#macro insertDDMContent
 	_ddmStorageLinkId
 	_ddmStructureId

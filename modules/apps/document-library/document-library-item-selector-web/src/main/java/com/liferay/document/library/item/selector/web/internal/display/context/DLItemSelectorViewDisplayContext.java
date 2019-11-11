@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.util.ArrayList;
@@ -226,14 +225,14 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 				InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
 					(InfoItemItemSelectorCriterion)itemSelectorCriterion;
 
-				FileEntryTypeCapability fileEntryTypeCapability =
-					repository.getCapability(FileEntryTypeCapability.class);
-
 				long fileEntryTypeId = GetterUtil.getLong(
 					infoItemItemSelectorCriterion.getItemSubtype());
 
-				repositoryEntries = new ArrayList<>(
-					RepositoryModelUtil.toRepositoryEntries(
+				FileEntryTypeCapability fileEntryTypeCapability =
+					repository.getCapability(FileEntryTypeCapability.class);
+
+				repositoryEntries =
+					(List)
 						fileEntryTypeCapability.
 							getFoldersAndFileEntriesAndFileShortcuts(
 								getStagingAwareGroupId(), getFolderId(),
@@ -241,7 +240,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 								WorkflowConstants.STATUS_APPROVED,
 								startAndEnd[0], startAndEnd[1],
 								DLUtil.getRepositoryModelOrderByComparator(
-									orderByCol, orderByType, true))));
+									orderByCol, orderByType, true));
 			}
 			else {
 				repositoryEntries =

@@ -76,6 +76,14 @@ describe('The workload by assignee body, when On Time tab is active, should', ()
 		expect(assigneeNames[0].innerHTML).toBe('User 1');
 		expect(assigneeNames[1].innerHTML).toBe('User 2');
 	});
+
+	test('Be rendered with "View All Steps" button and total "(2)"', async () => {
+		const viewAllAssignees = await waitForElement(() =>
+			getAllByTestId('viewAllAssignees')
+		);
+
+		expect(viewAllAssignees[0].innerHTML).toBe('view-all-assignees (2)');
+	});
 });
 
 describe('The workload by assignee body, when Overdue tab is active, should', () => {

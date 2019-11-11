@@ -54,7 +54,7 @@ import {
 	FRAGMENTS_EDITOR_ROW_TYPES,
 	FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 } from '../../utils/constants';
-import {isDropZone} from '../../utils/isDropZone.es';
+import {isDropZoneFragment} from '../../utils/isDropZone.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import templates from './FragmentEntryLink.soy';
 
@@ -242,7 +242,10 @@ class FragmentEntryLink extends Component {
 			fragmentEntryLink.portletId &&
 			getWidget(this.widgets, fragmentEntryLink.portletId);
 
-		if (!isDropZone(fragmentEntryLink) || (widget && widget.instanceable)) {
+		if (
+			!isDropZoneFragment(fragmentEntryLink) ||
+			(widget && widget.instanceable)
+		) {
 			buttons.push(FLOATING_TOOLBAR_BUTTONS.duplicateFragment);
 		}
 

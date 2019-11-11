@@ -14,11 +14,15 @@
 
 /**
  * Check if the fragment is a drop zone fragment
- * @param {object} fragmentEntryLink
+ * @param {object|string} fragmentEntryLinkOrfragmentEntryKey
  */
-export function isDropZone(fragmentEntryLink) {
+export function isDropZoneFragment(fragmentEntryLink) {
 	return (
 		fragmentEntryLink.fragmentEntryKey &&
-		fragmentEntryLink.fragmentEntryKey.startsWith('drop-zone')
+		isDropZoneKey(fragmentEntryLink.fragmentEntryKey)
 	);
+}
+
+export function isDropZoneKey(key) {
+	return key && key.startsWith('drop-zone');
 }

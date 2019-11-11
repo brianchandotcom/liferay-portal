@@ -16,9 +16,7 @@ package com.liferay.batch.engine.service.impl;
 
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.service.base.BatchEngineExportTaskLocalServiceBaseImpl;
-import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 
 import java.io.Serializable;
 
@@ -52,8 +50,6 @@ public class BatchEngineExportTaskLocalServiceImpl
 		batchEngineExportTask.setUserId(userId);
 		batchEngineExportTask.setCallbackURL(callbackURL);
 		batchEngineExportTask.setClassName(className);
-		batchEngineExportTask.setContent(
-			new OutputBlob(new UnsyncByteArrayInputStream(new byte[0]), 0));
 		batchEngineExportTask.setContentType(contentType);
 		batchEngineExportTask.setExecuteStatus(executeStatus);
 		batchEngineExportTask.setFieldNamesList(fieldNamesList);

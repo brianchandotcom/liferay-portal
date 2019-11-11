@@ -13,155 +13,116 @@
  */
 
 import ClayProgressBar from '@clayui/progress-bar';
+import {useIsMounted, useTimeout} from 'frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 
-/**
- * Handles the actions of the configuration entry's progressbar.
- *
- * @review
- */
+import {enableEntryIcon, disableEntryIcon} from './utils/entryIcons.es';
 
 const AdaptiveMediaProgress = ({
 	adaptedImages,
+	adaptiveMediaProgressComponentId,
 	autoStartProgress = false,
 	disabled = false,
 	intervalSpeed = 1000,
 	namespace,
-	optimizeImagesURL,
 	percentageUrl,
 	tooltip,
 	totalImages,
 	uuid
 }) => {
-	const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
-	const [percentage, setPercentage] = useState(0);
-	const [progressBarTooltip, setProgressBarTooltip] = useState('');
+	const delay = useTimeout();
+	const isMounted = useIsMounted();
 
-	let adaptRemainingIcon = useRef();
-	let disableIcon = useRef();
-	const progressContainer = useRef();
-
-	adaptRemainingIcon = document.getElementById(
-		`${namespace}icon-adapt-remaining-${uuid}`
+	const [showLoadingIndicator, setShowLoadingIndicator] = useState(
+		autoStartProgress
 	);
-	disableIcon = document.getElementById(`${namespace}icon-disable-${uuid}`);
+	const [percentage, setPercentage] = useState(
+		(adaptedImages / totalImages) * 100
+	);
+	const [progressBarTooltip, setProgressBarTooltip] = useState(
+		adaptedImages + '/' + totalImages
+	);
 
-	const disableEntryIcon = element => {
-		if (!element) {
-			return;
-		}
+	const startProgress = useCallback(
+		backgroundTaskUrl => {
+			fetch(backgroundTaskUrl);
 
-		element.parentElement.classList.add('disabled');
+			if (isMounted()) {
+				setShowLoadingIndicator(true);
+			}
 
-		element.setAttribute('data-href', element.getAttribute('href'));
-		element.setAttribute('data-onclick', element.getAttribute('onclick'));
+			disableEntryIcon(
+				document.getElementById(
+					`${namespace}icon-adapt-remaining${uuid}`
+				)
+			);
 
-		element.removeAttribute('href');
-		element.removeAttribute('onclick');
-	};
+			disableEntryIcon(
+				document.getElementById(`${namespace}icon-disable-${uuid}`)
+			);
 
-	const enableEntryIcon = element => {
-		if (!element) {
-			return;
-		}
+			return delay(updateProgress, intervalSpeed);
+		},
+		[delay, intervalSpeed, isMounted, namespace, updateProgress, uuid]
+	);
 
-		element.parentElement.classList.remove('disabled');
-
-		element.setAttribute('href', element.getAttribute('data-href'));
-		element.setAttribute('onclick', element.getAttribute('data-onclick'));
-
-		element.removeAttribute('data-href');
-		element.removeAttribute('data-onclick');
-	};
-
-	const updateProgressBar = (adaptedImages, totalImages) => {
-		setPercentage(Math.round((adaptedImages / totalImages) * 100) || 0);
-
-		setProgressBarTooltip(
-			tooltip ? tooltip : adaptedImages + '/' + totalImages
-		);
-	};
-
-	let intervalId;
-
-	const resetInterval = () => {
-		if (intervalId) {
-			clearInterval(intervalId);
-		}
-	};
-
-	const onFinish = () => {
-		enableEntryIcon(disableIcon.current);
-	};
-
-	const onProgressBarComplete = () => {
-		setShowLoadingIndicator(false);
-
-		resetInterval();
-
-		onFinish();
-	};
-
-	const getAdaptedImagesPercentage = () => {
+	const updateProgress = useCallback(() => {
 		fetch(percentageUrl)
 			.then(res => res.json())
-			.then(json => {
-				updateProgressBar(json.adaptedImages, json.totalImages);
+			.then(({adaptedImages, totalImages}) => {
+				if (isMounted()) {
+					setPercentage(
+						Math.round((adaptedImages / totalImages) * 100) || 0
+					);
 
-				if (progressContainer.current.dataset.percentage >= 100) {
-					onProgressBarComplete();
-				} else {
-					clearInterval(intervalId);
+					setProgressBarTooltip(
+						tooltip ? tooltip : adaptedImages + '/' + totalImages
+					);
 				}
-			})
-			.catch(() => {
-				clearInterval(intervalId);
+
+				if (adaptedImages === totalImages) {
+					if (isMounted()) {
+						setShowLoadingIndicator(false);
+					}
+
+					enableEntryIcon(
+						document.getElementById(
+							`${namespace}icon-disable-${uuid}`
+						)
+					);
+				} else {
+					delay(updateProgress, intervalSpeed);
+				}
 			});
-	};
-
-	const onStart = () => {
-		disableEntryIcon(adaptRemainingIcon.current);
-		disableEntryIcon(disableIcon.current);
-	};
-
-	const startProgress = () => {
-		const progressContainerElement = progressContainer.current;
-
-		if (
-			progressContainerElement.dataset.percentage >= 100 ||
-			totalImages === 0 ||
-			progressContainerElement.classList.contains('disabled')
-		) {
-			return;
-		}
-		if (optimizeImagesURL) {
-			fetch(optimizeImagesURL);
-		}
-
-		resetInterval();
-
-		intervalId = setInterval(getAdaptedImagesPercentage, intervalSpeed);
-
-		setShowLoadingIndicator(true);
-
-		onStart();
-	};
+	}, [
+		delay,
+		intervalSpeed,
+		isMounted,
+		namespace,
+		percentageUrl,
+		tooltip,
+		uuid
+	]);
 
 	useEffect(() => {
-		updateProgressBar(adaptedImages, totalImages);
-
 		if (autoStartProgress) {
-			startProgress();
+			updateProgress();
 		}
+	}, [autoStartProgress, updateProgress]);
 
-		if (adaptRemainingIcon) {
-			adaptRemainingIcon.addEventListener('click', () => startProgress());
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	if (!Liferay.component(adaptiveMediaProgressComponentId)) {
+		Liferay.component(
+			adaptiveMediaProgressComponentId,
+			{
+				startProgress
+			},
+			{
+				destroyOnNavigate: true
+			}
+		);
+	}
 
 	return (
 		<>
@@ -169,7 +130,6 @@ const AdaptiveMediaProgress = ({
 				className={`progress-container ${disabled ? 'disabled' : ''}`}
 				data-percentage={percentage}
 				data-title={progressBarTooltip}
-				ref={progressContainer}
 			>
 				<ClayProgressBar value={percentage} />
 			</div>
@@ -185,15 +145,14 @@ const AdaptiveMediaProgress = ({
 
 AdaptiveMediaProgress.propTypes = {
 	adaptedImages: PropTypes.number,
-	autoStartProgress: PropTypes.boolean,
-	disabled: PropTypes.boolean,
+	adaptiveMediaProgressComponentId: PropTypes.string,
+	autoStartProgress: PropTypes.bool,
+	disabled: PropTypes.bool,
 	intervalSpeed: PropTypes.number,
 	namespace: PropTypes.string,
-	optimizeImagesURL: PropTypes.string,
-	percentage: PropTypes.number,
 	percentageUrl: PropTypes.string,
 	progressBarTooltip: PropTypes.string,
-	showLoadingIndicator: PropTypes.boolean,
+	showLoadingIndicator: PropTypes.bool,
 	tooltip: PropTypes.string,
 	totalImages: PropTypes.number,
 	uuid: PropTypes.string

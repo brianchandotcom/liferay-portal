@@ -155,35 +155,29 @@ PortletURL portletURL = renderResponse.createRenderURL();
 						int totalImages = AMImageEntryLocalServiceUtil.getExpectedAMImageEntriesCount(themeDisplay.getCompanyId());
 						%>
 
-						<div id="<portlet:namespace />AdaptRemainingContainer_<%= rowId %>"></div>
+						<div id="<portlet:namespace />AdaptRemainingContainer_<%= rowId %>">
+							<portlet:resourceURL id="/adaptive_media/adapted_images_percentage" var="adaptedImagesPercentageURL">
+								<portlet:param name="entryUuid" value="<%= uuid %>" />
+							</portlet:resourceURL>
 
-						<portlet:resourceURL id="/adaptive_media/adapted_images_percentage" var="adaptedImagesPercentageURL">
-							<portlet:param name="entryUuid" value="<%= uuid %>" />
-						</portlet:resourceURL>
+							<%
+							Map<String, Object> data = new HashMap<>();
 
-						<portlet:actionURL name="/adaptive_media/optimize_images" var="optimizeImagesURL">
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="entryUuid" value="<%= uuid %>" />
-						</portlet:actionURL>
+							data.put("adaptedImages", Math.min(adaptedImages, totalImages));
+							data.put("adaptiveMediaProgressComponentId", renderResponse.getNamespace() + "AdaptRemaining" + uuid);
+							data.put("autoStartProgress", ((optimizeImagesAllConfigurationsBackgroundTasksCount > 0) && amImageConfigurationEntry.isEnabled()) || currentBackgroundTaskConfigurationEntryUuids.contains(uuid));
+							data.put("disabled", !amImageConfigurationEntry.isEnabled());
+							data.put("namespace", liferayPortletResponse.getNamespace());
+							data.put("percentageUrl", adaptedImagesPercentageURL.toString());
+							data.put("totalImages", totalImages);
+							data.put("uuid", uuid);
+							%>
 
-						<%
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("adaptedImages", Math.min(adaptedImages, totalImages));
-						data.put("autoStartProgress", ((optimizeImagesAllConfigurationsBackgroundTasksCount > 0) && amImageConfigurationEntry.isEnabled()) || currentBackgroundTaskConfigurationEntryUuids.contains(uuid));
-						data.put("disabled", !amImageConfigurationEntry.isEnabled());
-						data.put("namespace", liferayPortletResponse.getNamespace());
-						data.put("optimizeImagesURL", optimizeImagesURL.toString());
-						data.put("percentageUrl", adaptedImagesPercentageURL.toString());
-						data.put("totalImages", totalImages);
-						data.put("uuid", uuid);
-						%>
-
-						<react:component
-							componentId='<%= renderResponse.getNamespace() + "AdaptRemaining" + uuid %>'
-							data="<%= data %>"
-							module="adaptive_media/js/AdaptiveMediaProgress.es"
-						/>
+							<react:component
+								data="<%= data %>"
+								module="adaptive_media/js/AdaptiveMediaProgress.es"
+							/>
+						</div>
 					</liferay-ui:search-container-column-text>
 
 					<%
@@ -225,3 +219,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		</aui:form>
 	</div>
 </div>
+
+<aui:script>
+	function <portlet:namespace />adaptRemaining(uuid, backgroundTaskUrl) {
+		var component = Liferay.component(
+			'<portlet:namespace />AdaptRemaining' + uuid
+		);
+
+		component.startProgress(backgroundTaskUrl);
+	}
+</aui:script>

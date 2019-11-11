@@ -305,6 +305,14 @@ public class DepotEntryLocalServiceWrapper
 		return _depotEntryLocalService.getDepotEntry(depotEntryId);
 	}
 
+	@Override
+	public com.liferay.depot.model.DepotEntry getDepotEntryByGroupId(
+			long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryLocalService.getDepotEntryByGroupId(groupId);
+	}
+
 	/**
 	 * Returns the depot entry matching the UUID and group.
 	 *

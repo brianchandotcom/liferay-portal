@@ -258,6 +258,10 @@ public interface DepotEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DepotEntry getDepotEntry(long depotEntryId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DepotEntry getDepotEntryByGroupId(long groupId)
+		throws PortalException;
+
 	/**
 	 * Returns the depot entry matching the UUID and group.
 	 *

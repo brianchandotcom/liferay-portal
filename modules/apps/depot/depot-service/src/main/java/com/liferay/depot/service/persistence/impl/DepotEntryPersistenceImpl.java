@@ -1466,6 +1466,207 @@ public class DepotEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"depotEntry.companyId = ?";
 
+	private FinderPath _finderPathFetchByGroupId;
+	private FinderPath _finderPathCountByGroupId;
+
+	/**
+	 * Returns the depot entry where groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching depot entry
+	 * @throws NoSuchEntryException if a matching depot entry could not be found
+	 */
+	@Override
+	public DepotEntry findByGroupId(long groupId) throws NoSuchEntryException {
+		DepotEntry depotEntry = fetchByGroupId(groupId);
+
+		if (depotEntry == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchEntryException(msg.toString());
+		}
+
+		return depotEntry;
+	}
+
+	/**
+	 * Returns the depot entry where groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching depot entry, or <code>null</code> if a matching depot entry could not be found
+	 */
+	@Override
+	public DepotEntry fetchByGroupId(long groupId) {
+		return fetchByGroupId(groupId, true);
+	}
+
+	/**
+	 * Returns the depot entry where groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching depot entry, or <code>null</code> if a matching depot entry could not be found
+	 */
+	@Override
+	public DepotEntry fetchByGroupId(long groupId, boolean useFinderCache) {
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByGroupId, finderArgs, this);
+		}
+
+		if (result instanceof DepotEntry) {
+			DepotEntry depotEntry = (DepotEntry)result;
+
+			if (groupId != depotEntry.getGroupId()) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_DEPOTENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				List<DepotEntry> list = q.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByGroupId, finderArgs, list);
+					}
+				}
+				else {
+					DepotEntry depotEntry = list.get(0);
+
+					result = depotEntry;
+
+					cacheResult(depotEntry);
+				}
+			}
+			catch (Exception e) {
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByGroupId, finderArgs);
+				}
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (DepotEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the depot entry where groupId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @return the depot entry that was removed
+	 */
+	@Override
+	public DepotEntry removeByGroupId(long groupId)
+		throws NoSuchEntryException {
+
+		DepotEntry depotEntry = findByGroupId(groupId);
+
+		return remove(depotEntry);
+	}
+
+	/**
+	 * Returns the number of depot entries where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching depot entries
+	 */
+	@Override
+	public int countByGroupId(long groupId) {
+		FinderPath finderPath = _finderPathCountByGroupId;
+
+		Object[] finderArgs = new Object[] {groupId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_DEPOTENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
+		"depotEntry.groupId = ?";
+
 	public DepotEntryPersistenceImpl() {
 		setModelClass(DepotEntry.class);
 
@@ -1493,6 +1694,10 @@ public class DepotEntryPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByUUID_G,
 			new Object[] {depotEntry.getUuid(), depotEntry.getGroupId()},
+			depotEntry);
+
+		finderCache.putResult(
+			_finderPathFetchByGroupId, new Object[] {depotEntry.getGroupId()},
 			depotEntry);
 
 		depotEntry.resetOriginalValues();
@@ -1589,6 +1794,13 @@ public class DepotEntryPersistenceImpl
 			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
 		finderCache.putResult(
 			_finderPathFetchByUUID_G, args, depotEntryModelImpl, false);
+
+		args = new Object[] {depotEntryModelImpl.getGroupId()};
+
+		finderCache.putResult(
+			_finderPathCountByGroupId, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByGroupId, args, depotEntryModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -1613,6 +1825,24 @@ public class DepotEntryPersistenceImpl
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
 			finderCache.removeResult(_finderPathFetchByUUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {depotEntryModelImpl.getGroupId()};
+
+			finderCache.removeResult(_finderPathCountByGroupId, args);
+			finderCache.removeResult(_finderPathFetchByGroupId, args);
+		}
+
+		if ((depotEntryModelImpl.getColumnBitmask() &
+			 _finderPathFetchByGroupId.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				depotEntryModelImpl.getOriginalGroupId()
+			};
+
+			finderCache.removeResult(_finderPathCountByGroupId, args);
+			finderCache.removeResult(_finderPathFetchByGroupId, args);
 		}
 	}
 
@@ -2209,6 +2439,17 @@ public class DepotEntryPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathFetchByGroupId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, DepotEntryImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByGroupId",
+			new String[] {Long.class.getName()},
+			DepotEntryModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByGroupId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+			new String[] {Long.class.getName()});
 	}
 
 	@Deactivate

@@ -22,8 +22,12 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -97,6 +101,21 @@ public class FragmentEntryLinkItemSelectorUtil {
 			if (Validator.isNotNull(itemSubtype)) {
 				itemSelectorCriterion.setItemSubtype(itemSubtype);
 			}
+
+			JSONArray mimeTypesJSONArray =
+				typeOptionsJSONObject.getJSONArray("mimeTypes");
+
+			if (Validator.isNotNull(mimeTypesJSONArray)) {
+				List<String> mimeTypes = new ArrayList<>();
+
+				for(int i = 0; i < mimeTypesJSONArray.length(); i++) {
+					mimeTypes.add(mimeTypesJSONArray.getString(i));
+				}
+
+				itemSelectorCriterion.setMimeTypes(
+					mimeTypes.toArray(new String[0]));
+			}
+
 		}
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(

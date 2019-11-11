@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
+import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
 import com.liferay.portal.kernel.repository.capabilities.DynamicCapability;
+import com.liferay.portal.kernel.repository.capabilities.FileEntryTypeCapability;
 import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
@@ -96,6 +98,11 @@ public class PortalCapabilityLocatorImpl
 			documentRepository,
 			key -> new LiferayDynamicCapability(
 				_bundleContext, repositoryClassName));
+	}
+
+	@Override
+	public FileEntryTypeCapability getFileEntryTypeCapability() {
+		return new LiferayFileEntryTypeCapability(_dlFolderService);
 	}
 
 	@Override
@@ -238,6 +245,9 @@ public class PortalCapabilityLocatorImpl
 
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
+
+	@Reference
+	private DLFolderService _dlFolderService;
 
 	@Reference
 	private DLSyncEventLocalService _dlSyncEventLocalService;

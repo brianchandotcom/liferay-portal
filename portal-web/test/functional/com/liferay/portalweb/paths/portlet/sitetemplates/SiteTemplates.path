@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SITE_TEMPLATE_NAME</td>
-	<td>//div[contains(@id,'site_administration')]//span[contains(.,'${key_siteTemplateName}')]</td>
+	<td>//div[contains(@class,'site-name') and contains(.,'${key_siteTemplateName}')]</td>
 	<td></td>
 </tr>
 <tr>

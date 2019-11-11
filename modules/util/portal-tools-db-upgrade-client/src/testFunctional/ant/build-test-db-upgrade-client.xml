@@ -161,6 +161,12 @@
 	</target>
 
 	<target name="check-upgrade-client-gogoshell-failed-upgrade">
+		<antcall target="rebuild-legacy-database">
+			<param name="portal.version" value="6.2.5" />
+			<param name="data.archive.type" value="data-archive-polls" />
+			<param name="skip.get.testcase.database.properties" value="true" />
+		</antcall>
+
 		<get-database-upgrade-client-paths />
 
 		<parallel>
@@ -209,6 +215,12 @@
 				<fail if="gogoshell.timeout" message="The Gogo shell connection did not connect as expected." />
 			</sequential>
 		</parallel>
+
+		<antcall target="rebuild-legacy-database">
+			<param name="portal.version" value="6.2.5" />
+			<param name="data.archive.type" value="data-archive-polls" />
+			<param name="skip.get.testcase.database.properties" value="true" />
+		</antcall>
 
 		<clean-database-upgrade-client />
 	</target>

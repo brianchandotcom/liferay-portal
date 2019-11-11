@@ -180,10 +180,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			for (SearchResult searchResult : searchResults) {
 				String className = searchResult.getClassName();
 
-				if (className.equals(DLFileEntryConstants.getClassName()) ||
-					FileEntry.class.isAssignableFrom(
-						Class.forName(className))) {
-
+				if (className.equals(DLFileEntryConstants.getClassName())) {
 					repositoryEntries.add(
 						DLAppServiceUtil.getFileEntry(
 							searchResult.getClassPK()));

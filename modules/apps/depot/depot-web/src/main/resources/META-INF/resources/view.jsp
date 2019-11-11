@@ -47,15 +47,11 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 				>
 
 					<%
-					Map<String, Object> rowData = new HashMap<>();
-
-					rowData.put("actions", StringUtil.merge(depotAdminManagementToolbarDisplayContext.getAvailableActions(curGroup)));
-
-					row.setData(rowData);
+					row.setData(depotAdminManagementToolbarDisplayContext.getRowData(curGroup));
 					%>
 
 					<c:choose>
-						<c:when test='<%= Objects.equals(depotAdminDisplayContext.getDisplayStyle(), "descriptive") %>'>
+						<c:when test="<%= depotAdminDisplayContext.isDisplayStyleDescriptive() %>">
 							<liferay-ui:search-container-column-text>
 								<liferay-ui:search-container-column-icon
 									icon="repository"
@@ -80,7 +76,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
-						<c:when test='<%= Objects.equals(depotAdminDisplayContext.getDisplayStyle(), "icon") %>'>
+						<c:when test="<%= depotAdminDisplayContext.isDisplayStyleIcon() %>">
 
 							<%
 							row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());

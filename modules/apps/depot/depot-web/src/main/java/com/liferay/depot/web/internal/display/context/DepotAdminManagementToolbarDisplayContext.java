@@ -29,11 +29,14 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -73,18 +76,6 @@ public class DepotAdminManagementToolbarDisplayContext
 					});
 			}
 		};
-	}
-
-	public List<String> getAvailableActions(Group group)
-		throws PortalException {
-
-		List<String> availableActions = new ArrayList<>();
-
-		if (_hasDeleteGroupPermission(group)) {
-			availableActions.add("deleteSelectedDepotEntries");
-		}
-
-		return availableActions;
 	}
 
 	@Override
@@ -145,6 +136,14 @@ public class DepotAdminManagementToolbarDisplayContext
 		return "depotAdminManagementToolbarDefaultEventHandler";
 	}
 
+	public Map<String, Object> getRowData(Group curGroup)
+		throws PortalException {
+
+		return HashMapBuilder.put(
+			"actions", (Object)StringUtil.merge(_getAvailableActions(curGroup))
+		).build();
+	}
+
 	@Override
 	public String getSearchActionURL() {
 		PortletURL searchTagURL = getPortletURL();
@@ -193,6 +192,18 @@ public class DepotAdminManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"descriptive-name"};
+	}
+
+	private List<String> _getAvailableActions(Group group)
+		throws PortalException {
+
+		List<String> availableActions = new ArrayList<>();
+
+		if (_hasDeleteGroupPermission(group)) {
+			availableActions.add("deleteSelectedDepotEntries");
+		}
+
+		return availableActions;
 	}
 
 	private boolean _hasDeleteGroupPermission(Group group)

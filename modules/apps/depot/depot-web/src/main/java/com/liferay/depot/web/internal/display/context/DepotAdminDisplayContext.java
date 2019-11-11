@@ -31,6 +31,7 @@ import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.util.GroupURLProvider;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -113,6 +114,14 @@ public class DepotAdminDisplayContext {
 
 	public String getHref(Group curGroup) {
 		return _groupURLProvider.getGroupURL(curGroup, _liferayPortletRequest);
+	}
+
+	public boolean isDisplayStyleDescriptive() {
+		return Objects.equals(getDisplayStyle(), "descriptive");
+	}
+
+	public boolean isDisplayStyleIcon() {
+		return Objects.equals(getDisplayStyle(), "icon");
 	}
 
 	private long _getGroupId() {

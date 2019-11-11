@@ -91,6 +91,144 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_CARD_TITLE");
 	}
 
+	test AssertSimilarResultsMatchesAssetType {
+		property test.name.skip.portal.instance = "Elasticsearch7EE#AssertSimilarResultsMatchesAssetType";
+
+		for (var count : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "Similar Results Blogs Title ${count}");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Content",
+				entryTitle = "Similar Results DM Title ${count}");
+
+			JSONMBMessage.addMessage(
+				groupName = "Guest",
+				threadBody = "MB Content",
+				threadSubject = "Similar Results MB Title ${count}");
+
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Content",
+				dmDocumentTitle = "Similar Results WC Title ${count}",
+				groupName = "Guest");
+		}
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Similar Results Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Similar Results Page");
+
+		Portlet.addPG(portletName = "Similar Results");
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results Blogs Title 1");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results Blogs Title 2",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results Blogs Title 3",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results DM Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results MB Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results WC Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results DM Title 1");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results DM Title 2",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results DM Title 3",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Blogs Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results MB Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results WC Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results MB Title 1");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results MB Title 2",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results MB Title 3",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Blogs Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results DM Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results WC Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results WC Title 1");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results WC Title 2",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results WC Title 3",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Blogs Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results DM Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results MB Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+	}
+
 	@priority = "5"
 	test LearningToRankSmoke {
 		property osgi.module.configuration.file.names = "com.liferay.portal.search.learning.to.rank.configuration.LearningToRankConfiguration.config";

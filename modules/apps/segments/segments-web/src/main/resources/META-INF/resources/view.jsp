@@ -72,25 +72,27 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 				value="<%= HtmlUtil.escape(segmentsEntry.getName(locale)) %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smallest table-cell-minw-150"
-				name="source"
-			>
-				<c:choose>
-					<c:when test="<%= Objects.equals(segmentsEntry.getSource(), SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND) %>">
-						<liferay-ui:icon
-							message="source.analytics-cloud"
-							src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>'
-						/>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:icon
-							message="source.dxp"
-							src='<%= PortalUtil.getPathContext(request) + "/assets/dxp-icon.svg" %>'
-						/>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+			<c:if test="<%= segmentsDisplayContext.isAsahEnabled(themeDisplay.getCompanyId()) %>">
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-cell-minw-150"
+					name="source"
+				>
+					<c:choose>
+						<c:when test="<%= Objects.equals(segmentsEntry.getSource(), SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND) %>">
+							<liferay-ui:icon
+								message="source.analytics-cloud"
+								src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>'
+							/>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:icon
+								message="source.dxp"
+								src='<%= PortalUtil.getPathContext(request) + "/assets/dxp-icon.svg" %>'
+							/>
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-column-text>
+			</c:if>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-smallest table-cell-minw-150"

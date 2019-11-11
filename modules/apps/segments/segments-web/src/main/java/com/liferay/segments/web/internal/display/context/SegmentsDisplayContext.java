@@ -284,6 +284,17 @@ public class SegmentsDisplayContext {
 		return searchContainer.getTotal();
 	}
 
+	public boolean isAsahEnabled(long companyId) {
+		String asahFaroURL = PrefsPropsUtil.getString(
+			companyId, "liferayAnalyticsURL");
+
+		if (Validator.isNotNull(asahFaroURL)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isDisabledManagementBar() throws PortalException {
 		if (_hasResults()) {
 			return false;
@@ -296,7 +307,7 @@ public class SegmentsDisplayContext {
 		return true;
 	}
 
-	public Boolean isShowCreationMenu() {
+	public boolean isShowCreationMenu() {
 		if (SegmentsResourcePermission.contains(
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(),

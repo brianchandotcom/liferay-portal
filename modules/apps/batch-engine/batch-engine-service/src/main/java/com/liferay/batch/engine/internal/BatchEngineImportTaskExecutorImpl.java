@@ -30,11 +30,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -72,7 +67,9 @@ public class BatchEngineImportTaskExecutorImpl
 			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
 				batchEngineImportTask);
 
-			_execute(batchEngineImportTask);
+			_batchEngineTaskExecutor.execute(
+				() -> _importItems(batchEngineImportTask),
+				batchEngineImportTask.getUserId());
 
 			_updateBatchEngineImportTask(
 				BatchEngineTaskExecuteStatus.COMPLETED, batchEngineImportTask,
@@ -104,6 +101,9 @@ public class BatchEngineImportTaskExecutorImpl
 					batchEngineImportTaskConfiguration.csvFileColumnDelimiter(),
 					StringPool.COMMA));
 
+		_batchEngineTaskExecutor = new BatchEngineTaskExecutor(
+			_userLocalService);
+
 		_batchEngineTaskItemResourceDelegateFactory =
 			new BatchEngineTaskItemResourceDelegateFactory(
 				_batchEngineTaskMethodRegistry, _companyLocalService,
@@ -129,21 +129,8 @@ public class BatchEngineImportTaskExecutorImpl
 			});
 	}
 
-	private void _execute(BatchEngineImportTask batchEngineImportTask)
+	private void _importItems(BatchEngineImportTask batchEngineImportTask)
 		throws Throwable {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		User user = _userLocalService.getUser(
-			batchEngineImportTask.getUserId());
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-
-		String name = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(user.getUserId());
 
 		try (BatchEngineImportTaskItemReader batchEngineImportTaskItemReader =
 				_batchEngineImportTaskItemReaderFactory.create(
@@ -198,10 +185,6 @@ public class BatchEngineImportTaskExecutorImpl
 					items);
 			}
 		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			PrincipalThreadLocal.setName(name);
-		}
 	}
 
 	private void _updateBatchEngineImportTask(
@@ -236,6 +219,7 @@ public class BatchEngineImportTaskExecutorImpl
 	private BatchEngineImportTaskLocalService
 		_batchEngineImportTaskLocalService;
 
+	private BatchEngineTaskExecutor _batchEngineTaskExecutor;
 	private BatchEngineTaskItemResourceDelegateFactory
 		_batchEngineTaskItemResourceDelegateFactory;
 

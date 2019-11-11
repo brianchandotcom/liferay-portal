@@ -51,7 +51,7 @@ public class SitesScreenNavigationEntry extends BaseDepotScreenNavigationEntry {
 		return LanguageUtil.get(
 			getResourceBundle(locale),
 			"a-content-repository-can-be-connected-to-multiple-sites.-please-" +
-				"add-here-the-sites-you-want-this-repository-be-available-to");
+				"add-those-sites-here");
 	}
 
 	@Override

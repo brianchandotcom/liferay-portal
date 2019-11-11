@@ -15,8 +15,10 @@
 package com.liferay.batch.engine.internal.messaging;
 
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+import com.liferay.batch.engine.configuration.BatchEngineImportTaskConfiguration;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -26,7 +28,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
@@ -41,18 +42,23 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  */
 @Component(
-	immediate = true, property = "scan.interval=14",
-	service = MessageListener.class
+	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineImportTaskConfiguration",
+	immediate = true, service = MessageListener.class
 )
 public class BatchEngineImportTaskCleanerMessageListener
 	extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
+		BatchEngineImportTaskConfiguration batchEngineImportTaskConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BatchEngineImportTaskConfiguration.class, properties);
+
 		String className =
 			BatchEngineImportTaskCleanerMessageListener.class.getName();
-		int scanInterval = GetterUtil.getInteger(
-			properties.get("scan.interval"));
+		int scanInterval =
+			batchEngineImportTaskConfiguration.
+				getCompletedTasksCleanerScanInterval();
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className,

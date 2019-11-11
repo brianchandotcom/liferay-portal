@@ -62,6 +62,44 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private List<String> _combineWithComments(
+		List<String> definitions, String indent) {
+
+		List<String> definitionsList = new ArrayList<>();
+
+		StringBundler sb = new StringBundler(definitions.size());
+
+		String previousDefinition = StringPool.BLANK;
+
+		for (String definition : definitions) {
+			if (definition.startsWith(indent + StringPool.POUND)) {
+				previousDefinition = definition;
+
+				sb.append(definition);
+				sb.append("\n");
+			}
+			else {
+				if (previousDefinition.startsWith(indent + StringPool.POUND)) {
+					sb.append(definition);
+
+					definitionsList.add(sb.toString());
+					sb.setIndex(0);
+				}
+				else {
+					definitionsList.add(definition);
+				}
+
+				previousDefinition = definition;
+			}
+		}
+
+		if (sb.length() != 0) {
+			definitionsList.add(StringUtil.trimTrailing(sb.toString()));
+		}
+
+		return definitionsList;
+	}
+
 	private String _getParameterType(String definition) {
 		return definition.replaceAll("(?s).*in: (\\S*).*", "$1");
 	}
@@ -109,9 +147,11 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			return content;
 		}
 
-		List<String> oldDefinitions = new ArrayList<>(definitions);
-
 		definitions = _removeDuplicateAttribute(definitions);
+
+		definitions = _combineWithComments(definitions, indent);
+
+		List<String> oldDefinitions = new ArrayList<>(definitions);
 
 		Collections.sort(
 			definitions,
@@ -140,12 +180,6 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 					String trimmedDefinition1Line = definition1Lines[0];
 					String trimmedDefinition2Line = definition2Lines[0];
 
-					if (trimmedDefinition1Line.startsWith(StringPool.POUND) ||
-						trimmedDefinition2Line.startsWith(StringPool.POUND)) {
-
-						return 0;
-					}
-
 					if (trimmedDefinition1Line.equals(StringPool.DASH) &&
 						trimmedDefinition2Line.equals(StringPool.DASH)) {
 
@@ -172,8 +206,18 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 						return 1;
 					}
 
-					return trimmedDefinition1Line.compareTo(
-						trimmedDefinition2Line);
+					String definition1Key = definition1.replaceAll(
+						"( *#.*(\\Z|\n))*(.*)", "$3");
+					String definition2Key = definition2.replaceAll(
+						"( *#.*(\\Z|\n))*(.*)", "$3");
+
+					if (Validator.isNull(definition1Key) ||
+						Validator.isNull(definition2Key)) {
+
+						return 0;
+					}
+
+					return definition1Key.compareTo(definition2Key);
 				}
 
 			});

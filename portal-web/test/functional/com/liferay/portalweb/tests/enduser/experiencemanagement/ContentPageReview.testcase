@@ -37,8 +37,6 @@ definition {
 	@description = "This case ensures that the user can add a comment to a fragment of a content page."
 	@priority = "5"
 	test AddComment {
-		property test.name.skip.portal.instance = "ContentPageReview#AddComment";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -60,8 +58,6 @@ definition {
 	@description = "This case ensures that the user can add a comment with escape characters to a fragment of a content page."
 	@priority = "4"
 	test AddCommentWithEscapeCharacters {
-		property test.name.skip.portal.instance = "ContentPageReview#AddCommentWithEscapeCharacters";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -83,8 +79,6 @@ definition {
 	@description = "This case ensures a user can delete a fragment comment after publishing a content page."
 	@priority = "5"
 	test DeleteComment {
-		property test.name.skip.portal.instance = "ContentPageReview#DeleteComment";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -128,8 +122,6 @@ definition {
 	@description = "This case ensures a user can reopen a resolved comment after publishing a content page."
 	@priority = "4"
 	test ReopenResolvedComment {
-		property test.name.skip.portal.instance = "ContentPageReview#ReopenResolvedComment";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -173,8 +165,6 @@ definition {
 	@description = "This case ensures a user can mark a fragment comment as resolved after publishing a content page."
 	@priority = "4"
 	test ResolveComment {
-		property test.name.skip.portal.instance = "ContentPageReview#ResolveComment";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -210,8 +200,6 @@ definition {
 	@description = "This test ensures that Content Page Comments is being used once the proper configuration is enabled."
 	@priority = "5"
 	test Smoke {
-		property test.name.skip.portal.instance = "ContentPageReview#Smoke";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -226,8 +214,6 @@ definition {
 	@description = "This case ensures that the user can see a fragment comment after publishing a content page."
 	@priority = "5"
 	test ViewComment {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewComment";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -265,8 +251,6 @@ definition {
 	@description = "This test covers LPS-101027. It ensures that a published comment should remain if staging is deactivated."
 	@priority = "3"
 	test ViewCommentAfterDeactivatingStaging {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentAfterDeactivatingStaging";
-
 		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
 		Staging.activateStagingCP(siteName = "Test Site Name");
@@ -326,8 +310,6 @@ definition {
 	@description = "This test covers LPS-99643. It ensures that the comment on the content page is not removed after the draft is discarded."
 	@priority = "4"
 	test ViewCommentAfterDiscardedDraft {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentAfterDiscardedDraft";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -371,8 +353,6 @@ definition {
 	@description = "This test covers LPS-99063. It ensures that Edit and Delete actions should not appear for comment if a user did not create it."
 	@priority = "4"
 	test ViewCommentAsNonCreator {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentByNonCreator";
-
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
 			userFirstName = "userfn",
@@ -443,8 +423,6 @@ definition {
 	@description = "This case ensures that users can view created comments when no fragment is selected and navigate to them."
 	@priority = "5"
 	test ViewCommentList {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentList";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -503,8 +481,6 @@ definition {
 	@description = "This case ensures that comment list can be viewed and accessed via site navigation."
 	@priority = "5"
 	test ViewCommentListNavigation {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentListNavigation";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -551,8 +527,6 @@ definition {
 	@description = "This test covers LPS-100024. It ensures that comments from different experiences are independent from one another."
 	@priority = "4"
 	test ViewCommentOnDifferentExperience {
-		property test.name.skip.portal.instance = "ContentPageReview#CommentOnDifferentExperience";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ProductMenu.gotoPortlet(
@@ -607,8 +581,6 @@ definition {
 	@description = "This case ensures that a comment can be added and viewed using the icon in the fragment topper."
 	@priority = "5"
 	test ViewCommentViaFragment {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentViaFragment";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -645,8 +617,6 @@ definition {
 	@description = "This case ensures that the user can see an edited fragment comment after publishing a content page."
 	@priority = "4"
 	test ViewEditedComment {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewEditedComment";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -684,8 +654,6 @@ definition {
 	@description = "This case ensures that multiple comments can be added, viewed and accessed in the fragment list."
 	@priority = "4"
 	test ViewMultipleCommentsList {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewMultipleCommentsList";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -726,8 +694,6 @@ definition {
 	@description = "This case ensures that multiple replies can be added and viewed in a comment."
 	@priority = "4"
 	test ViewMultipleReplies {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewMultipleReplies";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");

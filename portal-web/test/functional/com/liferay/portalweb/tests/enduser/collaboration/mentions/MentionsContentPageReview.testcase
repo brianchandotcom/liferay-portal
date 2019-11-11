@@ -56,8 +56,6 @@ definition {
 	@description = "This case ensures that the user can mention the other user in a comment."
 	@priority = "5"
 	test ViewCommentMentionedUser {
-		property test.name.skip.portal.instance = "MentionsContentPageReview#ViewCommentMentionedUser";
-
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

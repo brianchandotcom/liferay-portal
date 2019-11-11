@@ -28,6 +28,66 @@ definition {
 		}
 	}
 
+	test AssertSimilarResultsDisplayTemplate {
+		property test.name.skip.portal.instance = "Elasticsearch6EE#SimilarResultsDisplayTemplate";
+
+		for (var count : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "WC Title ${count}");
+		}
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Similar Results Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Similar Results Page");
+
+		Portlet.addPG(portletName = "Similar Results");
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC Title 1");
+
+		AssertElementPresent(
+			key_linkResultTitle = "WC Title 2",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "WC Title 3",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(displayTemplate = "List Layout");
+
+		AssertElementPresent(
+			key_listResultTitle = "WC Title 2",
+			locator1 = "Search#SIMILAR_RESULTS_LIST_TITLE");
+
+		AssertElementPresent(
+			key_listResultTitle = "WC Title 3",
+			locator1 = "Search#SIMILAR_RESULTS_LIST_TITLE");
+
+		SearchPortlets.configureSimilarResults(displayTemplate = "Card Layout");
+
+		AssertElementPresent(
+			key_cardResultTitle = "WC Title 2",
+			locator1 = "Search#SIMILAR_RESULTS_CARD_TITLE");
+
+		AssertElementPresent(
+			key_cardResultTitle = "WC Title 3",
+			locator1 = "Search#SIMILAR_RESULTS_CARD_TITLE");
+	}
+
 	@priority = "5"
 	test LearningToRankSmoke {
 		property osgi.module.configuration.file.names = "com.liferay.portal.search.learning.to.rank.configuration.LearningToRankConfiguration.config";

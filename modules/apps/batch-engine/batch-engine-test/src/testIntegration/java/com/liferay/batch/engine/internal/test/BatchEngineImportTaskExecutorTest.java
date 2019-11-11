@@ -433,9 +433,7 @@ public class BatchEngineImportTaskExecutorTest
 		for (int i = 0; i < values.length; i = i + 2) {
 			sb.append(StringPool.QUOTE);
 			sb.append(values[i]);
-			sb.append(StringPool.QUOTE);
-			sb.append(StringPool.COLON);
-			sb.append(StringPool.SPACE);
+			sb.append("\": ");
 			sb.append(values[i + 1]);
 
 			sb.append(StringPool.COMMA);

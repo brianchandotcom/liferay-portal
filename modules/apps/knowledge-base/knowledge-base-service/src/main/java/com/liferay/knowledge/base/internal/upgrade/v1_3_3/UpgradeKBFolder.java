@@ -28,7 +28,6 @@ import java.sql.SQLException;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * @author Adolfo Pérez
@@ -134,8 +133,8 @@ public class UpgradeKBFolder extends UpgradeProcess {
 			title = String.valueOf(id);
 		}
 		else {
-			title = FriendlyURLNormalizerUtil.normalize(
-				title, _normalizationFriendlyUrlPattern);
+			title = FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
+				title);
 		}
 
 		return title.substring(0, 75);
@@ -161,8 +160,5 @@ public class UpgradeKBFolder extends UpgradeProcess {
 			DataAccess.cleanUp(ps);
 		}
 	}
-
-	private static final Pattern _normalizationFriendlyUrlPattern =
-		Pattern.compile("[^a-z0-9_-]");
 
 }

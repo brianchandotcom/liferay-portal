@@ -186,12 +186,35 @@
 									}
 								);
 							}
+
+							var title = instance.get('node');
+
+							instance._titleListener = title.on(
+								'mouseupoutside',
+								event => {
+									var editable = Util._getEditableInstance(
+										title
+									);
+
+									if (
+										!editable
+											.get('boundingBox')
+											.contains(event.target)
+									) {
+										editable.save();
+									}
+								}
+							);
 						},
 						stopEditing() {
 							var instance = this;
 
 							if (instance._dragListener) {
 								instance._dragListener.detach();
+							}
+
+							if (instance._titleListener) {
+								instance._titleListener.detach();
 							}
 						}
 					},
@@ -1479,6 +1502,8 @@
 		options => {
 			var obj = options.obj;
 
+			A.Event.defineOutside('mouseup');
+
 			if (obj) {
 				var title = obj.one('.portlet-title-text');
 
@@ -1521,7 +1546,7 @@
 				}
 			}
 		},
-		['aui-editable-deprecated']
+		['aui-editable-deprecated', 'event-outside']
 	);
 
 	Liferay.provide(

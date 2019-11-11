@@ -129,7 +129,10 @@ import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureModel;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRelModel;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureModelImpl;
+import com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelModelImpl;
+import com.liferay.layout.util.template.LayoutData;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
@@ -159,6 +162,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.model.AccountModel;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -296,6 +300,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 
@@ -2662,6 +2668,61 @@ public class DataFactory {
 		layoutPageTemplateStructureModel.setClassPK(layoutModel.getPlid());
 
 		return layoutPageTemplateStructureModel;
+	}
+
+	public LayoutPageTemplateStructureRelModel
+		newLayoutPageTemplateStructureRelModel(
+			LayoutModel layoutModel,
+			LayoutPageTemplateStructureModel layoutPageTemplateStructureModel,
+			List<FragmentEntryLinkModel> fragmentEntryLinkModels) {
+
+		LayoutPageTemplateStructureRelModel
+			layoutPageTemplateStructureRelModel =
+				new LayoutPageTemplateStructureRelModelImpl();
+
+		layoutPageTemplateStructureRelModel.setUuid(SequentialUUID.generate());
+
+		layoutPageTemplateStructureRelModel.setLayoutPageTemplateStructureRelId(
+			_counter.get());
+
+		layoutPageTemplateStructureRelModel.setGroupId(
+			layoutPageTemplateStructureModel.getGroupId());
+		layoutPageTemplateStructureRelModel.setCompanyId(_companyId);
+		layoutPageTemplateStructureRelModel.setUserId(_sampleUserId);
+		layoutPageTemplateStructureRelModel.setUserName(_SAMPLE_USER_NAME);
+		layoutPageTemplateStructureRelModel.setCreateDate(new Date());
+		layoutPageTemplateStructureRelModel.setModifiedDate(new Date());
+
+		layoutPageTemplateStructureRelModel.setLayoutPageTemplateStructureId(
+			layoutPageTemplateStructureModel.
+				getLayoutPageTemplateStructureId());
+
+		layoutPageTemplateStructureRelModel.setSegmentsExperienceId(0L);
+
+		Stream<FragmentEntryLinkModel> stream =
+			fragmentEntryLinkModels.stream();
+
+		LayoutData layoutData = LayoutData.of(
+			layoutModel.toEscapedModel(),
+			layoutRow -> layoutRow.addLayoutColumns(
+				layoutColumn -> {
+					List<Long> fragmentEntryLinkIds =
+						layoutColumn.getFragmentEntryLinkIds();
+
+					fragmentEntryLinkIds.addAll(
+						stream.map(
+							fragmentEntryLinkModel ->
+								fragmentEntryLinkModel.getFragmentEntryLinkId()
+						).collect(
+							Collectors.toList()
+						));
+				}));
+
+		JSONObject jsonObject = layoutData.getLayoutDataJSONObject();
+
+		layoutPageTemplateStructureRelModel.setData(jsonObject.toString());
+
+		return layoutPageTemplateStructureRelModel;
 	}
 
 	public List<LayoutSetModel> newLayoutSetModels(long groupId) {

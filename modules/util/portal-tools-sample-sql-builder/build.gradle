@@ -45,6 +45,7 @@ dependencies {
 	compile project(":apps:friendly-url:friendly-url-service")
 	compile project(":apps:journal:journal-api")
 	compile project(":apps:journal:journal-service")
+	compile project(":apps:layout:layout-api")
 	compile project(":apps:layout:layout-page-template-api")
 	compile project(":apps:layout:layout-page-template-service")
 	compile project(":apps:message-boards:message-boards-api")
@@ -59,6 +60,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.23.LIFERAY-PATCHED-4"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
 

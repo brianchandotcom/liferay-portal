@@ -68,6 +68,7 @@ const WorkloadByAssigneePage = ({page, pageSize, processId, sort}) => {
 				<WorkloadByAssigneePage.Body
 					data={data}
 					processId={processId}
+					taskKeys={taskKeys}
 				/>
 			</div>
 		</PromisesResolver>

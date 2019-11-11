@@ -27,7 +27,8 @@ const Item = ({
 	onTimeTaskCount,
 	overdueTaskCount,
 	processId,
-	taskCount
+	taskCount,
+	taskKeys
 }) => {
 	const {defaultDelta} = useContext(AppContext);
 	const instancesListPath = `/instances/${processId}/${defaultDelta}/1`;
@@ -36,6 +37,7 @@ const Item = ({
 		const filterParams = {
 			[filterConstants.assignees]: [id],
 			[filterConstants.processStatus]: [processStatusConstants.pending],
+			[filterConstants.processStep]: taskKeys,
 			[filterConstants.slaStatus]: [slaStatus]
 		};
 
@@ -102,7 +104,7 @@ const Item = ({
 	);
 };
 
-const Table = ({items, processId}) => {
+const Table = ({items, processId, taskKeys}) => {
 	return (
 		<div className="table-responsive workflow-process-dashboard">
 			<table className="table table-heading-nowrap table-hover table-list">
@@ -148,6 +150,7 @@ const Table = ({items, processId}) => {
 							{...item}
 							key={index}
 							processId={processId}
+							taskKeys={taskKeys}
 						/>
 					))}
 				</tbody>

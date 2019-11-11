@@ -18,7 +18,7 @@ import PaginationBar from '../../shared/components/pagination/PaginationBar.es';
 import PromisesResolver from '../../shared/components/request/PromisesResolver.es';
 import WorkloadByAssigneePage from './WorkloadByAssigneePage.es';
 
-const Body = ({data, processId}) => {
+const Body = ({data, processId, taskKeys}) => {
 	return (
 		<>
 			<PromisesResolver.Pending>
@@ -31,6 +31,7 @@ const Body = ({data, processId}) => {
 						<WorkloadByAssigneePage.Table
 							items={data.items}
 							processId={processId}
+							taskKeys={taskKeys}
 						/>
 
 						<PaginationBar
@@ -57,9 +58,7 @@ const EmptyView = () => {
 		<EmptyState
 			className="border-1"
 			hideAnimation={false}
-			message={Liferay.Language.get(
-				'no-results-were-found'
-			)}
+			message={Liferay.Language.get('no-results-were-found')}
 			type="not-found"
 		/>
 	);

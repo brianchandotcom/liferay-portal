@@ -41,4 +41,10 @@ public interface BatchEngineImportTaskConfiguration {
 	@Meta.AD(deflt = "30", name = "orphanage-threshold", required = false)
 	public int orphanageThreshold();
 
+	@Meta.AD(
+		deflt = "14", name = "completed-tasks-cleaner-scan-interval",
+		required = false
+	)
+	public int getCompletedTasksCleanerScanInterval();
+
 }

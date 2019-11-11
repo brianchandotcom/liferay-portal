@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.LayoutSetImpl;
@@ -476,11 +477,11 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, String virtualHostname)
 		throws PortalException {
 
-		TreeMap<String, String> hostnameMap = new TreeMap<>();
-
-		hostnameMap.put(virtualHostname, StringPool.BLANK);
-
-		return updateVirtualHosts(groupId, privateLayout, hostnameMap);
+		return updateVirtualHosts(
+			groupId, privateLayout,
+			TreeMapBuilder.put(
+				virtualHostname, StringPool.BLANK
+			).build());
 	}
 
 	@Override

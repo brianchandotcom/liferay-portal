@@ -219,15 +219,6 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 				repository.isCapabilityProvided(
 					FileEntryTypeCapability.class)) {
 
-				ItemSelectorCriterion itemSelectorCriterion =
-					getItemSelectorCriterion();
-
-				InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
-					(InfoItemItemSelectorCriterion)itemSelectorCriterion;
-
-				long fileEntryTypeId = GetterUtil.getLong(
-					infoItemItemSelectorCriterion.getItemSubtype());
-
 				FileEntryTypeCapability fileEntryTypeCapability =
 					repository.getCapability(FileEntryTypeCapability.class);
 
@@ -237,8 +228,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 							getFoldersAndFileEntriesAndFileShortcuts(
 								getStagingAwareGroupId(), getFolderId(),
 								WorkflowConstants.STATUS_APPROVED,
-								getMimeTypes(), fileEntryTypeId, false, false,
-								startAndEnd[0], startAndEnd[1],
+								getMimeTypes(), _getFileEntryTypeId(), false,
+								false, startAndEnd[0], startAndEnd[1],
 								DLUtil.getRepositoryModelOrderByComparator(
 									orderByCol, orderByType, true));
 			}
@@ -271,15 +262,6 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 				repository.isCapabilityProvided(
 					FileEntryTypeCapability.class)) {
 
-				ItemSelectorCriterion itemSelectorCriterion =
-					getItemSelectorCriterion();
-
-				InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
-					(InfoItemItemSelectorCriterion)itemSelectorCriterion;
-
-				long fileEntryTypeId = GetterUtil.getLong(
-					infoItemItemSelectorCriterion.getItemSubtype());
-
 				FileEntryTypeCapability fileEntryTypeCapability =
 					repository.getCapability(FileEntryTypeCapability.class);
 
@@ -287,7 +269,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 					getFoldersAndFileEntriesAndFileShortcutsCount(
 						getStagingAwareGroupId(), getFolderId(),
 						WorkflowConstants.STATUS_APPROVED, getMimeTypes(),
-						fileEntryTypeId, false);
+						_getFileEntryTypeId(), false);
 			}
 
 			repositoryEntriesCount =
@@ -364,6 +346,17 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		return _search;
 	}
 
+	private long _getFileEntryTypeId() {
+		ItemSelectorCriterion itemSelectorCriterion =
+			getItemSelectorCriterion();
+
+		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
+			(InfoItemItemSelectorCriterion)itemSelectorCriterion;
+
+		return GetterUtil.getLong(
+			infoItemItemSelectorCriterion.getItemSubtype());
+	}
+
 	private Hits _getHits() throws PortalException {
 		if (_hits != null) {
 			return _hits;
@@ -411,16 +404,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		if (_isFilterByFileEntryType() &&
 			repository.isCapabilityProvided(FileEntryTypeCapability.class)) {
 
-			ItemSelectorCriterion itemSelectorCriterion =
-				getItemSelectorCriterion();
-
-			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
-				(InfoItemItemSelectorCriterion)itemSelectorCriterion;
-
-			long fileEntryTypeId = GetterUtil.getLong(
-				infoItemItemSelectorCriterion.getItemSubtype());
-
-			searchContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
+			searchContext.setAttribute(
+				"fileEntryTypeId", _getFileEntryTypeId());
 		}
 
 		searchContext.setAttribute("mimeTypes", getMimeTypes());

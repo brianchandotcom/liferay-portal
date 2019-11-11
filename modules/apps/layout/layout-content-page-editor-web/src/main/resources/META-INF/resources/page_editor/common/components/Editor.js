@@ -76,7 +76,8 @@ export default function Editor({
 		const newEditor = AlloyEditor.editable(wrapperRef.current, {
 			...editorConfig,
 			enterMode: 1,
-			startupFocus: autoFocus
+			startupFocus: autoFocus,
+			title: false
 		});
 
 		let ready = false;

@@ -1673,6 +1673,69 @@ public class DataFactory {
 		return contactModel;
 	}
 
+	public LayoutModel newContentLayoutModel(
+		long groupId, String name, String fragmentEntries) {
+
+		SimpleCounter simpleCounter = _layoutCounters.get(groupId);
+
+		if (simpleCounter == null) {
+			simpleCounter = new SimpleCounter();
+
+			_layoutCounters.put(groupId, simpleCounter);
+		}
+
+		LayoutModel layoutModel = new LayoutModelImpl();
+
+		layoutModel.setUuid(SequentialUUID.generate());
+		layoutModel.setPlid(_counter.get());
+		layoutModel.setGroupId(groupId);
+		layoutModel.setCompanyId(_companyId);
+		layoutModel.setUserId(_sampleUserId);
+		layoutModel.setUserName(_SAMPLE_USER_NAME);
+		layoutModel.setCreateDate(new Date());
+		layoutModel.setModifiedDate(new Date());
+		layoutModel.setLayoutId(simpleCounter.get());
+		layoutModel.setName(
+			"<?xml version=\"1.0\"?><root><name>" + name + "</name></root>");
+		layoutModel.setType(LayoutConstants.TYPE_CONTENT);
+		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + name);
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		typeSettingsProperties.setProperty("fragmentEntries", fragmentEntries);
+
+		String typeSettings = StringUtil.replace(
+			typeSettingsProperties.toString(), '\n', "\\n");
+
+		layoutModel.setTypeSettings(typeSettings);
+
+		layoutModel.setLastPublishDate(new Date());
+
+		return layoutModel;
+	}
+
+	public List<LayoutModel> newContentLayoutModels(long groupId) {
+		List<LayoutModel> layoutModels = new ArrayList<>();
+
+		layoutModels.add(
+			newContentLayoutModel(
+				groupId, "1_web_content",
+				"navigation,header,web_content,footer"));
+		layoutModels.add(
+			newContentLayoutModel(
+				groupId, "1_asset_list",
+				"navigation,header,asset_list,footer"));
+		layoutModels.add(
+			newContentLayoutModel(
+				groupId, "1_media_gallery",
+				"navigation,header,media_gallery,footer"));
+		layoutModels.add(
+			newContentLayoutModel(
+				groupId, "1_site_map", "navigation,header,site_map,footer"));
+
+		return layoutModels;
+	}
+
 	public List<CounterModel> newCounterModels() {
 		List<CounterModel> counterModels = new ArrayList<>();
 

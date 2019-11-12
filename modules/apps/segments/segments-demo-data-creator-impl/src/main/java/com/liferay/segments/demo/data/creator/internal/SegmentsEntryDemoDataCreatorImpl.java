@@ -148,8 +148,8 @@ public class SegmentsEntryDemoDataCreatorImpl
 				Class<?> clazz = getClass();
 
 				String descriptionPath = StringBundler.concat(
-					"com/liferay/segments/demo/data/creator/internal/dependencies",
-					"/segment", index, "/description.txt");
+					"com/liferay/segments/demo/data/creator/internal",
+					"/dependencies/segment", index, "/description.txt");
 
 				return StringUtil.read(
 					clazz.getClassLoader(), descriptionPath, false);
@@ -164,8 +164,8 @@ public class SegmentsEntryDemoDataCreatorImpl
 				Class<?> clazz = getClass();
 
 				String namePath = StringBundler.concat(
-					"com/liferay/segments/demo/data/creator/internal/dependencies",
-					"/segment", index, "/name.txt");
+					"com/liferay/segments/demo/data/creator/internal",
+					"/dependencies/segment", index, "/name.txt");
 
 				return StringUtil.read(clazz.getClassLoader(), namePath, false);
 			}

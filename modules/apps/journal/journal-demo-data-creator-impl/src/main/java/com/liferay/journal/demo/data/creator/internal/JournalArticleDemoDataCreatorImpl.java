@@ -143,8 +143,8 @@ public class JournalArticleDemoDataCreatorImpl
 				Class<?> clazz = getClass();
 
 				String descriptionPath = StringBundler.concat(
-					"com/liferay/journal/demo/data/creator/internal/dependencies",
-					"/article", index, "/description.txt");
+					"com/liferay/journal/demo/data/creator/internal",
+					"/dependencies/article", index, "/description.txt");
 
 				return StringUtil.read(
 					clazz.getClassLoader(), descriptionPath, false);
@@ -191,8 +191,8 @@ public class JournalArticleDemoDataCreatorImpl
 				Class<?> clazz = getClass();
 
 				String titlePath = StringBundler.concat(
-					"com/liferay/journal/demo/data/creator/internal/dependencies",
-					"/article", index, "/title.txt");
+					"com/liferay/journal/demo/data/creator/internal",
+					"/dependencies/article", index, "/title.txt");
 
 				return StringUtil.read(
 					clazz.getClassLoader(), titlePath, false);

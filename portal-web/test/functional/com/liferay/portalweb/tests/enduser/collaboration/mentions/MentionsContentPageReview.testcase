@@ -161,7 +161,7 @@ definition {
 			mentionsUserScreenName = "user2");
 	}
 
-	@description = "This case ensures a user can not see a mention of him after the permission is revoked."
+	@description = "This case ensures a user cannot access a comment he is mentioned on after his permissions are revoked."
 	@priority = "5"
 	test ViewMentionAfterRevokingPermissions {
 		ProductMenu.gotoPortlet(

@@ -100,7 +100,7 @@ writeReleases {
 				return
 			}
 
-			println "Adding release information from ${it} into ${releasesTxtFile}"
+			logger.lifecycle "Adding release information from {} into {}.", it, releasesTxtFile
 
 			String symbolicName = mainAttributes.getValue("Bundle-SymbolicName")
 

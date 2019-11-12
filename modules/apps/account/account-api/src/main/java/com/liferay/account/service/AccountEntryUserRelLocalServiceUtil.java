@@ -317,6 +317,12 @@ public class AccountEntryUserRelLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static boolean hasAccountEntryUserRel(
+		long accountEntryId, long userId) {
+
+		return getService().hasAccountEntryUserRel(accountEntryId, userId);
+	}
+
 	/**
 	 * Updates the account entry user rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

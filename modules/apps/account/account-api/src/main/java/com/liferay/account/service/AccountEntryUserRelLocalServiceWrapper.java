@@ -345,6 +345,12 @@ public class AccountEntryUserRelLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public boolean hasAccountEntryUserRel(long accountEntryId, long userId) {
+		return _accountEntryUserRelLocalService.hasAccountEntryUserRel(
+			accountEntryId, userId);
+	}
+
 	/**
 	 * Updates the account entry user rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

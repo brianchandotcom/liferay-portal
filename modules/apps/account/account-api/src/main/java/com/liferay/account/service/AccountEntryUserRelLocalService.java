@@ -264,6 +264,9 @@ public interface AccountEntryUserRelLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasAccountEntryUserRel(long accountEntryId, long userId);
+
 	/**
 	 * Updates the account entry user rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

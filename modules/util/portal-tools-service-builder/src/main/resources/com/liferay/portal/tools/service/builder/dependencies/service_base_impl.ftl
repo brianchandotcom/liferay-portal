@@ -912,21 +912,6 @@ import org.osgi.service.component.annotations.Reference;
 			</#if>
 		</#list>
 
-		<#if entity.hasLazyBlobEntityColumn()>
-			@Activate
-			protected void activate() {
-				DB db = DBManagerUtil.getDB();
-
-				if ((db.getDBType() != DBType.DB2) &&
-					(db.getDBType() != DBType.MYSQL) &&
-					(db.getDBType() != DBType.MARIADB) &&
-					(db.getDBType() != DBType.SYBASE)) {
-
-					_useTempFile = true;
-				}
-			}
-		</#if>
-
 		<#list entity.entityColumns as entityColumn>
 			<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>
 				<#assign
@@ -1493,7 +1478,34 @@ import org.osgi.service.component.annotations.Reference;
 			@Activate
 			protected void activate() {
 				registerListener(new ${localizedEntity.name}VersionServiceListener());
+
+				<#if entity.hasLazyBlobEntityColumn()>
+					DB db = DBManagerUtil.getDB();
+
+					if ((db.getDBType() != DBType.DB2) &&
+						(db.getDBType() != DBType.MYSQL) &&
+						(db.getDBType() != DBType.MARIADB) &&
+						(db.getDBType() != DBType.SYBASE)) {
+
+						_useTempFile = true;
+					}
+				</#if>
 			}
+		<#elseif stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
+			<#if entity.hasLazyBlobEntityColumn()>
+				@Activate
+				protected void activate() {
+					DB db = DBManagerUtil.getDB();
+
+					if ((db.getDBType() != DBType.DB2) &&
+						(db.getDBType() != DBType.MYSQL) &&
+						(db.getDBType() != DBType.MARIADB) &&
+						(db.getDBType() != DBType.SYBASE)) {
+
+						_useTempFile = true;
+					}
+				}
+			</#if>
 		</#if>
 	<#else>
 		public void afterPropertiesSet() {

@@ -62,7 +62,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private List<String> _combineWithComments(
+	private List<String> _combineComments(
 		List<String> definitions, String indent) {
 
 		List<String> definitionsList = new ArrayList<>();
@@ -73,28 +73,24 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 		for (String definition : definitions) {
 			if (definition.startsWith(indent + StringPool.POUND)) {
-				previousDefinition = definition;
-
 				sb.append(definition);
 				sb.append("\n");
 			}
-			else {
-				if (previousDefinition.startsWith(indent + StringPool.POUND)) {
-					sb.append(definition);
+			else if (previousDefinition.startsWith(indent + StringPool.POUND)) {
+				sb.append(definition);
 
-					definitionsList.add(sb.toString());
+				definitionsList.add(sb.toString());
 
-					sb.setIndex(0);
-				}
-				else {
-					definitionsList.add(definition);
-				}
-
-				previousDefinition = definition;
+				sb.setIndex(0);
 			}
+			else {
+				definitionsList.add(definition);
+			}
+
+			previousDefinition = definition;
 		}
 
-		if (sb.length() != 0) {
+		if (sb.index() > 0) {
 			definitionsList.add(StringUtil.trimTrailing(sb.toString()));
 		}
 
@@ -150,7 +146,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 		definitions = _removeDuplicateAttribute(definitions);
 
-		definitions = _combineWithComments(definitions, indent);
+		definitions = _combineComments(definitions, indent);
 
 		List<String> oldDefinitions = new ArrayList<>(definitions);
 

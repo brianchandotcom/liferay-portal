@@ -39,7 +39,10 @@ definition {
 	test AddAudioViaWebContent {
 		property custom.properties = "editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor${line.separator}xuggler.enabled=true";
 		property dummy.socket.proxy.disabled = "true";
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until LRQA-53524 resolved
+
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "WebContentDisplay#AddAudioViaWebContent";
 		property testray.component.names = "Training,Web Content Administration";
 

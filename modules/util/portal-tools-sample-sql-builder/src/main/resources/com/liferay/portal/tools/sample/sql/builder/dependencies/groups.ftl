@@ -60,7 +60,7 @@
 			_layoutModel=contentLayoutModel
 		/>
 
-		${dataFactory.getCSVWriter("layout").write(contentLayoutModel.friendlyURL + "\n")}
+		${dataFactory.getCSVWriter("fragment").write(contentLayoutModel.friendlyURL + "\n")}
 	</#list>
 
 	<@insertGroup _groupModel=groupModel />

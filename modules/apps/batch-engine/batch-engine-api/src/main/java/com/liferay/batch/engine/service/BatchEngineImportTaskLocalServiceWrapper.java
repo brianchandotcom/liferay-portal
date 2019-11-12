@@ -363,6 +363,14 @@ public class BatchEngineImportTaskLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public java.io.InputStream openContentInputStream(
+		long batchEngineImportTaskId) {
+
+		return _batchEngineImportTaskLocalService.openContentInputStream(
+			batchEngineImportTaskId);
+	}
+
 	/**
 	 * Updates the batch engine import task in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

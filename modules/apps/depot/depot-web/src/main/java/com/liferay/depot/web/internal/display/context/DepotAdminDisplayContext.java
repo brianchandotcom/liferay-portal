@@ -19,7 +19,6 @@ import com.liferay.depot.web.internal.servlet.taglib.clay.DepotEntryVerticalCard
 import com.liferay.depot.web.internal.servlet.taglib.util.DepotActionDropdownItemsProvider;
 import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -97,17 +96,7 @@ public class DepotAdminDisplayContext {
 
 		_groupSearch.setId(getSearchContainerId());
 
-		SiteChecker siteChecker = new SiteChecker(_liferayPortletResponse);
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("^(?!.*");
-		sb.append(_liferayPortletResponse.getNamespace());
-		sb.append("redirect).*");
-
-		siteChecker.setRememberCheckBoxStateURLRegex(sb.toString());
-
-		_groupSearch.setRowChecker(siteChecker);
+		_groupSearch.setRowChecker(new SiteChecker(_liferayPortletResponse));
 
 		return _groupSearch;
 	}

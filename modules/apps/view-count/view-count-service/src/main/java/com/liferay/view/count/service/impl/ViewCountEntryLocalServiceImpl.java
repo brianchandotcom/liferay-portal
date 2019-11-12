@@ -60,8 +60,8 @@ public class ViewCountEntryLocalServiceImpl
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
-			ViewCountManager.class, ViewCountEntryLocalService.class,
-			IdentifiableOSGiService.class, PersistedModelLocalService.class
+			IdentifiableOSGiService.class, PersistedModelLocalService.class,
+			ViewCountEntryLocalService.class, ViewCountManager.class
 		};
 	}
 

@@ -18,14 +18,17 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
+import com.liferay.portal.kernel.service.ExceptionRetryAcceptor;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -330,10 +333,28 @@ public interface KaleoInstanceLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoInstance updateKaleoInstance(KaleoInstance kaleoInstance);
 
+	@Retry(
+		acceptor = ExceptionRetryAcceptor.class,
+		properties = {
+			@com.liferay.portal.kernel.spring.aop.Property(
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value = "org.hibernate.StaleObjectStateException"
+			)
+		}
+	)
 	public KaleoInstance updateKaleoInstance(
 			long kaleoInstanceId, long rootKaleoInstanceTokenId)
 		throws PortalException;
 
+	@Retry(
+		acceptor = ExceptionRetryAcceptor.class,
+		properties = {
+			@com.liferay.portal.kernel.spring.aop.Property(
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value = "org.hibernate.StaleObjectStateException"
+			)
+		}
+	)
 	public KaleoInstance updateKaleoInstance(
 			long kaleoInstanceId, Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)

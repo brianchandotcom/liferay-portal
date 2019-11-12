@@ -67,6 +67,7 @@ dependencies {
 	}
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 
+	compile project(":core:petra:petra-string")
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 }
 

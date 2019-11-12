@@ -30,7 +30,7 @@ const buildFilterItem = data => {
 const buildInitialState = (filterKeys, filters) => {
 	const initialState = {};
 
-	Object.entries(filterKeys).map(([key, value]) => {
+	Object.entries(filterKeys).forEach(([key, value]) => {
 		if (filters[value]) {
 			initialState[key] = filters[value].map(buildFilterItem);
 		}

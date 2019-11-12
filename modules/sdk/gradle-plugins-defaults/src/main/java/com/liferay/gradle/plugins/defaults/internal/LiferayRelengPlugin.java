@@ -973,70 +973,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		return false;
 	}
 
-	private boolean _isStaleProjectDependency(
-		Project project, Configuration configuration, Dependency dependency) {
-
-		if (dependency instanceof ProjectDependency) {
-			ProjectDependency projectDependency = (ProjectDependency)dependency;
-
-			Project dependencyProject =
-				projectDependency.getDependencyProject();
-
-			File artifactPropertiesFile = new File(
-				getRelengDir(dependencyProject), "artifact.properties");
-
-			if (_isStale(
-					project, dependencyProject.getProjectDir(),
-					artifactPropertiesFile)) {
-
-				Logger logger = project.getLogger();
-
-				if (logger.isQuietEnabled()) {
-					logger.quiet(
-						"{} has stale project dependency {}.", project,
-						dependencyProject.getName());
-				}
-
-				return true;
-			}
-		}
-
-		String configurationName = configuration.getName();
-
-		if (configurationName.startsWith("compile") &&
-			Objects.equals(dependency.getVersion(), "default")) {
-
-			File dir = _getPortalProjectDir(project, dependency);
-
-			if (dir != null) {
-				StringBuilder sb = new StringBuilder();
-
-				sb.append("modules/");
-				sb.append(_RELENG_DIR_NAME);
-				sb.append('/');
-				sb.append(dir.getName());
-				sb.append(".properties");
-
-				File artifactPropertiesFile = new File(
-					dir.getParent(), sb.toString());
-
-				if (_isStale(project, dir, artifactPropertiesFile)) {
-					Logger logger = project.getLogger();
-
-					if (logger.isQuietEnabled()) {
-						logger.quiet(
-							"{} has stale portal project dependency {}.",
-							project, dir.getName());
-					}
-
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
 	private boolean _isStale(
 		Project project, File artifactProjectDir, File artifactPropertiesFile) {
 
@@ -1099,6 +1035,70 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 			if (!Objects.equals(digest, oldDigest)) {
 				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isStaleProjectDependency(
+		Project project, Configuration configuration, Dependency dependency) {
+
+		if (dependency instanceof ProjectDependency) {
+			ProjectDependency projectDependency = (ProjectDependency)dependency;
+
+			Project dependencyProject =
+				projectDependency.getDependencyProject();
+
+			File artifactPropertiesFile = new File(
+				getRelengDir(dependencyProject), "artifact.properties");
+
+			if (_isStale(
+					project, dependencyProject.getProjectDir(),
+					artifactPropertiesFile)) {
+
+				Logger logger = project.getLogger();
+
+				if (logger.isQuietEnabled()) {
+					logger.quiet(
+						"{} has stale project dependency {}.", project,
+						dependencyProject.getName());
+				}
+
+				return true;
+			}
+		}
+
+		String configurationName = configuration.getName();
+
+		if (configurationName.startsWith("compile") &&
+			Objects.equals(dependency.getVersion(), "default")) {
+
+			File dir = _getPortalProjectDir(project, dependency);
+
+			if (dir != null) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("modules/");
+				sb.append(_RELENG_DIR_NAME);
+				sb.append('/');
+				sb.append(dir.getName());
+				sb.append(".properties");
+
+				File artifactPropertiesFile = new File(
+					dir.getParent(), sb.toString());
+
+				if (_isStale(project, dir, artifactPropertiesFile)) {
+					Logger logger = project.getLogger();
+
+					if (logger.isQuietEnabled()) {
+						logger.quiet(
+							"{} has stale portal project dependency {}.",
+							project, dir.getName());
+					}
+
+					return true;
+				}
 			}
 		}
 

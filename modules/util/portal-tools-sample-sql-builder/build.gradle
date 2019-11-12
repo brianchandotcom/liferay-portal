@@ -107,7 +107,6 @@ writeReleases {
 
 				writer.writeLine "${symbolicName}:${schemaVersion}"
 			}
-
 		}
 	}
 }

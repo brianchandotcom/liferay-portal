@@ -101,9 +101,6 @@ public class NotificationTemplateContextFactory {
 
 		String userTimezoneDisplayName = _getUserTimezoneDisplayName(user);
 
-		Group group = _groupLocalService.getGroup(
-			user.getCompanyId(), GroupConstants.GUEST);
-
 		Map<String, Serializable> attributes =
 			HashMapBuilder.<String, Serializable>put(
 				"endTime",
@@ -114,7 +111,13 @@ public class NotificationTemplateContextFactory {
 				"location", calendarBooking.getLocation()
 			).put(
 				"portalURL",
-				_getPortalURL(group.getCompanyId(), group.getGroupId())
+				() -> {
+					Group group = _groupLocalService.getGroup(
+						user.getCompanyId(), GroupConstants.GUEST);
+
+					return _getPortalURL(
+						group.getCompanyId(), group.getGroupId());
+				}
 			).put(
 				"portletName",
 				LanguageUtil.get(

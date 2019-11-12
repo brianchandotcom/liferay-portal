@@ -347,27 +347,32 @@ public class DDMFormBuilderContextFactoryHelper {
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout)
 		throws PortalException {
 
-		Map<String, Object> formContext = createFormContext(
-			ddmForm, ddmFormLayout);
-
-		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
-			ddmForm.getDDMFormSuccessPageSettings();
-
 		return HashMapBuilder.<String, Object>put(
-			"pages", formContext.get("pages")
+			"pages",
+			() -> {
+				Map<String, Object> formContext = createFormContext(
+					ddmForm, ddmFormLayout);
+
+				return formContext.get("pages");
+			}
 		).put(
 			"paginationMode", ddmFormLayout.getPaginationMode()
 		).put(
 			"rules", new ArrayList<>()
 		).put(
 			"successPageSettings",
-			HashMapBuilder.<String, Object>put(
-				"body", toMap(ddmFormSuccessPageSettings.getBody())
-			).put(
-				"enabled", ddmFormSuccessPageSettings.isEnabled()
-			).put(
-				"title", toMap(ddmFormSuccessPageSettings.getTitle())
-			).build()
+			() -> {
+				DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
+					ddmForm.getDDMFormSuccessPageSettings();
+
+				return HashMapBuilder.<String, Object>put(
+					"body", toMap(ddmFormSuccessPageSettings.getBody())
+				).put(
+					"enabled", ddmFormSuccessPageSettings.isEnabled()
+				).put(
+					"title", toMap(ddmFormSuccessPageSettings.getTitle())
+				).build();
+			}
 		).build();
 	}
 

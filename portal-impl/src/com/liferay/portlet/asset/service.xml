@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
 
-<service-builder api-package-path="com.liferay.asset.kernel" auto-import-default-references="false" mvcc-enabled="true" package-path="com.liferay.portlet.asset">
+<service-builder api-package-path="com.liferay.asset.kernel" auto-import-default-references="false" change-tracking-enabled="true" mvcc-enabled="true" package-path="com.liferay.portlet.asset">
 	<namespace>Asset</namespace>
 	<entity external-reference-code="true" local-service="true" name="AssetCategory" remote-service="true" uuid="true" uuid-accessor="true">
 

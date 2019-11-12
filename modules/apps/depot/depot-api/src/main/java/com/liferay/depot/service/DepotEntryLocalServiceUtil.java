@@ -292,13 +292,6 @@ public class DepotEntryLocalServiceUtil {
 		return getService().getDepotEntry(depotEntryId);
 	}
 
-	public static com.liferay.depot.model.DepotEntry getDepotEntryByGroupId(
-			long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getDepotEntryByGroupId(groupId);
-	}
-
 	/**
 	 * Returns the depot entry matching the UUID and group.
 	 *

@@ -388,48 +388,6 @@ public interface DepotEntryPersistence extends BasePersistence<DepotEntry> {
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns the depot entry where groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching depot entry
-	 * @throws NoSuchEntryException if a matching depot entry could not be found
-	 */
-	public DepotEntry findByGroupId(long groupId) throws NoSuchEntryException;
-
-	/**
-	 * Returns the depot entry where groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching depot entry, or <code>null</code> if a matching depot entry could not be found
-	 */
-	public DepotEntry fetchByGroupId(long groupId);
-
-	/**
-	 * Returns the depot entry where groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching depot entry, or <code>null</code> if a matching depot entry could not be found
-	 */
-	public DepotEntry fetchByGroupId(long groupId, boolean useFinderCache);
-
-	/**
-	 * Removes the depot entry where groupId = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @return the depot entry that was removed
-	 */
-	public DepotEntry removeByGroupId(long groupId) throws NoSuchEntryException;
-
-	/**
-	 * Returns the number of depot entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the number of matching depot entries
-	 */
-	public int countByGroupId(long groupId);
-
-	/**
 	 * Caches the depot entry in the entity cache if it is enabled.
 	 *
 	 * @param depotEntry the depot entry

@@ -83,6 +83,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 					sb.append(definition);
 
 					definitionsList.add(sb.toString());
+
 					sb.setIndex(0);
 				}
 				else {

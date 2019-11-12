@@ -18,20 +18,24 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.CTCollectionDescriptionException;
 import com.liferay.change.tracking.exception.CTCollectionNameException;
 import com.liferay.change.tracking.internal.CTPersistenceHelperThreadLocal;
+import com.liferay.change.tracking.internal.CTServiceCopier;
 import com.liferay.change.tracking.internal.CTServiceRegistry;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.base.CTCollectionLocalServiceBaseImpl;
 import com.liferay.petra.lang.SafeClosable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
@@ -40,8 +44,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -157,6 +163,97 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
+	public CTCollection undoCTCollection(
+			long ctCollectionId, long userId, String name, String description)
+		throws PortalException {
+
+		CTCollection undoCTCollection =
+			ctCollectionPersistence.findByPrimaryKey(ctCollectionId);
+
+		if (undoCTCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+			throw new IllegalArgumentException(
+				"Unable to undo " + undoCTCollection +
+					" because it is not published");
+		}
+
+		CTCollection newCTCollection = addCTCollection(
+			undoCTCollection.getCompanyId(), userId, name, description);
+
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.getCTPreferences(
+				undoCTCollection.getCompanyId(), userId);
+
+		ctPreferences.setCtCollectionId(newCTCollection.getCtCollectionId());
+
+		ctPreferencesPersistence.update(ctPreferences);
+
+		List<CTEntry> publishedCTEntries =
+			ctEntryPersistence.findByCTCollectionId(
+				undoCTCollection.getCtCollectionId());
+
+		Map<Long, CTServiceCopier> ctServiceCopiers = new HashMap<>();
+
+		long batchCounter = counterLocalService.increment(
+			CTEntry.class.getName(), publishedCTEntries.size());
+
+		batchCounter -= publishedCTEntries.size();
+
+		for (CTEntry publishedCTEntry : publishedCTEntries) {
+			ctServiceCopiers.computeIfAbsent(
+				publishedCTEntry.getModelClassNameId(),
+				modelClassNameId -> {
+					CTService<?> ctService = _ctServiceRegistry.getCTService(
+						modelClassNameId);
+
+					if (ctService != null) {
+						return new CTServiceCopier<>(
+							ctService, undoCTCollection.getCtCollectionId(),
+							newCTCollection.getCtCollectionId());
+					}
+
+					throw new SystemException(
+						StringBundler.concat(
+							"Unable to undo ", undoCTCollection,
+							" because service for ", modelClassNameId,
+							" is missing"));
+				});
+
+			CTEntry ctEntry = ctEntryPersistence.create(++batchCounter);
+
+			ctEntry.setCompanyId(newCTCollection.getCompanyId());
+			ctEntry.setUserId(newCTCollection.getUserId());
+			ctEntry.setCtCollectionId(newCTCollection.getCtCollectionId());
+			ctEntry.setModelClassNameId(publishedCTEntry.getModelClassNameId());
+			ctEntry.setModelClassPK(publishedCTEntry.getModelClassPK());
+			ctEntry.setModelMvccVersion(publishedCTEntry.getModelMvccVersion());
+
+			int changeType = publishedCTEntry.getChangeType();
+
+			if (changeType == CTConstants.CT_CHANGE_TYPE_ADDITION) {
+				changeType = CTConstants.CT_CHANGE_TYPE_DELETION;
+			}
+			else if (changeType == CTConstants.CT_CHANGE_TYPE_DELETION) {
+				changeType = CTConstants.CT_CHANGE_TYPE_ADDITION;
+			}
+
+			ctEntry.setChangeType(changeType);
+
+			ctEntryPersistence.update(ctEntry);
+		}
+
+		try {
+			for (CTServiceCopier ctServiceCopier : ctServiceCopiers.values()) {
+				ctServiceCopier.copy();
+			}
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+
+		return newCTCollection;
+	}
+
+	@Override
 	public CTCollection updateCTCollection(
 			long userId, long ctCollectionId, String name, String description)
 		throws PortalException {
@@ -235,6 +332,9 @@ public class CTCollectionLocalServiceImpl
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
+
+	@Reference
+	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;

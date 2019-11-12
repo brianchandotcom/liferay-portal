@@ -157,16 +157,6 @@ definition {
 			connectSite = "true",
 			siteList = "Site Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.viewConnectedSite(
-			depotName = "Test Depot Name",
-			siteList = "Site Name");
-
 		ProductMenu.gotoSite(site = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
@@ -178,8 +168,6 @@ definition {
 		Depot.disconnectSite(siteList = "Site Name");
 
 		Depot.viewNoConnectedSiteCP();
-
-		DepotNavigator.openDepotAdmin();
 	}
 
 	@description = "This ensures that a depot can be connected to the site."
@@ -242,16 +230,6 @@ definition {
 			connectSite = "true",
 			siteList = "Site Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.viewConnectedSite(
-			depotName = "Test Depot Name",
-			siteList = "Site Name");
-
 		ProductMenu.gotoSite(site = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
@@ -298,16 +276,6 @@ definition {
 		Depot.connectSite(
 			connectSite = "true",
 			siteList = "Child Site Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.viewConnectedSite(
-			depotName = "Test Depot Name",
-			siteList = "Site Name");
 
 		ProductMenu.gotoSite(site = "Child Site Name");
 

@@ -67,7 +67,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 		List<String> definitionsList = new ArrayList<>();
 
-		StringBundler sb = new StringBundler(definitions.size());
+		StringBundler sb = new StringBundler();
 
 		String previousDefinition = StringPool.BLANK;
 

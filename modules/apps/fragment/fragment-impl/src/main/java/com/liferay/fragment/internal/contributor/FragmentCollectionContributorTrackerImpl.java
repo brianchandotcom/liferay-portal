@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.ArrayList;
@@ -79,7 +81,20 @@ public class FragmentCollectionContributorTrackerImpl
 	public List<FragmentCollectionContributor>
 		getFragmentCollectionContributors() {
 
-		return new ArrayList<>(_serviceTrackerMap.values());
+		List<FragmentCollectionContributor> fragmentCollectionContributors =
+			new ArrayList<>(_serviceTrackerMap.values());
+
+		return ListUtil.filter(
+			fragmentCollectionContributors,
+			fragmentCollectionContributor -> {
+				if (MapUtil.isNotEmpty(
+						fragmentCollectionContributor.getNames())) {
+
+					return true;
+				}
+
+				return false;
+			});
 	}
 
 	@Override

@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,6 +88,22 @@ public class DepotAdminManagementToolbarDisplayContext
 		clearResultsURL.setParameter("orderByType", getOrderByType());
 
 		return clearResultsURL.toString();
+	}
+
+	public Map<String, Object> getComponentContext() throws PortalException {
+		String cmd = Constants.DELETE;
+
+		PortletURL deleteDepotEntries =
+			liferayPortletResponse.createActionURL();
+
+		deleteDepotEntries.setParameter(
+			ActionRequest.ACTION_NAME, "/depot_entries/delete");
+
+		return HashMapBuilder.<String, Object>put(
+			"deleteDepotEntriesURL", deleteDepotEntries.toString()
+		).put(
+			"deleteEntriesCmd", cmd
+		).build();
 	}
 
 	@Override

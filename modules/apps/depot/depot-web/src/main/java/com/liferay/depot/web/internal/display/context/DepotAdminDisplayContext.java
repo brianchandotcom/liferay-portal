@@ -116,6 +116,10 @@ public class DepotAdminDisplayContext {
 		return _groupURLProvider.getGroupURL(curGroup, _liferayPortletRequest);
 	}
 
+	public PortletURL getIteratorURL() {
+		return getGroupSearch().getIteratorURL();
+	}
+
 	public boolean isDisplayStyleDescriptive() {
 		return Objects.equals(getDisplayStyle(), "descriptive");
 	}

@@ -35,12 +35,23 @@ class DepotAdminManagementToolbarDefaultEventHandler extends DefaultEventHandler
 				)
 			)
 		) {
-			submitForm(this.one('#fm'));
+			const form = this.one('#fm');
+
+			Liferay.Util.postForm(form, {
+				data: {
+					deleteEntryIds: Liferay.Util.listCheckedExcept(
+						form,
+						this.ns('allRowIds')
+					)
+				},
+				url: this.deleteDepotEntriesURL
+			});
 		}
 	}
 }
 
 DepotAdminManagementToolbarDefaultEventHandler.STATE = {
+	deleteDepotEntriesURL: Config.string(),
 	spritemap: Config.string()
 };
 

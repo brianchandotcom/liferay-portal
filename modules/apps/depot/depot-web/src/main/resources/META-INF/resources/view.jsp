@@ -31,7 +31,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 	<div class="sidenav-content">
 		<portlet:actionURL name="deleteGroups" var="deleteGroupsURL" />
 
-		<aui:form action="<%= deleteGroupsURL %>" cssClass="container-fluid-1280" name="fm">
+		<aui:form action="<%= depotAdminDisplayContext.getIteratorURL() %>" cssClass="container-fluid-1280" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<liferay-ui:search-container
@@ -124,5 +124,6 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 
 <liferay-frontend:component
 	componentId="<%= depotAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= depotAdminManagementToolbarDisplayContext.getComponentContext() %>"
 	module="js/DepotAdminManagementToolbarDefaultEventHandler.es"
 />

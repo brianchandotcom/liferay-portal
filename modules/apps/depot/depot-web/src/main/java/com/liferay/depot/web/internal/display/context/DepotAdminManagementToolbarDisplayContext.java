@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -217,10 +216,6 @@ public class DepotAdminManagementToolbarDisplayContext
 	private boolean _hasDeleteGroupPermission(Group group)
 		throws PortalException {
 
-		if (group.isCompany()) {
-			return false;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -228,10 +223,6 @@ public class DepotAdminManagementToolbarDisplayContext
 				themeDisplay.getPermissionChecker(), group,
 				ActionKeys.DELETE)) {
 
-			return false;
-		}
-
-		if (PortalUtil.isSystemGroup(group.getGroupKey())) {
 			return false;
 		}
 

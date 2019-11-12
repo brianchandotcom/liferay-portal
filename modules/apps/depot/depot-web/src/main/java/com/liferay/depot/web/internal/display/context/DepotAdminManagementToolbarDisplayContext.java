@@ -91,8 +91,6 @@ public class DepotAdminManagementToolbarDisplayContext
 	}
 
 	public Map<String, Object> getComponentContext() throws PortalException {
-		String cmd = Constants.DELETE;
-
 		PortletURL deleteDepotEntries =
 			liferayPortletResponse.createActionURL();
 
@@ -101,8 +99,6 @@ public class DepotAdminManagementToolbarDisplayContext
 
 		return HashMapBuilder.<String, Object>put(
 			"deleteDepotEntriesURL", deleteDepotEntries.toString()
-		).put(
-			"deleteEntriesCmd", cmd
 		).build();
 	}
 

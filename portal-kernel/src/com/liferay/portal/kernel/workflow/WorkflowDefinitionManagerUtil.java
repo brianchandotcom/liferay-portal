@@ -37,6 +37,11 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, userId, title, name, bytes);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getActiveWorkflowDefinitionsCount(long)}
+	 */
+	@Deprecated
 	public static int getActiveWorkflowDefinitionCount(long companyId)
 		throws WorkflowException {
 
@@ -44,6 +49,10 @@ public class WorkflowDefinitionManagerUtil {
 			companyId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static int getActiveWorkflowDefinitionCount(
 			long companyId, String name)
 		throws WorkflowException {
@@ -70,19 +79,19 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, name, start, end, orderByComparator);
 	}
 
+	public static int getActiveWorkflowDefinitionsCount(long companyId)
+		throws WorkflowException {
+
+		return getWorkflowDefinitionManager().getActiveWorkflowDefinitionsCount(
+			companyId);
+	}
+
 	public static WorkflowDefinition getLatestWorkflowDefinition(
 			long companyId, String name)
 		throws WorkflowException {
 
 		return getWorkflowDefinitionManager().getLatestWorkflowDefinition(
 			companyId, name);
-	}
-
-	public static int getLatestWorkflowDefinitionCount(long companyId)
-		throws WorkflowException {
-
-		return getWorkflowDefinitionManager().getLatestWorkflowDefinitionCount(
-			companyId);
 	}
 
 	public static List<WorkflowDefinition> getLatestWorkflowDefinitions(
@@ -92,6 +101,13 @@ public class WorkflowDefinitionManagerUtil {
 
 		return getWorkflowDefinitionManager().getLatestWorkflowDefinitions(
 			companyId, start, end, orderByComparator);
+	}
+
+	public static int getLatestWorkflowDefinitionsCount(long companyId)
+		throws WorkflowException {
+
+		return getWorkflowDefinitionManager().getLatestWorkflowDefinitionsCount(
+			companyId);
 	}
 
 	public static WorkflowDefinition getWorkflowDefinition(
@@ -113,6 +129,11 @@ public class WorkflowDefinitionManagerUtil {
 			companyId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getWorkflowDefinitionsCount(long, String)}
+	 */
+	@Deprecated
 	public static int getWorkflowDefinitionCount(long companyId, String name)
 		throws WorkflowException {
 
@@ -144,6 +165,13 @@ public class WorkflowDefinitionManagerUtil {
 
 		return getWorkflowDefinitionManager().getWorkflowDefinitions(
 			companyId, name, start, end, orderByComparator);
+	}
+
+	public static int getWorkflowDefinitionsCount(long companyId, String name)
+		throws WorkflowException {
+
+		return getWorkflowDefinitionManager().getWorkflowDefinitionsCount(
+			companyId, name);
 	}
 
 	/**

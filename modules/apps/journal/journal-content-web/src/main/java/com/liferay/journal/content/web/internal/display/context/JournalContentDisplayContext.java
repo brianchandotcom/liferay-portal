@@ -522,7 +522,8 @@ public class JournalContentDisplayContext {
 
 		infoItemItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new JournalArticleItemSelectorReturnType());
-		infoItemItemSelectorCriterion.setStatus(WorkflowConstants.STATUS_ANY);
+		infoItemItemSelectorCriterion.setStatus(
+			WorkflowConstants.STATUS_APPROVED);
 
 		ItemSelector itemSelector = (ItemSelector)_portletRequest.getAttribute(
 			JournalWebKeys.ITEM_SELECTOR);

@@ -34,16 +34,12 @@ function AssetCategoriesSelector({
 					? `${vocabulary.title} ${vocabulary.group}`
 					: vocabulary.title;
 
-				const isValid =
-					!vocabulary.required || vocabulary.selectedItems.length;
-
 				return (
 					<AssetVocabularyCategoriesSelector
 						eventName={eventName}
 						groupIds={groupIds}
 						id={`namespace_assetCategoriesSelector_${vocabulary.id}`}
 						inputName={inputName}
-						isValid={isValid}
 						key={vocabulary.id}
 						label={label}
 						onSelectedItemsChange={selectedItems => {

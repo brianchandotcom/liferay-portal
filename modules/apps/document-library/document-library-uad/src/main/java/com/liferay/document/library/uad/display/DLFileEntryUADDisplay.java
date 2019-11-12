@@ -41,9 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	service = {DLFileEntryUADDisplay.class, UADDisplay.class}
-)
+@Component(service = {DLFileEntryUADDisplay.class, UADDisplay.class})
 public class DLFileEntryUADDisplay extends BaseDLFileEntryUADDisplay {
 
 	@Override

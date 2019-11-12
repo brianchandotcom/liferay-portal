@@ -10,12 +10,14 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.io.AutoDeleteFileInputStream;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import ${beanLocatorUtil};
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -49,13 +51,17 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.io.InputStream;
 import java.io.Serializable;
+
+import java.sql.Blob;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -879,8 +885,47 @@ import org.osgi.service.component.annotations.Reference;
 						${entity.varName}Persistence.closeSession(session);
 					}
 				}
+
+				@Override
+				@Transactional(readOnly = true)
+				public InputStream open${entityColumn.methodName}InputStream(long ${entity.PKVarName}) {
+					try {
+						${entity.name}${entityColumn.methodName}BlobModel
+							${entity.name}${entityColumn.methodName}BlobModel = get${entityColumn.methodName}BlobModel(
+								${entity.PKVarName});
+
+						Blob blob = ${entity.name}${entityColumn.methodName}BlobModel.get${entityColumn.methodName}Blob();
+
+						InputStream inputStream = blob.getBinaryStream();
+
+						if (_useTempFile) {
+							inputStream = new AutoDeleteFileInputStream(
+								_file.createTempFile(inputStream));
+						}
+
+						return inputStream;
+					}
+					catch (Exception e) {
+						throw new SystemException(e);
+					}
+				}
 			</#if>
 		</#list>
+
+		<#if entity.hasLazyBlobEntityColumn()>
+			@Activate
+			protected void activate() {
+				DB db = DBManagerUtil.getDB();
+
+				if ((db.getDBType() != DBType.DB2) &&
+					(db.getDBType() != DBType.MYSQL) &&
+					(db.getDBType() != DBType.MARIADB) &&
+					(db.getDBType() != DBType.SYBASE)) {
+
+					_useTempFile = true;
+				}
+			}
+		</#if>
 
 		<#list entity.entityColumns as entityColumn>
 			<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>
@@ -1918,6 +1963,15 @@ import org.osgi.service.component.annotations.Reference;
 			</#if>
 		</#if>
 	</#list>
+
+	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
+		<#if entity.hasLazyBlobEntityColumn()>
+			@Reference
+			private File _file;
+
+			private boolean _useTempFile;
+		</#if>
+	</#if>
 
 	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence() && !dependencyInjectorDS>
 		<#if validator.isNull(pluginName)>

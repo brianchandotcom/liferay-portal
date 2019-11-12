@@ -54,9 +54,7 @@ class StateSyncronizer extends Component {
 		this.syncEditors();
 	}
 
-	disposeInternal() {
-		super.disposeInternal();
-
+	disposed() {
 		this._eventHandler.removeAllListeners();
 
 		if (this._translationManagerHandles) {

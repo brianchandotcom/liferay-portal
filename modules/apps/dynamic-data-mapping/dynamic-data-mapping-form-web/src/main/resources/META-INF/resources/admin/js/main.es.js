@@ -261,8 +261,6 @@ class Form extends Component {
 	}
 
 	disposed() {
-		super.disposed();
-
 		if (this._autoSave) {
 			this._autoSave.dispose();
 		}
@@ -313,7 +311,7 @@ class Form extends Component {
 		return ruleBuilderVisible && this.isFormBuilderView();
 	}
 
-	onAvailableLocalesRemoved({previousValue, newValue}) {
+	onAvailableLocalesRemoved({newValue, previousValue}) {
 		const {store} = this.refs;
 
 		const removedItems = new Map();

@@ -25,7 +25,9 @@ public class PropertiesDefinitionKeysCheck extends DefinitionKeysCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("/liferay-plugin-package.properties")) {
+		if (fileName.endsWith("/liferay-plugin-package.properties") ||
+			fileName.endsWith("/TLiferayBatchFileProperties.properties")) {
+
 			content = sortDefinitionKeys(
 				content, getDefinitions(content),
 				new NaturalOrderStringComparator());

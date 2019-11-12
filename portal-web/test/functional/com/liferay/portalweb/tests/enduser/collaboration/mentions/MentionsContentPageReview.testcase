@@ -53,6 +53,75 @@ definition {
 		}
 	}
 
+	@description = "This case ensures a user can be mentioned in a comment when he has valid permission."
+	@priority = "5"
+	test MentionUserWithValidPermissions {
+		JSONUser.addUser(
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "user1");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "user1@liferay.com",
+			userScreenName = "user1");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.add(roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.portal.kernel.model.Layout",
+			roleTitle = "Regrole Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Regrole Name",
+			userScreenName = "user1");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title");
+
+		PageEditor.gotoCommentViaFragment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentName = "Title",
+			position = "1");
+
+		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
+
+		Type.sendKeys(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS",
+			value1 = "@user");
+
+		AssertElementNotPresent(
+			key_mentionsUserScreenName = "user2",
+			locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
+
+		Click.clickNoMouseOver(
+			key_mentionsUserScreenName = "user1",
+			locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
+	}
+
 	@description = "This case ensures that the user can mention the other user in a comment."
 	@priority = "5"
 	test ViewCommentMentionedUser {
@@ -90,6 +159,76 @@ definition {
 			fragmentComment = "Comment by Test ",
 			mentionsUserFullName = "userfn userln",
 			mentionsUserScreenName = "user2");
+	}
+
+	@description = "This case ensures a user can not see a mention of him after the permission is revoked."
+	@priority = "5"
+	test ViewMentionAfterRevokingPermissions {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.add(roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.portal.kernel.model.Layout",
+			roleTitle = "Regrole Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Regrole Name",
+			userScreenName = "user2");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addComment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentComment = "Comment by Test",
+			fragmentName = "Title",
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "user2",
+			position = "1");
+
+		PageEditor.viewComment(
+			fragmentComment = "Comment by Test ",
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "user2");
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.portal.kernel.model.Layout",
+			roleTitle = "Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user2@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.navigateToContent(contentBody = "user2");
+
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Forbidden");
 	}
 
 }

@@ -91,6 +91,22 @@ public class DepotAdminManagementToolbarDisplayContext
 		return clearResultsURL.toString();
 	}
 
+	public Map<String, Object> getComponentContext() throws PortalException {
+		String cmd = Constants.DELETE;
+
+		PortletURL deleteDepotEntries =
+			liferayPortletResponse.createActionURL();
+
+		deleteDepotEntries.setParameter(
+			ActionRequest.ACTION_NAME, "/depot_entries/delete");
+
+		return HashMapBuilder.<String, Object>put(
+			"deleteDepotEntriesURL", deleteDepotEntries.toString()
+		).put(
+			"deleteEntriesCmd", cmd
+		).build();
+	}
+
 	@Override
 	public String getComponentId() {
 		return "depotAdminManagementToolbar";

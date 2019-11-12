@@ -100,6 +100,10 @@ public class DepotAdminDisplayContext {
 		return groupSearch;
 	}
 
+	public PortletURL getIteratorURL() {
+		return getGroupSearch().getIteratorURL();
+	}
+
 	public boolean isDisplayStyleDescriptive() {
 		return Objects.equals(getDisplayStyle(), "descriptive");
 	}

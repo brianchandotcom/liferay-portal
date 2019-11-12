@@ -10,11 +10,11 @@
  * distribution rights of the Software.
  */
 
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useContext, useEffect, useState} from 'react';
 
 import Icon from '../../../shared/components/Icon.es';
 import Panel from '../../../shared/components/Panel.es';
-import Tooltip from '../../../shared/components/Tooltip.es';
 import {ErrorContext} from '../../../shared/components/request/Error.es';
 import {LoadingContext} from '../../../shared/components/request/Loading.es';
 import Request from '../../../shared/components/request/Request.es';
@@ -125,9 +125,17 @@ const Header = ({children, description, title}) => (
 			<div className="autofit-col autofit-col-expand flex-row">
 				<span className="mr-2">{title}</span>
 
-				<Tooltip message={description} position="right" width="288">
-					<Icon iconName={'question-circle-full'} />
-				</Tooltip>
+				<ClayTooltipProvider>
+					<span>
+						<span
+							className="workflow-tooltip"
+							data-tooltip-align={'right'}
+							title={description}
+						>
+							<Icon iconName={'question-circle-full'} />
+						</span>
+					</span>
+				</ClayTooltipProvider>
 			</div>
 
 			{children && (

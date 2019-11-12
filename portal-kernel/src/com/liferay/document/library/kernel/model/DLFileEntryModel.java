@@ -457,20 +457,6 @@ public interface DLFileEntryModel
 	public void setSize(long size);
 
 	/**
-	 * Returns the read count of this document library file entry.
-	 *
-	 * @return the read count of this document library file entry
-	 */
-	public int getReadCount();
-
-	/**
-	 * Sets the read count of this document library file entry.
-	 *
-	 * @param readCount the read count of this document library file entry
-	 */
-	public void setReadCount(int readCount);
-
-	/**
 	 * Returns the small image ID of this document library file entry.
 	 *
 	 * @return the small image ID of this document library file entry

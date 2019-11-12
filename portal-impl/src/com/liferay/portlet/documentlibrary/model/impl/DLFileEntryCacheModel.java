@@ -77,7 +77,7 @@ public class DLFileEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -127,8 +127,6 @@ public class DLFileEntryCacheModel
 		sb.append(version);
 		sb.append(", size=");
 		sb.append(size);
-		sb.append(", readCount=");
-		sb.append(readCount);
 		sb.append(", smallImageId=");
 		sb.append(smallImageId);
 		sb.append(", largeImageId=");
@@ -256,7 +254,6 @@ public class DLFileEntryCacheModel
 		}
 
 		dlFileEntryImpl.setSize(size);
-		dlFileEntryImpl.setReadCount(readCount);
 		dlFileEntryImpl.setSmallImageId(smallImageId);
 		dlFileEntryImpl.setLargeImageId(largeImageId);
 		dlFileEntryImpl.setCustom1ImageId(custom1ImageId);
@@ -311,8 +308,6 @@ public class DLFileEntryCacheModel
 		version = objectInput.readUTF();
 
 		size = objectInput.readLong();
-
-		readCount = objectInput.readInt();
 
 		smallImageId = objectInput.readLong();
 
@@ -430,8 +425,6 @@ public class DLFileEntryCacheModel
 
 		objectOutput.writeLong(size);
 
-		objectOutput.writeInt(readCount);
-
 		objectOutput.writeLong(smallImageId);
 
 		objectOutput.writeLong(largeImageId);
@@ -468,7 +461,6 @@ public class DLFileEntryCacheModel
 	public long fileEntryTypeId;
 	public String version;
 	public long size;
-	public int readCount;
 	public long smallImageId;
 	public long largeImageId;
 	public long custom1ImageId;

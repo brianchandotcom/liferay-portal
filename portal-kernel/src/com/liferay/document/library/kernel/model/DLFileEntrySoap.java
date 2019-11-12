@@ -55,7 +55,6 @@ public class DLFileEntrySoap implements Serializable {
 		soapModel.setFileEntryTypeId(model.getFileEntryTypeId());
 		soapModel.setVersion(model.getVersion());
 		soapModel.setSize(model.getSize());
-		soapModel.setReadCount(model.getReadCount());
 		soapModel.setSmallImageId(model.getSmallImageId());
 		soapModel.setLargeImageId(model.getLargeImageId());
 		soapModel.setCustom1ImageId(model.getCustom1ImageId());
@@ -307,14 +306,6 @@ public class DLFileEntrySoap implements Serializable {
 		_size = size;
 	}
 
-	public int getReadCount() {
-		return _readCount;
-	}
-
-	public void setReadCount(int readCount) {
-		_readCount = readCount;
-	}
-
 	public long getSmallImageId() {
 		return _smallImageId;
 	}
@@ -391,7 +382,6 @@ public class DLFileEntrySoap implements Serializable {
 	private long _fileEntryTypeId;
 	private String _version;
 	private long _size;
-	private int _readCount;
 	private long _smallImageId;
 	private long _largeImageId;
 	private long _custom1ImageId;

@@ -303,7 +303,6 @@ create table DLFileEntry (
 	fileEntryTypeId LONG,
 	version VARCHAR(75) null,
 	size_ LONG,
-	readCount INTEGER,
 	smallImageId LONG,
 	largeImageId LONG,
 	custom1ImageId LONG,

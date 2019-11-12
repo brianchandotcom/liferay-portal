@@ -68,7 +68,6 @@ public class DLFileEntryWrapper
 		attributes.put("fileEntryTypeId", getFileEntryTypeId());
 		attributes.put("version", getVersion());
 		attributes.put("size", getSize());
-		attributes.put("readCount", getReadCount());
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("largeImageId", getLargeImageId());
 		attributes.put("custom1ImageId", getCustom1ImageId());
@@ -223,12 +222,6 @@ public class DLFileEntryWrapper
 
 		if (size != null) {
 			setSize(size);
-		}
-
-		Integer readCount = (Integer)attributes.get("readCount");
-
-		if (readCount != null) {
-			setReadCount(readCount);
 		}
 
 		Long smallImageId = (Long)attributes.get("smallImageId");
@@ -615,13 +608,8 @@ public class DLFileEntryWrapper
 		return model.getPrimaryKey();
 	}
 
-	/**
-	 * Returns the read count of this document library file entry.
-	 *
-	 * @return the read count of this document library file entry
-	 */
 	@Override
-	public int getReadCount() {
+	public long getReadCount() {
 		return model.getReadCount();
 	}
 
@@ -1065,16 +1053,6 @@ public class DLFileEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	 * Sets the read count of this document library file entry.
-	 *
-	 * @param readCount the read count of this document library file entry
-	 */
-	@Override
-	public void setReadCount(int readCount) {
-		model.setReadCount(readCount);
 	}
 
 	/**

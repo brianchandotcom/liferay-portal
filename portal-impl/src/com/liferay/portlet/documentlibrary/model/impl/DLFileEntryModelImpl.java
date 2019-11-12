@@ -91,9 +91,8 @@ public class DLFileEntryModelImpl
 		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
 		{"extraSettings", Types.CLOB}, {"fileEntryTypeId", Types.BIGINT},
 		{"version", Types.VARCHAR}, {"size_", Types.BIGINT},
-		{"readCount", Types.INTEGER}, {"smallImageId", Types.BIGINT},
-		{"largeImageId", Types.BIGINT}, {"custom1ImageId", Types.BIGINT},
-		{"custom2ImageId", Types.BIGINT},
+		{"smallImageId", Types.BIGINT}, {"largeImageId", Types.BIGINT},
+		{"custom1ImageId", Types.BIGINT}, {"custom2ImageId", Types.BIGINT},
 		{"manualCheckInRequired", Types.BOOLEAN},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
@@ -126,7 +125,6 @@ public class DLFileEntryModelImpl
 		TABLE_COLUMNS_MAP.put("fileEntryTypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("size_", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("readCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("smallImageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("largeImageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("custom1ImageId", Types.BIGINT);
@@ -136,7 +134,7 @@ public class DLFileEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,lastPublishDate DATE null)";
+		"create table DLFileEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
 
@@ -234,7 +232,6 @@ public class DLFileEntryModelImpl
 		model.setFileEntryTypeId(soapModel.getFileEntryTypeId());
 		model.setVersion(soapModel.getVersion());
 		model.setSize(soapModel.getSize());
-		model.setReadCount(soapModel.getReadCount());
 		model.setSmallImageId(soapModel.getSmallImageId());
 		model.setLargeImageId(soapModel.getLargeImageId());
 		model.setCustom1ImageId(soapModel.getCustom1ImageId());
@@ -492,10 +489,6 @@ public class DLFileEntryModelImpl
 		attributeGetterFunctions.put("size", DLFileEntry::getSize);
 		attributeSetterBiConsumers.put(
 			"size", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setSize);
-		attributeGetterFunctions.put("readCount", DLFileEntry::getReadCount);
-		attributeSetterBiConsumers.put(
-			"readCount",
-			(BiConsumer<DLFileEntry, Integer>)DLFileEntry::setReadCount);
 		attributeGetterFunctions.put(
 			"smallImageId", DLFileEntry::getSmallImageId);
 		attributeSetterBiConsumers.put(
@@ -1019,17 +1012,6 @@ public class DLFileEntryModelImpl
 
 	@JSON
 	@Override
-	public int getReadCount() {
-		return _readCount;
-	}
-
-	@Override
-	public void setReadCount(int readCount) {
-		_readCount = readCount;
-	}
-
-	@JSON
-	@Override
 	public long getSmallImageId() {
 		return _smallImageId;
 	}
@@ -1365,7 +1347,6 @@ public class DLFileEntryModelImpl
 		dlFileEntryImpl.setFileEntryTypeId(getFileEntryTypeId());
 		dlFileEntryImpl.setVersion(getVersion());
 		dlFileEntryImpl.setSize(getSize());
-		dlFileEntryImpl.setReadCount(getReadCount());
 		dlFileEntryImpl.setSmallImageId(getSmallImageId());
 		dlFileEntryImpl.setLargeImageId(getLargeImageId());
 		dlFileEntryImpl.setCustom1ImageId(getCustom1ImageId());
@@ -1641,8 +1622,6 @@ public class DLFileEntryModelImpl
 
 		dlFileEntryCacheModel.size = getSize();
 
-		dlFileEntryCacheModel.readCount = getReadCount();
-
 		dlFileEntryCacheModel.smallImageId = getSmallImageId();
 
 		dlFileEntryCacheModel.largeImageId = getLargeImageId();
@@ -1777,7 +1756,6 @@ public class DLFileEntryModelImpl
 	private boolean _setOriginalFileEntryTypeId;
 	private String _version;
 	private long _size;
-	private int _readCount;
 	private long _smallImageId;
 	private long _originalSmallImageId;
 	private boolean _setOriginalSmallImageId;

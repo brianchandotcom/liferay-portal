@@ -10,5 +10,6 @@ dependencies {
 	compileOnly project(":apps:portal-search:portal-search-spi")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:xstream:xstream-configurator-api")
+	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 }

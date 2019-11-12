@@ -88,10 +88,14 @@ public class DepotAdminDisplayContext {
 	}
 
 	public GroupSearch getGroupSearch() {
-		GroupSearch groupSearch = _depotAdminGroupSearchProvider.getGroupSearch(
+		if (_groupSearch != null) {
+			return _groupSearch;
+		}
+
+		_groupSearch = _depotAdminGroupSearchProvider.getGroupSearch(
 			_liferayPortletRequest, _getPortletURL());
 
-		groupSearch.setId(getSearchContainerId());
+		_groupSearch.setId(getSearchContainerId());
 
 		SiteChecker siteChecker = new SiteChecker(_liferayPortletResponse);
 
@@ -103,9 +107,9 @@ public class DepotAdminDisplayContext {
 
 		siteChecker.setRememberCheckBoxStateURLRegex(sb.toString());
 
-		groupSearch.setRowChecker(siteChecker);
+		_groupSearch.setRowChecker(siteChecker);
 
-		return groupSearch;
+		return _groupSearch;
 	}
 
 	public String getHref(Group curGroup) {
@@ -138,6 +142,7 @@ public class DepotAdminDisplayContext {
 
 	private final DepotAdminGroupSearchProvider _depotAdminGroupSearchProvider;
 	private String _displayStyle;
+	private GroupSearch _groupSearch;
 	private final GroupURLProvider _groupURLProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

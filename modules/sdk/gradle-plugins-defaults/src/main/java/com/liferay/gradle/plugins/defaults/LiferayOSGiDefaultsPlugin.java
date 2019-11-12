@@ -195,6 +195,7 @@ import org.gradle.api.plugins.quality.FindBugsReports;
 import org.gradle.api.plugins.quality.Pmd;
 import org.gradle.api.plugins.quality.PmdExtension;
 import org.gradle.api.plugins.quality.PmdPlugin;
+import org.gradle.api.reporting.CustomizableHtmlReport;
 import org.gradle.api.reporting.SingleFileReport;
 import org.gradle.api.resources.ResourceHandler;
 import org.gradle.api.resources.TextResourceFactory;
@@ -3318,9 +3319,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		FindBugsReports findBugsReports = findBugs.getReports();
 
-		SingleFileReport htmlReport = findBugsReports.getHtml();
+		CustomizableHtmlReport customizableHtmlReport =
+			findBugsReports.getHtml();
 
-		htmlReport.setEnabled(true);
+		customizableHtmlReport.setEnabled(true);
 
 		SingleFileReport xmlReport = findBugsReports.getXml();
 

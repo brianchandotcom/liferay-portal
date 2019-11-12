@@ -87,26 +87,28 @@ writeReleases {
 	doLast {
 		File releasesTxtFile = new File(processResources.destinationDir, "com/liferay/portal/tools/sample/sql/builder/dependencies/releases.txt")
 
-		releasesTxtFile.withWriter("UTF-8") {
-			Writer writer ->
+		List<String> lines = []
 
-			(configurations.compile + configurations.compileInclude).each {
-				JarFile jarFile = new JarFile(it)
+		(configurations.compile + configurations.compileInclude).each {
+			JarFile jarFile = new JarFile(it)
 
-				Attributes mainAttributes = jarFile.manifest.mainAttributes
+			Attributes mainAttributes = jarFile.manifest.mainAttributes
 
-				String schemaVersion = mainAttributes.getValue("Liferay-Require-SchemaVersion")
+			String schemaVersion = mainAttributes.getValue("Liferay-Require-SchemaVersion")
 
-				if (!schemaVersion) {
-					return
-				}
-
-				println "Adding release information from ${it} into ${releasesTxtFile}"
-
-				String symbolicName = mainAttributes.getValue("Bundle-SymbolicName")
-
-				writer.writeLine "${symbolicName}:${schemaVersion}"
+			if (!schemaVersion) {
+				return
 			}
+
+			println "Adding release information from ${it} into ${releasesTxtFile}"
+
+			String symbolicName = mainAttributes.getValue("Bundle-SymbolicName")
+
+			lines.add("${symbolicName}:${schemaVersion}")
 		}
+
+		lines.sort()
+
+		releasesTxtFile.setText lines.join('\n'), "UTF-8"
 	}
 }

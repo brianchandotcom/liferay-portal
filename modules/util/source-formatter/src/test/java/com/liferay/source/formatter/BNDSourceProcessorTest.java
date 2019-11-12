@@ -39,6 +39,17 @@ public class BNDSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testFormatDefinitionKeys() throws Exception {
+		test("FormatDefinitionKeys1/common.testbnd");
+		test(
+			"FormatDefinitionKeys2/common.testbnd",
+			new String[] {
+				"Unknown key \"-fixupmessagess\"",
+				"Unknown key \"Liferay-Portal-ServerInfo\""
+			});
+	}
+
+	@Test
 	public void testIncorrectBundleActivator() throws Exception {
 		test(
 			"IncorrectBundleActivator1/bnd.testbnd",

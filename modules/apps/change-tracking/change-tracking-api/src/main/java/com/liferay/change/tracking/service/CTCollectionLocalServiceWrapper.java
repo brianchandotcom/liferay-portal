@@ -303,6 +303,15 @@ public class CTCollectionLocalServiceWrapper
 		return _ctCollectionLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.change.tracking.model.CTCollection undoCTCollection(
+			long ctCollectionId, long userId, String name, String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionLocalService.undoCTCollection(
+			ctCollectionId, userId, name, description);
+	}
+
 	/**
 	 * Updates the ct collection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -16,6 +16,7 @@ package com.liferay.change.tracking.internal;
 
 import com.liferay.change.tracking.exception.CTEventException;
 import com.liferay.change.tracking.listener.CTEventListener;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -40,6 +41,25 @@ public class CTServiceRegistry {
 
 	public CTService<?> getCTService(long classNameId) {
 		return _serviceTrackerMap.getService(classNameId);
+	}
+
+	public void onAfterCopy(
+		CTCollection sourceCTCollection, CTCollection targetCTCollection) {
+
+		for (CTEventListener ctEventListener : _serviceTrackerList) {
+			try {
+				ctEventListener.onAfterCopy(
+					sourceCTCollection, targetCTCollection);
+			}
+			catch (CTEventException ctee) {
+				_log.error(
+					StringBundler.concat(
+						"On after copy callback failure for change tracking ",
+						"collection ", sourceCTCollection, " by ",
+						ctEventListener),
+					ctee);
+			}
+		}
 	}
 
 	public void onAfterPublish(long ctCollectionId) {

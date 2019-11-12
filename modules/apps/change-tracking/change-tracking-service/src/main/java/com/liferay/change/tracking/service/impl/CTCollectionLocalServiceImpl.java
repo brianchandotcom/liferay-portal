@@ -250,6 +250,8 @@ public class CTCollectionLocalServiceImpl
 			throw new SystemException(e);
 		}
 
+		_ctServiceRegistry.onAfterCopy(undoCTCollection, newCTCollection);
+
 		return newCTCollection;
 	}
 

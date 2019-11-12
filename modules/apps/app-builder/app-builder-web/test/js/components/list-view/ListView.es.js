@@ -15,6 +15,7 @@
 import {waitForElementToBeRemoved} from '@testing-library/dom';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
+import {HashRouter as Router} from 'react-router-dom';
 
 import ListView from '../../../../src/main/resources/META-INF/resources/js/components/list-view/ListView.es';
 import {
@@ -35,14 +36,16 @@ describe('ListView', () => {
 		fetch.mockResponse(JSON.stringify(RESPONSES.NO_ITEMS));
 
 		const {queryByText} = render(
-			<ListView
-				actions={ACTIONS}
-				columns={COLUMNS}
-				emptyState={EMPTY_STATE}
-				endpoint={ENDPOINT}
-			>
-				{BODY}
-			</ListView>
+			<Router>
+				<ListView
+					actions={ACTIONS}
+					columns={COLUMNS}
+					emptyState={EMPTY_STATE}
+					endpoint={ENDPOINT}
+				>
+					{BODY}
+				</ListView>
+			</Router>
 		);
 
 		await waitForElementToBeRemoved(() =>
@@ -57,14 +60,16 @@ describe('ListView', () => {
 		fetch.mockResponse(JSON.stringify(RESPONSES.ONE_ITEM));
 
 		const {container, queryAllByTestId} = render(
-			<ListView
-				actions={ACTIONS}
-				columns={COLUMNS}
-				emptyState={EMPTY_STATE}
-				endpoint={ENDPOINT}
-			>
-				{BODY}
-			</ListView>
+			<Router>
+				<ListView
+					actions={ACTIONS}
+					columns={COLUMNS}
+					emptyState={EMPTY_STATE}
+					endpoint={ENDPOINT}
+				>
+					{BODY}
+				</ListView>
+			</Router>
 		);
 
 		await waitForElementToBeRemoved(() =>
@@ -79,14 +84,16 @@ describe('ListView', () => {
 		fetch.mockResponse(JSON.stringify(RESPONSES.TWENTY_ONE_ITEMS));
 
 		const {container, queryAllByTestId, queryAllByText} = render(
-			<ListView
-				actions={ACTIONS}
-				columns={COLUMNS}
-				emptyState={EMPTY_STATE}
-				endpoint={ENDPOINT}
-			>
-				{BODY}
-			</ListView>
+			<Router>
+				<ListView
+					actions={ACTIONS}
+					columns={COLUMNS}
+					emptyState={EMPTY_STATE}
+					endpoint={ENDPOINT}
+				>
+					{BODY}
+				</ListView>
+			</Router>
 		);
 
 		await waitForElementToBeRemoved(() => {

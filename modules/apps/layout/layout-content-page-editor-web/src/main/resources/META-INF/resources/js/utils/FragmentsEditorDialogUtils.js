@@ -78,7 +78,7 @@ function openImageSelector(callback, destroyedCallback = null) {
 	});
 
 	itemSelectorDialog.on('visibleChange', event => {
-		if (event.newVal === false && destroyedCallback) {
+		if (destroyedCallback) {
 			destroyedCallback();
 		}
 	});

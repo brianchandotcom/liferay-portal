@@ -99,6 +99,7 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 	 * @return the asset list entry segments entry rel that was removed
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public AssetListEntrySegmentsEntryRel deleteAssetListEntrySegmentsEntryRel(
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel);
 
@@ -114,13 +115,15 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 			long assetListEntrySegmentsEntryRelId)
 		throws PortalException;
 
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteAssetListEntrySegmentsEntryRel(
 			long assetListEntryId, long segmentsEntryId)
 		throws PortalException;
 
 	public void deleteAssetListEntrySegmentsEntryRelByAssetListEntryId(
 		long assetListEntryId);
+
+	public void deleteAssetListEntrySegmentsEntryRelBySegmentsEntryId(
+		long segmentsEntryId);
 
 	/**
 	 * @throws PortalException

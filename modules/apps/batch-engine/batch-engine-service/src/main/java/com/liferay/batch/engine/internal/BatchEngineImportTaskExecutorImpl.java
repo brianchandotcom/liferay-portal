@@ -74,17 +74,9 @@ public class BatchEngineImportTaskExecutorImpl
 
 			_execute(batchEngineImportTask);
 
-			batchEngineImportTask.setEndTime(new Date());
-			batchEngineImportTask.setExecuteStatus(
-				BatchEngineTaskExecuteStatus.COMPLETED.toString());
-
-			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
-				batchEngineImportTask);
-
-			BatchEngineTaskCallbackUtil.sendCallback(
-				batchEngineImportTask.getCallbackURL(),
-				batchEngineImportTask.getExecuteStatus(),
-				batchEngineImportTask.getBatchEngineImportTaskId());
+			_updateBatchEngineImportTask(
+				BatchEngineTaskExecuteStatus.COMPLETED, batchEngineImportTask,
+				null);
 		}
 		catch (Throwable t) {
 			_log.error(
@@ -92,18 +84,9 @@ public class BatchEngineImportTaskExecutorImpl
 					batchEngineImportTask,
 				t);
 
-			batchEngineImportTask.setEndTime(new Date());
-			batchEngineImportTask.setErrorMessage(t.getMessage());
-			batchEngineImportTask.setExecuteStatus(
-				BatchEngineTaskExecuteStatus.FAILED.toString());
-
-			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
-				batchEngineImportTask);
-
-			BatchEngineTaskCallbackUtil.sendCallback(
-				batchEngineImportTask.getCallbackURL(),
-				batchEngineImportTask.getExecuteStatus(),
-				batchEngineImportTask.getBatchEngineImportTaskId());
+			_updateBatchEngineImportTask(
+				BatchEngineTaskExecuteStatus.FAILED, batchEngineImportTask,
+				t.getMessage());
 		}
 	}
 
@@ -219,6 +202,24 @@ public class BatchEngineImportTaskExecutorImpl
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			PrincipalThreadLocal.setName(name);
 		}
+	}
+
+	private void _updateBatchEngineImportTask(
+		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus,
+		BatchEngineImportTask batchEngineImportTask, String errorMessage) {
+
+		batchEngineImportTask.setEndTime(new Date());
+		batchEngineImportTask.setErrorMessage(errorMessage);
+		batchEngineImportTask.setExecuteStatus(
+			batchEngineTaskExecuteStatus.toString());
+
+		_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
+			batchEngineImportTask);
+
+		BatchEngineTaskCallbackUtil.sendCallback(
+			batchEngineImportTask.getCallbackURL(),
+			batchEngineImportTask.getExecuteStatus(),
+			batchEngineImportTask.getBatchEngineImportTaskId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

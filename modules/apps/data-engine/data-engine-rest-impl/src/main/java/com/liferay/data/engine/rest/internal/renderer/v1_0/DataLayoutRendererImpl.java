@@ -147,6 +147,7 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 				dataLayoutRendererContext.getHttpServletRequest()));
 		ddmFormRenderingContext.setPortletNamespace(
 			dataLayoutRendererContext.getPortletNamespace());
+		ddmFormRenderingContext.setShowSubmitButton(false);
 
 		return ddmFormRenderingContext;
 	}

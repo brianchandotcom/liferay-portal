@@ -1896,6 +1896,43 @@ definition {
 			subject = "${portalURL}: Your New Account");
 	}
 
+	@priority = "3"
+	test ViewPageRenderedProperlyAfterBeYourselfAgain {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.impersonateCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
+
+		SearchPortlets.viewUserResultDetails(
+			pageName = "My Profile",
+			userName = "userfn userln");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Be yourself again.");
+
+		SearchPortlets.viewUserResultDetails(
+			pageName = "My Profile",
+			userName = "Test Test");
+	}
+
 	@priority = "4"
 	test ViewUserFormPersistence {
 		JSONUser.addUser(

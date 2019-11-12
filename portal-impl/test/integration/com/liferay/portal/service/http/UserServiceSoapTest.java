@@ -14,8 +14,8 @@
 
 package com.liferay.portal.service.http;
 
-import com.liferay.client.soap.portal.model.UserSoap;
-import com.liferay.client.soap.portal.service.ServiceContext;
+import com.liferay.client.soap.portal.kernel.model.UserSoap;
+import com.liferay.client.soap.portal.kernel.service.ServiceContext;
 import com.liferay.client.soap.portal.service.http.UserServiceSoap;
 import com.liferay.client.soap.portal.service.http.UserServiceSoapServiceLocator;
 import com.liferay.petra.string.StringPool;

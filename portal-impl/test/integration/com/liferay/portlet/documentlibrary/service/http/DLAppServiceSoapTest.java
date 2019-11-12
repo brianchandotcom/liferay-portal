@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.documentlibrary.service.http;
 
+import com.liferay.client.soap.document.library.kernel.service.http.DLAppServiceSoap;
+import com.liferay.client.soap.document.library.kernel.service.http.DLAppServiceSoapServiceLocator;
 import com.liferay.client.soap.portal.kernel.repository.model.FileEntrySoap;
 import com.liferay.client.soap.portal.kernel.repository.model.FolderSoap;
-import com.liferay.client.soap.portal.service.ServiceContext;
-import com.liferay.client.soap.portlet.documentlibrary.service.http.DLAppServiceSoap;
-import com.liferay.client.soap.portlet.documentlibrary.service.http.DLAppServiceSoapServiceLocator;
+import com.liferay.client.soap.portal.kernel.service.ServiceContext;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;

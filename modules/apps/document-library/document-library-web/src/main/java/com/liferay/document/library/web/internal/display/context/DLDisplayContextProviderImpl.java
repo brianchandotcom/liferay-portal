@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Iván Zaera
  */
-@Component(immediate = true, service = DLDisplayContextProvider.class)
+@Component(service = DLDisplayContextProvider.class)
 public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 	@Override

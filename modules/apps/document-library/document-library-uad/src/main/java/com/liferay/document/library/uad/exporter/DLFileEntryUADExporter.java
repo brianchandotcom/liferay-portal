@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @author Drew Brokke
  */
-@Component(immediate = true, service = UADExporter.class)
+@Component(service = UADExporter.class)
 public class DLFileEntryUADExporter extends BaseDLFileEntryUADExporter {
 
 	@Override

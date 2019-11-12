@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mauro Mariuzzo
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"mvc.render.command.name=-",

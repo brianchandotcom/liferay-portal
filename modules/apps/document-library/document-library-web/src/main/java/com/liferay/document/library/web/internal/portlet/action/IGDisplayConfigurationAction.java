@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
 	service = ConfigurationAction.class
 )

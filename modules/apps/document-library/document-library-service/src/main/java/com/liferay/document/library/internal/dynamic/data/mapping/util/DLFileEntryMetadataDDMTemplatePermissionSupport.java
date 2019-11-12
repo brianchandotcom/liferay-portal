@@ -23,7 +23,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Lino Alves
  */
 @Component(
-	immediate = true,
 	property = {
 		"add.template.action.id=ADD_DOCUMENT_TYPE",
 		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata"

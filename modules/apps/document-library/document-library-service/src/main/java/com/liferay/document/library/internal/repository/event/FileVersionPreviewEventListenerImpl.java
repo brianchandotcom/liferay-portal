@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = FileVersionPreviewEventListener.class)
+@Component(service = FileVersionPreviewEventListener.class)
 public class FileVersionPreviewEventListenerImpl
 	implements FileVersionPreviewEventListener {
 

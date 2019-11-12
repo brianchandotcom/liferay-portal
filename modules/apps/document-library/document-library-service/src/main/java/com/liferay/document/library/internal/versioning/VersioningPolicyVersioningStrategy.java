@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
-	immediate = true, service = VersioningStrategy.class
+	service = VersioningStrategy.class
 )
 public class VersioningPolicyVersioningStrategy implements VersioningStrategy {
 

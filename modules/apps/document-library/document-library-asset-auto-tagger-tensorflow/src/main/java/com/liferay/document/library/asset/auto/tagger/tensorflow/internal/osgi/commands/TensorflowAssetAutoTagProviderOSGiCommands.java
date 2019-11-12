@@ -22,7 +22,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.command.function=" + TensorflowAssetAutoTagProviderOSGiCommands.RESET_PROCESS_COUNTER,
 		"osgi.command.scope=" + TensorflowAssetAutoTagProviderOSGiCommands.SCOPE

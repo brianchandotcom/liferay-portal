@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lucas Marques de Paula
  */
 @Component(
-	immediate = true,
 	property = "ddm.structure.indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata",
 	service = DDMStructureIndexer.class
 )

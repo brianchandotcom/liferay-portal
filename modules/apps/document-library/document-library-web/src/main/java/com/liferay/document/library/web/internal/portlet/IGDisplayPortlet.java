@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.fragment.entry.processor.portlet.alias=media-gallery",
 		"com.liferay.portlet.add-default-resource=true",

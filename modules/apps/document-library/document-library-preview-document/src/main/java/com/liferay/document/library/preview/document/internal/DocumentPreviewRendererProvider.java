@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true,
 	property = {
 		"content.type=" + ContentTypes.APPLICATION_MSWORD,
 		"content.type=" + ContentTypes.APPLICATION_PDF,

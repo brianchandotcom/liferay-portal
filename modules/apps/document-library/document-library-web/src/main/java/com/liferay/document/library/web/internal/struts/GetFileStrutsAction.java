@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Bruno Farache
  */
 @Component(
-	immediate = true, property = "path=/document_library/get_file",
+	property = "path=/document_library/get_file",
 	service = StrutsAction.class
 )
 public class GetFileStrutsAction implements StrutsAction {

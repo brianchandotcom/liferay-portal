@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = UADAnonymizer.class)
+@Component(service = UADAnonymizer.class)
 public class DLFileShortcutUADAnonymizer
 	extends BaseDLFileShortcutUADAnonymizer {
 }

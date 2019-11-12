@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = RepositoryDefiner.class)
+@Component(service = RepositoryDefiner.class)
 public class CMISWebServicesRepositoryDefiner
 	extends BaseCMISRepositoryDefiner {
 

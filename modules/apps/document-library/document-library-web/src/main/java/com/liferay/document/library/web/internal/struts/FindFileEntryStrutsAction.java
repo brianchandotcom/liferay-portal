@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ryan Park
  */
 @Component(
-	immediate = true, property = "path=/document_library/find_file_entry",
+	property = "path=/document_library/find_file_entry",
 	service = StrutsAction.class
 )
 public class FindFileEntryStrutsAction extends FindStrutsAction {

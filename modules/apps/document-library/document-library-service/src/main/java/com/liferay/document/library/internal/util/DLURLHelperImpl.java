@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = DLURLHelper.class)
+@Component(service = DLURLHelper.class)
 public class DLURLHelperImpl implements DLURLHelper {
 
 	@Override

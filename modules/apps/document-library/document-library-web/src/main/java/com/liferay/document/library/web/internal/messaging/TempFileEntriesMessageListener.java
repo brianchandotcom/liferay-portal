@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
-	immediate = true, service = TempFileEntriesMessageListener.class
+	service = TempFileEntriesMessageListener.class
 )
 public class TempFileEntriesMessageListener extends BaseMessageListener {
 

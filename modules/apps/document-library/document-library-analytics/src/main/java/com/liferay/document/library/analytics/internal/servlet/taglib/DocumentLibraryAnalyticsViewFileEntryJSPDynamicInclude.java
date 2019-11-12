@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class DocumentLibraryAnalyticsViewFileEntryJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 

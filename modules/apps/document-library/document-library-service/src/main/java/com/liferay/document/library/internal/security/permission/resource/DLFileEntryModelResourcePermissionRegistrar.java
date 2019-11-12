@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class DLFileEntryModelResourcePermissionRegistrar {
 
 	@Activate

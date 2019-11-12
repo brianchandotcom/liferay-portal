@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	immediate = true,
 	property = {
 		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType",
 		"model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",

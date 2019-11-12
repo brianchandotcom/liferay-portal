@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true, service = AudioDLPreviewRendererProviderFactory.class
+	service = AudioDLPreviewRendererProviderFactory.class
 )
 public class AudioDLPreviewRendererProviderFactory {
 

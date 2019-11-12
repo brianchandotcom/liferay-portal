@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = DLAdminDisplayContextProvider.class)
+@Component(service = DLAdminDisplayContextProvider.class)
 public class DLAdminDisplayContextProvider {
 
 	public DLAdminDisplayContext getDLAdminDisplayContext(

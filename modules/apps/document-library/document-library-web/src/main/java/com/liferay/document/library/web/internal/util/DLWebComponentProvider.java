@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class DLWebComponentProvider {
 
 	public static DLWebComponentProvider getDLWebComponentProvider() {

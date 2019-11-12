@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = InputStreamSanitizer.class)
+@Component(service = InputStreamSanitizer.class)
 public class InputStreamSanitizerImpl implements InputStreamSanitizer {
 
 	@Override

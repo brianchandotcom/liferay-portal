@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=100",
+	property = "service.ranking:Integer=100",
 	service = ItemSelectorReturnTypeResolver.class
 )
 public class FileEntryDownloadURLItemSelectorReturnTypeResolver

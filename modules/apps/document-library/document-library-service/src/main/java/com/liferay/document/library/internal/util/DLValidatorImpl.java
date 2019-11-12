@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
-	immediate = true, service = DLValidator.class
+	service = DLValidator.class
 )
 public final class DLValidatorImpl implements DLValidator {
 

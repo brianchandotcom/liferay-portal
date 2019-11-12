@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true,
 	property = {
 		"path=/document_library/find_folder",
 		"path=/image_gallery_display/find_folder"

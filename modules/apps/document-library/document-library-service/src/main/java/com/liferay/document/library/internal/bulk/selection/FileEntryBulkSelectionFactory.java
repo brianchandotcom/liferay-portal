@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = {BulkSelectionFactory.class, FileEntryBulkSelectionFactory.class}
 )

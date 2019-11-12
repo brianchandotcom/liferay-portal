@@ -21,6 +21,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = UADExporter.class)
+@Component(service = UADExporter.class)
 public class DLFileShortcutUADExporter extends BaseDLFileShortcutUADExporter {
 }

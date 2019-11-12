@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.RepositoryModel",
 	service = {
 		BulkSelectionFactory.class, RepositoryModelBulkSelectionFactory.class

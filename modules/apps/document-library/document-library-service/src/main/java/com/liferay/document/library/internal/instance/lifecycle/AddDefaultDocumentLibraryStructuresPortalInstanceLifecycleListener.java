@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
-	immediate = true, service = PortalInstanceLifecycleListener.class
+	service = PortalInstanceLifecycleListener.class
 )
 public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {

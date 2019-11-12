@@ -23,7 +23,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata",
 	service = {
 		DDMStructurePermissionSupport.class,

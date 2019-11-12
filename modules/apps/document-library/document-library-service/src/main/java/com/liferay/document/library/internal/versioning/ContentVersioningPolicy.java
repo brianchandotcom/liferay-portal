@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=100",
+	property = "service.ranking:Integer=100",
 	service = VersioningPolicy.class
 )
 public class ContentVersioningPolicy implements VersioningPolicy {

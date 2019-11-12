@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = DLStoreConvertProcess.class)
+@Component(service = DLStoreConvertProcess.class)
 public class DLPreviewableProcessorDLStoreConvertProcess
 	implements DLStoreConvertProcess {
 

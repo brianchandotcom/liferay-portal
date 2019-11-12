@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = VersioningPolicy.class)
+@Component(service = VersioningPolicy.class)
 public class MetadataVersioningPolicy implements VersioningPolicy {
 
 	@Override

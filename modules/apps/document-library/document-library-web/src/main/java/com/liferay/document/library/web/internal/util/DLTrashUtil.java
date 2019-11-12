@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = DLTrashUtil.class)
+@Component(service = DLTrashUtil.class)
 public class DLTrashUtil {
 
 	public boolean isTrashEnabled(long groupId, long repositoryId)

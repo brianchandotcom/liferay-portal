@@ -59,7 +59,7 @@ if (Boolean.getBoolean("build.bnd.print.enabled")) {
 
 buildDir = new File(rootDir.parentFile, "build")
 
-for (String gradleVersion in ["2.5", "2.14", "4.10.2"]) {
+for (String gradleVersion in ["2.5", "2.14", "4.10.2", "5.6.4"]) {
 	String gradleDistributionURL = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 	String suffix = gradleVersion.replace(".", "")
 

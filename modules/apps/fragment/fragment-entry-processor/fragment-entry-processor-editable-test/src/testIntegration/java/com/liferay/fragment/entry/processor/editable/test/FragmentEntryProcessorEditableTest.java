@@ -87,7 +87,7 @@ public class FragmentEntryProcessorEditableTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_processedHTML = _getProcessedHTML();
+		_processedHTML = _getProcessedHTML("processed_fragment_entry.html");
 
 		_originalSiteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
 
@@ -477,10 +477,6 @@ public class FragmentEntryProcessorEditableTest {
 			_getFileAsString(jsonFileName));
 
 		return jsonObject.toString();
-	}
-
-	private String _getProcessedHTML() throws IOException {
-		return _getProcessedHTML("processed_fragment_entry.html");
 	}
 
 	private String _getProcessedHTML(String fileName) throws IOException {

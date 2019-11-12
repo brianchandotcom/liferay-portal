@@ -856,7 +856,8 @@ public class JenkinsResultsParserUtil {
 		try {
 			JSONObject jobJSONObject = toJSONObject(
 				_getDistPortalJobURL(portalBranchName) +
-					"/api/json?tree=builds[number]");
+					"/api/json?tree=builds[number]",
+				false);
 
 			JSONArray buildsJSONArray = jobJSONObject.getJSONArray("builds");
 
@@ -876,7 +877,7 @@ public class JenkinsResultsParserUtil {
 
 				try {
 					Matcher matcher = distPortalBundleFileNamesPattern.matcher(
-						toString(distPortalBundlesBuildURL));
+						toString(distPortalBundlesBuildURL, false));
 
 					if (matcher.find()) {
 						return distPortalBundlesBuildURL;

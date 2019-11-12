@@ -15,6 +15,7 @@
 package com.liferay.item.selector.criteria.info.item.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
  * @author Eudaldo Alonso
@@ -47,6 +48,6 @@ public class InfoItemItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	private String _itemSubtype;
 	private String _itemType;
-	private int _status;
+	private int _status = WorkflowConstants.STATUS_APPROVED;
 
 }

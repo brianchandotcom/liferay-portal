@@ -9,11 +9,11 @@
  * distribution rights of the Software.
  */
 
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
 import Icon from '../../../shared/components/Icon.es';
 import Panel from '../../../shared/components/Panel.es';
-import Tooltip from '../../../shared/components/Tooltip.es';
 import ListView from '../../../shared/components/list/ListView.es';
 import ReloadButton from '../../../shared/components/list/ReloadButton.es';
 import PaginationBar from '../../../shared/components/pagination/PaginationBar.es';
@@ -120,15 +120,19 @@ class WorkloadByStepCard extends React.Component {
 						<span className={'mr-2'}>
 							{Liferay.Language.get('workload-by-step')}
 						</span>
-						<Tooltip
-							message={Liferay.Language.get(
-								'workload-by-step-description'
-							)}
-							position="right"
-							width="288"
-						>
-							<Icon iconName={'question-circle-full'} />
-						</Tooltip>
+						<ClayTooltipProvider>
+							<span>
+								<span
+									className="workflow-tooltip"
+									data-tooltip-align={'right'}
+									title={Liferay.Language.get(
+										'workload-by-step-description'
+									)}
+								>
+									<Icon iconName={'question-circle-full'} />
+								</span>
+							</span>
+						</ClayTooltipProvider>
 					</div>
 				</Panel.Header>
 				<Panel.Body>

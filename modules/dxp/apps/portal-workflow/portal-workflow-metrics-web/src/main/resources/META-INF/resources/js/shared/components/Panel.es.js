@@ -9,11 +9,11 @@
  * distribution rights of the Software.
  */
 
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
 import React from 'react';
 
 import Icon from './Icon.es';
-import Tooltip from './Tooltip.es';
 
 const Body = ({children, elementClasses}) => {
 	const classes = getCN('panel-body', elementClasses);
@@ -68,13 +68,17 @@ const HeaderWithOptions = props => {
 				<div className="autofit-col autofit-col-expand flex-row">
 					<span className="mr-2">{title}</span>
 
-					<Tooltip
-						message={description}
-						position={tooltipPosition}
-						width="288"
-					>
-						<Icon iconName={'question-circle-full'} />
-					</Tooltip>
+					<ClayTooltipProvider>
+						<span>
+							<span
+								className="workflow-tooltip"
+								data-tooltip-align={tooltipPosition}
+								title={description}
+							>
+								<Icon iconName={'question-circle-full'} />
+							</span>
+						</span>
+					</ClayTooltipProvider>
 				</div>
 
 				{children}

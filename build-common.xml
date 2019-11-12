@@ -1454,12 +1454,6 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 								<arg value="-m" />
 								<arg value="artifact:ignore ${artifact.name} ${artifact.version} releng" />
 							</exec>
-
-							<gradle-execute dir="${project.dir}/modules" task="lockDependencyVersion">
-								<arg value="--build-file=releng.gradle" />
-								<arg value="-PdependencyName=com.liferay.${processed.artifact.name}" />
-								<arg value="-PdependencyVersion=${artifact.version.major.minor}.0" />
-							</gradle-execute>
 						</then>
 					</if>
 

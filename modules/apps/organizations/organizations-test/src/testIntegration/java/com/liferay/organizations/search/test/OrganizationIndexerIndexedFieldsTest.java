@@ -209,8 +209,6 @@ public class OrganizationIndexerIndexedFieldsTest {
 
 		Region region = regionService.getRegion(organization.getRegionId());
 
-		String regionName = StringUtil.toLowerCase(region.getName());
-
 		Map<String, String> map = HashMapBuilder.put(
 			Field.COMPANY_ID, String.valueOf(organization.getCompanyId())
 		).put(
@@ -243,7 +241,7 @@ public class OrganizationIndexerIndexedFieldsTest {
 			"parentOrganizationId",
 			String.valueOf(organization.getParentOrganizationId())
 		).put(
-			"region", regionName
+			"region", StringUtil.toLowerCase(region.getName())
 		).build();
 
 		indexedFieldsFixture.populateUID(

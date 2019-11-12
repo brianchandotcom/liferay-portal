@@ -79,8 +79,6 @@ public class PropertiesDocBuilder {
 			propertiesFileName = propertiesFileName.substring(pos + 1);
 		}
 
-		boolean toc = GetterUtil.getBoolean(arguments.get("properties.toc"));
-
 		Map<String, Object> context = HashMapBuilder.<String, Object>put(
 			"pageTitle", title
 		).put(
@@ -88,7 +86,7 @@ public class PropertiesDocBuilder {
 		).put(
 			"sections", propertiesSections
 		).put(
-			"toc", toc
+			"toc", GetterUtil.getBoolean(arguments.get("properties.toc"))
 		).build();
 
 		try {

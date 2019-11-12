@@ -38,10 +38,8 @@ public class DefaultFacetProcessor implements FacetProcessor<SolrQuery> {
 
 	@Override
 	public Map<String, JSONObject> processFacet(Facet facet) {
-		String name = FacetUtil.getAggregationName(facet);
-
 		return LinkedHashMapBuilder.<String, JSONObject>put(
-			name, getFacetParameters(facet)
+			FacetUtil.getAggregationName(facet), getFacetParameters(facet)
 		).build();
 	}
 

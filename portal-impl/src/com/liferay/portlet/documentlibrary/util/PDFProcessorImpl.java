@@ -916,18 +916,14 @@ public class PDFProcessorImpl
 
 			float height = pdRectangle.getHeight();
 
-			int scaledHeight = (int)Math.round(widthFactor * height);
-
 			double heightFactor =
 				(double)PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT /
 					height;
 
-			int scaledWidth = (int)Math.round(heightFactor * width);
-
 			return HashMapBuilder.put(
-				"height", scaledHeight
+				"height", (int)Math.round(widthFactor * height)
 			).put(
-				"width", scaledWidth
+				"width", (int)Math.round(heightFactor * width)
 			).build();
 		}
 	}

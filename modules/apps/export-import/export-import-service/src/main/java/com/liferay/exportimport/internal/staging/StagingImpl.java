@@ -2166,15 +2166,13 @@ public class StagingImpl implements Staging {
 		String backgroundTaskName = MapUtil.getString(
 			parameterMap, "name", exportImportConfiguration.getName());
 
-		boolean privateLayout = MapUtil.getBoolean(
-			settingsMap, "privateLayout");
-
 		Map<String, Serializable> taskContextMap =
 			HashMapBuilder.<String, Serializable>put(
 				"exportImportConfigurationId",
 				exportImportConfiguration.getExportImportConfigurationId()
 			).put(
-				"privateLayout", privateLayout
+				"privateLayout",
+				MapUtil.getBoolean(settingsMap, "privateLayout")
 			).build();
 
 		BackgroundTask backgroundTask =
@@ -3273,16 +3271,15 @@ public class StagingImpl implements Staging {
 
 		User user = permissionChecker.getUser();
 
-		HttpPrincipal httpPrincipal = new HttpPrincipal(
-			remoteURL, user.getLogin(), user.getPassword(),
-			user.isPasswordEncrypted());
-
 		Map<String, Serializable> taskContextMap =
 			HashMapBuilder.<String, Serializable>put(
 				"exportImportConfigurationId",
 				exportImportConfiguration.getExportImportConfigurationId()
 			).put(
-				"httpPrincipal", httpPrincipal
+				"httpPrincipal",
+				new HttpPrincipal(
+					remoteURL, user.getLogin(), user.getPassword(),
+					user.isPasswordEncrypted())
 			).put(
 				"privateLayout", remotePrivateLayout
 			).build();

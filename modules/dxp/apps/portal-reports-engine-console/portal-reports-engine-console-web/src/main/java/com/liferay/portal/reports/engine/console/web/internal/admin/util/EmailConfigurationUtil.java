@@ -44,33 +44,23 @@ public class EmailConfigurationUtil {
 
 		Locale locale = themeDisplay.getLocale();
 
-		String fromAddress = HtmlUtil.escape(emailFromAddress);
-		String fromName = HtmlUtil.escape(emailFromName);
-
-		String toAddress = LanguageUtil.get(
-			locale, "the-address-of-the-email-recipient");
-		String toName = LanguageUtil.get(
-			locale, "the-name-of-the-email-recipient");
-
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 
-		String pageURL = LanguageUtil.get(resourceBundle, "the-report-url");
-
-		String reportName = LanguageUtil.get(
-			resourceBundle, "the-name-of-the-report");
-
 		return LinkedHashMapBuilder.put(
-			"[$FROM_ADDRESS$]", fromAddress
+			"[$FROM_ADDRESS$]", HtmlUtil.escape(emailFromAddress)
 		).put(
-			"[$FROM_NAME$]", fromName
+			"[$FROM_NAME$]", HtmlUtil.escape(emailFromName)
 		).put(
-			"[$TO_ADDRESS$]", toAddress
+			"[$TO_ADDRESS$]",
+			LanguageUtil.get(locale, "the-address-of-the-email-recipient")
 		).put(
-			"[$TO_NAME$]", toName
+			"[$TO_NAME$]",
+			LanguageUtil.get(locale, "the-name-of-the-email-recipient")
 		).put(
-			"[$PAGE_URL$]", pageURL
+			"[$PAGE_URL$]", LanguageUtil.get(resourceBundle, "the-report-url")
 		).put(
-			"[$REPORT_NAME$]", reportName
+			"[$REPORT_NAME$]",
+			LanguageUtil.get(resourceBundle, "the-name-of-the-report")
 		).put(
 			"[$PORTAL_URL$]",
 			() -> {

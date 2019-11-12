@@ -1376,31 +1376,6 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 		User user = getUser();
 
-		int batchFileMaxSize = PrefsPropsUtil.getInteger(
-			user.getCompanyId(),
-			SyncServiceConfigurationKeys.SYNC_CLIENT_BATCH_FILE_MAX_SIZE,
-			SyncServiceConfigurationValues.SYNC_CLIENT_BATCH_FILE_MAX_SIZE);
-		boolean forceSecurityMode = PrefsPropsUtil.getBoolean(
-			user.getCompanyId(),
-			SyncServiceConfigurationKeys.SYNC_CLIENT_FORCE_SECURITY_MODE,
-			SyncServiceConfigurationValues.SYNC_CLIENT_FORCE_SECURITY_MODE);
-		int maxConnections = PrefsPropsUtil.getInteger(
-			user.getCompanyId(),
-			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS,
-			SyncServiceConfigurationValues.SYNC_CLIENT_MAX_CONNECTIONS);
-		int maxDownloadRate = PrefsPropsUtil.getInteger(
-			user.getCompanyId(),
-			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_DOWNLOAD_RATE,
-			SyncServiceConfigurationValues.SYNC_CLIENT_MAX_DOWNLOAD_RATE);
-		int maxUploadRate = PrefsPropsUtil.getInteger(
-			user.getCompanyId(),
-			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_UPLOAD_RATE,
-			SyncServiceConfigurationValues.SYNC_CLIENT_MAX_UPLOAD_RATE);
-		int pollInterval = PrefsPropsUtil.getInteger(
-			user.getCompanyId(),
-			SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
-			SyncServiceConfigurationValues.SYNC_CLIENT_POLL_INTERVAL);
-
 		return HashMapBuilder.put(
 			SyncServiceConfigurationKeys.
 				SYNC_CLIENT_AUTHENTICATION_RETRY_INTERVAL,
@@ -1409,22 +1384,51 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 					SYNC_CLIENT_AUTHENTICATION_RETRY_INTERVAL)
 		).put(
 			SyncServiceConfigurationKeys.SYNC_CLIENT_BATCH_FILE_MAX_SIZE,
-			String.valueOf(batchFileMaxSize)
+			String.valueOf(
+				PrefsPropsUtil.getInteger(
+					user.getCompanyId(),
+					SyncServiceConfigurationKeys.
+						SYNC_CLIENT_BATCH_FILE_MAX_SIZE,
+					SyncServiceConfigurationValues.
+						SYNC_CLIENT_BATCH_FILE_MAX_SIZE))
 		).put(
 			SyncServiceConfigurationKeys.SYNC_CLIENT_FORCE_SECURITY_MODE,
-			String.valueOf(forceSecurityMode)
+			String.valueOf(
+				PrefsPropsUtil.getBoolean(
+					user.getCompanyId(),
+					SyncServiceConfigurationKeys.
+						SYNC_CLIENT_FORCE_SECURITY_MODE,
+					SyncServiceConfigurationValues.
+						SYNC_CLIENT_FORCE_SECURITY_MODE))
 		).put(
 			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS,
-			String.valueOf(maxConnections)
+			String.valueOf(
+				PrefsPropsUtil.getInteger(
+					user.getCompanyId(),
+					SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS,
+					SyncServiceConfigurationValues.SYNC_CLIENT_MAX_CONNECTIONS))
 		).put(
 			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_DOWNLOAD_RATE,
-			String.valueOf(maxDownloadRate)
+			String.valueOf(
+				PrefsPropsUtil.getInteger(
+					user.getCompanyId(),
+					SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_DOWNLOAD_RATE,
+					SyncServiceConfigurationValues.
+						SYNC_CLIENT_MAX_DOWNLOAD_RATE))
 		).put(
 			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_UPLOAD_RATE,
-			String.valueOf(maxUploadRate)
+			String.valueOf(
+				PrefsPropsUtil.getInteger(
+					user.getCompanyId(),
+					SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_UPLOAD_RATE,
+					SyncServiceConfigurationValues.SYNC_CLIENT_MAX_UPLOAD_RATE))
 		).put(
 			SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
-			String.valueOf(pollInterval)
+			String.valueOf(
+				PrefsPropsUtil.getInteger(
+					user.getCompanyId(),
+					SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
+					SyncServiceConfigurationValues.SYNC_CLIENT_POLL_INTERVAL))
 		).build();
 	}
 

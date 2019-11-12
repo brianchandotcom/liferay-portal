@@ -903,10 +903,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			boolean like)
 		throws Exception {
 
-		Query query = addSearchTerm(searchQuery, searchContext, field, like);
-
 		Map<String, Query> queries = HashMapBuilder.<String, Query>put(
-			field, query
+			field, addSearchTerm(searchQuery, searchContext, field, like)
 		).build();
 
 		String localizedFieldName = Field.getLocalizedName(

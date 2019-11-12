@@ -186,10 +186,8 @@ public class JournalArticleAtomCollectionProvider
 		String articleId = StringPool.BLANK;
 		boolean autoArticleId = true;
 
-		Locale locale = LocaleUtil.getDefault();
-
 		Map<Locale, String> titleMap = HashMapBuilder.put(
-			locale, title
+			LocaleUtil.getDefault(), title
 		).build();
 
 		Map<Locale, String> descriptionMap = new HashMap<>();

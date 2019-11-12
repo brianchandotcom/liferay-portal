@@ -148,11 +148,9 @@ public class SegmentsEntryDemoDataCreatorImpl
 			"com/liferay/segments/demo/data/creator/internal/dependencies",
 			"/segment", index, "/description.txt");
 
-		String description = StringUtil.read(
-			clazz.getClassLoader(), descriptionPath, false);
-
 		return HashMapBuilder.put(
-			LocaleUtil.getSiteDefault(), description
+			LocaleUtil.getSiteDefault(),
+			StringUtil.read(clazz.getClassLoader(), descriptionPath, false)
 		).build();
 	}
 
@@ -163,10 +161,9 @@ public class SegmentsEntryDemoDataCreatorImpl
 			"com/liferay/segments/demo/data/creator/internal/dependencies",
 			"/segment", index, "/name.txt");
 
-		String name = StringUtil.read(clazz.getClassLoader(), namePath, false);
-
 		return HashMapBuilder.put(
-			LocaleUtil.getSiteDefault(), name
+			LocaleUtil.getSiteDefault(),
+			StringUtil.read(clazz.getClassLoader(), namePath, false)
 		).build();
 	}
 

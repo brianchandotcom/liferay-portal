@@ -310,7 +310,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 						".description";
 
 			Map<Locale, String> descriptionMap = HashMapBuilder.put(
-				LocaleUtil.getDefault(), PropsUtil.get(key)
+				LocaleUtil.getDefault(),
+				PropsUtil.get(
+					StringBundler.concat(
+						"system.role.",
+						StringUtil.replace(
+							name, CharPool.SPACE, CharPool.PERIOD),
+						".description"))
 			).build();
 
 			int type = RoleConstants.TYPE_REGULAR;
@@ -330,7 +336,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 						".description";
 
 			Map<Locale, String> descriptionMap = HashMapBuilder.put(
-				LocaleUtil.getDefault(), PropsUtil.get(key)
+				LocaleUtil.getDefault(),
+				PropsUtil.get(
+					StringBundler.concat(
+						"system.organization.role.",
+						StringUtil.replace(
+							name, CharPool.SPACE, CharPool.PERIOD),
+						".description"))
 			).build();
 
 			int type = RoleConstants.TYPE_ORGANIZATION;
@@ -343,13 +355,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		String[] systemSiteRoles = PortalUtil.getSystemSiteRoles();
 
 		for (String name : systemSiteRoles) {
-			String key =
-				"system.site.role." +
-					StringUtil.replace(name, CharPool.SPACE, CharPool.PERIOD) +
-						".description";
-
 			Map<Locale, String> descriptionMap = HashMapBuilder.put(
-				LocaleUtil.getDefault(), PropsUtil.get(key)
+				LocaleUtil.getDefault(),
+				PropsUtil.get(
+					StringBundler.concat(
+						"system.site.role.",
+						StringUtil.replace(
+							name, CharPool.SPACE, CharPool.PERIOD),
+						".description"))
 			).build();
 
 			int type = RoleConstants.TYPE_SITE;

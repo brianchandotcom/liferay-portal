@@ -677,11 +677,9 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 	@Test
 	public void testLoadPathsMissedInputPaths() throws InterruptedException {
 		Path inputPath1 = Paths.get("inputPaths1");
-		Path mappedInputPath1 = Paths.get("mappedInputPath1");
-		Path inputPath2 = Paths.get("inputPaths2");
 
 		final Map<Path, Path> mergedPaths = HashMapBuilder.<Path, Path>put(
-			inputPath1, mappedInputPath1
+			inputPath1, Paths.get("mappedInputPath1")
 		).build();
 
 		NettyFabricWorkerExecutionChannelHandler
@@ -712,6 +710,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		builder.setRuntimeClassPath(StringPool.BLANK);
 
 		ProcessConfig processConfig = builder.build();
+
+		Path inputPath2 = Paths.get("inputPaths2");
 
 		ProcessCallable<Serializable> processCallable =
 			new LoadPathProcessCallable(

@@ -122,17 +122,15 @@ public class JournalContentPortletToolbarContributor
 
 			URLMenuItem urlMenuItem = new URLMenuItem();
 
-			String ddmStructureName = ddmStructure.getName(
-				themeDisplay.getLocale());
-
-			String title = LanguageUtil.format(
-				themeDisplay.getLocale(), "new-x", ddmStructureName);
-
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
 				"id",
 				HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset"
 			).put(
-				"title", HtmlUtil.escape(title)
+				"title",
+				HtmlUtil.escape(
+					LanguageUtil.format(
+						themeDisplay.getLocale(), "new-x",
+						ddmStructure.getName(themeDisplay.getLocale())))
 			).build();
 
 			urlMenuItem.setData(data);

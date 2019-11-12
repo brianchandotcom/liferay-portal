@@ -45,13 +45,10 @@ public class Autocomplete {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (int i = 0; (i < array.length) && (i < max); i++) {
-			String text = array[i][0];
-			String value = array[i][1];
-
 			Map<String, String> map = HashMapBuilder.put(
-				"text", text
+				"text", array[i][0]
 			).put(
-				"value", value
+				"value", array[i][1]
 			).build();
 
 			jsonArray.put(map);

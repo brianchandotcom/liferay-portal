@@ -205,11 +205,10 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 			String script = StringUtil.read(url.openStream());
 
-			String fileName = FileUtil.stripExtension(
-				FileUtil.getShortFileName(url.getPath()));
-
 			Map<Locale, String> nameMap = HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), fileName
+				LocaleUtil.getSiteDefault(),
+				FileUtil.stripExtension(
+					FileUtil.getShortFileName(url.getPath()))
 			).build();
 
 			DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
@@ -511,11 +510,10 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			String ddmTemplateKey = FileUtil.stripExtension(
 				FileUtil.getShortFileName(url.getPath()));
 
-			String ddmTemplateName = StringUtil.upperCaseFirstLetter(
-				StringUtil.replace(ddmTemplateKey, '_', ' '));
-
 			Map<Locale, String> nameMap = HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), ddmTemplateName
+				LocaleUtil.getSiteDefault(),
+				StringUtil.upperCaseFirstLetter(
+					StringUtil.replace(ddmTemplateKey, '_', ' '))
 			).build();
 
 			_ddmTemplateLocalService.addTemplate(
@@ -554,16 +552,14 @@ public class PorygonSiteInitializer implements SiteInitializer {
 				StringUtil.read(url.openStream()), StringPool.DOLLAR,
 				StringPool.DOLLAR, fileEntriesMap);
 
-			String fileName = FileUtil.stripExtension(
-				FileUtil.getShortFileName(url.getPath()));
-
-			String articleName = StringUtil.upperCaseFirstLetter(
-				CamelCaseUtil.toCamelCase(
-					StringUtil.replace(
-						fileName, CharPool.UNDERLINE, CharPool.SPACE)));
-
 			Map<Locale, String> nameMap = HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), articleName
+				LocaleUtil.getSiteDefault(),
+				StringUtil.upperCaseFirstLetter(
+					CamelCaseUtil.toCamelCase(
+						StringUtil.replace(
+							FileUtil.stripExtension(
+								FileUtil.getShortFileName(url.getPath())),
+							CharPool.UNDERLINE, CharPool.SPACE)))
 			).build();
 
 			JournalArticle article = _journalArticleLocalService.addArticle(

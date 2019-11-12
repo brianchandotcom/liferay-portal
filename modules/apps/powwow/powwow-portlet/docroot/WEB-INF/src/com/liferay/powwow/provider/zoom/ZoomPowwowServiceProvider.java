@@ -608,10 +608,8 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		Map<String, Serializable> providerTypeMetadataMap =
 			powwowMeeting.getProviderTypeMetadataMap();
 
-		String hostId = getHostId(user, powwowServer);
-
 		Map<String, String> parameterMap = HashMapBuilder.put(
-			"host_id", hostId
+			"host_id", getHostId(user, powwowServer)
 		).put(
 			"id", String.valueOf(providerTypeMetadataMap.get("id"))
 		).put(

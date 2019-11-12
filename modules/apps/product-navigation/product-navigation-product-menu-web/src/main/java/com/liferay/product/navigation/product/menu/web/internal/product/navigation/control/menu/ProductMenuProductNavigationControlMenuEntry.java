@@ -103,12 +103,11 @@ public class ProductMenuProductNavigationControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		String portletNamespace = _portal.getPortletNamespace(
-			ProductNavigationProductMenuPortletKeys.
-				PRODUCT_NAVIGATION_PRODUCT_MENU);
-
 		Map<String, String> values = HashMapBuilder.put(
-			"portletNamespace", portletNamespace
+			"portletNamespace",
+			_portal.getPortletNamespace(
+				ProductNavigationProductMenuPortletKeys.
+					PRODUCT_NAVIGATION_PRODUCT_MENU)
 		).put(
 			"title",
 			HtmlUtil.escape(LanguageUtil.get(httpServletRequest, "menu"))

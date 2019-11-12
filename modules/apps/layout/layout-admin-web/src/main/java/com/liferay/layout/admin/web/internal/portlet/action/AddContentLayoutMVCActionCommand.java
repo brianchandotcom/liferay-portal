@@ -81,10 +81,9 @@ public class AddContentLayoutMVCActionCommand
 		long parentLayoutId = ParamUtil.getLong(
 			actionRequest, "parentLayoutId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
-
 		Map<Locale, String> nameMap = HashMapBuilder.put(
-			LocaleUtil.getSiteDefault(), name
+			LocaleUtil.getSiteDefault(),
+			ParamUtil.getString(actionRequest, "name")
 		).build();
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

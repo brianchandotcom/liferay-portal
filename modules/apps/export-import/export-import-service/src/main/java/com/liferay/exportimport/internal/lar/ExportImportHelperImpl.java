@@ -244,11 +244,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			Map<String, String[]> parameterMap, String type)
 		throws Exception {
 
-		boolean exportPortletData = getExportPortletData(
-			companyId, portletId, parameterMap);
-
 		Map<String, Boolean> exportPortletControlsMap = HashMapBuilder.put(
-			PortletDataHandlerKeys.PORTLET_DATA, exportPortletData
+			PortletDataHandlerKeys.PORTLET_DATA,
+			getExportPortletData(companyId, portletId, parameterMap)
 		).build();
 
 		exportPortletControlsMap.putAll(
@@ -265,11 +263,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			ManifestSummary manifestSummary)
 		throws Exception {
 
-		boolean importCurPortletData = getImportPortletData(
-			companyId, portletId, parameterMap, portletDataElement);
-
 		Map<String, Boolean> importPortletControlsMap = HashMapBuilder.put(
-			PortletDataHandlerKeys.PORTLET_DATA, importCurPortletData
+			PortletDataHandlerKeys.PORTLET_DATA,
+			getImportPortletData(
+				companyId, portletId, parameterMap, portletDataElement)
 		).build();
 
 		importPortletControlsMap.putAll(

@@ -143,11 +143,9 @@ public class JournalArticleDemoDataCreatorImpl
 			"com/liferay/journal/demo/data/creator/internal/dependencies",
 			"/article", index, "/description.txt");
 
-		String description = StringUtil.read(
-			clazz.getClassLoader(), descriptionPath, false);
-
 		return HashMapBuilder.put(
-			LocaleUtil.getSiteDefault(), description
+			LocaleUtil.getSiteDefault(),
+			StringUtil.read(clazz.getClassLoader(), descriptionPath, false)
 		).build();
 	}
 
@@ -190,11 +188,9 @@ public class JournalArticleDemoDataCreatorImpl
 			"com/liferay/journal/demo/data/creator/internal/dependencies",
 			"/article", index, "/title.txt");
 
-		String title = StringUtil.read(
-			clazz.getClassLoader(), titlePath, false);
-
 		return HashMapBuilder.put(
-			LocaleUtil.getSiteDefault(), title
+			LocaleUtil.getSiteDefault(),
+			StringUtil.read(clazz.getClassLoader(), titlePath, false)
 		).build();
 	}
 

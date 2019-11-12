@@ -66,10 +66,9 @@ public class UpdateLayoutPrototypeMVCActionCommand
 			long layoutPrototypeId = ParamUtil.getLong(
 				actionRequest, "layoutPrototypeId");
 
-			String name = ParamUtil.getString(actionRequest, "name");
-
 			Map<Locale, String> nameMap = HashMapBuilder.put(
-				actionRequest.getLocale(), name
+				actionRequest.getLocale(),
+				ParamUtil.getString(actionRequest, "name")
 			).build();
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(

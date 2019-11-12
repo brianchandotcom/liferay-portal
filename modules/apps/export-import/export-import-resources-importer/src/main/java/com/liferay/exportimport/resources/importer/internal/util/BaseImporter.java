@@ -169,10 +169,8 @@ public abstract class BaseImporter implements Importer {
 	}
 
 	public Map<Locale, String> getTargetValueMap() {
-		Locale locale = LocaleUtil.getDefault();
-
 		return HashMapBuilder.put(
-			locale, targetValue
+			LocaleUtil.getDefault(), targetValue
 		).build();
 	}
 

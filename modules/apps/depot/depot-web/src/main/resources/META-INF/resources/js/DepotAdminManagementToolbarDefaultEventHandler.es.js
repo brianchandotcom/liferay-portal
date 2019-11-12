@@ -15,6 +15,8 @@
 import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
+import confirmDepotEntryDeletion from './confirmDepotEntryDeletion.es';
+
 class DepotAdminManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	addDepotEntry(itemData) {
 		openSimpleInputModal({
@@ -28,13 +30,7 @@ class DepotAdminManagementToolbarDefaultEventHandler extends DefaultEventHandler
 	}
 
 	deleteSelectedDepotEntries() {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'removing-a-repository-can-affect-sites-that-use-the-contents-stored-in-it.-are-you-sure-you-want-to-continue-removing-this-repository'
-				)
-			)
-		) {
+		if (confirmDepotEntryDeletion()) {
 			const form = this.one('#fm');
 
 			Liferay.Util.postForm(form, {

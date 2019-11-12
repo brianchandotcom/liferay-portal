@@ -12,16 +12,10 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
-
-import confirmDepotEntryDeletion from './confirmDepotEntryDeletion.es';
-
-class DepotEntryDropdownDefaultEventHandler extends DefaultEventHandler {
-	deleteDepotEntry(itemData) {
-		if (confirmDepotEntryDeletion()) {
-			submitForm(document.hrefFm, itemData.deleteDepotEntryURL);
-		}
-	}
+export default function confirmDepotEntryDeletion() {
+	return confirm(
+		Liferay.Language.get(
+			'removing-a-repository-can-affect-sites-that-use-the-contents-stored-in-it.-are-you-sure-you-want-to-continue-removing-this-repository'
+		)
+	);
 }
-
-export default DepotEntryDropdownDefaultEventHandler;

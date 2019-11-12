@@ -35,7 +35,9 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ExceptionRetryAcceptor;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -403,6 +405,15 @@ public class KaleoInstanceLocalServiceImpl
 	}
 
 	@Override
+	@Retry(
+		acceptor = ExceptionRetryAcceptor.class,
+		properties = {
+			@com.liferay.portal.kernel.spring.aop.Property(
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value = "org.hibernate.StaleObjectStateException"
+			)
+		}
+	)
 	public KaleoInstance updateKaleoInstance(
 			long kaleoInstanceId, long rootKaleoInstanceTokenId)
 		throws PortalException {
@@ -416,6 +427,15 @@ public class KaleoInstanceLocalServiceImpl
 	}
 
 	@Override
+	@Retry(
+		acceptor = ExceptionRetryAcceptor.class,
+		properties = {
+			@com.liferay.portal.kernel.spring.aop.Property(
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value = "org.hibernate.StaleObjectStateException"
+			)
+		}
+	)
 	public KaleoInstance updateKaleoInstance(
 			long kaleoInstanceId, Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)

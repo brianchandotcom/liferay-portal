@@ -16,6 +16,7 @@ package com.liferay.asset.list.service.impl;
 
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntrySegmentsEntryRelLocalServiceBaseImpl;
+import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -27,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo García
@@ -70,20 +72,67 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public AssetListEntrySegmentsEntryRel deleteAssetListEntrySegmentsEntryRel(
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel) {
+
+		assetListEntrySegmentsEntryRelPersistence.remove(
+			assetListEntrySegmentsEntryRel);
+
+		// Asset list entry rels
+
+		_assetListEntryAssetEntryRelPersistence.removeByA_S(
+			assetListEntrySegmentsEntryRel.getAssetListEntryId(),
+			assetListEntrySegmentsEntryRel.getSegmentsEntryId());
+
+		return assetListEntrySegmentsEntryRel;
+	}
+
+	@Override
 	public void deleteAssetListEntrySegmentsEntryRel(
 			long assetListEntryId, long segmentsEntryId)
 		throws PortalException {
 
-		assetListEntrySegmentsEntryRelPersistence.removeByA_S(
-			assetListEntryId, segmentsEntryId);
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
+			assetListEntrySegmentsEntryRelPersistence.findByA_S(
+				assetListEntryId, segmentsEntryId);
+
+		assetListEntrySegmentsEntryRelLocalService.
+			deleteAssetListEntrySegmentsEntryRel(
+				assetListEntrySegmentsEntryRel);
 	}
 
 	@Override
 	public void deleteAssetListEntrySegmentsEntryRelByAssetListEntryId(
 		long assetListEntryId) {
 
-		assetListEntrySegmentsEntryRelPersistence.removeByAssetListEntryId(
-			assetListEntryId);
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			assetListEntrySegmentsEntryRelPersistence.findByAssetListEntryId(
+				assetListEntryId);
+
+		for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
+				assetListEntrySegmentsEntryRels) {
+
+			assetListEntrySegmentsEntryRelLocalService.
+				deleteAssetListEntrySegmentsEntryRel(
+					assetListEntrySegmentsEntryRel);
+		}
+	}
+
+	@Override
+	public void deleteAssetListEntrySegmentsEntryRelBySegmentsEntryId(
+		long segmentsEntryId) {
+
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			assetListEntrySegmentsEntryRelPersistence.findBySegmentsEntryId(
+				segmentsEntryId);
+
+		for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
+				assetListEntrySegmentsEntryRels) {
+
+			assetListEntrySegmentsEntryRelLocalService.
+				deleteAssetListEntrySegmentsEntryRel(
+					assetListEntrySegmentsEntryRel);
+		}
 	}
 
 	@Override
@@ -133,5 +182,9 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 		return assetListEntrySegmentsEntryRelPersistence.update(
 			assetListEntrySegmentsEntryRel);
 	}
+
+	@Reference
+	private AssetListEntryAssetEntryRelPersistence
+		_assetListEntryAssetEntryRelPersistence;
 
 }

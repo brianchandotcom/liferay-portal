@@ -154,7 +154,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 					}
 
 				}),
-			null, null, null);
+			null, null, null, null);
 	}
 
 	@Test

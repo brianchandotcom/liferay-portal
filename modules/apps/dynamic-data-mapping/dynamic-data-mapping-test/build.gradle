@@ -30,6 +30,7 @@ dependencies {
 	testCompile project(":apps:portal-search:portal-search-test-util")
 	testCompile project(":apps:portal-template:portal-template-soy-api")
 	testCompile project(":apps:portal:portal-aop-api")
+	testCompile project(":apps:view-count:view-count-api")
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-memory")

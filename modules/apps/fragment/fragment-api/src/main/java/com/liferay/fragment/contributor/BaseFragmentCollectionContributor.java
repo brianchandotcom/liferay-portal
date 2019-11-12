@@ -104,7 +104,13 @@ public abstract class BaseFragmentCollectionContributor
 	public String getName() {
 		_initialize();
 
-		return _names.get(LocaleUtil.getDefault());
+		String name = _names.get(LocaleUtil.getDefault());
+
+		if (Validator.isNotNull(name)) {
+			return name;
+		}
+
+		return getFragmentCollectionKey();
 	}
 
 	@Override

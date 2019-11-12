@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -92,8 +91,6 @@ public class DepotAdminManagementToolbarDisplayContext
 	}
 
 	public Map<String, Object> getComponentContext() throws PortalException {
-		String cmd = Constants.DELETE;
-
 		PortletURL deleteDepotEntries =
 			liferayPortletResponse.createActionURL();
 
@@ -102,8 +99,6 @@ public class DepotAdminManagementToolbarDisplayContext
 
 		return HashMapBuilder.<String, Object>put(
 			"deleteDepotEntriesURL", deleteDepotEntries.toString()
-		).put(
-			"deleteEntriesCmd", cmd
 		).build();
 	}
 

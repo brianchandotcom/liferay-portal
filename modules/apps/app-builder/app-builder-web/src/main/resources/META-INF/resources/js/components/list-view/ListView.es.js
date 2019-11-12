@@ -87,7 +87,7 @@ export default ({
 	});
 
 	return (
-		<SearchContext.Provider value={{dispatch, state}}>
+			<SearchContext.Provider value={[query, dispatch]}>
 			<ManagementToolbar>
 				<SearchBar columns={columns} totalCount={totalCount} />
 

@@ -18,15 +18,8 @@ import lang from '../../../utils/lang.es';
 import Button from '../../button/Button.es';
 import SearchContext from './SearchContext.es';
 
-export default ({totalCount}) => {
-	const {
-		dispatch,
-		state: {
-			isLoading,
-			query: {keywords}
-		}
-	} = useContext(SearchContext);
-
+export default ({isLoading, totalCount}) => {
+	const [{keywords}, dispatch] = useContext(SearchContext);
 	const invisible = isLoading ? 'invisible' : '';
 
 	return (

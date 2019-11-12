@@ -19,19 +19,15 @@ import React, {useContext, useEffect, useState} from 'react';
 import SearchContext from './SearchContext.es';
 
 export default ({disabled}) => {
-	const {
-		dispatch,
-		state: {query}
-	} = useContext(SearchContext);
-
-	const [keywords, setKeywords] = useState('');
+	const [searchContext, dispatch] = useContext(SearchContext);
+	const [keywords, setKeywords] = useState(searchContext.keywords);
 
 	useEffect(() => {
-		setKeywords(query.keywords);
-	}, [query.keywords]);
+		setKeywords(searchContext.keywords);
+	}, [searchContext.keywords]);
 
-	const onChange = event => {
-		setKeywords(event.target.value);
+	const onChange = ({target: {value}}) => {
+		setKeywords(value);
 	};
 
 	const handleSubmit = () => {

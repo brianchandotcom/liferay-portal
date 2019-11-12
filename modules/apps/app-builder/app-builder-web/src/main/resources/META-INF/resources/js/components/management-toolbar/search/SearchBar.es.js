@@ -19,12 +19,7 @@ import SearchInput from './SearchInput.es';
 import SearchSort from './SearchSort.es';
 
 export default ({columns, totalCount}) => {
-	const {
-		state: {
-			query: {keywords}
-		}
-	} = useContext(SearchContext);
-
+	const [{keywords}] = useContext(SearchContext);
 	const disabled = keywords === '' && totalCount === 0;
 
 	return (

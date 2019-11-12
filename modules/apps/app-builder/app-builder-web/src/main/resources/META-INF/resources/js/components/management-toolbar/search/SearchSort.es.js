@@ -23,7 +23,7 @@ import SearchContext from './SearchContext.es';
 const {Group, Item, ItemList} = ClayDropDown;
 
 export default ({columns, disabled}) => {
-	const {dispatch} = useContext(SearchContext);
+	const [, dispatch] = useContext(SearchContext);
 	columns = columns.filter(column => column.sortable);
 
 	let defaultColumn = columns.find(column =>

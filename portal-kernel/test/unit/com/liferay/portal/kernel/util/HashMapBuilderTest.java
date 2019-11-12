@@ -46,6 +46,21 @@ public class HashMapBuilderTest {
 	}
 
 	@Test
+	public void testNullValues() {
+		Map<String, Object> map = HashMapBuilder.put(
+			"Hello", null
+		).build();
+
+		Assert.assertEquals(map.toString(), 1, map.size());
+
+		map = HashMapBuilder.put(
+			"Hello", () -> null
+		).build();
+
+		Assert.assertEquals(map.toString(), 0, map.size());
+	}
+
+	@Test
 	public void testUnsafeFunction() {
 		List<String> list = ListUtil.fromArray("hello  ", "  world");
 

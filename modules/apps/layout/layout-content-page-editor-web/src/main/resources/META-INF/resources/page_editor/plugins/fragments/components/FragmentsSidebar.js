@@ -67,6 +67,12 @@ export default function FragmentsSidebar() {
 								{fragmentCollection.fragmentEntries.map(
 									fragmentEntry => (
 										<FragmentCard
+											fragmentGroupId={
+												fragmentEntry.groupId
+											}
+											fragmentKey={
+												fragmentEntry.fragmentEntryKey
+											}
 											imagePreviewURL={
 												fragmentEntry.imagePreviewURL
 											}

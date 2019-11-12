@@ -80,7 +80,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 							<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
 						</c:when>
 						<c:otherwise>
-							<div class="sticker sticker-default">
+							<div class="sticker sticker-secondary">
 								<aui:icon image="<%= group.getIconCssClass() %>" markupView="lexicon" />
 							</div>
 						</c:otherwise>

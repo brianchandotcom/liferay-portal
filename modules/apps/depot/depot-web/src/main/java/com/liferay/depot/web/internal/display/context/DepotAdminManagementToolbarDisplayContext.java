@@ -168,11 +168,6 @@ public class DepotAdminManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getSearchContainerId() {
-		return "repositories";
-	}
-
-	@Override
 	public Boolean isShowCreationMenu() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

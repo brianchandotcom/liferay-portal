@@ -24,7 +24,6 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 
 <clay:management-toolbar
 	displayContext="<%= depotAdminManagementToolbarDisplayContext %>"
-	searchContainerId="<%= depotAdminManagementToolbarDisplayContext.getSearchContainerId() %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right">
@@ -35,6 +34,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<liferay-ui:search-container
+				id="<%= depotAdminDisplayContext.getSearchContainerId() %>"
 				searchContainer="<%= depotAdminDisplayContext.getGroupSearch() %>"
 			>
 				<liferay-ui:search-container-row

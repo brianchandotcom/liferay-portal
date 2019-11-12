@@ -69,6 +69,11 @@ public class StagedAssetLinkImpl implements StagedAssetLink {
 	}
 
 	@Override
+	public long getCtCollectionId() {
+		return _assetLink.getCtCollectionId();
+	}
+
+	@Override
 	public String getEntry1ClassName() {
 		if (Validator.isNotNull(_entry1ClassName)) {
 			return _entry1ClassName;
@@ -259,6 +264,11 @@ public class StagedAssetLinkImpl implements StagedAssetLink {
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -222,7 +222,7 @@ public class AssetListEntryLocalServiceImpl
 
 		assetListEntryPersistence.update(assetListEntry);
 
-		// Asset list segments entry rel
+		// Asset list entry rels
 
 		_assetListEntryAssetEntryRelLocalService.
 			deleteAssetListEntryAssetEntryRel(

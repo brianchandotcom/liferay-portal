@@ -185,7 +185,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		ActionRequest actionRequest,
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
-		guardDuplicateAlias(actionRequest, editRankingMVCActionRequest);
+		guardDuplicateAliases(actionRequest, editRankingMVCActionRequest);
 		guardDuplicateQueryString(actionRequest, editRankingMVCActionRequest);
 
 		String id = editRankingMVCActionRequest.getResultsRankingUid();
@@ -281,40 +281,22 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		return portletURL.toString();
 	}
 
-	protected void guardDuplicateAlias(
+	protected void guardDuplicateAliases(
 		ActionRequest actionRequest,
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
-		boolean inactive = ParamUtil.getBoolean(actionRequest, "inactive");
-
-		if (_resultRankingsConfiguration.allowDuplicateQueryStrings() ||
-			inactive) {
-
-			return;
-		}
-
-		if (_isDuplicateAlias(actionRequest, editRankingMVCActionRequest)) {
-			throw new DuplicateQueryStringException();
-		}
+		_guardDuplicateQueryStrings(
+			actionRequest, editRankingMVCActionRequest,
+			_getAliases(editRankingMVCActionRequest));
 	}
 
 	protected void guardDuplicateQueryString(
 		ActionRequest actionRequest,
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
-		boolean inactive = ParamUtil.getBoolean(actionRequest, "inactive");
-
-		if (_resultRankingsConfiguration.allowDuplicateQueryStrings() ||
-			inactive) {
-
-			return;
-		}
-
-		if (_isDuplicateQueryString(
-				actionRequest, editRankingMVCActionRequest)) {
-
-			throw new DuplicateQueryStringException();
-		}
+		_guardDuplicateQueryStrings(
+			actionRequest, editRankingMVCActionRequest,
+			Arrays.asList(editRankingMVCActionRequest.getQueryString()));
 	}
 
 	protected void update(
@@ -367,6 +349,29 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		return newStrings;
 	}
 
+	private boolean _detectedDuplicateQueryStrings(
+		ActionRequest actionRequest,
+		EditRankingMVCActionRequest editRankingMVCActionRequest,
+		List<String> queryStrings) {
+
+		String index = _getIndexName(
+			actionRequest, editRankingMVCActionRequest);
+
+		String resultsRankingUid = ParamUtil.getString(
+			actionRequest, "resultsRankingUid");
+
+		if (duplicateQueryStringsDetector.detect(
+				duplicateQueryStringsDetector.builder().index(
+					index).queryStrings(
+						queryStrings).unlessRankingId(
+							resultsRankingUid).build())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private List<String> _getAliases(
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
@@ -417,51 +422,24 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		);
 	}
 
-	private boolean _isDuplicateAlias(
+	private void _guardDuplicateQueryStrings(
 		ActionRequest actionRequest,
-		EditRankingMVCActionRequest editRankingMVCActionRequest) {
+		EditRankingMVCActionRequest editRankingMVCActionRequest,
+		List<String> queryStrings) {
 
-		String index = _getIndexName(
-			actionRequest, editRankingMVCActionRequest);
+		boolean inactive = ParamUtil.getBoolean(actionRequest, "inactive");
 
-		List<String> aliases = _getAliases(editRankingMVCActionRequest);
+		if (_resultRankingsConfiguration.allowDuplicateQueryStrings() ||
+			inactive) {
 
-		String resultsRankingUid = ParamUtil.getString(
-			actionRequest, "resultsRankingUid");
-
-		if (duplicateQueryStringsDetector.detect(
-				duplicateQueryStringsDetector.builder().index(
-					index).queryStrings(
-						aliases).unlessRankingId(
-							resultsRankingUid).build())) {
-
-			return true;
+			return;
 		}
 
-		return false;
-	}
+		if (_detectedDuplicateQueryStrings(
+				actionRequest, editRankingMVCActionRequest, queryStrings)) {
 
-	private boolean _isDuplicateQueryString(
-		ActionRequest actionRequest,
-		EditRankingMVCActionRequest editRankingMVCActionRequest) {
-
-		String index = _getIndexName(
-			actionRequest, editRankingMVCActionRequest);
-
-		String resultsRankingUid = ParamUtil.getString(
-			actionRequest, "resultsRankingUid");
-
-		if (duplicateQueryStringsDetector.detect(
-				duplicateQueryStringsDetector.builder().index(
-					index).queryStrings(
-						Arrays.asList(
-							editRankingMVCActionRequest.getQueryString())).
-								unlessRankingId(resultsRankingUid).build())) {
-
-			return true;
+			throw new DuplicateQueryStringException();
 		}
-
-		return false;
 	}
 
 	private boolean _isInactive(

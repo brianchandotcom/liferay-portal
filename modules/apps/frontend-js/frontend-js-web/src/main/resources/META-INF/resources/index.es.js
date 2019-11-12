@@ -28,12 +28,6 @@ export {
 	default as objectToFormData
 } from './liferay/util/form/object_to_form_data.es.js';
 
-// KeyboardFocus API
-
-export {
-	default as KeyboardFocusManager
-} from './liferay/keyboard-focus/KeyboardFocusManager.es';
-
 // Liferay API
 
 export {

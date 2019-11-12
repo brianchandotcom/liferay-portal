@@ -3854,9 +3854,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		uploadArchivesTask.dependsOn(publishNodeModuleTasks);
 
+		if ((GradleUtil.getRootDir(project, ".lfrbuild-master-only") != null) &&
+			!GradlePluginsDefaultsUtil.isSnapshot(project)) {
+
+			uploadArchivesTask.finalizedBy(updateFileVersionsTask);
+		}
+
 		if (!GradlePluginsDefaultsUtil.isSnapshot(project)) {
-			uploadArchivesTask.finalizedBy(
-				updateFileVersionsTask, updateVersionTask);
+			uploadArchivesTask.finalizedBy(updateVersionTask);
 		}
 	}
 

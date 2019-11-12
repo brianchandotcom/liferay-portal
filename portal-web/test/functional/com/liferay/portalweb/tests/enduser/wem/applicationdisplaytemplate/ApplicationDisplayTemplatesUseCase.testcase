@@ -651,6 +651,7 @@ definition {
 
 	@priority = "3"
 	test ADTWiki {
+		property app.server.types = "tomcat,websphere";
 		property testray.component.names = "Content and Application Templates,Wiki";
 
 		JSONLayout.addWidgetToPublicLayout(

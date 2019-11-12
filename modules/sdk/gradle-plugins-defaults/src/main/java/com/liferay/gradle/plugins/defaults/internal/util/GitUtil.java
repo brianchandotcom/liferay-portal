@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.defaults.internal.util;
 import com.liferay.gradle.util.OSDetector;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
@@ -72,7 +73,9 @@ public class GitUtil {
 			});
 	}
 
-	public static String getGitResult(Project project, final Object... args) {
+	public static String getGitResult(
+		Project project, final File workingDir, final Object... args) {
+
 		final ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
@@ -84,6 +87,7 @@ public class GitUtil {
 					execSpec.args(args);
 					execSpec.setExecutable("git");
 					execSpec.setStandardOutput(byteArrayOutputStream);
+					execSpec.setWorkingDir(workingDir);
 				}
 
 			});
@@ -91,6 +95,10 @@ public class GitUtil {
 		String result = byteArrayOutputStream.toString();
 
 		return result.trim();
+	}
+
+	public static String getGitResult(Project project, final Object... args) {
+		return getGitResult(project, project.getProjectDir(), args);
 	}
 
 }

@@ -480,7 +480,7 @@ public class FragmentEntryProcessorEditableTest {
 	}
 
 	private String _getProcessedHTML() throws IOException {
-		return _getFileAsString("processed_fragment_entry.html");
+		return _getProcessedHTML("processed_fragment_entry.html");
 	}
 
 	private String _getProcessedHTML(String fileName) throws IOException {

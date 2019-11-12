@@ -559,8 +559,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerfile.instruction(
 			"COPY --chown=liferay:liferay deploy /etc/liferay/mount/deploy");
 		dockerfile.instruction(
-			"COPY --chown=liferay:liferay scripts /etc/liferay/mount/scripts");
-		dockerfile.instruction(
 			"COPY --chown=liferay:liferay " + _LIFERAY_CONFIGS_DIR_NAME +
 				" /home/liferay/configs");
 		dockerfile.instruction(
@@ -588,16 +586,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						}
 
 						File file = new File(dir, ".touch");
-
-						file.createNewFile();
-
-						dir = new File(destinationDir, "scripts");
-
-						if (!dir.exists()) {
-							dir.mkdirs();
-						}
-
-						file = new File(dir, ".touch");
 
 						file.createNewFile();
 

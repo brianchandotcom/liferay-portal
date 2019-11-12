@@ -23,6 +23,8 @@ function copy_and_remove_scripts {
 	echo ""
 	echo "[LIFERAY] ... into ${LIFERAY_MOUNT_DIR}/scripts"
 
+	mkdir ${LIFERAY_MOUNT_DIR}/scripts
+
 	cp -r /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts/* ${LIFERAY_MOUNT_DIR}/scripts
 
 	rm -rf /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts

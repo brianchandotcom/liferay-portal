@@ -65,10 +65,12 @@ public class DepotAdminDisplayContext {
 		return "icon";
 	}
 
-	public DepotEntryVerticalCard getDepotEntryVerticalCard(Group curGroup) {
+	public DepotEntryVerticalCard getDepotEntryVerticalCard(Group group) {
+		GroupSearch groupSearch = getGroupSearch();
+
 		return new DepotEntryVerticalCard(
-			curGroup, _liferayPortletRequest, _liferayPortletResponse,
-			getGroupSearch().getRowChecker(), _groupURLProvider);
+			group, _groupURLProvider, _liferayPortletRequest,
+			_liferayPortletResponse, groupSearch.getRowChecker());
 	}
 
 	public String getDisplayStyle() {

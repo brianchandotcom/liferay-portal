@@ -22,7 +22,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -40,17 +39,17 @@ public class DepotEntryVerticalCard
 	extends BaseBaseClayCard implements VerticalCard {
 
 	public DepotEntryVerticalCard(
-		BaseModel<?> baseModel, LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, RowChecker rowChecker,
-		GroupURLProvider groupURLProvider) {
+		Group group, GroupURLProvider groupURLProvider,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, RowChecker rowChecker) {
 
-		super(baseModel, rowChecker);
+		super(group, rowChecker);
 
+		_group = group;
+		_groupURLProvider = groupURLProvider;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_group = (Group)baseModel;
-		_groupURLProvider = groupURLProvider;
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

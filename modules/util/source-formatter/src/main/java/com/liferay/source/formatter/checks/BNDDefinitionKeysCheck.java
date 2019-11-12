@@ -75,6 +75,11 @@ public class BNDDefinitionKeysCheck extends DefinitionKeysCheck {
 
 		String definitionKey = matcher.group(1);
 
+		if (definitionKey.contains(StringPool.PERIOD)) {
+			definitionKey = StringUtil.extractFirst(
+				definitionKey, StringPool.PERIOD);
+		}
+
 		String lowerCaseDefinitionKey = StringUtil.toLowerCase(definitionKey);
 
 		String correctKey = null;
@@ -121,7 +126,7 @@ public class BNDDefinitionKeysCheck extends DefinitionKeysCheck {
 	}
 
 	private static final Pattern _definitionKeyPattern = Pattern.compile(
-		"([A-Za-z-]+?)[:=]");
+		"([A-Za-z-.]+?)[:=]");
 
 	private static class DefinitionComparator implements Comparator<String> {
 

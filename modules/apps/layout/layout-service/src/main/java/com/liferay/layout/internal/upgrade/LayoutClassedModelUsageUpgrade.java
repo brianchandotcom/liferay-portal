@@ -17,6 +17,7 @@ package com.liferay.layout.internal.upgrade;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.layout.internal.upgrade.v1_0_0.UpgradeLayoutClassedModelUsage;
+import com.liferay.layout.internal.upgrade.v1_0_0.UpgradeLayoutPermissions;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,7 +34,8 @@ public class LayoutClassedModelUsageUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"0.0.0", "1.0.0",
 			new UpgradeLayoutClassedModelUsage(
-				_assetEntryLocalService, _assetEntryUsageLocalService));
+				_assetEntryLocalService, _assetEntryUsageLocalService),
+			new UpgradeLayoutPermissions());
 	}
 
 	@Reference

@@ -27,6 +27,8 @@
 		"metal-throttle": "3.0.1",
 		"prop-types": "15.7.2",
 		"react": "16.9.0",
+		"react-dnd": "7.7.0",
+		"react-dnd-html5-backend": "7.7.0",
 		"react-dom": "16.9.0"
 	},
 	"name": "layout-content-page-editor-web",

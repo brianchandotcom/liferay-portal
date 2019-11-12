@@ -13,6 +13,8 @@
  */
 
 import React from 'react';
+import {DragDropContextProvider} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import useThunk from '../core/hooks/useThunk';
 import App from './components/App';
@@ -49,5 +51,9 @@ function Container({data}) {
 }
 
 export default function(data) {
-	return <Container data={data} />;
+	return (
+		<DragDropContextProvider backend={HTML5Backend}>
+			<Container data={data} />;
+		</DragDropContextProvider>
+	);
 }

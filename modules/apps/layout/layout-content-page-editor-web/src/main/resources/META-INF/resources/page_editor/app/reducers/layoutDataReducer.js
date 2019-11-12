@@ -116,7 +116,20 @@ export default function layoutDataReducer(state, action) {
 					items: removeItemReducer(state.layoutData.items, action)
 				}
 			};
+			break;
 
+		case TYPES.ADD_FRAGMENT_ENTRY_LINK_AND_ITEM:
+			nextState = {
+				...state,
+				fragmentEntryLinks: {
+					...state.fragmentEntryLinks,
+					[action.fragmentEntryLinkId]: action.fragmentEntryLink
+				},
+				layoutData: {
+					...state.layoutData,
+					items: addItemReducer(state.layoutData.items, action)
+				}
+			};
 			break;
 
 		default:

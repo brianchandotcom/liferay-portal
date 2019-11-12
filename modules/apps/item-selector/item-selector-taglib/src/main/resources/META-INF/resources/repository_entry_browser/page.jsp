@@ -361,7 +361,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 												>
 													<liferay-frontend:vertical-card-sticker-bottom>
 														<liferay-document-library:mime-type-sticker
-															cssClass="sticker-bottom sticker-secondary"
+															cssClass="sticker-bottom-left sticker-secondary"
 															fileVersion="<%= latestFileVersion %>"
 														/>
 													</liferay-frontend:vertical-card-sticker-bottom>

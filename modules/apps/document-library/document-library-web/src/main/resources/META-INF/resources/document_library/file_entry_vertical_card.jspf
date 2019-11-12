@@ -16,7 +16,7 @@
 
 <liferay-frontend:vertical-card-sticker-bottom>
 	<liferay-document-library:mime-type-sticker
-		cssClass="sticker-bottom"
+		cssClass="sticker-bottom-left"
 		fileVersion="<%= latestFileVersion %>"
 	/>
 </liferay-frontend:vertical-card-sticker-bottom>

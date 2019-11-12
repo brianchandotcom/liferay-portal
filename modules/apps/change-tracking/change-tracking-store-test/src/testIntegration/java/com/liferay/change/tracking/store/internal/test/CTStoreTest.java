@@ -1020,7 +1020,8 @@ public class CTStoreTest {
 	}
 
 	private CTCollection _createCTCollection() throws PortalException {
-		long ctCollectionId = _counterLocalService.increment();
+		long ctCollectionId = _counterLocalService.increment(
+			CTCollection.class.getName());
 
 		CTCollection ctCollection =
 			_ctCollectionLocalService.createCTCollection(ctCollectionId);

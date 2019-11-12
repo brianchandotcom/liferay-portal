@@ -81,7 +81,8 @@ public class LayoutCTTest {
 
 	@Before
 	public void setUp() throws Exception {
-		long ctCollectionId = _counterLocalService.increment();
+		long ctCollectionId = _counterLocalService.increment(
+			CTCollection.class.getName());
 
 		_ctCollection = _ctCollectionLocalService.createCTCollection(
 			ctCollectionId);

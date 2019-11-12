@@ -109,6 +109,12 @@ writeReleases {
 
 		lines.sort()
 
+		if (!releasesTxtFile.exists()) {
+			mkdir releasesTxtFile.getParentFile()
+
+			releasesTxtFile.createNewFile()
+		}
+
 		releasesTxtFile.setText lines.join('\n'), "UTF-8"
 	}
 }

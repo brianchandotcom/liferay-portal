@@ -280,9 +280,7 @@ definition {
 	@priority = "5"
 	test RestoreAndChangeConfigurationFragmentToContentPage {
 
-		// Ignore test from acceptance until LRQA-53261 resolved
-
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.html");

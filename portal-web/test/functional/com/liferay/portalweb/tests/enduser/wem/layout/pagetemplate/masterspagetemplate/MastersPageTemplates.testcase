@@ -29,6 +29,20 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-102208. As a master pages administrator I can duplicate a masters template"
+	@priority = "5"
+	test CanDuplicateMastersPageTemplate {
+		PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+
+		PageTemplatesAdmin.addMastersPageTemplate(pageTemplateName = "Masters Template Page Name");
+
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Make a Copy",
+			pageTemplateName = "Masters Template Page Name");
+
+		PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Masters Template Page Name (Copy)");
+	}
+
 	@description = "This is for LPS-103687. Validate if the Blank page template can not be deleted."
 	@priority = "5"
 	test CannotDeleteBlankPageTemplate {

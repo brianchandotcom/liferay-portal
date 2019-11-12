@@ -82,13 +82,6 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public DepotEntry getDepotEntryByGroupId(long groupId)
-		throws PortalException {
-
-		return depotEntryPersistence.findByGroupId(groupId);
-	}
-
-	@Override
 	public DepotEntry updateDepotEntry(
 			long depotEntryId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap,

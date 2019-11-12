@@ -38,9 +38,18 @@ public interface WorkflowDefinitionManager {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getActiveWorkflowDefinitionsCount(long)}
+	 */
+	@Deprecated
 	public int getActiveWorkflowDefinitionCount(long companyId)
 		throws WorkflowException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public int getActiveWorkflowDefinitionCount(long companyId, String name)
 		throws WorkflowException;
 
@@ -54,14 +63,14 @@ public interface WorkflowDefinitionManager {
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException;
 
-	public default WorkflowDefinition getLatestWorkflowDefinition(
-			long companyId, String name)
+	public default int getActiveWorkflowDefinitionsCount(long companyId)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
 	}
 
-	public default int getLatestWorkflowDefinitionCount(long companyId)
+	public default WorkflowDefinition getLatestWorkflowDefinition(
+			long companyId, String name)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
@@ -70,6 +79,12 @@ public interface WorkflowDefinitionManager {
 	public default List<WorkflowDefinition> getLatestWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public default int getLatestWorkflowDefinitionsCount(long companyId)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
@@ -86,6 +101,11 @@ public interface WorkflowDefinitionManager {
 	public int getWorkflowDefinitionCount(long companyId)
 		throws WorkflowException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getWorkflowDefinitionsCount(long, String)}
+	 */
+	@Deprecated
 	public int getWorkflowDefinitionCount(long companyId, String name)
 		throws WorkflowException;
 
@@ -102,6 +122,12 @@ public interface WorkflowDefinitionManager {
 			long companyId, String name, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException;
+
+	public default int getWorkflowDefinitionsCount(long companyId, String name)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Saves a workflow definition without activating it or validating its data.

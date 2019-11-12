@@ -12,11 +12,11 @@
  * details.
  */
 
-import {Treeview} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import templates from './CardsTreeview.soy';
+import Treeview from './Treeview.es';
 
 /**
  * CardsTreeview

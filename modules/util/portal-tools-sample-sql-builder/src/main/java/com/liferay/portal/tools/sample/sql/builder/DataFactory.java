@@ -4571,6 +4571,9 @@ public class DataFactory {
 				if (name.endsWith(StringPool.UNDERLINE)) {
 					name = name.substring(0, name.length() - 1);
 				}
+				else if (name.equals("LPageTemplateStructureRelId")) {
+					name = "LayoutPageTemplateStructureRelId";
+				}
 
 				int type = (int)tableColumn[1];
 
@@ -4601,12 +4604,6 @@ public class DataFactory {
 					sb.append(method.invoke(baseModel));
 				}
 				else {
-					if (StringUtil.equals(
-							name, "LPageTemplateStructureRelId")) {
-
-						name = "LayoutPageTemplateStructureRelId";
-					}
-
 					Method method = clazz.getMethod("get".concat(name));
 
 					sb.append(method.invoke(baseModel));

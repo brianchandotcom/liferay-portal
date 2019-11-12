@@ -51,6 +51,20 @@ definition {
 			value1 = "A page template entry with that name already exists.");
 	}
 
+	macro addMastersPageTemplate {
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "${pageTemplateName}");
+
+		Button.clickSave();
+
+		PageEditor.addFragment(
+			collectionName = "Drop Zone",
+			fragmentName = "Drop Zone Component");
+
+		PageEditor.clickPublish();
+	}
+
 	macro addPageTemplate {
 		PageTemplatesAdmin._addPageTemplate(
 			menuItem = "${menuItem}",

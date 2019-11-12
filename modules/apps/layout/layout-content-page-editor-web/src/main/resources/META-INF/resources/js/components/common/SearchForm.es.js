@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const SearchForm = ({onChange, value}) => (
-	<form className="mb-3" role="search">
+	<form className="mb-3" role="search" onSubmit={event => event.preventDefault()}>
 		<div className="input-group">
 			<div className="input-group-item">
 				<label className="sr-only" htmlFor="searchInput">

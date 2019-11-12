@@ -22,6 +22,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
@@ -30,6 +31,7 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -159,6 +161,15 @@ public class FragmentCollectionContributorTest {
 		@Override
 		public String getName() {
 			return "Test Fragment Collection Contributor";
+		}
+
+		@Override
+		public Map<Locale, String> getNames() {
+			return new HashMap<Locale, String>() {
+				{
+					put(LocaleUtil.getSiteDefault(), getName());
+				}
+			};
 		}
 
 		private FragmentEntry _getFragmentEntry(String key, int type) {

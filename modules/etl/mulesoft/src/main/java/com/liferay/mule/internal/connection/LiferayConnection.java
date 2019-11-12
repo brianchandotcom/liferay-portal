@@ -189,9 +189,9 @@ public final class LiferayConnection {
 	private String _getServerBaseURL(String openApiSpecPath)
 		throws ConnectionException {
 
-		OASURLParser oasURLParser = new OASURLParser(openApiSpecPath);
-
 		try {
+			OASURLParser oasURLParser = new OASURLParser(openApiSpecPath);
+
 			return oasURLParser.getServerBaseURL();
 		}
 		catch (MalformedURLException murle) {

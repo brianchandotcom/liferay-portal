@@ -24,11 +24,22 @@ import java.util.regex.Pattern;
  */
 public class OASURLParser {
 
-	public OASURLParser(String oasURL) {
-		_oasURL = oasURL;
+	public OASURLParser(String oasURL) throws MalformedURLException {
+		Matcher matcher = _oasURLPattern.matcher(oasURL);
+
+		if (!matcher.matches()) {
+			throw new MalformedURLException(
+				"Unable to parse OpenAPI specification endpoint URL: " +
+					oasURL);
+		}
+
+		_host = matcher.group(2);
+		_jaxRSAppBase = matcher.group(4);
+		_port = matcher.group(3);
+		_scheme = matcher.group(1);
 	}
 
-	public String getAuthorityWithScheme() throws MalformedURLException {
+	public String getAuthorityWithScheme() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(getScheme());
@@ -39,23 +50,23 @@ public class OASURLParser {
 		return sb.toString();
 	}
 
-	public String getHost() throws MalformedURLException {
-		return _getGroup(2);
+	public String getHost() {
+		return _host;
 	}
 
-	public String getJaxRSAppBase() throws MalformedURLException {
-		return _getGroup(4);
+	public String getJaxRSAppBase() {
+		return _jaxRSAppBase;
 	}
 
-	public String getPort() throws MalformedURLException {
-		return _getGroup(3);
+	public String getPort() {
+		return _port;
 	}
 
-	public String getScheme() throws MalformedURLException {
-		return _getGroup(1);
+	public String getScheme() {
+		return _scheme;
 	}
 
-	public String getServerBaseURL() throws MalformedURLException {
+	public String getServerBaseURL() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(getAuthorityWithScheme());
@@ -65,21 +76,12 @@ public class OASURLParser {
 		return sb.toString();
 	}
 
-	private String _getGroup(int group) throws MalformedURLException {
-		Matcher matcher = _oasURLPattern.matcher(_oasURL);
-
-		if (!matcher.matches()) {
-			throw new MalformedURLException(
-				"Unable to parse OpenAPI specification endpoint URL: " +
-					_oasURL);
-		}
-
-		return matcher.group(group);
-	}
-
 	private static final Pattern _oasURLPattern = Pattern.compile(
 		"(.*)://(.+)(:\\d+)/o/(.+)/v(.+)/openapi\\.(yaml|json)");
 
-	private final String _oasURL;
+	private final String _host;
+	private final String _jaxRSAppBase;
+	private final String _port;
+	private final String _scheme;
 
 }

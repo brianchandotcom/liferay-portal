@@ -19,10 +19,10 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
+ * @author     Carlos Sierra Andrés
  * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.saml.opensaml.integration.internal.transport.
  *             configuration.HttpClientFactoryConfiguration}
- * @author Carlos Sierra Andrés
  */
 @Deprecated
 @ExtendedObjectClassDefinition(category = "sso")

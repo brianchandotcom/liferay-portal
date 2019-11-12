@@ -28,12 +28,12 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 public class FriendlyURLExportImportPathUtil {
 
 	/**
-	 * Returns a model path based on the portlet data context and
-	 * friendly url entry.
+	 * Returns a model path based on the portlet data context and friendly url
+	 * entry.
 	 *
-	 * @param portletDataContext the context of the current export/import
-	 *        process
-	 * @param friendlyURLEntry the friendly url entry the path is needed for
+	 * @param  portletDataContext the context of the current export/import
+	 *         process
+	 * @param  friendlyURLEntry the friendly url entry the path is needed for
 	 * @return a model path for the friendly url entry
 	 * @review
 	 */

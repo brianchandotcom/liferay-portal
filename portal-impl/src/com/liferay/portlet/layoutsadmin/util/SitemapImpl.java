@@ -48,9 +48,10 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @author Jorge Ferrer
- * @author Vilmos Papp
- * @deprecated As of Mueller (7.2.x), replaced by {@link com.liferay.layout.internal.util.SitemapImpl}
+ * @author     Jorge Ferrer
+ * @author     Vilmos Papp
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.layout.internal.util.SitemapImpl}
  */
 @Deprecated
 public class SitemapImpl implements Sitemap {

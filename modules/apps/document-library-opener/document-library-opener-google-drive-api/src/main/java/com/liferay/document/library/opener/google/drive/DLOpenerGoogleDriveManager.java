@@ -31,7 +31,7 @@ import java.io.IOException;
  * DLOpenerGoogleDriveFileReference}.
  * </p>
  *
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated
@@ -172,8 +172,8 @@ public interface DLOpenerGoogleDriveManager {
 		throws PortalException;
 
 	/**
-	 * Sets an authorization token. This method should be used to skip the
-	 * OAuth 2 authorization flow with Google Drive if a valid token is already
+	 * Sets an authorization token. This method should be used to skip the OAuth
+	 * 2 authorization flow with Google Drive if a valid token is already
 	 * available.
 	 *
 	 * @param  companyId

@@ -22,8 +22,9 @@ import com.liferay.portal.kernel.xml.Element;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Eduardo García
- * @deprecated As of Mueller (7.2.x), replaced by {@link com.liferay.layout.admin.kernel.util.SitemapURLProvider}
+ * @author     Eduardo García
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.layout.admin.kernel.util.SitemapURLProvider}
  */
 @Deprecated
 @ProviderType

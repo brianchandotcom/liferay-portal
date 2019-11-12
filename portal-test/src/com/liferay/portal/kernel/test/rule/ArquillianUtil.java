@@ -19,7 +19,7 @@ import org.junit.runner.RunWith;
 import org.junit.runner.Runner;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

@@ -20,7 +20,7 @@ import com.liferay.taglib.util.IncludeTag;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author     Brian Wing Shun Chan
+ * @author Brian Wing Shun Chan
  */
 public class SearchFormTag<R> extends IncludeTag {
 

@@ -31,8 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Provides a complete implementation of {@link
- * JSPackage}.
+ * Provides a complete implementation of {@link JSPackage}.
  *
  * @author Iván Zaera
  */

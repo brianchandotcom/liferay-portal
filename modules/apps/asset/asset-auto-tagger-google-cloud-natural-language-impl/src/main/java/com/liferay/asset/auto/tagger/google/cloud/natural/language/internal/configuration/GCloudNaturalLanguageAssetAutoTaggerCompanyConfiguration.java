@@ -95,8 +95,8 @@ public interface GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration {
 	public float salience();
 
 	/**
-	 * Sets the class names to enable auto tagging of documents using the
-	 * Google Cloud Natural Language API.
+	 * Sets the class names to enable auto tagging of documents using the Google
+	 * Cloud Natural Language API.
 	 *
 	 * @review
 	 */

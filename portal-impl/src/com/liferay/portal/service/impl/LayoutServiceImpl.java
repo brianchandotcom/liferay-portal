@@ -167,40 +167,44 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * etc.
 	 * </p>
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @param  parentLayoutId the layout ID of the parent layout (optionally
-	 *         {@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
-	 * @param  classNameId the class name ID of the entity
-	 * @param  classPK the primary key of the entity
-	 * @param  localeNamesMap the layout's locales and localized names
-	 * @param  localeTitlesMap the layout's locales and localized titles
-	 * @param  descriptionMap the layout's locales and localized descriptions
-	 * @param  keywordsMap the layout's locales and localized keywords
-	 * @param  robotsMap the layout's locales and localized robots
-	 * @param  type the layout's type (optionally {@link
-	 *         LayoutConstants#TYPE_PORTLET}). The possible types can be found
-	 *         in {@link LayoutConstants}.
-	 * @param  typeSettings the settings to load the unicode properties object.
-	 *         See {@link com.liferay.portal.kernel.util.UnicodeProperties
-	 *         #fastLoad(String)}.
-	 * @param  hidden whether the layout is hidden
-	 * @param  system whether the layout is system
-	 * @param  friendlyURLMap the layout's locales and localized friendly URLs.
-	 *         To see how the URL is normalized when accessed, see {@link
-	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
-	 *         String)}.
-	 * @param  serviceContext the service context to be applied. Must set the
-	 *         UUID for the layout. Can set the creation date, modification
-	 *         date, and expando bridge attributes for the layout. For layouts
-	 *         that belong to a layout set prototype, an attribute named
-	 *         <code>layoutUpdateable</code> can be used to specify whether site
-	 *         administrators can modify this page within their site.
-	 * @return the layout
-	 * @throws PortalException if a portal exception occurred
+	 * @param      groupId the primary key of the group
+	 * @param      privateLayout whether the layout is private to the group
+	 * @param      parentLayoutId the layout ID of the parent layout (optionally
+	 *             {@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	 * @param      classNameId the class name ID of the entity
+	 * @param      classPK the primary key of the entity
+	 * @param      localeNamesMap the layout's locales and localized names
+	 * @param      localeTitlesMap the layout's locales and localized titles
+	 * @param      descriptionMap the layout's locales and localized
+	 *             descriptions
+	 * @param      keywordsMap the layout's locales and localized keywords
+	 * @param      robotsMap the layout's locales and localized robots
+	 * @param      type the layout's type (optionally {@link
+	 *             LayoutConstants#TYPE_PORTLET}). The possible types can be
+	 *             found in {@link LayoutConstants}.
+	 * @param      typeSettings the settings to load the unicode properties
+	 *             object. See {@link
+	 *             com.liferay.portal.kernel.util.UnicodeProperties
+	 *             #fastLoad(String)}.
+	 * @param      hidden whether the layout is hidden
+	 * @param      system whether the layout is system
+	 * @param      friendlyURLMap the layout's locales and localized friendly
+	 *             URLs. To see how the URL is normalized when accessed, see
+	 *             {@link
+	 *             com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 *             String)}.
+	 * @param      serviceContext the service context to be applied. Must set
+	 *             the UUID for the layout. Can set the creation date,
+	 *             modification date, and expando bridge attributes for the
+	 *             layout. For layouts that belong to a layout set prototype, an
+	 *             attribute named <code>layoutUpdateable</code> can be used to
+	 *             specify whether site administrators can modify this page
+	 *             within their site.
+	 * @return     the layout
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addLayout(long,
-	 *			boolean, long, long, long, Map, Map, Map, Map, Map, String,
-	 *			String, boolean, boolean, long, Map, ServiceContext)}
+	 *             boolean, long, long, long, Map, Map, Map, Map, Map, String,
+	 *             String, boolean, boolean, long, Map, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

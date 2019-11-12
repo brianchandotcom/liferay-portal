@@ -33,8 +33,8 @@ public interface DataLayoutRenderer {
 		throws Exception;
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), see
-	 * {@link DataLayoutRenderer#render(Long, DataLayoutRendererContext)}
+	 * @deprecated As of Mueller (7.2.x), see {@link
+	 *             DataLayoutRenderer#render(Long, DataLayoutRendererContext)}
 	 */
 	@Deprecated
 	public default String render(

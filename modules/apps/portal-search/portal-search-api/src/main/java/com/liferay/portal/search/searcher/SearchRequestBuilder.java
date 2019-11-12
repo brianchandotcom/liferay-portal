@@ -96,9 +96,8 @@ public interface SearchRequestBuilder {
 	/**
 	 * Provides a top hits aggregations for each of the specified fields.
 	 *
-	 * @param groupByRequests the grouping that is enabled for each field
+	 * @param  groupByRequests the grouping that is enabled for each field
 	 * @return the search request builder
-	 *
 	 * @review
 	 */
 	public SearchRequestBuilder groupByRequests(

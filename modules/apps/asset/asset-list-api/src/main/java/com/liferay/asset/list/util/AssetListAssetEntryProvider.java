@@ -21,8 +21,9 @@ import com.liferay.asset.list.model.AssetListEntry;
 import java.util.List;
 
 /**
- * @author Sarai Díaz
- * @deprecated As of Mueller (7.2.x), replaced by {@link com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider}
+ * @author     Sarai Díaz
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider}
  */
 @Deprecated
 public interface AssetListAssetEntryProvider {

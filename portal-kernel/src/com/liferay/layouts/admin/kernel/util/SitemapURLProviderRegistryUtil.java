@@ -30,8 +30,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @author Eduardo García
- * @deprecated As of Mueller (7.2.x), replaced by {@link com.liferay.layout.admin.kernel.util.SitemapURLProviderRegistryUtil}
+ * @author     Eduardo García
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.layout.admin.kernel.util.SitemapURLProviderRegistryUtil}
  */
 @Deprecated
 public class SitemapURLProviderRegistryUtil {

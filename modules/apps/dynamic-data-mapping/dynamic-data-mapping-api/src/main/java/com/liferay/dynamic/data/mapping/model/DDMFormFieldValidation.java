@@ -76,7 +76,7 @@ public class DDMFormFieldValidation implements Serializable {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #getErrorMessageLocalizedValue()}
+	 *             #getErrorMessageLocalizedValue()}
 	 */
 	@Deprecated
 	public String getErrorMessage() {
@@ -90,7 +90,7 @@ public class DDMFormFieldValidation implements Serializable {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 * 	 #getDDMFormFieldValidationExpression()}
+	 *             #getDDMFormFieldValidationExpression()}
 	 */
 	@Deprecated
 	public String getExpression() {
@@ -118,7 +118,7 @@ public class DDMFormFieldValidation implements Serializable {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #setErrorMessageLocalizedValue(LocalizedValue)}
+	 *             #setErrorMessageLocalizedValue(LocalizedValue)}
 	 */
 	@Deprecated
 	public void setErrorMessage(String errorMessage) {
@@ -138,7 +138,8 @@ public class DDMFormFieldValidation implements Serializable {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 * 	 #setDDMFormFieldValidationExpression(DDMFormFieldValidationExpression)}
+	 *             #setDDMFormFieldValidationExpression(
+	 *             DDMFormFieldValidationExpression)}
 	 */
 	@Deprecated
 	public void setExpression(String expression) {

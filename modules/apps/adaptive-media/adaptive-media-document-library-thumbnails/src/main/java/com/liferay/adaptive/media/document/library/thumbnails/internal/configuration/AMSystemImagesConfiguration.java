@@ -33,6 +33,7 @@ public interface AMSystemImagesConfiguration {
 
 	/**
 	 * Sets the Adaptive Media Configuration ID for preview resolution.
+	 *
 	 * @review
 	 */
 	@Meta.AD(
@@ -44,6 +45,7 @@ public interface AMSystemImagesConfiguration {
 
 	/**
 	 * Sets the Adaptive Media Configuration ID for thumbnail resolution.
+	 *
 	 * @review
 	 */
 	@Meta.AD(
@@ -56,6 +58,7 @@ public interface AMSystemImagesConfiguration {
 	/**
 	 * Sets the Adaptive Media Configuration ID for first custom thumbnail
 	 * resolution.
+	 *
 	 * @review
 	 */
 	@Meta.AD(
@@ -68,6 +71,7 @@ public interface AMSystemImagesConfiguration {
 	/**
 	 * Sets the Adaptive Media Configuration ID for second custom thumbnail
 	 * resolution.
+	 *
 	 * @review
 	 */
 	@Meta.AD(

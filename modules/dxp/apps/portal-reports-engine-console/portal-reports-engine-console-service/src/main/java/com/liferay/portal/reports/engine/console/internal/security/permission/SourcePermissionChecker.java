@@ -25,8 +25,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
- * @author Gavin Wan
+ * @author     Michael C. Han
+ * @author     Gavin Wan
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Component(

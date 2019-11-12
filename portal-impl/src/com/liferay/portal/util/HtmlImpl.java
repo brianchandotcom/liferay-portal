@@ -48,8 +48,8 @@ import net.htmlparser.jericho.TextExtractor;
 public class HtmlImpl implements Html {
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by
-	 *			   {@link #escapeAttribute(String)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #escapeAttribute(String)}
 	 */
 	@Deprecated
 	public static final int ESCAPE_MODE_ATTRIBUTE = 1;
@@ -212,14 +212,14 @@ public class HtmlImpl implements Html {
 	 * <code>escape(text)</code>.
 	 * </p>
 	 *
-	 * @param  text the text to escape
-	 * @param  mode the encoding type
-	 * @return the escaped hexadecimal value of the input text, based on the
-	 *         mode, or <code>null</code> if the text is <code>null</code>
-	 * @deprecated As of Mueller (7.2.x), replaced by
-	 *			   {@link #escapeAttribute(String)}, {@link #escapeCSS(String)},
-	 *			   {@link #escapeJS(String)}, {@link #escape(String)},
-	 *			   {@link #escapeURL(String)}
+	 * @param      text the text to escape
+	 * @param      mode the encoding type
+	 * @return     the escaped hexadecimal value of the input text, based on the
+	 *             mode, or <code>null</code> if the text is <code>null</code>
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #escapeAttribute(String)}, {@link #escapeCSS(String)}, {@link
+	 *             #escapeJS(String)}, {@link #escape(String)}, {@link
+	 *             #escapeURL(String)}
 	 */
 	@Deprecated
 	@Override

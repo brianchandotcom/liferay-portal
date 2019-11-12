@@ -29,9 +29,9 @@ import java.util.Set;
  * parallel.
  * </p>
  *
- * @author Michael C. Han
+ * @author     Michael C. Han
  * @deprecated As of Athanasius (7.3.x), replaced by {@link
- * 			com.liferay.portal.messaging.internal.ParallelDestination}
+ *             com.liferay.portal.messaging.internal.ParallelDestination}
  */
 @Deprecated
 public class ParallelDestination extends BaseAsyncDestination {

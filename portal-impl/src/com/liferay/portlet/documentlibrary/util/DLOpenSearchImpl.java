@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author     Brian Wing Shun Chan
  * @deprecated As of Mueller (7.2.x), replaced by {@link
- *			   com.liferay.document.library.internal.search.DLOpenSearchImpl}
+ *             com.liferay.document.library.internal.search.DLOpenSearchImpl}
  */
 @Deprecated
 public class DLOpenSearchImpl extends HitsOpenSearchImpl {

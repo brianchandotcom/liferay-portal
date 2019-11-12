@@ -36,9 +36,8 @@ public class AnalyzeIndexResponse implements IndexResponse {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getDetailsAnalyzer()}, {@link
-	 *             #getDetailsCharFilters()}, {@link
-	 *             #getDetailsTokenFilters()}, {@link
+	 *             #getDetailsAnalyzer()}, {@link #getDetailsCharFilters()},
+	 *             {@link #getDetailsTokenFilters()}, {@link
 	 *             #getDetailsTokenizer()}
 	 */
 	@Deprecated

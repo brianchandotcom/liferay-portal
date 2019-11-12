@@ -34,7 +34,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * @author Alexander Chow
+ * @author     Alexander Chow
  * @deprecated As of Mueller (7.2.x), replaced by {@link
  *             com.liferay.document.library.test.util.DLAppTestUtil}
  */

@@ -222,7 +222,8 @@ public class ParamAndPropertyAncestorTagImpl
 	protected volatile HttpServletRequest request;
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #getServletContext()}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getServletContext()}
 	 */
 	@Deprecated
 	protected ServletContext servletContext;

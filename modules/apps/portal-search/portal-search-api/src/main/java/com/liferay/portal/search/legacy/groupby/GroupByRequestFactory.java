@@ -28,9 +28,8 @@ public interface GroupByRequestFactory {
 	/**
 	 * Provides a GroupByRequest object based off a legacy GroupBy object.
 	 *
-	 * @param groupBy the legacy GroupBy object to be converted
+	 * @param  groupBy the legacy GroupBy object to be converted
 	 * @return the converted GroupByRequest object
-	 *
 	 * @review
 	 */
 	public GroupByRequest getGroupByRequest(GroupBy groupBy);

@@ -18,7 +18,7 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * @author Leonardo Barros
+ * @author     Leonardo Barros
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Deprecated

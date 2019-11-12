@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.Locale;
 
 /**
- * @author Jürgen Kappler
+ * @author     Jürgen Kappler
  * @deprecated As of Mueller (7.2.x), with no direct replacement}
  */
 @Deprecated

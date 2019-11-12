@@ -36,7 +36,7 @@ public interface InfoDisplayContributor<T> {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 * 			   #getInfoDisplayFields(long, Locale)}
+	 *             #getInfoDisplayFields(long, Locale)}
 	 */
 	@Deprecated
 	public default List<InfoDisplayField> getClassTypeInfoDisplayFields(

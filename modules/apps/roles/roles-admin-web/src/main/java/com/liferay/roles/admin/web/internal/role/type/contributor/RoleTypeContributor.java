@@ -21,9 +21,9 @@ import java.util.Locale;
 /**
  * Used to contribute a role type entry in the Roles Admin portlet. Each role
  * type will create a tab in the user interface.
- * @review
  *
  * @author Drew Brokke
+ * @review
  */
 public interface RoleTypeContributor {
 

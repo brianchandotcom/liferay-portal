@@ -44,8 +44,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Michael C. Han
- * @author Peter Fellwock
+ * @author     Michael C. Han
+ * @author     Peter Fellwock
  * @deprecated As of Judson (7.1.x)
  */
 @Deprecated

@@ -571,7 +571,7 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 	 * <li>
 	 * Adds model specific parameters to be able to decide whether a model needs
 	 * to be exported in the changeset portlet data handler. For example:
-	 * <code><com.liferay.journal.model.JournalArticle, true></code>.
+	 * <code>com.liferay.journal.model.JournalArticle, <code>true</code></code>.
 	 * </li>
 	 * <li>
 	 * Adds the original portlet ID parameter in case of portlet publication.

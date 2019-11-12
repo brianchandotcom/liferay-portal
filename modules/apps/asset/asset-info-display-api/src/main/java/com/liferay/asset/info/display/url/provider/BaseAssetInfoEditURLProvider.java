@@ -23,8 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author     Jürgen Kappler
- * @deprecated As of Mueller (7.2.x), in favour of {@link
- *             InfoEditURLProvider}
+ * @deprecated As of Mueller (7.2.x), in favour of {@link InfoEditURLProvider}
  */
 @Deprecated
 public class BaseAssetInfoEditURLProvider

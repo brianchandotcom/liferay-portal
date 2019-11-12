@@ -63,7 +63,7 @@ public class OutputStreamContainerFactoryTrackerImpl
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *			   #getOutputStreamContainerFactory(String)}
+	 *             #getOutputStreamContainerFactory(String)}
 	 */
 	@Deprecated
 	@Override
@@ -99,7 +99,7 @@ public class OutputStreamContainerFactoryTrackerImpl
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *			   #runWithSwappedLog(Runnable, String, OutputStream)}
+	 *             #runWithSwappedLog(Runnable, String, OutputStream)}
 	 */
 	@Deprecated
 	@Override
@@ -147,7 +147,7 @@ public class OutputStreamContainerFactoryTrackerImpl
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *			   #runWithSwappedLog(Runnable, String, OutputStream)}
+	 *             #runWithSwappedLog(Runnable, String, OutputStream)}
 	 */
 	@Deprecated
 	@Override

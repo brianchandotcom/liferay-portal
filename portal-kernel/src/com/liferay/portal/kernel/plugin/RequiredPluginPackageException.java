@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.plugin;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author     Brian Wing Shun Chan
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

@@ -56,7 +56,6 @@ public interface SearchRequest {
 	 * specified fields.
 	 *
 	 * @return the GroupByRequests that are enabled for the search.
-	 *
 	 * @review
 	 */
 	public List<GroupByRequest> getGroupByRequests();

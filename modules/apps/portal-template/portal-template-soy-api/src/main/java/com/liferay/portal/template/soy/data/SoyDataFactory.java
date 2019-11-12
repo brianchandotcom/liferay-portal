@@ -30,7 +30,7 @@ public interface SoyDataFactory {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 * 			#createSoyRawData(String)}
+	 *             #createSoyRawData(String)}
 	 */
 	@Deprecated
 	public SoyHTMLData createSoyHTMLData(String html);

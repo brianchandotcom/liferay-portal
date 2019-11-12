@@ -18,6 +18,8 @@ import com.liferay.saml.opensaml.integration.internal.resolver.SAMLCommands;
 
 /**
  * * @author Carlos Sierra Andrés
+ *
+ * @author Brian Wing Shun Chan
  */
 public interface Resolver {
 

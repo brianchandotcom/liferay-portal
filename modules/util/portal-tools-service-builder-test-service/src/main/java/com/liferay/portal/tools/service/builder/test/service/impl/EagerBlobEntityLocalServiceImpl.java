@@ -20,14 +20,16 @@ import com.liferay.portal.tools.service.builder.test.service.base.EagerBlobEntit
  * The implementation of the eager blob entity local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.portal.tools.service.builder.test.service.EagerBlobEntityLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * <code>com.liferay.portal.tools.service.builder.test.service.EagerBlobEntityLocalService</code>
+ * interface. <p> This is a local service. Methods of this service will not have
+ * security checks based on the propagated JAAS credentials because this service
+ * can only be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see EagerBlobEntityLocalServiceBaseImpl
+ * @see    EagerBlobEntityLocalServiceBaseImpl
  */
 public class EagerBlobEntityLocalServiceImpl
 	extends EagerBlobEntityLocalServiceBaseImpl {

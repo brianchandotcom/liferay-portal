@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of Athanasius (7.3.x), replaced by {@link
- *  		com.liferay.portal.messaging.internal.SynchronousDestination}
+ *             com.liferay.portal.messaging.internal.SynchronousDestination}
  */
 @Deprecated
 public class SynchronousDestination extends BaseDestination {

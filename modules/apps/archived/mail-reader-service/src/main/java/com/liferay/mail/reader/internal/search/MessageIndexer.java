@@ -36,8 +36,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Scott Lee
- * @author Peter Fellwock
+ * @author     Scott Lee
+ * @author     Peter Fellwock
  * @deprecated As of Judson (7.1.x)
  */
 @Deprecated

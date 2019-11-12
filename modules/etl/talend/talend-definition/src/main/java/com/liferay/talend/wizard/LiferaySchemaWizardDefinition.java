@@ -97,8 +97,8 @@ public class LiferaySchemaWizardDefinition
 	}
 
 	/**
-	 * @see org.talend.components.api.wizard.ComponentWizardDefinition#getPngImagePath(
-	 *      WizardImageType)
+	 * @see    org.talend.components.api.wizard.ComponentWizardDefinition#getPngImagePath(
+	 *         WizardImageType)
 	 * @review
 	 */
 	@Override

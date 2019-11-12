@@ -23,7 +23,7 @@ import java.util.function.Supplier;
  * Google Drive file. The methods in {@link DLOpenerGoogleDriveManager} return
  * instances of this class, which you should never create directly.
  *
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

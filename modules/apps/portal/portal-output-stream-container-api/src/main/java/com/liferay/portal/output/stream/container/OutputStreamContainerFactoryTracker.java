@@ -25,7 +25,7 @@ public interface OutputStreamContainerFactoryTracker {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *			   #getOutputStreamContainerFactory(String)}
+	 *             #getOutputStreamContainerFactory(String)}
 	 */
 	@Deprecated
 	public OutputStreamContainerFactory getOutputStreamContainerFactory();
@@ -37,7 +37,7 @@ public interface OutputStreamContainerFactoryTracker {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *			   #runWithSwappedLog(Runnable, String, OutputStream)}
+	 *             #runWithSwappedLog(Runnable, String, OutputStream)}
 	 */
 	@Deprecated
 	public void runWithSwappedLog(Runnable runnable, String outputStreamHint);
@@ -47,7 +47,7 @@ public interface OutputStreamContainerFactoryTracker {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *			   #runWithSwappedLog(Runnable, String, OutputStream)}
+	 *             #runWithSwappedLog(Runnable, String, OutputStream)}
 	 */
 	@Deprecated
 	public void runWithSwappedLog(

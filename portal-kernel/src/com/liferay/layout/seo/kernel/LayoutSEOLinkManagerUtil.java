@@ -23,8 +23,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @author Cristina González
- *
+ * @author     Cristina González
  * @deprecated As of Mueller (7.2.x), replaced by {@link LayoutSEOLinkManager}
  */
 @Deprecated

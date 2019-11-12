@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Jorge Ferrer
+ * @author     Jorge Ferrer
  * @deprecated As of Mueller (7.2.x), moved to {@link
  *             com.liferay.info.list.renderer.InfoListRenderer}
  */

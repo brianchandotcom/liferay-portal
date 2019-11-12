@@ -33,7 +33,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
- * @author Alexander Chow
+ * @author     Alexander Chow
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

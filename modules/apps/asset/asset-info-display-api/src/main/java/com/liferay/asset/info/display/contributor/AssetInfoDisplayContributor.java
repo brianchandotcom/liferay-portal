@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author Jürgen Kappler
+ * @author     Jürgen Kappler
  * @deprecated As of Mueller (7.2.x), in favour of {@link
  *             InfoDisplayContributor}
  */

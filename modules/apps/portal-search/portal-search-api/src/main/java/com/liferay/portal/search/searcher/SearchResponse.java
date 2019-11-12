@@ -60,7 +60,6 @@ public interface SearchResponse {
 	 * Returns the map containing the top hits aggregations for each field.
 	 *
 	 * @return the map containing the top hits aggregations
-	 *
 	 * @review
 	 */
 	public List<GroupByResponse> getGroupByResponses();

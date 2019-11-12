@@ -27,8 +27,9 @@ import java.util.Map;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Raymond Augé
- * @deprecated As of Mueller (7.2.x), replaced by {@link com.liferay.layout.admin.kernel.util.Sitemap}
+ * @author     Raymond Augé
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.layout.admin.kernel.util.Sitemap}
  */
 @Deprecated
 @ProviderType

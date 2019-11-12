@@ -425,10 +425,9 @@ public interface TrashHandler {
 	 * Returns <code>true</code> if the entity can be deleted from the Recycle
 	 * Bin.
 	 *
-	 * @return <code>true</code> if the entity can be deleted from the Recycle
-	 *         Bin.
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #isDeletable(long)}
+	 * @return     <code>true</code> if the entity can be deleted from the
+	 *             Recycle Bin.
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #isDeletable(long)}
 	 */
 	@Deprecated
 	public boolean isDeletable();
@@ -485,10 +484,9 @@ public interface TrashHandler {
 	 * Returns <code>true</code> if the entity can be moved from one container
 	 * model (such as a folder) to another.
 	 *
-	 * @return <code>true</code> if the entity can be moved from one container
-	 *         model to another; <code>false</code> otherwise
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #isMovable(long)}
+	 * @return     <code>true</code> if the entity can be moved from one
+	 *             container model to another; <code>false</code> otherwise
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #isMovable(long)}
 	 */
 	@Deprecated
 	public boolean isMovable();

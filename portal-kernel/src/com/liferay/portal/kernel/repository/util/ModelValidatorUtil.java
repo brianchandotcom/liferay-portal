@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.repository.model.ModelValidator;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

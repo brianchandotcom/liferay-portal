@@ -35,8 +35,8 @@ import org.hibernate.LockOptions;
 public class SessionImpl implements Session {
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #SessionImpl(
-	 *             org.hibernate.Session, ClassLoader)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #SessionImpl(org.hibernate.Session, ClassLoader)}
 	 */
 	@Deprecated
 	public SessionImpl(org.hibernate.Session session) {

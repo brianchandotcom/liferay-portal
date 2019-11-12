@@ -220,8 +220,8 @@ public abstract class BaseSearchRequest {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by
-	 *             {@link #setRescores(List)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #setRescores(List)}
 	 */
 	@Deprecated
 	public void setRescoreQuery(Query rescoreQuery) {

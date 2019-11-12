@@ -52,7 +52,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
- * @author Zsolt Berentey
+ * @author     Zsolt Berentey
  * @deprecated As of Mueller (7.2.x), replaced by {@link
  *             com.liferay.social.activity.test.util.BaseSocialActivityInterpreterTestCase}
  */

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import java.util.Optional;
 
 /**
- * @author Jorge Ferrer
+ * @author     Jorge Ferrer
  * @deprecated As of Mueller (7.2.x), moved to {@link
  *             com.liferay.info.list.provider.DefaultInfoListProviderContext}
  */

@@ -33,7 +33,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of Mueller (7.2.x), replaced by {@link
  *             com.liferay.document.library.test.util.DLTestUtil}
  */

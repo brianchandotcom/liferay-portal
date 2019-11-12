@@ -70,8 +70,8 @@ public class JSPRenderer {
 	}
 
 	/**
+	 * @param      servletContext
 	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 * @param servletContext
 	 */
 	@Deprecated
 	public void setServletContext(ServletContext servletContext) {

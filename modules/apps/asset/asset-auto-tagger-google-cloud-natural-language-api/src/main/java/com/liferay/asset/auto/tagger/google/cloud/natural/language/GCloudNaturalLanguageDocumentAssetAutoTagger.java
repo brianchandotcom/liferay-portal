@@ -20,9 +20,9 @@ import java.util.Locale;
 /**
  * Models a Google Cloud Natural Language Document Asset Auto Tagger.
  *
- * @author Cristina González
- * @review
+ * @author     Cristina González
  * @deprecated As of Mueller (7.2.x)
+ * @review
  */
 @Deprecated
 public interface GCloudNaturalLanguageDocumentAssetAutoTagger {

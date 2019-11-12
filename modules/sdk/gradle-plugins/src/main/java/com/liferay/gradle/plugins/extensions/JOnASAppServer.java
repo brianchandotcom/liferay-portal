@@ -22,7 +22,7 @@ import java.io.File;
 import org.gradle.api.Project;
 
 /**
- * @author Manuel de la Peña
+ * @author     Manuel de la Peña
  * @deprecated As of Mueller (7.2.x)
  */
 @Deprecated

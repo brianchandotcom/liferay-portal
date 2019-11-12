@@ -39,8 +39,9 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseTemplate implements Template {
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #BaseTemplate(
-	 * 			TemplateResource, Map, TemplateContextHelper, boolean)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #BaseTemplate(TemplateResource, Map, TemplateContextHelper,
+	 *             boolean)}
 	 */
 	@Deprecated
 	public BaseTemplate(

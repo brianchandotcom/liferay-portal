@@ -25,7 +25,7 @@ import java.util.Optional;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Jorge Ferrer
+ * @author     Jorge Ferrer
  * @deprecated As of Mueller (7.2.x), moved to {@link
  *             com.liferay.info.list.provider.InfoListProviderContext}
  */

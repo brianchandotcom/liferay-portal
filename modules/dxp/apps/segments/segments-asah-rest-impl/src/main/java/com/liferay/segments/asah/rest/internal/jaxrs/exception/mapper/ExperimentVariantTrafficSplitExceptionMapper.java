@@ -23,7 +23,8 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code SegmentsExperimentRelSplitException} to a {@code 400} error.
+ * Converts any {@code SegmentsExperimentRelSplitException} to a {@code 400}
+ * error.
  *
  * @author Sarai Díaz
  * @review

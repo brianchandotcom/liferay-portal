@@ -22,7 +22,7 @@ import org.eclipse.jetty.server.session.AbstractSession;
 import org.eclipse.jetty.server.session.AbstractSessionManager;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author     Brian Wing Shun Chan
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

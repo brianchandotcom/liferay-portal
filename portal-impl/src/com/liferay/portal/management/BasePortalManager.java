@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.management.ManageActionException;
 import com.liferay.portal.kernel.management.PortalManager;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

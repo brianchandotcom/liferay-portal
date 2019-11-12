@@ -82,7 +82,7 @@ public class DBInspector {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 * 				#hasColumnType(String, String, String)}
+	 *             #hasColumnType(String, String, String)}
 	 */
 	@Deprecated
 	public boolean hasColumnType(

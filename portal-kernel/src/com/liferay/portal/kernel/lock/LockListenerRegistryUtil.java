@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.lock;
 
 /**
- * @author Alexander Chow
- * @author Peter Fellwock
+ * @author     Alexander Chow
+ * @author     Peter Fellwock
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

@@ -20,7 +20,7 @@ import com.google.template.soy.data.UnsafeSanitizedContentOrdainer;
 import com.liferay.portal.template.soy.data.SoyHTMLData;
 
 /**
- * @author Iván Zaera Avellón
+ * @author     Iván Zaera Avellón
  * @deprecated As of Mueller (7.2.x), replaced by {@link SoyRawDataImpl}
  */
 @Deprecated

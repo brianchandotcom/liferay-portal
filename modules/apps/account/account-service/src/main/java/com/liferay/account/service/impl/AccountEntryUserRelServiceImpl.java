@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @see AccountEntryUserRelServiceBaseImpl
+ * @see    AccountEntryUserRelServiceBaseImpl
  */
 @Component(
 	property = {

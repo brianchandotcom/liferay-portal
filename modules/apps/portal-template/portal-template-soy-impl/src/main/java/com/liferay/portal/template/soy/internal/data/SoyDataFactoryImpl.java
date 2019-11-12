@@ -28,7 +28,7 @@ public class SoyDataFactoryImpl implements SoyDataFactory {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 * 			#createSoyRawData(String)}
+	 *             #createSoyRawData(String)}
 	 */
 	@Deprecated
 	@Override

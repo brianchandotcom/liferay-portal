@@ -21,7 +21,6 @@ package com.liferay.portal.kernel.security.permission.contributor;
  * possible or risk potentially dramatic performance degradation.
  *
  * @author Raymond Augé
- *
  * @review
  */
 public interface RoleContributor {

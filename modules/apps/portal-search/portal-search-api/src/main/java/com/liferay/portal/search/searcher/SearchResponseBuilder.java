@@ -54,9 +54,8 @@ public interface SearchResponseBuilder {
 	/**
 	 * Sets the list of top hits aggregations.
 	 *
-	 * @param groupByResponses the list of top hits aggregations.
+	 * @param  groupByResponses the list of top hits aggregations.
 	 * @return the same builder
-	 *
 	 * @review
 	 */
 	public SearchResponseBuilder groupByResponses(

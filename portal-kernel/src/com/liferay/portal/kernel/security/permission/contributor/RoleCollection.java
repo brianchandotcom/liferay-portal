@@ -21,13 +21,12 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * RoleCollection is used as the argument to {@link
- * RoleContributor#contribute(RoleCollection)}. It holds the managed
- * collection of roleIds starting with the <em>initial</em> set calculated
- * from persisted role assignment and role inheritance.
+ * RoleContributor#contribute(RoleCollection)}. It holds the managed collection
+ * of roleIds starting with the <em>initial</em> set calculated from persisted
+ * role assignment and role inheritance.
  *
  * @author Carlos Sierra Andrés
  * @author Raymond Augé
- *
  * @review
  */
 @ProviderType
@@ -37,7 +36,7 @@ public interface RoleCollection {
 	 * Add a roleId to the collection.
 	 *
 	 * @param  roleId to add to the collection
-	 * @return true if the roleId was added to the collection
+	 * @return <code>true</code> if the roleId was added to the collection
 	 */
 	public boolean addRoleId(long roleId);
 
@@ -59,8 +58,8 @@ public interface RoleCollection {
 	 * Get the initial set of roles calculated from persisted assignment and
 	 * inheritance.
 	 *
-	 * @return the initial set of roles calculated from persisted assignment
-	 *         and inheritance
+	 * @return the initial set of roles calculated from persisted assignment and
+	 *         inheritance
 	 */
 	public long[] getInitialRoleIds();
 
@@ -72,7 +71,7 @@ public interface RoleCollection {
 	 * Check if a Role is already in the collection by roleId.
 	 *
 	 * @param  roleId the roleId to check
-	 * @return true of the Role is in the collection
+	 * @return <code>true</code> of the Role is in the collection
 	 */
 	public boolean hasRoleId(long roleId);
 

@@ -17,7 +17,7 @@ package com.liferay.portal.search.synonym;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Adam Brandizzi
+ * @author     Adam Brandizzi
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

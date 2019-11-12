@@ -23,7 +23,8 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code SegmentsExperimentStatusException} to a {@code 400} error.
+ * Converts any {@code SegmentsExperimentStatusException} to a {@code 400}
+ * error.
  *
  * @author Sarai Díaz
  * @review

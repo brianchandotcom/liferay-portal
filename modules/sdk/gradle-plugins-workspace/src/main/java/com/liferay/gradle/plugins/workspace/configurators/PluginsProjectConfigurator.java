@@ -19,6 +19,7 @@ import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.tasks.InitBundleTask;
 import com.liferay.gradle.plugins.workspace.tasks.UpdatePropertiesTask;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
@@ -88,6 +89,7 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 		_configureTaskWar(warTask, workspaceExtension, initBundleTask);
 
 		_configureRootTaskDistBundle(warTask);
+		_configureRootTaskInitBundle(warTask);
 	}
 
 	@Override
@@ -309,6 +311,44 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 					configurableFileTree.include("*.war");
 
 					copySpec.from(configurableFileTree);
+				}
+
+			});
+	}
+
+	private void _configureRootTaskInitBundle(final Task warTask) {
+		Project project = warTask.getProject();
+
+		InitBundleTask initBundleTask = (InitBundleTask)GradleUtil.getTask(
+			project.getRootProject(),
+			RootProjectConfigurator.INIT_BUNDLE_TASK_NAME);
+
+		initBundleTask.dependsOn(warTask);
+
+		initBundleTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					project.copy(
+						new Action<CopySpec>() {
+
+							@Override
+							public void execute(CopySpec copySpec) {
+								Project project = warTask.getProject();
+
+								ConfigurableFileTree configurableFileTree =
+									project.fileTree("dist");
+
+								configurableFileTree.builtBy(warTask);
+								configurableFileTree.include("*.war");
+
+								copySpec.from(configurableFileTree);
+
+								copySpec.into("osgi/modules");
+							}
+
+						});
 				}
 
 			});

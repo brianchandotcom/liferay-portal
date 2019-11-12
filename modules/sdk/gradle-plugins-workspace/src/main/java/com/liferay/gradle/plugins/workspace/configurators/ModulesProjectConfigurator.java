@@ -26,6 +26,7 @@ import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.tasks.InitBundleTask;
 
 import groovy.json.JsonSlurper;
 
@@ -124,6 +125,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 			_configureLiferayOSGi(project);
 
+			_configureRootTaskInitBundle(jar);
 			_configureRootTaskDistBundle(jar);
 
 			project.afterEvaluate(
@@ -149,6 +151,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				final Task buildTask = GradleUtil.getTask(
 					project, LifecycleBasePlugin.BUILD_TASK_NAME);
 
+				_configureRootTaskInitBundle(buildTask);
 				_configureRootTaskDistBundle(buildTask);
 
 				jarSourcePath = new Callable<ConfigurableFileCollection>() {
@@ -304,6 +307,70 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		copy.dependsOn(buildTask);
 
 		copy.into("osgi/modules", _copyJarClosure(project, buildTask));
+	}
+
+	private void _configureRootTaskInitBundle(final Jar jar) {
+		final Project project = jar.getProject();
+
+		InitBundleTask initBundleTask = (InitBundleTask)GradleUtil.getTask(
+			project.getRootProject(),
+			RootProjectConfigurator.INIT_BUNDLE_TASK_NAME);
+
+		initBundleTask.dependsOn(jar);
+
+		initBundleTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task t) {
+					project.copy(
+						new Action<CopySpec>() {
+
+							@Override
+							public void execute(CopySpec copySpec) {
+								copySpec.from(jar);
+								copySpec.into(
+									new File(
+										initBundleTask.getDestinationDir(),
+										"osgi/modules"));
+							}
+
+						});
+				}
+
+			});
+	}
+
+	private void _configureRootTaskInitBundle(final Task buildTask) {
+		final Project project = buildTask.getProject();
+
+		InitBundleTask initBundleTask = (InitBundleTask)GradleUtil.getTask(
+			project.getRootProject(),
+			RootProjectConfigurator.INIT_BUNDLE_TASK_NAME);
+
+		initBundleTask.dependsOn(buildTask);
+
+		initBundleTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task t) {
+					project.copy(
+						new Action<CopySpec>() {
+
+							@Override
+							public void execute(CopySpec copySpec) {
+								copySpec.into(
+									new File(
+										initBundleTask.getDestinationDir(),
+										"osgi/modules"),
+									_copyJarClosure(project, buildTask));
+							}
+
+						});
+				}
+
+			});
 	}
 
 	private void _configureTaskTestIntegration(Project project) {

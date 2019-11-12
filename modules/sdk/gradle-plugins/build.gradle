@@ -64,7 +64,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xsd.builder", version: "1.0.7"
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.34"
 
-	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"), excludes: ["lib/plugins/biz.aQute.bndlib-3.4.0.jar"])
+	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"), excludes: ["lib/plugins/biz.aQute.bndlib-4.0.0.jar"])
 }
 
 downloadBundle {

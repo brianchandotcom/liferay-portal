@@ -79,7 +79,7 @@ public class DepotAdminDisplayContext {
 		GroupSearch groupSearch = _depotAdminGroupSearchProvider.getGroupSearch(
 			_liferayPortletRequest, _getPortletURL());
 
-		groupSearch.setId("repositories");
+		groupSearch.setId(getSearchContainerId());
 
 		SiteChecker siteChecker = new SiteChecker(_liferayPortletResponse);
 
@@ -98,6 +98,10 @@ public class DepotAdminDisplayContext {
 
 	public PortletURL getIteratorURL() {
 		return getGroupSearch().getIteratorURL();
+	}
+
+	public String getSearchContainerId() {
+		return "depotEntries";
 	}
 
 	public boolean isDisplayStyleDescriptive() {

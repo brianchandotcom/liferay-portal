@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
 import Icon from '../../shared/components/Icon.es';
-import Tooltip from '../../shared/components/Tooltip.es';
 import ListView from '../../shared/components/list/ListView.es';
 import PaginationBar from '../../shared/components/pagination/PaginationBar.es';
 import {ChildLink} from '../../shared/components/router/routerWrapper.es';
@@ -177,18 +177,24 @@ class SLAListCard extends React.Component {
 					<div className="container-fluid container-fluid-max-xl">
 						<ul className="autofit-row navbar-nav">
 							<li className="autofit-col-expand autofit-float-end nav-item">
-								<Tooltip
-									message={Liferay.Language.get('new-sla')}
-									position="bottom"
-									width="85"
-								>
-									<ChildLink
-										className="btn btn-primary nav-btn nav-btn-monospaced"
-										to={`/sla/new/${processId}`}
-									>
-										<Icon iconName="plus" />
-									</ChildLink>
-								</Tooltip>
+								<ClayTooltipProvider>
+									<span>
+										<span
+											className="workflow-tooltip"
+											data-tooltip-align={'bottom'}
+											title={Liferay.Language.get(
+												'new-sla'
+											)}
+										>
+											<ChildLink
+												className="btn btn-primary nav-btn nav-btn-monospaced"
+												to={`/sla/new/${processId}`}
+											>
+												<Icon iconName="plus" />
+											</ChildLink>
+										</span>
+									</span>
+								</ClayTooltipProvider>
 							</li>
 						</ul>
 					</div>

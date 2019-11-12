@@ -5,4 +5,7 @@
 	<category name="com.liferay.change.tracking.internal.CTSQLContextFactoryImpl">
 		<priority value="WARN" />
 	</category>
+	<category name="com.liferay.change.tracking.service.impl.CTCollectionLocalServiceImpl">
+		<priority value="WARN" />
+	</category>
 </log4j:configuration>

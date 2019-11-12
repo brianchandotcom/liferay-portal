@@ -39,10 +39,6 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 
 	@Override
 	public <T extends CTModel<T>> boolean isInsert(T ctModel) {
-		if (!CTPersistenceHelperThreadLocal.isEnabled()) {
-			return ctModel.isNew();
-		}
-
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
 		ctModel.setCtCollectionId(ctCollectionId);
@@ -103,10 +99,6 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 			return true;
 		}
 
-		if (!CTPersistenceHelperThreadLocal.isEnabled()) {
-			return false;
-		}
-
 		long modelClassNameId = _classNameLocalService.getClassNameId(
 			ctModelClass);
 
@@ -127,9 +119,7 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
-		if ((ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) ||
-			!CTPersistenceHelperThreadLocal.isEnabled()) {
-
+		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			return true;
 		}
 

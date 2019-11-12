@@ -314,8 +314,11 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 			HttpHeaders.CONTENT_LENGTH,
 			String.valueOf(byteArrayOutputStream.size()));
 
-		return new HttpResponseResource(
+		HttpClientResponse httpClientResponse = new HttpClientResponse(
 			HttpGet.METHOD_NAME, uri, closeableHttpResponse);
+
+		return new HttpResponseResource(
+			HttpGet.METHOD_NAME, uri, httpClientResponse);
 	}
 
 	private String _getModuleLatestVersion(
@@ -381,8 +384,11 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 			HttpHeaders.LAST_MODIFIED,
 			String.valueOf(cachedArtifactFile.lastModified()));
 
-		return new HttpResponseResource(
+		HttpClientResponse httpClientResponse = new HttpClientResponse(
 			HttpGet.METHOD_NAME, uri, closeableHttpResponse);
+
+		return new HttpResponseResource(
+			HttpGet.METHOD_NAME, uri, httpClientResponse);
 	}
 
 	private boolean _isForcedCacheEnabled() {

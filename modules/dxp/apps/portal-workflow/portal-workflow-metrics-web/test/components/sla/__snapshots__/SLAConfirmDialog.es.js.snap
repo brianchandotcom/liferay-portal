@@ -215,18 +215,15 @@ exports[`Should cancel dialog through SLA List 1`] = `
               <li
                 className="autofit-col-expand autofit-float-end nav-item"
               >
-                <Tooltip
-                  message="new-sla"
-                  position="bottom"
-                  width="85"
-                >
+                <TooltipProvider>
                   <span
-                    className="workflow-tooltip"
-                    onMouseLeave={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
                   >
                     <span
-                      className="tooltip-trigger"
-                      onMouseOver={[Function]}
+                      className="workflow-tooltip"
+                      data-tooltip-align="bottom"
+                      title="new-sla"
                     >
                       <withRouter()
                         className="btn btn-primary nav-btn nav-btn-monospaced"
@@ -384,7 +381,7 @@ exports[`Should cancel dialog through SLA List 1`] = `
                       </withRouter()>
                     </span>
                   </span>
-                </Tooltip>
+                </TooltipProvider>
               </li>
             </ul>
           </div>
@@ -504,18 +501,15 @@ exports[`Should cancel dialog through SLA List 2`] = `
               <li
                 className="autofit-col-expand autofit-float-end nav-item"
               >
-                <Tooltip
-                  message="new-sla"
-                  position="bottom"
-                  width="85"
-                >
+                <TooltipProvider>
                   <span
-                    className="workflow-tooltip"
-                    onMouseLeave={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
                   >
                     <span
-                      className="tooltip-trigger"
-                      onMouseOver={[Function]}
+                      className="workflow-tooltip"
+                      data-tooltip-align="bottom"
+                      title="new-sla"
                     >
                       <withRouter()
                         className="btn btn-primary nav-btn nav-btn-monospaced"
@@ -673,7 +667,7 @@ exports[`Should cancel dialog through SLA List 2`] = `
                       </withRouter()>
                     </span>
                   </span>
-                </Tooltip>
+                </TooltipProvider>
               </li>
             </ul>
           </div>

@@ -101,18 +101,15 @@ exports[`Should component receive props 1`] = `
                       >
                         workload-by-step
                       </span>
-                      <Tooltip
-                        message="workload-by-step-description"
-                        position="right"
-                        width="288"
-                      >
+                      <TooltipProvider>
                         <span
-                          className="workflow-tooltip"
-                          onMouseLeave={[Function]}
+                          onMouseOut={[Function]}
+                          onMouseOver={[Function]}
                         >
                           <span
-                            className="tooltip-trigger"
-                            onMouseOver={[Function]}
+                            className="workflow-tooltip"
+                            data-tooltip-align="right"
+                            title="workload-by-step-description"
                           >
                             <Icon
                               iconName="question-circle-full"
@@ -131,7 +128,7 @@ exports[`Should component receive props 1`] = `
                             </Icon>
                           </span>
                         </span>
-                      </Tooltip>
+                      </TooltipProvider>
                     </div>
                   </div>
                 </div>
@@ -272,18 +269,15 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                       >
                         workload-by-step
                       </span>
-                      <Tooltip
-                        message="workload-by-step-description"
-                        position="right"
-                        width="288"
-                      >
+                      <TooltipProvider>
                         <span
-                          className="workflow-tooltip"
-                          onMouseLeave={[Function]}
+                          onMouseOut={[Function]}
+                          onMouseOver={[Function]}
                         >
                           <span
-                            className="tooltip-trigger"
-                            onMouseOver={[Function]}
+                            className="workflow-tooltip"
+                            data-tooltip-align="right"
+                            title="workload-by-step-description"
                           >
                             <Icon
                               iconName="question-circle-full"
@@ -302,7 +296,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                             </Icon>
                           </span>
                         </span>
-                      </Tooltip>
+                      </TooltipProvider>
                     </div>
                   </div>
                 </div>
@@ -447,18 +441,15 @@ exports[`Should render component 1`] = `
                       >
                         workload-by-step
                       </span>
-                      <Tooltip
-                        message="workload-by-step-description"
-                        position="right"
-                        width="288"
-                      >
+                      <TooltipProvider>
                         <span
-                          className="workflow-tooltip"
-                          onMouseLeave={[Function]}
+                          onMouseOut={[Function]}
+                          onMouseOver={[Function]}
                         >
                           <span
-                            className="tooltip-trigger"
-                            onMouseOver={[Function]}
+                            className="workflow-tooltip"
+                            data-tooltip-align="right"
+                            title="workload-by-step-description"
                           >
                             <Icon
                               iconName="question-circle-full"
@@ -477,7 +468,7 @@ exports[`Should render component 1`] = `
                             </Icon>
                           </span>
                         </span>
-                      </Tooltip>
+                      </TooltipProvider>
                     </div>
                   </div>
                 </div>
@@ -540,12 +531,13 @@ exports[`Should render component with empty data 1`] = `
             workload-by-step
           </span>
           <span
-            className="workflow-tooltip"
-            onMouseLeave={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
           >
             <span
-              className="tooltip-trigger"
-              onMouseOver={[Function]}
+              className="workflow-tooltip"
+              data-tooltip-align="right"
+              title="workload-by-step-description"
             >
               <svg
                 className="lexicon-icon lexicon-icon-question-circle-full"
@@ -601,12 +593,13 @@ exports[`Should render component with error state 1`] = `
             workload-by-step
           </span>
           <span
-            className="workflow-tooltip"
-            onMouseLeave={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
           >
             <span
-              className="tooltip-trigger"
-              onMouseOver={[Function]}
+              className="workflow-tooltip"
+              data-tooltip-align="right"
+              title="workload-by-step-description"
             >
               <svg
                 className="lexicon-icon lexicon-icon-question-circle-full"

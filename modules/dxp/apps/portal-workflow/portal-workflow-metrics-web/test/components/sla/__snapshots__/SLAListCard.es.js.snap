@@ -86,18 +86,15 @@ exports[`Should remove a item 1`] = `
               <li
                 className="autofit-col-expand autofit-float-end nav-item"
               >
-                <Tooltip
-                  message="new-sla"
-                  position="bottom"
-                  width="85"
-                >
+                <TooltipProvider>
                   <span
-                    className="workflow-tooltip"
-                    onMouseLeave={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
                   >
                     <span
-                      className="tooltip-trigger"
-                      onMouseOver={[Function]}
+                      className="workflow-tooltip"
+                      data-tooltip-align="bottom"
+                      title="new-sla"
                     >
                       <withRouter()
                         className="btn btn-primary nav-btn nav-btn-monospaced"
@@ -255,7 +252,7 @@ exports[`Should remove a item 1`] = `
                       </withRouter()>
                     </span>
                   </span>
-                </Tooltip>
+                </TooltipProvider>
               </li>
             </ul>
           </div>
@@ -304,12 +301,13 @@ Array [
           className="autofit-col-expand autofit-float-end nav-item"
         >
           <span
-            className="workflow-tooltip"
-            onMouseLeave={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
           >
             <span
-              className="tooltip-trigger"
-              onMouseOver={[Function]}
+              className="workflow-tooltip"
+              data-tooltip-align="bottom"
+              title="new-sla"
             >
               <a
                 className="btn btn-primary nav-btn nav-btn-monospaced"
@@ -366,12 +364,13 @@ Array [
           className="autofit-col-expand autofit-float-end nav-item"
         >
           <span
-            className="workflow-tooltip"
-            onMouseLeave={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
           >
             <span
-              className="tooltip-trigger"
-              onMouseOver={[Function]}
+              className="workflow-tooltip"
+              data-tooltip-align="bottom"
+              title="new-sla"
             >
               <a
                 className="btn btn-primary nav-btn nav-btn-monospaced"
@@ -499,18 +498,15 @@ exports[`Should render toast with SLA saved message 1`] = `
               <li
                 className="autofit-col-expand autofit-float-end nav-item"
               >
-                <Tooltip
-                  message="new-sla"
-                  position="bottom"
-                  width="85"
-                >
+                <TooltipProvider>
                   <span
-                    className="workflow-tooltip"
-                    onMouseLeave={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
                   >
                     <span
-                      className="tooltip-trigger"
-                      onMouseOver={[Function]}
+                      className="workflow-tooltip"
+                      data-tooltip-align="bottom"
+                      title="new-sla"
                     >
                       <withRouter()
                         className="btn btn-primary nav-btn nav-btn-monospaced"
@@ -668,7 +664,7 @@ exports[`Should render toast with SLA saved message 1`] = `
                       </withRouter()>
                     </span>
                   </span>
-                </Tooltip>
+                </TooltipProvider>
               </li>
             </ul>
           </div>
@@ -788,18 +784,15 @@ exports[`Should render toast with SLA updated message 1`] = `
               <li
                 className="autofit-col-expand autofit-float-end nav-item"
               >
-                <Tooltip
-                  message="new-sla"
-                  position="bottom"
-                  width="85"
-                >
+                <TooltipProvider>
                   <span
-                    className="workflow-tooltip"
-                    onMouseLeave={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
                   >
                     <span
-                      className="tooltip-trigger"
-                      onMouseOver={[Function]}
+                      className="workflow-tooltip"
+                      data-tooltip-align="bottom"
+                      title="new-sla"
                     >
                       <withRouter()
                         className="btn btn-primary nav-btn nav-btn-monospaced"
@@ -957,7 +950,7 @@ exports[`Should render toast with SLA updated message 1`] = `
                       </withRouter()>
                     </span>
                   </span>
-                </Tooltip>
+                </TooltipProvider>
               </li>
             </ul>
           </div>
@@ -1077,18 +1070,15 @@ exports[`Should test props change 1`] = `
               <li
                 className="autofit-col-expand autofit-float-end nav-item"
               >
-                <Tooltip
-                  message="new-sla"
-                  position="bottom"
-                  width="85"
-                >
+                <TooltipProvider>
                   <span
-                    className="workflow-tooltip"
-                    onMouseLeave={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
                   >
                     <span
-                      className="tooltip-trigger"
-                      onMouseOver={[Function]}
+                      className="workflow-tooltip"
+                      data-tooltip-align="bottom"
+                      title="new-sla"
                     >
                       <withRouter()
                         className="btn btn-primary nav-btn nav-btn-monospaced"
@@ -1246,7 +1236,7 @@ exports[`Should test props change 1`] = `
                       </withRouter()>
                     </span>
                   </span>
-                </Tooltip>
+                </TooltipProvider>
               </li>
             </ul>
           </div>

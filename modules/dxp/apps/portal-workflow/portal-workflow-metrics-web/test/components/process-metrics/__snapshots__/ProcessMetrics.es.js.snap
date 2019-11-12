@@ -2078,18 +2078,15 @@ exports[`Should render dashboard route children 1`] = `
                               >
                                 pending-items
                               </span>
-                              <Tooltip
-                                message="pending-items-description"
-                                position="right"
-                                width="288"
-                              >
+                              <TooltipProvider>
                                 <span
-                                  className="workflow-tooltip"
-                                  onMouseLeave={[Function]}
+                                  onMouseOut={[Function]}
+                                  onMouseOver={[Function]}
                                 >
                                   <span
-                                    className="tooltip-trigger"
-                                    onMouseOver={[Function]}
+                                    className="workflow-tooltip"
+                                    data-tooltip-align="right"
+                                    title="pending-items-description"
                                   >
                                     <Icon
                                       iconName="question-circle-full"
@@ -2108,7 +2105,7 @@ exports[`Should render dashboard route children 1`] = `
                                     </Icon>
                                   </span>
                                 </span>
-                              </Tooltip>
+                              </TooltipProvider>
                             </div>
                           </div>
                         </div>
@@ -2174,18 +2171,15 @@ exports[`Should render dashboard route children 1`] = `
                       >
                         workload-by-step
                       </span>
-                      <Tooltip
-                        message="workload-by-step-description"
-                        position="right"
-                        width="288"
-                      >
+                      <TooltipProvider>
                         <span
-                          className="workflow-tooltip"
-                          onMouseLeave={[Function]}
+                          onMouseOut={[Function]}
+                          onMouseOver={[Function]}
                         >
                           <span
-                            className="tooltip-trigger"
-                            onMouseOver={[Function]}
+                            className="workflow-tooltip"
+                            data-tooltip-align="right"
+                            title="workload-by-step-description"
                           >
                             <Icon
                               iconName="question-circle-full"
@@ -2204,7 +2198,7 @@ exports[`Should render dashboard route children 1`] = `
                             </Icon>
                           </span>
                         </span>
-                      </Tooltip>
+                      </TooltipProvider>
                     </div>
                   </div>
                 </div>

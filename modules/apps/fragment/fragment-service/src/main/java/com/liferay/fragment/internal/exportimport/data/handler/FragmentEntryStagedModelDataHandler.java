@@ -35,8 +35,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pavel Savinov
@@ -96,7 +94,7 @@ public class FragmentEntryStagedModelDataHandler
 		}
 
 		String html =
-			_fragmentEntryLinkExportImportContentProcessor.
+			_dlReferencesExportImportContentProcessor.
 				replaceExportContentReferences(
 					portletDataContext, fragmentEntry, fragmentEntry.getHtml(),
 					true, false);
@@ -152,7 +150,7 @@ public class FragmentEntryStagedModelDataHandler
 		importedFragmentEntry.setFragmentCollectionId(fragmentCollectionId);
 
 		String html =
-			_fragmentEntryLinkExportImportContentProcessor.
+			_dlReferencesExportImportContentProcessor.
 				replaceImportContentReferences(
 					portletDataContext, fragmentEntry, fragmentEntry.getHtml());
 
@@ -202,16 +200,12 @@ public class FragmentEntryStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
+	@Reference(target = "(content.processor.type=DLReferences)")
+	private ExportImportContentProcessor<String>
+		_dlReferencesExportImportContentProcessor;
+
 	@Reference
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.fragment.model.FragmentEntryLink)"
-	)
-	private volatile ExportImportContentProcessor<String>
-		_fragmentEntryLinkExportImportContentProcessor;
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;

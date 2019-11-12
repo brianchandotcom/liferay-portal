@@ -95,7 +95,7 @@ public class FragmentEntryLinkStagedModelDataHandler
 		fragmentEntryLink.setEditableValues(editableValues);
 
 		String html =
-			_fragmentEntryLinkExportImportContentProcessor.
+			_dlReferencesExportImportContentProcessor.
 				replaceExportContentReferences(
 					portletDataContext, fragmentEntryLink,
 					fragmentEntryLink.getHtml(), true, false);
@@ -199,7 +199,7 @@ public class FragmentEntryLinkStagedModelDataHandler
 		importedFragmentEntryLink.setEditableValues(editableValues);
 
 		String html =
-			_fragmentEntryLinkExportImportContentProcessor.
+			_dlReferencesExportImportContentProcessor.
 				replaceImportContentReferences(
 					portletDataContext, fragmentEntryLink,
 					fragmentEntryLink.getHtml());
@@ -238,6 +238,10 @@ public class FragmentEntryLinkStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
+
+	@Reference(target = "(content.processor.type=DLReferences)")
+	private ExportImportContentProcessor<String>
+		_dlReferencesExportImportContentProcessor;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

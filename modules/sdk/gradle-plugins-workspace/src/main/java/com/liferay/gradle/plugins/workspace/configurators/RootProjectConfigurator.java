@@ -464,21 +464,28 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		File dockerDir = workspaceExtension.getDockerDir();
 
+		File workDir = new File(dockerDir, "work");
+
 		String dockerPath = dockerDir.getAbsolutePath();
+
+		String workPath = workDir.getAbsolutePath();
 
 		if (OSDetector.isWindows()) {
 			String prefix = FilenameUtils.getPrefix(dockerPath);
 
 			if (prefix.contains(":")) {
 				dockerPath = '/' + dockerPath.replace(":", "");
+				workPath = '/' + workPath.replace(":", "");
 			}
 
 			dockerPath = dockerPath.replace('\\', '/');
+			workPath = workPath.replace('\\', '/');
 		}
 
 		Map<String, String> binds = new HashMap<>();
 
 		binds.put(dockerPath, "/etc/liferay/mount");
+		binds.put(workPath, "/opt/liferay/work");
 
 		dockerCreateContainer.setBinds(binds);
 
@@ -585,6 +592,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						file.createNewFile();
 
 						dir = new File(destinationDir, "scripts");
+
+						if (!dir.exists()) {
+							dir.mkdirs();
+						}
+
+						file = new File(dir, ".touch");
+
+						file.createNewFile();
+
+						dir = new File(destinationDir, "work");
 
 						if (!dir.exists()) {
 							dir.mkdirs();

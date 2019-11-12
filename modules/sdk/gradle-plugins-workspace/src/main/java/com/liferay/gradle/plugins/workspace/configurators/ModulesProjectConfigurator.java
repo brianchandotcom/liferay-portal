@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
+import com.liferay.gradle.plugins.util.BndBuilderUtil;
 import com.liferay.gradle.plugins.workspace.FrontendPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
@@ -65,6 +66,8 @@ import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.jvm.tasks.Jar;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
+
+import org.osgi.framework.Constants;
 
 /**
  * @author Andrea Di Giorgi
@@ -174,6 +177,16 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			project);
 
 		_configureLiferay(project, workspaceExtension);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					_configureTaskDeployFast(project, workspaceExtension);
+				}
+
+			});
 
 		addTaskDockerDeploy(project, jarSourcePath, workspaceExtension);
 	}
@@ -365,6 +378,77 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 										initBundleTask.getDestinationDir(),
 										"osgi/modules"),
 									_copyJarClosure(project, buildTask));
+							}
+
+						});
+				}
+
+			});
+	}
+
+	private void _configureTaskDeployFast(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		Copy deployFastTask = (Copy)GradleUtil.getTask(
+			project, LiferayOSGiPlugin.DEPLOY_FAST_TASK_NAME);
+		GradleUtil.getTask(
+			project, RootProjectConfigurator.DOCKER_DEPLOY_TASK_NAME);
+
+		String bundleSymbolicName = BndBuilderUtil.getInstruction(
+			project, Constants.BUNDLE_SYMBOLICNAME);
+		String bundleVersion = BndBuilderUtil.getInstruction(
+			project, Constants.BUNDLE_VERSION);
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("work/");
+		sb.append(bundleSymbolicName);
+		sb.append("-");
+		sb.append(bundleVersion);
+
+		final String pathName = sb.toString();
+
+		File dockerWorkDir = new File(
+			workspaceExtension.getDockerDir(), pathName);
+
+		deployFastTask.setDestinationDir(workspaceExtension.getHomeDir());
+
+		deployFastTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					project.sync(
+						new Action<CopySpec>() {
+
+							@Override
+							public void execute(CopySpec copySpec) {
+								copySpec.from(
+									new File(
+										deployFastTask.getDestinationDir(),
+										pathName));
+								copySpec.into(dockerWorkDir);
+							}
+
+						});
+				}
+
+			});
+
+		Task cleanTask = GradleUtil.getTask(
+			project, LifecycleBasePlugin.CLEAN_TASK_NAME);
+
+		cleanTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					project.delete(
+						new Action<DeleteSpec>() {
+
+							@Override
+							public void execute(DeleteSpec deleteSpec) {
+								deleteSpec.delete(dockerWorkDir);
 							}
 
 						});

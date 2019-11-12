@@ -119,7 +119,7 @@ public class AssetListEntryStagingTest {
 			_stagingGroup.getGroupId());
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_liveGroup.getGroupId());
+			_stagingGroup.getGroupId());
 
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_stagingGroup.getGroupId(), assetListEntry,

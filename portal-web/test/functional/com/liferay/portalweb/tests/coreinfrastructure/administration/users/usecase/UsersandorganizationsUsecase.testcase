@@ -691,7 +691,6 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.impersonateCP(
-			notAdmin = "true",
 			siteName = "${siteName}",
 			userScreenName = "usersn2");
 

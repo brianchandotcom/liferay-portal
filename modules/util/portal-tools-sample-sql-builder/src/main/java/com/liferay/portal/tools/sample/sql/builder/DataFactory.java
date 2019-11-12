@@ -1203,6 +1203,8 @@ public class DataFactory {
 			properties.getProperty("sample.sql.max.blogs.entry.comment.count"));
 		_maxBlogsEntryCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.blogs.entry.count"));
+		_maxContentPageCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.content.page.count"));
 		_maxCPDefinitionCount = GetterUtil.getInteger(
 			properties.getProperty(
 				"sample.sql.max.commerce.product.definition.count"));
@@ -1734,21 +1736,11 @@ public class DataFactory {
 	public List<LayoutModel> newContentLayoutModels(long groupId) {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
-		layoutModels.add(
-			newContentLayoutModel(
-				groupId, "1_web_content",
-				"navigation,header,web_content,footer"));
-		layoutModels.add(
-			newContentLayoutModel(
-				groupId, "1_asset_list",
-				"navigation,header,asset_list,footer"));
-		layoutModels.add(
-			newContentLayoutModel(
-				groupId, "1_media_gallery",
-				"navigation,header,media_gallery,footer"));
-		layoutModels.add(
-			newContentLayoutModel(
-				groupId, "1_site_map", "navigation,header,site_map,footer"));
+		for (int i = 0; i < _maxContentPageCount; i++) {
+			layoutModels.add(
+				newContentLayoutModel(
+					groupId, i + "_web_content", "web_content"));
+		}
 
 		return layoutModels;
 	}
@@ -4724,6 +4716,7 @@ public class DataFactory {
 	private int _maxAssetVocabularyCount;
 	private int _maxBlogsEntryCommentCount;
 	private int _maxBlogsEntryCount;
+	private int _maxContentPageCount;
 	private int _maxCPDefinitionCount;
 	private int _maxCPInstanceCount;
 	private int _maxCProductCount;

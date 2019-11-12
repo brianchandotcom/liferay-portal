@@ -165,7 +165,8 @@ public class BatchEngineImportTaskExecutorImpl
 				_batchEngineImportTaskItemReaderFactory.create(
 					BatchEngineTaskContentType.valueOf(
 						batchEngineImportTask.getContentType()),
-					batchEngineImportTask.getContent());
+					_batchEngineImportTaskLocalService.openContentInputStream(
+						batchEngineImportTask.getBatchEngineImportTaskId()));
 			BatchEngineTaskItemResourceDelegate
 				batchEngineTaskItemResourceDelegate =
 					_batchEngineTaskItemResourceDelegateFactory.create(

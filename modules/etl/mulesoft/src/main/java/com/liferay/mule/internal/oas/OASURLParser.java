@@ -42,11 +42,11 @@ public class OASURLParser {
 	public String getAuthorityWithScheme() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(getScheme());
+		sb.append(_scheme);
 		sb.append("://");
-		sb.append(getHost());
+		sb.append(_host);
 		sb.append(":");
-		sb.append(getPort());
+		sb.append(_port);
 
 		return sb.toString();
 	}
@@ -72,7 +72,7 @@ public class OASURLParser {
 
 		sb.append(getAuthorityWithScheme());
 		sb.append("/o/");
-		sb.append(getJaxRSAppBase());
+		sb.append(_jaxRSAppBase);
 
 		return sb.toString();
 	}

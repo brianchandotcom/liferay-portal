@@ -49,7 +49,7 @@ ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayCont
 	</span>
 
 	<c:if test="<%= notificationsCount > 0 %>">
-		<span class="badge badge-danger panel-notifications-count sticker-right">
+		<span class="badge badge-danger panel-notifications-count sticker-top-right">
 			<span class="badge-item badge-item-expand"><%= notificationsCount %></span>
 		</span>
 	</c:if>

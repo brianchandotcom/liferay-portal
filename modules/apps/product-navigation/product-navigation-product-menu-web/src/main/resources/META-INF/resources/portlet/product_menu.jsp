@@ -42,7 +42,7 @@
 								%>
 
 								<c:if test="<%= notificationsCount > 0 %>">
-									<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
+									<span class="panel-notifications-count sticker sticker-rounded sticker-sm sticker-top-right sticker-warning"><%= notificationsCount %></span>
 								</c:if>
 
 								<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />

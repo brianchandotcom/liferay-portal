@@ -210,6 +210,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -301,8 +302,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 
@@ -2729,9 +2728,6 @@ public class DataFactory {
 
 		layoutPageTemplateStructureRelModel.setSegmentsExperienceId(0L);
 
-		Stream<FragmentEntryLinkModel> stream =
-			fragmentEntryLinkModels.stream();
-
 		LayoutData layoutData = LayoutData.of(
 			layoutModel.toEscapedModel(),
 			layoutRow -> layoutRow.addLayoutColumns(
@@ -2740,12 +2736,9 @@ public class DataFactory {
 						layoutColumn.getFragmentEntryLinkIds();
 
 					fragmentEntryLinkIds.addAll(
-						stream.map(
-							fragmentEntryLinkModel ->
-								fragmentEntryLinkModel.getFragmentEntryLinkId()
-						).collect(
-							Collectors.toList()
-						));
+						ListUtil.toList(
+							fragmentEntryLinkModels,
+							FragmentEntryLinkModel::getFragmentEntryLinkId));
 				}));
 
 		JSONObject jsonObject = layoutData.getLayoutDataJSONObject();

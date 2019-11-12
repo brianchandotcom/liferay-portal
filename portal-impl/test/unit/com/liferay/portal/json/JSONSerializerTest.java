@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.LocalizationImpl;
@@ -88,19 +89,23 @@ public class JSONSerializerTest {
 		String[] groupPermissions = {"VIEW"};
 
 		serviceContext.setAttribute("groupPermissions", groupPermissions);
-		serviceContext.setGroupPermissions(groupPermissions);
+
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			groupPermissions, null);
+
+		serviceContext.setModelPermissions(modelPermissions);
 
 		String json = JSONFactoryUtil.serialize(serviceContext);
 
 		ServiceContext deserializedServiceContext =
 			(ServiceContext)JSONFactoryUtil.deserialize(json);
 
-		ModelPermissions modelPermissions =
+		ModelPermissions deserializedModelPermissions =
 			deserializedServiceContext.getModelPermissions();
 
 		Assert.assertArrayEquals(
 			groupPermissions,
-			modelPermissions.getActionIds(
+			deserializedModelPermissions.getActionIds(
 				RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE));
 	}
 
@@ -111,7 +116,11 @@ public class JSONSerializerTest {
 		String[] groupPermissions = {"VIEW"};
 
 		serviceContext.setAttribute("groupPermissions", groupPermissions);
-		serviceContext.setGroupPermissions(groupPermissions);
+
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			groupPermissions, null);
+
+		serviceContext.setModelPermissions(modelPermissions);
 
 		String json1 = JSONFactoryUtil.serialize(serviceContext);
 

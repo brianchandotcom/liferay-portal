@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -386,24 +385,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Returns the specific group permissions for a resource if this service
-	 * context is being passed as a parameter to a method which manipulates the
-	 * resource.
-	 *
-	 * @return     the specific group permissions
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String[] getGroupPermissions() {
-		if (_modelPermissions == null) {
-			return StringPool.EMPTY_ARRAY;
-		}
-
-		return _modelPermissions.getActionIds(
-			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE);
-	}
-
-	/**
 	 * Returns this service context's user ID or guest ID if no user ID is
 	 * available.
 	 *
@@ -425,23 +406,6 @@ public class ServiceContext implements Cloneable, Serializable {
 		}
 
 		return 0;
-	}
-
-	/**
-	 * Returns the specific guest permissions for a resource if this service
-	 * context is being passed as a parameter to a method which manipulates the
-	 * resource.
-	 *
-	 * @return     the specific guest permissions
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String[] getGuestPermissions() {
-		if (_modelPermissions == null) {
-			return StringPool.EMPTY_ARRAY;
-		}
-
-		return _modelPermissions.getActionIds(RoleConstants.GUEST);
 	}
 
 	/**
@@ -1322,44 +1286,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public void setFormDate(Date formDate) {
 		_formDate = formDate;
-	}
-
-	/**
-	 * Sets an array containing specific group permissions for a resource if
-	 * this service context is being passed as a parameter to a method which
-	 * manipulates the resource.
-	 *
-	 * @param      groupPermissions the permissions (optionally
-	 *             <code>null</code>)
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setGroupPermissions(String[] groupPermissions) {
-		if (_modelPermissions == null) {
-			_modelPermissions = new ModelPermissions();
-		}
-
-		_modelPermissions.addRolePermissions(
-			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, groupPermissions);
-	}
-
-	/**
-	 * Sets an array containing specific guest permissions for a resource if
-	 * this service context is being passed as a parameter to a method which
-	 * manipulates the resource.
-	 *
-	 * @param      guestPermissions the guest permissions (optionally
-	 *             <code>null</code>)
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setGuestPermissions(String[] guestPermissions) {
-		if (_modelPermissions == null) {
-			_modelPermissions = new ModelPermissions();
-		}
-
-		_modelPermissions.addRolePermissions(
-			RoleConstants.GUEST, guestPermissions);
 	}
 
 	/**

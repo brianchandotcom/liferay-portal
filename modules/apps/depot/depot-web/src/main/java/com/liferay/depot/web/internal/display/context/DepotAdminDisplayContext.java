@@ -21,7 +21,6 @@ import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -47,7 +46,6 @@ public class DepotAdminDisplayContext {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -97,13 +95,11 @@ public class DepotAdminDisplayContext {
 
 		SiteChecker siteChecker = new SiteChecker(_liferayPortletResponse);
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append("^(?!.*");
 		sb.append(_liferayPortletResponse.getNamespace());
-		sb.append("redirect).*(groupId=");
-		sb.append(_getGroupId());
-		sb.append(")");
+		sb.append("redirect).*");
 
 		siteChecker.setRememberCheckBoxStateURLRegex(sb.toString());
 
@@ -128,16 +124,6 @@ public class DepotAdminDisplayContext {
 		return Objects.equals(getDisplayStyle(), "icon");
 	}
 
-	private long _getGroupId() {
-		if (_groupId <= 0) {
-			_groupId = ParamUtil.getLong(
-				_httpServletRequest, "groupId",
-				GroupConstants.DEFAULT_PARENT_GROUP_ID);
-		}
-
-		return _groupId;
-	}
-
 	private PortletURL _getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
@@ -148,9 +134,7 @@ public class DepotAdminDisplayContext {
 
 	private final DepotAdminGroupSearchProvider _depotAdminGroupSearchProvider;
 	private String _displayStyle;
-	private long _groupId;
 	private final GroupURLProvider _groupURLProvider;
-	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 

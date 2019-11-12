@@ -117,6 +117,13 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>FORM_VIEW_TAB</td>
+	<td>//div[contains(@class,'navbar')]//a[contains(@class,'active') and normalize-space()='Form Views']</td>
+	<td></td>
+</tr>
+
+
 
 </tbody>
 </table>

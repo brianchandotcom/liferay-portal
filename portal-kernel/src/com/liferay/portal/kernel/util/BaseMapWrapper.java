@@ -28,12 +28,21 @@ public abstract class BaseMapWrapper<K, V> {
 
 		try {
 			K key = keyUnsafeSupplier.get();
+
+			if (key == null) {
+				return;
+			}
+
+			if (valueUnsafeSupplier == null) {
+				_put(key, null);
+
+				return;
+			}
+
 			V value = valueUnsafeSupplier.get();
 
-			if ((key != null) && (value != null)) {
-				Map<K, V> map = getMap();
-
-				map.put(key, value);
+			if (value != null) {
+				_put(key, value);
 			}
 		}
 		catch (Exception e) {
@@ -49,9 +58,7 @@ public abstract class BaseMapWrapper<K, V> {
 			K key = keyUnsafeSupplier.get();
 
 			if (key != null) {
-				Map<K, V> map = getMap();
-
-				map.put(key, value);
+				_put(key, value);
 			}
 		}
 		catch (Exception e) {
@@ -68,9 +75,7 @@ public abstract class BaseMapWrapper<K, V> {
 				V value = unsafeFunction.apply(key);
 
 				if (value != null) {
-					Map<K, V> map = getMap();
-
-					map.put(key, value);
+					_put(key, value);
 				}
 			}
 		}
@@ -83,13 +88,17 @@ public abstract class BaseMapWrapper<K, V> {
 		K key,
 		BaseMapBuilder.UnsafeSupplier<V, Exception> valueUnsafeSupplier) {
 
+		if (valueUnsafeSupplier == null) {
+			_put(key, null);
+
+			return;
+		}
+
 		try {
 			V value = valueUnsafeSupplier.get();
 
 			if (value != null) {
-				Map<K, V> map = getMap();
-
-				map.put(key, value);
+				_put(key, value);
 			}
 		}
 		catch (Exception e) {
@@ -98,5 +107,11 @@ public abstract class BaseMapWrapper<K, V> {
 	}
 
 	protected abstract Map<K, V> getMap();
+
+	private void _put(K key, V value) {
+		Map<K, V> map = getMap();
+
+		map.put(key, value);
+	}
 
 }

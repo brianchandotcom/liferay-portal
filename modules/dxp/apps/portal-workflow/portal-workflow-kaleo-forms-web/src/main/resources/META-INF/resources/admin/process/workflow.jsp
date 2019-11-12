@@ -135,7 +135,7 @@ if (tabs1.equals("published")) {
 		<c:when test='<%= tabs1.equals("published") %>'>
 
 			<%
-			searchContainer.setTotal(WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionCount(company.getCompanyId()));
+			searchContainer.setTotal(WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionsCount(company.getCompanyId()));
 			%>
 
 			<liferay-ui:search-container-results

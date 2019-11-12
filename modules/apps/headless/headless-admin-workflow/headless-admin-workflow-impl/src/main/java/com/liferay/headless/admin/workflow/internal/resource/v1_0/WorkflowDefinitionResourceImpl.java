@@ -66,7 +66,7 @@ public class WorkflowDefinitionResourceImpl
 					null),
 				this::_toWorkflowDefinition),
 			pagination,
-			_workflowDefinitionManager.getLatestWorkflowDefinitionCount(
+			_workflowDefinitionManager.getLatestWorkflowDefinitionsCount(
 				contextCompany.getCompanyId()));
 	}
 

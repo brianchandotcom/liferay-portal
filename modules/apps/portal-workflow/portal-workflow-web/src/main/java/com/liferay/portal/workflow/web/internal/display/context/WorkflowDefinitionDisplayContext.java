@@ -494,20 +494,21 @@ public class WorkflowDefinitionDisplayContext {
 		return userName;
 	}
 
-	public int getWorkflowDefinitionCount(WorkflowDefinition workflowDefinition)
-		throws PortalException {
-
-		return WorkflowDefinitionManagerUtil.getWorkflowDefinitionCount(
-			_workflowDefinitionRequestHelper.getCompanyId(),
-			workflowDefinition.getName());
-	}
-
 	public List<WorkflowDefinition> getWorkflowDefinitions(String name)
 		throws PortalException {
 
 		return WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
 			_workflowDefinitionRequestHelper.getCompanyId(), name,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	public int getWorkflowDefinitionsCount(
+			WorkflowDefinition workflowDefinition)
+		throws PortalException {
+
+		return WorkflowDefinitionManagerUtil.getWorkflowDefinitionsCount(
+			_workflowDefinitionRequestHelper.getCompanyId(),
+			workflowDefinition.getName());
 	}
 
 	public List<WorkflowDefinition> getWorkflowDefinitionsOrderByDesc(

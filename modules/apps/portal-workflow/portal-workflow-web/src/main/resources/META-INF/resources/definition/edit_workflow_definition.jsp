@@ -171,7 +171,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 										<liferay-ui:message key="total-modifications" />
 									</dt>
 									<dd class="sidebar-dd">
-										<liferay-ui:message arguments='<%= new String[] {workflowDefinitionDisplayContext.getWorkflowDefinitionCount(workflowDefinition) + ""} %>' key="x-revisions" translateArguments="<%= false %>" />
+										<liferay-ui:message arguments='<%= new String[] {workflowDefinitionDisplayContext.getWorkflowDefinitionsCount(workflowDefinition) + ""} %>' key="x-revisions" translateArguments="<%= false %>" />
 									</dd>
 									<dt class="sidebar-dt"></dt>
 									<dd class="sidebar-dd"></dd>

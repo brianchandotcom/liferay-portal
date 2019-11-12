@@ -106,6 +106,8 @@ definition {
 	}
 
 	macro addFragment {
+		Pause(locator1 = "10000");
+
 		if (IsElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE", key_sidebarButton = "Fragments")) {
 			PageEditor.gotoTab(tabName = "Fragments");
 		}

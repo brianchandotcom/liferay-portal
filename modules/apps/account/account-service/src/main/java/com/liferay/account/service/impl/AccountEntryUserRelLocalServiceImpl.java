@@ -157,6 +157,19 @@ public class AccountEntryUserRelLocalServiceImpl
 		return accountEntryUserRelPersistence.countByAEI(accountEntryId);
 	}
 
+	@Override
+	public boolean hasAccountEntryUserRel(long accountEntryId, long userId) {
+		AccountEntryUserRel accountEntryUserRel =
+			accountEntryUserRelPersistence.fetchByAEI_AUI(
+				accountEntryId, userId);
+
+		if (accountEntryUserRel != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference
 	protected AccountEntryLocalService accountEntryLocalService;
 

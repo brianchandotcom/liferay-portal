@@ -121,6 +121,17 @@ public abstract class BaseFragmentCollectionContributor
 	}
 
 	@Override
+	public Map<Locale, String> getNames() {
+		_initialize();
+
+		if (_names != null) {
+			return Collections.unmodifiableMap(_names);
+		}
+
+		return Collections.emptyMap();
+	}
+
+	@Override
 	public ResourceBundleLoader getResourceBundleLoader() {
 		ServletContext servletContext = getServletContext();
 

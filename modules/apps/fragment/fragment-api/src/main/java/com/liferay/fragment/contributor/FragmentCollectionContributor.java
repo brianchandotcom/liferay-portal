@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Jürgen Kappler
@@ -50,6 +51,8 @@ public interface FragmentCollectionContributor {
 	public default String getName(Locale locale) {
 		return getName();
 	}
+
+	public Map<Locale, String> getNames();
 
 	public default ResourceBundleLoader getResourceBundleLoader() {
 		return ResourceBundleLoaderUtil.getPortalResourceBundleLoader();

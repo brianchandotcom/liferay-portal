@@ -97,7 +97,7 @@ public class DepotAdminManagementToolbarDisplayContext
 			liferayPortletResponse.createActionURL();
 
 		deleteDepotEntries.setParameter(
-			ActionRequest.ACTION_NAME, "/depot_entries/delete");
+			ActionRequest.ACTION_NAME, "/depot_entry/delete");
 
 		return HashMapBuilder.<String, Object>put(
 			"deleteDepotEntriesURL", deleteDepotEntries.toString()

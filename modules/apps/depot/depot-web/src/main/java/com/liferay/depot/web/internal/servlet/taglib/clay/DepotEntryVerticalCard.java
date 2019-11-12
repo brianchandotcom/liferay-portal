@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.util.GroupURLProvider;
 
@@ -76,6 +77,15 @@ public class DepotEntryVerticalCard
 	@Override
 	public String getIcon() {
 		return _group.getIconCssClass();
+	}
+
+	@Override
+	public String getInputValue() {
+		if (Validator.isNull(super.getInputValue())) {
+			return null;
+		}
+
+		return String.valueOf(_group.getClassPK());
 	}
 
 	@Override

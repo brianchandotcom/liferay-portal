@@ -43,8 +43,19 @@ public class DeleteDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_depotEntryLocalService.deleteDepotEntry(
-			ParamUtil.getLong(actionRequest, "depotEntryId"));
+		long depotEntryId = ParamUtil.getLong(actionRequest, "depotEntryId");
+
+		if (depotEntryId > 0) {
+			_depotEntryLocalService.deleteDepotEntry(depotEntryId);
+		}
+		else {
+			long[] deleteDepotEntryIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
+
+			for (long deleteDepotEntryId : deleteDepotEntryIds) {
+				_depotEntryLocalService.deleteDepotEntry(deleteDepotEntryId);
+			}
+		}
 	}
 
 	@Reference

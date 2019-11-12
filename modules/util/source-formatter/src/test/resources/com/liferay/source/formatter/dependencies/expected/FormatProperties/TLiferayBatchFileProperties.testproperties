@@ -1,0 +1,8 @@
+form.Advanced.displayName=Advanced
+form.Advanced.title=Advanced
+form.Main.displayName=Liferay Batch File
+form.Main.title=Liferay Batch File
+form.Reference.displayName=Liferay Batch File Reference
+form.Reference.title=Liferay Batch File Reference
+property.batchFilePath.displayName=Batch File Path
+property.entity.displayName=Target Entity DTO

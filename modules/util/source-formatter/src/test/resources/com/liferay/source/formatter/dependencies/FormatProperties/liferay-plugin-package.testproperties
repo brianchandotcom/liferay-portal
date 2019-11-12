@@ -1,0 +1,20 @@
+deploy-excludes=\
+    **/WEB-INF/lib/com.liferay.calendar.api.jar,\
+    **/WEB-INF/lib/com.liferay.calendar.service.jar,\
+    **/WEB-INF/lib/com.liferay.petra.content.jar,\
+    **/WEB-INF/lib/com.liferay.portal.dao.orm.custom.sql.api.jar,\
+    **/WEB-INF/lib/com.liferay.portal.spring.extender.jar,\
+    **/WEB-INF/lib/jericho-html.jar
+change-log=
+author=Liferay, Inc.
+Import-Package: com.liferay.portal.kernel.search.filter
+licenses=LGPL
+liferay-versions=7.2.0+
+module-group-id=liferay
+long-description=The Meetings app integrates your Liferay instance with the BigBlueButton and Zoom web conferencing services. You can use the meetings app to easily organize video conferences and automatically send email notifications to attendees. Attendees can join meetings by clicking the link in the notification email.<br /><br />The Meetings app installs the Meetings and Meetings Admin portlets. The Meetings portlet appears in the Applications menu's Social category. Meetings Admin appears in the Control Panel's Configuration section. Note that you must have an API key/URL and secret from the BigBlueButton or Zoom APIs.
+module-incremental-version=1
+name=Meetings EE
+page-url=http://www.liferay.com
+portal-dependency-tlds=c.tld
+short-description=
+tags=bbb, meetings, messaging, video chat, voice, voip, zoom

@@ -165,12 +165,13 @@ public abstract class BaseFragmentCollectionContributor
 				StringPool.BLANK,
 				FragmentExportImportConstants.FILE_NAME_FRAGMENT_CONFIG, true);
 
+			_fragmentEntries = new HashMap<>();
+			_fragmentEntryNames = new HashMap<>();
+
 			if (MapUtil.isEmpty(names) || !enumeration.hasMoreElements()) {
 				return;
 			}
 
-			_fragmentEntries = new HashMap<>();
-			_fragmentEntryNames = new HashMap<>();
 			_names = names;
 
 			while (enumeration.hasMoreElements()) {

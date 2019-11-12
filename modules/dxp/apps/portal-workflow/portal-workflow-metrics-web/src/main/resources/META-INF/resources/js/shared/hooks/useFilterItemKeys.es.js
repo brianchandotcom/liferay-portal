@@ -16,7 +16,7 @@ const useFilterItemKeys = (filterKeys, filterValues) => {
 		const filterItemKeys = {};
 
 		Object.entries(filterKeys).forEach(([key, value]) => {
-			if (filterValues[key] && filterValues[key]) {
+			if (filterValues && filterValues[key]) {
 				filterItemKeys[value] = filterValues[key].map(item => item.key);
 			}
 		});

@@ -48,7 +48,7 @@ public class ModulesPropertiesUtil {
 	public static String getContent(File portalDir) throws IOException {
 		StringBundler sb = new StringBundler();
 
-		Map<String, String> moduleInformationMap = getModuleInformationMap(
+		Map<String, String> moduleInformationMap = _getModuleInformationMap(
 			portalDir);
 
 		for (Map.Entry<String, String> entry :
@@ -67,7 +67,7 @@ public class ModulesPropertiesUtil {
 		return sb.toString();
 	}
 
-	protected static Map<String, String> getModuleInformationMap(File portalDir)
+	private static Map<String, String> _getModuleInformationMap(File portalDir)
 		throws IOException {
 
 		if (portalDir == null) {

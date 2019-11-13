@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS_NAVITEM_COLLAPSED</td>
+	<td>//div[contains(@class,'lfr-permission-navigation')]//li[contains(@class,'permission-navigation-section')]/a[contains(.,'${key_navItem}') and contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_NAVITEM_SUBITEM</td>
+	<td>//a[contains(.,'${key_navItem}') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//li[contains(@class,'permission-navigation-item')]/a[contains(.,'${key_subItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_FIELD</td>
 	<td>//input[contains(@id,'permissionNavigationSearch')]</td>
 	<td></td>

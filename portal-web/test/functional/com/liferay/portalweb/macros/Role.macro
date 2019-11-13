@@ -644,4 +644,18 @@ definition {
 		}
 	}
 
+	macro viewPermissionSubdirectory {
+		var key_navItem = "${navItem}";
+
+		if (IsElementPresent(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED")) {
+			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
+		}
+
+		for (var subItem : list "${subItemList}") {
+			var key_subItem = "${subItem}";
+
+			AssertElementPresent(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
+		}
+	}
+
 }

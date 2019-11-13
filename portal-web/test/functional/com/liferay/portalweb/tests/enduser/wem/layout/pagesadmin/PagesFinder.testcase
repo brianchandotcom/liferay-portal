@@ -80,6 +80,19 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-102544. Can navigate to both public and private pages from pages finder."
+	test NavigateToBothPageTypesViaPageFinder {
+		PagesFinder.goToFindAPage();
+
+		PagesFinder.selectPageType(optionValue = "Private Pages");
+
+		PagesFinder.navigateToPage(pageName = "Test Private Page");
+
+		PagesFinder.selectPageType(optionValue = "Public Pages");
+
+		PagesFinder.navigateToPage(pageName = "Test Portlet Page");
+	}
+
 	@description = "This is a test for LPS-90363. Assert that all page types can be found and counted in the pages finder."
 	@priority = "5"
 	test SearchAllPageTypes {

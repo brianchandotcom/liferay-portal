@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.theme.builder</artifactId>
-	<version>1.1.7</version>
+	<version>1.1.8</version>
 	<goalPrefix>theme-builder</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>
@@ -99,13 +99,13 @@
 				</parameter>
 			</parameters>
 			<configuration>
-				<_pluginDescriptor default-value="${plugin}" implementation="org.apache.maven.plugin.descriptor.PluginDescriptor"/>
+				<_pluginDescriptor implementation="org.apache.maven.plugin.descriptor.PluginDescriptor" default-value="${plugin}"/>
 				<_project implementation="org.apache.maven.project.MavenProject">${project}</_project>
 				<_repositorySystemSession implementation="org.eclipse.aether.RepositorySystemSession">${repositorySystemSession}</_repositorySystemSession>
-				<diffsDir default-value="${maven.war.src}" implementation="java.io.File"/>
-				<name default-value="${project.artifactId}" implementation="java.lang.String"/>
-				<outputDir default-value="${project.build.directory}/${project.build.finalName}" implementation="java.io.File"/>
-				<templateExtension default-value="ftl" implementation="java.lang.String"/>
+				<diffsDir implementation="java.io.File" default-value="${maven.war.src}"/>
+				<name implementation="java.lang.String" default-value="${project.artifactId}"/>
+				<outputDir implementation="java.io.File" default-value="${project.build.directory}/${project.build.finalName}"/>
+				<templateExtension implementation="java.lang.String" default-value="ftl"/>
 			</configuration>
 			<requirements>
 				<requirement>

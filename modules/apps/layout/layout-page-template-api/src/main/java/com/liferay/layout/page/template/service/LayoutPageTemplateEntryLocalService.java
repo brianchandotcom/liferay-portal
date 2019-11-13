@@ -82,20 +82,21 @@ public interface LayoutPageTemplateEntryLocalService
 			LayoutPrototype layoutPrototype)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addLayoutPageTemplateEntry(long, long, long, long, long,
-	 String, int, boolean, long, long, long, int,
-	 ServiceContext)}}
-	 */
-	@Deprecated
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long classNameId, long classTypeId, String name, int type,
 			boolean defaultTemplate, long layoutPrototypeId,
-			long previewFileEntryId, int status, ServiceContext serviceContext)
+			long previewFileEntryId, long plid, int status,
+			long masterLayoutPlid, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int, long,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long classNameId, long classTypeId, String name, int type,
@@ -112,53 +113,19 @@ public interface LayoutPageTemplateEntryLocalService
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, int status, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addLayoutPageTemplateEntry(long, long, long, long, long,
-	 String, int, boolean, long, long, long, int, ServiceContext)}
-	 */
-	@Deprecated
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, long layoutPrototypeId, int status,
+			String name, int type, int status, long masterLayoutPlid,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addLayoutPageTemplateEntry(long, long, long, long, long,
-	 String, int, boolean, long, long, long, int, ServiceContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, String, int,
+	 int, long, ServiceContext)}
 	 */
 	@Deprecated
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, long layoutPrototypeId,
-			long previewFileEntryId, int status, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addLayoutPageTemplateEntry(long, long, long, long, long,
-	 String, int, boolean, long, long, long, int, ServiceContext)}
-	 */
-	@Deprecated
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addLayoutPageTemplateEntry(long, long, long, long, long,
-	 String, int, boolean, long, long, long, int, ServiceContext)}
-	 */
-	@Deprecated
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, ServiceContext serviceContext)
+			String name, int type, int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutPageTemplateEntry copyLayoutPageTemplateEntry(
@@ -284,15 +251,6 @@ public interface LayoutPageTemplateEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId);
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #fetchLayoutPageTemplateEntry(long, String, int)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
-		long groupId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
@@ -474,14 +432,6 @@ public interface LayoutPageTemplateEntryLocalService
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long previewFileEntryId)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
 		throws PortalException;
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(

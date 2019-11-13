@@ -42,6 +42,25 @@ public class LayoutPageTemplateEntryServiceWrapper
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(
 				long groupId, long layoutPageTemplateCollectionId, String name,
+				int type, int status, long masterLayoutPlid,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+			groupId, layoutPageTemplateCollectionId, name, type, status,
+			masterLayoutPlid, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, String, int, int,
+	 long, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+			addLayoutPageTemplateEntry(
+				long groupId, long layoutPageTemplateCollectionId, String name,
 				int type, int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -62,42 +81,6 @@ public class LayoutPageTemplateEntryServiceWrapper
 		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 			groupId, layoutPageTemplateCollectionId, name, status, classNameId,
 			classTypeId, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addLayoutPageTemplateEntry(long, long, String, int, int,
-	 ServiceContext)} ()}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
-			addLayoutPageTemplateEntry(
-				long groupId, long layoutPageTemplateCollectionId, String name,
-				int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-			groupId, layoutPageTemplateCollectionId, name, type,
-			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addLayoutPageTemplateEntry(long, long, String, int, int,
-	 ServiceContext)} ()}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
-			addLayoutPageTemplateEntry(
-				long groupId, long layoutPageTemplateCollectionId, String name,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-			groupId, layoutPageTemplateCollectionId, name, serviceContext);
 	}
 
 	@Override
@@ -148,19 +131,6 @@ public class LayoutPageTemplateEntryServiceWrapper
 
 		return _layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
 			layoutPageTemplateEntryId);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
-			fetchLayoutPageTemplateEntry(long groupId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
-			groupId, name);
 	}
 
 	@Override
@@ -558,21 +528,6 @@ public class LayoutPageTemplateEntryServiceWrapper
 
 		return _layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntryId, previewFileEntryId);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
-			updateLayoutPageTemplateEntry(
-				long layoutPageTemplateEntryId, long classNameId,
-				long classTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntryId, classNameId, classTypeId);
 	}
 
 	@Override

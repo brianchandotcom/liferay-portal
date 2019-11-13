@@ -65,6 +65,39 @@ public class LayoutPageTemplateEntryServiceSoap {
 		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
 				addLayoutPageTemplateEntry(
 					long groupId, long layoutPageTemplateCollectionId,
+					String name, int type, int status, long masterLayoutPlid,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws RemoteException {
+
+		try {
+			com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+				returnValue =
+					LayoutPageTemplateEntryServiceUtil.
+						addLayoutPageTemplateEntry(
+							groupId, layoutPageTemplateCollectionId, name, type,
+							status, masterLayoutPlid, serviceContext);
+
+			return com.liferay.layout.page.template.model.
+				LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, String, int, int,
+	 long, ServiceContext)}
+	 */
+	@Deprecated
+	public static
+		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
+				addLayoutPageTemplateEntry(
+					long groupId, long layoutPageTemplateCollectionId,
 					String name, int type, int status,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
@@ -104,72 +137,6 @@ public class LayoutPageTemplateEntryServiceSoap {
 						addLayoutPageTemplateEntry(
 							groupId, layoutPageTemplateCollectionId, name,
 							status, classNameId, classTypeId, serviceContext);
-
-			return com.liferay.layout.page.template.model.
-				LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addLayoutPageTemplateEntry(long, long, String, int, int,
-	 ServiceContext)} ()}
-	 */
-	@Deprecated
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
-				addLayoutPageTemplateEntry(
-					long groupId, long layoutPageTemplateCollectionId,
-					String name, int type,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws RemoteException {
-
-		try {
-			com.liferay.layout.page.template.model.LayoutPageTemplateEntry
-				returnValue =
-					LayoutPageTemplateEntryServiceUtil.
-						addLayoutPageTemplateEntry(
-							groupId, layoutPageTemplateCollectionId, name, type,
-							serviceContext);
-
-			return com.liferay.layout.page.template.model.
-				LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addLayoutPageTemplateEntry(long, long, String, int, int,
-	 ServiceContext)} ()}
-	 */
-	@Deprecated
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
-				addLayoutPageTemplateEntry(
-					long groupId, long layoutPageTemplateCollectionId,
-					String name,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws RemoteException {
-
-		try {
-			com.liferay.layout.page.template.model.LayoutPageTemplateEntry
-				returnValue =
-					LayoutPageTemplateEntryServiceUtil.
-						addLayoutPageTemplateEntry(
-							groupId, layoutPageTemplateCollectionId, name,
-							serviceContext);
 
 			return com.liferay.layout.page.template.model.
 				LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
@@ -278,31 +245,6 @@ public class LayoutPageTemplateEntryServiceSoap {
 				returnValue =
 					LayoutPageTemplateEntryServiceUtil.
 						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
-
-			return com.liferay.layout.page.template.model.
-				LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
-				fetchLayoutPageTemplateEntry(long groupId, String name)
-			throws RemoteException {
-
-		try {
-			com.liferay.layout.page.template.model.LayoutPageTemplateEntry
-				returnValue =
-					LayoutPageTemplateEntryServiceUtil.
-						fetchLayoutPageTemplateEntry(groupId, name);
 
 			return com.liferay.layout.page.template.model.
 				LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
@@ -1119,35 +1061,6 @@ public class LayoutPageTemplateEntryServiceSoap {
 					LayoutPageTemplateEntryServiceUtil.
 						updateLayoutPageTemplateEntry(
 							layoutPageTemplateEntryId, previewFileEntryId);
-
-			return com.liferay.layout.page.template.model.
-				LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
-				updateLayoutPageTemplateEntry(
-					long layoutPageTemplateEntryId, long classNameId,
-					long classTypeId)
-			throws RemoteException {
-
-		try {
-			com.liferay.layout.page.template.model.LayoutPageTemplateEntry
-				returnValue =
-					LayoutPageTemplateEntryServiceUtil.
-						updateLayoutPageTemplateEntry(
-							layoutPageTemplateEntryId, classNameId,
-							classTypeId);
 
 			return com.liferay.layout.page.template.model.
 				LayoutPageTemplateEntrySoap.toSoapModel(returnValue);

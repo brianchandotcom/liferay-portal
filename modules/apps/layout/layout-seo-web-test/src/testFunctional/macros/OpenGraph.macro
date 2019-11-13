@@ -25,6 +25,33 @@ definition {
 				locator1 = "TextArea#ANY",
 				value1 = "${customDescription}");
 		}
+		if (isSet(customImage)) {
+			var key_uploadFileName = "${uploadFileName}";
+
+			Click(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");
+
+			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+			AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
+
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "${uploadFileName}");
+
+			SelectFrameTop(value1 = "relative=top");
+
+			PortletEntry.save();
+
+			Click(
+				key_pageName = "${pageName}",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.click(menuItem = "Configure");
+
+			AssertElementPresent(
+				key_dmDocumentURL = "${uploadFileName}",
+				locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_INPUT");
+		}
 
 		PortletEntry.save();
 	}

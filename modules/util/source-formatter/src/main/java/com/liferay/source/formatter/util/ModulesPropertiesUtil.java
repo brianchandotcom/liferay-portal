@@ -67,6 +67,57 @@ public class ModulesPropertiesUtil {
 		return sb.toString();
 	}
 
+	private static String _getBundleSymbolicName(
+		String bndContent, String absolutePath) {
+
+		if (absolutePath.endsWith("/portal-impl/bnd.bnd")) {
+			return "com.liferay.portal.impl";
+		}
+
+		if (absolutePath.endsWith("/portal-kernel/bnd.bnd")) {
+			return "com.liferay.portal.kernel";
+		}
+
+		if (absolutePath.endsWith("/portal-test-integration/bnd.bnd")) {
+			return "com.liferay.portal.test.integration";
+		}
+
+		if (absolutePath.endsWith("/portal-test/bnd.bnd")) {
+			return "com.liferay.portal.test";
+		}
+
+		if (absolutePath.endsWith("/portal-support-tomcat/bnd.bnd")) {
+			return "com.liferay.support.tomcat";
+		}
+
+		if (absolutePath.endsWith("/util-bridges/bnd.bnd")) {
+			return "com.liferay.util.bridges";
+		}
+
+		if (absolutePath.endsWith("/util-java/bnd.bnd")) {
+			return "com.liferay.util.java";
+		}
+
+		if (absolutePath.endsWith("/util-slf4j/bnd.bnd")) {
+			return "com.liferay.util.slf4j";
+		}
+
+		if (absolutePath.endsWith("/util-taglib/bnd.bnd")) {
+			return "com.liferay.util.taglib";
+		}
+
+		String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
+			bndContent, "Bundle-SymbolicName");
+
+		if (Validator.isNotNull(bundleSymbolicName) &&
+			bundleSymbolicName.startsWith("com.liferay.")) {
+
+			return bundleSymbolicName;
+		}
+
+		return null;
+	}
+
 	private static Map<String, String> _getModuleInformationMap(File portalDir)
 		throws IOException {
 
@@ -155,57 +206,6 @@ public class ModulesPropertiesUtil {
 			});
 
 		return moduleInformationMap;
-	}
-
-	private static String _getBundleSymbolicName(
-		String bndContent, String absolutePath) {
-
-		if (absolutePath.endsWith("/portal-impl/bnd.bnd")) {
-			return "com.liferay.portal.impl";
-		}
-
-		if (absolutePath.endsWith("/portal-kernel/bnd.bnd")) {
-			return "com.liferay.portal.kernel";
-		}
-
-		if (absolutePath.endsWith("/portal-test-integration/bnd.bnd")) {
-			return "com.liferay.portal.test.integration";
-		}
-
-		if (absolutePath.endsWith("/portal-test/bnd.bnd")) {
-			return "com.liferay.portal.test";
-		}
-
-		if (absolutePath.endsWith("/portal-support-tomcat/bnd.bnd")) {
-			return "com.liferay.support.tomcat";
-		}
-
-		if (absolutePath.endsWith("/util-bridges/bnd.bnd")) {
-			return "com.liferay.util.bridges";
-		}
-
-		if (absolutePath.endsWith("/util-java/bnd.bnd")) {
-			return "com.liferay.util.java";
-		}
-
-		if (absolutePath.endsWith("/util-slf4j/bnd.bnd")) {
-			return "com.liferay.util.slf4j";
-		}
-
-		if (absolutePath.endsWith("/util-taglib/bnd.bnd")) {
-			return "com.liferay.util.taglib";
-		}
-
-		String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
-			bndContent, "Bundle-SymbolicName");
-
-		if (Validator.isNotNull(bundleSymbolicName) &&
-			bundleSymbolicName.startsWith("com.liferay.")) {
-
-			return bundleSymbolicName;
-		}
-
-		return null;
 	}
 
 	private static final String[] _SKIP_DIR_NAMES = {

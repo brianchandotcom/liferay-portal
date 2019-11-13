@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -57,6 +59,7 @@ import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -267,6 +270,16 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 				sharingEntryId, serviceContext);
 		}
 
+		String portletId = (String)actionRequest.getAttribute(
+			WebKeys.PORTLET_ID);
+
+		PortletConfig portletConfig = PortletConfigFactoryUtil.get(portletId);
+
+		SessionMessages.add(
+			actionRequest,
+			portletConfig.getPortletName() +
+				_KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+
 		JSONObject jsonObject = JSONUtil.put(
 			"successMessage",
 			LanguageUtil.get(resourceBundle, "permissions-changed"));
@@ -274,6 +287,9 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
+
+	private static final String _KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE =
+		".hideDefaultSuccessMessage";
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

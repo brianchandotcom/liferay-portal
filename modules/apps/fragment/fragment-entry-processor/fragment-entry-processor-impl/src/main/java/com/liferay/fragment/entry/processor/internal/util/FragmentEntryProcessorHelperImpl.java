@@ -139,7 +139,8 @@ public class FragmentEntryProcessorHelperImpl
 
 		String fieldId = jsonObject.getString("fieldId");
 
-		Object fieldValue = fieldsValues.getOrDefault(fieldId, StringPool.BLANK);
+		Object fieldValue = fieldsValues.getOrDefault(
+			fieldId, StringPool.BLANK);
 
 		if (fieldValue == null) {
 			return null;

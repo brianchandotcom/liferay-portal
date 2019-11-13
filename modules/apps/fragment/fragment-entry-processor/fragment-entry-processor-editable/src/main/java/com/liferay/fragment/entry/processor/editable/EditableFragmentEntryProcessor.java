@@ -163,7 +163,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				JSONFactoryUtil.createJSONObject();
 
 			if (_fragmentEntryProcessorHelper.isAssetDisplayPage(
-					fragmentEntryProcessorContext.getMode())) {
+					fragmentEntryProcessorContext.getMode()) &&
+				editableValueJSONObject.has("mappedField")) {
 
 				value = editableValueJSONObject.getString("mappedField");
 
@@ -181,9 +182,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 						value, fragmentEntryProcessorContext);
 				}
 			}
-
-			if (_fragmentEntryProcessorHelper.isMapped(
-					editableValueJSONObject)) {
+			else if (_fragmentEntryProcessorHelper.isMapped(
+						editableValueJSONObject)) {
 
 				Object fieldValue =
 					_fragmentEntryProcessorHelper.getMappedValue(
@@ -205,8 +205,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 						value, fragmentEntryProcessorContext);
 				}
 			}
-
-			if (Validator.isNull(value)) {
+			else {
 				value = _fragmentEntryProcessorHelper.getEditableValue(
 					editableValueJSONObject,
 					fragmentEntryProcessorContext.getLocale(),

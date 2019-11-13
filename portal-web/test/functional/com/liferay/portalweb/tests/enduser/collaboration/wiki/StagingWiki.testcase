@@ -340,14 +340,17 @@ definition {
 
 		WikiPage.renameWikiPageCP(
 			wikiPageTitle = "Child Page Title",
-			wikiPageTitleRename = "Child Page Title Rename");
+			wikiPageTitleRename = "Rename Page Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
-		Staging.publishCustomPublication();
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(checkContentNameList = "Wiki");
+
+		Staging.publishToLive();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -360,14 +363,17 @@ definition {
 
 		WikiPage.renameWikiPageCP(
 			wikiPageTitle = "Child Page Title",
-			wikiPageTitleRename = "Child Page Title Rename 1");
+			wikiPageTitleRename = "Rename Page Title 1");
 
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
-		Staging.publishCustomPublication();
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(checkContentNameList = "Wiki");
+
+		Staging.publishToLive();
 
 		ProductMenu.gotoLiveSite();
 

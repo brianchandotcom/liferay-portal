@@ -37,9 +37,7 @@ public class LiferayBatchFileWriteOperation implements WriteOperation<Result> {
 
 	@Override
 	public Writer<Result> createWriter(RuntimeContainer runtimeContainer) {
-		return new LiferayBatchFileWriter(
-			this, _liferayBatchFileSink.getLiferayBatchFileProperties(),
-			runtimeContainer);
+		return new LiferayBatchFileWriter(this, runtimeContainer);
 	}
 
 	@Override

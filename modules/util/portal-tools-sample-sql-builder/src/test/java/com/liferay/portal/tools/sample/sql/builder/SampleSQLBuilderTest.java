@@ -130,6 +130,7 @@ public class SampleSQLBuilderTest {
 		properties.put("sample.sql.max.commerce.product.count", "1");
 		properties.put("sample.sql.max.commerce.product.definition.count", "1");
 		properties.put("sample.sql.max.commerce.product.instance.count", "1");
+		properties.put("sample.sql.max.content.page.count", "1");
 		properties.put("sample.sql.max.ddl.custom.field.count", "1");
 		properties.put("sample.sql.max.ddl.record.count", "1");
 		properties.put("sample.sql.max.ddl.record.set.count", "1");

@@ -25,6 +25,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -138,7 +139,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		String fieldId = jsonObject.getString("fieldId");
 
-		Object fieldValue = fieldsValues.getOrDefault(fieldId, null);
+		Object fieldValue = fieldsValues.getOrDefault(fieldId, StringPool.BLANK);
 
 		if (fieldValue == null) {
 			return null;

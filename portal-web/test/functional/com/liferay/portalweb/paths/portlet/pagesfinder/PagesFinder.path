@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_NAME</td>
+	<td>//a[contains(@class,'layout-tree')][contains(.,'${pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TYPE_SELECTOR</td>
+	<td>//div[contains(@class,'page-type-selector')]//select[contains(@class,'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_IN_PAGE_ADMINISTRATION</td>
 	<td>//div[contains(@id,'layout-finder')]//a[contains(.,"View in Page Administration")]</td>
 	<td></td>

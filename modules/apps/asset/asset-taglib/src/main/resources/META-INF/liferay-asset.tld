@@ -137,7 +137,7 @@
 	</tag>
 	<tag>
 		<name>asset-categories-selector</name>
-		<tag-class>com.liferay.asset.taglib.servlet.taglib.soy.AssetCategoriesSelectorTag</tag-class>
+		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetCategoriesSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>categoryIds</name>

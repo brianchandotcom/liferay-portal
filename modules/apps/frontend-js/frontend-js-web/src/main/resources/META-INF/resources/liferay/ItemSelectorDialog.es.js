@@ -44,6 +44,9 @@ class ItemSelectorDialog extends Component {
 					destroyOnHide: true,
 					modal: true,
 					on: {
+						click: event => {
+							event.domEvent.preventDefault();
+						},
 						visibleChange: event => {
 							if (!event.newVal) {
 								this.selectedItem = this._selectedItem;

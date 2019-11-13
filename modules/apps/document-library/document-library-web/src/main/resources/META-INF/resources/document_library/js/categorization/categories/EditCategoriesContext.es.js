@@ -12,10 +12,17 @@
  * details.
  */
 
-export {
-	default as AssetTagsSelector
-} from './asset_tags_selector/AssetTagsSelector.es';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-export {
-	default as AssetCategoriesSelector
-} from './asset_categories_selector/AssetCategoriesSelector.es';
+const EditCategoriesContext = React.createContext({
+	namespace: ''
+});
+
+EditCategoriesContext.Provider.propTypes = {
+	value: PropTypes.shape({
+		namespace: PropTypes.string
+	})
+};
+
+export default EditCategoriesContext;

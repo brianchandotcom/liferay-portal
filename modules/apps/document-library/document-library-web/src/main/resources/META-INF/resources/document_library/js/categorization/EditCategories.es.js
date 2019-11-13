@@ -12,7 +12,7 @@
  * details.
  */
 
-import 'asset-taglib/asset_categories_selector/AssetCategoriesSelector.es';
+import 'asset-taglib/asset_categories_selector/soy/AssetCategoriesSelector.es';
 
 import 'clay-alert';
 

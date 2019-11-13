@@ -14,28 +14,20 @@
 
 package com.liferay.item.selector.taglib.servlet.taglib;
 
+import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.item.selector.taglib.internal.util.GroupItemSelectorTrackerUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -69,25 +61,55 @@ public class GroupSelectorTag extends IncludeTag {
 	}
 
 	protected List<Group> getGroups(HttpServletRequest httpServletRequest) {
-		if (isRepositories(httpServletRequest)) {
-			return Collections.emptyList();
-		}
+		Optional<GroupItemSelectorProvider> groupItemSelectorProviderOptional =
+			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
+				getGroupType(httpServletRequest));
 
-		if (_groups == null) {
-			_searchGroups(httpServletRequest);
-		}
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
+
+		int cur = ParamUtil.getInteger(
+			httpServletRequest, SearchContainer.DEFAULT_CUR_PARAM,
+			SearchContainer.DEFAULT_CUR);
+		int delta = ParamUtil.getInteger(
+			httpServletRequest, SearchContainer.DEFAULT_DELTA_PARAM,
+			SearchContainer.DEFAULT_DELTA);
+
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			cur, delta);
+
+		_groups = groupItemSelectorProviderOptional.map(
+			groupItemSelectorProvider -> groupItemSelectorProvider.getGroups(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				keywords, startAndEnd[0], startAndEnd[1])
+		).orElse(
+			Collections.emptyList()
+		);
 
 		return _groups;
 	}
 
 	protected int getGroupsCount(HttpServletRequest httpServletRequest) {
-		if (isRepositories(httpServletRequest)) {
-			return 0;
-		}
+		Optional<GroupItemSelectorProvider> groupSelectorProviderOptional =
+			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
+				getGroupType(httpServletRequest));
 
-		if (_groupsCount < 0) {
-			_searchGroups(httpServletRequest);
-		}
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
+
+		_groupsCount = groupSelectorProviderOptional.map(
+			groupSelectorProvider -> groupSelectorProvider.getGroupCount(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				keywords)
+		).orElse(
+			0
+		);
 
 		return _groupsCount;
 	}
@@ -101,10 +123,6 @@ public class GroupSelectorTag extends IncludeTag {
 		return "/group_selector/page.jsp";
 	}
 
-	protected boolean isRepositories(HttpServletRequest httpServletRequest) {
-		return ParamUtil.getBoolean(httpServletRequest, "repositories");
-	}
-
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
@@ -114,55 +132,6 @@ public class GroupSelectorTag extends IncludeTag {
 			"liferay-item-selector:group-selector:groupsCount",
 			getGroupsCount(httpServletRequest));
 	}
-
-	private void _searchGroups(HttpServletRequest httpServletRequest) {
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			String keywords = ParamUtil.getString(
-				httpServletRequest, "keywords");
-
-			LinkedHashMap<String, Object> groupParams =
-				LinkedHashMapBuilder.<String, Object>put(
-					"site", Boolean.TRUE
-				).build();
-
-			List<Group> groups = GroupServiceUtil.search(
-				themeDisplay.getCompanyId(), _CLASS_NAME_IDS, keywords,
-				groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			int cur = ParamUtil.getInteger(
-				httpServletRequest, SearchContainer.DEFAULT_CUR_PARAM,
-				SearchContainer.DEFAULT_CUR);
-			int delta = ParamUtil.getInteger(
-				httpServletRequest, SearchContainer.DEFAULT_DELTA_PARAM,
-				SearchContainer.DEFAULT_DELTA);
-
-			int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
-				cur, delta);
-
-			_groups = ListUtil.subList(groups, startAndEnd[0], startAndEnd[1]);
-
-			_groupsCount = groups.size();
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-
-			_groups = Collections.emptyList();
-			_groupsCount = 0;
-		}
-	}
-
-	private static final long[] _CLASS_NAME_IDS = {
-		ClassNameLocalServiceUtil.getClassNameId(Company.class),
-		ClassNameLocalServiceUtil.getClassNameId(Group.class),
-		ClassNameLocalServiceUtil.getClassNameId(Organization.class)
-	};
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		GroupSelectorTag.class);
 
 	private List<Group> _groups;
 	private int _groupsCount = -1;

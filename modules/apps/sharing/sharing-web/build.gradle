@@ -10,6 +10,7 @@ dependencies {
 	compileOnly project(":apps:comment:comment-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:portal-portlet-bridge:portal-portlet-bridge-soy-api")
 	compileOnly project(":apps:product-navigation:product-navigation-personal-menu-api")

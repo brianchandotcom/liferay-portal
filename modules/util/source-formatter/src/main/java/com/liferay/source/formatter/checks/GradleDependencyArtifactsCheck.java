@@ -32,12 +32,14 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		content = _renameDependencyArtifacts(absolutePath, content);
+		content = _renameDependencyNames(absolutePath, content);
 
-		return _fixDependencyVersions(absolutePath, content);
+		return _enforceDependencyVersions(absolutePath, content);
 	}
 
-	private String _fixDependencyVersions(String absolutePath, String content) {
+	private String _enforceDependencyVersions(
+		String absolutePath, String content) {
+
 		List<String> enforceVersionArtifacts = getAttributeValues(
 			_ENFORCE_VERSION_ARTIFACTS_KEY, absolutePath);
 
@@ -69,9 +71,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 			"group: \"", array[0], "\", name: \"", array[1], "\"");
 	}
 
-	private String _renameDependencyArtifacts(
-		String absolutePath, String content) {
-
+	private String _renameDependencyNames(String absolutePath, String content) {
 		List<String> renameArtifacts = getAttributeValues(
 			_RENAME_ARTIFACTS_KEY, absolutePath);
 

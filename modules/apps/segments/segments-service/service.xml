@@ -345,6 +345,7 @@
 		<exception>LockedSegmentsExperiment</exception>
 		<exception>RequiredSegmentsEntry</exception>
 		<exception>RequiredSegmentsExperience</exception>
+		<exception>RunSegmentsExperiment</exception>
 		<exception>SegmentsEntryCriteria</exception>
 		<exception>SegmentsEntryKey</exception>
 		<exception>SegmentsEntryName</exception>

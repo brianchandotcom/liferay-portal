@@ -71,6 +71,18 @@ definition {
 		return "${privateLayout}";
 	}
 
+	macro setServiceContext {
+		if (!(isSet(serviceContext))) {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				addGuestPermissions = "true",
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				workflowAction = "${workflowAction}");
+		}
+
+		return "${serviceContext}";
+	}
+
 	macro setSite {
 		if (!(isSet(site))) {
 			var site = "true";

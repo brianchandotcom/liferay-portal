@@ -101,16 +101,16 @@ public class DepotAdminDisplayContext {
 		return _groupSearch;
 	}
 
-	public String getHref(Group curGroup) {
-		return _groupURLProvider.getGroupURL(curGroup, _liferayPortletRequest);
-	}
-
 	public PortletURL getIteratorURL() {
 		return getGroupSearch().getIteratorURL();
 	}
 
 	public String getSearchContainerId() {
 		return "depotEntries";
+	}
+
+	public String getViewDepotURL(Group group) {
+		return _groupURLProvider.getGroupURL(group, _liferayPortletRequest);
 	}
 
 	public boolean isDisplayStyleDescriptive() {

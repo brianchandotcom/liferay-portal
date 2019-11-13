@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.io.ByteArrayOutputStream;
@@ -40,6 +42,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Level;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -108,7 +111,11 @@ public class BatchEngineImportTaskExecutorTest
 
 		String content = sb.toString();
 
-		try {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+					Level.ERROR)) {
+
 			_importBlogPostings(
 				BatchEngineTaskOperation.CREATE,
 				content.getBytes(StandardCharsets.UTF_8), "CSV", null);
@@ -137,7 +144,11 @@ public class BatchEngineImportTaskExecutorTest
 
 		String content = sb.toString();
 
-		try {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+					Level.ERROR)) {
+
 			_importBlogPostings(
 				BatchEngineTaskOperation.CREATE,
 				content.getBytes(StandardCharsets.UTF_8), "JSON", null);
@@ -162,7 +173,11 @@ public class BatchEngineImportTaskExecutorTest
 
 		String content = sb.toString();
 
-		try {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+					Level.ERROR)) {
+
 			_importBlogPostings(
 				BatchEngineTaskOperation.CREATE,
 				content.getBytes(StandardCharsets.UTF_8), "JSONL", null);
@@ -188,7 +203,11 @@ public class BatchEngineImportTaskExecutorTest
 			dateFormat.format(new Date(baseDate.getTime())), "headline",
 			group.getGroupId(), "unknownValue");
 
-		try {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+					Level.ERROR)) {
+
 			_importBlogPostings(
 				BatchEngineTaskOperation.CREATE, _toContent(xssfWorkbook),
 				"XLS", null);
@@ -778,6 +797,11 @@ public class BatchEngineImportTaskExecutorTest
 		"alternativeHeadline1", "articleBody1", "datePublished1", "headline1",
 		"siteId1"
 	};
+
+	private static final String
+		_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL =
+			"com.liferay.batch.engine.internal." +
+				"BatchEngineImportTaskExecutorImpl";
 
 	private static Map<String, String> _fieldNamesMappingMap;
 

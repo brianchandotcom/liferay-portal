@@ -1,6 +1,11 @@
 {
 	"dependencies": {
+		"@clayui/button": "3.0.2",
 		"@clayui/charts": "3.0.2",
+		"@clayui/form": "3.2.0",
+		"@clayui/icon": "3.0.1",
+		"@clayui/management-toolbar": "3.0.3",
+		"@clayui/table": "3.0.3",
 		"axios": "0.18.1",
 		"classnames": "2.2.6",
 		"custom-event-polyfill": "1.0.6",

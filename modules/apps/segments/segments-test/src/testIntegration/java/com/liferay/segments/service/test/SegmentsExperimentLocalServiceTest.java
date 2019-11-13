@@ -37,6 +37,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.exception.LockedSegmentsExperimentException;
+import com.liferay.segments.exception.RunSegmentsExperimentException;
 import com.liferay.segments.exception.SegmentsExperimentConfidenceLevelException;
 import com.liferay.segments.exception.SegmentsExperimentGoalException;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
@@ -532,6 +533,52 @@ public class SegmentsExperimentLocalServiceTest {
 			segmentsExperienceIdSplitMap.get(
 				variantSegmentsExperimentRel.getSegmentsExperienceId()),
 			variantSegmentsExperimentRel.getSplit(), 0.001);
+	}
+
+	@Test(expected = RunSegmentsExperimentException.class)
+	public void testRunSegmentsExperimentWithClickGoalAndEmptyTarget()
+		throws Exception {
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			SegmentsExperimentConstants.Goal.CLICK_RATE.getLabel(),
+			StringPool.BLANK);
+
+		SegmentsExperience variantSegmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				segmentsExperiment.getGroupId(),
+				segmentsExperiment.getClassNameId(),
+				segmentsExperiment.getClassPK());
+
+		Map<Long, Double> segmentsExperienceIdSplitMap = HashMapBuilder.put(
+			segmentsExperiment.getSegmentsExperienceId(), 0.70
+		).put(
+			variantSegmentsExperience.getSegmentsExperienceId(), 0.30
+		).build();
+
+		double confidenceLevel = 0.95;
+
+		_segmentsExperimentLocalService.runSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentId(), confidenceLevel,
+			segmentsExperienceIdSplitMap);
+	}
+
+	@Test(expected = RunSegmentsExperimentException.class)
+	public void testRunSegmentsExperimentWithControlVariant() throws Exception {
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		double confidenceLevel = 0.95;
+
+		Map<Long, Double> segmentsExperienceIdSplitMap = HashMapBuilder.put(
+			segmentsExperiment.getSegmentsExperienceId(), 1.00
+		).build();
+
+		_segmentsExperimentLocalService.runSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentId(), confidenceLevel,
+			segmentsExperienceIdSplitMap);
 	}
 
 	@Test(expected = SegmentsExperimentConfidenceLevelException.class)

@@ -253,7 +253,13 @@ definition {
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
+		var categoryId = JSONCategory.getCategoryId(
+			categoryName = "Category Name",
+			groupName = "Test Site Name",
+			vocabularyName = "Vocabulary Name");
+
 		JSONLayout.addPublicLayout(
+			assetCategoryIds = "${categoryId}",
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
 

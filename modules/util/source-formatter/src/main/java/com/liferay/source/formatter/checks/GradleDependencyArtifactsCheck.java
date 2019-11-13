@@ -45,7 +45,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 		content = _enforceDependencyVersions(absolutePath, content);
 
-		Matcher matcher = _versionPattern.matcher(content);
+		Matcher matcher = _artifactPattern.matcher(content);
 
 		while (matcher.find()) {
 			String name = matcher.group(3);
@@ -299,12 +299,12 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 	private static final String _RENAME_ARTIFACTS_KEY = "renameArtifacts";
 
+	private static final Pattern _artifactPattern = Pattern.compile(
+		"\n\t*(.* (group: \"[^\"]+\", name: \"([^\"]+)\", " +
+			"version: \"([^\"]+)\"))");
 	private static final Pattern _bndConditionalPackagePattern =
 		Pattern.compile(
 			"-conditionalpackage:(.*[^\\\\])(\n|\\Z)", Pattern.DOTALL);
-	private static final Pattern _versionPattern = Pattern.compile(
-		"\n\t*(.* (group: \"[^\"]+\", name: \"([^\"]+)\", " +
-			"version: \"([^\"]+)\"))");
 
 	private Map<String, String> _projectNamesMap;
 

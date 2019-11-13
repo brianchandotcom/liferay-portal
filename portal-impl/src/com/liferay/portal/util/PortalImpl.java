@@ -5873,6 +5873,10 @@ public class PortalImpl implements Portal {
 		TreeMap<String, String> virtualHostnames = getVirtualHostnames(
 			layoutSet);
 
+		if (virtualHostnames.isEmpty()) {
+			return layoutSet.getCompanyFallbackVirtualHostname();
+		}
+
 		return virtualHostnames.firstKey();
 	}
 
@@ -5885,8 +5889,15 @@ public class PortalImpl implements Portal {
 			return virtualHostnames;
 		}
 
+		String companyFallbackVirtualHostname =
+			layoutSet.getCompanyFallbackVirtualHostname();
+
+		if (Validator.isNull(companyFallbackVirtualHostname)) {
+			return virtualHostnames;
+		}
+
 		return TreeMapBuilder.put(
-			layoutSet.getCompanyFallbackVirtualHostname(), StringPool.BLANK
+			companyFallbackVirtualHostname, StringPool.BLANK
 		).build();
 	}
 

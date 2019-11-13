@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -1039,6 +1040,7 @@ public class CTSQLTransformerTest {
 				ctCollectionId);
 
 			ctCollection.setName(String.valueOf(ctCollectionId));
+			ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 			ctCollection = _ctCollectionLocalService.updateCTCollection(
 				ctCollection);

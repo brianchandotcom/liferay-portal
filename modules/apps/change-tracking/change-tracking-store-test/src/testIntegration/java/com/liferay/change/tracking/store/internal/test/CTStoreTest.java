@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -1028,6 +1029,7 @@ public class CTStoreTest {
 
 		ctCollection.setUserId(TestPropsValues.getUserId());
 		ctCollection.setName(String.valueOf(ctCollectionId));
+		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		return _ctCollectionLocalService.updateCTCollection(ctCollection);
 	}

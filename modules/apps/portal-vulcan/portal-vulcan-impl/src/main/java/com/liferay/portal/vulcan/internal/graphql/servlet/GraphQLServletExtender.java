@@ -69,7 +69,6 @@ import graphql.annotations.processor.retrievers.GraphQLObjectInfoRetriever;
 import graphql.annotations.processor.retrievers.GraphQLTypeRetriever;
 import graphql.annotations.processor.retrievers.fieldBuilders.ArgumentBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.DeprecateBuilder;
-import graphql.annotations.processor.retrievers.fieldBuilders.DescriptionBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.DirectivesBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodNameBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodTypeBuilder;
@@ -1723,10 +1722,10 @@ public class GraphQLServletExtender {
 
 			builder.deprecate(deprecateBuilder.build());
 
-			DescriptionBuilder descriptionBuilder = new DescriptionBuilder(
-				method);
+			GraphQLField graphQLField = method.getAnnotation(
+				GraphQLField.class);
 
-			builder.description(descriptionBuilder.build());
+			builder.description(graphQLField.description());
 
 			MethodNameBuilder methodNameBuilder = new MethodNameBuilder(method);
 

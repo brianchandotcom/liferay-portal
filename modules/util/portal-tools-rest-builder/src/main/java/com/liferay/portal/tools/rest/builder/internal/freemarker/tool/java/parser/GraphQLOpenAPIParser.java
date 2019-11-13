@@ -66,11 +66,22 @@ public class GraphQLOpenAPIParser {
 
 		Set<String> methodAnnotations = new TreeSet<>();
 
-		String httpMethod = OpenAPIParserUtil.getHTTPMethod(
-			javaMethodSignature.getOperation());
+		Operation operation = javaMethodSignature.getOperation();
+
+		String httpMethod = OpenAPIParserUtil.getHTTPMethod(operation);
 
 		if (httpMethod != null) {
-			methodAnnotations.add("@GraphQLField");
+			StringBuilder sb = new StringBuilder("@GraphQLField(");
+
+			if (operation.getDescription() != null) {
+				sb.append("description=\"");
+				sb.append(operation.getDescription());
+				sb.append("\"");
+			}
+
+			sb.append(")");
+
+			methodAnnotations.add(sb.toString());
 		}
 
 		String methodAnnotation = _getMethodAnnotationGraphQLName(
@@ -206,7 +217,7 @@ public class GraphQLOpenAPIParser {
 		List<JavaMethodParameter> javaMethodParameters =
 			javaMethodSignature.getJavaMethodParameters();
 
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder("@GraphQLName(value=\"");
 
 		sb.append(javaMethodSignature.getMethodName());
 
@@ -216,7 +227,14 @@ public class GraphQLOpenAPIParser {
 					javaMethodParameter.getParameterName()));
 		}
 
-		return "@GraphQLName(\"" + sb.toString() + "\")";
+		Operation operation = javaMethodSignature.getOperation();
+
+		sb.append("\", description=\"");
+		sb.append(operation.getDescription());
+
+		sb.append("\")");
+
+		return sb.toString();
 	}
 
 	private static String _getParameterAnnotation(

@@ -31,6 +31,8 @@ import java.lang.annotation.Target;
 )
 public @interface GraphQLName {
 
+	public String description() default "";
+
 	public String value();
 
 }

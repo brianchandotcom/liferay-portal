@@ -23,8 +23,15 @@ import java.lang.annotation.Target;
  * @author Javier Gamarra
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
+@Target(
+	{
+		ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD,
+		ElementType.TYPE, ElementType.TYPE_USE
+	}
+)
 public @interface GraphQLField {
+
+	public String description() default "";
 
 	public boolean value() default true;
 

@@ -205,7 +205,11 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		<#if propertySchema.deprecated>
 			@Deprecated
 		</#if>
-		@GraphQLField
+		@GraphQLField(
+			<#if propertySchema.description??>
+				description = "${propertySchema.description}"
+			</#if>
+		)
 		@JsonProperty(
 			<#if propertySchema.readOnly>
 				access = JsonProperty.Access.READ_ONLY

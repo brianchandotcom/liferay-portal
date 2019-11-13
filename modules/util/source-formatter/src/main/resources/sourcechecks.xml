@@ -102,7 +102,9 @@
 		<check name="GradleDependenciesCheck">
 			<property name="checkPetraDependencies" value="true" />
 		</check>
-		<check name="GradleDependencyArtifactsCheck" />
+		<check name="GradleDependencyArtifactsCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="GradleDependencyConfigurationCheck" />
 		<check name="GradleDependencyVersionCheck" />
 		<check name="GradleExportedPackageDependenciesCheck" />

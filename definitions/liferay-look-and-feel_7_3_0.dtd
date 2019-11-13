@@ -1,7 +1,7 @@
 <!--
 <!DOCTYPE look-and-feel PUBLIC
-	"-//Liferay//DTD Look and Feel 7.2.0//EN"
-	"http://www.liferay.com/dtd/liferay-look-and-feel_7.2.0.dtd">
+	"-//Liferay//DTD Look and Feel 7.3.0//EN"
+	"http://www.liferay.com/dtd/liferay-look-and-feel_7.3.0.dtd">
 -->
 
 <!--
@@ -362,22 +362,22 @@ The default value is "${root-path}/images/color_schemes/${css-class}".
 <!ELEMENT color-scheme-images-path (#PCDATA)>
 
 <!--
-See liferay-layout-templates_7.2.0.dtd.
+See liferay-layout-templates_7.3.0.dtd.
 -->
 <!ELEMENT layout-templates (standard?, custom?)>
 
 <!--
-See liferay-layout-templates_7.2.0.dtd.
+See liferay-layout-templates_7.3.0.dtd.
 -->
 <!ELEMENT standard (layout-template*)>
 
 <!--
-See liferay-layout-templates_7.2.0.dtd.
+See liferay-layout-templates_7.3.0.dtd.
 -->
 <!ELEMENT layout-template (template-path, thumbnail-path?)>
 
 <!--
-See liferay-layout-templates_7.2.0.dtd.
+See liferay-layout-templates_7.3.0.dtd.
 -->
 <!ATTLIST layout-template
 	id CDATA #REQUIRED
@@ -385,17 +385,17 @@ See liferay-layout-templates_7.2.0.dtd.
 >
 
 <!--
-See liferay-layout-templates_7.2.0.dtd.
+See liferay-layout-templates_7.3.0.dtd.
 -->
 <!ELEMENT template-path (#PCDATA)>
 
 <!--
-See liferay-layout-templates_7.2.0.dtd.
+See liferay-layout-templates_7.3.0.dtd.
 -->
 <!ELEMENT thumbnail-path (#PCDATA)>
 
 <!--
-See liferay-layout-templates_7.2.0.dtd.
+See liferay-layout-templates_7.3.0.dtd.
 -->
 <!ELEMENT custom (layout-template*)>
 

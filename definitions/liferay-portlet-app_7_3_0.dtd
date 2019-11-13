@@ -1,7 +1,7 @@
 <!--
 <!DOCTYPE liferay-portlet-app PUBLIC
-	"-//Liferay//DTD Portlet Application 7.2.0//EN"
-	"http://www.liferay.com/dtd/liferay-portlet-app_7.2.0.dtd">
+	"-//Liferay//DTD Portlet Application 7.3.0//EN"
+	"http://www.liferay.com/dtd/liferay-portlet-app_7.3.0.dtd">
 -->
 
 <!--
@@ -793,7 +793,7 @@ changes to your code. See the Message Boards portlet for minor changes that were
 made to make it FBML compliant. Note that the Liferay tag libraries already
 output FBML automatically if a request is made by Facebook.
 
-This element is deprecated as of 7.2.0, with no direct replacement.
+This element is deprecated as of 7.3.0, with no direct replacement.
 -->
 <!ELEMENT facebook-integration (#PCDATA)>
 

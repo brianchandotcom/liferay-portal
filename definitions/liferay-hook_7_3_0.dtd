@@ -1,7 +1,7 @@
 <!--
 <!DOCTYPE hook PUBLIC
-	"-//Liferay//DTD Hook 7.2.0//EN"
-	"http://www.liferay.com/dtd/liferay-hook_7.2.0.dtd">
+	"-//Liferay//DTD Hook 7.3.0//EN"
+	"http://www.liferay.com/dtd/liferay-hook_7.3.0.dtd">
 -->
 
 <!ELEMENT hook (portal-properties?, language-properties*, custom-jsp-dir?,

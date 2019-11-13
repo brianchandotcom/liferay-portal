@@ -1,7 +1,7 @@
 <!--
 <!DOCTYPE liferay-social PUBLIC
-	"-//Liferay//DTD Social 7.2.0//EN"
-	"http://www.liferay.com/dtd/liferay-social_7.2.0.dtd">
+	"-//Liferay//DTD Social 7.3.0//EN"
+	"http://www.liferay.com/dtd/liferay-social_7.3.0.dtd">
 -->
 
 <!ELEMENT liferay-social (activity*)>

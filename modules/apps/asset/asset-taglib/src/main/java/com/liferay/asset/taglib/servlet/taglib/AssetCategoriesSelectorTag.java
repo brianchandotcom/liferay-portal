@@ -305,7 +305,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		List<String[]> categoryIdsTitles = getCategoryIdsTitles();
 
 		for (int i = 0; i < assetVocabularies.size(); i++) {
-			HashMap<String, Object> vocabulary = new HashMap<>();
+			Map<String, Object> vocabulary = new HashMap<>();
 
 			AssetVocabulary assetVocabulary = assetVocabularies.get(i);
 
@@ -336,7 +336,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			vocabulary.put("selectedCategoryIds", selectedCategoryIds);
 
 			if (Validator.isNotNull(selectedCategoryIds)) {
-				List<HashMap<String, Object>> selectedItems = new ArrayList<>();
+				List<Map<String, Object>> selectedItems = new ArrayList<>();
 
 				String[] categoryIds = selectedCategoryIds.split(",");
 
@@ -346,7 +346,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 					"_CATEGORY_");
 
 				for (int j = 0; j < categoryIds.length; j++) {
-					HashMap<String, Object> category = new HashMap<>();
+					Map<String, Object> category = new HashMap<>();
 
 					category.put("label", categoryTitles[j]);
 					category.put("value", categoryIds[j]);

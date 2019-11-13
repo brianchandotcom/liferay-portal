@@ -21,6 +21,7 @@ import com.liferay.change.tracking.service.base.CTEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -166,12 +167,16 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public CTEntry updateCTEntry(CTEntry ctEntry) throws PortalException {
-		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
+	public CTEntry updateCTEntry(CTEntry ctEntry) {
+		CTCollection ctCollection = ctCollectionPersistence.fetchByPrimaryKey(
 			ctEntry.getCtCollectionId());
 
+		if (ctCollection == null) {
+			throw new SystemException("No CTCollection exists for " + ctEntry);
+		}
+
 		if (ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) {
-			throw new PortalException(
+			throw new SystemException(
 				"CTCollection " + ctCollection + " is read only");
 		}
 

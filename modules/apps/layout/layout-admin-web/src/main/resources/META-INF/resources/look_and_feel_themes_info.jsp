@@ -37,7 +37,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 <h1 class="h4 text-default"><liferay-ui:message key="current-theme" /></h1>
 
 <div class="card-horizontal main-content-card">
-	<div class="card-row card-row-padded">
+	<div class="card-body">
 		<aui:row>
 			<div class="col-6 col-sm-4">
 				<div class="card image-card img-thumbnail">

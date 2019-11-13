@@ -33,7 +33,7 @@ else {
 <h1 class="h4 text-default"><liferay-ui:message key="current-theme" /></h1>
 
 <div class="card-horizontal main-content-card">
-	<div class="card-row card-row-padded">
+	<div class="card-body">
 		<div id="<portlet:namespace />themeContainer">
 			<liferay-util:include page="/look_and_feel_theme_details.jsp" servletContext="<%= application %>" />
 		</div>

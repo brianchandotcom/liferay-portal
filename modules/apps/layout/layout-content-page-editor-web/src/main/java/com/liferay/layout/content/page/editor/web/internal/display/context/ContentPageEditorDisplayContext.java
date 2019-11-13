@@ -283,7 +283,7 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"lookAndFeelURL", _getLookAndFeelURL()
 		).put(
-			"mappedAssetEntries", _getMappedInfoItemsSoyContexts()
+			"mappedInfoItems", _getMappedInfoItemsSoyContexts()
 		).put(
 			"masterPageLayoutData",
 			JSONFactoryUtil.createJSONObject(_getMasterPageLayoutData())

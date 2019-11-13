@@ -101,8 +101,8 @@ public class DepotAdminDisplayContext {
 		return _groupSearch;
 	}
 
-	public String getHref(Group curGroup) {
-		return _groupURLProvider.getGroupURL(curGroup, _liferayPortletRequest);
+	public String getEditDepotURL(Group group) {
+		return _groupURLProvider.getGroupURL(group, _liferayPortletRequest);
 	}
 
 	public PortletURL getIteratorURL() {

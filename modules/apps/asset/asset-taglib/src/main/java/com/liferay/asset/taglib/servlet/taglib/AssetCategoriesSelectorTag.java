@@ -170,37 +170,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_singleSelect = false;
 	}
 
-	protected List<AssetVocabulary> getAssetVocabularies() {
-		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(getGroupIds());
-
-		if (Validator.isNotNull(_className)) {
-			vocabularies = AssetVocabularyUtil.filterVocabularies(
-				vocabularies, _className, _classTypePK);
-		}
-
-		return ListUtil.filter(
-			vocabularies,
-			vocabulary -> {
-				if (_showOnlyRequiredVocabularies &&
-					!vocabulary.isRequired(
-						PortalUtil.getClassNameId(_className), _classTypePK)) {
-
-					return false;
-				}
-
-				int vocabularyCategoriesCount =
-					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
-						vocabulary.getGroupId(), vocabulary.getVocabularyId());
-
-				if (vocabularyCategoriesCount > 0) {
-					return true;
-				}
-
-				return false;
-			});
-	}
-
 	protected List<String[]> getCategoryIdsTitles() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -231,7 +200,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		}
 
 		try {
-			for (AssetVocabulary vocabulary : getAssetVocabularies()) {
+			for (AssetVocabulary vocabulary : _getVocabularies()) {
 				String categoryNames = StringPool.BLANK;
 
 				if (Validator.isNotNull(_className) && (_classPK > 0)) {
@@ -331,7 +300,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 		List<Map<String, Object>> vocabularies = new ArrayList<>();
 
-		List<AssetVocabulary> assetVocabularies = getAssetVocabularies();
+		List<AssetVocabulary> assetVocabularies = _getVocabularies();
 
 		List<String[]> categoryIdsTitles = getCategoryIdsTitles();
 
@@ -455,6 +424,37 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_namespace = AUIUtil.getNamespace(portletRequest, portletResponse);
 
 		return _namespace;
+	}
+
+	private List<AssetVocabulary> _getVocabularies() {
+		List<AssetVocabulary> vocabularies =
+			AssetVocabularyServiceUtil.getGroupVocabularies(getGroupIds());
+
+		if (Validator.isNotNull(_className)) {
+			vocabularies = AssetVocabularyUtil.filterVocabularies(
+				vocabularies, _className, _classTypePK);
+		}
+
+		return ListUtil.filter(
+			vocabularies,
+			vocabulary -> {
+				if (_showOnlyRequiredVocabularies &&
+					!vocabulary.isRequired(
+						PortalUtil.getClassNameId(_className), _classTypePK)) {
+
+					return false;
+				}
+
+				int vocabularyCategoriesCount =
+					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
+						vocabulary.getGroupId(), vocabulary.getVocabularyId());
+
+				if (vocabularyCategoriesCount > 0) {
+					return true;
+				}
+
+				return false;
+			});
 	}
 
 	private static final String _PAGE = "/asset_categories_selector/page.jsp";

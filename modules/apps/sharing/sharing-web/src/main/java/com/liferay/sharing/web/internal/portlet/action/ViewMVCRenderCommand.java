@@ -15,11 +15,11 @@
 package com.liferay.sharing.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.constants.SharingPortletKeys;
+import com.liferay.sharing.web.internal.constants.SharingWebKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
 import com.liferay.sharing.web.internal.util.SharingUtil;
@@ -55,35 +55,38 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Template template = (Template)renderRequest.getAttribute(
-			WebKeys.TEMPLATE);
-
 		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
 
-		template.put("classNameId", classNameId);
+		renderRequest.setAttribute("classNameId", classNameId);
 
 		long classPK = ParamUtil.getLong(renderRequest, "classPK");
 
-		template.put("classPK", classPK);
+		renderRequest.setAttribute("classPK", classPK);
 
-		template.put("portletNamespace", renderResponse.getNamespace());
+		renderRequest.setAttribute(
+			"dialogId",
+			ParamUtil.getString(
+				renderRequest, SharingWebKeys.SHARING_DIALOG_ID));
+
+		renderRequest.setAttribute(
+			"portletNamespace", renderResponse.getNamespace());
 
 		PortletURL shareActionURL = renderResponse.createActionURL();
 
 		shareActionURL.setParameter(
 			ActionRequest.ACTION_NAME, "/sharing/share");
 
-		template.put("shareActionURL", shareActionURL.toString());
+		renderRequest.setAttribute("shareActionURL", shareActionURL.toString());
 
 		List<SharingEntryPermissionDisplay> sharingEntryPermissionDisplays =
 			_sharingUtil.getSharingEntryPermissionDisplays(
 				themeDisplay.getPermissionChecker(), classNameId, classPK,
 				themeDisplay.getScopeGroupId(), themeDisplay.getLocale());
 
-		template.put(
+		renderRequest.setAttribute(
 			"sharingEntryPermissionDisplays", sharingEntryPermissionDisplays);
 
-		template.put(
+		renderRequest.setAttribute(
 			"sharingEntryPermissionDisplayActionId",
 			SharingEntryPermissionDisplayAction.VIEW.getActionId());
 
@@ -92,7 +95,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		sharingUserAutocompleteURL.setResourceID("/sharing/users");
 
-		template.put(
+		renderRequest.setAttribute(
 			"sharingUserAutocompleteURL",
 			sharingUserAutocompleteURL.toString());
 
@@ -102,15 +105,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		sharingVerifyEmailAddressURL.setResourceID(
 			"/sharing/verify_email_address");
 
-		template.put(
+		renderRequest.setAttribute(
 			"sharingVerifyEmailAddressURL",
 			sharingVerifyEmailAddressURL.toString());
 
-		template.put(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-
-		return "Sharing";
+		return "/sharing/view.jsp";
 	}
 
 	@Reference

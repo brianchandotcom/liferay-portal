@@ -3,13 +3,9 @@ Bundle-SymbolicName: com.liferay.asset.taglib
 Bundle-Version: 5.0.0
 Export-Package: com.liferay.asset.taglib.servlet.taglib
 Liferay-JS-Config: /META-INF/resources/config.js
-Liferay-JS-Submodules-Bridge: asset-taglib
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\
 		uri="http://liferay.com/tld/asset";\
-		version:Version="${Bundle-Version}",\
-	soy;\
-		type="asset-taglib";\
 		version:Version="${Bundle-Version}"
 Web-ContextPath: /asset-taglib

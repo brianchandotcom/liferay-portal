@@ -78,11 +78,11 @@ DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT
 			<liferay-ui:search-container-column-text>
 
 				<%
-				Map<String, String> data = new HashMap<>();
-
 				ActionURL disconnectSiteActionURL = DepotEntryURLUtil.getDisconnectSiteActionURL(depotEntryGroupRel.getDepotEntryGroupRelId(), currentURL, liferayPortletResponse);
 
-				data.put("href", disconnectSiteActionURL.toString());
+				Map<String, String> data = HashMapBuilder.put(
+					"href", disconnectSiteActionURL.toString()
+				).build();
 				%>
 
 				<clay:button

@@ -47,4 +47,37 @@
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Layout" package-path="com.liferay.portal" />
 	</entity>
+	<entity local-service="true" name="LayoutSEOSite" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="layoutSEOSiteId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="openGraphEnabled" type="boolean" />
+		<column name="openGraphImageFileEntryId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="LayoutSEOSiteEntry" unique="true">
+			<finder-column name="groupId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="Group" package-path="com.liferay.portal" />
+	</entity>
 </service-builder>

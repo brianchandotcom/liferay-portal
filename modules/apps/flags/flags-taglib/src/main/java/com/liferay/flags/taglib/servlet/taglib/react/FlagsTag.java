@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -248,7 +249,7 @@ public class FlagsTag extends IncludeTag {
 
 	private String _getMessage() {
 		ResourceBundle resourceBundle = new AggregateResourceBundle(
-			(ResourceBundle)pageContext.getAttribute("resourceBundle"),
+			TagResourceBundleUtil.getResourceBundle(pageContext),
 			ResourceBundleUtil.getBundle(
 				PortalUtil.getLocale(request), "com.liferay.flags.taglib"));
 

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -398,15 +399,19 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		try {
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("eventName", getEventName());
-			data.put("groupIds", ListUtil.toList(getGroupIds()));
-			data.put(
-				"id", _getNamespace() + _getId() + "assetCategoriesSelector");
-			data.put("inputName", _getInputName());
-			data.put("portletURL", getPortletURL().toString());
-			data.put("vocabularies", getVocabularies());
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"eventName", getEventName()
+			).put(
+				"groupIds", ListUtil.toList(getGroupIds())
+			).put(
+				"id", _getNamespace() + _getId() + "assetCategoriesSelector"
+			).put(
+				"inputName", _getInputName()
+			).put(
+				"portletURL", getPortletURL().toString()
+			).put(
+				"vocabularies", getVocabularies()
+			).build();
 
 			httpServletRequest.setAttribute(
 				"liferay-asset:asset-categories-selector:data", data);

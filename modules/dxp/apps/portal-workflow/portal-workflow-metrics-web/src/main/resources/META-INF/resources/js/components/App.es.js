@@ -17,6 +17,7 @@ import {withParams} from '../shared/components/router/routerUtil.es';
 import fetch from '../shared/rest/fetch.es';
 import {AppContext} from './AppContext.es';
 import InstanceListPage from './instance-list-page/InstanceListPage.es';
+import PerformanceByAssigneePage from './performance-by-assignee-page/PerformanceByAssigneePage.es';
 import PerformanceByStepPage from './performance-by-step-page/PerformanceByStepPage.es';
 import ProcessListPage from './process-list-page/ProcessListPage.es';
 import ProcessMetrics from './process-metrics/ProcessMetrics.es';
@@ -88,7 +89,7 @@ export default class AppComponent extends React.Component {
 							/>
 
 							<Route
-								path="/instances/:processId/:pageSize/:page"
+								path="/instance/:processId/:pageSize/:page"
 								render={withParams(InstanceListPage)}
 							/>
 
@@ -111,13 +112,21 @@ export default class AppComponent extends React.Component {
 							/>
 
 							<Route
-								path="/performance/:processId/:pageSize/:page/:sort/:search?"
+								exact
+								path="/performance/step/:processId/:pageSize/:page/:sort/:search?"
 								render={withParams(PerformanceByStepPage)}
 							/>
 
 							<Route
-								path="/assignees/:processId/:pageSize/:page/:sort/:search?"
+								exact
+								path="/workload/assignee/:processId/:pageSize/:page/:sort/:search?"
 								render={withParams(WorkloadByAssigneePage)}
+							/>
+
+							<Route
+								exact
+								path="/performance/assignee/:processId/:pageSize/:page/:sort/:search?"
+								render={withParams(PerformanceByAssigneePage)}
 							/>
 						</Switch>
 					</div>

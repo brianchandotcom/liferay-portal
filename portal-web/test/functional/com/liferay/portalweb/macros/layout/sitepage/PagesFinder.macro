@@ -12,6 +12,22 @@ definition {
 			value1 = "${keyword}");
 	}
 
+	macro navigateToPage {
+		Click(
+			locator1 = "PagesFinder#PAGE_NAME",
+			value1 = "${pageName}");
+
+		AssertTextEquals(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "${pageName}");
+	}
+
+	macro selectPageType {
+		Select(
+			locator1 = "PagesFinder#PAGE_TYPE_SELECTOR",
+			value1 = "${optionValue}");
+	}
+
 	macro viewInPagesAdministration {
 		Click(locator1 = "PagesFinder#VIEW_IN_PAGE_ADMINISTRATION");
 	}

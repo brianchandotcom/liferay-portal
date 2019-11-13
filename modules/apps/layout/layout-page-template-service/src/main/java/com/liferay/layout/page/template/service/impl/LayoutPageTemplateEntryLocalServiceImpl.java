@@ -123,7 +123,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			long classNameId, long classTypeId, String name, int type,
 			boolean defaultTemplate, long layoutPrototypeId,
 			long previewFileEntryId, long plid, int status,
-			ServiceContext serviceContext)
+			long masterLayoutPlid, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template entry
@@ -159,7 +159,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		if (plid == 0) {
 			Layout layout = _addLayout(
-				userId, groupId, name, type, serviceContext);
+				userId, groupId, name, type, masterLayoutPlid, serviceContext);
 
 			if (layout != null) {
 				plid = layout.getPlid();
@@ -192,6 +192,21 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long classNameId, long classTypeId, String name, int type,
+			boolean defaultTemplate, long layoutPrototypeId,
+			long previewFileEntryId, long plid, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addLayoutPageTemplateEntry(
+			userId, groupId, layoutPageTemplateCollectionId, classNameId,
+			classTypeId, name, type, defaultTemplate, layoutPrototypeId,
+			previewFileEntryId, plid, status, 0, serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long userId, long groupId, long layoutPageTemplateCollectionId,
+			long classNameId, long classTypeId, String name, int type,
 			int status, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -211,6 +226,18 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			classTypeId);
 
 		return layoutPageTemplateEntry;
+	}
+
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long userId, long groupId, long layoutPageTemplateCollectionId,
+			String name, int type, int status, long masterLayoutPlid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addLayoutPageTemplateEntry(
+			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name, type,
+			false, 0, 0, 0, status, masterLayoutPlid, serviceContext);
 	}
 
 	@Override
@@ -775,7 +802,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	private Layout _addLayout(
 			long userId, long groupId, String name, int type,
-			ServiceContext serviceContext)
+			long masterLayoutPlid, ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean privateLayout = false;
@@ -811,9 +838,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = layoutLocalService.addLayout(
-			userId, groupId, privateLayout, 0, titleMap, titleMap, null, null,
-			null, layoutType, typeSettings, true, true, new HashMap<>(),
-			serviceContext);
+			userId, groupId, privateLayout, 0, 0, 0, titleMap, titleMap, null,
+			null, null, layoutType, typeSettings, true, true, masterLayoutPlid,
+			new HashMap<>(), serviceContext);
 
 		serviceContext.setModifiedDate(layout.getModifiedDate());
 
@@ -823,7 +850,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layout.getPlid(), layout.getNameMap(), titleMap,
 			layout.getDescriptionMap(), layout.getKeywordsMap(),
 			layout.getRobotsMap(), layoutType, layout.getTypeSettings(), true,
-			true, Collections.emptyMap(), serviceContext);
+			true, masterLayoutPlid, Collections.emptyMap(), serviceContext);
 
 		return layout;
 	}

@@ -167,7 +167,9 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 					 !_isMasterOnlyFile(absolutePath)) {
 
 				for (String enforceVersionArtifact : enforceVersionArtifacts) {
-					if (enforceVersionArtifact.startsWith(name + ":")) {
+					if (enforceVersionArtifact.startsWith(
+							"com.liferay:" + name + ":")) {
+
 						return content;
 					}
 				}

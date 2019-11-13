@@ -80,7 +80,7 @@ public class LiferayWriter
 	}
 
 	@Override
-	public Result close() throws IOException {
+	public Result close() {
 		return _result;
 	}
 

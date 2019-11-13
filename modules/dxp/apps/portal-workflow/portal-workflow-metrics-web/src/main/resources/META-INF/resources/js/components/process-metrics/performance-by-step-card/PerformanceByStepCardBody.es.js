@@ -71,9 +71,10 @@ const Footer = ({processId, timeRange, totalCount}) => {
 			<div className="mb-1 text-right">
 				<ChildLink query={viewAllStepsQuery} to={viewAllStepsUrl}>
 					<button className="border-0 btn btn-secondary btn-sm">
-						<span data-testid="viewAllSteps">
-							{Liferay.Language.get('view-all-steps') +
-								` (${totalCount})`}
+						<span className="mr-2" data-testid="viewAllSteps">
+							{`${Liferay.Language.get(
+								'view-all-steps'
+							)} (${totalCount})`}
 						</span>
 
 						<Icon iconName="caret-right-l" />

@@ -76,8 +76,9 @@ const Body = ({currentTab, processId, query}) => {
 								className="mr-2"
 								data-testid="viewAllAssignees"
 							>
-								{Liferay.Language.get('view-all-assignees') +
-									` (${data.totalCount})`}
+								{`${Liferay.Language.get(
+									'view-all-assignees'
+								)} (${data.totalCount})`}
 							</span>
 
 							<Icon iconName="caret-right-l" />

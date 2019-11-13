@@ -343,6 +343,7 @@
 	</entity>
 	<exceptions>
 		<exception>LockedSegmentsExperiment</exception>
+		<exception>RunSegmentsExperiment</exception>
 		<exception>RequiredSegmentsEntry</exception>
 		<exception>RequiredSegmentsExperience</exception>
 		<exception>SegmentsEntryCriteria</exception>

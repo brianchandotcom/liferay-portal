@@ -15,7 +15,6 @@
 package com.liferay.change.tracking.internal;
 
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,8 +45,6 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 			return ctModel.isNew();
 		}
 
-		_validateCTCollectionStatus(ctCollectionId);
-
 		long modelClassNameId = _classNameLocalService.getClassNameId(
 			ctModel.getModelClass());
 
@@ -59,31 +55,31 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 
 		long userId = PrincipalThreadLocal.getUserId();
 
-		if (ctEntry == null) {
-			int changeType = CTConstants.CT_CHANGE_TYPE_MODIFICATION;
+		try {
+			if (ctEntry == null) {
+				int changeType = CTConstants.CT_CHANGE_TYPE_MODIFICATION;
 
-			if (ctModel.isNew()) {
-				changeType = CTConstants.CT_CHANGE_TYPE_ADDITION;
-			}
+				if (ctModel.isNew()) {
+					changeType = CTConstants.CT_CHANGE_TYPE_ADDITION;
+				}
 
-			try {
 				_ctEntryLocalService.addCTEntry(
 					ctCollectionId, modelClassNameId, ctModel, userId,
 					changeType);
-			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
+
+				ctModel.setNew(true);
+
+				return true;
 			}
 
-			ctModel.setNew(true);
+			if (userId != ctEntry.getUserId()) {
+				ctEntry.setUserId(userId);
 
-			return true;
+				_ctEntryLocalService.updateCTEntry(ctEntry);
+			}
 		}
-
-		if (userId != ctEntry.getUserId()) {
-			ctEntry.setUserId(userId);
-
-			_ctEntryLocalService.updateCTEntry(ctEntry);
+		catch (PortalException pe) {
+			throw new SystemException(pe);
 		}
 
 		return false;
@@ -123,8 +119,6 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 			return true;
 		}
 
-		_validateCTCollectionStatus(ctCollectionId);
-
 		long modelClassNameId = _classNameLocalService.getClassNameId(
 			ctModel.getModelClass());
 
@@ -133,51 +127,39 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 		CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
 			ctCollectionId, modelClassNameId, modelClassPK);
 
-		if (ctEntry == null) {
-			try {
+		try {
+			if (ctEntry == null) {
 				_ctEntryLocalService.addCTEntry(
 					ctCollectionId, modelClassNameId, ctModel,
 					PrincipalThreadLocal.getUserId(),
 					CTConstants.CT_CHANGE_TYPE_DELETION);
 			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
+			else {
+				int changeType = ctEntry.getChangeType();
+
+				if (changeType == CTConstants.CT_CHANGE_TYPE_ADDITION) {
+					_ctEntryLocalService.deleteCTEntry(ctEntry);
+
+					return true;
+				}
+
+				ctEntry.setChangeType(CTConstants.CT_CHANGE_TYPE_DELETION);
+
+				_ctEntryLocalService.updateCTEntry(ctEntry);
+
+				if ((changeType == CTConstants.CT_CHANGE_TYPE_MODIFICATION) &&
+					(ctModel.getCtCollectionId() !=
+						CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+
+					return true;
+				}
 			}
 		}
-		else {
-			int changeType = ctEntry.getChangeType();
-
-			if (changeType == CTConstants.CT_CHANGE_TYPE_ADDITION) {
-				_ctEntryLocalService.deleteCTEntry(ctEntry);
-
-				return true;
-			}
-
-			ctEntry.setChangeType(CTConstants.CT_CHANGE_TYPE_DELETION);
-
-			_ctEntryLocalService.updateCTEntry(ctEntry);
-
-			if ((changeType == CTConstants.CT_CHANGE_TYPE_MODIFICATION) &&
-				(ctModel.getCtCollectionId() !=
-					CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
-
-				return true;
-			}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
 		}
 
 		return false;
-	}
-
-	private void _validateCTCollectionStatus(long ctCollectionId) {
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ctCollectionId);
-
-		if ((ctCollection == null) ||
-			(ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT)) {
-
-			throw new IllegalStateException(
-				"CTCollection is read only " + String.valueOf(ctCollection));
-		}
 	}
 
 	@Reference

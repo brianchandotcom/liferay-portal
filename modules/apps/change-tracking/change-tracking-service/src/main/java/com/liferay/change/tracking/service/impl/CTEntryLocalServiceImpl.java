@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
 import java.util.List;
@@ -51,6 +52,11 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
 			ctCollectionId);
 
+		if (ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) {
+			throw new PortalException(
+				"CTCollection " + ctCollection + " is read only");
+		}
+
 		long ctEntryId = counterLocalService.increment(CTEntry.class.getName());
 
 		CTEntry ctEntry = ctEntryPersistence.create(ctEntryId);
@@ -64,6 +70,19 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		ctEntry.setChangeType(changeType);
 
 		return ctEntryPersistence.update(ctEntry);
+	}
+
+	@Override
+	public CTEntry deleteCTEntry(CTEntry ctEntry) throws PortalException {
+		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
+			ctEntry.getCtCollectionId());
+
+		if (ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) {
+			throw new PortalException(
+				"CTCollection " + ctCollection + " is read only");
+		}
+
+		return ctEntryPersistence.remove(ctEntry);
 	}
 
 	@Override
@@ -144,6 +163,19 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		}
 
 		return true;
+	}
+
+	@Override
+	public CTEntry updateCTEntry(CTEntry ctEntry) throws PortalException {
+		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
+			ctEntry.getCtCollectionId());
+
+		if (ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) {
+			throw new PortalException(
+				"CTCollection " + ctCollection + " is read only");
+		}
+
+		return ctEntryPersistence.update(ctEntry);
 	}
 
 }

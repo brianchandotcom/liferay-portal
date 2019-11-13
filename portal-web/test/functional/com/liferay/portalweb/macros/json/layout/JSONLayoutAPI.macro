@@ -2,7 +2,7 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a layout"
 	macro _addLayout {
-		Variables.assertDefined(parameterList = "${friendlyURL},${groupId},${privateLayout},${parentLayoutId},${layoutName}");
+		Variables.assertDefined(parameterList = "${friendlyURL},${groupId},${privateLayout},${parentLayoutId},${layoutName},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -17,7 +17,8 @@ definition {
 				-d description= \
 				-d type=${type} \
 				-d hidden=false \
-				-d friendlyURL=${friendlyURL}
+				-d friendlyURL=${friendlyURL} \
+				-d serviceContext=${serviceContext}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

@@ -28,7 +28,7 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 
 		<%
 		for (Map<String, Object> vocabulary : vocabularies) {
-			String vocabularyId = vocabulary.get("id").toString();
+			String vocabularyId = GetterUtil.getString(vocabulary.get("id"));
 		%>
 
 			<div class="field-content">
@@ -42,7 +42,7 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 							</c:if>
 
 							<%
-							boolean required = (boolean)vocabulary.get("required");
+							boolean required = GetterUtil.getBoolean(vocabulary.get("required"));
 							%>
 
 							<c:if test="<%= required %>">
@@ -72,8 +72,8 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 
 										<%
 										for (Map<String, Object> selectedItem : selectedItems) {
-											String selectedItemLabel = selectedItem.get("label").toString();
-											String selectedItemValue = selectedItem.get("value").toString();
+											String selectedItemLabel = GetterUtil.getString(selectedItem.get("label"));
+											String selectedItemValue = GetterUtil.getString(selectedItem.get("value"));
 										%>
 
 											<clay:label

@@ -66,10 +66,9 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 								</c:if>
 							</aui:select>
 
-							<div class="input-group-append input-group-item input-group-item-shrink search-bar-search-button-wrapper">
+							<div class="input-group-append input-group-item input-group-item-shrink">
 								<clay:button
 									ariaLabel='<%= LanguageUtil.get(request, "submit") %>'
-									elementClasses="search-bar-search-button"
 									icon="search"
 									style="secondary"
 									type="submit"
@@ -82,10 +81,9 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 
 								<aui:input name="<%= HtmlUtil.escapeAttribute(searchBarPortletDisplayContext.getScopeParameterName()) %>" type="hidden" value="<%= searchBarPortletDisplayContext.getScopeParameterValue() %>" />
 
-								<div class="input-group-inset-item input-group-inset-item-after search-bar-search-button-wrapper">
+								<div class="input-group-inset-item input-group-inset-item-after">
 									<clay:button
 										ariaLabel='<%= LanguageUtil.get(request, "submit") %>'
-										elementClasses="search-bar-search-button"
 										icon="search"
 										style="unstyled"
 										type="submit"

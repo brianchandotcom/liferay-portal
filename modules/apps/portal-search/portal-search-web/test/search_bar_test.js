@@ -19,7 +19,7 @@ var withAlloyUI = Liferay.Test.withAlloyUI;
 var FORM_TEMPLATE = `<form id="_NAMESPACE_fm">
 	<input class="search-bar-empty-search-input" type="hidden" value="{emptySearchEnabled}">
 	<input class="search-bar-keywords-input" name="q" type="text" value="{keywords}">
-	<button class="search-bar-search-button"></button>
+	<button type="submit"></button>
 </form>`;
 
 function getFormTemplate(keywords, emptySearchEnabled) {

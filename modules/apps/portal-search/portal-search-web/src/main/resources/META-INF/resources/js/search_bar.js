@@ -43,19 +43,9 @@ AUI.add(
 			instance.scopeSelect = instance.form.one(
 				'.search-bar-scope-select'
 			);
-
-			var searchButton = instance.form.one('.search-bar-search-button');
-
-			searchButton.on('click', A.bind(instance._onClick, instance));
 		};
 
 		A.mix(SearchBar.prototype, {
-			_onClick() {
-				var instance = this;
-
-				instance.search();
-			},
-
 			_onSubmit(event) {
 				var instance = this;
 

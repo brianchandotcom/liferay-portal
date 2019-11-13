@@ -337,12 +337,10 @@ public class CTEntryLocalServiceWrapper
 	 *
 	 * @param ctEntry the ct entry
 	 * @return the ct entry that was updated
-	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.change.tracking.model.CTEntry updateCTEntry(
-			com.liferay.change.tracking.model.CTEntry ctEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.change.tracking.model.CTEntry ctEntry) {
 
 		return _ctEntryLocalService.updateCTEntry(ctEntry);
 	}

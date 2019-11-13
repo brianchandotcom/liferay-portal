@@ -322,11 +322,9 @@ public class CTEntryLocalServiceUtil {
 	 *
 	 * @param ctEntry the ct entry
 	 * @return the ct entry that was updated
-	 * @throws PortalException
 	 */
 	public static com.liferay.change.tracking.model.CTEntry updateCTEntry(
-			com.liferay.change.tracking.model.CTEntry ctEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.change.tracking.model.CTEntry ctEntry) {
 
 		return getService().updateCTEntry(ctEntry);
 	}

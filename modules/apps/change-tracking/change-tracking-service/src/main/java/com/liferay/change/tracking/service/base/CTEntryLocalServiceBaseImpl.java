@@ -315,11 +315,10 @@ public abstract class CTEntryLocalServiceBaseImpl
 	 *
 	 * @param ctEntry the ct entry
 	 * @return the ct entry that was updated
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CTEntry updateCTEntry(CTEntry ctEntry) throws PortalException {
+	public CTEntry updateCTEntry(CTEntry ctEntry) {
 		return ctEntryPersistence.update(ctEntry);
 	}
 

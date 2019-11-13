@@ -262,9 +262,8 @@ public interface CTEntryLocalService
 	 *
 	 * @param ctEntry the ct entry
 	 * @return the ct entry that was updated
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
-	public CTEntry updateCTEntry(CTEntry ctEntry) throws PortalException;
+	public CTEntry updateCTEntry(CTEntry ctEntry);
 
 }

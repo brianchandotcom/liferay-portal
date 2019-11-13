@@ -122,9 +122,6 @@
 			<property name="allowedDependencyNames" value="com.liferay.arquillian.extension.junit.bridge" />
 			<property name="allowedDependencyNames" value="com.liferay.portal.cache.test.util" />
 		</check>
-		<check name="GradleVersionCheck">
-			<property name="enabled" value="false" />
-		</check>
 		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="GroovySourceProcessor">

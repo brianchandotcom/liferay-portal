@@ -307,8 +307,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		for (int i = 0; i < assetVocabularies.size(); i++) {
 			HashMap<String, Object> vocabulary = new HashMap<>();
 
-			vocabularies.add(vocabulary);
-
 			AssetVocabulary assetVocabulary = assetVocabularies.get(i);
 
 			vocabulary.put("id", assetVocabulary.getVocabularyId());
@@ -338,6 +336,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			vocabulary.put("selectedCategoryIds", selectedCategoryIds);
 
 			if (Validator.isNotNull(selectedCategoryIds)) {
+				List<HashMap<String, Object>> selectedItems = new ArrayList<>();
+
 				String[] categoryIds = selectedCategoryIds.split(",");
 
 				String selectedCategoryIdTitles = categoryIdsTitles.get(i)[1];
@@ -345,21 +345,21 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				String[] categoryTitles = selectedCategoryIdTitles.split(
 					"_CATEGORY_");
 
-				List<HashMap<String, Object>> selectedItems = new ArrayList<>();
-
 				for (int j = 0; j < categoryIds.length; j++) {
 					HashMap<String, Object> category = new HashMap<>();
 
-					selectedItems.add(category);
-
 					category.put("label", categoryTitles[j]);
 					category.put("value", categoryIds[j]);
+
+					selectedItems.add(category);
 				}
 
 				vocabulary.put("selectedItems", selectedItems);
 			}
 
 			vocabulary.put("singleSelect", !assetVocabulary.isMultiValued());
+
+			vocabularies.add(vocabulary);
 		}
 
 		return vocabularies;

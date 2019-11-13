@@ -83,7 +83,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 		Map<String, ? extends Serializable> fieldNameMappingMap,
 		Map<String, Object> fieldNameValueMap) {
 
-		if (fieldNameMappingMap.isEmpty()) {
+		if ((fieldNameMappingMap == null) || fieldNameMappingMap.isEmpty()) {
 			return fieldNameValueMap;
 		}
 

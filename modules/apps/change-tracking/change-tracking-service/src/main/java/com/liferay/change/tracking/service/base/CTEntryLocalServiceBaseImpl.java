@@ -114,10 +114,11 @@ public abstract class CTEntryLocalServiceBaseImpl
 	 *
 	 * @param ctEntry the ct entry
 	 * @return the ct entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CTEntry deleteCTEntry(CTEntry ctEntry) {
+	public CTEntry deleteCTEntry(CTEntry ctEntry) throws PortalException {
 		return ctEntryPersistence.remove(ctEntry);
 	}
 
@@ -314,10 +315,11 @@ public abstract class CTEntryLocalServiceBaseImpl
 	 *
 	 * @param ctEntry the ct entry
 	 * @return the ct entry that was updated
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CTEntry updateCTEntry(CTEntry ctEntry) {
+	public CTEntry updateCTEntry(CTEntry ctEntry) throws PortalException {
 		return ctEntryPersistence.update(ctEntry);
 	}
 

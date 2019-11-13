@@ -90,9 +90,10 @@ public interface CTEntryLocalService
 	 *
 	 * @param ctEntry the ct entry
 	 * @return the ct entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public CTEntry deleteCTEntry(CTEntry ctEntry);
+	public CTEntry deleteCTEntry(CTEntry ctEntry) throws PortalException;
 
 	/**
 	 * Deletes the ct entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -261,8 +262,9 @@ public interface CTEntryLocalService
 	 *
 	 * @param ctEntry the ct entry
 	 * @return the ct entry that was updated
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
-	public CTEntry updateCTEntry(CTEntry ctEntry);
+	public CTEntry updateCTEntry(CTEntry ctEntry) throws PortalException;
 
 }

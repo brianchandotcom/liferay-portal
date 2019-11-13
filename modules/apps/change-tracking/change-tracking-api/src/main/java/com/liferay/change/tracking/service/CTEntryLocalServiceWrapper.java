@@ -72,10 +72,12 @@ public class CTEntryLocalServiceWrapper
 	 *
 	 * @param ctEntry the ct entry
 	 * @return the ct entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.change.tracking.model.CTEntry deleteCTEntry(
-		com.liferay.change.tracking.model.CTEntry ctEntry) {
+			com.liferay.change.tracking.model.CTEntry ctEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctEntryLocalService.deleteCTEntry(ctEntry);
 	}
@@ -335,10 +337,12 @@ public class CTEntryLocalServiceWrapper
 	 *
 	 * @param ctEntry the ct entry
 	 * @return the ct entry that was updated
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.change.tracking.model.CTEntry updateCTEntry(
-		com.liferay.change.tracking.model.CTEntry ctEntry) {
+			com.liferay.change.tracking.model.CTEntry ctEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctEntryLocalService.updateCTEntry(ctEntry);
 	}

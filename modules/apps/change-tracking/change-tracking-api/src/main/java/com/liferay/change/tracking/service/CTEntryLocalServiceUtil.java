@@ -77,9 +77,11 @@ public class CTEntryLocalServiceUtil {
 	 *
 	 * @param ctEntry the ct entry
 	 * @return the ct entry that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.change.tracking.model.CTEntry deleteCTEntry(
-		com.liferay.change.tracking.model.CTEntry ctEntry) {
+			com.liferay.change.tracking.model.CTEntry ctEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteCTEntry(ctEntry);
 	}
@@ -320,9 +322,11 @@ public class CTEntryLocalServiceUtil {
 	 *
 	 * @param ctEntry the ct entry
 	 * @return the ct entry that was updated
+	 * @throws PortalException
 	 */
 	public static com.liferay.change.tracking.model.CTEntry updateCTEntry(
-		com.liferay.change.tracking.model.CTEntry ctEntry) {
+			com.liferay.change.tracking.model.CTEntry ctEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCTEntry(ctEntry);
 	}

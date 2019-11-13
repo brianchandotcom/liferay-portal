@@ -88,7 +88,7 @@ public class DisplayPageTemplateStagedModelDataHandlerTest
 			TestPropsValues.getUserId(), group.getGroupId(), 0, _classNameId,
 			_classTypeId, RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, false, 0, 0,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			0, WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	@Override

@@ -53,7 +53,7 @@
 										<div class="aspect-ratio aspect-ratio-bg-cover" style="background-image:url('<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>')">
 										</div>
 
-										<div class="card-row card-row-padded">
+										<div class="card-body">
 											<div class="card-col-field">
 												<%= layoutTemplate.getName(locale) %>
 											</div>

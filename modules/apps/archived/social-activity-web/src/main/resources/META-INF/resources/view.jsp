@@ -18,7 +18,7 @@
 
 <div class="container-fluid-1280">
 	<div class="card main-content-card">
-		<div class="card-row card-row-padded">
+		<div class="card-body">
 
 			<%
 			Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttribute(SocialActivityWebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP);

@@ -89,7 +89,7 @@
 
 		<li class="list-group-item">
 			<div class="card card-horizontal">
-				<div class="card-row card-row-padded">
+				<div class="card-body">
 					<div class="card-col-field">
 						<liferay-ui:user-portrait
 							userId="<%= activityDescriptor.getUserId() %>"

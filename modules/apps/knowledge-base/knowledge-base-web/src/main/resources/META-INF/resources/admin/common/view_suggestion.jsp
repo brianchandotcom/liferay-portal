@@ -29,7 +29,7 @@ renderResponse.setTitle(kbCommentTitle);
 
 <div class="card panel" id="<portlet:namespace /><%= kbComment.getKbCommentId() %>">
 	<div class="panel-heading">
-		<div class="card-row card-row-padded">
+		<div class="card-body">
 			<div class="card-col-field">
 				<div class="list-group-card-icon">
 					<liferay-ui:user-portrait
@@ -76,7 +76,7 @@ renderResponse.setTitle(kbCommentTitle);
 	<div class="divider"></div>
 
 	<div class="panel-body">
-		<div class="card-row card-row-padded text-default">
+		<div class="card-body text-default">
 			<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(kbComment.getContent())) %>
 		</div>
 	</div>

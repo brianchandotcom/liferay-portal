@@ -33,7 +33,7 @@ AUI.add(
 			'<label>',
 			'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{[ LString.escapeHTML(values.name) ]}" data-title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}checkbox" name="{$ns}selectUploadedFile" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{[ LString.escapeHTML(values.name) ]}" />',
 			'<div class="card-horizontal">',
-			'<div class="card-row card-row-padded">',
+			'<div class="card-body">',
 			'<div class="card-col-field">',
 			Liferay.Util.getLexiconIconTpl('document'),
 			'</div>',

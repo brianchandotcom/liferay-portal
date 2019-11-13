@@ -21,7 +21,7 @@ Map<String, Object> context = (Map<String, Object>)request.getAttribute("context
 %>
 
 <div class="card main-content-card taglib-empty-result-message">
-	<div class="card-row card-row-padded">
+	<div class="card-body">
 		<div class="taglib-empty-result-message-header"></div>
 
 		<div class="text-center text-muted">

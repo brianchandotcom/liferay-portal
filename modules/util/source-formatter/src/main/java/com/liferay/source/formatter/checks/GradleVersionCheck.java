@@ -46,7 +46,7 @@ public class GradleVersionCheck extends BaseFileCheck {
 			String name = matcher.group(3);
 			String version = matcher.group(4);
 
-			content = _checkDefaultVersion(
+			content = _formatVersion(
 				fileName, absolutePath, content, matcher.group(2), name,
 				version, matcher.start(3));
 
@@ -63,7 +63,7 @@ public class GradleVersionCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _checkDefaultVersion(
+	private String _formatVersion(
 			String fileName, String absolutePath, String content,
 			String dependency, String name, String version, int pos)
 		throws IOException {

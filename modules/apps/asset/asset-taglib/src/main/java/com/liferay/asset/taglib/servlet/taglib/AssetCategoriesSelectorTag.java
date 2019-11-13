@@ -371,7 +371,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
 				"eventName", getEventName()
 			).put(
-				"groupIds", ListUtil.toList(getGroupIds())
+				"groupIds", ListUtil.fromArray(getGroupIds())
 			).put(
 				"id", _getNamespace() + _getId() + "assetCategoriesSelector"
 			).put(

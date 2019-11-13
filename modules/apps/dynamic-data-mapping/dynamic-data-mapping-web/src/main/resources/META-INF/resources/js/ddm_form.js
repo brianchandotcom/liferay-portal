@@ -792,7 +792,13 @@ AUI.add(
 
 					var inputNode = instance.getInputNode();
 
-					return Lang.String.unescapeHTML(inputNode.val());
+					var value = '';
+
+					if (inputNode) {
+						value = Lang.String.unescapeHTML(inputNode.val());
+					}
+
+					return value;
 				},
 
 				initializer() {

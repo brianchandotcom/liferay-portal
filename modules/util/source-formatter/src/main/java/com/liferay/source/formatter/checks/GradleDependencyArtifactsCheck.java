@@ -43,7 +43,10 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 		content = _renameDependencyNames(absolutePath, content);
 
-		content = _enforceDependencyVersions(absolutePath, content);
+		List<String> enforceVersionArtifacts = getAttributeValues(
+			_ENFORCE_VERSION_ARTIFACTS_KEY, absolutePath);
+
+		content = _enforceDependencyVersions(content, enforceVersionArtifacts);
 
 		Matcher matcher = _artifactPattern.matcher(content);
 
@@ -53,7 +56,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 			content = _formatVersion(
 				fileName, absolutePath, content, matcher.group(2), name,
-				version, matcher.start(3));
+				version, matcher.start(3), enforceVersionArtifacts);
 
 			if ((isSubrepository() || absolutePath.contains("/modules/apps/") ||
 				 absolutePath.contains("/modules/dxp/apps/") ||
@@ -69,10 +72,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 	}
 
 	private String _enforceDependencyVersions(
-		String absolutePath, String content) {
-
-		List<String> enforceVersionArtifacts = getAttributeValues(
-			_ENFORCE_VERSION_ARTIFACTS_KEY, absolutePath);
+		String content, List<String> enforceVersionArtifacts) {
 
 		for (String artifact : enforceVersionArtifacts) {
 			String[] artifactParts = StringUtil.split(
@@ -138,7 +138,8 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 	private String _formatVersion(
 			String fileName, String absolutePath, String content,
-			String dependency, String name, String version, int pos)
+			String dependency, String name, String version, int pos,
+			List<String> enforceVersionArtifacts)
 		throws IOException {
 
 		if (isSubrepository() || !fileName.endsWith("build.gradle") ||
@@ -164,6 +165,12 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 			else if (name.startsWith("com.liferay") &&
 					 !name.startsWith("com.liferay.gradle") &&
 					 !_isMasterOnlyFile(absolutePath)) {
+
+				for (String enforceVersionArtifact : enforceVersionArtifacts) {
+					if (enforceVersionArtifact.startsWith(name + ":")) {
+						return content;
+					}
+				}
 
 				Map<String, String> projectNamesMap = _getProjectNamesMap(
 					absolutePath);

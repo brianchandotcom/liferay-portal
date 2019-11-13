@@ -33,28 +33,19 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 
 			<div class="field-content">
 				<div class="form-group" id="<%= "namespace_assetCategoriesSelector_" + vocabularyId %>">
-
-					<%
-					if (Validator.isNotNull(vocabulary.get("title"))) {
-					%>
-
+					<c:if test='<%= Validator.isNotNull(vocabulary.get("title")) %>'>
 						<label>
 							<%= vocabulary.get("title") %>
 
-							<%
-							if (Validator.isNotNull(vocabulary.get("group"))) {
-							%>
-
+							<c:if test='<%= Validator.isNotNull(vocabulary.get("group")) %>'>
 								<%= StringPool.BLANK + "(" + vocabulary.get("group") + ")" %>
+							</c:if>
 
 							<%
-							}
-
 							boolean required = (boolean)vocabulary.get("required");
-
-							if (required) {
 							%>
 
+							<c:if test="<%= required %>">
 								<span class="reference-mark">
 									<clay:icon
 										symbol="asterisk"
@@ -64,16 +55,9 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 										<liferay-ui:message key="required" />
 									</span>
 								</span>
-
-							<%
-							}
-							%>
-
+							</c:if>
 						</label>
-
-					<%
-					}
-					%>
+					</c:if>
 
 					<div class="input-group">
 						<div class="input-group-item">
@@ -82,12 +66,15 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 
 									<%
 									List<Map<String, Object>> selectedItems = (List<Map<String, Object>>)vocabulary.get("selectedItems");
+									%>
 
-									if (Validator.isNotNull(selectedItems)) {
+									<c:if test="<%= Validator.isNotNull(selectedItems) %>">
+
+										<%
 										for (Map<String, Object> selectedItem : selectedItems) {
 											String selectedItemLabel = selectedItem.get("label").toString();
 											String selectedItemValue = selectedItem.get("value").toString();
-									%>
+										%>
 
 											<clay:label
 												closeable="<%= true %>"
@@ -96,10 +83,11 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 
 											<input name="<%= inputName %>" type="hidden" value="<%= selectedItemValue %>" />
 
-									<%
+										<%
 										}
-									}
-									%>
+										%>
+
+									</c:if>
 
 									<input class="form-control-inset" type="text" value="" />
 								</div>

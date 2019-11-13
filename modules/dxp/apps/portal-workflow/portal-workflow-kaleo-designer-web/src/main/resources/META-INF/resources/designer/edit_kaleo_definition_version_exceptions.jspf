@@ -147,4 +147,17 @@
 
 <liferay-ui:error exception="<%= WorkflowDefinitionTitleException.class %>" message="name-workflow-before-publish" />
 
+<liferay-ui:error exception="<%= NoSuchRoleException.class %>" message="the-role-could-not-be-found" />
+
+<liferay-ui:error exception="<%= IllegalArgumentException.class %>">
+
+	<%
+	IllegalArgumentException iae = (IllegalArgumentException)errorException;
+	%>
+
+	<liferay-ui:message key="<%= iae.getMessage() %>" />
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= WorkflowException.class %>" message="an-error-occurred-in-the-workflow-engine" />
+
+<liferay-ui:error-principal />

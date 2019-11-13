@@ -15,12 +15,14 @@
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -73,15 +75,26 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 			return SessionErrors.isEmpty(actionRequest);
 		}
 		catch (WorkflowException we) {
-			if (_log.isWarnEnabled()) {
-				Throwable rootThrowable = getRootThrowable(we);
+			Throwable rootThrowable = getRootThrowable(we);
 
+			if (_log.isWarnEnabled()) {
 				_log.warn(rootThrowable, rootThrowable);
 			}
 
 			hideDefaultErrorMessage(actionRequest);
 
-			SessionErrors.add(actionRequest, we.getClass(), we);
+			if (rootThrowable instanceof IllegalArgumentException ||
+				rootThrowable instanceof NoSuchRoleException ||
+				rootThrowable instanceof
+					PrincipalException.MustBeCompanyAdmin ||
+				rootThrowable instanceof PrincipalException.MustBeOmniadmin) {
+
+				SessionErrors.add(
+					actionRequest, rootThrowable.getClass(), rootThrowable);
+			}
+			else {
+				SessionErrors.add(actionRequest, we.getClass(), we);
+			}
 
 			return false;
 		}

@@ -42,7 +42,6 @@ import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -305,13 +304,14 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		List<String[]> categoryIdsTitles = getCategoryIdsTitles();
 
 		for (int i = 0; i < vocabularies.size(); i++) {
-			Map<String, Object> vocabularyMap = new HashMap<>();
-
 			AssetVocabulary vocabulary = vocabularies.get(i);
 
-			vocabularyMap.put("id", vocabulary.getVocabularyId());
-			vocabularyMap.put(
-				"title", vocabulary.getTitle(themeDisplay.getLocale()));
+			Map<String, Object> vocabularyMap =
+				HashMapBuilder.<String, Object>put(
+					"id", vocabulary.getVocabularyId()
+				).put(
+					"title", vocabulary.getTitle(themeDisplay.getLocale())
+				).build();
 
 			String vocabularyGroupName = StringPool.BLANK;
 
@@ -346,10 +346,12 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 					"_CATEGORY_");
 
 				for (int j = 0; j < categoryIds.length; j++) {
-					Map<String, Object> category = new HashMap<>();
-
-					category.put("label", categoryTitles[j]);
-					category.put("value", categoryIds[j]);
+					Map<String, Object> category =
+						HashMapBuilder.<String, Object>put(
+							"label", categoryTitles[j]
+						).put(
+							"value", categoryIds[j]
+						).build();
 
 					selectedItems.add(category);
 				}

@@ -248,14 +248,9 @@ definition {
 			required = "true",
 			vocabularyName = "Vocabulary Name");
 
-		JSONCategory.addCategory(
+		var categoryId = JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
-			vocabularyName = "Vocabulary Name");
-
-		var categoryId = JSONCategory.getCategoryId(
-			categoryName = "Category Name",
-			groupName = "Test Site Name",
 			vocabularyName = "Vocabulary Name");
 
 		JSONLayout.addPublicLayout(

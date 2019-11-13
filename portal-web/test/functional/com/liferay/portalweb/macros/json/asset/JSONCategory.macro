@@ -25,12 +25,14 @@ definition {
 			groupId = "${groupId}",
 			vocabularyName = "${vocabularyName}");
 
-		JSONCategoryAPI._addCategory(
+		var categoryId = JSONCategoryAPI._addCategory(
 			descriptionMap = "${descriptionMap}",
 			groupId = "${groupId}",
 			parentCategoryId = "${parentCategoryId}",
 			titleMap = "${titleMap}",
 			vocabularyId = "${vocabularyId}");
+
+		return "${categoryId}";
 	}
 
 	@summary = "Add a basic subcategory"

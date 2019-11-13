@@ -1451,6 +1451,32 @@ import org.osgi.service.component.annotations.Reference;
 		</#list>
 	</#if>
 
+	<#assign lazyBlob = entity.hasLazyBlobEntityColumn() && stringUtil.equals(sessionTypeName, "Local") && entity.hasPersistence() />
+	<#assign localizedEntity = dependencyInjectorDS && stringUtil.equals(sessionTypeName, "Local") && entity.localizedEntity?? && entity.versionEntity??  && entity.hasPersistence() />
+
+	<#if lazyBlob || localizedEntity>
+		@Activate
+		protected void activate() {
+			<#if localizedEntity>
+                <#assign localizedEntity = entity.localizedEntity />
+
+				registerListener(new ${localizedEntity.name}VersionServiceListener());
+			</#if>
+
+			<#if lazyBlob>
+				DB db = DBManagerUtil.getDB();
+
+				if ((db.getDBType() != DBType.DB2) &&
+				(db.getDBType() != DBType.MYSQL) &&
+				(db.getDBType() != DBType.MARIADB) &&
+				(db.getDBType() != DBType.SYBASE)) {
+
+					_useTempFile = true;
+				}
+			</#if>
+		}
+	</#if>
+
 	<#if dependencyInjectorDS>
 		@Override
 		public Class<?>[] getAopInterfaces() {
@@ -1471,42 +1497,6 @@ import org.osgi.service.component.annotations.Reference;
 		public void setAopProxy(Object aopProxy) {
 			${entity.varName}${sessionTypeName}Service = (${entity.name}${sessionTypeName}Service)aopProxy;
 		}
-
-		<#if stringUtil.equals(sessionTypeName, "Local") && entity.localizedEntity?? && entity.versionEntity?? && entity.hasPersistence()>
-			<#assign localizedEntity = entity.localizedEntity />
-
-			@Activate
-			protected void activate() {
-				registerListener(new ${localizedEntity.name}VersionServiceListener());
-
-				<#if entity.hasLazyBlobEntityColumn()>
-					DB db = DBManagerUtil.getDB();
-
-					if ((db.getDBType() != DBType.DB2) &&
-						(db.getDBType() != DBType.MYSQL) &&
-						(db.getDBType() != DBType.MARIADB) &&
-						(db.getDBType() != DBType.SYBASE)) {
-
-						_useTempFile = true;
-					}
-				</#if>
-			}
-		<#elseif stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
-			<#if entity.hasLazyBlobEntityColumn()>
-				@Activate
-				protected void activate() {
-					DB db = DBManagerUtil.getDB();
-
-					if ((db.getDBType() != DBType.DB2) &&
-						(db.getDBType() != DBType.MYSQL) &&
-						(db.getDBType() != DBType.MARIADB) &&
-						(db.getDBType() != DBType.SYBASE)) {
-
-						_useTempFile = true;
-					}
-				}
-			</#if>
-		</#if>
 	<#else>
 		public void afterPropertiesSet() {
 			<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>

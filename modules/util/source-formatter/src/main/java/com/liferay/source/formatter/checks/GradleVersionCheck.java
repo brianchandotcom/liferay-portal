@@ -16,12 +16,17 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,12 +43,12 @@ public class GradleVersionCheck extends BaseFileCheck {
 		Matcher matcher = _versionPattern.matcher(content);
 
 		while (matcher.find()) {
-			String name = matcher.group(2);
-			String version = matcher.group(3);
+			String name = matcher.group(3);
+			String version = matcher.group(4);
 
 			content = _checkDefaultVersion(
-				fileName, absolutePath, content, name, version,
-				matcher.start(3));
+				fileName, absolutePath, content, matcher.group(2), name,
+				version, matcher.start(3));
 
 			if ((isSubrepository() || absolutePath.contains("/modules/apps/") ||
 				 absolutePath.contains("/modules/dxp/apps/") ||
@@ -59,8 +64,9 @@ public class GradleVersionCheck extends BaseFileCheck {
 	}
 
 	private String _checkDefaultVersion(
-		String fileName, String absolutePath, String content, String name,
-		String version, int pos) {
+			String fileName, String absolutePath, String content,
+			String dependency, String name, String version, int pos)
+		throws IOException {
 
 		if (isSubrepository() || !fileName.endsWith("build.gradle") ||
 			absolutePath.contains("/modules/apps/static/portal-osgi-web/") ||
@@ -81,6 +87,23 @@ public class GradleVersionCheck extends BaseFileCheck {
 				addMessage(
 					fileName, "Do not use 'default' version for '" + name + "'",
 					"gradle_versioning.markdown", getLineNumber(content, pos));
+			}
+			else if (name.startsWith("com.liferay") &&
+					 !name.startsWith("com.liferay.gradle") &&
+					 !_isMasterOnlyFile(absolutePath)) {
+
+				Map<String, String> projectNamesMap = _getProjectNamesMap(
+					absolutePath);
+
+				if (projectNamesMap.containsKey(name)) {
+					return StringUtil.replace(
+						content, dependency,
+						"project(\"" + projectNamesMap.get(name) + "\")");
+				}
+
+				addMessage(
+					fileName, "Incorrect dependency '" + name + "'",
+					getLineNumber(content, pos));
 			}
 		}
 		else if (!version.equals("default") &&
@@ -137,6 +160,42 @@ public class GradleVersionCheck extends BaseFileCheck {
 		return StringUtil.replaceFirst(content, line, newLine);
 	}
 
+	private synchronized Map<String, String> _getProjectNamesMap(
+			String absolutePath)
+		throws IOException {
+
+		if (_projectNamesMap != null) {
+			return _projectNamesMap;
+		}
+
+		_projectNamesMap = new HashMap<>();
+
+		String content = getModulesPropertiesContent(absolutePath);
+
+		if (Validator.isNull(content)) {
+			return _projectNamesMap;
+		}
+
+		List<String> lines = ListUtil.fromString(content);
+
+		for (String line : lines) {
+			String[] array = StringUtil.split(line, StringPool.EQUAL);
+
+			if (array.length != 2) {
+				continue;
+			}
+
+			String key = array[0];
+
+			if (key.startsWith("project.name[")) {
+				_projectNamesMap.put(
+					key.substring(13, key.length() - 1), array[1]);
+			}
+		}
+
+		return _projectNamesMap;
+	}
+
 	private boolean _isMasterOnlyFile(String absolutePath) {
 		int x = absolutePath.length();
 
@@ -174,6 +233,9 @@ public class GradleVersionCheck extends BaseFileCheck {
 		Pattern.compile(
 			"-conditionalpackage:(.*[^\\\\])(\n|\\Z)", Pattern.DOTALL);
 	private static final Pattern _versionPattern = Pattern.compile(
-		"\n\t*(.* name: \"(.*?)\", version: \"(.*?)\")");
+		"\n\t*(.* (group: \"[^\"]+\", name: \"([^\"]+)\", " +
+			"version: \"([^\"]+)\"))");
+
+	private Map<String, String> _projectNamesMap;
 
 }

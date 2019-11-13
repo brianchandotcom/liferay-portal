@@ -29,4 +29,7 @@ public class LayoutAdminWebKeys {
 	public static final String LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT =
 		"LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT";
 
+	public static final String SCREEN_NAVIGATION_KEY_LAYOUT =
+		"SCREEN_NAVIGATION_KEY_LAYOUT";
+
 }

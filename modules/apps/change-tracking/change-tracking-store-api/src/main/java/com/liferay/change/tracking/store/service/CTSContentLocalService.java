@@ -266,7 +266,7 @@ public interface CTSContentLocalService
 		String storeType);
 
 	@Transactional(readOnly = true)
-	public InputStream openCTSContentInputStream(long contentId);
+	public InputStream openDataInputStream(long ctsContentId);
 
 	/**
 	 * Updates the cts content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

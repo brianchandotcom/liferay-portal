@@ -11,6 +11,9 @@
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntityLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntityLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntityServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntityService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.EagerBlobEntityPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.EagerBlobEntityPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntityLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntityLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntityServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntityService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LazyBlobEntityPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntityPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LocalizedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LocalizedEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LocalizedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LocalizedEntryLocalizationPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryLocalizationPersistence" />

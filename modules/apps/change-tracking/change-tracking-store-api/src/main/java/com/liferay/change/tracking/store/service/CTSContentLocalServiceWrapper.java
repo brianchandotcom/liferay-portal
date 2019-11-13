@@ -330,8 +330,8 @@ public class CTSContentLocalServiceWrapper
 	}
 
 	@Override
-	public java.io.InputStream openCTSContentInputStream(long contentId) {
-		return _ctsContentLocalService.openCTSContentInputStream(contentId);
+	public java.io.InputStream openDataInputStream(long ctsContentId) {
+		return _ctsContentLocalService.openDataInputStream(ctsContentId);
 	}
 
 	/**

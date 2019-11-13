@@ -389,8 +389,8 @@ public class DLContentLocalServiceWrapper
 	}
 
 	@Override
-	public java.io.InputStream openContentInputStream(long contentId) {
-		return _dlContentLocalService.openContentInputStream(contentId);
+	public java.io.InputStream openDataInputStream(long contentId) {
+		return _dlContentLocalService.openDataInputStream(contentId);
 	}
 
 	/**

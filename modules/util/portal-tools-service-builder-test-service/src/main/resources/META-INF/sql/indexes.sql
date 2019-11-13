@@ -26,6 +26,8 @@ create index IX_4B556E5E on LVEntryVersion (uuid_[$COLUMN_LENGTH:75$], companyId
 create unique index IX_E9BD379C on LVEntryVersion (uuid_[$COLUMN_LENGTH:75$], groupId, version);
 create index IX_FA76694A on LVEntryVersion (uuid_[$COLUMN_LENGTH:75$], version);
 
+create unique index IX_BF2FC0D0 on LazyBlobEntity (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create unique index IX_2E833843 on LocalizedEntryLocalization (localizedEntryId, languageId[$COLUMN_LENGTH:75$]);
 
 create index IX_6770C47D on VersionedEntry (groupId, head);

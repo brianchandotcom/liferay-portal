@@ -12,6 +12,13 @@
 		<field name="groupId" type="long" />
 		<field name="blob" type="Blob" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.LazyBlobEntity">
+		<field name="uuid" type="String" />
+		<field name="lazyBlobEntityId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="blob1" type="Blob" />
+		<field name="blob2" type="Blob" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.LocalizedEntry">
 		<field name="defaultLanguageId" type="String" />
 		<field name="localizedEntryId" type="long" />

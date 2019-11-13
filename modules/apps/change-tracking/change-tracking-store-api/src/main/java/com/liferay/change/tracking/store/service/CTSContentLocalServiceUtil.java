@@ -330,10 +330,8 @@ public class CTSContentLocalServiceUtil {
 			companyId, repositoryId, path, version, storeType);
 	}
 
-	public static java.io.InputStream openCTSContentInputStream(
-		long contentId) {
-
-		return getService().openCTSContentInputStream(contentId);
+	public static java.io.InputStream openDataInputStream(long ctsContentId) {
+		return getService().openDataInputStream(ctsContentId);
 	}
 
 	/**

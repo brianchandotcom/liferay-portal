@@ -58,20 +58,12 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "alien");
 
-		AssertTextEquals(
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER",
-			resultOrder = "1",
-			value1 = "Alien³");
-
-		AssertTextEquals(
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER",
-			resultOrder = "2",
-			value1 = "Alien");
-
-		AssertTextEquals(
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER",
-			resultOrder = "3",
-			value1 = "Alien Nation");
+		if (IsTextEqual(locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER", resultOrder = "1", value1 = "Alien³")) {
+			SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Alien³,Alien,Alien Nation");
+		}
+		else {
+			SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Alien,Alien³,Alien Nation");
+		}
 	}
 
 	@priority = "5"

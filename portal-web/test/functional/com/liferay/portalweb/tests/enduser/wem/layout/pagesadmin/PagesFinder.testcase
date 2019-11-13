@@ -52,6 +52,11 @@ definition {
 				layoutName = "Test URL",
 				type = "url");
 
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Private Page",
+				type = "portlet");
+
 			for (var i : list "1,2,3,4") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",

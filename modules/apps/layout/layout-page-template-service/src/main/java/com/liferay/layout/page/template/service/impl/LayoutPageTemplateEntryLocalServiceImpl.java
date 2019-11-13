@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
@@ -116,27 +115,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 
 		return addLayoutPageTemplateEntry(groupId, layoutPrototype);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
-	 *             String, int, boolean, long, long, long, int,
-	 *             ServiceContext)}}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
-			long classNameId, long classTypeId, String name, int type,
-			boolean defaultTemplate, long layoutPrototypeId,
-			long previewFileEntryId, int status, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, classNameId,
-			classTypeId, name, type, defaultTemplate, 0, 0, 0, status,
-			serviceContext);
 	}
 
 	@Override
@@ -244,77 +222,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name, type,
 			false, 0, 0, 0, status, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
-	 *             String, int, boolean, long, long, long, int, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, long layoutPrototypeId, int status,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name, type,
-			false, 0, 0, 0, status, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
-	 *             String, int, boolean, long, long, long, int, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, long layoutPrototypeId,
-			long previewFileEntryId, int status, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name, type,
-			false, 0, 0, 0, status, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
-	 *             String, int, boolean, long, long, long, int, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name, type,
-			false, 0, 0, 0, WorkflowConstants.STATUS_DRAFT, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
-	 *             String, int, boolean, long, long, long, int, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, false, 0, 0, 0,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 	@Override
@@ -441,19 +348,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		return layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
 			layoutPageTemplateEntryId);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #fetchLayoutPageTemplateEntry(long, String, int)}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
-		long groupId, String name) {
-
-		return layoutPageTemplateEntryPersistence.fetchByG_N_First(
-			groupId, name, null);
 	}
 
 	@Override
@@ -650,66 +544,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		return layoutPageTemplateEntryLocalService.
 			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
-		throws PortalException {
-
-		List<DDMStructureLink> ddmStructureLinks =
-			_ddmStructureLinkLocalService.getStructureLinks(
-				classNameLocalService.getClassNameId(
-					LayoutPageTemplateEntry.class),
-				layoutPageTemplateEntryId);
-
-		if (ListUtil.isNotEmpty(ddmStructureLinks)) {
-			DDMStructureLink ddmStructureLink = ddmStructureLinks.get(0);
-
-			_ddmStructureLinkLocalService.deleteDDMStructureLink(
-				ddmStructureLink);
-		}
-
-		// Layout page template entry
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			layoutPageTemplateEntryPersistence.findByPrimaryKey(
-				layoutPageTemplateEntryId);
-
-		layoutPageTemplateEntry.setModifiedDate(new Date());
-		layoutPageTemplateEntry.setClassNameId(classNameId);
-		layoutPageTemplateEntry.setClassTypeId(classTypeId);
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Layout layout = null;
-
-		if (layoutPageTemplateEntry.getPlid() == 0) {
-			layout = _addLayout(
-				layoutPageTemplateEntry.getUserId(),
-				layoutPageTemplateEntry.getGroupId(),
-				layoutPageTemplateEntry.getName(),
-				layoutPageTemplateEntry.getType(), serviceContext);
-		}
-
-		if (layout != null) {
-			layoutPageTemplateEntry.setPlid(layout.getPlid());
-		}
-
-		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
-
-		// Dynamic data mapping structure link
-
-		_ddmStructureLinkLocalService.addStructureLink(
-			classNameLocalService.getClassNameId(LayoutPageTemplateEntry.class),
-			layoutPageTemplateEntryId, classTypeId);
-
-		return layoutPageTemplateEntry;
 	}
 
 	@Override

@@ -13,6 +13,12 @@ definition {
 			parentLayoutName = "${parentLayoutName}",
 			privateLayout = "true");
 
+		var serviceContext = JSONLayoutSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
 		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		JSONLayoutAPI._addLayout(
@@ -21,6 +27,7 @@ definition {
 			layoutName = "${layoutName}",
 			parentLayoutId = "${parentLayoutId}",
 			privateLayout = "true",
+			serviceContext = "${serviceContext}",
 			type = "${type}");
 	}
 
@@ -37,6 +44,12 @@ definition {
 			parentLayoutName = "${parentLayoutName}",
 			privateLayout = "true");
 
+		var serviceContext = JSONLayoutSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
 		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		JSONLayoutAPI._addLayout(
@@ -45,6 +58,7 @@ definition {
 			layoutName = "${layoutName}",
 			parentLayoutId = "${parentLayoutId}",
 			privateLayout = "true",
+			serviceContext = "${serviceContext}",
 			type = "${type}");
 	}
 
@@ -61,6 +75,12 @@ definition {
 			parentLayoutName = "${parentLayoutName}",
 			privateLayout = "false");
 
+		var serviceContext = JSONLayoutSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
 		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		JSONLayoutAPI._addLayout(
@@ -69,6 +89,7 @@ definition {
 			layoutName = "${layoutName}",
 			parentLayoutId = "${parentLayoutId}",
 			privateLayout = "false",
+			serviceContext = "${serviceContext}",
 			type = "${type}");
 	}
 
@@ -85,6 +106,12 @@ definition {
 			parentLayoutName = "${parentLayoutName}",
 			privateLayout = "false");
 
+		var serviceContext = JSONLayoutSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
 		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		JSONLayoutAPI._addLayout(
@@ -93,6 +120,7 @@ definition {
 			layoutName = "${layoutName}",
 			parentLayoutId = "${parentLayoutId}",
 			privateLayout = "false",
+			serviceContext = "${serviceContext}",
 			type = "${type}");
 	}
 

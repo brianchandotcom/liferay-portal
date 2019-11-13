@@ -57,6 +57,21 @@
 
 		<column lazy="false" name="blob" type="Blob" />
 	</entity>
+	<entity local-service="true" name="LazyBlobEntity" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="lazyBlobEntityId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="blob1" type="Blob" />
+		<column name="blob2" type="Blob" />
+	</entity>
 	<entity local-service="true" name="LocalizedEntry" remote-service="false">
 
 		<!-- PK fields -->

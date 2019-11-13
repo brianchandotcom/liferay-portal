@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.util;
 
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
  * @author Kyle Miho
@@ -70,7 +72,9 @@ public class LayoutPageTemplateTestUtil {
 			addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(),
 				layoutPageTemplateCollection.getGroupId(),
-				layoutPageTemplateCollectionId, name, serviceContext);
+				layoutPageTemplateCollectionId, name,
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 }

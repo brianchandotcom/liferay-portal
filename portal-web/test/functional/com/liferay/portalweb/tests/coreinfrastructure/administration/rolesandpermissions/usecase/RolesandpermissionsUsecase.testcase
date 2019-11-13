@@ -2221,4 +2221,23 @@ definition {
 		WebContent.viewWCViewableByPermissions();
 	}
 
+	@description = "This is a use case for LPS-97321."
+	@priority = "4"
+	test ViewUserPermissionSubdirectoryDisplays {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.add(roleTitle = "User Permission");
+
+		Navigator.gotoNavItem(navItem = "Define Permissions");
+
+		Role.viewPermissionSubdirectory(
+			navItem = "User",
+			subItemList = "Notifications,My Submissions,My Workflow Tasks,Account Settings,My Organizations");
+	}
+
 }

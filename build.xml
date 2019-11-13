@@ -1069,21 +1069,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 	</target>
 
 	<target depends="setup-libs" name="snapshot-bundle">
-		<antelope:stringutil property="snapshot.bundle.file.beginindex" string="${snapshot.bundle.url}">
-			<antelope:lastindexof string="/" />
-		</antelope:stringutil>
-
-		<antelope:math
-			datatype="int"
-			operand1="${snapshot.bundle.file.beginindex}"
-			operand2="1"
-			operation="+"
-			result="snapshot.bundle.file.beginindex"
-		/>
-
-		<antelope:stringutil property="snapshot.bundle.file" string="${snapshot.bundle.url}">
-			<antelope:substring beginindex="${snapshot.bundle.file.beginindex}" />
-		</antelope:stringutil>
+		<basename file="${snapshot.bundle.url}" property="snapshot.bundle.file" />
 
 		<property name="snapshot.bundle.sha256.original" value="${project.dir}/tmp/${snapshot.bundle.file}.snapshot.bundle.sha256.original" />
 		<property name="snapshot.bundle.sha256.new" value="${project.dir}/tmp/${snapshot.bundle.file}.snapshot.bundle.sha256.new" />

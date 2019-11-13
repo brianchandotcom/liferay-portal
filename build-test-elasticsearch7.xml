@@ -1071,6 +1071,8 @@ xpack.monitoring.collection.enabled: true</echo>
 			<print-file file.name="${elasticsearch.dir}-${elasticsearch.node.number}/logs/LiferayElasticsearchCluster.log" />
 		</antelope:repeat>
 
+		<get-testcase-property property.name="elastic.xpack.enabled" />
+
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
 			<then>

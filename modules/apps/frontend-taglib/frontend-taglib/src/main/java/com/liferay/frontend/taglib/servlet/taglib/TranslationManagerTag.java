@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -41,6 +41,42 @@ import javax.servlet.jsp.PageContext;
  */
 public class TranslationManagerTag extends IncludeTag {
 
+	public Locale[] getAvailableLocales() {
+		return _availableLocales;
+	}
+
+	public String getComponentId() {
+		return _componentId;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getDefaultLanguageId() {
+		return _defaultLanguageId;
+	}
+
+	public String getEditingLanguageId() {
+		return _editingLanguageId;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public boolean isChangeableDefaultLanguage() {
+		return _changeableDefaultLanguage;
+	}
+
+	public boolean isInitialize() {
+		return _initialize;
+	}
+
+	public boolean isReadOnly() {
+		return _readOnly;
+	}
+
 	public void setAvailableLocales(Locale[] availableLocales) {
 		_availableLocales = availableLocales;
 	}
@@ -49,6 +85,10 @@ public class TranslationManagerTag extends IncludeTag {
 		boolean changeableDefaultLanguage) {
 
 		_changeableDefaultLanguage = changeableDefaultLanguage;
+	}
+
+	public void setComponentId(String componentId) {
+		_componentId = componentId;
 	}
 
 	public void setCssClass(String cssClass) {
@@ -63,19 +103,19 @@ public class TranslationManagerTag extends IncludeTag {
 		_editingLanguageId = editingLanguageId;
 	}
 
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		servletContext = ServletContextUtil.getServletContext();
-	}
-
 	public void setId(String id) {
 		_id = id;
 	}
 
 	public void setInitialize(boolean initialize) {
 		_initialize = initialize;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	public void setReadOnly(boolean readOnly) {
@@ -86,14 +126,15 @@ public class TranslationManagerTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-	 	_availableLocales = null;
-	 	_changeableDefaultLanguage = false;
-	 	_cssClass = null;
-	 	_defaultLanguageId = null;
-	 	_editingLanguageId = null;
-	 	_id = null;
-	 	_initialize = false;
-	 	_readOnly = false;
+		_availableLocales = null;
+		_changeableDefaultLanguage = false;
+		_componentId = null;
+		_cssClass = null;
+		_defaultLanguageId = null;
+		_editingLanguageId = null;
+		_id = null;
+		_initialize = false;
+		_readOnly = false;
 	}
 
 	@Override
@@ -134,17 +175,25 @@ public class TranslationManagerTag extends IncludeTag {
 			localesJSONArray.put(localeJSONObject);
 		}
 
-		Map<String, Object> data = new HashMap<>();
-
-		data.put("availableLocales", availableLocalesJSONArray);
-		data.put("changeableDefaultLanguage", _changeableDefaultLanguage);
-		data.put("cssClass", _cssClass);
-		data.put("defaultLanguageId", _defaultLanguageId);
-		data.put("editingLanguageId", _editingLanguageId);
-		data.put("id", _id);
-		data.put("initialize", _initialize);
-		data.put("locales", localesJSONArray);
-		data.put("readOnly", _readOnly);
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"availableLocales", availableLocalesJSONArray
+		).put(
+			"changeableDefaultLanguage", _changeableDefaultLanguage
+		).put(
+			"cssClass", _cssClass
+		).put(
+			"defaultLanguageId", _defaultLanguageId
+		).put(
+			"editingLanguageId", _editingLanguageId
+		).put(
+			"id", _id
+		).put(
+			"initialize", _initialize
+		).put(
+			"locales", localesJSONArray
+		).put(
+			"readOnly", _readOnly
+		).build();
 
 		httpServletRequest.setAttribute(
 			"liferay-frontend:translation-manager:data", data);
@@ -154,6 +203,7 @@ public class TranslationManagerTag extends IncludeTag {
 
 	private Locale[] _availableLocales;
 	private boolean _changeableDefaultLanguage;
+	private String _componentId;
 	private String _cssClass;
 	private String _defaultLanguageId;
 	private String _editingLanguageId;

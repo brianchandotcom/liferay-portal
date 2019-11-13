@@ -63,7 +63,8 @@ page import="com.liferay.portlet.usersadmin.search.GroupSearch" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Map" %>
+page import="java.util.Map" %><%@
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

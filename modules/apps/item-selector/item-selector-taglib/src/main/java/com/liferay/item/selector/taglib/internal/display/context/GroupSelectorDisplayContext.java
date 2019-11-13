@@ -16,7 +16,10 @@ package com.liferay.item.selector.taglib.internal.display.context;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.item.selector.taglib.internal.servlet.item.selector.ItemSelectorUtil;
+import com.liferay.item.selector.taglib.internal.util.GroupItemSelectorTrackerUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -26,6 +29,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -40,6 +45,59 @@ public class GroupSelectorDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+	}
+
+	public String getGroupItemSelectorIcon(String groupType) {
+		Optional<GroupItemSelectorProvider> groupItemSelectorProviderOptional =
+			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
+				groupType);
+
+		return groupItemSelectorProviderOptional.map(
+			groupItemSelectorProvider -> groupItemSelectorProvider.getIcon()
+		).orElse(
+			"folder"
+		);
+	}
+
+	public String getGroupItemSelectorLabel(String groupType) {
+		Optional<GroupItemSelectorProvider> groupItemSelectorProviderOptional =
+			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
+				groupType);
+
+		return groupItemSelectorProviderOptional.map(
+			groupItemSelectorProvider -> groupItemSelectorProvider.getLabel(
+				_liferayPortletRequest.getLocale())
+		).orElse(
+			StringPool.BLANK
+		);
+	}
+
+	public PortletURL getGroupItemSelectorURL(String groupType) {
+		ItemSelector itemSelector = _getItemSelector();
+
+		String itemSelectedEventName = ParamUtil.getString(
+			_liferayPortletRequest, "itemSelectedEventName");
+
+		List<ItemSelectorCriterion> itemSelectorCriteria =
+			itemSelector.getItemSelectorCriteria(
+				_liferayPortletRequest.getParameterMap());
+
+		PortletURL portletURL = itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
+			itemSelectedEventName,
+			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
+
+		portletURL.setParameter("group_type", groupType);
+		portletURL.setParameter(
+			"selectedTab",
+			ParamUtil.getString(_liferayPortletRequest, "selectedTab"));
+		portletURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
+
+		return portletURL;
+	}
+
+	public Set<String> getGroupTypes() {
+		return GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderTypes();
 	}
 
 	public PortletURL getIteratorURL() {
@@ -57,54 +115,6 @@ public class GroupSelectorDisplayContext {
 			itemSelectedEventName,
 			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
 
-		portletURL.setParameter(
-			"selectedTab",
-			ParamUtil.getString(_liferayPortletRequest, "selectedTab"));
-		portletURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
-
-		return portletURL;
-	}
-
-	public PortletURL getRepositoriesURL() {
-		ItemSelector itemSelector = _getItemSelector();
-
-		String itemSelectedEventName = ParamUtil.getString(
-			_liferayPortletRequest, "itemSelectedEventName");
-
-		List<ItemSelectorCriterion> itemSelectorCriteria =
-			itemSelector.getItemSelectorCriteria(
-				_liferayPortletRequest.getParameterMap());
-
-		PortletURL portletURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
-			itemSelectedEventName,
-			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
-
-		portletURL.setParameter("repositories", Boolean.TRUE.toString());
-		portletURL.setParameter(
-			"selectedTab",
-			ParamUtil.getString(_liferayPortletRequest, "selectedTab"));
-		portletURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
-
-		return portletURL;
-	}
-
-	public PortletURL getSitesURL() {
-		ItemSelector itemSelector = _getItemSelector();
-
-		String itemSelectedEventName = ParamUtil.getString(
-			_liferayPortletRequest, "itemSelectedEventName");
-
-		List<ItemSelectorCriterion> itemSelectorCriteria =
-			itemSelector.getItemSelectorCriteria(
-				_liferayPortletRequest.getParameterMap());
-
-		PortletURL portletURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
-			itemSelectedEventName,
-			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
-
-		portletURL.setParameter("repositories", Boolean.FALSE.toString());
 		portletURL.setParameter(
 			"selectedTab",
 			ParamUtil.getString(_liferayPortletRequest, "selectedTab"));

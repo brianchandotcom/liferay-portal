@@ -24,15 +24,24 @@ GroupSelectorDisplayContext groupSelectorDisplayContext = new GroupSelectorDispl
 List<Group> groups = (List<Group>)request.getAttribute("liferay-item-selector:group-selector:groups");
 int groupsCount = GetterUtil.getInteger(request.getAttribute("liferay-item-selector:group-selector:groupsCount"));
 
-boolean repositories = ParamUtil.getBoolean(request, "repositories");
+String groupType = ParamUtil.getString(request, "groupType");
 
 SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, groupSelectorDisplayContext.getIteratorURL());
 %>
 
 <div class="container-fluid-1280">
 	<div class="btn-group" role="group">
-		<a class="btn btn-secondary <%= !repositories ? "active" : StringPool.BLANK %>" href="<%= groupSelectorDisplayContext.getSitesURL() %>"><liferay-ui:message key="sites" /></a>
-		<a class="btn btn-secondary <%= repositories? "active" : StringPool.BLANK %>" href="<%= groupSelectorDisplayContext.getRepositoriesURL() %>"><liferay-ui:message key="repositories" /></a>
+
+		<%
+		for (String curGroupType : groupSelectorDisplayContext.getGroupTypes()) {
+		%>
+
+			<a class="btn btn-secondary <%= Objects.equals(groupType, curGroupType) ? "active" : StringPool.BLANK %>" href="<%= groupSelectorDisplayContext.getGroupItemSelectorURL(curGroupType) %>"><%= groupSelectorDisplayContext.getGroupItemSelectorLabel(curGroupType) %></a>
+
+		<%
+		}
+		%>
+
 	</div>
 </div>
 
@@ -68,7 +77,7 @@ SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, groupSe
 				>
 					<liferay-frontend:horizontal-card-col>
 						<liferay-frontend:horizontal-card-icon
-							icon='<%= repositories? "repository" : "folder" %>'
+							icon="<%= groupSelectorDisplayContext.getGroupItemSelectorIcon(groupType) %>"
 						/>
 					</liferay-frontend:horizontal-card-col>
 				</liferay-frontend:horizontal-card>

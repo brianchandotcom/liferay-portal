@@ -112,11 +112,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "addLayoutPageTemplateEntry");
-						dropdownItem.putData(
-							"addPageTemplateURL",
-							_getAddLayoutPageTemplateEntryURL());
+						dropdownItem.setHref(_getSelectMasterPageURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "content-page-template"));
 					});
@@ -174,23 +170,6 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 		return new String[] {"create-date", "name"};
 	}
 
-	private String _getAddLayoutPageTemplateEntryURL() {
-		PortletURL actionURL = liferayPortletResponse.createActionURL();
-
-		actionURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template/add_layout_page_template_entry");
-		actionURL.setParameter("redirect", _themeDisplay.getURLCurrent());
-		actionURL.setParameter("backURL", _themeDisplay.getURLCurrent());
-		actionURL.setParameter(
-			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				_layoutPageTemplateDisplayContext.
-					getLayoutPageTemplateCollectionId()));
-
-		return actionURL.toString();
-	}
-
 	private String _getAddLayoutPrototypeURL() {
 		PortletURL actionURL = liferayPortletResponse.createActionURL();
 
@@ -205,6 +184,22 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 					getLayoutPageTemplateCollectionId()));
 
 		return actionURL.toString();
+	}
+
+	private String _getSelectMasterPageURL() {
+		PortletURL selectMasterPageURL =
+			liferayPortletResponse.createRenderURL();
+
+		selectMasterPageURL.setParameter("mvcPath", "/select_master_page.jsp");
+		selectMasterPageURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		selectMasterPageURL.setParameter(
+			"layoutPageTemplateCollectionId",
+			String.valueOf(
+				_layoutPageTemplateDisplayContext.
+					getLayoutPageTemplateCollectionId()));
+
+		return selectMasterPageURL.toString();
 	}
 
 	private final LayoutPageTemplateDisplayContext

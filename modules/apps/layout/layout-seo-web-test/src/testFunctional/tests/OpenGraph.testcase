@@ -81,6 +81,8 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''property="og:title",property="og:site_name",property="og:url",property="og:locale"''');
+
+		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''property="og:image",property="og:description"''');
 	}
 
 }

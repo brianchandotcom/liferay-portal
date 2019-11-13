@@ -298,42 +298,42 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<Map<String, Object>> vocabularies = new ArrayList<>();
+		List<Map<String, Object>> vocabulariesList = new ArrayList<>();
 
-		List<AssetVocabulary> assetVocabularies = _getVocabularies();
+		List<AssetVocabulary> vocabularies = _getVocabularies();
 
 		List<String[]> categoryIdsTitles = getCategoryIdsTitles();
 
-		for (int i = 0; i < assetVocabularies.size(); i++) {
-			Map<String, Object> vocabulary = new HashMap<>();
+		for (int i = 0; i < vocabularies.size(); i++) {
+			Map<String, Object> vocabularyMap = new HashMap<>();
 
-			AssetVocabulary assetVocabulary = assetVocabularies.get(i);
+			AssetVocabulary vocabulary = vocabularies.get(i);
 
-			vocabulary.put("id", assetVocabulary.getVocabularyId());
-			vocabulary.put(
-				"title", assetVocabulary.getTitle(themeDisplay.getLocale()));
+			vocabularyMap.put("id", vocabulary.getVocabularyId());
+			vocabularyMap.put(
+				"title", vocabulary.getTitle(themeDisplay.getLocale()));
 
 			String vocabularyGroupName = StringPool.BLANK;
 
-			if (assetVocabulary.getGroupId() != themeDisplay.getSiteGroupId()) {
+			if (vocabulary.getGroupId() != themeDisplay.getSiteGroupId()) {
 				Group vocabularyGroup = GroupLocalServiceUtil.getGroup(
-					assetVocabulary.getGroupId());
+					vocabulary.getGroupId());
 
 				vocabularyGroupName = vocabularyGroup.getDescriptiveName(
 					themeDisplay.getLocale());
 			}
 
-			vocabulary.put("group", vocabularyGroupName);
+			vocabularyMap.put("group", vocabularyGroupName);
 
-			vocabulary.put(
+			vocabularyMap.put(
 				"required",
-				assetVocabulary.isRequired(
+				vocabulary.isRequired(
 					PortalUtil.getClassNameId(_className), _classTypePK) &&
 				_showRequiredLabel);
 
 			String selectedCategoryIds = categoryIdsTitles.get(i)[0];
 
-			vocabulary.put("selectedCategoryIds", selectedCategoryIds);
+			vocabularyMap.put("selectedCategoryIds", selectedCategoryIds);
 
 			if (Validator.isNotNull(selectedCategoryIds)) {
 				List<Map<String, Object>> selectedItems = new ArrayList<>();
@@ -354,15 +354,15 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 					selectedItems.add(category);
 				}
 
-				vocabulary.put("selectedItems", selectedItems);
+				vocabularyMap.put("selectedItems", selectedItems);
 			}
 
-			vocabulary.put("singleSelect", !assetVocabulary.isMultiValued());
+			vocabularyMap.put("singleSelect", !vocabulary.isMultiValued());
 
-			vocabularies.add(vocabulary);
+			vocabulariesList.add(vocabularyMap);
 		}
 
-		return vocabularies;
+		return vocabulariesList;
 	}
 
 	@Override

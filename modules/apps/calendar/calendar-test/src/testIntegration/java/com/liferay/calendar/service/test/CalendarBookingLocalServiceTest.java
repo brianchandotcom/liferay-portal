@@ -125,10 +125,6 @@ public class CalendarBookingLocalServiceTest {
 		assertSameDay(nowJCalendar, startTimeJCalendar);
 
 		assertSameDay(nowJCalendar, endTimeJCalendar);
-
-		assertEqualsTime(0, 0, startTimeJCalendar);
-
-		assertEqualsTime(23, 59, endTimeJCalendar);
 	}
 
 	@Test

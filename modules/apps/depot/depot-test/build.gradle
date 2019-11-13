@@ -3,6 +3,7 @@ dependencies {
 	testIntegrationCompile project(":apps:application-list:application-list-api")
 	testIntegrationCompile project(":apps:depot:depot-api")
 	testIntegrationCompile project(":apps:document-library:document-library-api")
+	testIntegrationCompile project(":apps:item-selector:item-selector-api")
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

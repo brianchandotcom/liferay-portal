@@ -634,6 +634,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_OPEN_GRAPH_IMAGE</td>
+	<td>//button[contains(@name,'openGraphImageButton')][contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEND_INVITATIONS</td>
 	<td>//button[contains(@id,'InviteMembersPortlet')]//span[contains(.,'Send Invitations')]</td>
 	<td></td>

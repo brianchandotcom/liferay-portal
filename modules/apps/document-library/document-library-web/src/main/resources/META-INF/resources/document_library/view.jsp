@@ -306,22 +306,22 @@ String navigation = ParamUtil.getString(request, "navigation");
 		</aui:script>
 
 		<%
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> editTagsData = new HashMap<>();
 
-		data.put("context", Collections.singletonMap("namespace", liferayPortletResponse.getNamespace()));
+		editTagsData.put("context", Collections.singletonMap("namespace", liferayPortletResponse.getNamespace()));
 
-		Map<String, Object> props = new HashMap<>();
+		Map<String, Object> editTagsProps = new HashMap<>();
 
-		props.put("componentId", liferayPortletResponse.getNamespace() + "EditTagsComponent");
+		editTagsProps.put("componentId", liferayPortletResponse.getNamespace() + "EditTagsComponent");
 
 		long groupIds[] = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 
-		props.put("groupIds", groupIds);
+		editTagsProps.put("groupIds", groupIds);
 
-		props.put("pathModule", PortalUtil.getPathModule());
-		props.put("repositoryId", String.valueOf(repositoryId));
+		editTagsProps.put("pathModule", PortalUtil.getPathModule());
+		editTagsProps.put("repositoryId", String.valueOf(repositoryId));
 
-		data.put("props", props);
+		editTagsData.put("props", editTagsProps);
 		%>
 
 		<div>

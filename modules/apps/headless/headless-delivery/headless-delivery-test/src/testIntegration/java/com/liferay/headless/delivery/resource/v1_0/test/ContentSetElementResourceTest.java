@@ -16,14 +16,55 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import org.junit.Ignore;
+import com.liferay.headless.delivery.client.dto.v1_0.ContentSetElement;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class ContentSetElementResourceTest
 	extends BaseContentSetElementResourceTestCase {
+
+	@Override
+	protected String testGetSiteContentSetByUuidContentSetElementsPage_getUuid()
+		throws Exception {
+		return "uuid";
+	}
+
+	@Override
+	protected String testGetSiteContentSetByKeyContentSetElementsPage_getKey()
+		throws Exception {
+		return "key";
+	}
+
+	@Override
+	protected Long testGetContentSetContentSetElementsPage_getContentSetId()
+		throws Exception {
+		return 0L;
+	}
+
+	@Override
+	protected ContentSetElement testGetContentSetContentSetElementsPage_addContentSetElement(
+		Long contentSetId, ContentSetElement contentSetElement)
+		throws Exception {
+
+		return new ContentSetElement();
+	}
+
+	@Override
+	protected ContentSetElement testGetSiteContentSetByKeyContentSetElementsPage_addContentSetElement(
+		Long siteId, String key, ContentSetElement contentSetElement)
+		throws Exception {
+
+		return new ContentSetElement();
+	}
+
+	@Override
+	protected ContentSetElement testGetSiteContentSetByUuidContentSetElementsPage_addContentSetElement(
+		Long siteId, String uuid, ContentSetElement contentSetElement)
+		throws Exception {
+
+		return new ContentSetElement();
+	}
 }

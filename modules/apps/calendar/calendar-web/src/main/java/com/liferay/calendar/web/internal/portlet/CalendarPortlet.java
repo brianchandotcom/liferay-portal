@@ -1151,12 +1151,6 @@ public class CalendarPortlet extends MVCPortlet {
 	}
 
 	protected TimeZone getTimeZone(PortletRequest portletRequest) {
-		boolean allDay = ParamUtil.getBoolean(portletRequest, "allDay");
-
-		if (allDay) {
-			return TimeZoneUtil.getTimeZone(StringPool.UTC);
-		}
-
 		PortletPreferences preferences = portletRequest.getPreferences();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(

@@ -11295,6 +11295,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
+		<get-testcase-property property.name="cas.enabled" />
+
+		<if>
+			<equals arg1="${cas.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-authentication.xml" target="setup-cas" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="openam.enabled" />
 
 		<if>

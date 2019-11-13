@@ -3,6 +3,63 @@
 <project basedir="." name="portal-test-authentication" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="deploy-cas">
+		<sequential>
+			<delete dir="${app.server.deploy.dir}/cas-web" />
+
+			<if>
+				<not>
+					<available file="${app.server.dir}/cas-web.war" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${app.server.dir}/cas-web.war"
+						src="http://files.liferay.com/private/apps/jasig/cas/3.3.5/cas-web.war"
+						verbose="true"
+					/>
+
+					<move
+						file="${app.server.dir}/cas-web.war"
+						tofile="${app.server.deploy.dir}/cas-web.war"
+					/>
+				</then>
+			</if>
+
+			<unzip
+				dest="${app.server.deploy.dir}/cas-web"
+				src="${app.server.deploy.dir}/cas-web.war"
+			/>
+
+			<replace
+				file="${app.server.deploy.dir}/cas-web/WEB-INF/deployerConfigContext.xml"
+			>
+				<replacetoken><![CDATA[<entry key="uid" value="uid" />]]></replacetoken>
+				<replacevalue><![CDATA[<entry key="uid"><list><value>uid</value></list></entry>]]></replacevalue>
+			</replace>
+
+			<replace
+				file="${app.server.deploy.dir}/cas-web/WEB-INF/deployerConfigContext.xml"
+			>
+				<replacetoken><![CDATA[<entry key="eduPersonAffiliation" value="eduPersonAffiliation" />]]></replacetoken>
+				<replacevalue><![CDATA[<entry key="eduPersonAffiliation"><list><value>eduPersonAffiliation</value></list></entry>]]></replacevalue>
+			</replace>
+
+			<replace
+				file="${app.server.deploy.dir}/cas-web/WEB-INF/deployerConfigContext.xml"
+			>
+				<replacetoken><![CDATA[<entry key="groupMembership" value="groupMembership" />]]></replacetoken>
+				<replacevalue><![CDATA[<entry key="groupMembership"><list><value>groupMembership</value></list></entry>]]></replacevalue>
+			</replace>
+
+			<zip
+				basedir="${app.server.deploy.dir}/cas-web"
+				destfile="${app.server.deploy.dir}/cas-web.war"
+			/>
+
+			<delete dir="${app.server.deploy.dir}/cas-web" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="deploy-openam">
 		<sequential>
 			<delete dir="${app.server.deploy.dir}/openam" />
@@ -162,6 +219,10 @@ SERVER_URL=http://test.able.com:8080</echo>
 				</elseif>
 			</if>
 		</sequential>
+	</target>
+
+	<target name="setup-cas">
+		<deploy-cas />
 	</target>
 
 	<target name="setup-openam">

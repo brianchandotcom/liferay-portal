@@ -342,7 +342,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				String selectedCategoryIdTitles = categoryIdsTitles.get(i)[1];
 
 				String[] categoryTitles = selectedCategoryIdTitles.split(
-					"_CATEGORY_");
+					AssetCategoryUtil.CATEGORY_SEPARATOR);
 
 				for (int j = 0; j < categoryIds.length; j++) {
 					Map<String, Object> category =

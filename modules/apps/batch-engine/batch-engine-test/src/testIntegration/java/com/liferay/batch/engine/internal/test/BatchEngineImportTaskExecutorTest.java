@@ -24,6 +24,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.Inject;
@@ -37,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +47,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -56,6 +57,21 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class BatchEngineImportTaskExecutorTest
 	extends BaseBatchEngineTaskExecutorTest {
+
+	@BeforeClass
+	public static void setUpClass() {
+		_fieldNamesMappingMap = HashMapBuilder.put(
+			"alternativeHeadline1", "alternativeHeadline"
+		).put(
+			"articleBody1", "articleBody"
+		).put(
+			"datePublished1", "datePublished"
+		).put(
+			"headline1", "headline"
+		).put(
+			"siteId1", "siteId"
+		).build();
+	}
 
 	@Test
 	public void testCreateBlogPostingsFromCSVFile() {
@@ -775,16 +791,7 @@ public class BatchEngineImportTaskExecutorTest
 		"siteId1"
 	};
 
-	private static final Map<String, String> _fieldNamesMappingMap =
-		new HashMap<String, String>() {
-			{
-				put("alternativeHeadline1", "alternativeHeadline");
-				put("articleBody1", "articleBody");
-				put("datePublished1", "datePublished");
-				put("headline1", "headline");
-				put("siteId1", "siteId");
-			}
-		};
+	private static Map<String, String> _fieldNamesMappingMap;
 
 	@DeleteAfterTestRun
 	private BatchEngineImportTask _batchEngineImportTask;

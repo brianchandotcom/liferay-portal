@@ -63,6 +63,51 @@ public class GradleVersionCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private String _fixMicroVersion(
+			String fileName, String content, String line, String name,
+			String version)
+		throws IOException {
+
+		if (!line.startsWith("compileOnly ") && !line.startsWith("provided ")) {
+			return content;
+		}
+
+		if (!name.startsWith("com.liferay.") ||
+			!version.matches("[0-9]+\\.[0-9]+\\.[1-9][0-9]*")) {
+
+			return content;
+		}
+
+		int pos = fileName.lastIndexOf(CharPool.SLASH);
+
+		String bndFileLocation = fileName.substring(0, pos + 1) + "bnd.bnd";
+
+		File bndFile = new File(bndFileLocation);
+
+		if (bndFile.exists()) {
+			String bndFileContent = FileUtil.read(bndFile);
+
+			Matcher matcher = _bndConditionalPackagePattern.matcher(
+				bndFileContent);
+
+			if (matcher.find()) {
+				String conditionalPackageContent = matcher.group();
+
+				if (conditionalPackageContent.contains(name)) {
+					return content;
+				}
+			}
+		}
+
+		pos = version.lastIndexOf(".");
+
+		String newLine = StringUtil.replaceFirst(
+			line, "version: \"" + version + "\"",
+			"version: \"" + version.substring(0, pos + 1) + "0\"");
+
+		return StringUtil.replaceFirst(content, line, newLine);
+	}
+
 	private String _formatVersion(
 			String fileName, String absolutePath, String content,
 			String dependency, String name, String version, int pos)
@@ -113,51 +158,6 @@ public class GradleVersionCheck extends BaseFileCheck {
 		}
 
 		return content;
-	}
-
-	private String _fixMicroVersion(
-			String fileName, String content, String line, String name,
-			String version)
-		throws IOException {
-
-		if (!line.startsWith("compileOnly ") && !line.startsWith("provided ")) {
-			return content;
-		}
-
-		if (!name.startsWith("com.liferay.") ||
-			!version.matches("[0-9]+\\.[0-9]+\\.[1-9][0-9]*")) {
-
-			return content;
-		}
-
-		int pos = fileName.lastIndexOf(CharPool.SLASH);
-
-		String bndFileLocation = fileName.substring(0, pos + 1) + "bnd.bnd";
-
-		File bndFile = new File(bndFileLocation);
-
-		if (bndFile.exists()) {
-			String bndFileContent = FileUtil.read(bndFile);
-
-			Matcher matcher = _bndConditionalPackagePattern.matcher(
-				bndFileContent);
-
-			if (matcher.find()) {
-				String conditionalPackageContent = matcher.group();
-
-				if (conditionalPackageContent.contains(name)) {
-					return content;
-				}
-			}
-		}
-
-		pos = version.lastIndexOf(".");
-
-		String newLine = StringUtil.replaceFirst(
-			line, "version: \"" + version + "\"",
-			"version: \"" + version.substring(0, pos + 1) + "0\"");
-
-		return StringUtil.replaceFirst(content, line, newLine);
 	}
 
 	private synchronized Map<String, String> _getProjectNamesMap(

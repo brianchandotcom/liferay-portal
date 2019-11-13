@@ -73,12 +73,11 @@ export function getComputedEditableValue(editableValue, configuration = {}) {
 		const segmentedValue = editableValue[prefixedExperienceKey];
 
 		if (segmentedValue) {
-			const preferedTranslatedValue = segmentedValue[selectedLanguageId];
-
-			const translatedValue = isNullOrUndefined(preferedTranslatedValue)
-				? segmentedValue[defaultLanguageId]
-				: preferedTranslatedValue;
-			result.value = translatedValue;
+			result.value = _getTranslatedValue(
+				segmentedValue,
+				selectedLanguageId,
+				defaultLanguageId
+			);
 		} else {
 			const preferedTranslatedValue = editableValue[selectedLanguageId];
 
@@ -86,9 +85,25 @@ export function getComputedEditableValue(editableValue, configuration = {}) {
 				? editableValue[defaultLanguageId]
 				: editableValue[selectedExperienceId];
 		}
+	} else {
+		result.value = _getTranslatedValue(
+			editableValue,
+			selectedLanguageId,
+			defaultLanguageId
+		);
 	}
 
 	return result;
+}
+
+function _getTranslatedValue(values, selectedLanguageId, defaultLanguageId) {
+	const preferedTranslatedValue = values[selectedLanguageId];
+
+	const translatedValue = isNullOrUndefined(preferedTranslatedValue)
+		? values[defaultLanguageId]
+		: preferedTranslatedValue;
+
+	return translatedValue;
 }
 
 export function computeConfigurationEditableValue(

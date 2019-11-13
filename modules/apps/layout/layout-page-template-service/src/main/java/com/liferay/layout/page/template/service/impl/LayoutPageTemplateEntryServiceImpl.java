@@ -81,49 +81,6 @@ public class LayoutPageTemplateEntryServiceImpl
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addLayoutPageTemplateEntry(long, long, String, int, int,
-	 *             ServiceContext)} ()}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long groupId, long layoutPageTemplateCollectionId, String name,
-			int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
-
-		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			getUserId(), groupId, layoutPageTemplateCollectionId, name, type,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addLayoutPageTemplateEntry(long, long, String, int, int,
-	 *             ServiceContext)} ()}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long groupId, long layoutPageTemplateCollectionId, String name,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
-
-		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			getUserId(), groupId, layoutPageTemplateCollectionId, name,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
-	}
-
 	@Override
 	public LayoutPageTemplateEntry copyLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId,
@@ -183,28 +140,6 @@ public class LayoutPageTemplateEntryServiceImpl
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				layoutPageTemplateEntryId);
-
-		if (layoutPageTemplateEntry != null) {
-			_layoutPageTemplateEntryModelResourcePermission.check(
-				getPermissionChecker(), layoutPageTemplateEntry,
-				ActionKeys.VIEW);
-		}
-
-		return layoutPageTemplateEntry;
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
-			long groupId, String name)
-		throws PortalException {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				groupId, name);
 
 		if (layoutPageTemplateEntry != null) {
 			_layoutPageTemplateEntryModelResourcePermission.check(
@@ -628,24 +563,6 @@ public class LayoutPageTemplateEntryServiceImpl
 		return layoutPageTemplateEntryLocalService.
 			updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntryId, previewFileEntryId);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
-		throws PortalException {
-
-		_layoutPageTemplateEntryModelResourcePermission.check(
-			getPermissionChecker(), layoutPageTemplateEntryId,
-			ActionKeys.UPDATE);
-
-		return layoutPageTemplateEntryLocalService.
-			updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId, classNameId, classTypeId);
 	}
 
 	@Override

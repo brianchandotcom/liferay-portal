@@ -115,7 +115,7 @@ public class GitHubDevSyncUtil {
 		try {
 			int retries = 0;
 
-			while ((retries < 3) && !gitHubDevGitRemotes.isEmpty()) {
+			while ((retries < 10) && !gitHubDevGitRemotes.isEmpty()) {
 				retries++;
 
 				GitRemote gitHubDevGitRemote = getRandomGitRemote(
@@ -137,9 +137,11 @@ public class GitHubDevSyncUtil {
 						"Unable to fetch ", cacheBranchName, " from ",
 						gitHubDevGitRemote.getHostname());
 
-					if (retries == 3) {
+					if (retries == 10) {
 						throw new RuntimeException(message, e);
 					}
+
+					JenkinsResultsParserUtil.sleep(30000);
 
 					System.out.println("Retrying: " + message);
 				}

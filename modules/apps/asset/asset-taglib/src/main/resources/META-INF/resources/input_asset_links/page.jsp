@@ -160,11 +160,17 @@
 
 									var entryHtml =
 										'<h4 class="list-group-title">' +
-										encodeURI(assetEntry.assettitle) +
+										Liferay.Util.escapeHTML(
+											assetEntry.assettitle
+										) +
 										'</h4><p class="list-group-subtitle">' +
-										encodeURI(assetEntry.assettype) +
+										Liferay.Util.escapeHTML(
+											assetEntry.assettype
+										) +
 										'</p><p class="list-group-subtitle">' +
-										encodeURI(assetEntry.groupdescriptivename) +
+										Liferay.Util.escapeHTML(
+											assetEntry.groupdescriptivename
+										) +
 										'</p>';
 
 									searchContainer.addRow(

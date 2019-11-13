@@ -73,10 +73,17 @@ public class BatchEngineImportTaskLocalServiceImpl
 				new UnsyncByteArrayInputStream(content), content.length));
 		batchEngineImportTask.setContentType(contentType);
 		batchEngineImportTask.setExecuteStatus(executeStatus);
-		batchEngineImportTask.setFieldNameMapping(
-			(Map<String, Serializable>)(Map)fieldNameMappingMap);
+
+		if ((fieldNameMappingMap != null) && !fieldNameMappingMap.isEmpty()) {
+			batchEngineImportTask.setFieldNameMapping((Map)fieldNameMappingMap);
+		}
+
 		batchEngineImportTask.setOperation(operation);
-		batchEngineImportTask.setParameters(parameters);
+
+		if ((parameters != null) && !parameters.isEmpty()) {
+			batchEngineImportTask.setParameters(parameters);
+		}
+
 		batchEngineImportTask.setVersion(version);
 
 		return batchEngineImportTaskPersistence.update(batchEngineImportTask);

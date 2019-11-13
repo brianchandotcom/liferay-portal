@@ -42,7 +42,6 @@ import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -305,13 +304,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		List<String[]> categoryIdsTitles = getCategoryIdsTitles();
 
 		for (int i = 0; i < vocabularies.size(); i++) {
-			Map<String, Object> vocabularyMap = new HashMap<>();
-
 			AssetVocabulary vocabulary = vocabularies.get(i);
-
-			vocabularyMap.put("id", vocabulary.getVocabularyId());
-			vocabularyMap.put(
-				"title", vocabulary.getTitle(themeDisplay.getLocale()));
 
 			String vocabularyGroupName = StringPool.BLANK;
 
@@ -323,17 +316,23 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 					themeDisplay.getLocale());
 			}
 
-			vocabularyMap.put("group", vocabularyGroupName);
-
-			vocabularyMap.put(
-				"required",
-				vocabulary.isRequired(
-					PortalUtil.getClassNameId(_className), _classTypePK) &&
-				_showRequiredLabel);
-
 			String selectedCategoryIds = categoryIdsTitles.get(i)[0];
 
-			vocabularyMap.put("selectedCategoryIds", selectedCategoryIds);
+			Map<String, Object> vocabularyMap =
+				HashMapBuilder.<String, Object>put(
+					"group", vocabularyGroupName
+				).put(
+					"id", vocabulary.getVocabularyId()
+				).put(
+					"required",
+					vocabulary.isRequired(
+						PortalUtil.getClassNameId(_className), _classTypePK) &&
+					_showRequiredLabel
+				).put(
+					"selectedCategoryIds", selectedCategoryIds
+				).put(
+					"title", vocabulary.getTitle(themeDisplay.getLocale())
+				).build();
 
 			if (Validator.isNotNull(selectedCategoryIds)) {
 				List<Map<String, Object>> selectedItems = new ArrayList<>();
@@ -346,10 +345,12 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 					"_CATEGORY_");
 
 				for (int j = 0; j < categoryIds.length; j++) {
-					Map<String, Object> category = new HashMap<>();
-
-					category.put("label", categoryTitles[j]);
-					category.put("value", categoryIds[j]);
+					Map<String, Object> category =
+						HashMapBuilder.<String, Object>put(
+							"label", categoryTitles[j]
+						).put(
+							"value", categoryIds[j]
+						).build();
 
 					selectedItems.add(category);
 				}

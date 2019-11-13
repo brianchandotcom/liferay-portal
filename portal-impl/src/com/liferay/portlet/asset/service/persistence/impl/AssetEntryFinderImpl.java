@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -347,7 +348,7 @@ public class AssetEntryFinderImpl
 	protected SQLQuery buildAssetQuerySQL(
 		AssetEntryQuery entryQuery, boolean count, Session session) {
 
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(60);
 
 		if (count) {
 			sb.append("SELECT COUNT(DISTINCT AssetEntry.entryId) AS ");
@@ -398,7 +399,9 @@ public class AssetEntryFinderImpl
 		if (entryQuery.isExcludeZeroViewCount()) {
 			sb.append("INNER JOIN ViewCountEntry ON (");
 			sb.append("ViewCountEntry.companyId = AssetEntry.companyId) AND ");
-			sb.append("(ViewCountEntry.classNameId = AssetEntry.classNameId");
+			sb.append("(ViewCountEntry.classNameId = ");
+			sb.append(
+				ClassNameLocalServiceUtil.getClassNameId(AssetEntry.class));
 			sb.append(") AND (ViewCountEntry.classPK = AssetEntry.entryId) ");
 			sb.append("AND (ViewCountEntry.viewCount > 0) ");
 		}

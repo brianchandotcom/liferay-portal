@@ -1135,8 +1135,12 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			/>
 		</un7z>
 
+		<condition else="liferay-portal-${git.working.branch.name}" property="snapshot.bundle.prefix.dir.name" value="liferay-portal-${git.working.branch.name}-private">
+			<equals arg1="${build.profile}" arg2="dxp" />
+		</condition>
+
 		<move
-			file="${liferay.home}/liferay-portal-${git.working.branch.name}"
+			file="${liferay.home}/${snapshot.bundle.prefix.dir.name}"
 			tofile="${liferay.home}"
 		/>
 

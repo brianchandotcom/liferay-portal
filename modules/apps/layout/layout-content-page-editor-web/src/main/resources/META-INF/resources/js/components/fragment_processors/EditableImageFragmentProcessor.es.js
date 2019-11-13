@@ -127,7 +127,7 @@ function render(content, value, editableValues) {
 	const image = wrapper.querySelector('img');
 
 	if (image) {
-		image.src = value.url || value;
+		image.src = value.url || value || editableValues.defaultValue;
 
 		if (config.alt) {
 			image.alt = config.alt;

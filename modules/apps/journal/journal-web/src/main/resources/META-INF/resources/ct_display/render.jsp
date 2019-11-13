@@ -17,25 +17,26 @@
 <%@ include file="/ct_display/init.jsp" %>
 
 <%
-JournalArticle journalArticle = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 JournalArticleDisplay journalArticleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 
-DDMStructure ddmStructure = journalArticle.getDDMStructure();
+long siteGroupId = PortalUtil.getSiteGroupId(journalArticleDisplay.getGroupId());
+
+DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(siteGroupId, ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class), journalArticleDisplay.getDDMStructureKey(), true);
+
+DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(siteGroupId, PortalUtil.getClassNameId(DDMStructure.class), journalArticleDisplay.getDDMTemplateKey(), true);
 %>
+
+<p><b><liferay-ui:message key="id" /></b>: <%= journalArticleDisplay.getArticleId() %></p>
+
+<p><b><liferay-ui:message key="version" /></b>: <%= journalArticleDisplay.getVersion() %></p>
+
+<p><b><liferay-ui:message key="title" /></b>: <%= HtmlUtil.escape(journalArticleDisplay.getTitle()) %></p>
+
+<p><b><liferay-ui:message key="description" /></b>: <%= HtmlUtil.escape(journalArticleDisplay.getDescription()) %></p>
 
 <p><b><liferay-ui:message key="structure" /></b>: <%= HtmlUtil.escape(ddmStructure.getName(locale)) %></p>
 
-<p>
-	<b><liferay-ui:message key="version" /></b>: <%= journalArticle.getVersion() %>
-
-	<span class="label label-<%= LabelItem.getStyleFromWorkflowStatus(journalArticle.getStatus()) %> ml-2 text-uppercase">
-		<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(journalArticle.getStatus()) %>" />
-	</span>
-</p>
-
-<p><b><liferay-ui:message key="id" /></b>: <%= journalArticle.getArticleId() %></p>
-
-<p><b><liferay-ui:message key="description" /></b>: <%= HtmlUtil.escape(journalArticle.getDescription(locale)) %></p>
+<p><b><liferay-ui:message key="template" /></b>: <%= (ddmTemplate == null) ? "" : HtmlUtil.escape(ddmTemplate.getName(locale)) %></p>
 
 <b><liferay-ui:message key="content" /></b>:
 

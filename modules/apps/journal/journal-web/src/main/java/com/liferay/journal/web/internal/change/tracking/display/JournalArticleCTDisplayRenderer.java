@@ -101,9 +101,6 @@ public class JournalArticleCTDisplayRenderer
 		throws Exception {
 
 		httpServletRequest.setAttribute(
-			WebKeys.JOURNAL_ARTICLE, journalArticle);
-
-		httpServletRequest.setAttribute(
 			WebKeys.JOURNAL_ARTICLE_DISPLAY,
 			_journalContent.getDisplay(
 				journalArticle, "", "",

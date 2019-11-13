@@ -22,12 +22,15 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem" %><%@
+page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %><%@
+page import="com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil" %><%@
+page import="com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
 page import="com.liferay.journal.model.JournalArticleDisplay" %><%@
+page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <liferay-frontend:defineObjects />
 

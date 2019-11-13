@@ -106,7 +106,9 @@ public class DepotAdminDisplayContext {
 	}
 
 	public PortletURL getIteratorURL() {
-		return getGroupSearch().getIteratorURL();
+		GroupSearch groupSearch = getGroupSearch();
+
+		return groupSearch.getIteratorURL();
 	}
 
 	public String getSearchContainerId() {

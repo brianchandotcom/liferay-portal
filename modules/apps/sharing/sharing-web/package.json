@@ -1,14 +1,20 @@
 {
 	"dependencies": {
-		"clay-alert": "2.18.5",
-		"clay-button": "2.18.5",
-		"clay-multi-select": "2.18.5",
-		"clay-select": "2.18.5",
-		"clay-sticker": "2.18.5",
+		"@clayui/alert": "3.0.1",
+		"@clayui/autocomplete": "3.0.3",
+		"@clayui/button": "3.0.2",
+		"@clayui/data-provider": "3.0.3",
+		"@clayui/drop-down": "3.1.1",
+		"@clayui/form": "3.2.0",
+		"@clayui/icon": "3.0.1",
+		"@clayui/modal": "3.1.2",
+		"@clayui/multi-select": "3.1.0",
+		"@clayui/sticker": "3.0.2",
+		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
-		"metal-component": "2.16.8",
 		"metal-dom": "2.16.8",
-		"metal-soy": "2.16.8"
+		"prop-types": "15.7.2",
+		"react": "16.9.0"
 	},
 	"name": "sharing-web",
 	"scripts": {

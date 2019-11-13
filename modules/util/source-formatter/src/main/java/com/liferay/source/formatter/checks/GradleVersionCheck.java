@@ -41,8 +41,9 @@ public class GradleVersionCheck extends BaseFileCheck {
 			String name = matcher.group(2);
 			String version = matcher.group(3);
 
-			_checkDefaultVersion(
-				fileName, content, name, version, matcher.start());
+			content = _checkDefaultVersion(
+				fileName, absolutePath, content, name, version,
+				matcher.start(3));
 
 			if ((isSubrepository() || absolutePath.contains("/modules/apps/") ||
 				 absolutePath.contains("/modules/dxp/apps/") ||
@@ -57,11 +58,18 @@ public class GradleVersionCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkDefaultVersion(
-		String fileName, String content, String name, String version, int pos) {
+	private String _checkDefaultVersion(
+		String fileName, String absolutePath, String content, String name,
+		String version, int pos) {
 
-		if (version.equals("default") &&
-			!name.equals("com.liferay.portal.impl") &&
+		if (isSubrepository() || !fileName.endsWith("build.gradle") ||
+			absolutePath.contains("/modules/apps/static/portal-osgi-web/") ||
+			absolutePath.contains("/modules/util/")) {
+
+			return content;
+		}
+
+		if (!name.equals("com.liferay.portal.impl") &&
 			!name.equals("com.liferay.portal.kernel") &&
 			!name.equals("com.liferay.portal.test") &&
 			!name.equals("com.liferay.portal.test.integration") &&
@@ -69,10 +77,19 @@ public class GradleVersionCheck extends BaseFileCheck {
 			!name.equals("com.liferay.util.java") &&
 			!name.equals("com.liferay.util.taglib")) {
 
-			addMessage(
-				fileName, "Do not use 'default' version for '" + name + "'",
-				"gradle_versioning.markdown", getLineNumber(content, pos));
+			if (version.equals("default")) {
+				addMessage(
+					fileName, "Do not use 'default' version for '" + name + "'",
+					"gradle_versioning.markdown", getLineNumber(content, pos));
+			}
 		}
+		else if (!version.equals("default") &&
+				 !_isMasterOnlyFile(absolutePath)) {
+
+			return StringUtil.replaceFirst(content, version, "default", pos);
+		}
+
+		return content;
 	}
 
 	private String _fixMicroVersion(
@@ -118,6 +135,25 @@ public class GradleVersionCheck extends BaseFileCheck {
 			"version: \"" + version.substring(0, pos + 1) + "0\"");
 
 		return StringUtil.replaceFirst(content, line, newLine);
+	}
+
+	private boolean _isMasterOnlyFile(String absolutePath) {
+		int x = absolutePath.length();
+
+		while (true) {
+			x = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
+
+			if (x == -1) {
+				return false;
+			}
+
+			File file = new File(
+				absolutePath.substring(0, x + 1) + ".lfrbuild-master-only");
+
+			if (file.exists()) {
+				return true;
+			}
+		}
 	}
 
 	private boolean _isTestUtilModule(String absolutePath) {

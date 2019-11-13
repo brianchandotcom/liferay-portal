@@ -48,11 +48,11 @@ public class ModulesPropertiesUtil {
 	public static String getContent(File portalDir) throws IOException {
 		StringBundler sb = new StringBundler();
 
-		Map<String, String> bundleInformationMap = getBundleInformationMap(
+		Map<String, String> moduleInformationMap = getModuleInformationMap(
 			portalDir);
 
 		for (Map.Entry<String, String> entry :
-				bundleInformationMap.entrySet()) {
+				moduleInformationMap.entrySet()) {
 
 			sb.append(entry.getKey());
 			sb.append(StringPool.EQUAL);
@@ -60,21 +60,21 @@ public class ModulesPropertiesUtil {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		if (!bundleInformationMap.isEmpty()) {
+		if (!moduleInformationMap.isEmpty()) {
 			sb.setIndex(sb.index() - 1);
 		}
 
 		return sb.toString();
 	}
 
-	protected static Map<String, String> getBundleInformationMap(File portalDir)
+	protected static Map<String, String> getModuleInformationMap(File portalDir)
 		throws IOException {
 
 		if (portalDir == null) {
 			return Collections.emptyMap();
 		}
 
-		final Map<String, String> bundleInformationMap = new TreeMap<>();
+		final Map<String, String> moduleInformationMap = new TreeMap<>();
 
 		Files.walkFileTree(
 			portalDir.toPath(), EnumSet.noneOf(FileVisitOption.class), 15,
@@ -116,7 +116,7 @@ public class ModulesPropertiesUtil {
 						bndContent, "Bundle-Version");
 
 					if (Validator.isNotNull(bundleVersion)) {
-						bundleInformationMap.put(
+						moduleInformationMap.put(
 							"bundle.version[" + bundleSymbolicName + "]",
 							bundleVersion);
 					}
@@ -126,7 +126,7 @@ public class ModulesPropertiesUtil {
 					int x = absolutePath.indexOf("/modules/");
 
 					if (x != -1) {
-						bundleInformationMap.put(
+						moduleInformationMap.put(
 							"project.name[" + bundleSymbolicName + "]",
 							StringUtil.replace(
 								absolutePath.substring(x + 8), CharPool.SLASH,
@@ -143,7 +143,7 @@ public class ModulesPropertiesUtil {
 						FileUtil.read(packageJSONPath.toFile()));
 
 					if (!jsonObject.isNull("name")) {
-						bundleInformationMap.put(
+						moduleInformationMap.put(
 							"bundle.symbolic.name[" +
 								jsonObject.getString("name") + "]",
 							bundleSymbolicName);
@@ -154,7 +154,7 @@ public class ModulesPropertiesUtil {
 
 			});
 
-		return bundleInformationMap;
+		return moduleInformationMap;
 	}
 
 	private static String _getBundleSymbolicName(

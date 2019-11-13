@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
  * @author Kyle Miho
@@ -46,7 +47,7 @@ public class DisplayPageTemplateTestUtil {
 			addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(), groupId, 0, name,
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
-				serviceContext);
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 }

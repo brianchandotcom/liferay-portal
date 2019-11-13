@@ -121,7 +121,8 @@ public class LayoutPageTemplateEntryServiceTest {
 				_group.getGroupId(),
 				_layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				name, serviceContext);
+				name, LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		LayoutPageTemplateEntry persistedLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
@@ -314,34 +315,6 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		Assert.assertEquals(
 			fragmentEntryLinks.toString(), 0, fragmentEntryLinks.size());
-	}
-
-	@Test
-	public void testUpdateLayoutPageTemplateEntryClassNameAndClassType()
-		throws PortalException {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId());
-
-		long classNameId = PortalUtil.getClassNameId(Layout.class);
-		long classTypeId = RandomTestUtil.randomLong();
-
-		layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				classNameId, classTypeId);
-
-		LayoutPageTemplateEntry persistedLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-
-		Assert.assertEquals(
-			classNameId, persistedLayoutPageTemplateEntry.getClassNameId());
-
-		Assert.assertEquals(
-			classTypeId, persistedLayoutPageTemplateEntry.getClassTypeId());
 	}
 
 	@Test

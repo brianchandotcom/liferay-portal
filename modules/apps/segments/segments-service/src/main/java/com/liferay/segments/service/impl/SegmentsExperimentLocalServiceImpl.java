@@ -321,20 +321,15 @@ public class SegmentsExperimentLocalServiceImpl
 		_validateEditableStatus(segmentsExperiment.getStatus());
 
 		_validateConfidenceLevel(confidenceLevel);
-
 		_validateSegmentsExperimentRels(segmentsExperienceIdSplitMap);
 		_validateSplit(segmentsExperienceIdSplitMap);
 
 		UnicodeProperties typeSettingsProperties =
 			segmentsExperiment.getTypeSettingsProperties();
 
-		String goal = typeSettingsProperties.get("goal");
-
-		if (goal.equals(
-				SegmentsExperimentConstants.Goal.CLICK_RATE.getLabel())) {
-
-			_validateGoalTarget(typeSettingsProperties.get("goalTarget"));
-		}
+		_validateGoalTarget(
+			typeSettingsProperties.get("goal"),
+			typeSettingsProperties.get("goalTarget"));
 
 		typeSettingsProperties.setProperty(
 			"confidenceLevel", String.valueOf(confidenceLevel));
@@ -576,10 +571,15 @@ public class SegmentsExperimentLocalServiceImpl
 		}
 	}
 
-	private void _validateGoalTarget(String goalTarget) throws PortalException {
-		if (Validator.isNull(goalTarget)) {
+	private void _validateGoalTarget(String goal, String goalTarget)
+		throws PortalException {
+
+		if (goal.equals(
+				SegmentsExperimentConstants.Goal.CLICK_RATE.getLabel()) &&
+			Validator.isNull(goalTarget)) {
+
 			throw new RunSegmentsExperimentException(
-				"Target element needs to be set in Click goal");
+				"Target element needs to be set in click goal");
 		}
 	}
 

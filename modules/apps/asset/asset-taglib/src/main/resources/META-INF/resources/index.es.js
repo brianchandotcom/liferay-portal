@@ -12,10 +12,6 @@
  * details.
  */
 
-export {
-	default as AssetTagsSelector
-} from './asset_tags_selector/AssetTagsSelector.es';
-
-export {
-	default as AssetCategoriesSelector
-} from './asset_categories_selector/AssetCategoriesSelector.es';
+export {default as AssetTagsSelector} from './asset_tags_selector/AssetTagsSelector.es';
+export {default as AssetCategoriesSelector} from './asset_categories_selector/AssetCategoriesSelector.es';
+export {default as AssetVocabularyCategoriesSelector} from './asset_categories_selector/AssetVocabularyCategoriesSelector.es';

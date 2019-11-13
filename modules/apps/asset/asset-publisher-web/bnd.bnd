@@ -5,9 +5,5 @@ Import-Package:\
 	com.liferay.portal.kernel.portlet;version="[10.0.0,10.1)",\
 	\
 	*
-Provide-Capability:\
-	soy;\
-		type="asset-publisher-web";\
-		version:Version="${Bundle-Version}"
 Web-ContextPath: /asset-publisher-web
 -dsannotations-options: inherit

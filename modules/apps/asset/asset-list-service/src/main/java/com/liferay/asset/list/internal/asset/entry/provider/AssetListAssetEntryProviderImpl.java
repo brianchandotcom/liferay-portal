@@ -389,7 +389,7 @@ public class AssetListAssetEntryProviderImpl
 			String queryName = properties.getProperty(
 				"queryName" + i, StringPool.BLANK);
 
-			if (!Objects.equals(queryName, "keywords") && queryContains &&
+			if (Objects.equals(queryName, "keywords") && queryContains &&
 				(queryAndOperator || (queryValues.length == 1))) {
 
 				allKeywords = queryValues;

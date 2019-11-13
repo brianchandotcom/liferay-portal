@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"clay-multi-select": "2.18.5",
+		"@clayui/button": "3.0.2",
+		"@clayui/icon": "3.0.1",
+		"asset-taglib": "*",
 		"frontend-js-web": "*",
-		"metal-component": "2.16.8",
-		"metal-soy": "2.16.8",
 		"metal-state": "2.16.8"
 	},
 	"name": "asset-list-web",

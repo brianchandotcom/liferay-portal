@@ -20,6 +20,10 @@
 			opacity: 1;
 		}
 
+		& + .timeline-item > .panel {
+			border-top: none;
+		}
+
 		.form-group {
 			display: inline-block;
 			margin: 8px;
@@ -125,7 +129,7 @@
 		.form-builder-timeline-add-item {
 			border-radius: 100%;
 			color: #fff;
-			margin-left: 3px;
+			margin-left: 10px;
 			margin-top: -55px;
 			padding: 0;
 		}

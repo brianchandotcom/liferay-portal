@@ -39,23 +39,22 @@
 
 		<div id="<portlet:namespace />ConditionForm"></div>
 
-		<%
-		Map<String, Object> context = new HashMap<>();
+		<div>
+			<%
+			Map<String, Object> data = new HashMap<>();
 
-		context.put("categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL());
-		context.put("groupIds", ListUtil.toList(editAssetListDisplayContext.getReferencedModelsGroupIds()));
-		context.put("id", "autofield");
-		context.put("namespace", liferayPortletResponse.getNamespace());
-		context.put("pathThemeImages", themeDisplay.getPathThemeImages());
-		context.put("rules", editAssetListDisplayContext.getAutoFieldRulesJSONArray());
-		context.put("tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL());
-		context.put("vocabularyIds", editAssetListDisplayContext.getVocabularyIds());
-		%>
+			data.put("categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL());
+			data.put("groupIds", ListUtil.toList(editAssetListDisplayContext.getReferencedModelsGroupIds()));
+			data.put("namespace", liferayPortletResponse.getNamespace());
+			data.put("rules", editAssetListDisplayContext.getAutoFieldRulesJSONArray());
+			data.put("tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL());
+			data.put("vocabularyIds", editAssetListDisplayContext.getVocabularyIds());
+			%>
 
-		<soy:component-renderer
-			context="<%= context %>"
-			module="js/AutoField.es"
-			templateNamespace="com.liferay.asset.list.web.AutoField.render"
-		/>
+			<react:component
+				data="<%= data %>"
+				module="auto_field/index"
+			/>
+		</div>
 	</liferay-frontend:fieldset>
 </liferay-frontend:fieldset-group>

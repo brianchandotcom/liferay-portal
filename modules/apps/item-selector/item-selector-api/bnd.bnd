@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.item.selector.api
 Bundle-Version: 5.0.0
 Export-Package:\
 	com.liferay.item.selector,\
-	com.liferay.item.selector.constants
+	com.liferay.item.selector.constants,\
+	com.liferay.item.selector.provider

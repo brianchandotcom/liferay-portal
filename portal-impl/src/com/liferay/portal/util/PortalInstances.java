@@ -467,7 +467,7 @@ public class PortalInstances {
 				httpServletRequest.setAttribute(
 					WebKeys.VIRTUAL_HOST_LAYOUT_SET, layoutSet);
 
-				// Virtual Host default locale
+				// Virtual host default locale
 
 				String languageId = virtualHost.getLanguageId();
 
@@ -478,8 +478,8 @@ public class PortalInstances {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							StringBundler.concat(
-								"Virtual Host ", virtualHost.getHostname(),
-								" has default languageId ", languageId));
+								"Virtual host ", virtualHost.getHostname(),
+								" has default language ", languageId));
 					}
 
 					httpServletRequest.setAttribute(

@@ -332,19 +332,19 @@ String navigation = ParamUtil.getString(request, "navigation");
 		</div>
 
 		<%
-		Map<String, Object> editCategoriesContext = new HashMap<>();
-			editCategoriesContext.put("namespace", liferayPortletResponse.getNamespace());
+		Map<String, Object> editCategoriesData = new HashMap<>();
 
-			Map<String, Object> editCategoriesProps = new HashMap<>();
-			editCategoriesProps.put("componentId", liferayPortletResponse.getNamespace() + "EditCategoriesComponent");
-			editCategoriesProps.put("groupIds", groupIds);
-			editCategoriesProps.put("pathModule", PortalUtil.getPathModule());
-			editCategoriesProps.put("repositoryId", String.valueOf(repositoryId));
-			editCategoriesProps.put("selectCategoriesUrl", selectCategoriesURL.toString());
+		editCategoriesData.put("context", Collections.singletonMap("namespace", liferayPortletResponse.getNamespace()));
 
-			Map<String, Object> editCategoriesData = new HashMap<>();
-			editCategoriesData.put("context", editCategoriesContext);
-			editCategoriesData.put("props", editCategoriesProps);
+		Map<String, Object> editCategoriesProps = new HashMap<>();
+
+		editCategoriesProps.put("componentId", liferayPortletResponse.getNamespace() + "EditCategoriesComponent");
+		editCategoriesProps.put("groupIds", groupIds);
+		editCategoriesProps.put("pathModule", PortalUtil.getPathModule());
+		editCategoriesProps.put("repositoryId", String.valueOf(repositoryId));
+		editCategoriesProps.put("selectCategoriesUrl", selectCategoriesURL.toString());
+
+		editCategoriesData.put("props", editCategoriesProps);
 		%>
 
 		<div>

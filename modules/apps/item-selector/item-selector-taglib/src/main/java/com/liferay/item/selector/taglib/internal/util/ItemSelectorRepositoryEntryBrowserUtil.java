@@ -203,6 +203,7 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 
 		viewGroupSelectorURL.setParameter(
 			"showGroupSelector", Boolean.TRUE.toString());
+		viewGroupSelectorURL.setParameter("group_type", "site");
 
 		ResourceBundleLoader resourceBundleLoader =
 			ResourceBundleLoaderUtil.

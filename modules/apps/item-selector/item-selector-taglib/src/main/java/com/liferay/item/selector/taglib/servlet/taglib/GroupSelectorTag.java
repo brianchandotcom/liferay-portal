@@ -92,6 +92,10 @@ public class GroupSelectorTag extends IncludeTag {
 		return _groupsCount;
 	}
 
+	protected String getGroupType(HttpServletRequest httpServletRequest) {
+		return ParamUtil.getString(httpServletRequest, "group_type");
+	}
+
 	@Override
 	protected String getPage() {
 		return "/group_selector/page.jsp";

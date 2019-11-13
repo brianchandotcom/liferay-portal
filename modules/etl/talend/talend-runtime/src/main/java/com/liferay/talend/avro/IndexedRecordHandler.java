@@ -22,6 +22,14 @@ import org.apache.avro.generic.IndexedRecord;
  */
 public abstract class IndexedRecordHandler {
 
+	public static boolean isIndexedRecord(Object object) {
+		if (object instanceof IndexedRecord) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void updateField(
 		Schema.Field schemaField, Object value, IndexedRecord indexedRecord) {
 

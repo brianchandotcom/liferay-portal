@@ -867,51 +867,6 @@ import org.osgi.service.component.annotations.Reference;
 			}
 		</#if>
 
-		<#list entity.blobEntityColumns as entityColumn>
-			<#if entityColumn.lazy>
-				@Override
-				public ${entity.name}${entityColumn.methodName}BlobModel get${entityColumn.methodName}BlobModel(Serializable primaryKey) {
-					Session session = null;
-
-					try {
-						session = ${entity.varName}Persistence.openSession();
-
-						return (${apiPackagePath}.model.${entity.name}${entityColumn.methodName}BlobModel)session.get(${entity.name}${entityColumn.methodName}BlobModel.class, primaryKey);
-					}
-					catch (Exception e) {
-						throw ${entity.varName}Persistence.processException(e);
-					}
-					finally {
-						${entity.varName}Persistence.closeSession(session);
-					}
-				}
-
-				@Override
-				@Transactional(readOnly = true)
-				public InputStream open${entityColumn.methodName}InputStream(long ${entity.PKVarName}) {
-					try {
-						${entity.name}${entityColumn.methodName}BlobModel
-							${entity.name}${entityColumn.methodName}BlobModel = get${entityColumn.methodName}BlobModel(
-								${entity.PKVarName});
-
-						Blob blob = ${entity.name}${entityColumn.methodName}BlobModel.get${entityColumn.methodName}Blob();
-
-						InputStream inputStream = blob.getBinaryStream();
-
-						if (_useTempFile) {
-							inputStream = new AutoDeleteFileInputStream(
-								_file.createTempFile(inputStream));
-						}
-
-						return inputStream;
-					}
-					catch (Exception e) {
-						throw new SystemException(e);
-					}
-				}
-			</#if>
-		</#list>
-
 		<#list entity.entityColumns as entityColumn>
 			<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>
 				<#assign
@@ -1451,14 +1406,63 @@ import org.osgi.service.component.annotations.Reference;
 		</#list>
 	</#if>
 
-	<#assign lazyBlob = entity.hasLazyBlobEntityColumn() && stringUtil.equals(sessionTypeName, "Local") && entity.hasPersistence() />
-	<#assign localizedEntity = dependencyInjectorDS && stringUtil.equals(sessionTypeName, "Local") && entity.localizedEntity?? && entity.versionEntity??  && entity.hasPersistence() />
+	<#assign
+		lazyBlob = entity.hasLazyBlobEntityColumn() && stringUtil.equals(sessionTypeName, "Local") && entity.hasPersistence()
+		localizedEntity = dependencyInjectorDS && stringUtil.equals(sessionTypeName, "Local") && entity.localizedEntity?? && entity.versionEntity??  && entity.hasPersistence()
+	/>
+
+	<#if lazyBlob>
+		<#list entity.blobEntityColumns as entityColumn>
+			<#if entityColumn.lazy>
+				@Override
+				public ${entity.name}${entityColumn.methodName}BlobModel get${entityColumn.methodName}BlobModel(Serializable primaryKey) {
+					Session session = null;
+
+					try {
+						session = ${entity.varName}Persistence.openSession();
+
+						return (${apiPackagePath}.model.${entity.name}${entityColumn.methodName}BlobModel)session.get(${entity.name}${entityColumn.methodName}BlobModel.class, primaryKey);
+					}
+					catch (Exception e) {
+						throw ${entity.varName}Persistence.processException(e);
+					}
+					finally {
+						${entity.varName}Persistence.closeSession(session);
+					}
+				}
+
+				@Override
+				@Transactional(readOnly = true)
+				public InputStream open${entityColumn.methodName}InputStream(long ${entity.PKVarName}) {
+					try {
+						${entity.name}${entityColumn.methodName}BlobModel
+							${entity.name}${entityColumn.methodName}BlobModel = get${entityColumn.methodName}BlobModel(
+								${entity.PKVarName});
+
+						Blob blob = ${entity.name}${entityColumn.methodName}BlobModel.get${entityColumn.methodName}Blob();
+
+						InputStream inputStream = blob.getBinaryStream();
+
+						if (_useTempFile) {
+							inputStream = new AutoDeleteFileInputStream(
+								_file.createTempFile(inputStream));
+						}
+
+						return inputStream;
+					}
+					catch (Exception e) {
+						throw new SystemException(e);
+					}
+				}
+			</#if>
+		</#list>
+	</#if>
 
 	<#if lazyBlob || localizedEntity>
 		@Activate
 		protected void activate() {
 			<#if localizedEntity>
-                <#assign localizedEntity = entity.localizedEntity />
+				<#assign localizedEntity = entity.localizedEntity />
 
 				registerListener(new ${localizedEntity.name}VersionServiceListener());
 			</#if>
@@ -1966,13 +1970,11 @@ import org.osgi.service.component.annotations.Reference;
 		</#if>
 	</#list>
 
-	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
-		<#if entity.hasLazyBlobEntityColumn()>
-			@Reference
-			private File _file;
+	<#if lazyBlob>
+		@Reference
+		private File _file;
 
-			private boolean _useTempFile;
-		</#if>
+		private boolean _useTempFile;
 	</#if>
 
 	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence() && !dependencyInjectorDS>

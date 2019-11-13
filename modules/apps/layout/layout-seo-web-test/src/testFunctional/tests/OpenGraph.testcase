@@ -34,6 +34,73 @@ definition {
 		}
 	}
 
+	@description = "This ensures that the user can customize OG tags."
+	@priority = "5"
+	test CustomizeMetaTags {
+		property test.name.skip.portal.instance = "OpenGraph#CustomizeMetaTags";
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		Panel.expandPanel(panel = "SEO");
+
+		OpenGraph.configureOpenGraph(
+			customDescription = "This is a custom description",
+			customImage = "true",
+			customTitle = "This is a custom title",
+			pageName = "Test Page Name",
+			uploadFileName = "Document_1.jpg");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		var customImageURL = selenium.getAttribute("TextInput#OPEN_GRAPH_CUSTOM_IMAGE_VALUE");
+
+		var customImageURLSource = StringUtil.replace("${customImageURL}", "&", "&amp;");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a custom title","og:description" content="This is a custom description","og:image" content="${customImageURLSource}"''');
+	}
+
+	@description = "This ensures that the user can customize OG tags with escape characters."
+	@priority = "4"
+	test CustomizeMetaTagsWithEscapeCharacters {
+		property test.name.skip.portal.instance = "OpenGraph#CustomizeMetaTagsWithEscapeCharacters";
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		Panel.expandPanel(panel = "SEO");
+
+		OpenGraph.configureOpenGraph(
+			customDescription = '''description@#$%^&amp;*()~`1234567890''',
+			customTitle = '''@#$%^&amp;*()~`1234567890title''');
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="@#$%^&amp;*()~`1234567890title","og:description" content="description@#$%^&amp;*()~`1234567890"''');
+	}
+
 	@description = "This ensures that OG tags will not appear when Open Graph is disabled."
 	@priority = "5"
 	test DisableConfiguration {
@@ -56,6 +123,106 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''property="og:title",property="og:site_name",property="og:url",property="og:locale"''');
+	}
+
+	@description = "This ensures that the user can edit existed OG tags."
+	@priority = "5"
+	test EditMetaTagCustomizations {
+		property test.name.skip.portal.instance = "OpenGraph#EditMetaTagCustomizations";
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		Panel.expandPanel(panel = "SEO");
+
+		OpenGraph.configureOpenGraph(
+			customDescription = "This is a custom description",
+			customImage = "true",
+			customTitle = "This is a custom title",
+			pageName = "Test Page Name",
+			uploadFileName = "Document_1.jpg");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		OpenGraph.configureOpenGraph(
+			customDescription = "This is a custom description edit",
+			customImage = "true",
+			customTitle = "This is a custom title edit",
+			pageName = "Test Page Name",
+			uploadFileName = "Document_2.jpg");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		var customImageURL = selenium.getAttribute("TextInput#OPEN_GRAPH_CUSTOM_IMAGE_VALUE");
+
+		var customImageURLSource = StringUtil.replace("${customImageURL}", "&", "&amp;");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a custom title edit","og:description" content="This is a custom description edit","og:image" content="${customImageURLSource}"''');
+	}
+
+	@description = "This ensures that the user can reselect the default OG title tag."
+	@priority = "5"
+	test RevertCustomTitle {
+		property test.name.skip.portal.instance = "OpenGraph#RevertCustomTitle";
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		Panel.expandPanel(panel = "SEO");
+
+		OpenGraph.configureOpenGraph(customTitle = "This is a custom title");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''property="og:title" content="This is a custom title"''');
+
+		User.firstLoginPG();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		Click(
+			checkboxName = "Use Custom Title",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		PortletEntry.save();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''property="og:title" content="Test Page Name - Test Site Name''');
 	}
 
 	@description = "This ensures that OG tags will appear when Open Graph is enabled."

@@ -30,4 +30,10 @@
 		<field name="accountEntryId" type="long" />
 		<field name="accountUserId" type="long" />
 	</model>
+	<model name="com.liferay.account.model.AccountRole">
+		<field name="mvccVersion" type="long" />
+		<field name="accountRoleId" type="long" />
+		<field name="accountEntryId" type="long" />
+		<field name="roleId" type="long" />
+	</model>
 </model-hints>

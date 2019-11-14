@@ -21,3 +21,10 @@ create table AccountEntryUserRel (
 	accountEntryId LONG,
 	accountUserId LONG
 );
+
+create table AccountRole (
+	mvccVersion LONG default 0 not null,
+	accountRoleId LONG not null primary key,
+	accountEntryId LONG,
+	roleId LONG
+);

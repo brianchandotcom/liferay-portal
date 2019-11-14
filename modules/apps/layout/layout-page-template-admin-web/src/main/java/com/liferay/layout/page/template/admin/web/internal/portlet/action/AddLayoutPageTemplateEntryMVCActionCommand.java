@@ -74,6 +74,9 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 			actionRequest, "type",
 			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
+		long masterLayoutPlid = ParamUtil.getLong(
+			actionRequest, "masterLayoutPlid");
+
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
@@ -82,7 +85,8 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					serviceContext.getScopeGroupId(),
 					layoutPageTemplateCollectionId, name, type,
-					WorkflowConstants.STATUS_DRAFT, serviceContext);
+					WorkflowConstants.STATUS_DRAFT, masterLayoutPlid,
+					serviceContext);
 
 			JSONObject jsonObject = JSONUtil.put(
 				"redirectURL",

@@ -45,6 +45,33 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Message#SUCCESS");
 
+		if (isSet(openGraph)) {
+			Navigator.gotoNavTab(navTab = "SEO");
+
+			Panel.expandPanel(panel = "SEO");
+
+			var checkboxName = "Use Custom Title";
+
+			if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
+				Click(locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			Type(
+				locator1 = "TextInput#OPEN_GRAPH_CUSTOM_TITLE",
+				value1 = "${customTitle}");
+
+			var checkboxName = "Use Custom Description";
+
+			if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
+				Click(locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			Type(
+				key_text = "openGraphDescription",
+				locator1 = "TextArea#ANY",
+				value1 = "${customDescription}");
+		}
+
 		Button.click(button = "Save");
 
 		WaitForSPARefresh();
@@ -213,8 +240,11 @@ definition {
 		SitePages._addPage(
 			assertCheckboxMissing = "${assertCheckboxMissing}",
 			collectionName = "${collectionName}",
+			customDescription = "${customDescription}",
+			customTitle = "${customTitle}",
 			inheritChanges = "${inheritChanges}",
 			navigationMenus = "${navigationMenus}",
+			openGraph = "${openGraph}",
 			pageName = "${pageName}",
 			pageTemplateName = "${pageTemplateName}",
 			pageTypeURL = "${pageTypeURL}",

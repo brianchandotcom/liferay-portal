@@ -69,7 +69,7 @@ definition {
 			portalURL = "${portalURL}");
 	}
 
-	@description = "This test ensures that the inputs shown in the preview are cut at limit length and ellipses show that it is longer. "
+	@description = "This test ensures that ellipses are shown in the preview when the text limit is reached."
 	@priority = "5"
 	test ValidateLongInputs {
 		var portalURL = PropsUtil.get("portal.url");

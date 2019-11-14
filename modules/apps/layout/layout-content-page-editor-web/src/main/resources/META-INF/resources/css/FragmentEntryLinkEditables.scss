@@ -21,6 +21,7 @@
 		display: block;
 		height: 100%;
 		left: 0;
+		pointer-events: none;
 		position: absolute;
 		top: 0;
 		transition: background-color ease 0.3s, box-shadow ease 0.3s;

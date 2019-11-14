@@ -52,6 +52,57 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "my custom object");
 	}
 
+	@description = "Add a Form View with a Text Field"
+	@priority = "5"
+	test AddMultipleFormViewsToOneObject {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 1",
+			isCreatingFormView = "false",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 2",
+			isCreatingFormView = "false",
+			isCreatingViaPlusIcon = "true");
+
+		var fieldList = "Text Field,Select from List,Single Selection,Multiple Selection,Date,Numeric,Grid,Upload";
+
+		for (var field : list "${fieldList}") {
+
+			AppBuilderAdmin.add();
+
+			FormViewBuilder.addFormViewAndValidateFieldLabel(
+				fieldType = "${field}",
+				formViewName = "My Form View with ${field} 1");
+
+			FormViewBuilder.addFormViewAndValidateFieldLabel(
+				fieldType = "${field}",
+				formViewName = "My Form View with ${field} 2");
+
+			FormViewBuilder.openFormView(formViewName = "My Form View with ${field} 1");
+			FormViewBuilder.validateFieldLabel(fieldLabel = "${field}");
+			AppBuilderAdmin.gotoBack();
+
+			FormViewBuilder.openFormView(formViewName = "My Form View with ${field} 2");
+			FormViewBuilder.validateFieldLabel(fieldLabel = "${field}");
+			AppBuilderAdmin.gotoBack();
+		}
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.openItem(itemName = "my custom object 1");
+
+		AppBuilderAdmin.validateEmptyListMessage(
+			description = "Create one or more forms to display the data held in your data object.",
+			title = "There are no form views yet.");
+
+		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Form View");
+	}
+
 	@description = "Add a Form View with a Date field"
 	@priority = "5"
 	test AddSimpleFormViewWithDateField {
@@ -306,58 +357,6 @@ definition {
 			title = "There are no table views yet.");
 
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Table View");
-	}
-
-	@description = "Add a Form View with a Text Field"
-	@priority = "5"
-	test AddMultipleFormViewsToOneObject {
-		property portal.acceptance = "true";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object 1",
-			isCreatingFormView = "false",
-			isCreatingViaPlusIcon = "true");
-
-		AppBuilderAdmin.gotoBack();
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object 2",
-			isCreatingFormView = "false",
-			isCreatingViaPlusIcon = "true");
-
-		var fieldList = "Text Field,Select from List,Single Selection,Multiple Selection,Date,Numeric,Grid,Upload";
-
-		for (var field : list "${fieldList}") {
-
-			AppBuilderAdmin.add();
-
-			FormViewBuilder.addFormViewAndValidateFieldLabel(
-			fieldType = "${field}",
-			formViewName = "My Form View with ${field} 1");
-
-			FormViewBuilder.addFormViewAndValidateFieldLabel(
-			fieldType = "${field}",
-			formViewName = "My Form View with ${field} 2");
-
-			FormViewBuilder.openFormView(formViewName = "My Form View with ${field} 1");
-			FormViewBuilder.validateFieldLabel(fieldLabel = "${field}");
-			AppBuilderAdmin.gotoBack();
-
-			FormViewBuilder.openFormView(formViewName = "My Form View with ${field} 2");
-			FormViewBuilder.validateFieldLabel(fieldLabel = "${field}");
-			AppBuilderAdmin.gotoBack();
-		}
-
-		AppBuilderAdmin.gotoBack();
-
-		AppBuilderAdmin.openItem(itemName = "my custom object 1");
-
-		AppBuilderAdmin.validateEmptyListMessage(
-			description = "Create one or more forms to display the data held in your data object.",
-			title = "There are no form views yet.");
-
-		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Form View");
-
 	}
 
 }

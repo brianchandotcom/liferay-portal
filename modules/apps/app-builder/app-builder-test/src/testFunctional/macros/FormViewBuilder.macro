@@ -52,6 +52,10 @@ definition {
 		AppBuilderAdmin.gotoBack();
 	}
 
+	macro openFormView {
+		AppBuilderAdmin.openItem(itemName = "${formViewName}");
+	}
+
 	macro save {
 		AppBuilderAdmin.save();
 	}
@@ -69,10 +73,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = "${fieldLabel}");
-	}
-
-	macro openFormView {
-		AppBuilderAdmin.openItem(itemName = "${formViewName}");
 	}
 
 }

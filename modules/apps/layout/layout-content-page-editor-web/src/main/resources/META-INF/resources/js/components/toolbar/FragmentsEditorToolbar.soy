@@ -8,14 +8,11 @@
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? _online: bool}
 	{@param? _publishButtonEnabled: bool}
-	{@param? availableSegmentsEntries: ?}
 	{@param? classPK: ?}
 	{@param? defaultSegmentsExperienceId: string }
 	{@param? discardDraftRedirectURL: string}
 	{@param? discardDraftURL: string}
 	{@param? draft: bool}
-	{@param? editSegmentsEntryURL: string}
-	{@param? hasEditSegmentsEntryPermission: bool }
 	{@param? hasUpdatePermissions: bool }
 	{@param? lastSaveDate: string}
 	{@param? portletNamespace: string}
@@ -26,7 +23,6 @@
 		label: string,
 		value: number
 	] }
-	{@param? selectedSegmentsEntryId: string}
 	{@param? selectedSidebarPanelId: string}
 	{@param? singleSegmentsExperienceMode: bool}
 	{@param? spritemap: string}
@@ -49,12 +45,6 @@
 				{if $defaultSegmentsExperienceId and not $singleSegmentsExperienceMode }
 					<li class="nav-item">
 						{call com.liferay.layout.content.page.editor.web.SegmentsExperienceSelector.render}
-							{param availableSegmentsEntries: $availableSegmentsEntries /}
-							{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
-							{param editSegmentsEntryURL: $editSegmentsEntryURL /}
-							{param hasEditSegmentsEntryPermission: $hasEditSegmentsEntryPermission /}
-							{param selectedSegmentsEntryId: $selectedSegmentsEntryId /}
-							{param spritemap: $spritemap ?: '' /}
 							{param store: $store /}
 						{/call}
 					</li>

@@ -353,48 +353,17 @@ public class DataFactory {
 		_sampleUserId = _counter.get();
 		_userPersonalSiteGroupId = _counter.get();
 
-		List<String> lines = new ArrayList<>();
-
-		StringUtil.readLines(
-			getResourceInputStream("ddm_structure_basic_document.json"), lines);
-
-		_dlDDMStructureContent = StringUtil.merge(lines, StringPool.SPACE);
-
-		lines.clear();
-
-		StringUtil.readLines(
-			getResourceInputStream("ddm_structure_layout_basic_document.json"),
-			lines);
-
-		_dlDDMStructureLayoutContent = StringUtil.merge(
-			lines, StringPool.SPACE);
-
-		lines.clear();
-
-		StringUtil.readLines(
-			getResourceInputStream("ddm_structure_basic_web_content.json"),
-			lines);
-
-		_journalDDMStructureContent = StringUtil.merge(lines, StringPool.SPACE);
-
-		lines.clear();
-
-		StringUtil.readLines(
-			getResourceInputStream(
-				"ddm_structure_layout_basic_web_content.json"),
-			lines);
-
-		_journalDDMStructureLayoutContent = StringUtil.merge(
-			lines, StringPool.SPACE);
-
-		lines.clear();
-
-		String defaultAssetPublisherPreference = StringUtil.read(
-			getResourceInputStream("default_asset_publisher_preference.xml"));
+		_dlDDMStructureContent = _readFile("ddm_structure_basic_document.json");
+		_dlDDMStructureLayoutContent = _readFile(
+			"ddm_structure_layout_basic_document.json");
+		_journalDDMStructureContent = _readFile(
+			"ddm_structure_basic_web_content.json");
+		_journalDDMStructureLayoutContent = _readFile(
+			"ddm_structure_layout_basic_web_content.json");
 
 		_defaultAssetPublisherPortletPreferencesImpl =
 			(PortletPreferencesImpl)_portletPreferencesFactory.fromDefaultXML(
-				defaultAssetPublisherPreference);
+				_readFile("default_asset_publisher_preference.xml"));
 
 		initAssetCategoryModels();
 		initAssetTagModels();
@@ -2269,15 +2238,7 @@ public class DataFactory {
 		fragmentEntryModel.setFragmentEntryKey("web_content");
 		fragmentEntryModel.setName("web_content");
 		fragmentEntryModel.setCss(StringPool.BLANK);
-
-		List<String> lines = new ArrayList<>();
-
-		StringUtil.readLines(getResourceInputStream("web_content.html"), lines);
-
-		String html = StringUtil.merge(lines, StringPool.SPACE);
-
-		fragmentEntryModel.setHtml(html);
-
+		fragmentEntryModel.setHtml(_readFile("web_content.html"));
 		fragmentEntryModel.setJs(StringPool.BLANK);
 		fragmentEntryModel.setType(FragmentConstants.TYPE_COMPONENT);
 		fragmentEntryModel.setStatus(WorkflowConstants.STATUS_APPROVED);
@@ -4548,6 +4509,14 @@ public class DataFactory {
 		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
+	}
+
+	private String _readFile(String resourceName) throws IOException {
+		List<String> lines = new ArrayList<>();
+
+		StringUtil.readLines(getResourceInputStream(resourceName), lines);
+
+		return StringUtil.merge(lines, StringPool.SPACE);
 	}
 
 	private static final long _CURRENT_TIME = System.currentTimeMillis();

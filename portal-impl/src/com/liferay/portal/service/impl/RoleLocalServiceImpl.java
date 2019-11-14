@@ -304,11 +304,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		String[] systemRoles = PortalUtil.getSystemRoles();
 
 		for (String name : systemRoles) {
-			String key =
-				"system.role." +
-					StringUtil.replace(name, CharPool.SPACE, CharPool.PERIOD) +
-						".description";
-
 			Map<Locale, String> descriptionMap = HashMapBuilder.put(
 				LocaleUtil.getDefault(),
 				PropsUtil.get(
@@ -330,11 +325,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			PortalUtil.getSystemOrganizationRoles();
 
 		for (String name : systemOrganizationRoles) {
-			String key =
-				"system.organization.role." +
-					StringUtil.replace(name, CharPool.SPACE, CharPool.PERIOD) +
-						".description";
-
 			Map<Locale, String> descriptionMap = HashMapBuilder.put(
 				LocaleUtil.getDefault(),
 				PropsUtil.get(

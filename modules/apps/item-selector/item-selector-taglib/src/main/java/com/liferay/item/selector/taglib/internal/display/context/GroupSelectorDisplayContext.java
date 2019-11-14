@@ -22,7 +22,6 @@ import com.liferay.item.selector.taglib.internal.util.GroupItemSelectorTrackerUt
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -40,11 +39,9 @@ import javax.portlet.PortletURL;
 public class GroupSelectorDisplayContext {
 
 	public GroupSelectorDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletRequest liferayPortletRequest) {
 
 		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 	}
 
 	public String getGroupItemSelectorIcon(String groupType) {
@@ -53,7 +50,7 @@ public class GroupSelectorDisplayContext {
 				groupType);
 
 		return groupItemSelectorProviderOptional.map(
-			groupItemSelectorProvider -> groupItemSelectorProvider.getIcon()
+			GroupItemSelectorProvider::getIcon
 		).orElse(
 			"folder"
 		);
@@ -73,21 +70,9 @@ public class GroupSelectorDisplayContext {
 	}
 
 	public PortletURL getGroupItemSelectorURL(String groupType) {
-		ItemSelector itemSelector = _getItemSelector();
+		PortletURL portletURL = _getItemSelectorURL();
 
-		String itemSelectedEventName = ParamUtil.getString(
-			_liferayPortletRequest, "itemSelectedEventName");
-
-		List<ItemSelectorCriterion> itemSelectorCriteria =
-			itemSelector.getItemSelectorCriteria(
-				_liferayPortletRequest.getParameterMap());
-
-		PortletURL portletURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
-			itemSelectedEventName,
-			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
-
-		portletURL.setParameter("group_type", groupType);
+		portletURL.setParameter("groupType", groupType);
 		portletURL.setParameter(
 			"selectedTab",
 			ParamUtil.getString(_liferayPortletRequest, "selectedTab"));
@@ -96,11 +81,7 @@ public class GroupSelectorDisplayContext {
 		return portletURL;
 	}
 
-	public Set<String> getGroupTypes() {
-		return GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderTypes();
-	}
-
-	public PortletURL getIteratorURL() {
+	private PortletURL _getItemSelectorURL() {
 		ItemSelector itemSelector = _getItemSelector();
 
 		String itemSelectedEventName = ParamUtil.getString(
@@ -110,10 +91,18 @@ public class GroupSelectorDisplayContext {
 			itemSelector.getItemSelectorCriteria(
 				_liferayPortletRequest.getParameterMap());
 
-		PortletURL portletURL = itemSelector.getItemSelectorURL(
+		return itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
 			itemSelectedEventName,
 			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
+	}
+
+	public Set<String> getGroupTypes() {
+		return GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderTypes();
+	}
+
+	public PortletURL getIteratorURL() {
+		PortletURL portletURL = _getItemSelectorURL();
 
 		portletURL.setParameter(
 			"selectedTab",
@@ -160,6 +149,5 @@ public class GroupSelectorDisplayContext {
 	}
 
 	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 
 }

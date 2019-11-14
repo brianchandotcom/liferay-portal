@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Collection;
@@ -67,10 +69,14 @@ public class DefaultDestinationFactory implements DestinationFactory {
 	protected void activate() {
 		_destinationPrototypes.put(
 			DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-			new ParallelDestinationPrototype(_portalExecutorManager));
+			new ParallelDestinationPrototype(
+				_portalExecutorManager, _permissionCheckerFactory,
+				_userLocalService));
 		_destinationPrototypes.put(
 			DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-			new SerialDestinationPrototype(_portalExecutorManager));
+			new SerialDestinationPrototype(
+				_portalExecutorManager, _permissionCheckerFactory,
+				_userLocalService));
 		_destinationPrototypes.put(
 			DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
 			new SynchronousDestinationPrototype());
@@ -108,6 +114,12 @@ public class DefaultDestinationFactory implements DestinationFactory {
 		_destinationPrototypes = new ConcurrentHashMap<>();
 
 	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Reference
 	private PortalExecutorManager _portalExecutorManager;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

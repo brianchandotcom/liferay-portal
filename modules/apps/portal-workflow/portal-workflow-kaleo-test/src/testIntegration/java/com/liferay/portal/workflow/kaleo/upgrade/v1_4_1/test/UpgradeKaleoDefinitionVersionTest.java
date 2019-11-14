@@ -78,39 +78,39 @@ public class UpgradeKaleoDefinitionVersionTest {
 
 		_db = DBManagerUtil.getDB();
 
-		setUpUpgradeKaleoDefinitionVersion();
+		_setUpUpgradeKaleoDefinitionVersion();
 
-		setUpOldColumnsAndIndexes();
+		_setUpOldColumnsAndIndexes();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		deleteKaleoDefinitionVersion(_name);
+		_deleteKaleoDefinitionVersion(_name);
 	}
 
 	@Test
 	public void testCreateKaleoDefinitionVersion() throws Exception {
-		addKaleoDefinition(
+		_addKaleoDefinition(
 			_company1.getCompanyId(), _company1.getGroupId(), _name, 1);
-		addKaleoDefinition(
+		_addKaleoDefinition(
 			_company1.getCompanyId(), _company1.getGroupId(), _name, 2);
-		addKaleoDefinition(
+		_addKaleoDefinition(
 			_company2.getCompanyId(), _company2.getGroupId(), _name, 3);
 
 		_upgradeKaleoDefinitionVersion.upgrade();
 
-		getKaleoDefinition(_company1.getCompanyId(), _name);
-		getKaleoDefinitionVersion(_company1.getCompanyId(), _name, 1);
-		getKaleoDefinitionVersion(_company1.getCompanyId(), _name, 2);
-		getKaleoDefinition(_company2.getCompanyId(), _name);
-		getKaleoDefinitionVersion(_company2.getCompanyId(), _name, 3);
+		_getKaleoDefinition(_company1.getCompanyId(), _name);
+		_getKaleoDefinitionVersion(_company1.getCompanyId(), _name, 1);
+		_getKaleoDefinitionVersion(_company1.getCompanyId(), _name, 2);
+		_getKaleoDefinition(_company2.getCompanyId(), _name);
+		_getKaleoDefinitionVersion(_company2.getCompanyId(), _name, 3);
 	}
 
-	protected void addColumn(String table, String column) throws Exception {
-		addColumn(table, column, null);
+	private void _addColumn(String table, String column) throws Exception {
+		_addColumn(table, column, null);
 	}
 
-	protected void addColumn(
+	private void _addColumn(
 			String table, String column, BiConsumer<String, String> postProcess)
 		throws Exception {
 
@@ -126,15 +126,15 @@ public class UpgradeKaleoDefinitionVersionTest {
 		}
 	}
 
-	protected void addColumnAndIndex(String table, String column, String index)
+	private void _addColumnAndIndex(String table, String column, String index)
 		throws Exception {
 
-		addColumn(
+		_addColumn(
 			table, column,
-			(table2, column2) -> addIndex(table2, index, column2));
+			(table2, column2) -> _addIndex(table2, index, column2));
 	}
 
-	protected void addIndex(String table, String index, String... columns) {
+	private void _addIndex(String table, String index, String... columns) {
 		try {
 			_db.runSQL(
 				StringBundler.concat(
@@ -146,7 +146,7 @@ public class UpgradeKaleoDefinitionVersionTest {
 		}
 	}
 
-	protected void addKaleoDefinition(
+	private void _addKaleoDefinition(
 			long companyId, long groupId, String name, int version)
 		throws Exception {
 
@@ -186,14 +186,14 @@ public class UpgradeKaleoDefinitionVersionTest {
 		}
 	}
 
-	protected void deleteKaleoDefinitionVersion(String name) throws Exception {
+	private void _deleteKaleoDefinitionVersion(String name) throws Exception {
 		_db.runSQL(
 			"delete from KaleoDefinitionVersion where name = '" + name + "'");
 
 		_db.runSQL("delete from KaleoDefinition where name = '" + name + "'");
 	}
 
-	protected KaleoDefinition getKaleoDefinition(long companyId, String name)
+	private KaleoDefinition _getKaleoDefinition(long companyId, String name)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -204,69 +204,70 @@ public class UpgradeKaleoDefinitionVersionTest {
 			name, serviceContext);
 	}
 
-	protected KaleoDefinitionVersion getKaleoDefinitionVersion(
+	private KaleoDefinitionVersion _getKaleoDefinitionVersion(
 			long companyId, String name, int version)
 		throws PortalException {
 
 		return KaleoDefinitionVersionLocalServiceUtil.getKaleoDefinitionVersion(
-			companyId, name, getVersion(version));
+			companyId, name, _getVersion(version));
 	}
 
-	protected String getVersion(int version) {
+	private String _getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
 	}
 
-	protected void setUpOldColumnsAndIndexes() throws Exception {
+	private void _setUpOldColumnsAndIndexes() throws Exception {
 		try (Connection con = DataAccess.getConnection()) {
 			_dbInspector = new DBInspector(con);
 
-			addColumn("KaleoDefinition", "startKaleoNodeId");
+			_addColumn("KaleoDefinition", "startKaleoNodeId");
 
-			addColumnAndIndex("KaleoAction", "kaleoDefinitionId", "IX_F95A622");
-			addColumnAndIndex(
+			_addColumnAndIndex(
+				"KaleoAction", "kaleoDefinitionId", "IX_F95A622");
+			_addColumnAndIndex(
 				"KaleoCondition", "kaleoDefinitionId", "IX_DC978A5D");
-			addColumnAndIndex(
+			_addColumnAndIndex(
 				"KaleoInstance", "kaleoDefinitionId", "IX_ACF16238");
-			addColumnAndIndex(
+			_addColumnAndIndex(
 				"KaleoInstanceToken", "kaleoDefinitionId", "IX_7BDB04B4");
-			addColumnAndIndex("KaleoLog", "kaleoDefinitionId", "IX_6C64B7D4");
+			_addColumnAndIndex("KaleoLog", "kaleoDefinitionId", "IX_6C64B7D4");
 
-			addColumn(
+			_addColumn(
 				"KaleoNode", "kaleoDefinitionId",
 				(table, column) -> {
-					addIndex("KaleoNode", "IX_32E94DD6", "kaleoDefinitionId");
-					addIndex(
+					_addIndex("KaleoNode", "IX_32E94DD6", "kaleoDefinitionId");
+					_addIndex(
 						"KaleoNode", "IX_F28C443E", "companyId",
 						"kaleoDefinitionId");
 				});
 
-			addColumnAndIndex(
+			_addColumnAndIndex(
 				"KaleoNotification", "kaleoDefinitionId", "IX_4B968E8D");
-			addColumnAndIndex(
+			_addColumnAndIndex(
 				"KaleoNotificationRecipient", "kaleoDefinitionId",
 				"IX_AA6697EA");
-			addColumnAndIndex("KaleoTask", "kaleoDefinitionId", "IX_3FFA633");
-			addColumnAndIndex(
+			_addColumnAndIndex("KaleoTask", "kaleoDefinitionId", "IX_3FFA633");
+			_addColumnAndIndex(
 				"KaleoTaskAssignment", "kaleoDefinitionId", "IX_575C03A6");
-			addColumnAndIndex(
+			_addColumnAndIndex(
 				"KaleoTaskAssignmentInstance", "kaleoDefinitionId",
 				"IX_C851011");
-			addColumnAndIndex(
+			_addColumnAndIndex(
 				"KaleoTaskForm", "kaleoDefinitionId", "IX_60D1964F");
-			addColumnAndIndex(
+			_addColumnAndIndex(
 				"KaleoTaskFormInstance", "kaleoDefinitionId", "IX_B975E9BA");
-			addColumnAndIndex(
+			_addColumnAndIndex(
 				"KaleoTaskInstanceToken", "kaleoDefinitionId", "IX_608E9519");
-			addColumn("KaleoTimer", "kaleoDefinitionId");
-			addColumn("KaleoTimerInstanceToken", "kaleoDefinitionId");
-			addColumnAndIndex(
+			_addColumn("KaleoTimer", "kaleoDefinitionId");
+			_addColumn("KaleoTimerInstanceToken", "kaleoDefinitionId");
+			_addColumnAndIndex(
 				"KaleoTransition", "kaleoDefinitionId", "IX_479F3063");
 
 			_dbInspector = null;
 		}
 	}
 
-	protected void setUpUpgradeKaleoDefinitionVersion() {
+	private void _setUpUpgradeKaleoDefinitionVersion() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		UpgradeStepRegistrator upgradeStepRegistror = registry.getService(

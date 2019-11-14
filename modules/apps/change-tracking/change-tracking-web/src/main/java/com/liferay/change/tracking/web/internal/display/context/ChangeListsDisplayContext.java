@@ -25,7 +25,7 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebConstants;
-import com.liferay.change.tracking.web.internal.display.CTDisplayRegistry;
+import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -87,7 +87,7 @@ public class ChangeListsDisplayContext {
 
 	public ChangeListsDisplayContext(
 		CTCollectionLocalService ctCollectionLocalService,
-		CTDisplayRegistry ctDisplayRegistry,
+		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService,
 		CTPreferencesLocalService ctPreferencesLocalService,
 		CTProcessLocalService ctProcessLocalService, Portal portal,
@@ -95,7 +95,7 @@ public class ChangeListsDisplayContext {
 		UserLocalService userLocalService) {
 
 		_ctCollectionLocalService = ctCollectionLocalService;
-		_ctDisplayRegistry = ctDisplayRegistry;
+		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
 		_ctPreferencesLocalService = ctPreferencesLocalService;
 		_ctProcessLocalService = ctProcessLocalService;
@@ -562,7 +562,7 @@ public class ChangeListsDisplayContext {
 				diffURL.setParameter(
 					"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
 
-				String editURL = _ctDisplayRegistry.getEditURL(
+				String editURL = _ctDisplayRendererRegistry.getEditURL(
 					_httpServletRequest, ctEntry);
 
 				if (editURL == null) {
@@ -576,7 +576,7 @@ public class ChangeListsDisplayContext {
 							_themeDisplay.getLocale(), changeTypeKey)
 					).put(
 						"contentType",
-						_ctDisplayRegistry.getTypeName(
+						_ctDisplayRendererRegistry.getTypeName(
 							_portal.getLocale(_httpServletRequest), ctEntry)
 					).put(
 						"diffURL", diffURL.toString()
@@ -797,7 +797,7 @@ public class ChangeListsDisplayContext {
 	private final boolean _confirmationEnabled;
 	private final long _ctCollectionId;
 	private final CTCollectionLocalService _ctCollectionLocalService;
-	private final CTDisplayRegistry _ctDisplayRegistry;
+	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntryLocalService _ctEntryLocalService;
 	private final CTPreferencesLocalService _ctPreferencesLocalService;
 	private final CTProcessLocalService _ctProcessLocalService;

@@ -19,7 +19,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.change.tracking.web.internal.display.CTDisplayRegistry;
+import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.CTEntryDiffDisplay;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -64,13 +64,13 @@ public class ViewDiffMVCRenderCommand implements MVCRenderCommand {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
-		String name = _ctDisplayRegistry.getTypeName(
+		String name = _ctDisplayRendererRegistry.getTypeName(
 			_portal.getLocale(httpServletRequest), ctEntry);
 
 		CTEntryDiffDisplay ctEntryDiffDisplay = new CTEntryDiffDisplay(
 			httpServletRequest, _portal.getHttpServletResponse(renderResponse),
-			changeType, ctCollection, _ctDisplayRegistry, ctEntry, _language,
-			name);
+			changeType, ctCollection, _ctDisplayRendererRegistry, ctEntry,
+			_language, name);
 
 		renderRequest.setAttribute("CT_ENTRY_DIFF_DISPLAY", ctEntryDiffDisplay);
 
@@ -81,7 +81,7 @@ public class ViewDiffMVCRenderCommand implements MVCRenderCommand {
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
-	private CTDisplayRegistry _ctDisplayRegistry;
+	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

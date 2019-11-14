@@ -51,8 +51,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Samuel Trong Tran
  */
-@Component(immediate = true, service = CTDisplayRegistry.class)
-public class CTDisplayRegistry {
+@Component(immediate = true, service = CTDisplayRendererRegistry.class)
+public class CTDisplayRendererRegistry {
 
 	public <T extends CTModel<T>> String getEditURL(
 			HttpServletRequest httpServletRequest, CTEntry ctEntry)

@@ -20,7 +20,7 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
-import com.liferay.change.tracking.web.internal.display.CTDisplayRegistry;
+import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.context.ChangeListsDisplayContext;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -84,7 +84,7 @@ public class ChangeListsPortlet extends BaseChangeListsPortlet {
 
 		ChangeListsDisplayContext changeListsDisplayContext =
 			new ChangeListsDisplayContext(
-				_ctCollectionLocalService, _ctDisplayRegistry,
+				_ctCollectionLocalService, _ctDisplayRendererRegistry,
 				_ctEntryLocalService, _ctPreferencesLocalService,
 				_ctProcessLocalService, _portal, renderRequest, renderResponse,
 				_userLocalService);
@@ -102,7 +102,7 @@ public class ChangeListsPortlet extends BaseChangeListsPortlet {
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
-	private CTDisplayRegistry _ctDisplayRegistry;
+	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

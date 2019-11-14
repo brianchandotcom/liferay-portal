@@ -30,14 +30,15 @@ public class CTEntryDiffDisplay {
 	public CTEntryDiffDisplay(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String changeType,
-		CTCollection ctCollection, CTDisplayRegistry ctDisplayRegistry,
-		CTEntry ctEntry, Language language, String name) {
+		CTCollection ctCollection,
+		CTDisplayRendererRegistry ctDisplayRendererRegistry, CTEntry ctEntry,
+		Language language, String name) {
 
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
 		_changeType = changeType;
 		_ctCollection = ctCollection;
-		_ctDisplayRegistry = ctDisplayRegistry;
+		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntry = ctEntry;
 		_language = language;
 		_name = name;
@@ -76,7 +77,7 @@ public class CTEntryDiffDisplay {
 				ctCollectionId = _ctCollection.getCtCollectionId();
 			}
 
-			_ctDisplayRegistry.renderCTEntry(
+			_ctDisplayRendererRegistry.renderCTEntry(
 				_httpServletRequest, _httpServletResponse, _ctEntry,
 				ctCollectionId);
 		}
@@ -84,7 +85,7 @@ public class CTEntryDiffDisplay {
 
 	public void renderRightView() throws Exception {
 		if (!_changeType.equals("deleted")) {
-			_ctDisplayRegistry.renderCTEntry(
+			_ctDisplayRendererRegistry.renderCTEntry(
 				_httpServletRequest, _httpServletResponse, _ctEntry,
 				_ctCollection.getCtCollectionId());
 		}
@@ -92,7 +93,7 @@ public class CTEntryDiffDisplay {
 
 	private final String _changeType;
 	private final CTCollection _ctCollection;
-	private final CTDisplayRegistry _ctDisplayRegistry;
+	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntry _ctEntry;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;

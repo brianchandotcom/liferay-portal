@@ -14,6 +14,7 @@
 
 package com.liferay.account.role;
 
+import com.liferay.account.model.AccountRole;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;

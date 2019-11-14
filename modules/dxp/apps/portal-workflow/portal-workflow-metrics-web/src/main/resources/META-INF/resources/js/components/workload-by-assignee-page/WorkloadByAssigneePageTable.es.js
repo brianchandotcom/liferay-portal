@@ -86,7 +86,7 @@ const Item = ({
 	taskKeys
 }) => {
 	const {defaultDelta} = useContext(AppContext);
-	const instancesListPath = `/instances/${processId}/${defaultDelta}/1`;
+	const instancesListPath = `/instance/${processId}/${defaultDelta}/1`;
 
 	const getFiltersQuery = slaStatus => {
 		const filterParams = {

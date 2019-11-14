@@ -70,7 +70,7 @@ const Body = ({currentTab, processId, query}) => {
 					<div className="mb-1 text-right">
 						<ChildLink
 							className="border-0 btn btn-secondary btn-sm"
-							to={`/assignees/${processId}/${defaultDelta}/1/overdueTaskCount:desc`}
+							to={`/workload/assignee/${processId}/${defaultDelta}/1/overdueTaskCount:desc`}
 						>
 							<span
 								className="mr-2"

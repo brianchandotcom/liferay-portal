@@ -104,7 +104,7 @@ class SummaryCard extends React.Component {
 			</span>
 		);
 
-		const instancesListPath = `/instances/${processId}/${defaultDelta}/1`;
+		const instancesListPath = `/instance/${processId}/${defaultDelta}/1`;
 		const title = getTitle(completed);
 
 		return (

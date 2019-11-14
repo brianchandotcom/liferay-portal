@@ -64,10 +64,11 @@ const Body = ({data, defaultDelta, processId}) => {
 
 			<PromisesResolver.Resolved>
 				{items && items.length > 0 ? (
-					<PerformanceByAssigneeCard.Footer 
-					defaultDelta={defaultDelta}
-					processId={processId}
-					totalCount={totalCount} />
+					<PerformanceByAssigneeCard.Footer
+						defaultDelta={defaultDelta}
+						processId={processId}
+						totalCount={totalCount}
+					/>
 				) : null}
 			</PromisesResolver.Resolved>
 		</>
@@ -79,18 +80,18 @@ const Footer = ({defaultDelta, processId, totalCount}) => {
 	return (
 		<Panel.Footer elementClasses="fixed-bottom">
 			<div className="mb-1 text-right">
-			<ChildLink to={viewAllAssigneesUrl}>
-				<button className="border-0 btn btn-secondary btn-sm">
-					<span className="mr-2" data-testid="viewAllAssignees">
-						{`${Liferay.Language.get(
-							'view-all-assignees'
-						)} (${totalCount})`}
-					</span>
+				<ChildLink to={viewAllAssigneesUrl}>
+					<button className="border-0 btn btn-secondary btn-sm">
+						<span className="mr-2" data-testid="viewAllAssignees">
+							{`${Liferay.Language.get(
+								'view-all-assignees'
+							)} (${totalCount})`}
+						</span>
 
-					<Icon iconName="caret-right-l" />
-				</button>
-		</ChildLink>
-		</div>
+						<Icon iconName="caret-right-l" />
+					</button>
+				</ChildLink>
+			</div>
 		</Panel.Footer>
 	);
 };

@@ -63,8 +63,7 @@ const Footer = ({processId, timeRange, totalCount}) => {
 				}
 		  }
 		: {};
-
-	const viewAllStepsUrl = `/performance/${processId}/${defaultDelta}/1/breachedInstancePercentage:desc`;
+	const viewAllStepsUrl = `/performance/step/${processId}/${defaultDelta}/1/breachedInstancePercentage:desc`;
 
 	return (
 		<Panel.Footer elementClasses="fixed-bottom">

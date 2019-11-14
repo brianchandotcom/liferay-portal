@@ -53,7 +53,7 @@ const Item = ({
 		return filterParams;
 	};
 
-	const instancesListPath = `/instances/${processId}/${defaultDelta}/1`;
+	const instancesListPath = `/instance/${processId}/${defaultDelta}/1`;
 
 	return (
 		<tr>

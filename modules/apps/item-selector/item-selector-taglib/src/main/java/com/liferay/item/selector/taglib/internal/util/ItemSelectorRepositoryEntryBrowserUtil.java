@@ -157,10 +157,10 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 	}
 
 	public static String getItemSelectorReturnTypeClassName(
-			ItemSelectorReturnTypeResolver
-				<? extends ItemSelectorReturnType, FileEntry>
-					itemSelectorReturnTypeResolver,
-			ItemSelectorReturnType itemSelectorReturnType) {
+		ItemSelectorReturnTypeResolver
+			<? extends ItemSelectorReturnType, FileEntry>
+				itemSelectorReturnTypeResolver,
+		ItemSelectorReturnType itemSelectorReturnType) {
 
 		if (itemSelectorReturnTypeResolver != null) {
 			Class<? extends ItemSelectorReturnType>

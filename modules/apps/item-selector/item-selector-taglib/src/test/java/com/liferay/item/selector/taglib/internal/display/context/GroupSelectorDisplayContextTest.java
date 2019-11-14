@@ -56,8 +56,7 @@ public class GroupSelectorDisplayContextTest {
 	@Test
 	public void testGetGroupItemSelectorIcon() {
 		GroupSelectorDisplayContext groupSelectorDisplayContext =
-			new GroupSelectorDisplayContext(
-				new MockLiferayResourceRequest());
+			new GroupSelectorDisplayContext(new MockLiferayResourceRequest());
 
 		Assert.assertEquals(
 			"icon",
@@ -67,8 +66,7 @@ public class GroupSelectorDisplayContextTest {
 	@Test
 	public void testGetGroupItemSelectorLabel() {
 		GroupSelectorDisplayContext groupSelectorDisplayContext =
-			new GroupSelectorDisplayContext(
-				new MockLiferayResourceRequest());
+			new GroupSelectorDisplayContext(new MockLiferayResourceRequest());
 
 		Assert.assertEquals(
 			"label",
@@ -78,8 +76,7 @@ public class GroupSelectorDisplayContextTest {
 	@Test
 	public void testGetGroupTypes() {
 		GroupSelectorDisplayContext groupSelectorDisplayContext =
-			new GroupSelectorDisplayContext(
-				new MockLiferayResourceRequest());
+			new GroupSelectorDisplayContext(new MockLiferayResourceRequest());
 
 		Assert.assertEquals(
 			Collections.singleton("test"),

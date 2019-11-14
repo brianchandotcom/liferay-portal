@@ -23,6 +23,8 @@ public class LayoutScreenNavigationEntryConstants {
 
 	public static final String ENTRY_KEY_GENERAL = "general";
 
+	public static final String ENTRY_KEY_OPEN_GRAPH = "open-graph";
+
 	public static final String SCREEN_NAVIGATION_KEY_LAYOUT =
 		"SCREEN_NAVIGATION_KEY_LAYOUT";
 

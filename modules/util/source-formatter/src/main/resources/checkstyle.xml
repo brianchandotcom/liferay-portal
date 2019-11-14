@@ -45,7 +45,7 @@
 			<message key="name.invalidPattern" value="Private method ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="MethodParamPadCheck" />
-		<module name="MissingDeprecatedCheck" />
+		<!-- <module name="MissingDeprecatedCheck" /> -->
 		<module name="ModifierOrderCheck" />
 		<module name="MultipleVariableDeclarationsCheck" />
 		<module name="NoLineWrapCheck" />

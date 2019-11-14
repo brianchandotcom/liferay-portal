@@ -65,7 +65,9 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 			!StringUtil.startsWith(src, "https://") &&
 			!StringUtil.startsWith(src, "mhtml://")) {
 
-			src = _http.getProtocol(actionRequest) + "://" + src;
+			src =
+				_http.getProtocol(actionRequest) + Http.PROTOCOL_DELIMITER +
+					src;
 
 			setPreference(actionRequest, "src", src);
 		}

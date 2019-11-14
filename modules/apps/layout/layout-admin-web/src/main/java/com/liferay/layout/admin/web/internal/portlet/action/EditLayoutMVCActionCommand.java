@@ -205,7 +205,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			!StringUtil.startsWith(src, "https://") &&
 			!StringUtil.startsWith(src, "mhtml://")) {
 
-			src = _http.getProtocol(actionRequest) + "://" + src;
+			src =
+				_http.getProtocol(actionRequest) + Http.PROTOCOL_DELIMITER +
+					src;
 
 			formTypeSettingsProperties.put("embeddedLayoutURL", src);
 		}

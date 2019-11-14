@@ -48,6 +48,8 @@ definition {
 		AppBuilderAdmin.openItem(itemName = "${formViewName}");
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
+
+		AppBuilderAdmin.gotoBack();
 	}
 
 	macro save {
@@ -67,6 +69,10 @@ definition {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = "${fieldLabel}");
+	}
+
+	macro openFormView {
+		AppBuilderAdmin.openItem(itemName = "${formViewName}");
 	}
 
 }

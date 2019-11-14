@@ -117,20 +117,21 @@ const PreviewSeoContainer = ({
 
 			const node = document.getElementById(`_${portletNamespace}_${id}`);
 
-			node.addEventListener('input', listener);
+			if (node) node.addEventListener('input', listener);
 
 			setPreviewState({
 				defaultValue,
 				type,
-				value: node.value
+				value: node ? node.value : defaultValue
 			});
 
 			return {listener, node};
 		});
 
 		return () => {
-			inputs.forEach(({listener, node}) =>
-				node.removeEventListener('input', listener)
+			inputs.forEach(
+				({listener, node}) =>
+					node && node.removeEventListener('input', listener)
 			);
 		};
 	}, [portletNamespace, targets]);

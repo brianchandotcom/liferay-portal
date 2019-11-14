@@ -2272,8 +2272,7 @@ public class DataFactory {
 
 		List<String> lines = new ArrayList<>();
 
-		StringUtil.readLines(
-			getResourceInputStream("data/web_content.html"), lines);
+		StringUtil.readLines(getResourceInputStream("web_content.html"), lines);
 
 		String html = StringUtil.merge(lines, StringPool.SPACE);
 
@@ -4554,7 +4553,7 @@ public class DataFactory {
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
 
 	private static final String _DEPENDENCIES_DIR =
-		"com/liferay/portal/tools/sample/sql/builder/dependencies/";
+		"com/liferay/portal/tools/sample/sql/builder/dependencies/data/";
 
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;

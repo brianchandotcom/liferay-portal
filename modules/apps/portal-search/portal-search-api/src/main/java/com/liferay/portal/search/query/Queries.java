@@ -85,7 +85,7 @@ public interface Queries {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #moreLikeThis(List<String>, String...)}
+	 *             #moreLikeThis(List, String...)}
 	 */
 	@Deprecated
 	public MoreLikeThisQuery moreLikeThis(List<String> likeTexts);
@@ -98,7 +98,7 @@ public interface Queries {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #moreLikeThis(List<String>, String...)}
+	 *             #moreLikeThis(List, String...)}
 	 */
 	@Deprecated
 	public MoreLikeThisQuery moreLikeThis(String... likeTexts);

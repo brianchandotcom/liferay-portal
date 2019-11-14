@@ -70,7 +70,7 @@ public class GetIndexIndexResponse implements IndexResponse {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setIndexMappings(Map<String, String>)}
+	 *             #setIndexMappings(Map)}
 	 */
 	@Deprecated
 	public void setMappings(Map<String, Map<String, String>> mappings) {
@@ -83,7 +83,7 @@ public class GetIndexIndexResponse implements IndexResponse {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setIndexMappings(Map<String, String>)}
+	 *             #setIndexMappings(Map)}
 	 */
 	@Deprecated
 	public void setUntypedMappings(Map<String, String> untypedMappings) {

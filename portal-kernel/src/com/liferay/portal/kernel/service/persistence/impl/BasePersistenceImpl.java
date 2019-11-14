@@ -626,7 +626,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #appendOrderByComparator(
 	 *             com.liferay.petra.string.Stringbundler, String,
-	 *             OrderByComparator<T>)}
+	 *             OrderByComparator)}
 	 */
 	@Deprecated
 	protected void appendOrderByComparator(
@@ -640,7 +640,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #appendOrderByComparator(
 	 *             com.liferay.petra.string.Stringbundler, String,
-	 *             OrderByComparator<T>, boolean)}
+	 *             OrderByComparator, boolean)}
 	 */
 	@Deprecated
 	protected void appendOrderByComparator(

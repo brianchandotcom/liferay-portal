@@ -199,7 +199,7 @@ public class QueriesImpl implements Queries {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #moreLikeThis(List<String>, String...)}
+	 *             #moreLikeThis(List, String...)}
 	 */
 	@Deprecated
 	@Override
@@ -224,7 +224,7 @@ public class QueriesImpl implements Queries {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #moreLikeThis(List<String>, String...)}
+	 *             #moreLikeThis(List, String...)}
 	 */
 	@Deprecated
 	@Override

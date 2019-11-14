@@ -30,4 +30,6 @@ public interface CTWebKeys {
 
 	public static final String CT_COLLECTION = "CT_COLLECTION";
 
+	public static final String CT_ENTRY_DIFF_DISPLAY = "CT_ENTRY_DIFF_DISPLAY";
+
 }

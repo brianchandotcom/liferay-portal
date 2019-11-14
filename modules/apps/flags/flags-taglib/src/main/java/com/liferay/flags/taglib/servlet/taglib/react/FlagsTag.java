@@ -173,8 +173,11 @@ public class FlagsTag extends IncludeTag {
 			"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS)
 		).build();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Map<String, Object> props = HashMapBuilder.<String, Object>put(
 			"baseData", _getDataJSONObject(themeDisplay)
@@ -201,9 +204,10 @@ public class FlagsTag extends IncludeTag {
 			PortalUtil.getPathMain() + "/portal/terms_of_use");
 		props.put(
 			"reasons",
-			FlagsTagUtil.getReasons(themeDisplay.getCompanyId(), request));
+			FlagsTagUtil.getReasons(
+				themeDisplay.getCompanyId(), httpServletRequest));
 		props.put("signedIn", themeDisplay.isSignedIn());
-		props.put("uri", FlagsTagUtil.getURI(request));
+		props.put("uri", FlagsTagUtil.getURI(httpServletRequest));
 
 		return HashMapBuilder.<String, Object>put(
 			"context", context
@@ -218,7 +222,7 @@ public class FlagsTag extends IncludeTag {
 		String contentURL = _contentURL;
 
 		if (Validator.isNull(contentURL)) {
-			contentURL = FlagsTagUtil.getCurrentURL(request);
+			contentURL = FlagsTagUtil.getCurrentURL(getRequest());
 		}
 
 		JSONObject dataJSONObject = JSONUtil.put(
@@ -251,7 +255,8 @@ public class FlagsTag extends IncludeTag {
 		ResourceBundle resourceBundle = new AggregateResourceBundle(
 			TagResourceBundleUtil.getResourceBundle(pageContext),
 			ResourceBundleUtil.getBundle(
-				PortalUtil.getLocale(request), "com.liferay.flags.taglib"));
+				PortalUtil.getLocale(getRequest()),
+				"com.liferay.flags.taglib"));
 
 		if (Validator.isNotNull(_message)) {
 			return LanguageUtil.get(resourceBundle, _message);

@@ -12,8 +12,75 @@
  * details.
  */
 
-import React from 'react';
+import ClayButton from '@clayui/button';
+import ClayForm, {ClayInput} from '@clayui/form';
+import React, {useState} from 'react';
 
-export default function() {
-	return <h1>hello world</h1>;
+import {sub} from './utils.es';
+
+const ItemSelectorUrl = ({eventName}) => {
+	const inputName = 'urlInputReact';
+	const [imgUrl, setImgUrl] = useState('');
+	const [imgLoaded, setImgLoaded] = useState(false);
+
+	const handleImageUrlChange = ({target}) => {
+		setImgUrl(target.value);
+		setImgLoaded(false);
+	};
+
+	const handleSubmit = event => {
+		event.preventDefault();
+
+		if (!imgLoaded) {
+			return;
+		}
+
+		const eventData = {
+			data: {
+				returnType: 'URL',
+				value: imgUrl
+			}
+		};
+
+		Liferay.Util.getOpener().Liferay.fire(eventName, eventData);
+		Liferay.Util.getOpener().Liferay.fire(`${eventName}AddItem`, eventData);
+	};
+
+	return (
+		<>
+			<form onSubmit={handleSubmit}>
+				<ClayForm.Group>
+					<label htmlFor={inputName}>
+						{Liferay.Language.get('image-url')}
+					</label>
+					<ClayInput
+						id={inputName}
+						onChange={handleImageUrlChange}
+						placeholder="http://"
+						type="text"
+						value={imgUrl}
+					/>
+					<p className="form-text">
+						{sub(Liferay.Language.get('for-example-x'), [
+							'http://www.liferay.com/liferay.png'
+						])}
+					</p>
+				</ClayForm.Group>
+				<ClayButton disabled={!imgLoaded} type="submit">
+					{Liferay.Language.get('add')}
+				</ClayButton>
+			</form>
+			{imgUrl && (
+				<img
+					className={`img-fluid mt-4 ${imgLoaded ? '' : 'invisible'}`}
+					onLoad={() => setImgLoaded(true)}
+					src={imgUrl}
+				/>
+			)}
+		</>
+	);
+};
+
+export default function(props) {
+	return <ItemSelectorUrl {...props} />;
 }

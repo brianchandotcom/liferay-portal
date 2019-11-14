@@ -89,7 +89,7 @@ exports[`Should render component 1`] = `
               },
             }
           }
-          to="/instances/12345/20/1"
+          to="/instance/12345/20/1"
         >
           <Component
             className=" process-dashboard-summary-card"
@@ -171,7 +171,7 @@ exports[`Should render component 1`] = `
                 },
               }
             }
-            to="/instances/12345/20/1"
+            to="/instance/12345/20/1"
           >
             <ChildLinkWrapper
               backPath="/"
@@ -233,7 +233,7 @@ exports[`Should render component 1`] = `
                   },
                 }
               }
-              to="/instances/12345/20/1"
+              to="/instance/12345/20/1"
             >
               <Link
                 className=" process-dashboard-summary-card"
@@ -241,14 +241,14 @@ exports[`Should render component 1`] = `
                 onMouseOver={[Function]}
                 to={
                   Object {
-                    "pathname": "/instances/12345/20/1",
+                    "pathname": "/instance/12345/20/1",
                     "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending",
                   }
                 }
               >
                 <a
                   className=" process-dashboard-summary-card"
-                  href="/instances/12345/20/1?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending"
+                  href="/instance/12345/20/1?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending"
                   onClick={[Function]}
                   onMouseOut={[Function]}
                   onMouseOver={[Function]}
@@ -400,7 +400,7 @@ exports[`Should render component with disabled state 1`] = `
               },
             }
           }
-          to="/instances/12345/20/1"
+          to="/instance/12345/20/1"
         >
           <Component
             className="disabled process-dashboard-summary-card"
@@ -482,7 +482,7 @@ exports[`Should render component with disabled state 1`] = `
                 },
               }
             }
-            to="/instances/12345/20/1"
+            to="/instance/12345/20/1"
           >
             <ChildLinkWrapper
               backPath="/"
@@ -544,7 +544,7 @@ exports[`Should render component with disabled state 1`] = `
                   },
                 }
               }
-              to="/instances/12345/20/1"
+              to="/instance/12345/20/1"
             >
               <Link
                 className="disabled process-dashboard-summary-card"
@@ -552,14 +552,14 @@ exports[`Should render component with disabled state 1`] = `
                 onMouseOver={[Function]}
                 to={
                   Object {
-                    "pathname": "/instances/12345/20/1",
+                    "pathname": "/instance/12345/20/1",
                     "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending",
                   }
                 }
               >
                 <a
                   className="disabled process-dashboard-summary-card"
-                  href="/instances/12345/20/1?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending"
+                  href="/instance/12345/20/1?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending"
                   onClick={[Function]}
                   onMouseOut={[Function]}
                   onMouseOver={[Function]}

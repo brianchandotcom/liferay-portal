@@ -88,7 +88,8 @@ public class BatchEngineImportTaskExecutorImpl
 		}
 		catch (Throwable t) {
 			_log.error(
-				"Unable to update batch engine task " + batchEngineImportTask,
+				"Unable to update batch engine import task " +
+					batchEngineImportTask,
 				t);
 
 			batchEngineImportTask.setEndTime(new Date());

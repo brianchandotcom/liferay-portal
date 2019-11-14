@@ -29,6 +29,10 @@ definition {
 			fieldFieldLabel = "Text Child",
 			fieldName = "textChild");
 
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Form.addTranslation(localizedLanguage = "Chinese (China)");
+
 		DDLDataDefinition.save();
 
 		Navigator.openURL();
@@ -80,7 +84,7 @@ definition {
 			ddlRecordFieldData = "en-US Child",
 			fieldName = "textChild");
 
-		for (var language : list "es-ES,pt-BR") {
+		for (var language : list "es-ES,zh-CN") {
 			PortletEntry.changeLocale(locale = "${language}");
 
 			DDLRecord.populateFieldText(
@@ -92,7 +96,7 @@ definition {
 				fieldName = "textChild");
 		}
 
-		for (var language : list "en-US,es-ES,pt-BR") {
+		for (var language : list "en-US,es-ES,zh-CN") {
 			PortletEntry.changeLocale(locale = "${language}");
 
 			FormFields.viewTextValue(

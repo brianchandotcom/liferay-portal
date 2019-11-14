@@ -53,6 +53,10 @@ public class LayoutPageTemplateStructureImpl
 	}
 
 	private long _getFirstSegmentsExperienceId(long[] segmentsExperienceIds) {
+		if (segmentsExperienceIds.length == 1) {
+			return segmentsExperienceIds[0];
+		}
+
 		LongStream stream = Arrays.stream(segmentsExperienceIds);
 
 		return stream.filter(

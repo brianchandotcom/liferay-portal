@@ -15,14 +15,11 @@
 package com.liferay.account.internal.role;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.role.AccountRole;
+import com.liferay.account.model.AccountRole;
 import com.liferay.account.role.AccountRoleManager;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -45,12 +42,8 @@ public class AccountRoleManagerImpl implements AccountRoleManager {
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap)
 		throws PortalException {
 
-		Role role = _roleLocalService.addRole(
-			userId, AccountEntry.class.getName(), accountEntryId,
-			_NAME_NAMESPACE + name, titleMap, descriptionMap,
-			RoleConstants.TYPE_PROVIDER, null, null);
-
-		return new AccountRoleImpl(role);
+		return _accountRoleLocalService.addAccountRole(
+			userId, accountEntryId, name, titleMap, descriptionMap);
 	}
 
 	@Override
@@ -74,21 +67,16 @@ public class AccountRoleManagerImpl implements AccountRoleManager {
 		return TransformUtil.transform(
 			_userGroupRoleLocalService.getUserGroupRoles(
 				userId, accountEntry.getAccountEntryGroupId()),
-			userGroupRole -> new AccountRoleImpl(userGroupRole.getRole()));
+			userGroupRole -> _accountRoleLocalService.getAccountRoleByRoleId(
+				userGroupRole.getRoleId()));
 	}
 
 	@Override
 	public List<AccountRole> getAccountRoles(
 		long companyId, long[] accountEntryIds) {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			AccountEntry.class);
-
-		return TransformUtil.transform(
-			_roleLocalService.getRoles(
-				companyId, classNameId, accountEntryIds,
-				RoleConstants.TYPE_PROVIDER),
-			AccountRoleImpl::new);
+		return _accountRoleLocalService.getAccountRolesByAccountEntryIds(
+			accountEntryIds);
 	}
 
 	@Override
@@ -102,16 +90,11 @@ public class AccountRoleManagerImpl implements AccountRoleManager {
 			userId, accountEntry.getAccountEntryGroupId(), new long[] {roleId});
 	}
 
-	private static final String _NAME_NAMESPACE = "lfr-account-";
-
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
+	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

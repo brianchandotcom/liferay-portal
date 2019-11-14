@@ -995,26 +995,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			return true;
 		}
 
-		String result = GitUtil.getGitResult(
-			project, artifactProjectDir, "log", "--format=%s",
-			artifactGitId + "..HEAD", ".");
-
-		String[] lines = result.split("\\r?\\n");
-
-		for (String line : lines) {
-			if (logger.isInfoEnabled()) {
-				logger.info(line);
-			}
-
-			if (Validator.isNull(line)) {
-				continue;
-			}
-
-			if (!line.contains(
-					WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
-
-				return true;
-			}
+		if (_isStale(project, artifactProjectDir, artifactGitId)) {
+			return true;
 		}
 
 		if (GradleUtil.hasPlugin(project, LiferayThemeDefaultsPlugin.class)) {
@@ -1034,6 +1016,34 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			}
 
 			if (!Objects.equals(digest, oldDigest)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isStale(
+		Project project, File artifactProjectDir, String artifactGitId) {
+
+		Logger logger = project.getLogger();
+
+		String result = GitUtil.getGitResult(
+			project, artifactProjectDir, "log", "--format=%s",
+			artifactGitId + "..HEAD", ".");
+
+		String[] lines = result.split("\\r?\\n");
+
+		for (String line : lines) {
+			if (logger.isInfoEnabled()) {
+				logger.info(line);
+			}
+
+			if (Validator.isNull(line)) {
+				continue;
+			}
+
+			if (!line.contains(_IGNORED_MESSAGE_PATTERN)) {
 				return true;
 			}
 		}
@@ -1104,6 +1114,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		return false;
 	}
+
+	private static final String _IGNORED_MESSAGE_PATTERN =
+		WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN;
 
 	private static final String _LIFERAY_RELENG_APP_TITLE_PREFIX =
 		"liferay.releng.app.title.prefix";

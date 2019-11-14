@@ -70,7 +70,6 @@ public class JSConfigGeneratorModule {
 	 * This is the legacy equivalent of {@link JSModule#getName()} for new JS
 	 * modules.
 	 *
-	 * @return
 	 * @review
 	 */
 	public String getName() {
@@ -86,7 +85,6 @@ public class JSConfigGeneratorModule {
 	 * new JS modules, but in this case we don't use "resolved" prefix because
 	 * there's no notion of resolved URLs or IDs in legacy modules.
 	 *
-	 * @return
 	 * @review
 	 */
 	public String getURL() {

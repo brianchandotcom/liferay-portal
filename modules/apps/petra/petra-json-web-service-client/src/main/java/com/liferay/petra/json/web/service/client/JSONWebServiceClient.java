@@ -44,7 +44,6 @@ public interface JSONWebServiceClient {
 	/**
 	 * @param      url
 	 * @param      parameters
-	 * @return
 	 * @throws     JSONWebServiceInvocationException
 	 * @throws     JSONWebServiceTransportException
 	 * @deprecated As of Judson (7.1.x), use {@link #doDelete(String, List)}
@@ -71,7 +70,6 @@ public interface JSONWebServiceClient {
 	/**
 	 * @param      url
 	 * @param      parameters
-	 * @return
 	 * @throws     JSONWebServiceInvocationException
 	 * @throws     JSONWebServiceTransportException
 	 * @deprecated As of Judson (7.1.x), use {@link #doGet(String, List)}
@@ -85,7 +83,6 @@ public interface JSONWebServiceClient {
 	 * @param      url
 	 * @param      parameters
 	 * @param      headers
-	 * @return
 	 * @throws     JSONWebServiceInvocationException
 	 * @throws     JSONWebServiceTransportException
 	 * @deprecated As of Judson (7.1.x), use {@link #doGet(String, List, List)}
@@ -133,7 +130,6 @@ public interface JSONWebServiceClient {
 	/**
 	 * @param      url
 	 * @param      parameters
-	 * @return
 	 * @throws     JSONWebServiceInvocationException
 	 * @throws     JSONWebServiceTransportException
 	 * @deprecated As of Judson (7.1.x), use {@link #doPost(String, List)}
@@ -165,7 +161,6 @@ public interface JSONWebServiceClient {
 	 * @param      url
 	 * @param      json
 	 * @param      headers
-	 * @return
 	 * @throws     JSONWebServiceInvocationException
 	 * @throws     JSONWebServiceTransportException
 	 * @deprecated As of Judson (7.1.x), use {@link #doPostAsJSON(String,
@@ -203,7 +198,6 @@ public interface JSONWebServiceClient {
 	/**
 	 * @param      url
 	 * @param      parameters
-	 * @return
 	 * @throws     JSONWebServiceInvocationException
 	 * @throws     JSONWebServiceTransportException
 	 * @deprecated As of Judson (7.1.x), use {@link #doPut(String, List)}
@@ -217,7 +211,6 @@ public interface JSONWebServiceClient {
 	 * @param      url
 	 * @param      parameters
 	 * @param      headers
-	 * @return
 	 * @throws     JSONWebServiceInvocationException
 	 * @throws     JSONWebServiceTransportException
 	 * @deprecated As of Judson (7.1.x), use {@link #doPut(String, List, List)}
@@ -250,7 +243,6 @@ public interface JSONWebServiceClient {
 	 * @param      clazz
 	 * @param      url
 	 * @param      parameters
-	 * @return
 	 * @throws     JSONWebServiceInvocationException
 	 * @throws     JSONWebServiceSerializeException
 	 * @throws     JSONWebServiceTransportException

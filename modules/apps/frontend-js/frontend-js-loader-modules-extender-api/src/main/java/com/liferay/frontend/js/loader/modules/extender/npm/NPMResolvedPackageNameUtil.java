@@ -46,7 +46,6 @@ public class NPMResolvedPackageNameUtil {
 	 * the {@link ServletContext} associated to the given request.
 	 *
 	 * @param  httpServletRequest
-	 * @return
 	 * @review
 	 */
 	public static String get(HttpServletRequest httpServletRequest) {
@@ -72,7 +71,6 @@ public class NPMResolvedPackageNameUtil {
 	 * given servlet context.
 	 *
 	 * @param  servletContext
-	 * @return
 	 * @review
 	 */
 	public static String get(ServletContext servletContext) {

@@ -104,7 +104,6 @@ public class AnalyzeIndexRequest implements IndexRequest<AnalyzeIndexResponse> {
 	}
 
 	/**
-	 * @return
 	 * @deprecated As of Judson (7.1.x), with no direct replacement. This method
 	 *             should not be in the parent interface.  Only certain
 	 *             IndexRequests work with mappings.

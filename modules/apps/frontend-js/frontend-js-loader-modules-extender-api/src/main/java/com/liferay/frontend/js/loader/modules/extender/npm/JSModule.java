@@ -100,7 +100,6 @@ public interface JSModule extends JSResolvableBundleAsset {
 	/**
 	 * Get the metadata that describe the module.
 	 *
-	 * @return
 	 * @review
 	 */
 	public JSONObject getFlagsJSONObject();

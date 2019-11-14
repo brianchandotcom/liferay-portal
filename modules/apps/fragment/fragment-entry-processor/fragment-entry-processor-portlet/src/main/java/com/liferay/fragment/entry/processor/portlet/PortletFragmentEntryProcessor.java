@@ -155,7 +155,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		validateFragmentEntryHTML(html, StringPool.BLANK);
+		Document document = _getDocument(html);
+
+		_validateFragmentEntryHTMLDocument(document);
 
 		String widgetHTML = _renderWidgetHTML(
 			fragmentEntryLink.getEditableValues(),
@@ -164,8 +166,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		if (Validator.isNotNull(widgetHTML)) {
 			return widgetHTML;
 		}
-
-		Document document = _getDocument(html);
 
 		for (Element element : document.select("*")) {
 			String tagName = element.tagName();
@@ -248,63 +248,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Document document = _getDocument(html);
 
-		for (Element element : document.select("*")) {
-			String htmlTagName = element.tagName();
-
-			if (!StringUtil.startsWith(htmlTagName, "lfr-widget-")) {
-				continue;
-			}
-
-			String alias = StringUtil.replace(
-				htmlTagName, "lfr-widget-", StringPool.BLANK);
-
-			if (Validator.isNull(_portletRegistry.getPortletName(alias))) {
-				throw new FragmentEntryContentException(
-					LanguageUtil.format(
-						_resourceBundle,
-						"there-is-no-widget-available-for-alias-x", alias));
-			}
-
-			String id = element.id();
-
-			if (Validator.isNotNull(id) && !Validator.isAlphanumericName(id)) {
-				throw new FragmentEntryContentException(
-					LanguageUtil.format(
-						_resourceBundle,
-						"widget-id-must-contain-only-alphanumeric-characters",
-						alias));
-			}
-
-			if (Validator.isNotNull(id)) {
-				Elements elements = document.select("#" + id);
-
-				if (elements.size() > 1) {
-					throw new FragmentEntryContentException(
-						LanguageUtil.get(
-							_resourceBundle, "widget-id-must-be-unique"));
-				}
-
-				if (id.length() > GetterUtil.getInteger(
-						ModelHintsConstants.TEXT_MAX_LENGTH)) {
-
-					throw new FragmentEntryContentException(
-						LanguageUtil.format(
-							_resourceBundle,
-							"widget-id-cannot-exceed-x-characters",
-							ModelHintsConstants.TEXT_MAX_LENGTH));
-				}
-			}
-
-			Elements elements = document.select(htmlTagName);
-
-			if ((elements.size() > 1) && Validator.isNull(id)) {
-				throw new FragmentEntryContentException(
-					LanguageUtil.get(
-						_resourceBundle,
-						"duplicate-widgets-within-the-same-fragment-must-" +
-							"have-an-id"));
-			}
-		}
+		_validateFragmentEntryHTMLDocument(document);
 	}
 
 	private Document _getDocument(String html) {
@@ -569,6 +513,68 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			_portletPreferencesLocalService.updatePortletPreferences(
 				portletPreferencesImpl);
+		}
+	}
+
+	private void _validateFragmentEntryHTMLDocument(Document document)
+		throws PortalException {
+
+		for (Element element : document.select("*")) {
+			String htmlTagName = element.tagName();
+
+			if (!StringUtil.startsWith(htmlTagName, "lfr-widget-")) {
+				continue;
+			}
+
+			String alias = StringUtil.replace(
+				htmlTagName, "lfr-widget-", StringPool.BLANK);
+
+			if (Validator.isNull(_portletRegistry.getPortletName(alias))) {
+				throw new FragmentEntryContentException(
+					LanguageUtil.format(
+						_resourceBundle,
+						"there-is-no-widget-available-for-alias-x", alias));
+			}
+
+			String id = element.id();
+
+			if (Validator.isNotNull(id) && !Validator.isAlphanumericName(id)) {
+				throw new FragmentEntryContentException(
+					LanguageUtil.format(
+						_resourceBundle,
+						"widget-id-must-contain-only-alphanumeric-characters",
+						alias));
+			}
+
+			if (Validator.isNotNull(id)) {
+				Elements elements = document.select("#" + id);
+
+				if (elements.size() > 1) {
+					throw new FragmentEntryContentException(
+						LanguageUtil.get(
+							_resourceBundle, "widget-id-must-be-unique"));
+				}
+
+				if (id.length() > GetterUtil.getInteger(
+						ModelHintsConstants.TEXT_MAX_LENGTH)) {
+
+					throw new FragmentEntryContentException(
+						LanguageUtil.format(
+							_resourceBundle,
+							"widget-id-cannot-exceed-x-characters",
+							ModelHintsConstants.TEXT_MAX_LENGTH));
+				}
+			}
+
+			Elements elements = document.select(htmlTagName);
+
+			if ((elements.size() > 1) && Validator.isNull(id)) {
+				throw new FragmentEntryContentException(
+					LanguageUtil.get(
+						_resourceBundle,
+						"duplicate-widgets-within-the-same-fragment-must-" +
+							"have-an-id"));
+			}
 		}
 	}
 

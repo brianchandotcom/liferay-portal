@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -120,9 +121,7 @@ public class BatchEngineImportTaskExecutorTest
 				BatchEngineTaskOperation.CREATE,
 				content.getBytes(StandardCharsets.UTF_8), "CSV", null);
 
-			Assert.fail();
-		}
-		catch (AssertionError ae) {
+			_assertInvalidFile(captureAppender);
 		}
 	}
 
@@ -153,9 +152,7 @@ public class BatchEngineImportTaskExecutorTest
 				BatchEngineTaskOperation.CREATE,
 				content.getBytes(StandardCharsets.UTF_8), "JSON", null);
 
-			Assert.fail();
-		}
-		catch (AssertionError ae) {
+			_assertInvalidFile(captureAppender);
 		}
 	}
 
@@ -182,9 +179,7 @@ public class BatchEngineImportTaskExecutorTest
 				BatchEngineTaskOperation.CREATE,
 				content.getBytes(StandardCharsets.UTF_8), "JSONL", null);
 
-			Assert.fail();
-		}
-		catch (AssertionError ae) {
+			_assertInvalidFile(captureAppender);
 		}
 	}
 
@@ -212,9 +207,7 @@ public class BatchEngineImportTaskExecutorTest
 				BatchEngineTaskOperation.CREATE, _toContent(xssfWorkbook),
 				"XLS", null);
 
-			Assert.fail();
-		}
-		catch (AssertionError ae) {
+			_assertInvalidFile(captureAppender);
 		}
 	}
 
@@ -415,6 +408,23 @@ public class BatchEngineImportTaskExecutorTest
 				_toTime(baseDate, i), _toTime(blogsEntry.getDisplayDate(), 0));
 			Assert.assertEquals("headline" + i, blogsEntry.getTitle());
 		}
+	}
+
+	private void _assertInvalidFile(CaptureAppender captureAppender) {
+		Assert.assertEquals(0, blogsEntryLocalService.getBlogsEntriesCount());
+
+		List<LoggingEvent> loggingEvents = captureAppender.getLoggingEvents();
+
+		Assert.assertEquals(loggingEvents.toString(), 1, loggingEvents.size());
+
+		LoggingEvent loggingEvent = loggingEvents.get(0);
+
+		Assert.assertEquals(Level.ERROR, loggingEvent.getLevel());
+
+		String message = (String)loggingEvent.getMessage();
+
+		Assert.assertTrue(
+			message.startsWith("Unable to update batch engine import task"));
 	}
 
 	private void _assertUpdatedBlogPostings() {

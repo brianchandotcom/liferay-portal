@@ -2236,6 +2236,14 @@ definition {
 		Navigator.gotoNavItem(navItem = "Define Permissions");
 
 		Role.viewPermissionSubdirectory(
+			navItem = "Control Panel",
+			subItemList = "General Permissions,Users,Sites,Workflow");
+
+		Role.viewPermissionSubdirectory(
+			navItem = "Site Administration",
+			subItemList = "Site Builder,Content & Data,Recycle Bin,People,Publishing");
+
+		Role.viewPermissionSubdirectory(
 			navItem = "User",
 			subItemList = "Notifications,My Submissions,My Workflow Tasks,Account Settings,My Organizations");
 	}

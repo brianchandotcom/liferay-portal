@@ -2,17 +2,15 @@
 
 ${dataFactory.toInsertSQL(fragmentCollectionModel)}
 
-<#assign fragmentEntryModels = dataFactory.newFragmentEntryModels(groupId, fragmentCollectionModel) />
+<#assign fragmentEntryModel = dataFactory.newFragmentEntryModel(groupId, fragmentCollectionModel) />
 
-<#list fragmentEntryModels?keys as fragmentEntryModelName>
-	${dataFactory.toInsertSQL(fragmentEntryModels["${fragmentEntryModelName}"])}
-</#list>
+${dataFactory.toInsertSQL(fragmentEntryModel)}
 
 <#assign contentLayoutModels = dataFactory.newContentLayoutModels(groupId) />
 
 <#list contentLayoutModels as contentLayoutModel>
 	<@insertContentLayout
-		_fragmentEntryModels=fragmentEntryModels
+		_fragmentEntryModel=fragmentEntryModel
 		_layoutModel=contentLayoutModel
 	/>
 

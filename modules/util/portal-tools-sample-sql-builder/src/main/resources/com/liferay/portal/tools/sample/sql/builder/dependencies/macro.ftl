@@ -27,27 +27,23 @@
 
 <#macro insertContentLayout
 	_layoutModel
-	_fragmentEntryModels
+	_fragmentEntryModel
 >
 	${dataFactory.toInsertSQL(_layoutModel)}
 
 	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(_layoutModel))}
 
-	<#local fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(_layoutModel, _fragmentEntryModels)>
+	<#local fragmentEntryLinkModel = dataFactory.newFragmentEntryLinkModel(_layoutModel, _fragmentEntryModel)>
 
-	<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
-		${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
+	${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
 
-		<#if fragmentEntryLinkModel.getHtml()?contains("lfr-widget-web-content")>
-			${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferencesModel(fragmentEntryLinkModel))}
-		</#if>
-	</#list>
+	${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferencesModel(fragmentEntryLinkModel))}
 
 	<#local layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(_layoutModel)>
 
 	${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 
-	<#local layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(_layoutModel, layoutPageTemplateStructureModel, fragmentEntryLinkModels)>
+	<#local layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(_layoutModel, layoutPageTemplateStructureModel, fragmentEntryLinkModel)>
 
 	${dataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
 </#macro>

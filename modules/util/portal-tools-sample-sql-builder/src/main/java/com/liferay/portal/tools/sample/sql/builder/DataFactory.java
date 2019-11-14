@@ -208,9 +208,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.IntegerWrapper;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -2225,8 +2223,7 @@ public class DataFactory {
 	}
 
 	public FragmentEntryLinkModel newFragmentEntryLinkModel(
-		LayoutModel layoutModel, FragmentEntryModel fragmentEntryModel,
-		int position) {
+		LayoutModel layoutModel, FragmentEntryModel fragmentEntryModel) {
 
 		FragmentEntryLinkModel fragmentEntryLinkModel =
 			new FragmentEntryLinkModelImpl();
@@ -2248,48 +2245,13 @@ public class DataFactory {
 		fragmentEntryLinkModel.setHtml(fragmentEntryModel.getHtml());
 		fragmentEntryLinkModel.setEditableValues(StringPool.BLANK);
 		fragmentEntryLinkModel.setNamespace(StringUtil.randomId());
-		fragmentEntryLinkModel.setPosition(position);
+		fragmentEntryLinkModel.setPosition(0);
 
 		return fragmentEntryLinkModel;
 	}
 
-	public List<FragmentEntryLinkModel> newFragmentEntryLinkModels(
-		LayoutModel layoutModel,
-		Map<String, FragmentEntryModel> fragmentEntryModels) {
-
-		List<FragmentEntryLinkModel> fragmentEntryLinkModels =
-			new ArrayList<>();
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.fastLoad(layoutModel.getTypeSettings());
-
-		String fragmentEntries = typeSettingsProperties.getProperty(
-			"fragmentEntries");
-
-		fragmentEntries = fragmentEntries.substring(
-			0, fragmentEntries.length() - 2);
-
-		String[] fragmentEntryNames = fragmentEntries.split(StringPool.COMMA);
-
-		int position = 0;
-
-		for (String fragmentEntryName : fragmentEntryNames) {
-			fragmentEntryLinkModels.add(
-				newFragmentEntryLinkModel(
-					layoutModel,
-					fragmentEntryModels.get(fragmentEntryName.trim()),
-					position));
-
-			position++;
-		}
-
-		return fragmentEntryLinkModels;
-	}
-
 	public FragmentEntryModel newFragmentEntryModel(
-			long groupId, String fragmentName,
-			FragmentCollectionModel fragmentCollectionModel)
+			long groupId, FragmentCollectionModel fragmentCollectionModel)
 		throws Exception {
 
 		FragmentEntryModel fragmentEntryModel = new FragmentEntryModelImpl();
@@ -2304,16 +2266,14 @@ public class DataFactory {
 		fragmentEntryModel.setModifiedDate(new Date());
 		fragmentEntryModel.setFragmentCollectionId(
 			fragmentCollectionModel.getFragmentCollectionId());
-		fragmentEntryModel.setFragmentEntryKey(fragmentName);
-		fragmentEntryModel.setName(fragmentName);
+		fragmentEntryModel.setFragmentEntryKey("web_content");
+		fragmentEntryModel.setName("web_content");
 		fragmentEntryModel.setCss(StringPool.BLANK);
 
 		List<String> lines = new ArrayList<>();
 
 		StringUtil.readLines(
-			getResourceInputStream(
-				"fragment_entries/" + fragmentName + ".html"),
-			lines);
+			getResourceInputStream("fragment_entries/web_content.html"), lines);
 
 		String html = StringUtil.merge(lines, StringPool.SPACE);
 
@@ -2324,38 +2284,6 @@ public class DataFactory {
 		fragmentEntryModel.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		return fragmentEntryModel;
-	}
-
-	public Map<String, FragmentEntryModel> newFragmentEntryModels(
-			long groupId, FragmentCollectionModel fragmentCollectionModel)
-		throws Exception {
-
-		return HashMapBuilder.put(
-			"asset_list",
-			newFragmentEntryModel(
-				groupId, "asset_list", fragmentCollectionModel)
-		).put(
-			"footer",
-			newFragmentEntryModel(groupId, "footer", fragmentCollectionModel)
-		).put(
-			"header",
-			newFragmentEntryModel(groupId, "header", fragmentCollectionModel)
-		).put(
-			"media_gallery",
-			newFragmentEntryModel(
-				groupId, "media_gallery", fragmentCollectionModel)
-		).put(
-			"navigation",
-			newFragmentEntryModel(
-				groupId, "navigation", fragmentCollectionModel)
-		).put(
-			"site_map",
-			newFragmentEntryModel(groupId, "site_map", fragmentCollectionModel)
-		).put(
-			"web_content",
-			newFragmentEntryModel(
-				groupId, "web_content", fragmentCollectionModel)
-		).build();
 	}
 
 	public FriendlyURLEntryLocalizationModel
@@ -2693,7 +2621,7 @@ public class DataFactory {
 		newLayoutPageTemplateStructureRelModel(
 			LayoutModel layoutModel,
 			LayoutPageTemplateStructureModel layoutPageTemplateStructureModel,
-			List<FragmentEntryLinkModel> fragmentEntryLinkModels) {
+			FragmentEntryLinkModel fragmentEntryLinkModel) {
 
 		LayoutPageTemplateStructureRelModel
 			layoutPageTemplateStructureRelModel =
@@ -2721,10 +2649,8 @@ public class DataFactory {
 					List<Long> fragmentEntryLinkIds =
 						layoutColumn.getFragmentEntryLinkIds();
 
-					fragmentEntryLinkIds.addAll(
-						ListUtil.toList(
-							fragmentEntryLinkModels,
-							FragmentEntryLinkModel::getFragmentEntryLinkId));
+					fragmentEntryLinkIds.add(
+						fragmentEntryLinkModel.getFragmentEntryLinkId());
 				}));
 
 		JSONObject jsonObject = layoutData.getLayoutDataJSONObject();

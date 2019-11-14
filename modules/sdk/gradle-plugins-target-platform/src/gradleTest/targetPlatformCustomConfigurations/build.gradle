@@ -31,7 +31,7 @@ apply plugin: "java"
 task runGradleTest
 
 dependencies {
-	serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.315"
+	serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.316"
 
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.1.3"
 }

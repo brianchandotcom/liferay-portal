@@ -55,7 +55,6 @@ page import="com.liferay.layout.page.template.service.LayoutPageTemplateCollecti
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil" %><%@
-page import="com.liferay.layout.seo.kernel.LayoutSEOLinkManagerUtil" %><%@
 page import="com.liferay.layout.seo.model.LayoutSEOEntry" %><%@
 page import="com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

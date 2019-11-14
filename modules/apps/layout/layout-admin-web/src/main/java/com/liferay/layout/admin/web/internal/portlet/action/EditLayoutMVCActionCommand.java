@@ -90,14 +90,6 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 		long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "title");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		Map<Locale, String> keywordsMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "keywords");
-		Map<Locale, String> robotsMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "robots");
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
 		boolean hidden = ParamUtil.getBoolean(uploadPortletRequest, "hidden");
 		Map<Locale, String> friendlyURLMap =
@@ -142,31 +134,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		layout = _layoutService.updateLayout(
 			groupId, privateLayout, layoutId, layout.getParentLayoutId(),
-			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
-			hidden, friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
-
-		boolean canonicalURLEnabled = ParamUtil.getBoolean(
-			actionRequest, "canonicalURLEnabled");
-		Map<Locale, String> canonicalURLMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "canonicalURL");
-		boolean openGraphDescriptionEnabled = ParamUtil.getBoolean(
-			actionRequest, "openGraphDescriptionEnabled");
-		Map<Locale, String> openGraphDescriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "openGraphDescription");
-		long openGraphImageFileEntryId = ParamUtil.getLong(
-			actionRequest, "openGraphImageFileEntryId");
-		boolean openGraphTitleEnabled = ParamUtil.getBoolean(
-			actionRequest, "openGraphTitleEnabled");
-		Map<Locale, String> openGraphTitleMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "openGraphTitle");
-
-		_layoutSEOEntryService.updateLayoutSEOEntry(
-			groupId, privateLayout, layoutId, canonicalURLEnabled,
-			canonicalURLMap, openGraphDescriptionEnabled,
-			openGraphDescriptionMap, openGraphImageFileEntryId,
-			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+			nameMap, layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(), type, hidden,
+			friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
 
 		Layout draftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), layout.getPlid());
@@ -174,17 +144,11 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 		if (draftLayout != null) {
 			_layoutService.updateLayout(
 				groupId, privateLayout, draftLayout.getLayoutId(),
-				draftLayout.getParentLayoutId(), nameMap, titleMap,
-				descriptionMap, keywordsMap, robotsMap, type,
+				draftLayout.getParentLayoutId(), nameMap,
+				draftLayout.getTitleMap(), draftLayout.getDescriptionMap(),
+				draftLayout.getKeywordsMap(), draftLayout.getRobotsMap(), type,
 				draftLayout.isHidden(), draftLayout.getFriendlyURLMap(),
 				!deleteLogo, iconBytes, serviceContext);
-
-			_layoutSEOEntryService.updateLayoutSEOEntry(
-				groupId, privateLayout, draftLayout.getLayoutId(),
-				canonicalURLEnabled, canonicalURLMap,
-				openGraphDescriptionEnabled, openGraphDescriptionMap,
-				openGraphImageFileEntryId, openGraphTitleEnabled,
-				openGraphTitleMap, serviceContext);
 		}
 
 		themeDisplay.clearLayoutFriendlyURL(layout);

@@ -21,7 +21,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.34"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
-	compileOnly group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.938"
+	compileOnly group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.939"
 }
 
 gradleTest {

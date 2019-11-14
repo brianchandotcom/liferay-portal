@@ -69,6 +69,10 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 						style="<%= accountUserDisplay.getStatusLabelStyle() %>"
 					/>
 				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-jsp
+					path="/account_users_admin/account_user_action.jsp"
+				/>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator

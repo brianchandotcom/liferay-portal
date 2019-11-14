@@ -17,7 +17,6 @@ package com.liferay.change.tracking.internal;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.change.tracking.sql.CTSQLContextFactory;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
@@ -106,32 +105,14 @@ public class CTSQLContextFactoryImpl implements CTSQLContextFactory {
 		wrappedSession.doWork(
 			connection -> {
 				for (String[] columnNames : uniqueIndexColumnNames) {
-					StringBundler sb = new StringBundler(
-						4 * columnNames.length + 13);
-
-					sb.append("select ct1.");
-					sb.append(primaryColumnName);
-					sb.append(" from ");
-					sb.append(tableName);
-					sb.append(" ct1 inner join ");
-					sb.append(tableName);
-					sb.append(" ct2 on ct1.");
-					sb.append(primaryColumnName);
-					sb.append(" != ct2.");
-					sb.append(primaryColumnName);
-					sb.append(" and ct1.ctCollectionId = 0 and ");
-					sb.append("ct2.ctCollectionId = ");
-					sb.append(ctCollectionId);
-
-					for (String column : columnNames) {
-						sb.append(" and ct1.");
-						sb.append(column);
-						sb.append(" = ct2.");
-						sb.append(column);
-					}
+					String findConflictsSQL =
+						CTRowUtil.getConstraintConflictsSQL(
+							tableName, primaryColumnName, columnNames,
+							ctCollectionId,
+							CTConstants.CT_COLLECTION_ID_PRODUCTION, false);
 
 					try (PreparedStatement ps = connection.prepareStatement(
-							sb.toString());
+							findConflictsSQL);
 						ResultSet rs = ps.executeQuery()) {
 
 						while (rs.next()) {

@@ -123,6 +123,47 @@ public class CTRowUtil {
 		}
 	}
 
+	public static String getConstraintConflictsSQL(
+		String tableName, String primaryColumnName,
+		String[] uniqueIndexColumnNames, long sourceCTCollectionId,
+		long targetCTCollectionId, boolean includeSourceCTPrimaryKey) {
+
+		StringBundler sb = new StringBundler(
+			4 * uniqueIndexColumnNames.length + 17);
+
+		sb.append("select ");
+
+		if (includeSourceCTPrimaryKey) {
+			sb.append("sourceTable.");
+			sb.append(primaryColumnName);
+			sb.append(" as sourcePK, ");
+		}
+
+		sb.append("targetTable.");
+		sb.append(primaryColumnName);
+		sb.append(" as targetPK from ");
+		sb.append(tableName);
+		sb.append(" sourceTable inner join ");
+		sb.append(tableName);
+		sb.append(" targetTable on sourceTable.");
+		sb.append(primaryColumnName);
+		sb.append(" != targetTable.");
+		sb.append(primaryColumnName);
+		sb.append(" and sourceTable.ctCollectionId = ");
+		sb.append(sourceCTCollectionId);
+		sb.append(" and targetTable.ctCollectionId = ");
+		sb.append(targetCTCollectionId);
+
+		for (String uniqueIndexColumnName : uniqueIndexColumnNames) {
+			sb.append(" and sourceTable.");
+			sb.append(uniqueIndexColumnName);
+			sb.append(" = targetTable.");
+			sb.append(uniqueIndexColumnName);
+		}
+
+		return sb.toString();
+	}
+
 	private static boolean _isPostgresBlobTable(
 		Map<String, Integer> tableColumnsMap) {
 

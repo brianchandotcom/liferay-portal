@@ -41,7 +41,7 @@ if (Validator.isNotNull(assetPublisherViewContentDisplayContext.getReturnToFullP
 
 		PortalUtil.addPortletBreadcrumbEntry(request, assetRenderer.getTitle(locale), currentURL);
 
-		if (request.getAttribute(WebKeys.PAGE_DESCRIPTION) == null) {
+		if (Validator.isNull(request.getAttribute(WebKeys.PAGE_DESCRIPTION))) {
 			String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
 
 			PortalUtil.setPageDescription(summary, request);

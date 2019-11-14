@@ -333,6 +333,12 @@ public class BatchEngineExportTaskLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.io.InputStream openContentInputStream(
+		long batchEngineExportTaskId) {
+
+		return getService().openContentInputStream(batchEngineExportTaskId);
+	}
+
 	/**
 	 * Updates the batch engine export task in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -361,6 +361,14 @@ public class BatchEngineExportTaskLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public java.io.InputStream openContentInputStream(
+		long batchEngineExportTaskId) {
+
+		return _batchEngineExportTaskLocalService.openContentInputStream(
+			batchEngineExportTaskId);
+	}
+
 	/**
 	 * Updates the batch engine export task in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

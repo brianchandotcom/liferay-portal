@@ -1544,15 +1544,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 						try (ResultSet rs2 = ps2.executeQuery()) {
 							if (rs2.next()) {
 								long companyId = rs2.getLong("companyId");
-								String xml = rs2.getString("data_");
+
+								String xml = renameInvalidDDMFormFieldNames(
+									structureId, rs2.getString("data_"));
 
 								DDMFormValues ddmFormValues = getDDMFormValues(
 									companyId, ddmForm, xml);
 
 								String content = toJSON(ddmFormValues);
-
-								content = renameInvalidDDMFormFieldNames(
-									structureId, content);
 
 								ps3.setString(1, content);
 

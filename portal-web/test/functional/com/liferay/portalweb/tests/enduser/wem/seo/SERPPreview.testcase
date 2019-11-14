@@ -1,0 +1,121 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "SEO";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@description = "This test ensures that a SERP preview is shown correctly based on the meta tags. "
+	@priority = "5"
+	test Smoke {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		Navigator.gotoEditPageViaControlMenu(pageName = "Test Page");
+
+		Navigator.gotoSEOPanel();
+
+		AssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_SERP");
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "Page HTML Title");
+
+		PortletEntry.inputTextArea(
+			fieldId = "GroupPagesPortlet_description",
+			text = "Page Description");
+
+		Page.viewPreview(
+			description = "Page Description",
+			htmlTitle = "Page HTML Title - ${siteName}",
+			pageName = "Test Page",
+			portalURL = "${portalURL}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Navigator.gotoEditPageViaControlMenu(pageName = "Test Page");
+
+		Navigator.gotoSEOPanel();
+
+		Page.viewPreview(
+			description = "Page Description",
+			htmlTitle = "Page HTML Title - ${siteName}",
+			pageName = "Test Page",
+			portalURL = "${portalURL}");
+	}
+
+	@description = "This test ensures that the inputs shown in the preview are cut at limit length and ellipses show that it is longer. "
+	@priority = "5"
+	test ValidateLongInputs {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview");
+
+		Navigator.gotoPage(pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview");
+
+		Navigator.gotoEditPageViaControlMenu(pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview");
+
+		Navigator.gotoSEOPanel();
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "Liferay Portal provides an excellent platform for building web applications");
+
+		PortletEntry.inputTextArea(
+			fieldId = "GroupPagesPortlet_description",
+			text = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications");
+
+		Page.viewPreview(
+			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
+			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - ${siteName}",
+			pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
+			portalURL = "${portalURL}",
+			truncateHtmlTitle = "true",
+			truncateURL = "true");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Navigator.gotoEditPageViaControlMenu(pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview");
+
+		Navigator.gotoSEOPanel();
+
+		Page.viewPreview(
+			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
+			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - ${siteName}",
+			pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
+			portalURL = "${portalURL}",
+			truncateHtmlTitle = "true",
+			truncateURL = "true");
+	}
+
+}

@@ -16,6 +16,7 @@ package com.liferay.account.internal.search.spi.model.index.contributor;
 
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -47,6 +48,8 @@ public class UserModelDocumentContributor
 	public void contribute(Document document, User user) {
 		try {
 			document.addKeyword("accountEntryIds", getAccountEntryIds(user));
+			document.addKeyword(
+				"emailAddressDomain", getEmailAddressDomain(user));
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -72,6 +75,12 @@ public class UserModelDocumentContributor
 		}
 
 		return ArrayUtil.toLongArray(accountEntryIds);
+	}
+
+	protected String getEmailAddressDomain(User user) {
+		String emailAddress = user.getEmailAddress();
+
+		return emailAddress.substring(emailAddress.indexOf(StringPool.AT) + 1);
 	}
 
 	@Reference

@@ -62,7 +62,12 @@ definition {
 				elasticsearchTasks = JSONCurlUtil.get("${curl}");
 			}
 
-			echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
+			if ("${reindexStartTime}" == "10") {
+				fail("Elasticsearch failed to receive reindex request after 10 seconds.");
+			}
+			else {
+				echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
+			}
 
 			while (contains("${elasticsearchTasks}", "indices:data/write/bulk") && ("${reindexElapsedTime}" != "120")) {
 				Pause.pauseNoSPARefresh(locator1 = "5000");

@@ -526,7 +526,7 @@
 
 			editor.once('destroy', () => {
 				if (instance._itemSelectorDialog) {
-					instance._itemSelectorDialog.destroy();
+					instance._itemSelectorDialog.dispose();
 				}
 			});
 		}

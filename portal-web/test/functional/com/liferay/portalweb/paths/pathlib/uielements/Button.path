@@ -460,7 +460,7 @@
 </tr>
 <tr>
 	<td>PROPAGATE</td>
-	<td>//button[contains(@data-title,'Propagate')]</td>
+	<td>//button[contains(@title,'Propagate')]</td>
 	<td></td>
 </tr>
 <tr>

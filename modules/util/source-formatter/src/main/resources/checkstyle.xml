@@ -128,6 +128,9 @@
 			<message key="concat.avoid.too.many" value="Use StringBundler instead of chaining concat when there is more than 3 parts" />
 			<message key="response.unsorted" value="Method calls between ''Response.status'' and ''Response.build'' should be sorted" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.AttributeOrderCheck">
+			<message key="attribute.incorrect.order" value="Attribute ''{0}'' should come after attribute ''{1}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ConcatCheck">
 			<message key="end.character.invalid" value="When concatenating multiple literal strings, only the last literal string can end with ''{0}''" />
 			<message key="literal.string.combine" value="Combine the literal strings ''{0}'' and ''{1}''" />

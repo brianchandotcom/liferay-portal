@@ -43,8 +43,12 @@ import com.liferay.gradle.util.Validator;
 import groovy.lang.Closure;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 
 import java.lang.reflect.Method;
+
+import java.nio.file.Files;
 
 import java.util.Map;
 import java.util.Objects;
@@ -1028,6 +1032,34 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		Logger logger = project.getLogger();
 
+		Project rootProject = project.getRootProject();
+
+		String gitId = GitUtil.getGitResult(
+			project, rootProject.getProjectDir(), "rev-parse", "--short",
+			"HEAD");
+
+		File gitResultsDir = new File(
+			rootProject.getBuildDir(), "releng/git-results/" + gitId);
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(artifactProjectDir.getName());
+		sb.append('-');
+		sb.append(artifactGitId);
+		sb.append('-');
+
+		File file = new File(gitResultsDir, sb.toString() + "true");
+
+		if (file.exists()) {
+			return true;
+		}
+
+		file = new File(gitResultsDir, sb.toString() + "false");
+
+		if (file.exists()) {
+			return false;
+		}
+
 		String result = GitUtil.getGitResult(
 			project, artifactProjectDir, "log", "--format=%s",
 			artifactGitId + "..HEAD", ".");
@@ -1044,11 +1076,33 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			}
 
 			if (!line.contains(_IGNORED_MESSAGE_PATTERN)) {
-				return true;
+				try {
+					Files.createDirectories(gitResultsDir.toPath());
+
+					file = new File(gitResultsDir, sb.toString() + "true");
+
+					file.createNewFile();
+
+					return true;
+				}
+				catch (IOException ioe) {
+					throw new UncheckedIOException(ioe);
+				}
 			}
 		}
 
-		return false;
+		try {
+			Files.createDirectories(gitResultsDir.toPath());
+
+			file = new File(gitResultsDir, sb.toString() + "false");
+
+			file.createNewFile();
+
+			return false;
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
 	}
 
 	private boolean _isStaleProjectDependency(

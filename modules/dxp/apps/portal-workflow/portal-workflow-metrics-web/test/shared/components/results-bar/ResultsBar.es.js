@@ -9,52 +9,82 @@
  * distribution rights of the Software.
  */
 
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
-import renderer from 'react-test-renderer';
 
 import ResultsBar from '../../../../src/main/resources/META-INF/resources/js/shared/components/results-bar/ResultsBar.es';
 import {MockRouter as Router} from '../../../mock/MockRouter.es';
 
-test('Should render component with one item', () => {
-	const component = renderer.create(
-		<Router>
-			<ResultsBar>
-				<>
+describe('The ResultsBar component should', () => {
+	const mockProps = {
+		page: 1,
+		pageSize: 1,
+		sort: encodeURIComponent('overdueTaskCount:asc')
+	};
+
+	const mockQuery = '?filters.taskKeys[0]=review&filters.taskKeys[1]=update';
+
+	afterEach(cleanup);
+
+	test('Render with search value "test" and total count "1"', () => {
+		const {getByTestId} = render(
+			<Router>
+				<ResultsBar>
 					<ResultsBar.TotalCount search={'test'} totalCount={1} />
 
-					<ResultsBar.Clear
-						page={1}
-						pageSize={5}
-						sort={encodeURIComponent('title:asc')}
+					<ResultsBar.Clear {...mockProps} />
+				</ResultsBar>
+			</Router>
+		);
+
+		const clearAll = getByTestId('clearAll');
+
+		const totalCount = getByTestId('totalCount');
+		expect(totalCount.innerHTML).toBe('x-result-for-x');
+		expect(clearAll.getAttribute('href')).toBe('/?backPath=%2F&filters=');
+	});
+
+	test('Render with search value "test" and with 2 selected filter item', async () => {
+		const mockFilters = [
+			{
+				items: [
+					{active: true, key: 'review', name: 'Review'},
+					{active: true, key: 'update', name: 'Update'}
+				],
+				key: 'taskKeys',
+				name: 'Process Step',
+				pinned: false
+			}
+		];
+
+		const {getAllByTestId, getByTestId} = render(
+			<Router query={mockQuery}>
+				<ResultsBar>
+					<ResultsBar.TotalCount totalCount={2} />
+
+					<ResultsBar.FilterItems
+						filters={mockFilters}
+						{...mockProps}
 					/>
-				</>
-			</ResultsBar>
-		</Router>
-	);
 
-	const tree = component.toJSON();
+					<ResultsBar.Clear {...mockProps} />
+				</ResultsBar>
+			</Router>
+		);
 
-	expect(tree).toMatchSnapshot();
-});
+		const removeFilter = getAllByTestId('removeFilter');
+		const totalCount = getByTestId('totalCount');
 
-test('Should render component with one list item', () => {
-	const component = renderer.create(
-		<Router>
-			<ResultsBar>
-				<>
-					<ResultsBar.TotalCount search={'test'} totalCount={5} />
+		expect(removeFilter.length).toBe(2);
 
-					<ResultsBar.Clear
-						page={1}
-						pageSize={5}
-						sort={encodeURIComponent('title:asc')}
-					/>
-				</>
-			</ResultsBar>
-		</Router>
-	);
+		expect(removeFilter[0].getAttribute('href')).toBe(
+			'/?filters.taskKeys%5B0%5D=update'
+		);
 
-	const tree = component.toJSON();
+		expect(removeFilter[1].getAttribute('href')).toBe(
+			'/?filters.taskKeys%5B0%5D=review'
+		);
 
-	expect(tree).toMatchSnapshot();
+		expect(totalCount.innerHTML).toBe('x-results-for-x');
+	});
 });

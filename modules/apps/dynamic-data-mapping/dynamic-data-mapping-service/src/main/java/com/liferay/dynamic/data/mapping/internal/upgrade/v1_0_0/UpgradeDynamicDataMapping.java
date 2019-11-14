@@ -387,9 +387,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 						}
 					}
 
-					_ddmForms.put(structureId, ddmForm);
+					DDMForm updatedDDMForm = updateDDMFormFields(ddmForm);
 
-					return ddmForm;
+					_ddmForms.put(structureId, updatedDDMForm);
+
+					return updatedDDMForm;
 				}
 			}
 
@@ -1252,8 +1254,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				// Structure content
 
 				DDMForm ddmForm = getDDMForm(structureId);
-
-				ddmForm = updateDDMFormFields(ddmForm);
 
 				populateStructureInvalidDDMFormFieldNamesMap(
 					structureId, ddmForm);

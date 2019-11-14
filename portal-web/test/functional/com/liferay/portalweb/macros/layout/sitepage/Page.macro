@@ -919,6 +919,38 @@ definition {
 		}
 	}
 
+	macro viewPreview {
+		AssertTextEquals(
+			locator1 = "SitePagesEditPage#PREVIEW_TITLE",
+			value1 = "${htmlTitle}");
+
+		var pageNameURL = StringUtil.lowerCase("${pageName}");
+
+		var pageNameURL = StringUtil.replace("${pageNameURL}", " ", "-");
+
+		var url = "${portalURL}/web/guest/${pageNameURL}";
+
+		AssertTextEquals(
+			locator1 = "SitePagesEditPage#PREVIEW_URL",
+			value1 = "${url}");
+
+		AssertTextEquals(
+			locator1 = "SitePagesEditPage#PREVIEW_DESCRIPTION",
+			value1 = "${description}");
+
+		if (isSet(truncateHtmlTitle)) {
+			ScrollWebElementIntoView(locator1 = "//h4[contains(.,'Open Graph')]");
+
+			SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_TITLE_ELLIPSES");
+		}
+
+		if (isSet(truncateURL)) {
+			ScrollWebElementIntoView(locator1 = "//h4[contains(.,'Open Graph')]");
+
+			SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_URL_ELLIPSES");
+		}
+	}
+
 	macro viewRTLLayout {
 		AssertCssValue(
 			locator1 = "Home#SITE_NAME",

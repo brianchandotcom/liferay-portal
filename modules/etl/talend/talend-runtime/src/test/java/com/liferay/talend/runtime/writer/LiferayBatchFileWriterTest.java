@@ -16,6 +16,7 @@ package com.liferay.talend.runtime.writer;
 
 import com.liferay.talend.BaseTestCase;
 import com.liferay.talend.properties.batch.LiferayBatchFileProperties;
+import com.liferay.talend.runtime.LiferayMockRuntimeContainer;
 
 import java.io.File;
 
@@ -67,10 +68,13 @@ public class LiferayBatchFileWriterTest extends BaseTestCase {
 				_testTemporaryDirectory.getAbsolutePath() + "/testOutput.jsonl",
 				entitySchema, "batchFileProperties", oasJsonObject);
 
+		LiferayMockRuntimeContainer liferayMockRuntimeContainer =
+			new LiferayMockRuntimeContainer(batchFileProperties);
+
 		LiferayBatchFileWriter liferayBatchFileWriter =
 			new LiferayBatchFileWriter(
-				new LiferayBatchFileWriteOperation(null), batchFileProperties,
-				null);
+				new LiferayBatchFileWriteOperation(null),
+				liferayMockRuntimeContainer);
 
 		liferayBatchFileWriter.open("testUid");
 

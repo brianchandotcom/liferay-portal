@@ -43,7 +43,6 @@ public class LiferayReaderTest extends BaseTestCase {
 			"/v1.0/taxonomy-vocabularies/{id}/taxonomy-categories";
 
 		LiferayReader liferayReader = new LiferayReader(
-			null,
 			new LiferayFixedResponseContentSource(
 				readObject("page_content.json")),
 			_getTLiferayInputProperties(
@@ -61,7 +60,7 @@ public class LiferayReaderTest extends BaseTestCase {
 		String endpoint = "/v1.0/page-content/{id}/taxonomy-categories";
 
 		LiferayReader liferayReader = new LiferayReader(
-			null, _getLiferayFixedResponseContentSource(),
+			_getLiferayFixedResponseContentSource(),
 			_getTLiferayInputProperties(
 				Action.Unavailable, _OAS_URL, endpoint));
 
@@ -90,7 +89,6 @@ public class LiferayReaderTest extends BaseTestCase {
 			"/v1.0/taxonomy-vocabularies/{id}/taxonomy-categories";
 
 		LiferayReader liferayReader = new LiferayReader(
-			null,
 			_getLiferayFixedResponseContentSource(
 				readObject("page_no_content.json")),
 			_getTLiferayInputProperties(
@@ -107,7 +105,6 @@ public class LiferayReaderTest extends BaseTestCase {
 			"/v1.0/taxonomy-vocabularies/{id}/taxonomy-categories";
 
 		LiferayReader liferayReader = new LiferayReader(
-			null,
 			_getLiferayFixedResponseContentSource(
 				readObject("page_content.json")),
 			_getTLiferayInputProperties(

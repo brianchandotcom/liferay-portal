@@ -19,7 +19,7 @@ package com.liferay.layout.admin.web.internal.constants;
  */
 public class LayoutScreenNavigationEntryConstants {
 
-	public static final String CATEGORY_KEY_GENERAL = "CATEGORY_KEY_GENERAL";
+	public static final String CATEGORY_KEY_GENERAL = "general";
 
 	public static final String ENTRY_KEY_GENERAL = "general";
 
@@ -27,7 +27,6 @@ public class LayoutScreenNavigationEntryConstants {
 
 	public static final String ENTRY_KEY_SEO = "seo";
 
-	public static final String SCREEN_NAVIGATION_KEY_LAYOUT =
-		"SCREEN_NAVIGATION_KEY_LAYOUT";
+	public static final String SCREEN_NAVIGATION_KEY_LAYOUT = "layout.form";
 
 }

@@ -188,6 +188,13 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return layoutPageTemplateEntry;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 *             String, int, boolean, long, long, long, int, long,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
@@ -240,6 +247,12 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			false, 0, 0, 0, status, masterLayoutPlid, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addLayoutPageTemplateEntry(long, long, long, String, int,
+	 *             int, long, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,

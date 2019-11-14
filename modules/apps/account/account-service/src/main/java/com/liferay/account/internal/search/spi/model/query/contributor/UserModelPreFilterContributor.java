@@ -52,6 +52,19 @@ public class UserModelPreFilterContributor
 
 			booleanFilter.add(accountEntryTermsFilter, BooleanClauseOccur.MUST);
 		}
+
+		String[] emailAddressDomains = (String[])searchContext.getAttribute(
+			"emailAddressDomains");
+
+		if (emailAddressDomains != null) {
+			TermsFilter emailAddressDomainTermsFilter = new TermsFilter(
+				"emailAddressDomain");
+
+			emailAddressDomainTermsFilter.addValues(emailAddressDomains);
+
+			booleanFilter.add(
+				emailAddressDomainTermsFilter, BooleanClauseOccur.MUST);
+		}
 	}
 
 }

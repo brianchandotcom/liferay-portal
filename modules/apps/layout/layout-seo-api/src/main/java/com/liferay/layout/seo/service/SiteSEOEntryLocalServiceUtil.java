@@ -190,6 +190,12 @@ public class SiteSEOEntryLocalServiceUtil {
 		return getService().fetchSiteSEOEntry(siteSEOEntryId);
 	}
 
+	public static com.liferay.layout.seo.model.SiteSEOEntry
+		fetchSiteSEOEntryByGroupId(long groupId) {
+
+		return getService().fetchSiteSEOEntryByGroupId(groupId);
+	}
+
 	/**
 	 * Returns the site seo entry matching the UUID and group.
 	 *
@@ -327,6 +333,17 @@ public class SiteSEOEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getSiteSEOEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.layout.seo.model.SiteSEOEntry updateSiteSEOEntry(
+			long userId, long groupId, long openGraphImageFileEntryId,
+			boolean openSiteGraphEnabled,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateSiteSEOEntry(
+			userId, groupId, openGraphImageFileEntryId, openSiteGraphEnabled,
+			serviceContext);
 	}
 
 	/**

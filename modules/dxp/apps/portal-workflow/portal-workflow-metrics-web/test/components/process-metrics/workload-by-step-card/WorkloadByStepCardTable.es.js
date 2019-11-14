@@ -25,7 +25,7 @@ test('Should display hyphen when the task has no count', () => {
 
 	const component = renderer.create(
 		<Router client={fetch(data)}>
-			<WorkloadByStepCardTable items={data} />
+			<WorkloadByStepCardTable items={data} processId={123456} />
 		</Router>
 	);
 

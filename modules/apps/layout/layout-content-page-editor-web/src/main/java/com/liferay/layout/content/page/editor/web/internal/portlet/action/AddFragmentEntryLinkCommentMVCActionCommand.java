@@ -95,7 +95,7 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 						themeDisplay.getUserId(),
 						themeDisplay.getScopeGroupId(),
 						FragmentEntryLink.class.getName(), fragmentEntryLinkId,
-						user.getFullName(), String.valueOf(Math.random()),
+						user.getFullName(), null,
 						ParamUtil.getString(actionRequest, "body"),
 						serviceContextFunction);
 				}
@@ -103,8 +103,7 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 					commentId = _commentManager.addComment(
 						themeDisplay.getUserId(),
 						FragmentEntryLink.class.getName(), fragmentEntryLinkId,
-						user.getFullName(), parentCommentId,
-						String.valueOf(Math.random()),
+						user.getFullName(), parentCommentId, null,
 						ParamUtil.getString(actionRequest, "body"),
 						serviceContextFunction);
 				}

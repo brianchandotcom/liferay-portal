@@ -79,8 +79,7 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 		WorkflowUtil.withoutWorkflow(
 			() -> _commentManager.updateComment(
 				themeDisplay.getUserId(), FragmentEntryLink.class.getName(),
-				comment.getClassPK(), commentId, String.valueOf(Math.random()),
-				body,
+				comment.getClassPK(), commentId, null, body,
 				CommentUtil.getServiceContextFunction(
 					actionRequest, themeDisplay)));
 

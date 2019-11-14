@@ -16,17 +16,31 @@ package com.liferay.account.internal.model.listener.test;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.test.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.RequiredRoleException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -34,11 +48,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * @author Pei-Jung Lan
+ * @author Drew Brokke
  */
 @RunWith(Arquillian.class)
 public class RoleModelListenerTest {
@@ -50,121 +61,111 @@ public class RoleModelListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_user = UserTestUtil.addUser();
+		_company = CompanyTestUtil.addCompany();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		if (_companyLocalService.fetchCompany(_company.getCompanyId()) !=
+				null) {
+
+			_companyLocalService.deleteCompany(_company);
+		}
 	}
 
 	@Test
-	public void testAddAccountEntryUserRelsForUserWithDefaultAccountEntry()
-		throws Exception {
+	public void testDeleteCompany() throws Exception {
+		List<Long> requiredRoleIds = Stream.of(
+			AccountConstants.REQUIRED_ROLE_NAMES
+		).map(
+			requiredRoleName -> _roleLocalService.fetchRole(
+				_company.getCompanyId(), requiredRoleName)
+		).map(
+			Role::getRoleId
+		).collect(
+			Collectors.toList()
+		);
 
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		_companyLocalService.deleteCompany(_company);
 
-		_accountEntries.add(accountEntry);
-
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), _user.getUserId());
-
-		_accountEntryUserRelLocalService.deleteAccountEntryUserRels(
-			accountEntry.getAccountEntryId(), new long[] {_user.getUserId()});
-
-		_assertGetAccountEntryUserRelByAccountUserId(
-			_user.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
-
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), _user.getUserId());
-
-		_assertGetAccountEntryUserRelByAccountUserId(
-			_user.getUserId(), accountEntry.getAccountEntryId());
+		for (long requiredRoleId : requiredRoleIds) {
+			Assert.assertNull(_roleLocalService.fetchRole(requiredRoleId));
+		}
 	}
 
 	@Test
-	public void testDeleteAccountEntryUserRelsForUserWithMultipleAccountEntries()
-		throws Exception {
+	public void testDeleteDefaultAccountRole() throws Exception {
+		for (String requiredRoleName : AccountConstants.REQUIRED_ROLE_NAMES) {
+			try {
+				_roleLocalService.deleteRole(
+					_roleLocalService.getRole(
+						_company.getCompanyId(), requiredRoleName));
 
-		AccountEntry accountEntry1 = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+				Assert.fail(
+					"Should not be able to delete role: " + requiredRoleName);
+			}
+			catch (ModelListenerException mle) {
+				Throwable throwable = mle.getCause();
 
-		_accountEntries.add(accountEntry1);
+				Assert.assertTrue(throwable instanceof RequiredRoleException);
 
-		AccountEntry accountEntry2 = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+				String message = throwable.getMessage();
 
-		_accountEntries.add(accountEntry2);
-
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry1.getAccountEntryId(), _user.getUserId());
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry2.getAccountEntryId(), _user.getUserId());
-
-		List<AccountEntryUserRel> userAccountEntryUserRels =
-			_accountEntryUserRelLocalService.
-				getAccountEntryUserRelsByAccountUserId(_user.getUserId());
-
-		Assert.assertEquals(
-			userAccountEntryUserRels.toString(), 2,
-			userAccountEntryUserRels.size());
-
-		_accountEntryUserRelLocalService.deleteAccountEntryUserRels(
-			accountEntry1.getAccountEntryId(), new long[] {_user.getUserId()});
-
-		_assertGetAccountEntryUserRelByAccountUserId(
-			_user.getUserId(), accountEntry2.getAccountEntryId());
+				Assert.assertTrue(
+					message.startsWith("Cannot delete default account role: "));
+				Assert.assertTrue(message.endsWith(requiredRoleName));
+			}
+		}
 	}
 
-	@Test
-	public void testDeleteAccountEntryUserRelsForUserWithSingleAccountEntry()
-		throws Exception {
+	@Test(expected = ModelListenerException.class)
+	public void testDeleteRole() throws Exception {
+		_accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService, WorkflowConstants.STATUS_APPROVED);
 
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		_accountRole = _accountRoleLocalService.addAccountRole(
+			TestPropsValues.getUserId(), _accountEntry.getAccountEntryId(),
+			RandomTestUtil.randomString(), null, null);
 
-		_accountEntries.add(accountEntry);
+		try {
+			_roleLocalService.deleteRole(_accountRole.getRoleId());
 
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), _user.getUserId());
+			Assert.fail(
+				"Should not be able to directly delete a role associated " +
+					"with an AccountRole");
+		}
+		catch (ModelListenerException mle) {
+			Throwable throwable = mle.getCause();
 
-		List<AccountEntryUserRel> userAccountEntryUserRels =
-			_accountEntryUserRelLocalService.
-				getAccountEntryUserRelsByAccountUserId(_user.getUserId());
+			Assert.assertTrue(throwable instanceof RequiredRoleException);
 
-		Assert.assertEquals(
-			userAccountEntryUserRels.toString(), 1,
-			userAccountEntryUserRels.size());
+			String message = throwable.getMessage();
 
-		_accountEntryUserRelLocalService.deleteAccountEntryUserRels(
-			accountEntry.getAccountEntryId(), new long[] {_user.getUserId()});
+			Assert.assertTrue(
+				message.contains("is required by an AccountRole"));
 
-		_assertGetAccountEntryUserRelByAccountUserId(
-			_user.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
-	}
-
-	private void _assertGetAccountEntryUserRelByAccountUserId(
-		long accountUserId, long expectedAccountEntryId) {
-
-		List<AccountEntryUserRel> accountEntryUserRels =
-			_accountEntryUserRelLocalService.
-				getAccountEntryUserRelsByAccountUserId(accountUserId);
-
-		Assert.assertEquals(
-			accountEntryUserRels.toString(), 1, accountEntryUserRels.size());
-
-		AccountEntryUserRel accountEntryUserRel = accountEntryUserRels.get(0);
-
-		Assert.assertEquals(
-			expectedAccountEntryId, accountEntryUserRel.getAccountEntryId());
+			throw mle;
+		}
 	}
 
 	@DeleteAfterTestRun
-	private final List<AccountEntry> _accountEntries = new ArrayList<>();
+	private AccountEntry _accountEntry;
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
-	@Inject
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
-
 	@DeleteAfterTestRun
-	private User _user;
+	private AccountRole _accountRole;
+
+	@Inject
+	private AccountRoleLocalService _accountRoleLocalService;
+
+	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

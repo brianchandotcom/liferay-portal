@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchVersionedEntryVersionException;
 import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion;
@@ -38,10 +38,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1899,6 +1895,11 @@ public class VersionedEntryVersionPersistenceImpl
 
 	public VersionedEntryVersionPersistenceImpl() {
 		setModelClass(VersionedEntryVersion.class);
+
+		setModelImplClass(VersionedEntryVersionImpl.class);
+		setModelPKClass(long.class);
+		setEntityCacheEnabled(
+			VersionedEntryVersionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2004,6 +2005,7 @@ public class VersionedEntryVersionPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2381,58 +2383,6 @@ public class VersionedEntryVersionPersistenceImpl
 	/**
 	 * Returns the versioned entry version with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the versioned entry version
-	 * @return the versioned entry version, or <code>null</code> if a versioned entry version with the primary key could not be found
-	 */
-	@Override
-	public VersionedEntryVersion fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			VersionedEntryVersionModelImpl.ENTITY_CACHE_ENABLED,
-			VersionedEntryVersionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		VersionedEntryVersion versionedEntryVersion =
-			(VersionedEntryVersion)serializable;
-
-		if (versionedEntryVersion == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				versionedEntryVersion = (VersionedEntryVersion)session.get(
-					VersionedEntryVersionImpl.class, primaryKey);
-
-				if (versionedEntryVersion != null) {
-					cacheResult(versionedEntryVersion);
-				}
-				else {
-					entityCache.putResult(
-						VersionedEntryVersionModelImpl.ENTITY_CACHE_ENABLED,
-						VersionedEntryVersionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(
-					VersionedEntryVersionModelImpl.ENTITY_CACHE_ENABLED,
-					VersionedEntryVersionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return versionedEntryVersion;
-	}
-
-	/**
-	 * Returns the versioned entry version with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param versionedEntryVersionId the primary key of the versioned entry version
 	 * @return the versioned entry version, or <code>null</code> if a versioned entry version with the primary key could not be found
 	 */
@@ -2441,110 +2391,6 @@ public class VersionedEntryVersionPersistenceImpl
 		long versionedEntryVersionId) {
 
 		return fetchByPrimaryKey((Serializable)versionedEntryVersionId);
-	}
-
-	@Override
-	public Map<Serializable, VersionedEntryVersion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, VersionedEntryVersion> map =
-			new HashMap<Serializable, VersionedEntryVersion>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			VersionedEntryVersion versionedEntryVersion = fetchByPrimaryKey(
-				primaryKey);
-
-			if (versionedEntryVersion != null) {
-				map.put(primaryKey, versionedEntryVersion);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				VersionedEntryVersionModelImpl.ENTITY_CACHE_ENABLED,
-				VersionedEntryVersionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (VersionedEntryVersion)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		query.append(_SQL_SELECT_VERSIONEDENTRYVERSION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (VersionedEntryVersion versionedEntryVersion :
-					(List<VersionedEntryVersion>)q.list()) {
-
-				map.put(
-					versionedEntryVersion.getPrimaryKeyObj(),
-					versionedEntryVersion);
-
-				cacheResult(versionedEntryVersion);
-
-				uncachedPrimaryKeys.remove(
-					versionedEntryVersion.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					VersionedEntryVersionModelImpl.ENTITY_CACHE_ENABLED,
-					VersionedEntryVersionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2736,6 +2582,21 @@ public class VersionedEntryVersionPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "versionedEntryVersionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_VERSIONEDENTRYVERSION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return VersionedEntryVersionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2871,9 +2732,6 @@ public class VersionedEntryVersionPersistenceImpl
 
 	private static final String _SQL_SELECT_VERSIONEDENTRYVERSION =
 		"SELECT versionedEntryVersion FROM VersionedEntryVersion versionedEntryVersion";
-
-	private static final String _SQL_SELECT_VERSIONEDENTRYVERSION_WHERE_PKS_IN =
-		"SELECT versionedEntryVersion FROM VersionedEntryVersion versionedEntryVersion WHERE versionedEntryVersionId IN (";
 
 	private static final String _SQL_SELECT_VERSIONEDENTRYVERSION_WHERE =
 		"SELECT versionedEntryVersion FROM VersionedEntryVersion versionedEntryVersion WHERE ";

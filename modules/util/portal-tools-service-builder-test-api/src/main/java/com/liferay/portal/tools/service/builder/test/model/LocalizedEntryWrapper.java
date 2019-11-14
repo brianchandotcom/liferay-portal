@@ -14,15 +14,11 @@
 
 package com.liferay.portal.tools.service.builder.test.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -34,20 +30,11 @@ import java.util.Objects;
  * @generated
  */
 public class LocalizedEntryWrapper
+	extends BaseModelWrapper<LocalizedEntry>
 	implements LocalizedEntry, ModelWrapper<LocalizedEntry> {
 
 	public LocalizedEntryWrapper(LocalizedEntry localizedEntry) {
-		_localizedEntry = localizedEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return LocalizedEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return LocalizedEntry.class.getName();
+		super(localizedEntry);
 	}
 
 	@Override
@@ -76,39 +63,28 @@ public class LocalizedEntryWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new LocalizedEntryWrapper(
-			(LocalizedEntry)_localizedEntry.clone());
-	}
-
-	@Override
-	public int compareTo(LocalizedEntry localizedEntry) {
-		return _localizedEntry.compareTo(localizedEntry);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _localizedEntry.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	@Override
 	public String getContent() {
-		return _localizedEntry.getContent();
+		return model.getContent();
 	}
 
 	@Override
 	public String getContent(String languageId) {
-		return _localizedEntry.getContent(languageId);
+		return model.getContent(languageId);
 	}
 
 	@Override
 	public String getContent(String languageId, boolean useDefault) {
-		return _localizedEntry.getContent(languageId, useDefault);
+		return model.getContent(languageId, useDefault);
 	}
 
 	@Override
 	public String getContentMapAsXML() {
-		return _localizedEntry.getContentMapAsXML();
+		return model.getContentMapAsXML();
 	}
 
 	/**
@@ -118,22 +94,17 @@ public class LocalizedEntryWrapper
 	 */
 	@Override
 	public String getDefaultLanguageId() {
-		return _localizedEntry.getDefaultLanguageId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _localizedEntry.getExpandoBridge();
+		return model.getDefaultLanguageId();
 	}
 
 	@Override
 	public Map<String, String> getLanguageIdToContentMap() {
-		return _localizedEntry.getLanguageIdToContentMap();
+		return model.getLanguageIdToContentMap();
 	}
 
 	@Override
 	public Map<String, String> getLanguageIdToTitleMap() {
-		return _localizedEntry.getLanguageIdToTitleMap();
+		return model.getLanguageIdToTitleMap();
 	}
 
 	/**
@@ -143,7 +114,7 @@ public class LocalizedEntryWrapper
 	 */
 	@Override
 	public long getLocalizedEntryId() {
-		return _localizedEntry.getLocalizedEntryId();
+		return model.getLocalizedEntryId();
 	}
 
 	/**
@@ -153,52 +124,27 @@ public class LocalizedEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _localizedEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _localizedEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public String getTitle() {
-		return _localizedEntry.getTitle();
+		return model.getTitle();
 	}
 
 	@Override
 	public String getTitle(String languageId) {
-		return _localizedEntry.getTitle(languageId);
+		return model.getTitle(languageId);
 	}
 
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return _localizedEntry.getTitle(languageId, useDefault);
+		return model.getTitle(languageId, useDefault);
 	}
 
 	@Override
 	public String getTitleMapAsXML() {
-		return _localizedEntry.getTitleMapAsXML();
-	}
-
-	@Override
-	public int hashCode() {
-		return _localizedEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _localizedEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _localizedEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _localizedEntry.isNew();
+		return model.getTitleMapAsXML();
 	}
 
 	/**
@@ -208,12 +154,7 @@ public class LocalizedEntryWrapper
 	 */
 	@Override
 	public void persist() {
-		_localizedEntry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_localizedEntry.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -223,24 +164,7 @@ public class LocalizedEntryWrapper
 	 */
 	@Override
 	public void setDefaultLanguageId(String defaultLanguageId) {
-		_localizedEntry.setDefaultLanguageId(defaultLanguageId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_localizedEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_localizedEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_localizedEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setDefaultLanguageId(defaultLanguageId);
 	}
 
 	/**
@@ -250,12 +174,7 @@ public class LocalizedEntryWrapper
 	 */
 	@Override
 	public void setLocalizedEntryId(long localizedEntryId) {
-		_localizedEntry.setLocalizedEntryId(localizedEntryId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_localizedEntry.setNew(n);
+		model.setLocalizedEntryId(localizedEntryId);
 	}
 
 	/**
@@ -265,83 +184,12 @@ public class LocalizedEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_localizedEntry.setPrimaryKey(primaryKey);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_localizedEntry.setPrimaryKeyObj(primaryKeyObj);
+	protected LocalizedEntryWrapper wrap(LocalizedEntry localizedEntry) {
+		return new LocalizedEntryWrapper(localizedEntry);
 	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<LocalizedEntry>
-		toCacheModel() {
-
-		return _localizedEntry.toCacheModel();
-	}
-
-	@Override
-	public LocalizedEntry toEscapedModel() {
-		return new LocalizedEntryWrapper(_localizedEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _localizedEntry.toString();
-	}
-
-	@Override
-	public LocalizedEntry toUnescapedModel() {
-		return new LocalizedEntryWrapper(_localizedEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _localizedEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof LocalizedEntryWrapper)) {
-			return false;
-		}
-
-		LocalizedEntryWrapper localizedEntryWrapper =
-			(LocalizedEntryWrapper)obj;
-
-		if (Objects.equals(
-				_localizedEntry, localizedEntryWrapper._localizedEntry)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public LocalizedEntry getWrappedModel() {
-		return _localizedEntry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _localizedEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _localizedEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_localizedEntry.resetOriginalValues();
-	}
-
-	private final LocalizedEntry _localizedEntry;
 
 }

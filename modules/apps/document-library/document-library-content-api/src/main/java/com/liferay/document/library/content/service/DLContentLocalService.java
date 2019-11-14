@@ -69,7 +69,7 @@ public interface DLContentLocalService
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addContent(long, long, String, String, InputStream))}
+	 #addContent(long, long, String, String, InputStream)}
 	 */
 	@Deprecated
 	public DLContent addContent(
@@ -82,7 +82,7 @@ public interface DLContentLocalService
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addContent(long, long, String, String, InputStream))}
+	 #addContent(long, long, String, String, InputStream)}
 	 */
 	@Deprecated
 	public DLContent addContent(

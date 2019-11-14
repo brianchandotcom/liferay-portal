@@ -14,17 +14,13 @@
 
 package com.liferay.portal.tools.service.builder.test.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.sql.Blob;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,20 +32,11 @@ import java.util.Objects;
  * @generated
  */
 public class EagerBlobEntityWrapper
+	extends BaseModelWrapper<EagerBlobEntity>
 	implements EagerBlobEntity, ModelWrapper<EagerBlobEntity> {
 
 	public EagerBlobEntityWrapper(EagerBlobEntity eagerBlobEntity) {
-		_eagerBlobEntity = eagerBlobEntity;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return EagerBlobEntity.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return EagerBlobEntity.class.getName();
+		super(eagerBlobEntity);
 	}
 
 	@Override
@@ -91,17 +78,6 @@ public class EagerBlobEntityWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new EagerBlobEntityWrapper(
-			(EagerBlobEntity)_eagerBlobEntity.clone());
-	}
-
-	@Override
-	public int compareTo(EagerBlobEntity eagerBlobEntity) {
-		return _eagerBlobEntity.compareTo(eagerBlobEntity);
-	}
-
 	/**
 	 * Returns the blob of this eager blob entity.
 	 *
@@ -109,7 +85,7 @@ public class EagerBlobEntityWrapper
 	 */
 	@Override
 	public Blob getBlob() {
-		return _eagerBlobEntity.getBlob();
+		return model.getBlob();
 	}
 
 	/**
@@ -119,12 +95,7 @@ public class EagerBlobEntityWrapper
 	 */
 	@Override
 	public long getEagerBlobEntityId() {
-		return _eagerBlobEntity.getEagerBlobEntityId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _eagerBlobEntity.getExpandoBridge();
+		return model.getEagerBlobEntityId();
 	}
 
 	/**
@@ -134,7 +105,7 @@ public class EagerBlobEntityWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _eagerBlobEntity.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -144,12 +115,7 @@ public class EagerBlobEntityWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _eagerBlobEntity.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _eagerBlobEntity.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -159,27 +125,7 @@ public class EagerBlobEntityWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _eagerBlobEntity.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _eagerBlobEntity.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _eagerBlobEntity.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _eagerBlobEntity.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _eagerBlobEntity.isNew();
+		return model.getUuid();
 	}
 
 	/**
@@ -189,7 +135,7 @@ public class EagerBlobEntityWrapper
 	 */
 	@Override
 	public void persist() {
-		_eagerBlobEntity.persist();
+		model.persist();
 	}
 
 	/**
@@ -199,12 +145,7 @@ public class EagerBlobEntityWrapper
 	 */
 	@Override
 	public void setBlob(Blob blob) {
-		_eagerBlobEntity.setBlob(blob);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_eagerBlobEntity.setCachedModel(cachedModel);
+		model.setBlob(blob);
 	}
 
 	/**
@@ -214,24 +155,7 @@ public class EagerBlobEntityWrapper
 	 */
 	@Override
 	public void setEagerBlobEntityId(long eagerBlobEntityId) {
-		_eagerBlobEntity.setEagerBlobEntityId(eagerBlobEntityId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_eagerBlobEntity.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_eagerBlobEntity.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_eagerBlobEntity.setExpandoBridgeAttributes(serviceContext);
+		model.setEagerBlobEntityId(eagerBlobEntityId);
 	}
 
 	/**
@@ -241,12 +165,7 @@ public class EagerBlobEntityWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_eagerBlobEntity.setGroupId(groupId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_eagerBlobEntity.setNew(n);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -256,12 +175,7 @@ public class EagerBlobEntityWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_eagerBlobEntity.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_eagerBlobEntity.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -271,78 +185,12 @@ public class EagerBlobEntityWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_eagerBlobEntity.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<EagerBlobEntity>
-		toCacheModel() {
-
-		return _eagerBlobEntity.toCacheModel();
+	protected EagerBlobEntityWrapper wrap(EagerBlobEntity eagerBlobEntity) {
+		return new EagerBlobEntityWrapper(eagerBlobEntity);
 	}
-
-	@Override
-	public EagerBlobEntity toEscapedModel() {
-		return new EagerBlobEntityWrapper(_eagerBlobEntity.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _eagerBlobEntity.toString();
-	}
-
-	@Override
-	public EagerBlobEntity toUnescapedModel() {
-		return new EagerBlobEntityWrapper(_eagerBlobEntity.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _eagerBlobEntity.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof EagerBlobEntityWrapper)) {
-			return false;
-		}
-
-		EagerBlobEntityWrapper eagerBlobEntityWrapper =
-			(EagerBlobEntityWrapper)obj;
-
-		if (Objects.equals(
-				_eagerBlobEntity, eagerBlobEntityWrapper._eagerBlobEntity)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public EagerBlobEntity getWrappedModel() {
-		return _eagerBlobEntity;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _eagerBlobEntity.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _eagerBlobEntity.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_eagerBlobEntity.resetOriginalValues();
-	}
-
-	private final EagerBlobEntity _eagerBlobEntity;
 
 }

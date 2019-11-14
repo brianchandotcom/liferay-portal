@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationVersionException;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersion;
@@ -39,10 +39,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2841,6 +2837,11 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 	public LVEntryLocalizationVersionPersistenceImpl() {
 		setModelClass(LVEntryLocalizationVersion.class);
+
+		setModelImplClass(LVEntryLocalizationVersionImpl.class);
+		setModelPKClass(long.class);
+		setEntityCacheEnabled(
+			LVEntryLocalizationVersionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2964,6 +2965,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -3437,63 +3439,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	/**
 	 * Returns the lv entry localization version with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the lv entry localization version
-	 * @return the lv entry localization version, or <code>null</code> if a lv entry localization version with the primary key could not be found
-	 */
-	@Override
-	public LVEntryLocalizationVersion fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		Serializable serializable = entityCache.getResult(
-			LVEntryLocalizationVersionModelImpl.ENTITY_CACHE_ENABLED,
-			LVEntryLocalizationVersionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		LVEntryLocalizationVersion lvEntryLocalizationVersion =
-			(LVEntryLocalizationVersion)serializable;
-
-		if (lvEntryLocalizationVersion == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				lvEntryLocalizationVersion =
-					(LVEntryLocalizationVersion)session.get(
-						LVEntryLocalizationVersionImpl.class, primaryKey);
-
-				if (lvEntryLocalizationVersion != null) {
-					cacheResult(lvEntryLocalizationVersion);
-				}
-				else {
-					entityCache.putResult(
-						LVEntryLocalizationVersionModelImpl.
-							ENTITY_CACHE_ENABLED,
-						LVEntryLocalizationVersionImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(
-					LVEntryLocalizationVersionModelImpl.ENTITY_CACHE_ENABLED,
-					LVEntryLocalizationVersionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return lvEntryLocalizationVersion;
-	}
-
-	/**
-	 * Returns the lv entry localization version with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param lvEntryLocalizationVersionId the primary key of the lv entry localization version
 	 * @return the lv entry localization version, or <code>null</code> if a lv entry localization version with the primary key could not be found
 	 */
@@ -3502,112 +3447,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		long lvEntryLocalizationVersionId) {
 
 		return fetchByPrimaryKey((Serializable)lvEntryLocalizationVersionId);
-	}
-
-	@Override
-	public Map<Serializable, LVEntryLocalizationVersion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, LVEntryLocalizationVersion> map =
-			new HashMap<Serializable, LVEntryLocalizationVersion>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			LVEntryLocalizationVersion lvEntryLocalizationVersion =
-				fetchByPrimaryKey(primaryKey);
-
-			if (lvEntryLocalizationVersion != null) {
-				map.put(primaryKey, lvEntryLocalizationVersion);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				LVEntryLocalizationVersionModelImpl.ENTITY_CACHE_ENABLED,
-				LVEntryLocalizationVersionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(
-						primaryKey, (LVEntryLocalizationVersion)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		query.append(_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (LVEntryLocalizationVersion lvEntryLocalizationVersion :
-					(List<LVEntryLocalizationVersion>)q.list()) {
-
-				map.put(
-					lvEntryLocalizationVersion.getPrimaryKeyObj(),
-					lvEntryLocalizationVersion);
-
-				cacheResult(lvEntryLocalizationVersion);
-
-				uncachedPrimaryKeys.remove(
-					lvEntryLocalizationVersion.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					LVEntryLocalizationVersionModelImpl.ENTITY_CACHE_ENABLED,
-					LVEntryLocalizationVersionImpl.class, primaryKey,
-					nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -3800,6 +3639,21 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "lvEntryLocalizationVersionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_LVENTRYLOCALIZATIONVERSION;
 	}
 
 	@Override
@@ -3999,10 +3853,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 	private static final String _SQL_SELECT_LVENTRYLOCALIZATIONVERSION =
 		"SELECT lvEntryLocalizationVersion FROM LVEntryLocalizationVersion lvEntryLocalizationVersion";
-
-	private static final String
-		_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE_PKS_IN =
-			"SELECT lvEntryLocalizationVersion FROM LVEntryLocalizationVersion lvEntryLocalizationVersion WHERE lvEntryLocalizationVersionId IN (";
 
 	private static final String _SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE =
 		"SELECT lvEntryLocalizationVersion FROM LVEntryLocalizationVersion lvEntryLocalizationVersion WHERE ";

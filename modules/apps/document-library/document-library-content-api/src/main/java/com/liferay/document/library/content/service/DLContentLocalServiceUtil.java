@@ -40,7 +40,7 @@ public class DLContentLocalServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addContent(long, long, String, String, InputStream))}
+	 #addContent(long, long, String, String, InputStream)}
 	 */
 	@Deprecated
 	public static com.liferay.document.library.content.model.DLContent
@@ -63,7 +63,7 @@ public class DLContentLocalServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addContent(long, long, String, String, InputStream))}
+	 #addContent(long, long, String, String, InputStream)}
 	 */
 	@Deprecated
 	public static com.liferay.document.library.content.model.DLContent

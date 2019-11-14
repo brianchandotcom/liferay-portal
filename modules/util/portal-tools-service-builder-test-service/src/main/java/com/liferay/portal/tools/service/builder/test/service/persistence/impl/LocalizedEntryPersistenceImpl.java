@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLocalizedEntryException;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntry;
@@ -34,10 +34,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.Localiz
 
 import java.io.Serializable;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -76,6 +72,10 @@ public class LocalizedEntryPersistenceImpl
 
 	public LocalizedEntryPersistenceImpl() {
 		setModelClass(LocalizedEntry.class);
+
+		setModelImplClass(LocalizedEntryImpl.class);
+		setModelPKClass(long.class);
+		setEntityCacheEnabled(LocalizedEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -159,6 +159,7 @@ public class LocalizedEntryPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -358,163 +359,12 @@ public class LocalizedEntryPersistenceImpl
 	/**
 	 * Returns the localized entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the localized entry
-	 * @return the localized entry, or <code>null</code> if a localized entry with the primary key could not be found
-	 */
-	@Override
-	public LocalizedEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			LocalizedEntryModelImpl.ENTITY_CACHE_ENABLED,
-			LocalizedEntryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		LocalizedEntry localizedEntry = (LocalizedEntry)serializable;
-
-		if (localizedEntry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				localizedEntry = (LocalizedEntry)session.get(
-					LocalizedEntryImpl.class, primaryKey);
-
-				if (localizedEntry != null) {
-					cacheResult(localizedEntry);
-				}
-				else {
-					entityCache.putResult(
-						LocalizedEntryModelImpl.ENTITY_CACHE_ENABLED,
-						LocalizedEntryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(
-					LocalizedEntryModelImpl.ENTITY_CACHE_ENABLED,
-					LocalizedEntryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return localizedEntry;
-	}
-
-	/**
-	 * Returns the localized entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param localizedEntryId the primary key of the localized entry
 	 * @return the localized entry, or <code>null</code> if a localized entry with the primary key could not be found
 	 */
 	@Override
 	public LocalizedEntry fetchByPrimaryKey(long localizedEntryId) {
 		return fetchByPrimaryKey((Serializable)localizedEntryId);
-	}
-
-	@Override
-	public Map<Serializable, LocalizedEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, LocalizedEntry> map =
-			new HashMap<Serializable, LocalizedEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			LocalizedEntry localizedEntry = fetchByPrimaryKey(primaryKey);
-
-			if (localizedEntry != null) {
-				map.put(primaryKey, localizedEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				LocalizedEntryModelImpl.ENTITY_CACHE_ENABLED,
-				LocalizedEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (LocalizedEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		query.append(_SQL_SELECT_LOCALIZEDENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (LocalizedEntry localizedEntry :
-					(List<LocalizedEntry>)q.list()) {
-
-				map.put(localizedEntry.getPrimaryKeyObj(), localizedEntry);
-
-				cacheResult(localizedEntry);
-
-				uncachedPrimaryKeys.remove(localizedEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					LocalizedEntryModelImpl.ENTITY_CACHE_ENABLED,
-					LocalizedEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -705,6 +555,21 @@ public class LocalizedEntryPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "localizedEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_LOCALIZEDENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return LocalizedEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -747,9 +612,6 @@ public class LocalizedEntryPersistenceImpl
 
 	private static final String _SQL_SELECT_LOCALIZEDENTRY =
 		"SELECT localizedEntry FROM LocalizedEntry localizedEntry";
-
-	private static final String _SQL_SELECT_LOCALIZEDENTRY_WHERE_PKS_IN =
-		"SELECT localizedEntry FROM LocalizedEntry localizedEntry WHERE localizedEntryId IN (";
 
 	private static final String _SQL_COUNT_LOCALIZEDENTRY =
 		"SELECT COUNT(localizedEntry) FROM LocalizedEntry localizedEntry";

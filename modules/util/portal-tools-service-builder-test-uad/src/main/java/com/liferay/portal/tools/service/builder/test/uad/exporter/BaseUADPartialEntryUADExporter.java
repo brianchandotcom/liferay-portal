@@ -14,8 +14,8 @@
 
 package com.liferay.portal.tools.service.builder.test.uad.exporter;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.tools.service.builder.test.model.UADPartialEntry;
 import com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalService;
 import com.liferay.portal.tools.service.builder.test.uad.constants.SBTestUADConstants;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -39,13 +39,9 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.EagerBl
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -879,24 +875,16 @@ public class EagerBlobEntityPersistenceImpl
 	public EagerBlobEntityPersistenceImpl() {
 		setModelClass(EagerBlobEntity.class);
 
+		setModelImplClass(EagerBlobEntityImpl.class);
+		setModelPKClass(long.class);
+		setEntityCacheEnabled(EagerBlobEntityModelImpl.ENTITY_CACHE_ENABLED);
+
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put("blob", "blob_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**
@@ -993,6 +981,7 @@ public class EagerBlobEntityPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1290,163 +1279,12 @@ public class EagerBlobEntityPersistenceImpl
 	/**
 	 * Returns the eager blob entity with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the eager blob entity
-	 * @return the eager blob entity, or <code>null</code> if a eager blob entity with the primary key could not be found
-	 */
-	@Override
-	public EagerBlobEntity fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			EagerBlobEntityModelImpl.ENTITY_CACHE_ENABLED,
-			EagerBlobEntityImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		EagerBlobEntity eagerBlobEntity = (EagerBlobEntity)serializable;
-
-		if (eagerBlobEntity == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				eagerBlobEntity = (EagerBlobEntity)session.get(
-					EagerBlobEntityImpl.class, primaryKey);
-
-				if (eagerBlobEntity != null) {
-					cacheResult(eagerBlobEntity);
-				}
-				else {
-					entityCache.putResult(
-						EagerBlobEntityModelImpl.ENTITY_CACHE_ENABLED,
-						EagerBlobEntityImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(
-					EagerBlobEntityModelImpl.ENTITY_CACHE_ENABLED,
-					EagerBlobEntityImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return eagerBlobEntity;
-	}
-
-	/**
-	 * Returns the eager blob entity with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param eagerBlobEntityId the primary key of the eager blob entity
 	 * @return the eager blob entity, or <code>null</code> if a eager blob entity with the primary key could not be found
 	 */
 	@Override
 	public EagerBlobEntity fetchByPrimaryKey(long eagerBlobEntityId) {
 		return fetchByPrimaryKey((Serializable)eagerBlobEntityId);
-	}
-
-	@Override
-	public Map<Serializable, EagerBlobEntity> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, EagerBlobEntity> map =
-			new HashMap<Serializable, EagerBlobEntity>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			EagerBlobEntity eagerBlobEntity = fetchByPrimaryKey(primaryKey);
-
-			if (eagerBlobEntity != null) {
-				map.put(primaryKey, eagerBlobEntity);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				EagerBlobEntityModelImpl.ENTITY_CACHE_ENABLED,
-				EagerBlobEntityImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (EagerBlobEntity)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		query.append(_SQL_SELECT_EAGERBLOBENTITY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (EagerBlobEntity eagerBlobEntity :
-					(List<EagerBlobEntity>)q.list()) {
-
-				map.put(eagerBlobEntity.getPrimaryKeyObj(), eagerBlobEntity);
-
-				cacheResult(eagerBlobEntity);
-
-				uncachedPrimaryKeys.remove(eagerBlobEntity.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					EagerBlobEntityModelImpl.ENTITY_CACHE_ENABLED,
-					EagerBlobEntityImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1643,6 +1481,21 @@ public class EagerBlobEntityPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "eagerBlobEntityId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_EAGERBLOBENTITY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return EagerBlobEntityModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1722,9 +1575,6 @@ public class EagerBlobEntityPersistenceImpl
 
 	private static final String _SQL_SELECT_EAGERBLOBENTITY =
 		"SELECT eagerBlobEntity FROM EagerBlobEntity eagerBlobEntity";
-
-	private static final String _SQL_SELECT_EAGERBLOBENTITY_WHERE_PKS_IN =
-		"SELECT eagerBlobEntity FROM EagerBlobEntity eagerBlobEntity WHERE eagerBlobEntityId IN (";
 
 	private static final String _SQL_SELECT_EAGERBLOBENTITY_WHERE =
 		"SELECT eagerBlobEntity FROM EagerBlobEntity eagerBlobEntity WHERE ";

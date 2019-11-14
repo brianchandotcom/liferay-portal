@@ -16,6 +16,7 @@ package com.liferay.portal.tools.service.builder.test.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry;
 import com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntryModel;
 
@@ -248,123 +248,38 @@ public class NestedSetsTreeEntryModelImpl
 
 		attributeGetterFunctions.put(
 			"nestedSetsTreeEntryId",
-			new Function<NestedSetsTreeEntry, Object>() {
-
-				@Override
-				public Object apply(NestedSetsTreeEntry nestedSetsTreeEntry) {
-					return nestedSetsTreeEntry.getNestedSetsTreeEntryId();
-				}
-
-			});
+			NestedSetsTreeEntry::getNestedSetsTreeEntryId);
 		attributeSetterBiConsumers.put(
 			"nestedSetsTreeEntryId",
-			new BiConsumer<NestedSetsTreeEntry, Object>() {
-
-				@Override
-				public void accept(
-					NestedSetsTreeEntry nestedSetsTreeEntry,
-					Object nestedSetsTreeEntryIdObject) {
-
-					nestedSetsTreeEntry.setNestedSetsTreeEntryId(
-						(Long)nestedSetsTreeEntryIdObject);
-				}
-
-			});
+			(BiConsumer<NestedSetsTreeEntry, Long>)
+				NestedSetsTreeEntry::setNestedSetsTreeEntryId);
 		attributeGetterFunctions.put(
-			"groupId",
-			new Function<NestedSetsTreeEntry, Object>() {
-
-				@Override
-				public Object apply(NestedSetsTreeEntry nestedSetsTreeEntry) {
-					return nestedSetsTreeEntry.getGroupId();
-				}
-
-			});
+			"groupId", NestedSetsTreeEntry::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<NestedSetsTreeEntry, Object>() {
-
-				@Override
-				public void accept(
-					NestedSetsTreeEntry nestedSetsTreeEntry,
-					Object groupIdObject) {
-
-					nestedSetsTreeEntry.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<NestedSetsTreeEntry, Long>)
+				NestedSetsTreeEntry::setGroupId);
 		attributeGetterFunctions.put(
 			"parentNestedSetsTreeEntryId",
-			new Function<NestedSetsTreeEntry, Object>() {
-
-				@Override
-				public Object apply(NestedSetsTreeEntry nestedSetsTreeEntry) {
-					return nestedSetsTreeEntry.getParentNestedSetsTreeEntryId();
-				}
-
-			});
+			NestedSetsTreeEntry::getParentNestedSetsTreeEntryId);
 		attributeSetterBiConsumers.put(
 			"parentNestedSetsTreeEntryId",
-			new BiConsumer<NestedSetsTreeEntry, Object>() {
-
-				@Override
-				public void accept(
-					NestedSetsTreeEntry nestedSetsTreeEntry,
-					Object parentNestedSetsTreeEntryIdObject) {
-
-					nestedSetsTreeEntry.setParentNestedSetsTreeEntryId(
-						(Long)parentNestedSetsTreeEntryIdObject);
-				}
-
-			});
+			(BiConsumer<NestedSetsTreeEntry, Long>)
+				NestedSetsTreeEntry::setParentNestedSetsTreeEntryId);
 		attributeGetterFunctions.put(
 			"leftNestedSetsTreeEntryId",
-			new Function<NestedSetsTreeEntry, Object>() {
-
-				@Override
-				public Object apply(NestedSetsTreeEntry nestedSetsTreeEntry) {
-					return nestedSetsTreeEntry.getLeftNestedSetsTreeEntryId();
-				}
-
-			});
+			NestedSetsTreeEntry::getLeftNestedSetsTreeEntryId);
 		attributeSetterBiConsumers.put(
 			"leftNestedSetsTreeEntryId",
-			new BiConsumer<NestedSetsTreeEntry, Object>() {
-
-				@Override
-				public void accept(
-					NestedSetsTreeEntry nestedSetsTreeEntry,
-					Object leftNestedSetsTreeEntryIdObject) {
-
-					nestedSetsTreeEntry.setLeftNestedSetsTreeEntryId(
-						(Long)leftNestedSetsTreeEntryIdObject);
-				}
-
-			});
+			(BiConsumer<NestedSetsTreeEntry, Long>)
+				NestedSetsTreeEntry::setLeftNestedSetsTreeEntryId);
 		attributeGetterFunctions.put(
 			"rightNestedSetsTreeEntryId",
-			new Function<NestedSetsTreeEntry, Object>() {
-
-				@Override
-				public Object apply(NestedSetsTreeEntry nestedSetsTreeEntry) {
-					return nestedSetsTreeEntry.getRightNestedSetsTreeEntryId();
-				}
-
-			});
+			NestedSetsTreeEntry::getRightNestedSetsTreeEntryId);
 		attributeSetterBiConsumers.put(
 			"rightNestedSetsTreeEntryId",
-			new BiConsumer<NestedSetsTreeEntry, Object>() {
-
-				@Override
-				public void accept(
-					NestedSetsTreeEntry nestedSetsTreeEntry,
-					Object rightNestedSetsTreeEntryIdObject) {
-
-					nestedSetsTreeEntry.setRightNestedSetsTreeEntryId(
-						(Long)rightNestedSetsTreeEntryIdObject);
-				}
-
-			});
+			(BiConsumer<NestedSetsTreeEntry, Long>)
+				NestedSetsTreeEntry::setRightNestedSetsTreeEntryId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);

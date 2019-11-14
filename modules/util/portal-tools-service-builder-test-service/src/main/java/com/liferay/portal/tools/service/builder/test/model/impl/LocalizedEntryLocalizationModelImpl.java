@@ -16,6 +16,7 @@ package com.liferay.portal.tools.service.builder.test.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocalization;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocalizationModel;
 
@@ -263,161 +263,43 @@ public class LocalizedEntryLocalizationModelImpl
 					<String, BiConsumer<LocalizedEntryLocalization, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion",
-			new Function<LocalizedEntryLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					LocalizedEntryLocalization localizedEntryLocalization) {
-
-					return localizedEntryLocalization.getMvccVersion();
-				}
-
-			});
+			"mvccVersion", LocalizedEntryLocalization::getMvccVersion);
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
-			new BiConsumer<LocalizedEntryLocalization, Object>() {
-
-				@Override
-				public void accept(
-					LocalizedEntryLocalization localizedEntryLocalization,
-					Object mvccVersionObject) {
-
-					localizedEntryLocalization.setMvccVersion(
-						(Long)mvccVersionObject);
-				}
-
-			});
+			(BiConsumer<LocalizedEntryLocalization, Long>)
+				LocalizedEntryLocalization::setMvccVersion);
 		attributeGetterFunctions.put(
 			"localizedEntryLocalizationId",
-			new Function<LocalizedEntryLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					LocalizedEntryLocalization localizedEntryLocalization) {
-
-					return localizedEntryLocalization.
-						getLocalizedEntryLocalizationId();
-				}
-
-			});
+			LocalizedEntryLocalization::getLocalizedEntryLocalizationId);
 		attributeSetterBiConsumers.put(
 			"localizedEntryLocalizationId",
-			new BiConsumer<LocalizedEntryLocalization, Object>() {
-
-				@Override
-				public void accept(
-					LocalizedEntryLocalization localizedEntryLocalization,
-					Object localizedEntryLocalizationIdObject) {
-
-					localizedEntryLocalization.setLocalizedEntryLocalizationId(
-						(Long)localizedEntryLocalizationIdObject);
-				}
-
-			});
+			(BiConsumer<LocalizedEntryLocalization, Long>)
+				LocalizedEntryLocalization::setLocalizedEntryLocalizationId);
 		attributeGetterFunctions.put(
 			"localizedEntryId",
-			new Function<LocalizedEntryLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					LocalizedEntryLocalization localizedEntryLocalization) {
-
-					return localizedEntryLocalization.getLocalizedEntryId();
-				}
-
-			});
+			LocalizedEntryLocalization::getLocalizedEntryId);
 		attributeSetterBiConsumers.put(
 			"localizedEntryId",
-			new BiConsumer<LocalizedEntryLocalization, Object>() {
-
-				@Override
-				public void accept(
-					LocalizedEntryLocalization localizedEntryLocalization,
-					Object localizedEntryIdObject) {
-
-					localizedEntryLocalization.setLocalizedEntryId(
-						(Long)localizedEntryIdObject);
-				}
-
-			});
+			(BiConsumer<LocalizedEntryLocalization, Long>)
+				LocalizedEntryLocalization::setLocalizedEntryId);
 		attributeGetterFunctions.put(
-			"languageId",
-			new Function<LocalizedEntryLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					LocalizedEntryLocalization localizedEntryLocalization) {
-
-					return localizedEntryLocalization.getLanguageId();
-				}
-
-			});
+			"languageId", LocalizedEntryLocalization::getLanguageId);
 		attributeSetterBiConsumers.put(
 			"languageId",
-			new BiConsumer<LocalizedEntryLocalization, Object>() {
-
-				@Override
-				public void accept(
-					LocalizedEntryLocalization localizedEntryLocalization,
-					Object languageIdObject) {
-
-					localizedEntryLocalization.setLanguageId(
-						(String)languageIdObject);
-				}
-
-			});
+			(BiConsumer<LocalizedEntryLocalization, String>)
+				LocalizedEntryLocalization::setLanguageId);
 		attributeGetterFunctions.put(
-			"title",
-			new Function<LocalizedEntryLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					LocalizedEntryLocalization localizedEntryLocalization) {
-
-					return localizedEntryLocalization.getTitle();
-				}
-
-			});
+			"title", LocalizedEntryLocalization::getTitle);
 		attributeSetterBiConsumers.put(
 			"title",
-			new BiConsumer<LocalizedEntryLocalization, Object>() {
-
-				@Override
-				public void accept(
-					LocalizedEntryLocalization localizedEntryLocalization,
-					Object titleObject) {
-
-					localizedEntryLocalization.setTitle((String)titleObject);
-				}
-
-			});
+			(BiConsumer<LocalizedEntryLocalization, String>)
+				LocalizedEntryLocalization::setTitle);
 		attributeGetterFunctions.put(
-			"content",
-			new Function<LocalizedEntryLocalization, Object>() {
-
-				@Override
-				public Object apply(
-					LocalizedEntryLocalization localizedEntryLocalization) {
-
-					return localizedEntryLocalization.getContent();
-				}
-
-			});
+			"content", LocalizedEntryLocalization::getContent);
 		attributeSetterBiConsumers.put(
 			"content",
-			new BiConsumer<LocalizedEntryLocalization, Object>() {
-
-				@Override
-				public void accept(
-					LocalizedEntryLocalization localizedEntryLocalization,
-					Object contentObject) {
-
-					localizedEntryLocalization.setContent(
-						(String)contentObject);
-				}
-
-			});
+			(BiConsumer<LocalizedEntryLocalization, String>)
+				LocalizedEntryLocalization::setContent);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);

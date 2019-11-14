@@ -14,16 +14,11 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchEagerBlobEntityException;
 import com.liferay.portal.tools.service.builder.test.model.EagerBlobEntity;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the eager blob entity service.
@@ -45,9 +40,6 @@ public interface EagerBlobEntityPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EagerBlobEntityUtil} to access the eager blob entity persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, EagerBlobEntity> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the eager blob entities where uuid = &#63;.
@@ -361,8 +353,5 @@ public interface EagerBlobEntityPersistence
 	 * @return the number of eager blob entities
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

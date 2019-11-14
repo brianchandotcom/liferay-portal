@@ -16,6 +16,7 @@ package com.liferay.portal.tools.service.builder.test.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntry;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocalization;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryModel;
@@ -240,53 +240,17 @@ public class LocalizedEntryModelImpl
 			new LinkedHashMap<String, BiConsumer<LocalizedEntry, ?>>();
 
 		attributeGetterFunctions.put(
-			"defaultLanguageId",
-			new Function<LocalizedEntry, Object>() {
-
-				@Override
-				public Object apply(LocalizedEntry localizedEntry) {
-					return localizedEntry.getDefaultLanguageId();
-				}
-
-			});
+			"defaultLanguageId", LocalizedEntry::getDefaultLanguageId);
 		attributeSetterBiConsumers.put(
 			"defaultLanguageId",
-			new BiConsumer<LocalizedEntry, Object>() {
-
-				@Override
-				public void accept(
-					LocalizedEntry localizedEntry,
-					Object defaultLanguageIdObject) {
-
-					localizedEntry.setDefaultLanguageId(
-						(String)defaultLanguageIdObject);
-				}
-
-			});
+			(BiConsumer<LocalizedEntry, String>)
+				LocalizedEntry::setDefaultLanguageId);
 		attributeGetterFunctions.put(
-			"localizedEntryId",
-			new Function<LocalizedEntry, Object>() {
-
-				@Override
-				public Object apply(LocalizedEntry localizedEntry) {
-					return localizedEntry.getLocalizedEntryId();
-				}
-
-			});
+			"localizedEntryId", LocalizedEntry::getLocalizedEntryId);
 		attributeSetterBiConsumers.put(
 			"localizedEntryId",
-			new BiConsumer<LocalizedEntry, Object>() {
-
-				@Override
-				public void accept(
-					LocalizedEntry localizedEntry,
-					Object localizedEntryIdObject) {
-
-					localizedEntry.setLocalizedEntryId(
-						(Long)localizedEntryIdObject);
-				}
-
-			});
+			(BiConsumer<LocalizedEntry, Long>)
+				LocalizedEntry::setLocalizedEntryId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);

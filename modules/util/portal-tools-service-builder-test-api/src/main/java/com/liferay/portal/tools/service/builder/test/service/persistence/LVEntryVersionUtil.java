@@ -2400,10 +2400,6 @@ public class LVEntryVersionUtil {
 		getPersistence().setBigDecimalEntries(pk, bigDecimalEntries);
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static LVEntryVersionPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

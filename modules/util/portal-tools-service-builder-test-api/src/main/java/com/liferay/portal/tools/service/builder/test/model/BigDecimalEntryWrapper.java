@@ -14,17 +14,13 @@
 
 package com.liferay.portal.tools.service.builder.test.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.math.BigDecimal;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,20 +32,11 @@ import java.util.Objects;
  * @generated
  */
 public class BigDecimalEntryWrapper
+	extends BaseModelWrapper<BigDecimalEntry>
 	implements BigDecimalEntry, ModelWrapper<BigDecimalEntry> {
 
 	public BigDecimalEntryWrapper(BigDecimalEntry bigDecimalEntry) {
-		_bigDecimalEntry = bigDecimalEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return BigDecimalEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return BigDecimalEntry.class.getName();
+		super(bigDecimalEntry);
 	}
 
 	@Override
@@ -85,17 +72,6 @@ public class BigDecimalEntryWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new BigDecimalEntryWrapper(
-			(BigDecimalEntry)_bigDecimalEntry.clone());
-	}
-
-	@Override
-	public int compareTo(BigDecimalEntry bigDecimalEntry) {
-		return _bigDecimalEntry.compareTo(bigDecimalEntry);
-	}
-
 	/**
 	 * Returns the big decimal entry ID of this big decimal entry.
 	 *
@@ -103,7 +79,7 @@ public class BigDecimalEntryWrapper
 	 */
 	@Override
 	public long getBigDecimalEntryId() {
-		return _bigDecimalEntry.getBigDecimalEntryId();
+		return model.getBigDecimalEntryId();
 	}
 
 	/**
@@ -113,7 +89,7 @@ public class BigDecimalEntryWrapper
 	 */
 	@Override
 	public BigDecimal getBigDecimalValue() {
-		return _bigDecimalEntry.getBigDecimalValue();
+		return model.getBigDecimalValue();
 	}
 
 	/**
@@ -123,12 +99,7 @@ public class BigDecimalEntryWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _bigDecimalEntry.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _bigDecimalEntry.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -138,32 +109,7 @@ public class BigDecimalEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _bigDecimalEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _bigDecimalEntry.getPrimaryKeyObj();
-	}
-
-	@Override
-	public int hashCode() {
-		return _bigDecimalEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _bigDecimalEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _bigDecimalEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _bigDecimalEntry.isNew();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -173,7 +119,7 @@ public class BigDecimalEntryWrapper
 	 */
 	@Override
 	public void setBigDecimalEntryId(long bigDecimalEntryId) {
-		_bigDecimalEntry.setBigDecimalEntryId(bigDecimalEntryId);
+		model.setBigDecimalEntryId(bigDecimalEntryId);
 	}
 
 	/**
@@ -183,12 +129,7 @@ public class BigDecimalEntryWrapper
 	 */
 	@Override
 	public void setBigDecimalValue(BigDecimal bigDecimalValue) {
-		_bigDecimalEntry.setBigDecimalValue(bigDecimalValue);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_bigDecimalEntry.setCachedModel(cachedModel);
+		model.setBigDecimalValue(bigDecimalValue);
 	}
 
 	/**
@@ -198,29 +139,7 @@ public class BigDecimalEntryWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_bigDecimalEntry.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_bigDecimalEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_bigDecimalEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_bigDecimalEntry.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_bigDecimalEntry.setNew(n);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -230,83 +149,12 @@ public class BigDecimalEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_bigDecimalEntry.setPrimaryKey(primaryKey);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_bigDecimalEntry.setPrimaryKeyObj(primaryKeyObj);
+	protected BigDecimalEntryWrapper wrap(BigDecimalEntry bigDecimalEntry) {
+		return new BigDecimalEntryWrapper(bigDecimalEntry);
 	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<BigDecimalEntry>
-		toCacheModel() {
-
-		return _bigDecimalEntry.toCacheModel();
-	}
-
-	@Override
-	public BigDecimalEntry toEscapedModel() {
-		return new BigDecimalEntryWrapper(_bigDecimalEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _bigDecimalEntry.toString();
-	}
-
-	@Override
-	public BigDecimalEntry toUnescapedModel() {
-		return new BigDecimalEntryWrapper(_bigDecimalEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _bigDecimalEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof BigDecimalEntryWrapper)) {
-			return false;
-		}
-
-		BigDecimalEntryWrapper bigDecimalEntryWrapper =
-			(BigDecimalEntryWrapper)obj;
-
-		if (Objects.equals(
-				_bigDecimalEntry, bigDecimalEntryWrapper._bigDecimalEntry)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public BigDecimalEntry getWrappedModel() {
-		return _bigDecimalEntry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _bigDecimalEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _bigDecimalEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_bigDecimalEntry.resetOriginalValues();
-	}
-
-	private final BigDecimalEntry _bigDecimalEntry;
 
 }

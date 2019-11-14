@@ -16,6 +16,7 @@ package com.liferay.portal.tools.service.builder.test.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.tools.service.builder.test.model.EagerBlobEntity;
 import com.liferay.portal.tools.service.builder.test.model.EagerBlobEntityModel;
 import com.liferay.portal.tools.service.builder.test.model.EagerBlobEntitySoap;
@@ -279,96 +279,24 @@ public class EagerBlobEntityModelImpl
 		Map<String, BiConsumer<EagerBlobEntity, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<EagerBlobEntity, ?>>();
 
-		attributeGetterFunctions.put(
-			"uuid",
-			new Function<EagerBlobEntity, Object>() {
-
-				@Override
-				public Object apply(EagerBlobEntity eagerBlobEntity) {
-					return eagerBlobEntity.getUuid();
-				}
-
-			});
+		attributeGetterFunctions.put("uuid", EagerBlobEntity::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<EagerBlobEntity, Object>() {
-
-				@Override
-				public void accept(
-					EagerBlobEntity eagerBlobEntity, Object uuidObject) {
-
-					eagerBlobEntity.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<EagerBlobEntity, String>)EagerBlobEntity::setUuid);
 		attributeGetterFunctions.put(
-			"eagerBlobEntityId",
-			new Function<EagerBlobEntity, Object>() {
-
-				@Override
-				public Object apply(EagerBlobEntity eagerBlobEntity) {
-					return eagerBlobEntity.getEagerBlobEntityId();
-				}
-
-			});
+			"eagerBlobEntityId", EagerBlobEntity::getEagerBlobEntityId);
 		attributeSetterBiConsumers.put(
 			"eagerBlobEntityId",
-			new BiConsumer<EagerBlobEntity, Object>() {
-
-				@Override
-				public void accept(
-					EagerBlobEntity eagerBlobEntity,
-					Object eagerBlobEntityIdObject) {
-
-					eagerBlobEntity.setEagerBlobEntityId(
-						(Long)eagerBlobEntityIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<EagerBlobEntity, Object>() {
-
-				@Override
-				public Object apply(EagerBlobEntity eagerBlobEntity) {
-					return eagerBlobEntity.getGroupId();
-				}
-
-			});
+			(BiConsumer<EagerBlobEntity, Long>)
+				EagerBlobEntity::setEagerBlobEntityId);
+		attributeGetterFunctions.put("groupId", EagerBlobEntity::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<EagerBlobEntity, Object>() {
-
-				@Override
-				public void accept(
-					EagerBlobEntity eagerBlobEntity, Object groupIdObject) {
-
-					eagerBlobEntity.setGroupId((Long)groupIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"blob",
-			new Function<EagerBlobEntity, Object>() {
-
-				@Override
-				public Object apply(EagerBlobEntity eagerBlobEntity) {
-					return eagerBlobEntity.getBlob();
-				}
-
-			});
+			(BiConsumer<EagerBlobEntity, Long>)EagerBlobEntity::setGroupId);
+		attributeGetterFunctions.put("blob", EagerBlobEntity::getBlob);
 		attributeSetterBiConsumers.put(
 			"blob",
-			new BiConsumer<EagerBlobEntity, Object>() {
-
-				@Override
-				public void accept(
-					EagerBlobEntity eagerBlobEntity, Object blobObject) {
-
-					eagerBlobEntity.setBlob((Blob)blobObject);
-				}
-
-			});
+			(BiConsumer<EagerBlobEntity, Blob>)EagerBlobEntity::setBlob);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);

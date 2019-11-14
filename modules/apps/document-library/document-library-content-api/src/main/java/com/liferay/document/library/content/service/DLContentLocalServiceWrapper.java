@@ -37,7 +37,7 @@ public class DLContentLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addContent(long, long, String, String, InputStream))}
+	 #addContent(long, long, String, String, InputStream)}
 	 */
 	@Deprecated
 	@Override
@@ -60,7 +60,7 @@ public class DLContentLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addContent(long, long, String, String, InputStream))}
+	 #addContent(long, long, String, String, InputStream)}
 	 */
 	@Deprecated
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.portal.tools.service.builder.test.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.tools.service.builder.test.model.VersionedEntry;
 import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion;
 import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersionModel;
@@ -258,106 +258,29 @@ public class VersionedEntryVersionModelImpl
 
 		attributeGetterFunctions.put(
 			"versionedEntryVersionId",
-			new Function<VersionedEntryVersion, Object>() {
-
-				@Override
-				public Object apply(
-					VersionedEntryVersion versionedEntryVersion) {
-
-					return versionedEntryVersion.getVersionedEntryVersionId();
-				}
-
-			});
+			VersionedEntryVersion::getVersionedEntryVersionId);
 		attributeSetterBiConsumers.put(
 			"versionedEntryVersionId",
-			new BiConsumer<VersionedEntryVersion, Object>() {
-
-				@Override
-				public void accept(
-					VersionedEntryVersion versionedEntryVersion,
-					Object versionedEntryVersionIdObject) {
-
-					versionedEntryVersion.setVersionedEntryVersionId(
-						(Long)versionedEntryVersionIdObject);
-				}
-
-			});
+			(BiConsumer<VersionedEntryVersion, Long>)
+				VersionedEntryVersion::setVersionedEntryVersionId);
 		attributeGetterFunctions.put(
-			"version",
-			new Function<VersionedEntryVersion, Object>() {
-
-				@Override
-				public Object apply(
-					VersionedEntryVersion versionedEntryVersion) {
-
-					return versionedEntryVersion.getVersion();
-				}
-
-			});
+			"version", VersionedEntryVersion::getVersion);
 		attributeSetterBiConsumers.put(
 			"version",
-			new BiConsumer<VersionedEntryVersion, Object>() {
-
-				@Override
-				public void accept(
-					VersionedEntryVersion versionedEntryVersion,
-					Object versionObject) {
-
-					versionedEntryVersion.setVersion((Integer)versionObject);
-				}
-
-			});
+			(BiConsumer<VersionedEntryVersion, Integer>)
+				VersionedEntryVersion::setVersion);
 		attributeGetterFunctions.put(
-			"versionedEntryId",
-			new Function<VersionedEntryVersion, Object>() {
-
-				@Override
-				public Object apply(
-					VersionedEntryVersion versionedEntryVersion) {
-
-					return versionedEntryVersion.getVersionedEntryId();
-				}
-
-			});
+			"versionedEntryId", VersionedEntryVersion::getVersionedEntryId);
 		attributeSetterBiConsumers.put(
 			"versionedEntryId",
-			new BiConsumer<VersionedEntryVersion, Object>() {
-
-				@Override
-				public void accept(
-					VersionedEntryVersion versionedEntryVersion,
-					Object versionedEntryIdObject) {
-
-					versionedEntryVersion.setVersionedEntryId(
-						(Long)versionedEntryIdObject);
-				}
-
-			});
+			(BiConsumer<VersionedEntryVersion, Long>)
+				VersionedEntryVersion::setVersionedEntryId);
 		attributeGetterFunctions.put(
-			"groupId",
-			new Function<VersionedEntryVersion, Object>() {
-
-				@Override
-				public Object apply(
-					VersionedEntryVersion versionedEntryVersion) {
-
-					return versionedEntryVersion.getGroupId();
-				}
-
-			});
+			"groupId", VersionedEntryVersion::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<VersionedEntryVersion, Object>() {
-
-				@Override
-				public void accept(
-					VersionedEntryVersion versionedEntryVersion,
-					Object groupIdObject) {
-
-					versionedEntryVersion.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<VersionedEntryVersion, Long>)
+				VersionedEntryVersion::setGroupId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);

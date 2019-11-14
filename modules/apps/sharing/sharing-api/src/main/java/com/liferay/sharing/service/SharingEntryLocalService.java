@@ -623,9 +623,8 @@ public interface SharingEntryLocalService
 	 {@code SharingEntryAction#VIEW}, or contain a {@code null}
 	 value), or if the expiration date is a past value
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 SharingEntryLocalService#
-	 updateSharingEntry(long, long, Collection, boolean, Date,
-	 ServiceContext)}
+	 SharingEntryLocalService#updateSharingEntry(
+	 long, long, Collection, boolean, Date, ServiceContext)}
 	 * @review
 	 */
 	@Deprecated

@@ -14,15 +14,11 @@
 
 package com.liferay.portal.tools.service.builder.test.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -34,20 +30,11 @@ import java.util.Objects;
  * @generated
  */
 public class UADPartialEntryWrapper
+	extends BaseModelWrapper<UADPartialEntry>
 	implements ModelWrapper<UADPartialEntry>, UADPartialEntry {
 
 	public UADPartialEntryWrapper(UADPartialEntry uadPartialEntry) {
-		_uadPartialEntry = uadPartialEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return UADPartialEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return UADPartialEntry.class.getName();
+		super(uadPartialEntry);
 	}
 
 	@Override
@@ -89,22 +76,6 @@ public class UADPartialEntryWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new UADPartialEntryWrapper(
-			(UADPartialEntry)_uadPartialEntry.clone());
-	}
-
-	@Override
-	public int compareTo(UADPartialEntry uadPartialEntry) {
-		return _uadPartialEntry.compareTo(uadPartialEntry);
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _uadPartialEntry.getExpandoBridge();
-	}
-
 	/**
 	 * Returns the message of this uad partial entry.
 	 *
@@ -112,7 +83,7 @@ public class UADPartialEntryWrapper
 	 */
 	@Override
 	public String getMessage() {
-		return _uadPartialEntry.getMessage();
+		return model.getMessage();
 	}
 
 	/**
@@ -122,12 +93,7 @@ public class UADPartialEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _uadPartialEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _uadPartialEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -137,7 +103,7 @@ public class UADPartialEntryWrapper
 	 */
 	@Override
 	public long getUadPartialEntryId() {
-		return _uadPartialEntry.getUadPartialEntryId();
+		return model.getUadPartialEntryId();
 	}
 
 	/**
@@ -147,7 +113,7 @@ public class UADPartialEntryWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _uadPartialEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -157,7 +123,7 @@ public class UADPartialEntryWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _uadPartialEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -167,27 +133,7 @@ public class UADPartialEntryWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _uadPartialEntry.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _uadPartialEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _uadPartialEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _uadPartialEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _uadPartialEntry.isNew();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -197,29 +143,7 @@ public class UADPartialEntryWrapper
 	 */
 	@Override
 	public void persist() {
-		_uadPartialEntry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_uadPartialEntry.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_uadPartialEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_uadPartialEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_uadPartialEntry.setExpandoBridgeAttributes(serviceContext);
+		model.persist();
 	}
 
 	/**
@@ -229,12 +153,7 @@ public class UADPartialEntryWrapper
 	 */
 	@Override
 	public void setMessage(String message) {
-		_uadPartialEntry.setMessage(message);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_uadPartialEntry.setNew(n);
+		model.setMessage(message);
 	}
 
 	/**
@@ -244,12 +163,7 @@ public class UADPartialEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_uadPartialEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_uadPartialEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -259,7 +173,7 @@ public class UADPartialEntryWrapper
 	 */
 	@Override
 	public void setUadPartialEntryId(long uadPartialEntryId) {
-		_uadPartialEntry.setUadPartialEntryId(uadPartialEntryId);
+		model.setUadPartialEntryId(uadPartialEntryId);
 	}
 
 	/**
@@ -269,7 +183,7 @@ public class UADPartialEntryWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_uadPartialEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -279,7 +193,7 @@ public class UADPartialEntryWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_uadPartialEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -289,78 +203,12 @@ public class UADPartialEntryWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_uadPartialEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<UADPartialEntry>
-		toCacheModel() {
-
-		return _uadPartialEntry.toCacheModel();
+	protected UADPartialEntryWrapper wrap(UADPartialEntry uadPartialEntry) {
+		return new UADPartialEntryWrapper(uadPartialEntry);
 	}
-
-	@Override
-	public UADPartialEntry toEscapedModel() {
-		return new UADPartialEntryWrapper(_uadPartialEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _uadPartialEntry.toString();
-	}
-
-	@Override
-	public UADPartialEntry toUnescapedModel() {
-		return new UADPartialEntryWrapper(_uadPartialEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _uadPartialEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof UADPartialEntryWrapper)) {
-			return false;
-		}
-
-		UADPartialEntryWrapper uadPartialEntryWrapper =
-			(UADPartialEntryWrapper)obj;
-
-		if (Objects.equals(
-				_uadPartialEntry, uadPartialEntryWrapper._uadPartialEntry)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public UADPartialEntry getWrappedModel() {
-		return _uadPartialEntry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _uadPartialEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _uadPartialEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_uadPartialEntry.resetOriginalValues();
-	}
-
-	private final UADPartialEntry _uadPartialEntry;
 
 }

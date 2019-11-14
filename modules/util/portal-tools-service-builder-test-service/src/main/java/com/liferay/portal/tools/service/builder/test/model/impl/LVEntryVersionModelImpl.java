@@ -16,6 +16,7 @@ package com.liferay.portal.tools.service.builder.test.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.tools.service.builder.test.model.LVEntry;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryVersion;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryVersionModel;
@@ -283,187 +283,43 @@ public class LVEntryVersionModelImpl
 			new LinkedHashMap<String, BiConsumer<LVEntryVersion, ?>>();
 
 		attributeGetterFunctions.put(
-			"lvEntryVersionId",
-			new Function<LVEntryVersion, Object>() {
-
-				@Override
-				public Object apply(LVEntryVersion lvEntryVersion) {
-					return lvEntryVersion.getLvEntryVersionId();
-				}
-
-			});
+			"lvEntryVersionId", LVEntryVersion::getLvEntryVersionId);
 		attributeSetterBiConsumers.put(
 			"lvEntryVersionId",
-			new BiConsumer<LVEntryVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryVersion lvEntryVersion,
-					Object lvEntryVersionIdObject) {
-
-					lvEntryVersion.setLvEntryVersionId(
-						(Long)lvEntryVersionIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"version",
-			new Function<LVEntryVersion, Object>() {
-
-				@Override
-				public Object apply(LVEntryVersion lvEntryVersion) {
-					return lvEntryVersion.getVersion();
-				}
-
-			});
+			(BiConsumer<LVEntryVersion, Long>)
+				LVEntryVersion::setLvEntryVersionId);
+		attributeGetterFunctions.put("version", LVEntryVersion::getVersion);
 		attributeSetterBiConsumers.put(
 			"version",
-			new BiConsumer<LVEntryVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryVersion lvEntryVersion, Object versionObject) {
-
-					lvEntryVersion.setVersion((Integer)versionObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"uuid",
-			new Function<LVEntryVersion, Object>() {
-
-				@Override
-				public Object apply(LVEntryVersion lvEntryVersion) {
-					return lvEntryVersion.getUuid();
-				}
-
-			});
+			(BiConsumer<LVEntryVersion, Integer>)LVEntryVersion::setVersion);
+		attributeGetterFunctions.put("uuid", LVEntryVersion::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			new BiConsumer<LVEntryVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryVersion lvEntryVersion, Object uuidObject) {
-
-					lvEntryVersion.setUuid((String)uuidObject);
-				}
-
-			});
+			(BiConsumer<LVEntryVersion, String>)LVEntryVersion::setUuid);
 		attributeGetterFunctions.put(
-			"defaultLanguageId",
-			new Function<LVEntryVersion, Object>() {
-
-				@Override
-				public Object apply(LVEntryVersion lvEntryVersion) {
-					return lvEntryVersion.getDefaultLanguageId();
-				}
-
-			});
+			"defaultLanguageId", LVEntryVersion::getDefaultLanguageId);
 		attributeSetterBiConsumers.put(
 			"defaultLanguageId",
-			new BiConsumer<LVEntryVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryVersion lvEntryVersion,
-					Object defaultLanguageIdObject) {
-
-					lvEntryVersion.setDefaultLanguageId(
-						(String)defaultLanguageIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"lvEntryId",
-			new Function<LVEntryVersion, Object>() {
-
-				@Override
-				public Object apply(LVEntryVersion lvEntryVersion) {
-					return lvEntryVersion.getLvEntryId();
-				}
-
-			});
+			(BiConsumer<LVEntryVersion, String>)
+				LVEntryVersion::setDefaultLanguageId);
+		attributeGetterFunctions.put("lvEntryId", LVEntryVersion::getLvEntryId);
 		attributeSetterBiConsumers.put(
 			"lvEntryId",
-			new BiConsumer<LVEntryVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryVersion lvEntryVersion, Object lvEntryIdObject) {
-
-					lvEntryVersion.setLvEntryId((Long)lvEntryIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"companyId",
-			new Function<LVEntryVersion, Object>() {
-
-				@Override
-				public Object apply(LVEntryVersion lvEntryVersion) {
-					return lvEntryVersion.getCompanyId();
-				}
-
-			});
+			(BiConsumer<LVEntryVersion, Long>)LVEntryVersion::setLvEntryId);
+		attributeGetterFunctions.put("companyId", LVEntryVersion::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<LVEntryVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryVersion lvEntryVersion, Object companyIdObject) {
-
-					lvEntryVersion.setCompanyId((Long)companyIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<LVEntryVersion, Object>() {
-
-				@Override
-				public Object apply(LVEntryVersion lvEntryVersion) {
-					return lvEntryVersion.getGroupId();
-				}
-
-			});
+			(BiConsumer<LVEntryVersion, Long>)LVEntryVersion::setCompanyId);
+		attributeGetterFunctions.put("groupId", LVEntryVersion::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId",
-			new BiConsumer<LVEntryVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryVersion lvEntryVersion, Object groupIdObject) {
-
-					lvEntryVersion.setGroupId((Long)groupIdObject);
-				}
-
-			});
+			(BiConsumer<LVEntryVersion, Long>)LVEntryVersion::setGroupId);
 		attributeGetterFunctions.put(
-			"uniqueGroupKey",
-			new Function<LVEntryVersion, Object>() {
-
-				@Override
-				public Object apply(LVEntryVersion lvEntryVersion) {
-					return lvEntryVersion.getUniqueGroupKey();
-				}
-
-			});
+			"uniqueGroupKey", LVEntryVersion::getUniqueGroupKey);
 		attributeSetterBiConsumers.put(
 			"uniqueGroupKey",
-			new BiConsumer<LVEntryVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryVersion lvEntryVersion,
-					Object uniqueGroupKeyObject) {
-
-					lvEntryVersion.setUniqueGroupKey(
-						(String)uniqueGroupKeyObject);
-				}
-
-			});
+			(BiConsumer<LVEntryVersion, String>)
+				LVEntryVersion::setUniqueGroupKey);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);

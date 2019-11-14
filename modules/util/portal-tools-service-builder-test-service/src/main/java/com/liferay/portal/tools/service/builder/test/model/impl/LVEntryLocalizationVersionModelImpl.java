@@ -16,6 +16,7 @@ package com.liferay.portal.tools.service.builder.test.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalization;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersion;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersionModel;
@@ -270,213 +270,54 @@ public class LVEntryLocalizationVersionModelImpl
 
 		attributeGetterFunctions.put(
 			"lvEntryLocalizationVersionId",
-			new Function<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
-					return lvEntryLocalizationVersion.
-						getLvEntryLocalizationVersionId();
-				}
-
-			});
+			LVEntryLocalizationVersion::getLvEntryLocalizationVersionId);
 		attributeSetterBiConsumers.put(
 			"lvEntryLocalizationVersionId",
-			new BiConsumer<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object lvEntryLocalizationVersionIdObject) {
-
-					lvEntryLocalizationVersion.setLvEntryLocalizationVersionId(
-						(Long)lvEntryLocalizationVersionIdObject);
-				}
-
-			});
+			(BiConsumer<LVEntryLocalizationVersion, Long>)
+				LVEntryLocalizationVersion::setLvEntryLocalizationVersionId);
 		attributeGetterFunctions.put(
-			"version",
-			new Function<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
-					return lvEntryLocalizationVersion.getVersion();
-				}
-
-			});
+			"version", LVEntryLocalizationVersion::getVersion);
 		attributeSetterBiConsumers.put(
 			"version",
-			new BiConsumer<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object versionObject) {
-
-					lvEntryLocalizationVersion.setVersion(
-						(Integer)versionObject);
-				}
-
-			});
+			(BiConsumer<LVEntryLocalizationVersion, Integer>)
+				LVEntryLocalizationVersion::setVersion);
 		attributeGetterFunctions.put(
 			"lvEntryLocalizationId",
-			new Function<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
-					return lvEntryLocalizationVersion.
-						getLvEntryLocalizationId();
-				}
-
-			});
+			LVEntryLocalizationVersion::getLvEntryLocalizationId);
 		attributeSetterBiConsumers.put(
 			"lvEntryLocalizationId",
-			new BiConsumer<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object lvEntryLocalizationIdObject) {
-
-					lvEntryLocalizationVersion.setLvEntryLocalizationId(
-						(Long)lvEntryLocalizationIdObject);
-				}
-
-			});
+			(BiConsumer<LVEntryLocalizationVersion, Long>)
+				LVEntryLocalizationVersion::setLvEntryLocalizationId);
 		attributeGetterFunctions.put(
-			"companyId",
-			new Function<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
-					return lvEntryLocalizationVersion.getCompanyId();
-				}
-
-			});
+			"companyId", LVEntryLocalizationVersion::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			new BiConsumer<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object companyIdObject) {
-
-					lvEntryLocalizationVersion.setCompanyId(
-						(Long)companyIdObject);
-				}
-
-			});
+			(BiConsumer<LVEntryLocalizationVersion, Long>)
+				LVEntryLocalizationVersion::setCompanyId);
 		attributeGetterFunctions.put(
-			"lvEntryId",
-			new Function<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
-					return lvEntryLocalizationVersion.getLvEntryId();
-				}
-
-			});
+			"lvEntryId", LVEntryLocalizationVersion::getLvEntryId);
 		attributeSetterBiConsumers.put(
 			"lvEntryId",
-			new BiConsumer<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object lvEntryIdObject) {
-
-					lvEntryLocalizationVersion.setLvEntryId(
-						(Long)lvEntryIdObject);
-				}
-
-			});
+			(BiConsumer<LVEntryLocalizationVersion, Long>)
+				LVEntryLocalizationVersion::setLvEntryId);
 		attributeGetterFunctions.put(
-			"languageId",
-			new Function<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
-					return lvEntryLocalizationVersion.getLanguageId();
-				}
-
-			});
+			"languageId", LVEntryLocalizationVersion::getLanguageId);
 		attributeSetterBiConsumers.put(
 			"languageId",
-			new BiConsumer<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object languageIdObject) {
-
-					lvEntryLocalizationVersion.setLanguageId(
-						(String)languageIdObject);
-				}
-
-			});
+			(BiConsumer<LVEntryLocalizationVersion, String>)
+				LVEntryLocalizationVersion::setLanguageId);
 		attributeGetterFunctions.put(
-			"title",
-			new Function<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
-					return lvEntryLocalizationVersion.getTitle();
-				}
-
-			});
+			"title", LVEntryLocalizationVersion::getTitle);
 		attributeSetterBiConsumers.put(
 			"title",
-			new BiConsumer<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object titleObject) {
-
-					lvEntryLocalizationVersion.setTitle((String)titleObject);
-				}
-
-			});
+			(BiConsumer<LVEntryLocalizationVersion, String>)
+				LVEntryLocalizationVersion::setTitle);
 		attributeGetterFunctions.put(
-			"content",
-			new Function<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
-					return lvEntryLocalizationVersion.getContent();
-				}
-
-			});
+			"content", LVEntryLocalizationVersion::getContent);
 		attributeSetterBiConsumers.put(
 			"content",
-			new BiConsumer<LVEntryLocalizationVersion, Object>() {
-
-				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object contentObject) {
-
-					lvEntryLocalizationVersion.setContent(
-						(String)contentObject);
-				}
-
-			});
+			(BiConsumer<LVEntryLocalizationVersion, String>)
+				LVEntryLocalizationVersion::setContent);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);

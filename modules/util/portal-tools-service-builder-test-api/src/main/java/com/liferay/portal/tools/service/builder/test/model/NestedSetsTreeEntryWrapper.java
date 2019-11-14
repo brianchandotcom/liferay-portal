@@ -14,15 +14,11 @@
 
 package com.liferay.portal.tools.service.builder.test.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -34,20 +30,11 @@ import java.util.Objects;
  * @generated
  */
 public class NestedSetsTreeEntryWrapper
+	extends BaseModelWrapper<NestedSetsTreeEntry>
 	implements ModelWrapper<NestedSetsTreeEntry>, NestedSetsTreeEntry {
 
 	public NestedSetsTreeEntryWrapper(NestedSetsTreeEntry nestedSetsTreeEntry) {
-		_nestedSetsTreeEntry = nestedSetsTreeEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return NestedSetsTreeEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return NestedSetsTreeEntry.class.getName();
+		super(nestedSetsTreeEntry);
 	}
 
 	@Override
@@ -103,22 +90,6 @@ public class NestedSetsTreeEntryWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new NestedSetsTreeEntryWrapper(
-			(NestedSetsTreeEntry)_nestedSetsTreeEntry.clone());
-	}
-
-	@Override
-	public int compareTo(NestedSetsTreeEntry nestedSetsTreeEntry) {
-		return _nestedSetsTreeEntry.compareTo(nestedSetsTreeEntry);
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _nestedSetsTreeEntry.getExpandoBridge();
-	}
-
 	/**
 	 * Returns the group ID of this nested sets tree entry.
 	 *
@@ -126,7 +97,7 @@ public class NestedSetsTreeEntryWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _nestedSetsTreeEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -136,7 +107,7 @@ public class NestedSetsTreeEntryWrapper
 	 */
 	@Override
 	public long getLeftNestedSetsTreeEntryId() {
-		return _nestedSetsTreeEntry.getLeftNestedSetsTreeEntryId();
+		return model.getLeftNestedSetsTreeEntryId();
 	}
 
 	/**
@@ -146,7 +117,7 @@ public class NestedSetsTreeEntryWrapper
 	 */
 	@Override
 	public long getNestedSetsTreeEntryId() {
-		return _nestedSetsTreeEntry.getNestedSetsTreeEntryId();
+		return model.getNestedSetsTreeEntryId();
 	}
 
 	/**
@@ -156,7 +127,7 @@ public class NestedSetsTreeEntryWrapper
 	 */
 	@Override
 	public long getParentNestedSetsTreeEntryId() {
-		return _nestedSetsTreeEntry.getParentNestedSetsTreeEntryId();
+		return model.getParentNestedSetsTreeEntryId();
 	}
 
 	/**
@@ -166,12 +137,7 @@ public class NestedSetsTreeEntryWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _nestedSetsTreeEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _nestedSetsTreeEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -181,27 +147,7 @@ public class NestedSetsTreeEntryWrapper
 	 */
 	@Override
 	public long getRightNestedSetsTreeEntryId() {
-		return _nestedSetsTreeEntry.getRightNestedSetsTreeEntryId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _nestedSetsTreeEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _nestedSetsTreeEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _nestedSetsTreeEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _nestedSetsTreeEntry.isNew();
+		return model.getRightNestedSetsTreeEntryId();
 	}
 
 	/**
@@ -211,29 +157,7 @@ public class NestedSetsTreeEntryWrapper
 	 */
 	@Override
 	public void persist() {
-		_nestedSetsTreeEntry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_nestedSetsTreeEntry.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_nestedSetsTreeEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_nestedSetsTreeEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_nestedSetsTreeEntry.setExpandoBridgeAttributes(serviceContext);
+		model.persist();
 	}
 
 	/**
@@ -243,7 +167,7 @@ public class NestedSetsTreeEntryWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_nestedSetsTreeEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -253,8 +177,7 @@ public class NestedSetsTreeEntryWrapper
 	 */
 	@Override
 	public void setLeftNestedSetsTreeEntryId(long leftNestedSetsTreeEntryId) {
-		_nestedSetsTreeEntry.setLeftNestedSetsTreeEntryId(
-			leftNestedSetsTreeEntryId);
+		model.setLeftNestedSetsTreeEntryId(leftNestedSetsTreeEntryId);
 	}
 
 	/**
@@ -264,12 +187,7 @@ public class NestedSetsTreeEntryWrapper
 	 */
 	@Override
 	public void setNestedSetsTreeEntryId(long nestedSetsTreeEntryId) {
-		_nestedSetsTreeEntry.setNestedSetsTreeEntryId(nestedSetsTreeEntryId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_nestedSetsTreeEntry.setNew(n);
+		model.setNestedSetsTreeEntryId(nestedSetsTreeEntryId);
 	}
 
 	/**
@@ -281,8 +199,7 @@ public class NestedSetsTreeEntryWrapper
 	public void setParentNestedSetsTreeEntryId(
 		long parentNestedSetsTreeEntryId) {
 
-		_nestedSetsTreeEntry.setParentNestedSetsTreeEntryId(
-			parentNestedSetsTreeEntryId);
+		model.setParentNestedSetsTreeEntryId(parentNestedSetsTreeEntryId);
 	}
 
 	/**
@@ -292,12 +209,7 @@ public class NestedSetsTreeEntryWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_nestedSetsTreeEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_nestedSetsTreeEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -307,108 +219,39 @@ public class NestedSetsTreeEntryWrapper
 	 */
 	@Override
 	public void setRightNestedSetsTreeEntryId(long rightNestedSetsTreeEntryId) {
-		_nestedSetsTreeEntry.setRightNestedSetsTreeEntryId(
-			rightNestedSetsTreeEntryId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<NestedSetsTreeEntry>
-		toCacheModel() {
-
-		return _nestedSetsTreeEntry.toCacheModel();
-	}
-
-	@Override
-	public NestedSetsTreeEntry toEscapedModel() {
-		return new NestedSetsTreeEntryWrapper(
-			_nestedSetsTreeEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _nestedSetsTreeEntry.toString();
-	}
-
-	@Override
-	public NestedSetsTreeEntry toUnescapedModel() {
-		return new NestedSetsTreeEntryWrapper(
-			_nestedSetsTreeEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _nestedSetsTreeEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof NestedSetsTreeEntryWrapper)) {
-			return false;
-		}
-
-		NestedSetsTreeEntryWrapper nestedSetsTreeEntryWrapper =
-			(NestedSetsTreeEntryWrapper)obj;
-
-		if (Objects.equals(
-				_nestedSetsTreeEntry,
-				nestedSetsTreeEntryWrapper._nestedSetsTreeEntry)) {
-
-			return true;
-		}
-
-		return false;
+		model.setRightNestedSetsTreeEntryId(rightNestedSetsTreeEntryId);
 	}
 
 	@Override
 	public long getNestedSetsTreeNodeLeft() {
-		return _nestedSetsTreeEntry.getNestedSetsTreeNodeLeft();
+		return model.getNestedSetsTreeNodeLeft();
 	}
 
 	@Override
 	public long getNestedSetsTreeNodeRight() {
-		return _nestedSetsTreeEntry.getNestedSetsTreeNodeRight();
+		return model.getNestedSetsTreeNodeRight();
 	}
 
 	@Override
 	public long getNestedSetsTreeNodeScopeId() {
-		return _nestedSetsTreeEntry.getNestedSetsTreeNodeScopeId();
+		return model.getNestedSetsTreeNodeScopeId();
 	}
 
 	@Override
 	public void setNestedSetsTreeNodeLeft(long nestedSetsTreeNodeLeft) {
-		_nestedSetsTreeEntry.setNestedSetsTreeNodeLeft(nestedSetsTreeNodeLeft);
+		model.setNestedSetsTreeNodeLeft(nestedSetsTreeNodeLeft);
 	}
 
 	@Override
 	public void setNestedSetsTreeNodeRight(long nestedSetsTreeNodeRight) {
-		_nestedSetsTreeEntry.setNestedSetsTreeNodeRight(
-			nestedSetsTreeNodeRight);
+		model.setNestedSetsTreeNodeRight(nestedSetsTreeNodeRight);
 	}
 
 	@Override
-	public NestedSetsTreeEntry getWrappedModel() {
-		return _nestedSetsTreeEntry;
-	}
+	protected NestedSetsTreeEntryWrapper wrap(
+		NestedSetsTreeEntry nestedSetsTreeEntry) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _nestedSetsTreeEntry.isEntityCacheEnabled();
+		return new NestedSetsTreeEntryWrapper(nestedSetsTreeEntry);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _nestedSetsTreeEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_nestedSetsTreeEntry.resetOriginalValues();
-	}
-
-	private final NestedSetsTreeEntry _nestedSetsTreeEntry;
 
 }

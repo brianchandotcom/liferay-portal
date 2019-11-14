@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.external.data.source.test.model.TestEntityModel;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -229,46 +229,12 @@ public class TestEntityModelImpl
 		Map<String, BiConsumer<TestEntity, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<TestEntity, ?>>();
 
-		attributeGetterFunctions.put(
-			"id",
-			new Function<TestEntity, Object>() {
-
-				@Override
-				public Object apply(TestEntity testEntity) {
-					return testEntity.getId();
-				}
-
-			});
+		attributeGetterFunctions.put("id", TestEntity::getId);
 		attributeSetterBiConsumers.put(
-			"id",
-			new BiConsumer<TestEntity, Object>() {
-
-				@Override
-				public void accept(TestEntity testEntity, Object idObject) {
-					testEntity.setId((Long)idObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"data",
-			new Function<TestEntity, Object>() {
-
-				@Override
-				public Object apply(TestEntity testEntity) {
-					return testEntity.getData();
-				}
-
-			});
+			"id", (BiConsumer<TestEntity, Long>)TestEntity::setId);
+		attributeGetterFunctions.put("data", TestEntity::getData);
 		attributeSetterBiConsumers.put(
-			"data",
-			new BiConsumer<TestEntity, Object>() {
-
-				@Override
-				public void accept(TestEntity testEntity, Object dataObject) {
-					testEntity.setData((String)dataObject);
-				}
-
-			});
+			"data", (BiConsumer<TestEntity, String>)TestEntity::setData);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);

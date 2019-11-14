@@ -14,15 +14,11 @@
 
 package com.liferay.portal.tools.service.builder.test.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -34,20 +30,11 @@ import java.util.Objects;
  * @generated
  */
 public class LVEntryVersionWrapper
+	extends BaseModelWrapper<LVEntryVersion>
 	implements LVEntryVersion, ModelWrapper<LVEntryVersion> {
 
 	public LVEntryVersionWrapper(LVEntryVersion lvEntryVersion) {
-		_lvEntryVersion = lvEntryVersion;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return LVEntryVersion.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return LVEntryVersion.class.getName();
+		super(lvEntryVersion);
 	}
 
 	@Override
@@ -117,17 +104,6 @@ public class LVEntryVersionWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new LVEntryVersionWrapper(
-			(LVEntryVersion)_lvEntryVersion.clone());
-	}
-
-	@Override
-	public int compareTo(LVEntryVersion lvEntryVersion) {
-		return _lvEntryVersion.compareTo(lvEntryVersion);
-	}
-
 	/**
 	 * Returns the company ID of this lv entry version.
 	 *
@@ -135,7 +111,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _lvEntryVersion.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -145,12 +121,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public String getDefaultLanguageId() {
-		return _lvEntryVersion.getDefaultLanguageId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _lvEntryVersion.getExpandoBridge();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -160,7 +131,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _lvEntryVersion.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -170,7 +141,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public long getLvEntryId() {
-		return _lvEntryVersion.getLvEntryId();
+		return model.getLvEntryId();
 	}
 
 	/**
@@ -180,7 +151,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public long getLvEntryVersionId() {
-		return _lvEntryVersion.getLvEntryVersionId();
+		return model.getLvEntryVersionId();
 	}
 
 	/**
@@ -190,12 +161,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _lvEntryVersion.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _lvEntryVersion.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -205,7 +171,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public String getUniqueGroupKey() {
-		return _lvEntryVersion.getUniqueGroupKey();
+		return model.getUniqueGroupKey();
 	}
 
 	/**
@@ -215,7 +181,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public String getUuid() {
-		return _lvEntryVersion.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -225,32 +191,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public int getVersion() {
-		return _lvEntryVersion.getVersion();
-	}
-
-	@Override
-	public int hashCode() {
-		return _lvEntryVersion.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _lvEntryVersion.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _lvEntryVersion.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _lvEntryVersion.isNew();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_lvEntryVersion.setCachedModel(cachedModel);
+		return model.getVersion();
 	}
 
 	/**
@@ -260,7 +201,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_lvEntryVersion.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -270,24 +211,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public void setDefaultLanguageId(String defaultLanguageId) {
-		_lvEntryVersion.setDefaultLanguageId(defaultLanguageId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_lvEntryVersion.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_lvEntryVersion.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_lvEntryVersion.setExpandoBridgeAttributes(serviceContext);
+		model.setDefaultLanguageId(defaultLanguageId);
 	}
 
 	/**
@@ -297,7 +221,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_lvEntryVersion.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -307,7 +231,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public void setLvEntryId(long lvEntryId) {
-		_lvEntryVersion.setLvEntryId(lvEntryId);
+		model.setLvEntryId(lvEntryId);
 	}
 
 	/**
@@ -317,12 +241,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public void setLvEntryVersionId(long lvEntryVersionId) {
-		_lvEntryVersion.setLvEntryVersionId(lvEntryVersionId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_lvEntryVersion.setNew(n);
+		model.setLvEntryVersionId(lvEntryVersionId);
 	}
 
 	/**
@@ -332,12 +251,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_lvEntryVersion.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_lvEntryVersion.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -347,7 +261,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public void setUniqueGroupKey(String uniqueGroupKey) {
-		_lvEntryVersion.setUniqueGroupKey(uniqueGroupKey);
+		model.setUniqueGroupKey(uniqueGroupKey);
 	}
 
 	/**
@@ -357,7 +271,7 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public void setUuid(String uuid) {
-		_lvEntryVersion.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -367,98 +281,32 @@ public class LVEntryVersionWrapper
 	 */
 	@Override
 	public void setVersion(int version) {
-		_lvEntryVersion.setVersion(version);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<LVEntryVersion>
-		toCacheModel() {
-
-		return _lvEntryVersion.toCacheModel();
-	}
-
-	@Override
-	public LVEntryVersion toEscapedModel() {
-		return new LVEntryVersionWrapper(_lvEntryVersion.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _lvEntryVersion.toString();
-	}
-
-	@Override
-	public LVEntryVersion toUnescapedModel() {
-		return new LVEntryVersionWrapper(_lvEntryVersion.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _lvEntryVersion.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof LVEntryVersionWrapper)) {
-			return false;
-		}
-
-		LVEntryVersionWrapper lvEntryVersionWrapper =
-			(LVEntryVersionWrapper)obj;
-
-		if (Objects.equals(
-				_lvEntryVersion, lvEntryVersionWrapper._lvEntryVersion)) {
-
-			return true;
-		}
-
-		return false;
+		model.setVersion(version);
 	}
 
 	@Override
 	public long getVersionedModelId() {
-		return _lvEntryVersion.getVersionedModelId();
+		return model.getVersionedModelId();
 	}
 
 	@Override
 	public void setVersionedModelId(long id) {
-		_lvEntryVersion.setVersionedModelId(id);
+		model.setVersionedModelId(id);
 	}
 
 	@Override
 	public void populateVersionedModel(LVEntry lvEntry) {
-		_lvEntryVersion.populateVersionedModel(lvEntry);
+		model.populateVersionedModel(lvEntry);
 	}
 
 	@Override
 	public LVEntry toVersionedModel() {
-		return _lvEntryVersion.toVersionedModel();
+		return model.toVersionedModel();
 	}
 
 	@Override
-	public LVEntryVersion getWrappedModel() {
-		return _lvEntryVersion;
+	protected LVEntryVersionWrapper wrap(LVEntryVersion lvEntryVersion) {
+		return new LVEntryVersionWrapper(lvEntryVersion);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _lvEntryVersion.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _lvEntryVersion.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_lvEntryVersion.resetOriginalValues();
-	}
-
-	private final LVEntryVersion _lvEntryVersion;
 
 }

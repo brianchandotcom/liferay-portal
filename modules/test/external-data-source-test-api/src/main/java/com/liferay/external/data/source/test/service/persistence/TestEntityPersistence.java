@@ -14,16 +14,11 @@
 
 package com.liferay.external.data.source.test.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.external.data.source.test.exception.NoSuchTestEntityException;
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the test entity service.
@@ -44,9 +39,6 @@ public interface TestEntityPersistence extends BasePersistence<TestEntity> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TestEntityUtil} to access the test entity persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, TestEntity> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Caches the test entity in the entity cache if it is enabled.
@@ -166,8 +158,5 @@ public interface TestEntityPersistence extends BasePersistence<TestEntity> {
 	 * @return the number of test entities
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

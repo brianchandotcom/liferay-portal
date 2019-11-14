@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryVersionException;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryVersion;
@@ -44,13 +44,10 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntry
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -5958,23 +5955,15 @@ public class LVEntryVersionPersistenceImpl
 	public LVEntryVersionPersistenceImpl() {
 		setModelClass(LVEntryVersion.class);
 
+		setModelImplClass(LVEntryVersionImpl.class);
+		setModelPKClass(long.class);
+		setEntityCacheEnabled(LVEntryVersionModelImpl.ENTITY_CACHE_ENABLED);
+
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**
@@ -6086,6 +6075,7 @@ public class LVEntryVersionPersistenceImpl
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -6707,163 +6697,12 @@ public class LVEntryVersionPersistenceImpl
 	/**
 	 * Returns the lv entry version with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the lv entry version
-	 * @return the lv entry version, or <code>null</code> if a lv entry version with the primary key could not be found
-	 */
-	@Override
-	public LVEntryVersion fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			LVEntryVersionModelImpl.ENTITY_CACHE_ENABLED,
-			LVEntryVersionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		LVEntryVersion lvEntryVersion = (LVEntryVersion)serializable;
-
-		if (lvEntryVersion == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				lvEntryVersion = (LVEntryVersion)session.get(
-					LVEntryVersionImpl.class, primaryKey);
-
-				if (lvEntryVersion != null) {
-					cacheResult(lvEntryVersion);
-				}
-				else {
-					entityCache.putResult(
-						LVEntryVersionModelImpl.ENTITY_CACHE_ENABLED,
-						LVEntryVersionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(
-					LVEntryVersionModelImpl.ENTITY_CACHE_ENABLED,
-					LVEntryVersionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return lvEntryVersion;
-	}
-
-	/**
-	 * Returns the lv entry version with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param lvEntryVersionId the primary key of the lv entry version
 	 * @return the lv entry version, or <code>null</code> if a lv entry version with the primary key could not be found
 	 */
 	@Override
 	public LVEntryVersion fetchByPrimaryKey(long lvEntryVersionId) {
 		return fetchByPrimaryKey((Serializable)lvEntryVersionId);
-	}
-
-	@Override
-	public Map<Serializable, LVEntryVersion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, LVEntryVersion> map =
-			new HashMap<Serializable, LVEntryVersion>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			LVEntryVersion lvEntryVersion = fetchByPrimaryKey(primaryKey);
-
-			if (lvEntryVersion != null) {
-				map.put(primaryKey, lvEntryVersion);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				LVEntryVersionModelImpl.ENTITY_CACHE_ENABLED,
-				LVEntryVersionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (LVEntryVersion)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
-
-		query.append(_SQL_SELECT_LVENTRYVERSION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (LVEntryVersion lvEntryVersion :
-					(List<LVEntryVersion>)q.list()) {
-
-				map.put(lvEntryVersion.getPrimaryKeyObj(), lvEntryVersion);
-
-				cacheResult(lvEntryVersion);
-
-				uncachedPrimaryKeys.remove(lvEntryVersion.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					LVEntryVersionModelImpl.ENTITY_CACHE_ENABLED,
-					LVEntryVersionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -7406,6 +7245,21 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "lvEntryVersionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_LVENTRYVERSION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return LVEntryVersionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -7761,9 +7615,6 @@ public class LVEntryVersionPersistenceImpl
 
 	private static final String _SQL_SELECT_LVENTRYVERSION =
 		"SELECT lvEntryVersion FROM LVEntryVersion lvEntryVersion";
-
-	private static final String _SQL_SELECT_LVENTRYVERSION_WHERE_PKS_IN =
-		"SELECT lvEntryVersion FROM LVEntryVersion lvEntryVersion WHERE lvEntryVersionId IN (";
 
 	private static final String _SQL_SELECT_LVENTRYVERSION_WHERE =
 		"SELECT lvEntryVersion FROM LVEntryVersion lvEntryVersion WHERE ";

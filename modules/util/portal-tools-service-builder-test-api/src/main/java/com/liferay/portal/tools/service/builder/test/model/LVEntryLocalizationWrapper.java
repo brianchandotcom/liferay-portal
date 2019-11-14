@@ -14,15 +14,11 @@
 
 package com.liferay.portal.tools.service.builder.test.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -34,20 +30,11 @@ import java.util.Objects;
  * @generated
  */
 public class LVEntryLocalizationWrapper
+	extends BaseModelWrapper<LVEntryLocalization>
 	implements LVEntryLocalization, ModelWrapper<LVEntryLocalization> {
 
 	public LVEntryLocalizationWrapper(LVEntryLocalization lvEntryLocalization) {
-		_lvEntryLocalization = lvEntryLocalization;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return LVEntryLocalization.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return LVEntryLocalization.class.getName();
+		super(lvEntryLocalization);
 	}
 
 	@Override
@@ -118,17 +105,6 @@ public class LVEntryLocalizationWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new LVEntryLocalizationWrapper(
-			(LVEntryLocalization)_lvEntryLocalization.clone());
-	}
-
-	@Override
-	public int compareTo(LVEntryLocalization lvEntryLocalization) {
-		return _lvEntryLocalization.compareTo(lvEntryLocalization);
-	}
-
 	/**
 	 * Returns the company ID of this lv entry localization.
 	 *
@@ -136,7 +112,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public long getCompanyId() {
-		return _lvEntryLocalization.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -146,12 +122,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public String getContent() {
-		return _lvEntryLocalization.getContent();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _lvEntryLocalization.getExpandoBridge();
+		return model.getContent();
 	}
 
 	/**
@@ -161,7 +132,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public long getHeadId() {
-		return _lvEntryLocalization.getHeadId();
+		return model.getHeadId();
 	}
 
 	/**
@@ -171,7 +142,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public String getLanguageId() {
-		return _lvEntryLocalization.getLanguageId();
+		return model.getLanguageId();
 	}
 
 	/**
@@ -181,7 +152,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public long getLvEntryId() {
-		return _lvEntryLocalization.getLvEntryId();
+		return model.getLvEntryId();
 	}
 
 	/**
@@ -191,7 +162,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public long getLvEntryLocalizationId() {
-		return _lvEntryLocalization.getLvEntryLocalizationId();
+		return model.getLvEntryLocalizationId();
 	}
 
 	/**
@@ -201,7 +172,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public long getMvccVersion() {
-		return _lvEntryLocalization.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -211,12 +182,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _lvEntryLocalization.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _lvEntryLocalization.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -226,32 +192,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public String getTitle() {
-		return _lvEntryLocalization.getTitle();
-	}
-
-	@Override
-	public int hashCode() {
-		return _lvEntryLocalization.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _lvEntryLocalization.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _lvEntryLocalization.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _lvEntryLocalization.isNew();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_lvEntryLocalization.setCachedModel(cachedModel);
+		return model.getTitle();
 	}
 
 	/**
@@ -261,7 +202,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
-		_lvEntryLocalization.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -271,24 +212,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public void setContent(String content) {
-		_lvEntryLocalization.setContent(content);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_lvEntryLocalization.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_lvEntryLocalization.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_lvEntryLocalization.setExpandoBridgeAttributes(serviceContext);
+		model.setContent(content);
 	}
 
 	/**
@@ -298,7 +222,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public void setHeadId(long headId) {
-		_lvEntryLocalization.setHeadId(headId);
+		model.setHeadId(headId);
 	}
 
 	/**
@@ -308,7 +232,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public void setLanguageId(String languageId) {
-		_lvEntryLocalization.setLanguageId(languageId);
+		model.setLanguageId(languageId);
 	}
 
 	/**
@@ -318,7 +242,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public void setLvEntryId(long lvEntryId) {
-		_lvEntryLocalization.setLvEntryId(lvEntryId);
+		model.setLvEntryId(lvEntryId);
 	}
 
 	/**
@@ -328,7 +252,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public void setLvEntryLocalizationId(long lvEntryLocalizationId) {
-		_lvEntryLocalization.setLvEntryLocalizationId(lvEntryLocalizationId);
+		model.setLvEntryLocalizationId(lvEntryLocalizationId);
 	}
 
 	/**
@@ -338,12 +262,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_lvEntryLocalization.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_lvEntryLocalization.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -353,12 +272,7 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_lvEntryLocalization.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_lvEntryLocalization.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -368,93 +282,26 @@ public class LVEntryLocalizationWrapper
 	 */
 	@Override
 	public void setTitle(String title) {
-		_lvEntryLocalization.setTitle(title);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<LVEntryLocalization>
-		toCacheModel() {
-
-		return _lvEntryLocalization.toCacheModel();
-	}
-
-	@Override
-	public LVEntryLocalization toEscapedModel() {
-		return new LVEntryLocalizationWrapper(
-			_lvEntryLocalization.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _lvEntryLocalization.toString();
-	}
-
-	@Override
-	public LVEntryLocalization toUnescapedModel() {
-		return new LVEntryLocalizationWrapper(
-			_lvEntryLocalization.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _lvEntryLocalization.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof LVEntryLocalizationWrapper)) {
-			return false;
-		}
-
-		LVEntryLocalizationWrapper lvEntryLocalizationWrapper =
-			(LVEntryLocalizationWrapper)obj;
-
-		if (Objects.equals(
-				_lvEntryLocalization,
-				lvEntryLocalizationWrapper._lvEntryLocalization)) {
-
-			return true;
-		}
-
-		return false;
+		model.setTitle(title);
 	}
 
 	@Override
 	public boolean isHead() {
-		return _lvEntryLocalization.isHead();
+		return model.isHead();
 	}
 
 	@Override
 	public void populateVersionModel(
 		LVEntryLocalizationVersion lvEntryLocalizationVersion) {
 
-		_lvEntryLocalization.populateVersionModel(lvEntryLocalizationVersion);
+		model.populateVersionModel(lvEntryLocalizationVersion);
 	}
 
 	@Override
-	public LVEntryLocalization getWrappedModel() {
-		return _lvEntryLocalization;
-	}
+	protected LVEntryLocalizationWrapper wrap(
+		LVEntryLocalization lvEntryLocalization) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _lvEntryLocalization.isEntityCacheEnabled();
+		return new LVEntryLocalizationWrapper(lvEntryLocalization);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _lvEntryLocalization.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_lvEntryLocalization.resetOriginalValues();
-	}
-
-	private final LVEntryLocalization _lvEntryLocalization;
 
 }

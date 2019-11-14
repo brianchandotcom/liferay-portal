@@ -14,15 +14,11 @@
 
 package com.liferay.portal.tools.service.builder.test.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -34,22 +30,13 @@ import java.util.Objects;
  * @generated
  */
 public class VersionedEntryVersionWrapper
+	extends BaseModelWrapper<VersionedEntryVersion>
 	implements ModelWrapper<VersionedEntryVersion>, VersionedEntryVersion {
 
 	public VersionedEntryVersionWrapper(
 		VersionedEntryVersion versionedEntryVersion) {
 
-		_versionedEntryVersion = versionedEntryVersion;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return VersionedEntryVersion.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return VersionedEntryVersion.class.getName();
+		super(versionedEntryVersion);
 	}
 
 	@Override
@@ -92,22 +79,6 @@ public class VersionedEntryVersionWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new VersionedEntryVersionWrapper(
-			(VersionedEntryVersion)_versionedEntryVersion.clone());
-	}
-
-	@Override
-	public int compareTo(VersionedEntryVersion versionedEntryVersion) {
-		return _versionedEntryVersion.compareTo(versionedEntryVersion);
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _versionedEntryVersion.getExpandoBridge();
-	}
-
 	/**
 	 * Returns the group ID of this versioned entry version.
 	 *
@@ -115,7 +86,7 @@ public class VersionedEntryVersionWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _versionedEntryVersion.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -125,12 +96,7 @@ public class VersionedEntryVersionWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _versionedEntryVersion.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _versionedEntryVersion.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -140,7 +106,7 @@ public class VersionedEntryVersionWrapper
 	 */
 	@Override
 	public int getVersion() {
-		return _versionedEntryVersion.getVersion();
+		return model.getVersion();
 	}
 
 	/**
@@ -150,7 +116,7 @@ public class VersionedEntryVersionWrapper
 	 */
 	@Override
 	public long getVersionedEntryId() {
-		return _versionedEntryVersion.getVersionedEntryId();
+		return model.getVersionedEntryId();
 	}
 
 	/**
@@ -160,49 +126,7 @@ public class VersionedEntryVersionWrapper
 	 */
 	@Override
 	public long getVersionedEntryVersionId() {
-		return _versionedEntryVersion.getVersionedEntryVersionId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _versionedEntryVersion.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _versionedEntryVersion.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _versionedEntryVersion.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _versionedEntryVersion.isNew();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_versionedEntryVersion.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_versionedEntryVersion.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_versionedEntryVersion.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_versionedEntryVersion.setExpandoBridgeAttributes(serviceContext);
+		return model.getVersionedEntryVersionId();
 	}
 
 	/**
@@ -212,12 +136,7 @@ public class VersionedEntryVersionWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_versionedEntryVersion.setGroupId(groupId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_versionedEntryVersion.setNew(n);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -227,12 +146,7 @@ public class VersionedEntryVersionWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_versionedEntryVersion.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_versionedEntryVersion.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -242,7 +156,7 @@ public class VersionedEntryVersionWrapper
 	 */
 	@Override
 	public void setVersion(int version) {
-		_versionedEntryVersion.setVersion(version);
+		model.setVersion(version);
 	}
 
 	/**
@@ -252,7 +166,7 @@ public class VersionedEntryVersionWrapper
 	 */
 	@Override
 	public void setVersionedEntryId(long versionedEntryId) {
-		_versionedEntryVersion.setVersionedEntryId(versionedEntryId);
+		model.setVersionedEntryId(versionedEntryId);
 	}
 
 	/**
@@ -262,102 +176,34 @@ public class VersionedEntryVersionWrapper
 	 */
 	@Override
 	public void setVersionedEntryVersionId(long versionedEntryVersionId) {
-		_versionedEntryVersion.setVersionedEntryVersionId(
-			versionedEntryVersionId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<VersionedEntryVersion>
-		toCacheModel() {
-
-		return _versionedEntryVersion.toCacheModel();
-	}
-
-	@Override
-	public VersionedEntryVersion toEscapedModel() {
-		return new VersionedEntryVersionWrapper(
-			_versionedEntryVersion.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _versionedEntryVersion.toString();
-	}
-
-	@Override
-	public VersionedEntryVersion toUnescapedModel() {
-		return new VersionedEntryVersionWrapper(
-			_versionedEntryVersion.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _versionedEntryVersion.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof VersionedEntryVersionWrapper)) {
-			return false;
-		}
-
-		VersionedEntryVersionWrapper versionedEntryVersionWrapper =
-			(VersionedEntryVersionWrapper)obj;
-
-		if (Objects.equals(
-				_versionedEntryVersion,
-				versionedEntryVersionWrapper._versionedEntryVersion)) {
-
-			return true;
-		}
-
-		return false;
+		model.setVersionedEntryVersionId(versionedEntryVersionId);
 	}
 
 	@Override
 	public long getVersionedModelId() {
-		return _versionedEntryVersion.getVersionedModelId();
+		return model.getVersionedModelId();
 	}
 
 	@Override
 	public void setVersionedModelId(long id) {
-		_versionedEntryVersion.setVersionedModelId(id);
+		model.setVersionedModelId(id);
 	}
 
 	@Override
 	public void populateVersionedModel(VersionedEntry versionedEntry) {
-		_versionedEntryVersion.populateVersionedModel(versionedEntry);
+		model.populateVersionedModel(versionedEntry);
 	}
 
 	@Override
 	public VersionedEntry toVersionedModel() {
-		return _versionedEntryVersion.toVersionedModel();
+		return model.toVersionedModel();
 	}
 
 	@Override
-	public VersionedEntryVersion getWrappedModel() {
-		return _versionedEntryVersion;
-	}
+	protected VersionedEntryVersionWrapper wrap(
+		VersionedEntryVersion versionedEntryVersion) {
 
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _versionedEntryVersion.isEntityCacheEnabled();
+		return new VersionedEntryVersionWrapper(versionedEntryVersion);
 	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _versionedEntryVersion.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_versionedEntryVersion.resetOriginalValues();
-	}
-
-	private final VersionedEntryVersion _versionedEntryVersion;
 
 }

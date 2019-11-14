@@ -73,12 +73,32 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 
 	@Override
 	public BaseModelSearchResult<User> searchAccountUsers(
+			long accountEntryId, String[] emailAddressDomains, String keywords,
+			int status, int cur, int delta, String sortField, boolean reverse)
+		throws PortalException {
+
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				"accountEntryIds", new long[] {accountEntryId}
+			).put(
+				"emailAddressDomains", emailAddressDomains
+			).build();
+
+		return _getUserBaseModelSearchResult(
+			_getSearchResponse(
+				attributes, cur, delta, keywords, reverse, sortField, status));
+	}
+
+	@Override
+	public BaseModelSearchResult<User> searchAccountUsers(
 			long[] accountEntryIds, String keywords, int status, int cur,
 			int delta, String sortField, boolean reverse)
 		throws PortalException {
 
 		for (long accountEntryId : accountEntryIds) {
-			if (accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) {
+			if ((accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_ANY) &&
+				(accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT)) {
+
 				_accountEntryLocalService.getAccountEntry(accountEntryId);
 			}
 		}

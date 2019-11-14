@@ -2273,7 +2273,7 @@ public class DataFactory {
 		List<String> lines = new ArrayList<>();
 
 		StringUtil.readLines(
-			getResourceInputStream("fragment_entries/web_content.html"), lines);
+			getResourceInputStream("data/web_content.html"), lines);
 
 		String html = StringUtil.merge(lines, StringPool.SPACE);
 

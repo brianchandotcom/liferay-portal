@@ -155,7 +155,7 @@ public class SearchHitImpl implements SearchHit, Serializable {
 
 		/**
 		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-		 *             #addHighlightFields(Collection))}
+		 *             #addHighlightFields(Collection)}
 		 */
 		@Deprecated
 		@Override

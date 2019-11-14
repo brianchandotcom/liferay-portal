@@ -19,8 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author     Miguel Pastor
  * @deprecated As of Judson (7.1.x), replaced by {@link
- *             com.liferay.portal.kernel.security.permission.resource.
- *             ModelResourcePermission}
+ *             com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission}
  */
 @Deprecated
 public interface BaseModelPermissionChecker {

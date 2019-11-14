@@ -42,8 +42,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author     Tomas Polesovsky
  * @author     Philip Jones
  * @deprecated As of Judson (7.1.x), since 2.1.0 replaced by {@link
- *             com.liferay.portal.settings.web.portlet.action.
- *             PortalSettingsContributor}
+ *             com.liferay.portal.settings.web.portlet.action.PortalSettingsContributor}
  */
 @Deprecated
 @ProviderType

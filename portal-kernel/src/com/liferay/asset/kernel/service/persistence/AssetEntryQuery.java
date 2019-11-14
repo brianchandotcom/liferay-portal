@@ -250,7 +250,7 @@ public class AssetEntryQuery {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getAllKeywords())}
+	 *             #getAllKeywords()}
 	 */
 	@Deprecated
 	public String getKeywords() {
@@ -464,7 +464,7 @@ public class AssetEntryQuery {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setAllKeywords(String[] keywords))}
+	 *             #setAllKeywords(String[])}
 	 */
 	@Deprecated
 	public void setKeywords(String keywords) {

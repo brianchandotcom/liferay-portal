@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author     Pavel Savinov
  * @deprecated As of Mueller (7.2.x), replaced by {@link
- *             com.liferay.info.display.field.ExpandoInfoDisplayFieldProvider
+ *             com.liferay.info.display.field.ExpandoInfoDisplayFieldProvider}
  */
 @Deprecated
 public class ExpandoInfoDisplayContributorFieldUtil {

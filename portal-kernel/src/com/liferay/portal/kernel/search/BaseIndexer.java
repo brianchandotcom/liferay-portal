@@ -387,7 +387,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	 * @param      status
 	 * @throws     Exception
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             RelatedEntryIndexer.isVisibleRelatedEntry(long, int)}
+	 *             RelatedEntryIndexer#isVisibleRelatedEntry(long, int)}
 	 */
 	@Deprecated
 	@Override
@@ -1157,8 +1157,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.portal.search.contributor.sort.
-	 *             SortFieldTranslator}
+	 *             com.liferay.portal.search.contributor.sort.SortFieldTranslator}
 	 */
 	@Deprecated
 	protected String doGetSortField(String orderByCol) {

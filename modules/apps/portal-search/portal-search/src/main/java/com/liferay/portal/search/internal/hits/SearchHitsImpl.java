@@ -102,7 +102,7 @@ public class SearchHitsImpl implements SearchHits, Serializable {
 
 		/**
 		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-		 *             #addSearchHits(Collection))}
+		 *             #addSearchHits(Collection)}
 		 */
 		@Deprecated
 		@Override

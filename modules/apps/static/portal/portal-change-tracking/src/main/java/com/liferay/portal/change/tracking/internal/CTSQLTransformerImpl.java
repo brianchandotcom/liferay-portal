@@ -247,7 +247,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	}
 
 	/**
-	 * @see https://github.com/JSQLParser/JSqlParser/issues/832
+	 * See https://github.com/JSQLParser/JSqlParser/issues/832
 	 */
 	private String _escape(String sql) {
 		return StringUtil.replace(
@@ -255,7 +255,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	}
 
 	/**
-	 * @see https://github.com/JSQLParser/JSqlParser/issues/832
+	 * See https://github.com/JSQLParser/JSqlParser/issues/832
 	 */
 	private String _unescape(String sql) {
 		return StringUtil.replace(

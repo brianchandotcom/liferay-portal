@@ -178,7 +178,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.taglib.util.FriendlyURLUtil.getFriendlyURL(
+	 *             com.liferay.taglib.util.FriendlyURLUtil#getFriendlyURL(
 	 *             HttpServletRequest, javax.servlet.jsp.PageContext)}
 	 */
 	@Deprecated

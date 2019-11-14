@@ -36,7 +36,7 @@ public interface SearchHitBuilder {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #addHighlightFields(Collection))}
+	 *             #addHighlightFields(Collection)}
 	 */
 	@Deprecated
 	public SearchHitBuilder addHighlightFields(

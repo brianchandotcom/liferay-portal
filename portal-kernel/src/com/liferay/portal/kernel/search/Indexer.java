@@ -104,7 +104,7 @@ public interface Indexer<T> {
 	 * @param      status
 	 * @throws     Exception
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             RelatedEntryIndexer.isVisibleRelatedEntry(long, int)}
+	 *             RelatedEntryIndexer#isVisibleRelatedEntry(long, int)}
 	 */
 	@Deprecated
 	public boolean isVisibleRelatedEntry(long classPK, int status)

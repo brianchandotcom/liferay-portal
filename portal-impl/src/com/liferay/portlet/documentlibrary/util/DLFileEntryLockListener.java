@@ -27,8 +27,7 @@ import com.liferay.portal.util.PropsValues;
 /**
  * @author     Alexander Chow
  * @deprecated As of Mueller (7.2.x), replaced by {@link
- *             com.liferay.document.library.internal.lock.
- *             DLFileEntryLockListener}
+ *             com.liferay.document.library.internal.lock.DLFileEntryLockListener}
  */
 @Deprecated
 public class DLFileEntryLockListener extends BaseLockListener {

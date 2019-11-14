@@ -492,8 +492,8 @@ public class OrganizationFinderImpl
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #findO_ByC_PO_N_T_S_C_Z_R_C(long, long, String, String,
-	 *             String, String, String, String, Long, Long,
-	 *             LinkedHashMap, boolean, int, int, OrderByComparator)}
+	 *             String, String, String, String, Long, Long, LinkedHashMap,
+	 *             boolean, int, int, OrderByComparator)}
 	 */
 	@Deprecated
 	@Override

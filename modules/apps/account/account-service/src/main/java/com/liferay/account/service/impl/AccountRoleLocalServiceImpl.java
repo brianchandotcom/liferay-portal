@@ -14,8 +14,16 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.base.AccountRoleLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -44,5 +52,74 @@ public class AccountRoleLocalServiceImpl
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.account.service.AccountRoleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountRoleLocalServiceUtil</code>.
 	 */
+	@Override
+	public AccountRole addAccountRole(
+			long userId, long accountEntryId, String name,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap)
+		throws PortalException {
+
+		AccountRole accountRole = createAccountRole(
+			counterLocalService.increment());
+
+		accountRole.setAccountEntryId(accountEntryId);
+
+		// Role
+
+		Role role = roleLocalService.addRole(
+			userId, AccountRole.class.getName(), accountRole.getAccountRoleId(),
+			name, titleMap, descriptionMap, RoleConstants.TYPE_PROVIDER, null,
+			null);
+
+		accountRole.setRoleId(role.getRoleId());
+
+		addAccountRole(accountRole);
+
+		return accountRole;
+	}
+
+	@Override
+	public AccountRole deleteAccountRole(AccountRole accountRole)
+		throws PortalException {
+
+		accountRole = super.deleteAccountRole(accountRole);
+
+		// Role
+
+		roleLocalService.deleteRole(accountRole.getRoleId());
+
+		return accountRole;
+	}
+
+	@Override
+	public AccountRole deleteAccountRole(long accountRoleId)
+		throws PortalException {
+
+		AccountRole accountRole = super.deleteAccountRole(accountRoleId);
+
+		// Role
+
+		roleLocalService.deleteRole(accountRole.getRoleId());
+
+		return accountRole;
+	}
+
+	@Override
+	public AccountRole fetchAccountRoleByRoleId(long roleId) {
+		return accountRolePersistence.fetchByRoleId(roleId);
+	}
+
+	@Override
+	public AccountRole getAccountRoleByRoleId(long roleId)
+		throws PortalException {
+
+		return accountRolePersistence.findByRoleId(roleId);
+	}
+
+	@Override
+	public List<AccountRole> getAccountRolesByAccountEntryIds(
+		long[] accountEntryIds) {
+
+		return accountRolePersistence.findByAccountEntryIds(accountEntryIds);
+	}
 
 }

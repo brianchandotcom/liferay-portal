@@ -14,6 +14,13 @@
 
 package com.liferay.account.model.impl;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+
 /**
  * The extended model implementation for the AccountRole service. Represents a row in the &quot;AccountRole&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,5 +39,30 @@ public class AccountRoleImpl extends AccountRoleBaseImpl {
 	 */
 	public AccountRoleImpl() {
 	}
+
+	@Override
+	public Role getRole() {
+		try {
+			return RoleLocalServiceUtil.getRole(getRoleId());
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+
+			throw new RuntimeException(pe);
+		}
+	}
+
+	@Override
+	public String getRoleName() throws PortalException {
+		Role role = getRole();
+
+		if (role == null) {
+			return StringPool.BLANK;
+		}
+
+		return role.getName();
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(AccountRoleImpl.class);
 
 }

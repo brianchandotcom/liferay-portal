@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>LIST_ENTRY_TITLE</td>
-	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h5 | //li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h2</td>
+	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h5 | //li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h2 | //li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//p[contains(@class,'h5')]</td>
 	<td></td>
 </tr>
 <tr>

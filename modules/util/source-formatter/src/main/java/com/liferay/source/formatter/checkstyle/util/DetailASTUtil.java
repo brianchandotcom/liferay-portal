@@ -14,6 +14,9 @@
 
 package com.liferay.source.formatter.checkstyle.util;
 
+import antlr.CommonASTWithHiddenTokens;
+import antlr.CommonHiddenStreamToken;
+
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -51,6 +54,13 @@ public class DetailASTUtil {
 		}
 
 		return endLineNumber;
+	}
+
+	public static CommonHiddenStreamToken getHiddenBefore(DetailAST detailAST) {
+		CommonASTWithHiddenTokens commonASTWithHiddenTokens =
+			(CommonASTWithHiddenTokens)detailAST;
+
+		return commonASTWithHiddenTokens.getHiddenBefore();
 	}
 
 	public static List<String> getImportNames(DetailAST detailAST) {

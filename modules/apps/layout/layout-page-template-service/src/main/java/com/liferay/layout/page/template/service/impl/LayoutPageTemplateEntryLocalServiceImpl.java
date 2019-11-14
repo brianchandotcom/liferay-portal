@@ -833,7 +833,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		String typeSettings = StringPool.BLANK;
 
-		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE) {
+		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE) ||
+			(masterLayoutPlid > 0)) {
+
 			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
 			typeSettingsProperties.setProperty(

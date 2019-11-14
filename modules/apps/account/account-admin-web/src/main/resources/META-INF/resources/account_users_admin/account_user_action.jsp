@@ -17,11 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = currentURL;
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 AccountUserDisplay accountUserDisplay = (AccountUserDisplay)row.getObject();
 
 long accountUserId = accountUserDisplay.getUserId();
+
+User accountUser = UserLocalServiceUtil.getUser(accountUserId);
 %>
 
 <liferay-ui:icon-menu
@@ -42,5 +46,43 @@ long accountUserId = accountUserDisplay.getUserId();
 			target="_blank"
 			url="<%= impersonateUserURL %>"
 		/>
+	</c:if>
+
+	<c:if test="<%= UserPermissionUtil.contains(permissionChecker, accountUserId, ActionKeys.DELETE) %>">
+		<c:if test="<%= !accountUser.isActive() %>">
+			<portlet:actionURL name="/account_admin/edit_account_user" var="restoreUserURL">
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="accountEntriesNavigation" value='<%= ParamUtil.getString(request, "accountEntriesNavigation") %>' />
+				<portlet:param name="accountUserIds" value="<%= String.valueOf(accountUserId) %>" />
+			</portlet:actionURL>
+
+			<liferay-ui:icon
+				message="activate"
+				url="<%= restoreUserURL %>"
+			/>
+		</c:if>
+
+		<portlet:actionURL name="/account_admin/edit_account_user" var="deleteUserURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= accountUser.isActive() ? Constants.DEACTIVATE : Constants.DELETE %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="accountEntriesNavigation" value='<%= ParamUtil.getString(request, "accountEntriesNavigation") %>' />
+			<portlet:param name="accountUserIds" value="<%= String.valueOf(accountUserId) %>" />
+		</portlet:actionURL>
+
+		<c:if test="<%= accountUserId != user.getUserId() %>">
+			<c:choose>
+				<c:when test="<%= accountUser.isActive() %>">
+					<liferay-ui:icon-deactivate
+						url="<%= deleteUserURL %>"
+					/>
+				</c:when>
+				<c:when test="<%= !accountUser.isActive() && PropsValues.USERS_DELETE %>">
+					<liferay-ui:icon-delete
+						url="<%= deleteUserURL %>"
+					/>
+				</c:when>
+			</c:choose>
+		</c:if>
 	</c:if>
 </liferay-ui:icon-menu>

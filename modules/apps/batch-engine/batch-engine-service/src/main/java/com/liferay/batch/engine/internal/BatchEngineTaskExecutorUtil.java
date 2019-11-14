@@ -20,24 +20,18 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.UserLocalService;
 
 /**
  * @author Ivica Cardic
  */
-public class BatchEngineTaskExecutor {
+public class BatchEngineTaskExecutorUtil {
 
-	public BatchEngineTaskExecutor(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	public void execute(UnsafeRunnable unsafeRunnable, long userId)
+	public static void execute(
+			UnsafeRunnable<Throwable> unsafeRunnable, User user)
 		throws Throwable {
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-
-		User user = _userLocalService.getUser(userId);
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
@@ -54,7 +48,5 @@ public class BatchEngineTaskExecutor {
 			PrincipalThreadLocal.setName(name);
 		}
 	}
-
-	private final UserLocalService _userLocalService;
 
 }

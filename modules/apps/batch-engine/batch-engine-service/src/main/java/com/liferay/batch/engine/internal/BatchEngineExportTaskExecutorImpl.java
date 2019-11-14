@@ -66,9 +66,9 @@ public class BatchEngineExportTaskExecutorImpl
 			_batchEngineExportTaskLocalService.updateBatchEngineExportTask(
 				batchEngineExportTask);
 
-			_batchEngineTaskExecutor.execute(
+			BatchEngineTaskExecutorUtil.execute(
 				() -> _exportItems(batchEngineExportTask),
-				batchEngineExportTask.getUserId());
+				_userLocalService.getUser(batchEngineExportTask.getUserId()));
 
 			_updateBatchEngineExportTask(
 				BatchEngineTaskExecuteStatus.COMPLETED, batchEngineExportTask,
@@ -101,9 +101,6 @@ public class BatchEngineExportTaskExecutorImpl
 				GetterUtil.getString(
 					batchEngineExportTaskConfiguration.csvFileColumnDelimiter(),
 					StringPool.COMMA));
-
-		_batchEngineTaskExecutor = new BatchEngineTaskExecutor(
-			_userLocalService);
 
 		_batchEngineTaskItemResourceDelegateFactory =
 			new BatchEngineTaskItemResourceDelegateFactory(
@@ -199,7 +196,6 @@ public class BatchEngineExportTaskExecutorImpl
 	private BatchEngineExportTaskLocalService
 		_batchEngineExportTaskLocalService;
 
-	private BatchEngineTaskExecutor _batchEngineTaskExecutor;
 	private BatchEngineTaskItemResourceDelegateFactory
 		_batchEngineTaskItemResourceDelegateFactory;
 

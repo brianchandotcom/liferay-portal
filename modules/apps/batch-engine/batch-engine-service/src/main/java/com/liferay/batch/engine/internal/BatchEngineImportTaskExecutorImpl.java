@@ -67,9 +67,9 @@ public class BatchEngineImportTaskExecutorImpl
 			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
 				batchEngineImportTask);
 
-			_batchEngineTaskExecutor.execute(
+			BatchEngineTaskExecutorUtil.execute(
 				() -> _importItems(batchEngineImportTask),
-				batchEngineImportTask.getUserId());
+				_userLocalService.getUser(batchEngineImportTask.getUserId()));
 
 			_updateBatchEngineImportTask(
 				BatchEngineTaskExecuteStatus.COMPLETED, batchEngineImportTask,
@@ -100,9 +100,6 @@ public class BatchEngineImportTaskExecutorImpl
 				GetterUtil.getString(
 					batchEngineImportTaskConfiguration.csvFileColumnDelimiter(),
 					StringPool.COMMA));
-
-		_batchEngineTaskExecutor = new BatchEngineTaskExecutor(
-			_userLocalService);
 
 		_batchEngineTaskItemResourceDelegateFactory =
 			new BatchEngineTaskItemResourceDelegateFactory(
@@ -219,7 +216,6 @@ public class BatchEngineImportTaskExecutorImpl
 	private BatchEngineImportTaskLocalService
 		_batchEngineImportTaskLocalService;
 
-	private BatchEngineTaskExecutor _batchEngineTaskExecutor;
 	private BatchEngineTaskItemResourceDelegateFactory
 		_batchEngineTaskItemResourceDelegateFactory;
 

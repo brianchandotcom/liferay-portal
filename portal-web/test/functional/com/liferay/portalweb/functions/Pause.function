@@ -8,4 +8,9 @@ definition {
 		selenium.pause();
 	}
 
+	@summary-ignore = "true"
+	function pauseNoSPARefresh {
+		selenium.pause();
+	}
+
 }

@@ -17,8 +17,6 @@ package com.liferay.change.tracking.web.internal.display;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.change.tracking.display.CTDisplayRenderer;
 import com.liferay.change.tracking.model.CTEntry;
-import com.liferay.change.tracking.web.internal.display.adapter.CTDisplayRendererAssetRendererAdapter;
-import com.liferay.change.tracking.web.internal.display.adapter.CTModelDisplayRendererAdapter;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.SafeClosable;

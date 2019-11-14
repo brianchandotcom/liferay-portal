@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.web.internal.display.adapter;
+package com.liferay.change.tracking.web.internal.display;
 
 import com.liferay.change.tracking.display.CTDisplayRenderer;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;

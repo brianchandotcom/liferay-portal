@@ -20,7 +20,12 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_NAVITEM_SUBITEM</td>
-	<td>//a[contains(.,'${key_navItem}') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//li[contains(@class,'permission-navigation-item')]/a[contains(.,'${key_subItem}')]</td>
+	<td>//a[contains(.,'${key_navItem}') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//*[contains(@class,'permission-navigation')]/a[contains(.,'${key_subItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_NAVITEM_SUBITEM_COLLAPSED</td>
+	<td>//a[contains(.,'${key_navItem}') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//*[contains(@class,'permission-navigation')]/a[contains(.,'${key_subItem}') and contains(@class,'collapsed')]</td>
 	<td></td>
 </tr>
 <tr>

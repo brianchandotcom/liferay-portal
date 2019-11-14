@@ -649,12 +649,20 @@ definition {
 
 		if (IsElementPresent(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED")) {
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
+
+			AssertElementNotPresent(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
 		}
 
 		for (var subItem : list "${subItemList}") {
 			var key_subItem = "${subItem}";
 
 			AssertElementPresent(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
+
+			if (IsElementPresent(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM_COLLAPSED")) {
+				Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM_COLLAPSED");
+
+				AssertElementNotPresent(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM_COLLAPSED");
+			}
 		}
 	}
 

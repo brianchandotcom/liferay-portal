@@ -1,6 +1,7 @@
 dependencies {
-	compile group: "com.puppycrawl.tools", name: "checkstyle", version: "8.11"
+	compile group: "com.puppycrawl.tools", name: "checkstyle", version: "8.26"
 	compile group: "commons-io", name: "commons-io", version: "2.6"
+	compile group: "org.antlr", name: "antlr4-runtime", version: "4.7.2"
 
 	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "2.0.0"
 

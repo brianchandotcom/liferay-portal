@@ -1144,7 +1144,7 @@ public class JavaParser {
 		}
 
 		CommonHiddenStreamToken commonHiddenStreamToken =
-			detailAST.getHiddenBefore();
+			DetailASTUtil.getHiddenBefore(detailAST);
 
 		if (commonHiddenStreamToken != null) {
 			parsedJavaClass.addPrecedingCommentToken(

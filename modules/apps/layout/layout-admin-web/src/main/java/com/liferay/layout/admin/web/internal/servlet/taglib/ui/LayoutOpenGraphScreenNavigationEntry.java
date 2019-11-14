@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.servlet.taglib;
+package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -98,7 +98,8 @@ public class LayoutOpenGraphScreenNavigationEntry
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/layout/open_graph.jsp");
+			httpServletRequest, httpServletResponse,
+			"/layout/screen/navigation/entries/open_graph.jsp");
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {

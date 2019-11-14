@@ -12,27 +12,29 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.servlet.taglib;
+package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.layout.admin.web.internal.constants.LayoutScreenNavigationEntryConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,11 +45,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "screen.navigation.entry.order:Integer=1",
-	service = ScreenNavigationEntry.class
-)
-public class LayoutSEOScreenNavigationEntry
+@Component(service = ScreenNavigationEntry.class)
+public class LayoutGeneralScreenNavigationEntry
 	implements ScreenNavigationEntry<Layout> {
 
 	@Override
@@ -57,7 +56,7 @@ public class LayoutSEOScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return LayoutScreenNavigationEntryConstants.ENTRY_KEY_SEO;
+		return LayoutScreenNavigationEntryConstants.ENTRY_KEY_GENERAL;
 	}
 
 	@Override
@@ -73,24 +72,18 @@ public class LayoutSEOScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
-		Group group = _groupLocalService.fetchGroup(layout.getGroupId());
+		List<FormNavigatorCategory> formNavigatorCategories =
+			FormNavigatorCategoryUtil.getFormNavigatorCategories(
+				FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT);
 
-		if ((group != null) && group.isLayoutPrototype()) {
-			return false;
-		}
+		Stream<FormNavigatorCategory> formNavigatorCategoryStream =
+			formNavigatorCategories.stream();
 
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), layout.getPlid());
-
-		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) ||
-			 Objects.equals(
-				 layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) &&
-			(draftLayout == null)) {
-
-			return false;
-		}
-
-		return true;
+		return formNavigatorCategoryStream.anyMatch(
+			category -> ListUtil.isNotEmpty(
+				FormNavigatorEntryUtil.getFormNavigatorEntries(
+					FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT,
+					category.getKey(), user, layout)));
 	}
 
 	@Override
@@ -100,7 +93,8 @@ public class LayoutSEOScreenNavigationEntry
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/layout/seo_entry.jsp");
+			httpServletRequest, httpServletResponse,
+			"/layout/screen/navigation/entries/general.jsp");
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
@@ -112,13 +106,7 @@ public class LayoutSEOScreenNavigationEntry
 	}
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

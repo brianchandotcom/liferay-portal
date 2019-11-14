@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.servlet.taglib;
+package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.layout.admin.web.internal.constants.LayoutScreenNavigationEntryConstants;

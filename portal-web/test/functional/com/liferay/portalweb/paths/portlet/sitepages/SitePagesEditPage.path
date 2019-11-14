@@ -59,6 +59,37 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SEO-->
+<tr>
+	<td>PREVIEW_DESCRIPTION</td>
+	<td>//div[contains(@class,'preview-seo-description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_SERP</td>
+	<td>//div[contains(@class,'preview-seo-serp')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_TITLE</td>
+	<td>//div[contains(@class,'preview-seo-title text-truncate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_TITLE_ELLIPSES</td>
+	<td>portal/screenshots/page/preview_title_ellipses.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_URL</td>
+	<td>//div[contains(@class,'preview-seo-url text-truncate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_URL_ELLIPSES</td>
+	<td>portal/screenshots/page/preview_url_ellipses.png</td>
+	<td></td>
+</tr>
 <!--LOOK_AND_FEEL-->
 <tr>
 	<td>CHANGE_CURRENT_THEME_BUTTON</td>

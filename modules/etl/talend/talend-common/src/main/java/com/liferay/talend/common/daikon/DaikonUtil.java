@@ -16,6 +16,7 @@ package com.liferay.talend.common.daikon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.talend.daikon.NamedThing;
@@ -25,6 +26,15 @@ import org.talend.daikon.SimpleNamedThing;
  * @author Igor Beslic
  */
 public class DaikonUtil {
+
+	public static List<NamedThing> toNamedThings(Map<String, String> names) {
+		List<NamedThing> namedThings = new ArrayList<>();
+
+		names.forEach(
+			(key, value) -> namedThings.add(new SimpleNamedThing(value, key)));
+
+		return namedThings;
+	}
 
 	public static List<NamedThing> toNamedThings(Set<String> names) {
 		List<NamedThing> namedThings = new ArrayList<>();

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<root>
+	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7210" export-date="Thu, 14 Nov 2019 18:32:25 +0000" type="portlet" company-id="20101" company-group-id="20128" group-id="20124" user-personal-site-group-id="20127" private-layout="true" root-portlet-id="com_liferay_journal_web_portlet_JournalPortlet" schema-version="1.0.0"/>
+	<missing-references>
+		<missing-reference class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" class-pk="25710" attached-class-name="com.liferay.journal.model.JournalArticle" display-name="Basic Web Content" group-id="20128" group-key="20101" live-group-id="20128" type="dependency" referrer-class-name="com.liferay.journal.model.JournalArticle" referrer-display-name="Meet and Greet" uuid="1c013c39-dc30-9f79-7c86-ffd32aeac143" company-id="20101" preloaded="true" referenced-class-name="com.liferay.journal.model.JournalArticle" structure-key="BASIC-WEB-CONTENT"/>
+		<missing-reference class-name="com.liferay.dynamic.data.mapping.model.DDMTemplate" class-pk="25714" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" display-name="Basic Web Content" group-id="20128" group-key="20101" live-group-id="20128" type="dependency" referrer-class-name="com.liferay.journal.model.JournalArticle" referrer-display-name="Meet and Greet" uuid="4d9cb2e5-afa2-94b7-8d0c-c094d0327f76" company-id="20101" preloaded="true" referenced-class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" template-key="BASIC-WEB-CONTENT"/>
+	</missing-references>
+	<portlet portlet-id="com_liferay_journal_web_portlet_JournalPortlet" layout-id="1" path="/group/20124/portlet/com_liferay_journal_web_portlet_JournalPortlet/1/portlet.xml" portlet-data="true" schema-version="1.1.0" portlet-configuration="setup"/>
+	<manifest-summary>
+		<staged-model manifest-summary-key="com.liferay.journal.model.JournalFeed"/>
+		<staged-model manifest-summary-key="com.liferay.journal.model.JournalArticle" addition-count="5"/>
+		<staged-model manifest-summary-key="com.liferay.document.library.kernel.model.DLFileEntry" addition-count="1"/>
+		<staged-model manifest-summary-key="com.liferay.dynamic.data.mapping.model.DDMTemplate#com.liferay.dynamic.data.mapping.model.DDMStructure" addition-count="2"/>
+		<staged-model manifest-summary-key="com.liferay.dynamic.data.mapping.model.DDMStructure#com.liferay.journal.model.JournalArticle" addition-count="2"/>
+		<staged-model manifest-summary-key="com.liferay.journal.model.JournalFolder"/>
+		<staged-model manifest-summary-key="com.liferay.portal.kernel.model.Repository" addition-count="1"/>
+		<staged-model manifest-summary-key="com.liferay.document.library.kernel.model.DLFolder" addition-count="2"/>
+	</manifest-summary>
+</root>

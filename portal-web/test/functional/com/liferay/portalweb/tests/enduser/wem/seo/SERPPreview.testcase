@@ -22,7 +22,7 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that a SERP preview is shown correctly based on the meta tags. "
+	@description = "This test ensures that a SERP preview is shown correctly based on the meta tags."
 	@priority = "5"
 	test Smoke {
 		var portalURL = PropsUtil.get("portal.url");
@@ -98,8 +98,8 @@ definition {
 			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - ${siteName}",
 			pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
 			portalURL = "${portalURL}",
-			truncateHtmlTitle = "true",
-			truncateURL = "true");
+			truncatedHTMLTitle = "true",
+			truncatedURL = "true");
 
 		Button.clickSave();
 
@@ -114,8 +114,8 @@ definition {
 			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - ${siteName}",
 			pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
 			portalURL = "${portalURL}",
-			truncateHtmlTitle = "true",
-			truncateURL = "true");
+			truncatedHTMLTitle = "true",
+			truncatedURL = "true");
 	}
 
 }

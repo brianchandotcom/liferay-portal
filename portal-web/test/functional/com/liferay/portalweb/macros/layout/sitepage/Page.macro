@@ -938,13 +938,13 @@ definition {
 			locator1 = "SitePagesEditPage#PREVIEW_DESCRIPTION",
 			value1 = "${description}");
 
-		if (isSet(truncateHtmlTitle)) {
+		if (isSet(truncatedHTMLTitle)) {
 			ScrollWebElementIntoView(locator1 = "//h4[contains(.,'Open Graph')]");
 
 			SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_TITLE_ELLIPSES");
 		}
 
-		if (isSet(truncateURL)) {
+		if (isSet(truncatedURL)) {
 			ScrollWebElementIntoView(locator1 = "//h4[contains(.,'Open Graph')]");
 
 			SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_URL_ELLIPSES");

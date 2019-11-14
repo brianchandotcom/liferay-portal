@@ -18,7 +18,7 @@ import {TimeRangeContext} from '../filter/store/TimeRangeStore.es';
 import PerformanceByAssigneeCard from './PerformanceByAssigneeCard.es';
 
 const Container = ({processId, query}) => {
-	const {client} = useContext(AppContext);
+	const {client, defaultDelta} = useContext(AppContext);
 	const [data, setData] = useState({});
 	const {getSelectedProcessSteps} = useContext(ProcessStepContext);
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
@@ -72,7 +72,11 @@ const Container = ({processId, query}) => {
 				query={query}
 			/>
 
-			<PerformanceByAssigneeCard.Body data={data} />
+			<PerformanceByAssigneeCard.Body
+				data={data}
+				defaultDelta={defaultDelta}
+				processId={processId}
+			/>
 		</PromisesResolver>
 	);
 };

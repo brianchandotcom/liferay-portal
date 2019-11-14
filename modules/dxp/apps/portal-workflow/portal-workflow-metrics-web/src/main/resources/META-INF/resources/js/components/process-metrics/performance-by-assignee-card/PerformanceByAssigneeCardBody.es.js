@@ -17,9 +17,10 @@ import EmptyState from '../../../shared/components/list/EmptyState.es';
 import ReloadButton from '../../../shared/components/list/ReloadButton.es';
 import LoadingState from '../../../shared/components/loading/LoadingState.es';
 import PromisesResolver from '../../../shared/components/request/PromisesResolver.es';
+import {ChildLink} from '../../../shared/components/router/routerWrapper.es';
 import PerformanceByAssigneeCard from './PerformanceByAssigneeCard.es';
 
-const Body = ({data}) => {
+const Body = ({data, defaultDelta, processId}) => {
 	const {items, totalCount} = data;
 
 	return (
@@ -63,17 +64,22 @@ const Body = ({data}) => {
 
 			<PromisesResolver.Resolved>
 				{items && items.length > 0 ? (
-					<PerformanceByAssigneeCard.Footer totalCount={totalCount} />
+					<PerformanceByAssigneeCard.Footer 
+					defaultDelta={defaultDelta}
+					processId={processId}
+					totalCount={totalCount} />
 				) : null}
 			</PromisesResolver.Resolved>
 		</>
 	);
 };
 
-const Footer = ({totalCount}) => {
+const Footer = ({defaultDelta, processId, totalCount}) => {
+	const viewAllAssigneesUrl = `/performance/assignee/${processId}/${defaultDelta}/1/durationTaskAvg:desc/`;
 	return (
 		<Panel.Footer elementClasses="fixed-bottom">
 			<div className="mb-1 text-right">
+			<ChildLink to={viewAllAssigneesUrl}>
 				<button className="border-0 btn btn-secondary btn-sm">
 					<span className="mr-2" data-testid="viewAllAssignees">
 						{`${Liferay.Language.get(
@@ -83,7 +89,8 @@ const Footer = ({totalCount}) => {
 
 					<Icon iconName="caret-right-l" />
 				</button>
-			</div>
+		</ChildLink>
+		</div>
 		</Panel.Footer>
 	);
 };

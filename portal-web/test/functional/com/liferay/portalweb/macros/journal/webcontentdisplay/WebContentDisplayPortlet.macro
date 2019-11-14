@@ -292,7 +292,8 @@ definition {
 		var key_webContentTitle = "${webContentTitle}";
 
 		AssertClick(
-			locator1 = "Link#WEB_CONTENT_ARTICLE",
+			key_listEntry = "${webContentTitle}",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE",
 			value1 = "${webContentTitle}");
 
 		SelectFrame(value1 = "relative=top");
@@ -300,9 +301,15 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		AssertTextEquals(
-			key_cardName = "${webContentTitle}",
-			locator1 = "Card#SPECIFIC_CARD_TITLE",
+			key_listEntry = "${webContentTitle}",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE",
 			value1 = "${webContentTitle}");
+
+		SelectFrame(value1 = "relative=top");
+
+		Button.clickDone();
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		PortletEntry.save();
 

@@ -24,6 +24,8 @@ public class OASConstants {
 
 	public static final String FORMAT = "format";
 
+	public static final String INFO = "info";
+
 	public static final String OPERATION_DELETE = "delete";
 
 	public static final String OPERATION_GET = "get";
@@ -72,6 +74,8 @@ public class OASConstants {
 	public static final String REQUIRED = "required";
 
 	public static final String TYPE = "type";
+
+	public static final String VERSION = "version";
 
 	private OASConstants() {
 	}

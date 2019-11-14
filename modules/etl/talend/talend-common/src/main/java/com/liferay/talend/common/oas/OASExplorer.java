@@ -100,6 +100,13 @@ public class OASExplorer {
 		return endpointJsonObject.keySet();
 	}
 
+	public String getVersion(JsonObject oasJsonObject) {
+		JsonObject infoVersionJsonObject = _jsonFinder.getDescendantJsonObject(
+			OASConstants.INFO, oasJsonObject);
+
+		return infoVersionJsonObject.getString(OASConstants.VERSION);
+	}
+
 	private Set<String> _extractEndpoints(
 		JsonObject oasJsonObject, String operation) {
 

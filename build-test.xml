@@ -661,31 +661,13 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		<sequential>
 			<var name="module.base.dir" unset="true" />
 
-			<antelope:stringutil property="subrepository.name" string="@{subrepository.name}">
-				<antelope:replace regex="(.+)-private" replacement="$1" />
-			</antelope:stringutil>
-
 			<for param="gitrepo.file">
-				<fileset
-					dir="${project.dir}/modules"
-					erroronmissingdir="false"
-					id="fileset.id"
-				>
+				<fileset dir="${project.dir}/modules" erroronmissingdir="false" id="fileset.id">
 					<include name="**/.gitrepo" />
 				</fileset>
 				<sequential>
-					<local name="gitrepo.file.content" />
-
-					<loadfile
-						property="gitrepo.file.content"
-						srcfile="@{gitrepo.file}"
-					/>
-
 					<if>
-						<or>
-							<contains string="${gitrepo.file.content}" substring="git@github.com:liferay/${subrepository.name}.git" />
-							<contains string="${gitrepo.file.content}" substring="git@github.com:liferay/${subrepository.name}-private.git" />
-						</or>
+						<resourcecontains resource="@{gitrepo.file}" substring="git@github.com:liferay/@{subrepository.name}.git" />
 						<then>
 							<antelope:stringutil property="module.base.dir" string="@{gitrepo.file}">
 								<antelope:replace regex="\\" replacement="/" />

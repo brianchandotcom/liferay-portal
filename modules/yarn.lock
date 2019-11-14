@@ -5083,11 +5083,6 @@ clay-component@2.18.5, clay-component@^2.18.5:
     metal-dom "^2.16.0"
     metal-state "^2.16.0"
 
-clay-css@2.18.4:
-  version "2.18.4"
-  resolved "https://registry.yarnpkg.com/clay-css/-/clay-css-2.18.4.tgz#4d4f09e2e25387098e4aa7be0ecfbd92c3349bd0"
-  integrity sha512-5PT0kHr255px0z3AUSZrIi80B4g6Pu4aAxscDfh/dplkvFc52Ep8NZ+VIemVuknDZLeAJF+FceC2Cv51oqYl1Q==
-
 clay-css@2.18.5, clay-css@^2.11.1:
   version "2.18.5"
   resolved "https://registry.yarnpkg.com/clay-css/-/clay-css-2.18.5.tgz#aacbab035ebc61228e5531e5c8503cc4bc23c6cd"

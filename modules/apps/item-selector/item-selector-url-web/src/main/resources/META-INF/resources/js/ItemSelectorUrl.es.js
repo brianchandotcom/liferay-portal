@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import classNames from 'classnames';
 import React, {useState} from 'react';
 
 import {sub} from './utils.es';
@@ -72,7 +73,9 @@ const ItemSelectorUrl = ({eventName}) => {
 			</form>
 			{imgUrl && (
 				<img
-					className={`img-fluid mt-4 ${imgLoaded ? '' : 'invisible'}`}
+					className={classNames('img-fluid mt-4', {
+						invisible: !imgLoaded
+					})}
 					onLoad={() => setImgLoaded(true)}
 					src={imgUrl}
 				/>

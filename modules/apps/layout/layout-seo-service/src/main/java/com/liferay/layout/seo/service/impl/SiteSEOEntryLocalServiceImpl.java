@@ -14,23 +14,20 @@
 
 package com.liferay.layout.seo.service.impl;
 
+import com.liferay.layout.seo.model.SiteSEOEntry;
 import com.liferay.layout.seo.service.base.SiteSEOEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.DateUtil;
+
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The implementation of the site seo entry local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.layout.seo.service.SiteSEOEntryLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see SiteSEOEntryLocalServiceBaseImpl
+ * @author Alicia Garcia
  */
 @Component(
 	property = "model.class.name=com.liferay.layout.seo.model.SiteSEOEntry",
@@ -39,9 +36,59 @@ import org.osgi.service.component.annotations.Component;
 public class SiteSEOEntryLocalServiceImpl
 	extends SiteSEOEntryLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.layout.seo.service.SiteSEOEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.seo.service.SiteSEOEntryLocalServiceUtil</code>.
-	 */
+	@Override
+	public SiteSEOEntry fetchSiteSEOEntryByGroupId(long groupId) {
+		return siteSEOEntryPersistence.fetchByGroupId(groupId);
+	}
+
+	public SiteSEOEntry updateSiteSEOEntry( long userId,
+											long groupId,
+											long openGraphImageFileEntryId,
+											boolean openSiteGraphEnabled,
+											ServiceContext serviceContext)
+		throws PortalException {
+
+		SiteSEOEntry siteSEOEntry = siteSEOEntryPersistence.fetchByGroupId(
+			groupId);
+
+		if (siteSEOEntry == null) {
+			siteSEOEntry = _addSiteSEOEntry(userId,groupId, serviceContext);
+		}
+
+		siteSEOEntry.setModifiedDate(DateUtil.newDate());
+
+		siteSEOEntry.setOpenGraphSiteEnabled(openSiteGraphEnabled);
+
+		if(openSiteGraphEnabled) {
+			siteSEOEntry.setOpenGraphImageFileEntryId(
+				openGraphImageFileEntryId);
+		}
+		return siteSEOEntryPersistence.update(siteSEOEntry);
+	}
+
+	private SiteSEOEntry _addSiteSEOEntry(long userId,
+										  long groupId, ServiceContext serviceContext)
+		throws PortalException {
+
+		SiteSEOEntry siteSEOEntry;
+		siteSEOEntry = siteSEOEntryPersistence.create(
+			counterLocalService.increment());
+
+		siteSEOEntry.setUuid(serviceContext.getUuid());
+		siteSEOEntry.setGroupId(groupId);
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		siteSEOEntry.setCompanyId(group.getCompanyId());
+
+		siteSEOEntry.setUserId(userId);
+
+		Date now = DateUtil.newDate();
+
+		siteSEOEntry.setCreateDate(now);
+		siteSEOEntry.setModifiedDate(now);
+
+		return siteSEOEntry;
+	}
+
 }

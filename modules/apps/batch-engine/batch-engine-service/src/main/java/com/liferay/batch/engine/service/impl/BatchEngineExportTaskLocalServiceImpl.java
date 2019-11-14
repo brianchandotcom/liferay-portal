@@ -65,6 +65,8 @@ public class BatchEngineExportTaskLocalServiceImpl
 		batchEngineExportTask.setUserId(userId);
 		batchEngineExportTask.setCallbackURL(callbackURL);
 		batchEngineExportTask.setClassName(className);
+		batchEngineExportTask.setContent(
+			new OutputBlob(new UnsyncByteArrayInputStream(new byte[0]), 0));
 		batchEngineExportTask.setContentType(contentType);
 		batchEngineExportTask.setExecuteStatus(executeStatus);
 		batchEngineExportTask.setFieldNamesList(fieldNamesList);

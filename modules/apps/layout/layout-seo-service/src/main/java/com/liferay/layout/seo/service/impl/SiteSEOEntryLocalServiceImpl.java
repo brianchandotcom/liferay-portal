@@ -41,33 +41,32 @@ public class SiteSEOEntryLocalServiceImpl
 		return siteSEOEntryPersistence.fetchByGroupId(groupId);
 	}
 
-	public SiteSEOEntry updateSiteSEOEntry( long userId,
-											long groupId,
-											long openGraphImageFileEntryId,
-											boolean openSiteGraphEnabled,
-											ServiceContext serviceContext)
+	public SiteSEOEntry updateSiteSEOEntry(
+			long userId, long groupId, long openGraphImageFileEntryId,
+			boolean openSiteGraphEnabled, ServiceContext serviceContext)
 		throws PortalException {
 
 		SiteSEOEntry siteSEOEntry = siteSEOEntryPersistence.fetchByGroupId(
 			groupId);
 
 		if (siteSEOEntry == null) {
-			siteSEOEntry = _addSiteSEOEntry(userId,groupId, serviceContext);
+			siteSEOEntry = _addSiteSEOEntry(userId, groupId, serviceContext);
 		}
 
 		siteSEOEntry.setModifiedDate(DateUtil.newDate());
 
 		siteSEOEntry.setOpenGraphSiteEnabled(openSiteGraphEnabled);
 
-		if(openSiteGraphEnabled) {
+		if (openSiteGraphEnabled) {
 			siteSEOEntry.setOpenGraphImageFileEntryId(
 				openGraphImageFileEntryId);
 		}
+
 		return siteSEOEntryPersistence.update(siteSEOEntry);
 	}
 
-	private SiteSEOEntry _addSiteSEOEntry(long userId,
-										  long groupId, ServiceContext serviceContext)
+	private SiteSEOEntry _addSiteSEOEntry(
+			long userId, long groupId, ServiceContext serviceContext)
 		throws PortalException {
 
 		SiteSEOEntry siteSEOEntry;

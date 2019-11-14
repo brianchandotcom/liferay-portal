@@ -17,7 +17,7 @@
 <%@ include file="/group_selector/init.jsp" %>
 
 <%
-GroupSelectorDisplayContext groupSelectorDisplayContext = new GroupSelectorDisplayContext(liferayPortletRequest, liferayPortletResponse);
+GroupSelectorDisplayContext groupSelectorDisplayContext = new GroupSelectorDisplayContext(liferayPortletRequest);
 %>
 
 <%

@@ -20,7 +20,7 @@ import com.liferay.depot.service.DepotEntryGroupRelService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -93,7 +93,7 @@ public class GroupItemSelectorProviderImpl
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "repository");
+		return _language.get(locale, "repository");
 	}
 
 	private Optional<Group> _toGroup(DepotEntryGroupRel depotEntryGroupRel) {
@@ -121,5 +121,8 @@ public class GroupItemSelectorProviderImpl
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private Language _language;
 
 }

@@ -65,7 +65,7 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 			PortletURL portletURL)
 		throws Exception {
 
-		addGroupSelectorBreadcrumbEntry(
+		_addGroupSelectorBreadcrumbEntry(
 			httpServletRequest, liferayPortletResponse, portletURL);
 
 		portletURL.setParameter("displayStyle", displayStyle);
@@ -76,7 +76,7 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		addPortletBreadcrumbEntry(
+		_addPortletBreadcrumbEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, httpServletRequest,
 			scopeGroup.getDescriptiveName(httpServletRequest.getLocale()),
 			portletURL);
@@ -89,12 +89,12 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 			Collections.reverse(ancestorFolders);
 
 			for (Folder ancestorFolder : ancestorFolders) {
-				addPortletBreadcrumbEntry(
+				_addPortletBreadcrumbEntry(
 					ancestorFolder.getFolderId(), httpServletRequest,
 					ancestorFolder.getName(), portletURL);
 			}
 
-			addPortletBreadcrumbEntry(
+			_addPortletBreadcrumbEntry(
 				folder.getFolderId(), httpServletRequest, folder.getName(),
 				portletURL);
 		}
@@ -160,8 +160,7 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 			ItemSelectorReturnTypeResolver
 				<? extends ItemSelectorReturnType, FileEntry>
 					itemSelectorReturnTypeResolver,
-			ItemSelectorReturnType itemSelectorReturnType)
-		throws Exception {
+			ItemSelectorReturnType itemSelectorReturnType) {
 
 		if (itemSelectorReturnTypeResolver != null) {
 			Class<? extends ItemSelectorReturnType>
@@ -192,18 +191,18 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 			itemSelectorReturnType, fileEntry, themeDisplay);
 	}
 
-	protected static void addGroupSelectorBreadcrumbEntry(
+	private static void _addGroupSelectorBreadcrumbEntry(
 			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			PortletURL portletURL)
-		throws PortalException, PortletException {
+		throws PortletException {
 
 		PortletURL viewGroupSelectorURL = PortletURLUtil.clone(
 			portletURL, liferayPortletResponse);
 
 		viewGroupSelectorURL.setParameter(
 			"showGroupSelector", Boolean.TRUE.toString());
-		viewGroupSelectorURL.setParameter("group_type", "site");
+		viewGroupSelectorURL.setParameter("groupType", "site");
 
 		ResourceBundleLoader resourceBundleLoader =
 			ResourceBundleLoaderUtil.
@@ -218,7 +217,7 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 			viewGroupSelectorURL.toString());
 	}
 
-	protected static void addPortletBreadcrumbEntry(
+	private static void _addPortletBreadcrumbEntry(
 		long folderId, HttpServletRequest httpServletRequest, String title,
 		PortletURL portletURL) {
 

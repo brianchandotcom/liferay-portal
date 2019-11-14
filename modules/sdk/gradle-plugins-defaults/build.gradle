@@ -16,7 +16,7 @@ configurations {
 dependencies {
 	compile group: "com.github.jk1", name: "gradle-license-report", version: "1.8"
 	compile group: "com.gradle.publish", name: "plugin-publish-plugin", version: "0.9.9"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "4.4.82"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "4.4.83"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.app.javadoc.builder", version: "1.2.2"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.baseline", version: "2.2.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "1.0.16"

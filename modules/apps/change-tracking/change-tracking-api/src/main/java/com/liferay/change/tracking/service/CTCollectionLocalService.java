@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.service;
 
+import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,6 +74,10 @@ public interface CTCollectionLocalService
 
 	public CTCollection addCTCollection(
 			long companyId, long userId, String name, String description)
+		throws PortalException;
+
+	public Map<Long, List<ConflictInfo>> checkConflicts(
+			CTCollection ctCollection)
 		throws PortalException;
 
 	/**

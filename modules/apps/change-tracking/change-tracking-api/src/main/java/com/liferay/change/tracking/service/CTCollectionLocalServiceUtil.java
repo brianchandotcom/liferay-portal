@@ -60,6 +60,16 @@ public class CTCollectionLocalServiceUtil {
 			companyId, userId, name, description);
 	}
 
+	public static java.util.Map
+		<Long,
+		 java.util.List<com.liferay.change.tracking.conflict.ConflictInfo>>
+				checkConflicts(
+					com.liferay.change.tracking.model.CTCollection ctCollection)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().checkConflicts(ctCollection);
+	}
+
 	/**
 	 * Creates a new ct collection with the primary key. Does not add the ct collection to the database.
 	 *

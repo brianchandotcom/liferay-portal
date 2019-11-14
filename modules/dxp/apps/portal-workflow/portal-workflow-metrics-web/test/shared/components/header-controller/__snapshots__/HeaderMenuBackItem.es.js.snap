@@ -5,7 +5,7 @@ exports[`Should render component on container 1`] = `
   className="control-menu-nav-item"
 >
   <a
-    className="control-menu-icon dropdown-item lfr-icon-item"
+    className="control-menu-icon lfr-icon-item"
     href="/"
     onClick={[Function]}
   >

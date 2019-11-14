@@ -11,9 +11,10 @@
 
 import React from 'react';
 
-import FilterResultsBar from '../../shared/components/filter/FilterResultsBar.es';
 import {getFilterResults} from '../../shared/components/filter/util/filterUtil.es';
+import Search from '../../shared/components/pagination/Search.es';
 import PromisesResolver from '../../shared/components/request/PromisesResolver.es';
+import ResultsBar from '../../shared/components/results-bar/ResultsBar.es';
 import {useFilterItemKeys} from '../../shared/hooks/useFilterItemKeys.es';
 import {useFiltersReducer} from '../../shared/hooks/useFiltersReducer.es';
 import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
@@ -38,49 +39,33 @@ const filterTitles = {
 	roles: Liferay.Language.get('roles')
 };
 
-const WorkloadByAssigneePage = ({page, pageSize, processId, sort}) => {
-	useProcessTitle(processId, Liferay.Language.get('workload-by-assignee'));
-
-	const [filterValues, dispatch] = useFiltersReducer(filterKeys);
-	const {roleIds, taskKeys} = useFilterItemKeys(filterKeys, filterValues);
-
-	const {data, promises} = useResource(
-		`/processes/${processId}/assignee-users`,
-		{
-			page,
-			pageSize,
-			roleIds,
-			sort: decodeURIComponent(sort),
-			taskKeys
-		}
-	);
-
-	return (
-		<PromisesResolver promises={promises}>
-			<WorkloadByAssigneePage.Filters
-				dispatch={dispatch}
-				filterValues={filterValues}
-				processId={processId}
-				totalCount={data.totalCount}
-			/>
-
-			<div className="container-fluid-1280 mt-4">
-				<WorkloadByAssigneePage.Body
-					data={data}
-					processId={processId}
-					taskKeys={taskKeys}
-				/>
-			</div>
-		</PromisesResolver>
-	);
-};
-
-const Filters = ({dispatch, filterValues, processId, totalCount}) => {
+const Filters = ({
+	dispatch,
+	filterValues,
+	page,
+	pageSize,
+	processId,
+	search,
+	sort,
+	totalCount
+}) => {
 	const filterResults = getFilterResults(
 		filterKeys,
 		filterTitles,
 		filterValues
 	);
+
+	const routerParams = {page, pageSize, processId, sort};
+
+	const selectedFilters = filterResults.filter(filter => {
+		filter.items = filter.items
+			? filter.items.filter(item => item.active)
+			: [];
+
+		return !!filter.items.length;
+	});
+
+	const showFiltersResult = search || !!selectedFilters.length;
 
 	return (
 		<>
@@ -105,11 +90,84 @@ const Filters = ({dispatch, filterValues, processId, totalCount}) => {
 							processId={processId}
 						/>
 					</ul>
+
+					<div className="nav-form navbar-form-autofit">
+						<Search
+							disabled={false}
+							placeholder={Liferay.Language.get(
+								'search-for-assignee-name'
+							)}
+						/>
+					</div>
 				</div>
 			</nav>
 
-			<FilterResultsBar filters={filterResults} totalCount={totalCount} />
+			{showFiltersResult && (
+				<ResultsBar>
+					<ResultsBar.TotalCount
+						search={search}
+						totalCount={totalCount}
+					/>
+
+					<ResultsBar.FilterItems
+						filters={selectedFilters}
+						search={search}
+						{...routerParams}
+					/>
+
+					<ResultsBar.Clear
+						filters={selectedFilters}
+						{...routerParams}
+					/>
+				</ResultsBar>
+			)}
 		</>
+	);
+};
+
+const WorkloadByAssigneePage = ({page, pageSize, processId, search, sort}) => {
+	let keywords;
+	useProcessTitle(processId, Liferay.Language.get('workload-by-assignee'));
+
+	const [filterValues, dispatch] = useFiltersReducer(filterKeys);
+	const {roleIds, taskKeys} = useFilterItemKeys(filterKeys, filterValues);
+
+	if (typeof search === 'string' && search) {
+		keywords = decodeURIComponent(search);
+	}
+
+	const {data, promises} = useResource(
+		`/processes/${processId}/assignee-users`,
+		{
+			keywords,
+			page,
+			pageSize,
+			roleIds,
+			sort: decodeURIComponent(sort),
+			taskKeys
+		}
+	);
+
+	return (
+		<PromisesResolver promises={promises}>
+			<WorkloadByAssigneePage.Filters
+				dispatch={dispatch}
+				filterValues={filterValues}
+				page={page}
+				pageSize={pageSize}
+				processId={processId}
+				search={search}
+				sort={sort}
+				totalCount={data.totalCount}
+			/>
+
+			<div className="container-fluid-1280 mt-4">
+				<WorkloadByAssigneePage.Body
+					data={data}
+					processId={processId}
+				/>
+			</div>
+		</PromisesResolver>
 	);
 };
 

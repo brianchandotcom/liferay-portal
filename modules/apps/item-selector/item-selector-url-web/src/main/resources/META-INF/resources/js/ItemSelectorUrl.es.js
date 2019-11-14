@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,24 +11,9 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+import React from 'react';
 
-<%
-ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext = (ItemSelectorURLViewDisplayContext)request.getAttribute(ItemSelectorURLView.ITEM_SELECTOR_URL_VIEW_DISPLAY_CONTEXT);
-
-Map<String, Object> data = new HashMap<>();
-data.put("eventName", itemSelectorURLViewDisplayContext.getItemSelectedEventName());
-%>
-
-<div class="lfr-form-content">
-	<div class="sheet sheet-lg">
-		<div class="panel-group panel-group-flush">
-			<react:component
-				data="<%= data %>"
-				module="js/ItemSelectorUrl.es"
-			/>
-		</div>
-	</div>
-</div>
+export default function() {
+	return <h1>hello world</h1>;
+}

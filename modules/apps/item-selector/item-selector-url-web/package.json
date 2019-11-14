@@ -1,0 +1,16 @@
+{
+	"dependencies": {
+		"@clayui/button": "3.0.2",
+		"@clayui/form": "3.2.0",
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
+		"react": "16.9.0"
+	},
+	"name": "item-selector-url-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "5.0.0"
+}

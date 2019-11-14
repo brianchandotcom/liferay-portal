@@ -705,7 +705,10 @@ definition {
 	@description = "This is a test for LPS-101328. Editable image name should be visible in the floating toolbar."
 	@priority = "5"
 	test ViewSelectedImageName {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until LRQA-52823 resolved
+
+		property portal.acceptance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 

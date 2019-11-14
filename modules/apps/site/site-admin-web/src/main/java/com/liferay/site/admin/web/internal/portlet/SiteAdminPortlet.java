@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -814,6 +815,15 @@ public class SiteAdminPortlet extends MVCPortlet {
 			}
 		}
 
+		boolean openGraphEnabled = ParamUtil.getBoolean(
+			actionRequest, "openGraphEnabled");
+		long openGraphImageFileEntryId = ParamUtil.getLong(
+			actionRequest, "openGraphImageFileEntryId");
+
+		_updateSiteSEOEntry(
+			portal.getUserId(actionRequest), liveGroup.getGroupId(),
+			openGraphEnabled, openGraphImageFileEntryId, serviceContext);
+
 		// Settings
 
 		UnicodeProperties typeSettingsProperties =
@@ -1116,6 +1126,10 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected Http http;
 
 	protected LayoutLocalService layoutLocalService;
+
+	@Reference
+	protected LayoutSEOSiteLocalService layoutSEOSiteLocalService;
+
 	protected LayoutSetLocalService layoutSetLocalService;
 	protected LayoutSetPrototypeService layoutSetPrototypeService;
 	protected LayoutSetService layoutSetService;
@@ -1136,6 +1150,16 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected TeamLocalService teamLocalService;
 	protected UserLocalService userLocalService;
 	protected UserService userService;
+
+	private void _updateSiteSEOEntry(
+			long userId, long groupId, boolean openGraphEnabled,
+			long openGraphImageFileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		layoutSEOSiteLocalService.updateLayoutSEOSite(
+			userId, groupId, openGraphEnabled, openGraphImageFileEntryId,
+			serviceContext);
+	}
 
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;
 

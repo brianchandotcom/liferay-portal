@@ -53,7 +53,7 @@ definition {
 			var elasticsearchTasks = JSONCurlUtil.get("${curl}");
 
 			while ((!(contains("${elasticsearchTasks}", "indices:data/write/bulk"))) && ("${reindexStartTime}" != "10")) {
-				Pause(locator1 = "1000");
+				Pause.pauseNoSPARefresh(locator1 = "1000");
 
 				var reindexStartTime = ${reindexStartTime} + 1;
 
@@ -65,7 +65,7 @@ definition {
 			echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
 
 			while (contains("${elasticsearchTasks}", "indices:data/write/bulk") && ("${reindexElapsedTime}" != "120")) {
-				Pause(locator1 = "5000");
+				Pause.pauseNoSPARefresh(locator1 = "5000");
 
 				var reindexElapsedTime = ${reindexElapsedTime} + 5;
 
@@ -76,7 +76,7 @@ definition {
 		}
 		else if (contains("${searchEngineVendor}", "Solr")) {
 			while (IsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")&& ("${reindexElapsedTime}" != "120")) {
-				Pause(locator1 = "5000");
+				Pause.pauseNoSPARefresh(locator1 = "5000");
 
 				var reindexElapsedTime = ${reindexElapsedTime} + 5;
 			}

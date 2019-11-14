@@ -166,10 +166,10 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 		serviceContext = ServiceContextTestUtil.getServiceContext(
 			group, companyAdminUser.getUserId());
 
-		setUpPermissionThreadLocal();
-		setUpPrincipalThreadLocal();
-		setUpUsers();
-		setUpWorkflow();
+		_setUpPermissionThreadLocal();
+		_setUpPrincipalThreadLocal();
+		_setUpUsers();
+		_setUpWorkflow();
 	}
 
 	@After
@@ -376,7 +376,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 				RandomTestUtil.randomString());
 
-			DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+			DDMFormValues ddmFormValues = _createDDMFormValues(ddmForm);
 
 			return DDLRecordLocalServiceUtil.addRecord(
 				adminUser.getUserId(), group.getGroupId(),
@@ -504,36 +504,6 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 		}
 	}
 
-	protected DDMFormValues createDDMFormValues(DDMForm ddmForm) {
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm);
-
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
-				RandomTestUtil.randomString(), StringPool.BLANK);
-
-		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-
-		return ddmFormValues;
-	}
-
-	protected void createJoinXorWorkflow() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_PROXY_MESSAGE_LISTENER_CLASS_NAME, Level.OFF)) {
-
-			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
-				adminUser.getCompanyId(), JOIN_XOR, 1);
-		}
-		catch (WorkflowException we) {
-			String content = read("join-xor-definition.xml");
-
-			WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
-				adminUser.getCompanyId(), adminUser.getUserId(), JOIN_XOR,
-				JOIN_XOR, content.getBytes());
-		}
-	}
-
 	protected Organization createOrganization(boolean site)
 		throws PortalException {
 
@@ -550,76 +520,12 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			StringUtil.randomString(), site);
 	}
 
-	protected void createScriptedAssignmentWorkflow() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_PROXY_MESSAGE_LISTENER_CLASS_NAME, Level.OFF)) {
-
-			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
-				adminUser.getCompanyId(), SCRIPTED_SINGLE_APPROVER, 1);
-		}
-		catch (WorkflowException we) {
-			String content = read(
-				"single-approver-definition-scripted-assignment.xml");
-
-			WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
-				adminUser.getCompanyId(), adminUser.getUserId(),
-				SCRIPTED_SINGLE_APPROVER, SCRIPTED_SINGLE_APPROVER,
-				content.getBytes());
-		}
-	}
-
-	protected void createSiteMemberWorkflow() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_PROXY_MESSAGE_LISTENER_CLASS_NAME, Level.OFF)) {
-
-			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
-				adminUser.getCompanyId(), SITE_MEMBER_SINGLE_APPROVER, 1);
-		}
-		catch (WorkflowException we) {
-			String content = read("single-approver-definition-site-member.xml");
-
-			WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
-				adminUser.getCompanyId(), adminUser.getUserId(),
-				SITE_MEMBER_SINGLE_APPROVER, SITE_MEMBER_SINGLE_APPROVER,
-				content.getBytes());
-		}
-	}
-
 	protected User createUser(String roleName) throws Exception {
-		return createUser(roleName, group, true);
+		return _createUser(roleName, group, true);
 	}
 
 	protected User createUser(String roleName, Group group) throws Exception {
-		return createUser(roleName, group, true);
-	}
-
-	protected User createUser(
-			String roleName, Group group, boolean addUserToRole)
-		throws Exception {
-
-		User user = UserTestUtil.addUser(
-			company.getCompanyId(), companyAdminUser.getUserId(),
-			RandomTestUtil.randomString(
-				NumericStringRandomizerBumper.INSTANCE,
-				UniqueStringRandomizerBumper.INSTANCE),
-			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new long[] {group.getGroupId()},
-			ServiceContextTestUtil.getServiceContext());
-
-		Role role = RoleLocalServiceUtil.getRole(
-			company.getCompanyId(), roleName);
-
-		if (addUserToRole) {
-			UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
-		}
-
-		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			new long[] {user.getUserId()}, group.getGroupId(),
-			role.getRoleId());
-
-		return user;
+		return _createUser(roleName, group, true);
 	}
 
 	protected void deactivateWorkflow(
@@ -647,10 +553,6 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			classPK);
 	}
 
-	protected String getBasePath() {
-		return "com/liferay/portal/workflow/kaleo/dependencies/";
-	}
-
 	protected DLFileEntryType getBasicFileEntryType() throws Exception {
 		return DLFileEntryTypeLocalServiceUtil.getFileEntryType(
 			0, "BASIC-DOCUMENT");
@@ -660,33 +562,11 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			String className, long classPK)
 		throws WorkflowException {
 
-		return getWorkflowInstance(className, classPK, true);
-	}
-
-	protected WorkflowInstance getWorkflowInstance(
-			String className, long classPK, boolean completed)
-		throws WorkflowException {
-
-		List<WorkflowInstance> workflowInstances =
-			WorkflowInstanceManagerUtil.getWorkflowInstances(
-				adminUser.getCompanyId(), adminUser.getUserId(), className,
-				classPK, completed, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Assert.assertEquals(
-			workflowInstances.toString(), 1, workflowInstances.size());
-
-		return workflowInstances.get(0);
+		return _getWorkflowInstance(className, classPK, true);
 	}
 
 	protected WorkflowTask getWorkflowTask() throws Exception {
 		return getWorkflowTask(adminUser, null, false, null, 0);
-	}
-
-	protected WorkflowTask getWorkflowTask(
-			User user, String taskName, boolean completed)
-		throws Exception {
-
-		return getWorkflowTask(adminUser, taskName, completed, null, 0);
 	}
 
 	protected WorkflowTask getWorkflowTask(
@@ -699,7 +579,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 		WorkflowInstance workflowInstance = null;
 
 		if (Validator.isNotNull(className) && (classPK > 0)) {
-			workflowInstance = getWorkflowInstance(
+			workflowInstance = _getWorkflowInstance(
 				className, classPK, completed);
 
 			if (workflowTasks.isEmpty()) {
@@ -740,68 +620,16 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			workflowTask.getWorkflowTaskId(), user.getUserId());
 	}
 
-	protected String read(String fileName) throws Exception {
-		Class<?> clazz = getClass();
-
-		return StringUtil.read(
-			clazz.getClassLoader(), getBasePath() + fileName);
-	}
-
 	protected int searchCount(String keywords) throws Exception {
 		return WorkflowTaskManagerUtil.searchCount(
-			adminUser.getCompanyId(), adminUser.getUserId(), keywords, null,
-			false, true);
+			adminUser.getCompanyId(), adminUser.getUserId(), keywords, keywords,
+			null, null, null, null, false, true, false);
 	}
 
 	protected int searchCountByUserRoles(User user) throws Exception {
 		return WorkflowTaskManagerUtil.searchCount(
-			user.getCompanyId(), user.getUserId(), null, null, false, true);
-	}
-
-	protected void setUpPermissionThreadLocal() throws Exception {
-		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
-
-		PermissionThreadLocal.setPermissionChecker(
-			new SimplePermissionChecker() {
-				{
-					init(companyAdminUser);
-				}
-
-				@Override
-				public boolean hasOwnerPermission(
-					long companyId, String name, String primKey, long ownerId,
-					String actionId) {
-
-					return true;
-				}
-
-			});
-	}
-
-	protected void setUpPrincipalThreadLocal() throws Exception {
-		_name = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(companyAdminUser.getUserId());
-	}
-
-	protected void setUpUsers() throws Exception {
-		adminUser = createUser(RoleConstants.ADMINISTRATOR);
-
-		portalContentReviewerUser = createUser(
-			RoleConstants.PORTAL_CONTENT_REVIEWER);
-
-		siteAdminUser = createUser(RoleConstants.SITE_ADMINISTRATOR);
-
-		siteContentReviewerUser = createUser(
-			RoleConstants.SITE_CONTENT_REVIEWER);
-
-		siteMemberUser = createUser(RoleConstants.SITE_MEMBER);
-	}
-
-	protected void setUpWorkflow() throws Exception {
-		createJoinXorWorkflow();
-		createScriptedAssignmentWorkflow();
-		createSiteMemberWorkflow();
+			user.getCompanyId(), user.getUserId(), null, null, null, null, null,
+			null, false, true, false);
 	}
 
 	protected FileVersion updateFileVersion(long fileEntryId) throws Exception {
@@ -891,6 +719,120 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	@Inject
 	protected UserLocalService userLocalService;
 
+	private DDMFormValues _createDDMFormValues(DDMForm ddmForm) {
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
+				RandomTestUtil.randomString(), StringPool.BLANK);
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		return ddmFormValues;
+	}
+
+	private void _createJoinXorWorkflow() throws Exception {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					_PROXY_MESSAGE_LISTENER_CLASS_NAME, Level.OFF)) {
+
+			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+				adminUser.getCompanyId(), JOIN_XOR, 1);
+		}
+		catch (WorkflowException we) {
+			String content = _read("join-xor-definition.xml");
+
+			WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
+				adminUser.getCompanyId(), adminUser.getUserId(), JOIN_XOR,
+				JOIN_XOR, content.getBytes());
+		}
+	}
+
+	private void _createScriptedAssignmentWorkflow() throws Exception {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					_PROXY_MESSAGE_LISTENER_CLASS_NAME, Level.OFF)) {
+
+			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+				adminUser.getCompanyId(), SCRIPTED_SINGLE_APPROVER, 1);
+		}
+		catch (WorkflowException we) {
+			String content = _read(
+				"single-approver-definition-scripted-assignment.xml");
+
+			WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
+				adminUser.getCompanyId(), adminUser.getUserId(),
+				SCRIPTED_SINGLE_APPROVER, SCRIPTED_SINGLE_APPROVER,
+				content.getBytes());
+		}
+	}
+
+	private void _createSiteMemberWorkflow() throws Exception {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					_PROXY_MESSAGE_LISTENER_CLASS_NAME, Level.OFF)) {
+
+			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+				adminUser.getCompanyId(), SITE_MEMBER_SINGLE_APPROVER, 1);
+		}
+		catch (WorkflowException we) {
+			String content = _read(
+				"single-approver-definition-site-member.xml");
+
+			WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
+				adminUser.getCompanyId(), adminUser.getUserId(),
+				SITE_MEMBER_SINGLE_APPROVER, SITE_MEMBER_SINGLE_APPROVER,
+				content.getBytes());
+		}
+	}
+
+	private User _createUser(
+			String roleName, Group group, boolean addUserToRole)
+		throws Exception {
+
+		User user = UserTestUtil.addUser(
+			company.getCompanyId(), companyAdminUser.getUserId(),
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {group.getGroupId()},
+			ServiceContextTestUtil.getServiceContext());
+
+		Role role = RoleLocalServiceUtil.getRole(
+			company.getCompanyId(), roleName);
+
+		if (addUserToRole) {
+			UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+		}
+
+		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+			new long[] {user.getUserId()}, group.getGroupId(),
+			role.getRoleId());
+
+		return user;
+	}
+
+	private String _getBasePath() {
+		return "com/liferay/portal/workflow/kaleo/dependencies/";
+	}
+
+	private WorkflowInstance _getWorkflowInstance(
+			String className, long classPK, boolean completed)
+		throws WorkflowException {
+
+		List<WorkflowInstance> workflowInstances =
+			WorkflowInstanceManagerUtil.getWorkflowInstances(
+				adminUser.getCompanyId(), adminUser.getUserId(), className,
+				classPK, completed, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			workflowInstances.toString(), 1, workflowInstances.size());
+
+		return workflowInstances.get(0);
+	}
+
 	private List<WorkflowTask> _getWorkflowTasks(User user, boolean completed)
 		throws Exception {
 
@@ -913,6 +855,59 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 
 				return workflowTasks;
 			});
+	}
+
+	private String _read(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		return StringUtil.read(
+			clazz.getClassLoader(), _getBasePath() + fileName);
+	}
+
+	private void _setUpPermissionThreadLocal() throws Exception {
+		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+				{
+					init(companyAdminUser);
+				}
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+			});
+	}
+
+	private void _setUpPrincipalThreadLocal() throws Exception {
+		_name = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(companyAdminUser.getUserId());
+	}
+
+	private void _setUpUsers() throws Exception {
+		adminUser = createUser(RoleConstants.ADMINISTRATOR);
+
+		portalContentReviewerUser = createUser(
+			RoleConstants.PORTAL_CONTENT_REVIEWER);
+
+		siteAdminUser = createUser(RoleConstants.SITE_ADMINISTRATOR);
+
+		siteContentReviewerUser = createUser(
+			RoleConstants.SITE_CONTENT_REVIEWER);
+
+		siteMemberUser = createUser(RoleConstants.SITE_MEMBER);
+	}
+
+	private void _setUpWorkflow() throws Exception {
+		_createJoinXorWorkflow();
+		_createScriptedAssignmentWorkflow();
+		_createSiteMemberWorkflow();
 	}
 
 	private static final String _MAIL_ENGINE_CLASS_NAME =

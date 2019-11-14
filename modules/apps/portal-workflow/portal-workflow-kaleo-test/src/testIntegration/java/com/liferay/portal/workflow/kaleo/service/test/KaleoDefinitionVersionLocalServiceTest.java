@@ -51,17 +51,17 @@ public class KaleoDefinitionVersionLocalServiceTest {
 
 	@Before
 	public void setUp() throws PortalException {
-		setUpServiceContext();
+		_setUpServiceContext();
 	}
 
 	@Test
 	public void testAddKaleoDefinitionShouldCreateVersion() throws Exception {
-		KaleoDefinition kaleoDefinition = addKaleoDefinition();
+		KaleoDefinition kaleoDefinition = _addKaleoDefinition();
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			KaleoDefinitionVersionLocalServiceUtil.getKaleoDefinitionVersion(
 				kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
-				getVersion(kaleoDefinition.getVersion()));
+				_getVersion(kaleoDefinition.getVersion()));
 
 		Assert.assertEquals("1.0", kaleoDefinitionVersion.getVersion());
 	}
@@ -70,41 +70,41 @@ public class KaleoDefinitionVersionLocalServiceTest {
 	public void testDeleteKaleoDefinitionShouldDeleteVersion()
 		throws Exception {
 
-		KaleoDefinition kaleoDefinition = addKaleoDefinition();
+		KaleoDefinition kaleoDefinition = _addKaleoDefinition();
 
-		deactivateKaleoDefinition(kaleoDefinition);
+		_deactivateKaleoDefinition(kaleoDefinition);
 
-		deleteKaleoDefinition(kaleoDefinition);
+		_deleteKaleoDefinition(kaleoDefinition);
 
 		KaleoDefinitionVersionLocalServiceUtil.getKaleoDefinitionVersion(
 			kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
-			getVersion(kaleoDefinition.getVersion()));
+			_getVersion(kaleoDefinition.getVersion()));
 	}
 
 	@Test
 	public void testUpdateKaleoDefinitionShouldIncrementVersion1()
 		throws Exception {
 
-		KaleoDefinition kaleoDefinition = addKaleoDefinition();
+		KaleoDefinition kaleoDefinition = _addKaleoDefinition();
 
-		kaleoDefinition = updateKaleoDefinition(kaleoDefinition);
+		kaleoDefinition = _updateKaleoDefinition(kaleoDefinition);
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			KaleoDefinitionVersionLocalServiceUtil.getKaleoDefinitionVersion(
 				kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
-				getVersion(kaleoDefinition.getVersion()));
+				_getVersion(kaleoDefinition.getVersion()));
 
 		Assert.assertEquals("2.0", kaleoDefinitionVersion.getVersion());
 	}
 
-	protected KaleoDefinition addKaleoDefinition()
+	private KaleoDefinition _addKaleoDefinition()
 		throws IOException, PortalException {
 
 		KaleoDefinition kaleoDefinition =
 			KaleoDefinitionLocalServiceUtil.addKaleoDefinition(
 				StringUtil.randomString(), StringUtil.randomString(),
 				StringUtil.randomString(),
-				read("legal-marketing-definition.xml"), 1, _serviceContext);
+				_read("legal-marketing-definition.xml"), 1, _serviceContext);
 
 		KaleoDefinitionLocalServiceUtil.activateKaleoDefinition(
 			kaleoDefinition.getKaleoDefinitionId(), _serviceContext);
@@ -112,7 +112,7 @@ public class KaleoDefinitionVersionLocalServiceTest {
 		return kaleoDefinition;
 	}
 
-	protected void deactivateKaleoDefinition(KaleoDefinition kaleoDefinition)
+	private void _deactivateKaleoDefinition(KaleoDefinition kaleoDefinition)
 		throws PortalException {
 
 		KaleoDefinitionLocalServiceUtil.deactivateKaleoDefinition(
@@ -120,18 +120,18 @@ public class KaleoDefinitionVersionLocalServiceTest {
 			_serviceContext);
 	}
 
-	protected void deleteKaleoDefinition(KaleoDefinition kaleoDefinition)
+	private void _deleteKaleoDefinition(KaleoDefinition kaleoDefinition)
 		throws PortalException {
 
 		KaleoDefinitionLocalServiceUtil.deleteKaleoDefinition(
 			kaleoDefinition.getName(), _serviceContext);
 	}
 
-	protected String getVersion(int version) {
+	private String _getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
 	}
 
-	protected String read(String name) throws IOException {
+	private String _read(String name) throws IOException {
 		ClassLoader classLoader =
 			KaleoDefinitionVersionLocalServiceTest.class.getClassLoader();
 
@@ -142,14 +142,14 @@ public class KaleoDefinitionVersionLocalServiceTest {
 		}
 	}
 
-	protected void setUpServiceContext() throws PortalException {
+	private void _setUpServiceContext() throws PortalException {
 		_serviceContext = new ServiceContext();
 
 		_serviceContext.setCompanyId(TestPropsValues.getCompanyId());
 		_serviceContext.setUserId(TestPropsValues.getUserId());
 	}
 
-	protected KaleoDefinition updateKaleoDefinition(
+	private KaleoDefinition _updateKaleoDefinition(
 			KaleoDefinition kaleoDefinition)
 		throws IOException, PortalException {
 

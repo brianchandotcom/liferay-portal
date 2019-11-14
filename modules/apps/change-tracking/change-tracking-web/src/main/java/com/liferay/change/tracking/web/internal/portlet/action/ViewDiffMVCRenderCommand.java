@@ -21,12 +21,13 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.CTEntryDiffDisplay;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -50,29 +51,38 @@ public class ViewDiffMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
 		String changeType = ParamUtil.getString(renderRequest, "changeType");
 
 		long ctEntryId = ParamUtil.getLong(renderRequest, "ctEntryId");
 
-		CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
+		try {
+			CTEntry ctEntry = _ctEntryLocalService.getCTEntry(ctEntryId);
 
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ctEntry.getCtCollectionId());
+			CTCollection ctCollection =
+				_ctCollectionLocalService.getCTCollection(
+					ctEntry.getCtCollectionId());
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
 
-		String name = _ctDisplayRendererRegistry.getTypeName(
-			_portal.getLocale(httpServletRequest), ctEntry);
+			String name = _ctDisplayRendererRegistry.getTypeName(
+				_portal.getLocale(httpServletRequest), ctEntry);
 
-		CTEntryDiffDisplay ctEntryDiffDisplay = new CTEntryDiffDisplay(
-			httpServletRequest, _portal.getHttpServletResponse(renderResponse),
-			changeType, ctCollection, _ctDisplayRendererRegistry, ctEntry,
-			_language, name);
+			CTEntryDiffDisplay ctEntryDiffDisplay = new CTEntryDiffDisplay(
+				httpServletRequest,
+				_portal.getHttpServletResponse(renderResponse), changeType,
+				ctCollection, _ctDisplayRendererRegistry, ctEntry, _language,
+				name);
 
-		renderRequest.setAttribute("CT_ENTRY_DIFF_DISPLAY", ctEntryDiffDisplay);
+			renderRequest.setAttribute(
+				"CT_ENTRY_DIFF_DISPLAY", ctEntryDiffDisplay);
+		}
+		catch (PortalException pe) {
+			throw new PortletException(pe);
+		}
 
 		return "/change_lists/diff.jsp";
 	}
@@ -91,8 +101,5 @@ public class ViewDiffMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private ResourceActions _resourceActions;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.change.tracking.display.CTDisplayRenderer;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -51,10 +52,11 @@ public class JournalArticleCTDisplayRenderer
 
 	@Override
 	public String getEditURL(
-		HttpServletRequest httpServletRequest, JournalArticle journalArticle) {
+			HttpServletRequest httpServletRequest,
+			JournalArticle journalArticle)
+		throws PortalException {
 
-		Group group = _groupLocalService.fetchGroup(
-			journalArticle.getGroupId());
+		Group group = _groupLocalService.getGroup(journalArticle.getGroupId());
 
 		if (group.isCompany()) {
 			ThemeDisplay themeDisplay =

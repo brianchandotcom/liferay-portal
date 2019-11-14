@@ -37,6 +37,14 @@ import javax.servlet.jsp.PageContext;
  */
 public class GroupSelectorTag extends IncludeTag {
 
+	public List<Group> getGroups() {
+		return _groups;
+	}
+
+	public int getGroupsCount() {
+		return _groupsCount;
+	}
+
 	public void setGroups(List<Group> groups) {
 		_groups = groups;
 	}
@@ -58,6 +66,21 @@ public class GroupSelectorTag extends IncludeTag {
 
 		_groups = null;
 		_groupsCount = -1;
+	}
+
+	@Override
+	protected String getPage() {
+		return "/group_selector/page.jsp";
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-item-selector:group-selector:groups",
+			_getGroups(httpServletRequest));
+		httpServletRequest.setAttribute(
+			"liferay-item-selector:group-selector:groupsCount",
+			_getGroupsCount(httpServletRequest));
 	}
 
 	private List<Group> _getGroups(HttpServletRequest httpServletRequest) {
@@ -116,21 +139,6 @@ public class GroupSelectorTag extends IncludeTag {
 
 	private String _getGroupType(HttpServletRequest httpServletRequest) {
 		return ParamUtil.getString(httpServletRequest, "groupType");
-	}
-
-	@Override
-	protected String getPage() {
-		return "/group_selector/page.jsp";
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		httpServletRequest.setAttribute(
-			"liferay-item-selector:group-selector:groups",
-			_getGroups(httpServletRequest));
-		httpServletRequest.setAttribute(
-			"liferay-item-selector:group-selector:groupsCount",
-			_getGroupsCount(httpServletRequest));
 	}
 
 	private List<Group> _groups;

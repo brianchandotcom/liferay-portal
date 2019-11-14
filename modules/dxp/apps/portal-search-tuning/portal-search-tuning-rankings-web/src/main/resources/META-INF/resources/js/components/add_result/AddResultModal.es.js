@@ -277,7 +277,7 @@ function AddResultModal({
 					description={Liferay.Language.get(
 						'search-the-engine-to-display-results'
 					)}
-					displayState="empty"
+					displayState={DISPLAY_STATES.EMPTY}
 					title={Liferay.Language.get('search-the-engine')}
 				/>
 			);

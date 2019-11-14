@@ -19,6 +19,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import {KEY_CODES} from '../../utils/constants.es';
 import {isNull, toggleListItem} from '../../utils/util.es';
 import ClayEmptyState, {DISPLAY_STATES} from '../shared/ClayEmptyState.es';
+import ErrorBoundary from '../shared/ErrorBoundary.es';
 import Item from './Item.es';
 import ItemDragLayer from './ItemDragLayer.es';
 import SearchBar from './SearchBar.es';
@@ -244,56 +245,62 @@ class List extends PureComponent {
 					selectedIds={selectedIds}
 				/>
 
-				{!!resultIds.length && (
-					<ul
-						className="list-group show-quick-actions-on-hover"
-						onKeyDown={this._handleKeyDown}
-					>
-						{resultIds.map((id, index, arr) =>
-							this._renderItem(id, index, arr)
-						)}
-					</ul>
-				)}
+				<ErrorBoundary toast>
+					{!!resultIds.length && (
+						<ul
+							className="list-group show-quick-actions-on-hover"
+							onKeyDown={this._handleKeyDown}
+						>
+							{resultIds.map((id, index, arr) =>
+								this._renderItem(id, index, arr)
+							)}
+						</ul>
+					)}
 
-				{dataLoading && (
-					<div className="load-more-container">
-						<ClayLoadingIndicator />
-					</div>
-				)}
+					{dataLoading && (
+						<div className="load-more-container">
+							<ClayLoadingIndicator />
+						</div>
+					)}
 
-				{!dataLoading && (
-					<>
-						{!displayError && !resultIds.length && (
-							<ClayEmptyState />
-						)}
+					{!dataLoading && (
+						<>
+							{!displayError && !resultIds.length && (
+								<ClayEmptyState />
+							)}
 
-						{displayError && (
-							<ClayEmptyState
-								actionLabel={Liferay.Language.get('try-again')}
-								description={Liferay.Language.get(
-									'an-error-has-occurred-and-we-were-unable-to-load-the-results'
-								)}
-								displayState={DISPLAY_STATES.EMPTY}
-								onClickAction={this._handleLoadMoreResults}
-								title={Liferay.Language.get(
-									'unable-to-load-content'
-								)}
-							/>
-						)}
+							{displayError && (
+								<ClayEmptyState
+									actionLabel={Liferay.Language.get(
+										'try-again'
+									)}
+									description={Liferay.Language.get(
+										'an-error-has-occurred-and-we-were-unable-to-load-the-results'
+									)}
+									displayState={DISPLAY_STATES.EMPTY}
+									onClickAction={this._handleLoadMoreResults}
+									title={Liferay.Language.get(
+										'unable-to-load-content'
+									)}
+								/>
+							)}
 
-						{showLoadMore && (
-							<div className="load-more-container">
-								<ClayButton
-									className="load-more-button"
-									displayType="secondary"
-									onClick={this._handleLoadMoreResults}
-								>
-									{Liferay.Language.get('load-more-results')}
-								</ClayButton>
-							</div>
-						)}
-					</>
-				)}
+							{showLoadMore && (
+								<div className="load-more-container">
+									<ClayButton
+										className="load-more-button"
+										displayType="secondary"
+										onClick={this._handleLoadMoreResults}
+									>
+										{Liferay.Language.get(
+											'load-more-results'
+										)}
+									</ClayButton>
+								</div>
+							)}
+						</>
+					)}
+				</ErrorBoundary>
 			</div>
 		);
 	}

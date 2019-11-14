@@ -26,42 +26,9 @@ import {
 import PageToolbar from './PageToolbar.es';
 import Alias from './alias/Alias.es';
 import List from './list/List.es';
-import ClayEmptyState, {DISPLAY_STATES} from './shared/ClayEmptyState.es';
+import ErrorBoundary from './shared/ErrorBoundary.es';
 
 const DELTA = 50;
-
-class ErrorBoundary extends Component {
-	state = {
-		hasError: false
-	};
-
-	static getDerivedStateFromError() {
-		return {hasError: true};
-	}
-
-	/**
-	 * Display the reason why the component was unable to load in the console.
-	 */
-	componentDidCatch(error, info) {
-		if (process.env.NODE_ENV === 'development') {
-			console.error('error', error, info);
-		}
-	}
-
-	render() {
-		return this.state.hasError ? (
-			<ClayEmptyState
-				description={Liferay.Language.get(
-					'an-error-has-occurred-and-we-were-unable-to-load-the-results'
-				)}
-				displayState={DISPLAY_STATES.EMPTY}
-				title={Liferay.Language.get('unable-to-load-content')}
-			/>
-		) : (
-			this.props.children
-		);
-	}
-}
 
 const HiddenInputs = ({valueMap}) => {
 	const {namespace} = useContext(ThemeContext);
@@ -187,7 +154,7 @@ class ResultRankingsForm extends Component {
 		 * Toggles on and off the debugger form.
 		 * @type {boolean}
 		 */
-		showDebugger: false,
+		showDebugger: process.env.NODE_ENV === 'development',
 
 		/**
 		 * Total number of hidden results returned from the fetch request.
@@ -427,18 +394,20 @@ class ResultRankingsForm extends Component {
 					}
 				);
 			})
-			.catch(() => {
+			.catch(error => {
 				// Delay showing error message so the user has confirmation
 				// when attempting to reload the content after an error.
 
-				setTimeout(
-					() =>
-						this.setState({
-							dataLoadingVisible: false,
-							displayError: true
-						}),
-					1000
-				);
+				setTimeout(() => {
+					if (process.env.NODE_ENV === 'development') {
+						console.error('Unable to load content.', error);
+					}
+
+					this.setState({
+						dataLoadingVisible: false,
+						displayError: true
+					});
+				}, 1000);
 			});
 	};
 
@@ -519,18 +488,20 @@ class ResultRankingsForm extends Component {
 					totalResultsHiddenCount: total
 				}));
 			})
-			.catch(() => {
+			.catch(error => {
 				// Delay showing error message so the user has confirmation
 				// when attempting to reload the content after an error.
 
-				setTimeout(
-					() =>
-						this.setState({
-							dataLoadingHidden: false,
-							displayErrorHidden: true
-						}),
-					1000
-				);
+				setTimeout(() => {
+					if (process.env.NODE_ENV === 'development') {
+						console.error('Unable to load content.', error);
+					}
+
+					this.setState({
+						dataLoadingHidden: false,
+						displayError: true
+					});
+				}, 1000);
 			});
 	};
 
@@ -746,10 +717,15 @@ class ResultRankingsForm extends Component {
 
 						<h2 className="sheet-title">{`${searchQuery}`}</h2>
 
-						<Alias
-							keywords={aliases}
-							onChange={this._handleUpdateAliases}
-						/>
+						<ErrorBoundary
+							component={Liferay.Language.get('aliases')}
+							toast
+						>
+							<Alias
+								keywords={aliases}
+								onChange={this._handleUpdateAliases}
+							/>
+						</ErrorBoundary>
 					</div>
 
 					<div className="form-section-body sheet sheet-lg">

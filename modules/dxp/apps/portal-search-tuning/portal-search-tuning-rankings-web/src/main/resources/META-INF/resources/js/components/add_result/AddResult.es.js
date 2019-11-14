@@ -13,6 +13,7 @@ import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import ErrorBoundary from '../shared/ErrorBoundary.es';
 import AddResultModal from './AddResultModal.es';
 
 /**
@@ -44,13 +45,15 @@ function AddResult({fetchDocumentsSearchUrl, onAddResultSubmit}) {
 				{Liferay.Language.get('add-result')}
 			</ClayButton>
 
-			{showModal ? (
-				<AddResultModal
-					fetchDocumentsSearchUrl={fetchDocumentsSearchUrl}
-					onAddResultSubmit={onAddResultSubmit}
-					onCloseModal={_handleCloseModal}
-				/>
-			) : null}
+			<ErrorBoundary component={Liferay.Language.get('add-result')} toast>
+				{showModal ? (
+					<AddResultModal
+						fetchDocumentsSearchUrl={fetchDocumentsSearchUrl}
+						onAddResultSubmit={onAddResultSubmit}
+						onCloseModal={_handleCloseModal}
+					/>
+				) : null}
+			</ErrorBoundary>
 		</>
 	);
 }

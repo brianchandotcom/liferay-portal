@@ -41,9 +41,11 @@ if (Validator.isNotNull(assetPublisherViewContentDisplayContext.getReturnToFullP
 
 		PortalUtil.addPortletBreadcrumbEntry(request, assetRenderer.getTitle(locale), currentURL);
 
-		String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
+		if (request.getAttribute(WebKeys.PAGE_DESCRIPTION) == null) {
+			String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
 
-		PortalUtil.setPageDescription(summary, request);
+			PortalUtil.setPageDescription(summary, request);
+		}
 
 		PortalUtil.setPageKeywords(assetHelper.getAssetKeywords(assetEntry.getClassName(), assetEntry.getClassPK()), request);
 		PortalUtil.setPageTitle(assetRenderer.getTitle(locale), request);

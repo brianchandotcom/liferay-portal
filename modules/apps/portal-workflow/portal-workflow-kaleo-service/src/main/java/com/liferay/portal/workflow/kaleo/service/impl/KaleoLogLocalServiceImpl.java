@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -56,6 +58,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoLog addActionExecutionKaleoLog(
 			KaleoInstanceToken kaleoInstanceToken, KaleoAction kaleoAction,
@@ -81,6 +84,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		return kaleoLog;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoLog addNodeEntryKaleoLog(
 			KaleoInstanceToken kaleoInstanceToken, KaleoNode sourceKaleoNode,
@@ -109,6 +113,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		return kaleoLog;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoLog addNodeExitKaleoLog(
 			KaleoInstanceToken kaleoInstanceToken, KaleoNode departingKaleoNode,
@@ -144,6 +149,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		return kaleoLog;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoLog addTaskAssignmentKaleoLog(
 			List<KaleoTaskAssignmentInstance>
@@ -204,6 +210,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		return kaleoLog;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoLog addTaskCompletionKaleoLog(
 			KaleoTaskInstanceToken kaleoTaskInstanceToken, String comment,
@@ -250,6 +257,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		return kaleoLog;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoLog addTaskUpdateKaleoLog(
 			KaleoTaskInstanceToken kaleoTaskInstanceToken, String comment,
@@ -283,6 +291,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		return kaleoLog;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoLog addWorkflowInstanceEndKaleoLog(
 			KaleoInstanceToken kaleoInstanceToken,
@@ -313,6 +322,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		return kaleoLog;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoLog addWorkflowInstanceStartKaleoLog(
 			KaleoInstanceToken kaleoInstanceToken,
@@ -336,20 +346,32 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 
 	@Override
 	public void deleteCompanyKaleoLogs(long companyId) {
-		kaleoLogPersistence.removeByCompanyId(companyId);
+		for (KaleoLog kaleoLog :
+				kaleoLogPersistence.findByCompanyId(companyId)) {
+
+			kaleoLogLocalService.deleteKaleoLog(kaleoLog);
+		}
 	}
 
 	@Override
 	public void deleteKaleoDefinitionVersionKaleoLogs(
 		long kaleoDefinitionVersionId) {
 
-		kaleoLogPersistence.removeByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId);
+		for (KaleoLog kaleoLog :
+				kaleoLogPersistence.findByKaleoDefinitionVersionId(
+					kaleoDefinitionVersionId)) {
+
+			kaleoLogLocalService.deleteKaleoLog(kaleoLog);
+		}
 	}
 
 	@Override
 	public void deleteKaleoInstanceKaleoLogs(long kaleoInstanceId) {
-		kaleoLogPersistence.removeByKaleoInstanceId(kaleoInstanceId);
+		for (KaleoLog kaleoLog :
+				kaleoLogPersistence.findByKaleoInstanceId(kaleoInstanceId)) {
+
+			kaleoLogLocalService.deleteKaleoLog(kaleoLog);
+		}
 	}
 
 	@Override

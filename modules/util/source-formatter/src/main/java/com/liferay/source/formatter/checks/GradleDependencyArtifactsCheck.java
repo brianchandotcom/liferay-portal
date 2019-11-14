@@ -168,7 +168,9 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 				for (String enforceVersionArtifact : enforceVersionArtifacts) {
 					if (enforceVersionArtifact.startsWith(
-							"com.liferay:" + name + ":")) {
+							"com.liferay:" + name + ":") ||
+						enforceVersionArtifact.startsWith(
+							"com.liferay.arquillian:" + name + ":")) {
 
 						return content;
 					}

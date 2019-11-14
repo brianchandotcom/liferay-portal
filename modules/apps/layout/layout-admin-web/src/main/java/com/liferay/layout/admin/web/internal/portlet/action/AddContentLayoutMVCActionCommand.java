@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -129,13 +130,26 @@ public class AddContentLayoutMVCActionCommand
 						layoutPageTemplateEntryId, ActionKeys.VIEW);
 				}
 
+				long masterLayoutPlid = 0;
+
+				if (layoutPageTemplateEntry != null) {
+					Layout layoutPageTemplateEntryLayout =
+						_layoutLocalService.fetchLayout(
+							layoutPageTemplateEntry.getPlid());
+
+					if (layoutPageTemplateEntryLayout != null) {
+						masterLayoutPlid =
+							layoutPageTemplateEntryLayout.getMasterLayoutPlid();
+					}
+				}
+
 				layout = _layoutService.addLayout(
 					groupId, privateLayout, parentLayoutId,
 					portal.getClassNameId(LayoutPageTemplateEntry.class),
 					layoutPageTemplateEntryId, nameMap, new HashMap<>(),
 					new HashMap<>(), new HashMap<>(), new HashMap<>(),
 					LayoutConstants.TYPE_CONTENT, null, false, false,
-					new HashMap<>(), serviceContext);
+					masterLayoutPlid, new HashMap<>(), serviceContext);
 			}
 
 			String redirectURL = getRedirectURL(
@@ -173,6 +187,9 @@ public class AddContentLayoutMVCActionCommand
 
 	@Reference
 	private LayoutExceptionRequestHandler _layoutExceptionRequestHandler;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

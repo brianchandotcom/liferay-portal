@@ -159,8 +159,11 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 		try {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_fetchLayoutPageTemplateEntry(layout);
+			LayoutPageTemplateEntry layoutPageTemplateEntry = null;
+
+			if (layoutMode.equals(Constants.EDIT)) {
+				layoutPageTemplateEntry = _fetchLayoutPageTemplateEntry(layout);
+			}
 
 			if (layoutPageTemplateEntry != null) {
 				httpServletRequest.setAttribute(

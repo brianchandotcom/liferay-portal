@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -72,10 +71,15 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateLayoutSEOEntry(
-			groupId, privateLayout, layoutId, enabledCanonicalURLMap,
-			canonicalURLMap, false, Collections.emptyMap(), 0, false,
-			Collections.emptyMap(), serviceContext);
+		Layout layout = layoutLocalService.getLayout(
+			groupId, privateLayout, layoutId);
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.UPDATE);
+
+		return layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			getUserId(), groupId, privateLayout, layoutId,
+			enabledCanonicalURLMap, canonicalURLMap, serviceContext);
 	}
 
 }

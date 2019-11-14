@@ -106,10 +106,21 @@ public class LayoutSEOEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateLayoutSEOEntry(
-			userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
-			canonicalURLMap, false, Collections.emptyMap(), 0, false,
-			Collections.emptyMap(), serviceContext);
+		LayoutSEOEntry layoutSEOEntry = layoutSEOEntryPersistence.fetchByG_P_L(
+			groupId, privateLayout, layoutId);
+
+		if (layoutSEOEntry == null) {
+			return _addLayoutSEOEntry(
+				userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
+				canonicalURLMap, false, Collections.emptyMap(), 0, false,
+				Collections.emptyMap(), serviceContext);
+		}
+
+		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
+		layoutSEOEntry.setCanonicalURLEnabled(canonicalURLEnabled);
+		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
+
+		return layoutSEOEntryPersistence.update(layoutSEOEntry);
 	}
 
 	private LayoutSEOEntry _addLayoutSEOEntry(

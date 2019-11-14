@@ -70,7 +70,7 @@ public class LiferayOutputResourceProperties
 
 		LiferayOASSource liferayOASSource =
 			LiferayBaseComponentDefinition.getLiferayOASSource(
-				getEffectiveLiferayConnectionProperties());
+				connection.getEffectiveLiferayConnectionProperties());
 
 		if (!liferayOASSource.isValid()) {
 			return liferayOASSource.getValidationResult();

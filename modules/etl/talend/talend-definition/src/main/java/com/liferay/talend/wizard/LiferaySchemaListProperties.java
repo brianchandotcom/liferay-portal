@@ -61,7 +61,7 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 
 		LiferayOASSource liferayOASSource =
 			LiferayBaseComponentDefinition.getLiferayOASSource(
-				connection.getReferencedConnectionProperties());
+				connection.getEffectiveLiferayConnectionProperties());
 
 		if (!liferayOASSource.isValid()) {
 			return liferayOASSource.getValidationResult();
@@ -95,7 +95,7 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 	public void beforeFormPresentMain() throws Exception {
 		LiferayOASSource liferayOASSource =
 			LiferayBaseComponentDefinition.getLiferayOASSource(
-				connection.getReferencedConnectionProperties());
+				connection.getEffectiveLiferayConnectionProperties());
 
 		if (!liferayOASSource.isValid()) {
 			throw new IllegalStateException(

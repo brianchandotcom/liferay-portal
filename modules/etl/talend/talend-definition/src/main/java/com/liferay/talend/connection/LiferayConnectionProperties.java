@@ -87,6 +87,19 @@ public class LiferayConnectionProperties
 		return _getValue(connectTimeout);
 	}
 
+	public LiferayConnectionProperties
+		getEffectiveLiferayConnectionProperties() {
+
+		LiferayConnectionProperties liferayConnectionProperties =
+			referencedComponent.getReference();
+
+		if (liferayConnectionProperties != null) {
+			return liferayConnectionProperties;
+		}
+
+		return this;
+	}
+
 	public int getItemsPerPage() {
 		return _getValue(itemsPerPage);
 	}

@@ -74,7 +74,7 @@ public abstract class BaseLiferayResourceProperties
 
 		LiferayOASSource liferayOASSource =
 			LiferayBaseComponentDefinition.getLiferayOASSource(
-				getEffectiveLiferayConnectionProperties());
+				connection.getEffectiveLiferayConnectionProperties());
 
 		if (!liferayOASSource.isValid()) {
 			return liferayOASSource.getValidationResult();
@@ -86,7 +86,7 @@ public abstract class BaseLiferayResourceProperties
 	public ValidationResult beforeEndpoint() {
 		LiferayOASSource liferayOASSource =
 			LiferayBaseComponentDefinition.getLiferayOASSource(
-				getEffectiveLiferayConnectionProperties());
+				connection.getEffectiveLiferayConnectionProperties());
 
 		if (!liferayOASSource.isValid()) {
 			return liferayOASSource.getValidationResult();
@@ -262,44 +262,6 @@ public abstract class BaseLiferayResourceProperties
 	}
 
 	protected abstract ValidationResult doAfterEndpoint(OASSource oasSource);
-
-	protected LiferayConnectionProperties
-		getEffectiveLiferayConnectionProperties() {
-
-		LiferayConnectionProperties liferayConnectionProperties =
-			getLiferayConnectionProperties();
-
-		if (liferayConnectionProperties == null) {
-			_logger.error("LiferayConnectionProperties is null");
-		}
-
-		LiferayConnectionProperties referencedLiferayConnectionProperties =
-			liferayConnectionProperties.getReferencedConnectionProperties();
-
-		if (referencedLiferayConnectionProperties != null) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug("Using a reference connection properties");
-				_logger.debug(
-					"API spec URL: " +
-						referencedLiferayConnectionProperties.getApiSpecURL());
-				_logger.debug(
-					"User ID: " +
-						referencedLiferayConnectionProperties.getUserId());
-			}
-
-			return referencedLiferayConnectionProperties;
-		}
-
-		if (_logger.isDebugEnabled()) {
-			_logger.debug(
-				"API spec URL: " +
-					liferayConnectionProperties.apiSpecURL.getValue());
-			_logger.debug(
-				"User ID: " + liferayConnectionProperties.getUserId());
-		}
-
-		return liferayConnectionProperties;
-	}
 
 	protected abstract Set<String> getEndpoints(OASSource oasSource);
 

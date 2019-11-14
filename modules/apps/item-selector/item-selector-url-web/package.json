@@ -2,6 +2,7 @@
 	"dependencies": {
 		"@clayui/button": "3.0.2",
 		"@clayui/form": "3.2.0",
+		"@clayui/loading-indicator": "3.0.0",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.9.0"

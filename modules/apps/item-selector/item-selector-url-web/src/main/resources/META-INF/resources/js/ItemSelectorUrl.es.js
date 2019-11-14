@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React, {useState} from 'react';
 
@@ -83,6 +84,11 @@ const ItemSelectorUrl = ({eventName}) => {
 						onLoad={() => setImgLoaded(true)}
 						src={imgUrl}
 					/>
+				)}
+				{imgUrl && !imgLoaded && (
+					<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid">
+						<ClayLoadingIndicator className="" />
+					</div>
 				)}
 			</div>
 		</>

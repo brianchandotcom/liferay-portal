@@ -175,6 +175,19 @@ public class DLFolderServiceUtil {
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
 	}
 
+	public static java.util.List<Object>
+			getFoldersAndFileEntriesAndFileShortcuts(
+				long groupId, long folderId, String[] mimeTypes,
+				long fileEntryTypeId, boolean includeMountFolders, int status,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator<?> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getFoldersAndFileEntriesAndFileShortcuts(
+			groupId, folderId, mimeTypes, fileEntryTypeId, includeMountFolders,
+			status, start, end, obc);
+	}
+
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status,
 			boolean includeMountFolders)
@@ -202,6 +215,16 @@ public class DLFolderServiceUtil {
 
 		return getService().getFoldersAndFileEntriesAndFileShortcutsCount(
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
+	}
+
+	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, String[] mimeTypes,
+			long fileEntryTypeId, boolean includeMountFolders, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getFoldersAndFileEntriesAndFileShortcutsCount(
+			groupId, folderId, mimeTypes, fileEntryTypeId, includeMountFolders,
+			status);
 	}
 
 	public static int getFoldersCount(long groupId, long parentFolderId)

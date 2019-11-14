@@ -651,6 +651,50 @@ public class DLFolderServiceHttp {
 		}
 	}
 
+	public static java.util.List<Object>
+			getFoldersAndFileEntriesAndFileShortcuts(
+				HttpPrincipal httpPrincipal, long groupId, long folderId,
+				String[] mimeTypes, long fileEntryTypeId,
+				boolean includeMountFolders, int status, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator<?> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DLFolderServiceUtil.class,
+				"getFoldersAndFileEntriesAndFileShortcuts",
+				_getFoldersAndFileEntriesAndFileShortcutsParameterTypes15);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, folderId, mimeTypes, fileEntryTypeId,
+				includeMountFolders, status, start, end, obc);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (java.util.List<Object>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 			HttpPrincipal httpPrincipal, long groupId, long folderId,
 			int status, boolean includeMountFolders)
@@ -660,7 +704,7 @@ public class DLFolderServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class,
 				"getFoldersAndFileEntriesAndFileShortcutsCount",
-				_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes15);
+				_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, folderId, status, includeMountFolders);
@@ -700,7 +744,7 @@ public class DLFolderServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class,
 				"getFoldersAndFileEntriesAndFileShortcutsCount",
-				_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes16);
+				_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, folderId, status, mimeTypes,
@@ -743,11 +787,53 @@ public class DLFolderServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class,
 				"getFoldersAndFileEntriesAndFileShortcutsCount",
-				_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes17);
+				_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, folderId, mimeTypes, includeMountFolders,
 				queryDefinition);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
+			HttpPrincipal httpPrincipal, long groupId, long folderId,
+			String[] mimeTypes, long fileEntryTypeId,
+			boolean includeMountFolders, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DLFolderServiceUtil.class,
+				"getFoldersAndFileEntriesAndFileShortcutsCount",
+				_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes19);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, folderId, mimeTypes, fileEntryTypeId,
+				includeMountFolders, status);
 
 			Object returnObj = null;
 
@@ -782,7 +868,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "getFoldersCount",
-				_getFoldersCountParameterTypes18);
+				_getFoldersCountParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, parentFolderId);
@@ -821,7 +907,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "getFoldersCount",
-				_getFoldersCountParameterTypes19);
+				_getFoldersCountParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, parentFolderId, status,
@@ -864,7 +950,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "getMountFolders",
-				_getMountFoldersParameterTypes20);
+				_getMountFoldersParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, parentFolderId, start, end, obc);
@@ -903,7 +989,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "getMountFoldersCount",
-				_getMountFoldersCountParameterTypes21);
+				_getMountFoldersCountParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, parentFolderId);
@@ -942,7 +1028,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "getSubfolderIds",
-				_getSubfolderIdsParameterTypes22);
+				_getSubfolderIdsParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderIds, groupId, folderId, recurse);
@@ -977,7 +1063,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "getSubfolderIds",
-				_getSubfolderIdsParameterTypes23);
+				_getSubfolderIdsParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, folderId, recurse);
@@ -1015,7 +1101,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "hasFolderLock",
-				_hasFolderLockParameterTypes24);
+				_hasFolderLockParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId);
@@ -1053,7 +1139,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "hasInheritableLock",
-				_hasInheritableLockParameterTypes25);
+				_hasInheritableLockParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId);
@@ -1090,7 +1176,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "isFolderLocked",
-				_isFolderLockedParameterTypes26);
+				_isFolderLockedParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId);
@@ -1121,7 +1207,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "lockFolder",
-				_lockFolderParameterTypes27);
+				_lockFolderParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId);
@@ -1160,7 +1246,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "lockFolder",
-				_lockFolderParameterTypes28);
+				_lockFolderParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId, owner, inheritable, expirationTime);
@@ -1199,7 +1285,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "moveFolder",
-				_moveFolderParameterTypes29);
+				_moveFolderParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId, parentFolderId, serviceContext);
@@ -1239,7 +1325,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "refreshFolderLock",
-				_refreshFolderLockParameterTypes30);
+				_refreshFolderLockParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, lockUuid, companyId, expirationTime);
@@ -1278,7 +1364,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "unlockFolder",
-				_unlockFolderParameterTypes31);
+				_unlockFolderParameterTypes33);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, parentFolderId, name, lockUuid);
@@ -1312,7 +1398,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "unlockFolder",
-				_unlockFolderParameterTypes32);
+				_unlockFolderParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId, lockUuid);
@@ -1350,7 +1436,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "updateFolder",
-				_updateFolderParameterTypes33);
+				_updateFolderParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId, parentFolderId, name, description,
@@ -1395,7 +1481,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "updateFolder",
-				_updateFolderParameterTypes34);
+				_updateFolderParameterTypes36);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId, name, description, defaultFileEntryTypeId,
@@ -1435,7 +1521,7 @@ public class DLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFolderServiceUtil.class, "verifyInheritableLock",
-				_verifyInheritableLockParameterTypes35);
+				_verifyInheritableLockParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId, lockUuid);
@@ -1531,71 +1617,84 @@ public class DLFolderServiceHttp {
 				com.liferay.portal.kernel.dao.orm.QueryDefinition.class
 			};
 	private static final Class<?>[]
-		_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes15 =
-			new Class[] {long.class, long.class, int.class, boolean.class};
+		_getFoldersAndFileEntriesAndFileShortcutsParameterTypes15 =
+			new Class[] {
+				long.class, long.class, String[].class, long.class,
+				boolean.class, int.class, int.class, int.class,
+				com.liferay.portal.kernel.util.OrderByComparator.class
+			};
 	private static final Class<?>[]
 		_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes16 =
+			new Class[] {long.class, long.class, int.class, boolean.class};
+	private static final Class<?>[]
+		_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes17 =
 			new Class[] {
 				long.class, long.class, int.class, String[].class, boolean.class
 			};
 	private static final Class<?>[]
-		_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes17 =
+		_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes18 =
 			new Class[] {
 				long.class, long.class, String[].class, boolean.class,
 				com.liferay.portal.kernel.dao.orm.QueryDefinition.class
 			};
-	private static final Class<?>[] _getFoldersCountParameterTypes18 =
+	private static final Class<?>[]
+		_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes19 =
+			new Class[] {
+				long.class, long.class, String[].class, long.class,
+				boolean.class, int.class
+			};
+	private static final Class<?>[] _getFoldersCountParameterTypes20 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _getFoldersCountParameterTypes19 =
+	private static final Class<?>[] _getFoldersCountParameterTypes21 =
 		new Class[] {long.class, long.class, int.class, boolean.class};
-	private static final Class<?>[] _getMountFoldersParameterTypes20 =
+	private static final Class<?>[] _getMountFoldersParameterTypes22 =
 		new Class[] {
 			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getMountFoldersCountParameterTypes21 =
+	private static final Class<?>[] _getMountFoldersCountParameterTypes23 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _getSubfolderIdsParameterTypes22 =
+	private static final Class<?>[] _getSubfolderIdsParameterTypes24 =
 		new Class[] {
 			java.util.List.class, long.class, long.class, boolean.class
 		};
-	private static final Class<?>[] _getSubfolderIdsParameterTypes23 =
+	private static final Class<?>[] _getSubfolderIdsParameterTypes25 =
 		new Class[] {long.class, long.class, boolean.class};
-	private static final Class<?>[] _hasFolderLockParameterTypes24 =
+	private static final Class<?>[] _hasFolderLockParameterTypes26 =
 		new Class[] {long.class};
-	private static final Class<?>[] _hasInheritableLockParameterTypes25 =
+	private static final Class<?>[] _hasInheritableLockParameterTypes27 =
 		new Class[] {long.class};
-	private static final Class<?>[] _isFolderLockedParameterTypes26 =
+	private static final Class<?>[] _isFolderLockedParameterTypes28 =
 		new Class[] {long.class};
-	private static final Class<?>[] _lockFolderParameterTypes27 = new Class[] {
+	private static final Class<?>[] _lockFolderParameterTypes29 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _lockFolderParameterTypes28 = new Class[] {
+	private static final Class<?>[] _lockFolderParameterTypes30 = new Class[] {
 		long.class, String.class, boolean.class, long.class
 	};
-	private static final Class<?>[] _moveFolderParameterTypes29 = new Class[] {
+	private static final Class<?>[] _moveFolderParameterTypes31 = new Class[] {
 		long.class, long.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _refreshFolderLockParameterTypes30 =
+	private static final Class<?>[] _refreshFolderLockParameterTypes32 =
 		new Class[] {String.class, long.class, long.class};
-	private static final Class<?>[] _unlockFolderParameterTypes31 =
+	private static final Class<?>[] _unlockFolderParameterTypes33 =
 		new Class[] {long.class, long.class, String.class, String.class};
-	private static final Class<?>[] _unlockFolderParameterTypes32 =
+	private static final Class<?>[] _unlockFolderParameterTypes34 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _updateFolderParameterTypes33 =
+	private static final Class<?>[] _updateFolderParameterTypes35 =
 		new Class[] {
 			long.class, long.class, String.class, String.class, long.class,
 			java.util.List.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateFolderParameterTypes34 =
+	private static final Class<?>[] _updateFolderParameterTypes36 =
 		new Class[] {
 			long.class, String.class, String.class, long.class,
 			java.util.List.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _verifyInheritableLockParameterTypes35 =
+	private static final Class<?>[] _verifyInheritableLockParameterTypes37 =
 		new Class[] {long.class, String.class};
 
 }

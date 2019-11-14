@@ -322,6 +322,27 @@ public class DLFolderServiceSoap {
 		}
 	}
 
+	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, String[] mimeTypes,
+			long fileEntryTypeId, boolean includeMountFolders, int status)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				DLFolderServiceUtil.
+					getFoldersAndFileEntriesAndFileShortcutsCount(
+						groupId, folderId, mimeTypes, fileEntryTypeId,
+						includeMountFolders, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getFoldersCount(long groupId, long parentFolderId)
 		throws RemoteException {
 

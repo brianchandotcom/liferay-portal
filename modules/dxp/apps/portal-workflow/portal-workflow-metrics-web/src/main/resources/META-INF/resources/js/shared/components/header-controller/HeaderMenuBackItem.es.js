@@ -32,7 +32,7 @@ class HeaderMenuBackItem extends React.Component {
 				{!isFirstPage && query.backPath && (
 					<li className="control-menu-nav-item">
 						<Link
-							className="control-menu-icon dropdown-item lfr-icon-item"
+							className="control-menu-icon lfr-icon-item"
 							to={query.backPath}
 						>
 							<span className="icon-monospaced">

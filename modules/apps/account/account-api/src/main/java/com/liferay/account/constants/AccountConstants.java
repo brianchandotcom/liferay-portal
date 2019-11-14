@@ -21,6 +21,23 @@ public class AccountConstants {
 
 	public static final long ACCOUNT_ENTRY_ID_DEFAULT = 0;
 
+	public static final String REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR =
+		"Account Administrator";
+
+	public static final String REQUIRED_ROLE_NAME_ACCOUNT_OWNER =
+		"Account Owner";
+
+	public static final String REQUIRED_ROLE_NAME_ACCOUNT_POWER_USER =
+		"Account Power User";
+
+	public static final String REQUIRED_ROLE_NAME_ACCOUNT_USER = "Account User";
+
+	public static final String[] REQUIRED_ROLE_NAMES = {
+		REQUIRED_ROLE_NAME_ACCOUNT_USER, REQUIRED_ROLE_NAME_ACCOUNT_POWER_USER,
+		REQUIRED_ROLE_NAME_ACCOUNT_OWNER,
+		REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR
+	};
+
 	public static final String RESOURCE_NAME = "com.liferay.account";
 
 }

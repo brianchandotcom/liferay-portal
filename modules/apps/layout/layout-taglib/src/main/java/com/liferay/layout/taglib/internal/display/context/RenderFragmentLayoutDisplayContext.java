@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletJSONUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -165,34 +165,28 @@ public class RenderFragmentLayoutDisplayContext {
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid());
 
-		Stream<PortletPreferences> stream = portletPreferencesList.stream();
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				themeDisplay.getCompanyId(), portletPreferences.getPortletId());
 
-		stream.map(
-			portletPreferences -> PortletLocalServiceUtil.getPortletById(
-				themeDisplay.getCompanyId(), portletPreferences.getPortletId())
-		).forEach(
-			portlet -> {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-				try {
-					PortletJSONUtil.populatePortletJSONObject(
-						_httpServletRequest, StringPool.BLANK, portlet,
-						jsonObject);
+			try {
+				PortletJSONUtil.populatePortletJSONObject(
+					_httpServletRequest, StringPool.BLANK, portlet, jsonObject);
 
-					PortletJSONUtil.writeHeaderPaths(
-						pipingServletResponse, jsonObject);
+				PortletJSONUtil.writeHeaderPaths(
+					pipingServletResponse, jsonObject);
 
-					PortletJSONUtil.writeFooterPaths(
-						pipingServletResponse, jsonObject);
-				}
-				catch (Exception e) {
-					_log.error(
-						"Unable to write portlet paths " +
-							portlet.getPortletId(),
-						e);
-				}
+				PortletJSONUtil.writeFooterPaths(
+					pipingServletResponse, jsonObject);
 			}
-		);
+			catch (Exception e) {
+				_log.error(
+					"Unable to write portlet paths " + portlet.getPortletId(),
+					e);
+			}
+		}
 
 		return unsyncStringWriter.toString();
 	}

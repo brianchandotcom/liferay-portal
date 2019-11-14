@@ -19,7 +19,6 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -60,6 +59,7 @@ import java.util.Map;
 import org.apache.log4j.Level;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -76,26 +76,24 @@ public class KaleoLogLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws PortalException {
+		setUpServiceContext();
+	}
+
 	@Test
 	public void testGetKaleoInstanceKaleoLogs() throws Exception {
-		long kaleoDefinitionVersionId = 1;
-
-		ServiceContext serviceContext = createServiceContext(
-			TestPropsValues.getUser());
-
-		KaleoInstance kaleoInstance = addKaleoInstance(
-			kaleoDefinitionVersionId, serviceContext);
+		KaleoInstance kaleoInstance = addKaleoInstance();
 
 		KaleoInstanceToken kaleoInstanceToken = addKaleoInstanceToken(
-			kaleoInstance, serviceContext);
+			kaleoInstance);
 
 		KaleoLog kaleoLog = _kaleoLogLocalService.addNodeExitKaleoLog(
 			kaleoInstanceToken, kaleoInstanceToken.getCurrentKaleoNode(),
-			serviceContext);
+			_serviceContext);
 
 		_kaleoLogLocalService.addWorkflowInstanceEndKaleoLog(
-			addKaleoInstanceToken(kaleoInstance, serviceContext),
-			serviceContext);
+			addKaleoInstanceToken(kaleoInstance), _serviceContext);
 
 		List<KaleoLog> kaleoLogs =
 			_kaleoLogLocalService.getKaleoInstanceKaleoLogs(
@@ -126,24 +124,17 @@ public class KaleoLogLocalServiceTest {
 
 	@Test
 	public void testGetKaleoInstanceKaleoLogsCount() throws Exception {
-		long kaleoDefinitionVersionId = 1;
-
-		ServiceContext serviceContext = createServiceContext(
-			TestPropsValues.getUser());
-
-		KaleoInstance kaleoInstance = addKaleoInstance(
-			kaleoDefinitionVersionId, serviceContext);
+		KaleoInstance kaleoInstance = addKaleoInstance();
 
 		KaleoInstanceToken kaleoInstanceToken = addKaleoInstanceToken(
-			kaleoInstance, serviceContext);
+			kaleoInstance);
 
 		_kaleoLogLocalService.addNodeExitKaleoLog(
 			kaleoInstanceToken, kaleoInstanceToken.getCurrentKaleoNode(),
-			serviceContext);
+			_serviceContext);
 
 		_kaleoLogLocalService.addWorkflowInstanceEndKaleoLog(
-			addKaleoInstanceToken(kaleoInstance, serviceContext),
-			serviceContext);
+			addKaleoInstanceToken(kaleoInstance), _serviceContext);
 
 		Assert.assertEquals(
 			2,
@@ -165,30 +156,23 @@ public class KaleoLogLocalServiceTest {
 
 	@Test
 	public void testGetKaleoTaskInstanceTokenKaleoLogs() throws Exception {
-		long kaleoDefinitionVersionId = 1;
-
-		ServiceContext serviceContext = createServiceContext(
-			TestPropsValues.getUser());
-
-		KaleoInstance kaleoInstance = addKaleoInstance(
-			kaleoDefinitionVersionId, serviceContext);
+		KaleoInstance kaleoInstance = addKaleoInstance();
 
 		KaleoInstanceToken kaleoInstanceToken = addKaleoInstanceToken(
-			kaleoInstance, serviceContext);
+			kaleoInstance);
 
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			addKaleoTaskInstanceToken(
-				kaleoInstance, kaleoInstanceToken, serviceContext);
+			addKaleoTaskInstanceToken(kaleoInstance, kaleoInstanceToken);
 
 		KaleoLog kaleoLog = _kaleoLogLocalService.addTaskAssignmentKaleoLog(
 			Collections.emptyList(), kaleoTaskInstanceToken, StringPool.BLANK,
 			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
-			serviceContext);
+			_serviceContext);
 
 		_kaleoLogLocalService.addTaskCompletionKaleoLog(
 			kaleoTaskInstanceToken, StringPool.BLANK,
 			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
-			serviceContext);
+			_serviceContext);
 
 		List<KaleoLog> kaleoLogs =
 			_kaleoLogLocalService.getKaleoTaskInstanceTokenKaleoLogs(
@@ -220,30 +204,23 @@ public class KaleoLogLocalServiceTest {
 
 	@Test
 	public void testGetKaleoTaskInstanceTokenKaleoLogsCount() throws Exception {
-		long kaleoDefinitionVersionId = 1;
-
-		ServiceContext serviceContext = createServiceContext(
-			TestPropsValues.getUser());
-
-		KaleoInstance kaleoInstance = addKaleoInstance(
-			kaleoDefinitionVersionId, serviceContext);
+		KaleoInstance kaleoInstance = addKaleoInstance();
 
 		KaleoInstanceToken kaleoInstanceToken = addKaleoInstanceToken(
-			kaleoInstance, serviceContext);
+			kaleoInstance);
 
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			addKaleoTaskInstanceToken(
-				kaleoInstance, kaleoInstanceToken, serviceContext);
+			addKaleoTaskInstanceToken(kaleoInstance, kaleoInstanceToken);
 
 		_kaleoLogLocalService.addTaskAssignmentKaleoLog(
 			Collections.emptyList(), kaleoTaskInstanceToken, StringPool.BLANK,
 			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
-			serviceContext);
+			_serviceContext);
 
 		_kaleoLogLocalService.addTaskCompletionKaleoLog(
 			kaleoTaskInstanceToken, StringPool.BLANK,
 			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
-			serviceContext);
+			_serviceContext);
 
 		Assert.assertEquals(
 			2,
@@ -279,10 +256,7 @@ public class KaleoLogLocalServiceTest {
 		}
 	}
 
-	protected KaleoInstance addKaleoInstance(
-			long kaleoDefinitionVersionId, ServiceContext serviceContext)
-		throws Exception {
-
+	protected KaleoInstance addKaleoInstance() throws Exception {
 		BlogsEntry blogsEntry = addBlogsEntry();
 
 		Map<String, Serializable> workflowContext = HashMapBuilder.put(
@@ -294,47 +268,41 @@ public class KaleoLogLocalServiceTest {
 		).build();
 
 		return _kaleoInstanceLocalService.addKaleoInstance(
-			kaleoDefinitionVersionId, "Test", 1, workflowContext,
-			serviceContext);
+			1, "Test", 1, workflowContext, _serviceContext);
 	}
 
 	protected KaleoInstanceToken addKaleoInstanceToken(
-			KaleoInstance kaleoInstance, ServiceContext serviceContext)
+			KaleoInstance kaleoInstance)
 		throws Exception {
 
 		KaleoNode kaleoNode = _kaleoNodeLocalService.addKaleoNode(
 			kaleoInstance.getKaleoDefinitionVersionId(),
-			new Task("task", StringPool.BLANK), serviceContext);
+			new Task("task", StringPool.BLANK), _serviceContext);
 
 		return _kaleoInstanceTokenLocalService.addKaleoInstanceToken(
 			kaleoNode.getKaleoNodeId(),
 			kaleoInstance.getKaleoDefinitionVersionId(),
 			kaleoInstance.getKaleoInstanceId(), 0,
 			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
-			serviceContext);
+			_serviceContext);
 	}
 
 	protected KaleoTaskInstanceToken addKaleoTaskInstanceToken(
-			KaleoInstance kaleoInstance, KaleoInstanceToken kaleoInstanceToken,
-			ServiceContext serviceContext)
+			KaleoInstance kaleoInstance, KaleoInstanceToken kaleoInstanceToken)
 		throws Exception {
 
 		return _kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
 			kaleoInstanceToken.getKaleoInstanceTokenId(), 1, "task",
 			Collections.emptyList(), null,
 			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
-			serviceContext);
+			_serviceContext);
 	}
 
-	protected ServiceContext createServiceContext(User user)
-		throws PortalException {
+	protected void setUpServiceContext() throws PortalException {
+		_serviceContext = new ServiceContext();
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
-		serviceContext.setUserId(user.getUserId());
-
-		return serviceContext;
+		_serviceContext.setCompanyId(TestPropsValues.getCompanyId());
+		_serviceContext.setUserId(TestPropsValues.getUserId());
 	}
 
 	@DeleteAfterTestRun
@@ -364,5 +332,7 @@ public class KaleoLogLocalServiceTest {
 
 	@Inject(type = KaleoWorkflowModelConverter.class)
 	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
+
+	private ServiceContext _serviceContext;
 
 }

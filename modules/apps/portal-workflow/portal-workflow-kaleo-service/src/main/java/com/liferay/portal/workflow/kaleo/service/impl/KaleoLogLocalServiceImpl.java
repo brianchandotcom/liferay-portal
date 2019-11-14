@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.BaseMapBuilder;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -589,9 +588,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAttributes(searchAttributes);
-
-		searchContext.setCompanyId(CompanyThreadLocal.getCompanyId());
-
+		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 		searchContext.setStart(start);
 

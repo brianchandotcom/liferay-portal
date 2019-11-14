@@ -34,6 +34,9 @@ public class KaleoLogModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, KaleoLog kaleoLog) {
+		document.addDateSortable(
+			Field.MODIFIED_DATE, kaleoLog.getModifiedDate());
+
 		document.addKeyword("comment", kaleoLog.getComment());
 		document.addKeyword(
 			"currentAssigneeClassName", kaleoLog.getCurrentAssigneeClassName());
@@ -42,12 +45,12 @@ public class KaleoLogModelDocumentContributor
 		document.addNumberSortable("duration", kaleoLog.getDuration());
 		document.addDateSortable("endDate", kaleoLog.getEndDate());
 		document.addKeyword(
+			"kaleoActionClassName", kaleoLog.getKaleoClassName());
+		document.addKeyword("kaleoActionClassPK", kaleoLog.getKaleoClassPK());
+		document.addKeyword(
 			"kaleoActionDescription", kaleoLog.getKaleoActionDescription());
 		document.addKeyword("kaleoActionId", kaleoLog.getKaleoActionId());
 		document.addKeyword("kaleoActionName", kaleoLog.getKaleoActionName());
-		document.addKeyword(
-			"kaleoActionClassName", kaleoLog.getKaleoClassName());
-		document.addKeyword("kaleoActionClassPK", kaleoLog.getKaleoClassPK());
 		document.addKeyword(
 			"kaleoDefinitionVersionId", kaleoLog.getKaleoDefinitionVersionId());
 		document.addKeyword("kaleoInstanceId", kaleoLog.getKaleoInstanceId());
@@ -57,8 +60,6 @@ public class KaleoLogModelDocumentContributor
 		document.addKeyword("kaleoNodeName", kaleoLog.getKaleoNodeName());
 		document.addKeyword(
 			"kaleoTaskInstanceTokenId", kaleoLog.getKaleoTaskInstanceTokenId());
-		document.addDateSortable(
-			Field.MODIFIED_DATE, kaleoLog.getModifiedDate());
 		document.addKeyword(
 			"previousAssigneeClassName",
 			kaleoLog.getPreviousAssigneeClassName());

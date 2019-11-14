@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.portal.tools.java.parser.util.DetailASTUtil;
+import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;

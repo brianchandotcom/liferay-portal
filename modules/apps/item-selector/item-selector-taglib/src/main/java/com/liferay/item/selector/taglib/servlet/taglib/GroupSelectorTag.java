@@ -60,10 +60,10 @@ public class GroupSelectorTag extends IncludeTag {
 		_groupsCount = -1;
 	}
 
-	protected List<Group> getGroups(HttpServletRequest httpServletRequest) {
+	private List<Group> _getGroups(HttpServletRequest httpServletRequest) {
 		Optional<GroupItemSelectorProvider> groupItemSelectorProviderOptional =
 			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
-				getGroupType(httpServletRequest));
+				_getGroupType(httpServletRequest));
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -92,10 +92,10 @@ public class GroupSelectorTag extends IncludeTag {
 		return _groups;
 	}
 
-	protected int getGroupsCount(HttpServletRequest httpServletRequest) {
+	private int _getGroupsCount(HttpServletRequest httpServletRequest) {
 		Optional<GroupItemSelectorProvider> groupSelectorProviderOptional =
 			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
-				getGroupType(httpServletRequest));
+				_getGroupType(httpServletRequest));
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -114,8 +114,8 @@ public class GroupSelectorTag extends IncludeTag {
 		return _groupsCount;
 	}
 
-	protected String getGroupType(HttpServletRequest httpServletRequest) {
-		return ParamUtil.getString(httpServletRequest, "group_type");
+	private String _getGroupType(HttpServletRequest httpServletRequest) {
+		return ParamUtil.getString(httpServletRequest, "groupType");
 	}
 
 	@Override
@@ -127,10 +127,10 @@ public class GroupSelectorTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
 			"liferay-item-selector:group-selector:groups",
-			getGroups(httpServletRequest));
+			_getGroups(httpServletRequest));
 		httpServletRequest.setAttribute(
 			"liferay-item-selector:group-selector:groupsCount",
-			getGroupsCount(httpServletRequest));
+			_getGroupsCount(httpServletRequest));
 	}
 
 	private List<Group> _groups;

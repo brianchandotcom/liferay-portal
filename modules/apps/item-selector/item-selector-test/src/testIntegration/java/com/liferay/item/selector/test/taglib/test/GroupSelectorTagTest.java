@@ -77,7 +77,7 @@ public class GroupSelectorTagTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, getThemeDisplay());
-		mockHttpServletRequest.setParameter("group_type", "site");
+		mockHttpServletRequest.setParameter("groupType", "site");
 
 		GroupSelectorTag groupSelectorTag = _getGroupSelectorTag(
 			mockHttpServletRequest);
@@ -121,7 +121,7 @@ public class GroupSelectorTagTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, getThemeDisplay());
-		mockHttpServletRequest.setParameter("group_type", "site");
+		mockHttpServletRequest.setParameter("groupType", "site");
 
 		GroupSelectorTag groupSelectorTag = _getGroupSelectorTag(
 			mockHttpServletRequest);

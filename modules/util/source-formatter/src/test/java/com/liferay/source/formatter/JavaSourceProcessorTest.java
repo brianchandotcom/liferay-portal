@@ -22,6 +22,18 @@ import org.junit.Test;
 public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testAttributeOrder() throws Exception {
+		test("AttributeOrder.testjava",
+			new String[] {
+				"Attribute 'dataDefinitionId' should come after attribute " +
+					"'appDeployments'",
+				"Attribute 'type' should come after attribute 'settings'",
+				"Attribute 'type' should come after attribute 'settings'"
+			},
+			new Integer[] {29, 33, 45});
+	}
+
+	@Test
 	public void testAnnotationParameterImports() throws Exception {
 		test("AnnotationParameterImports.testjava");
 	}

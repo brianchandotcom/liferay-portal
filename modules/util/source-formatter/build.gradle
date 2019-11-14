@@ -38,7 +38,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.1.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.26"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.27"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.5.0"

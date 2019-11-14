@@ -23,7 +23,7 @@
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(escapedHREF) %>">
 		<a
-			class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %> <%= type.equals("cancel") ? "btn-link" : "btn-secondary" %>"
+			class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
 			href="<%= escapedHREF %>"
 			id="<%= id %>"
 
@@ -37,7 +37,7 @@
 	</c:when>
 	<c:otherwise>
 		<button
-			class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %> <%= type.equals("cancel") ? "btn-link" : "btn-secondary" %>"
+			class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
 
 			<c:if test="<%= disabled %>">
 				disabled

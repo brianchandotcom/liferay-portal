@@ -85,6 +85,9 @@ if (primary == Boolean.TRUE) {
 if (type.equals("cancel")) {
 	cssClass += " btn-cancel btn-secondary";
 }
+else if (primary == Boolean.FALSE) {
+	cssClass += " btn-secondary";
+}
 
 if (dropdown) {
 	cssClass += " dropdown-toggle direction-down";

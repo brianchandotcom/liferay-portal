@@ -20,10 +20,12 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.ratings.test.util.RatingsTestUtil;
 
@@ -135,6 +137,84 @@ public class AssetEntryServiceTest {
 		validateAssetEntries(expectedAssetEntries, actualAssetEntries);
 	}
 
+	@Test
+	public void testGetEntriesOrderByRatingsAndViewCount() throws Exception {
+		List<AssetEntry> expectedAssetEntries = new ArrayList<>(4);
+
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+			AssetEntry.class);
+
+		AssetEntry assetEntry1 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
+
+		RatingsTestUtil.addStats(
+			assetEntry1.getClassName(), assetEntry1.getClassPK(), 2000);
+
+		ViewCountManagerUtil.incrementViewCount(
+			assetEntry1.getCompanyId(), classNameId, assetEntry1.getEntryId(),
+			2);
+
+		AssetEntry assetEntry2 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
+
+		RatingsTestUtil.addStats(
+			assetEntry2.getClassName(), assetEntry2.getClassPK(), 2000);
+
+		ViewCountManagerUtil.incrementViewCount(
+			assetEntry2.getCompanyId(), classNameId, assetEntry2.getEntryId(),
+			1);
+
+		AssetEntry assetEntry3 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
+
+		RatingsTestUtil.addStats(
+			assetEntry3.getClassName(), assetEntry3.getClassPK(), 3000);
+
+		AssetEntry assetEntry4 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
+
+		RatingsTestUtil.addStats(
+			assetEntry4.getClassName(), assetEntry4.getClassPK(), 1000);
+
+		ViewCountManagerUtil.incrementViewCount(
+			assetEntry4.getCompanyId(), classNameId, assetEntry4.getEntryId(),
+			4);
+
+		expectedAssetEntries.add(assetEntry3);
+		expectedAssetEntries.add(assetEntry1);
+		expectedAssetEntries.add(assetEntry2);
+		expectedAssetEntries.add(assetEntry4);
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
+		assetEntryQuery.setOrderByCol1("ratings");
+		assetEntryQuery.setOrderByCol2("viewCount");
+		assetEntryQuery.setOrderByType1("DESC");
+		assetEntryQuery.setOrderByType2("DESC");
+
+		List<AssetEntry> actualAssetEntries =
+			AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+
+		validateAssetEntries(expectedAssetEntries, actualAssetEntries);
+	}
+
+	@Test
+	public void testGetEntriesOrderByViewCount() throws Exception {
+		List<AssetEntry> expectedAssetEntries = createAssetEntries();
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
+		assetEntryQuery.setOrderByCol1("viewCount");
+		assetEntryQuery.setOrderByType1("DESC");
+
+		List<AssetEntry> actualAssetEntries =
+			AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+
+		validateAssetEntries(expectedAssetEntries, actualAssetEntries);
+	}
+
 	protected List<AssetEntry> createAssetEntries() throws Exception {
 		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
@@ -146,11 +226,18 @@ public class AssetEntryServiceTest {
 
 		Date dayBeforeYesterday = calendar.getTime();
 
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+			AssetEntry.class);
+
 		AssetEntry assetEntry1 = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), dayBeforeYesterday);
 
 		RatingsTestUtil.addStats(
 			assetEntry1.getClassName(), assetEntry1.getClassPK(), 2000);
+
+		ViewCountManagerUtil.incrementViewCount(
+			assetEntry1.getCompanyId(), classNameId, assetEntry1.getEntryId(),
+			2);
 
 		AssetEntry assetEntry2 = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), dayBeforeYesterday);
@@ -158,11 +245,19 @@ public class AssetEntryServiceTest {
 		RatingsTestUtil.addStats(
 			assetEntry2.getClassName(), assetEntry2.getClassPK(), 1000);
 
+		ViewCountManagerUtil.incrementViewCount(
+			assetEntry2.getCompanyId(), classNameId, assetEntry2.getEntryId(),
+			1);
+
 		AssetEntry assetEntry3 = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), yesterday);
 
 		RatingsTestUtil.addStats(
 			assetEntry3.getClassName(), assetEntry3.getClassPK(), 3000);
+
+		ViewCountManagerUtil.incrementViewCount(
+			assetEntry3.getCompanyId(), classNameId, assetEntry3.getEntryId(),
+			3);
 
 		AssetEntry assetEntry4 = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), dayBeforeYesterday);

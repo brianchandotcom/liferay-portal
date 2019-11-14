@@ -715,6 +715,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(
 			FrameworkPropsKeys.FELIX_FILEINSTALL_TMPDIR,
 			SystemProperties.get(SystemProperties.TMP_DIR));
+		properties.put(
+			FrameworkPropsKeys.FELIX_FILEINSTALL_WEB_START_LEVEL,
+			String.valueOf(PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL));
 
 		// Framework
 

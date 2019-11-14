@@ -42,11 +42,12 @@ public class ContentSetElementResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		long userId = TestPropsValues.getUserId();
-
 		_serviceContext = new ServiceContext();
 
 		_serviceContext.setScopeGroupId(testGroup.getGroupId());
+
+		long userId = TestPropsValues.getUserId();
+
 		_serviceContext.setUserId(userId);
 
 		_assetListEntry = AssetListEntryLocalServiceUtil.addAssetListEntry(

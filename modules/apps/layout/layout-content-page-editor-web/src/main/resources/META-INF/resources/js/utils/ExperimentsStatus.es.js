@@ -25,7 +25,7 @@ export const STATUS_SCHEDULED = 7;
 export const STATUS_TERMINATED = 6;
 
 /**
- * Maps the Experiment status code to its label style
+ * Maps the Experiment status code to its label style for Clay 2 label component
  */
 const STATUS_TO_TYPE = {
 	[STATUS_COMPLETED]: 'success',

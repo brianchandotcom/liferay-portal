@@ -19,7 +19,6 @@ import com.liferay.talend.common.daikon.DaikonUtil;
 import com.liferay.talend.common.oas.OASParameter;
 import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.schema.SchemaListener;
 import com.liferay.talend.source.LiferayOASSource;
 import com.liferay.talend.tliferayoutput.Action;
@@ -60,8 +59,7 @@ import org.talend.daikon.properties.property.StringProperty;
  * @author Igor Beslic
  */
 public abstract class BaseLiferayResourceProperties
-	extends ComponentPropertiesImpl
-	implements LiferayConnectionPropertiesProvider {
+	extends ComponentPropertiesImpl {
 
 	public BaseLiferayResourceProperties(String name) {
 		super(name);
@@ -130,11 +128,6 @@ public abstract class BaseLiferayResourceProperties
 		UriBuilder uriBuilder = UriBuilder.fromPath(endpointHref);
 
 		return buildEndpointURI(uriBuilder);
-	}
-
-	@Override
-	public LiferayConnectionProperties getLiferayConnectionProperties() {
-		return connection;
 	}
 
 	public Schema getSchema() {

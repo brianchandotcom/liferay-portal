@@ -45,9 +45,7 @@ import org.talend.daikon.properties.property.PropertyFactory;
  * @author Zoltán Takács
  * @author Igor Beslic
  */
-public class LiferayConnectionProperties
-	extends ComponentPropertiesImpl
-	implements LiferayConnectionPropertiesProvider {
+public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 
 	public LiferayConnectionProperties(String name) {
 		super(name);
@@ -104,11 +102,6 @@ public class LiferayConnectionProperties
 		return _getValue(itemsPerPage);
 	}
 
-	@Override
-	public LiferayConnectionProperties getLiferayConnectionProperties() {
-		return this;
-	}
-
 	public String getOAuthClientId() {
 		return _getValue(oAuthAuthorizationProperties.oauthClientId);
 	}
@@ -127,30 +120,6 @@ public class LiferayConnectionProperties
 
 	public String getReferencedComponentId() {
 		return referencedComponent.componentInstanceId.getStringValue();
-	}
-
-	public LiferayConnectionProperties getReferencedConnectionProperties() {
-		LiferayConnectionProperties liferayConnectionProperties =
-			referencedComponent.getReference();
-
-		if (liferayConnectionProperties != null) {
-			return liferayConnectionProperties;
-		}
-
-		if (getReferencedComponentId() != null) {
-			_logger.error(
-				"Connection has a reference to '{}' but the referenced " +
-					"Object is null",
-				getReferencedComponentId());
-		}
-
-		if (_logger.isDebugEnabled()) {
-			_logger.debug(
-				"Fall back to the actual instance " +
-					"LiferayConnectionProperties for the runtime environment");
-		}
-
-		return getLiferayConnectionProperties();
 	}
 
 	public String getUserId() {
@@ -313,7 +282,7 @@ public class LiferayConnectionProperties
 	public ValidationResult validateTestConnection() {
 		LiferayOASSource liferayOASSource =
 			LiferayBaseComponentDefinition.getLiferayOASSource(
-				getReferencedConnectionProperties());
+				getEffectiveLiferayConnectionProperties());
 
 		Form form = getForm(UIKeys.FORM_WIZARD);
 

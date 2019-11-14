@@ -34,8 +34,7 @@ import org.talend.daikon.properties.presentation.Form;
  * @author Ivica Cardic
  */
 public abstract class LiferayConnectionResourceBaseProperties
-	extends FixedConnectorsComponentProperties
-	implements LiferayConnectionPropertiesProvider {
+	extends FixedConnectorsComponentProperties {
 
 	public LiferayConnectionResourceBaseProperties(String name) {
 		super(name);
@@ -53,11 +52,6 @@ public abstract class LiferayConnectionResourceBaseProperties
 
 	public int getItemsPerPage() {
 		return connection.getItemsPerPage();
-	}
-
-	@Override
-	public LiferayConnectionProperties getLiferayConnectionProperties() {
-		return connection;
 	}
 
 	public Schema getSchema() {
@@ -121,6 +115,10 @@ public abstract class LiferayConnectionResourceBaseProperties
 	public LiferayConnectionProperties connection =
 		new LiferayConnectionProperties("connection");
 	public BaseLiferayResourceProperties resource;
+
+	protected LiferayConnectionProperties getLiferayConnectionProperties() {
+		return connection;
+	}
 
 	protected transient PropertyPathConnector mainConnector =
 		new PropertyPathConnector(Connector.MAIN_NAME, "resource.main");

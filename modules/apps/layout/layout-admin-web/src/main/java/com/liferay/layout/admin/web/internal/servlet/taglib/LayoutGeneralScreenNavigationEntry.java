@@ -19,14 +19,22 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.layout.admin.web.internal.constants.LayoutScreenNavigationEntryConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,6 +68,22 @@ public class LayoutGeneralScreenNavigationEntry
 	public String getScreenNavigationKey() {
 		return LayoutScreenNavigationEntryConstants.
 			SCREEN_NAVIGATION_KEY_LAYOUT;
+	}
+
+	@Override
+	public boolean isVisible(User user, Layout layout) {
+		List<FormNavigatorCategory> formNavigatorCategories =
+			FormNavigatorCategoryUtil.getFormNavigatorCategories(
+				FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT);
+
+		Stream<FormNavigatorCategory> formNavigatorCategoryStream =
+			formNavigatorCategories.stream();
+
+		return formNavigatorCategoryStream.anyMatch(
+			category -> ListUtil.isNotEmpty(
+				FormNavigatorEntryUtil.getFormNavigatorEntries(
+					FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT,
+					category.getKey(), user, layout)));
 	}
 
 	@Override

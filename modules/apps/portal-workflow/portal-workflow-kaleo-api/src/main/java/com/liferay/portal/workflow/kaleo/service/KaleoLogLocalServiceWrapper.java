@@ -347,6 +347,12 @@ public class KaleoLogLocalServiceWrapper
 		return _kaleoLogLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getKaleoInstanceKaleoLogs(long, long, List, int, int,
+	 OrderByComparator)}
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog>
 		getKaleoInstanceKaleoLogs(
@@ -361,11 +367,39 @@ public class KaleoLogLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog>
+		getKaleoInstanceKaleoLogs(
+			long companyId, long kaleoInstanceId,
+			java.util.List<Integer> logTypes, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.workflow.kaleo.model.KaleoLog>
+					orderByComparator) {
+
+		return _kaleoLogLocalService.getKaleoInstanceKaleoLogs(
+			companyId, kaleoInstanceId, logTypes, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getKaleoInstanceKaleoLogsCount(long, long, List)}
+	 */
+	@Deprecated
+	@Override
 	public int getKaleoInstanceKaleoLogsCount(
 		long kaleoInstanceId, java.util.List<Integer> logTypes) {
 
 		return _kaleoLogLocalService.getKaleoInstanceKaleoLogsCount(
 			kaleoInstanceId, logTypes);
+	}
+
+	@Override
+	public int getKaleoInstanceKaleoLogsCount(
+		long companyId, long kaleoInstanceId,
+		java.util.List<Integer> logTypes) {
+
+		return _kaleoLogLocalService.getKaleoInstanceKaleoLogsCount(
+			companyId, kaleoInstanceId, logTypes);
 	}
 
 	/**
@@ -411,6 +445,12 @@ public class KaleoLogLocalServiceWrapper
 		return _kaleoLogLocalService.getKaleoLogsCount();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getKaleoTaskInstanceTokenKaleoLogs(long, long, List, int,
+	 int, OrderByComparator)}
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog>
 		getKaleoTaskInstanceTokenKaleoLogs(
@@ -425,11 +465,39 @@ public class KaleoLogLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog>
+		getKaleoTaskInstanceTokenKaleoLogs(
+			long companyId, long kaleoTaskInstanceTokenId,
+			java.util.List<Integer> logTypes, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.workflow.kaleo.model.KaleoLog>
+					orderByComparator) {
+
+		return _kaleoLogLocalService.getKaleoTaskInstanceTokenKaleoLogs(
+			companyId, kaleoTaskInstanceTokenId, logTypes, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getKaleoTaskInstanceTokenKaleoLogsCount(long, long, List)}
+	 */
+	@Deprecated
+	@Override
 	public int getKaleoTaskInstanceTokenKaleoLogsCount(
 		long kaleoTaskInstanceTokenId, java.util.List<Integer> logTypes) {
 
 		return _kaleoLogLocalService.getKaleoTaskInstanceTokenKaleoLogsCount(
 			kaleoTaskInstanceTokenId, logTypes);
+	}
+
+	@Override
+	public int getKaleoTaskInstanceTokenKaleoLogsCount(
+		long companyId, long kaleoTaskInstanceTokenId,
+		java.util.List<Integer> logTypes) {
+
+		return _kaleoLogLocalService.getKaleoTaskInstanceTokenKaleoLogsCount(
+			companyId, kaleoTaskInstanceTokenId, logTypes);
 	}
 
 	/**

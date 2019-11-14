@@ -630,6 +630,8 @@ definition {
 
 		DynamicDataMapping.editFieldRepeatable(fieldFieldLabel = "Text");
 
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
 		DDLDataDefinition.save();
 
 		Navigator.openURL();
@@ -1235,6 +1237,8 @@ definition {
 			fieldFieldLabel = "Document",
 			fieldName = "Document");
 
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
 		DDLDataDefinition.save();
 
 		Navigator.openURL();
@@ -1335,7 +1339,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${adminEditURL}");
 
-		DDLRecord.viewTranslationNotAvailable(localizedLanguage = "Catalan (Spain)");
+		DDLRecord.viewTranslationNotAvailable(localizedLanguage = "Spanish (Spain)");
 
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "Text Edit",
@@ -1880,6 +1884,10 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
+		Form.addTranslation(localizedLanguage = "English (United States)");
+
+		Form.addTranslation(localizedLanguage = "Chinese (China)");
+
 		DDLDataDefinition.save();
 
 		Navigator.openURL();
@@ -1950,10 +1958,10 @@ definition {
 			ddlRecordFieldData = "",
 			fieldName = "Text");
 
-		PortletEntry.changeLocale(locale = "iw-IL");
+		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text Hebrew",
+			ddlRecordFieldData = "Text Chinese",
 			fieldName = "Text");
 
 		PortletEntry.publish();
@@ -2014,10 +2022,10 @@ definition {
 			ddlRecordFieldData = "remove",
 			fieldName = "Text");
 
-		PortletEntry.changeLocale(locale = "iw-IL");
+		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text Hebrew",
+			ddlRecordFieldData = "Text Chinese",
 			fieldName = "Text");
 
 		PortletEntry.publish();
@@ -2271,6 +2279,8 @@ definition {
 			fieldName = "Text");
 
 		DynamicDataMapping.editFieldRepeatable(fieldFieldLabel = "Text");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
 
 		DDLDataDefinition.save();
 

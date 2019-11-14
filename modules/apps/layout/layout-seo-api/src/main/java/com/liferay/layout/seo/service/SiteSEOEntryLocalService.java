@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -177,6 +178,9 @@ public interface SiteSEOEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SiteSEOEntry fetchSiteSEOEntry(long siteSEOEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SiteSEOEntry fetchSiteSEOEntryByGroupId(long groupId);
+
 	/**
 	 * Returns the site seo entry matching the UUID and group.
 	 *
@@ -280,6 +284,11 @@ public interface SiteSEOEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SiteSEOEntry getSiteSEOEntryByUuidAndGroupId(
 			String uuid, long groupId)
+		throws PortalException;
+
+	public SiteSEOEntry updateSiteSEOEntry(
+			long userId, long groupId, long openGraphImageFileEntryId,
+			boolean openSiteGraphEnabled, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

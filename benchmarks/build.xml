@@ -6,7 +6,21 @@
 	<target name="build-sample-sql">
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
 
+		<unzip
+			dest="build"
+			overwrite="true"
+		>
+			<fileset
+				dir="${sdk.dir}/dist"
+				includes="com.liferay.portal.tools.sample.sql.builder*.jar"
+			/>
+		</unzip>
+
 		<path id="sample.sql.builder.classpath">
+			<fileset
+				dir="build"
+				includes="lib/*.jar"
+			/>
 			<fileset
 				dir="${sdk.dir}/dist"
 				includes="com.liferay.blogs.*.jar"
@@ -65,6 +79,8 @@
 			<sysproperty key="external-properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="${sample.sql.properties.file}" />
 		</java>
+
+		<delete dir="build" quiet="true" />
 	</target>
 
 	<target name="clean">

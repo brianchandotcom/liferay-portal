@@ -92,8 +92,10 @@ public class FragmentRendererControllerImpl
 			fragmentRendererContext.getFragmentEntryLink();
 
 		try {
-			_fragmentEntryValidator.validateConfiguration(
-				fragmentEntryLink.getConfiguration());
+			if (Validator.isNotNull(fragmentEntryLink.getConfiguration())) {
+				_fragmentEntryValidator.validateConfiguration(
+					fragmentEntryLink.getConfiguration());
+			}
 		}
 		catch (FragmentEntryConfigurationException fece) {
 			SessionErrors.add(

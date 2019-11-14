@@ -69,11 +69,7 @@ public class TLiferayBatchFileDefinition extends LiferayDefinition {
 
 		assertEngineCompatibility(executionEngine);
 
-		if (connectorTopology == ConnectorTopology.INCOMING) {
-			return getCommonRuntimeInfo(BATCH_FILE_SINK_CLASS);
-		}
-
-		return null;
+		return getCommonRuntimeInfo(BATCH_FILE_SINK_CLASS);
 	}
 
 	@Override

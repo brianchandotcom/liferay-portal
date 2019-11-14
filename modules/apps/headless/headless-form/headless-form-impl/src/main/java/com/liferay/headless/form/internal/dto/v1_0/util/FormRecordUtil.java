@@ -54,12 +54,12 @@ public class FormRecordUtil {
 					portal,
 					userLocalService.getUser(
 						ddmFormInstanceRecord.getUserId()));
-				draft =
-					ddmFormInstanceRecord.getStatus() ==
-						WorkflowConstants.STATUS_DRAFT;
 				dateCreated = ddmFormInstanceRecord.getCreateDate();
 				dateModified = ddmFormInstanceRecord.getModifiedDate();
 				datePublished = ddmFormInstanceRecord.getLastPublishDate();
+				draft =
+					ddmFormInstanceRecord.getStatus() ==
+						WorkflowConstants.STATUS_DRAFT;
 				formFieldValues = TransformUtil.transformToArray(
 					ddmFormValues.getDDMFormFieldValues(),
 					ddmFormFieldValue -> {

@@ -56,11 +56,11 @@ public abstract class BaseLiferayFieldQueryFactoryTestCase
 			"content_pt_BR", getPortugueseBlueprint(),
 			new Expectations() {
 				{
+					phrasePrefix = true;
 					word1 = true;
 					word2 = true;
 					wordPrefix1 = true;
 					wordPrefix2 = false;
-					phrasePrefix = true;
 				}
 			});
 	}
@@ -92,11 +92,11 @@ public abstract class BaseLiferayFieldQueryFactoryTestCase
 			"description_pt_BR", getPortugueseBlueprint(),
 			new Expectations() {
 				{
+					phrasePrefix = true;
 					word1 = true;
 					word2 = true;
 					wordPrefix1 = true;
 					wordPrefix2 = false;
-					phrasePrefix = true;
 				}
 			});
 	}
@@ -107,11 +107,11 @@ public abstract class BaseLiferayFieldQueryFactoryTestCase
 			"properties", getEnglishBlueprint(),
 			new Expectations() {
 				{
+					phrasePrefix = false;
 					word1 = false;
 					word2 = false;
 					wordPrefix1 = false;
 					wordPrefix2 = false;
-					phrasePrefix = false;
 				}
 			});
 	}
@@ -136,11 +136,11 @@ public abstract class BaseLiferayFieldQueryFactoryTestCase
 			"properties_pt_BR", getPortugueseBlueprint(),
 			new Expectations() {
 				{
+					phrasePrefix = true;
 					word1 = true;
 					word2 = true;
 					wordPrefix1 = true;
 					wordPrefix2 = false;
-					phrasePrefix = true;
 				}
 			});
 	}
@@ -198,11 +198,11 @@ public abstract class BaseLiferayFieldQueryFactoryTestCase
 	protected static Expectations getDescriptionStyleExpectations() {
 		return new Expectations() {
 			{
+				phrasePrefix = true;
 				word1 = true;
 				word2 = true;
 				wordPrefix1 = false;
 				wordPrefix2 = false;
-				phrasePrefix = true;
 			}
 		};
 	}
@@ -249,11 +249,11 @@ public abstract class BaseLiferayFieldQueryFactoryTestCase
 	protected static Expectations getTitleStyleExpectations() {
 		return new Expectations() {
 			{
+				phrasePrefix = true;
 				word1 = true;
 				word2 = true;
 				wordPrefix1 = true;
 				wordPrefix2 = true;
-				phrasePrefix = true;
 			}
 		};
 	}

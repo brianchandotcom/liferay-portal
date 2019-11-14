@@ -130,9 +130,9 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 		return new Organization() {
 			{
-				id = organization.getOrganizationId();
 				dateCreated = organization.getCreateDate();
 				dateModified = organization.getModifiedDate();
+				id = organization.getOrganizationId();
 				name = organization.getName();
 			}
 		};

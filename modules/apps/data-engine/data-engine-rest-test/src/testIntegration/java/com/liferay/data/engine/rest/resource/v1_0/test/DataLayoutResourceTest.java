@@ -211,8 +211,8 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 		DataLayout dataLayout = new DataLayout() {
 			{
 				dataDefinitionId = _ddmStructure.getStructureId();
-				dateCreated = RandomTestUtil.nextDate();
 				dataLayoutKey = RandomTestUtil.randomString();
+				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
 				paginationMode = "wizard";

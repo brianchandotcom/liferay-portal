@@ -157,11 +157,10 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 		assertSearch(
 			new Expectations() {
 				{
-					selectGroups = new Group[] {_group2};
-					selectUsers = new User[] {_user1};
-
 					groupFrequencies = SearchMapUtil.join(
 						toMap(_group1, 3), toMap(_group2, 1));
+					selectGroups = new Group[] {_group2};
+					selectUsers = new User[] {_user1};
 					typeFrequencies = toMap(JournalArticle.class, 1);
 					userFrequencies = SearchMapUtil.join(
 						toMap(_user1, 1), toMap(_user2, 2), toMap(_user3, 1));
@@ -178,12 +177,11 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 		assertSearch(
 			new Expectations() {
 				{
+					groupFrequencies = SearchMapUtil.join(
+						toMap(_group1, 1), toMap(_group2, 1));
 					selectGroups = new Group[] {_group2};
 					selectTypes = new Class<?>[] {JournalArticle.class};
 					selectUsers = new User[] {_user1};
-
-					groupFrequencies = SearchMapUtil.join(
-						toMap(_group1, 1), toMap(_group2, 1));
 					typeFrequencies = toMap(JournalArticle.class, 1);
 					userFrequencies = toMap(_user1, 1);
 				}
@@ -199,10 +197,10 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 		assertSearch(
 			new Expectations() {
 				{
-					selectUsers = new User[] {_user1};
-
 					groupFrequencies = SearchMapUtil.join(
 						toMap(_group1, 3), toMap(_group2, 1));
+
+					selectUsers = new User[] {_user1};
 					typeFrequencies = SearchMapUtil.join(
 						toMap(BlogsEntry.class, 1), toMap(DLFileEntry.class, 1),
 						toMap(JournalArticle.class, 2));
@@ -221,11 +219,11 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 		assertSearch(
 			new Expectations() {
 				{
-					selectUsers = new User[] {_user1};
-					selectTypes = new Class<?>[] {JournalArticle.class};
-
 					groupFrequencies = SearchMapUtil.join(
 						toMap(_group1, 1), toMap(_group2, 1));
+
+					selectTypes = new Class<?>[] {JournalArticle.class};
+					selectUsers = new User[] {_user1};
 					typeFrequencies = SearchMapUtil.join(
 						toMap(BlogsEntry.class, 1), toMap(DLFileEntry.class, 1),
 						toMap(JournalArticle.class, 2));
@@ -244,13 +242,13 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 		assertSearch(
 			new Expectations() {
 				{
+					groupFrequencies = SearchMapUtil.join(
+						toMap(_group1, 2), toMap(_group2, 1));
 					selectTypes = new Class<?>[] {
 						DLFileEntry.class, JournalArticle.class
 					};
-					selectUsers = new User[] {_user1};
 
-					groupFrequencies = SearchMapUtil.join(
-						toMap(_group1, 2), toMap(_group2, 1));
+					selectUsers = new User[] {_user1};
 					typeFrequencies = SearchMapUtil.join(
 						toMap(BlogsEntry.class, 1), toMap(DLFileEntry.class, 1),
 						toMap(JournalArticle.class, 2));

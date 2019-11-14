@@ -139,8 +139,8 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 					nodeKeys = new NodeKey[] {
 						new NodeKey() {
 							{
-								id = String.valueOf(_node.getId());
 								executionType = "enter";
+								id = String.valueOf(_node.getId());
 							}
 						}
 					};
@@ -154,8 +154,8 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 					nodeKeys = new NodeKey[] {
 						new NodeKey() {
 							{
-								id = String.valueOf(_node.getId());
 								executionType = "leave";
+								id = String.valueOf(_node.getId());
 							}
 						}
 					};

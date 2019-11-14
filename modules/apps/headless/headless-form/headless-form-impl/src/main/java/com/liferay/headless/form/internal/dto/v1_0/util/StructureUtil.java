@@ -142,12 +142,6 @@ public class StructureUtil {
 			{
 				displayStyle = GetterUtil.getString(
 					ddmFormField.getProperty("displayStyle"));
-				immutable = ddmFormField.isTransient();
-				inputControl = type;
-				label = _toString(locale, ddmFormField.getLabel());
-				localizable = ddmFormField.isLocalizable();
-				multiple = ddmFormField.isMultiple();
-				name = ddmFormField.getName();
 
 				formFieldOptions = Optional.ofNullable(
 					ddmFormField.getDDMFormFieldOptions()
@@ -169,6 +163,13 @@ public class StructureUtil {
 				).toArray(
 					FormFieldOption[]::new
 				);
+
+				immutable = ddmFormField.isTransient();
+				inputControl = type;
+				label = _toString(locale, ddmFormField.getLabel());
+				localizable = ddmFormField.isLocalizable();
+				multiple = ddmFormField.isMultiple();
+				name = ddmFormField.getName();
 
 				predefinedValue = _toString(
 					locale, ddmFormField.getPredefinedValue());
@@ -325,11 +326,11 @@ public class StructureUtil {
 
 		return new FormPage() {
 			{
-				headline = _toString(locale, ddmFormLayoutPage.getTitle());
 				formFields = TransformUtil.transform(
 					ddmFormFields,
 					ddmFormField -> _toFormField(ddmFormField, locale),
 					FormField.class);
+				headline = _toString(locale, ddmFormLayoutPage.getTitle());
 				text = _toString(locale, ddmFormLayoutPage.getDescription());
 			}
 		};

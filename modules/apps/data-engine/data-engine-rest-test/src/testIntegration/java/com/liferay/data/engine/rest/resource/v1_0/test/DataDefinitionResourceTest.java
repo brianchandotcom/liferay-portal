@@ -160,8 +160,8 @@ public class DataDefinitionResourceTest
 			dataDefinition.getId(), _OPERATION_SAVE_PERMISSION,
 			new DataDefinitionPermission() {
 				{
-					view = true;
 					roleNames = new String[] {role.getName()};
+					view = true;
 				}
 			});
 	}

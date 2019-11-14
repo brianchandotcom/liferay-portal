@@ -66,10 +66,10 @@ public class BlogPostingDTOConverter implements DTOConverter {
 
 		return new BlogPosting() {
 			{
-				alternativeHeadline = blogsEntry.getSubtitle();
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()));
+				alternativeHeadline = blogsEntry.getSubtitle();
 				articleBody = blogsEntry.getContent();
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(blogsEntry.getUserId()));

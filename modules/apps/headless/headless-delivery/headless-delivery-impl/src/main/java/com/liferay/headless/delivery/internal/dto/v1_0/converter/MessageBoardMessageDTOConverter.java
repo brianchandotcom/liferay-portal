@@ -79,16 +79,16 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 					_assetTagLocalService.getTags(
 						MBMessage.class.getName(), mbMessage.getMessageId()),
 					AssetTag.NAME_ACCESSOR);
-				relatedContents = RelatedContentUtil.toRelatedContents(
-					_assetEntryLocalService, _assetLinkLocalService,
-					mbMessage.getModelClassName(), mbMessage.getMessageId(),
-					dtoConverterContext.getLocale());
 				numberOfMessageBoardAttachments =
 					mbMessage.getAttachmentsFileEntriesCount();
 				numberOfMessageBoardMessages =
 					_mbMessageLocalService.getChildMessagesCount(
 						mbMessage.getMessageId(),
 						WorkflowConstants.STATUS_APPROVED);
+				relatedContents = RelatedContentUtil.toRelatedContents(
+					_assetEntryLocalService, _assetLinkLocalService,
+					mbMessage.getModelClassName(), mbMessage.getMessageId(),
+					dtoConverterContext.getLocale());
 				showAsAnswer = mbMessage.isAnswer();
 				siteId = mbMessage.getGroupId();
 				subscribed = _subscriptionLocalService.isSubscribed(

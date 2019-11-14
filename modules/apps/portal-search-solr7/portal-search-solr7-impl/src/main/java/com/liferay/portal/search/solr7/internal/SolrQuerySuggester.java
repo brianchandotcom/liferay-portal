@@ -189,8 +189,8 @@ public class SolrQuerySuggester implements QuerySuggester {
 			suggestions.add(
 				new Suggestion() {
 					{
-						term = keyword;
 						options = suggestKeywords(searchContext, max, keyword);
+						term = keyword;
 					}
 				});
 		}

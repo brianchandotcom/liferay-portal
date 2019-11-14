@@ -103,12 +103,12 @@ public class StructuredContentDTOConverter implements DTOConverter {
 
 		return new StructuredContent() {
 			{
-				availableLanguages = LocaleUtil.toW3cLanguageIds(
-					journalArticle.getAvailableLanguageIds());
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()));
+				availableLanguages = LocaleUtil.toW3cLanguageIds(
+					journalArticle.getAvailableLanguageIds());
 				contentFields = _toContentFields(
 					journalArticle, dtoConverterContext.getLocale(),
 					_dlAppService, _dlURLHelper,

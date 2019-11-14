@@ -1170,8 +1170,6 @@ public class DataFactory {
 			properties.getProperty("sample.sql.max.blogs.entry.comment.count"));
 		_maxBlogsEntryCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.blogs.entry.count"));
-		_maxContentPageCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.content.page.count"));
 		_maxCPDefinitionCount = GetterUtil.getInteger(
 			properties.getProperty(
 				"sample.sql.max.commerce.product.definition.count"));
@@ -1180,6 +1178,8 @@ public class DataFactory {
 				"sample.sql.max.commerce.product.instance.count"));
 		_maxCProductCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.commerce.product.count"));
+		_maxContentPageCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.content.page.count"));
 		_maxDDLCustomFieldCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.ddl.custom.field.count"));
 		_maxDDLRecordCount = GetterUtil.getInteger(

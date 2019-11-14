@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayPortletURL" %><%@
 page import="com.liferay.portal.kernel.service.GroupServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -43,8 +44,6 @@ page import="com.liferay.taglib.aui.AUIUtil" %>
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

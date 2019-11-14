@@ -125,7 +125,7 @@ definition {
 		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''property="og:title",property="og:site_name",property="og:url",property="og:locale"''');
 	}
 
-	@description = "This ensures that the user can edit existed OG tags."
+	@description = "This ensures that the user can edit existing OG tags."
 	@priority = "5"
 	test EditMetaTagCustomizations {
 		property test.name.skip.portal.instance = "OpenGraph#EditMetaTagCustomizations";
@@ -178,7 +178,7 @@ definition {
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a custom title edit","og:description" content="This is a custom description edit","og:image" content="${customImageURLSource}"''');
 	}
 
-	@description = "This ensures that the user can reselect the default OG title tag."
+	@description = "This ensures that the user can reset to the default OG title tag."
 	@priority = "5"
 	test RevertCustomTitle {
 		property test.name.skip.portal.instance = "OpenGraph#RevertCustomTitle";

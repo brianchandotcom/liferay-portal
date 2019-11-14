@@ -97,7 +97,7 @@ public class GroupItemSelectorTrackerUtilTest {
 		implements GroupItemSelectorProvider {
 
 		@Override
-		public long getGroupCount(
+		public int getGroupCount(
 			long companyId, long groupId, String keywords) {
 
 			return 3;

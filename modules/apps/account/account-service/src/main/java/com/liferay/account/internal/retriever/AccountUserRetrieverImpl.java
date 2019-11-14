@@ -16,6 +16,7 @@ package com.liferay.account.internal.retriever;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.internal.search.searcher.UserSearchRequestBuilder;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -33,6 +35,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -87,6 +90,27 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 			HashMapBuilder.<String, Serializable>put(
 				"accountEntryIds", accountEntryIds
 			).build();
+
+		return _getUserBaseModelSearchResult(
+			_getSearchResponse(
+				attributes, cur, delta, keywords, reverse, sortField, status));
+	}
+
+	@Override
+	public BaseModelSearchResult<User> searchAssignableUsers(
+			long accountEntryId, boolean restrictToDomains, String keywords,
+			int status, int cur, int delta, String sortField, boolean reverse)
+		throws PortalException {
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		if (restrictToDomains) {
+			AccountEntry accountEntry =
+				_accountEntryLocalService.getAccountEntry(accountEntryId);
+
+			attributes.put(
+				"emailDomains", StringUtil.split(accountEntry.getDomains()));
+		}
 
 		return _getUserBaseModelSearchResult(
 			_getSearchResponse(

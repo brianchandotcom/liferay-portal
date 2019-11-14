@@ -39,4 +39,9 @@ public interface AccountUserRetriever {
 			int delta, String sortField, boolean reverse)
 		throws PortalException;
 
+	public BaseModelSearchResult<User> searchAssignableUsers(
+			long accountEntryId, boolean restrictToDomains, String keywords,
+			int status, int cur, int delta, String sortField, boolean reverse)
+		throws PortalException;
+
 }

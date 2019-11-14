@@ -39,7 +39,7 @@ definition {
 
 		Panel.expandPanel(panel = "Index Actions");
 
-		AssertClick.assertTextClickAtAndPause(
+		AssertClick.assertTextClickAt(
 			key_actionsDescription = "${actionsDescription}",
 			locator1 = "Button#EXECUTE_ACTION",
 			value1 = "Execute");

@@ -45,6 +45,14 @@ dependencies {
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 }
 
+deployDependencies {
+	from (configurations.compile) {
+		include "checkstyle-*.jar"
+	}
+
+	rename(/checkstyle-(.+)\.jar/, "checkstyle" + renameSuffix)
+}
+
 liferay {
 	deployDir = "../../../tools/sdk/dependencies/com.liferay.source.formatter/lib"
 }

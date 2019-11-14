@@ -38,8 +38,6 @@ import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.Properties;
-import org.talend.daikon.properties.ValidationResult;
-import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.PropertyFactory;
@@ -144,14 +142,6 @@ public class TLiferayOutputProperties
 		if (_logger.isTraceEnabled()) {
 			_logger.trace("Properties set " + System.identityHashCode(this));
 		}
-	}
-
-	public void setValidationResult(
-		ValidationResult validationResult,
-		ValidationResultMutable validationResultMutable) {
-
-		validationResultMutable.setMessage(validationResult.getMessage());
-		validationResultMutable.setStatus(validationResult.getStatus());
 	}
 
 	public Property<Boolean> dieOnError = PropertyFactory.newBoolean(

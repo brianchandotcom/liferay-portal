@@ -24,7 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.talend.components.api.component.PropertyPathConnector;
-import org.talend.daikon.properties.Properties;
 
 /**
  * @author Zoltán Takács
@@ -42,26 +41,6 @@ public class TLiferayInputProperties
 
 		if (_logger.isTraceEnabled()) {
 			_logger.trace("Instantiated " + System.identityHashCode(this));
-		}
-	}
-
-	@Override
-	public Properties init() {
-		Properties properties = super.init();
-
-		if (_logger.isTraceEnabled()) {
-			_logger.trace("Initialized " + System.identityHashCode(this));
-		}
-
-		return properties;
-	}
-
-	@Override
-	public void setupProperties() {
-		super.setupProperties();
-
-		if (_logger.isTraceEnabled()) {
-			_logger.trace("Properties set " + System.identityHashCode(this));
 		}
 	}
 

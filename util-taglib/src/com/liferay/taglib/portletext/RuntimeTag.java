@@ -209,8 +209,37 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			keySet.removeIf(key -> key.startsWith("p_p_"));
 		}
 
-		String portletNamespace = PortalUtil.getPortletNamespace(
-			portletInstanceKey);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Portlet portlet = getPortlet(
+			themeDisplay.getCompanyId(), portletInstanceKey);
+
+		String portletNamespace = StringPool.BLANK;
+
+		if (portlet.isInstanceable()) {
+			portletNamespace = PortalUtil.getPortletNamespace(
+				portletInstanceKey);
+
+			queryString = PortletParameterUtil.addNamespace(
+				portletInstanceKey, queryString);
+		}
+		else {
+			portlet.setPortletId(portlet.getRootPortletId());
+			portlet.setPortletName(portlet.getRootPortletId());
+
+			portletNamespace = PortalUtil.getPortletNamespace(
+				portlet.getRootPortletId());
+
+			queryString = PortletParameterUtil.addNamespace(
+				portlet.getRootPortletId(), queryString);
+
+			if (Validator.isNotNull(instanceId)) {
+				httpServletRequest.setAttribute(
+					WebKeys.RENDER_PORTLET_INSTANCE_ID, instanceId);
+			}
+		}
 
 		Map<String, String[]> originalParameterMap =
 			originalHttpServletRequest.getParameterMap();
@@ -225,22 +254,12 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			}
 		}
 
-		queryString = PortletParameterUtil.addNamespace(
-			portletInstanceKey, queryString);
-
 		httpServletRequest = DynamicServletRequest.addQueryString(
 			restrictPortletServletRequest, parameterMap, queryString, false);
 
 		try {
 			httpServletRequest.setAttribute(
 				WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			Portlet portlet = getPortlet(
-				themeDisplay.getCompanyId(), portletInstanceKey);
 
 			Stack<String> embeddedPortletIds = _embeddedPortletIds.get();
 

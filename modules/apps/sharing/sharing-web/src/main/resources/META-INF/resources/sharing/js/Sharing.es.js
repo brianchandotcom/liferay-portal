@@ -184,133 +184,127 @@ const Sharing = ({
 	const users = resource.resource;
 
 	return (
-		<>
-			<ClayForm className="sharing-modal-content" onSubmit={handleSubmit}>
-				<div className="inline-scroller modal-body">
-					<ClayForm.Group
-						className={emailAddressErrorMessage ? 'has-error' : ''}
-					>
-						<ClayInput.Group>
-							<ClayInput.GroupItem>
-								<label htmlFor="userEmailAddress">
-									{Liferay.Language.get(
-										'invite-to-collaborate'
-									)}
-								</label>
+		<ClayForm className="sharing-modal-content" onSubmit={handleSubmit}>
+			<div className="inline-scroller modal-body">
+				<ClayForm.Group
+					className={emailAddressErrorMessage ? 'has-error' : ''}
+				>
+					<ClayInput.Group>
+						<ClayInput.GroupItem>
+							<label htmlFor="userEmailAddress">
+								{Liferay.Language.get('invite-to-collaborate')}
+							</label>
 
-								<ClayMultiSelect
-									inputName={`${portletNamespace}userEmailAddress`}
-									inputValue={multiSelectValue}
-									items={selectedItems}
-									menuRenderer={SharingAutocomplete}
-									onChange={setMultiSelectValue}
-									onItemsChange={handleItemsChange}
-									placeholder={Liferay.Language.get(
-										'enter-name-or-email-address'
-									)}
-									sourceItems={
-										users
-											? users.map(user => {
-													return {
-														emailAddress:
-															user.emailAddress,
-														fullName: user.fullName,
-														id: user.userId,
-														label: user.fullName,
-														portraitURL:
-															user.portraitURL,
-														value: user.emailAddress
-													};
-											  })
-											: []
-									}
-								/>
-								<ClayForm.FeedbackGroup>
-									<ClayForm.Text>
-										{Liferay.Language.get(
-											'you-can-use-a-comma-to-enter-multiple-collaborators'
-										)}
-									</ClayForm.Text>
-								</ClayForm.FeedbackGroup>
-
-								{emailAddressErrorMessage && (
-									<ClayForm.FeedbackGroup>
-										<ClayForm.FeedbackItem>
-											{emailAddressErrorMessage}
-										</ClayForm.FeedbackItem>
-									</ClayForm.FeedbackGroup>
+							<ClayMultiSelect
+								inputName={`${portletNamespace}userEmailAddress`}
+								inputValue={multiSelectValue}
+								items={selectedItems}
+								menuRenderer={SharingAutocomplete}
+								onChange={setMultiSelectValue}
+								onItemsChange={handleItemsChange}
+								placeholder={Liferay.Language.get(
+									'enter-name-or-email-address'
 								)}
-							</ClayInput.GroupItem>
-						</ClayInput.Group>
-					</ClayForm.Group>
+								sourceItems={
+									users
+										? users.map(user => {
+												return {
+													emailAddress:
+														user.emailAddress,
+													fullName: user.fullName,
+													id: user.userId,
+													label: user.fullName,
+													portraitURL:
+														user.portraitURL,
+													value: user.emailAddress
+												};
+										  })
+										: []
+								}
+							/>
+							<ClayForm.FeedbackGroup>
+								<ClayForm.Text>
+									{Liferay.Language.get(
+										'you-can-use-a-comma-to-enter-multiple-collaborators'
+									)}
+								</ClayForm.Text>
+							</ClayForm.FeedbackGroup>
 
-					<ClayForm.Group>
-						<ClayCheckbox
-							checked={allowSharingChecked}
-							label={Liferay.Language.get(
-								'allow-the-document-to-be-shared-with-other-users'
+							{emailAddressErrorMessage && (
+								<ClayForm.FeedbackGroup>
+									<ClayForm.FeedbackItem>
+										{emailAddressErrorMessage}
+									</ClayForm.FeedbackItem>
+								</ClayForm.FeedbackGroup>
 							)}
-							name={`${portletNamespace}shareable`}
-							onChange={() =>
-								setAllowSharingChecked(allow => !allow)
-							}
-						/>
-					</ClayForm.Group>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</ClayForm.Group>
 
-					<h4 className="sheet-tertiary-title">
-						{Liferay.Language.get('sharing-permissions')}
-					</h4>
+				<ClayForm.Group>
+					<ClayCheckbox
+						checked={allowSharingChecked}
+						label={Liferay.Language.get(
+							'allow-the-document-to-be-shared-with-other-users'
+						)}
+						name={`${portletNamespace}shareable`}
+						onChange={() => setAllowSharingChecked(allow => !allow)}
+					/>
+				</ClayForm.Group>
 
-					<ClayForm.Group>
-						<ClayRadioGroup
-							name={`${portletNamespace}sharingEntryPermissionDisplayActionId`}
-							onSelectedValueChange={permission =>
-								setSharingPermission(permission)
-							}
-							selectedValue={sharingPermission}
-						>
-							{sharingEntryPermissionDisplays.map(display => (
-								<ClayRadio
-									checked={
-										sharingEntryPermissionDisplayActionId ===
-										display.sharingEntryPermissionDisplayActionId
-									}
-									disabled={!display.enabled}
-									key={
-										display.sharingEntryPermissionDisplayActionId
-									}
-									label={display.title}
-									value={
-										display.sharingEntryPermissionDisplayActionId
-									}
-								>
-									<div className="form-text">
-										{display.description}
-									</div>
-								</ClayRadio>
-							))}
-						</ClayRadioGroup>
-					</ClayForm.Group>
-				</div>
+				<h4 className="sheet-tertiary-title">
+					{Liferay.Language.get('sharing-permissions')}
+				</h4>
 
-				<ClayModal.Footer
-					last={
-						<ClayButton.Group spaced>
-							<ClayButton
-								displayType="secondary"
-								onClick={onModalClose}
+				<ClayForm.Group>
+					<ClayRadioGroup
+						name={`${portletNamespace}sharingEntryPermissionDisplayActionId`}
+						onSelectedValueChange={permission =>
+							setSharingPermission(permission)
+						}
+						selectedValue={sharingPermission}
+					>
+						{sharingEntryPermissionDisplays.map(display => (
+							<ClayRadio
+								checked={
+									sharingEntryPermissionDisplayActionId ===
+									display.sharingEntryPermissionDisplayActionId
+								}
+								disabled={!display.enabled}
+								key={
+									display.sharingEntryPermissionDisplayActionId
+								}
+								label={display.title}
+								value={
+									display.sharingEntryPermissionDisplayActionId
+								}
 							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
+								<div className="form-text">
+									{display.description}
+								</div>
+							</ClayRadio>
+						))}
+					</ClayRadioGroup>
+				</ClayForm.Group>
+			</div>
 
-							<ClayButton displayType="primary" type="submit">
-								{Liferay.Language.get('share')}
-							</ClayButton>
-						</ClayButton.Group>
-					}
-				/>
-			</ClayForm>
-		</>
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={onModalClose}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton displayType="primary" type="submit">
+							{Liferay.Language.get('share')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</ClayForm>
 	);
 };
 

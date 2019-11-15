@@ -554,6 +554,9 @@ public interface WebKeys {
 	public static final String RENDER_PORTLET_COLUMN_POS =
 		"RENDER_PORTLET_COLUMN_POS";
 
+	public static final String RENDER_PORTLET_INSTANCE_ID =
+		"RENDER_PORTLET_INSTANCE_ID";
+
 	public static final String RENDER_PORTLET_PREFERENCES =
 		"RENDER_PORTLET_PREFERENCES";
 

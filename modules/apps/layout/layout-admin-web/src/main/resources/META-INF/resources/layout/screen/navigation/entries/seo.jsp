@@ -89,6 +89,8 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 									<aui:validator name="url" />
 								</aui:input>
 							</div>
+
+							<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 						</c:when>
 						<c:otherwise>
 							<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-1" />

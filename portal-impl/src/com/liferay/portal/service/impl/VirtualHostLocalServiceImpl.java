@@ -42,7 +42,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.concurrent.Callable;
 
 /**
  * @author Alexander Chow
@@ -134,7 +133,7 @@ public class VirtualHostLocalServiceImpl
 	@Override
 	public List<VirtualHost> updateVirtualHosts(
 		long companyId, final long layoutSetId,
-		TreeMap<String, String> hostnameMap) {
+		TreeMap<String, String> hostnames) {
 
 		LayoutSet layoutSet = layoutSetPersistence.fetchByPrimaryKey(
 			layoutSetId);
@@ -149,11 +148,9 @@ public class VirtualHostLocalServiceImpl
 		List<VirtualHost> virtualHosts = new ArrayList<>(
 			virtualHostPersistence.findByC_L(companyId, layoutSetId));
 
-		List<String> hostnames = new ArrayList<>(hostnameMap.navigableKeySet());
-
 		boolean first = true;
 
-		for (String curHostname : hostnames) {
+		for (String curHostname : hostnames.navigableKeySet()) {
 			VirtualHost virtualHost = null;
 
 			for (VirtualHost curVirtualHost : virtualHosts) {
@@ -176,7 +173,7 @@ public class VirtualHostLocalServiceImpl
 				virtualHosts.add(virtualHost);
 			}
 
-			String languageId = hostnameMap.get(curHostname);
+			String languageId = hostnames.get(curHostname);
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
@@ -198,7 +195,7 @@ public class VirtualHostLocalServiceImpl
 		while (itr.hasNext()) {
 			VirtualHost virtualHost = itr.next();
 
-			if (!hostnames.contains(virtualHost.getHostname())) {
+			if (!hostnames.containsKey(virtualHost.getHostname())) {
 				itr.remove();
 
 				virtualHostPersistence.remove(virtualHost);
@@ -211,17 +208,12 @@ public class VirtualHostLocalServiceImpl
 
 		if (company != null) {
 			TransactionCommitCallbackUtil.registerCallback(
-				new Callable<Void>() {
+				() -> {
+					EntityCacheUtil.removeResult(
+						company.isEntityCacheEnabled(), company.getClass(),
+						company.getPrimaryKeyObj());
 
-					@Override
-					public Void call() throws Exception {
-						EntityCacheUtil.removeResult(
-							company.isEntityCacheEnabled(), company.getClass(),
-							company.getPrimaryKeyObj());
-
-						return null;
-					}
-
+					return null;
 				});
 
 			companyPersistence.clearCache(company);
@@ -243,17 +235,12 @@ public class VirtualHostLocalServiceImpl
 			layoutSetPersistence.clearCache(layoutSet);
 
 			TransactionCommitCallbackUtil.registerCallback(
-				new Callable<Void>() {
+				() -> {
+					EntityCacheUtil.removeResult(
+						LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+						LayoutSetImpl.class, layoutSetId);
 
-					@Override
-					public Void call() {
-						EntityCacheUtil.removeResult(
-							LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-							LayoutSetImpl.class, layoutSetId);
-
-						return null;
-					}
-
+					return null;
 				});
 		}
 

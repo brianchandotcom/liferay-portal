@@ -31,11 +31,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +57,114 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			searchContainer);
+	}
+
+	public List<DropdownItem> getActionDropdownItems() {
+		return DropdownItemList.of(
+			() -> {
+				if (Objects.equals(getNavigation(), "inactive")) {
+					return null;
+				}
+
+				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.putData("action", "deactivateAccountUsers");
+
+				PortletURL deactivateAccountUsersURL =
+					liferayPortletResponse.createActionURL();
+
+				deactivateAccountUsersURL.setParameter(
+					"accountEntriesNavigation", _getAccountEntriesNavigation());
+				deactivateAccountUsersURL.setParameter(
+					"accountEntryIds",
+					ParamUtil.getString(request, "accountEntryIds"));
+				deactivateAccountUsersURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/account_admin/edit_account_user");
+				deactivateAccountUsersURL.setParameter(
+					Constants.CMD, Constants.DEACTIVATE);
+				deactivateAccountUsersURL.setParameter(
+					"navigation", getNavigation());
+
+				dropdownItem.putData(
+					"deactivateAccountUsersURL",
+					deactivateAccountUsersURL.toString());
+
+				dropdownItem.setIcon("hidden");
+				dropdownItem.setLabel(LanguageUtil.get(request, "deactivate"));
+				dropdownItem.setQuickAction(true);
+
+				return dropdownItem;
+			},
+			() -> {
+				if (Objects.equals(getNavigation(), "active")) {
+					return null;
+				}
+
+				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.putData("action", "activateAccountUsers");
+
+				PortletURL activateAccountUsersURL =
+					liferayPortletResponse.createActionURL();
+
+				activateAccountUsersURL.setParameter(
+					"accountEntriesNavigation", _getAccountEntriesNavigation());
+				activateAccountUsersURL.setParameter(
+					"accountEntryIds",
+					ParamUtil.getString(request, "accountEntryIds"));
+				activateAccountUsersURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/account_admin/edit_account_user");
+				activateAccountUsersURL.setParameter(
+					Constants.CMD, Constants.RESTORE);
+				activateAccountUsersURL.setParameter(
+					"navigation", getNavigation());
+
+				dropdownItem.putData(
+					"activateAccountUsersURL",
+					activateAccountUsersURL.toString());
+
+				dropdownItem.setIcon("undo");
+				dropdownItem.setLabel(LanguageUtil.get(request, "activate"));
+				dropdownItem.setQuickAction(true);
+
+				return dropdownItem;
+			},
+			() -> {
+				if (Objects.equals(getNavigation(), "active")) {
+					return null;
+				}
+
+				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.putData("action", "deleteAccountUsers");
+
+				PortletURL deleteAccountUsersURL =
+					liferayPortletResponse.createActionURL();
+
+				deleteAccountUsersURL.setParameter(
+					"accountEntriesNavigation", _getAccountEntriesNavigation());
+				deleteAccountUsersURL.setParameter(
+					"accountEntryIds",
+					ParamUtil.getString(request, "accountEntryIds"));
+				deleteAccountUsersURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/account_admin/edit_account_user");
+				deleteAccountUsersURL.setParameter(
+					Constants.CMD, Constants.DELETE);
+				deleteAccountUsersURL.setParameter(
+					"navigation", getNavigation());
+
+				dropdownItem.putData(
+					"deleteAccountUsersURL", deleteAccountUsersURL.toString());
+
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setQuickAction(true);
+
+				return dropdownItem;
+			});
 	}
 
 	@Override

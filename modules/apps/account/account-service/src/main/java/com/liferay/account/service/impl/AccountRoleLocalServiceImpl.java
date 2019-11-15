@@ -20,6 +20,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.List;
 import java.util.Locale;
@@ -105,6 +106,13 @@ public class AccountRoleLocalServiceImpl
 
 	@Override
 	public void deleteAccountRolesByCompanyId(long companyId) {
+		if (!CompanyThreadLocal.isDeleteInProcess()) {
+			throw new UnsupportedOperationException(
+				"Deleting AccountRoles by companyId is only supported during " +
+					"company deletion");
+		}
+
+		accountRolePersistence.removeByCompanyId(companyId);
 	}
 
 	@Override

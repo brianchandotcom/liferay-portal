@@ -21,15 +21,11 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 
 String portletResourceNamespace = renderResponse.getNamespace();
 
-DDMStructure ddmStructure = (DDMStructure)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
-
-long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
+DDMStructure ddmStructure = dlEditFileEntryTypeDisplayContext.getDDMStructure();
 
 String script = BeanParamUtil.getString(ddmStructure, request, "definition");
 
-JSONArray fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(DDMStructureLocalServiceUtil.fetchDDMStructure(ddmStructureId), script);
-
-String fieldsJSONArrayString = (fieldsJSONArray != null) ? fieldsJSONArray.toString() : StringPool.BLANK;
+String fieldsJSONArrayString = dlEditFileEntryTypeDisplayContext.getFieldsJSONArrayString();
 
 String scopeAvailableFields = dlEditFileEntryTypeDisplayContext.getAvailableFields();
 

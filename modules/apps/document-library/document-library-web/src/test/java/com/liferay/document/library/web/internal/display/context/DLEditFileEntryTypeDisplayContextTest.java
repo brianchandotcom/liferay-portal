@@ -14,11 +14,8 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import org.junit.Assert;
 import org.junit.Test;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Cristina González
@@ -28,10 +25,10 @@ public class DLEditFileEntryTypeDisplayContextTest {
 	@Test
 	public void test() {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
-			new DLEditFileEntryTypeDisplayContext(null, null);
+			new DLEditFileEntryTypeDisplayContext(null, null, null, null);
 
 		Assert.assertEquals(
-		"Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE",
+			"Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE",
 			dlEditFileEntryTypeDisplayContext.getAvailableFields());
 	}
 

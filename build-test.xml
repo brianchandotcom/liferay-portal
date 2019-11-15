@@ -6763,7 +6763,7 @@ ${update.properties}</echo>
 		<apply-portal-ext-properties />
 	</target>
 
-	<target name="prepare-ipaddress-update">
+	<target name="prepare-ip-address-update">
 		<get-testcase-property property.name="testcase.url" />
 
 		<if>
@@ -11093,7 +11093,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</else>
 		</if>
 
-		<antcall target="prepare-ipaddress-update" />
+		<antcall target="prepare-ip-address-update" />
 
 		<antcall target="check-inet-address" />
 

@@ -1,9 +1,9 @@
-@component-name = "portal-ipaddresses"
+@component-name = "portal-ip-address"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "IP Addresses";
+	property testray.main.component.name = "IP Address";
 
 	setUp {
 		TestCase.setUpPortalInstance();

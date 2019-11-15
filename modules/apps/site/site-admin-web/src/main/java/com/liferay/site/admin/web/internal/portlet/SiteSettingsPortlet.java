@@ -14,6 +14,8 @@
 
 package com.liferay.site.admin.web.internal.portlet;
 
+import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
+import com.liferay.site.admin.web.internal.constants.SiteAdminWebKeys;
 
 import java.io.IOException;
 
@@ -35,6 +38,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -84,6 +88,10 @@ public class SiteSettingsPortlet extends SiteAdminPortlet {
 			SessionErrors.add(renderRequest, pe.getClass());
 		}
 
+		renderRequest.setAttribute(SiteAdminWebKeys.DLURL_HELPER, _dlurlHelper);
+		renderRequest.setAttribute(
+			SiteAdminWebKeys.ITEM_SELECTOR, _itemSelector);
+
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
@@ -104,5 +112,11 @@ public class SiteSettingsPortlet extends SiteAdminPortlet {
 			actionRequest, group, SiteAdminPortletKeys.SITE_SETTINGS, 0, 0,
 			PortletRequest.RENDER_PHASE);
 	}
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

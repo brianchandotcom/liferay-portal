@@ -14,12 +14,21 @@
 
 package com.liferay.site.admin.web.internal.display.context;
 
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.layout.seo.model.SiteSEOEntry;
 import com.liferay.layout.seo.service.SiteSEOEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -27,6 +36,7 @@ import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
@@ -46,6 +56,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
 import com.liferay.portlet.sitesadmin.search.SiteChecker;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
+import com.liferay.site.admin.web.internal.constants.SiteAdminWebKeys;
 import com.liferay.site.admin.web.internal.servlet.taglib.util.SiteActionDropdownItemsProvider;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.util.GroupSearchProvider;
@@ -74,9 +85,17 @@ public class SiteAdminDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
+		_itemSelector = (ItemSelector)_liferayPortletRequest.getAttribute(
+			SiteAdminWebKeys.ITEM_SELECTOR);
+		_dlurlHelper = (DLURLHelper)_liferayPortletRequest.getAttribute(
+			SiteAdminWebKeys.DLURL_HELPER);
+
 		_groupSearchProvider =
 			(GroupSearchProvider)httpServletRequest.getAttribute(
 				SiteWebKeys.GROUP_SEARCH_PROVIDER);
+
+		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems(Group group)
@@ -198,6 +217,45 @@ public class SiteAdminDisplayContext {
 		return groupSearch;
 	}
 
+	public String getItemSelectorURL() {
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
+		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new FileEntryItemSelectorReturnType(),
+			new URLItemSelectorReturnType());
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+			_liferayPortletResponse.getNamespace() +
+				"openGraphImageSelectedItem",
+			imageItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
+	}
+
+	public String getOpenGraphImageURL(long groupId) {
+		SiteSEOEntry siteSEOEntry = getSelSiteSEOEntry(groupId);
+
+		if ((siteSEOEntry == null) ||
+			(siteSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
+
+			return null;
+		}
+
+		try {
+			return _dlurlHelper.getImagePreviewURL(
+				DLAppLocalServiceUtil.getFileEntry(
+					siteSEOEntry.getOpenGraphImageFileEntryId()),
+				_themeDisplay);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return null;
+		}
+	}
+
 	public int getOrganizationsCount(Group group) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -310,12 +368,18 @@ public class SiteAdminDisplayContext {
 		return false;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		SiteAdminDisplayContext.class);
+
 	private String _displayStyle;
+	private final DLURLHelper _dlurlHelper;
 	private Group _group;
 	private long _groupId;
 	private final GroupSearchProvider _groupSearchProvider;
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final ThemeDisplay _themeDisplay;
 
 }

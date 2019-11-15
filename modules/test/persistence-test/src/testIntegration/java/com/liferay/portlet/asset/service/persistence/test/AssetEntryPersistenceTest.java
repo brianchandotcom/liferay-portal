@@ -126,6 +126,8 @@ public class AssetEntryPersistenceTest {
 
 		newAssetEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAssetEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newAssetEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newAssetEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -184,6 +186,9 @@ public class AssetEntryPersistenceTest {
 		Assert.assertEquals(
 			existingAssetEntry.getMvccVersion(),
 			newAssetEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingAssetEntry.getCtCollectionId(),
+			newAssetEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingAssetEntry.getEntryId(), newAssetEntry.getEntryId());
 		Assert.assertEquals(
@@ -245,6 +250,13 @@ public class AssetEntryPersistenceTest {
 			existingAssetEntry.getWidth(), newAssetEntry.getWidth());
 		AssertUtils.assertEquals(
 			existingAssetEntry.getPriority(), newAssetEntry.getPriority());
+	}
+
+	@Test
+	public void testCountByCTCollectionId() throws Exception {
+		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCTCollectionId(0L);
 	}
 
 	@Test
@@ -352,14 +364,14 @@ public class AssetEntryPersistenceTest {
 
 	protected OrderByComparator<AssetEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AssetEntry", "mvccVersion", true, "entryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"classUuid", true, "classTypeId", true, "listable", true, "visible",
-			true, "startDate", true, "endDate", true, "publishDate", true,
-			"expirationDate", true, "mimeType", true, "title", true, "url",
-			true, "layoutUuid", true, "height", true, "width", true, "priority",
-			true);
+			"AssetEntry", "mvccVersion", true, "ctCollectionId", true,
+			"entryId", true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"classNameId", true, "classPK", true, "classUuid", true,
+			"classTypeId", true, "listable", true, "visible", true, "startDate",
+			true, "endDate", true, "publishDate", true, "expirationDate", true,
+			"mimeType", true, "title", true, "url", true, "layoutUuid", true,
+			"height", true, "width", true, "priority", true);
 	}
 
 	@Test
@@ -602,6 +614,8 @@ public class AssetEntryPersistenceTest {
 		AssetEntry assetEntry = _persistence.create(pk);
 
 		assetEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		assetEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		assetEntry.setGroupId(RandomTestUtil.nextLong());
 

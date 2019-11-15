@@ -17,6 +17,7 @@ package com.liferay.asset.kernel.service.persistence;
 import com.liferay.asset.kernel.exception.NoSuchCategoryPropertyException;
 import com.liferay.asset.kernel.model.AssetCategoryProperty;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -35,13 +36,159 @@ import org.osgi.annotation.versioning.ProviderType;
 @Deprecated
 @ProviderType
 public interface AssetCategoryPropertyPersistence
-	extends BasePersistence<AssetCategoryProperty> {
+	extends BasePersistence<AssetCategoryProperty>,
+			CTPersistence<AssetCategoryProperty> {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetCategoryPropertyUtil} to access the asset category property persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+
+	/**
+	 * Returns all the asset category properties where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching asset category properties
+	 */
+	@Override
+	public java.util.List<AssetCategoryProperty> findByCTCollectionId(
+		long ctCollectionId);
+
+	/**
+	 * Returns a range of all the asset category properties where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset category properties
+	 * @param end the upper bound of the range of asset category properties (not inclusive)
+	 * @return the range of matching asset category properties
+	 */
+	public java.util.List<AssetCategoryProperty> findByCTCollectionId(
+		long ctCollectionId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the asset category properties where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset category properties
+	 * @param end the upper bound of the range of asset category properties (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset category properties
+	 */
+	public java.util.List<AssetCategoryProperty> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the asset category properties where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset category properties
+	 * @param end the upper bound of the range of asset category properties (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset category properties
+	 */
+	public java.util.List<AssetCategoryProperty> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first asset category property in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset category property
+	 * @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
+	 */
+	public AssetCategoryProperty findByCTCollectionId_First(
+			long ctCollectionId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetCategoryProperty> orderByComparator)
+		throws NoSuchCategoryPropertyException;
+
+	/**
+	 * Returns the first asset category property in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset category property, or <code>null</code> if a matching asset category property could not be found
+	 */
+	public AssetCategoryProperty fetchByCTCollectionId_First(
+		long ctCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator);
+
+	/**
+	 * Returns the last asset category property in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset category property
+	 * @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
+	 */
+	public AssetCategoryProperty findByCTCollectionId_Last(
+			long ctCollectionId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetCategoryProperty> orderByComparator)
+		throws NoSuchCategoryPropertyException;
+
+	/**
+	 * Returns the last asset category property in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset category property, or <code>null</code> if a matching asset category property could not be found
+	 */
+	public AssetCategoryProperty fetchByCTCollectionId_Last(
+		long ctCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator);
+
+	/**
+	 * Returns the asset category properties before and after the current asset category property in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param categoryPropertyId the primary key of the current asset category property
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset category property
+	 * @throws NoSuchCategoryPropertyException if a asset category property with the primary key could not be found
+	 */
+	public AssetCategoryProperty[] findByCTCollectionId_PrevAndNext(
+			long categoryPropertyId, long ctCollectionId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetCategoryProperty> orderByComparator)
+		throws NoSuchCategoryPropertyException;
+
+	/**
+	 * Removes all the asset category properties where ctCollectionId = &#63; from the database.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 */
+	public void removeByCTCollectionId(long ctCollectionId);
+
+	/**
+	 * Returns the number of asset category properties where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the number of matching asset category properties
+	 */
+	public int countByCTCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns all the asset category properties where companyId = &#63;.

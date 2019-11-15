@@ -534,6 +534,182 @@ public class AssetVocabularyUtil {
 	}
 
 	/**
+	 * Returns all the asset vocabularies where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching asset vocabularies
+	 */
+	public static List<AssetVocabulary> findByCTCollectionId(
+		long ctCollectionId) {
+
+		return getPersistence().findByCTCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Returns a range of all the asset vocabularies where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @return the range of matching asset vocabularies
+	 */
+	public static List<AssetVocabulary> findByCTCollectionId(
+		long ctCollectionId, int start, int end) {
+
+		return getPersistence().findByCTCollectionId(
+			ctCollectionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset vocabularies where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset vocabularies
+	 */
+	public static List<AssetVocabulary> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<AssetVocabulary> orderByComparator) {
+
+		return getPersistence().findByCTCollectionId(
+			ctCollectionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset vocabularies where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset vocabularies
+	 */
+	public static List<AssetVocabulary> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<AssetVocabulary> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByCTCollectionId(
+			ctCollectionId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first asset vocabulary in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset vocabulary
+	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
+	 */
+	public static AssetVocabulary findByCTCollectionId_First(
+			long ctCollectionId,
+			OrderByComparator<AssetVocabulary> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
+
+		return getPersistence().findByCTCollectionId_First(
+			ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first asset vocabulary in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
+	 */
+	public static AssetVocabulary fetchByCTCollectionId_First(
+		long ctCollectionId,
+		OrderByComparator<AssetVocabulary> orderByComparator) {
+
+		return getPersistence().fetchByCTCollectionId_First(
+			ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last asset vocabulary in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset vocabulary
+	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
+	 */
+	public static AssetVocabulary findByCTCollectionId_Last(
+			long ctCollectionId,
+			OrderByComparator<AssetVocabulary> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
+
+		return getPersistence().findByCTCollectionId_Last(
+			ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last asset vocabulary in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
+	 */
+	public static AssetVocabulary fetchByCTCollectionId_Last(
+		long ctCollectionId,
+		OrderByComparator<AssetVocabulary> orderByComparator) {
+
+		return getPersistence().fetchByCTCollectionId_Last(
+			ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param vocabularyId the primary key of the current asset vocabulary
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset vocabulary
+	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
+	 */
+	public static AssetVocabulary[] findByCTCollectionId_PrevAndNext(
+			long vocabularyId, long ctCollectionId,
+			OrderByComparator<AssetVocabulary> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
+
+		return getPersistence().findByCTCollectionId_PrevAndNext(
+			vocabularyId, ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the asset vocabularies where ctCollectionId = &#63; from the database.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 */
+	public static void removeByCTCollectionId(long ctCollectionId) {
+		getPersistence().removeByCTCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Returns the number of asset vocabularies where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the number of matching asset vocabularies
+	 */
+	public static int countByCTCollectionId(long ctCollectionId) {
+		return getPersistence().countByCTCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Returns all the asset vocabularies where groupId = &#63;.
 	 *
 	 * @param groupId the group ID

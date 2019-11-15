@@ -78,6 +78,7 @@
 	</model>
 	<model name="com.liferay.asset.kernel.model.AssetCategory">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="categoryId" type="long" />
@@ -104,6 +105,7 @@
 	</model>
 	<model name="com.liferay.asset.kernel.model.AssetCategoryProperty">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="categoryPropertyId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -116,6 +118,7 @@
 	</model>
 	<model name="com.liferay.asset.kernel.model.AssetEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="entryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -153,6 +156,7 @@
 	</model>
 	<model name="com.liferay.asset.kernel.model.AssetLink">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="linkId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -165,6 +169,7 @@
 	</model>
 	<model name="com.liferay.asset.kernel.model.AssetTag">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="tagId" type="long" />
 		<field name="groupId" type="long" />
@@ -181,6 +186,7 @@
 	</model>
 	<model name="com.liferay.asset.kernel.model.AssetVocabulary">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="vocabularyId" type="long" />

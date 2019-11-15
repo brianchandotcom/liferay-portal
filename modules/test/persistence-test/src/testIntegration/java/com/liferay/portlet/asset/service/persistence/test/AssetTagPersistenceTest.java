@@ -125,6 +125,8 @@ public class AssetTagPersistenceTest {
 
 		newAssetTag.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAssetTag.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newAssetTag.setUuid(RandomTestUtil.randomString());
 
 		newAssetTag.setGroupId(RandomTestUtil.nextLong());
@@ -152,6 +154,9 @@ public class AssetTagPersistenceTest {
 
 		Assert.assertEquals(
 			existingAssetTag.getMvccVersion(), newAssetTag.getMvccVersion());
+		Assert.assertEquals(
+			existingAssetTag.getCtCollectionId(),
+			newAssetTag.getCtCollectionId());
 		Assert.assertEquals(existingAssetTag.getUuid(), newAssetTag.getUuid());
 		Assert.assertEquals(
 			existingAssetTag.getTagId(), newAssetTag.getTagId());
@@ -202,6 +207,13 @@ public class AssetTagPersistenceTest {
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByCTCollectionId() throws Exception {
+		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCTCollectionId(0L);
 	}
 
 	@Test
@@ -283,10 +295,10 @@ public class AssetTagPersistenceTest {
 
 	protected OrderByComparator<AssetTag> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AssetTag", "mvccVersion", true, "uuid", true, "tagId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "name", true,
-			"assetCount", true, "lastPublishDate", true);
+			"AssetTag", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "tagId", true, "groupId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"name", true, "assetCount", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -527,6 +539,8 @@ public class AssetTagPersistenceTest {
 		AssetTag assetTag = _persistence.create(pk);
 
 		assetTag.setMvccVersion(RandomTestUtil.nextLong());
+
+		assetTag.setCtCollectionId(RandomTestUtil.nextLong());
 
 		assetTag.setUuid(RandomTestUtil.randomString());
 

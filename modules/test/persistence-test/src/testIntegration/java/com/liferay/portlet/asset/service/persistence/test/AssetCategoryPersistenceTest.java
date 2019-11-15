@@ -125,6 +125,8 @@ public class AssetCategoryPersistenceTest {
 
 		newAssetCategory.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAssetCategory.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newAssetCategory.setUuid(RandomTestUtil.randomString());
 
 		newAssetCategory.setExternalReferenceCode(
@@ -164,6 +166,9 @@ public class AssetCategoryPersistenceTest {
 		Assert.assertEquals(
 			existingAssetCategory.getMvccVersion(),
 			newAssetCategory.getMvccVersion());
+		Assert.assertEquals(
+			existingAssetCategory.getCtCollectionId(),
+			newAssetCategory.getCtCollectionId());
 		Assert.assertEquals(
 			existingAssetCategory.getUuid(), newAssetCategory.getUuid());
 		Assert.assertEquals(
@@ -234,6 +239,13 @@ public class AssetCategoryPersistenceTest {
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByCTCollectionId() throws Exception {
+		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCTCollectionId(0L);
 	}
 
 	@Test
@@ -392,12 +404,12 @@ public class AssetCategoryPersistenceTest {
 
 	protected OrderByComparator<AssetCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AssetCategory", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "categoryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "parentCategoryId", true, "treePath",
-			true, "name", true, "title", true, "description", true,
-			"vocabularyId", true, "lastPublishDate", true);
+			"AssetCategory", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "externalReferenceCode", true, "categoryId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "parentCategoryId",
+			true, "treePath", true, "name", true, "title", true, "description",
+			true, "vocabularyId", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -669,6 +681,8 @@ public class AssetCategoryPersistenceTest {
 		AssetCategory assetCategory = _persistence.create(pk);
 
 		assetCategory.setMvccVersion(RandomTestUtil.nextLong());
+
+		assetCategory.setCtCollectionId(RandomTestUtil.nextLong());
 
 		assetCategory.setUuid(RandomTestUtil.randomString());
 

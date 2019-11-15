@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetLinkModel
-	extends BaseModel<AssetLink>, MVCCModel, ShardedModel {
+	extends BaseModel<AssetLink>, CTModel<AssetLink>, MVCCModel, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -49,6 +50,7 @@ public interface AssetLinkModel
 	 *
 	 * @return the primary key of this asset link
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -56,6 +58,7 @@ public interface AssetLinkModel
 	 *
 	 * @param primaryKey the primary key of this asset link
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -73,6 +76,22 @@ public interface AssetLinkModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this asset link.
+	 *
+	 * @return the ct collection ID of this asset link
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this asset link.
+	 *
+	 * @param ctCollectionId the ct collection ID of this asset link
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the link ID of this asset link.

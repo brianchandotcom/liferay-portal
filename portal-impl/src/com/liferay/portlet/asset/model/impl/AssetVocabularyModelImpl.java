@@ -81,8 +81,8 @@ public class AssetVocabularyModelImpl
 	public static final String TABLE_NAME = "AssetVocabulary";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
 		{"vocabularyId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -96,6 +96,7 @@ public class AssetVocabularyModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("vocabularyId", Types.BIGINT);
@@ -113,7 +114,7 @@ public class AssetVocabularyModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetVocabulary (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,vocabularyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,settings_ STRING null,lastPublishDate DATE null)";
+		"create table AssetVocabulary (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,vocabularyId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,settings_ STRING null,lastPublishDate DATE null,primary key (vocabularyId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetVocabulary";
 
@@ -146,13 +147,15 @@ public class AssetVocabularyModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
+	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 2L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
 
-	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long NAME_COLUMN_BITMASK = 16L;
+
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -168,6 +171,7 @@ public class AssetVocabularyModelImpl
 		AssetVocabulary model = new AssetVocabularyImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setVocabularyId(soapModel.getVocabularyId());
@@ -344,6 +348,12 @@ public class AssetVocabularyModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<AssetVocabulary, Long>)AssetVocabulary::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", AssetVocabulary::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<AssetVocabulary, Long>)
+				AssetVocabulary::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", AssetVocabulary::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -428,6 +438,29 @@ public class AssetVocabularyModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCtCollectionId) {
+			_setOriginalCtCollectionId = true;
+
+			_originalCtCollectionId = _ctCollectionId;
+		}
+
+		_ctCollectionId = ctCollectionId;
+	}
+
+	public long getOriginalCtCollectionId() {
+		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1007,6 +1040,7 @@ public class AssetVocabularyModelImpl
 		AssetVocabularyImpl assetVocabularyImpl = new AssetVocabularyImpl();
 
 		assetVocabularyImpl.setMvccVersion(getMvccVersion());
+		assetVocabularyImpl.setCtCollectionId(getCtCollectionId());
 		assetVocabularyImpl.setUuid(getUuid());
 		assetVocabularyImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
@@ -1082,6 +1116,11 @@ public class AssetVocabularyModelImpl
 	public void resetOriginalValues() {
 		AssetVocabularyModelImpl assetVocabularyModelImpl = this;
 
+		assetVocabularyModelImpl._originalCtCollectionId =
+			assetVocabularyModelImpl._ctCollectionId;
+
+		assetVocabularyModelImpl._setOriginalCtCollectionId = false;
+
 		assetVocabularyModelImpl._originalUuid = assetVocabularyModelImpl._uuid;
 
 		assetVocabularyModelImpl._originalExternalReferenceCode =
@@ -1110,6 +1149,8 @@ public class AssetVocabularyModelImpl
 			new AssetVocabularyCacheModel();
 
 		assetVocabularyCacheModel.mvccVersion = getMvccVersion();
+
+		assetVocabularyCacheModel.ctCollectionId = getCtCollectionId();
 
 		assetVocabularyCacheModel.uuid = getUuid();
 
@@ -1281,6 +1322,9 @@ public class AssetVocabularyModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
+	private long _originalCtCollectionId;
+	private boolean _setOriginalCtCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

@@ -17,6 +17,7 @@ package com.liferay.asset.kernel.service.persistence;
 import com.liferay.asset.kernel.exception.NoSuchTagException;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface AssetTagPersistence extends BasePersistence<AssetTag> {
+public interface AssetTagPersistence
+	extends BasePersistence<AssetTag>, CTPersistence<AssetTag> {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -385,6 +387,150 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @return the number of matching asset tags
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	/**
+	 * Returns all the asset tags where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching asset tags
+	 */
+	@Override
+	public java.util.List<AssetTag> findByCTCollectionId(long ctCollectionId);
+
+	/**
+	 * Returns a range of all the asset tags where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset tags
+	 * @param end the upper bound of the range of asset tags (not inclusive)
+	 * @return the range of matching asset tags
+	 */
+	public java.util.List<AssetTag> findByCTCollectionId(
+		long ctCollectionId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the asset tags where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset tags
+	 * @param end the upper bound of the range of asset tags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset tags
+	 */
+	public java.util.List<AssetTag> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the asset tags where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset tags
+	 * @param end the upper bound of the range of asset tags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset tags
+	 */
+	public java.util.List<AssetTag> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first asset tag in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset tag
+	 * @throws NoSuchTagException if a matching asset tag could not be found
+	 */
+	public AssetTag findByCTCollectionId_First(
+			long ctCollectionId,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
+		throws NoSuchTagException;
+
+	/**
+	 * Returns the first asset tag in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset tag, or <code>null</code> if a matching asset tag could not be found
+	 */
+	public AssetTag fetchByCTCollectionId_First(
+		long ctCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
+
+	/**
+	 * Returns the last asset tag in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset tag
+	 * @throws NoSuchTagException if a matching asset tag could not be found
+	 */
+	public AssetTag findByCTCollectionId_Last(
+			long ctCollectionId,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
+		throws NoSuchTagException;
+
+	/**
+	 * Returns the last asset tag in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
+	 */
+	public AssetTag fetchByCTCollectionId_Last(
+		long ctCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
+
+	/**
+	 * Returns the asset tags before and after the current asset tag in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param tagId the primary key of the current asset tag
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset tag
+	 * @throws NoSuchTagException if a asset tag with the primary key could not be found
+	 */
+	public AssetTag[] findByCTCollectionId_PrevAndNext(
+			long tagId, long ctCollectionId,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
+		throws NoSuchTagException;
+
+	/**
+	 * Removes all the asset tags where ctCollectionId = &#63; from the database.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 */
+	public void removeByCTCollectionId(long ctCollectionId);
+
+	/**
+	 * Returns the number of asset tags where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the number of matching asset tags
+	 */
+	public int countByCTCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns all the asset tags where groupId = &#63;.

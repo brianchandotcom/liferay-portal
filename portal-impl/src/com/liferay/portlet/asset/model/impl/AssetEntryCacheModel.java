@@ -76,10 +76,12 @@ public class AssetEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", entryId=");
 		sb.append(entryId);
 		sb.append(", groupId=");
@@ -142,6 +144,7 @@ public class AssetEntryCacheModel
 		AssetEntryImpl assetEntryImpl = new AssetEntryImpl();
 
 		assetEntryImpl.setMvccVersion(mvccVersion);
+		assetEntryImpl.setCtCollectionId(ctCollectionId);
 		assetEntryImpl.setEntryId(entryId);
 		assetEntryImpl.setGroupId(groupId);
 		assetEntryImpl.setCompanyId(companyId);
@@ -265,6 +268,8 @@ public class AssetEntryCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		entryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -307,6 +312,8 @@ public class AssetEntryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(entryId);
 
@@ -397,6 +404,7 @@ public class AssetEntryCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long entryId;
 	public long groupId;
 	public long companyId;

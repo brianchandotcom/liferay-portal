@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -51,9 +52,12 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -163,25 +167,28 @@ public class AssetTagPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
 				finderArgs = new Object[] {uuid};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<AssetTag> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetTag>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -248,12 +255,12 @@ public class AssetTagPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -563,12 +570,22 @@ public class AssetTagPersistenceImpl
 	public int countByUuid(String uuid) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
 
-		Object[] finderArgs = new Object[] {uuid};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid;
+
+			finderArgs = new Object[] {uuid};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -603,10 +620,14 @@ public class AssetTagPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -690,15 +711,18 @@ public class AssetTagPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -751,7 +775,7 @@ public class AssetTagPersistenceImpl
 				List<AssetTag> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByUUID_G, finderArgs, list);
 					}
@@ -765,7 +789,7 @@ public class AssetTagPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByUUID_G, finderArgs);
 				}
@@ -812,12 +836,22 @@ public class AssetTagPersistenceImpl
 	public int countByUUID_G(String uuid, long groupId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUUID_G;
+
+			finderArgs = new Object[] {uuid, groupId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -856,10 +890,14 @@ public class AssetTagPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -962,18 +1000,21 @@ public class AssetTagPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
 				finderArgs = new Object[] {uuid, companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -982,7 +1023,7 @@ public class AssetTagPersistenceImpl
 
 		List<AssetTag> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetTag>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1055,12 +1096,12 @@ public class AssetTagPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -1396,12 +1437,22 @@ public class AssetTagPersistenceImpl
 	public int countByUuid_C(String uuid, long companyId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid_C;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
 
-		Object[] finderArgs = new Object[] {uuid, companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid_C;
+
+			finderArgs = new Object[] {uuid, companyId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1440,10 +1491,14 @@ public class AssetTagPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1463,6 +1518,513 @@ public class AssetTagPersistenceImpl
 
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"assetTag.companyId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByCTCollectionId;
+	private FinderPath _finderPathWithoutPaginationFindByCTCollectionId;
+	private FinderPath _finderPathCountByCTCollectionId;
+
+	/**
+	 * Returns all the asset tags where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching asset tags
+	 */
+	@Override
+	public List<AssetTag> findByCTCollectionId(long ctCollectionId) {
+		return findByCTCollectionId(
+			ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset tags where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset tags
+	 * @param end the upper bound of the range of asset tags (not inclusive)
+	 * @return the range of matching asset tags
+	 */
+	@Override
+	public List<AssetTag> findByCTCollectionId(
+		long ctCollectionId, int start, int end) {
+
+		return findByCTCollectionId(ctCollectionId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset tags where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset tags
+	 * @param end the upper bound of the range of asset tags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset tags
+	 */
+	@Override
+	public List<AssetTag> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<AssetTag> orderByComparator) {
+
+		return findByCTCollectionId(
+			ctCollectionId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset tags where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset tags
+	 * @param end the upper bound of the range of asset tags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset tags
+	 */
+	@Override
+	public List<AssetTag> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache) {
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache && productionMode) {
+				finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
+				finderArgs = new Object[] {ctCollectionId};
+			}
+		}
+		else if (useFinderCache && productionMode) {
+			finderPath = _finderPathWithPaginationFindByCTCollectionId;
+			finderArgs = new Object[] {
+				ctCollectionId, start, end, orderByComparator
+			};
+		}
+
+		List<AssetTag> list = null;
+
+		if (useFinderCache && productionMode) {
+			list = (List<AssetTag>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetTag assetTag : list) {
+					if (ctCollectionId != assetTag.getCtCollectionId()) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_ASSETTAG_WHERE);
+
+			query.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				query.append(AssetTagModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(ctCollectionId);
+
+				list = (List<AssetTag>)QueryUtil.list(
+					q, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache && productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception e) {
+				if (useFinderCache && productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first asset tag in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset tag
+	 * @throws NoSuchTagException if a matching asset tag could not be found
+	 */
+	@Override
+	public AssetTag findByCTCollectionId_First(
+			long ctCollectionId, OrderByComparator<AssetTag> orderByComparator)
+		throws NoSuchTagException {
+
+		AssetTag assetTag = fetchByCTCollectionId_First(
+			ctCollectionId, orderByComparator);
+
+		if (assetTag != null) {
+			return assetTag;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ctCollectionId=");
+		msg.append(ctCollectionId);
+
+		msg.append("}");
+
+		throw new NoSuchTagException(msg.toString());
+	}
+
+	/**
+	 * Returns the first asset tag in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset tag, or <code>null</code> if a matching asset tag could not be found
+	 */
+	@Override
+	public AssetTag fetchByCTCollectionId_First(
+		long ctCollectionId, OrderByComparator<AssetTag> orderByComparator) {
+
+		List<AssetTag> list = findByCTCollectionId(
+			ctCollectionId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last asset tag in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset tag
+	 * @throws NoSuchTagException if a matching asset tag could not be found
+	 */
+	@Override
+	public AssetTag findByCTCollectionId_Last(
+			long ctCollectionId, OrderByComparator<AssetTag> orderByComparator)
+		throws NoSuchTagException {
+
+		AssetTag assetTag = fetchByCTCollectionId_Last(
+			ctCollectionId, orderByComparator);
+
+		if (assetTag != null) {
+			return assetTag;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ctCollectionId=");
+		msg.append(ctCollectionId);
+
+		msg.append("}");
+
+		throw new NoSuchTagException(msg.toString());
+	}
+
+	/**
+	 * Returns the last asset tag in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
+	 */
+	@Override
+	public AssetTag fetchByCTCollectionId_Last(
+		long ctCollectionId, OrderByComparator<AssetTag> orderByComparator) {
+
+		int count = countByCTCollectionId(ctCollectionId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AssetTag> list = findByCTCollectionId(
+			ctCollectionId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the asset tags before and after the current asset tag in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param tagId the primary key of the current asset tag
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset tag
+	 * @throws NoSuchTagException if a asset tag with the primary key could not be found
+	 */
+	@Override
+	public AssetTag[] findByCTCollectionId_PrevAndNext(
+			long tagId, long ctCollectionId,
+			OrderByComparator<AssetTag> orderByComparator)
+		throws NoSuchTagException {
+
+		AssetTag assetTag = findByPrimaryKey(tagId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetTag[] array = new AssetTagImpl[3];
+
+			array[0] = getByCTCollectionId_PrevAndNext(
+				session, assetTag, ctCollectionId, orderByComparator, true);
+
+			array[1] = assetTag;
+
+			array[2] = getByCTCollectionId_PrevAndNext(
+				session, assetTag, ctCollectionId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetTag getByCTCollectionId_PrevAndNext(
+		Session session, AssetTag assetTag, long ctCollectionId,
+		OrderByComparator<AssetTag> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ASSETTAG_WHERE);
+
+		query.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AssetTagModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(ctCollectionId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(assetTag)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<AssetTag> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the asset tags where ctCollectionId = &#63; from the database.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 */
+	@Override
+	public void removeByCTCollectionId(long ctCollectionId) {
+		for (AssetTag assetTag :
+				findByCTCollectionId(
+					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(assetTag);
+		}
+	}
+
+	/**
+	 * Returns the number of asset tags where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the number of matching asset tags
+	 */
+	@Override
+	public int countByCTCollectionId(long ctCollectionId) {
+		FinderPath finderPath = _finderPathCountByCTCollectionId;
+
+		Object[] finderArgs = new Object[] {ctCollectionId};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ASSETTAG_WHERE);
+
+			query.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(ctCollectionId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2 =
+		"assetTag.ctCollectionId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
@@ -1538,25 +2100,28 @@ public class AssetTagPersistenceImpl
 		long groupId, int start, int end,
 		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
 				finderArgs = new Object[] {groupId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<AssetTag> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetTag>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1612,12 +2177,12 @@ public class AssetTagPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -1974,16 +2539,19 @@ public class AssetTagPersistenceImpl
 			return findByGroupId(groupIds[0], start, end, orderByComparator);
 		}
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
+
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {StringUtil.merge(groupIds)};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				StringUtil.merge(groupIds), start, end, orderByComparator
 			};
@@ -1991,7 +2559,7 @@ public class AssetTagPersistenceImpl
 
 		List<AssetTag> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetTag>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByGroupId, finderArgs, this);
 
@@ -2049,14 +2617,14 @@ public class AssetTagPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(
 						_finderPathWithPaginationFindByGroupId, finderArgs,
 						list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathWithPaginationFindByGroupId, finderArgs);
 				}
@@ -2094,12 +2662,22 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = _finderPathCountByGroupId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
 
-		Object[] finderArgs = new Object[] {groupId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByGroupId;
+
+			finderArgs = new Object[] {groupId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2123,10 +2701,14 @@ public class AssetTagPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2153,10 +2735,19 @@ public class AssetTagPersistenceImpl
 			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
-		Object[] finderArgs = new Object[] {StringUtil.merge(groupIds)};
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathWithPaginationCountByGroupId, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {StringUtil.merge(groupIds)};
+
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathWithPaginationCountByGroupId, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler();
@@ -2190,12 +2781,17 @@ public class AssetTagPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationCountByGroupId, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationCountByGroupId, finderArgs,
+						count);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationCountByGroupId, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationCountByGroupId, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2288,25 +2884,28 @@ public class AssetTagPersistenceImpl
 
 		name = Objects.toString(name, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByName;
 				finderArgs = new Object[] {name};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByName;
 			finderArgs = new Object[] {name, start, end, orderByComparator};
 		}
 
 		List<AssetTag> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetTag>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2373,12 +2972,12 @@ public class AssetTagPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -2751,16 +3350,19 @@ public class AssetTagPersistenceImpl
 			return findByName(names[0], start, end, orderByComparator);
 		}
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
+
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {StringUtil.merge(names)};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				StringUtil.merge(names), start, end, orderByComparator
 			};
@@ -2768,7 +3370,7 @@ public class AssetTagPersistenceImpl
 
 		List<AssetTag> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetTag>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByName, finderArgs, this);
 
@@ -2843,13 +3445,13 @@ public class AssetTagPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(
 						_finderPathWithPaginationFindByName, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathWithPaginationFindByName, finderArgs);
 				}
@@ -2888,12 +3490,22 @@ public class AssetTagPersistenceImpl
 	public int countByName(String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathCountByName;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
 
-		Object[] finderArgs = new Object[] {name};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByName;
+
+			finderArgs = new Object[] {name};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2928,10 +3540,14 @@ public class AssetTagPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2962,10 +3578,19 @@ public class AssetTagPersistenceImpl
 			names = ArrayUtil.sortedUnique(names);
 		}
 
-		Object[] finderArgs = new Object[] {StringUtil.merge(names)};
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathWithPaginationCountByName, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {StringUtil.merge(names)};
+
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathWithPaginationCountByName, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler();
@@ -3016,12 +3641,17 @@ public class AssetTagPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationCountByName, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationCountByName, finderArgs,
+						count);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationCountByName, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationCountByName, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3105,15 +3735,18 @@ public class AssetTagPersistenceImpl
 
 		name = Objects.toString(name, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {groupId, name};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByG_N, finderArgs, this);
 		}
@@ -3166,7 +3799,7 @@ public class AssetTagPersistenceImpl
 				List<AssetTag> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByG_N, finderArgs, list);
 					}
@@ -3180,7 +3813,7 @@ public class AssetTagPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByG_N, finderArgs);
 				}
@@ -3227,12 +3860,22 @@ public class AssetTagPersistenceImpl
 	public int countByG_N(long groupId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathCountByG_N;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
 
-		Object[] finderArgs = new Object[] {groupId, name};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_N;
+
+			finderArgs = new Object[] {groupId, name};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3271,10 +3914,14 @@ public class AssetTagPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3375,6 +4022,9 @@ public class AssetTagPersistenceImpl
 
 		name = Objects.toString(name, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -3385,7 +4035,7 @@ public class AssetTagPersistenceImpl
 
 		List<AssetTag> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetTag>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -3459,12 +4109,12 @@ public class AssetTagPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -3866,16 +4516,19 @@ public class AssetTagPersistenceImpl
 				groupIds[0], name, start, end, orderByComparator);
 		}
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
+
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {StringUtil.merge(groupIds), name};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				StringUtil.merge(groupIds), name, start, end, orderByComparator
 			};
@@ -3883,7 +4536,7 @@ public class AssetTagPersistenceImpl
 
 		List<AssetTag> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetTag>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByG_LikeN, finderArgs, this);
 
@@ -3963,14 +4616,14 @@ public class AssetTagPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(
 						_finderPathWithPaginationFindByG_LikeN, finderArgs,
 						list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathWithPaginationFindByG_LikeN, finderArgs);
 				}
@@ -4013,12 +4666,22 @@ public class AssetTagPersistenceImpl
 	public int countByG_LikeN(long groupId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathWithPaginationCountByG_LikeN;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
 
-		Object[] finderArgs = new Object[] {groupId, name};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathWithPaginationCountByG_LikeN;
+
+			finderArgs = new Object[] {groupId, name};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -4057,10 +4720,14 @@ public class AssetTagPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4090,10 +4757,19 @@ public class AssetTagPersistenceImpl
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {StringUtil.merge(groupIds), name};
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathWithPaginationCountByG_LikeN, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {StringUtil.merge(groupIds), name};
+
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathWithPaginationCountByG_LikeN, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler();
@@ -4146,12 +4822,17 @@ public class AssetTagPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationCountByG_LikeN, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationCountByG_LikeN, finderArgs,
+						count);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationCountByG_LikeN, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationCountByG_LikeN, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4196,6 +4877,12 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(AssetTag assetTag) {
+		if (assetTag.getCtCollectionId() != 0) {
+			assetTag.resetOriginalValues();
+
+			return;
+		}
+
 		EntityCacheUtil.putResult(
 			AssetTagModelImpl.ENTITY_CACHE_ENABLED, AssetTagImpl.class,
 			assetTag.getPrimaryKey(), assetTag);
@@ -4219,6 +4906,12 @@ public class AssetTagPersistenceImpl
 	@Override
 	public void cacheResult(List<AssetTag> assetTags) {
 		for (AssetTag assetTag : assetTags) {
+			if (assetTag.getCtCollectionId() != 0) {
+				assetTag.resetOriginalValues();
+
+				continue;
+			}
+
 			if (EntityCacheUtil.getResult(
 					AssetTagModelImpl.ENTITY_CACHE_ENABLED, AssetTagImpl.class,
 					assetTag.getPrimaryKey()) == null) {
@@ -4439,6 +5132,10 @@ public class AssetTagPersistenceImpl
 		assetTagToAssetEntryTableMapper.deleteLeftPrimaryKeyTableMappings(
 			assetTag.getPrimaryKey());
 
+		if (!CTPersistenceHelperUtil.isRemove(assetTag)) {
+			return assetTag;
+		}
+
 		Session session = null;
 
 		try {
@@ -4523,7 +5220,16 @@ public class AssetTagPersistenceImpl
 		try {
 			session = openSession();
 
-			if (assetTag.isNew()) {
+			if (CTPersistenceHelperUtil.isInsert(assetTag)) {
+				if (!isNew) {
+					AssetTag oldAssetTag = (AssetTag)session.get(
+						AssetTagImpl.class, assetTag.getPrimaryKeyObj());
+
+					if (oldAssetTag != null) {
+						session.evict(oldAssetTag);
+					}
+				}
+
 				session.save(assetTag);
 
 				assetTag.setNew(false);
@@ -4537,6 +5243,47 @@ public class AssetTagPersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (assetTag.getCtCollectionId() != 0) {
+			if (!AssetTagModelImpl.COLUMN_BITMASK_ENABLED) {
+				FinderCacheUtil.clearCache(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			}
+			else if (isNew) {
+				Object[] args = new Object[] {
+					assetTagModelImpl.getCtCollectionId()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByCTCollectionId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByCTCollectionId, args);
+			}
+			else if ((assetTagModelImpl.getColumnBitmask() &
+					  _finderPathWithoutPaginationFindByCTCollectionId.
+						  getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					assetTagModelImpl.getOriginalCtCollectionId()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByCTCollectionId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByCTCollectionId, args);
+
+				args = new Object[] {assetTagModelImpl.getCtCollectionId()};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByCTCollectionId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByCTCollectionId, args);
+			}
+
+			assetTag.resetOriginalValues();
+
+			return assetTag;
 		}
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -4559,6 +5306,13 @@ public class AssetTagPersistenceImpl
 			FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
 			FinderCacheUtil.removeResult(
 				_finderPathWithoutPaginationFindByUuid_C, args);
+
+			args = new Object[] {assetTagModelImpl.getCtCollectionId()};
+
+			FinderCacheUtil.removeResult(
+				_finderPathCountByCTCollectionId, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByCTCollectionId, args);
 
 			args = new Object[] {assetTagModelImpl.getGroupId()};
 
@@ -4618,6 +5372,27 @@ public class AssetTagPersistenceImpl
 				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
 				FinderCacheUtil.removeResult(
 					_finderPathWithoutPaginationFindByUuid_C, args);
+			}
+
+			if ((assetTagModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByCTCollectionId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					assetTagModelImpl.getOriginalCtCollectionId()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByCTCollectionId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByCTCollectionId, args);
+
+				args = new Object[] {assetTagModelImpl.getCtCollectionId()};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByCTCollectionId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByCTCollectionId, args);
 			}
 
 			if ((assetTagModelImpl.getColumnBitmask() &
@@ -4711,12 +5486,117 @@ public class AssetTagPersistenceImpl
 	/**
 	 * Returns the asset tag with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the asset tag
+	 * @return the asset tag, or <code>null</code> if a asset tag with the primary key could not be found
+	 */
+	@Override
+	public AssetTag fetchByPrimaryKey(Serializable primaryKey) {
+		if (CTPersistenceHelperUtil.isProductionMode(AssetTag.class)) {
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		AssetTag assetTag = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			assetTag = (AssetTag)session.get(AssetTagImpl.class, primaryKey);
+
+			if (assetTag != null) {
+				cacheResult(assetTag);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return assetTag;
+	}
+
+	/**
+	 * Returns the asset tag with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param tagId the primary key of the asset tag
 	 * @return the asset tag, or <code>null</code> if a asset tag with the primary key could not be found
 	 */
 	@Override
 	public AssetTag fetchByPrimaryKey(long tagId) {
 		return fetchByPrimaryKey((Serializable)tagId);
+	}
+
+	@Override
+	public Map<Serializable, AssetTag> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (CTPersistenceHelperUtil.isProductionMode(AssetTag.class)) {
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, AssetTag> map = new HashMap<Serializable, AssetTag>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			AssetTag assetTag = fetchByPrimaryKey(primaryKey);
+
+			if (assetTag != null) {
+				map.put(primaryKey, assetTag);
+			}
+
+			return map;
+		}
+
+		StringBundler query = new StringBundler(primaryKeys.size() * 2 + 1);
+
+		query.append(getSelectSQL());
+		query.append(" WHERE ");
+		query.append(getPKDBName());
+		query.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			query.append((long)primaryKey);
+
+			query.append(",");
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(")");
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (AssetTag assetTag : (List<AssetTag>)q.list()) {
+				map.put(assetTag.getPrimaryKeyObj(), assetTag);
+
+				cacheResult(assetTag);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -4782,25 +5662,28 @@ public class AssetTagPersistenceImpl
 		int start, int end, OrderByComparator<AssetTag> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<AssetTag> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetTag>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -4838,12 +5721,12 @@ public class AssetTagPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -4875,8 +5758,15 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetTag.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -4888,12 +5778,16 @@ public class AssetTagPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY);
+				}
 
 				throw processException(e);
 			}
@@ -5250,6 +6144,54 @@ public class AssetTagPersistenceImpl
 		return AssetTagModelImpl.TABLE_COLUMNS_MAP;
 	}
 
+	@Override
+	public Set<String> getCTIgnoredAttributeNames() {
+		return _ctIgnoredAttributeNames;
+	}
+
+	@Override
+	public Set<String> getCTMergeableAttributeNames() {
+		return _ctMergeableAttributeNames;
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	@Override
+	public AssetTag removeCTModel(AssetTag assetTag, boolean quiet) {
+		if (quiet) {
+			return removeImpl(assetTag);
+		}
+
+		return remove(assetTag);
+	}
+
+	@Override
+	public AssetTag updateCTModel(AssetTag assetTag, boolean quiet) {
+		if (quiet) {
+			return updateImpl(assetTag);
+		}
+
+		return update(assetTag);
+	}
+
+	private static final Set<String> _ctIgnoredAttributeNames =
+		new HashSet<String>();
+	private static final Set<String> _ctMergeableAttributeNames =
+		new HashSet<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		_ctIgnoredAttributeNames.add("modifiedDate");
+
+		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
+
+		_uniqueIndexColumnNames.add(new String[] {"groupId", "name"});
+	}
+
 	/**
 	 * Initializes the asset tag persistence.
 	 */
@@ -5336,6 +6278,29 @@ public class AssetTagPersistenceImpl
 			AssetTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByCTCollectionId = new FinderPath(
+			AssetTagModelImpl.ENTITY_CACHE_ENABLED,
+			AssetTagModelImpl.FINDER_CACHE_ENABLED, AssetTagImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCTCollectionId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByCTCollectionId = new FinderPath(
+			AssetTagModelImpl.ENTITY_CACHE_ENABLED,
+			AssetTagModelImpl.FINDER_CACHE_ENABLED, AssetTagImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCTCollectionId",
+			new String[] {Long.class.getName()},
+			AssetTagModelImpl.CTCOLLECTIONID_COLUMN_BITMASK |
+			AssetTagModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByCTCollectionId = new FinderPath(
+			AssetTagModelImpl.ENTITY_CACHE_ENABLED,
+			AssetTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCTCollectionId",
+			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			AssetTagModelImpl.ENTITY_CACHE_ENABLED,

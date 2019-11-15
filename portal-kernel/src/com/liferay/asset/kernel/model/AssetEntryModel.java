@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -42,8 +43,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetEntryModel
-	extends AttachedModel, BaseModel<AssetEntry>, GroupedModel, LocalizedModel,
-			MVCCModel, ShardedModel {
+	extends AttachedModel, BaseModel<AssetEntry>, CTModel<AssetEntry>,
+			GroupedModel, LocalizedModel, MVCCModel, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -56,6 +57,7 @@ public interface AssetEntryModel
 	 *
 	 * @return the primary key of this asset entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -63,6 +65,7 @@ public interface AssetEntryModel
 	 *
 	 * @param primaryKey the primary key of this asset entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -80,6 +83,22 @@ public interface AssetEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this asset entry.
+	 *
+	 * @return the ct collection ID of this asset entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this asset entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this asset entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the entry ID of this asset entry.

@@ -81,15 +81,15 @@ public class AssetCategoryModelImpl
 	public static final String TABLE_NAME = "AssetCategory";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR}, {"categoryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"parentCategoryId", Types.BIGINT}, {"treePath", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"title", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"vocabularyId", Types.BIGINT},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"categoryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"parentCategoryId", Types.BIGINT},
+		{"treePath", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"vocabularyId", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,6 +97,7 @@ public class AssetCategoryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("categoryId", Types.BIGINT);
@@ -116,7 +117,7 @@ public class AssetCategoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetCategory (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,treePath STRING null,name VARCHAR(75) null,title STRING null,description STRING null,vocabularyId LONG,lastPublishDate DATE null)";
+		"create table AssetCategory (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,categoryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,treePath STRING null,name VARCHAR(75) null,title STRING null,description STRING null,vocabularyId LONG,lastPublishDate DATE null,primary key (categoryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetCategory";
 
@@ -149,19 +150,21 @@ public class AssetCategoryModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
+	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 2L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
 
-	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
-	public static final long PARENTCATEGORYID_COLUMN_BITMASK = 16L;
+	public static final long NAME_COLUMN_BITMASK = 16L;
 
-	public static final long TREEPATH_COLUMN_BITMASK = 32L;
+	public static final long PARENTCATEGORYID_COLUMN_BITMASK = 32L;
 
-	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long TREEPATH_COLUMN_BITMASK = 64L;
 
-	public static final long VOCABULARYID_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
+
+	public static final long VOCABULARYID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -177,6 +180,7 @@ public class AssetCategoryModelImpl
 		AssetCategory model = new AssetCategoryImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCategoryId(soapModel.getCategoryId());
@@ -372,6 +376,11 @@ public class AssetCategoryModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<AssetCategory, Long>)AssetCategory::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", AssetCategory::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<AssetCategory, Long>)AssetCategory::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", AssetCategory::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<AssetCategory, String>)AssetCategory::setUuid);
@@ -460,6 +469,29 @@ public class AssetCategoryModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCtCollectionId) {
+			_setOriginalCtCollectionId = true;
+
+			_originalCtCollectionId = _ctCollectionId;
+		}
+
+		_ctCollectionId = ctCollectionId;
+	}
+
+	public long getOriginalCtCollectionId() {
+		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1095,6 +1127,7 @@ public class AssetCategoryModelImpl
 		AssetCategoryImpl assetCategoryImpl = new AssetCategoryImpl();
 
 		assetCategoryImpl.setMvccVersion(getMvccVersion());
+		assetCategoryImpl.setCtCollectionId(getCtCollectionId());
 		assetCategoryImpl.setUuid(getUuid());
 		assetCategoryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		assetCategoryImpl.setCategoryId(getCategoryId());
@@ -1171,6 +1204,11 @@ public class AssetCategoryModelImpl
 	public void resetOriginalValues() {
 		AssetCategoryModelImpl assetCategoryModelImpl = this;
 
+		assetCategoryModelImpl._originalCtCollectionId =
+			assetCategoryModelImpl._ctCollectionId;
+
+		assetCategoryModelImpl._setOriginalCtCollectionId = false;
+
 		assetCategoryModelImpl._originalUuid = assetCategoryModelImpl._uuid;
 
 		assetCategoryModelImpl._originalExternalReferenceCode =
@@ -1212,6 +1250,8 @@ public class AssetCategoryModelImpl
 			new AssetCategoryCacheModel();
 
 		assetCategoryCacheModel.mvccVersion = getMvccVersion();
+
+		assetCategoryCacheModel.ctCollectionId = getCtCollectionId();
 
 		assetCategoryCacheModel.uuid = getUuid();
 
@@ -1386,6 +1426,9 @@ public class AssetCategoryModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
+	private long _originalCtCollectionId;
+	private boolean _setOriginalCtCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

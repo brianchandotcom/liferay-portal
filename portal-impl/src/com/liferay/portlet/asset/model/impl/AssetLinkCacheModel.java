@@ -76,10 +76,12 @@ public class AssetLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", linkId=");
 		sb.append(linkId);
 		sb.append(", companyId=");
@@ -108,6 +110,7 @@ public class AssetLinkCacheModel
 		AssetLinkImpl assetLinkImpl = new AssetLinkImpl();
 
 		assetLinkImpl.setMvccVersion(mvccVersion);
+		assetLinkImpl.setCtCollectionId(ctCollectionId);
 		assetLinkImpl.setLinkId(linkId);
 		assetLinkImpl.setCompanyId(companyId);
 		assetLinkImpl.setUserId(userId);
@@ -140,6 +143,8 @@ public class AssetLinkCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		linkId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -160,6 +165,8 @@ public class AssetLinkCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(linkId);
 
@@ -186,6 +193,7 @@ public class AssetLinkCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long linkId;
 	public long companyId;
 	public long userId;

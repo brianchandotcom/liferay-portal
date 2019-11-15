@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -41,8 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetVocabularyModel
-	extends BaseModel<AssetVocabulary>, LocalizedModel, MVCCModel, ShardedModel,
-			StagedGroupedModel {
+	extends BaseModel<AssetVocabulary>, CTModel<AssetVocabulary>,
+			LocalizedModel, MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -55,6 +56,7 @@ public interface AssetVocabularyModel
 	 *
 	 * @return the primary key of this asset vocabulary
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -62,6 +64,7 @@ public interface AssetVocabularyModel
 	 *
 	 * @param primaryKey the primary key of this asset vocabulary
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -79,6 +82,22 @@ public interface AssetVocabularyModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this asset vocabulary.
+	 *
+	 * @return the ct collection ID of this asset vocabulary
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this asset vocabulary.
+	 *
+	 * @param ctCollectionId the ct collection ID of this asset vocabulary
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this asset vocabulary.

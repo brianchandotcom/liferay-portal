@@ -126,6 +126,185 @@ public class AssetCategoryPropertyUtil {
 	}
 
 	/**
+	 * Returns all the asset category properties where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching asset category properties
+	 */
+	public static List<AssetCategoryProperty> findByCTCollectionId(
+		long ctCollectionId) {
+
+		return getPersistence().findByCTCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Returns a range of all the asset category properties where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset category properties
+	 * @param end the upper bound of the range of asset category properties (not inclusive)
+	 * @return the range of matching asset category properties
+	 */
+	public static List<AssetCategoryProperty> findByCTCollectionId(
+		long ctCollectionId, int start, int end) {
+
+		return getPersistence().findByCTCollectionId(
+			ctCollectionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset category properties where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset category properties
+	 * @param end the upper bound of the range of asset category properties (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset category properties
+	 */
+	public static List<AssetCategoryProperty> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<AssetCategoryProperty> orderByComparator) {
+
+		return getPersistence().findByCTCollectionId(
+			ctCollectionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset category properties where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset category properties
+	 * @param end the upper bound of the range of asset category properties (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset category properties
+	 */
+	public static List<AssetCategoryProperty> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<AssetCategoryProperty> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByCTCollectionId(
+			ctCollectionId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first asset category property in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset category property
+	 * @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
+	 */
+	public static AssetCategoryProperty findByCTCollectionId_First(
+			long ctCollectionId,
+			OrderByComparator<AssetCategoryProperty> orderByComparator)
+		throws com.liferay.asset.kernel.exception.
+			NoSuchCategoryPropertyException {
+
+		return getPersistence().findByCTCollectionId_First(
+			ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first asset category property in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset category property, or <code>null</code> if a matching asset category property could not be found
+	 */
+	public static AssetCategoryProperty fetchByCTCollectionId_First(
+		long ctCollectionId,
+		OrderByComparator<AssetCategoryProperty> orderByComparator) {
+
+		return getPersistence().fetchByCTCollectionId_First(
+			ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last asset category property in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset category property
+	 * @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
+	 */
+	public static AssetCategoryProperty findByCTCollectionId_Last(
+			long ctCollectionId,
+			OrderByComparator<AssetCategoryProperty> orderByComparator)
+		throws com.liferay.asset.kernel.exception.
+			NoSuchCategoryPropertyException {
+
+		return getPersistence().findByCTCollectionId_Last(
+			ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last asset category property in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset category property, or <code>null</code> if a matching asset category property could not be found
+	 */
+	public static AssetCategoryProperty fetchByCTCollectionId_Last(
+		long ctCollectionId,
+		OrderByComparator<AssetCategoryProperty> orderByComparator) {
+
+		return getPersistence().fetchByCTCollectionId_Last(
+			ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the asset category properties before and after the current asset category property in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param categoryPropertyId the primary key of the current asset category property
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset category property
+	 * @throws NoSuchCategoryPropertyException if a asset category property with the primary key could not be found
+	 */
+	public static AssetCategoryProperty[] findByCTCollectionId_PrevAndNext(
+			long categoryPropertyId, long ctCollectionId,
+			OrderByComparator<AssetCategoryProperty> orderByComparator)
+		throws com.liferay.asset.kernel.exception.
+			NoSuchCategoryPropertyException {
+
+		return getPersistence().findByCTCollectionId_PrevAndNext(
+			categoryPropertyId, ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the asset category properties where ctCollectionId = &#63; from the database.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 */
+	public static void removeByCTCollectionId(long ctCollectionId) {
+		getPersistence().removeByCTCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Returns the number of asset category properties where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the number of matching asset category properties
+	 */
+	public static int countByCTCollectionId(long ctCollectionId) {
+		return getPersistence().countByCTCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Returns all the asset category properties where companyId = &#63;.
 	 *
 	 * @param companyId the company ID

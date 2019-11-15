@@ -17,6 +17,7 @@ package com.liferay.asset.kernel.service.persistence;
 import com.liferay.asset.kernel.exception.NoSuchLinkException;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,13 +33,158 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface AssetLinkPersistence extends BasePersistence<AssetLink> {
+public interface AssetLinkPersistence
+	extends BasePersistence<AssetLink>, CTPersistence<AssetLink> {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetLinkUtil} to access the asset link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+
+	/**
+	 * Returns all the asset links where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching asset links
+	 */
+	@Override
+	public java.util.List<AssetLink> findByCTCollectionId(long ctCollectionId);
+
+	/**
+	 * Returns a range of all the asset links where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @return the range of matching asset links
+	 */
+	public java.util.List<AssetLink> findByCTCollectionId(
+		long ctCollectionId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the asset links where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset links
+	 */
+	public java.util.List<AssetLink> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the asset links where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset links
+	 */
+	public java.util.List<AssetLink> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first asset link in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset link
+	 * @throws NoSuchLinkException if a matching asset link could not be found
+	 */
+	public AssetLink findByCTCollectionId_First(
+			long ctCollectionId,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
+				orderByComparator)
+		throws NoSuchLinkException;
+
+	/**
+	 * Returns the first asset link in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset link, or <code>null</code> if a matching asset link could not be found
+	 */
+	public AssetLink fetchByCTCollectionId_First(
+		long ctCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
+			orderByComparator);
+
+	/**
+	 * Returns the last asset link in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset link
+	 * @throws NoSuchLinkException if a matching asset link could not be found
+	 */
+	public AssetLink findByCTCollectionId_Last(
+			long ctCollectionId,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
+				orderByComparator)
+		throws NoSuchLinkException;
+
+	/**
+	 * Returns the last asset link in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
+	 */
+	public AssetLink fetchByCTCollectionId_Last(
+		long ctCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
+			orderByComparator);
+
+	/**
+	 * Returns the asset links before and after the current asset link in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param linkId the primary key of the current asset link
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset link
+	 * @throws NoSuchLinkException if a asset link with the primary key could not be found
+	 */
+	public AssetLink[] findByCTCollectionId_PrevAndNext(
+			long linkId, long ctCollectionId,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
+				orderByComparator)
+		throws NoSuchLinkException;
+
+	/**
+	 * Removes all the asset links where ctCollectionId = &#63; from the database.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 */
+	public void removeByCTCollectionId(long ctCollectionId);
+
+	/**
+	 * Returns the number of asset links where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the number of matching asset links
+	 */
+	public int countByCTCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns all the asset links where entryId1 = &#63;.

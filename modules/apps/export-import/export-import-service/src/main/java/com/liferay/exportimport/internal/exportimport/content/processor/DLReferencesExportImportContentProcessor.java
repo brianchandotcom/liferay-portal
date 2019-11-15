@@ -129,14 +129,10 @@ public class DLReferencesExportImportContentProcessor
 		sb.replace(beginPos + 1, endPos, urlParams);
 	}
 
-	protected Map<String, String[]> getDLReferenceParameters(
-		long groupId, String content, int beginPos, int endPos) {
-
-		boolean legacyURL = true;
+	protected String getDLReference(String content, int beginPos, int endPos) {
 		String[] stopStrings = _DL_REFERENCE_LEGACY_STOP_STRINGS;
 
-		if (content.startsWith("/documents/", beginPos)) {
-			legacyURL = false;
+		if (!isLegacyURL(content, beginPos)) {
 			stopStrings = _DL_REFERENCE_STOP_STRINGS;
 		}
 
@@ -146,9 +142,17 @@ public class DLReferencesExportImportContentProcessor
 			return null;
 		}
 
+		return content.substring(beginPos, endPos);
+	}
+
+	protected Map<String, String[]> getDLReferenceParameters(
+		long groupId, String content, int beginPos, int endPos) {
+
+		boolean legacyURL = isLegacyURL(content, beginPos);
+
 		Map<String, String[]> map = new HashMap<>();
 
-		String dlReference = content.substring(beginPos, endPos);
+		String dlReference = getDLReference(content, beginPos, endPos);
 
 		while (dlReference.contains(StringPool.AMPERSAND_ENCODED)) {
 			dlReference = StringUtil.replace(
@@ -276,6 +280,14 @@ public class DLReferencesExportImportContentProcessor
 		}
 
 		return fileEntry;
+	}
+
+	protected boolean isLegacyURL(String content, int beginPos) {
+		if (content.startsWith("/documents/", beginPos)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected boolean isValidateDLReferences() {
@@ -586,6 +598,8 @@ public class DLReferencesExportImportContentProcessor
 				getDLReferenceParameters(
 					groupId, content, beginPos + pathContext.length(), endPos);
 
+			String dlReference = getDLReference(content, beginPos, endPos);
+
 			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
 
 			if (fileEntry == null) {
@@ -659,6 +673,7 @@ public class DLReferencesExportImportContentProcessor
 							new NoSuchFileEntryException());
 
 					eicve.setDlReferenceParameters(dlReferenceParameters);
+					eicve.setDlReference(dlReference);
 					eicve.setType(
 						ExportImportContentValidationException.
 							FILE_ENTRY_NOT_FOUND);

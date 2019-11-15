@@ -213,6 +213,8 @@
 				</waitfor>
 
 				<fail if="gogoshell.timeout" message="The Gogo shell connection did not connect as expected." />
+
+				<stop-one-java-process process.name="jar" />
 			</sequential>
 		</parallel>
 

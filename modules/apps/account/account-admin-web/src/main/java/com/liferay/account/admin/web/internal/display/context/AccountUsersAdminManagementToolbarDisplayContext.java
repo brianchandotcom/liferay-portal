@@ -74,7 +74,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
-						dropdownItem.putData("action", "selectAccountEntry");
+						dropdownItem.putData("action", "addAccountUser");
 
 						PortletURL accountEntrySelectorURL =
 							liferayPortletResponse.createRenderURL();
@@ -89,23 +89,23 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 							"accountEntrySelectorURL",
 							accountEntrySelectorURL.toString());
 
-						dropdownItem.putData(
-							"dialogTitle",
-							LanguageUtil.get(request, "select-an-account"));
-
-						PortletURL redirectURL =
+						PortletURL addAccountUserURL =
 							liferayPortletResponse.createRenderURL();
 
-						redirectURL.setParameter(
+						addAccountUserURL.setParameter(
 							"mvcRenderCommandName",
 							"/account_admin/add_account_user");
-						redirectURL.setParameter(
+						addAccountUserURL.setParameter(
 							"backURL",
 							String.valueOf(
 								liferayPortletResponse.createRenderURL()));
 
 						dropdownItem.putData(
-							"redirectURL", redirectURL.toString());
+							"addAccountUserURL", addAccountUserURL.toString());
+
+						dropdownItem.putData(
+							"dialogTitle",
+							LanguageUtil.get(request, "select-an-account"));
 
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "add-user"));

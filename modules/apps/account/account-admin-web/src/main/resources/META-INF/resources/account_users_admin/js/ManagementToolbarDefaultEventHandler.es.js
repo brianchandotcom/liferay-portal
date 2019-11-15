@@ -35,27 +35,27 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		);
 	}
 
-	selectAccountEntry(itemData) {
+	addAccountUser(itemData) {
 		Liferay.Util.selectEntity(
 			{
 				dialog: {
 					constrain: true,
 					modal: true
 				},
-				eventName: this.ns('addNewAccountUser'),
-				id: this.ns('selectAccountEntry'),
+				eventName: this.ns('addAccountUser'),
+				id: this.ns('addAccountUser'),
 				title: Liferay.Language.get(itemData.dialogTitle),
 				uri: itemData.accountEntrySelectorURL
 			},
 			event => {
-				var redirectURL = Liferay.Util.PortletURL.createPortletURL(
-					itemData.redirectURL,
+				var addAccountUserURL = Liferay.Util.PortletURL.createPortletURL(
+					itemData.addAccountUserURL,
 					{
 						accountEntryId: event.accountEntryId
 					}
 				);
 
-				window.location.href = redirectURL;
+				window.location.href = addAccountUserURL;
 			}
 		);
 	}

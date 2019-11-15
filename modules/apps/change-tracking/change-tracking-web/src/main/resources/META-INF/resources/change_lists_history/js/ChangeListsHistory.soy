@@ -8,6 +8,7 @@
 		detailsLink: string,
 		state: string,
 		timestamp: string,
+		undoURL: string,
 		userInitials: string,
 		userName: string
 	]>}
@@ -33,6 +34,7 @@
 						{param labelText: $processEntry.state /}
 						{param spritemap: $spritemap /}
 						{param timestamp: $processEntry.timestamp /}
+						{param undoURL: $processEntry.undoURL /}
 						{param userName: $processEntry.userName /}
 						{param userInitials: $processEntry.userInitials /}
 						{param userPortraitURL: '' /}
@@ -59,6 +61,7 @@
 	{@param? labelState: string}
 	{@param? labelText: string}
 	{@param? timestamp: string}
+	{@param? undoURL: string}
 	{@param? userName: string}
 	{@param? userInitials: string}
 	{@param? userPortraitURL: string}
@@ -82,7 +85,7 @@
 					{/call}
 				</div>
 
-				<div class="col-sm-6">
+				<div class="col-sm-5">
 					<div class="text-bottom text-rigth">
 						{$timestamp} {msg desc=""}by{/msg} {$userName}
 
@@ -98,6 +101,15 @@
 							</div>
 						{/if}
 					</div>
+				</div>
+
+				<div class="col-sm-1">
+					<a href="{$undoURL}">
+						{call ClayIcon.render}
+							{param spritemap: $spritemap /}
+							{param symbol: 'undo' /}
+						{/call}
+					</a>
 				</div>
 
 			</div>

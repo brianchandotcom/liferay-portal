@@ -50,6 +50,7 @@ import java.text.Format;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
@@ -181,6 +182,18 @@ public class GetCTProcessesMVCResourceCommand
 				themeDisplay.getLocale());
 			User user = _userLocalService.getUser(ctProcess.getUserId());
 
+			PortletURL undoURL = PortletURLFactoryUtil.create(
+				resourceRequest, CTPortletKeys.CHANGE_LISTS_HISTORY,
+				PortletRequest.ACTION_PHASE);
+
+			undoURL.setParameter(
+				ActionRequest.ACTION_NAME,
+				"/change_lists_history/undo_ct_collection");
+
+			undoURL.setParameter(
+				"ctCollectionId",
+				String.valueOf(ctCollection.getCtCollectionId()));
+
 			jsonArray.put(
 				jsonObject.put(
 					"description", ctCollection.getDescription()
@@ -192,6 +205,8 @@ public class GetCTProcessesMVCResourceCommand
 					"state", _getCTProcessStatusLabel(ctProcess)
 				).put(
 					"timestamp", format.format(ctProcess.getCreateDate())
+				).put(
+					"undoURL", undoURL.toString()
 				).put(
 					"userInitials", user.getInitials()
 				).put(

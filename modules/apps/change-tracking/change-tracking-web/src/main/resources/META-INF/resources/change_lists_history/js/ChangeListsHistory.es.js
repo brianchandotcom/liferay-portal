@@ -241,6 +241,7 @@ class ChangeListsHistory extends PortletBase {
 				name: processEntry.name,
 				state: processEntry.state,
 				timestamp: processEntry.timestamp,
+				undoURL: processEntry.undoURL,
 				userInitials: processEntry.userInitials,
 				userName: processEntry.userName
 			});
@@ -292,6 +293,7 @@ ChangeListsHistory.STATE = {
 			name: Config.string(),
 			state: Config.string(),
 			timestamp: Config.string(),
+			undoURL: Config.string(),
 			userInitials: Config.string(),
 			userName: Config.string()
 		})

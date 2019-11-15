@@ -1972,7 +1972,7 @@ import org.osgi.service.component.annotations.Reference;
 
 	<#if lazyBlob>
 		@Reference
-		private File _file;
+		protected File _file;
 
 		private boolean _useTempFile;
 	</#if>

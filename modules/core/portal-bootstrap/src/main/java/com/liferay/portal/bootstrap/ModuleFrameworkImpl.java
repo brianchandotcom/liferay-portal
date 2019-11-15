@@ -1547,7 +1547,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			URI uri = new URI(location);
 
-			if (jarPaths.contains(
+			if (Files.exists(
 					Paths.get(
 						new URI(
 							uri.getScheme(), uri.getAuthority(), uri.getPath(),

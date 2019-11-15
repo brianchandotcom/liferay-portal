@@ -28,7 +28,9 @@ definition {
 
 		AssertLocation(value1 = "http://[::1]:8080/web/guest/home");
 
-		Smoke.runSmoke();
+		// AUI-3161
+
+		// Smoke.runSmoke();
 
 		User.logoutPG();
 

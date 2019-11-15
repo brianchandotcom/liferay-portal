@@ -96,7 +96,9 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		if (IsElementPresent(locator1 = "Button#ANY", key_text = "More")) {
-			MenuItem.viewPresent(menuItem = "Showing ${pageMod} Elements");
+			AssertElementPresent(
+				key_caption = "Showing ${pageMod} Elements",
+				locator1 = "Dropdown#CAPTION");
 		}
 
 		Button.clickMore();

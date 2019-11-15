@@ -1,0 +1,1 @@
+export {default as ItemSelectorRepositoryEntryBrowser} from './repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser.es';

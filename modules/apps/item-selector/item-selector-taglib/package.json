@@ -14,6 +14,7 @@
 		"react": "16.9.0",
 		"react-dom": "16.9.0"
 	},
+	"main": "index.es.js",
 	"name": "item-selector-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

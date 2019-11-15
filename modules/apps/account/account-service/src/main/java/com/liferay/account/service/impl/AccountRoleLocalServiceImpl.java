@@ -104,6 +104,10 @@ public class AccountRoleLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAccountRolesByCompanyId(long companyId) {
+	}
+
+	@Override
 	public AccountRole fetchAccountRoleByRoleId(long roleId) {
 		return accountRolePersistence.fetchByRoleId(roleId);
 	}

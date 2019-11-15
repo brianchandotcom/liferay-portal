@@ -27,10 +27,6 @@ DDMStructure ddmStructure = (DDMStructure)request.getAttribute(WebKeys.DOCUMENT_
 
 long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
 
-String script = BeanParamUtil.getString(ddmStructure, request, "definition");
-
-JSONArray fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(DDMStructureLocalServiceUtil.fetchDDMStructure(ddmStructureId), script);
-
 List<DDMStructure> ddmStructures = null;
 
 if (fileEntryType != null) {
@@ -42,8 +38,6 @@ if (fileEntryType != null) {
 		ddmStructures.remove(ddmStructure);
 	}
 }
-
-DDMDisplay ddmDisplay = new DLDDMDisplay();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -96,15 +90,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="mainMetadataFields" label="main-metadata-fields">
-				<liferay-util:include page="/form_builder.jsp" portletId="<%= PortletProviderUtil.getPortletId(com.liferay.dynamic.data.mapping.model.DDMStructure.class.getName(), PortletProvider.Action.VIEW) %>">
-					<portlet:param name="refererPortletName" value="<%= DLPortletKeys.DOCUMENT_LIBRARY %>" />
-					<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
-					<portlet:param name="script" value="<%= script %>" />
-					<portlet:param name="fieldsJSONArrayString" value="<%= (fieldsJSONArray != null) ? fieldsJSONArray.toString() : StringPool.BLANK %>" />
-					<portlet:param name="className" value="<%= ddmDisplay.getStructureType() %>" />
-					<portlet:param name="storageType" value="<%= ddmDisplay.getStorageType() %>" />
-					<portlet:param name="scopeAvailableFields" value="<%= ddmDisplay.getAvailableFields() %>" />
-				</liferay-util:include>
+				<liferay-util:include page="/document_library/ddm/form_builder.jsp" servletContext="<%= application %>" />
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="additionalMetadataFields" label="additional-metadata-fields">

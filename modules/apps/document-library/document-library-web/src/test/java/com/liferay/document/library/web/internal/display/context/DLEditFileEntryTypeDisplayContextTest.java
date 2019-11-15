@@ -16,18 +16,26 @@ package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.web.internal.display.context.util.MockHttpServletRequestBuilder;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanPropertiesImpl;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsImpl;
+
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,17 +51,29 @@ import org.mockito.Mockito;
 public class DLEditFileEntryTypeDisplayContextTest {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws PortalException {
 		BeanPropertiesUtil beanPropertiesUtil = new BeanPropertiesUtil();
 
 		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
 
 		_ddm = Mockito.mock(DDM.class);
 
+		DDMForm ddmForm = _getRandomDDMForm();
+
+		Mockito.when(
+			_ddm.getDDMForm(Mockito.anyString())
+		).thenReturn(
+			ddmForm
+		);
+
 		_ddmStructureLocalService = Mockito.mock(
 			DDMStructureLocalService.class);
 
-		_language = Mockito.mock(Language.class);
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
+		_language = new LanguageImpl();
 
 		LanguageResources languageResources = new LanguageResources();
 
@@ -107,6 +127,50 @@ public class DLEditFileEntryTypeDisplayContextTest {
 
 		Assert.assertNotNull(ddmStructure);
 		Assert.assertNotNull(ddmStructure.getStructureId());
+	}
+
+	@Test
+	public void testGetTranslationManagerInfo() {
+		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
+			new DLEditFileEntryTypeDisplayContext(
+				_ddm, _ddmStructureLocalService, _language,
+				new MockPortletRenderRequest(
+					new MockHttpServletRequestBuilder().withAttribute(
+						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
+						_getRandomDDMStructure()
+					).withParameter(
+						"definition", RandomTestUtil.randomString()
+					).build()),
+				null);
+
+		DLEditFileEntryTypeDisplayContext.TranslationManagerInfo
+			translationManagerInfo =
+				dlEditFileEntryTypeDisplayContext.getTranslationManagerInfo();
+
+		Assert.assertEquals(
+			"pt_BR", translationManagerInfo.getDefaultLanguageId());
+		Assert.assertEquals(
+			"[\"pt_BR\"]", translationManagerInfo.getAvailableLocalesString());
+		Assert.assertEquals(
+			true, translationManagerInfo.isChangeableDefaultLanguage());
+	}
+
+	private DDMForm _getRandomDDMForm() {
+		DDMForm ddmForm = Mockito.mock(DDMForm.class);
+
+		Mockito.when(
+			ddmForm.getAvailableLocales()
+		).thenReturn(
+			Collections.singleton(LocaleUtil.BRAZIL)
+		);
+
+		Mockito.when(
+			ddmForm.getDefaultLocale()
+		).thenReturn(
+			LocaleUtil.BRAZIL
+		);
+
+		return ddmForm;
 	}
 
 	private DDMStructure _getRandomDDMStructure() {

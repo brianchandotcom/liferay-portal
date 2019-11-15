@@ -33,7 +33,7 @@ definition {
 
 	@ignore = "true"
 	test AssertSimilarResultsDisplayTemplate {
-		property test.name.skip.portal.instance = "Elasticsearch6EE#SimilarResultsDisplayTemplate";
+		property test.name.skip.portal.instance = "Elasticsearch7EE#AssertSimilarResultsDisplayTemplate";
 
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(

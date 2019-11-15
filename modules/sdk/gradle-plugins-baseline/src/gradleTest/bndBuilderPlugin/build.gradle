@@ -2,7 +2,7 @@ import aQute.bnd.osgi.Constants
 
 buildscript {
 	dependencies {
-		classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "3.3.0"
+		classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "4.3.0"
 	}
 
 	repositories {

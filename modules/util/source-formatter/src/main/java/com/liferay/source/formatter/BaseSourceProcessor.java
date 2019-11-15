@@ -482,21 +482,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return Collections.emptySet();
 		}
 
-		Checker checker = new Checker();
-
-		Class<?> clazz = getClass();
-
-		checker.setModuleClassLoader(clazz.getClassLoader());
-
-		SourceFormatterSuppressions sourceFormatterSuppressions =
-			getSourceFormatterSuppressions();
-
-		checker.addFilter(sourceFormatterSuppressions.getCheckstyleFilterSet());
-
-		checker.configure(configuration);
-
-		checker.addListener(checkstyleLogger);
-		checker.setCheckstyleLogger(checkstyleLogger);
+		Checker checker = new Checker(
+			configuration, checkstyleLogger, checkstyleLogger,
+			getSourceFormatterSuppressions());
 
 		checker.process(Arrays.asList(files));
 

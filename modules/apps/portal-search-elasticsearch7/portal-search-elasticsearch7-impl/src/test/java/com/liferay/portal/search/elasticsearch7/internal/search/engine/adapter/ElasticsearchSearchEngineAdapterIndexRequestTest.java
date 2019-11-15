@@ -383,7 +383,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 	}
 
 	@Test
-	public void testExecuteGetFieldMappingIndexRequest() {
+	public void testExecuteGetFieldMappingIndexRequest() throws Exception {
 		String mappingName = "testGetFieldMapping";
 		String mappingSource =
 			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}, " +
@@ -403,11 +403,14 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		Map<String, String> fieldMappings =
 			getFieldMappingIndexResponse.getFieldMappings();
 
-		String mappings = fieldMappings.get("test_request_index");
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			fieldMappings.get(_INDEX_NAME));
+
+		String fieldMapping = jsonObject.getString("otherTestField");
 
 		Assert.assertTrue(
-			mappings,
-			mappings.equals("{\"otherTestField\":[{\"type\":\"keyword\"}]}"));
+			fieldMapping,
+			fieldMapping.equals("{\"otherTestField\":{\"type\":\"keyword\"}}"));
 	}
 
 	@Test

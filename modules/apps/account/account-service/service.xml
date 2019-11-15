@@ -111,6 +111,7 @@
 		<!-- References -->
 
 		<reference entity="Role" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>AccountEntryDomains</exception>

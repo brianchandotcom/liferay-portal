@@ -80,8 +80,8 @@ public class AttributeOrderCheck extends BaseCheck {
 				(previousName.compareToIgnoreCase(name) > 0)) {
 
 				log(
-					exprDetailAST, _MSG_ATTRIBUTE_INCORRECT_ORDER,
-					previousName, name);
+					exprDetailAST, _MSG_ATTRIBUTE_INCORRECT_ORDER, previousName,
+					name);
 			}
 
 			previousName = name;

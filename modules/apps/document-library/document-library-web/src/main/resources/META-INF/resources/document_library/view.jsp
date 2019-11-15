@@ -315,7 +315,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		editTagsProps.put("componentId", liferayPortletResponse.getNamespace() + "EditTagsComponent");
 
-		long groupIds[] = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
+		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 
 		editTagsProps.put("groupIds", groupIds);
 

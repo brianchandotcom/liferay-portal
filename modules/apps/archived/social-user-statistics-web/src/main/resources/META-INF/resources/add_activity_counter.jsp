@@ -27,7 +27,7 @@ socialUserStatisticsPortletInstanceConfiguration = ConfigurationProviderUtil.get
 
 String displayActivityCounterName = "";
 
-String displayActivityCounterNames[] = socialUserStatisticsPortletInstanceConfiguration.displayActivityCounterName();
+String[] displayActivityCounterNames = socialUserStatisticsPortletInstanceConfiguration.displayActivityCounterName();
 
 if (index < displayActivityCounterNames.length) {
 	displayActivityCounterName = displayActivityCounterNames[index];

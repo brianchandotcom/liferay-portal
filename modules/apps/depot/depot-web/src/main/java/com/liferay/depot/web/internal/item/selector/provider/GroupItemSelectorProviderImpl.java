@@ -46,19 +46,6 @@ public class GroupItemSelectorProviderImpl
 	implements GroupItemSelectorProvider {
 
 	@Override
-	public int getGroupCount(long companyId, long groupId, String keywords) {
-		try {
-			return _depotEntryGroupRelService.getDepotEntryGroupRelsCount(
-				groupId);
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-
-			return 0;
-		}
-	}
-
-	@Override
 	public List<Group> getGroups(
 		long companyId, long groupId, String keywords, int start, int end) {
 
@@ -83,6 +70,19 @@ public class GroupItemSelectorProviderImpl
 			_log.error(pe, pe);
 
 			return Collections.emptyList();
+		}
+	}
+
+	@Override
+	public int getGroupsCount(long companyId, long groupId, String keywords) {
+		try {
+			return _depotEntryGroupRelService.getDepotEntryGroupRelsCount(
+				groupId);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+
+			return 0;
 		}
 	}
 

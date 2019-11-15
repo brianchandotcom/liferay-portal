@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class DepotGroupSelectorTagTest {
+public class GroupItemSelectorProviderTest {
 
 	@ClassRule
 	@Rule
@@ -60,19 +60,6 @@ public class DepotGroupSelectorTagTest {
 	}
 
 	@Test
-	public void testGetGroupCount() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry();
-
-		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			depotEntry.getDepotEntryId(), _group.getGroupId());
-
-		Assert.assertEquals(
-			1,
-			_groupItemSelectorProvider.getGroupCount(
-				_group.getCompanyId(), _group.getGroupId(), null));
-	}
-
-	@Test
 	public void testGetGroups() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry();
 
@@ -83,6 +70,19 @@ public class DepotGroupSelectorTagTest {
 			_group.getCompanyId(), _group.getGroupId(), null, 0, 20);
 
 		Assert.assertEquals(groups.toString(), 1, groups.size());
+	}
+
+	@Test
+	public void testGetGroupsCount() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		Assert.assertEquals(
+			1,
+			_groupItemSelectorProvider.getGroupsCount(
+				_group.getCompanyId(), _group.getGroupId(), null));
 	}
 
 	@Test

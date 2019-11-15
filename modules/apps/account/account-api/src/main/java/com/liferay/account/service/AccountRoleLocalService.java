@@ -113,6 +113,8 @@ public interface AccountRoleLocalService
 	public AccountRole deleteAccountRole(long accountRoleId)
 		throws PortalException;
 
+	public void deleteAccountRolesByCompanyId(long companyId);
+
 	/**
 	 * @throws PortalException
 	 */

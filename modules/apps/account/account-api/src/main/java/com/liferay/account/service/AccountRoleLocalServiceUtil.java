@@ -105,6 +105,10 @@ public class AccountRoleLocalServiceUtil {
 		return getService().deleteAccountRole(accountRoleId);
 	}
 
+	public static void deleteAccountRolesByCompanyId(long companyId) {
+		getService().deleteAccountRolesByCompanyId(companyId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

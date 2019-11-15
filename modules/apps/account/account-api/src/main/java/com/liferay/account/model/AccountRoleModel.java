@@ -16,6 +16,7 @@ package com.liferay.account.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface AccountRoleModel extends BaseModel<AccountRole>, MVCCModel {
+public interface AccountRoleModel
+	extends BaseModel<AccountRole>, MVCCModel, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -82,6 +84,22 @@ public interface AccountRoleModel extends BaseModel<AccountRole>, MVCCModel {
 	 * @param accountRoleId the account role ID of this account role
 	 */
 	public void setAccountRoleId(long accountRoleId);
+
+	/**
+	 * Returns the company ID of this account role.
+	 *
+	 * @return the company ID of this account role
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this account role.
+	 *
+	 * @param companyId the company ID of this account role
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the account entry ID of this account role.

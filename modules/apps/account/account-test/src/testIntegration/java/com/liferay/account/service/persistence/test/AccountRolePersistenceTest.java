@@ -124,6 +124,8 @@ public class AccountRolePersistenceTest {
 
 		newAccountRole.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAccountRole.setCompanyId(RandomTestUtil.nextLong());
+
 		newAccountRole.setAccountEntryId(RandomTestUtil.nextLong());
 
 		newAccountRole.setRoleId(RandomTestUtil.nextLong());
@@ -140,10 +142,19 @@ public class AccountRolePersistenceTest {
 			existingAccountRole.getAccountRoleId(),
 			newAccountRole.getAccountRoleId());
 		Assert.assertEquals(
+			existingAccountRole.getCompanyId(), newAccountRole.getCompanyId());
+		Assert.assertEquals(
 			existingAccountRole.getAccountEntryId(),
 			newAccountRole.getAccountEntryId());
 		Assert.assertEquals(
 			existingAccountRole.getRoleId(), newAccountRole.getRoleId());
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -192,7 +203,7 @@ public class AccountRolePersistenceTest {
 	protected OrderByComparator<AccountRole> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"AccountRole", "mvccVersion", true, "accountRoleId", true,
-			"accountEntryId", true, "roleId", true);
+			"companyId", true, "accountEntryId", true, "roleId", true);
 	}
 
 	@Test
@@ -425,6 +436,8 @@ public class AccountRolePersistenceTest {
 		AccountRole accountRole = _persistence.create(pk);
 
 		accountRole.setMvccVersion(RandomTestUtil.nextLong());
+
+		accountRole.setCompanyId(RandomTestUtil.nextLong());
 
 		accountRole.setAccountEntryId(RandomTestUtil.nextLong());
 

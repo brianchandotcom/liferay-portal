@@ -43,6 +43,7 @@ public class AccountRoleWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("accountRoleId", getAccountRoleId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("accountEntryId", getAccountEntryId());
 		attributes.put("roleId", getRoleId());
 
@@ -61,6 +62,12 @@ public class AccountRoleWrapper
 
 		if (accountRoleId != null) {
 			setAccountRoleId(accountRoleId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long accountEntryId = (Long)attributes.get("accountEntryId");
@@ -94,6 +101,16 @@ public class AccountRoleWrapper
 	@Override
 	public long getAccountRoleId() {
 		return model.getAccountRoleId();
+	}
+
+	/**
+	 * Returns the company ID of this account role.
+	 *
+	 * @return the company ID of this account role
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -166,6 +183,16 @@ public class AccountRoleWrapper
 	@Override
 	public void setAccountRoleId(long accountRoleId) {
 		model.setAccountRoleId(accountRoleId);
+	}
+
+	/**
+	 * Sets the company ID of this account role.
+	 *
+	 * @param companyId the company ID of this account role
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
 	}
 
 	/**

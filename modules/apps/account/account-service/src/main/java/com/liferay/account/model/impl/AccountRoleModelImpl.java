@@ -68,7 +68,8 @@ public class AccountRoleModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"accountRoleId", Types.BIGINT},
-		{"accountEntryId", Types.BIGINT}, {"roleId", Types.BIGINT}
+		{"companyId", Types.BIGINT}, {"accountEntryId", Types.BIGINT},
+		{"roleId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -77,12 +78,13 @@ public class AccountRoleModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountRoleId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("roleId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountRole (mvccVersion LONG default 0 not null,accountRoleId LONG not null primary key,accountEntryId LONG,roleId LONG)";
+		"create table AccountRole (mvccVersion LONG default 0 not null,accountRoleId LONG not null primary key,companyId LONG,accountEntryId LONG,roleId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table AccountRole";
 
@@ -100,9 +102,11 @@ public class AccountRoleModelImpl
 
 	public static final long ACCOUNTENTRYID_COLUMN_BITMASK = 1L;
 
-	public static final long ROLEID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long ACCOUNTROLEID_COLUMN_BITMASK = 4L;
+	public static final long ROLEID_COLUMN_BITMASK = 4L;
+
+	public static final long ACCOUNTROLEID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -127,6 +131,7 @@ public class AccountRoleModelImpl
 
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setAccountRoleId(soapModel.getAccountRoleId());
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setAccountEntryId(soapModel.getAccountEntryId());
 		model.setRoleId(soapModel.getRoleId());
 
@@ -289,6 +294,10 @@ public class AccountRoleModelImpl
 		attributeSetterBiConsumers.put(
 			"accountRoleId",
 			(BiConsumer<AccountRole, Long>)AccountRole::setAccountRoleId);
+		attributeGetterFunctions.put("companyId", AccountRole::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<AccountRole, Long>)AccountRole::setCompanyId);
 		attributeGetterFunctions.put(
 			"accountEntryId", AccountRole::getAccountEntryId);
 		attributeSetterBiConsumers.put(
@@ -324,6 +333,29 @@ public class AccountRoleModelImpl
 	@Override
 	public void setAccountRoleId(long accountRoleId) {
 		_accountRoleId = accountRoleId;
+	}
+
+	@JSON
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -379,7 +411,7 @@ public class AccountRoleModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, AccountRole.class.getName(), getPrimaryKey());
+			getCompanyId(), AccountRole.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -410,6 +442,7 @@ public class AccountRoleModelImpl
 
 		accountRoleImpl.setMvccVersion(getMvccVersion());
 		accountRoleImpl.setAccountRoleId(getAccountRoleId());
+		accountRoleImpl.setCompanyId(getCompanyId());
 		accountRoleImpl.setAccountEntryId(getAccountEntryId());
 		accountRoleImpl.setRoleId(getRoleId());
 
@@ -474,6 +507,11 @@ public class AccountRoleModelImpl
 	public void resetOriginalValues() {
 		AccountRoleModelImpl accountRoleModelImpl = this;
 
+		accountRoleModelImpl._originalCompanyId =
+			accountRoleModelImpl._companyId;
+
+		accountRoleModelImpl._setOriginalCompanyId = false;
+
 		accountRoleModelImpl._originalAccountEntryId =
 			accountRoleModelImpl._accountEntryId;
 
@@ -494,6 +532,8 @@ public class AccountRoleModelImpl
 		accountRoleCacheModel.mvccVersion = getMvccVersion();
 
 		accountRoleCacheModel.accountRoleId = getAccountRoleId();
+
+		accountRoleCacheModel.companyId = getCompanyId();
 
 		accountRoleCacheModel.accountEntryId = getAccountEntryId();
 
@@ -577,6 +617,9 @@ public class AccountRoleModelImpl
 
 	private long _mvccVersion;
 	private long _accountRoleId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _accountEntryId;
 	private long _originalAccountEntryId;
 	private boolean _setOriginalAccountEntryId;

@@ -105,6 +105,11 @@ public class AccountRoleLocalServiceWrapper
 		return _accountRoleLocalService.deleteAccountRole(accountRoleId);
 	}
 
+	@Override
+	public void deleteAccountRolesByCompanyId(long companyId) {
+		_accountRoleLocalService.deleteAccountRolesByCompanyId(companyId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

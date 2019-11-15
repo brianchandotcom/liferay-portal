@@ -75,12 +75,14 @@ public class AccountRoleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", accountRoleId=");
 		sb.append(accountRoleId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", accountEntryId=");
 		sb.append(accountEntryId);
 		sb.append(", roleId=");
@@ -96,6 +98,7 @@ public class AccountRoleCacheModel
 
 		accountRoleImpl.setMvccVersion(mvccVersion);
 		accountRoleImpl.setAccountRoleId(accountRoleId);
+		accountRoleImpl.setCompanyId(companyId);
 		accountRoleImpl.setAccountEntryId(accountEntryId);
 		accountRoleImpl.setRoleId(roleId);
 
@@ -110,6 +113,8 @@ public class AccountRoleCacheModel
 
 		accountRoleId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		accountEntryId = objectInput.readLong();
 
 		roleId = objectInput.readLong();
@@ -121,6 +126,8 @@ public class AccountRoleCacheModel
 
 		objectOutput.writeLong(accountRoleId);
 
+		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(accountEntryId);
 
 		objectOutput.writeLong(roleId);
@@ -128,6 +135,7 @@ public class AccountRoleCacheModel
 
 	public long mvccVersion;
 	public long accountRoleId;
+	public long companyId;
 	public long accountEntryId;
 	public long roleId;
 

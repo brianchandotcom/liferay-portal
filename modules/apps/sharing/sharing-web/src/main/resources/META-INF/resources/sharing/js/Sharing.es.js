@@ -90,6 +90,10 @@ const Sharing = ({
 					  });
 			})
 			.then(response => {
+				parent.Liferay.fire('sharing:changed', {
+					classNameId,
+					classPK
+				});
 				showNotification(response.successMessage);
 			})
 			.catch(error => {

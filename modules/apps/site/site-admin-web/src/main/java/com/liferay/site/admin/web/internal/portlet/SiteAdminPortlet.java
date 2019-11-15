@@ -624,25 +624,26 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		TreeMap<String, String> treeMap = new TreeMap<>();
 
-		String[] virtualHostNames = ParamUtil.getStringValues(
-			actionRequest, parameterPrefix + "Name[]");
-		String[] virtualHostLocales = ParamUtil.getStringValues(
-			actionRequest, parameterPrefix + "Locale[]");
+		String[] virtualHostnames = ParamUtil.getStringValues(
+			actionRequest, parameterPrefix + "name[]");
+		String[] virtualHostLanguageIds = ParamUtil.getStringValues(
+			actionRequest, parameterPrefix + "LanguageId[]");
 
-		for (int i = 0; i < virtualHostNames.length; i++) {
-			String virtualHostName = virtualHostNames[i];
+		for (int i = 0; i < virtualHostnames.length; i++) {
+			String virtualHostname = virtualHostnames[i];
 
-			String virtualHostLocale = virtualHostLocales[i];
+			String virtualHostLanguageId = virtualHostLanguageIds[i];
 
-			if (Validator.isNotNull(virtualHostLocale)) {
-				Locale locale = LocaleUtil.fromLanguageId(virtualHostLocale);
+			if (Validator.isNotNull(virtualHostLanguageId)) {
+				Locale locale = LocaleUtil.fromLanguageId(
+					virtualHostLanguageId);
 
 				if (!availableLocales.contains(locale)) {
-					throw new AvailableLocaleException(virtualHostLocale);
+					throw new AvailableLocaleException(virtualHostLanguageId);
 				}
 			}
 
-			treeMap.put(virtualHostName, virtualHostLocale);
+			treeMap.put(virtualHostname, virtualHostLanguageId);
 		}
 
 		return treeMap;

@@ -155,14 +155,14 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 	@Deprecated
 	@Override
 	public LayoutSet updateVirtualHost(
-			long groupId, boolean privateLayout, String virtualHost)
+			long groupId, boolean privateLayout, String virtualHostname)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
 		return layoutSetLocalService.updateVirtualHost(
-			groupId, privateLayout, virtualHost);
+			groupId, privateLayout, virtualHostname);
 	}
 
 	@Override

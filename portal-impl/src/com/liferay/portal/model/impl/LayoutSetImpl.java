@@ -298,14 +298,14 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 			_virtualHostnames = new TreeMap<>();
 		}
 		else {
-			TreeMap<String, String> virtualHostNames = new TreeMap<>();
+			TreeMap<String, String> virtualHostnames = new TreeMap<>();
 
 			for (VirtualHost virtualHost : virtualHosts) {
-				virtualHostNames.put(
+				virtualHostnames.put(
 					virtualHost.getHostname(), virtualHost.getLanguageId());
 			}
 
-			_virtualHostnames = virtualHostNames;
+			_virtualHostnames = virtualHostnames;
 		}
 
 		return _virtualHostnames;
@@ -364,7 +364,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	 */
 	@Deprecated
 	@Override
-	public void setVirtualHostname(final String virtualHostname) {
+	public void setVirtualHostname(String virtualHostname) {
 		_virtualHostnames = TreeMapBuilder.put(
 			virtualHostname, StringPool.BLANK
 		).build();

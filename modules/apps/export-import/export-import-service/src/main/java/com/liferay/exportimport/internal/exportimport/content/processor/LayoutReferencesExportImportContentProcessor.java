@@ -202,14 +202,14 @@ public class LayoutReferencesExportImportContentProcessor
 		Group group = _groupLocalService.getGroup(
 			portletDataContext.getScopeGroupId());
 
-		StringBundler hostNameSB = new StringBundler(2);
+		StringBundler hostnameSB = new StringBundler(2);
 
-		content = replaceExportHostname(group, content, hostNameSB);
+		content = replaceExportHostname(group, content, hostnameSB);
 
-		if (hostNameSB.index() > 0) {
-			hostNameSB.append(content);
+		if (hostnameSB.index() > 0) {
+			hostnameSB.append(content);
 
-			content = hostNameSB.toString();
+			content = hostnameSB.toString();
 		}
 
 		StringBuilder sb = new StringBuilder(content);

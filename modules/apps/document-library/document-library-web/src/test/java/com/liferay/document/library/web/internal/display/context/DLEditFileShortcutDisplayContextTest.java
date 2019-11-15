@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.web.internal.display.context.util.MockHttpServletRequestBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanPropertiesImpl;
@@ -34,9 +35,7 @@ import com.liferay.portlet.internal.PortalContextImpl;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -235,47 +234,6 @@ public class DLEditFileShortcutDisplayContextTest {
 		);
 
 		Assert.assertEquals("New", dlEditFileShortcutDisplayContext.getTitle());
-	}
-
-	public static class MockHttpServletRequestBuilder {
-
-		public MockHttpServletRequestBuilder() {
-		}
-
-		public MockHttpServletRequest build() {
-			MockHttpServletRequest mockHttpServletRequest =
-				new MockHttpServletRequest();
-
-			Set<Map.Entry<String, Object>> entries = _attributes.entrySet();
-
-			entries.forEach(
-				entry -> mockHttpServletRequest.setAttribute(
-					entry.getKey(), entry.getValue()));
-
-			mockHttpServletRequest.setParameters(_parameters);
-
-			return mockHttpServletRequest;
-		}
-
-		public MockHttpServletRequestBuilder withAttribute(
-			String key, Object value) {
-
-			_attributes.put(key, value);
-
-			return this;
-		}
-
-		public MockHttpServletRequestBuilder withParameter(
-			String key, String value) {
-
-			_parameters.put(key, value);
-
-			return this;
-		}
-
-		private HashMap<String, Object> _attributes = new HashMap<>();
-		private HashMap<String, String> _parameters = new HashMap<>();
-
 	}
 
 	private FileShortcut _addRandomFileShortcut() {

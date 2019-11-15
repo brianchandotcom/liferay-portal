@@ -6763,6 +6763,22 @@ ${update.properties}</echo>
 		<apply-portal-ext-properties />
 	</target>
 
+	<target name="prepare-ipaddress-update">
+		<get-testcase-property property.name="testcase.url" />
+
+		<if>
+			<contains string="${testcase.url}" substring=":1]" />
+			<then>
+				<replace
+					file="${app.server.bin.dir}/setenv${file.suffix.bat}"
+				>
+					<replacetoken><![CDATA[-Djava.net.preferIPv4Stack=true]]></replacetoken>
+					<replacevalue><![CDATA[-Djava.net.preferIPv4Stack=false]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+	</target>
+
 	<target name="prepare-lcs-gateway-bundle">
 		<ant antfile="build-dist.xml" inheritAll="false" target="unzip-tomcat">
 			<property name="app.server.parent.dir" value="${app.server.parent.dir}/gateway" />
@@ -11076,6 +11092,8 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 				<antcall target="prepare-system-ext-properties" />
 			</else>
 		</if>
+
+		<antcall target="prepare-ipaddress-update" />
 
 		<antcall target="check-inet-address" />
 

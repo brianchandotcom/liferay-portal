@@ -4,15 +4,7 @@ import org.gradle.util.VersionNumber
 
 buildscript {
 	dependencies {
-		String gradleBundlePluginVersion = "0.8.6"
-
-		VersionNumber gradleVersionNumber = VersionNumber.parse(gradle.gradleVersion)
-
-		if (gradleVersionNumber <= new VersionNumber(2, 13, 0, null)) {
-			gradleBundlePluginVersion = "0.8.4"
-		}
-
-		classpath group: "org.dm.gradle", name: "gradle-bundle-plugin", version: gradleBundlePluginVersion
+		classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "4.3.0"
 	}
 
 	repositories {
@@ -22,8 +14,8 @@ buildscript {
 	}
 }
 
+apply plugin: "biz.aQute.bnd.builder"
 apply plugin: "com.liferay.baseline"
-apply plugin: "org.dm.bundle"
 
 Properties bndProperties = _getBndProperties(project)
 
@@ -41,8 +33,8 @@ baselineConfiguration {
 	allowMavenLocal = true
 }
 
-bundle {
-	instruction "-include", "bnd.bnd"
+jar {
+	bnd "-include": "bnd.bnd"
 }
 
 repositories {

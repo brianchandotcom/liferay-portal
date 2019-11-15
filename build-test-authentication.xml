@@ -30,6 +30,8 @@
 				src="${app.server.deploy.dir}/cas-web.war"
 			/>
 
+			<delete dir="${app.server.deploy.dir}/cas-web.war" />
+
 			<replace
 				file="${app.server.deploy.dir}/cas-web/WEB-INF/deployerConfigContext.xml"
 			>
@@ -50,13 +52,6 @@
 				<replacetoken><![CDATA[<entry key="groupMembership" value="groupMembership" />]]></replacetoken>
 				<replacevalue><![CDATA[<entry key="groupMembership"><list><value>groupMembership</value></list></entry>]]></replacevalue>
 			</replace>
-
-			<zip
-				basedir="${app.server.deploy.dir}/cas-web"
-				destfile="${app.server.deploy.dir}/cas-web.war"
-			/>
-
-			<delete dir="${app.server.deploy.dir}/cas-web" />
 		</sequential>
 	</macrodef>
 

@@ -16,7 +16,7 @@ package com.liferay.batch.engine.internal.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.batch.engine.BatchEngineTaskField;
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
 import com.liferay.batch.engine.BatchEngineTaskMethod;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.blogs.model.BlogsEntry;
@@ -175,7 +175,7 @@ public class BaseBatchEngineTaskExecutorTest {
 		)
 		@Override
 		public void deleteBlogPosting(
-				@BatchEngineTaskField("id") Long blogPostingId)
+				@BatchEngineTaskFieldId("id") Long blogPostingId)
 			throws Exception {
 
 			_initContextFields();
@@ -235,7 +235,7 @@ public class BaseBatchEngineTaskExecutorTest {
 		)
 		@Override
 		public BlogPosting putBlogPosting(
-				@BatchEngineTaskField("id") Long blogPostingId,
+				@BatchEngineTaskFieldId("id") Long blogPostingId,
 				BlogPosting blogPosting)
 			throws Exception {
 

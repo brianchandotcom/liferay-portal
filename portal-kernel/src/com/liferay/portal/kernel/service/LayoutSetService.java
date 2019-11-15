@@ -117,7 +117,7 @@ public interface LayoutSetService extends BaseService {
 	 */
 	@Deprecated
 	public LayoutSet updateVirtualHost(
-			long groupId, boolean privateLayout, String virtualHost)
+			long groupId, boolean privateLayout, String virtualHostname)
 		throws PortalException;
 
 	public LayoutSet updateVirtualHosts(

@@ -326,10 +326,10 @@ public class VirtualHostLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.VirtualHost>
 		updateVirtualHosts(
 			long companyId, long layoutSetId,
-			java.util.TreeMap<String, String> hostnameMap) {
+			java.util.TreeMap<String, String> hostnames) {
 
 		return getService().updateVirtualHosts(
-			companyId, layoutSetId, hostnameMap);
+			companyId, layoutSetId, hostnames);
 	}
 
 	public static VirtualHostLocalService getService() {

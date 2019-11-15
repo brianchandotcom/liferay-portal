@@ -311,7 +311,7 @@ public class LayoutSetServiceHttp {
 
 	public static com.liferay.portal.kernel.model.LayoutSet updateVirtualHost(
 			HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
-			String virtualHost)
+			String virtualHostname)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -320,7 +320,7 @@ public class LayoutSetServiceHttp {
 				_updateVirtualHostParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, privateLayout, virtualHost);
+				methodKey, groupId, privateLayout, virtualHostname);
 
 			Object returnObj = null;
 

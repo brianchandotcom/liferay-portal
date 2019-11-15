@@ -131,11 +131,12 @@ public class LayoutSetServiceWrapper
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSet updateVirtualHost(
-			long groupId, boolean privateLayout, java.lang.String virtualHost)
+			long groupId, boolean privateLayout,
+			java.lang.String virtualHostname)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutSetService.updateVirtualHost(
-			groupId, privateLayout, virtualHost);
+			groupId, privateLayout, virtualHostname);
 	}
 
 	@Override

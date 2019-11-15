@@ -16,6 +16,7 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -72,13 +73,17 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 				emailAddress, LocaleUtil.fromLanguageId(languageId), firstName,
 				middleName, lastName, prefixId, suffixId);
 		}
-		catch (Exception e) {
-			if (e instanceof UserEmailAddressException ||
-				e instanceof UserScreenNameException) {
+		catch (PortalException pe) {
+			if (pe instanceof UserEmailAddressException ||
+				pe instanceof UserScreenNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass(), e);
+				SessionErrors.add(actionRequest, pe.getClass(), pe);
+
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "/account_admin/add_account_user");
+			}
+			else {
+				throw pe;
 			}
 		}
 	}

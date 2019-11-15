@@ -83,29 +83,33 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					e.preventDefault();
 					e.stopPropagation();
 
-					const container = this.one(
-						'.item-selector-preview-container'
-					);
-
-					const data = {
-						container,
-						currentIndex: index,
-						editItemURL: this.editItemURL,
-						handleSelectedItem: this._onItemSelected.bind(this),
-						headerTitle: this.closeCaption,
-						items,
-						uploadItemReturnType: this.uploadItemReturnType,
-						uploadItemURL: this.uploadItemURL
-					};
-
-					render(
-						props => <ItemSelectorPreview {...props} />,
-						data,
-						container
-					);
+					this.openItemSelectorPreview(items, index);
 				});
 			});
 		}
+	}
+
+	openItemSelectorPreview(items, index) {
+		const container = this.one(
+			'.item-selector-preview-container'
+		);
+
+		const data = {
+			container,
+			currentIndex: index,
+			editItemURL: this.editItemURL,
+			handleSelectedItem: this._onItemSelected.bind(this),
+			headerTitle: this.closeCaption,
+			items,
+			uploadItemReturnType: this.uploadItemReturnType,
+			uploadItemURL: this.uploadItemURL
+		};
+
+		render(
+			props => <ItemSelectorPreview {...props} />,
+			data,
+			container
+		);
 	}
 
 	/**

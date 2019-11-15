@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.multihost.locale.test;
+package com.liferay.portal.servlet.filters.absoluteredirects.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
@@ -54,7 +54,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Noemi Zamarripa
  */
 @RunWith(Arquillian.class)
-public class MultiVirtualHostLocaleFilterTest {
+public class VirtualHostAbsoluteRedirectsFilterTest {
 
 	@ClassRule
 	@Rule

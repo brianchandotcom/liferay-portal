@@ -15,7 +15,8 @@ export default function(props) {
 	const itemSelector = new ItemSelectorRepositoryEntryBrowser({...props});
 
 	itemSelector.on('selectedItem', event => {
-		debugger;
 		console.log(event);
+		Liferay.Util.getOpener().Liferay.fire(props.eventName, event);
+		Liferay.Util.getOpener().Liferay.fire(props.eventName + 'AddItem', event);
 	});
 }

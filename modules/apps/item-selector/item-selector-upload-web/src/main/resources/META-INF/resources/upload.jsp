@@ -36,6 +36,8 @@ String[] extensions = itemSelectorUploadViewDisplayContext.getExtensions();
 Map<String, Object> context = new HashMap<>();
 
 context.put("closeCaption", itemSelectorUploadViewDisplayContext.getTitle(locale));
+context.put("editItemURL", uploadURL.toString()); //TODO hacerlo opcional en Preview
+context.put("eventName", itemSelectorUploadViewDisplayContext.getItemSelectedEventName());
 context.put("maxFileSize", itemSelectorUploadViewDisplayContext.getMaxFileSize());
 context.put("rootNode", "#itemSelectorUploadContainer");
 context.put("uploadItemReturnType", HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName()));
@@ -63,6 +65,8 @@ context.put("validExtensions", ArrayUtil.isEmpty(extensions) ? "*" : StringUtil.
 	<liferay-ui:drop-here-info
 		message="drop-files-here"
 	/>
+
+	<div class="item-selector-preview-container"></div>
 </div>
 
 <liferay-frontend:component

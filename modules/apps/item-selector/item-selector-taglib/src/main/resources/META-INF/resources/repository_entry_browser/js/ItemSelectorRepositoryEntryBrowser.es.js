@@ -155,14 +155,16 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					this._uploadItemViewer.hide();
 				}),
 				itemSelectorUploader.after('itemUploadComplete', itemData => {
-					const updatedImage = this._uploadItemViewer.updateCurrentImage(
+					//TODO updateCurrentImage
+					console.log(itemData);
+					/*const updatedImage = this._uploadItemViewer.updateCurrentImage(
 						itemData
 					);
 
 					this._onItemSelected({
 						returntype: this.uploadItemReturnType,
 						value: updatedImage.getData('value')
-					});
+					});*/
 				}),
 				itemSelectorUploader.after(
 					'itemUploadError',
@@ -449,25 +451,15 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				'/file_system/large/default.png';
 		}
 
-		AUI().use('aui-node', A => {
-			const linkNode = A.Node.create(
-				uploadItemLinkTpl({
-					preview,
-					returnType: this.uploadItemReturnType,
-					title: file.name,
-					value: preview
-				})
-			);
+		const item = {
+			metadata: JSON.stringify(this._getUploadFileMetadata(file)),
+			returnType: this.uploadItemReturnType,
+			title: file.name,
+			url: preview,
+			value: preview
+		};
 
-			linkNode.setData(
-				'metadata',
-				JSON.stringify(this._getUploadFileMetadata(file))
-			);
-
-			this._uploadItemViewer.set('links', new A.NodeList(linkNode));
-
-			this._uploadItemViewer.show();
-		});
+		this.openItemSelectorPreview([item], 0);
 
 		this._itemSelectorUploader.startUpload(file, this.uploadItemURL);
 	}

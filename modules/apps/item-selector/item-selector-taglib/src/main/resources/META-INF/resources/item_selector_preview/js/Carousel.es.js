@@ -40,7 +40,7 @@ const InfoPanel = metadata => {
 		return (
 			<ClayTabs.Item
 				active={activeTabKeyValue == index}
-				key={`tabItem-${index}`}
+				key={group.title}
 				onClick={() => setActiveTabKeyValue(index)}
 			>
 				{group.title}

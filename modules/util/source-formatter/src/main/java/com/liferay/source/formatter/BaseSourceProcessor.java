@@ -491,6 +491,24 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return checker.getSourceFormatterMessages();
 	}
 
+	protected synchronized Set<SourceFormatterMessage> processCheckstyle(
+			Configuration configuration, CheckstyleLogger checkstyleLogger,
+			List<String[]> fileContents)
+		throws CheckstyleException, IOException {
+
+		if (fileContents.isEmpty()) {
+			return Collections.emptySet();
+		}
+
+		Checker checker = new Checker(
+			configuration, checkstyleLogger, checkstyleLogger,
+			getSourceFormatterSuppressions());
+
+		checker.processFileContents(fileContents);
+
+		return checker.getSourceFormatterMessages();
+	}
+
 	protected File processFormattedFile(
 			File file, String fileName, String content, String newContent,
 			Set<String> modifiedMessages)

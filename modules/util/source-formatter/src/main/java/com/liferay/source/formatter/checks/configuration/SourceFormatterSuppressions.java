@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.checks.configuration;
 
-import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -72,13 +71,6 @@ public class SourceFormatterSuppressions {
 
 			for (String fileNameRegex : fileNameRegexes) {
 				if (absolutePath.matches(".*" + fileNameRegex)) {
-					return true;
-				}
-
-				String fileName = AlloyMVCCheckstyleUtil.getSourceFileName(
-					absolutePath);
-
-				if (fileName.matches(".*" + fileNameRegex)) {
 					return true;
 				}
 			}

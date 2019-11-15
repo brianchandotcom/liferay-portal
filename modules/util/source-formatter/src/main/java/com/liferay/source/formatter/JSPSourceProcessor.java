@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
-import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleLogger;
-import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleUtil;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
+import com.liferay.source.formatter.checkstyle.util.JSPCheckstyleUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
@@ -147,11 +147,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected void preFormat() throws CheckstyleException {
 		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
-		_checkstyleLogger = new AlloyMVCCheckstyleLogger(
+		_checkstyleLogger = new CheckstyleLogger(
 			sourceFormatterArgs.getBaseDirName());
 		_checkstyleConfiguration = CheckstyleUtil.getConfiguration(
-			"checkstyle-alloy-mvc.xml", getPropertiesMap(),
-			sourceFormatterArgs);
+			"checkstyle-jsp.xml", getPropertiesMap(), sourceFormatterArgs);
 	}
 
 	private Map<String, String> _getDeletedContentsMap(String[] excludes)
@@ -213,32 +212,30 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private void _processCheckstyle() throws CheckstyleException, IOException {
-		if (_ungeneratedFiles.isEmpty()) {
+		if (_ungeneratedFileContents.isEmpty()) {
 			return;
 		}
 
 		_sourceFormatterMessages.addAll(
 			processCheckstyle(
 				_checkstyleConfiguration, _checkstyleLogger,
-				_ungeneratedFiles.toArray(new File[0])));
+				_ungeneratedFileContents));
 
-		for (File ungeneratedFile : _ungeneratedFiles) {
-			Files.deleteIfExists(ungeneratedFile.toPath());
-		}
-
-		_ungeneratedFiles.clear();
+		_ungeneratedFileContents.clear();
 	}
 
 	private synchronized void _processCheckstyle(
 			String absolutePath, String content)
 		throws CheckstyleException, IOException {
 
-		File file = AlloyMVCCheckstyleUtil.getJavaFile(absolutePath, content);
+		String javaContent = JSPCheckstyleUtil.getJavaContent(
+			absolutePath, content);
 
-		if (file != null) {
-			_ungeneratedFiles.add(file);
+		if (javaContent != null) {
+			_ungeneratedFileContents.add(
+				new String[] {absolutePath, javaContent});
 
-			if (_ungeneratedFiles.size() == CheckstyleUtil.BATCH_SIZE) {
+			if (_ungeneratedFileContents.size() == CheckstyleUtil.BATCH_SIZE) {
 				_processCheckstyle();
 			}
 		}
@@ -249,9 +246,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	};
 
 	private Configuration _checkstyleConfiguration;
-	private AlloyMVCCheckstyleLogger _checkstyleLogger;
+	private CheckstyleLogger _checkstyleLogger;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new TreeSet<>();
-	private final List<File> _ungeneratedFiles = new ArrayList<>();
+	private final List<String[]> _ungeneratedFileContents = new ArrayList<>();
 
 }

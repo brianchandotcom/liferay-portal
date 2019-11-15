@@ -15,13 +15,12 @@
 package com.liferay.source.formatter.checkstyle;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 
 import com.puppycrawl.tools.checkstyle.JavaParser;
 import com.puppycrawl.tools.checkstyle.ModuleFactory;
@@ -131,22 +130,6 @@ public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 		_fireAuditStarted();
 	}
 
-	private static List<String> _getLines(String s) throws IOException {
-		List<String> lines = new ArrayList<>();
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(s))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lines.add(line);
-			}
-		}
-
-		return lines;
-	}
-
 	private void _fireAuditStarted() {
 		_auditListener.auditStarted(new AuditEvent(this));
 	}
@@ -205,9 +188,8 @@ public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 			String fileName, String content, List<AbstractCheck> checks)
 		throws CheckstyleException, IOException {
 
-		List<String> lines = _getLines(content);
-
-		FileText fileText = new FileText(new File(fileName), lines);
+		FileText fileText = new FileText(
+			new File(fileName), CheckstyleUtil.getLines(content));
 
 		FileContents fileContents = new FileContents(fileText);
 

@@ -128,11 +128,11 @@ public class LayoutSetServiceUtil {
 	 */
 	@Deprecated
 	public static com.liferay.portal.kernel.model.LayoutSet updateVirtualHost(
-			long groupId, boolean privateLayout, String virtualHost)
+			long groupId, boolean privateLayout, String virtualHostname)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateVirtualHost(
-			groupId, privateLayout, virtualHost);
+			groupId, privateLayout, virtualHostname);
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet updateVirtualHosts(

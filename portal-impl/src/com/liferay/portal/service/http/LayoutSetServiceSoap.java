@@ -159,13 +159,13 @@ public class LayoutSetServiceSoap {
 	@Deprecated
 	public static com.liferay.portal.kernel.model.LayoutSetSoap
 			updateVirtualHost(
-				long groupId, boolean privateLayout, String virtualHost)
+				long groupId, boolean privateLayout, String virtualHostname)
 		throws RemoteException {
 
 		try {
 			com.liferay.portal.kernel.model.LayoutSet returnValue =
 				LayoutSetServiceUtil.updateVirtualHost(
-					groupId, privateLayout, virtualHost);
+					groupId, privateLayout, virtualHostname);
 
 			return com.liferay.portal.kernel.model.LayoutSetSoap.toSoapModel(
 				returnValue);

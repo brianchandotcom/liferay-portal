@@ -347,10 +347,10 @@ public class VirtualHostLocalServiceWrapper
 	public java.util.List<com.liferay.portal.kernel.model.VirtualHost>
 		updateVirtualHosts(
 			long companyId, long layoutSetId,
-			java.util.TreeMap<java.lang.String, java.lang.String> hostnameMap) {
+			java.util.TreeMap<java.lang.String, java.lang.String> hostnames) {
 
 		return _virtualHostLocalService.updateVirtualHosts(
-			companyId, layoutSetId, hostnameMap);
+			companyId, layoutSetId, hostnames);
 	}
 
 	@Override

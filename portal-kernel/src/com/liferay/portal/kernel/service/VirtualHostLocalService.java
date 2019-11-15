@@ -270,6 +270,6 @@ public interface VirtualHostLocalService
 	public VirtualHost updateVirtualHost(VirtualHost virtualHost);
 
 	public List<VirtualHost> updateVirtualHosts(
-		long companyId, long layoutSetId, TreeMap<String, String> hostnameMap);
+		long companyId, long layoutSetId, TreeMap<String, String> hostnames);
 
 }

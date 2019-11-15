@@ -64,7 +64,8 @@ public class DLViewFileEntryTypesDisplayContext {
 			PortletURL creationURL = renderResponse.createRenderURL();
 
 			creationURL.setParameter(
-				"mvcPath", "/document_library/edit_file_entry_type.jsp");
+				"mvcRenderCommandName",
+				"/document_library/edit_file_entry_type");
 			creationURL.setParameter(
 				"redirect", PortalUtil.getCurrentURL(request));
 

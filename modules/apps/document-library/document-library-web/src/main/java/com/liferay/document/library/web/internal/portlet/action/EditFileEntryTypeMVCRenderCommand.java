@@ -67,6 +67,16 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
+			renderRequest.setAttribute(
+				DLWebKeys.
+					DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT,
+				new DLEditFileEntryTypeDisplayContext(
+					_ddm, _ddmStorageLinkLocalService,
+					_ddmStructureLocalService, _language,
+					_portal.getLiferayPortletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse)) {
+				});
+
 			long fileEntryTypeId = ParamUtil.getLong(
 				renderRequest, "fileEntryTypeId");
 
@@ -90,16 +100,6 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
 				_getDDMStructure(dlFileEntryType));
-
-			renderRequest.setAttribute(
-				DLWebKeys.
-					DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT,
-				new DLEditFileEntryTypeDisplayContext(
-					_ddm, _ddmStorageLinkLocalService,
-					_ddmStructureLocalService, _language,
-					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)) {
-				});
 
 			return "/document_library/edit_file_entry_type.jsp";
 		}

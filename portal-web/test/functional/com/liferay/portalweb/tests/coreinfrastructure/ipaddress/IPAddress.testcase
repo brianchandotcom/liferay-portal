@@ -1,0 +1,38 @@
+@component-name = "portal-ipaddresses"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "IP Addresses";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test RunPortalOnIPV6 {
+		property custom.properties = "redirect.url.ips.allowed=127.0.0.1,SERVER_IP,0:0:0:0:0:0:0:1${line.separator}tunnel.servlet.hosts.allowed=[0:0:0:0:0:0:0:1]";
+		property testcase.url = "http://[0:0:0:0:0:0:0:1]:8080";
+
+		AssertLocation(value1 = "http://[::1]:8080/web/guest");
+
+		User.firstLoginPG();
+
+		AssertLocation(value1 = "http://[::1]:8080/web/guest/home");
+
+		Smoke.runSmoke();
+
+		User.logoutPG();
+
+		AssertLocation(value1 = "http://[::1]:8080/web/guest/home");
+	}
+
+}

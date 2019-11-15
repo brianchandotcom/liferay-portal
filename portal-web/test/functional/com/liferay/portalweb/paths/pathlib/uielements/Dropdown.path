@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CAPTION</td>
+	<td>//div[contains(@class,'caption') and normalize-space()='${key_caption}']</td>
+	<td></td>
+</tr>	
+<tr>
 	<td>EMPTY_MESSAGE_DROPDOWN</td>
 	<td>//div[contains(@class,'empty-result-message')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

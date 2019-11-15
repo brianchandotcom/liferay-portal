@@ -309,6 +309,8 @@ const ManageCollaborators = ({
 			openToastParams.type = 'danger';
 		}
 
+		closeDialog();
+
 		parentOpenToast(openToastParams);
 	};
 

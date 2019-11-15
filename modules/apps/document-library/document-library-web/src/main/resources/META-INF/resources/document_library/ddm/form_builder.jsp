@@ -19,8 +19,6 @@
 <%
 DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFileEntryTypeDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT);
 
-DDMStructure ddmStructure = dlEditFileEntryTypeDisplayContext.getDDMStructure();
-
 String fieldsJSONArrayString = dlEditFileEntryTypeDisplayContext.getFieldsJSONArrayString();
 
 String scopeAvailableFields = dlEditFileEntryTypeDisplayContext.getAvailableFields();
@@ -229,7 +227,7 @@ String availableLocalesString = translationManagerInfo.getAvailableLocalesString
 		availableFields: availableFields,
 		boundingBox: '#<portlet:namespace />formBuilder',
 		enableEditing: false,
-		fieldNameEditionDisabled: <%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(ddmStructure.getStructureId()) > 0) %>,
+		fieldNameEditionDisabled: <%= dlEditFileEntryTypeDisplayContext.getFieldNameEditionDisabled() %>,
 
 		<c:if test="<%= Validator.isNotNull(fieldsJSONArrayString) %>">
 			fields: <%= fieldsJSONArrayString %>,

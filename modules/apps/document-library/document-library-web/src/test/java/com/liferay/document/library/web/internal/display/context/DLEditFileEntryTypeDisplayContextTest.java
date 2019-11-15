@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.web.internal.display.context.util.MockHttpServletRequestBuilder;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.petra.string.StringPool;
@@ -66,6 +67,9 @@ public class DLEditFileEntryTypeDisplayContextTest {
 			ddmForm
 		);
 
+		_ddmStorageLinkLocalService = Mockito.mock(
+			DDMStorageLinkLocalService.class);
+
 		_ddmStructureLocalService = Mockito.mock(
 			DDMStructureLocalService.class);
 
@@ -86,7 +90,8 @@ public class DLEditFileEntryTypeDisplayContextTest {
 	public void testGetAvailableFields() {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
-				_ddm, _ddmStructureLocalService, _language, null, null);
+				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
+				_language, null, null);
 
 		Assert.assertEquals(
 			"Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE",
@@ -97,7 +102,8 @@ public class DLEditFileEntryTypeDisplayContextTest {
 	public void testGetFieldsJSONArrayString() {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
-				_ddm, _ddmStructureLocalService, _language,
+				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
+				_language,
 				new MockPortletRenderRequest(
 					new MockHttpServletRequestBuilder().withAttribute(
 						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
@@ -111,29 +117,11 @@ public class DLEditFileEntryTypeDisplayContextTest {
 	}
 
 	@Test
-	public void testGetStructure() {
-		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
-			new DLEditFileEntryTypeDisplayContext(
-				_ddm, _ddmStructureLocalService, _language,
-				new MockPortletRenderRequest(
-					new MockHttpServletRequestBuilder().withAttribute(
-						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
-						_getRandomDDMStructure()
-					).build()),
-				null);
-
-		DDMStructure ddmStructure =
-			dlEditFileEntryTypeDisplayContext.getDDMStructure();
-
-		Assert.assertNotNull(ddmStructure);
-		Assert.assertNotNull(ddmStructure.getStructureId());
-	}
-
-	@Test
 	public void testGetTranslationManagerInfo() {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
-				_ddm, _ddmStructureLocalService, _language,
+				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
+				_language,
 				new MockPortletRenderRequest(
 					new MockHttpServletRequestBuilder().withAttribute(
 						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
@@ -194,6 +182,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 	}
 
 	private DDM _ddm;
+	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private Language _language;
 

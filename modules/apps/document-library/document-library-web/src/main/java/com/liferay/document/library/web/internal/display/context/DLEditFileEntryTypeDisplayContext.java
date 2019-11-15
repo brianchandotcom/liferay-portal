@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.web.internal.dynamic.data.mapping.util.DLDDMDisplay;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
@@ -49,11 +50,13 @@ import java.util.stream.Stream;
 public class DLEditFileEntryTypeDisplayContext {
 
 	public DLEditFileEntryTypeDisplayContext(
-		DDM ddm, DDMStructureLocalService ddmStructureLocalService,
-		Language language, LiferayPortletRequest liferayPortletRequest,
+		DDM ddm, DDMStorageLinkLocalService ddmStorageLinkLocalService,
+		DDMStructureLocalService ddmStructureLocalService, Language language,
+		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_ddm = ddm;
+		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_language = language;
 		_liferayPortletRequest = liferayPortletRequest;
@@ -66,13 +69,26 @@ public class DLEditFileEntryTypeDisplayContext {
 		return ddmDisplay.getAvailableFields();
 	}
 
-	public DDMStructure getDDMStructure() {
-		return (DDMStructure)_liferayPortletRequest.getAttribute(
-			WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
+	public boolean getFieldNameEditionDisabled() {
+		DDMStructure ddmStructure = _getDDMStructure();
+
+		if (ddmStructure == null) {
+			return false;
+		}
+
+		int structureStorageLinksCount =
+			_ddmStorageLinkLocalService.getStructureStorageLinksCount(
+				ddmStructure.getStructureId());
+
+		if ((ddmStructure != null) && (structureStorageLinksCount > 0)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getFieldsJSONArrayString() {
-		DDMStructure ddmStructure = getDDMStructure();
+		DDMStructure ddmStructure = _getDDMStructure();
 
 		long ddmStructureId = BeanParamUtil.getLong(
 			ddmStructure, _liferayPortletRequest, "structureId");
@@ -114,7 +130,7 @@ public class DLEditFileEntryTypeDisplayContext {
 
 	public TranslationManagerInfo getTranslationManagerInfo() {
 		String definition = BeanParamUtil.getString(
-			getDDMStructure(), _liferayPortletRequest, "definition");
+			_getDDMStructure(), _liferayPortletRequest, "definition");
 
 		if (Validator.isNotNull(definition)) {
 			try {
@@ -181,10 +197,16 @@ public class DLEditFileEntryTypeDisplayContext {
 
 	}
 
+	private DDMStructure _getDDMStructure() {
+		return (DDMStructure)_liferayPortletRequest.getAttribute(
+			WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLEditFileEntryTypeDisplayContext.class);
 
 	private final DDM _ddm;
+	private final DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;

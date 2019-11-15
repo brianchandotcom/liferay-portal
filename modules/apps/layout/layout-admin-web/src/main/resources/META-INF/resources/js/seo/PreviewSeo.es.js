@@ -12,6 +12,7 @@
  * details.
  */
 
+import {useIsMounted} from 'frontend-js-react-web';
 import {PropTypes} from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -75,8 +76,12 @@ const PreviewSeoContainer = ({
 	const [url, setUrl] = useState('');
 	const [imgUrl, setImgUrl] = useState('');
 
+	const isMounted = useIsMounted();
+
 	useEffect(() => {
 		const setPreviewState = ({defaultValue = '', type, value}) => {
+			if (!isMounted()) return;
+
 			if (value === '' && defaultValue) {
 				value = defaultValue;
 			}
@@ -144,7 +149,7 @@ const PreviewSeoContainer = ({
 					node && node.removeEventListener('input', listener)
 			);
 		};
-	}, [portletNamespace, targets]);
+	}, [isMounted, portletNamespace, targets]);
 
 	return (
 		<PreviewSeo

@@ -19,8 +19,6 @@
 <%
 DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFileEntryTypeDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT);
 
-DDMDisplay ddmDisplay = new DLDDMDisplay();
-
 String portletResourceNamespace = renderResponse.getNamespace();
 
 DDMStructure ddmStructure = (DDMStructure)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
@@ -33,7 +31,7 @@ JSONArray fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(DDMStructureLocalS
 
 String fieldsJSONArrayString = (fieldsJSONArray != null) ? fieldsJSONArray.toString() : StringPool.BLANK;
 
-String scopeAvailableFields = ddmDisplay.getAvailableFields();
+String scopeAvailableFields = dlEditFileEntryTypeDisplayContext.getAvailableFields();
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 %>

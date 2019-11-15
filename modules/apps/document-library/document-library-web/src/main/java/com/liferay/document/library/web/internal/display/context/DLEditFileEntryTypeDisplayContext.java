@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.document.library.web.internal.dynamic.data.mapping.util.DLDDMDisplay;
+import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
@@ -28,6 +30,12 @@ public class DLEditFileEntryTypeDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+	}
+
+	public String getAvailableFields() {
+		DDMDisplay ddmDisplay = new DLDDMDisplay();
+
+		return ddmDisplay.getAvailableFields();
 	}
 
 	private final LiferayPortletRequest _liferayPortletRequest;

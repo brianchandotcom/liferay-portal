@@ -92,7 +92,8 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 					DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT,
 				new DLEditFileEntryTypeDisplayContext(
 					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)));
+					_portal.getLiferayPortletResponse(renderResponse)) {
+				});
 
 			return "/document_library/edit_file_entry_type.jsp";
 		}

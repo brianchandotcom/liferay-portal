@@ -3,6 +3,7 @@
 .preview-seo {
 	$component: &;
 
+	background-color: $white;
 	border: 1px solid $secondary-l3;
 	border-radius: 0.25rem;
 	font-size: 0.875rem;
@@ -21,7 +22,7 @@
 	&-serp {
 		box-sizing: content-box;
 		font-family: arial, sans-serif;
-		width: 600px;
+		max-width: 600px;
 
 		#{$component}-description {
 			color: #545454;
@@ -40,7 +41,7 @@
 	}
 
 	&-og {
-		width: 535px;
+		max-width: 535px;
 
 		#{$component}-image {
 			margin-bottom: 0.75rem;

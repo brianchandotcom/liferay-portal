@@ -50,7 +50,7 @@ SiteSEOEntry siteSEOEntry = siteAdminDisplayContext.getSelSiteSEOEntry(groupId);
 
 	<div class="input-group">
 		<div class="input-group-item">
-			<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="" wrapperCssClass="w-100" />
+			<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="<%= siteAdminDisplayContext.getOpenGraphImageURL(groupId) %>" wrapperCssClass="w-100" />
 		</div>
 
 		<div class="input-group-item input-group-item-shrink">
@@ -67,11 +67,50 @@ SiteSEOEntry siteSEOEntry = siteAdminDisplayContext.getSelSiteSEOEntry(groupId);
 	<label><liferay-ui:message key="preview" /></label>
 </div>
 
-<aui:script>
+<portlet:actionURL name="/site/upload_open_graph_image" var="uploadOpenGraphImageURL" />
+
+<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 	var openGraphImageButton = document.getElementById(
 		'<portlet:namespace />openGraphImageButton'
 	);
 
+	if (openGraphImageButton) {
+		var itemSelectorDialog = new ItemSelectorDialog.default({
+			buttonAddLabel: '<liferay-ui:message key="done" />',
+			eventName: '<portlet:namespace />openGraphImageSelectedItem',
+			title: '<liferay-ui:message key="open-graph-image" />',
+			url: '<%= siteAdminDisplayContext.getItemSelectorURL() %>'
+		});
+
+		itemSelectorDialog.on('selectedItemChange', function(event) {
+			var selectedItem = event.selectedItem;
+
+			if (selectedItem) {
+				var itemValue = JSON.parse(selectedItem.value);
+
+				var openGraphImageFileEntryId = document.getElementById(
+					'<portlet:namespace />openGraphImageFileEntryId'
+				);
+
+				if (openGraphImageFileEntryId) {
+					openGraphImageFileEntryId.value = itemValue.fileEntryId;
+				}
+
+				var openGraphImageURL = document.getElementById(
+					'<portlet:namespace />openGraphImageURL'
+				);
+
+				if (openGraphImageURL) {
+					openGraphImageURL.value = itemValue.url;
+				}
+			}
+		});
+
+		openGraphImageButton.addEventListener('click', function(event) {
+			event.preventDefault();
+			itemSelectorDialog.open();
+		});
+	}
 	var openSiteGraphEnabledCheck = document.getElementById(
 		'<portlet:namespace />openSiteGraphEnabled'
 	);

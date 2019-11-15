@@ -97,17 +97,17 @@ public class GroupItemSelectorTrackerUtilTest {
 		implements GroupItemSelectorProvider {
 
 		@Override
-		public int getGroupCount(
-			long companyId, long groupId, String keywords) {
-
-			return 3;
-		}
-
-		@Override
 		public List<Group> getGroups(
 			long companyId, long groupId, String keywords, int start, int end) {
 
 			return Collections.singletonList(Mockito.mock(Group.class));
+		}
+
+		@Override
+		public int getGroupsCount(
+			long companyId, long groupId, String keywords) {
+
+			return 3;
 		}
 
 		@Override

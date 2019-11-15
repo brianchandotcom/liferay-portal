@@ -47,17 +47,17 @@ public class GroupItemSelectorProviderImpl
 	implements GroupItemSelectorProvider {
 
 	@Override
-	public int getGroupCount(long companyId, long groupId, String keywords) {
-		List<Group> groups = _searchGroups(companyId, keywords);
-
-		return groups.size();
-	}
-
-	@Override
 	public List<Group> getGroups(
 		long companyId, long groupId, String keywords, int start, int end) {
 
 		return ListUtil.subList(_searchGroups(companyId, keywords), start, end);
+	}
+
+	@Override
+	public int getGroupsCount(long companyId, long groupId, String keywords) {
+		List<Group> groups = _searchGroups(companyId, keywords);
+
+		return groups.size();
 	}
 
 	@Override

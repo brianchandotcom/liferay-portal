@@ -80,7 +80,7 @@ const ItemSelectorUrl = ({eventName}) => {
 					{Liferay.Language.get('add')}
 				</ClayButton>
 			</form>
-			<div className="aspect-ratio aspect-ratio-16-to-9 mt-4 bg-light">
+			<div className="aspect-ratio aspect-ratio-16-to-9 bg-light mt-4">
 				{imgUrl && (
 					<img
 						className={classNames(
@@ -95,7 +95,7 @@ const ItemSelectorUrl = ({eventName}) => {
 				)}
 				{imgUrl && !imgLoaded && (
 					<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid">
-						<ClayLoadingIndicator className="" />
+						<ClayLoadingIndicator />
 					</div>
 				)}
 			</div>

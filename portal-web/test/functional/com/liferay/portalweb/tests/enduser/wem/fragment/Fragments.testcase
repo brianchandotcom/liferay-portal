@@ -867,7 +867,7 @@ definition {
 			locator1 = "//tr[1]/td[3]",
 			value1 = "4");
 
-		AssertElementNotPresent(locator1 = "//tr[2]/td[2]");
+		AssertElementNotPresent(locator1 = "//*[contains(.,'Test Site Name 2')]");
 	}
 
 	@description = "Once fragments are published, they can no longer be saved as draft."

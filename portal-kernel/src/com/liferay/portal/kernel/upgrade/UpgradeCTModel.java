@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -39,15 +40,23 @@ public class UpgradeCTModel extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (String tableName : _tableNames) {
-			_upgradeCTModel(tableName);
-		}
-	}
-
-	private void _upgradeCTModel(String tableName) throws Exception {
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 		DBInspector dbInspector = new DBInspector(connection);
+
+		for (String tableName : _tableNames) {
+			try (LoggingTimer loggingTimer = new LoggingTimer(
+					UpgradeCTModel.class, tableName)) {
+
+				_upgradeCTModel(databaseMetaData, dbInspector, tableName);
+			}
+		}
+	}
+
+	private void _upgradeCTModel(
+			DatabaseMetaData databaseMetaData, DBInspector dbInspector,
+			String tableName)
+		throws Exception {
 
 		String normalizedTableName = dbInspector.normalizeName(
 			tableName, databaseMetaData);

@@ -1,6 +1,3 @@
-<%@ page import="com.liferay.layout.seo.model.SiteSEOEntry" %><%@
-page import="com.liferay.site.admin.web.internal.display.context.SiteAdminDisplayContext" %>
-
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -19,30 +16,72 @@ page import="com.liferay.site.admin.web.internal.display.context.SiteAdminDispla
 
 <%@ include file="/init.jsp" %>
 
-<aui:fieldset>
+<%
+Group group = (Group)request.getAttribute("site.group");
+Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
-	<h4 class="sheet-tertiary-title">
-		<liferay-ui:message key="enable-open-graph" />
-	</h4>
+long groupId = group.getGroupId();
 
-	<p class="text-muted">
-		<liferay-ui:message key="enable-open-graph-description" />
-	</p>
+if (liveGroup != null) {
+	groupId = liveGroup.getGroupId();
+}
 
-	<h4 class="sheet-tertiary-title">
-		<liferay-ui:message key="open-graph-image" />
-	</h4>
+SiteSEOEntry siteSEOEntry = siteAdminDisplayContext.getSelSiteSEOEntry(groupId);
+%>
 
-	<p class="text-muted">
-		<liferay-ui:message key="open-graph-image-description" />
-	</p>
+<div class="form-group" id="<portlet:namespace />idOptions">
+	<aui:input id="openSiteGraphEnabled" label="enable-open-graph" name="openSiteGraphEnabled" type="checkbox" value="<%= siteSEOEntry.isOpenGraphSiteEnabled() %>" />
+</div>
 
-	<div>
-		<label class="control-label"><liferay-ui:message key="image" /></label>
+<p class="text-muted">
+	<liferay-ui:message key="enable-open-graph-description" />
+</p>
+
+<h4 class="sheet-tertiary-title">
+	<liferay-ui:message key="open-graph-image" />
+</h4>
+
+<p class="text-muted">
+	<liferay-ui:message key="open-graph-image-description" />
+</p>
+
+<div>
+	<label class="control-label"><liferay-ui:message key="image" /></label>
+
+	<div class="input-group">
+		<div class="input-group-item">
+			<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="" wrapperCssClass="w-100" />
+		</div>
+
+		<div class="input-group-item input-group-item-shrink">
+			<aui:button name="openGraphImageButton" value="select" />
+		</div>
 	</div>
+</div>
 
-	<div class="form-group">
-		<label><liferay-ui:message key="preview" /></label>
-	</div>
+<div id="<portlet:namespace />openGraphSettings">
+	<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
+</div>
 
-</aui:fieldset>
+<div class="form-group">
+	<label><liferay-ui:message key="preview" /></label>
+</div>
+
+<aui:script>
+	var openGraphImageButton = document.getElementById(
+		'<portlet:namespace />openGraphImageButton'
+	);
+
+	var openSiteGraphEnabledCheck = document.getElementById(
+		'<portlet:namespace />openSiteGraphEnabled'
+	);
+
+	if (openSiteGraphEnabledCheck && openGraphImageButton) {
+		openSiteGraphEnabledCheck.addEventListener('click', function(event) {
+			Liferay.Util.toggleDisabled(
+				openGraphImageButton,
+				!event.target.checked
+			);
+		});
+	}
+</aui:script>

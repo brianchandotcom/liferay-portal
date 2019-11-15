@@ -15,6 +15,8 @@
 package com.liferay.site.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.layout.seo.model.SiteSEOEntry;
+import com.liferay.layout.seo.service.SiteSEOEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -236,6 +238,10 @@ public class SiteAdminDisplayContext {
 		return portletURL;
 	}
 
+	public SiteSEOEntry getSelSiteSEOEntry(long groupId) {
+		return SiteSEOEntryLocalServiceUtil.fetchSiteSEOEntryByGroupId(groupId);
+	}
+
 	public int getUserGroupsCount(Group group) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -289,6 +295,16 @@ public class SiteAdminDisplayContext {
 				 permissionChecker, group, ActionKeys.ADD_COMMUNITY))) {
 
 			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isOpenGraphSiteEnabled(long groupId) {
+		SiteSEOEntry selSiteSEOEntry = getSelSiteSEOEntry(groupId);
+
+		if (selSiteSEOEntry != null) {
+			return selSiteSEOEntry.isOpenGraphSiteEnabled();
 		}
 
 		return false;

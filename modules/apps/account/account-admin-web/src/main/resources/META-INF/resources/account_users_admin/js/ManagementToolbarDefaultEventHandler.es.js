@@ -15,6 +15,30 @@
 import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 
 class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
+	activateAccountUsers(itemData) {
+		this._updateAccountUsers(itemData.activateAccountUsersURL);
+	}
+
+	deactivateAccountUsers(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-deactivate-this')
+			)
+		) {
+			this._updateAccountUsers(itemData.deactivateAccountUsersURL);
+		}
+	}
+
+	deleteAccountUsers(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
+			this._updateAccountUsers(itemData.deleteAccountUsersURL);
+		}
+	}
+
 	selectAccountEntries(itemData) {
 		this._openAccountEntrySelector(
 			Liferay.Language.get('select'),
@@ -81,6 +105,20 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		});
 
 		itemSelectorDialog.open();
+	}
+
+	_updateAccountUsers(url) {
+		const form = this.one('#fm');
+
+		Liferay.Util.postForm(form, {
+			data: {
+				accountUserIds: Liferay.Util.listCheckedExcept(
+					form,
+					this.ns('allRowIds')
+				)
+			},
+			url
+		});
 	}
 }
 

@@ -75,7 +75,7 @@ const Sharing = ({
 			[`${portletNamespace}classNameId`]: classNameId,
 			[`${portletNamespace}classPK`]: classPK,
 			[`${portletNamespace}shareable`]: allowSharingChecked,
-			[`${portletNamespace}sharingEntryPermissionDisplayActionId`]: sharingEntryPermissionDisplayActionId,
+			[`${portletNamespace}sharingEntryPermissionDisplayActionId`]: sharingPermission,
 			[`${portletNamespace}userEmailAddress`]: selectedItems
 				.map(({value}) => value)
 				.join(',')

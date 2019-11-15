@@ -70,6 +70,13 @@ public class DLEditFileEntryTypeDisplayContextTest {
 		_ddmStorageLinkLocalService = Mockito.mock(
 			DDMStorageLinkLocalService.class);
 
+		Mockito.when(
+			_ddmStorageLinkLocalService.getStructureStorageLinksCount(
+				Mockito.anyInt())
+		).thenReturn(
+			3
+		);
+
 		_ddmStructureLocalService = Mockito.mock(
 			DDMStructureLocalService.class);
 
@@ -96,6 +103,23 @@ public class DLEditFileEntryTypeDisplayContextTest {
 		Assert.assertEquals(
 			"Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE",
 			dlEditFileEntryTypeDisplayContext.getAvailableFields());
+	}
+
+	@Test
+	public void testGetFieldNameEditionDisabled() {
+		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
+			new DLEditFileEntryTypeDisplayContext(
+				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
+				_language,
+				new MockPortletRenderRequest(
+					new MockHttpServletRequestBuilder().withAttribute(
+						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
+						_getRandomDDMStructure()
+					).build()),
+				null);
+
+		Assert.assertTrue(
+			dlEditFileEntryTypeDisplayContext.getFieldNameEditionDisabled());
 	}
 
 	@Test

@@ -14,7 +14,7 @@
 
 package com.liferay.batch.engine.internal;
 
-import com.liferay.batch.engine.BatchEngineTaskField;
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
 import com.liferay.batch.engine.BatchEngineTaskMethod;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.ItemClassRegistry;
@@ -288,12 +288,12 @@ public class BatchEngineTaskMethodRegistryImpl
 			for (int i = 0; i < resourceMethodParameters.length; i++) {
 				Parameter parameter = resourceMethodParameters[i];
 
-				BatchEngineTaskField batchEngineTaskField =
-					parameter.getAnnotation(BatchEngineTaskField.class);
+				BatchEngineTaskFieldId batchEngineTaskFieldId =
+					parameter.getAnnotation(BatchEngineTaskFieldId.class);
 
 				Class<?> parameterType = parameter.getType();
 
-				if (batchEngineTaskField == null) {
+				if (batchEngineTaskFieldId == null) {
 					if (parentResourceMethodParameters == null) {
 						continue;
 					}
@@ -331,7 +331,7 @@ public class BatchEngineTaskMethodRegistryImpl
 				else {
 					resourceMethodArgNameTypeEntries[i] =
 						new AbstractMap.SimpleImmutableEntry<>(
-							batchEngineTaskField.value(), parameterType);
+							batchEngineTaskFieldId.value(), parameterType);
 				}
 			}
 

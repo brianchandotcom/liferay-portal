@@ -74,6 +74,8 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
+						dropdownItem.putData("action", "selectAccountEntry");
+
 						PortletURL accountEntrySelectorURL =
 							liferayPortletResponse.createRenderURL();
 
@@ -87,8 +89,6 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 							"accountEntrySelectorURL",
 							accountEntrySelectorURL.toString());
 
-						dropdownItem.putData("action", "selectAccountEntry");
-
 						dropdownItem.putData(
 							"dialogTitle",
 							LanguageUtil.get(request, "select-an-account"));
@@ -99,11 +99,10 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 						redirectURL.setParameter(
 							"mvcRenderCommandName",
 							"/account_admin/add_account_user");
-
-						PortletURL backURL =
-							liferayPortletResponse.createRenderURL();
-
-						redirectURL.setParameter("backURL", backURL.toString());
+						redirectURL.setParameter(
+							"backURL",
+							String.valueOf(
+								liferayPortletResponse.createRenderURL()));
 
 						dropdownItem.putData(
 							"redirectURL", redirectURL.toString());
@@ -249,6 +248,8 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 							Objects.equals(
 								_getAccountEntriesNavigation(), "accounts"));
 
+						dropdownItem.putData("action", "selectAccountEntries");
+
 						PortletURL accountEntriesSelectorURL =
 							liferayPortletResponse.createRenderURL();
 
@@ -261,14 +262,14 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 							LiferayWindowState.POP_UP);
 
 						dropdownItem.putData(
-							"redirectURL", currentURLObj.toString());
-						dropdownItem.putData(
-							"accountEntrySelectorURL",
+							"accountEntriesSelectorURL",
 							accountEntriesSelectorURL.toString());
+
 						dropdownItem.putData(
 							"dialogTitle",
 							LanguageUtil.get(request, "select-accounts"));
-						dropdownItem.putData("action", "selectAccountEntries");
+						dropdownItem.putData(
+							"redirectURL", currentURLObj.toString());
 
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "accounts"));

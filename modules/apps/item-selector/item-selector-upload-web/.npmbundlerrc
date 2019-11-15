@@ -1,0 +1,9 @@
+{
+	"config": {
+		"imports": {
+			"item-selector-taglib": {
+				"/": ">=4.0.0"
+			}
+		}
+	}
+}

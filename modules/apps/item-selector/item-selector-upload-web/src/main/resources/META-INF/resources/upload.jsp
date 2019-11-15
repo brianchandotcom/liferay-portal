@@ -18,6 +18,29 @@
 
 <%
 ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (ItemSelectorUploadViewDisplayContext)request.getAttribute(ItemSelectorUploadView.ITEM_SELECTOR_UPLOAD_VIEW_DISPLAY_CONTEXT);
+
+ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver = itemSelectorUploadViewDisplayContext.getItemSelectorReturnTypeResolver();
+
+Class<?> itemSelectorReturnTypeClass = itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass();
+
+String uploadURL = itemSelectorUploadViewDisplayContext.getURL();
+
+String namespace = itemSelectorUploadViewDisplayContext.getNamespace();
+
+if (Validator.isNotNull(namespace)) {
+	uploadURL = HttpUtil.addParameter(uploadURL, namespace + "returnType", itemSelectorReturnTypeClass.getName());
+}
+
+String[] extensions = itemSelectorUploadViewDisplayContext.getExtensions();
+
+Map<String, Object> context = new HashMap<>();
+
+context.put("closeCaption", itemSelectorUploadViewDisplayContext.getTitle(locale));
+context.put("maxFileSize", itemSelectorUploadViewDisplayContext.getMaxFileSize());
+context.put("rootNode", "#itemSelectorUploadContainer");
+context.put("uploadItemReturnType", HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName()));
+context.put("uploadItemURL", uploadURL.toString());
+context.put("validExtensions", ArrayUtil.isEmpty(extensions) ? "*" : StringUtil.merge(extensions));
 %>
 
 <div class="container-fluid-1280 lfr-item-viewer" id="itemSelectorUploadContainer">
@@ -42,39 +65,7 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 	/>
 </div>
 
-<aui:script use="liferay-item-selector-repository-entry-browser">
-
-	<%
-	ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver = itemSelectorUploadViewDisplayContext.getItemSelectorReturnTypeResolver();
-
-	Class<?> itemSelectorReturnTypeClass = itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass();
-
-	String uploadURL = itemSelectorUploadViewDisplayContext.getURL();
-
-	String namespace = itemSelectorUploadViewDisplayContext.getNamespace();
-
-	if (Validator.isNotNull(namespace)) {
-		uploadURL = HttpUtil.addParameter(uploadURL, namespace + "returnType", itemSelectorReturnTypeClass.getName());
-	}
-	%>
-
-	new Liferay.ItemSelectorRepositoryEntryBrowser({
-		closeCaption:
-			'<%= itemSelectorUploadViewDisplayContext.getTitle(locale) %>',
-		maxFileSize: '<%= itemSelectorUploadViewDisplayContext.getMaxFileSize() %>',
-		on: {
-			selectedItem: function(event) {
-				Liferay.Util.getOpener().Liferay.fire(
-					'<%= itemSelectorUploadViewDisplayContext.getItemSelectedEventName() %>',
-					event
-				);
-			}
-		},
-		rootNode: '#itemSelectorUploadContainer',
-		uploadItemReturnType:
-			'<%= HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName()) %>',
-		uploadItemURL: '<%= uploadURL.toString() %>',
-		validExtensions:
-			'<%= ArrayUtil.isEmpty(itemSelectorUploadViewDisplayContext.getExtensions()) ? "*" : StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions()) %>'
-	});
-</aui:script>
+<liferay-frontend:component
+	context="<%= context %>"
+	module="js/index.es"
+/>

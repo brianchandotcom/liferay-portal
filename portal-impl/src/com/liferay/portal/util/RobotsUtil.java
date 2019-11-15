@@ -37,14 +37,14 @@ public class RobotsUtil {
 	}
 
 	public static String getDefaultRobots(
-		String virtualHost, boolean secure, int port) {
+		String virtualHostname, boolean secure, int port) {
 
-		if (Validator.isNotNull(virtualHost)) {
+		if (Validator.isNotNull(virtualHostname)) {
 			String content = ContentUtil.get(
 				RobotsUtil.class.getClassLoader(),
 				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
 
-			content = StringUtil.replace(content, "[$HOST$]", virtualHost);
+			content = StringUtil.replace(content, "[$HOST$]", virtualHostname);
 			content = StringUtil.replace(
 				content, "[$PORT$]", String.valueOf(port));
 

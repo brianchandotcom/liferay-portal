@@ -237,10 +237,10 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			});
 
 		registry.register(
-			"3.1.0", "3.2.0", new UpgradeCTModel("JournalArticleLocalization"),
-			new UpgradeCTModel("JournalArticleResource"),
-			new UpgradeCTModel("JournalArticle"),
-			new UpgradeCTModel("JournalFolder"));
+			"3.1.0", "3.2.0",
+			new UpgradeCTModel(
+				"JournalArticleLocalization", "JournalArticleResource",
+				"JournalArticle", "JournalFolder"));
 	}
 
 	protected void deleteTempImages() throws Exception {

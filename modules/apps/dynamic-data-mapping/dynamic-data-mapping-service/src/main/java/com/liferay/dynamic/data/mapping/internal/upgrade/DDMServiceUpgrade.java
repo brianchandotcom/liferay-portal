@@ -279,10 +279,10 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 			"3.2.0", "3.2.1", new UpgradeDDMDataProviderInstance(_jsonFactory));
 
 		registry.register(
-			"3.2.1", "3.3.0", new UpgradeCTModel("DDMStructure"),
-			new UpgradeCTModel("DDMStructureVersion"),
-			new UpgradeCTModel("DDMTemplate"),
-			new UpgradeCTModel("DDMTemplateVersion"));
+			"3.2.1", "3.3.0",
+			new UpgradeCTModel(
+				"DDMStructure", "DDMStructureVersion", "DDMTemplate",
+				"DDMTemplateVersion"));
 
 		registry.register(
 			"3.3.0", "3.3.1",

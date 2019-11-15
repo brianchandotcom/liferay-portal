@@ -37,21 +37,16 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(new Version(6, 0, 2), new UpgradeLayoutSet());
 
-		upgradeProcesses.put(
-			new Version(6, 0, 3), new UpgradeCTModel("Layout"));
-
 		upgradeProcesses.put(new Version(6, 0, 4), new UpgradeAssetCategory());
-
-		upgradeProcesses.put(
-			new Version(6, 0, 5), new UpgradeCTModel("ResourcePermission"));
 
 		upgradeProcesses.put(new Version(7, 0, 0), new UpgradeRatingsStats());
 
 		upgradeProcesses.put(
-			new Version(7, 0, 1),
+			new Version(7, 1, 0),
 			new UpgradeCTModel(
 				"AssetCategory", "AssetCategoryProperty", "AssetEntry",
-				"AssetLink", "AssetTag", "AssetVocabulary"));
+				"AssetLink", "AssetTag", "AssetVocabulary", "Layout",
+				"ResourcePermission"));
 	}
 
 }

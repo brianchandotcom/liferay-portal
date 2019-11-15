@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -93,7 +94,7 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 				DLWebKeys.
 					DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT,
 				new DLEditFileEntryTypeDisplayContext(
-					_ddm, _ddmStructureLocalService,
+					_ddm, _ddmStructureLocalService, _language,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)) {
 				});
@@ -149,6 +150,9 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DLFileEntryTypeService _dlFileEntryTypeService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

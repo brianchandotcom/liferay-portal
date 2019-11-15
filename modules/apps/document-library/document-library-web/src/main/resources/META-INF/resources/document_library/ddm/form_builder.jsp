@@ -19,50 +19,21 @@
 <%
 DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFileEntryTypeDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT);
 
-String portletResourceNamespace = renderResponse.getNamespace();
-
 DDMStructure ddmStructure = dlEditFileEntryTypeDisplayContext.getDDMStructure();
-
-String script = BeanParamUtil.getString(ddmStructure, request, "definition");
 
 String fieldsJSONArrayString = dlEditFileEntryTypeDisplayContext.getFieldsJSONArrayString();
 
 String scopeAvailableFields = dlEditFileEntryTypeDisplayContext.getAvailableFields();
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+
+DLEditFileEntryTypeDisplayContext.TranslationManagerInfo translationManagerInfo = dlEditFileEntryTypeDisplayContext.getTranslationManagerInfo();
+String availableLocalesString = translationManagerInfo.getAvailableLocalesString();
 %>
 
 <liferay-util:html-top>
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
-
-<%
-String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
-
-Locale[] availableLocales = {LocaleUtil.getSiteDefault()};
-
-boolean changeableDefaultLanguage = false;
-
-if (Validator.isNotNull(script)) {
-	try {
-		DDMForm ddmForm = DDMUtil.getDDMForm(script);
-
-		String ddmFormDefaultLanguageId = LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
-
-		if (!Objects.equals(defaultLanguageId, ddmFormDefaultLanguageId)) {
-			changeableDefaultLanguage = true;
-		}
-
-		defaultLanguageId = ddmFormDefaultLanguageId;
-
-		Set<Locale> ddmFormAvailableLocales = ddmForm.getAvailableLocales();
-
-		availableLocales = ddmFormAvailableLocales.toArray(new Locale[0]);
-	}
-	catch (Exception e) {
-	}
-}
-%>
 
 <div class="separator"><!-- --></div>
 
@@ -74,7 +45,7 @@ if (Validator.isNotNull(script)) {
 >
 	<liferay-ui:section>
 		<div id="<portlet:namespace />formBuilderTab">
-			<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= changeableDefaultLanguage %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" initialize="<%= false %>" readOnly="<%= false %>" />
+			<aui:translation-manager availableLocales="<%= translationManagerInfo.getAvailableLocales() %>" changeableDefaultLanguage="<%= translationManagerInfo.isChangeableDefaultLanguage() %>" defaultLanguageId="<%= translationManagerInfo.getDefaultLanguageId() %>" id="translationManager" initialize="<%= false %>" readOnly="<%= false %>" />
 
 			<div class="diagram-builder form-builder" id="<portlet:namespace />formBuilder">
 				<div class="diagram-builder-content" id="<portlet:namespace />formBuilderContent">
@@ -116,20 +87,6 @@ if (Validator.isNotNull(script)) {
 		</div>
 	</liferay-ui:section>
 </liferay-ui:tabs>
-
-<%
-JSONArray availableLocalesJSONArray = JSONFactoryUtil.createJSONArray();
-
-for (int i = 0; i < availableLocales.length; i++) {
-	availableLocalesJSONArray.put(LanguageUtil.getLanguageId(availableLocales[i]));
-}
-
-JSONObject localesMapJSONObject = JSONFactoryUtil.createJSONObject();
-
-for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId())) {
-	localesMapJSONObject.put(LocaleUtil.toLanguageId(availableLocale), availableLocale.getDisplayName(locale));
-}
-%>
 
 <aui:script use="aui-ace-editor,aui-datepicker-deprecated,aui-tabview,event-custom-base,json,liferay-portlet-dynamic-data-lists,liferay-portlet-dynamic-data-mapping,liferay-portlet-dynamic-data-mapping-custom-fields,liferay-xml-formatter">
 	var Lang = A.Lang;
@@ -280,18 +237,19 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 		portletNamespace: '<portlet:namespace />',
 		portletResourceNamespace:
-			'<%= HtmlUtil.escapeJS(portletResourceNamespace) %>',
+			'<%= HtmlUtil.escapeJS(renderResponse.getNamespace()) %>',
 		readOnly: <%= ParamUtil.getBoolean(request, "formBuilderReadOnly") %>,
 		srcNode: '#<portlet:namespace />formBuilderContent',
 		translationManager: {
-			<c:if test="<%= availableLocalesJSONArray.length() > 0 %>">
-				availableLocales: <%= availableLocalesJSONArray.toString() %>,
+			<c:if test="<%=  Validator.isNotNull(availableLocalesString) %>">
+				availableLocales: <%= availableLocalesString %>,
 			</c:if>
 
 			boundingBox: '#<portlet:namespace />translationManager',
-			changeableDefaultLanguage: <%= changeableDefaultLanguage %>,
-			defaultLocale: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
-			localesMap: <%= localesMapJSONObject.toString() %>,
+			changeableDefaultLanguage: <%= translationManagerInfo.isChangeableDefaultLanguage() %>,
+			defaultLocale:
+				'<%= HtmlUtil.escapeJS(translationManagerInfo.getDefaultLanguageId()) %>',
+			localesMap: <%= dlEditFileEntryTypeDisplayContext.getLocalesMap() %>,
 			srcNode:
 				'#<portlet:namespace />translationManager .lfr-translation-manager-content'
 		}
@@ -338,11 +296,11 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 	Liferay.on('destroyPortlet', onDestroyPortlet);
 
 	window[
-		'<%= HtmlUtil.escapeJS(portletResourceNamespace) %>formBuilder'
+		'<%= HtmlUtil.escapeJS(renderResponse.getNamespace()) %>formBuilder'
 	] = formBuilder;
 
 	window[
-		'<%= HtmlUtil.escapeJS(portletResourceNamespace) %>getContentValue'
+		'<%= HtmlUtil.escapeJS(renderResponse.getNamespace()) %>getContentValue'
 	] = getContentValue;
 
 	Liferay.on('<portlet:namespace />saveTemplate', function(event) {

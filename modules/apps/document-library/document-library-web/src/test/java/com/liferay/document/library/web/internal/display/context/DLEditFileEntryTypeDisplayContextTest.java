@@ -21,10 +21,12 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanPropertiesImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +53,12 @@ public class DLEditFileEntryTypeDisplayContextTest {
 		_ddmStructureLocalService = Mockito.mock(
 			DDMStructureLocalService.class);
 
+		_language = Mockito.mock(Language.class);
+
+		LanguageResources languageResources = new LanguageResources();
+
+		languageResources.setConfig(StringPool.BLANK);
+
 		PropsUtil.setProps(new PropsImpl());
 	}
 
@@ -58,7 +66,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 	public void testGetAvailableFields() {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
-				_ddm, _ddmStructureLocalService, null, null);
+				_ddm, _ddmStructureLocalService, _language, null, null);
 
 		Assert.assertEquals(
 			"Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE",
@@ -69,7 +77,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 	public void testGetFieldsJSONArrayString() {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
-				_ddm, _ddmStructureLocalService,
+				_ddm, _ddmStructureLocalService, _language,
 				new MockPortletRenderRequest(
 					new MockHttpServletRequestBuilder().withAttribute(
 						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
@@ -86,7 +94,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 	public void testGetStructure() {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
-				_ddm, _ddmStructureLocalService,
+				_ddm, _ddmStructureLocalService, _language,
 				new MockPortletRenderRequest(
 					new MockHttpServletRequestBuilder().withAttribute(
 						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
@@ -123,6 +131,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 
 	private DDM _ddm;
 	private DDMStructureLocalService _ddmStructureLocalService;
+	private Language _language;
 
 	private class MockPortletRenderRequest
 		extends MockLiferayPortletRenderRequest {

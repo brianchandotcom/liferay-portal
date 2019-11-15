@@ -15,18 +15,33 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.web.internal.dynamic.data.mapping.util.DLDDMDisplay;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Cristina González
@@ -35,11 +50,12 @@ public class DLEditFileEntryTypeDisplayContext {
 
 	public DLEditFileEntryTypeDisplayContext(
 		DDM ddm, DDMStructureLocalService ddmStructureLocalService,
-		LiferayPortletRequest liferayPortletRequest,
+		Language language, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_ddm = ddm;
 		_ddmStructureLocalService = ddmStructureLocalService;
+		_language = language;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 	}
@@ -61,13 +77,13 @@ public class DLEditFileEntryTypeDisplayContext {
 		long ddmStructureId = BeanParamUtil.getLong(
 			ddmStructure, _liferayPortletRequest, "structureId");
 
-		String script = BeanParamUtil.getString(
+		String definition = BeanParamUtil.getString(
 			ddmStructure, _liferayPortletRequest, "definition");
 
 		return Optional.ofNullable(
 			_ddm.getDDMFormFieldsJSONArray(
 				_ddmStructureLocalService.fetchDDMStructure(ddmStructureId),
-				script)
+				definition)
 		).map(
 			JSONArray::toString
 		).orElseGet(
@@ -75,8 +91,102 @@ public class DLEditFileEntryTypeDisplayContext {
 		);
 	}
 
+	public String getLocalesMap() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Locale locale = LocaleUtil.fromLanguageId(
+			_language.getLanguageId(_liferayPortletRequest));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		for (Locale availableLocale :
+				_language.getAvailableLocales(themeDisplay.getSiteGroupId())) {
+
+			jsonObject.put(
+				LocaleUtil.toLanguageId(availableLocale),
+				availableLocale.getDisplayName(locale));
+		}
+
+		return jsonObject.toString();
+	}
+
+	public TranslationManagerInfo getTranslationManagerInfo() {
+		String definition = BeanParamUtil.getString(
+			getDDMStructure(), _liferayPortletRequest, "definition");
+
+		if (Validator.isNotNull(definition)) {
+			try {
+				DDMForm ddmForm = _ddm.getDDMForm(definition);
+
+				Set<Locale> locales = ddmForm.getAvailableLocales();
+
+				return new TranslationManagerInfo(
+					locales.toArray(new Locale[0]),
+					!Objects.equals(
+						LocaleUtil.getSiteDefault(),
+						ddmForm.getDefaultLocale()),
+					LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()));
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
+			}
+		}
+
+		return new TranslationManagerInfo(
+			new Locale[] {LocaleUtil.getSiteDefault()}, false,
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
+	}
+
+	public class TranslationManagerInfo {
+
+		public TranslationManagerInfo(
+			Locale[] availableLocales, boolean changeableDefaultLanguage,
+			String defaultLanguageId) {
+
+			_availableLocales = availableLocales;
+			_changeableDefaultLanguage = changeableDefaultLanguage;
+			_defaultLanguageId = defaultLanguageId;
+		}
+
+		public Locale[] getAvailableLocales() {
+			return _availableLocales;
+		}
+
+		public String getAvailableLocalesString() {
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+				Stream.of(
+					_availableLocales
+				).map(
+					locale -> _language.getLanguageId(locale)
+				).collect(
+					Collectors.toList()
+				));
+
+			return jsonArray.toString();
+		}
+
+		public String getDefaultLanguageId() {
+			return _defaultLanguageId;
+		}
+
+		public boolean isChangeableDefaultLanguage() {
+			return _changeableDefaultLanguage;
+		}
+
+		private final Locale[] _availableLocales;
+		private final boolean _changeableDefaultLanguage;
+		private final String _defaultLanguageId;
+
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLEditFileEntryTypeDisplayContext.class);
+
 	private final DDM _ddm;
 	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 

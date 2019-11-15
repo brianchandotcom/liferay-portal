@@ -111,6 +111,8 @@ public interface DLFileEntry
 
 	public String getLuceneProperties();
 
+	public long getReadCount();
+
 	public boolean hasLock();
 
 	public boolean isCheckedOut();

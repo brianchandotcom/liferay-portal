@@ -252,7 +252,6 @@
 		<field name="fileEntryTypeId" type="long" />
 		<field name="version" type="String" />
 		<field name="size" type="long" />
-		<field name="readCount" type="int" />
 		<field name="smallImageId" type="long" />
 		<field name="largeImageId" type="long" />
 		<field name="custom1ImageId" type="long" />

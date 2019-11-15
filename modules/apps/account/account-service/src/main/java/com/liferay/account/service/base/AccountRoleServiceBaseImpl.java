@@ -125,4 +125,11 @@ public abstract class AccountRoleServiceBaseImpl
 	@Reference
 	protected com.liferay.portal.kernel.service.RoleService roleService;
 
+	@Reference
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.UserService userService;
+
 }

@@ -122,10 +122,20 @@ const PreviewSeoContainer = ({
 			setPreviewState({
 				defaultValue,
 				type,
-				value: node ? node.value : defaultValue
+				value: node && node.value
 			});
 
-			return {listener, node};
+			return {defaultValue, listener, node, type};
+		});
+
+		Liferay.on('inputLocalized:localeChanged', () => {
+			inputs.forEach(({defaultValue, node, type}) =>
+				setPreviewState({
+					defaultValue,
+					type,
+					value: node && node.value
+				})
+			);
 		});
 
 		return () => {

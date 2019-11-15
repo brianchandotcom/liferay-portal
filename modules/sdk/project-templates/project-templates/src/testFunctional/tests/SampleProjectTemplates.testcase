@@ -73,7 +73,7 @@ definition {
 
 	@priority = "5"
 	test ThemeTemplateSmoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property project.templates = "theme";
 		property test.name.skip.portal.instance = "SampleProjectTemplates#ThemeTemplateSmoke";
 		var themeName = "sampletheme";

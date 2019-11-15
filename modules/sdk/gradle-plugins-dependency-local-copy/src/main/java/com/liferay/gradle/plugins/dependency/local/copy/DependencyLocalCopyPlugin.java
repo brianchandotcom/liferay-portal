@@ -76,7 +76,8 @@ public class DependencyLocalCopyPlugin implements Plugin<Project> {
 		final String dependencyProjectPath = dependencyProject.getPath();
 
 		Sync sync = GradleUtil.addTask(
-			project, SYNC_LOCAL_COPY_TASK_NAME + dependencyProjectPath,
+			project,
+			SYNC_LOCAL_COPY_TASK_NAME + dependencyProjectPath.replace(':', '_'),
 			Sync.class);
 
 		Configuration configuration = GradleUtil.addConfiguration(

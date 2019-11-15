@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
+import {useIsMounted} from 'frontend-js-react-web';
 import React, {useState} from 'react';
 
 import {sub} from './utils.es';
@@ -24,10 +25,17 @@ const ItemSelectorUrl = ({eventName}) => {
 	const inputName = 'urlInputReact';
 	const [imgUrl, setImgUrl] = useState('');
 	const [imgLoaded, setImgLoaded] = useState(false);
+	const isMounted = useIsMounted();
 
 	const handleImageUrlChange = ({target}) => {
 		setImgUrl(target.value);
 		setImgLoaded(false);
+	};
+
+	const handleImageLoad = () => {
+		if (isMounted()) {
+			setImgLoaded(true);
+		}
 	};
 
 	const handleSubmit = event => {
@@ -81,7 +89,7 @@ const ItemSelectorUrl = ({eventName}) => {
 								invisible: !imgLoaded
 							}
 						)}
-						onLoad={() => setImgLoaded(true)}
+						onLoad={handleImageLoad}
 						src={imgUrl}
 					/>
 				)}

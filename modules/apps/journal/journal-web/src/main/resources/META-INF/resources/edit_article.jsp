@@ -172,7 +172,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 							<liferay-ui:message key="unable-to-validate-referenced-journal-article" />
 						</c:when>
 						<c:when test="<%= eicve.getType() == ExportImportContentValidationException.FILE_ENTRY_NOT_FOUND %>">
-							<liferay-ui:message arguments="<%= new String[] {MapUtil.toString(eicve.getDlReferenceParameters())} %>" key="unable-to-validate-referenced-file-entry-because-it-cannot-be-found-with-the-following-parameters-x" />
+							<liferay-ui:message arguments="<%= new String[] {MapUtil.toString(eicve.getDlReferenceParameters())} %>" key="unable-to-validate-referenced-document-because-it-cannot-be-found-with-the-following-parameters-x-when-analyzing-link-x" />
 						</c:when>
 						<c:when test="<%= eicve.getType() == ExportImportContentValidationException.LAYOUT_GROUP_NOT_FOUND %>">
 							<liferay-ui:message arguments="<%= new String[] {eicve.getLayoutURL(), eicve.getGroupFriendlyURL()} %>" key="unable-to-validate-referenced-page-with-url-x-because-the-page-group-with-url-x-cannot-be-found" />

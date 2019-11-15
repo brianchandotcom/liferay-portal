@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.internal.background.task;
 
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.internal.CTRowUtil;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -277,19 +278,10 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		if (_modificationCTEntries != null) {
 			StringBundler sb = new StringBundler();
 
-			sb.append("insert into ");
-			sb.append(ctModelRegistration.getTableName());
-			sb.append(" (");
-
 			Map<String, Integer> tableColumnsMap =
 				ctModelRegistration.getTableColumnsMap();
 
-			for (String name : tableColumnsMap.keySet()) {
-				sb.append(name);
-				sb.append(", ");
-			}
-
-			sb.setStringAt(") select ", sb.index() - 1);
+			sb.append("select ");
 
 			Set<String> ignoredAttributeNames =
 				ctPersistence.getCTIgnoredAttributeNames();
@@ -324,11 +316,8 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			sb.append(" and t2.ctCollectionId = ");
 			sb.append(_sourceCTCollectionId);
 
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(sb.toString())) {
-
-				preparedStatement.executeUpdate();
-			}
+			CTRowUtil.copyCTRows(
+				ctModelRegistration, connection, sb.toString());
 
 			sb.setIndex(0);
 

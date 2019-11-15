@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 import java.util.Map;
 
@@ -62,18 +61,9 @@ public class CTServiceCopier<T extends CTModel<T>> {
 		Map<String, Integer> tableColumnsMap =
 			ctModelRegistration.getTableColumnsMap();
 
-		StringBundler sb = new StringBundler(5 * tableColumnsMap.size() + 7);
+		StringBundler sb = new StringBundler(3 * tableColumnsMap.size() + 5);
 
-		sb.append("insert into ");
-		sb.append(ctModelRegistration.getTableName());
-		sb.append(" (");
-
-		for (String name : tableColumnsMap.keySet()) {
-			sb.append(name);
-			sb.append(", ");
-		}
-
-		sb.setStringAt(") select ", sb.index() - 1);
+		sb.append("select ");
 
 		for (String name : tableColumnsMap.keySet()) {
 			if (name.equals("ctCollectionId")) {
@@ -94,11 +84,7 @@ public class CTServiceCopier<T extends CTModel<T>> {
 		sb.append(" t1 where t1.ctCollectionId = ");
 		sb.append(_sourceCTCollectionId);
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
-
-			preparedStatement.executeUpdate();
-		}
+		CTRowUtil.copyCTRows(ctModelRegistration, connection, sb.toString());
 
 		return null;
 	}

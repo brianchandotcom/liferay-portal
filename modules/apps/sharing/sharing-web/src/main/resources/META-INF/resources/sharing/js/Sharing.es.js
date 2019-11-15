@@ -45,6 +45,14 @@ const Sharing = ({
 	const [allowSharingChecked, setAllowSharingChecked] = useState(true);
 	const [sharingPermission, setSharingPermission] = useState('VIEW');
 
+	const closeDialog = () => {
+		const sharingDialog = Liferay.Util.getWindow(dialogId);
+
+		if (sharingDialog && sharingDialog.hide) {
+			sharingDialog.hide();
+		}
+	};
+
 	const showNotification = (message, error) => {
 		const parentOpenToast = Liferay.Util.getOpener().Liferay.Util.openToast;
 
@@ -54,6 +62,8 @@ const Sharing = ({
 			openToastParams.title = Liferay.Language.get('error');
 			openToastParams.type = 'danger';
 		}
+
+		closeDialog();
 
 		parentOpenToast(openToastParams);
 	};

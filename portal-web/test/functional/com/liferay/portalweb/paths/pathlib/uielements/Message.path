@@ -175,7 +175,7 @@
 </tr>
 <tr>
 	<td>ERROR_MODAL_CONTENT</td>
-	<td>//div[contains(@class,'modal-content')]//form[contains(@class,'form-feedback')]</td>
+	<td>//div[contains(@class,'modal-content')]//div[contains(@class,'form-feedback')]</td>
 	<td></td>
 </tr>
 <tr>

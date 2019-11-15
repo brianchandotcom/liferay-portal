@@ -121,6 +121,176 @@ public class AssetLinkUtil {
 	}
 
 	/**
+	 * Returns all the asset links where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching asset links
+	 */
+	public static List<AssetLink> findByCTCollectionId(long ctCollectionId) {
+		return getPersistence().findByCTCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Returns a range of all the asset links where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @return the range of matching asset links
+	 */
+	public static List<AssetLink> findByCTCollectionId(
+		long ctCollectionId, int start, int end) {
+
+		return getPersistence().findByCTCollectionId(
+			ctCollectionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset links where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset links
+	 */
+	public static List<AssetLink> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<AssetLink> orderByComparator) {
+
+		return getPersistence().findByCTCollectionId(
+			ctCollectionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset links where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset links
+	 */
+	public static List<AssetLink> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<AssetLink> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByCTCollectionId(
+			ctCollectionId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first asset link in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset link
+	 * @throws NoSuchLinkException if a matching asset link could not be found
+	 */
+	public static AssetLink findByCTCollectionId_First(
+			long ctCollectionId, OrderByComparator<AssetLink> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchLinkException {
+
+		return getPersistence().findByCTCollectionId_First(
+			ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first asset link in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset link, or <code>null</code> if a matching asset link could not be found
+	 */
+	public static AssetLink fetchByCTCollectionId_First(
+		long ctCollectionId, OrderByComparator<AssetLink> orderByComparator) {
+
+		return getPersistence().fetchByCTCollectionId_First(
+			ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last asset link in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset link
+	 * @throws NoSuchLinkException if a matching asset link could not be found
+	 */
+	public static AssetLink findByCTCollectionId_Last(
+			long ctCollectionId, OrderByComparator<AssetLink> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchLinkException {
+
+		return getPersistence().findByCTCollectionId_Last(
+			ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last asset link in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
+	 */
+	public static AssetLink fetchByCTCollectionId_Last(
+		long ctCollectionId, OrderByComparator<AssetLink> orderByComparator) {
+
+		return getPersistence().fetchByCTCollectionId_Last(
+			ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the asset links before and after the current asset link in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param linkId the primary key of the current asset link
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset link
+	 * @throws NoSuchLinkException if a asset link with the primary key could not be found
+	 */
+	public static AssetLink[] findByCTCollectionId_PrevAndNext(
+			long linkId, long ctCollectionId,
+			OrderByComparator<AssetLink> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchLinkException {
+
+		return getPersistence().findByCTCollectionId_PrevAndNext(
+			linkId, ctCollectionId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the asset links where ctCollectionId = &#63; from the database.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 */
+	public static void removeByCTCollectionId(long ctCollectionId) {
+		getPersistence().removeByCTCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Returns the number of asset links where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the number of matching asset links
+	 */
+	public static int countByCTCollectionId(long ctCollectionId) {
+		return getPersistence().countByCTCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Returns all the asset links where entryId1 = &#63;.
 	 *
 	 * @param entryId1 the entry id1

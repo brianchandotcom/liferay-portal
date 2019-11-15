@@ -67,11 +67,12 @@ public class AssetLinkModelImpl
 	public static final String TABLE_NAME = "AssetLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"linkId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"entryId1", Types.BIGINT}, {"entryId2", Types.BIGINT},
-		{"type_", Types.INTEGER}, {"weight", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"linkId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"entryId1", Types.BIGINT},
+		{"entryId2", Types.BIGINT}, {"type_", Types.INTEGER},
+		{"weight", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -79,6 +80,7 @@ public class AssetLinkModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("linkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -91,7 +93,7 @@ public class AssetLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetLink (mvccVersion LONG default 0 not null,linkId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,entryId1 LONG,entryId2 LONG,type_ INTEGER,weight INTEGER)";
+		"create table AssetLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,linkId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,entryId1 LONG,entryId2 LONG,type_ INTEGER,weight INTEGER,primary key (linkId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetLink";
 
@@ -120,13 +122,15 @@ public class AssetLinkModelImpl
 			"value.object.column.bitmask.enabled.com.liferay.asset.kernel.model.AssetLink"),
 		true);
 
-	public static final long ENTRYID1_COLUMN_BITMASK = 1L;
+	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 1L;
 
-	public static final long ENTRYID2_COLUMN_BITMASK = 2L;
+	public static final long ENTRYID1_COLUMN_BITMASK = 2L;
 
-	public static final long TYPE_COLUMN_BITMASK = 4L;
+	public static final long ENTRYID2_COLUMN_BITMASK = 4L;
 
-	public static final long WEIGHT_COLUMN_BITMASK = 8L;
+	public static final long TYPE_COLUMN_BITMASK = 8L;
+
+	public static final long WEIGHT_COLUMN_BITMASK = 16L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(
@@ -260,6 +264,11 @@ public class AssetLinkModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<AssetLink, Long>)AssetLink::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", AssetLink::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<AssetLink, Long>)AssetLink::setCtCollectionId);
 		attributeGetterFunctions.put("linkId", AssetLink::getLinkId);
 		attributeSetterBiConsumers.put(
 			"linkId", (BiConsumer<AssetLink, Long>)AssetLink::setLinkId);
@@ -303,6 +312,28 @@ public class AssetLinkModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCtCollectionId) {
+			_setOriginalCtCollectionId = true;
+
+			_originalCtCollectionId = _ctCollectionId;
+		}
+
+		_ctCollectionId = ctCollectionId;
+	}
+
+	public long getOriginalCtCollectionId() {
+		return _originalCtCollectionId;
 	}
 
 	@Override
@@ -491,6 +522,7 @@ public class AssetLinkModelImpl
 		AssetLinkImpl assetLinkImpl = new AssetLinkImpl();
 
 		assetLinkImpl.setMvccVersion(getMvccVersion());
+		assetLinkImpl.setCtCollectionId(getCtCollectionId());
 		assetLinkImpl.setLinkId(getLinkId());
 		assetLinkImpl.setCompanyId(getCompanyId());
 		assetLinkImpl.setUserId(getUserId());
@@ -568,6 +600,11 @@ public class AssetLinkModelImpl
 	public void resetOriginalValues() {
 		AssetLinkModelImpl assetLinkModelImpl = this;
 
+		assetLinkModelImpl._originalCtCollectionId =
+			assetLinkModelImpl._ctCollectionId;
+
+		assetLinkModelImpl._setOriginalCtCollectionId = false;
+
 		assetLinkModelImpl._originalEntryId1 = assetLinkModelImpl._entryId1;
 
 		assetLinkModelImpl._setOriginalEntryId1 = false;
@@ -588,6 +625,8 @@ public class AssetLinkModelImpl
 		AssetLinkCacheModel assetLinkCacheModel = new AssetLinkCacheModel();
 
 		assetLinkCacheModel.mvccVersion = getMvccVersion();
+
+		assetLinkCacheModel.ctCollectionId = getCtCollectionId();
 
 		assetLinkCacheModel.linkId = getLinkId();
 
@@ -694,6 +733,9 @@ public class AssetLinkModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
+	private long _originalCtCollectionId;
+	private boolean _setOriginalCtCollectionId;
 	private long _linkId;
 	private long _companyId;
 	private long _userId;

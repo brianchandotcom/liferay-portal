@@ -14,6 +14,7 @@
 
 package com.liferay.asset.kernel.service;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -36,15 +37,15 @@ public class AssetEntryServiceWrapper
 	 * Never modify or reference this interface directly. Always use {@link AssetEntryServiceUtil} to access the asset entry remote service. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Override
-	public com.liferay.asset.kernel.model.AssetEntry fetchEntry(long entryId)
+	public AssetEntry fetchEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetEntryService.fetchEntry(entryId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getCompanyEntries(long companyId, int start, int end) {
+	public java.util.List<AssetEntry> getCompanyEntries(
+		long companyId, int start, int end) {
 
 		return _assetEntryService.getCompanyEntries(companyId, start, end);
 	}
@@ -55,7 +56,7 @@ public class AssetEntryServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getEntries(
+	public java.util.List<AssetEntry> getEntries(
 			com.liferay.asset.kernel.service.persistence.AssetEntryQuery
 				entryQuery)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -73,15 +74,14 @@ public class AssetEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetEntry getEntry(long entryId)
+	public AssetEntry getEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetEntryService.getEntry(entryId);
 	}
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetEntry getEntry(
-			String className, long classPK)
+	public AssetEntry getEntry(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetEntryService.getEntry(className, classPK);
@@ -98,15 +98,14 @@ public class AssetEntryServiceWrapper
 	}
 
 	@Override
-	public void incrementViewCounter(
-			com.liferay.asset.kernel.model.AssetEntry assetEntry)
+	public void incrementViewCounter(AssetEntry assetEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_assetEntryService.incrementViewCounter(assetEntry);
 	}
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetEntry incrementViewCounter(
+	public AssetEntry incrementViewCounter(
 			long companyId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -115,7 +114,7 @@ public class AssetEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetEntry updateEntry(
+	public AssetEntry updateEntry(
 			long groupId, java.util.Date createDate,
 			java.util.Date modifiedDate, String className, long classPK,
 			String classUuid, long classTypeId, long[] categoryIds,

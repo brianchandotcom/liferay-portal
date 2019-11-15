@@ -75,11 +75,12 @@ public class AssetCategoryPropertyModelImpl
 	public static final String TABLE_NAME = "AssetCategoryProperty";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"categoryPropertyId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"categoryId", Types.BIGINT},
-		{"key_", Types.VARCHAR}, {"value", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"categoryPropertyId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"categoryId", Types.BIGINT}, {"key_", Types.VARCHAR},
+		{"value", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -87,6 +88,7 @@ public class AssetCategoryPropertyModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("categoryPropertyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -99,7 +101,7 @@ public class AssetCategoryPropertyModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetCategoryProperty (mvccVersion LONG default 0 not null,categoryPropertyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,key_ VARCHAR(75) null,value VARCHAR(75) null)";
+		"create table AssetCategoryProperty (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,categoryPropertyId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,key_ VARCHAR(75) null,value VARCHAR(75) null,primary key (categoryPropertyId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetCategoryProperty";
@@ -135,7 +137,9 @@ public class AssetCategoryPropertyModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long KEY_COLUMN_BITMASK = 4L;
+	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 4L;
+
+	public static final long KEY_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -153,6 +157,7 @@ public class AssetCategoryPropertyModelImpl
 		AssetCategoryProperty model = new AssetCategoryPropertyImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setCategoryPropertyId(soapModel.getCategoryPropertyId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -330,6 +335,12 @@ public class AssetCategoryPropertyModelImpl
 			(BiConsumer<AssetCategoryProperty, Long>)
 				AssetCategoryProperty::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", AssetCategoryProperty::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<AssetCategoryProperty, Long>)
+				AssetCategoryProperty::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"categoryPropertyId", AssetCategoryProperty::getCategoryPropertyId);
 		attributeSetterBiConsumers.put(
 			"categoryPropertyId",
@@ -397,6 +408,29 @@ public class AssetCategoryPropertyModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCtCollectionId) {
+			_setOriginalCtCollectionId = true;
+
+			_originalCtCollectionId = _ctCollectionId;
+		}
+
+		_ctCollectionId = ctCollectionId;
+	}
+
+	public long getOriginalCtCollectionId() {
+		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -608,6 +642,7 @@ public class AssetCategoryPropertyModelImpl
 			new AssetCategoryPropertyImpl();
 
 		assetCategoryPropertyImpl.setMvccVersion(getMvccVersion());
+		assetCategoryPropertyImpl.setCtCollectionId(getCtCollectionId());
 		assetCategoryPropertyImpl.setCategoryPropertyId(
 			getCategoryPropertyId());
 		assetCategoryPropertyImpl.setCompanyId(getCompanyId());
@@ -679,6 +714,11 @@ public class AssetCategoryPropertyModelImpl
 	public void resetOriginalValues() {
 		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl = this;
 
+		assetCategoryPropertyModelImpl._originalCtCollectionId =
+			assetCategoryPropertyModelImpl._ctCollectionId;
+
+		assetCategoryPropertyModelImpl._setOriginalCtCollectionId = false;
+
 		assetCategoryPropertyModelImpl._originalCompanyId =
 			assetCategoryPropertyModelImpl._companyId;
 
@@ -703,6 +743,8 @@ public class AssetCategoryPropertyModelImpl
 			new AssetCategoryPropertyCacheModel();
 
 		assetCategoryPropertyCacheModel.mvccVersion = getMvccVersion();
+
+		assetCategoryPropertyCacheModel.ctCollectionId = getCtCollectionId();
 
 		assetCategoryPropertyCacheModel.categoryPropertyId =
 			getCategoryPropertyId();
@@ -832,6 +874,9 @@ public class AssetCategoryPropertyModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
+	private long _originalCtCollectionId;
+	private boolean _setOriginalCtCollectionId;
 	private long _categoryPropertyId;
 	private long _companyId;
 	private long _originalCompanyId;

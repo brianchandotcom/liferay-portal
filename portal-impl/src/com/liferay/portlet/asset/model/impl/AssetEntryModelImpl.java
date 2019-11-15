@@ -80,20 +80,20 @@ public class AssetEntryModelImpl
 	public static final String TABLE_NAME = "AssetEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"entryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"classUuid", Types.VARCHAR}, {"classTypeId", Types.BIGINT},
-		{"listable", Types.BOOLEAN}, {"visible", Types.BOOLEAN},
-		{"startDate", Types.TIMESTAMP}, {"endDate", Types.TIMESTAMP},
-		{"publishDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
-		{"mimeType", Types.VARCHAR}, {"title", Types.VARCHAR},
-		{"description", Types.CLOB}, {"summary", Types.CLOB},
-		{"url", Types.VARCHAR}, {"layoutUuid", Types.VARCHAR},
-		{"height", Types.INTEGER}, {"width", Types.INTEGER},
-		{"priority", Types.DOUBLE}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"entryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"classUuid", Types.VARCHAR},
+		{"classTypeId", Types.BIGINT}, {"listable", Types.BOOLEAN},
+		{"visible", Types.BOOLEAN}, {"startDate", Types.TIMESTAMP},
+		{"endDate", Types.TIMESTAMP}, {"publishDate", Types.TIMESTAMP},
+		{"expirationDate", Types.TIMESTAMP}, {"mimeType", Types.VARCHAR},
+		{"title", Types.VARCHAR}, {"description", Types.CLOB},
+		{"summary", Types.CLOB}, {"url", Types.VARCHAR},
+		{"layoutUuid", Types.VARCHAR}, {"height", Types.INTEGER},
+		{"width", Types.INTEGER}, {"priority", Types.DOUBLE}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -101,6 +101,7 @@ public class AssetEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -130,7 +131,7 @@ public class AssetEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetEntry (mvccVersion LONG default 0 not null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,listable BOOLEAN,visible BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description TEXT null,summary TEXT null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE)";
+		"create table AssetEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,entryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,listable BOOLEAN,visible BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description TEXT null,summary TEXT null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE,primary key (entryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetEntry";
 
@@ -169,17 +170,19 @@ public class AssetEntryModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 8L;
 
-	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 16L;
+	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 16L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 32L;
+	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 32L;
 
-	public static final long LAYOUTUUID_COLUMN_BITMASK = 64L;
+	public static final long GROUPID_COLUMN_BITMASK = 64L;
 
-	public static final long PUBLISHDATE_COLUMN_BITMASK = 128L;
+	public static final long LAYOUTUUID_COLUMN_BITMASK = 128L;
 
-	public static final long VISIBLE_COLUMN_BITMASK = 256L;
+	public static final long PUBLISHDATE_COLUMN_BITMASK = 256L;
 
-	public static final long ENTRYID_COLUMN_BITMASK = 512L;
+	public static final long VISIBLE_COLUMN_BITMASK = 512L;
+
+	public static final long ENTRYID_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -195,6 +198,7 @@ public class AssetEntryModelImpl
 		AssetEntry model = new AssetEntryImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setEntryId(soapModel.getEntryId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -415,6 +419,11 @@ public class AssetEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<AssetEntry, Long>)AssetEntry::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", AssetEntry::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<AssetEntry, Long>)AssetEntry::setCtCollectionId);
 		attributeGetterFunctions.put("entryId", AssetEntry::getEntryId);
 		attributeSetterBiConsumers.put(
 			"entryId", (BiConsumer<AssetEntry, Long>)AssetEntry::setEntryId);
@@ -526,6 +535,29 @@ public class AssetEntryModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCtCollectionId) {
+			_setOriginalCtCollectionId = true;
+
+			_originalCtCollectionId = _ctCollectionId;
+		}
+
+		_ctCollectionId = ctCollectionId;
+	}
+
+	public long getOriginalCtCollectionId() {
+		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1426,6 +1458,7 @@ public class AssetEntryModelImpl
 		AssetEntryImpl assetEntryImpl = new AssetEntryImpl();
 
 		assetEntryImpl.setMvccVersion(getMvccVersion());
+		assetEntryImpl.setCtCollectionId(getCtCollectionId());
 		assetEntryImpl.setEntryId(getEntryId());
 		assetEntryImpl.setGroupId(getGroupId());
 		assetEntryImpl.setCompanyId(getCompanyId());
@@ -1514,6 +1547,11 @@ public class AssetEntryModelImpl
 	public void resetOriginalValues() {
 		AssetEntryModelImpl assetEntryModelImpl = this;
 
+		assetEntryModelImpl._originalCtCollectionId =
+			assetEntryModelImpl._ctCollectionId;
+
+		assetEntryModelImpl._setOriginalCtCollectionId = false;
+
 		assetEntryModelImpl._originalGroupId = assetEntryModelImpl._groupId;
 
 		assetEntryModelImpl._setOriginalGroupId = false;
@@ -1556,6 +1594,8 @@ public class AssetEntryModelImpl
 		AssetEntryCacheModel assetEntryCacheModel = new AssetEntryCacheModel();
 
 		assetEntryCacheModel.mvccVersion = getMvccVersion();
+
+		assetEntryCacheModel.ctCollectionId = getCtCollectionId();
 
 		assetEntryCacheModel.entryId = getEntryId();
 
@@ -1773,6 +1813,9 @@ public class AssetEntryModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
+	private long _originalCtCollectionId;
+	private boolean _setOriginalCtCollectionId;
 	private long _entryId;
 	private long _groupId;
 	private long _originalGroupId;

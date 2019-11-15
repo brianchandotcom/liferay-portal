@@ -125,6 +125,8 @@ public class AssetVocabularyPersistenceTest {
 
 		newAssetVocabulary.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAssetVocabulary.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newAssetVocabulary.setUuid(RandomTestUtil.randomString());
 
 		newAssetVocabulary.setExternalReferenceCode(
@@ -160,6 +162,9 @@ public class AssetVocabularyPersistenceTest {
 		Assert.assertEquals(
 			existingAssetVocabulary.getMvccVersion(),
 			newAssetVocabulary.getMvccVersion());
+		Assert.assertEquals(
+			existingAssetVocabulary.getCtCollectionId(),
+			newAssetVocabulary.getCtCollectionId());
 		Assert.assertEquals(
 			existingAssetVocabulary.getUuid(), newAssetVocabulary.getUuid());
 		Assert.assertEquals(
@@ -227,6 +232,13 @@ public class AssetVocabularyPersistenceTest {
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByCTCollectionId() throws Exception {
+		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCTCollectionId(0L);
 	}
 
 	@Test
@@ -306,12 +318,12 @@ public class AssetVocabularyPersistenceTest {
 
 	protected OrderByComparator<AssetVocabulary> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AssetVocabulary", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "vocabularyId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "name", true, "title",
-			true, "description", true, "settings", true, "lastPublishDate",
-			true);
+			"AssetVocabulary", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "externalReferenceCode", true, "vocabularyId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "name", true,
+			"title", true, "description", true, "settings", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -580,6 +592,8 @@ public class AssetVocabularyPersistenceTest {
 		AssetVocabulary assetVocabulary = _persistence.create(pk);
 
 		assetVocabulary.setMvccVersion(RandomTestUtil.nextLong());
+
+		assetVocabulary.setCtCollectionId(RandomTestUtil.nextLong());
 
 		assetVocabulary.setUuid(RandomTestUtil.randomString());
 

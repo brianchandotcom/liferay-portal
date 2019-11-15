@@ -80,10 +80,12 @@ public class AssetCategoryPropertyCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", categoryPropertyId=");
 		sb.append(categoryPropertyId);
 		sb.append(", companyId=");
@@ -113,6 +115,7 @@ public class AssetCategoryPropertyCacheModel
 			new AssetCategoryPropertyImpl();
 
 		assetCategoryPropertyImpl.setMvccVersion(mvccVersion);
+		assetCategoryPropertyImpl.setCtCollectionId(ctCollectionId);
 		assetCategoryPropertyImpl.setCategoryPropertyId(categoryPropertyId);
 		assetCategoryPropertyImpl.setCompanyId(companyId);
 		assetCategoryPropertyImpl.setUserId(userId);
@@ -163,6 +166,8 @@ public class AssetCategoryPropertyCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		categoryPropertyId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -180,6 +185,8 @@ public class AssetCategoryPropertyCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(categoryPropertyId);
 
@@ -215,6 +222,7 @@ public class AssetCategoryPropertyCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long categoryPropertyId;
 	public long companyId;
 	public long userId;

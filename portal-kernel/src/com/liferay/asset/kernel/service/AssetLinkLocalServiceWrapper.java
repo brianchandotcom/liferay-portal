@@ -14,7 +14,10 @@
 
 package com.liferay.asset.kernel.service;
 
+import com.liferay.asset.kernel.model.AssetLink;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link AssetLinkLocalService}.
@@ -39,9 +42,7 @@ public class AssetLinkLocalServiceWrapper
 	 * @return the asset link that was added
 	 */
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink addAssetLink(
-		com.liferay.asset.kernel.model.AssetLink assetLink) {
-
+	public AssetLink addAssetLink(AssetLink assetLink) {
 		return _assetLinkLocalService.addAssetLink(assetLink);
 	}
 
@@ -61,7 +62,7 @@ public class AssetLinkLocalServiceWrapper
 	 * @return the asset link
 	 */
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink addLink(
+	public AssetLink addLink(
 			long userId, long entryId1, long entryId2, int type, int weight)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -76,9 +77,7 @@ public class AssetLinkLocalServiceWrapper
 	 * @return the new asset link
 	 */
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink createAssetLink(
-		long linkId) {
-
+	public AssetLink createAssetLink(long linkId) {
 		return _assetLinkLocalService.createAssetLink(linkId);
 	}
 
@@ -89,9 +88,7 @@ public class AssetLinkLocalServiceWrapper
 	 * @return the asset link that was removed
 	 */
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink deleteAssetLink(
-		com.liferay.asset.kernel.model.AssetLink assetLink) {
-
+	public AssetLink deleteAssetLink(AssetLink assetLink) {
 		return _assetLinkLocalService.deleteAssetLink(assetLink);
 	}
 
@@ -103,7 +100,7 @@ public class AssetLinkLocalServiceWrapper
 	 * @throws PortalException if a asset link with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink deleteAssetLink(long linkId)
+	public AssetLink deleteAssetLink(long linkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetLinkLocalService.deleteAssetLink(linkId);
@@ -120,7 +117,7 @@ public class AssetLinkLocalServiceWrapper
 	 * @param link the asset link
 	 */
 	@Override
-	public void deleteLink(com.liferay.asset.kernel.model.AssetLink link) {
+	public void deleteLink(AssetLink link) {
 		_assetLinkLocalService.deleteLink(link);
 	}
 
@@ -259,9 +256,7 @@ public class AssetLinkLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink fetchAssetLink(
-		long linkId) {
-
+	public AssetLink fetchAssetLink(long linkId) {
 		return _assetLinkLocalService.fetchAssetLink(linkId);
 	}
 
@@ -280,7 +275,7 @@ public class AssetLinkLocalServiceWrapper
 	 * @throws PortalException if a asset link with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink getAssetLink(long linkId)
+	public AssetLink getAssetLink(long linkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetLinkLocalService.getAssetLink(linkId);
@@ -298,9 +293,7 @@ public class AssetLinkLocalServiceWrapper
 	 * @return the range of asset links
 	 */
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getAssetLinks(int start, int end) {
-
+	public java.util.List<AssetLink> getAssetLinks(int start, int end) {
 		return _assetLinkLocalService.getAssetLinks(start, end);
 	}
 
@@ -321,15 +314,13 @@ public class AssetLinkLocalServiceWrapper
 	 * @return the asset links whose first entry ID is the given entry ID
 	 */
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getDirectLinks(long entryId) {
-
+	public java.util.List<AssetLink> getDirectLinks(long entryId) {
 		return _assetLinkLocalService.getDirectLinks(entryId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getDirectLinks(long entryId, boolean excludeInvisibleLinks) {
+	public java.util.List<AssetLink> getDirectLinks(
+		long entryId, boolean excludeInvisibleLinks) {
 
 		return _assetLinkLocalService.getDirectLinks(
 			entryId, excludeInvisibleLinks);
@@ -349,16 +340,13 @@ public class AssetLinkLocalServiceWrapper
 	 the given entry ID
 	 */
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getDirectLinks(long entryId, int typeId) {
-
+	public java.util.List<AssetLink> getDirectLinks(long entryId, int typeId) {
 		return _assetLinkLocalService.getDirectLinks(entryId, typeId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getDirectLinks(
-			long entryId, int typeId, boolean excludeInvisibleLinks) {
+	public java.util.List<AssetLink> getDirectLinks(
+		long entryId, int typeId, boolean excludeInvisibleLinks) {
 
 		return _assetLinkLocalService.getDirectLinks(
 			entryId, typeId, excludeInvisibleLinks);
@@ -380,14 +368,12 @@ public class AssetLinkLocalServiceWrapper
 	 ID
 	 */
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetLink> getLinks(
-		long entryId) {
-
+	public java.util.List<AssetLink> getLinks(long entryId) {
 		return _assetLinkLocalService.getLinks(entryId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetLink> getLinks(
+	public java.util.List<AssetLink> getLinks(
 		long groupId, java.util.Date startDate, java.util.Date endDate,
 		int start, int end) {
 
@@ -409,9 +395,7 @@ public class AssetLinkLocalServiceWrapper
 	 entry ID is the given entry ID
 	 */
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetLink> getLinks(
-		long entryId, int typeId) {
-
+	public java.util.List<AssetLink> getLinks(long entryId, int typeId) {
 		return _assetLinkLocalService.getLinks(entryId, typeId);
 	}
 
@@ -423,9 +407,7 @@ public class AssetLinkLocalServiceWrapper
 	 * @return the asset links of the given entry params
 	 */
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetLink> getLinks(
-		long classNameId, long classPK) {
-
+	public java.util.List<AssetLink> getLinks(long classNameId, long classPK) {
 		return _assetLinkLocalService.getLinks(classNameId, classPK);
 	}
 
@@ -461,9 +443,7 @@ public class AssetLinkLocalServiceWrapper
 	 the given entry ID
 	 */
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getReverseLinks(long entryId, int typeId) {
-
+	public java.util.List<AssetLink> getReverseLinks(long entryId, int typeId) {
 		return _assetLinkLocalService.getReverseLinks(entryId, typeId);
 	}
 
@@ -474,14 +454,12 @@ public class AssetLinkLocalServiceWrapper
 	 * @return the asset link that was updated
 	 */
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink updateAssetLink(
-		com.liferay.asset.kernel.model.AssetLink assetLink) {
-
+	public AssetLink updateAssetLink(AssetLink assetLink) {
 		return _assetLinkLocalService.updateAssetLink(assetLink);
 	}
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink updateLink(
+	public AssetLink updateLink(
 			long userId, long entryId1, long entryId2, int typeId, int weight)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -518,6 +496,25 @@ public class AssetLinkLocalServiceWrapper
 
 		_assetLinkLocalService.updateLinks(
 			userId, entryId, linkEntryIds, typeId);
+	}
+
+	@Override
+	public CTPersistence<AssetLink> getCTPersistence() {
+		return _assetLinkLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<AssetLink> getModelClass() {
+		return _assetLinkLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<AssetLink>, R, E> updateUnsafeFunction)
+		throws E {
+
+		return _assetLinkLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

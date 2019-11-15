@@ -85,9 +85,10 @@ create table AnnouncementsFlag (
 
 create table AssetCategory (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	categoryId LONG not null primary key,
+	categoryId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -100,7 +101,8 @@ create table AssetCategory (
 	title STRING null,
 	description STRING null,
 	vocabularyId LONG,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (categoryId, ctCollectionId)
 );
 
 create table AssetEntries_AssetCategories (
@@ -119,7 +121,8 @@ create table AssetEntries_AssetTags (
 
 create table AssetEntry (
 	mvccVersion LONG default 0 not null,
-	entryId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	entryId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -144,12 +147,14 @@ create table AssetEntry (
 	layoutUuid VARCHAR(75) null,
 	height INTEGER,
 	width INTEGER,
-	priority DOUBLE
+	priority DOUBLE,
+	primary key (entryId, ctCollectionId)
 );
 
 create table AssetLink (
 	mvccVersion LONG default 0 not null,
-	linkId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	linkId LONG not null,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -157,13 +162,15 @@ create table AssetLink (
 	entryId1 LONG,
 	entryId2 LONG,
 	type_ INTEGER,
-	weight INTEGER
+	weight INTEGER,
+	primary key (linkId, ctCollectionId)
 );
 
 create table AssetTag (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	tagId LONG not null primary key,
+	tagId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -172,14 +179,16 @@ create table AssetTag (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	assetCount INTEGER,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (tagId, ctCollectionId)
 );
 
 create table AssetVocabulary (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	vocabularyId LONG not null primary key,
+	vocabularyId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -190,7 +199,8 @@ create table AssetVocabulary (
 	title STRING null,
 	description STRING null,
 	settings_ STRING null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (vocabularyId, ctCollectionId)
 );
 
 create table BrowserTracker (

@@ -124,6 +124,8 @@ public class AssetLinkPersistenceTest {
 
 		newAssetLink.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAssetLink.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newAssetLink.setCompanyId(RandomTestUtil.nextLong());
 
 		newAssetLink.setUserId(RandomTestUtil.nextLong());
@@ -148,6 +150,9 @@ public class AssetLinkPersistenceTest {
 		Assert.assertEquals(
 			existingAssetLink.getMvccVersion(), newAssetLink.getMvccVersion());
 		Assert.assertEquals(
+			existingAssetLink.getCtCollectionId(),
+			newAssetLink.getCtCollectionId());
+		Assert.assertEquals(
 			existingAssetLink.getLinkId(), newAssetLink.getLinkId());
 		Assert.assertEquals(
 			existingAssetLink.getCompanyId(), newAssetLink.getCompanyId());
@@ -166,6 +171,13 @@ public class AssetLinkPersistenceTest {
 			existingAssetLink.getType(), newAssetLink.getType());
 		Assert.assertEquals(
 			existingAssetLink.getWeight(), newAssetLink.getWeight());
+	}
+
+	@Test
+	public void testCountByCTCollectionId() throws Exception {
+		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCTCollectionId(0L);
 	}
 
 	@Test
@@ -240,9 +252,10 @@ public class AssetLinkPersistenceTest {
 
 	protected OrderByComparator<AssetLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AssetLink", "mvccVersion", true, "linkId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true, "entryId1",
-			true, "entryId2", true, "type", true, "weight", true);
+			"AssetLink", "mvccVersion", true, "ctCollectionId", true, "linkId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "entryId1", true, "entryId2", true, "type",
+			true, "weight", true);
 	}
 
 	@Test
@@ -478,6 +491,8 @@ public class AssetLinkPersistenceTest {
 		AssetLink assetLink = _persistence.create(pk);
 
 		assetLink.setMvccVersion(RandomTestUtil.nextLong());
+
+		assetLink.setCtCollectionId(RandomTestUtil.nextLong());
 
 		assetLink.setCompanyId(RandomTestUtil.nextLong());
 

@@ -167,6 +167,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			return widgetHTML;
 		}
 
+		FragmentEntryLink originalFragmentEntryLink = null;
+		OptionalLong segmentsExperienceIdOptionalLong = null;
+
 		for (Element element : document.select("*")) {
 			String tagName = element.tagName();
 
@@ -186,18 +189,23 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 						"there-is-no-widget-available-for-alias-x", alias));
 			}
 
-			FragmentEntryLink originalFragmentEntryLink =
-				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-					fragmentEntryLink.getOriginalFragmentEntryLinkId());
+			if (originalFragmentEntryLink == null) {
+				originalFragmentEntryLink =
+					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+						fragmentEntryLink.getOriginalFragmentEntryLinkId());
+			}
 
 			String id = element.attr("id");
 
 			String instanceId = _getInstanceId(
 				fragmentEntryLink.getNamespace(), id);
 
-			OptionalLong segmentsExperienceIdOptionalLong =
-				_getSegmentsExperienceIdOptional(
-					fragmentEntryProcessorContext.getSegmentsExperienceIds());
+			if (segmentsExperienceIdOptionalLong == null) {
+				segmentsExperienceIdOptionalLong =
+					_getSegmentsExperienceIdOptional(
+						fragmentEntryProcessorContext.
+							getSegmentsExperienceIds());
+			}
 
 			if (segmentsExperienceIdOptionalLong.isPresent()) {
 				instanceId =

@@ -24,7 +24,7 @@ import java.util.Locale;
  */
 public interface GroupItemSelectorProvider {
 
-	public int getGroupCount(long companyId, long groupId, String keywords);
+	public int getGroupsCount(long companyId, long groupId, String keywords);
 
 	public List<Group> getGroups(
 		long companyId, long groupId, String keywords, int start, int end);

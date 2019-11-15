@@ -87,7 +87,7 @@ public class GroupSelectorDisplayContextTest {
 		implements GroupItemSelectorProvider {
 
 		@Override
-		public int getGroupCount(
+		public int getGroupsCount(
 			long companyId, long groupId, String keywords) {
 
 			return 3;

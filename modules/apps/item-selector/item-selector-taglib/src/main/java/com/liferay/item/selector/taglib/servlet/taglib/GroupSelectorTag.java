@@ -127,7 +127,7 @@ public class GroupSelectorTag extends IncludeTag {
 		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
 		_groupsCount = groupSelectorProviderOptional.map(
-			groupSelectorProvider -> groupSelectorProvider.getGroupCount(
+			groupSelectorProvider -> groupSelectorProvider.getGroupsCount(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 				keywords)
 		).orElse(

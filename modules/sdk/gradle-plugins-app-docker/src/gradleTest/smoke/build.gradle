@@ -15,6 +15,20 @@ allprojects {
 	version = "1.0.0"
 
 	repositories {
+		File dir = rootProject.projectDir
+
+		while (dir != null) {
+			File tmpMavenRepositoryDir = new File(dir, ".m2-tmp")
+
+			if (tmpMavenRepositoryDir.exists()) {
+				maven {
+					url tmpMavenRepositoryDir
+				}
+			}
+
+			dir = dir.getParentFile();
+		}
+
 		maven {
 			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 		}

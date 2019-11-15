@@ -51,7 +51,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				var addAccountUserURL = Liferay.Util.PortletURL.createPortletURL(
 					itemData.addAccountUserURL,
 					{
-						accountEntryId: event.accountEntryId
+						accountEntryId: event.accountentryid
 					}
 				);
 

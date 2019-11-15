@@ -28,7 +28,7 @@ SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementTo
 	displayContext="<%= selectAccountEntryManagementToolbarDisplayContext %>"
 />
 
-<aui:container cssClass="container-fluid container-fluid-max-xl">
+<aui:container cssClass="container-fluid container-fluid-max-xl" id="selectAccountEntry">
 	<liferay-ui:search-container
 		searchContainer="<%= accountEntryDisplaySearchContainer %>"
 	>
@@ -67,32 +67,9 @@ SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementTo
 	</liferay-ui:search-container>
 </aui:container>
 
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />accountEntries'
+<aui:script>
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />selectAccountEntry',
+		'<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "addAccountUser") %>'
 	);
-
-	var searchContainerContentBox = searchContainer.get('contentBox');
-
-	searchContainerContentBox.delegate(
-		'click',
-		function(event) {
-			var node = event.currentTarget;
-
-			<portlet:namespace/>closePopup(node.getData('accountentryid'));
-		},
-		'.choose-account'
-	);
-
-	function <portlet:namespace/>closePopup(accountEntryId) {
-		var Util = Liferay.Util;
-
-		var openingLiferay = Util.getOpener().Liferay;
-
-		openingLiferay.fire('<portlet:namespace/>addNewAccountUser', {
-			accountEntryId: accountEntryId
-		});
-
-		Util.getWindow().hide();
-	}
 </aui:script>

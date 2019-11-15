@@ -22,6 +22,7 @@ import com.liferay.batch.engine.configuration.BatchEngineImportTaskConfiguration
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.internal.util.ParametersUtil;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
@@ -36,22 +37,18 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
-import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -147,31 +144,6 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			_file.getExtension(zipEntry.getName()));
 	}
 
-	private Map<String, Serializable> _getParameters() {
-		Map<String, Serializable> parameters = new HashMap<>();
-
-		MultivaluedMap<String, String> queryParameters =
-			contextUriInfo.getQueryParameters();
-
-		for (Map.Entry<String, List<String>> entry :
-				queryParameters.entrySet()) {
-
-			String key = entry.getKey();
-
-			if (_ignoredParameters.contains(key)) {
-				continue;
-			}
-
-			List<String> values = entry.getValue();
-
-			if (!values.isEmpty()) {
-				parameters.put(key, values.get(0));
-			}
-		}
-
-		return parameters;
-	}
-
 	private ImportTask _importFile(
 			BatchEngineTaskOperation batchEngineTaskOperation,
 			BinaryFile binaryFile, String callbackURL, String className,
@@ -213,7 +185,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				StringUtil.upperCase(extension),
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				_toMap(fieldNameMappingString), batchEngineTaskOperation.name(),
-				_getParameters(), version);
+				ParametersUtil.toParameters(contextUriInfo, _ignoredParameters),
+				version);
 
 		executorService.submit(
 			() -> _batchEngineImportTaskExecutor.execute(

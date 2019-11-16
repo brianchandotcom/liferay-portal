@@ -46,9 +46,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Message#SUCCESS");
 
 		if (isSet(openGraph)) {
-			Navigator.gotoNavTab(navTab = "SEO");
-
-			Panel.expandPanel(panel = "SEO");
+			Navigator.gotoNavTab(navTab = "Open Graph");
 
 			var checkboxName = "Use Custom Title";
 

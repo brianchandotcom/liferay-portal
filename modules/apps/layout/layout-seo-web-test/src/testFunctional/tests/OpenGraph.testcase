@@ -46,9 +46,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page Name");
 
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		Panel.expandPanel(panel = "SEO");
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			customDescription = "This is a custom description",
@@ -57,11 +55,9 @@ definition {
 			pageName = "Test Page Name",
 			uploadFileName = "Document_1.jpg");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
+		Click(locator1 = "ControlMenu#EDIT_COG");
 
-		Navigator.gotoNavTab(navTab = "SEO");
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		var customImageURL = selenium.getAttribute("TextInput#OPEN_GRAPH_CUSTOM_IMAGE_VALUE");
 
@@ -86,9 +82,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page Name");
 
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		Panel.expandPanel(panel = "SEO");
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			customDescription = '''description@#$%^&amp;*()~`1234567890''',
@@ -137,9 +131,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page Name");
 
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		Panel.expandPanel(panel = "SEO");
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			customDescription = "This is a custom description",
@@ -148,11 +140,9 @@ definition {
 			pageName = "Test Page Name",
 			uploadFileName = "Document_1.jpg");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
+		Click(locator1 = "ControlMenu#EDIT_COG");
 
-		Navigator.gotoNavTab(navTab = "SEO");
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			customDescription = "This is a custom description edit",
@@ -161,11 +151,9 @@ definition {
 			pageName = "Test Page Name",
 			uploadFileName = "Document_2.jpg");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
+		Click(locator1 = "ControlMenu#EDIT_COG");
 
-		Navigator.gotoNavTab(navTab = "SEO");
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		var customImageURL = selenium.getAttribute("TextInput#OPEN_GRAPH_CUSTOM_IMAGE_VALUE");
 
@@ -190,9 +178,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page Name");
 
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		Panel.expandPanel(panel = "SEO");
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		OpenGraph.configureOpenGraph(customTitle = "This is a custom title");
 
@@ -210,13 +196,13 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page Name");
 
-		Navigator.gotoNavTab(navTab = "SEO");
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		Click(
 			checkboxName = "Use Custom Title",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		PortletEntry.save();
+		Button.click(button = "Save");
 
 		User.logoutPG();
 
@@ -237,9 +223,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page Name");
 
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		Panel.expandPanel(panel = "SEO");
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		OpenGraph.viewDefaultConfiguration();
 
@@ -277,7 +261,7 @@ definition {
 
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a new title","og:description" content="This is a new description"''');
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:url" content="http://localhost:8080/web/test-site-name","og:locale" content="en_US","og:locale:alternate" content="en_US","og:site_name" content="Test Site Name"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:url" content="http://localhost:8080/web/test-site-name/test-new-page","og:locale" content="en_US","og:locale:alternate" content="en_US","og:site_name" content="Test Site Name"''');
 	}
 
 }

@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
@@ -280,7 +281,9 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			long id, String xml, Locale defaultSiteLocale) {
 
 			_id = id;
+
 			_xml = xml;
+
 			_defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
 				_xml, defaultSiteLocale);
 		}
@@ -295,7 +298,6 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 				sb.append("' where id_ = ");
 				sb.append(_id);
 
-				runSQL(connection, sb.toString());
 				runSQL(connection, sb.toString());
 			}
 			catch (Exception e) {
@@ -329,8 +331,6 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			_description = description;
 			_defaultLanguageId = defaultLanguageId;
 			_sql = sql;
-
-			_preparedStatement = connection.prepareStatement(_sql);
 		}
 
 		@Override
@@ -345,49 +345,54 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			locales.addAll(titleMap.keySet());
 			locales.addAll(descriptionMap.keySet());
 
-			for (Locale locale : locales) {
-				String localizedTitle = titleMap.get(locale);
-				String localizedDescription = descriptionMap.get(locale);
+			try (PreparedStatement ps =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection, _sql)) {
 
-				if ((localizedTitle != null) &&
-					(localizedTitle.length() > _MAX_LENGTH_TITLE)) {
+				for (Locale locale : locales) {
+					String localizedTitle = titleMap.get(locale);
+					String localizedDescription = descriptionMap.get(locale);
 
-					localizedTitle = StringUtil.shorten(
-						localizedTitle, _MAX_LENGTH_TITLE);
+					if ((localizedTitle != null) &&
+						(localizedTitle.length() > _MAX_LENGTH_TITLE)) {
 
-					_log(_id, "title");
-				}
+						localizedTitle = StringUtil.shorten(
+							localizedTitle, _MAX_LENGTH_TITLE);
 
-				if (localizedDescription != null) {
-					String safeLocalizedDescription = _truncate(
-						localizedDescription, _MAX_LENGTH_DESCRIPTION);
-
-					if (localizedDescription != safeLocalizedDescription) {
-						_log(_id, "description");
+						_log(_id, "title");
 					}
 
-					localizedDescription = safeLocalizedDescription;
+					if (localizedDescription != null) {
+						String safeLocalizedDescription = _truncate(
+							localizedDescription, _MAX_LENGTH_DESCRIPTION);
+
+						if (localizedDescription != safeLocalizedDescription) {
+							_log(_id, "description");
+						}
+
+						localizedDescription = safeLocalizedDescription;
+					}
+
+					ps.setLong(1, _increment());
+					ps.setLong(2, _companyId);
+					ps.setLong(3, _id);
+					ps.setString(4, localizedTitle);
+					ps.setString(5, localizedDescription);
+					ps.setString(6, LocaleUtil.toLanguageId(locale));
+
+					ps.addBatch();
 				}
 
-				_preparedStatement.setLong(1, _increment());
-				_preparedStatement.setLong(2, _companyId);
-				_preparedStatement.setLong(3, _id);
-				_preparedStatement.setString(4, localizedTitle);
-				_preparedStatement.setString(5, localizedDescription);
-				_preparedStatement.setString(
-					6, LocaleUtil.toLanguageId(locale));
+				try {
+					ps.executeBatch();
+				}
+				catch (Exception e) {
+					_log.error(
+						"Unable to update localized fields for article " + _id,
+						e);
 
-				_preparedStatement.addBatch();
-			}
-
-			try {
-				_preparedStatement.executeBatch();
-			}
-			catch (Exception e) {
-				_log.error(
-					"Unable to update localized fields for article " + _id, e);
-
-				return false;
+					return false;
+				}
 			}
 
 			return true;
@@ -397,7 +402,6 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		private final String _defaultLanguageId;
 		private final String _description;
 		private final long _id;
-		private final PreparedStatement _preparedStatement;
 		private final String _sql;
 		private final String _title;
 

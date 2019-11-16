@@ -85,13 +85,13 @@ public class JSPCheckstyleUtil {
 			}
 
 			if (i == 0) {
-				sb.append("public class Test {public void method() {");
+				sb.append("public class Test { public void method() {");
 			}
 
 			sb.append("\n");
 		}
 
-		sb.append("}}\n");
+		sb.append("} }\n");
 
 		return sb.toString();
 	}

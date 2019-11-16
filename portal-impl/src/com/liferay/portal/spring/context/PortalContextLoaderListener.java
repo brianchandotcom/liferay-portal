@@ -107,6 +107,11 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
+		ApplicationContext applicationContext =
+			ContextLoader.getCurrentWebApplicationContext();
+
+		ModuleFrameworkUtilAdapter.unregisterContext(applicationContext);
+
 		ThreadLocalCacheManager.destroy();
 
 		if (_serviceWrapperRegistry != null) {

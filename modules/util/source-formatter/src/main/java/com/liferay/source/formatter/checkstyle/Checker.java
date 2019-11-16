@@ -186,21 +186,26 @@ public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 
 	private SortedSet<LocalizedMessage> _processContent(
 			String fileName, String content, List<AbstractCheck> checks)
-		throws CheckstyleException, IOException {
+		throws IOException {
 
 		FileText fileText = new FileText(
 			new File(fileName), CheckstyleUtil.getLines(content));
 
 		FileContents fileContents = new FileContents(fileText);
 
-		DetailAST rootDetailAST = JavaParser.parse(fileContents);
+		try {
+			DetailAST rootDetailAST = JavaParser.parse(fileContents);
 
-		return _walk(rootDetailAST, fileContents, checks);
+			return _walk(rootDetailAST, fileContents, checks);
+		}
+		catch (CheckstyleException ce) {
+			return new TreeSet<>();
+		}
 	}
 
 	private void _processFileContents(
 			List<String[]> fileContents, List<AbstractCheck> checks)
-		throws CheckstyleException, IOException {
+		throws IOException {
 
 		for (String[] fileContentArray : fileContents) {
 			String content = fileContentArray[1];

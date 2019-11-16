@@ -53,7 +53,7 @@ ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay = (Configurati
 
 							<%
 							for (ConfigurationEntry curConfigurationEntry : configurationEntries) {
-								String cssClass = configurationEntry.equals(curConfigurationEntry) ? "active nav-link": "nav-link";
+								String cssClass = configurationEntry.equals(curConfigurationEntry) ? "active nav-link" : "nav-link";
 							%>
 
 								<li>

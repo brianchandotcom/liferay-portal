@@ -277,7 +277,7 @@ if (fixedHeader) {
 							String columnClassName = entry.getCssClass();
 
 							if (!Validator.isBlank(entry.getAlign())) {
-								columnClassName += " text-"+ entry.getAlign();
+								columnClassName += " text-" + entry.getAlign();
 							}
 
 							if (!Validator.isBlank(entry.getValign())) {

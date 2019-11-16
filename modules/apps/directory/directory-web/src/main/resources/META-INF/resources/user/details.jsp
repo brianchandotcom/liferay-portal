@@ -27,8 +27,8 @@ if (!organizations.isEmpty()) {
 	organizationsHTML = organizations.get(0).getName();
 }
 
-for (int i = 1; i<organizations.size(); i++) {
-	organizationsHTML += ", "+ organizations.get(i).getName();
+for (int i = 1; i < organizations.size(); i++) {
+	organizationsHTML += ", " + organizations.get(i).getName();
 }
 %>
 

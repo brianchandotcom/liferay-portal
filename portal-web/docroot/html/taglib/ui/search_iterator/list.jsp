@@ -86,7 +86,7 @@ if (iteratorURL != null) {
 					}
 
 					if (Validator.isNull(normalizedHeaderName)) {
-						normalizedHeaderName = String.valueOf(i +1);
+						normalizedHeaderName = String.valueOf(i + 1);
 					}
 
 					String orderKey = null;

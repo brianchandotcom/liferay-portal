@@ -106,7 +106,7 @@ for (int i = 0; i < results.size(); i++) {
 		if (Validator.isNotNull(portletResource)) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 
-			if ((portlet!= null) && panelCategoryHelper.containsPortlet(portlet.getPortletId(), PanelCategoryKeys.SITE_ADMINISTRATION)) {
+			if ((portlet != null) && panelCategoryHelper.containsPortlet(portlet.getPortletId(), PanelCategoryKeys.SITE_ADMINISTRATION)) {
 				supportsFilterByGroup = true;
 			}
 		}

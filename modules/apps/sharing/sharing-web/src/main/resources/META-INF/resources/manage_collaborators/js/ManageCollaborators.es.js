@@ -34,11 +34,13 @@ const ManageCollaborators = ({
 	actionUrl,
 	classNameId,
 	classPK,
+	collaborators,
 	dialogId,
-	initialCollaborators,
 	portletNamespace
 }) => {
-	const [collaborators, setCollaborators] = useState(initialCollaborators);
+	const [currentCollaborators, setCurrentCollaborators] = useState(
+		collaborators
+	);
 	const [deleteSharingEntryIds, setDeleteSharingEntryIds] = useState([]);
 	const [expirationDateError, setExpirationDateError] = useState(false);
 	const [expandedCollaboratorId, setExpandedCollaboratorId] = useState(1234);
@@ -85,7 +87,7 @@ const ManageCollaborators = ({
 	};
 
 	const findExpirationDateError = () => {
-		const collaborator = collaborators.find(
+		const collaborator = currentCollaborators.find(
 			collaborator =>
 				collaborator.sharingEntryExpirationDateError === true
 		);
@@ -96,7 +98,7 @@ const ManageCollaborators = ({
 	const getCollaborator = collaboratorId => {
 		const collaboratorIdNumber = Number(collaboratorId);
 
-		const collaborator = collaborators.find(
+		const collaborator = currentCollaborators.find(
 			collaborator => collaborator.userId === collaboratorIdNumber
 		);
 
@@ -138,8 +140,8 @@ const ManageCollaborators = ({
 
 		event.stopPropagation();
 
-		setCollaborators(
-			collaborators.filter(
+		setCurrentCollaborators(
+			currentCollaborators.filter(
 				collaborator => collaborator.userId != collaboratorId
 			)
 		);
@@ -283,8 +285,8 @@ const ManageCollaborators = ({
 	};
 
 	const setCollaborator = updatedCollaborator => {
-		setCollaborators(
-			collaborators.map(collaborator => {
+		setCurrentCollaborators(
+			currentCollaborators.map(collaborator => {
 				if (collaborator.userId === updatedCollaborator.userId) {
 					return {
 						...collaborator,
@@ -503,7 +505,7 @@ const ManageCollaborators = ({
 	return (
 		<>
 			<div>
-				{collaborators.length ? (
+				{currentCollaborators.length ? (
 					<>
 						{expirationDateError && (
 							<ClayAlert
@@ -520,7 +522,7 @@ const ManageCollaborators = ({
 							</ClayAlert>
 						)}
 						<ul className="list-group">
-							{collaborators.map(collaborator => {
+							{currentCollaborators.map(collaborator => {
 								return (
 									<Collaborator
 										{...collaborator}
@@ -576,8 +578,8 @@ ManageCollaborators.propTypes = {
 	actionUrl: PropTypes.string.isRequired,
 	classNameId: PropTypes.string,
 	classPK: PropTypes.string,
+	collaborators: PropTypes.array.isRequired,
 	dialogId: PropTypes.string.isRequired,
-	initialCollaborators: PropTypes.array.isRequired,
 	portletNamespace: PropTypes.string
 };
 

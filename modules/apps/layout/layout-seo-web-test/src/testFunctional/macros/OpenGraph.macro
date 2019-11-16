@@ -40,27 +40,25 @@ definition {
 
 			SelectFrameTop(value1 = "relative=top");
 
-			PortletEntry.save();
+			Button.click(button = "Save");
 
-			Click(
-				key_pageName = "${pageName}",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			Click(locator1 = "ControlMenu#EDIT_COG");
 
-			MenuItem.click(menuItem = "Configure");
+			Navigator.gotoNavTab(navTab = "Open Graph");
 
 			AssertElementPresent(
 				key_dmDocumentURL = "${uploadFileName}",
 				locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_INPUT");
 		}
 
-		PortletEntry.save();
+		Button.click(button = "Save");
 	}
 
 	macro viewDefaultConfiguration {
 		task ("Assert open graph title") {
 			AssertTextEquals(
 				key_title = "Open Graph",
-				locator1 = "Header#H4_TITLE",
+				locator1 = "Header#H2_TITLE",
 				value1 = "Open Graph");
 		}
 
@@ -90,7 +88,7 @@ definition {
 				locator1 = "FormFields#LABEL",
 				value1 = "Image");
 
-			AssertElementPresent(locator1 = "Button#SELECT");
+			AssertElementPresent(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");
 		}
 	}
 

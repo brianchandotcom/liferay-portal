@@ -22,8 +22,8 @@ Map<String, Object> data = new HashMap<>();
 data.put("actionUrl", request.getAttribute("actionUrl"));
 data.put("classNameId", request.getAttribute("classNameId"));
 data.put("classPK", request.getAttribute("classPK"));
+data.put("collaborators", request.getAttribute("collaborators"));
 data.put("dialogId", request.getAttribute("dialogId"));
-data.put("initialCollaborators", request.getAttribute("initialCollaborators"));
 data.put("portletNamespace", request.getAttribute("portletNamespace"));
 %>
 

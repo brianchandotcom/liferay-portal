@@ -81,13 +81,15 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		long classPK = ParamUtil.getLong(renderRequest, "classPK");
 
 		renderRequest.setAttribute("classPK", classPK);
+
+		renderRequest.setAttribute(
+			"collaborators",
+			_getCollaboratorsJSONArray(classNameId, classPK, renderRequest));
+
 		renderRequest.setAttribute(
 			"dialogId",
 			ParamUtil.getString(
 				renderRequest, SharingWebKeys.MANAGE_COLLABORATORS_DIALOG_ID));
-		renderRequest.setAttribute(
-			"initialCollaborators",
-			_getCollaboratorsJSONArray(classNameId, classPK, renderRequest));
 		renderRequest.setAttribute(
 			"portletNamespace", renderResponse.getNamespace());
 

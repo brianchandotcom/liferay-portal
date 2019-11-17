@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.item.selector.test;
+package com.liferay.depot.web.internal.item.selector.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class GroupItemSelectorProviderTest {
+public class GroupItemSelectorProviderImplTest {
 
 	@ClassRule
 	@Rule

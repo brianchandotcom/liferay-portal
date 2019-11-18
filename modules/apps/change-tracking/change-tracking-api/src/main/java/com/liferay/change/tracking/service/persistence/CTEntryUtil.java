@@ -484,291 +484,6 @@ public class CTEntryUtil {
 	}
 
 	/**
-	 * Returns all the ct entries where ctCollectionId &ne; &#63; and modelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPK the model class pk
-	 * @return the matching ct entries
-	 */
-	public static List<CTEntry> findByNotC_MCPK(
-		long ctCollectionId, long modelClassPK) {
-
-		return getPersistence().findByNotC_MCPK(ctCollectionId, modelClassPK);
-	}
-
-	/**
-	 * Returns a range of all the ct entries where ctCollectionId &ne; &#63; and modelClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPK the model class pk
-	 * @param start the lower bound of the range of ct entries
-	 * @param end the upper bound of the range of ct entries (not inclusive)
-	 * @return the range of matching ct entries
-	 */
-	public static List<CTEntry> findByNotC_MCPK(
-		long ctCollectionId, long modelClassPK, int start, int end) {
-
-		return getPersistence().findByNotC_MCPK(
-			ctCollectionId, modelClassPK, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ct entries where ctCollectionId &ne; &#63; and modelClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPK the model class pk
-	 * @param start the lower bound of the range of ct entries
-	 * @param end the upper bound of the range of ct entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ct entries
-	 */
-	public static List<CTEntry> findByNotC_MCPK(
-		long ctCollectionId, long modelClassPK, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator) {
-
-		return getPersistence().findByNotC_MCPK(
-			ctCollectionId, modelClassPK, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the ct entries where ctCollectionId &ne; &#63; and modelClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPK the model class pk
-	 * @param start the lower bound of the range of ct entries
-	 * @param end the upper bound of the range of ct entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ct entries
-	 */
-	public static List<CTEntry> findByNotC_MCPK(
-		long ctCollectionId, long modelClassPK, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
-
-		return getPersistence().findByNotC_MCPK(
-			ctCollectionId, modelClassPK, start, end, orderByComparator,
-			useFinderCache);
-	}
-
-	/**
-	 * Returns the first ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPK the model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	public static CTEntry findByNotC_MCPK_First(
-			long ctCollectionId, long modelClassPK,
-			OrderByComparator<CTEntry> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchEntryException {
-
-		return getPersistence().findByNotC_MCPK_First(
-			ctCollectionId, modelClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the first ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPK the model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	public static CTEntry fetchByNotC_MCPK_First(
-		long ctCollectionId, long modelClassPK,
-		OrderByComparator<CTEntry> orderByComparator) {
-
-		return getPersistence().fetchByNotC_MCPK_First(
-			ctCollectionId, modelClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPK the model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	public static CTEntry findByNotC_MCPK_Last(
-			long ctCollectionId, long modelClassPK,
-			OrderByComparator<CTEntry> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchEntryException {
-
-		return getPersistence().findByNotC_MCPK_Last(
-			ctCollectionId, modelClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPK the model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	public static CTEntry fetchByNotC_MCPK_Last(
-		long ctCollectionId, long modelClassPK,
-		OrderByComparator<CTEntry> orderByComparator) {
-
-		return getPersistence().fetchByNotC_MCPK_Last(
-			ctCollectionId, modelClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassPK = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPK the model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	public static CTEntry[] findByNotC_MCPK_PrevAndNext(
-			long ctEntryId, long ctCollectionId, long modelClassPK,
-			OrderByComparator<CTEntry> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchEntryException {
-
-		return getPersistence().findByNotC_MCPK_PrevAndNext(
-			ctEntryId, ctCollectionId, modelClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns all the ct entries where ctCollectionId &ne; &#63; and modelClassPK = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPKs the model class pks
-	 * @return the matching ct entries
-	 */
-	public static List<CTEntry> findByNotC_MCPK(
-		long ctCollectionId, long[] modelClassPKs) {
-
-		return getPersistence().findByNotC_MCPK(ctCollectionId, modelClassPKs);
-	}
-
-	/**
-	 * Returns a range of all the ct entries where ctCollectionId &ne; &#63; and modelClassPK = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPKs the model class pks
-	 * @param start the lower bound of the range of ct entries
-	 * @param end the upper bound of the range of ct entries (not inclusive)
-	 * @return the range of matching ct entries
-	 */
-	public static List<CTEntry> findByNotC_MCPK(
-		long ctCollectionId, long[] modelClassPKs, int start, int end) {
-
-		return getPersistence().findByNotC_MCPK(
-			ctCollectionId, modelClassPKs, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ct entries where ctCollectionId &ne; &#63; and modelClassPK = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPKs the model class pks
-	 * @param start the lower bound of the range of ct entries
-	 * @param end the upper bound of the range of ct entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ct entries
-	 */
-	public static List<CTEntry> findByNotC_MCPK(
-		long ctCollectionId, long[] modelClassPKs, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator) {
-
-		return getPersistence().findByNotC_MCPK(
-			ctCollectionId, modelClassPKs, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the ct entries where ctCollectionId &ne; &#63; and modelClassPK = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPK the model class pk
-	 * @param start the lower bound of the range of ct entries
-	 * @param end the upper bound of the range of ct entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ct entries
-	 */
-	public static List<CTEntry> findByNotC_MCPK(
-		long ctCollectionId, long[] modelClassPKs, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
-
-		return getPersistence().findByNotC_MCPK(
-			ctCollectionId, modelClassPKs, start, end, orderByComparator,
-			useFinderCache);
-	}
-
-	/**
-	 * Removes all the ct entries where ctCollectionId &ne; &#63; and modelClassPK = &#63; from the database.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPK the model class pk
-	 */
-	public static void removeByNotC_MCPK(
-		long ctCollectionId, long modelClassPK) {
-
-		getPersistence().removeByNotC_MCPK(ctCollectionId, modelClassPK);
-	}
-
-	/**
-	 * Returns the number of ct entries where ctCollectionId &ne; &#63; and modelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPK the model class pk
-	 * @return the number of matching ct entries
-	 */
-	public static int countByNotC_MCPK(long ctCollectionId, long modelClassPK) {
-		return getPersistence().countByNotC_MCPK(ctCollectionId, modelClassPK);
-	}
-
-	/**
-	 * Returns the number of ct entries where ctCollectionId &ne; &#63; and modelClassPK = any &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassPKs the model class pks
-	 * @return the number of matching ct entries
-	 */
-	public static int countByNotC_MCPK(
-		long ctCollectionId, long[] modelClassPKs) {
-
-		return getPersistence().countByNotC_MCPK(ctCollectionId, modelClassPKs);
-	}
-
-	/**
 	 * Returns the ct entry where ctCollectionId = &#63; and modelClassNameId = &#63; and modelClassPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -846,6 +561,321 @@ public class CTEntryUtil {
 
 		return getPersistence().countByC_MCNI_MCPK(
 			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
+	/**
+	 * Returns all the ct entries where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPK the model class pk
+	 * @return the matching ct entries
+	 */
+	public static List<CTEntry> findByNotC_MCNI_MCPK(
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+
+		return getPersistence().findByNotC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
+	/**
+	 * Returns a range of all the ct entries where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPK the model class pk
+	 * @param start the lower bound of the range of ct entries
+	 * @param end the upper bound of the range of ct entries (not inclusive)
+	 * @return the range of matching ct entries
+	 */
+	public static List<CTEntry> findByNotC_MCNI_MCPK(
+		long ctCollectionId, long modelClassNameId, long modelClassPK,
+		int start, int end) {
+
+		return getPersistence().findByNotC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPK, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct entries where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPK the model class pk
+	 * @param start the lower bound of the range of ct entries
+	 * @param end the upper bound of the range of ct entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ct entries
+	 */
+	public static List<CTEntry> findByNotC_MCNI_MCPK(
+		long ctCollectionId, long modelClassNameId, long modelClassPK,
+		int start, int end, OrderByComparator<CTEntry> orderByComparator) {
+
+		return getPersistence().findByNotC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPK, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct entries where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPK the model class pk
+	 * @param start the lower bound of the range of ct entries
+	 * @param end the upper bound of the range of ct entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ct entries
+	 */
+	public static List<CTEntry> findByNotC_MCNI_MCPK(
+		long ctCollectionId, long modelClassNameId, long modelClassPK,
+		int start, int end, OrderByComparator<CTEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByNotC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPK, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPK the model class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ct entry
+	 * @throws NoSuchEntryException if a matching ct entry could not be found
+	 */
+	public static CTEntry findByNotC_MCNI_MCPK_First(
+			long ctCollectionId, long modelClassNameId, long modelClassPK,
+			OrderByComparator<CTEntry> orderByComparator)
+		throws com.liferay.change.tracking.exception.NoSuchEntryException {
+
+		return getPersistence().findByNotC_MCNI_MCPK_First(
+			ctCollectionId, modelClassNameId, modelClassPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the first ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPK the model class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ct entry, or <code>null</code> if a matching ct entry could not be found
+	 */
+	public static CTEntry fetchByNotC_MCNI_MCPK_First(
+		long ctCollectionId, long modelClassNameId, long modelClassPK,
+		OrderByComparator<CTEntry> orderByComparator) {
+
+		return getPersistence().fetchByNotC_MCNI_MCPK_First(
+			ctCollectionId, modelClassNameId, modelClassPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPK the model class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ct entry
+	 * @throws NoSuchEntryException if a matching ct entry could not be found
+	 */
+	public static CTEntry findByNotC_MCNI_MCPK_Last(
+			long ctCollectionId, long modelClassNameId, long modelClassPK,
+			OrderByComparator<CTEntry> orderByComparator)
+		throws com.liferay.change.tracking.exception.NoSuchEntryException {
+
+		return getPersistence().findByNotC_MCNI_MCPK_Last(
+			ctCollectionId, modelClassNameId, modelClassPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPK the model class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
+	 */
+	public static CTEntry fetchByNotC_MCNI_MCPK_Last(
+		long ctCollectionId, long modelClassNameId, long modelClassPK,
+		OrderByComparator<CTEntry> orderByComparator) {
+
+		return getPersistence().fetchByNotC_MCNI_MCPK_Last(
+			ctCollectionId, modelClassNameId, modelClassPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the ct entries before and after the current ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
+	 *
+	 * @param ctEntryId the primary key of the current ct entry
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPK the model class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ct entry
+	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
+	 */
+	public static CTEntry[] findByNotC_MCNI_MCPK_PrevAndNext(
+			long ctEntryId, long ctCollectionId, long modelClassNameId,
+			long modelClassPK, OrderByComparator<CTEntry> orderByComparator)
+		throws com.liferay.change.tracking.exception.NoSuchEntryException {
+
+		return getPersistence().findByNotC_MCNI_MCPK_PrevAndNext(
+			ctEntryId, ctCollectionId, modelClassNameId, modelClassPK,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the ct entries where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPKs the model class pks
+	 * @return the matching ct entries
+	 */
+	public static List<CTEntry> findByNotC_MCNI_MCPK(
+		long ctCollectionId, long modelClassNameId, long[] modelClassPKs) {
+
+		return getPersistence().findByNotC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPKs);
+	}
+
+	/**
+	 * Returns a range of all the ct entries where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPKs the model class pks
+	 * @param start the lower bound of the range of ct entries
+	 * @param end the upper bound of the range of ct entries (not inclusive)
+	 * @return the range of matching ct entries
+	 */
+	public static List<CTEntry> findByNotC_MCNI_MCPK(
+		long ctCollectionId, long modelClassNameId, long[] modelClassPKs,
+		int start, int end) {
+
+		return getPersistence().findByNotC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPKs, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct entries where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPKs the model class pks
+	 * @param start the lower bound of the range of ct entries
+	 * @param end the upper bound of the range of ct entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ct entries
+	 */
+	public static List<CTEntry> findByNotC_MCNI_MCPK(
+		long ctCollectionId, long modelClassNameId, long[] modelClassPKs,
+		int start, int end, OrderByComparator<CTEntry> orderByComparator) {
+
+		return getPersistence().findByNotC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPKs, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct entries where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPK the model class pk
+	 * @param start the lower bound of the range of ct entries
+	 * @param end the upper bound of the range of ct entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ct entries
+	 */
+	public static List<CTEntry> findByNotC_MCNI_MCPK(
+		long ctCollectionId, long modelClassNameId, long[] modelClassPKs,
+		int start, int end, OrderByComparator<CTEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByNotC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPKs, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the ct entries where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63; from the database.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPK the model class pk
+	 */
+	public static void removeByNotC_MCNI_MCPK(
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+
+		getPersistence().removeByNotC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
+	/**
+	 * Returns the number of ct entries where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPK the model class pk
+	 * @return the number of matching ct entries
+	 */
+	public static int countByNotC_MCNI_MCPK(
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+
+		return getPersistence().countByNotC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
+	/**
+	 * Returns the number of ct entries where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = any &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param modelClassNameId the model class name ID
+	 * @param modelClassPKs the model class pks
+	 * @return the number of matching ct entries
+	 */
+	public static int countByNotC_MCNI_MCPK(
+		long ctCollectionId, long modelClassNameId, long[] modelClassPKs) {
+
+		return getPersistence().countByNotC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPKs);
 	}
 
 	/**

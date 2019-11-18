@@ -193,27 +193,28 @@ public class CTEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByNotC_MCPK() throws Exception {
-		_persistence.countByNotC_MCPK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-
-		_persistence.countByNotC_MCPK(0L, 0L);
-	}
-
-	@Test
-	public void testCountByNotC_MCPKArrayable() throws Exception {
-		_persistence.countByNotC_MCPK(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L});
-	}
-
-	@Test
 	public void testCountByC_MCNI_MCPK() throws Exception {
 		_persistence.countByC_MCNI_MCPK(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
 		_persistence.countByC_MCNI_MCPK(0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByNotC_MCNI_MCPK() throws Exception {
+		_persistence.countByNotC_MCNI_MCPK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByNotC_MCNI_MCPK(0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByNotC_MCNI_MCPKArrayable() throws Exception {
+		_persistence.countByNotC_MCNI_MCPK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			new long[] {RandomTestUtil.nextLong(), 0L});
 	}
 
 	@Test

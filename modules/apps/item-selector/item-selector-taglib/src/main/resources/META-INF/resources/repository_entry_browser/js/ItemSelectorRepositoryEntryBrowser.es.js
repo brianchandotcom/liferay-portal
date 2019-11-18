@@ -19,6 +19,7 @@ import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
 
@@ -87,15 +88,15 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				});
 			});
 		}
+
+		this._itemSelectorPreviewContainer = this.one(
+			'.item-selector-preview-container'
+		);
 	}
 
 	openItemSelectorPreview(items, index) {
-		const container = this.one(
-			'.item-selector-preview-container'
-		);
-
 		const data = {
-			container,
+			this._itemSelectorPreviewContainer,
 			currentIndex: index,
 			editItemURL: this.editItemURL,
 			handleSelectedItem: this._onItemSelected.bind(this),
@@ -108,8 +109,12 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 		render(
 			props => <ItemSelectorPreview {...props} />,
 			data,
-			container
+			this._itemSelectorPreviewContainer
 		);
+	}
+
+	closeItemSelectorPreview() {
+		ReactDOM.unmountComponentAtNode(this._itemSelectorPreviewContainer);
 	}
 
 	/**
@@ -152,19 +157,13 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 			this._eventHandler.add(
 				itemSelectorUploader.after('itemUploadCancel', () => {
-					this._uploadItemViewer.hide();
+					this.closeItemSelectorPreview();
 				}),
 				itemSelectorUploader.after('itemUploadComplete', itemData => {
-					//TODO updateCurrentImage
-					console.log(itemData);
-					/*const updatedImage = this._uploadItemViewer.updateCurrentImage(
-						itemData
-					);
-
-					this._onItemSelected({
-						returntype: this.uploadItemReturnType,
-						value: updatedImage.getData('value')
-					});*/
+					Liferay.fire('updateCurrentItem', {
+						url: itemData.file.url,
+						value: itemData.file.resolvedValue
+					});
 				}),
 				itemSelectorUploader.after(
 					'itemUploadError',
@@ -375,7 +374,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	 * @private
 	 */
 	_onItemUploadError(event) {
-		this._uploadItemViewer.hide();
+		this.closeItemSelectorPreview();
 
 		this._showError(this._getUploadErrorMessage(event.error));
 	}
@@ -453,7 +452,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 		const item = {
 			metadata: JSON.stringify(this._getUploadFileMetadata(file)),
-			returnType: this.uploadItemReturnType,
+			returntype: this.uploadItemReturnType,
 			title: file.name,
 			url: preview,
 			value: preview

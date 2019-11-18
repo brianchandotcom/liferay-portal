@@ -71,6 +71,8 @@ class ItemSelectorPreview extends Component {
 				width: '320px'
 			});
 		}
+
+		this._updateCurrentItemHandler = Liferay.on('updateCurrentItem', this.updateCurrentItem);
 	}
 
 	componentWillUnmount() {
@@ -78,6 +80,8 @@ class ItemSelectorPreview extends Component {
 			'keydown',
 			this.handleOnKeyDown.bind(this)
 		);
+
+		Liferay.detach('updateCurrentItem', this._updateCurrentItemHandler);
 	}
 
 	close = () => {
@@ -225,6 +229,10 @@ class ItemSelectorPreview extends Component {
 			items
 		});
 	};
+
+	updateCurrentItem = ({url, value}) => {
+		this.setState({currentItem: {...this.state.currentItem, url, value}});
+	}
 
 	render() {
 		const {currentItem, currentItemIndex, items} = this.state;

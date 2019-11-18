@@ -81,6 +81,38 @@
 		<reference entity="AccountEntry" package-path="com.liferay.account" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
+	<entity local-service="true" name="AccountRole">
+
+		<!-- PK fields -->
+
+		<column name="accountRoleId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="accountEntryId" type="long" />
+		<column name="roleId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="AccountEntryIds" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="accountEntryId" />
+		</finder>
+		<finder name="RoleId" return-type="AccountRole">
+			<finder-column name="roleId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="Role" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
 	<exceptions>
 		<exception>AccountEntryDomains</exception>
 		<exception>AccountEntryName</exception>

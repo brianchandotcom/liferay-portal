@@ -12,30 +12,28 @@
  * details.
  */
 
-package com.liferay.account.internal.role;
+package com.liferay.account.exception;
 
-import com.liferay.account.role.AccountRole;
-import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
- * @author Drew Brokke
+ * @author Brian Wing Shun Chan
  */
-public class AccountRoleImpl implements AccountRole {
+public class NoSuchRoleException extends NoSuchModelException {
 
-	public AccountRoleImpl(Role role) {
-		_role = role;
+	public NoSuchRoleException() {
 	}
 
-	@Override
-	public String getName() {
-		return _role.getName();
+	public NoSuchRoleException(String msg) {
+		super(msg);
 	}
 
-	@Override
-	public long getRoleId() {
-		return _role.getRoleId();
+	public NoSuchRoleException(String msg, Throwable cause) {
+		super(msg, cause);
 	}
 
-	private final Role _role;
+	public NoSuchRoleException(Throwable cause) {
+		super(cause);
+	}
 
 }

@@ -17,14 +17,13 @@ package com.liferay.account.role.test;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.account.role.AccountRole;
+import com.liferay.account.model.AccountRole;
 import com.liferay.account.role.AccountRoleManager;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.test.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -44,7 +43,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -69,18 +67,8 @@ public class AccountRoleManagerTest {
 			_accountEntryLocalService);
 		_accountEntry2 = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		for (String name : _names) {
-			Role role = _roleLocalService.fetchRole(
-				TestPropsValues.getCompanyId(), name);
-
-			if (role != null) {
-				_roleLocalService.deleteRole(role);
-			}
-		}
+		_accountEntry3 = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
 	}
 
 	@Test
@@ -103,7 +91,7 @@ public class AccountRoleManagerTest {
 
 		AccountRole accountRole = accountRoles.get(0);
 
-		Assert.assertEquals("lfr-account-" + name, accountRole.getName());
+		Assert.assertEquals(name, accountRole.getRoleName());
 	}
 
 	@Test
@@ -235,23 +223,23 @@ public class AccountRoleManagerTest {
 
 		accountRoles.add(
 			_addAccountRole(
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				_accountEntry1.getAccountEntryId(),
 				RandomTestUtil.randomString(50)));
 		accountRoles.add(
 			_addAccountRole(
-				_accountEntry1.getAccountEntryId(),
+				_accountEntry2.getAccountEntryId(),
 				RandomTestUtil.randomString(50)));
 
 		_addAccountRole(
-			_accountEntry2.getAccountEntryId(),
+			_accountEntry3.getAccountEntryId(),
 			RandomTestUtil.randomString(50));
 
 		List<AccountRole> actualAccountRoles =
 			_accountRoleManager.getAccountRoles(
 				TestPropsValues.getCompanyId(),
 				new long[] {
-					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-					_accountEntry1.getAccountEntryId()
+					_accountEntry1.getAccountEntryId(),
+					_accountEntry2.getAccountEntryId()
 				});
 
 		Assert.assertEquals(
@@ -276,7 +264,7 @@ public class AccountRoleManagerTest {
 		AccountRole accountRole = _accountRoleManager.addAccountRole(
 			TestPropsValues.getUserId(), accountEntryId, name, null, null);
 
-		_names.add(accountRole.getName());
+		_accountRoles.add(accountRole);
 
 		return accountRole;
 	}
@@ -320,6 +308,9 @@ public class AccountRoleManagerTest {
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry2;
 
+	@DeleteAfterTestRun
+	private AccountEntry _accountEntry3;
+
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -333,7 +324,8 @@ public class AccountRoleManagerTest {
 	@Inject
 	private AccountRoleManager _accountRoleManager;
 
-	private final List<String> _names = new ArrayList<>();
+	@DeleteAfterTestRun
+	private final List<AccountRole> _accountRoles = new ArrayList<>();
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

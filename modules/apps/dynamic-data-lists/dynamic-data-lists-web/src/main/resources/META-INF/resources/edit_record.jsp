@@ -19,6 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+String portletResource = ParamUtil.getString(request, "portletResource");
+
 DDLRecord record = (DDLRecord)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
 long recordId = BeanParamUtil.getLong(record, request, "recordId");
@@ -150,6 +152,7 @@ else {
 	<div class="sidenav-content">
 		<aui:form action="<%= (record == null) ? addRecordURL : updateRecordURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 			<aui:input name="recordId" type="hidden" value="<%= recordId %>" />
 			<aui:input name="groupId" type="hidden" value="<%= recordSet.getGroupId() %>" />
 			<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />

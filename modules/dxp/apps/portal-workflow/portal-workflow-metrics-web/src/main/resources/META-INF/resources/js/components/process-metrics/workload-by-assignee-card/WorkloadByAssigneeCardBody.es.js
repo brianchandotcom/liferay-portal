@@ -38,6 +38,8 @@ const Body = ({currentTab, processId, query}) => {
 		() => (processSteps ? processSteps[0].key : null),
 		[processSteps]
 	);
+	const filters =
+		processStepKey !== 'allSteps' ? {taskKeys: [processStepKey]} : {};
 
 	useEffect(() => {
 		setLoading(true);
@@ -70,6 +72,7 @@ const Body = ({currentTab, processId, query}) => {
 					<div className="mb-1 text-right">
 						<ChildLink
 							className="border-0 btn btn-secondary btn-sm"
+							query={{filters}}
 							to={`/workload/assignee/${processId}/${defaultDelta}/1/overdueTaskCount:desc`}
 						>
 							<span

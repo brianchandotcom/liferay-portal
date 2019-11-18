@@ -120,7 +120,7 @@ const PreviewSeoContainer = ({
 				});
 			};
 
-			const node = document.getElementById(`_${portletNamespace}_${id}`);
+			const node = document.getElementById(`${portletNamespace}${id}`);
 
 			if (node) node.addEventListener('input', listener);
 
@@ -131,6 +131,10 @@ const PreviewSeoContainer = ({
 			});
 
 			return {defaultValue, listener, node, type};
+		});
+
+		Liferay.on(`${portletNamespace}PreviewSeo:changed`, event => {
+			setPreviewState(event.data);
 		});
 
 		Liferay.on('inputLocalized:localeChanged', () => {
@@ -174,5 +178,10 @@ PreviewSeoContainer.propTypes = {
 };
 
 export default function(props) {
-	return <PreviewSeoContainer {...props} />;
+	return (
+		<PreviewSeoContainer
+			{...props}
+			portletNamespace={`_${props.portletNamespace}_`}
+		/>
+	);
 }

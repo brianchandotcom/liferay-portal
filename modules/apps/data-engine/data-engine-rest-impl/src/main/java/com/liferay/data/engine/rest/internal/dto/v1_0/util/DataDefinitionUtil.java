@@ -141,7 +141,7 @@ public class DataDefinitionUtil {
 
 						customProperties.put(
 							entry.getKey(),
-							_toMap((DDMFormFieldOptions)entry.getValue()));
+							_toList((DDMFormFieldOptions)entry.getValue()));
 					}
 					else if (Objects.equals(
 								settingsDDMFormField.getType(), "validation")) {
@@ -416,6 +416,31 @@ public class DataDefinitionUtil {
 		);
 	}
 
+	private static List<Map<String, Object>> _toList(
+		DDMFormFieldOptions ddmFormFieldOptions) {
+
+		Set<String> optionValues = ddmFormFieldOptions.getOptionsValues();
+
+		if (optionValues.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<Map<String, Object>> options = new ArrayList<>();
+
+		for (String optionValue : optionValues) {
+			options.add(
+				HashMapBuilder.<String, Object>put(
+					"label",
+					LocalizedValueUtil.toLocalizedValuesMap(
+						ddmFormFieldOptions.getOptionLabels(optionValue))
+				).put(
+					"value", optionValue
+				).build());
+		}
+
+		return options;
+	}
+
 	private static Set<Locale> _toLocales(String[] languageIds) {
 		if (ArrayUtil.isEmpty(languageIds)) {
 			return Collections.emptySet();
@@ -428,34 +453,6 @@ public class DataDefinitionUtil {
 		).collect(
 			Collectors.toSet()
 		);
-	}
-
-	private static Map<String, List<Map<String, Object>>> _toMap(
-		DDMFormFieldOptions ddmFormFieldOptions) {
-
-		if (ddmFormFieldOptions == null) {
-			return Collections.emptyMap();
-		}
-
-		Map<String, List<Map<String, Object>>> options = new HashMap<>();
-
-		Map<String, LocalizedValue> localizedOptions =
-			ddmFormFieldOptions.getOptions();
-
-		for (Map.Entry<String, LocalizedValue> entry :
-				localizedOptions.entrySet()) {
-
-			if (!options.containsKey(entry.getKey())) {
-				options.put(entry.getKey(), new ArrayList<>());
-			}
-
-			List<Map<String, Object>> optionList = options.get(entry.getKey());
-
-			optionList.add(
-				LocalizedValueUtil.toLocalizedValuesMap(entry.getValue()));
-		}
-
-		return options;
 	}
 
 	private static Map<String, Object> _toMap(

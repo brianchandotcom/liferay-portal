@@ -43,6 +43,9 @@ definition {
 		else if ("${widgetName}" == "Categories Navigation") {
 			var portletId = "com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet";
 		}
+		else if ("${widgetName}" == "Contacts Center") {
+			var portletId = "com_liferay_contacts_web_portlet_ContactsCenterPortlet";
+		}
 		else if ("${widgetName}" == "Documents and Media") {
 			var portletId = "com_liferay_document_library_web_portlet_DLPortlet";
 		}

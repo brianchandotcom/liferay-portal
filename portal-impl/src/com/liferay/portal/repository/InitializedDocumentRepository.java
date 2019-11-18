@@ -90,24 +90,6 @@ public abstract class InitializedDocumentRepository
 			userId, parentFolderId, name, description, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #checkInFileEntry(long, long, DLVersionNumberIncrease,
-	 *             String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean majorVersion,
-			String changeLog, ServiceContext serviceContext)
-		throws PortalException {
-
-		checkInFileEntry(
-			userId, fileEntryId,
-			DLVersionNumberIncrease.fromMajorVersion(majorVersion), changeLog,
-			serviceContext);
-	}
-
 	@Override
 	public void checkInFileEntry(
 			long userId, long fileEntryId,
@@ -438,46 +420,6 @@ public abstract class InitializedDocumentRepository
 		}
 
 		this.documentRepository = documentRepository;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #updateFileEntry(long, long, String, String, String, String,
-	 *             String, DLVersionNumberIncrease, File, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FileEntry updateFileEntry(
-			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
-		throws PortalException {
-
-		return updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, DLVersionNumberIncrease.fromMajorVersion(majorVersion),
-			file, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #updateFileEntry(long, long, String, String, String, String,
-	 *             String, DLVersionNumberIncrease, InputStream, long,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FileEntry updateFileEntry(
-			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, DLVersionNumberIncrease.fromMajorVersion(majorVersion),
-			is, size, serviceContext);
 	}
 
 	@Override

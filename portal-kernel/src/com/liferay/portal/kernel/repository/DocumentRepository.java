@@ -57,17 +57,6 @@ public interface DocumentRepository extends CapabilityProvider {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #checkInFileEntry(long, long, DLVersionNumberIncrease,
-	 *             String, ServiceContext)}
-	 */
-	@Deprecated
-	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean majorVersion,
-			String changeLog, ServiceContext serviceContext)
-		throws PortalException;
-
 	public void checkInFileEntry(
 			long userId, long fileEntryId,
 			DLVersionNumberIncrease dlVersionNumberIncrease, String changeLog,
@@ -195,32 +184,6 @@ public interface DocumentRepository extends CapabilityProvider {
 
 	public void revertFileEntry(
 			long userId, long fileEntryId, String version,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #updateFileEntry(long, long, String, String, String, String,
-	 *             String, DLVersionNumberIncrease, File, ServiceContext)}
-	 */
-	@Deprecated
-	public FileEntry updateFileEntry(
-			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #updateFileEntry(long, long, String, String, String, String,
-	 *             String, DLVersionNumberIncrease, InputStream, long,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	public FileEntry updateFileEntry(
-			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException;
 

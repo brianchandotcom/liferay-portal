@@ -1,0 +1,23 @@
+.view-entry {
+	margin-top: 2rem;
+
+	.data-record-field-preview {
+		margin-bottom: 2rem;
+
+		.data-record-document-field {
+			display: block;
+
+			.lexicon-icon-document-pdf {
+				color: red;
+			}
+
+			.lexicon-icon-document-text {
+				color: blue;
+			}
+		}
+
+		label {
+			color: #6b6c7e;
+		}
+	}
+}

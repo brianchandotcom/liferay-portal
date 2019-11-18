@@ -16,6 +16,8 @@ import {useIsMounted} from 'frontend-js-react-web';
 import {PropTypes} from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
+import {PreviewSeoOnChange} from './PreviewSeoEvents.es';
+
 const MAX_LENGTH_DESCIPTION = 160;
 
 const PreviewSeo = ({
@@ -133,9 +135,7 @@ const PreviewSeoContainer = ({
 			return {defaultValue, listener, node, type};
 		});
 
-		Liferay.on(`${portletNamespace}PreviewSeo:changed`, event => {
-			setPreviewState(event.data);
-		});
+		PreviewSeoOnChange(portletNamespace, setPreviewState);
 
 		Liferay.on('inputLocalized:localeChanged', () => {
 			inputs.forEach(({defaultValue, node, type}) =>

@@ -158,7 +158,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 <portlet:actionURL name="/layout/upload_open_graph_image" var="uploadOpenGraphImageURL" />
 
-<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+<aui:script require='<%= "frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog," + npmResolvedPackageName + "/js/seo/PreviewSeoEvents.es as PreviewSeoEvents" %>'>
 	var openGraphImageButton = document.getElementById(
 		'<portlet:namespace />openGraphImageButton'
 	);
@@ -193,11 +193,9 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 					openGraphImageURL.value = itemValue.url;
 				}
 
-				Liferay.fire('<portlet:namespace />PreviewSeo:changed', {
-					data: {
-						type: 'imgUrl',
-						value: itemValue.url
-					}
+				PreviewSeoEvents.PreviewSeoFireChange('<portlet:namespace />', {
+					type: 'imgUrl',
+					value: itemValue.url
 				});
 			}
 		});

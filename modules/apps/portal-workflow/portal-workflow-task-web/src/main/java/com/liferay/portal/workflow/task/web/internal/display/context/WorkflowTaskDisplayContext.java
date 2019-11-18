@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -352,6 +353,22 @@ public class WorkflowTaskDisplayContext {
 		return _orderByType;
 	}
 
+	public String getPortletResource() {
+		if (_portletResource != null) {
+			return _portletResource;
+		}
+
+		ThemeDisplay themeDisplay =
+			_workflowTaskRequestHelper.getThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		_portletResource = ParamUtil.getString(
+			_httpServletRequest, "portletResource", portletDisplay.getId());
+
+		return _portletResource;
+	}
+
 	public String getPreviewOfTitle(WorkflowTask workflowTask)
 		throws PortalException {
 
@@ -417,6 +434,10 @@ public class WorkflowTaskDisplayContext {
 		throws PortalException, PortletException {
 
 		PortletURL editPortletURL = _getEditPortletURL(workflowTask);
+
+		editPortletURL.setParameter(
+			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
+		editPortletURL.setParameter("portletResource", getPortletResource());
 
 		ThemeDisplay themeDisplay =
 			_workflowTaskRequestHelper.getThemeDisplay();
@@ -1104,6 +1125,7 @@ public class WorkflowTaskDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
+	private String _portletResource;
 	private final Map<Long, Role> _roles = new HashMap<>();
 	private final Map<Long, User> _users = new HashMap<>();
 	private final WorkflowTaskRequestHelper _workflowTaskRequestHelper;

@@ -625,7 +625,7 @@ definition {
 	macro editComment {
 		var key_entryComment = "${entryComment}";
 
-		MouseOver(locator1 = "Comments#COMMENT_BODY_SPECIFIC");
+		MouseOver(locator1 = "Comments#COMMENT_ACTIONS");
 
 		Click(locator1 = "Comments#COMMENT_ACTIONS");
 

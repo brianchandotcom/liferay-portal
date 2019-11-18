@@ -281,6 +281,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			long id, String xml, Locale defaultSiteLocale) {
 
 			_id = id;
+
 			_xml = xml;
 
 			_defaultLanguageId = LocalizationUtil.getDefaultLanguageId(

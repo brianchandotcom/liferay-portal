@@ -480,10 +480,6 @@ definition {
 				key_dmDocumentTitle = "${webContentDocumentsAndMedia}",
 				locator1 = "WC#ICON_DOCUMENT_TITLE",
 				value1 = "${webContentDocumentsAndMedia}");
-
-			SelectFrameTop(value1 = "relative=top");
-
-			Click(locator1 = "Button#ADD");
 		}
 
 		if (isSet(webContentHTML)) {

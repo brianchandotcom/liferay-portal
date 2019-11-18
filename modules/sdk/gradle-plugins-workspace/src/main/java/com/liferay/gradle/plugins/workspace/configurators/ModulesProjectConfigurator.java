@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
+import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.plugins.util.BndBuilderUtil;
 import com.liferay.gradle.plugins.workspace.FrontendPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
@@ -184,6 +185,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				@Override
 				public void execute(Project project) {
 					_configureTaskDeployFast(project, workspaceExtension);
+					_configureTaskSetUpTestableTomcat(
+						project, workspaceExtension);
 				}
 
 			});
@@ -455,6 +458,23 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				}
 
 			});
+	}
+
+	private void _configureTaskSetUpTestableTomcat(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		Task setupTestableTomcatTask = GradleUtil.getTask(
+			project, TestIntegrationPlugin.SET_UP_TESTABLE_TOMCAT_TASK_NAME);
+
+		File homeDir = workspaceExtension.getHomeDir();
+
+		if (!homeDir.exists()) {
+			Task initBundleTask = GradleUtil.getTask(
+				project.getRootProject(),
+				RootProjectConfigurator.INIT_BUNDLE_TASK_NAME);
+
+			setupTestableTomcatTask.dependsOn(initBundleTask);
+		}
 	}
 
 	private void _configureTaskTestIntegration(Project project) {

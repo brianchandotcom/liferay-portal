@@ -14,17 +14,24 @@
 
 package com.liferay.layout.type.controller.content.internal.product.navigation.control.menu;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.layout.type.controller.content.internal.controller.ContentLayoutTypeController;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -35,11 +42,13 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -176,13 +185,52 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 				ActionKeys.UPDATE) &&
 			!LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-				ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+				ActionKeys.UPDATE_LAYOUT_CONTENT) &&
+			!_layoutContainsUpdatableMappedContent(
+				themeDisplay.getPermissionChecker(),
+				ParamUtil.getLong(httpServletRequest, "p_l_id"))) {
 
 			return false;
 		}
 
 		return true;
 	}
+
+	private boolean _layoutContainsUpdatableMappedContent(
+		PermissionChecker permissionChecker, long plid) {
+
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			LayoutClassedModelUsageLocalServiceUtil.
+				getLayoutClassedModelUsagesByPlid(plid);
+
+		try {
+			for (LayoutClassedModelUsage layoutClassedModelUsage :
+					layoutClassedModelUsages) {
+
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					layoutClassedModelUsage.getClassNameId(),
+					layoutClassedModelUsage.getClassPK());
+
+				if (assetEntry == null) {
+					continue;
+				}
+
+				if (AssetEntryPermission.contains(
+						permissionChecker, assetEntry, ActionKeys.UPDATE)) {
+
+					return true;
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error("An error occurred while getting mapped contents", e);
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditLayoutModeProductNavigationControlMenuEntry.class);
 
 	@Reference
 	private Http _http;

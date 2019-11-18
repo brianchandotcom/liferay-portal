@@ -52,10 +52,10 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "my custom object");
 	}
 
-	@description = "Add a Form View with a Text Field"
+	@description = "This is a use case for LPS-104569."
 	@priority = "5"
-	test AddMultipleFormViewsToOneObject {
-		property portal.acceptance = "true";
+	test AddMultipleFormViewsToTheSameObject {
+		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object 1",

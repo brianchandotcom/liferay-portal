@@ -18,7 +18,7 @@ import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
-import com.liferay.batch.engine.configuration.BatchEngineExportTaskConfiguration;
+import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegate;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegateFactory;
 import com.liferay.batch.engine.internal.writer.BatchEngineExportTaskItemWriter;
@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  */
 @Component(
-	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineExportTaskConfiguration",
+	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
 	service = BatchEngineExportTaskExecutor.class
 )
 public class BatchEngineExportTaskExecutorImpl
@@ -90,16 +90,16 @@ public class BatchEngineExportTaskExecutorImpl
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		BatchEngineExportTaskConfiguration batchEngineExportTaskConfiguration =
+		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
 			ConfigurableUtil.createConfigurable(
-				BatchEngineExportTaskConfiguration.class, properties);
+				BatchEngineTaskConfiguration.class, properties);
 
-		_batchSize = batchEngineExportTaskConfiguration.batchSize();
+		_batchSize = batchEngineTaskConfiguration.batchSize();
 
 		_batchEngineExportTaskItemWriterFactory =
 			new BatchEngineExportTaskItemWriterFactory(
 				GetterUtil.getString(
-					batchEngineExportTaskConfiguration.csvFileColumnDelimiter(),
+					batchEngineTaskConfiguration.csvFileColumnDelimiter(),
 					StringPool.COMMA));
 
 		_batchEngineTaskItemResourceDelegateFactory =

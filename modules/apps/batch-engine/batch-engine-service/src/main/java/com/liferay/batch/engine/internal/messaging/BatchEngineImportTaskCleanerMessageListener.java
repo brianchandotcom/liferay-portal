@@ -15,7 +15,7 @@
 package com.liferay.batch.engine.internal.messaging;
 
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
-import com.liferay.batch.engine.configuration.BatchEngineImportTaskConfiguration;
+import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  */
 @Component(
-	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineImportTaskConfiguration",
+	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
 	immediate = true, service = MessageListener.class
 )
 public class BatchEngineImportTaskCleanerMessageListener
@@ -50,15 +50,14 @@ public class BatchEngineImportTaskCleanerMessageListener
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		BatchEngineImportTaskConfiguration batchEngineImportTaskConfiguration =
+		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
 			ConfigurableUtil.createConfigurable(
-				BatchEngineImportTaskConfiguration.class, properties);
+				BatchEngineTaskConfiguration.class, properties);
 
 		String className =
 			BatchEngineImportTaskCleanerMessageListener.class.getName();
 		int scanInterval =
-			batchEngineImportTaskConfiguration.
-				getCompletedTasksCleanerScanInterval();
+			batchEngineTaskConfiguration.getCompletedTasksCleanerScanInterval();
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className,

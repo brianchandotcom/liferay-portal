@@ -16,7 +16,7 @@ package com.liferay.batch.engine.internal.messaging;
 
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
-import com.liferay.batch.engine.configuration.BatchEngineImportTaskConfiguration;
+import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  */
 @Component(
-	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineImportTaskConfiguration",
+	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
 	immediate = true, service = MessageListener.class
 )
 public class BatchEngineImportTaskOrphanScannerMessageListener
@@ -54,18 +54,16 @@ public class BatchEngineImportTaskOrphanScannerMessageListener
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		BatchEngineImportTaskConfiguration batchEngineImportTaskConfiguration =
+		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
 			ConfigurableUtil.createConfigurable(
-				BatchEngineImportTaskConfiguration.class, properties);
+				BatchEngineTaskConfiguration.class, properties);
 
 		_orphanageThreshold =
-			batchEngineImportTaskConfiguration.orphanageThreshold() *
-				Time.MINUTE;
+			batchEngineTaskConfiguration.orphanageThreshold() * Time.MINUTE;
 
 		String className =
 			BatchEngineImportTaskOrphanScannerMessageListener.class.getName();
-		int scanInterval =
-			batchEngineImportTaskConfiguration.orphanScanInterval();
+		int scanInterval = batchEngineTaskConfiguration.orphanScanInterval();
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className,

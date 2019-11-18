@@ -18,7 +18,7 @@ import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.ItemClassRegistry;
-import com.liferay.batch.engine.configuration.BatchEngineImportTaskConfiguration;
+import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Ivica Cardic
  */
 @Component(
-	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineImportTaskConfiguration",
+	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
 	properties = "OSGI-INF/liferay/rest/v1_0/import-task.properties",
 	property = "batch.engine=true", scope = ServiceScope.PROTOTYPE,
 	service = ImportTaskResource.class
@@ -114,11 +114,11 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		BatchEngineImportTaskConfiguration batchEngineImportTaskConfiguration =
+		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
 			ConfigurableUtil.createConfigurable(
-				BatchEngineImportTaskConfiguration.class, properties);
+				BatchEngineTaskConfiguration.class, properties);
 
-		_batchSize = batchEngineImportTaskConfiguration.batchSize();
+		_batchSize = batchEngineTaskConfiguration.batchSize();
 
 		if (_batchSize <= 0) {
 			_batchSize = 1;

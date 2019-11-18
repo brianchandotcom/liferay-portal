@@ -14,7 +14,7 @@
 
 package com.liferay.account.internal.model.listener;
 
-import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -42,7 +42,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 		}
 
 		if (ArrayUtil.contains(
-				AccountConstants.REQUIRED_ROLE_NAMES, role.getName())) {
+				AccountRoleConstants.REQUIRED_ROLE_NAMES, role.getName())) {
 
 			throw new ModelListenerException(
 				new RequiredRoleException(

@@ -16,6 +16,7 @@ package com.liferay.account.internal.instance.lifecycle;
 
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.role.AccountRoleManager;
@@ -52,21 +53,23 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 	public void portalInstanceRegistered(Company company) throws Exception {
 		User defaultUser = company.getDefaultUser();
 
-		if (!_roleExists(AccountConstants.REQUIRED_ROLE_NAME_ACCOUNT_USER)) {
+		if (!_roleExists(
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_USER)) {
+
 			AccountRole accountUserRole = _addAccountRole(
 				defaultUser.getUserId(),
-				AccountConstants.REQUIRED_ROLE_NAME_ACCOUNT_USER);
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_USER);
 
 			_assignPermissions(
 				accountUserRole.getRoleId(), _accountUserResourceActionsMap);
 		}
 
 		if (!_roleExists(
-				AccountConstants.REQUIRED_ROLE_NAME_ACCOUNT_POWER_USER)) {
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_POWER_USER)) {
 
 			AccountRole accountPowerUserRole = _addAccountRole(
 				defaultUser.getUserId(),
-				AccountConstants.REQUIRED_ROLE_NAME_ACCOUNT_POWER_USER);
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_POWER_USER);
 
 			_assignPermissions(
 				accountPowerUserRole.getRoleId(),
@@ -76,18 +79,21 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 				_accountPowerUserResourceActionsMap);
 		}
 
-		if (!_roleExists(AccountConstants.REQUIRED_ROLE_NAME_ACCOUNT_OWNER)) {
+		if (!_roleExists(
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_OWNER)) {
+
 			_addRegularRole(
 				defaultUser.getUserId(),
-				AccountConstants.REQUIRED_ROLE_NAME_ACCOUNT_OWNER);
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_OWNER);
 		}
 
 		if (!_roleExists(
-				AccountConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR)) {
+				AccountRoleConstants.
+					REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR)) {
 
 			_addRegularRole(
 				defaultUser.getUserId(),
-				AccountConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
 		}
 	}
 

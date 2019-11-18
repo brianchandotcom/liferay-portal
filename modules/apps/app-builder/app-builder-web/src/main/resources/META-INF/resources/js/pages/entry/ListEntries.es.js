@@ -13,6 +13,7 @@
  */
 
 import React, {useContext, useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
@@ -62,7 +63,7 @@ const ListEntries = () => {
 		defaultDataRecordValues[column] = '';
 	});
 
-	const getItemURL = (dataRecordId = 0) =>
+	const getEditURL = (dataRecordId = 0) =>
 		Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
 			dataDefinitionId,
 			dataLayoutId,
@@ -71,7 +72,7 @@ const ListEntries = () => {
 		});
 
 	const handleEditItem = dataRecordId => {
-		Liferay.Util.navigate(getItemURL(dataRecordId));
+		Liferay.Util.navigate(getEditURL(dataRecordId));
 	};
 
 	return (
@@ -121,7 +122,9 @@ const ListEntries = () => {
 
 					if (firstDataRecordValue) {
 						dataRecordValues[firstColumn] = (
-							<a href={getItemURL(id)}>{firstDataRecordValue}</a>
+							<Link to={`/entries/${id}`}>
+								{firstDataRecordValue}
+							</Link>
 						);
 					}
 

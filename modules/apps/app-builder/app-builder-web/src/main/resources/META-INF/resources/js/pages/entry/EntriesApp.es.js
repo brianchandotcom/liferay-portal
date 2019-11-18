@@ -17,6 +17,7 @@ import {Route, HashRouter as Router, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from '../../AppContext.es';
 import ListEntries from './ListEntries.es';
+import ViewEntry from './ViewEntry.es';
 
 export default function(props) {
 	return (
@@ -24,7 +25,11 @@ export default function(props) {
 			<AppContextProvider {...props}>
 				<Router>
 					<Switch>
-						<Route component={ListEntries} path="/" />
+						<Route component={ListEntries} exact path="/" />
+						<Route
+							component={ViewEntry}
+							path="/entries/:dataRecordId(\d+)"
+						/>
 					</Switch>
 				</Router>
 			</AppContextProvider>

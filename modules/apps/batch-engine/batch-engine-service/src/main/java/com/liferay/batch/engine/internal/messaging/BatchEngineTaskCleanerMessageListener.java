@@ -14,13 +14,12 @@
 
 package com.liferay.batch.engine.internal.messaging;
 
-import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
+import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
-import com.liferay.petra.concurrent.NoticeableExecutorService;
-import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -49,8 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
 	immediate = true, service = MessageListener.class
 )
-public class BatchEngineImportTaskOrphanScannerMessageListener
-	extends BaseMessageListener {
+public class BatchEngineTaskCleanerMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
@@ -58,17 +55,15 @@ public class BatchEngineImportTaskOrphanScannerMessageListener
 			ConfigurableUtil.createConfigurable(
 				BatchEngineTaskConfiguration.class, properties);
 
-		_orphanageThreshold =
-			batchEngineTaskConfiguration.orphanageThreshold() * Time.MINUTE;
-
 		String className =
-			BatchEngineImportTaskOrphanScannerMessageListener.class.getName();
-		int scanInterval = batchEngineTaskConfiguration.orphanScanInterval();
+			BatchEngineTaskCleanerMessageListener.class.getName();
+		int scanInterval =
+			batchEngineTaskConfiguration.getCompletedTasksCleanerScanInterval();
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className,
-			new Date(System.currentTimeMillis() + scanInterval * Time.MINUTE),
-			null, scanInterval, TimeUnit.MINUTE);
+			new Date(System.currentTimeMillis() + scanInterval * Time.DAY),
+			null, scanInterval, TimeUnit.DAY);
 
 		_schedulerEngineHelper.register(
 			this, new SchedulerEntryImpl(className, trigger),
@@ -77,53 +72,35 @@ public class BatchEngineImportTaskOrphanScannerMessageListener
 
 	@Deactivate
 	protected void deactivate() {
-		ExecutorService executorService =
-			_portalExecutorManager.getPortalExecutor(
-				BatchEngineImportTaskOrphanScannerMessageListener.class.
-					getName(),
-				false);
-
-		if (executorService != null) {
-			executorService.shutdownNow();
-		}
-
 		_schedulerEngineHelper.unregister(this);
 	}
 
 	@Override
-	protected void doReceive(Message message) {
-		NoticeableExecutorService noticeableExecutorService =
-			_portalExecutorManager.getPortalExecutor(
-				BatchEngineImportTaskOrphanScannerMessageListener.class.
-					getName());
+	protected void doReceive(Message message) throws Exception {
+		for (BatchEngineExportTask batchEngineExportTask :
+				_batchEngineExportTaskLocalService.getBatchEngineExportTasks(
+					BatchEngineTaskExecuteStatus.COMPLETED.toString())) {
 
-		long time = System.currentTimeMillis();
+			_batchEngineExportTaskLocalService.deleteBatchEngineExportTask(
+				batchEngineExportTask.getBatchEngineExportTaskId());
+		}
 
 		for (BatchEngineImportTask batchEngineImportTask :
 				_batchEngineImportTaskLocalService.getBatchEngineImportTasks(
-					BatchEngineTaskExecuteStatus.STARTED.toString())) {
+					BatchEngineTaskExecuteStatus.COMPLETED.toString())) {
 
-			Date modifiedDate = batchEngineImportTask.getModifiedDate();
-
-			if ((time - modifiedDate.getTime()) > _orphanageThreshold) {
-				noticeableExecutorService.submit(
-					() -> _batchEngineImportTaskExecutor.execute(
-						batchEngineImportTask));
-			}
+			_batchEngineImportTaskLocalService.deleteBatchEngineImportTask(
+				batchEngineImportTask.getBatchEngineImportTaskId());
 		}
 	}
 
 	@Reference
-	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
+	private BatchEngineExportTaskLocalService
+		_batchEngineExportTaskLocalService;
 
 	@Reference
 	private BatchEngineImportTaskLocalService
 		_batchEngineImportTaskLocalService;
-
-	private long _orphanageThreshold;
-
-	@Reference
-	private PortalExecutorManager _portalExecutorManager;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

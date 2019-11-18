@@ -484,14 +484,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		Map<String, String> binds = new HashMap<>();
 
-		binds.put(dockerPath, "/etc/liferay/mount");
+		binds.put(dockerPath, "/mnt/liferay");
 		binds.put(workPath, "/opt/liferay/work");
 
 		dockerCreateContainer.setBinds(binds);
 
 		dockerCreateContainer.setDescription(
 			"Creates a Docker container from your built image and mounts " +
-				dockerPath + " to /etc/liferay/mount.");
+				dockerPath + " to /mnt/liferay.");
 
 		List<String> portBindings = new ArrayList<>();
 
@@ -557,7 +557,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				workspaceExtension.getEnvironment());
 
 		dockerfile.instruction(
-			"COPY --chown=liferay:liferay deploy /etc/liferay/mount/deploy");
+			"COPY --chown=liferay:liferay deploy /mnt/liferay/deploy");
 		dockerfile.instruction(
 			"COPY --chown=liferay:liferay " + _LIFERAY_CONFIGS_DIR_NAME +
 				" /home/liferay/configs");

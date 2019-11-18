@@ -304,7 +304,7 @@
 				<arg value="${db.upgrade.client.home}/db_upgrade${file.suffix.bat}" />
 			</exec>
 
-			<waitfor maxwait="3000" maxwaitunit="second" timeoutproperty="upgrade.secondprocess">
+			<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.secondprocess">
 				<resourcecontains
 					resource="temp.log"
 					substring="Database upgrade client is already running"

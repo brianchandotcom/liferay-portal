@@ -1,11 +1,29 @@
 definition {
 
 	macro gotoDepot {
-		var key_card = "${depotName}";
+		if (isSet(listView)) {
+			var key_listEntry = "${depotName}";
 
-		Click(
-			locator1 = "LexiconCard#CARD_TITLE",
-			value1 = "${depotName}");
+			Click(
+				locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
+				value1 = "${depotName}");
+		}
+
+		else if (isSet(tableView)) {
+			var key_tableEntry = "${depotName}";
+
+			Click(
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
+				value1 = "${depotName}");
+		}
+
+		else {
+			var key_card = "${depotName}";
+
+			Click(
+				locator1 = "LexiconCard#CARD_TITLE",
+				value1 = "${depotName}");
+		}
 
 		AssertTextNotEquals(
 			locator1 = "ControlMenu#HEADING",

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.ExceptionRetryAcceptor;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -316,7 +317,7 @@ public interface KaleoInstanceTokenLocalService
 	@Retry(
 		acceptor = ExceptionRetryAcceptor.class,
 		properties = {
-			@com.liferay.portal.kernel.spring.aop.Property(
+			@Property(
 				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
 				value = "org.hibernate.StaleObjectStateException"
 			)

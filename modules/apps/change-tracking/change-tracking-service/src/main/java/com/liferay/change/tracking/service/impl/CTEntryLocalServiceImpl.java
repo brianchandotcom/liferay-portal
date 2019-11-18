@@ -110,6 +110,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			ctCollectionId, modelClassNameId);
 	}
 
+	@Override
 	public List<Long> getExclusiveModelClassPKs(
 		long ctCollectionId, long modelClassNameId) {
 
@@ -124,8 +125,8 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			ctEntries, CTEntry::getModelClassPK);
 
 		for (CTEntry ctEntry :
-				ctEntryPersistence.findByNotC_MCPK(
-					ctCollectionId,
+				ctEntryPersistence.findByNotC_MCNI_MCPK(
+					ctCollectionId, modelClassNameId,
 					ArrayUtil.toArray(modelClassPKs.toArray(new Long[0])))) {
 
 			modelClassPKs.remove(ctEntry.getModelClassPK());

@@ -41,6 +41,8 @@ if (kaleoProcess != null) {
 	kaleoProcessStarted = (DDLRecordLocalServiceUtil.getRecordsCount(kaleoProcess.getDDLRecordSetId(), WorkflowConstants.STATUS_ANY) > 0);
 }
 
+String historyKey = ParamUtil.getString(request, "historyKey");
+
 portletDisplay.setShowBackIcon(true);
 
 PortletURL backPortletURL = renderResponse.createRenderURL();
@@ -85,11 +87,11 @@ renderResponse.setTitle(title);
 		var="htmlBottom"
 	>
 		<aui:button-row cssClass="kaleo-process-buttons">
-			<aui:button cssClass="hide kaleo-process-previous pull-left" icon="icon-circle-arrow-left" value="previous" />
+			<aui:button cssClass='<%= (historyKey.equals("forms") ? StringPool.BLANK : "hide") + " kaleo-process-previous pull-left" %>' icon="icon-circle-arrow-left" value="previous" />
 
-			<aui:button cssClass="hide kaleo-process-submit pull-right" disabled="<%= true %>" primary="<%= true %>" type="submit" />
+			<aui:button cssClass='<%= (historyKey.equals("forms") ? StringPool.BLANK : "hide") + " kaleo-process-submit pull-right" %>' disabled="<%= true %>" primary="<%= true %>" type="submit" />
 
-			<aui:button cssClass="kaleo-process-next pull-right" disabled="<%= true %>" icon="icon-circle-arrow-right" iconAlign="right" primary="<%= true %>" value="next" />
+			<aui:button cssClass='<%= (historyKey.equals("forms") ? "hide" : StringPool.BLANK) + " kaleo-process-next pull-right" %>' disabled="<%= true %>" icon="icon-circle-arrow-right" iconAlign="right" primary="<%= true %>" value="next" />
 
 			<aui:button cssClass="kaleo-process-cancel pull-right" href="<%= redirect %>" value="cancel" />
 		</aui:button-row>

@@ -44,12 +44,13 @@
 <div id="<portlet:namespace />ConditionForm"></div>
 
 <div>
+
 	<%
 	Map<String, Object> data = new HashMap<>();
 
 	data.put("categorySelectorURL", assetPublisherDisplayContext.getCategorySelectorURL());
-	data.put("id", "autofield");
 	data.put("groupIds", ListUtil.toList(assetPublisherDisplayContext.getReferencedModelsGroupIds()));
+	data.put("id", "autofield");
 	data.put("namespace", liferayPortletResponse.getNamespace());
 	data.put("pathThemeImages", themeDisplay.getPathThemeImages());
 	data.put("rules", assetPublisherDisplayContext.getAutoFieldRulesJSONArray());

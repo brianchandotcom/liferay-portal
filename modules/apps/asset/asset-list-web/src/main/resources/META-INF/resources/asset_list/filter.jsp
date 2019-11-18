@@ -40,6 +40,7 @@
 		<div id="<portlet:namespace />ConditionForm"></div>
 
 		<div>
+
 			<%
 			Map<String, Object> data = new HashMap<>();
 

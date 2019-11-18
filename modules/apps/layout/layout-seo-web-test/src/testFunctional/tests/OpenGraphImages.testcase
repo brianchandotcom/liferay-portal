@@ -1,0 +1,104 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.ssl.enabled = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "SEO";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This ensures that the OG image tags will not appear when the HTTPS user disables Open Graph."
+	@priority = "5"
+	test DisableAfterAddingImage {
+		property test.name.skip.portal.instance = "OpenGraphImages#DisableAfterAddingImage";
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			pageName = "Test Page Name",
+			uploadFileName = "Document_1.jpg");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "SEO",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.disableCheckbox(fieldName = "Enable Open Graph");
+
+		SystemSettings.saveConfiguration();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");
+
+		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''og:image:url,og:image:url_secure,og:image:type,og:image:width,og:image:height''');
+	}
+
+	@description = "This ensures that the HTTPS users can customize OG image tags and generate special tags."
+	@priority = "5"
+	test ViewImageWithMetaTags {
+		property test.name.skip.portal.instance = "OpenGraphImages#ViewImageWithMetaTags";
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			pageName = "Test Page Name",
+			uploadFileName = "Document_1.jpg");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''og:image:url,og:image:url_secure,og:image:type,og:image:width,og:image:height''');
+	}
+
+}

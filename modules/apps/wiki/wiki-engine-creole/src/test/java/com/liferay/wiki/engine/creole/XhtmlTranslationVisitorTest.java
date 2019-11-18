@@ -16,6 +16,7 @@ package com.liferay.wiki.engine.creole;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.HtmlImpl;
@@ -46,7 +47,8 @@ public class XhtmlTranslationVisitorTest {
 
 	@After
 	public void tearDown() {
-		_wikiEngineCreoleComponentProvider.deactivate();
+		ReflectionTestUtil.invoke(
+			_wikiEngineCreoleComponentProvider, "deactivate", new Class<?>[0]);
 	}
 
 	@Test

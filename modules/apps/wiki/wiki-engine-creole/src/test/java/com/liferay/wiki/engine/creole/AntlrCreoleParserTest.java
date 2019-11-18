@@ -15,6 +15,7 @@
 package com.liferay.wiki.engine.creole;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.wiki.engine.creole.internal.parser.ast.ASTNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.BaseListNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.BoldTextNode;
@@ -70,7 +71,8 @@ public class AntlrCreoleParserTest {
 
 	@After
 	public void tearDown() {
-		_wikiEngineCreoleComponentProvider.deactivate();
+		ReflectionTestUtil.invoke(
+			_wikiEngineCreoleComponentProvider, "deactivate", new Class<?>[0]);
 	}
 
 	@Test

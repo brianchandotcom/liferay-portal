@@ -20,6 +20,61 @@ import {processStatusConstants} from '../process-metrics/filter/store/ProcessSta
 import {slaStatusConstants} from '../process-metrics/filter/store/SLAStatusStore.es';
 import WorkloadByAssigneePage from './WorkloadByAssigneePage.es';
 
+const Table = ({items, processId, taskKeys}) => {
+	return (
+		<div className="table-responsive workflow-process-dashboard">
+			<table className="table table-heading-nowrap table-hover table-list">
+				<thead>
+					<tr>
+						<th
+							className="table-cell-expand table-head-title"
+							style={{width: '62%'}}
+						>
+							{Liferay.Language.get('assignee-name')}
+						</th>
+
+						<th className="table-cell-minw-75 table-head-title text-right">
+							<ListHeadItem
+								iconColor="danger"
+								iconName="exclamation-circle"
+								name="overdueTaskCount"
+								title={Liferay.Language.get('overdue')}
+							/>
+						</th>
+
+						<th className="table-cell-minw-75 table-head-title text-right">
+							<ListHeadItem
+								iconColor="success"
+								iconName="check-circle"
+								name="onTimeTaskCount"
+								title={Liferay.Language.get('on-time')}
+							/>
+						</th>
+
+						<th className="table-cell-minw-75 table-head-title text-right">
+							<ListHeadItem
+								name="taskCount"
+								title={Liferay.Language.get('total-pending')}
+							/>
+						</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{items.map((item, index) => (
+						<WorkloadByAssigneePage.Item
+							{...item}
+							key={index}
+							processId={processId}
+							taskKeys={taskKeys}
+						/>
+					))}
+				</tbody>
+			</table>
+		</div>
+	);
+};
+
 const Item = ({
 	id,
 	image,
@@ -101,61 +156,6 @@ const Item = ({
 				</ChildLink>
 			</td>
 		</tr>
-	);
-};
-
-const Table = ({items, processId, taskKeys}) => {
-	return (
-		<div className="table-responsive workflow-process-dashboard">
-			<table className="table table-heading-nowrap table-hover table-list">
-				<thead>
-					<tr>
-						<th
-							className="table-cell-expand table-head-title"
-							style={{width: '62%'}}
-						>
-							{Liferay.Language.get('assignee-name')}
-						</th>
-
-						<th className="table-cell-minw-75 table-head-title text-right">
-							<ListHeadItem
-								iconColor="danger"
-								iconName="exclamation-circle"
-								name="overdueTaskCount"
-								title={Liferay.Language.get('overdue')}
-							/>
-						</th>
-
-						<th className="table-cell-minw-75 table-head-title text-right">
-							<ListHeadItem
-								iconColor="success"
-								iconName="check-circle"
-								name="onTimeTaskCount"
-								title={Liferay.Language.get('on-time')}
-							/>
-						</th>
-
-						<th className="table-cell-minw-75 table-head-title text-right">
-							<ListHeadItem
-								name="taskCount"
-								title={Liferay.Language.get('total-pending')}
-							/>
-						</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					{items.map((item, index) => (
-						<WorkloadByAssigneePage.Item
-							{...item}
-							key={index}
-							processId={processId}
-							taskKeys={taskKeys}
-						/>
-					))}
-				</tbody>
-			</table>
-		</div>
 	);
 };
 

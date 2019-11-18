@@ -29,18 +29,63 @@ import {
 } from './WorkloadByAssigneePageBody.es';
 import {Item, Table} from './WorkloadByAssigneePageTable.es';
 
-const filterKeys = {
-	processSteps: 'taskKeys',
-	roles: 'roleIds'
-};
+const WorkloadByAssigneePage = ({page, pageSize, processId, search, sort}) => {
+	useProcessTitle(processId, Liferay.Language.get('workload-by-assignee'));
 
-const filterTitles = {
-	processSteps: Liferay.Language.get('process-step'),
-	roles: Liferay.Language.get('roles')
+	const filterKeys = {
+		processSteps: 'taskKeys',
+		roles: 'roleIds'
+	};
+
+	const [filterValues, dispatch] = useFiltersReducer(filterKeys);
+	const {roleIds, taskKeys} = useFilterItemKeys(filterKeys, filterValues);
+
+	let keywords;
+
+	if (typeof search === 'string' && search) {
+		keywords = decodeURIComponent(search);
+	}
+
+	const {data, promises} = useResource(
+		`/processes/${processId}/assignee-users`,
+		{
+			keywords,
+			page,
+			pageSize,
+			roleIds,
+			sort: decodeURIComponent(sort),
+			taskKeys
+		}
+	);
+
+	return (
+		<PromisesResolver promises={promises}>
+			<WorkloadByAssigneePage.Filters
+				dispatch={dispatch}
+				filterKeys={filterKeys}
+				filterValues={filterValues}
+				page={page}
+				pageSize={pageSize}
+				processId={processId}
+				search={search}
+				sort={sort}
+				totalCount={data.totalCount}
+			/>
+
+			<div className="container-fluid-1280 mt-4">
+				<WorkloadByAssigneePage.Body
+					data={data}
+					processId={processId}
+					taskKeys={taskKeys}
+				/>
+			</div>
+		</PromisesResolver>
+	);
 };
 
 const Filters = ({
 	dispatch,
+	filterKeys,
 	filterValues,
 	page,
 	pageSize,
@@ -49,6 +94,11 @@ const Filters = ({
 	sort,
 	totalCount
 }) => {
+	const filterTitles = {
+		processSteps: Liferay.Language.get('process-step'),
+		roles: Liferay.Language.get('roles')
+	};
+
 	const filterResults = getFilterResults(
 		filterKeys,
 		filterTitles,
@@ -122,52 +172,6 @@ const Filters = ({
 				</ResultsBar>
 			)}
 		</>
-	);
-};
-
-const WorkloadByAssigneePage = ({page, pageSize, processId, search, sort}) => {
-	let keywords;
-	useProcessTitle(processId, Liferay.Language.get('workload-by-assignee'));
-
-	const [filterValues, dispatch] = useFiltersReducer(filterKeys);
-	const {roleIds, taskKeys} = useFilterItemKeys(filterKeys, filterValues);
-
-	if (typeof search === 'string' && search) {
-		keywords = decodeURIComponent(search);
-	}
-
-	const {data, promises} = useResource(
-		`/processes/${processId}/assignee-users`,
-		{
-			keywords,
-			page,
-			pageSize,
-			roleIds,
-			sort: decodeURIComponent(sort),
-			taskKeys
-		}
-	);
-
-	return (
-		<PromisesResolver promises={promises}>
-			<WorkloadByAssigneePage.Filters
-				dispatch={dispatch}
-				filterValues={filterValues}
-				page={page}
-				pageSize={pageSize}
-				processId={processId}
-				search={search}
-				sort={sort}
-				totalCount={data.totalCount}
-			/>
-
-			<div className="container-fluid-1280 mt-4">
-				<WorkloadByAssigneePage.Body
-					data={data}
-					processId={processId}
-				/>
-			</div>
-		</PromisesResolver>
 	);
 };
 

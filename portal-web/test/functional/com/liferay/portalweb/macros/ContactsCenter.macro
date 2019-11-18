@@ -18,6 +18,35 @@ definition {
 			value1 = "You have successfully added a new contact.");
 	}
 
+	macro editPG {
+		AssertClick(
+			key_contact = "${contactName}",
+			locator1 = "ContactsCenter#CONTACT_LIST",
+			value1 = "${contactName}");
+
+		AssertClick(
+			locator1 = "Button#EDIT",
+			value1 = "Edit");
+
+		AssertElementPresent(locator1 = "TextInput#NAME");
+
+		if (isSet(contactNameEdit)) {
+			PortletEntry.inputName(name = "${contactNameEdit}");
+		}
+
+		if (isSet(emailAddressEdit)) {
+			Type(
+				locator1 = "ContactsCenter#CONTACT_EMAIL_ADDRESS",
+				value1 = "${emailAddressEdit}");
+		}
+
+		Button.clickSave();
+
+		AssertTextEquals(
+			locator1 = "ContactsCenter#SUCCESS_MESSAGE",
+			value1 = "You have successfully updated the contact.");
+	}
+
 	macro viewContactPG {
 		AssertClick.assertPartialTextClickAt(
 			key_contact = "${contactName}",

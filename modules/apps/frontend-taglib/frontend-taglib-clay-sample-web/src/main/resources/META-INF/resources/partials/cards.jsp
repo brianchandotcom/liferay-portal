@@ -309,8 +309,12 @@
 
 <%!
 private static final String _DOC_FILE_TITLE = "deliverable.doc";
+
 private static final String _MP3_FILE_TITLE = "deliverable.mp3";
+
 private static final String _PDF_FILE_TITLE = "deliverable.pdf";
+
 private static final String _PNG_FILE_TITLE = "lexicon.icon.camera.png";
+
 private static final String _SVG_FILE_TITLE = "lexicon.icon.camera.svg";
 %>

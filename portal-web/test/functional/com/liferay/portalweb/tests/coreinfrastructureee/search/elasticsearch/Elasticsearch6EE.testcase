@@ -92,24 +92,24 @@ definition {
 		property test.name.skip.portal.instance = "Elasticsearch6EE#AssertSimilarResultsMatchesAssetType";
 
 		for (var count : list "1,2,3") {
-			JSONWebcontent.addWebContent(
-				content = "WC Content",
-				groupName = "Guest",
-				title = "Similar Results Blogs Title ${count}");
-
 			JSONBlog.addEntry(
 				entryContent = "Blogs Content",
-				entryTitle = "Similar Results DM Title ${count}");
+				entryTitle = "Similar Results Blogs Title ${count}");
+
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Content",
+				dmDocumentTitle = "Similar Results DM Title ${count}",
+				groupName = "Guest");
 
 			JSONMBMessage.addMessage(
 				groupName = "Guest",
 				threadBody = "MB Content",
 				threadSubject = "Similar Results MB Title ${count}");
 
-			JSONDocument.addFile(
-				dmDocumentDescription = "DM Content",
-				dmDocumentTitle = "Similar Results WC Title ${count}",
-				groupName = "Guest");
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "Similar Results WC Title ${count}");
 		}
 
 		JSONLayout.addPublicLayout(

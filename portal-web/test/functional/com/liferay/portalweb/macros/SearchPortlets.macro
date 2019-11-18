@@ -195,7 +195,7 @@ definition {
 
 		if (isSet(minimumTermFrequency)) {
 			Type(
-				key_fieldLabel = "Minimum Document Frequency",
+				key_fieldLabel = "Minimum Term Frequency",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "${minimumTermFrequency}");
 		}

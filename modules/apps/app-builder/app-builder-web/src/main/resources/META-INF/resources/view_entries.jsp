@@ -27,6 +27,6 @@
 
 	<react:component
 		data="<%= data %>"
-		module="js/pages/entry/EntriesApp.es"
+		module="js/pages/entry/ViewEntriesApp.es"
 	/>
 </div>

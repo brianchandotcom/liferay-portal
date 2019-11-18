@@ -51,20 +51,12 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	attached() {
 		AUI().use(
 			'liferay-item-selector-uploader',
-			'liferay-item-viewer',
 			A => {
-				this._uploadItemViewer = new A.LiferayItemViewer({
-					btnCloseCaption: this.closeCaption,
-					links: '',
-					uploadItemURL: this.uploadItemURL
-				});
-
 				this._itemSelectorUploader = new A.LiferayItemSelectorUploader({
 					rootNode: this.rootNode
 				});
 
 				this._bindEvents();
-				this._renderUI();
 			}
 		);
 
@@ -95,8 +87,10 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	}
 
 	openItemSelectorPreview(items, index) {
+		const container = this._itemSelectorPreviewContainer;
+
 		const data = {
-			this._itemSelectorPreviewContainer,
+			container,
 			currentIndex: index,
 			editItemURL: this.editItemURL,
 			handleSelectedItem: this._onItemSelected.bind(this),
@@ -109,7 +103,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 		render(
 			props => <ItemSelectorPreview {...props} />,
 			data,
-			this._itemSelectorPreviewContainer
+			container
 		);
 	}
 
@@ -123,7 +117,6 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	detached() {
 		super.detached();
 
-		this._uploadItemViewer.destroy();
 		this._itemSelectorUploader.destroy();
 
 		this._eventHandler.removeAllListeners();
@@ -395,17 +388,6 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 			reader.readAsDataURL(file);
 		}
-	}
-
-	/**
-	 * Renders the item viewer's components
-	 *
-	 * @private
-	 */
-	_renderUI() {
-		const rootNode = this.rootNode;
-
-		this._uploadItemViewer.render(rootNode);
 	}
 
 	/**

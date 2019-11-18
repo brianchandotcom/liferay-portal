@@ -538,6 +538,7 @@ definition {
 	@description = "This test ensures that all the default values for an imported structure can be reset."
 	@priority = "4"
 	test ResetImportedStructureDefaultValues {
+		property test.name.skip.portal.instance = "WebContentExportImport#ResetImportedStructureDefaultValues";
 		property testray.component.names = "Web Content Administration";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

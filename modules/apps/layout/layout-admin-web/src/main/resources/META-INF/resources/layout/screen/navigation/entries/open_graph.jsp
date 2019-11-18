@@ -192,6 +192,13 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 				if (openGraphImageURL) {
 					openGraphImageURL.value = itemValue.url;
 				}
+
+				Liferay.fire('<portlet:namespace />PreviewSeo:changed', {
+					data: {
+						type: 'imgUrl',
+						value: itemValue.url
+					}
+				});
 			}
 		});
 

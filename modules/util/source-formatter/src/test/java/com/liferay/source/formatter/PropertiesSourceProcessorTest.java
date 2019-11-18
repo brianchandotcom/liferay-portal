@@ -27,4 +27,9 @@ public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("FormatProperties/TLiferayBatchFileProperties.testproperties");
 	}
 
+	@Test
+	public void testStylingCheck() throws Exception {
+		test("StylingCheck.testproperties");
+	}
+
 }

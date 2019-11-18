@@ -55,7 +55,7 @@ public class SerialDestination extends BaseAsyncDestination {
 			@Override
 			public void run() {
 				try {
-					MessageBusThreadLocalHelper.populateThreadLocalsFromMessage(
+					MessageBusThreadLocalUtil.populateThreadLocalsFromMessage(
 						message, permissionCheckerFactory, userLocalService);
 
 					for (MessageListener messageListener : messageListeners) {

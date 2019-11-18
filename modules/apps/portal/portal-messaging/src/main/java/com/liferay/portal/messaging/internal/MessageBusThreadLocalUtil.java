@@ -32,7 +32,7 @@ import java.util.Locale;
 /**
  * @author Tina Tian
  */
-public class MessageBusThreadLocalHelper {
+public class MessageBusThreadLocalUtil {
 
 	public static void populateMessageFromThreadLocals(Message message) {
 		if (!message.contains("companyId")) {

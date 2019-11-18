@@ -51,7 +51,7 @@ public class ParallelDestination extends BaseAsyncDestination {
 				@Override
 				public void run() {
 					try {
-						MessageBusThreadLocalHelper.
+						MessageBusThreadLocalUtil.
 							populateThreadLocalsFromMessage(
 								message, permissionCheckerFactory,
 								userLocalService);

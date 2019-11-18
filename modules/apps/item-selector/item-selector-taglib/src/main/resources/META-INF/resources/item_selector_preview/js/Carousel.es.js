@@ -51,10 +51,10 @@ const InfoPanel = metadata => {
 	const itemsContent = imageData.groups.map((group, index) => {
 		const itemContentTab = group.data.map(item => {
 			return (
-				<>
+				<React.Fragment key={item.key}>
 					<dt className="sidebar-dt">{item.key}</dt>
 					<dd className="sidebar-dd">{item.value}</dd>
-				</>
+				</React.Fragment>
 			);
 		});
 

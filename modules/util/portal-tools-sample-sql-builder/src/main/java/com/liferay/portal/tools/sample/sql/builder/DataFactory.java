@@ -1178,8 +1178,8 @@ public class DataFactory {
 				"sample.sql.max.commerce.product.instance.count"));
 		_maxCProductCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.commerce.product.count"));
-		_maxContentPageCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.content.page.count"));
+		_maxContentLayoutCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.content.layout.count"));
 		_maxDDLCustomFieldCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.ddl.custom.field.count"));
 		_maxDDLRecordCount = GetterUtil.getInteger(
@@ -1703,7 +1703,7 @@ public class DataFactory {
 	public List<LayoutModel> newContentLayoutModels(long groupId) {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
-		for (int i = 0; i < _maxContentPageCount; i++) {
+		for (int i = 0; i < _maxContentLayoutCount; i++) {
 			layoutModels.add(
 				newContentLayoutModel(
 					groupId, i + "_web_content", "web_content"));
@@ -4610,7 +4610,7 @@ public class DataFactory {
 	private int _maxAssetVocabularyCount;
 	private int _maxBlogsEntryCommentCount;
 	private int _maxBlogsEntryCount;
-	private int _maxContentPageCount;
+	private int _maxContentLayoutCount;
 	private int _maxCPDefinitionCount;
 	private int _maxCPInstanceCount;
 	private int _maxCProductCount;

@@ -367,7 +367,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String variableName = matcher.group(1);
+			String variableName = matcher.group(2);
 
 			Pattern pattern2 = Pattern.compile("\\W(" + variableName + ")\\W");
 
@@ -396,7 +396,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			}
 
 			return StringUtil.replaceFirst(
-				content, "\n", "\n\n", matcher.end(2));
+				content, "\n", "\n\n", matcher.end(3));
 		}
 
 		return content;
@@ -700,6 +700,6 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	private static final Pattern _redundantEmptyLinePattern5 = Pattern.compile(
 		"\\}\n\n\t*(catch|else( if)?|finally) [\\(\\{]");
 	private static final Pattern _setVariablePattern = Pattern.compile(
-		"\t[A-Z]\\w+ (\\w+) =\\s+((?!\\{\n).)*?;\n", Pattern.DOTALL);
+		"\t*[A-Z]\\w+(<.+>)? (\\w+) =\\s+((?!\\{\n).)*?;\n", Pattern.DOTALL);
 
 }

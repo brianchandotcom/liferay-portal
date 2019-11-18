@@ -14,7 +14,11 @@
 
 package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
+import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,7 +26,9 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -71,7 +77,9 @@ public class ContentsContentPageEditorSidebarPanel
 					permissionChecker, plid, ActionKeys.UPDATE) &&
 				!LayoutPermissionUtil.contains(
 					permissionChecker, plid,
-					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+					ActionKeys.UPDATE_LAYOUT_CONTENT) &&
+				!_layoutContainsUpdatableMappedContent(
+					permissionChecker, plid)) {
 
 				return false;
 			}
@@ -83,6 +91,39 @@ public class ContentsContentPageEditorSidebarPanel
 		}
 
 		return true;
+	}
+
+	private boolean _layoutContainsUpdatableMappedContent(
+		PermissionChecker permissionChecker, long plid) {
+
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			LayoutClassedModelUsageLocalServiceUtil.
+				getLayoutClassedModelUsagesByPlid(plid);
+
+		try {
+			for (LayoutClassedModelUsage layoutClassedModelUsage :
+					layoutClassedModelUsages) {
+
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					layoutClassedModelUsage.getClassNameId(),
+					layoutClassedModelUsage.getClassPK());
+
+				if (assetEntry == null) {
+					continue;
+				}
+
+				if (AssetEntryPermission.contains(
+						permissionChecker, assetEntry, ActionKeys.UPDATE)) {
+
+					return true;
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error("An error occurred while getting mapped contents", e);
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

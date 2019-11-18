@@ -14,12 +14,14 @@
 
 package com.liferay.saml.opensaml.integration.internal.metadata;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
@@ -106,7 +108,9 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 		SecurityConfigurationBootstrap securityConfigurationBootstrap =
 			new SecurityConfigurationBootstrap();
 
-		securityConfigurationBootstrap.activate(
+		ReflectionTestUtil.invoke(
+			securityConfigurationBootstrap, "activate",
+			new Class<?>[] {Map.class},
 			HashMapBuilder.<String, Object>put(
 				"blacklisted.algorithms",
 				new String[] {

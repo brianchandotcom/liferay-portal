@@ -1838,6 +1838,28 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			ReflectionUtil.throwException(frameworkEvent.getThrowable());
 		}
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Started dynamic bundles");
+		}
+
+		DefaultNoticeableFuture<FrameworkEvent> webDefaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Starting web bundles");
+		}
+
+		frameworkStartLevel.setStartLevel(
+			PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL,
+			webFrameworkEvent -> webDefaultNoticeableFuture.set(
+				webFrameworkEvent));
+
+		FrameworkEvent webFrameworkEvent = webDefaultNoticeableFuture.get();
+
+		if (webFrameworkEvent.getType() == FrameworkEvent.ERROR) {
+			ReflectionUtil.throwException(webFrameworkEvent.getThrowable());
+		}
+
 		if (dynamicBundleChecksums.isEmpty()) {
 			fileInstallBundle.start();
 		}
@@ -1874,28 +1896,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			finally {
 				bundleContext.removeBundleListener(synchronousBundleListener);
 			}
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Started dynamic bundles");
-		}
-
-		DefaultNoticeableFuture<FrameworkEvent> webDefaultNoticeableFuture =
-			new DefaultNoticeableFuture<>();
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Starting web bundles");
-		}
-
-		frameworkStartLevel.setStartLevel(
-			PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL,
-			webFrameworkEvent -> webDefaultNoticeableFuture.set(
-				webFrameworkEvent));
-
-		FrameworkEvent webFrameworkEvent = webDefaultNoticeableFuture.get();
-
-		if (webFrameworkEvent.getType() == FrameworkEvent.ERROR) {
-			ReflectionUtil.throwException(webFrameworkEvent.getThrowable());
 		}
 
 		if (_log.isInfoEnabled()) {

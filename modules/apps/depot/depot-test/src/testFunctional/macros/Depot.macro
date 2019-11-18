@@ -54,9 +54,11 @@ definition {
 
 	macro disconnectSite {
 		for (var siteName : list "${siteList}") {
-			Click(
+			ClickNoError(
 				key_entryName = "${siteName}",
 				locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
+
+			AssertConfirm(value1 = "Removing this site connection will not allow the site to consume data from this repository directly.");
 
 			Alert.viewSuccessMessage();
 		}

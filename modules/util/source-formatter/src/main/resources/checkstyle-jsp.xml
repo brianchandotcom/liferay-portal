@@ -55,7 +55,7 @@
 		<module name="ParameterNameCheck">
 			<message key="name.invalidPattern" value="Parameter ''{0}'' must match pattern ''{1}''" />
 		</module>
-				<module name="StaticVariableNameCheck">
+		<module name="StaticVariableNameCheck">
 			<property name="applyToPackage" value="false" />
 			<property name="applyToPrivate" value="false" />
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
@@ -69,10 +69,10 @@
 		</module>
 		<module name="StringLiteralEqualityCheck" />
 		<module name="TypeNameCheck">
-		<property name="format" value="^[A-Z][_a-zA-Z0-9]*" />
+			<property name="format" value="^[A-Z][_a-zA-Z0-9]*" />
 			<message key="name.invalidPattern" value="Class, interface, enum or annotation ''{0}'' must match pattern ''{1}''" />
 		</module>
-				<module name="WhitespaceAfterCheck">
+		<module name="WhitespaceAfterCheck">
 			<property name="tokens" value="COMMA, SEMI" />
 		</module>
 		<module name="WhitespaceAroundCheck">

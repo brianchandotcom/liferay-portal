@@ -14,6 +14,8 @@
 
 package com.liferay.layout.type.controller.content.internal.controller;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererController;
@@ -24,8 +26,10 @@ import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.info.item.selector.InfoItemSelectorTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,7 +51,10 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.taglib.servlet.PipingServletResponse;
+
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -296,7 +303,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 					permissionChecker, layout, ActionKeys.UPDATE) ||
 				LayoutPermissionUtil.contains(
 					permissionChecker, layout,
-					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+					ActionKeys.UPDATE_LAYOUT_CONTENT) ||
+				_layoutContainsUpdatableMappedContent(
+					permissionChecker, layout.getPlid())) {
 
 				return true;
 			}
@@ -305,6 +314,39 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			if (_log.isDebugEnabled()) {
 				_log.debug(pe, pe);
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _layoutContainsUpdatableMappedContent(
+		PermissionChecker permissionChecker, long plid) {
+
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			LayoutClassedModelUsageLocalServiceUtil.
+				getLayoutClassedModelUsagesByPlid(plid);
+
+		try {
+			for (LayoutClassedModelUsage layoutClassedModelUsage :
+					layoutClassedModelUsages) {
+
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					layoutClassedModelUsage.getClassNameId(),
+					layoutClassedModelUsage.getClassPK());
+
+				if (assetEntry == null) {
+					continue;
+				}
+
+				if (AssetEntryPermission.contains(
+						permissionChecker, assetEntry, ActionKeys.UPDATE)) {
+
+					return true;
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error("An error occurred while getting mapped contents", e);
 		}
 
 		return false;

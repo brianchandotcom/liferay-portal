@@ -41,6 +41,7 @@ export default withRouter(
 			pageSize: 20,
 			sort: ''
 		});
+
 		const dispatch = action => setQuery(reducer(query, action));
 
 		const {refetch, resource} = useResource({

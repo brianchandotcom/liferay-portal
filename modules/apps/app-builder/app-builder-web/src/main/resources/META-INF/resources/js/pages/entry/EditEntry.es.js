@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useCallback} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
@@ -27,11 +27,11 @@ export default ({
 }) => {
 	const {basePortletURL} = useContext(AppContext);
 
-	const onCancel = () => {
+	const onCancel = useCallback(() => {
 		Liferay.Util.navigate(basePortletURL);
-	};
+	}, [basePortletURL]);
 
-	const onSave = () => {
+	const onSave = useCallback(() => {
 		const {pages} = Liferay.component(editEntryContainerElementId);
 		const visitor = new PagesVisitor(pages);
 
@@ -54,7 +54,17 @@ export default ({
 				dataRecord
 			).then(onCancel);
 		}
-	};
+	}, [dataDefinitionId, dataRecordId, editEntryContainerElementId, onCancel]);
+
+	useEffect(() => {
+		const component = Liferay.component(editEntryContainerElementId);
+		const formNode = component.getFormNode();
+		const onSubmit = () => onSave();
+
+		formNode.addEventListener('submit', onSubmit);
+
+		return () => formNode.removeEventListener('submit', onSubmit);
+	}, [editEntryContainerElementId, onSave]);
 
 	return (
 		<ClayButton.Group spaced>

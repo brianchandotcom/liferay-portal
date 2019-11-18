@@ -48,6 +48,9 @@ public class GroupIdQueryPreFilterContributor
 		if (ArrayUtil.isEmpty(groupIds) ||
 			((groupIds.length == 1) && (groupIds[0] == 0))) {
 
+			booleanFilter.addTerm(
+				Field.STAGING_GROUP, "true", BooleanClauseOccur.MUST_NOT);
+
 			_addInactiveGroupsBooleanFilter(booleanFilter, searchContext);
 
 			return;

@@ -155,7 +155,7 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 		});
 
 		itemSelectorDialog.on('selectedItemChange', function(event) {
-			var selectedItems = event.selectedItem;
+			var selectedItem = event.selectedItem;
 
 			if (selectedItem) {
 				Liferay.Util.postForm(form, {

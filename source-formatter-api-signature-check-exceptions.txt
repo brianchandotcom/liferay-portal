@@ -32,7 +32,6 @@ com.liferay.document.library.kernel.util.DL#getWebDavURL(ThemeDisplay,Folder,Fil
 com.liferay.document.library.kernel.util.DL#getWebDavURL(ThemeDisplay,Folder,FileEntry,boolean,boolean)
 com.liferay.document.library.kernel.util.DL#hasViewInContextGroupLayout(long,ThemeDisplay)
 com.liferay.document.library.kernel.util.DL#startWorkflowInstance(long,DLFileVersion,String,ServiceContext)
-com.liferay.document.library.kernel.util.DLFileVersionPolicy#isKeepFileVersionLabel(DLFileVersion,DLFileVersion,boolean,ServiceContext)
 com.liferay.document.library.kernel.util.DLUtil#getDownloadURL(FileEntry,FileVersion,ThemeDisplay,String)
 com.liferay.document.library.kernel.util.DLUtil#getDownloadURL(FileEntry,FileVersion,ThemeDisplay,String,boolean,boolean)
 com.liferay.document.library.kernel.util.DLUtil#getFileEntryImage(FileEntry,ThemeDisplay)

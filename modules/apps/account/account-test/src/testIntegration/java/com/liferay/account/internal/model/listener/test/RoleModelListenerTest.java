@@ -14,7 +14,7 @@
 
 package com.liferay.account.internal.model.listener.test;
 
-import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -76,7 +76,7 @@ public class RoleModelListenerTest {
 	@Test
 	public void testDeleteCompany() throws Exception {
 		List<Long> requiredRoleIds = Stream.of(
-			AccountConstants.REQUIRED_ROLE_NAMES
+			AccountRoleConstants.REQUIRED_ROLE_NAMES
 		).map(
 			requiredRoleName -> _roleLocalService.fetchRole(
 				_company.getCompanyId(), requiredRoleName)
@@ -95,7 +95,9 @@ public class RoleModelListenerTest {
 
 	@Test
 	public void testDeleteDefaultAccountRole() throws Exception {
-		for (String requiredRoleName : AccountConstants.REQUIRED_ROLE_NAMES) {
+		for (String requiredRoleName :
+				AccountRoleConstants.REQUIRED_ROLE_NAMES) {
+
 			try {
 				_roleLocalService.deleteRole(
 					_roleLocalService.getRole(

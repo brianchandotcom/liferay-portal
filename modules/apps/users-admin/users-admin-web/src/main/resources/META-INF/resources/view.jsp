@@ -95,7 +95,7 @@ else {
 	</c:when>
 </c:choose>
 
-<aui:script>
+<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 	function <portlet:namespace />deleteOrganization(
 		organizationId,
 		organizationsRedirect

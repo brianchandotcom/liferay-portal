@@ -31,8 +31,8 @@ import java.sql.ResultSet;
 public class UpgradeCTModel extends UpgradeProcess {
 
 	public UpgradeCTModel(String... tableNames) {
-		if (tableNames.length < 0) {
-			throw new IllegalArgumentException();
+		if (tableNames.length == 0) {
+			throw new IllegalArgumentException("Empty table names");
 		}
 
 		_tableNames = tableNames;

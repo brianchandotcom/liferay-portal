@@ -80,14 +80,15 @@
 			<finder-column name="ctCollectionId" />
 			<finder-column name="modelClassNameId" />
 		</finder>
-		<finder name="NotC_MCPK" return-type="Collection">
-			<finder-column comparator="!=" name="ctCollectionId" />
-			<finder-column arrayable-operator="OR" name="modelClassPK" />
-		</finder>
 		<finder name="C_MCNI_MCPK" return-type="CTEntry" unique="true">
 			<finder-column name="ctCollectionId" />
 			<finder-column name="modelClassNameId" />
 			<finder-column name="modelClassPK" />
+		</finder>
+		<finder name="NotC_MCNI_MCPK" return-type="Collection">
+			<finder-column comparator="!=" name="ctCollectionId" />
+			<finder-column name="modelClassNameId" />
+			<finder-column arrayable-operator="OR" name="modelClassPK" />
 		</finder>
 
 		<!-- References -->

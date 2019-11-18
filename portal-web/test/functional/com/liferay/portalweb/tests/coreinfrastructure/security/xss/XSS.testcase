@@ -446,38 +446,7 @@ definition {
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		Portlet.gotoPortletOptions(
-			portletName = "Web Content Display",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#DIALOG");
-
-		AssertClick(
-			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
-			value1 = "Select");
-
-		SelectFrame(value1 = "relative=top");
-
-		SelectFrame(locator1 = "IFrame#DIALOG");
-
-		var key_webContentTitle = '''<script>alert(123);</script>''';
-		var webContentTitle = '''<script>alert(123);</script>''';
-
-		AssertClick(
-			locator1 = "Link#WEB_CONTENT_ARTICLE",
-			value1 = "${webContentTitle}");
-
-		AssertAlertNotPresent();
-
-		SelectFrame(value1 = "relative=top");
-
-		SelectFrame(locator1 = "IFrame#DIALOG");
-
-		PortletEntry.save();
-
-		AssertAlertNotPresent();
-
-		SelectFrame(value1 = "relative=top");
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = '''<script>alert(123);</script>''');
 
 		Navigator.openURL();
 

@@ -156,6 +156,21 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	}
 
 	@Override
+	public Boolean getFetchSource() {
+		return _fetchSource;
+	}
+
+	@Override
+	public String[] getFetchSourceExcludes() {
+		return _fetchSourceExcludes;
+	}
+
+	@Override
+	public String[] getFetchSourceIncludes() {
+		return _fetchSourceIncludes;
+	}
+
+	@Override
 	public Integer getFrom() {
 		return _from;
 	}
@@ -285,6 +300,18 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		_federatedSearchKey = federatedSearchKey;
 	}
 
+	public void setFetchSource(boolean fetchSource) {
+		_fetchSource = fetchSource;
+	}
+
+	public void setFetchSourceExcludes(String[] fetchSourceExcludes) {
+		_fetchSourceExcludes = fetchSourceExcludes;
+	}
+
+	public void setFetchSourceIncludes(String[] fetchSourceIncludes) {
+		_fetchSourceIncludes = fetchSourceIncludes;
+	}
+
 	public void setFrom(Integer from) {
 		_from = from;
 	}
@@ -386,6 +413,9 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	private String _federatedSearchKey;
 	private final Map<String, SearchRequest> _federatedSearchRequestsMap =
 		new LinkedHashMap<>();
+	private Boolean _fetchSource;
+	private String[] _fetchSourceExcludes;
+	private String[] _fetchSourceIncludes;
 	private Integer _from;
 	private final List<GroupByRequest> _groupByRequests = new ArrayList<>();
 	private final List<String> _includeContributors = new ArrayList<>();

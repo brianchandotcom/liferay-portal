@@ -198,6 +198,36 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	}
 
 	@Override
+	public SearchRequestBuilder fetchSource(boolean fetchSource) {
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setFetchSource(fetchSource));
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder fetchSourceExcludes(
+		String[] fetchSourceExcludes) {
+
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setFetchSourceExcludes(
+				fetchSourceExcludes));
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder fetchSourceIncludes(
+		String[] fetchSourceIncludes) {
+
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setFetchSourceIncludes(
+				fetchSourceIncludes));
+
+		return this;
+	}
+
+	@Override
 	public SearchRequestBuilder fields(String... fields) {
 		withSearchRequestImpl(
 			searchRequestImpl -> searchRequestImpl.setSelectedFieldNames(

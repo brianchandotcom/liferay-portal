@@ -78,6 +78,15 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 					LayoutSEOEntry selLayoutSEOEntry = layoutsAdminDisplayContext.getSelLayoutSEOEntry();
 					%>
 
+					<liferay-util:buffer
+						var="infoCanonicalURL"
+					>
+						<clay:alert
+							message='<%= LanguageUtil.get(resourceBundle, "use-custom-canonical-url-alert-info") %>'
+							title='<%= LanguageUtil.get(request, "info") + ":" %>'
+						/>
+					</liferay-util:buffer>
+
 					<c:choose>
 						<c:when test="<%= selLayoutSEOEntry != null %>">
 							<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
@@ -90,6 +99,10 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 								</aui:input>
 							</div>
 
+							<div class="<%= selLayoutSEOEntry.isCanonicalURLEnabled() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />canonicalURLAlert">
+								<%= infoCanonicalURL %>
+							</div>
+
 							<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 						</c:when>
 						<c:otherwise>
@@ -99,6 +112,10 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 								<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getCanonicalLayoutURL() %>" type="text">
 									<aui:validator name="url" />
 								</aui:input>
+							</div>
+
+							<div class="hide" id="<portlet:namespace />canonicalURLAlert">
+								<%= infoCanonicalURL %>
 							</div>
 						</c:otherwise>
 					</c:choose>
@@ -213,9 +230,15 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	var canonicalURLFieldDefaultLocale = document.getElementById(
 		'<portlet:namespace />canonicalURL_<%= themeDisplay.getLanguageId() %>'
 	);
+	var canonicalURLAlert = document.getElementById(
+		'<portlet:namespace />canonicalURLAlert'
+	);
 
 	if (canonicalURLEnabledCheck && canonicalURLField) {
 		canonicalURLEnabledCheck.addEventListener('click', function(event) {
+			if (canonicalURLAlert) {
+				canonicalURLAlert.classList.toggle('hide');
+			}
 			Liferay.Util.toggleDisabled(canonicalURLField, !event.target.checked);
 			Liferay.Util.toggleDisabled(
 				canonicalURLFieldDefaultLocale,

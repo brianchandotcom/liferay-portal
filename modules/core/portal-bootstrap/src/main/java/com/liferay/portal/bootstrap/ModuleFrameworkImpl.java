@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
-import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -943,8 +942,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			Collections.sort(
 				zipEntries,
-				Comparator.comparing(
-					ZipEntry::getName, new NaturalOrderStringComparator()));
+				new Comparator<ZipEntry>() {
+
+					@Override
+					public int compare(ZipEntry zipEntry1, ZipEntry zipEntry2) {
+						String name1 = zipEntry1.getName();
+						String name2 = zipEntry2.getName();
+
+						return name1.compareTo(name2);
+					}
+
+				});
 
 			for (ZipEntry zipEntry : zipEntries) {
 				String zipEntryName = zipEntry.getName();

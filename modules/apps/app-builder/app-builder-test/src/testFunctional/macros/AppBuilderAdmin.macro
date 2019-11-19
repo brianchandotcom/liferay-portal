@@ -4,6 +4,24 @@ definition {
 		Click(locator1 = "AppBuilder#BUTTON_ADD");
 	}
 
+	macro addApp {
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+		
+		AppBuilderAdmin.add();
+
+		AppBuilderAdmin.selectForm(formName = "${formName}");
+
+		AppBuilderAdmin.selectTableView(tableName = "${tableName}");
+
+		AppBuilderAdmin.setName(title = "${appTitle}");
+
+		Check.checkToggleSwitch(
+			key_deployOption = "${deployOption}",
+			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
+
+		Button.click(button = "Deploy");
+	}
+
 	macro addCustomObject {
 
 		if ("${isCreatingViaPlusIcon}" == "false") {

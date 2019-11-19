@@ -19,6 +19,8 @@ package com.liferay.account.constants;
  */
 public class AccountConstants {
 
+	public static final long ACCOUNT_ENTRY_ID_ANY = -1;
+
 	public static final long ACCOUNT_ENTRY_ID_DEFAULT = 0;
 
 	public static final String RESOURCE_NAME = "com.liferay.account";

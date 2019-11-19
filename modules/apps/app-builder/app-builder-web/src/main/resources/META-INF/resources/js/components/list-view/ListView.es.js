@@ -107,7 +107,7 @@ export default withRouter(
 					emptyState={emptyState}
 					isEmpty={totalCount === 0}
 					isLoading={isLoading}
-					items={items.map(item => children(item))}
+					items={items.map((item, index) => children(item, index))}
 					keywords={query.keywords}
 					totalCount={totalCount}
 				/>

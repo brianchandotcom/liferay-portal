@@ -87,7 +87,7 @@ export const getFieldProperties = (
 	const visitor = new PagesVisitor(pages);
 
 	visitor.mapFields(
-		({fieldName, localizable, localizedValue, type, value}) => {
+		({fieldName, localizable, localizedValue = {}, type, value}) => {
 			if (localizable && localizedValue[editingLanguageId]) {
 				properties[fieldName] = localizedValue[editingLanguageId];
 			} else if (localizable && localizedValue[defaultLanguageId]) {

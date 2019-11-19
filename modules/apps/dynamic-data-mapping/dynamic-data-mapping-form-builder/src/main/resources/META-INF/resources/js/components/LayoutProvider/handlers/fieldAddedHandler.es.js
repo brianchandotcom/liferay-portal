@@ -83,12 +83,6 @@ const handleFieldAdded = (props, state, event) => {
 		type: fieldType.name
 	};
 
-	if (addedToPlaceholder) {
-		pages = FormSupport.addRow(pages, rowIndex, pageIndex);
-
-		columnIndex = 0;
-	}
-
 	return {
 		focusedField: {
 			...fieldProperties,

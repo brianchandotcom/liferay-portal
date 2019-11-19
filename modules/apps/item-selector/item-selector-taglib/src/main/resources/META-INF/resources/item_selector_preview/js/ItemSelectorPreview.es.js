@@ -42,10 +42,7 @@ class ItemSelectorPreview extends Component {
 				returntype: PropTypes.string.isRequired,
 				title: PropTypes.string.isRequired,
 				url: PropTypes.string,
-				value: PropTypes.oneOfType([
-					PropTypes.string,
-					PropTypes.object
-				])
+				value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 			})
 		).isRequired,
 		uploadItemReturnType: PropTypes.string,
@@ -84,7 +81,10 @@ class ItemSelectorPreview extends Component {
 			});
 		}
 
-		this._updateCurrentItemHandler = Liferay.on('updateCurrentItem', this.updateCurrentItem);
+		this._updateCurrentItemHandler = Liferay.on(
+			'updateCurrentItem',
+			this.updateCurrentItem
+		);
 	}
 
 	componentWillUnmount() {
@@ -244,7 +244,7 @@ class ItemSelectorPreview extends Component {
 
 	updateCurrentItem = ({url, value}) => {
 		this.setState({currentItem: {...this.state.currentItem, url, value}});
-	}
+	};
 
 	render() {
 		const {currentItem, currentItemIndex, items} = this.state;

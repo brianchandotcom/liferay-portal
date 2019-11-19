@@ -28,9 +28,6 @@ const STR_DRAG_OVER = 'dragover';
 const STR_DROP = 'drop';
 const statusCode = Liferay.STATUS_CODE;
 
-const uploadItemLinkTpl = ({preview, returnType, title, value}) =>
-	`<a data-returnType="${returnType}" data-value="${value}" href="${preview}" title="${title}"></a>`;
-
 /**
  * Handles the events in the Repository Entry Browser taglib.
  *
@@ -49,16 +46,13 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	 * @inheritDoc
 	 */
 	attached() {
-		AUI().use(
-			'liferay-item-selector-uploader',
-			A => {
-				this._itemSelectorUploader = new A.LiferayItemSelectorUploader({
-					rootNode: this.rootNode
-				});
+		AUI().use('liferay-item-selector-uploader', A => {
+			this._itemSelectorUploader = new A.LiferayItemSelectorUploader({
+				rootNode: this.rootNode
+			});
 
-				this._bindEvents();
-			}
-		);
+			this._bindEvents();
+		});
 
 		this.attachItemSelectorPreviewComponent();
 	}
@@ -100,11 +94,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			uploadItemURL: this.uploadItemURL
 		};
 
-		render(
-			props => <ItemSelectorPreview {...props} />,
-			data,
-			container
-		);
+		render(props => <ItemSelectorPreview {...props} />, data, container);
 	}
 
 	closeItemSelectorPreview() {

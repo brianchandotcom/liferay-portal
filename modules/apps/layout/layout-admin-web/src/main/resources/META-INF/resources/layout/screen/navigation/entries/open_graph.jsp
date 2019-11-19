@@ -52,7 +52,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 			<div class="form-group">
 				<label class="control-label"><liferay-ui:message key="image" /></label>
 
-				<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="mb-3" />
+				<aui:input label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" readonly="<%= true %>" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="mb-3" />
 
 				<aui:button-row cssClass="mt-0">
 					<aui:button name="openGraphImageButton" value="select" />

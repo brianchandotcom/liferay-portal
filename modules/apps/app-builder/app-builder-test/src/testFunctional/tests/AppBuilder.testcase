@@ -239,21 +239,6 @@ definition {
 
 	@description = "Delete an existing custom object with no associated relationships"
 	@priority = "5"
-	test DeleteCustomObjectWithNoAssociatedRelationship {
-		property portal.acceptance = "false";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		AppBuilderAdmin.gotoBack();
-
-		AppBuilderAdmin.deleteEntry(customObjectName = "my custom object");
-	}
-
-	@description = "Delete an existing custom object with no associated relationships"
-	@priority = "5"
 	test DeleteCustomObjectWithAssociatedRelationship {
 		property portal.acceptance = "false";
 
@@ -271,14 +256,14 @@ definition {
 			tableViewName = "My Table View");
 
 		AppBuilderAdmin.addApp(
-			formName = "My Form View",
-			tableName = "My Table View",
 			appTitle = "Test App",
-			deployOption = "Product Menu");
+			deployOption = "Product Menu",
+			formName = "My Form View",
+			tableName = "My Table View");
 
 		AppBuilderAdmin.gotoCustomAppCP(
-			portlet = "Test App",
-			panel = "Control Panel");
+			panel = "Control Panel",
+			portlet = "Test App");
 
 		AppBuilderAdmin.add();
 
@@ -292,7 +277,22 @@ definition {
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Custom Objects");
-		
+
+		AppBuilderAdmin.deleteEntry(customObjectName = "my custom object");
+	}
+
+	@description = "Delete an existing custom object with no associated relationships"
+	@priority = "5"
+	test DeleteCustomObjectWithNoAssociatedRelationship {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.gotoBack();
+
 		AppBuilderAdmin.deleteEntry(customObjectName = "my custom object");
 	}
 

@@ -2,7 +2,7 @@ definition {
 
 	macro addBasicTableView {
 		AppBuilderAdmin.switchTab(tabName = "Table Views");
-		
+
 		AppBuilderAdmin.add();
 
 		TableViewBuilder.addColumnByDoubleClick(fieldType = "${fieldType}");

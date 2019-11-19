@@ -6,7 +6,7 @@ definition {
 
 	macro addApp {
 		AppBuilderAdmin.switchTab(tabName = "Apps");
-		
+
 		AppBuilderAdmin.add();
 
 		AppBuilderAdmin.selectForm(formName = "${formName}");

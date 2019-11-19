@@ -47,6 +47,28 @@ definition {
 			value1 = "You have successfully updated the contact.");
 	}
 
+	macro viewContactCenterContainerPG {
+		AssertTextEquals(
+			locator1 = "ContactsCenter#CONTACT_CONNECTIONS_COUNT",
+			value1 = "You have ${contactConnection} connections.");
+
+		AssertTextEquals(
+			locator1 = "ContactsCenter#CONTACT_FOLLOWING_COUNT",
+			value1 = "You are following ${contactFollowing} people.");
+
+		AssertTextEquals(
+			locator1 = "ContactsCenter#CONTACT_FOLLOWER_COUNT",
+			value1 = "You have ${contactFollower} followers.");
+
+		AssertTextEquals(
+			locator1 = "ContactsCenter#MY_CONTACTS_COUNT",
+			value1 = "View my ${myContact} contacts.");
+
+		AssertTextEquals(
+			locator1 = "ContactsCenter#All_USERS_COUNT",
+			value1 = "View all ${allUser} users.");
+	}
+
 	macro viewContactPG {
 		AssertClick.assertPartialTextClickAt(
 			key_contact = "${contactName}",

@@ -49,18 +49,15 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 			<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-			<div>
+			<div class="form-group">
 				<label class="control-label"><liferay-ui:message key="image" /></label>
 
-				<div class="input-group">
-					<div class="input-group-item">
-						<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="w-100" />
-					</div>
+				<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="mb-3" />
 
-					<div class="input-group-item input-group-item-shrink">
-						<aui:button name="openGraphImageButton" value="select" />
-					</div>
-				</div>
+				<aui:button-row cssClass="mt-0">
+					<aui:button name="openGraphImageButton" value="select" />
+					<aui:button name="openGraphClearImageButton" value="clear" />
+				</aui:button-row>
 			</div>
 
 			<%

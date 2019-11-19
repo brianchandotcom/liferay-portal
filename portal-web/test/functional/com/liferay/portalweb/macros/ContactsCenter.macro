@@ -18,8 +18,13 @@ definition {
 			value1 = "You have successfully added a new contact.");
 	}
 
-	macro viewPG {
-		AssertTextEquals(
+	macro viewContactPG {
+		AssertClick.assertPartialTextClickAt(
+			key_contact = "${contactName}",
+			locator1 = "ContactsCenter#CONTACT_LIST",
+			value1 = "${contactName}");
+
+		AssertTextEquals.assertPartialText(
 			key_contactText = "${contactName}",
 			locator1 = "ContactsCenter#CONTACT_CONTAINER_TEXT",
 			value1 = "${contactName}");
@@ -28,6 +33,12 @@ definition {
 			key_contactText = "${emailAddress}",
 			locator1 = "ContactsCenter#CONTACT_CONTAINER_TEXT",
 			value1 = "${emailAddress}");
+
+		if (isSet(interactButton)) {
+			for (var button : list "${interactButton}") {
+				Button.viewPresent(button = "${button}");
+			}
+		}
 	}
 
 }

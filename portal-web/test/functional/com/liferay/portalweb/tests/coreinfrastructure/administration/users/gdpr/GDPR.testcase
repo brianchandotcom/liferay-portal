@@ -542,7 +542,7 @@ definition {
 			contactName = "test1",
 			emailAddress = "test1@liferay.com");
 
-		ContactsCenter.viewPG(
+		ContactsCenter.viewContactPG(
 			contactName = "test1",
 			emailAddress = "test1@liferay.com");
 

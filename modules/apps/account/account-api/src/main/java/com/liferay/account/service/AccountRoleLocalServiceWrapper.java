@@ -58,10 +58,12 @@ public class AccountRoleLocalServiceWrapper
 	}
 
 	@Override
-	public void associateUser(long accountEntryId, long roleId, long userId)
+	public void associateUser(
+			long accountEntryId, long accountRoleId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_accountRoleLocalService.associateUser(accountEntryId, roleId, userId);
+		_accountRoleLocalService.associateUser(
+			accountEntryId, accountRoleId, userId);
 	}
 
 	/**
@@ -327,11 +329,12 @@ public class AccountRoleLocalServiceWrapper
 	}
 
 	@Override
-	public void unassociateUser(long accountEntryId, long roleId, long userId)
+	public void unassociateUser(
+			long accountEntryId, long accountRoleId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_accountRoleLocalService.unassociateUser(
-			accountEntryId, roleId, userId);
+			accountEntryId, accountRoleId, userId);
 	}
 
 	/**

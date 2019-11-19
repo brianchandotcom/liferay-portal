@@ -61,10 +61,10 @@ public class AccountRoleLocalServiceUtil {
 	}
 
 	public static void associateUser(
-			long accountEntryId, long roleId, long userId)
+			long accountEntryId, long accountRoleId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		getService().associateUser(accountEntryId, roleId, userId);
+		getService().associateUser(accountEntryId, accountRoleId, userId);
 	}
 
 	/**
@@ -309,10 +309,10 @@ public class AccountRoleLocalServiceUtil {
 	}
 
 	public static void unassociateUser(
-			long accountEntryId, long roleId, long userId)
+			long accountEntryId, long accountRoleId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		getService().unassociateUser(accountEntryId, roleId, userId);
+		getService().unassociateUser(accountEntryId, accountRoleId, userId);
 	}
 
 	/**

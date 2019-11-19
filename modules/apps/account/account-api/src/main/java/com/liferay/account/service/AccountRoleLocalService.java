@@ -77,7 +77,8 @@ public interface AccountRoleLocalService
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap)
 		throws PortalException;
 
-	public void associateUser(long accountEntryId, long roleId, long userId)
+	public void associateUser(
+			long accountEntryId, long accountRoleId, long userId)
 		throws PortalException;
 
 	/**
@@ -255,7 +256,8 @@ public interface AccountRoleLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void unassociateUser(long accountEntryId, long roleId, long userId)
+	public void unassociateUser(
+			long accountEntryId, long accountRoleId, long userId)
 		throws PortalException;
 
 	/**

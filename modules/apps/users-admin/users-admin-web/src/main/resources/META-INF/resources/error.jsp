@@ -21,5 +21,6 @@
 <liferay-ui:error exception="<%= NoSuchOrganizationException.class %>" message="the-organization-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchRoleException.class %>" message="the-role-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchUserException.class %>" message="the-user-could-not-be-found" />
+<liferay-ui:error exception="<%= RequiredRoleException.RequiredAdminRoleException.class %>" message="at-least-one-administrator-is-required" />
 
 <liferay-ui:error-principal />

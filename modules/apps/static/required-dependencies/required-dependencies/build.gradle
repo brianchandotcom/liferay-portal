@@ -23,7 +23,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.6.4.LIFERAY-PATCHED-11"
 	compileOnly group: "com.liferay", name: "org.apache.felix.gogo.runtime", version: "1.1.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay", name: "org.apache.felix.scr", version: "2.1.14.LIFERAY-PATCHED-3"
-	compileOnly group: "com.liferay", name: "org.eclipse.equinox.metatype", version: "1.4.200.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay", name: "org.eclipse.equinox.metatype", version: "1.4.200.LIFERAY-PATCHED-3"
 	compileOnly group: "com.liferay", name: "org.osgi.service.http", version: "3.5.0-20150611.165350-3.LIFERAY-PATCHED-2"
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.3"
 	compileOnly group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", version: "1.2.2"

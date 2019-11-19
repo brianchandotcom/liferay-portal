@@ -57,7 +57,7 @@ public class GroupItemSelectorProviderImpl
 			Stream<DepotEntryGroupRel> stream = depotEntryGroupRels.stream();
 
 			return stream.map(
-				this::_toGroup
+				this::_toGroupOptional
 			).filter(
 				Optional::isPresent
 			).map(
@@ -96,7 +96,9 @@ public class GroupItemSelectorProviderImpl
 		return _language.get(locale, "repository");
 	}
 
-	private Optional<Group> _toGroup(DepotEntryGroupRel depotEntryGroupRel) {
+	private Optional<Group> _toGroupOptional(
+		DepotEntryGroupRel depotEntryGroupRel) {
+
 		try {
 			DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
 				depotEntryGroupRel.getDepotEntryId());

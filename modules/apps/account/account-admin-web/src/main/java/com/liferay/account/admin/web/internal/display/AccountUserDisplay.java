@@ -91,6 +91,10 @@ public class AccountUserDisplay {
 		return _name;
 	}
 
+	public int getStatus() {
+		return _status;
+	}
+
 	public String getStatusLabel() {
 		return _statusLabel;
 	}
@@ -109,6 +113,7 @@ public class AccountUserDisplay {
 		_emailAddress = user.getEmailAddress();
 		_jobTitle = user.getJobTitle();
 		_name = user.getFullName();
+		_status = user.getStatus();
 		_statusLabel = _getStatusLabel(user);
 		_statusLabelStyle = _getStatusLabelStyle(user);
 		_userId = user.getUserId();
@@ -170,6 +175,7 @@ public class AccountUserDisplay {
 	private final String _emailAddress;
 	private final String _jobTitle;
 	private final String _name;
+	private final int _status;
 	private final String _statusLabel;
 	private final String _statusLabelStyle;
 	private final long _userId;

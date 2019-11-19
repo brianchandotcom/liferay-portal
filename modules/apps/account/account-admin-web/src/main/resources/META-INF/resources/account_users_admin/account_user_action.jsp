@@ -17,15 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = currentURL;
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 AccountUserDisplay accountUserDisplay = (AccountUserDisplay)row.getObject();
-
-long accountUserId = accountUserDisplay.getUserId();
-
-User accountUser = UserLocalServiceUtil.getUser(accountUserId);
 %>
 
 <liferay-ui:icon-menu
@@ -35,9 +29,9 @@ User accountUser = UserLocalServiceUtil.getUser(accountUserId);
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= !PropsValues.PORTAL_JAAS_ENABLE && PropsValues.PORTAL_IMPERSONATION_ENABLE && (accountUserId != user.getUserId()) && !themeDisplay.isImpersonated() && UserPermissionUtil.contains(permissionChecker, accountUserId, ActionKeys.IMPERSONATE) %>">
+	<c:if test="<%= !PropsValues.PORTAL_JAAS_ENABLE && PropsValues.PORTAL_IMPERSONATION_ENABLE && (accountUserDisplay.getUserId() != user.getUserId()) && !themeDisplay.isImpersonated() && UserPermissionUtil.contains(permissionChecker, accountUserDisplay.getUserId(), ActionKeys.IMPERSONATE) %>">
 		<liferay-security:doAsURL
-			doAsUserId="<%= accountUserId %>"
+			doAsUserId="<%= accountUserDisplay.getUserId() %>"
 			var="impersonateUserURL"
 		/>
 
@@ -48,13 +42,13 @@ User accountUser = UserLocalServiceUtil.getUser(accountUserId);
 		/>
 	</c:if>
 
-	<c:if test="<%= UserPermissionUtil.contains(permissionChecker, accountUserId, ActionKeys.DELETE) %>">
-		<c:if test="<%= !accountUser.isActive() %>">
+	<c:if test="<%= UserPermissionUtil.contains(permissionChecker, accountUserDisplay.getUserId(), ActionKeys.DELETE) %>">
+		<c:if test="<%= accountUserDisplay.getStatus() == WorkflowConstants.STATUS_INACTIVE %>">
 			<portlet:actionURL name="/account_admin/edit_account_user" var="restoreUserURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="accountEntriesNavigation" value='<%= ParamUtil.getString(request, "accountEntriesNavigation") %>' />
-				<portlet:param name="accountUserIds" value="<%= String.valueOf(accountUserId) %>" />
+				<portlet:param name="accountUserIds" value="<%= String.valueOf(accountUserDisplay.getUserId()) %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon
@@ -64,20 +58,20 @@ User accountUser = UserLocalServiceUtil.getUser(accountUserId);
 		</c:if>
 
 		<portlet:actionURL name="/account_admin/edit_account_user" var="deleteUserURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= accountUser.isActive() ? Constants.DEACTIVATE : Constants.DELETE %>" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= (accountUserDisplay.getStatus() == WorkflowConstants.STATUS_APPROVED) ? Constants.DEACTIVATE : Constants.DELETE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="accountEntriesNavigation" value='<%= ParamUtil.getString(request, "accountEntriesNavigation") %>' />
-			<portlet:param name="accountUserIds" value="<%= String.valueOf(accountUserId) %>" />
+			<portlet:param name="accountUserIds" value="<%= String.valueOf(accountUserDisplay.getUserId()) %>" />
 		</portlet:actionURL>
 
-		<c:if test="<%= accountUserId != user.getUserId() %>">
+		<c:if test="<%= accountUserDisplay.getUserId() != user.getUserId() %>">
 			<c:choose>
-				<c:when test="<%= accountUser.isActive() %>">
+				<c:when test="<%= accountUserDisplay.getStatus() == WorkflowConstants.STATUS_APPROVED %>">
 					<liferay-ui:icon-deactivate
 						url="<%= deleteUserURL %>"
 					/>
 				</c:when>
-				<c:when test="<%= !accountUser.isActive() && PropsValues.USERS_DELETE %>">
+				<c:when test="<%= (accountUserDisplay.getStatus() == WorkflowConstants.STATUS_INACTIVE) && PropsValues.USERS_DELETE %>">
 					<liferay-ui:icon-delete
 						url="<%= deleteUserURL %>"
 					/>

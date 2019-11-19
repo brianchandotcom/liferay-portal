@@ -28,7 +28,7 @@ export default function(props) {
 						<Route component={ListEntries} exact path="/" />
 						<Route
 							component={ViewEntry}
-							path="/entries/:dataRecordId(\d+)"
+							path="/entries/:entryIndex(\d+)"
 						/>
 					</Switch>
 				</Router>

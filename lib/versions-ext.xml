@@ -429,9 +429,9 @@
 			</library>
 			<library>
 				<file-name>lib/development/jserrorcollector.jar</file-name>
-				<version>c7d2d9161321e9</version>
+				<version>0.6-atlassian-3</version>
 				<project-name>JSErrorCollector</project-name>
-				<project-url>https://github.com/mguillem/JSErrorCollector</project-url>
+				<project-url>https://github.com/atlassian/JSErrorCollector</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>
@@ -492,7 +492,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jutf7.jar</file-name>
-				<version></version>
+				<version>1.0.0</version>
 				<project-name>jutf7</project-name>
 				<project-url>http://jutf7.sourceforge.net</project-url>
 				<licenses>
@@ -1084,7 +1084,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/axis.jar</file-name>
-				<version>1.4.LIFERAY-PATCHED-3</version>
+				<version>1.4.LIFERAY-PATCHED-4</version>
 				<project-name>Axis</project-name>
 				<project-url>http://ws.apache.org/axis</project-url>
 				<licenses>
@@ -1349,7 +1349,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-discovery.jar</file-name>
-				<version>0.4.0</version>
+				<version>0.4</version>
 				<project-name>Commons Discovery.jar</project-name>
 				<project-url>http://commons.apache.org/discovery</project-url>
 				<licenses>
@@ -1387,7 +1387,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-httpclient.jar</file-name>
-				<version>3.1.0</version>
+				<version>3.1</version>
 				<project-name>Commons HttpClient</project-name>
 				<project-url>http://hc.apache.org/httpclient-legacy/index.html</project-url>
 				<licenses>
@@ -1412,7 +1412,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-lang.jar</file-name>
-				<version>2.6.0</version>
+				<version>2.6</version>
 				<project-name>Commons Lang</project-name>
 				<project-url>http://commons.apache.org/lang</project-url>
 				<licenses>
@@ -1425,7 +1425,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-logging.jar</file-name>
-				<version>1.2.0</version>
+				<version>1.2</version>
 				<project-name>Commons Logging</project-name>
 				<project-url>http://commons.apache.org/logging</project-url>
 				<licenses>
@@ -1449,7 +1449,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-math.jar</file-name>
-				<version>2.0.0</version>
+				<version>2.0</version>
 				<project-name>Commons Math</project-name>
 				<project-url>http://commons.apache.org/math</project-url>
 				<licenses>
@@ -1502,7 +1502,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/crypt.jar</file-name>
-				<version></version>
+				<version>1.0</version>
 				<project-name>Manticore UFC Crypt</project-name>
 				<project-url>http://manticore.2y.net/Java/examples/Crypt.html</project-url>
 				<licenses>
@@ -1592,7 +1592,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/freshcookies-security.jar</file-name>
-				<version>0.6</version>
+				<version>0.60</version>
 				<project-name>Freshcookies</project-name>
 				<project-url>http://freshcookies.org/freshcookies-security</project-url>
 				<licenses>
@@ -1604,7 +1604,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/gif89.jar</file-name>
-				<version></version>
+				<version>1.0</version>
 				<project-name>Gif89Encoder</project-name>
 				<project-url>http://jmge.net/java/gifenc</project-url>
 				<licenses>
@@ -1632,7 +1632,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/hibernate-commons-annotations.jar</file-name>
-				<version>3.2.0</version>
+				<version>3.2.0.Final</version>
 				<project-name>Hibernate</project-name>
 				<project-url>http://www.hibernate.org</project-url>
 				<licenses>
@@ -1719,7 +1719,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/ical4j.jar</file-name>
-				<version>1.0</version>
+				<version>1.0 RC3</version>
 				<project-name>iCal4j</project-name>
 				<project-url>http://ical4j.sourceforge.net</project-url>
 				<licenses>
@@ -1856,7 +1856,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/javassist.jar</file-name>
-				<version>3.18.2</version>
+				<version>3.18.2 GA</version>
 				<project-name>Javassist</project-name>
 				<project-url>http://www.csg.is.titech.ac.jp/~chiba/javassist</project-url>
 				<licenses>
@@ -1953,7 +1953,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jazzy.jar</file-name>
-				<version>0.5</version>
+				<version>0.5.2-rtext-1.4.1-2</version>
 				<project-name>Jazzy</project-name>
 				<project-url>http://jazzy.sourceforge.net</project-url>
 				<licenses>
@@ -1977,7 +1977,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jcifs.jar</file-name>
-				<version>1.3.14</version>
+				<version>1.3.14-kohsuke-1</version>
 				<project-name>jCIFS</project-name>
 				<project-url>http://jcifs.samba.org</project-url>
 				<licenses>
@@ -2101,7 +2101,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jhlabs-filters.jar</file-name>
-				<version></version>
+				<version>01012005</version>
 				<project-name>JH Labs Java Image Filters</project-name>
 				<project-url>http://www.jhlabs.com/ip/filters</project-url>
 				<licenses>

@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <div class="app-builder-root">
-	<div class="edit-entry">
-		<div class="card card-root mb-0 shadowless-card">
-			<div class="card-body">
-				<div class="row">
-					<div class="col-12">
+	<div class="container edit-entry">
+		<div class="justify-content-center row">
+			<div class="col-lg-8">
+				<div class="card card-root mb-0 mt-4 shadowless-card">
+					<div class="card-body pt-0">
 						<aui:form>
 							<liferay-data-engine:data-layout-renderer
 								containerId='<%= renderResponse.getNamespace() + "container" %>'

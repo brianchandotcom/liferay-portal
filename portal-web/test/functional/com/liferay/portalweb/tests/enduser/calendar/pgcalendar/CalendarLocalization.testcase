@@ -115,11 +115,16 @@ definition {
 			messageLocalized = "Mostrar 4 más",
 			viewTypeLocalized = "Mes");
 
-		MyAccount.configureDisplaySettingsLanguageLocalized(
-			category = "Mi cuenta",
+		Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		Click(
+			key_dropdownItem = "Mi cuenta",
+			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
+
+		MyAccount.changeUserLanguage(
 			languageName = "English (United States)",
-			portlet = "Mi cuenta",
-			saveButton = "Guardar");
+			saveButton = "Guardar",
+			successMessage = "Your request completed successfully.");
 	}
 
 }

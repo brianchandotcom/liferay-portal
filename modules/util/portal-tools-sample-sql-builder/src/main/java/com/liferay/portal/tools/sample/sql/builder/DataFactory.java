@@ -312,7 +312,7 @@ public class DataFactory {
 	public DataFactory(Properties properties) throws Exception {
 		initContext(properties);
 
-		_counter = new SimpleCounter(_maxGroupsCount + 1);
+		_counter = new SimpleCounter(_maxGroupCount + 1);
 		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
@@ -428,7 +428,7 @@ public class DataFactory {
 
 		if (_assetCategoryCounters == null) {
 			_assetCategoryCounters =
-				(Map<Long, SimpleCounter>[])new HashMap<?, ?>[_maxGroupsCount];
+				(Map<Long, SimpleCounter>[])new HashMap<?, ?>[_maxGroupCount];
 		}
 
 		SimpleCounter counter = getSimpleCounter(
@@ -487,7 +487,7 @@ public class DataFactory {
 
 		if (_assetTagCounters == null) {
 			_assetTagCounters =
-				(Map<Long, SimpleCounter>[])new HashMap<?, ?>[_maxGroupsCount];
+				(Map<Long, SimpleCounter>[])new HashMap<?, ?>[_maxGroupCount];
 		}
 
 		SimpleCounter counter = getSimpleCounter(
@@ -719,7 +719,7 @@ public class DataFactory {
 	}
 
 	public int getMaxGroupCount() {
-		return _maxGroupsCount;
+		return _maxGroupCount;
 	}
 
 	public int getMaxJournalArticleCount() {
@@ -743,7 +743,7 @@ public class DataFactory {
 
 		groupIds.add(_guestGroupModel.getGroupId());
 
-		if ((groupId + _maxUserToGroupCount) > _maxGroupsCount) {
+		if ((groupId + _maxUserToGroupCount) > _maxGroupCount) {
 			groupId = groupId - _maxUserToGroupCount + 1;
 		}
 
@@ -813,19 +813,19 @@ public class DataFactory {
 
 	public void initAssetCategoryModels() {
 		_assetCategoryModelsArray =
-			(List<AssetCategoryModel>[])new List<?>[_maxGroupsCount];
+			(List<AssetCategoryModel>[])new List<?>[_maxGroupCount];
 		_assetCategoryModelsMaps =
 			(Map<Long, List<AssetCategoryModel>>[])
-				new HashMap<?, ?>[_maxGroupsCount];
+				new HashMap<?, ?>[_maxGroupCount];
 		_assetVocabularyModelsArray =
-			(List<AssetVocabularyModel>[])new List<?>[_maxGroupsCount];
+			(List<AssetVocabularyModel>[])new List<?>[_maxGroupCount];
 		_defaultAssetVocabularyModel = newAssetVocabularyModel(
 			_globalGroupId, _defaultUserId, null,
 			PropsValues.ASSET_VOCABULARY_DEFAULT);
 
 		StringBundler sb = new StringBundler(4);
 
-		for (int i = 1; i <= _maxGroupsCount; i++) {
+		for (int i = 1; i <= _maxGroupCount; i++) {
 			List<AssetVocabularyModel> assetVocabularyModels = new ArrayList<>(
 				_maxAssetVocabularyCount);
 			List<AssetCategoryModel> assetCategoryModels = new ArrayList<>(
@@ -891,12 +891,11 @@ public class DataFactory {
 
 	public void initAssetTagModels() {
 		_assetTagModelsArray =
-			(List<AssetTagModel>[])new List<?>[_maxGroupsCount];
+			(List<AssetTagModel>[])new List<?>[_maxGroupCount];
 		_assetTagModelsMaps =
-			(Map<Long, List<AssetTagModel>>[])
-				new HashMap<?, ?>[_maxGroupsCount];
+			(Map<Long, List<AssetTagModel>>[])new HashMap<?, ?>[_maxGroupCount];
 
-		for (int i = 1; i <= _maxGroupsCount; i++) {
+		for (int i = 1; i <= _maxGroupCount; i++) {
 			List<AssetTagModel> assetTagModels = new ArrayList<>(
 				_maxAssetTagCount);
 
@@ -1167,7 +1166,7 @@ public class DataFactory {
 			properties.getProperty("sample.sql.max.dl.folder.count"));
 		_maxDLFolderDepth = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.dl.folder.depth"));
-		_maxGroupsCount = GetterUtil.getInteger(
+		_maxGroupCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.group.count"));
 		_maxJournalArticleCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.journal.article.count"));
@@ -1304,9 +1303,9 @@ public class DataFactory {
 			_userPersonalSiteGroupId, getClassNameId(UserPersonalSite.class),
 			_defaultUserId, GroupConstants.USER_PERSONAL_SITE, false);
 
-		_groupModels = new ArrayList<>(_maxGroupsCount);
+		_groupModels = new ArrayList<>(_maxGroupCount);
 
-		for (int i = 1; i <= _maxGroupsCount; i++) {
+		for (int i = 1; i <= _maxGroupCount; i++) {
 			GroupModel groupModel = newGroupModel(
 				i, groupClassNameId, i, "Site " + i, true);
 
@@ -4589,7 +4588,7 @@ public class DataFactory {
 	private int _maxDLFileEntrySize;
 	private int _maxDLFolderCount;
 	private int _maxDLFolderDepth;
-	private int _maxGroupsCount;
+	private int _maxGroupCount;
 	private int _maxJournalArticleCount;
 	private int _maxJournalArticlePageCount;
 	private int _maxJournalArticleVersionCount;

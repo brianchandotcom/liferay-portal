@@ -209,6 +209,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METADATA_PRIORITY</td>
+	<td>//div[contains(@class,'asset-priority') and contains(.,'${key_assetPriority}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METADATA_TAGS</td>
 	<td>//span[@class='taglib-asset-tags-summary']/a[contains(@class,'label')]</td>
 	<td></td>

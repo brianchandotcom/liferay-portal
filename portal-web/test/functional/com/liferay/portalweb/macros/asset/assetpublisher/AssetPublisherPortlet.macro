@@ -1521,6 +1521,14 @@ definition {
 			locator1 = "APAsset#ASSET_TITLE",
 			value1 = "${assetTitle}");
 
+		if (isSet(assetPriority)) {
+			var key_assetPriority = "${assetPriority}";
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "AP#METADATA_PRIORITY",
+				value1 = "${assetPriority}");
+		}
+
 		if (isSet(relatedAssetTitles)) {
 			AssetPublisherPortlet.viewAssetRelatedAssets(relatedAssetTitles = "${relatedAssetTitles}");
 		}

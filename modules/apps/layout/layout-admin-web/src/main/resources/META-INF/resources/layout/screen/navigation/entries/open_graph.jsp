@@ -168,27 +168,22 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 			url: '<%= layoutsAdminDisplayContext.getItemSelectorURL() %>'
 		});
 
+		var openGraphImageFileEntryId = document.getElementById(
+			'<portlet:namespace />openGraphImageFileEntryId'
+		);
+
+		var openGraphImageURL = document.getElementById(
+			'<portlet:namespace />openGraphImageURL'
+		);
+
 		itemSelectorDialog.on('selectedItemChange', function(event) {
 			var selectedItem = event.selectedItem;
 
 			if (selectedItem) {
 				var itemValue = JSON.parse(selectedItem.value);
 
-				var openGraphImageFileEntryId = document.getElementById(
-					'<portlet:namespace />openGraphImageFileEntryId'
-				);
-
-				if (openGraphImageFileEntryId) {
-					openGraphImageFileEntryId.value = itemValue.fileEntryId;
-				}
-
-				var openGraphImageURL = document.getElementById(
-					'<portlet:namespace />openGraphImageURL'
-				);
-
-				if (openGraphImageURL) {
-					openGraphImageURL.value = itemValue.url;
-				}
+				openGraphImageFileEntryId.value = itemValue.fileEntryId;
+				openGraphImageURL.value = itemValue.url;
 
 				PreviewSeoEvents.PreviewSeoFireChange('<portlet:namespace />', {
 					type: 'imgUrl',
@@ -197,9 +192,24 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 			}
 		});
 
-		openGraphImageButton.addEventListener('click', function(event) {
-			event.preventDefault();
+		openGraphImageButton.addEventListener('click', function() {
 			itemSelectorDialog.open();
+		});
+	}
+
+	var openGraphClearImageButton = document.getElementById(
+		'<portlet:namespace />openGraphClearImageButton'
+	);
+
+	if (openGraphClearImageButton) {
+		openGraphClearImageButton.addEventListener('click', function() {
+			openGraphImageFileEntryId.value = '';
+			openGraphImageURL.value = '';
+
+			PreviewSeoEvents.PreviewSeoFireChange('<portlet:namespace />', {
+				type: 'imgUrl',
+				value: ''
+			});
 		});
 	}
 

@@ -16,22 +16,15 @@ package com.liferay.change.tracking.store.service.impl;
 
 import com.liferay.change.tracking.store.exception.NoSuchContentException;
 import com.liferay.change.tracking.store.model.CTSContent;
-import com.liferay.change.tracking.store.model.CTSContentDataBlobModel;
 import com.liferay.change.tracking.store.service.base.CTSContentLocalServiceBaseImpl;
-import com.liferay.petra.io.AutoDeleteFileInputStream;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.File;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -40,13 +33,9 @@ import java.io.InputStream;
 
 import java.nio.channels.FileChannel;
 
-import java.sql.Blob;
-
 import java.util.List;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -181,42 +170,6 @@ public class CTSContentLocalServiceImpl extends CTSContentLocalServiceBaseImpl {
 		return false;
 	}
 
-	@Override
-	@Transactional(readOnly = true)
-	public InputStream openCTSContentInputStream(long contentId) {
-		try {
-			CTSContentDataBlobModel ctsContentDataBlobModel = getDataBlobModel(
-				contentId);
-
-			Blob blob = ctsContentDataBlobModel.getDataBlob();
-
-			InputStream inputStream = blob.getBinaryStream();
-
-			if (_useTempFile) {
-				inputStream = new AutoDeleteFileInputStream(
-					_file.createTempFile(inputStream));
-			}
-
-			return inputStream;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-	}
-
-	@Activate
-	protected void activate() {
-		DB db = DBManagerUtil.getDB();
-
-		if ((db.getDBType() != DBType.DB2) &&
-			(db.getDBType() != DBType.MYSQL) &&
-			(db.getDBType() != DBType.MARIADB) &&
-			(db.getDBType() != DBType.SYBASE)) {
-
-			_useTempFile = true;
-		}
-	}
-
 	private OutputBlob _toOutputBlob(InputStream inputStream) {
 		if (inputStream instanceof ByteArrayInputStream) {
 			ByteArrayInputStream byteArrayInputStream =
@@ -279,10 +232,5 @@ public class CTSContentLocalServiceImpl extends CTSContentLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTSContentLocalServiceImpl.class);
-
-	@Reference
-	private File _file;
-
-	private boolean _useTempFile;
 
 }

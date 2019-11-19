@@ -584,7 +584,6 @@ public class LibraryReferenceTest {
 			matcher.matches());
 
 		String numericVersion = matcher.group(1);
-		String separator = matcher.group(3);
 		String suffix = matcher.group(5);
 
 		if (Validator.isNull(numericVersion)) {
@@ -595,13 +594,18 @@ public class LibraryReferenceTest {
 			return numericVersion;
 		}
 
-		if (!Objects.equals(separator, ".")) {
-			separator = StringPool.SPACE;
+		for (String normalizedVersionSuffix : _normalizedVersionSuffixes) {
+			if (suffix.regionMatches(
+					true, 0, normalizedVersionSuffix, 0,
+					normalizedVersionSuffix.length())) {
 
-			suffix = StringUtil.toUpperCase(suffix);
+				return StringBundler.concat(
+					numericVersion, StringPool.SPACE, normalizedVersionSuffix,
+					suffix.substring(normalizedVersionSuffix.length()));
+			}
 		}
 
-		return numericVersion + separator + suffix;
+		return version;
 	}
 
 	private static final String _ECLIPSE_FILE_NAME = ".classpath";
@@ -646,6 +650,8 @@ public class LibraryReferenceTest {
 	private static final Set<String> _netBeansJars = new HashSet<>();
 	private static final Set<String> _netBeansModuleSourceDirs =
 		new HashSet<>();
+	private static final List<String> _normalizedVersionSuffixes =
+		Arrays.asList("FCS", "GA", "RC");
 	private static Path _portalPath;
 	private static final Pattern _versionPattern = Pattern.compile(
 		"(\\d+(\\.\\d+)+)?(\\W)?(RELEASE)?(.*)");

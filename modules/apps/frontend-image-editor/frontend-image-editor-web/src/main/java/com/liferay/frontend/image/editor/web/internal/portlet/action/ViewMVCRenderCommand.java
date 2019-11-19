@@ -176,9 +176,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				ImageEditorCapability imageEditorCapability =
 					imageEditorCapabilityDescriptor.getImageEditorCapability();
 
-				ServletContext servletContext =
-					imageEditorCapability.getServletContext();
-
 				Map<String, Object> properties =
 					imageEditorCapabilityDescriptor.getProperties();
 
@@ -187,7 +184,13 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 						"label",
 						imageEditorCapability.getLabel(themeDisplay.getLocale())
 					).put(
-						"modulePath", servletContext.getContextPath()
+						"modulePath",
+						() -> {
+							ServletContext servletContext =
+								imageEditorCapability.getServletContext();
+
+							return servletContext.getContextPath();
+						}
 					).put(
 						"variant",
 						GetterUtil.getString(

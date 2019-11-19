@@ -104,25 +104,28 @@ public class UpgradePortletPreferencesTest {
 
 	@Test
 	public void testUpgradeDLDateFieldsValues() throws Exception {
-		DDMStructure ddmStructure = addDDMStructure(
-			DLFileEntryMetadata.class.getName());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				"New File Entry Type", StringPool.BLANK,
-				new long[] {ddmStructure.getStructureId()}, serviceContext);
-
 		Date now = new Date();
 
 		String dateString = _oldDateFormat.format(now);
 
 		Map<String, String> portletPreferencesMap = HashMapBuilder.put(
 			"anyClassTypeDLFileEntryAssetRendererFactory",
-			String.valueOf(dlFileEntryType.getFileEntryTypeId())
+			() -> {
+				DDMStructure ddmStructure = addDDMStructure(
+					DLFileEntryMetadata.class.getName());
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext();
+
+				DLFileEntryType dlFileEntryType =
+					DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+						TestPropsValues.getUserId(), _group.getGroupId(),
+						"New File Entry Type", StringPool.BLANK,
+						new long[] {ddmStructure.getStructureId()},
+						serviceContext);
+
+				return String.valueOf(dlFileEntryType.getFileEntryTypeId());
+			}
 		).put(
 			"ddmStructureFieldName", "Birthday"
 		).put(
@@ -206,16 +209,18 @@ public class UpgradePortletPreferencesTest {
 
 	@Test
 	public void testUpgradeJournalDateFieldValue() throws Exception {
-		DDMStructure ddmStructure = addDDMStructure(
-			JournalArticle.class.getName());
-
 		Date now = new Date();
 
 		String dateString = _oldDateFormat.format(now);
 
 		Map<String, String> portletPreferencesMap = HashMapBuilder.put(
 			"anyClassTypeJournalArticleAssetRendererFactory",
-			String.valueOf(ddmStructure.getStructureId())
+			() -> {
+				DDMStructure ddmStructure = addDDMStructure(
+					JournalArticle.class.getName());
+
+				return String.valueOf(ddmStructure.getStructureId());
+			}
 		).put(
 			"ddmStructureFieldName", "Birthday"
 		).put(

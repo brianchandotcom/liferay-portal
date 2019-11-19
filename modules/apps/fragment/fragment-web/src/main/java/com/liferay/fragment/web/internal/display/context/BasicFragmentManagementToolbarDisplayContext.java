@@ -137,9 +137,6 @@ public class BasicFragmentManagementToolbarDisplayContext
 		exportFragmentEntriesURL.setResourceID(
 			"/fragment/export_fragment_entries");
 
-		long fragmentCollectionId = ParamUtil.getLong(
-			liferayPortletRequest, "fragmentCollectionId");
-
 		PortletURL moveFragmentEntryURL =
 			liferayPortletResponse.createActionURL();
 
@@ -162,7 +159,8 @@ public class BasicFragmentManagementToolbarDisplayContext
 		).put(
 			"exportFragmentEntriesURL", exportFragmentEntriesURL.toString()
 		).put(
-			"fragmentCollectionId", fragmentCollectionId
+			"fragmentCollectionId",
+			ParamUtil.getLong(liferayPortletRequest, "fragmentCollectionId")
 		).put(
 			"moveFragmentEntryURL", moveFragmentEntryURL.toString()
 		).put(

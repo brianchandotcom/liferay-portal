@@ -128,8 +128,6 @@ public class AssetPublisherPortletToolbarContributor
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
 
@@ -137,7 +135,14 @@ public class AssetPublisherPortletToolbarContributor
 			resourceBundle, "add-content-select-scope-and-type");
 
 		Map<String, Object> data = HashMapBuilder.<String, Object>put(
-			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset"
+			"id",
+			() -> {
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
+
+				return HtmlUtil.escape(portletDisplay.getNamespace()) +
+					"editAsset";
+			}
 		).put(
 			"title", title
 		).build();

@@ -71,8 +71,6 @@ public class PropertiesDocBuilder {
 			return;
 		}
 
-		String title = GetterUtil.getString(arguments.get("properties.title"));
-
 		int pos = propertiesFileName.lastIndexOf(StringPool.SLASH);
 
 		if (pos != -1) {
@@ -80,7 +78,7 @@ public class PropertiesDocBuilder {
 		}
 
 		Map<String, Object> context = HashMapBuilder.<String, Object>put(
-			"pageTitle", title
+			"pageTitle", GetterUtil.getString(arguments.get("properties.title"))
 		).put(
 			"propertiesFileName", propertiesFileName
 		).put(

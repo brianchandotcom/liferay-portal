@@ -3262,9 +3262,6 @@ public class StagingImpl implements Staging {
 		String backgroundTaskName = MapUtil.getString(
 			parameterMap, "name", exportImportConfiguration.getName());
 
-		String remoteURL = _stagingURLHelper.buildRemoteURL(
-			remoteAddress, remotePort, remotePathContext, secureConnection);
-
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -3277,7 +3274,10 @@ public class StagingImpl implements Staging {
 			).put(
 				"httpPrincipal",
 				new HttpPrincipal(
-					remoteURL, user.getLogin(), user.getPassword(),
+					_stagingURLHelper.buildRemoteURL(
+						remoteAddress, remotePort, remotePathContext,
+						secureConnection),
+					user.getLogin(), user.getPassword(),
 					user.isPasswordEncrypted())
 			).put(
 				"privateLayout", remotePrivateLayout

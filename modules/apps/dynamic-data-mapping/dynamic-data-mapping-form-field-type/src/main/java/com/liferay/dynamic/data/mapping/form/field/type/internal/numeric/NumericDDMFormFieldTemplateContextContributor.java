@@ -53,16 +53,15 @@ public class NumericDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		LocalizedValue placeholder = (LocalizedValue)ddmFormField.getProperty(
-			"placeholder");
-
 		Locale locale = ddmFormFieldRenderingContext.getLocale();
 
 		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
 			"dataType", getDataType(ddmFormField, ddmFormFieldRenderingContext)
 		).put(
 			"placeholder",
-			getValueString(placeholder, locale, ddmFormFieldRenderingContext)
+			getValueString(
+				(LocalizedValue)ddmFormField.getProperty("placeholder"), locale,
+				ddmFormFieldRenderingContext)
 		).put(
 			"predefinedValue",
 			getFormattedValue(

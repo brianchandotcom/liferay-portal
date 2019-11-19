@@ -8368,10 +8368,13 @@ public class PortalImpl implements Portal {
 					if (virtualHostnames.isEmpty() ||
 						virtualHostnames.containsKey(_LOCALHOST)) {
 
-						Company company = themeDisplay.getCompany();
-
 						virtualHostnames = TreeMapBuilder.put(
-							company.getVirtualHostname(), StringPool.BLANK
+							() -> {
+								Company company = themeDisplay.getCompany();
+
+								return company.getVirtualHostname();
+							},
+							StringPool.BLANK
 						).build();
 					}
 

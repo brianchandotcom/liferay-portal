@@ -547,16 +547,19 @@ public class SegmentsExperimentLocalServiceTest {
 			SegmentsExperimentConstants.Goal.CLICK_RATE.getLabel(),
 			StringPool.BLANK);
 
-		SegmentsExperience variantSegmentsExperience =
-			SegmentsTestUtil.addSegmentsExperience(
-				segmentsExperiment.getGroupId(),
-				segmentsExperiment.getClassNameId(),
-				segmentsExperiment.getClassPK());
-
 		Map<Long, Double> segmentsExperienceIdSplitMap = HashMapBuilder.put(
 			segmentsExperiment.getSegmentsExperienceId(), 0.70
 		).put(
-			variantSegmentsExperience.getSegmentsExperienceId(), 0.30
+			() -> {
+				SegmentsExperience variantSegmentsExperience =
+					SegmentsTestUtil.addSegmentsExperience(
+						segmentsExperiment.getGroupId(),
+						segmentsExperiment.getClassNameId(),
+						segmentsExperiment.getClassPK());
+
+				return variantSegmentsExperience.getSegmentsExperienceId();
+			},
+			0.30
 		).build();
 
 		_segmentsExperimentLocalService.runSegmentsExperiment(

@@ -51,16 +51,15 @@ public class KeyValueDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		LocalizedValue placeholder = (LocalizedValue)ddmFormField.getProperty(
-			"placeholder");
-
 		Locale locale = ddmFormFieldRenderingContext.getLocale();
 
 		return HashMapBuilder.<String, Object>put(
 			"autoFocus",
 			GetterUtil.getBoolean(ddmFormField.getProperty("autoFocus"))
 		).put(
-			"placeholder", getValueString(placeholder, locale)
+			"placeholder",
+			getValueString(
+				(LocalizedValue)ddmFormField.getProperty("placeholder"), locale)
 		).put(
 			"strings",
 			HashMapBuilder.put(

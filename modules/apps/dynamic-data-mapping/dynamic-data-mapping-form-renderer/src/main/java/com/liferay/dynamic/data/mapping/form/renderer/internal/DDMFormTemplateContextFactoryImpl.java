@@ -107,10 +107,6 @@ public class DDMFormTemplateContextFactoryImpl
 			containerId = StringUtil.randomId();
 		}
 
-		String currentPage = ParamUtil.getString(
-			ddmFormRenderingContext.getHttpServletRequest(), "currentPage",
-			"1");
-
 		setDDMFormFieldsEvaluableProperty(ddmForm);
 
 		Locale locale = ddmFormRenderingContext.getLocale();
@@ -123,7 +119,10 @@ public class DDMFormTemplateContextFactoryImpl
 			HashMapBuilder.<String, Object>put(
 				"containerId", containerId
 			).put(
-				"currentPage", currentPage
+				"currentPage",
+				ParamUtil.getString(
+					ddmFormRenderingContext.getHttpServletRequest(),
+					"currentPage", "1")
 			).put(
 				"editingLanguageId", LanguageUtil.getLanguageId(locale)
 			).put(

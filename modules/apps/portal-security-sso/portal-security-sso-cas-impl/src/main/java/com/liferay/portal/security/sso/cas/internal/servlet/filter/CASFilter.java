@@ -140,21 +140,19 @@ public class CASFilter extends BaseFilter {
 				new CompanyServiceSettingsLocator(
 					companyId, CASConstants.SERVICE_NAME));
 
-		String serverName = casConfiguration.serverName();
 		String serverUrl = casConfiguration.serverURL();
-		String loginUrl = casConfiguration.loginURL();
 
 		Cas20ProxyTicketValidator cas20ProxyTicketValidator =
 			new Cas20ProxyTicketValidator(serverUrl);
 
 		Map<String, String> parameters = HashMapBuilder.put(
-			"casServerLoginUrl", loginUrl
+			"casServerLoginUrl", casConfiguration.loginURL()
 		).put(
 			"casServerUrlPrefix", serverUrl
 		).put(
 			"redirectAfterValidation", "false"
 		).put(
-			"serverName", serverName
+			"serverName", casConfiguration.serverName()
 		).build();
 
 		cas20ProxyTicketValidator.setCustomParameters(parameters);

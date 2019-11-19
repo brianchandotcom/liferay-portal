@@ -169,10 +169,6 @@ public class FlagsTag extends IncludeTag {
 	private Map<String, Object> _getData(String message)
 		throws PortalException {
 
-		Map<String, Object> context = HashMapBuilder.<String, Object>put(
-			"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS)
-		).build();
-
 		HttpServletRequest httpServletRequest = getRequest();
 
 		ThemeDisplay themeDisplay =
@@ -210,7 +206,10 @@ public class FlagsTag extends IncludeTag {
 		props.put("uri", FlagsTagUtil.getURI(httpServletRequest));
 
 		return HashMapBuilder.<String, Object>put(
-			"context", context
+			"context",
+			HashMapBuilder.<String, Object>put(
+				"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS)
+			).build()
 		).put(
 			"props", props
 		).build();

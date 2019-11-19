@@ -472,7 +472,7 @@
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findF_ByG_M_F">
 		<![CDATA[
 			SELECT
-				DISTINCT folderId AS modelFolderId, DLFolder.createDate AS createDate, DLFolder.modifiedDate AS modifiedDate, DLFolder.name AS name, DLFolder.name AS title, 0 AS size_, 0 AS readCount, 0 AS fileShortcutId, 1 AS modelFolder
+				DISTINCT folderId AS modelFolderId, DLFolder.createDate AS createDate, DLFolder.modifiedDate AS modifiedDate, DLFolder.name AS name, DLFolder.name AS title, 0 AS size_, 0 AS fileShortcutId, 1 AS modelFolder, 0 AS readCount
 			FROM
 				DLFolder
 			WHERE
@@ -485,7 +485,7 @@
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFE_ByG_F">
 		<![CDATA[
 			SELECT
-				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, 0 AS fileShortcutId, 0 AS modelFolder
+				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, 0 AS fileShortcutId, 0 AS modelFolder, 0 AS readCount
 			FROM
 				DLFileEntry
 			[$JOIN$]
@@ -495,10 +495,44 @@
 				[$FILE_ENTRY_FOLDER_ID$]
 		]]>
 	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFE_ByG_F_RC">
+		<![CDATA[
+			SELECT
+				DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, 0 AS fileShortcutId, 0 AS modelFolder, ViewCountEntry.viewCount AS readCount
+			FROM
+				ViewCountEntry
+			[$VC_JOIN$]
+			INNER JOIN
+				DLFileEntry ON
+					(DLFileEntry.companyId = ViewCountEntry.companyId) AND
+					(DLFileEntry.fileEntryId = ViewCountEntry.classPK) AND
+					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$])
+			WHERE
+				(DLFileEntry.groupId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
+				[$FILE_ENTRY_FOLDER_ID$]
+			UNION ALL
+			SELECT
+				DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, 0 AS fileShortcutId, 0 AS modelFolder, 0 AS readCount
+			FROM
+				DLFileEntry
+			[$JOIN$]
+			LEFT JOIN
+				ViewCountEntry ON
+					(DLFileEntry.companyId = ViewCountEntry.companyId) AND
+					(DLFileEntry.fileEntryId = ViewCountEntry.classPK) AND
+					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$])
+			WHERE
+				(ViewCountEntry.viewCount IS NULL) AND
+				(DLFileEntry.groupId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
+				[$FILE_ENTRY_FOLDER_ID$]
+		]]>
+	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFE_ByG_F_FETI">
 		<![CDATA[
 			SELECT
-				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, 0 AS fileShortcutId, 0 AS modelFolder
+				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, 0 AS fileShortcutId, 0 AS modelFolder, 0 AS readCount
 			FROM
 				DLFileEntry
 			[$JOIN$]
@@ -509,16 +543,92 @@
 				(DLFileEntry.fileEntryTypeId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFE_ByG_F_FETI_RC">
+		<![CDATA[
+			SELECT
+				DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, 0 AS fileShortcutId, 0 AS modelFolder, ViewCountEntry.viewCount AS readCount
+			FROM
+				ViewCountEntry
+			[$VC_JOIN$]
+			INNER JOIN
+				DLFileEntry ON
+					(DLFileEntry.companyId = ViewCountEntry.companyId) AND
+					(DLFileEntry.fileEntryId = ViewCountEntry.classPK) AND
+					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$])
+			WHERE
+				(DLFileEntry.groupId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
+				[$FILE_ENTRY_FOLDER_ID$] AND
+				(DLFileEntry.fileEntryTypeId = ?)
+			UNION ALL
+			SELECT
+				DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, 0 AS fileShortcutId, 0 AS modelFolder, 0 AS readCount
+			FROM
+				DLFileEntry
+			[$JOIN$]
+			LEFT JOIN
+				ViewCountEntry ON
+					(DLFileEntry.companyId = ViewCountEntry.companyId) AND
+					(DLFileEntry.fileEntryId = ViewCountEntry.classPK) AND
+					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$])
+			WHERE
+				(ViewCountEntry.viewCount IS NULL) AND
+				(DLFileEntry.groupId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
+				[$FILE_ENTRY_FOLDER_ID$] AND
+				(DLFileEntry.fileEntryTypeId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFS_ByG_F_A">
 		<![CDATA[
 			SELECT
-				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, fileShortcutId AS fileShortcutId, 0 AS modelFolder
+				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, fileShortcutId AS fileShortcutId, 0 AS modelFolder, 0 AS readCount
 			FROM
 				DLFileShortcut
 			INNER JOIN
 				DLFileEntry ON
 					DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId
 			WHERE
+				(DLFileShortcut.groupId = ?) AND
+				(DLFileShortcut.active_ = ?) AND
+				([$STATUS$]) AND
+				[$FILE_SHORTCUT_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFS_ByG_F_A_RC">
+		<![CDATA[
+			SELECT
+				DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, fileShortcutId AS fileShortcutId, 0 AS modelFolder, ViewCountEntry.viewCount AS readCount
+			FROM
+				DLFileShortcut
+			INNER JOIN
+				DLFileEntry ON
+					DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId
+			INNER JOIN
+				ViewCountEntry ON
+					(DLFileEntry.companyId = ViewCountEntry.companyId) AND
+					(DLFileEntry.fileEntryId = ViewCountEntry.classPK) AND
+					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$])
+			WHERE
+				(DLFileShortcut.groupId = ?) AND
+				(DLFileShortcut.active_ = ?) AND
+				([$STATUS$]) AND
+				[$FILE_SHORTCUT_FOLDER_ID$]
+			UNION ALL
+			SELECT
+				DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, fileShortcutId AS fileShortcutId, 0 AS modelFolder, 0 AS readCount
+			FROM
+				DLFileShortcut
+			INNER JOIN
+				DLFileEntry ON
+					DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId
+			LEFT JOIN
+				ViewCountEntry ON
+					(DLFileEntry.companyId = ViewCountEntry.companyId) AND
+					(DLFileEntry.fileEntryId = ViewCountEntry.classPK) AND
+					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$])
+			WHERE
+				(ViewCountEntry.viewCount IS NULL) AND
 				(DLFileShortcut.groupId = ?) AND
 				(DLFileShortcut.active_ = ?) AND
 				([$STATUS$]) AND
@@ -544,6 +654,13 @@
 			INNER JOIN
 				DLFileEntry ON
 					DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId
+		]]>
+	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.joinVC_ByDLFileVersion">
+		<![CDATA[
+			INNER JOIN
+				DLFileVersion ON
+					ViewCountEntry.classPK = DLFileVersion.fileEntryId
 		]]>
 	</sql>
 </custom-sql>

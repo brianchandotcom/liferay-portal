@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -141,7 +140,7 @@ public class DataDefinitionUtil {
 
 						customProperties.put(
 							entry.getKey(),
-							_toList((DDMFormFieldOptions)entry.getValue()));
+							_toMap((DDMFormFieldOptions)entry.getValue()));
 					}
 					else if (Objects.equals(
 								settingsDDMFormField.getType(), "validation")) {
@@ -416,31 +415,6 @@ public class DataDefinitionUtil {
 		);
 	}
 
-	private static List<Map<String, Object>> _toList(
-		DDMFormFieldOptions ddmFormFieldOptions) {
-
-		Set<String> optionValues = ddmFormFieldOptions.getOptionsValues();
-
-		if (optionValues.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<Map<String, Object>> options = new ArrayList<>();
-
-		for (String optionValue : optionValues) {
-			options.add(
-				HashMapBuilder.<String, Object>put(
-					"label",
-					LocalizedValueUtil.toLocalizedValuesMap(
-						ddmFormFieldOptions.getOptionLabels(optionValue))
-				).put(
-					"value", optionValue
-				).build());
-		}
-
-		return options;
-	}
-
 	private static Set<Locale> _toLocales(String[] languageIds) {
 		if (ArrayUtil.isEmpty(languageIds)) {
 			return Collections.emptySet();
@@ -453,6 +427,50 @@ public class DataDefinitionUtil {
 		).collect(
 			Collectors.toSet()
 		);
+	}
+
+	private static Map<String, List<Map<String, String>>> _toMap(
+		DDMFormFieldOptions ddmFormFieldOptions) {
+
+		Set<String> optionsValues = ddmFormFieldOptions.getOptionsValues();
+
+		if (optionsValues.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, List<Map<String, String>>> options = new HashMap<>();
+
+		for (String optionValue : optionsValues) {
+			LocalizedValue localizedValue = ddmFormFieldOptions.getOptionLabels(
+				optionValue);
+
+			for (Locale locale : localizedValue.getAvailableLocales()) {
+				String languageId = LanguageUtil.getLanguageId(locale);
+
+				if (options.containsKey(languageId)) {
+					List<Map<String, String>> values = options.get(languageId);
+
+					values.add(
+						HashMapBuilder.put(
+							"label", localizedValue.getString(locale)
+						).put(
+							"value", optionValue
+						).build());
+				}
+				else {
+					options.put(
+						languageId,
+						ListUtil.toList(
+							HashMapBuilder.put(
+								"label", localizedValue.getString(locale)
+							).put(
+								"value", optionValue
+							).build()));
+				}
+			}
+		}
+
+		return options;
 	}
 
 	private static Map<String, Object> _toMap(

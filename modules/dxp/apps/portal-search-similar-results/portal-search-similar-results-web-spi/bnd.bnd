@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Search Similar Results Web SPI
 Bundle-SymbolicName: com.liferay.portal.search.similar.results.web.spi
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.portal.search.similar.results.web.spi.contributor,\
 	com.liferay.portal.search.similar.results.web.spi.contributor.helper

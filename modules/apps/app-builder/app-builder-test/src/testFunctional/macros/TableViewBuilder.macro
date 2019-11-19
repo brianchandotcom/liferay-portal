@@ -8,6 +8,8 @@ definition {
 		TableViewBuilder.addColumnByDoubleClick(fieldType = "${fieldType}");
 
 		TableViewBuilder.setName(tableViewName = "${tableViewName}");
+
+		TableViewBuilder.save();
 	}
 
 	macro addColumnByDoubleClick {
@@ -25,8 +27,6 @@ definition {
 
 	macro setName {
 		AppBuilderAdmin.setName(title = "${tableViewName}");
-
-		TableViewBuilder.save();
 	}
 
 	macro validateColumnLabel {

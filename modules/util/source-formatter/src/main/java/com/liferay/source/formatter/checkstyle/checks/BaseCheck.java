@@ -30,6 +30,7 @@ import com.liferay.source.formatter.util.SourceFormatterCheckUtil;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.List;
 import java.util.Map;
@@ -139,6 +140,16 @@ public abstract class BaseCheck extends AbstractCheck {
 			_excludesJSONObject, _excludesValuesMap, key, getAbsolutePath(), -1,
 			null, getBaseDirName());
 	}
+
+	protected static final int[] ARITHMETIC_OPERATOR_TOKEN_TYPES = {
+		TokenTypes.DIV, TokenTypes.MINUS, TokenTypes.MOD, TokenTypes.PLUS,
+		TokenTypes.STAR
+	};
+
+	protected static final int[] RELATIONAL_OPERATOR_TOKEN_TYPES = {
+		TokenTypes.EQUAL, TokenTypes.GE, TokenTypes.GT, TokenTypes.LE,
+		TokenTypes.LT, TokenTypes.NOT_EQUAL
+	};
 
 	private JSONObject _attributesJSONObject = new JSONObjectImpl();
 	private final Map<String, String> _attributeValueMap =

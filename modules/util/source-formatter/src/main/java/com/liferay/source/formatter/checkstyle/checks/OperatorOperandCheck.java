@@ -28,7 +28,7 @@ public class OperatorOperandCheck extends BaseCheck {
 	@Override
 	public int[] getDefaultTokens() {
 		return ArrayUtil.append(
-			_ARITHMETIC_OPERATOR_TOKEN_TYPES, _RELATIONAL_OPERATOR_TOKEN_TYPES);
+			ARITHMETIC_OPERATOR_TOKEN_TYPES, RELATIONAL_OPERATOR_TOKEN_TYPES);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class OperatorOperandCheck extends BaseCheck {
 		_checkOperand(detailAST, detailAST.getFirstChild(), "left");
 
 		if (ArrayUtil.contains(
-				_ARITHMETIC_OPERATOR_TOKEN_TYPES, detailAST.getType())) {
+				ARITHMETIC_OPERATOR_TOKEN_TYPES, detailAST.getType())) {
 
 			_checkOperand(detailAST, detailAST.getLastChild(), "right");
 		}
@@ -101,17 +101,7 @@ public class OperatorOperandCheck extends BaseCheck {
 		}
 	}
 
-	private static final int[] _ARITHMETIC_OPERATOR_TOKEN_TYPES = {
-		TokenTypes.DIV, TokenTypes.MINUS, TokenTypes.MOD, TokenTypes.PLUS,
-		TokenTypes.STAR
-	};
-
 	private static final String _MSG_IMPROVE_READABILITY =
 		"readability.improve";
-
-	private static final int[] _RELATIONAL_OPERATOR_TOKEN_TYPES = {
-		TokenTypes.EQUAL, TokenTypes.GE, TokenTypes.GT, TokenTypes.LE,
-		TokenTypes.LT, TokenTypes.NOT_EQUAL
-	};
 
 }

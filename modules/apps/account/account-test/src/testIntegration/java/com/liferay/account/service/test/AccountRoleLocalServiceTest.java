@@ -126,7 +126,7 @@ public class AccountRoleLocalServiceTest {
 				user.getUserId()));
 
 		_accountRoleLocalService.associateUser(
-			_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
+			_accountEntry1.getAccountEntryId(), accountRole.getAccountRoleId(),
 			user.getUserId());
 
 		Assert.assertTrue(
@@ -135,7 +135,7 @@ public class AccountRoleLocalServiceTest {
 				user.getUserId()));
 
 		_accountRoleLocalService.unassociateUser(
-			_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
+			_accountEntry1.getAccountEntryId(), accountRole.getAccountRoleId(),
 			user.getUserId());
 
 		Assert.assertFalse(
@@ -157,11 +157,11 @@ public class AccountRoleLocalServiceTest {
 			ArrayUtil.contains(roleIds, defaultAccountRole.getRoleId()));
 
 		_accountRoleLocalService.associateUser(
-			_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
+			_accountEntry1.getAccountEntryId(), accountRole.getAccountRoleId(),
 			user.getUserId());
 		_accountRoleLocalService.associateUser(
-			_accountEntry1.getAccountEntryId(), defaultAccountRole.getRoleId(),
-			user.getUserId());
+			_accountEntry1.getAccountEntryId(),
+			defaultAccountRole.getAccountRoleId(), user.getUserId());
 
 		roleIds = _getRoleIds(user);
 

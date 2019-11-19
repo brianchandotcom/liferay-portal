@@ -63,7 +63,29 @@ definition {
 	}
 
 	macro editDepot {
-		DepotNavigator.gotoEdit(depotName = "${depotName}");
+		if (isSet(listView)) {
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			Click(
+				key_listEntry = "${depotName}",
+				locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		else if (isSet(tableView)) {
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+			Click(
+				key_tableEntry = "${depotName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		else {
+			DepotNavigator.gotoEdit(depotName = "${depotName}");
+		}
 
 		if (isSet(depotNameEdit)) {
 			Type(

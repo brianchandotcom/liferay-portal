@@ -135,6 +135,13 @@
 	<td></td>
 </tr>
 
+<!--CONTROL_PANEL-->
+<tr>
+	<td>CUSTOM_PORTLET</td>
+	<td>//div[contains(@class,'panel-app-root')]//a[contains(@data-title,'${key_portlet}')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

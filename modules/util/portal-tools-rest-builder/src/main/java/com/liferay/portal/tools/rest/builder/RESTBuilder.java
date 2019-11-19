@@ -292,6 +292,8 @@ public class RESTBuilder {
 
 		String s = _fixOpenAPILicense(FileUtil.read(file));
 
+		s = _fixOpenAPIPaths(s);
+
 		s = _fixOpenAPIPathParameters(s);
 
 		if (_configYAML.isForcePredictableSchemaPropertyName()) {
@@ -1303,6 +1305,45 @@ public class RESTBuilder {
 				"{" + newParameterName + "}");
 
 			s = StringUtil.replace(s, pathLine, newPathLine);
+		}
+
+		return s;
+	}
+
+	private String _fixOpenAPIPaths(String s) {
+		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(s);
+
+		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		if (pathItems == null) {
+			return s;
+		}
+
+		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
+			String path = entry.getKey();
+
+			if (!path.endsWith("/")) {
+				continue;
+			}
+
+			String newPath = path.substring(0, path.length() - 1);
+
+			int x = s.indexOf(StringUtil.quote(path, '"') + ":");
+
+			if (x != -1) {
+				String newSub = StringUtil.quote(newPath, '"');
+				String oldSub = StringUtil.quote(path, '"');
+
+				s = StringUtil.replaceFirst(s, oldSub, newSub, x);
+
+				continue;
+			}
+
+			x = s.indexOf(path + ":");
+
+			if (x != -1) {
+				s = StringUtil.replaceFirst(s, path, newPath, x);
+			}
 		}
 
 		return s;

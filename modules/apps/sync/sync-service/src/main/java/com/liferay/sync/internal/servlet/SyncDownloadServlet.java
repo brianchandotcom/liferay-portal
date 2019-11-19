@@ -222,8 +222,8 @@ public class SyncDownloadServlet extends HttpServlet {
 		for (FileEntry fileEntry : fileEntries) {
 			try (InputStream inputStream =
 					_dlFileEntryLocalService.getFileAsStream(
-						userId, fileEntry.getFileEntryId(),
-						fileEntry.getVersion(), false)) {
+						fileEntry.getFileEntryId(), fileEntry.getVersion(),
+						false)) {
 
 				String filePath = folderPath + fileEntry.getTitle();
 
@@ -287,8 +287,7 @@ public class SyncDownloadServlet extends HttpServlet {
 
 		if (Validator.isNull(version)) {
 			InputStream inputStream = _dlFileEntryLocalService.getFileAsStream(
-				userId, fileEntry.getFileEntryId(), fileEntry.getVersion(),
-				false);
+				fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
 
 			return new DownloadServletInputStream(
 				inputStream, fileEntry.getFileName(), fileEntry.getMimeType(),

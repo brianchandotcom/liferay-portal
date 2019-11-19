@@ -26,6 +26,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
@@ -495,8 +496,9 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		return dlFileEntryLocalService.updateFileEntry(
 			serviceContext.getUserId(), dlFileEntry.getFileEntryId(), null,
-			null, null, null, null, false, defaultFileEntryTypeId, null, null,
-			null, 0, serviceContext);
+			null, null, null, null,
+			DLVersionNumberIncrease.fromMajorVersion(false),
+			defaultFileEntryTypeId, null, null, null, 0, serviceContext);
 	}
 
 	@Override

@@ -443,7 +443,9 @@ public class DLFileEntryLocalServiceTest {
 
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			dlFileEntry.getFileEntryId(), "file.pdf", null, "file.pdf",
-			StringPool.BLANK, StringPool.BLANK, false, null, 0, serviceContext);
+			StringPool.BLANK, StringPool.BLANK,
+			DLVersionNumberIncrease.fromMajorVersion(false), null, 0,
+			serviceContext);
 
 		Assert.assertEquals(
 			content, StringUtil.read(fileEntry.getContentStream()));

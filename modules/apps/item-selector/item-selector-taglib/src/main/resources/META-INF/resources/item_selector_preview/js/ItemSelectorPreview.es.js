@@ -35,7 +35,18 @@ class ItemSelectorPreview extends Component {
 		editItemURL: PropTypes.string,
 		handleSelectedItem: PropTypes.func.isRequired,
 		headerTitle: PropTypes.string.isRequired,
-		items: PropTypes.array.isRequired,
+		items: PropTypes.arrayOf(
+			PropTypes.shape({
+				metadata: PropTypes.object,
+				returntype: PropTypes.string.isRequired,
+				title: PropTypes.string.isRequired,
+				url: PropTypes.string.isRequired,
+				value: PropTypes.oneOfType([
+					PropTypes.string,
+					PropTypes.object
+				])
+			})
+		).isRequired,
 		uploadItemReturnType: PropTypes.string,
 		uploadItemURL: PropTypes.string
 	};

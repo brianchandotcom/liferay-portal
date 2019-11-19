@@ -60,6 +60,13 @@ public class AccountRoleLocalServiceUtil {
 			userId, accountEntryId, name, titleMap, descriptionMap);
 	}
 
+	public static void associateUser(
+			long accountEntryId, long roleId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().associateUser(accountEntryId, roleId, userId);
+	}
+
 	/**
 	 * Creates a new account role with the primary key. Does not add the account role to the database.
 	 *
@@ -251,6 +258,13 @@ public class AccountRoleLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.account.model.AccountRole>
+			getAccountRoles(long accountEntryId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccountRoles(accountEntryId, userId);
+	}
+
+	public static java.util.List<com.liferay.account.model.AccountRole>
 		getAccountRolesByAccountEntryIds(long[] accountEntryIds) {
 
 		return getService().getAccountRolesByAccountEntryIds(accountEntryIds);
@@ -292,6 +306,13 @@ public class AccountRoleLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static void unassociateUser(
+			long accountEntryId, long roleId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().unassociateUser(accountEntryId, roleId, userId);
 	}
 
 	/**

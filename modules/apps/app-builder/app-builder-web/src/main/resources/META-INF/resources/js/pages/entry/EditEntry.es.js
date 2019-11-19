@@ -18,6 +18,7 @@ import React, {useContext, useEffect, useCallback} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
+import {ControlMenuBase} from '../../components/control-menu/ControlMenu.es';
 import {addItem, updateItem} from '../../utils/client.es';
 
 export default ({
@@ -67,11 +68,19 @@ export default ({
 	}, [editEntryContainerElementId, onSave]);
 
 	return (
-		<ClayButton.Group spaced>
-			<Button onClick={onSave}>{Liferay.Language.get('save')}</Button>
-			<Button displayType="secondary" onClick={onCancel}>
-				{Liferay.Language.get('cancel')}
-			</Button>
-		</ClayButton.Group>
+		<>
+			<ControlMenuBase
+				backURL={`${basePortletURL}/#/`}
+				title={Liferay.Language.get('edit-entry')}
+				url={location.href}
+			/>
+
+			<ClayButton.Group spaced>
+				<Button onClick={onSave}>{Liferay.Language.get('save')}</Button>
+				<Button displayType="secondary" onClick={onCancel}>
+					{Liferay.Language.get('cancel')}
+				</Button>
+			</ClayButton.Group>
+		</>
 	);
 };

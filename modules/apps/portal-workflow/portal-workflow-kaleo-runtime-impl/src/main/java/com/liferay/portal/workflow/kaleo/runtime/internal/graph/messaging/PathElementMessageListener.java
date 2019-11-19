@@ -22,9 +22,9 @@ import com.liferay.portal.workflow.kaleo.runtime.constants.KaleoRuntimeDestinati
 import com.liferay.portal.workflow.kaleo.runtime.graph.GraphWalker;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
@@ -43,13 +43,13 @@ public class PathElementMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		Queue<List<PathElement>> queue = new ArrayDeque<>();
+		Queue<List<PathElement>> queue = new LinkedList<>();
 
 		queue.add(Collections.singletonList((PathElement)message.getPayload()));
 
-		while (!queue.isEmpty()) {
-			List<PathElement> pathElements = queue.remove();
+		List<PathElement> pathElements = null;
 
+		while ((pathElements = queue.poll()) != null) {
 			for (PathElement pathElement : pathElements) {
 				List<PathElement> remainingPathElements = new ArrayList<>();
 

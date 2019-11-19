@@ -69,7 +69,7 @@ export const ControlMenuBase = ({backURL, title, tooltip, url}) => {
 				<Portal containerSelector=".sites-control-group .control-menu-nav">
 					<li className="control-menu-nav-item">
 						<Link
-							className="control-menu-icon dropdown-item lfr-icon-item"
+							className="control-menu-icon lfr-icon-item"
 							tabIndex={1}
 							to={backURL}
 						>

@@ -55,7 +55,7 @@ renderResponse.setTitle(role.getTitle(locale));
 />
 
 <clay:management-toolbar
-	actionDropdownItems='<%= (tabs2.equals("users") && role.getName().equals(RoleConstants.ADMINISTRATOR) && (searchContainer.getResults().size() == 1)) ? null : editRoleAssignmentsManagementToolbarDisplayContext.getActionDropdownItems() %>'
+	actionDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
 	componentId="editRoleAssignmentsManagementToolbar"
 	filterDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"

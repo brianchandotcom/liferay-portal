@@ -16,10 +16,8 @@ package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,14 +26,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -58,22 +52,9 @@ public class AccountUserDisplaySearchContainerFactory {
 		long[] accountEntryIds = null;
 
 		if (accountEntriesNavigation.equals("all")) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)liferayPortletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			List<AccountEntry> accountEntries =
-				_accountEntryLocalService.getAccountEntries(
-					themeDisplay.getCompanyId(),
-					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
-
-			List<Long> accountEntryIdsList = TransformUtil.transform(
-				accountEntries, AccountEntry::getAccountEntryId);
-
-			accountEntryIdsList.add(AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
-
-			accountEntryIds = ArrayUtil.toLongArray(accountEntryIdsList);
+			accountEntryIds = new long[] {
+				AccountConstants.ACCOUNT_ENTRY_ID_ANY
+			};
 		}
 		else if (accountEntriesNavigation.equals("accounts")) {
 			accountEntryIds = ParamUtil.getLongValues(

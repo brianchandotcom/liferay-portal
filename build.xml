@@ -1062,7 +1062,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<delete verbose="true">
 			<fileset
 				dir="${project.dir}"
-				includes="*.profile-dxp.properties"
+				includes="*/*.profile-dxp.properties,*.profile-dxp.properties"
 			/>
 		</delete>
 

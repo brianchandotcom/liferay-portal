@@ -20,14 +20,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -51,31 +48,11 @@ import org.osgi.service.component.annotations.Reference;
 public class EditAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteUsers(ActionRequest actionRequest) throws Exception {
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
 		long[] accountUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "accountUserIds"), 0L);
 
 		for (long accountUserId : accountUserIds) {
-			if (cmd.equals(Constants.DEACTIVATE) ||
-				cmd.equals(Constants.RESTORE)) {
-
-				int status = WorkflowConstants.STATUS_APPROVED;
-
-				if (cmd.equals(Constants.DEACTIVATE)) {
-					status = WorkflowConstants.STATUS_INACTIVE;
-				}
-
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(
-						User.class.getName(), actionRequest);
-
-				_userService.updateStatus(
-					accountUserId, status, serviceContext);
-			}
-			else {
-				_userService.deleteUser(accountUserId);
-			}
+			_userService.deleteUser(accountUserId);
 		}
 	}
 
@@ -88,8 +65,11 @@ public class EditAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.DEACTIVATE) ||
-				cmd.equals(Constants.DELETE) || cmd.equals(Constants.RESTORE)) {
+				cmd.equals(Constants.RESTORE)) {
 
+				updateAccountUsersStatus(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
 				deleteUsers(actionRequest);
 			}
 		}
@@ -111,11 +91,27 @@ public class EditAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference
-	protected Http http;
+	protected void updateAccountUsersStatus(ActionRequest actionRequest)
+		throws Exception {
 
-	@Reference
-	protected Portal portal;
+		long[] accountUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "accountUserIds"), 0L);
+
+		for (long accountUserId : accountUserIds) {
+			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (cmd.equals(Constants.DEACTIVATE)) {
+				status = WorkflowConstants.STATUS_INACTIVE;
+			}
+
+			_userService.updateStatus(
+				accountUserId, status,
+				ServiceContextFactory.getInstance(
+					User.class.getName(), actionRequest));
+		}
+	}
 
 	@Reference
 	private UserService _userService;

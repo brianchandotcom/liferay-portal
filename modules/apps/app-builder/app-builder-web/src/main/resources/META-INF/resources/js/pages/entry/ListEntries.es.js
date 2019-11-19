@@ -22,7 +22,7 @@ import {Loading} from '../../components/loading/Loading.es';
 import {toQuery, toQueryString} from '../../hooks/useQuery.es';
 import {confirmDelete, getItem} from '../../utils/client.es';
 
-const ListEntries = withRouter(({location}) => {
+const ListEntries = withRouter(({history, location}) => {
 	const [state, setState] = useState({
 		dataDefinitionId: null,
 		dataLayoutId: null,
@@ -81,6 +81,11 @@ const ListEntries = withRouter(({location}) => {
 			<ListView
 				actions={[
 					{
+						action: ({viewURL}) =>
+							Promise.resolve(history.push(viewURL)),
+						name: Liferay.Language.get('view')
+					},
+					{
 						action: ({id}) => Promise.resolve(handleEditItem(id)),
 						name: Liferay.Language.get('edit')
 					},
@@ -130,22 +135,23 @@ const ListEntries = withRouter(({location}) => {
 					const entryIndex =
 						query.pageSize * (query.page - 1) + index + 1;
 
+					let viewURL = '';
+
 					if (firstDataRecordValue) {
+						viewURL = `/entries/${entryIndex}?${toQueryString(
+							query
+						)}`;
+
 						dataRecordValues[firstColumn] = (
-							<Link
-								to={`/entries/${entryIndex}?${toQueryString(
-									query
-								)}`}
-							>
-								{firstDataRecordValue}
-							</Link>
+							<Link to={viewURL}>{firstDataRecordValue}</Link>
 						);
 					}
 
 					return {
 						...defaultDataRecordValues,
 						...dataRecordValues,
-						id
+						id,
+						viewURL
 					};
 				}}
 			</ListView>

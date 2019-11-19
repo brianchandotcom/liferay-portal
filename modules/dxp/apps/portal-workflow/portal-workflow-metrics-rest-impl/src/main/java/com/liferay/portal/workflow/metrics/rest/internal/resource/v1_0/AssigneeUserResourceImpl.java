@@ -426,9 +426,10 @@ public class AssigneeUserResourceImpl
 
 		return Stream.of(
 			_userLocalService.search(
-				contextCompany.getCompanyId(), keywords,
-				WorkflowConstants.STATUS_APPROVED, params, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, (OrderByComparator<User>)null)
+				contextCompany.getCompanyId(), keywords, keywords, keywords,
+				null, null, WorkflowConstants.STATUS_APPROVED, params, false,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				(OrderByComparator<User>)null)
 		).flatMap(
 			List::parallelStream
 		).map(

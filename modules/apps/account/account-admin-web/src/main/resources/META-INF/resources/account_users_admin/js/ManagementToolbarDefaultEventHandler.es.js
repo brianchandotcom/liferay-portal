@@ -22,7 +22,9 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deactivateAccountUsers(itemData) {
 		if (
 			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-deactivate-this')
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-deactivate-the-selected-users'
+				)
 			)
 		) {
 			this._updateAccountUsers(itemData.deactivateAccountUsersURL);
@@ -32,7 +34,9 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteAccountUsers(itemData) {
 		if (
 			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-delete-the-selected-users'
+				)
 			)
 		) {
 			this._updateAccountUsers(itemData.deleteAccountUsersURL);

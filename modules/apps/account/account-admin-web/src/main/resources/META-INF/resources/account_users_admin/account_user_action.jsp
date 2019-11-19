@@ -67,12 +67,15 @@ AccountUserDisplay accountUserDisplay = (AccountUserDisplay)row.getObject();
 		<c:if test="<%= accountUserDisplay.getUserId() != user.getUserId() %>">
 			<c:choose>
 				<c:when test="<%= accountUserDisplay.getStatus() == WorkflowConstants.STATUS_APPROVED %>">
-					<liferay-ui:icon-deactivate
+					<liferay-ui:icon-delete
+						confirmation="are-you-sure-you-want-to-deactivate-this-user"
+						message="deactivate"
 						url="<%= deleteUserURL %>"
 					/>
 				</c:when>
 				<c:when test="<%= (accountUserDisplay.getStatus() == WorkflowConstants.STATUS_INACTIVE) && PropsValues.USERS_DELETE %>">
 					<liferay-ui:icon-delete
+						confirmation="are-you-sure-you-want-to-delete-this-user"
 						url="<%= deleteUserURL %>"
 					/>
 				</c:when>

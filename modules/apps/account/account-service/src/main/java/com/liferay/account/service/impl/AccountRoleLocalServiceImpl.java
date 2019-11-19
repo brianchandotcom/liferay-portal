@@ -71,14 +71,18 @@ public class AccountRoleLocalServiceImpl
 	}
 
 	@Override
-	public void associateUser(long accountEntryId, long roleId, long userId)
+	public void associateUser(
+			long accountEntryId, long accountRoleId, long userId)
 		throws PortalException {
 
 		AccountEntry accountEntry = accountEntryPersistence.findByPrimaryKey(
 			accountEntryId);
 
+		AccountRole accountRole = getAccountRole(accountRoleId);
+
 		userGroupRoleLocalService.addUserGroupRoles(
-			userId, accountEntry.getAccountEntryGroupId(), new long[] {roleId});
+			userId, accountEntry.getAccountEntryGroupId(),
+			new long[] {accountRole.getRoleId()});
 	}
 
 	@Override
@@ -151,14 +155,18 @@ public class AccountRoleLocalServiceImpl
 	}
 
 	@Override
-	public void unassociateUser(long accountEntryId, long roleId, long userId)
+	public void unassociateUser(
+			long accountEntryId, long accountRoleId, long userId)
 		throws PortalException {
 
 		AccountEntry accountEntry = accountEntryPersistence.findByPrimaryKey(
 			accountEntryId);
 
+		AccountRole accountRole = getAccountRole(accountRoleId);
+
 		userGroupRoleLocalService.deleteUserGroupRoles(
-			userId, accountEntry.getAccountEntryGroupId(), new long[] {roleId});
+			userId, accountEntry.getAccountEntryGroupId(),
+			new long[] {accountRole.getRoleId()});
 	}
 
 }

@@ -35,7 +35,6 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -81,7 +80,9 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 		throws PortalException {
 
 		for (long accountEntryId : accountEntryIds) {
-			if (accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) {
+			if ((accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_ANY) &&
+				(accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT)) {
+
 				_accountEntryLocalService.getAccountEntry(accountEntryId);
 			}
 		}
@@ -102,7 +103,11 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 			int status, int cur, int delta, String sortField, boolean reverse)
 		throws PortalException {
 
-		Map<String, Serializable> attributes = new HashMap<>();
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				"accountEntryIds",
+				new long[] {AccountConstants.ACCOUNT_ENTRY_ID_ANY}
+			).build();
 
 		if (restrictToDomains) {
 			AccountEntry accountEntry =

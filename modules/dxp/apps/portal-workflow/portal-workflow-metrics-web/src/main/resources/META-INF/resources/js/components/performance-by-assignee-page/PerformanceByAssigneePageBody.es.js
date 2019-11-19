@@ -15,7 +15,7 @@ import EmptyState from '../../shared/components/list/EmptyState.es';
 import ReloadButton from '../../shared/components/list/ReloadButton.es';
 import LoadingState from '../../shared/components/loading/LoadingState.es';
 import PromisesResolver from '../../shared/components/request/PromisesResolver.es';
-import PerformanceByAssigneePage from './PerformanceByAssigneePage.es';
+import {Table} from './PerformanceByAssigneePageTable.es';
 
 const Body = ({data}) => {
 	const {items} = data;
@@ -23,39 +23,58 @@ const Body = ({data}) => {
 	return (
 		<div className="container-fluid-1280 mt-4">
 			<PromisesResolver.Pending>
-				<LoadingState />
+				<Body.Loading />
 			</PromisesResolver.Pending>
 
 			<PromisesResolver.Resolved>
 				{items && items.length > 0 ? (
-					<PerformanceByAssigneePage.Table items={items} />
+					<Body.Table items={items} />
 				) : (
-					<EmptyState
-						className="border-0"
-						data-testid="emptyState"
-						hideAnimation={true}
-						message={Liferay.Language.get(
-							'there-is-no-data-at-the-moment'
-						)}
-						messageClassName="small"
-					/>
+					<Body.Empty />
 				)}
 			</PromisesResolver.Resolved>
 
 			<PromisesResolver.Rejected>
-				<EmptyState
-					actionButton={<ReloadButton />}
-					className="border-0"
-					hideAnimation={true}
-					message={Liferay.Language.get(
-						'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
-					)}
-					messageClassName="small"
-					type="error"
-				/>
+				<Body.Error />
 			</PromisesResolver.Rejected>
 		</div>
 	);
 };
+
+const EmptyView = () => {
+	return (
+		<EmptyState
+			className="border-0"
+			data-testid="emptyState"
+			hideAnimation={true}
+			message={Liferay.Language.get('there-is-no-data-at-the-moment')}
+			messageClassName="small"
+		/>
+	);
+};
+
+const ErrorView = () => {
+	return (
+		<EmptyState
+			actionButton={<ReloadButton />}
+			className="border-0"
+			hideAnimation={true}
+			message={Liferay.Language.get(
+				'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+			)}
+			messageClassName="small"
+			type="error"
+		/>
+	);
+};
+
+const LoadingView = () => {
+	return <LoadingState />;
+};
+
+Body.Empty = EmptyView;
+Body.Error = ErrorView;
+Body.Loading = LoadingView;
+Body.Table = Table;
 
 export {Body};

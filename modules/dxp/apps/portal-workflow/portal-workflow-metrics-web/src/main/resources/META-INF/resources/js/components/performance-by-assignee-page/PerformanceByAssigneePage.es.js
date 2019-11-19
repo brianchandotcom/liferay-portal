@@ -16,7 +16,6 @@ import Request from '../../shared/components/request/Request.es';
 import {AppContext} from '../AppContext.es';
 import {Body} from './PerformanceByAssigneePageBody.es';
 import {Header} from './PerformanceByAssigneePageHeader.es';
-import {Item, Table} from './PerformanceByAssigneePageTable.es';
 
 const PerformanceByAssigneePage = ({
 	page,
@@ -61,7 +60,5 @@ const PerformanceByAssigneePage = ({
 
 PerformanceByAssigneePage.Body = Body;
 PerformanceByAssigneePage.Header = Header;
-PerformanceByAssigneePage.Item = Item;
-PerformanceByAssigneePage.Table = Table;
 
 export default PerformanceByAssigneePage;

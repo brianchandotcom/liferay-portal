@@ -15,36 +15,6 @@ import React from 'react';
 import ListHeadItem from '../../shared/components/list/ListHeadItem.es';
 import UserAvatar from '../../shared/components/user-avatar/UserAvatar.es';
 import {formatDuration} from '../../shared/util/duration.es';
-import PerformanceByAssigneePage from './PerformanceByAssigneePage.es';
-
-const Item = ({durationTaskAvg, image, name, taskCount}) => {
-	const formattedDuration = formatDuration(durationTaskAvg);
-
-	return (
-		<ClayTable.Row>
-			<ClayTable.Cell data-testid="assigneeProfileInfo">
-				<UserAvatar className="mr-3" image={image} />
-
-				<span data-testid="assigneeName">{name}</span>
-			</ClayTable.Cell>
-
-			<ClayTable.Cell>
-				<span className="task-count-value" data-testid="taskCount">
-					{taskCount}
-				</span>
-			</ClayTable.Cell>
-
-			<ClayTable.Cell>
-				<span
-					className="task-count-value"
-					data-testid="durationTaskAvg"
-				>
-					{formattedDuration}
-				</span>
-			</ClayTable.Cell>
-		</ClayTable.Row>
-	);
-};
 
 const Table = ({items}) => {
 	return (
@@ -75,11 +45,42 @@ const Table = ({items}) => {
 
 			<ClayTable.Body>
 				{items.map((item, index) => (
-					<PerformanceByAssigneePage.Item {...item} key={index} />
+					<Table.Item {...item} key={index} />
 				))}
 			</ClayTable.Body>
 		</ClayTable>
 	);
 };
 
-export {Item, Table};
+const Item = ({durationTaskAvg, image, name, taskCount}) => {
+	const formattedDuration = formatDuration(durationTaskAvg);
+
+	return (
+		<ClayTable.Row>
+			<ClayTable.Cell data-testid="assigneeProfileInfo">
+				<UserAvatar className="mr-3" image={image} />
+
+				<span data-testid="assigneeName">{name}</span>
+			</ClayTable.Cell>
+
+			<ClayTable.Cell>
+				<span className="task-count-value" data-testid="taskCount">
+					{taskCount}
+				</span>
+			</ClayTable.Cell>
+
+			<ClayTable.Cell>
+				<span
+					className="task-count-value"
+					data-testid="durationTaskAvg"
+				>
+					{formattedDuration}
+				</span>
+			</ClayTable.Cell>
+		</ClayTable.Row>
+	);
+};
+
+Table.Item = Item;
+
+export {Table};

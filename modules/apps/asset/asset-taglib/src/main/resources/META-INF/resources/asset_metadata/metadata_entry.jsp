@@ -112,7 +112,7 @@ else if (metadataField.equals("view-count")) {
 		</div>
 	</c:when>
 	<c:when test="<%= Validator.isNotNull(value) %>">
-		<aui:col cssClass="help-block" md="3" sm="4" xs="6">
+		<aui:col cssClass="form-feedback-item" md="3" sm="4" xs="6">
 			<dt class="metadata-entry-label <%= showLabel ? StringPool.BLANK : "hide" %>"><%= label %></dt>
 
 			<dd class="metadata-entry <%= metadataFieldCssClass %>">

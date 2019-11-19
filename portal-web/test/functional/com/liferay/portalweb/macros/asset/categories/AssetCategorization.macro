@@ -39,7 +39,7 @@ definition {
 		AssetCategorization._addTag(tagName = "${tagName}");
 
 		AssertTextEquals(
-			locator1 = "//div[contains(@class,'help-block')]",
+			locator1 = "//div[contains(@class,'form-feedback-item')]",
 			value1 = "Duplicate Tag: ${tagName}");
 	}
 

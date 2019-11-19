@@ -50,6 +50,16 @@ public class AccountRoleLocalServiceUtil {
 		return getService().addAccountRole(accountRole);
 	}
 
+	public static com.liferay.account.model.AccountRole addAccountRole(
+			long userId, long accountEntryId, String name,
+			java.util.Map<java.util.Locale, String> titleMap,
+			java.util.Map<java.util.Locale, String> descriptionMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addAccountRole(
+			userId, accountEntryId, name, titleMap, descriptionMap);
+	}
+
 	/**
 	 * Creates a new account role with the primary key. Does not add the account role to the database.
 	 *
@@ -67,9 +77,11 @@ public class AccountRoleLocalServiceUtil {
 	 *
 	 * @param accountRole the account role
 	 * @return the account role that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.account.model.AccountRole deleteAccountRole(
-		com.liferay.account.model.AccountRole accountRole) {
+			com.liferay.account.model.AccountRole accountRole)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteAccountRole(accountRole);
 	}
@@ -86,6 +98,10 @@ public class AccountRoleLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteAccountRole(accountRoleId);
+	}
+
+	public static void deleteAccountRolesByCompanyId(long companyId) {
+		getService().deleteAccountRolesByCompanyId(companyId);
 	}
 
 	/**
@@ -190,6 +206,12 @@ public class AccountRoleLocalServiceUtil {
 		return getService().fetchAccountRole(accountRoleId);
 	}
 
+	public static com.liferay.account.model.AccountRole
+		fetchAccountRoleByRoleId(long roleId) {
+
+		return getService().fetchAccountRoleByRoleId(roleId);
+	}
+
 	/**
 	 * Returns the account role with the primary key.
 	 *
@@ -202,6 +224,13 @@ public class AccountRoleLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getAccountRole(accountRoleId);
+	}
+
+	public static com.liferay.account.model.AccountRole getAccountRoleByRoleId(
+			long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccountRoleByRoleId(roleId);
 	}
 
 	/**
@@ -219,6 +248,12 @@ public class AccountRoleLocalServiceUtil {
 		getAccountRoles(int start, int end) {
 
 		return getService().getAccountRoles(start, end);
+	}
+
+	public static java.util.List<com.liferay.account.model.AccountRole>
+		getAccountRolesByAccountEntryIds(long[] accountEntryIds) {
+
+		return getService().getAccountRolesByAccountEntryIds(accountEntryIds);
 	}
 
 	/**

@@ -133,6 +133,11 @@ public class AccountRoleWrapper
 		return model.getPrimaryKey();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Role getRole() {
+		return model.getRole();
+	}
+
 	/**
 	 * Returns the role ID of this account role.
 	 *
@@ -141,6 +146,13 @@ public class AccountRoleWrapper
 	@Override
 	public long getRoleId() {
 		return model.getRoleId();
+	}
+
+	@Override
+	public String getRoleName()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getRoleName();
 	}
 
 	/**

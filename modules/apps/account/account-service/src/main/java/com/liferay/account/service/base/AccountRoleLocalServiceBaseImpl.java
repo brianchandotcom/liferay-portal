@@ -115,10 +115,13 @@ public abstract class AccountRoleLocalServiceBaseImpl
 	 *
 	 * @param accountRole the account role
 	 * @return the account role that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public AccountRole deleteAccountRole(AccountRole accountRole) {
+	public AccountRole deleteAccountRole(AccountRole accountRole)
+		throws PortalException {
+
 		return accountRolePersistence.remove(accountRole);
 	}
 

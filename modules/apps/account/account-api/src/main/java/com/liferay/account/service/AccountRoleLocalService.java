@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -70,6 +72,11 @@ public interface AccountRoleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountRole addAccountRole(AccountRole accountRole);
 
+	public AccountRole addAccountRole(
+			long userId, long accountEntryId, String name,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap)
+		throws PortalException;
+
 	/**
 	 * Creates a new account role with the primary key. Does not add the account role to the database.
 	 *
@@ -84,9 +91,11 @@ public interface AccountRoleLocalService
 	 *
 	 * @param accountRole the account role
 	 * @return the account role that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public AccountRole deleteAccountRole(AccountRole accountRole);
+	public AccountRole deleteAccountRole(AccountRole accountRole)
+		throws PortalException;
 
 	/**
 	 * Deletes the account role with the primary key from the database. Also notifies the appropriate model listeners.
@@ -98,6 +107,8 @@ public interface AccountRoleLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public AccountRole deleteAccountRole(long accountRoleId)
 		throws PortalException;
+
+	public void deleteAccountRolesByCompanyId(long companyId);
 
 	/**
 	 * @throws PortalException
@@ -175,6 +186,9 @@ public interface AccountRoleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountRole fetchAccountRole(long accountRoleId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountRole fetchAccountRoleByRoleId(long roleId);
+
 	/**
 	 * Returns the account role with the primary key.
 	 *
@@ -184,6 +198,10 @@ public interface AccountRoleLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountRole getAccountRole(long accountRoleId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountRole getAccountRoleByRoleId(long roleId)
 		throws PortalException;
 
 	/**
@@ -199,6 +217,10 @@ public interface AccountRoleLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountRole> getAccountRoles(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountRole> getAccountRolesByAccountEntryIds(
+		long[] accountEntryIds);
 
 	/**
 	 * Returns the number of account roles.

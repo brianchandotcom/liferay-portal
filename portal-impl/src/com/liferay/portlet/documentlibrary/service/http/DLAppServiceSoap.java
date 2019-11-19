@@ -2390,36 +2390,6 @@ public class DLAppServiceSoap {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #updateFileEntry(long, String, String, String, String,
-	 String, DLVersionNumberIncrease, byte[], ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.repository.model.FileEntrySoap
-			updateFileEntry(
-				long fileEntryId, String sourceFileName, String mimeType,
-				String title, String description, String changeLog,
-				boolean majorVersion, byte[] bytes,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.portal.kernel.repository.model.FileEntry returnValue =
-				DLAppServiceUtil.updateFileEntry(
-					fileEntryId, sourceFileName, mimeType, title, description,
-					changeLog, majorVersion, bytes, serviceContext);
-
-			return com.liferay.portal.kernel.repository.model.FileEntrySoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
 	 * Updates a file entry and associated metadata based on a byte array
 	 * object. If the file data is <code>null</code>, then only the associated
 	 * metadata (i.e., <code>title</code>, <code>description</code>, and

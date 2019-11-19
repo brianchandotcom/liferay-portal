@@ -115,11 +115,15 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 	const onNext = () => {
 		const nextIndex = Math.min(parseInt(entryIndex, 10) + 1, total);
 
+		setLoading(true);
+
 		history.push(`/entries/${nextIndex}?${toQueryString(query)}`);
 	};
 
 	const onPrev = () => {
 		const prevIndex = Math.max(parseInt(entryIndex, 10) - 1, 1);
+
+		setLoading(true);
 
 		history.push(`/entries/${prevIndex}?${toQueryString(query)}`);
 	};

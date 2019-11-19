@@ -22,7 +22,9 @@ const Header = ({
 	handleClickDone,
 	handleClickEdit,
 	headerTitle,
-	infoButtonRef
+	infoButtonRef,
+	showEditIcon,
+	showInfoIcon
 }) => (
 	<div className="navbar navigation-bar navigation-bar-light">
 		<div className="container-fluid header">
@@ -49,27 +51,31 @@ const Header = ({
 			<nav className="navbar navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
 				<div className="container-fluid container-fluid-max-xl">
 					<ul className="navbar-nav">
-						<li className="btn-group-item nav-item">
-							<ClayButton
-								borderless
-								displayType="secondary"
-								monospaced
-								onClick={handleClickEdit}
-							>
-								<ClayIcon symbol="pencil" />
-							</ClayButton>
-						</li>
-						<li className="btn-group-item nav-item">
-							<ClayButton
-								borderless
-								displayType="secondary"
-								id="infoButtonRef"
-								monospaced
-								ref={infoButtonRef}
-							>
-								<ClayIcon symbol="info-panel-open" />
-							</ClayButton>
-						</li>
+						{showEditIcon && (
+							<li className="btn-group-item nav-item">
+								<ClayButton
+									borderless
+									displayType="secondary"
+									monospaced
+									onClick={handleClickEdit}
+								>
+									<ClayIcon symbol="pencil" />
+								</ClayButton>
+							</li>
+						)}
+						{showInfoIcon && (
+							<li className="btn-group-item nav-item">
+								<ClayButton
+									borderless
+									displayType="secondary"
+									id="infoButtonRef"
+									monospaced
+									ref={infoButtonRef}
+								>
+									<ClayIcon symbol="info-panel-open" />
+								</ClayButton>
+							</li>
+						)}
 						<li className="nav-item">
 							<ClayButton
 								displayType="primary"

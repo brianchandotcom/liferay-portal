@@ -36,7 +36,6 @@ String[] extensions = itemSelectorUploadViewDisplayContext.getExtensions();
 Map<String, Object> context = new HashMap<>();
 
 context.put("closeCaption", itemSelectorUploadViewDisplayContext.getTitle(locale));
-context.put("editItemURL", uploadURL.toString()); //TODO hacerlo opcional en Preview
 context.put("eventName", itemSelectorUploadViewDisplayContext.getItemSelectedEventName());
 context.put("maxFileSize", itemSelectorUploadViewDisplayContext.getMaxFileSize());
 context.put("rootNode", "#itemSelectorUploadContainer");

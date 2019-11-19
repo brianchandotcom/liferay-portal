@@ -30,14 +30,14 @@ const TPL_EDIT_DIALOG_TITLE = '{edit} {title} ({copy})';
 
 class ItemSelectorPreview extends Component {
 	static propTypes = {
-		container: PropTypes.instanceOf(Element),
+		container: PropTypes.instanceOf(Element).isRequired,
 		currentIndex: PropTypes.number.isRequired,
-		editItemURL: PropTypes.string.isRequired,
+		editItemURL: PropTypes.string,
 		handleSelectedItem: PropTypes.func.isRequired,
 		headerTitle: PropTypes.string.isRequired,
 		items: PropTypes.array.isRequired,
-		uploadItemReturnType: PropTypes.string.isRequired,
-		uploadItemURL: PropTypes.string.isRequired
+		uploadItemReturnType: PropTypes.string,
+		uploadItemURL: PropTypes.string
 	};
 
 	constructor(props) {
@@ -245,6 +245,8 @@ class ItemSelectorPreview extends Component {
 					handleClickEdit={this.handleClickEdit}
 					headerTitle={this.props.headerTitle}
 					infoButtonRef={this.infoButtonRef}
+					showEditIcon={this.props.editItemURL}
+					showInfoIcon={currentItem.metadata}
 				/>
 
 				<Carousel

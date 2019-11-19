@@ -15,7 +15,10 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index.IndexRequestExecutorFixture;
@@ -87,6 +90,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpJSONFactoryUtil();
+
 		_elasticsearchFixture = new ElasticsearchFixture(
 			ElasticsearchSearchEngineAdapterIndexRequestTest.class.
 				getSimpleName());
@@ -210,9 +215,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		Assert.assertEquals(0, flushIndexResponse.getFailedShards());
 	}
 
-	@Ignore
 	@Test
-	public void testExecuteGetFieldMappingIndexRequest() {
+	public void testExecuteGetFieldMappingIndexRequest() throws Exception {
 		String mappingName = "testGetFieldMapping";
 		String mappingSource =
 			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}, " +
@@ -229,10 +233,17 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		GetFieldMappingIndexResponse getFieldMappingIndexResponse =
 			_searchEngineAdapter.execute(getFieldMappingIndexRequest);
 
-		String fieldMappings = String.valueOf(
-			getFieldMappingIndexResponse.getFieldMappings());
+		Map<String, String> fieldMappings =
+			getFieldMappingIndexResponse.getFieldMappings();
 
-		Assert.assertTrue(fieldMappings.contains(mappingSource));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			fieldMappings.get(_INDEX_NAME));
+
+		String fieldMapping = jsonObject.getString("otherTestField");
+
+		Assert.assertTrue(
+			fieldMapping,
+			fieldMapping.equals("{\"otherTestField\":{\"type\":\"keyword\"}}"));
 	}
 
 	@Test
@@ -434,6 +445,12 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 					createIndexRequestExecutor(elasticsearchClientResolver));
 			}
 		};
+	}
+
+	protected static void setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	protected void assertIndexMetaDataState(

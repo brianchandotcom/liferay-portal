@@ -119,7 +119,7 @@ class StateSyncronizer extends Component {
 	isEmpty() {
 		const {store} = this.props;
 
-		return FormSupport.emptyPages(store.state.pages);
+		return FormSupport.isEmpty(store.state.pages);
 	}
 
 	onRemoveAvailableLocales({newValue, previousValue}) {

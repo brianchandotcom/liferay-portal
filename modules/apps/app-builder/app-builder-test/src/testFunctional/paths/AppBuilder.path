@@ -31,7 +31,7 @@
 
 <tr>
 	<td>ITEM_ON_THE_TABLE_CLICK</td>
-	<td>//table[contains(@class,'table')]//a[contains(text(),'${key_ItemName}')]</td>
+	<td>//table[contains(@class,'table')]//*[contains(text(),'${key_ItemName}')]</td>
 	<td></td>
 </tr>
 
@@ -118,7 +118,7 @@
 
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//div[contains(@class,'input-group-item')]//button[contains(@class,'btn-primary')]</td>
+	<td>//button[contains(@class,'btn-primary') and contains(text(),'Save')]</td>
 	<td></td>
 </tr>
 

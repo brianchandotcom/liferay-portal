@@ -92,8 +92,8 @@ describe('The subcomponents from workload by assignee page body should', () => {
 	test('Be rendered with loading view', async () => {
 		const {getByTestId} = render(<WorkloadByAssigneePage.Loading />);
 
-		const loadingViewDiv = getByTestId('loadingView');
+		const loadingStateDiv = getByTestId('loadingState');
 
-		expect(loadingViewDiv).not.toBeNull();
+		expect(loadingStateDiv).not.toBeNull();
 	});
 });

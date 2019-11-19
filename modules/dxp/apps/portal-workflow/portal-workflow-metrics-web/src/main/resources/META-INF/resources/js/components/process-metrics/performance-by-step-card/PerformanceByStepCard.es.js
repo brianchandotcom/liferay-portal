@@ -121,14 +121,7 @@ const Header = ({totalCount}) => (
 );
 
 const LoadingView = () => {
-	return (
-		<div
-			className="border-0 mt-8 pb-5 pt-5 sheet"
-			data-testid="loadingView"
-		>
-			<LoadingState />
-		</div>
-	);
+	return <LoadingState className="border-0 mt-8 pb-5 pt-5 sheet" />;
 };
 
 const PerformanceByStepCard = ({processId, query}) => {

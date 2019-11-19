@@ -17,6 +17,12 @@ import React from 'react';
  */
 export default class LoadingState extends React.Component {
 	render() {
-		return <span aria-hidden="true" className="loading-animation" />;
+		const {className = 'border-1 pb-6 pt-6 sheet'} = this.props;
+
+		return (
+			<div className={className} data-testid="loadingState">
+				<span aria-hidden="true" className="loading-animation" />
+			</div>
+		);
 	}
 }

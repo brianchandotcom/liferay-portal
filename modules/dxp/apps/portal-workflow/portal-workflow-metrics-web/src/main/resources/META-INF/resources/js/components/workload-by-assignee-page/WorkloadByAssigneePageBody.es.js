@@ -80,11 +80,7 @@ const ErrorView = () => {
 };
 
 const LoadingView = () => {
-	return (
-		<div className={`border-1 pb-6 pt-6 sheet`} data-testid="loadingView">
-			<LoadingState />
-		</div>
-	);
+	return <LoadingState />;
 };
 
 export {Body, EmptyView, ErrorView, LoadingView};

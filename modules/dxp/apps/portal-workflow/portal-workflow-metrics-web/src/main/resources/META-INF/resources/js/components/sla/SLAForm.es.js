@@ -229,7 +229,7 @@ const Body = ({id, processId, query}) => {
 	}
 
 	if (loading) {
-		return <LoadingState />;
+		return <LoadingState className="" />;
 	}
 
 	return (

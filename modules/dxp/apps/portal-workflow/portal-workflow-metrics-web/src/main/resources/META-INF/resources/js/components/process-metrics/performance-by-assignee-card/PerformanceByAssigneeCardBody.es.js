@@ -27,9 +27,7 @@ const Body = ({data, defaultDelta, processId}) => {
 		<>
 			<Panel.Body>
 				<PromisesResolver.Pending>
-					<div className="border-0 mt-8 pb-5 pt-5 sheet">
-						<LoadingState />
-					</div>
+					<LoadingState className="border-0 mt-8 pb-5 pt-5 sheet" />
 				</PromisesResolver.Pending>
 
 				<PromisesResolver.Resolved>

@@ -27,14 +27,7 @@ const LoadingContext = createContext(false);
 function Loading({children}) {
 	const {loading} = useContext(LoadingContext);
 
-	return (
-		loading &&
-		(children || (
-			<div className="pb-6 pt-5">
-				<LoadingState />
-			</div>
-		))
-	);
+	return loading && (children || <LoadingState className="pb-6 pt-5" />);
 }
 
 export {Loading, LoadingContext, useLoading};

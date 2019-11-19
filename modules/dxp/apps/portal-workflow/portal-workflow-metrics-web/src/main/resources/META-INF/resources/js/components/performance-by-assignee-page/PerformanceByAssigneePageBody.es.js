@@ -23,12 +23,7 @@ const Body = ({data}) => {
 	return (
 		<div className="container-fluid-1280 mt-4">
 			<PromisesResolver.Pending>
-				<div
-					className={`border-1 pb-6 pt-6 sheet`}
-					data-testid="loadingState"
-				>
-					<LoadingState />
-				</div>
+				<LoadingState />
 			</PromisesResolver.Pending>
 
 			<PromisesResolver.Resolved>

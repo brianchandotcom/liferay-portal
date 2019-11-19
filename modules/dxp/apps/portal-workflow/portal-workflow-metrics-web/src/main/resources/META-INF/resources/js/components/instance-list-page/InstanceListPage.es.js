@@ -109,9 +109,7 @@ const Body = ({page, pageSize, processId, query}) => {
 			<div className="container-fluid-1280 mt-4">
 				<PromisesResolver promises={promises}>
 					<PromisesResolver.Pending>
-						<div className={`border-1 pb-6 pt-6 sheet`}>
-							<LoadingState />
-						</div>
+						<LoadingState />
 					</PromisesResolver.Pending>
 
 					<PromisesResolver.Resolved>

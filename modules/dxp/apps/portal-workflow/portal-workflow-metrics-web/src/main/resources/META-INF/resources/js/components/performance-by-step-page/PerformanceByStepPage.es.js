@@ -148,9 +148,7 @@ const Body = ({page, pageSize, processId, query, search, sort}) => {
 			>
 				<PromisesResolver promises={promises}>
 					<PromisesResolver.Pending>
-						<div className={`border-1 pb-6 pt-6 sheet`}>
-							<LoadingState />
-						</div>
+						<LoadingState />
 					</PromisesResolver.Pending>
 
 					<PromisesResolver.Resolved>

@@ -96,6 +96,14 @@ definition {
 		}
 	}
 
+	macro gotoCustomAppCP {
+		ProductMenuHelper.expandPanel(panel = "${panel}");
+
+		Click(
+			key_portlet = "${portlet}",
+			locator1 = "AppBuilder#CUSTOM_PORTLET");
+	}
+
 	macro openItem {
 		Click(
 			key_ItemName = "${itemName}",

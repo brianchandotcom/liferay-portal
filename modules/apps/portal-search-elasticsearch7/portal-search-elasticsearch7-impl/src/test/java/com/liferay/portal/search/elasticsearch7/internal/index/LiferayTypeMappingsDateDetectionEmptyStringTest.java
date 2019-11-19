@@ -31,7 +31,7 @@ import org.junit.rules.TestName;
  * @author Rodrigo Paulino
  * @author André de Oliveira
  */
-public class LiferayTypeMappingsDDMKeywordEmptyStringTest {
+public class LiferayTypeMappingsDateDetectionEmptyStringTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -44,96 +44,96 @@ public class LiferayTypeMappingsDDMKeywordEmptyStringTest {
 	}
 
 	@Test
-	public void testDDMKeywordEmptyStringInSecondDocument() throws Exception {
-		final String field1 = randomDDMKeywordField();
-		final String ddmField2 = randomDDMKeywordField();
-		final String ddmField3 = randomDDMKeywordField();
-		final String ddmField4 = randomDDMKeywordField();
-		final String ddmField5 = randomDDMKeywordField();
-		final String ddmField6 = randomDDMKeywordField();
-		final String ddmField7 = randomDDMKeywordField();
-		final String ddmField8 = randomDDMKeywordField();
-		final String ddmField9 = randomDDMKeywordField();
+	public void testEmptyStringInSecondDocument() throws Exception {
+		final String field1 = randomField();
+		final String field2 = randomField();
+		final String field3 = randomField();
+		final String field4 = randomField();
+		final String field5 = randomField();
+		final String field6 = randomField();
+		final String field7 = randomField();
+		final String field8 = randomField();
+		final String field9 = randomField();
 
 		index(
 			HashMapBuilder.<String, Object>put(
-				ddmField2, StringPool.BLANK
-			).put(
-				ddmField3, new Date()
-			).put(
-				ddmField4, "2011-07-01T01:32:33"
-			).put(
-				ddmField5, 321231312321L
-			).put(
-				ddmField6, "321231312321"
-			).put(
-				ddmField7, true
-			).put(
-				ddmField8, "true"
-			).put(
-				ddmField9, "NULL"
-			).put(
 				field1, RandomTestUtil.randomString()
+			).put(
+				field2, StringPool.BLANK
+			).put(
+				field3, new Date()
+			).put(
+				field4, "2011-07-01T01:32:33"
+			).put(
+				field5, 321231312321L
+			).put(
+				field6, "321231312321"
+			).put(
+				field7, true
+			).put(
+				field8, "true"
+			).put(
+				field9, "NULL"
 			).build());
 
 		index(
 			HashMapBuilder.<String, Object>put(
-				ddmField2, StringPool.BLANK
-			).put(
-				ddmField3, StringPool.BLANK
-			).put(
-				ddmField4, StringPool.BLANK
-			).put(
-				ddmField5, StringPool.BLANK
-			).put(
-				ddmField6, StringPool.BLANK
-			).put(
-				ddmField7, StringPool.BLANK
-			).put(
-				ddmField8, StringPool.BLANK
-			).put(
-				ddmField9, StringPool.BLANK
-			).put(
 				field1, StringPool.BLANK
+			).put(
+				field2, StringPool.BLANK
+			).put(
+				field3, StringPool.BLANK
+			).put(
+				field4, StringPool.BLANK
+			).put(
+				field5, StringPool.BLANK
+			).put(
+				field6, StringPool.BLANK
+			).put(
+				field7, StringPool.BLANK
+			).put(
+				field8, StringPool.BLANK
+			).put(
+				field9, StringPool.BLANK
 			).build());
 
 		index(
 			HashMapBuilder.<String, Object>put(
-				ddmField2, RandomTestUtil.randomString()
-			).put(
-				ddmField3, RandomTestUtil.randomString()
-			).put(
-				ddmField4, RandomTestUtil.randomString()
-			).put(
-				ddmField5, String.valueOf(RandomTestUtil.randomLong())
-			).put(
-				ddmField6, RandomTestUtil.randomString()
-			).put(
-				ddmField7, StringPool.FALSE
-			).put(
-				ddmField8, RandomTestUtil.randomString()
-			).put(
-				ddmField9, RandomTestUtil.randomString()
-			).put(
 				field1, RandomTestUtil.randomString()
+			).put(
+				field2, RandomTestUtil.randomString()
+			).put(
+				field3, RandomTestUtil.randomString()
+			).put(
+				field4, RandomTestUtil.randomString()
+			).put(
+				field5, String.valueOf(RandomTestUtil.randomLong())
+			).put(
+				field6, RandomTestUtil.randomString()
+			).put(
+				field7, StringPool.FALSE
+			).put(
+				field8, RandomTestUtil.randomString()
+			).put(
+				field9, RandomTestUtil.randomString()
 			).build());
 
-		assertType(field1, "keyword");
-		assertType(ddmField2, "keyword");
-		assertType(ddmField3, "keyword");
-		assertType(ddmField4, "keyword");
-		assertType(ddmField5, "long");
-		assertType(ddmField6, "keyword");
-		assertType(ddmField7, "boolean");
-		assertType(ddmField8, "keyword");
-		assertType(ddmField9, "keyword");
+		assertType(field1, "text");
+		assertType(field2, "text");
+		assertType(field3, "text");
+		assertType(field4, "text");
+		assertType(field5, "long");
+		assertType(field6, "text");
+		assertType(field7, "boolean");
+		assertType(field8, "text");
+		assertType(field9, "text");
 	}
 
 	@Rule
 	public TestName testName = new TestName();
 
-	protected static String randomDDMKeywordField() {
-		return "ddm__keyword__" + RandomTestUtil.randomString();
+	protected static String randomField() {
+		return "randomField__" + RandomTestUtil.randomString();
 	}
 
 	protected void assertType(String field, String type) throws Exception {

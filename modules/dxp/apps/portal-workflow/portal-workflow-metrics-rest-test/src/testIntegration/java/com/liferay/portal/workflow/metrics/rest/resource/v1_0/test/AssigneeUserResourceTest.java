@@ -322,8 +322,11 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 			Arrays.asList(assigneeUser1, assigneeUser2, assigneeUser3),
 			(List<AssigneeUser>)page.getItems());
 
+		Instance instance3 = _workflowMetricsRESTTestHelper.addInstance(
+			testGroup.getCompanyId(), true, _process.getId());
+
 		_addTask(
-			assigneeUser1.getId(), () -> instance1, _process.getId(),
+			assigneeUser1.getId(), () -> instance3, _process.getId(),
 			"COMPLETED",
 			new Task() {
 				{
@@ -347,7 +350,7 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 			});
 
 		_addTask(
-			assigneeUser2.getId(), () -> instance1, _process.getId(),
+			assigneeUser2.getId(), () -> instance3, _process.getId(),
 			"COMPLETED",
 			new Task() {
 				{

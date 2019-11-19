@@ -32,6 +32,7 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.Workfl
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.lang.time.DateUtils;
 
@@ -394,8 +395,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		User adminUser = UserTestUtil.getAdminUser(testGroup.getCompanyId());
 
 		task = _workflowMetricsRESTTestHelper.addTask(
-			adminUser.getUserId(), testGroup.getCompanyId(), processId, status,
-			task, version);
+			adminUser.getUserId(), testGroup.getCompanyId(),
+			() -> _workflowMetricsRESTTestHelper.addInstance(
+				testGroup.getCompanyId(), Objects.equals(status, "COMPLETED"),
+				processId),
+			processId, status, task, version);
 
 		_tasks.add(task);
 

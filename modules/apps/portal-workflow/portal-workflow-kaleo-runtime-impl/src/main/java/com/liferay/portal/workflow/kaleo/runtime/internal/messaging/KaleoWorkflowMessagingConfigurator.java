@@ -220,7 +220,7 @@ public class KaleoWorkflowMessagingConfigurator {
 
 		MessageListener workflowLogManagerProxyMessageListener =
 			registerProxyMessageListener(
-				_workflowLogManagerk, DestinationNames.WORKFLOW_LOG);
+				_workflowLogManager, DestinationNames.WORKFLOW_LOG);
 
 		_defaultWorkflowDestinationEventListener.setWorkflowLogManagerListener(
 			workflowLogManagerProxyMessageListener);
@@ -353,7 +353,7 @@ public class KaleoWorkflowMessagingConfigurator {
 	private WorkflowInstanceManager _workflowInstanceManager;
 
 	@Reference(target = "(proxy.bean=false)")
-	private WorkflowLogManager _workflowLogManagerk;
+	private WorkflowLogManager _workflowLogManager;
 
 	@Reference(target = "(proxy.bean=false)")
 	private WorkflowTaskManager _workflowTaskManager;

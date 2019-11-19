@@ -932,7 +932,7 @@ public class CTStoreTest {
 		Assert.assertArrayEquals(
 			data,
 			StreamUtil.toByteArray(
-				_ctsContentLocalService.openCTSContentInputStream(
+				_ctsContentLocalService.openDataInputStream(
 					ctsContent.getCtsContentId())));
 	}
 

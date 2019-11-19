@@ -131,7 +131,7 @@ public class CTStore implements Store {
 			CTSContent ctsContent = _ctsContentLocalService.getCTSContent(
 				companyId, repositoryId, fileName, versionLabel, _storeType);
 
-			return _ctsContentLocalService.openCTSContentInputStream(
+			return _ctsContentLocalService.openDataInputStream(
 				ctsContent.getCtsContentId());
 		}
 

@@ -112,7 +112,7 @@ public class CTStoreCTEventListener implements CTEventListener {
 					store.addFile(
 						ctsContent.getCompanyId(), ctsContent.getRepositoryId(),
 						ctsContent.getPath(), ctsContent.getVersion(),
-						_ctsContentLocalService.openCTSContentInputStream(
+						_ctsContentLocalService.openDataInputStream(
 							ctsContent.getCtsContentId()));
 				}
 			}

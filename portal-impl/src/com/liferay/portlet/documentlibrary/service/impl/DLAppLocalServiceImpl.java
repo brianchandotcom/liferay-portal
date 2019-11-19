@@ -400,40 +400,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Deletes the file ranks associated to a given file entry. This method is
-	 * only supported by the Liferay repository.
-	 *
-	 * @param      fileEntryId the primary key of the file entry
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByFileEntryId}
-	 */
-	@Deprecated
-	@Override
-	public void deleteFileRanksByFileEntryId(long fileEntryId) {
-		throw new UnsupportedOperationException(
-			"This method is deprecated and replaced by " +
-				"com.liferay.document.library.file.rank.service." +
-					"DLFileRankLocalService#deleteFileRanksByFileEntryId");
-	}
-
-	/**
-	 * Deletes the file ranks associated to a given user. This method is only
-	 * supported by the Liferay repository.
-	 *
-	 * @param      userId the primary key of the user
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByUserId}
-	 */
-	@Deprecated
-	@Override
-	public void deleteFileRanksByUserId(long userId) {
-		throw new UnsupportedOperationException(
-			"This method is deprecated and replaced by " +
-				"com.liferay.document.library.file.rank.service." +
-					"DLFileRankLocalService#deleteFileRanksByUserId");
-	}
-
-	/**
 	 * Deletes the file shortcut. This method is only supported by the Liferay
 	 * repository.
 	 *
@@ -1133,19 +1099,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			repositoryProvider.getFileEntryLocalRepository(newToFileEntryId);
 
 		localRepository.updateFileShortcuts(oldToFileEntryId, newToFileEntryId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateFileShortcuts(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public void updateFileShortcuts(
-			long toRepositoryId, long oldToFileEntryId, long newToFileEntryId)
-		throws PortalException {
-
-		updateFileShortcuts(oldToFileEntryId, newToFileEntryId);
 	}
 
 	/**

@@ -155,27 +155,57 @@ username="elastic"</echo>
 			<if>
 				<os family="unix" />
 				<then>
-					<exec dir="${elasticsearch.dir}-1/bin" executable="/bin/bash">
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}-1/config/certs/ca/ca.crt --ca-key ${elasticsearch.dir}-1/config/certs/ca/ca.key --pass liferay --ip 127.0.0.1 --dns localhost --name localhost --out ${elasticsearch.dir}-1/config/certs/localhost.p12" />
+						<arg value="./elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/config/certs/ca/ca.crt --ca-key ${elasticsearch.dir}/config/certs/ca/ca.key --pass liferay --ip 127.0.0.1 --dns localhost --name localhost --out ${elasticsearch.dir}/config/certs/localhost.p12" />
 					</exec>
 
-					<exec dir="${elasticsearch.dir}-1/bin" executable="/bin/bash">
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}-1/config/certs/localhost.jks -srckeystore ${elasticsearch.dir}-1/config/certs/localhost.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
+						<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}/config/certs/localhost.jks -srckeystore ${elasticsearch.dir}/config/certs/localhost.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
+					</exec>
+
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./elasticsearch-keystore create" />
+					</exec>
+
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" inputstring="liferay&#x0A;">
+						<arg value="-c" />
+						<arg value="./elasticsearch-keystore add xpack.security.http.ssl.keystore.secure_password" />
+					</exec>
+
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" inputstring="liferay&#x0A;">
+						<arg value="-c" />
+						<arg value="./elasticsearch-keystore add xpack.security.http.ssl.truststore.secure_password" />
 					</exec>
 				</then>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<exec dir="${elasticsearch.dir}-1/bin" executable="cmd">
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
 							<arg value="/c" />
-							<arg value="elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}-1/config/certs/ca/ca.crt --ca-key ${elasticsearch.dir}-1/config/certs/ca/ca.key --pass liferay --ip 127.0.0.1 --dns localhost --name localhost --out ${elasticsearch.dir}-1/config/certs/localhost.p12" />
+							<arg value="elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/config/certs/ca/ca.crt --ca-key ${elasticsearch.dir}/config/certs/ca/ca.key --pass liferay --ip 127.0.0.1 --dns localhost --name localhost --out ${elasticsearch.dir}/config/certs/localhost.p12" />
 						</exec>
 
-						<exec dir="${elasticsearch.dir}-1/bin" executable="cmd">
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
 							<arg value="/c" />
-							<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}-1/config/certs/localhost.jks -srckeystore ${elasticsearch.dir}-1/config/certs/localhost.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
+							<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}/config/certs/localhost.jks -srckeystore ${elasticsearch.dir}/config/certs/localhost.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
+						</exec>
+
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="-c" />
+							<arg value="elasticsearch-keystore create" />
+						</exec>
+
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd" inputstring="liferay&#x0A;">
+							<arg value="-c" />
+							<arg value="elasticsearch-keystore add xpack.security.http.ssl.keystore.secure_password" />
+						</exec>
+
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd" inputstring="liferay&#x0A;">
+							<arg value="-c" />
+							<arg value="elasticsearch-keystore add xpack.security.http.ssl.truststore.secure_password" />
 						</exec>
 					</then>
 				</elseif>
@@ -824,6 +854,8 @@ xpack.monitoring.collection.enabled: true</echo>
 				<generate-x-pack-security-certificates />
 
 				<configure-elasticsearch-x-pack-security-properties />
+
+				<configure-portal-x-pack-security-truststore />
 			</then>
 		</if>
 
@@ -856,8 +888,6 @@ xpack.monitoring.collection.enabled: true</echo>
 				<start-x-pack-trial />
 
 				<configure-portal-x-pack-osgi-properties />
-
-				<configure-portal-x-pack-security-truststore />
 
 				<antcall target="start-kibana" />
 

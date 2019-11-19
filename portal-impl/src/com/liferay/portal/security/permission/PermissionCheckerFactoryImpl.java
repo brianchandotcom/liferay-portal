@@ -51,7 +51,7 @@ public class PermissionCheckerFactoryImpl implements PermissionCheckerFactory {
 		permissionChecker.init(
 			user, _roleContributors.toArray(new RoleContributor[0]));
 
-		return permissionChecker;
+		return new StagingPermissionChecker(permissionChecker);
 	}
 
 	public void destroy() {

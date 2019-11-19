@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.staging.security.internal.permission;
+package com.liferay.portal.security.permission;
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;

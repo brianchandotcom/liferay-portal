@@ -63,7 +63,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 			if ((isSubrepository() || absolutePath.contains("/modules/apps/") ||
 				 absolutePath.contains("/modules/dxp/apps/") ||
 				 absolutePath.contains("/modules/private/apps/")) &&
-				!_isTestUtilModule(absolutePath)) {
+				!_isTestModule(absolutePath, "-test-util")) {
 
 				content = _fixMicroVersion(
 					fileName, content, matcher.group(1), name, version);
@@ -79,15 +79,13 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 		boolean relengSkipUpdateFileVersionsFile =
 			_isRelengSkipUpdateFileVersionsFile(absolutePath);
-		boolean testModule = _isTestModule(absolutePath);
-		boolean testUtilModule = _isTestUtilModule(absolutePath);
+		boolean testModule = _isTestModule(absolutePath, "-test", "-test-util");
 
 		for (String artifact : enforceVersionArtifacts) {
 			String[] artifactParts = StringUtil.split(
 				artifact, StringPool.COLON);
 
-			if ((testModule || testUtilModule ||
-				 relengSkipUpdateFileVersionsFile) &&
+			if ((testModule || relengSkipUpdateFileVersionsFile) &&
 				Objects.equals(artifactParts[0], "com.liferay.portal")) {
 
 				continue;
@@ -308,32 +306,22 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		}
 	}
 
-	private boolean _isTestModule(String absolutePath) {
+	private boolean _isTestModule(
+		String absolutePath, String... directoryNameEndings) {
+
 		int x = absolutePath.lastIndexOf(StringPool.SLASH);
 
 		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
 
 		String moduleName = absolutePath.substring(y + 1, x);
 
-		if (!moduleName.endsWith("-test")) {
-			return false;
+		for (String directoryNameEnding : directoryNameEndings) {
+			if (moduleName.endsWith(directoryNameEnding)) {
+				return true;
+			}
 		}
 
-		return true;
-	}
-
-	private boolean _isTestUtilModule(String absolutePath) {
-		int x = absolutePath.lastIndexOf(StringPool.SLASH);
-
-		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
-
-		String moduleName = absolutePath.substring(y + 1, x);
-
-		if (!moduleName.endsWith("-test-util")) {
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	private String _renameDependencyNames(String absolutePath, String content) {

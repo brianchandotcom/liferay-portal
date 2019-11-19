@@ -96,7 +96,10 @@ const Carousel = ({
 				<Arrow direction="left" handleClick={handleClickPrevious} />
 			)}
 
-			<img alt={currentItem.title} src={currentItem.url || currentItem.base64} />
+			<img
+				alt={currentItem.title}
+				src={currentItem.url || currentItem.base64}
+			/>
 
 			{showArrows && (
 				<Arrow direction="right" handleClick={handleClickNext} />

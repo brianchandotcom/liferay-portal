@@ -102,7 +102,7 @@ public class AccountRoleLocalServiceTest {
 
 		AccountRole accountRole = accountRoles.get(0);
 
-		Assert.assertEquals("lfr-account-" + name, accountRole.getRoleName());
+		Assert.assertEquals(name, accountRole.getRoleName());
 	}
 
 	@Test

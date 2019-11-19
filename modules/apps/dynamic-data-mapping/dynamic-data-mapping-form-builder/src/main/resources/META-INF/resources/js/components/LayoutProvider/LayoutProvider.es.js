@@ -138,7 +138,7 @@ class LayoutProvider extends Component {
 		return settingsVisitor.mapFields(field => {
 			let value = field.value;
 
-			if (field.localizable) {
+			if (field.localizable && field.localizedValue) {
 				let localizedValue = field.localizedValue[editingLanguageId];
 
 				if (localizedValue === undefined) {
@@ -163,7 +163,7 @@ class LayoutProvider extends Component {
 				defaultLanguageId,
 				editingLanguageId,
 				localizedValue: {
-					...field.localizedValue,
+					...(field.localizedValue || {}),
 					[editingLanguageId]: value
 				},
 				value

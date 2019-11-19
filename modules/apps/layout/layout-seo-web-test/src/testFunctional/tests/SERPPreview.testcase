@@ -118,9 +118,9 @@ definition {
 			truncatedURL = "true");
 	}
 
-	@description = "This test ensures that a SERP preview is refreshed when switching translations. "
+	@description = "This test ensures that a SERP preview is refreshed when switching translations."
 	@priority = "4"
-	test viewPreviewWhenSwitchingTranslations {
+	test ViewPreviewWhenSwitchingTranslations {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

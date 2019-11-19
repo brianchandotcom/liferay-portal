@@ -88,6 +88,14 @@ definition {
 		Click(locator1 = "AppBuilder#SAVE_BUTTON");
 	}
 
+	macro selectForm {
+		Click(
+			key_ItemName = "${formName}",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+
+		Button.clickNext();
+	}
+
 	macro setName {
 		Type(
 			locator1 = "FormViewBuilder#FORM_VIEW_NAME",

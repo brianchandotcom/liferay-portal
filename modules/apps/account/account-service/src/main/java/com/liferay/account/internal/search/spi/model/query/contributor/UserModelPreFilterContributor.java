@@ -14,9 +14,11 @@
 
 package com.liferay.account.internal.search.spi.model.query.contributor;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
@@ -44,13 +46,25 @@ public class UserModelPreFilterContributor
 			"accountEntryIds");
 
 		if (ArrayUtil.isNotEmpty(accountEntryIds)) {
-			TermsFilter accountEntryTermsFilter = new TermsFilter(
-				"accountEntryIds");
+			if ((accountEntryIds.length == 1) &&
+				(accountEntryIds[0] == AccountConstants.ACCOUNT_ENTRY_ID_ANY)) {
 
-			accountEntryTermsFilter.addValues(
-				ArrayUtil.toStringArray(accountEntryIds));
+				ExistsFilter accountEntryIdsExistsFilter = new ExistsFilter(
+					"accountEntryIds");
 
-			booleanFilter.add(accountEntryTermsFilter, BooleanClauseOccur.MUST);
+				booleanFilter.add(
+					accountEntryIdsExistsFilter, BooleanClauseOccur.MUST);
+			}
+			else {
+				TermsFilter accountEntryTermsFilter = new TermsFilter(
+					"accountEntryIds");
+
+				accountEntryTermsFilter.addValues(
+					ArrayUtil.toStringArray(accountEntryIds));
+
+				booleanFilter.add(
+					accountEntryTermsFilter, BooleanClauseOccur.MUST);
+			}
 		}
 
 		String[] emailAddressDomains = (String[])searchContext.getAttribute(

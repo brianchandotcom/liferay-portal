@@ -73,12 +73,30 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private boolean _containsModuleFile(String absolutePath, String fileName) {
+		int x = absolutePath.length();
+
+		while (true) {
+			x = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
+
+			if (x == -1) {
+				return false;
+			}
+
+			File file = new File(absolutePath.substring(0, x + 1) + fileName);
+
+			if (file.exists()) {
+				return true;
+			}
+		}
+	}
+
 	private String _enforceDependencyVersions(
 		String absolutePath, String content,
 		List<String> enforceVersionArtifacts) {
 
-		boolean relengSkipUpdateFileVersionsFile =
-			_isRelengSkipUpdateFileVersionsFile(absolutePath);
+		boolean relengSkipUpdateFileVersionsFile = _containsModuleFile(
+			absolutePath, ".lfrbuild-releng-skip-update-file-versions");
 		boolean testModule = _isTestModule(absolutePath, "-test", "-test-util");
 
 		for (String artifact : enforceVersionArtifacts) {
@@ -177,7 +195,8 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 			}
 			else if (name.startsWith("com.liferay") &&
 					 !name.startsWith("com.liferay.gradle") &&
-					 !_isMasterOnlyFile(absolutePath)) {
+					 !_containsModuleFile(
+						 absolutePath, ".lfrbuild-master-only")) {
 
 				for (String enforceVersionArtifact : enforceVersionArtifacts) {
 					if (enforceVersionArtifact.startsWith(
@@ -204,7 +223,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 			}
 		}
 		else if (!version.equals("default") &&
-				 !_isMasterOnlyFile(absolutePath)) {
+				 !_containsModuleFile(absolutePath, ".lfrbuild-master-only")) {
 
 			for (String enforceVersionArtifact : enforceVersionArtifacts) {
 				if (enforceVersionArtifact.startsWith(
@@ -265,45 +284,6 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		}
 
 		return _projectNamesMap;
-	}
-
-	private boolean _isMasterOnlyFile(String absolutePath) {
-		int x = absolutePath.length();
-
-		while (true) {
-			x = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
-
-			if (x == -1) {
-				return false;
-			}
-
-			File file = new File(
-				absolutePath.substring(0, x + 1) + ".lfrbuild-master-only");
-
-			if (file.exists()) {
-				return true;
-			}
-		}
-	}
-
-	private boolean _isRelengSkipUpdateFileVersionsFile(String absolutePath) {
-		int x = absolutePath.length();
-
-		while (true) {
-			x = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
-
-			if (x == -1) {
-				return false;
-			}
-
-			File file = new File(
-				absolutePath.substring(0, x + 1) +
-					".lfrbuild-releng-skip-update-file-versions");
-
-			if (file.exists()) {
-				return true;
-			}
-		}
 	}
 
 	private boolean _isTestModule(

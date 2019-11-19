@@ -74,17 +74,17 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 					liferayPortletResponse.createActionURL();
 
 				deactivateAccountUsersURL.setParameter(
-					"accountEntriesNavigation", _getAccountEntriesNavigation());
-				deactivateAccountUsersURL.setParameter(
-					"accountEntryIds",
-					ParamUtil.getString(request, "accountEntryIds"));
-				deactivateAccountUsersURL.setParameter(
 					ActionRequest.ACTION_NAME,
 					"/account_admin/edit_account_users");
 				deactivateAccountUsersURL.setParameter(
 					Constants.CMD, Constants.DEACTIVATE);
 				deactivateAccountUsersURL.setParameter(
 					"navigation", getNavigation());
+				deactivateAccountUsersURL.setParameter(
+					"accountEntriesNavigation", _getAccountEntriesNavigation());
+				deactivateAccountUsersURL.setParameter(
+					"accountEntryIds",
+					ParamUtil.getString(request, "accountEntryIds"));
 
 				dropdownItem.putData(
 					"deactivateAccountUsersURL",
@@ -109,17 +109,17 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 					liferayPortletResponse.createActionURL();
 
 				activateAccountUsersURL.setParameter(
-					"accountEntriesNavigation", _getAccountEntriesNavigation());
-				activateAccountUsersURL.setParameter(
-					"accountEntryIds",
-					ParamUtil.getString(request, "accountEntryIds"));
-				activateAccountUsersURL.setParameter(
 					ActionRequest.ACTION_NAME,
 					"/account_admin/edit_account_users");
 				activateAccountUsersURL.setParameter(
 					Constants.CMD, Constants.RESTORE);
 				activateAccountUsersURL.setParameter(
 					"navigation", getNavigation());
+				activateAccountUsersURL.setParameter(
+					"accountEntriesNavigation", _getAccountEntriesNavigation());
+				activateAccountUsersURL.setParameter(
+					"accountEntryIds",
+					ParamUtil.getString(request, "accountEntryIds"));
 
 				dropdownItem.putData(
 					"activateAccountUsersURL",
@@ -144,17 +144,17 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 					liferayPortletResponse.createActionURL();
 
 				deleteAccountUsersURL.setParameter(
-					"accountEntriesNavigation", _getAccountEntriesNavigation());
-				deleteAccountUsersURL.setParameter(
-					"accountEntryIds",
-					ParamUtil.getString(request, "accountEntryIds"));
-				deleteAccountUsersURL.setParameter(
 					ActionRequest.ACTION_NAME,
 					"/account_admin/edit_account_users");
 				deleteAccountUsersURL.setParameter(
 					Constants.CMD, Constants.DELETE);
 				deleteAccountUsersURL.setParameter(
 					"navigation", getNavigation());
+				deleteAccountUsersURL.setParameter(
+					"accountEntriesNavigation", _getAccountEntriesNavigation());
+				deleteAccountUsersURL.setParameter(
+					"accountEntryIds",
+					ParamUtil.getString(request, "accountEntryIds"));
 
 				dropdownItem.putData(
 					"deleteAccountUsersURL", deleteAccountUsersURL.toString());

@@ -13,6 +13,7 @@
  */
 
 import {ClayInput} from '@clayui/form';
+import classNames from 'classnames';
 import React from 'react';
 
 import Button from '../button/Button.es';
@@ -60,9 +61,13 @@ const UpperToolbarInput = ({
 	);
 };
 
-const UpperToolbarItem = ({children, expand}) => {
+const UpperToolbarItem = ({children, className, expand}) => {
 	return (
-		<li className={`tbar-item ${expand ? 'tbar-item-expand' : ''}`}>
+		<li
+			className={classNames(className, 'tbar-item', {
+				'tbar-item-expand': expand
+			})}
+		>
 			<div className="tbar-section">{children}</div>
 		</li>
 	);

@@ -1019,7 +1019,7 @@ xpack.monitoring.collection.enabled: true</echo>
 			<then>
 				<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
-					<arg value="./kibana &gt; kibana.log 2&gt;&amp;1 &amp;" />
+					<arg value="./kibana --allow-root &gt; kibana.log 2&gt;&amp;1 &amp;" />
 				</exec>
 			</then>
 			<elseif>

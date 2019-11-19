@@ -86,6 +86,14 @@ public interface SearchRequestBuilder {
 
 	public SearchRequestBuilder federatedSearchKey(String federatedSearchKey);
 
+	public SearchRequestBuilder fetchSource(boolean fetchSource);
+
+	public SearchRequestBuilder fetchSourceExcludes(
+		String[] fetchSourceExcludes);
+
+	public SearchRequestBuilder fetchSourceIncludes(
+		String[] fetchSourceIncludes);
+
 	public SearchRequestBuilder fields(String... fields);
 
 	public SearchRequestBuilder from(Integer from);

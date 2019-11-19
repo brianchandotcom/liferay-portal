@@ -49,6 +49,12 @@ public interface SearchRequest {
 
 	public List<SearchRequest> getFederatedSearchRequests();
 
+	public Boolean getFetchSource();
+
+	public String[] getFetchSourceExcludes();
+
+	public String[] getFetchSourceIncludes();
+
 	public Integer getFrom();
 
 	/**

@@ -149,16 +149,17 @@ exports[`Should component receive props 1`] = `
                     loading={true}
                   >
                     <div>
-                      <div
-                        className="border-0 pb-6 pt-6 sheet"
-                      >
-                        <LoadingState>
+                      <LoadingState>
+                        <div
+                          className="border-1 pb-6 pt-6 sheet"
+                          data-testid="loadingState"
+                        >
                           <span
                             aria-hidden="true"
                             className="loading-animation"
                           />
-                        </LoadingState>
-                      </div>
+                        </div>
+                      </LoadingState>
                     </div>
                   </ListView>
                 </div>
@@ -317,16 +318,17 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     loading={true}
                   >
                     <div>
-                      <div
-                        className="border-0 pb-6 pt-6 sheet"
-                      >
-                        <LoadingState>
+                      <LoadingState>
+                        <div
+                          className="border-1 pb-6 pt-6 sheet"
+                          data-testid="loadingState"
+                        >
                           <span
                             aria-hidden="true"
                             className="loading-animation"
                           />
-                        </LoadingState>
-                      </div>
+                        </div>
+                      </LoadingState>
                     </div>
                   </ListView>
                 </div>
@@ -489,16 +491,17 @@ exports[`Should render component 1`] = `
                     loading={true}
                   >
                     <div>
-                      <div
-                        className="border-0 pb-6 pt-6 sheet"
-                      >
-                        <LoadingState>
+                      <LoadingState>
+                        <div
+                          className="border-1 pb-6 pt-6 sheet"
+                          data-testid="loadingState"
+                        >
                           <span
                             aria-hidden="true"
                             className="loading-animation"
                           />
-                        </LoadingState>
-                      </div>
+                        </div>
+                      </LoadingState>
                     </div>
                   </ListView>
                 </div>
@@ -561,7 +564,8 @@ exports[`Should render component with empty data 1`] = `
     >
       <div>
         <div
-          className="border-0 pb-6 pt-6 sheet"
+          className="border-1 pb-6 pt-6 sheet"
+          data-testid="loadingState"
         >
           <span
             aria-hidden="true"
@@ -623,7 +627,8 @@ exports[`Should render component with error state 1`] = `
     >
       <div>
         <div
-          className="border-0 pb-6 pt-6 sheet"
+          className="border-1 pb-6 pt-6 sheet"
+          data-testid="loadingState"
         >
           <span
             aria-hidden="true"

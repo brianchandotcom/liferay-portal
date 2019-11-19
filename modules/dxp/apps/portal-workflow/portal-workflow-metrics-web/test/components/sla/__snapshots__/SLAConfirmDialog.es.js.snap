@@ -396,16 +396,17 @@ exports[`Should cancel dialog through SLA List 1`] = `
             loading={true}
           >
             <div>
-              <div
-                className="border-1 pb-6 pt-6 sheet"
-              >
-                <LoadingState>
+              <LoadingState>
+                <div
+                  className="border-1 pb-6 pt-6 sheet"
+                  data-testid="loadingState"
+                >
                   <span
                     aria-hidden="true"
                     className="loading-animation"
                   />
-                </LoadingState>
-              </div>
+                </div>
+              </LoadingState>
             </div>
           </ListView>
         </div>
@@ -682,16 +683,17 @@ exports[`Should cancel dialog through SLA List 2`] = `
             loading={true}
           >
             <div>
-              <div
-                className="border-1 pb-6 pt-6 sheet"
-              >
-                <LoadingState>
+              <LoadingState>
+                <div
+                  className="border-1 pb-6 pt-6 sheet"
+                  data-testid="loadingState"
+                >
                   <span
                     aria-hidden="true"
                     className="loading-animation"
                   />
-                </LoadingState>
-              </div>
+                </div>
+              </LoadingState>
             </div>
           </ListView>
         </div>

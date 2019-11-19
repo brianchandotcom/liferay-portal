@@ -1,8 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should test component render 1`] = `
-<span
-  aria-hidden="true"
-  className="loading-animation"
-/>
+<div
+  className="border-1 pb-6 pt-6 sheet"
+  data-testid="loadingState"
+>
+  <span
+    aria-hidden="true"
+    className="loading-animation"
+  />
+</div>
 `;

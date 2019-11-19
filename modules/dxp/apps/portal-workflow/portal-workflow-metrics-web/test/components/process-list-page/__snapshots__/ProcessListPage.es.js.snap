@@ -62,7 +62,7 @@ Array [
   >
     <div
       className="border-1 pb-6 pt-6 sheet"
-      data-testid="loadingView"
+      data-testid="loadingState"
     >
       <span
         aria-hidden="true"
@@ -135,7 +135,7 @@ Array [
   >
     <div
       className="border-1 pb-6 pt-6 sheet"
-      data-testid="loadingView"
+      data-testid="loadingState"
     >
       <span
         aria-hidden="true"
@@ -208,7 +208,7 @@ Array [
   >
     <div
       className="border-1 pb-6 pt-6 sheet"
-      data-testid="loadingView"
+      data-testid="loadingState"
     >
       <span
         aria-hidden="true"

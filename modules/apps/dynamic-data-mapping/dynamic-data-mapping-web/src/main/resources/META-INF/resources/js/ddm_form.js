@@ -4125,14 +4125,12 @@ AUI.add(
 						'localizationMap'
 					);
 
-					var totalLocalizations;
+					var totalLocalizations = {};
 
 					if (originalField) {
 						totalLocalizations = originalField.get(
 							'localizationMap'
 						);
-					} else {
-						totalLocalizations = {};
 					}
 
 					var currentLocale = repeatedField.get('displayLocale');
@@ -4165,12 +4163,11 @@ AUI.add(
 					repeatedField.set('localizationMap', newFieldLocalizations);
 
 					var newNestedFields = repeatedField.get('fields');
-					var originalNestedFields;
+
+					var originalNestedFields = [];
 
 					if (originalField) {
 						originalNestedFields = originalField.get('fields');
-					} else {
-						originalNestedFields = [];
 					}
 
 					for (var i = 0; i < newNestedFields.length; i++) {

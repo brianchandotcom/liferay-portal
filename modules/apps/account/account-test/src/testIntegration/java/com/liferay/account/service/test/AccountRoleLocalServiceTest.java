@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.account.role.test;
+package com.liferay.account.service.test;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.account.role.AccountRole;
-import com.liferay.account.role.AccountRoleManager;
+import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.account.service.test.AccountEntryTestUtil;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -56,7 +55,7 @@ import org.junit.runner.RunWith;
  * @author Drew Brokke
  */
 @RunWith(Arquillian.class)
-public class AccountRoleManagerTest {
+public class AccountRoleLocalServiceTest {
 
 	@ClassRule
 	@Rule
@@ -85,9 +84,9 @@ public class AccountRoleManagerTest {
 
 	@Test
 	public void testAddAccountRole() throws Exception {
-		List<AccountRole> accountRoles = _accountRoleManager.getAccountRoles(
-			TestPropsValues.getCompanyId(),
-			new long[] {_accountEntry1.getAccountEntryId()});
+		List<AccountRole> accountRoles =
+			_accountRoleLocalService.getAccountRolesByAccountEntryIds(
+				new long[] {_accountEntry1.getAccountEntryId()});
 
 		Assert.assertEquals(accountRoles.toString(), 0, accountRoles.size());
 
@@ -95,15 +94,15 @@ public class AccountRoleManagerTest {
 
 		_addAccountRole(_accountEntry1.getAccountEntryId(), name);
 
-		accountRoles = _accountRoleManager.getAccountRoles(
-			TestPropsValues.getCompanyId(),
-			new long[] {_accountEntry1.getAccountEntryId()});
+		accountRoles =
+			_accountRoleLocalService.getAccountRolesByAccountEntryIds(
+				new long[] {_accountEntry1.getAccountEntryId()});
 
 		Assert.assertEquals(accountRoles.toString(), 1, accountRoles.size());
 
 		AccountRole accountRole = accountRoles.get(0);
 
-		Assert.assertEquals("lfr-account-" + name, accountRole.getName());
+		Assert.assertEquals("lfr-account-" + name, accountRole.getRoleName());
 	}
 
 	@Test
@@ -126,7 +125,7 @@ public class AccountRoleManagerTest {
 				_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
 				user.getUserId()));
 
-		_accountRoleManager.associateUser(
+		_accountRoleLocalService.associateUser(
 			_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
 			user.getUserId());
 
@@ -135,7 +134,7 @@ public class AccountRoleManagerTest {
 				_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
 				user.getUserId()));
 
-		_accountRoleManager.unassociateUser(
+		_accountRoleLocalService.unassociateUser(
 			_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
 			user.getUserId());
 
@@ -157,10 +156,10 @@ public class AccountRoleManagerTest {
 		Assert.assertFalse(
 			ArrayUtil.contains(roleIds, defaultAccountRole.getRoleId()));
 
-		_accountRoleManager.associateUser(
+		_accountRoleLocalService.associateUser(
 			_accountEntry1.getAccountEntryId(), accountRole.getRoleId(),
 			user.getUserId());
-		_accountRoleManager.associateUser(
+		_accountRoleLocalService.associateUser(
 			_accountEntry1.getAccountEntryId(), defaultAccountRole.getRoleId(),
 			user.getUserId());
 
@@ -205,9 +204,9 @@ public class AccountRoleManagerTest {
 
 	@Test
 	public void testGetAccountRoles() throws Exception {
-		List<AccountRole> accountRoles = _accountRoleManager.getAccountRoles(
-			TestPropsValues.getCompanyId(),
-			new long[] {_accountEntry1.getAccountEntryId()});
+		List<AccountRole> accountRoles =
+			_accountRoleLocalService.getAccountRolesByAccountEntryIds(
+				new long[] {_accountEntry1.getAccountEntryId()});
 
 		Assert.assertNotNull(accountRoles);
 
@@ -220,9 +219,9 @@ public class AccountRoleManagerTest {
 			_accountEntry2.getAccountEntryId(),
 			RandomTestUtil.randomString(50));
 
-		accountRoles = _accountRoleManager.getAccountRoles(
-			TestPropsValues.getCompanyId(),
-			new long[] {_accountEntry1.getAccountEntryId()});
+		accountRoles =
+			_accountRoleLocalService.getAccountRolesByAccountEntryIds(
+				new long[] {_accountEntry1.getAccountEntryId()});
 
 		Assert.assertNotNull(accountRoles);
 
@@ -247,8 +246,7 @@ public class AccountRoleManagerTest {
 			RandomTestUtil.randomString(50));
 
 		List<AccountRole> actualAccountRoles =
-			_accountRoleManager.getAccountRoles(
-				TestPropsValues.getCompanyId(),
+			_accountRoleLocalService.getAccountRolesByAccountEntryIds(
 				new long[] {
 					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 					_accountEntry1.getAccountEntryId()
@@ -273,10 +271,10 @@ public class AccountRoleManagerTest {
 	private AccountRole _addAccountRole(long accountEntryId, String name)
 		throws Exception {
 
-		AccountRole accountRole = _accountRoleManager.addAccountRole(
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), accountEntryId, name, null, null);
 
-		_names.add(accountRole.getName());
+		_names.add(accountRole.getRoleName());
 
 		return accountRole;
 	}
@@ -308,7 +306,8 @@ public class AccountRoleManagerTest {
 		throws Exception {
 
 		long[] accountRoleIds = ListUtil.toLongArray(
-			_accountRoleManager.getAccountRoles(accountEntryId, accountUserId),
+			_accountRoleLocalService.getAccountRoles(
+				accountEntryId, accountUserId),
 			AccountRole::getRoleId);
 
 		return ArrayUtil.contains(accountRoleIds, roleId);
@@ -331,7 +330,7 @@ public class AccountRoleManagerTest {
 		new ArrayList<>();
 
 	@Inject
-	private AccountRoleManager _accountRoleManager;
+	private AccountRoleLocalService _accountRoleLocalService;
 
 	private final List<String> _names = new ArrayList<>();
 

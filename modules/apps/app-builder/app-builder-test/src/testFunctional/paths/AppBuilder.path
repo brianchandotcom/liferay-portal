@@ -45,6 +45,11 @@
 	<td>//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox']/../span</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VERTICAL_ELLIPSIS_BUTTON</td>
+	<td>//tr[contains(@data-testid,'item')][descendant::a[contains(.,'${key_customObjectName}')]]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
 
 <!--CUSTOM_OBJECTS_LISTING_SCREEN_MODAL_ITEMS-->
 <tr>

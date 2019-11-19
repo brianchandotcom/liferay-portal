@@ -26,6 +26,48 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a depot can be accessed in the list view."
+	@priority = "5"
+	test AccessInListView {
+		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			listView = "true",
+			portlet = "Documents and Media");
+	}
+
+	@description = "This ensures that a depot can be accessed in the table view."
+	@priority = "5"
+	test AccessInTableView {
+		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media",
+			tableView = "true");
+	}
+
 	@description = "This ensures that a depot can be deleted."
 	@priority = "5"
 	test DeleteDepot {
@@ -90,6 +132,46 @@ definition {
 		Depot.viewDefaultCP();
 	}
 
+	@description = "This ensures that a depot can be deleted in the list view."
+	@priority = "5"
+	test DeleteInListView {
+		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Depot.deleteCP(depotName = "Test Depot Name");
+
+		Depot.viewDefaultCP();
+	}
+
+	@description = "This ensures that a depot can be deleted in the table view."
+	@priority = "5"
+	test DeleteInTableView {
+		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		Depot.deleteCP(depotName = "Test Depot Name");
+
+		Depot.viewDefaultCP();
+	}
+
 	@description = "This ensures that a depot can be edited."
 	@priority = "5"
 	test EditDepot {
@@ -111,6 +193,64 @@ definition {
 		DepotNavigator.gotoDepot(
 			depotName = "Edited Test Depot Name",
 			portlet = "Documents and Media");
+	}
+
+	@description = "This ensures that a depot can be edited in the list view."
+	@priority = "5"
+	test EditInListView {
+		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.editDepot(
+			depotDescriptionEdit = "This is an edited description of a depot",
+			depotName = "Test Depot Name",
+			depotNameEdit = "Edited Test Depot Name",
+			listView = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DepotNavigator.gotoDepot(
+			depotName = "Edited Test Depot Name",
+			listView = "true",
+			portlet = "Documents and Media");
+	}
+
+	@description = "This ensures that a depot can be edited in the table view."
+	@priority = "5"
+	test EditInTableView {
+		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.editDepot(
+			depotDescriptionEdit = "This is an edited description of a depot",
+			depotName = "Test Depot Name",
+			depotNameEdit = "Edited Test Depot Name",
+			tableView = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		DepotNavigator.gotoDepot(
+			depotName = "Edited Test Depot Name",
+			portlet = "Documents and Media",
+			tableView = "true");
 	}
 
 	@description = "This ensures that a depot's description can be searched."

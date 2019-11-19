@@ -257,7 +257,7 @@ definition {
 			fieldType = "Text Field",
 			tableViewName = "My Table View");
 
-		AppBuilderAdmin.addApp(
+		App.add(
 			appTitle = "Test App",
 			deployOption = "Product Menu",
 			formViewName = "My Form View",

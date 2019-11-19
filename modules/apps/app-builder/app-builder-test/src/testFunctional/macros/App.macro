@@ -1,0 +1,37 @@
+definition {
+
+	macro add {
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.add();
+
+		App.selectFormView(formViewName = "${formViewName}");
+
+		App.selectTableView(tableViewName = "${tableViewName}");
+
+		AppBuilderAdmin.setName(title = "${appTitle}");
+
+		Check.checkToggleSwitch(
+			key_deployOption = "${deployOption}",
+			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
+
+		Button.click(button = "Deploy");
+	}
+
+	macro selectFormView {
+		Click(
+			key_ItemName = "${formViewName}",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+
+		Button.clickNext();
+	}
+
+	macro selectTableView {
+		Click(
+			key_ItemName = "${tableViewName}",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+
+		Button.clickNext();
+	}
+
+}

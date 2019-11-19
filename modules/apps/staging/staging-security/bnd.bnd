@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Staging Security
-Bundle-SymbolicName: com.liferay.staging.security
-Bundle-Version: 5.0.0
-Import-Package:\
-	com.liferay.portal.kernel.security.permission;version="[3.0.0,4)",\
-	\
-	*

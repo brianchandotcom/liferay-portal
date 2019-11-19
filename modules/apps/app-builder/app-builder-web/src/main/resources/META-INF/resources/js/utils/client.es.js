@@ -55,8 +55,8 @@ export const request = (endpoint, method = 'GET') =>
 		method
 	});
 
-export const getItem = endpoint => {
-	return fetch(getURL(endpoint), {
+export const getItem = (endpoint, params) => {
+	return fetch(getURL(endpoint, params), {
 		headers: HEADERS,
 		method: 'GET'
 	}).then(response => response.json());

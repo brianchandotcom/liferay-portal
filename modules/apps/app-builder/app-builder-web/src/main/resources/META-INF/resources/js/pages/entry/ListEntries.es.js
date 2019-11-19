@@ -13,15 +13,16 @@
  */
 
 import React, {useContext, useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
 import {Loading} from '../../components/loading/Loading.es';
+import {toQuery, toQueryString} from '../../hooks/useQuery.es';
 import {confirmDelete, getItem} from '../../utils/client.es';
 
-const ListEntries = () => {
+const ListEntries = withRouter(({location}) => {
 	const [state, setState] = useState({
 		dataDefinitionId: null,
 		dataLayoutId: null,
@@ -115,14 +116,27 @@ const ListEntries = () => {
 				}}
 				endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-records`}
 			>
-				{item => {
+				{(item, index) => {
 					const {dataRecordValues = {}, id} = item;
 					const firstColumn = columns[0] || '';
 					const firstDataRecordValue = dataRecordValues[firstColumn];
+					const query = toQuery(location.search, {
+						keywords: '',
+						page: 1,
+						pageSize: 20,
+						sort: ''
+					});
+
+					const entryIndex =
+						query.pageSize * (query.page - 1) + index + 1;
 
 					if (firstDataRecordValue) {
 						dataRecordValues[firstColumn] = (
-							<Link to={`/entries/${id}`}>
+							<Link
+								to={`/entries/${entryIndex}?${toQueryString(
+									query
+								)}`}
+							>
 								{firstDataRecordValue}
 							</Link>
 						);
@@ -137,6 +151,6 @@ const ListEntries = () => {
 			</ListView>
 		</Loading>
 	);
-};
+});
 
 export default ListEntries;

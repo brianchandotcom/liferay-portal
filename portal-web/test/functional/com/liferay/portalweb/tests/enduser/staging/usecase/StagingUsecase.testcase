@@ -291,7 +291,7 @@ definition {
 
 	@description = "This is a use case for LPS-72145."
 	@priority = "4"
-	test AssetDeletedPollsOnLivingSiteWithoutPublishToLive {
+	test AssertDeletedPollsOnLivingSiteWithoutPublishToLive {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
@@ -349,7 +349,7 @@ definition {
 
 	@description = "This is a use case for LPS-95516."
 	@priority = "3"
-	test AssetWebContentNotBeDeletedOnLiveViaSAP {
+	test AssertWebContentNotBeDeletedOnLiveViaSAP {
 		ProductMenu.gotoStagingSite();
 
 		ProductMenu.gotoPortlet(

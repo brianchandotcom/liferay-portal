@@ -23,7 +23,6 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -43,7 +42,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -70,18 +68,6 @@ public class AccountRoleLocalServiceTest {
 			_accountEntryLocalService);
 		_accountEntry3 = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		for (String name : _names) {
-			Role role = _roleLocalService.fetchRole(
-				TestPropsValues.getCompanyId(), name);
-
-			if (role != null) {
-				_roleLocalService.deleteRole(role);
-			}
-		}
 	}
 
 	@Test
@@ -276,7 +262,7 @@ public class AccountRoleLocalServiceTest {
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), accountEntryId, name, null, null);
 
-		_names.add(accountRole.getRoleName());
+		_accountRoles.add(accountRole);
 
 		return accountRole;
 	}
@@ -337,7 +323,8 @@ public class AccountRoleLocalServiceTest {
 	@Inject
 	private AccountRoleLocalService _accountRoleLocalService;
 
-	private final List<String> _names = new ArrayList<>();
+	@DeleteAfterTestRun
+	private final List<AccountRole> _accountRoles = new ArrayList<>();
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

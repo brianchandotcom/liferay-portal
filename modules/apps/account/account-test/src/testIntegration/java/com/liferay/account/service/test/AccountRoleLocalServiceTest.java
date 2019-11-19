@@ -68,6 +68,8 @@ public class AccountRoleLocalServiceTest {
 			_accountEntryLocalService);
 		_accountEntry2 = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
+		_accountEntry3 = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
 	}
 
 	@After
@@ -234,22 +236,22 @@ public class AccountRoleLocalServiceTest {
 
 		accountRoles.add(
 			_addAccountRole(
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				_accountEntry1.getAccountEntryId(),
 				RandomTestUtil.randomString(50)));
 		accountRoles.add(
 			_addAccountRole(
-				_accountEntry1.getAccountEntryId(),
+				_accountEntry2.getAccountEntryId(),
 				RandomTestUtil.randomString(50)));
 
 		_addAccountRole(
-			_accountEntry2.getAccountEntryId(),
+			_accountEntry3.getAccountEntryId(),
 			RandomTestUtil.randomString(50));
 
 		List<AccountRole> actualAccountRoles =
 			_accountRoleLocalService.getAccountRolesByAccountEntryIds(
 				new long[] {
-					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-					_accountEntry1.getAccountEntryId()
+					_accountEntry1.getAccountEntryId(),
+					_accountEntry2.getAccountEntryId()
 				});
 
 		Assert.assertEquals(
@@ -318,6 +320,9 @@ public class AccountRoleLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry2;
+
+	@DeleteAfterTestRun
+	private AccountEntry _accountEntry3;
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;

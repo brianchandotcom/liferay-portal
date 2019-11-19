@@ -7037,10 +7037,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<priority value="${dialect.detector.log.level}" />
 	</category>
 
-	<category name="com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper">
-		<priority value="INFO" />
-	</category>
-
 	<root>
 		<priority value="INFO" />
 		<appender-ref ref="CONSOLE" />

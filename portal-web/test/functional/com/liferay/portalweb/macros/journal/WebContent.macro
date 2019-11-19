@@ -417,6 +417,20 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro addWithPriorityCP {
+		WebContent.addCP(
+			webContentContent = "${webContentContent}",
+			webContentTitle = "${webContentTitle}");
+
+		Panel.expandPanel(panel = "Metadata");
+
+		Type(
+			locator1 = "TextInput#ASSET_PRIORITY",
+			value1 = "${assetPriority}");
+
+		PortletEntry.publish();
+	}
+
 	macro addWithStructureAndWorkflowCP {
 		WebContent.addCP(webContentTitle = "${webContentTitle}");
 

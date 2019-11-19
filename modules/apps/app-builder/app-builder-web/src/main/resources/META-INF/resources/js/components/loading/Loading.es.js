@@ -20,7 +20,11 @@ export const withLoading = Component => {
 		const {isLoading, ...restProps} = props;
 
 		if (isLoading) {
-			return <ClayLoadingIndicator />;
+			return (
+				<div className="align-items-center d-flex loading-wrapper">
+					<ClayLoadingIndicator />
+				</div>
+			);
 		}
 
 		return <Component {...restProps} />;

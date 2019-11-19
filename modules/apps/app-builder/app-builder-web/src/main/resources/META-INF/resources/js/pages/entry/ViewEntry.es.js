@@ -115,33 +115,37 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 	const onNext = () => {
 		const nextIndex = Math.min(parseInt(entryIndex, 10) + 1, total);
 
+		setLoading(true);
+
 		history.push(`/entries/${nextIndex}?${toQueryString(query)}`);
 	};
 
 	const onPrev = () => {
 		const prevIndex = Math.max(parseInt(entryIndex, 10) - 1, 1);
 
+		setLoading(true);
+
 		history.push(`/entries/${prevIndex}?${toQueryString(query)}`);
 	};
 
 	return (
-		<>
+		<div className="view-entry">
 			<ControlMenu
 				backURL="../../"
 				title={Liferay.Language.get('details-view')}
 			/>
 
-			<Loading isLoading={isLoading}>
-				<ViewEntryUpperToolbar
-					onCancel={onCancel}
-					onEdit={onEdit}
-					onNext={onNext}
-					onPrev={onPrev}
-					page={page}
-					total={total}
-				/>
+			<ViewEntryUpperToolbar
+				onCancel={onCancel}
+				onEdit={onEdit}
+				onNext={onNext}
+				onPrev={onPrev}
+				page={page}
+				total={total}
+			/>
 
-				<div className="container view-entry">
+			<Loading isLoading={isLoading}>
+				<div className="container">
 					<div className="justify-content-center row">
 						<div className="col-lg-8">
 							{dataLayoutPages &&
@@ -159,6 +163,6 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 					</div>
 				</div>
 			</Loading>
-		</>
+		</div>
 	);
 });

@@ -37,10 +37,11 @@ class ItemSelectorPreview extends Component {
 		headerTitle: PropTypes.string.isRequired,
 		items: PropTypes.arrayOf(
 			PropTypes.shape({
+				base64: PropTypes.string,
 				metadata: PropTypes.object,
 				returntype: PropTypes.string.isRequired,
 				title: PropTypes.string.isRequired,
-				url: PropTypes.string.isRequired,
+				url: PropTypes.string,
 				value: PropTypes.oneOfType([
 					PropTypes.string,
 					PropTypes.object
@@ -251,6 +252,7 @@ class ItemSelectorPreview extends Component {
 		return (
 			<div className="fullscreen item-selector-preview">
 				<Header
+					disabledAddButton={!currentItem.url}
 					handleClickClose={this.handleClickClose}
 					handleClickDone={this.handleClickDone}
 					handleClickEdit={this.handleClickEdit}

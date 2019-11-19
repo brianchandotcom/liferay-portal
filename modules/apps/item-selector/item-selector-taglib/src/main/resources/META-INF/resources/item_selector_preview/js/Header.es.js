@@ -18,8 +18,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const Header = ({
+	disabledAddButton = false,
+	handleClickAdd,
 	handleClickClose,
-	handleClickDone,
 	handleClickEdit,
 	headerTitle,
 	infoButtonRef,
@@ -78,8 +79,9 @@ const Header = ({
 						)}
 						<li className="nav-item">
 							<ClayButton
+								disabled={disabledAddButton}
 								displayType="primary"
-								onClick={handleClickDone}
+								onClick={handleClickAdd}
 							>
 								{Liferay.Language.get('add')}
 							</ClayButton>
@@ -92,9 +94,13 @@ const Header = ({
 );
 
 Header.propTypes = {
+	disabledAddButton: PropTypes.bool,
+	handleClickAdd: PropTypes.func.isRequired,
 	handleClickClose: PropTypes.func.isRequired,
-	handleClickDone: PropTypes.func.isRequired,
-	headerTitle: PropTypes.string.isRequired
+	handleClickEdit: PropTypes.func,
+	headerTitle: PropTypes.string.isRequired,
+	showEditIcon: PropTypes.bool,
+	showInfoIcon: PropTypes.bool
 };
 
 export default Header;

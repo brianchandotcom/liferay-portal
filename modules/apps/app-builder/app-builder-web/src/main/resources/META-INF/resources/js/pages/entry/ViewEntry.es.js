@@ -16,6 +16,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import {Loading} from '../../components/loading/Loading.es';
 import useQuery, {toQueryString} from '../../hooks/useQuery.es';
 import {getItem} from '../../utils/client.es';
@@ -124,33 +125,40 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 	};
 
 	return (
-		<Loading isLoading={isLoading}>
-			<ViewEntryUpperToolbar
-				onCancel={onCancel}
-				onEdit={onEdit}
-				onNext={onNext}
-				onPrev={onPrev}
-				page={page}
-				total={total}
+		<>
+			<ControlMenu
+				backURL="../../"
+				title={Liferay.Language.get('details-view')}
 			/>
 
-			<div className="container view-entry">
-				<div className="justify-content-center row">
-					<div className="col-lg-8">
-						{dataLayoutPages &&
-							dataLayoutPages.map((dataLayoutPage, index) => (
-								<div className="sheet" key={index}>
-									<ViewDataLayoutPageValues
-										dataDefinition={dataDefinition}
-										dataLayoutPage={dataLayoutPage}
-										dataRecordValues={dataRecordValues}
-										key={index}
-									/>
-								</div>
-							))}
+			<Loading isLoading={isLoading}>
+				<ViewEntryUpperToolbar
+					onCancel={onCancel}
+					onEdit={onEdit}
+					onNext={onNext}
+					onPrev={onPrev}
+					page={page}
+					total={total}
+				/>
+
+				<div className="container view-entry">
+					<div className="justify-content-center row">
+						<div className="col-lg-8">
+							{dataLayoutPages &&
+								dataLayoutPages.map((dataLayoutPage, index) => (
+									<div className="sheet" key={index}>
+										<ViewDataLayoutPageValues
+											dataDefinition={dataDefinition}
+											dataLayoutPage={dataLayoutPage}
+											dataRecordValues={dataRecordValues}
+											key={index}
+										/>
+									</div>
+								))}
+						</div>
 					</div>
 				</div>
-			</div>
-		</Loading>
+			</Loading>
+		</>
 	);
 });

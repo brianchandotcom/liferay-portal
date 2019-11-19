@@ -594,14 +594,12 @@ public class LibraryReferenceTest {
 			return numericVersion;
 		}
 
-		for (String normalizedVersionSuffix : _normalizedVersionSuffixes) {
-			if (suffix.regionMatches(
-					true, 0, normalizedVersionSuffix, 0,
-					normalizedVersionSuffix.length())) {
+		String upperCaseSuffix = StringUtil.toUpperCase(suffix);
 
+		for (String normalizedVersionSuffix : _normalizedVersionSuffixes) {
+			if (upperCaseSuffix.startsWith(normalizedVersionSuffix)) {
 				return StringBundler.concat(
-					numericVersion, StringPool.SPACE, normalizedVersionSuffix,
-					suffix.substring(normalizedVersionSuffix.length()));
+					numericVersion, StringPool.SPACE, upperCaseSuffix);
 			}
 		}
 

@@ -74,10 +74,6 @@ public class Log4jLogImpl implements Log {
 		_logger.log(_logWrapperClassName, Level.FATAL, null, t);
 	}
 
-	public Logger getWrappedLogger() {
-		return _logger;
-	}
-
 	@Override
 	public void info(Object msg) {
 		_logger.log(_logWrapperClassName, Level.INFO, msg, null);

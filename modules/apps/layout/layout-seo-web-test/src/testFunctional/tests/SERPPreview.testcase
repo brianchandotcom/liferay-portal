@@ -118,4 +118,87 @@ definition {
 			truncatedURL = "true");
 	}
 
+	@description = "This test ensures that a SERP preview is refreshed when switching translations. "
+	@priority = "4"
+	test viewPreviewWhenSwitchingTranslations {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		Navigator.gotoEditPageViaControlMenu(pageName = "Test Page");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "Page HTML Title");
+
+		PortletEntry.inputTextArea(
+			fieldId = "GroupPagesPortlet_description",
+			text = "Page Description");
+
+		Page.viewPreview(
+			description = "Page Description",
+			htmlTitle = "Page HTML Title - ${siteName}",
+			pageName = "Test Page",
+			portalURL = "${portalURL}");
+
+		PortletEntry.changeLocale(
+			fieldName = "HTML Title",
+			locale = "zh-CN");
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "中文标题");
+
+		PortletEntry.inputTextArea(
+			fieldId = "GroupPagesPortlet_description",
+			text = "中文描述");
+
+		Page.viewPreview(
+			description = "中文描述",
+			htmlTitle = "中文标题 - ${siteName}",
+			pageName = "Test Page",
+			portalURL = "${portalURL}");
+
+		PortletEntry.changeLocale(
+			fieldName = "HTML Title",
+			locale = "en-US");
+
+		Page.viewPreview(
+			description = "Page Description",
+			htmlTitle = "Page HTML Title - ${siteName}",
+			pageName = "Test Page",
+			portalURL = "${portalURL}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Navigator.gotoEditPageViaControlMenu(pageName = "Test Page");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		Page.viewPreview(
+			description = "Page Description",
+			htmlTitle = "Page HTML Title - ${siteName}",
+			pageName = "Test Page",
+			portalURL = "${portalURL}");
+
+		PortletEntry.changeLocale(
+			fieldName = "HTML Title",
+			locale = "zh-CN");
+
+		Page.viewPreview(
+			description = "中文描述",
+			htmlTitle = "中文标题 - ${siteName}",
+			pageName = "Test Page",
+			portalURL = "${portalURL}");
+	}
+
 }

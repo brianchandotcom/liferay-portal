@@ -25,7 +25,9 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-const toQuery = (string, defaultQuery = {}) => {
+import {useState, useEffect, useRef} from 'react';
+
+export const toQuery = (string, defaultQuery = {}) => {
 	const query = {...defaultQuery};
 	const params = new URLSearchParams(string);
 
@@ -36,7 +38,7 @@ const toQuery = (string, defaultQuery = {}) => {
 	return query;
 };
 
-const toString = (object, queryString = '') => {
+export const toQueryString = (object, queryString = '') => {
 	const params = new URLSearchParams(queryString);
 
 	Object.keys(object).forEach(key => {
@@ -53,9 +55,17 @@ const toString = (object, queryString = '') => {
 export default (history, defaultQuery = {}) => {
 	const {location} = history;
 	const {pathname, search} = location;
+	const defaultQueryRef = useRef(defaultQuery);
+	const [query, setQuery] = useState(
+		toQuery(search, defaultQueryRef.current)
+	);
+
+	useEffect(() => {
+		setQuery(toQuery(search, defaultQueryRef.current));
+	}, [defaultQueryRef, search]);
 
 	return [
-		toQuery(search, defaultQuery),
-		query => history.push(`${pathname}?${toString(query, search)}`)
+		query,
+		query => history.push(`${pathname}?${toQueryString(query, search)}`)
 	];
 };

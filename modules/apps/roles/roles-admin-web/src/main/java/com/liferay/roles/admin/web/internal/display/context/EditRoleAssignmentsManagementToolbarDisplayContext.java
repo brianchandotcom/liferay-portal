@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -92,7 +93,16 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		_role = RoleServiceUtil.fetchRole(roleId);
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
+	public List<DropdownItem> getActionDropdownItems() throws Exception {
+		SearchContainer searchContainer = getSearchContainer();
+
+		if (Objects.equals(getTabs2(), "users") &&
+			Objects.equals(_role.getName(), RoleConstants.ADMINISTRATOR) &&
+			(searchContainer.getTotal() == 1)) {
+
+			return null;
+		}
+
 		return DropdownItemList.of(
 			() -> {
 				DropdownItem dropdownItem = new DropdownItem();
@@ -360,6 +370,10 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public SearchContainer getSearchContainer() throws Exception {
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
 		if (Objects.equals(getTabs2(), "organizations")) {
 			_searchContainer = getOrganizationSearchContainer();
 		}

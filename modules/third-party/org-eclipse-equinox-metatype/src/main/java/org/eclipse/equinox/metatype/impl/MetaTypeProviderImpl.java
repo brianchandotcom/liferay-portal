@@ -149,10 +149,10 @@ public class MetaTypeProviderImpl implements MetaTypeProvider {
 
 		int idx_first = locale.indexOf(LocalizationElement.LOCALE_SEP);
 		int idx_second = locale.lastIndexOf(LocalizationElement.LOCALE_SEP);
-		if (idx_first == -1 && locale.length() == 2)
+		if (idx_first == -1 && (locale.length() == 2 || locale.length() == 3))
 			// It is format of only language.
 			return false;
-		if ((idx_first == 2) && (idx_second == 5 || idx_second == 2))
+		if (((idx_first == 2) && (idx_second == 5 || idx_second == 2)) || ((idx_first == 3) && (idx_second == 6 || idx_second == 3)))
 			// It is format of language + "_" + country [ + "_" + variation ].
 			return false;
 		return true;

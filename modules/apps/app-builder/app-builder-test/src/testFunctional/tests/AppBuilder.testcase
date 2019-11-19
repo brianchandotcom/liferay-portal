@@ -194,8 +194,6 @@ definition {
 
 		TableViewBuilder.setName(tableViewName = "My Table View");
 
-		TableViewBuilder.save();
-
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "My Table View");
 
 		AppBuilderAdmin.openItem(itemName = "My Table View");

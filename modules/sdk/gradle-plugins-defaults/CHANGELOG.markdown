@@ -5477,6 +5477,12 @@ according to Liferay defaults.
 - [LPS-94158]: Update the [Find Security Bugs] dependency to version
  1.9.0.LIFERAY-PATCHED-1.
 
+## 6.1.91 - 1970-01-01
+
+### Changed
+- [LPS-104435]: Update the [Liferay Gradle Plugins] dependency to version
+4.4.84.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -6030,6 +6036,7 @@ according to Liferay defaults.
 [LPS-89415]: https://issues.liferay.com/browse/LPS-89415
 [LPS-89457]: https://issues.liferay.com/browse/LPS-89457
 [LPS-94158]: https://issues.liferay.com/browse/LPS-94158
+[LPS-104435]: https://issues.liferay.com/browse/LPS-104435
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

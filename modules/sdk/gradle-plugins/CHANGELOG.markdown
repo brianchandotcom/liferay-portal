@@ -6484,6 +6484,14 @@ version 1.0.2.
 - [LPS-89415]: Set the [Liferay Portal Tools REST Builder] dependency to version
 1.0.2.
 
+## 4.4.84 - 1970-01-01
+
+### Changed
+- [LPS-104435]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.469.
+- [LPS-104435]: Update the [Liferay Source Formatter] dependency to version
+1.0.941.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6986,4 +6994,5 @@ version 1.0.2.
 [LPS-89388]: https://issues.liferay.com/browse/LPS-89388
 [LPS-89415]: https://issues.liferay.com/browse/LPS-89415
 [LPS-89457]: https://issues.liferay.com/browse/LPS-89457
+[LPS-104435]: https://issues.liferay.com/browse/LPS-104435
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

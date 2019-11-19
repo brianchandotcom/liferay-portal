@@ -6,6 +6,7 @@
 		<suppress checks="ConcatCheck" files="modules/core/petra/petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
 		<suppress checks="EnumConstantOrderCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/ProcessLog\.java" />
 		<suppress checks="MethodNameCheck" files="modules/core/petra/petra-reflect/src/test/java/com/liferay/petra/reflect/AnnotationLocatorTest\.java" />
+		<suppress checks="MissingDeprecatedCheck" files="modules/core/petra/petra-lang/src/main/java/com/liferay/petra/lang/ClassLoaderPool\.java" />
 		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/unsync/BoundaryCheckerUtil\.java" />
 		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/local/AsyncBrokerThreadLocal\.java" />
 		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/local/LocalProcessChannel\.java" />

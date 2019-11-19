@@ -584,7 +584,12 @@ public class LibraryReferenceTest {
 			matcher.matches());
 
 		String numericVersion = matcher.group(1);
-		String suffix = matcher.group(5);
+
+		String suffix = matcher.group(4);
+
+		if (suffix.startsWith("RELEASE")) {
+			suffix = suffix.substring("RELEASE".length());
+		}
 
 		if (Validator.isNull(numericVersion)) {
 			return suffix;
@@ -652,7 +657,7 @@ public class LibraryReferenceTest {
 		Arrays.asList("FCS", "GA", "RC");
 	private static Path _portalPath;
 	private static final Pattern _versionPattern = Pattern.compile(
-		"(\\d+(\\.\\d+)+)?(\\W)?(RELEASE)?(.*)");
+		"(\\d+(\\.\\d+)+)?(\\W)?(.*)");
 	private static final Set<String> _versionsExtJars = new HashSet<>();
 	private static final Set<String> _versionsJars = new HashSet<>();
 	private static final Map<String, String> _versionsJarsVersions =

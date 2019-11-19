@@ -6484,7 +6484,7 @@ version 1.0.2.
 - [LPS-89415]: Set the [Liferay Portal Tools REST Builder] dependency to version
 1.0.2.
 
-## 4.4.84 - 1970-01-01
+## 4.4.84 - 2019-11-19
 
 ### Changed
 - [LPS-104435]: Update the [Liferay Gradle Plugins Source Formatter] dependency

@@ -5477,7 +5477,7 @@ according to Liferay defaults.
 - [LPS-94158]: Update the [Find Security Bugs] dependency to version
  1.9.0.LIFERAY-PATCHED-1.
 
-## 6.1.91 - 1970-01-01
+## 6.1.91 - 2019-11-19
 
 ### Changed
 - [LPS-104435]: Update the [Liferay Gradle Plugins] dependency to version

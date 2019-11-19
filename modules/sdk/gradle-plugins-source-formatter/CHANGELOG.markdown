@@ -2925,7 +2925,7 @@ command line argument:
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.777.
 
-## 2.3.469 - 1970-01-01
+## 2.3.469 - 2019-11-19
 
 ### Changed
 - [LPS-104435]: Update the [Liferay Source Formatter] dependency to version

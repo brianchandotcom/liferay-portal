@@ -260,8 +260,8 @@ definition {
 		AppBuilderAdmin.addApp(
 			appTitle = "Test App",
 			deployOption = "Product Menu",
-			formName = "My Form View",
-			tableName = "My Table View");
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
 
 		AppBuilderAdmin.gotoCustomAppCP(
 			panel = "Control Panel",

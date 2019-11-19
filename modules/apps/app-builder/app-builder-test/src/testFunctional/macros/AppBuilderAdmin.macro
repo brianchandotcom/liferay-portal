@@ -9,9 +9,9 @@ definition {
 
 		AppBuilderAdmin.add();
 
-		AppBuilderAdmin.selectForm(formName = "${formName}");
+		AppBuilderAdmin.selectFormView(formViewName = "${formViewName}");
 
-		AppBuilderAdmin.selectTableView(tableName = "${tableName}");
+		AppBuilderAdmin.selectTableView(tableViewName = "${tableViewName}");
 
 		AppBuilderAdmin.setName(title = "${appTitle}");
 
@@ -114,9 +114,9 @@ definition {
 		Click(locator1 = "AppBuilder#SAVE_BUTTON");
 	}
 
-	macro selectForm {
+	macro selectFormView {
 		Click(
-			key_ItemName = "${formName}",
+			key_ItemName = "${formViewName}",
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 
 		Button.clickNext();
@@ -124,7 +124,7 @@ definition {
 
 	macro selectTableView {
 		Click(
-			key_ItemName = "${tableName}",
+			key_ItemName = "${tableViewName}",
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 
 		Button.clickNext();

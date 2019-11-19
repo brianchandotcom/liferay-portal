@@ -6167,7 +6167,7 @@ paths:
                     description:
                         ""
             tags: ["StructuredContent"]
-    "/sites/{siteId}/wiki-nodes/":
+    "/sites/{siteId}/wiki-nodes":
         get:
             # @review
             description:
@@ -7027,7 +7027,7 @@ paths:
                     description:
                         ""
             tags: ["WikiNode"]
-    "/wiki-nodes/{wikiNodeId}/wiki-pages/":
+    "/wiki-nodes/{wikiNodeId}/wiki-pages":
         get:
             # @review
             description:

@@ -208,7 +208,7 @@ public interface WikiNodeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes/",
+						"/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes",
 				siteId);
 
 			httpInvoker.userNameAndPassword(
@@ -273,7 +273,7 @@ public interface WikiNodeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes/",
+						"/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes",
 				siteId);
 
 			httpInvoker.userNameAndPassword(

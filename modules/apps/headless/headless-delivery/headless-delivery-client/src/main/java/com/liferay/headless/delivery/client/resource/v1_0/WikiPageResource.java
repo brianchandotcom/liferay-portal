@@ -223,7 +223,7 @@ public interface WikiPageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/wiki-pages/",
+						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/wiki-pages",
 				wikiNodeId);
 
 			httpInvoker.userNameAndPassword(
@@ -288,7 +288,7 @@ public interface WikiPageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/wiki-pages/",
+						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/wiki-pages",
 				wikiNodeId);
 
 			httpInvoker.userNameAndPassword(

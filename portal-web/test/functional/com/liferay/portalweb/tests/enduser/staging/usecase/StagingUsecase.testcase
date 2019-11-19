@@ -42,6 +42,155 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-98170"
+	@priority = "4"
+	test AssertAssetPriorityNotBeResetAfterPublication {
+		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+
+		SitePages.addPublicPage(pageName = "Second Test Page");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureShowMetadataFieldsPG(
+			addMetadata = "true",
+			metadataFieldList = "Priority",
+			portletName = "Asset Publisher");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Second Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureShowMetadataFieldsPG(
+			addMetadata = "true",
+			metadataFieldList = "Priority",
+			portletName = "Asset Publisher");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		WebContent.addWithPriorityCP(
+			assetPriority = "1.1",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewPG(
+			assetContent = "Web Content Content",
+			assetPriority = "1.1",
+			assetTitle = "Web Content Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Second Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewPG(
+			assetContent = "Web Content Content",
+			assetPriority = "1.1",
+			assetTitle = "Web Content Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Link to Page",
+			fieldFieldLabel = "Link to Page",
+			fieldName = "LinkToPage");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Link to Page",
+			templateName = "WC Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			linkedPageName = "Second Test Page",
+			linkFieldName = "LinkToPage",
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentTitle = "WC WebContent Title 2");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
+
+		WebContent.viewPGViaWCD(
+			linkName = "Link to Page",
+			linkToPage = "true");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewPG(
+			assetContent = "Web Content Content",
+			assetPriority = "1.1",
+			assetTitle = "Web Content Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Second Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewPG(
+			assetContent = "Web Content Content",
+			assetPriority = "1.1",
+			assetTitle = "Web Content Title");
+	}
+
 	@description = "This is a use case for LPS-71786"
 	@priority = "3"
 	test AssertDeletedAssetLinkRemovedFromLiveSite {

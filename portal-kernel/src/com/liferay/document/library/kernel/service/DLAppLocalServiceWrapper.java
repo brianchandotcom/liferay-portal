@@ -270,34 +270,6 @@ public class DLAppLocalServiceWrapper
 	}
 
 	/**
-	 * Deletes the file ranks associated to a given file entry. This method is
-	 * only supported by the Liferay repository.
-	 *
-	 * @param fileEntryId the primary key of the file entry
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByFileEntryId}
-	 */
-	@Deprecated
-	@Override
-	public void deleteFileRanksByFileEntryId(long fileEntryId) {
-		_dlAppLocalService.deleteFileRanksByFileEntryId(fileEntryId);
-	}
-
-	/**
-	 * Deletes the file ranks associated to a given user. This method is only
-	 * supported by the Liferay repository.
-	 *
-	 * @param userId the primary key of the user
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByUserId}
-	 */
-	@Deprecated
-	@Override
-	public void deleteFileRanksByUserId(long userId) {
-		_dlAppLocalService.deleteFileRanksByUserId(userId);
-	}
-
-	/**
 	 * Deletes the file shortcut. This method is only supported by the Liferay
 	 * repository.
 	 *
@@ -825,20 +797,6 @@ public class DLAppLocalServiceWrapper
 
 		_dlAppLocalService.updateFileShortcuts(
 			oldToFileEntryId, newToFileEntryId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateFileShortcuts(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public void updateFileShortcuts(
-			long toRepositoryId, long oldToFileEntryId, long newToFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_dlAppLocalService.updateFileShortcuts(
-			toRepositoryId, oldToFileEntryId, newToFileEntryId);
 	}
 
 	/**

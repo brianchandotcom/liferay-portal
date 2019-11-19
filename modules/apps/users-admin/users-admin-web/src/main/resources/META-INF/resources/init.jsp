@@ -62,6 +62,7 @@ page import="com.liferay.portal.kernel.exception.OrganizationParentException" %>
 page import="com.liferay.portal.kernel.exception.PhoneNumberException" %><%@
 page import="com.liferay.portal.kernel.exception.PhoneNumberExtensionException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredOrganizationException" %><%@
+page import="com.liferay.portal.kernel.exception.RequiredRoleException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredUserException" %><%@
 page import="com.liferay.portal.kernel.exception.UserEmailAddressException" %><%@
 page import="com.liferay.portal.kernel.exception.UserFieldException" %><%@

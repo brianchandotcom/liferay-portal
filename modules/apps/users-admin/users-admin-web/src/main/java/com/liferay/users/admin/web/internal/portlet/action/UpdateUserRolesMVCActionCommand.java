@@ -16,9 +16,12 @@ package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -26,12 +29,14 @@ import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyExcep
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -110,6 +115,19 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				User.class.getName(), actionRequest);
 
+			Role administratorRole = _roleService.getRole(
+				user.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+			long[] administratorUserIds = _userService.getRoleUserIds(
+				administratorRole.getRoleId());
+
+			if ((administratorUserIds.length == 1) &&
+				ArrayUtil.contains(administratorUserIds, user.getUserId()) &&
+				!ArrayUtil.contains(roleIds, administratorRole.getRoleId())) {
+
+				throw new RequiredRoleException.RequiredAdminRoleException();
+			}
+
 			user = _userService.updateUser(
 				user.getUserId(), user.getPassword(), null, null,
 				user.isPasswordReset(), null, null, user.getScreenName(),
@@ -137,7 +155,8 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchUserException ||
-				e instanceof PrincipalException) {
+				e instanceof PrincipalException ||
+				e instanceof RequiredRoleException.RequiredAdminRoleException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
@@ -219,6 +238,9 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RoleService _roleService;
 
 	@Reference
 	private UsersAdmin _usersAdmin;

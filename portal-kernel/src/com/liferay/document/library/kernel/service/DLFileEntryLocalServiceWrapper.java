@@ -594,21 +594,6 @@ public class DLFileEntryLocalServiceWrapper
 		return _dlFileEntryLocalService.getExtraSettingsFileEntriesCount();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getFileAsStream(long, String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public java.io.InputStream getFileAsStream(
-			long userId, long fileEntryId, String version,
-			boolean incrementCounter)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFileEntryLocalService.getFileAsStream(
-			userId, fileEntryId, version, incrementCounter);
-	}
-
 	@Override
 	public java.io.InputStream getFileAsStream(long fileEntryId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1021,33 +1006,6 @@ public class DLFileEntryLocalServiceWrapper
 			com.liferay.document.library.kernel.model.DLFileEntry dlFileEntry) {
 
 		return _dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #updateFileEntry(long, long, String, String, String, String,
-	 String, DLVersionNumberIncrease, long, Map, File,
-	 InputStream, long, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntry
-			updateFileEntry(
-				long userId, long fileEntryId, String sourceFileName,
-				String mimeType, String title, String description,
-				String changeLog, boolean majorVersion, long fileEntryTypeId,
-				java.util.Map
-					<String,
-					 com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
-						ddmFormValuesMap,
-				java.io.File file, java.io.InputStream is, long size,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFileEntryLocalService.updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, fileEntryTypeId, ddmFormValuesMap, file,
-			is, size, serviceContext);
 	}
 
 	@Override

@@ -25,6 +25,8 @@ definition {
 
 	macro setName {
 		AppBuilderAdmin.setName(title = "${tableViewName}");
+
+		TableViewBuilder.save();
 	}
 
 	macro validateColumnLabel {

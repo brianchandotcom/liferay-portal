@@ -39,16 +39,6 @@
 					}
 				},
 				{
-					"template_ddm_keyword": {
-						"mapping": {
-							"store": true,
-							"type": "keyword"
-						},
-						"match": "ddm__keyword__*",
-						"match_mapping_type": "string"
-					}
-				},
-				{
 					"template_expando_keyword": {
 						"mapping": {
 							"analyzer": "keyword_lowercase",
@@ -456,16 +446,6 @@
 					}
 				},
 				{
-					"template_ddm": {
-						"mapping": {
-							"store": true,
-							"type": "text"
-						},
-						"match": "ddm__*",
-						"match_mapping_type": "string"
-					}
-				},
-				{
 					"template_expando": {
 						"mapping": {
 							"store": true,
@@ -568,6 +548,23 @@
 					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"
+				},
+				"ddmFields": {
+					"properties": {
+						"fieldName": {
+							"type": "keyword"
+						},
+						"fieldValueKeyword": {
+							"type": "keyword"
+						},
+						"fieldValueText": {
+							"type": "text"
+						},
+						"valueFieldName": {
+							"type": "keyword"
+						}
+					},
+					"type": "nested"
 				},
 				"ddmStructureKey": {
 					"store": true,

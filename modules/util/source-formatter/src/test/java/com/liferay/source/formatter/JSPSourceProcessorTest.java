@@ -47,6 +47,11 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectEmptyLine() throws Exception {
+		test("IncorrectEmptyLine.testjsp");
+	}
+
+	@Test
 	public void testIncorrectIndentation() throws Exception {
 		test("IncorrectIndentation.testjsp");
 	}

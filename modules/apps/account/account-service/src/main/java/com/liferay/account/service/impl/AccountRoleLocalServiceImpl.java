@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.base.AccountRoleLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -66,6 +68,17 @@ public class AccountRoleLocalServiceImpl
 		addAccountRole(accountRole);
 
 		return accountRole;
+	}
+
+	@Override
+	public void associateUser(long accountEntryId, long roleId, long userId)
+		throws PortalException {
+
+		AccountEntry accountEntry = accountEntryPersistence.findByPrimaryKey(
+			accountEntryId);
+
+		userGroupRoleLocalService.addUserGroupRoles(
+			userId, accountEntry.getAccountEntryGroupId(), new long[] {roleId});
 	}
 
 	@Override
@@ -118,10 +131,34 @@ public class AccountRoleLocalServiceImpl
 	}
 
 	@Override
+	public List<AccountRole> getAccountRoles(long accountEntryId, long userId)
+		throws PortalException {
+
+		AccountEntry accountEntry = accountEntryPersistence.findByPrimaryKey(
+			accountEntryId);
+
+		return TransformUtil.transform(
+			userGroupRoleLocalService.getUserGroupRoles(
+				userId, accountEntry.getAccountEntryGroupId()),
+			userGroupRole -> getAccountRoleByRoleId(userGroupRole.getRoleId()));
+	}
+
+	@Override
 	public List<AccountRole> getAccountRolesByAccountEntryIds(
 		long[] accountEntryIds) {
 
 		return accountRolePersistence.findByAccountEntryId(accountEntryIds);
+	}
+
+	@Override
+	public void unassociateUser(long accountEntryId, long roleId, long userId)
+		throws PortalException {
+
+		AccountEntry accountEntry = accountEntryPersistence.findByPrimaryKey(
+			accountEntryId);
+
+		userGroupRoleLocalService.deleteUserGroupRoles(
+			userId, accountEntry.getAccountEntryGroupId(), new long[] {roleId});
 	}
 
 }

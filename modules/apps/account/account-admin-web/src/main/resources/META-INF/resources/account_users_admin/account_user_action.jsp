@@ -44,7 +44,7 @@ AccountUserDisplay accountUserDisplay = (AccountUserDisplay)row.getObject();
 
 	<c:if test="<%= UserPermissionUtil.contains(permissionChecker, accountUserDisplay.getUserId(), ActionKeys.DELETE) %>">
 		<c:if test="<%= accountUserDisplay.getStatus() == WorkflowConstants.STATUS_INACTIVE %>">
-			<portlet:actionURL name="/account_admin/edit_account_user" var="restoreUserURL">
+			<portlet:actionURL name="/account_admin/edit_account_users" var="restoreUserURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="accountEntriesNavigation" value='<%= ParamUtil.getString(request, "accountEntriesNavigation") %>' />
@@ -57,7 +57,7 @@ AccountUserDisplay accountUserDisplay = (AccountUserDisplay)row.getObject();
 			/>
 		</c:if>
 
-		<portlet:actionURL name="/account_admin/edit_account_user" var="deleteUserURL">
+		<portlet:actionURL name="/account_admin/edit_account_users" var="deleteUserURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= (accountUserDisplay.getStatus() == WorkflowConstants.STATUS_APPROVED) ? Constants.DEACTIVATE : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="accountEntriesNavigation" value='<%= ParamUtil.getString(request, "accountEntriesNavigation") %>' />

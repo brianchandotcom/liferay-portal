@@ -44,11 +44,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_USERS_ADMIN,
-		"mvc.command.name=/account_admin/edit_account_user"
+		"mvc.command.name=/account_admin/edit_account_users"
 	},
 	service = MVCActionCommand.class
 )
-public class EditAccountUserMVCActionCommand extends BaseMVCActionCommand {
+public class EditAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteUsers(ActionRequest actionRequest) throws Exception {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);

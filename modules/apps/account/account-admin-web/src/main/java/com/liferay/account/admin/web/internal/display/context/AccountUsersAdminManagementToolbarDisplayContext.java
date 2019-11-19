@@ -80,7 +80,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 					ParamUtil.getString(request, "accountEntryIds"));
 				deactivateAccountUsersURL.setParameter(
 					ActionRequest.ACTION_NAME,
-					"/account_admin/edit_account_user");
+					"/account_admin/edit_account_users");
 				deactivateAccountUsersURL.setParameter(
 					Constants.CMD, Constants.DEACTIVATE);
 				deactivateAccountUsersURL.setParameter(
@@ -115,7 +115,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 					ParamUtil.getString(request, "accountEntryIds"));
 				activateAccountUsersURL.setParameter(
 					ActionRequest.ACTION_NAME,
-					"/account_admin/edit_account_user");
+					"/account_admin/edit_account_users");
 				activateAccountUsersURL.setParameter(
 					Constants.CMD, Constants.RESTORE);
 				activateAccountUsersURL.setParameter(
@@ -150,7 +150,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 					ParamUtil.getString(request, "accountEntryIds"));
 				deleteAccountUsersURL.setParameter(
 					ActionRequest.ACTION_NAME,
-					"/account_admin/edit_account_user");
+					"/account_admin/edit_account_users");
 				deleteAccountUsersURL.setParameter(
 					Constants.CMD, Constants.DELETE);
 				deleteAccountUsersURL.setParameter(

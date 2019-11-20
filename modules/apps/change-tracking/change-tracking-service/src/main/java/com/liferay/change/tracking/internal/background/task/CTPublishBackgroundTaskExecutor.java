@@ -21,6 +21,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.service.CTMessageLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
@@ -31,6 +32,8 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -122,6 +125,13 @@ public class CTPublishBackgroundTaskExecutor
 
 		_ctServiceRegistry.onAfterPublish(ctCollectionId);
 
+		List<Message> messages = _ctMessageLocalService.getMessages(
+			ctCollectionId);
+
+		for (Message message : messages) {
+			_messageBus.sendMessage(message.getDestinationName(), message);
+		}
+
 		Date modifiedDate = new Date();
 
 		ctCollection.setModifiedDate(modifiedDate);
@@ -161,9 +171,15 @@ public class CTPublishBackgroundTaskExecutor
 	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
+	private CTMessageLocalService _ctMessageLocalService;
+
+	@Reference
 	private CTProcessLocalService _ctProcessLocalService;
 
 	@Reference
 	private CTServiceRegistry _ctServiceRegistry;
+
+	@Reference
+	private MessageBus _messageBus;
 
 }

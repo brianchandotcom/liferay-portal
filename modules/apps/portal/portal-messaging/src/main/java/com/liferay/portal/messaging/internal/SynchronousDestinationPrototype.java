@@ -29,6 +29,8 @@ public class SynchronousDestinationPrototype implements DestinationPrototype {
 		SynchronousDestination synchronousDestination =
 			new SynchronousDestination();
 
+		synchronousDestination.setDestinationType(
+			destinationConfiguration.getDestinationType());
 		synchronousDestination.setName(
 			destinationConfiguration.getDestinationName());
 

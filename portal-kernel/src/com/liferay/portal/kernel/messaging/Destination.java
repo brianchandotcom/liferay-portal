@@ -36,6 +36,8 @@ public interface Destination {
 
 	public DestinationStatistics getDestinationStatistics();
 
+	public String getDestinationType();
+
 	public int getMessageListenerCount();
 
 	public Set<MessageListener> getMessageListeners();

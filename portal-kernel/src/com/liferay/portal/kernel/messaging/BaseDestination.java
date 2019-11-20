@@ -85,6 +85,11 @@ public abstract class BaseDestination implements Destination {
 	}
 
 	@Override
+	public String getDestinationType() {
+		return _destinationType;
+	}
+
+	@Override
 	public int getMessageListenerCount() {
 		return messageListeners.size();
 	}
@@ -145,6 +150,10 @@ public abstract class BaseDestination implements Destination {
 	@Override
 	public void send(Message message) {
 		throw new UnsupportedOperationException();
+	}
+
+	public void setDestinationType(String destinationType) {
+		_destinationType = destinationType;
 	}
 
 	public void setName(String name) {
@@ -226,5 +235,6 @@ public abstract class BaseDestination implements Destination {
 
 	private final Set<DestinationEventListener> _destinationEventListeners =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
+	private String _destinationType;
 
 }

@@ -41,6 +41,8 @@ public class SerialDestinationPrototype implements DestinationPrototype {
 
 		SerialDestination serialDestination = new SerialDestination();
 
+		serialDestination.setDestinationType(
+			destinationConfiguration.getDestinationType());
 		serialDestination.setName(
 			destinationConfiguration.getDestinationName());
 		serialDestination.setMaximumQueueSize(

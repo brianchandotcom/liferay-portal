@@ -16,7 +16,6 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexResponse;
@@ -80,7 +79,7 @@ public class GetFieldMappingIndexRequestExecutorImpl
 
 				Map<String, Object> source = fieldMappingMetaData.sourceAsMap();
 
-				jsonObject.put(fieldName, JSONUtil.put(source.get(fieldName)));
+				jsonObject.put(fieldName, source);
 			}
 
 			fieldMappings.put(indexName, jsonObject.toString());

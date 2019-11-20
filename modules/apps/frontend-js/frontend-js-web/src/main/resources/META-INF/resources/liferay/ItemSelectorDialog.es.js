@@ -38,6 +38,33 @@ class ItemSelectorDialog extends Component {
 		const eventName = this.eventName;
 		const zIndex = this.zIndex;
 
+		const dialogFooter = [
+			{
+				cssClass: 'btn-link close-modal',
+				id: 'cancelButton',
+				label: this.buttonCancelLabel,
+				on: {
+					click: () => {
+						this.close();
+					}
+				}
+			},
+			{
+				cssClass: 'btn-primary',
+				disabled: true,
+				id: 'addButton',
+				label: this.buttonAddLabel,
+				on: {
+					click: () => {
+						this._selectedItem = this._currentItem;
+						this.close();
+					}
+				}
+			}
+		];
+
+		const toolbarsFooter = this.multiSelection ? dialogFooter : null;
+
 		Liferay.Util.selectEntity(
 			{
 				dialog: {
@@ -66,30 +93,7 @@ class ItemSelectorDialog extends Component {
 							this.emit('visibleChange', {visible: event.newVal});
 						}
 					},
-					'toolbars.footer': [
-						{
-							cssClass: 'btn-link close-modal',
-							id: 'cancelButton',
-							label: this.buttonCancelLabel,
-							on: {
-								click: () => {
-									this.close();
-								}
-							}
-						},
-						{
-							cssClass: 'btn-primary',
-							disabled: true,
-							id: 'addButton',
-							label: this.buttonAddLabel,
-							on: {
-								click: () => {
-									this._selectedItem = this._currentItem;
-									this.close();
-								}
-							}
-						}
-					],
+					'toolbars.footer': toolbarsFooter,
 					zIndex
 				},
 				eventName,
@@ -117,14 +121,20 @@ class ItemSelectorDialog extends Component {
 	_onItemSelected(event) {
 		const currentItem = event.data;
 
-		const dialog = Liferay.Util.getWindow(this.eventName);
+		if (this.multiSelection) {
+			const dialog = Liferay.Util.getWindow(this.eventName);
 
-		const addButton = dialog
-			.getToolbar('footer')
-			.get('boundingBox')
-			.one('#addButton');
+			const addButton = dialog
+				.getToolbar('footer')
+				.get('boundingBox')
+				.one('#addButton');
 
-		Liferay.Util.toggleDisabled(addButton, !currentItem);
+			Liferay.Util.toggleDisabled(addButton, !currentItem);
+		}
+		else {
+			this._selectedItem = currentItem;
+			this.close();
+		}
 
 		this._currentItem = currentItem;
 	}
@@ -172,6 +182,14 @@ ItemSelectorDialog.STATE = {
 	 * @type {String}
 	 */
 	eventName: Config.string().required(),
+
+
+	/**
+	 * Enables multiple selection of items.
+	 * @type {boolean}
+	 */
+
+	multiSelection: Config.bool().value(false),
 
 	/**
 	 * The selected item(s) in the dialog.

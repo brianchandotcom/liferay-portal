@@ -82,14 +82,6 @@ public interface LayoutPageTemplateEntryLocalService
 			LayoutPrototype layoutPrototype)
 		throws PortalException;
 
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
-			long classNameId, long classTypeId, String name, int type,
-			boolean defaultTemplate, long layoutPrototypeId,
-			long previewFileEntryId, long plid, int status,
-			long masterLayoutPlid, ServiceContext serviceContext)
-		throws PortalException;
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addLayoutPageTemplateEntry(long, long, long, long, long,
@@ -108,13 +100,15 @@ public interface LayoutPageTemplateEntryLocalService
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long classNameId, long classTypeId, String name, int type,
+			boolean defaultTemplate, long layoutPrototypeId,
+			long previewFileEntryId, long plid, long masterLayoutPlid,
 			int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, int status, long masterLayoutPlid,
-			ServiceContext serviceContext)
+			long classNameId, long classTypeId, String name, int type,
+			int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -126,6 +120,12 @@ public interface LayoutPageTemplateEntryLocalService
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			String name, int type, int status, ServiceContext serviceContext)
+		throws PortalException;
+
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long userId, long groupId, long layoutPageTemplateCollectionId,
+			String name, int type, long masterLayoutPlid, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutPageTemplateEntry copyLayoutPageTemplateEntry(

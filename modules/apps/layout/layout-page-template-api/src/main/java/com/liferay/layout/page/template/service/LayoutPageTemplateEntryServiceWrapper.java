@@ -34,24 +34,6 @@ public class LayoutPageTemplateEntryServiceWrapper
 	}
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateEntryServiceUtil} to access the layout page template entry remote service. Add custom service methods to <code>com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
-	@Override
-	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
-			addLayoutPageTemplateEntry(
-				long groupId, long layoutPageTemplateCollectionId, String name,
-				int type, int status, long masterLayoutPlid,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-			groupId, layoutPageTemplateCollectionId, name, type, status,
-			masterLayoutPlid, serviceContext);
-	}
-
-	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addLayoutPageTemplateEntry(long, long, String, int, int,
 	 long, ServiceContext)}
@@ -68,6 +50,19 @@ public class LayoutPageTemplateEntryServiceWrapper
 		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 			groupId, layoutPageTemplateCollectionId, name, type, status,
 			serviceContext);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+			addLayoutPageTemplateEntry(
+				long groupId, long layoutPageTemplateCollectionId, String name,
+				int type, long masterLayoutPlid, int status,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+			groupId, layoutPageTemplateCollectionId, name, type,
+			masterLayoutPlid, status, serviceContext);
 	}
 
 	@Override

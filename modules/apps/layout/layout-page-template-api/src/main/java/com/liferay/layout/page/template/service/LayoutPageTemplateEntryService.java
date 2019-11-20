@@ -53,11 +53,6 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateEntryServiceUtil} to access the layout page template entry remote service. Add custom service methods to <code>com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long groupId, long layoutPageTemplateCollectionId, String name,
-			int type, int status, long masterLayoutPlid,
-			ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
@@ -68,6 +63,12 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId, String name,
 			int type, int status, ServiceContext serviceContext)
+		throws PortalException;
+
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long groupId, long layoutPageTemplateCollectionId, String name,
+			int type, long masterLayoutPlid, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(

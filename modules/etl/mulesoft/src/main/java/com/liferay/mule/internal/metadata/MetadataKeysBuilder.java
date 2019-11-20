@@ -52,7 +52,7 @@ public class MetadataKeysBuilder {
 			LiferayConnection liferayConnection =
 				liferayConnectionOptional.get();
 
-			return _getMetadataKeys(
+			return getMetadataKeys(
 				_jsonNodeReader.fromHttpResponse(
 					liferayConnection.getOpenAPISpec()),
 				operation);
@@ -67,7 +67,7 @@ public class MetadataKeysBuilder {
 		}
 	}
 
-	private Set<MetadataKey> _getMetadataKeys(
+	protected Set<MetadataKey> getMetadataKeys(
 		JsonNode openAPISpecJsonNode, String operation) {
 
 		Set<MetadataKey> metadataKeys = new HashSet<>();

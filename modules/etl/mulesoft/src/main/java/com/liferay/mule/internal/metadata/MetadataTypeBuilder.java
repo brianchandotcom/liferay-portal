@@ -52,13 +52,13 @@ public class MetadataTypeBuilder {
 			String referencePath)
 		throws ConnectionException, MetadataResolvingException {
 
-		JsonNode oasJsonNode = _getOASJsonNode(metadataContext.getConnection());
+		JsonNode oasJsonNode = getOASJsonNode(metadataContext);
 
 		JsonNode referenceJsonNode = _fetchReferenceJsonNode(
 			oasJsonNode, endpoint, operation, referencePath);
 
 		if (referenceJsonNode.isNull()) {
-			return _resolveAnyMetadataType(metadataContext);
+			return resolveAnyMetadataType(metadataContext);
 		}
 
 		String schemaName = _getSchemaName(referenceJsonNode.textValue());
@@ -71,7 +71,7 @@ public class MetadataTypeBuilder {
 			OASConstants.PROPERTIES);
 
 		if (schemaType.equals(OASConstants.ARRAY)) {
-			ArrayTypeBuilder arrayTypeBuilder = _getArrayTypeBuilder(
+			ArrayTypeBuilder arrayTypeBuilder = getArrayTypeBuilder(
 				metadataContext, schemaName);
 
 			_resolveArrayMetadataType(
@@ -82,7 +82,7 @@ public class MetadataTypeBuilder {
 			return arrayTypeBuilder.build();
 		}
 
-		ObjectTypeBuilder objectTypeBuilder = _getObjectTypeBuilder(
+		ObjectTypeBuilder objectTypeBuilder = getObjectTypeBuilder(
 			metadataContext, schemaName);
 
 		_resolveObjectMetadataType(
@@ -90,6 +90,64 @@ public class MetadataTypeBuilder {
 			_fetchRequiredJsonNode(schemaJsonNode));
 
 		return objectTypeBuilder.build();
+	}
+
+	protected ArrayTypeBuilder getArrayTypeBuilder(
+		MetadataContext metadataContext, String label) {
+
+		BaseTypeBuilder baseTypeBuilder = metadataContext.getTypeBuilder();
+
+		return baseTypeBuilder.create(
+			MetadataFormat.JSON
+		).arrayType(
+		).label(
+			label
+		);
+	}
+
+	protected JsonNode getOASJsonNode(MetadataContext metadataContext)
+		throws ConnectionException, MetadataResolvingException {
+
+		Optional<LiferayConnection> liferayConnectionOptional =
+			metadataContext.getConnection();
+
+		try {
+			LiferayConnection liferayConnection =
+				liferayConnectionOptional.get();
+
+			return _jsonNodeReader.fromHttpResponse(
+				liferayConnection.getOpenAPISpec());
+		}
+		catch (IOException ioe) {
+			throw new MetadataResolvingException(
+				ioe.getMessage(), FailureCode.NO_DYNAMIC_METADATA_AVAILABLE);
+		}
+		catch (TimeoutException te) {
+			throw new MetadataResolvingException(
+				te.getMessage(), FailureCode.CONNECTION_FAILURE);
+		}
+	}
+
+	protected ObjectTypeBuilder getObjectTypeBuilder(
+		MetadataContext metadataContext, String label) {
+
+		BaseTypeBuilder baseTypeBuilder = metadataContext.getTypeBuilder();
+
+		return baseTypeBuilder.create(
+			MetadataFormat.JSON
+		).objectType(
+		).label(
+			label
+		);
+	}
+
+	protected MetadataType resolveAnyMetadataType(
+		MetadataContext metadataContext) {
+
+		BaseTypeBuilder baseTypeBuilder = metadataContext.getTypeBuilder();
+
+		return baseTypeBuilder.anyType(
+		).build();
 	}
 
 	private JsonNode _fetchReferenceJsonNode(
@@ -107,19 +165,6 @@ public class MetadataTypeBuilder {
 	private JsonNode _fetchRequiredJsonNode(JsonNode schemaJsonNode) {
 		return _jsonNodeReader.fetchDescendantJsonNode(
 			schemaJsonNode, OASConstants.REQUIRED);
-	}
-
-	private ArrayTypeBuilder _getArrayTypeBuilder(
-		MetadataContext metadataContext, String label) {
-
-		BaseTypeBuilder baseTypeBuilder = metadataContext.getTypeBuilder();
-
-		return baseTypeBuilder.create(
-			MetadataFormat.JSON
-		).arrayType(
-		).label(
-			label
-		);
 	}
 
 	private MetadataType _getMetadataType(JsonNode propertyJsonNode) {
@@ -184,40 +229,6 @@ public class MetadataTypeBuilder {
 		return baseTypeBuilder.build();
 	}
 
-	private JsonNode _getOASJsonNode(
-			Optional<LiferayConnection> liferayConnectionOptional)
-		throws MetadataResolvingException {
-
-		try {
-			LiferayConnection liferayConnection =
-				liferayConnectionOptional.get();
-
-			return _jsonNodeReader.fromHttpResponse(
-				liferayConnection.getOpenAPISpec());
-		}
-		catch (IOException ioe) {
-			throw new MetadataResolvingException(
-				ioe.getMessage(), FailureCode.NO_DYNAMIC_METADATA_AVAILABLE);
-		}
-		catch (TimeoutException te) {
-			throw new MetadataResolvingException(
-				te.getMessage(), FailureCode.CONNECTION_FAILURE);
-		}
-	}
-
-	private ObjectTypeBuilder _getObjectTypeBuilder(
-		MetadataContext metadataContext, String label) {
-
-		BaseTypeBuilder baseTypeBuilder = metadataContext.getTypeBuilder();
-
-		return baseTypeBuilder.create(
-			MetadataFormat.JSON
-		).objectType(
-		).label(
-			label
-		);
-	}
-
 	private JsonNode _getSchemaJsonNode(
 		JsonNode openAPISpecJsonNode, String schemaName) {
 
@@ -246,15 +257,6 @@ public class MetadataTypeBuilder {
 		).description(
 			"Dictionary"
 		);
-	}
-
-	private MetadataType _resolveAnyMetadataType(
-		MetadataContext metadataContext) {
-
-		BaseTypeBuilder baseTypeBuilder = metadataContext.getTypeBuilder();
-
-		return baseTypeBuilder.anyType(
-		).build();
 	}
 
 	private void _resolveArrayMetadataType(

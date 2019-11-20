@@ -4433,27 +4433,35 @@ log.sanitizer.enabled=false</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="legacy-functional-bundle-tomcat-db2">
+	<target name="legacy-functional-bundle-tomcat-db2111">
 		<run-legacy-database-dump database.type="db2" />
 	</target>
 
-	<target name="legacy-functional-bundle-tomcat-mariadb">
+	<target name="legacy-functional-bundle-tomcat-mariadb102">
 		<run-legacy-database-dump database.type="mariadb" />
 	</target>
 
-	<target name="legacy-functional-bundle-tomcat-mysql">
-		<run-legacy-database-dump database.type="mysql" />
+	<target name="legacy-functional-bundle-tomcat-mysql55">
+		<run-legacy-database-dump database.type="mysql" database.version="5.5" />
 	</target>
 
-	<target name="legacy-functional-bundle-tomcat-oracle">
+	<target name="legacy-functional-bundle-tomcat-mysql56">
+		<run-legacy-database-dump database.type="mysql" database.version="5.6" />
+	</target>
+
+	<target name="legacy-functional-bundle-tomcat-mysql57">
+		<run-legacy-database-dump database.type="mysql" database.version="5.7" />
+	</target>
+
+	<target name="legacy-functional-bundle-tomcat-oracle122">
 		<run-legacy-database-dump database.type="oracle" />
 	</target>
 
-	<target name="legacy-functional-bundle-tomcat-postgresql">
+	<target name="legacy-functional-bundle-tomcat-postgresql10">
 		<run-legacy-database-dump database.type="postgresql" />
 	</target>
 
-	<target name="legacy-functional-bundle-tomcat-sybase">
+	<target name="legacy-functional-bundle-tomcat-sybase160">
 		<run-legacy-database-dump database.type="sybase" />
 	</target>
 

@@ -190,7 +190,9 @@ public class JSPStylingCheck extends StylingCheck {
 			}
 		}
 
-		return content;
+		matcher = _incorrectLineBreakPattern3.matcher(content);
+
+		return matcher.replaceAll("$1\n\t$2$4\n$2$5");
 	}
 
 	private static final Pattern _chainingPattern = Pattern.compile(
@@ -203,6 +205,8 @@ public class JSPStylingCheck extends StylingCheck {
 		"[\n\t]\\} ?(catch|else|finally) ");
 	private static final Pattern _incorrectLineBreakPattern2 = Pattern.compile(
 		"=(\n\\s*).*;\n");
+	private static final Pattern _incorrectLineBreakPattern3 = Pattern.compile(
+		"(\n(\t*)<(\\w+)>)(<\\w+>.*)(</\\3>\n)");
 	private static final Pattern _incorrectSingleLineJavaSourcePattern =
 		Pattern.compile("(\t*)(<% (.*) %>)\n");
 

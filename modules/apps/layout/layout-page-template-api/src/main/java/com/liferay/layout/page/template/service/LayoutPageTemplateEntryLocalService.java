@@ -85,7 +85,7 @@ public interface LayoutPageTemplateEntryLocalService
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addLayoutPageTemplateEntry(long, long, long, long, long,
-	 String, int, boolean, long, long, long, int, long,
+	 String, int, long, boolean, long, long, long, int,
 	 ServiceContext)}
 	 */
 	@Deprecated
@@ -100,21 +100,21 @@ public interface LayoutPageTemplateEntryLocalService
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long classNameId, long classTypeId, String name, int type,
-			boolean defaultTemplate, long layoutPrototypeId,
-			long previewFileEntryId, long plid, long masterLayoutPlid,
 			int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long classNameId, long classTypeId, String name, int type,
+			long previewFileEntryId, boolean defaultTemplate,
+			long layoutPrototypeId, long plid, long masterLayoutPlid,
 			int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addLayoutPageTemplateEntry(long, long, long, String, int,
-	 int, long, ServiceContext)}
+	 long, int, ServiceContext)}
 	 */
 	@Deprecated
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(

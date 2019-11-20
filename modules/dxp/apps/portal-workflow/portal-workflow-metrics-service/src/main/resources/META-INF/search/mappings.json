@@ -1143,6 +1143,10 @@
 				"store": true,
 				"type": "boolean"
 			},
+			"instanceCompleted": {
+				"store": true,
+				"type": "boolean"
+			},
 			"instanceId": {
 				"store": true,
 				"type": "keyword"
@@ -1242,6 +1246,10 @@
 			"id": {
 				"store": true,
 				"type": "keyword"
+			},
+			"instanceCompleted": {
+				"store": true,
+				"type": "boolean"
 			},
 			"instanceId": {
 				"store": true,

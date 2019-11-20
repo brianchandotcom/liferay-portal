@@ -95,6 +95,7 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			document.addNumber("duration", duration.toMillis());
 		}
 
+		document.addKeyword("instanceCompleted", false);
 		document.addKeyword(
 			"instanceId", kaleoTaskInstanceToken.getKaleoInstanceId());
 		document.addDateSortable(

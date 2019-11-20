@@ -327,6 +327,26 @@ definition {
 			portlet = "Documents and Media");
 	}
 
+	@description = "This ensures that all depots can be deleted when the user selects all."
+	@priority = "4"
+	test SelectAllAndDelete {
+		DepotNavigator.openDepotAdmin();
+
+		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
+			Depot.addDepot(
+				depotDescription = "This is the description of a depot",
+				depotName = "${depotName}");
+
+			DepotNavigator.openDepotAdmin();
+		}
+
+		PortletEntry.selectAll();
+
+		Depot.deleteCP(deletions = "true");
+
+		Depot.viewDefaultCP();
+	}
+
 	@description = "This ensures that a depot can be added."
 	@priority = "5"
 	test Smoke {

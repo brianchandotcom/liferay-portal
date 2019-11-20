@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ACCOUNT_STATUS</td>
-	<td>//label[contains(@for,'AccountsAdminPortlet')]/input[contains(@class,'toggle-switch')]</td>
+	<td>//label[contains(@for,'AccountEntriesAdminPortlet')]/input[contains(@class,'toggle-switch')]</td>
 	<td></td>
 </tr>
 <tr>

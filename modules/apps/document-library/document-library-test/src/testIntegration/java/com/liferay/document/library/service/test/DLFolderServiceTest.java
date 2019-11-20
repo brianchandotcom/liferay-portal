@@ -22,9 +22,8 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
-import com.liferay.document.library.kernel.service.DLFolderServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
+import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -38,7 +37,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -47,7 +46,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
+import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -108,7 +107,7 @@ public class DLFolderServiceTest {
 		_ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), DLFileEntryMetadata.class.getName());
 
-		_dlFileEntryType = DLFileEntryTypeServiceUtil.addFileEntryType(
+		_dlFileEntryType = _dlFileEntryTypeService.addFileEntryType(
 			_group.getGroupId(), StringUtil.randomString(),
 			StringUtil.randomString(),
 			new long[] {_ddmStructure.getStructureId()},
@@ -130,37 +129,37 @@ public class DLFolderServiceTest {
 
 		List<Object> expectedResults = new ArrayList<>();
 
-		FileEntry fileEntry1 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
 			_group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			serviceContext);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			fileEntry1.getCompanyId(),
-			ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class),
+			_classNameLocalService.getClassNameId(DLFileEntry.class),
 			fileEntry1.getFileEntryId(), 2);
 
-		FileEntry fileEntry2 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry2 = _dlAppService.addFileEntry(
 			_group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			serviceContext);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			fileEntry2.getCompanyId(),
-			ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class),
+			_classNameLocalService.getClassNameId(DLFileEntry.class),
 			fileEntry2.getFileEntryId(), 1);
 
-		FileEntry fileEntry3 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry3 = _dlAppService.addFileEntry(
 			_group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title3", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			serviceContext);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			fileEntry3.getCompanyId(),
-			ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class),
+			_classNameLocalService.getClassNameId(DLFileEntry.class),
 			fileEntry3.getFileEntryId(), 4);
 
 		Folder hiddenFolder = _dlAppService.addFolder(
@@ -169,33 +168,33 @@ public class DLFolderServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
-		FileEntry fileEntry4 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry4 = _dlAppService.addFileEntry(
 			_group.getGroupId(), hiddenFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title4", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			serviceContext);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			fileEntry4.getCompanyId(),
-			ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class),
+			_classNameLocalService.getClassNameId(DLFileEntry.class),
 			fileEntry4.getFileEntryId(), 5);
 
-		FileShortcut fileShortcut1 = DLAppServiceUtil.addFileShortcut(
+		FileShortcut fileShortcut1 = _dlAppService.addFileShortcut(
 			_group.getGroupId(), _parentFolder.getFolderId(),
 			fileEntry4.getFileEntryId(), serviceContext);
 
-		FileEntry fileEntry5 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry5 = _dlAppService.addFileEntry(
 			_group.getGroupId(), hiddenFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title5", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			serviceContext);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			fileEntry5.getCompanyId(),
-			ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class),
+			_classNameLocalService.getClassNameId(DLFileEntry.class),
 			fileEntry5.getFileEntryId(), 3);
 
-		FileShortcut fileShortcut2 = DLAppServiceUtil.addFileShortcut(
+		FileShortcut fileShortcut2 = _dlAppService.addFileShortcut(
 			_group.getGroupId(), _parentFolder.getFolderId(),
 			fileEntry5.getFileEntryId(), serviceContext);
 
@@ -206,7 +205,7 @@ public class DLFolderServiceTest {
 		expectedResults.add(fileShortcut1);
 
 		List<Object> actualResults =
-			DLFolderServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+			_dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
 				_group.getGroupId(), _parentFolder.getFolderId(), null,
 				_dlFileEntryType.getFileEntryTypeId(), false,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
@@ -247,19 +246,19 @@ public class DLFolderServiceTest {
 
 		List<FileEntry> expectedResults = new ArrayList<>();
 
-		FileEntry fileEntry1 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
 			_group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			serviceContext);
 
-		FileEntry fileEntry2 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry2 = _dlAppService.addFileEntry(
 			_group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			serviceContext);
 
-		FileEntry fileEntry3 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry3 = _dlAppService.addFileEntry(
 			_group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title3", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
@@ -270,7 +269,7 @@ public class DLFolderServiceTest {
 		expectedResults.add(fileEntry3);
 
 		List<Object> actualResults =
-			DLFolderServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+			_dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
 				_group.getGroupId(), _parentFolder.getFolderId(), null,
 				_dlFileEntryType.getFileEntryTypeId(), false,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
@@ -292,11 +291,23 @@ public class DLFolderServiceTest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFolderServiceTest.class);
 
-	@DeleteAfterTestRun
-	private DDMStructure _ddmStructure;
+	@Inject
+	private static ClassNameLocalService _classNameLocalService;
 
 	@Inject
-	private DLAppService _dlAppService;
+	private static DLAppService _dlAppService;
+
+	@Inject
+	private static DLFileEntryTypeService _dlFileEntryTypeService;
+
+	@Inject
+	private static DLFolderService _dlFolderService;
+
+	@Inject
+	private static ViewCountManager _viewCountManager;
+
+	@DeleteAfterTestRun
+	private DDMStructure _ddmStructure;
 
 	@DeleteAfterTestRun
 	private DLFileEntryType _dlFileEntryType;

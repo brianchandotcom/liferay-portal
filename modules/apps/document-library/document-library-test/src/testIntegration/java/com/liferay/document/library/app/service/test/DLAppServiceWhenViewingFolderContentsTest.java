@@ -16,7 +16,7 @@ package com.liferay.document.library.app.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
@@ -24,16 +24,17 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
+import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		DLAppServiceUtil.addFileEntry(
+		_dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
@@ -72,14 +73,14 @@ public class DLAppServiceWhenViewingFolderContentsTest
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		DLAppServiceUtil.addFileEntry(
+		_dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringPool.BLANK, (byte[])null, serviceContext);
 
 		int foldersAndFileEntriesAndFileShortcutsCount =
-			DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
+			_dlAppService.getFoldersAndFileEntriesAndFileShortcutsCount(
 				group.getGroupId(), parentFolder.getFolderId(),
 				WorkflowConstants.STATUS_APPROVED, false);
 
@@ -91,7 +92,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		DLAppServiceUtil.addFileEntry(
+		_dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
@@ -99,7 +100,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		DLAppServiceUtil.addFileEntry(
+		_dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
@@ -111,14 +112,14 @@ public class DLAppServiceWhenViewingFolderContentsTest
 				user)) {
 
 			int foldersAndFileEntriesAndFileShortcutsCount =
-				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
+				_dlAppService.getFoldersAndFileEntriesAndFileShortcutsCount(
 					group.getGroupId(), parentFolder.getFolderId(),
 					WorkflowConstants.STATUS_APPROVED, false);
 
 			Assert.assertEquals(1, foldersAndFileEntriesAndFileShortcutsCount);
 		}
 		finally {
-			UserLocalServiceUtil.deleteUser(user.getUserId());
+			_userLocalService.deleteUser(user.getUserId());
 		}
 	}
 
@@ -127,7 +128,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		DLAppServiceUtil.addFileEntry(
+		_dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
@@ -135,7 +136,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		DLAppServiceUtil.addFileEntry(
+		_dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
@@ -147,7 +148,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 				user)) {
 
 			List<Object> foldersAndFileEntriesAndFileShortcuts =
-				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+				_dlAppService.getFoldersAndFileEntriesAndFileShortcuts(
 					group.getGroupId(), parentFolder.getFolderId(),
 					WorkflowConstants.STATUS_APPROVED, false, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS);
@@ -157,7 +158,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 				foldersAndFileEntriesAndFileShortcuts.size());
 		}
 		finally {
-			UserLocalServiceUtil.deleteUser(user.getUserId());
+			_userLocalService.deleteUser(user.getUserId());
 		}
 	}
 
@@ -166,7 +167,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		DLAppServiceUtil.addFileEntry(
+		_dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
@@ -174,14 +175,14 @@ public class DLAppServiceWhenViewingFolderContentsTest
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		DLAppServiceUtil.addFileEntry(
+		_dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringPool.BLANK, (byte[])null, serviceContext);
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
-			DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+			_dlAppService.getFoldersAndFileEntriesAndFileShortcuts(
 				group.getGroupId(), parentFolder.getFolderId(),
 				WorkflowConstants.STATUS_APPROVED, false, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
@@ -198,37 +199,37 @@ public class DLAppServiceWhenViewingFolderContentsTest
 
 		List<FileEntry> expectedResults = new ArrayList<>();
 
-		FileEntry fileEntry1 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			serviceContext);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			fileEntry1.getCompanyId(),
-			ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class),
+			_classNameLocalService.getClassNameId(DLFileEntry.class),
 			fileEntry1.getFileEntryId(), 2);
 
-		FileEntry fileEntry2 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry2 = _dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			serviceContext);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			fileEntry2.getCompanyId(),
-			ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class),
+			_classNameLocalService.getClassNameId(DLFileEntry.class),
 			fileEntry2.getFileEntryId(), 1);
 
-		FileEntry fileEntry3 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry3 = _dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title3", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			serviceContext);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			fileEntry3.getCompanyId(),
-			ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class),
+			_classNameLocalService.getClassNameId(DLFileEntry.class),
 			fileEntry3.getFileEntryId(), 3);
 
 		expectedResults.add(fileEntry2);
@@ -236,7 +237,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 		expectedResults.add(fileEntry3);
 
 		List<Object> actualResults =
-			DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+			_dlAppService.getFoldersAndFileEntriesAndFileShortcuts(
 				group.getGroupId(), parentFolder.getFolderId(),
 				WorkflowConstants.STATUS_APPROVED, false, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
@@ -261,19 +262,19 @@ public class DLAppServiceWhenViewingFolderContentsTest
 
 		List<FileEntry> expectedResults = new ArrayList<>();
 
-		FileEntry fileEntry1 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			serviceContext);
 
-		FileEntry fileEntry2 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry2 = _dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			serviceContext);
 
-		FileEntry fileEntry3 = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry3 = _dlAppService.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title3", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
@@ -284,7 +285,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 		expectedResults.add(fileEntry3);
 
 		List<Object> actualResults =
-			DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+			_dlAppService.getFoldersAndFileEntriesAndFileShortcuts(
 				group.getGroupId(), parentFolder.getFolderId(),
 				WorkflowConstants.STATUS_APPROVED, false, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
@@ -301,5 +302,17 @@ public class DLAppServiceWhenViewingFolderContentsTest
 				actualFileEntry.getFileEntryId());
 		}
 	}
+
+	@Inject
+	private static ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private static DLAppService _dlAppService;
+
+	@Inject
+	private static UserLocalService _userLocalService;
+
+	@Inject
+	private static ViewCountManager _viewCountManager;
 
 }

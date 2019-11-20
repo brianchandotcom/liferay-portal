@@ -510,6 +510,7 @@
 		<field indexed="true" name="discussion" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="displayDate" stored="true" type="string" />
 		<field indexed="true" name="emailAddress" stored="true" type="string" />
+		<field indexed="true" name="emailAddressDomain" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="endTime" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="entryClassName" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="entryClassPK" stored="true" type="string" />

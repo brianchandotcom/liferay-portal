@@ -387,7 +387,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 			if (fullIdent != null) {
 				log(
-					detailAST, _MSG_USE_MAP_BUIDER,
+					detailAST, _MSG_USE_MAP_BUILDER,
 					newInstanceTypeName + "Builder", detailAST.getLineNo(),
 					fullIdent.getLineNo());
 
@@ -613,7 +613,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 	private static final String _MSG_INLINE_MAP_BUILDER = "map.builder.inline";
 
-	private static final String _MSG_USE_MAP_BUIDER = "map.builder.use";
+	private static final String _MSG_USE_MAP_BUILDER = "map.builder.use";
 
 	private static final String _MSG_USE_MAP_BUILDER_INSTEAD =
 		"map.builder.use.instead";

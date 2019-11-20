@@ -330,9 +330,7 @@ public class DataFactory {
 		for (String model : models) {
 			ClassNameModel classNameModel = new ClassNameModelImpl();
 
-			long classNameId = _counter.get();
-
-			classNameModel.setClassNameId(classNameId);
+			classNameModel.setClassNameId(_counter.get());
 
 			classNameModel.setValue(model);
 
@@ -376,10 +374,9 @@ public class DataFactory {
 		initDLFileEntryTypeModel();
 		initGroupModels();
 
-		int maxJournalArticleSize = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.journal.article.size"));
-
-		initJournalArticleContent(maxJournalArticleSize);
+		initJournalArticleContent(
+			GetterUtil.getInteger(
+				properties.getProperty("sample.sql.max.journal.article.size")));
 
 		initRoleModels();
 		initUserNames();
@@ -853,12 +850,10 @@ public class DataFactory {
 					sb.append(StringPool.UNDERLINE);
 					sb.append(k);
 
-					AssetCategoryModel assetCategoryModel =
+					assetCategoryModels.add(
 						newAssetCategoryModel(
 							i, sb.toString(),
-							assetVocabularyModel.getVocabularyId());
-
-					assetCategoryModels.add(assetCategoryModel);
+							assetVocabularyModel.getVocabularyId()));
 				}
 			}
 
@@ -1056,12 +1051,11 @@ public class DataFactory {
 				_cpDefinitionLocalizationModels.add(
 					cpDefinitionLocalizationModel);
 
-				CPDefinitionModel cpDefinitionModel = newCPDefinitionModel(
-					_commerceCatalogGroupId, cpDefinitionId, cProductId,
-					cpTaxCategoryModel.getCPTaxCategoryId(),
-					definitionIndex + 1);
-
-				_cpDefinitionModels.add(cpDefinitionModel);
+				_cpDefinitionModels.add(
+					newCPDefinitionModel(
+						_commerceCatalogGroupId, cpDefinitionId, cProductId,
+						cpTaxCategoryModel.getCPTaxCategoryId(),
+						definitionIndex + 1));
 
 				_assetEntryModels.add(
 					newAssetEntryModel(
@@ -1357,25 +1351,24 @@ public class DataFactory {
 
 		// Organization Administrator
 
-		RoleModel organizationAdministratorRoleModel = newRoleModel(
-			RoleConstants.ORGANIZATION_ADMINISTRATOR,
-			RoleConstants.TYPE_ORGANIZATION);
-
-		_roleModels.add(organizationAdministratorRoleModel);
+		_roleModels.add(
+			newRoleModel(
+				RoleConstants.ORGANIZATION_ADMINISTRATOR,
+				RoleConstants.TYPE_ORGANIZATION));
 
 		// Organization Owner
 
-		RoleModel organizationOwnerRoleModel = newRoleModel(
-			RoleConstants.ORGANIZATION_OWNER, RoleConstants.TYPE_ORGANIZATION);
-
-		_roleModels.add(organizationOwnerRoleModel);
+		_roleModels.add(
+			newRoleModel(
+				RoleConstants.ORGANIZATION_OWNER,
+				RoleConstants.TYPE_ORGANIZATION));
 
 		// Organization User
 
-		RoleModel organizationUserRoleModel = newRoleModel(
-			RoleConstants.ORGANIZATION_USER, RoleConstants.TYPE_ORGANIZATION);
-
-		_roleModels.add(organizationUserRoleModel);
+		_roleModels.add(
+			newRoleModel(
+				RoleConstants.ORGANIZATION_USER,
+				RoleConstants.TYPE_ORGANIZATION));
 
 		// Owner
 
@@ -1393,10 +1386,9 @@ public class DataFactory {
 
 		// Site Administrator
 
-		RoleModel siteAdministratorRoleModel = newRoleModel(
-			RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE);
-
-		_roleModels.add(siteAdministratorRoleModel);
+		_roleModels.add(
+			newRoleModel(
+				RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE));
 
 		// Site Member
 
@@ -1407,10 +1399,8 @@ public class DataFactory {
 
 		// Site Owner
 
-		RoleModel siteOwnerRoleModel = newRoleModel(
-			RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE);
-
-		_roleModels.add(siteOwnerRoleModel);
+		_roleModels.add(
+			newRoleModel(RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE));
 
 		// User
 
@@ -1609,11 +1599,10 @@ public class DataFactory {
 		FullNameGenerator fullNameGenerator =
 			FullNameGeneratorFactory.getInstance();
 
-		String fullName = fullNameGenerator.getFullName(
-			userModel.getFirstName(), userModel.getMiddleName(),
-			userModel.getLastName());
-
-		contactModel.setUserName(fullName);
+		contactModel.setUserName(
+			fullNameGenerator.getFullName(
+				userModel.getFirstName(), userModel.getMiddleName(),
+				userModel.getLastName()));
 
 		contactModel.setCreateDate(new Date());
 		contactModel.setModifiedDate(new Date());
@@ -1662,10 +1651,8 @@ public class DataFactory {
 
 		typeSettingsProperties.setProperty("fragmentEntries", fragmentEntries);
 
-		String typeSettings = StringUtil.replace(
-			typeSettingsProperties.toString(), '\n', "\\n");
-
-		layoutModel.setTypeSettings(typeSettings);
+		layoutModel.setTypeSettings(
+			StringUtil.replace(typeSettingsProperties.toString(), '\n', "\\n"));
 
 		layoutModel.setLastPublishDate(new Date());
 
@@ -2239,10 +2226,8 @@ public class DataFactory {
 		friendlyURLEntryLocalizationModel.setClassPK(
 			friendlyURLEntryModel.getClassPK());
 
-		String languageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
-		friendlyURLEntryLocalizationModel.setLanguageId(languageId);
+		friendlyURLEntryLocalizationModel.setLanguageId(
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 
 		friendlyURLEntryLocalizationModel.setUrlTitle(
 			blogsEntryModel.getUrlTitle());
@@ -2352,9 +2337,7 @@ public class DataFactory {
 		sb.append(StringPool.UNDERLINE);
 		sb.append(versionIndex);
 
-		String urlTitle = sb.toString();
-
-		journalArticleModel.setUrlTitle(urlTitle);
+		journalArticleModel.setUrlTitle(sb.toString());
 
 		journalArticleModel.setContent(_journalArticleContent);
 		journalArticleModel.setDefaultLanguageId("en_US");
@@ -2400,10 +2383,6 @@ public class DataFactory {
 			FragmentEntryLinkModel fragmentEntryLinkModel)
 		throws Exception {
 
-		String portletId = PortletIdCodec.encode(
-			JournalContentPortletKeys.JOURNAL_CONTENT,
-			fragmentEntryLinkModel.getNamespace());
-
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
 		portletPreferences.setValue("articleId", _defaultJournalArticleId);
@@ -2416,7 +2395,10 @@ public class DataFactory {
 		portletPreferencesModel.setOwnerType(
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
 		portletPreferencesModel.setPlid(fragmentEntryLinkModel.getClassPK());
-		portletPreferencesModel.setPortletId(portletId);
+		portletPreferencesModel.setPortletId(
+			PortletIdCodec.encode(
+				JournalContentPortletKeys.JOURNAL_CONTENT,
+				fragmentEntryLinkModel.getNamespace()));
 		portletPreferencesModel.setPreferences(
 			_portletPreferencesFactory.toXML(portletPreferences));
 
@@ -2487,11 +2469,7 @@ public class DataFactory {
 		LayoutModel layoutModel = new LayoutModelImpl();
 
 		layoutModel.setUuid(SequentialUUID.generate());
-
-		long plid = _counter.get();
-
-		layoutModel.setPlid(plid);
-
+		layoutModel.setPlid(_counter.get());
 		layoutModel.setGroupId(groupId);
 		layoutModel.setCompanyId(_companyId);
 		layoutModel.setUserId(_sampleUserId);
@@ -2511,10 +2489,8 @@ public class DataFactory {
 		typeSettingsProperties.setProperty("column-1", column1);
 		typeSettingsProperties.setProperty("column-2", column2);
 
-		String typeSettings = StringUtil.replace(
-			typeSettingsProperties.toString(), '\n', "\\n");
-
-		layoutModel.setTypeSettings(typeSettings);
+		layoutModel.setTypeSettings(
+			StringUtil.replace(typeSettingsProperties.toString(), '\n', "\\n"));
 
 		layoutModel.setLastPublishDate(new Date());
 
@@ -3808,12 +3784,11 @@ public class DataFactory {
 		cpTaxCategoryModel.setCreateDate(new Date());
 		cpTaxCategoryModel.setModifiedDate(new Date());
 
-		name = StringBundler.concat(
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales",
-			"=\"en_US\" default-locale=\"en_US\"><Name language-id=\"en_US\">",
-			name, "</Name></root>");
-
-		cpTaxCategoryModel.setName(name);
+		cpTaxCategoryModel.setName(
+			StringBundler.concat(
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ",
+				"available-locales=\"en_US\" default-locale=\"en_US\"><Name ",
+				"language-id=\"en_US\">", name, "</Name></root>"));
 
 		cpTaxCategoryModel.setDescription(null);
 

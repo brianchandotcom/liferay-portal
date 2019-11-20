@@ -256,6 +256,7 @@
 		</if>
 
 		<delete file="help.output" />
+
 		<clean-database-upgrade-client />
 	</target>
 

@@ -908,22 +908,31 @@ public class PDFProcessorImpl
 
 			PDRectangle pdRectangle = pdPage.getMediaBox();
 
+			float height = pdRectangle.getHeight();
 			float width = pdRectangle.getWidth();
 
-			double widthFactor =
-				(double)PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH /
-					width;
-
-			float height = pdRectangle.getHeight();
-
-			double heightFactor =
-				(double)PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT /
-					height;
-
 			return HashMapBuilder.put(
-				"height", (int)Math.round(widthFactor * height)
+				"height",
+				() -> {
+					double widthFactor =
+						(double)
+							PropsValues.
+								DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH /
+									width;
+
+					return (int)Math.round(widthFactor * height);
+				}
 			).put(
-				"width", (int)Math.round(heightFactor * width)
+				"width",
+				() -> {
+					double heightFactor =
+						(double)
+							PropsValues.
+								DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT /
+									height;
+
+					return (int)Math.round(heightFactor * width);
+				}
 			).build();
 		}
 	}

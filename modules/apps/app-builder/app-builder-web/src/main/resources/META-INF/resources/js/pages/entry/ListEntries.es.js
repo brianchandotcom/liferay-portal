@@ -135,17 +135,15 @@ const ListEntries = withRouter(({history, location}) => {
 					const entryIndex =
 						query.pageSize * (query.page - 1) + index + 1;
 
-					let viewURL = '';
+					const viewURL = `/entries/${entryIndex}?${toQueryString(
+						query
+					)}`;
 
-					if (firstDataRecordValue) {
-						viewURL = `/entries/${entryIndex}?${toQueryString(
-							query
-						)}`;
-
-						dataRecordValues[firstColumn] = (
-							<Link to={viewURL}>{firstDataRecordValue}</Link>
-						);
-					}
+					dataRecordValues[firstColumn] = (
+						<Link to={viewURL}>
+							{firstDataRecordValue || ' - '}
+						</Link>
+					);
 
 					return {
 						...defaultDataRecordValues,

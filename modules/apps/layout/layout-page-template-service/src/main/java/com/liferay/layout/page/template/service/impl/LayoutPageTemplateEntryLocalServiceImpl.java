@@ -146,6 +146,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			int status, ServiceContext serviceContext)
 		throws PortalException {
 
+		// Layout page template entry
+
 		validate(classNameId, classTypeId, groupId, serviceContext.getLocale());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =

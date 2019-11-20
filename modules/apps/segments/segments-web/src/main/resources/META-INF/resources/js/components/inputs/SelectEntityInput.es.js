@@ -46,6 +46,7 @@ class SelectEntityInput extends React.Component {
 			const itemSelectorDialog = new ItemSelectorDialog({
 				buttonAddLabel: Liferay.Language.get('select'),
 				eventName: id,
+				multiSelection: true,
 				title,
 				url: uri
 			});

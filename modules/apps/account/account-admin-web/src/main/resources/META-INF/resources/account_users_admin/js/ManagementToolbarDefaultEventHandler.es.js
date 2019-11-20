@@ -98,6 +98,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: dialogButtonLabel,
 			eventName: dialogEventName,
+			multiSelection: true,
 			title: dialogTitle,
 			url: accountEntrySelectorURL
 		});

@@ -300,6 +300,7 @@ else {
 				var itemSelectorDialog = new ItemSelectorDialog.default({
 					buttonAddLabel: '<liferay-ui:message key="done" />',
 					eventName: '<portlet:namespace />selectUsers',
+					multiSelection: true,
 					title: '<liferay-ui:message key="assign-users" />',
 					url: selectUsersURL.toString()
 				});

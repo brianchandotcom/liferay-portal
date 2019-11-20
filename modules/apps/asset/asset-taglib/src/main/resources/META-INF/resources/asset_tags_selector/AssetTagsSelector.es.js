@@ -129,6 +129,7 @@ function AssetTagsSelector({
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
 			eventName,
+			multiSelection: true,
 			title: Liferay.Language.get('tags'),
 			url
 		});

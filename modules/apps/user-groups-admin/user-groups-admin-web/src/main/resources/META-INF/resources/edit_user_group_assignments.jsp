@@ -149,6 +149,7 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 	function <portlet:namespace />addUsers(event) {
 		var itemSelectorDialog = new ItemSelectorDialog.default({
 			eventName: '<portlet:namespace />selectUsers',
+			multiSelection: true,
 			title:
 				'<liferay-ui:message arguments="<%= HtmlUtil.escape(userGroup.getName()) %>" key="add-users-to-x" />',
 			url: '<%= selectUsersURL %>'

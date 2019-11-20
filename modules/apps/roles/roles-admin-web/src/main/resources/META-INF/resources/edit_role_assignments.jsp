@@ -113,6 +113,7 @@ renderResponse.setTitle(role.getTitle(locale));
 	var addAssignees = function(event) {
 		var itemSelectorDialog = new ItemSelectorDialog.default({
 			eventName: '<portlet:namespace />selectAssignees',
+			multiSelection: true,
 			title:
 				'<liferay-ui:message arguments="<%= HtmlUtil.escape(role.getName()) %>" key="add-assignees-to-x" />',
 

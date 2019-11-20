@@ -139,6 +139,7 @@ class FragmentCollectionsView extends PortletBase {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: dialogButtonLabel,
 			eventName: this.ns('selectCollections'),
+			multiSelection: true,
 			title: dialogTitle,
 			url: dialogURL
 		});

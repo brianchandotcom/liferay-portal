@@ -159,6 +159,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 			const itemSelectorDialog = new ItemSelectorDialog.default({
 				buttonAddLabel: '<liferay-ui:message key="delete" />',
 				eventName: '<portlet:namespace />selectCollections',
+				multiSelection: true,
 				title: '<liferay-ui:message key="delete-collection" />',
 				url:
 					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/layout_page_template/select_layout_page_template_collections" /></portlet:renderURL>'

@@ -19,6 +19,7 @@ class EditTeamAssignmentsUsersManagementToolbarDefaultEventHandler extends Defau
 	selectUser(itemData) {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			eventName: this.ns('selectUser'),
+			multiSelection: true,
 			title: itemData.title,
 			url: itemData.selectUserURL
 		});

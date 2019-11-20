@@ -137,6 +137,7 @@
 						buttonAddLabel: '<liferay-ui:message key="done" />',
 						eventName:
 							'<%= inputAssetLinksDisplayContext.getEventName() %>',
+						multiSelection: true,
 						title: event.currentTarget.attr('data-title'),
 						url: event.currentTarget.attr('data-href')
 					});

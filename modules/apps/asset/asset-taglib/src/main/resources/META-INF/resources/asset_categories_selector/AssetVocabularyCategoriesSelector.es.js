@@ -148,6 +148,7 @@ function AssetVocabulariesCategoriesSelector({
 
 		const itemSelectorDialog = new ItemSelectorDialog({
 			eventName,
+			multiSelection: true,
 			title: Liferay.Language.get('select-categories'),
 			url
 		});

@@ -162,6 +162,7 @@
 
 			const itemSelectorDialog = new ItemSelectorDialog.default({
 				eventName: '<portlet:namespace />selectAsset',
+				multiSelection: true,
 				title: encodeURI(delegateTarget.dataset.title),
 				url: delegateTarget.dataset.href
 			});

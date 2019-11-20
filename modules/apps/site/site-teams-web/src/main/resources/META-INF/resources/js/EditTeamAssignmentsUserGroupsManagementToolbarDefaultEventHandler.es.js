@@ -19,6 +19,7 @@ class EditTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler extends 
 	selectUserGroup(itemData) {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			eventName: this.ns('selectUserGroup'),
+			multiSelection: true,
 			title: itemData.title,
 			url: itemData.selectUserGroupURL
 		});

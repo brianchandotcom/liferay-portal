@@ -113,6 +113,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			var itemSelectorDialog = new ItemSelectorDialog.default({
 				buttonAddLabel: '<liferay-ui:message key="done" />',
 				eventName: '<portlet:namespace />selectUserGroupsRoles',
+				multiSelection: true,
 				title: '<liferay-ui:message key="assign-site-roles" />',
 				url: target.dataset.href
 			});
@@ -160,6 +161,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			var itemSelectorDialog = new ItemSelectorDialog.default({
 				buttonAddLabel: '<liferay-ui:message key="done" />',
 				eventName: '<portlet:namespace />selectUserGroupsRoles',
+				multiSelection: true,
 				title: '<liferay-ui:message key="unassign-site-roles" />',
 				url: target.dataset.href
 			});

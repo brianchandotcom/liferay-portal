@@ -259,6 +259,7 @@ for (long groupId : groupIds) {
 
 			const itemSelectorDialog = new ItemSelectorDialog.default({
 				eventName: '<%= eventName %>',
+				multiSelection: true,
 				title: delegateTarget.dataset.title,
 				url: delegateTarget.dataset.href
 			});

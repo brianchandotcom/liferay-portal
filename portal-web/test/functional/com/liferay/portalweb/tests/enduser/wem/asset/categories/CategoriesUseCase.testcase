@@ -877,6 +877,8 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Import Site Name");
 
+		CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Category Name");
+
 		CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Subcategory Name");
 
 		AssetPublisherPortlet.viewAssetPG(

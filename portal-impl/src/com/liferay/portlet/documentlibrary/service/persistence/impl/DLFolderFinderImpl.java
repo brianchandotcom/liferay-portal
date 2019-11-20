@@ -629,14 +629,13 @@ public class DLFolderFinderImpl
 		OrderByComparator<?> orderByComparator =
 			queryDefinition.getOrderByComparator();
 
-		if (orderByComparator != null) {
-			String orderBy = orderByComparator.getOrderBy();
+		if ((orderByComparator != null) &&
+			ArrayUtil.contains(
+				orderByComparator.getOrderByFields(), "readCount")) {
 
-			if (orderBy.contains("readCount")) {
-				return doFindF_FE_FS_ByG_F_M_M_RC(
-					groupId, folderId, mimeTypes, includeMountFolders,
-					queryDefinition, inlineSQLHelper);
-			}
+			return doFindF_FE_FS_ByG_F_M_M_RC(
+				groupId, folderId, mimeTypes, includeMountFolders,
+				queryDefinition, inlineSQLHelper);
 		}
 
 		Session session = null;
@@ -782,14 +781,13 @@ public class DLFolderFinderImpl
 		OrderByComparator<?> orderByComparator =
 			queryDefinition.getOrderByComparator();
 
-		if (orderByComparator != null) {
-			String orderBy = orderByComparator.getOrderBy();
+		if ((orderByComparator != null) &&
+			ArrayUtil.contains(
+				orderByComparator.getOrderByFields(), "readCount")) {
 
-			if (orderBy.contains("readCount")) {
-				return doFindF_FE_FS_ByG_F_M_FETI_M_RC(
-					groupId, folderId, mimeTypes, fileEntryTypeId,
-					includeMountFolders, queryDefinition, inlineSQLHelper);
-			}
+			return doFindF_FE_FS_ByG_F_M_FETI_M_RC(
+				groupId, folderId, mimeTypes, fileEntryTypeId,
+				includeMountFolders, queryDefinition, inlineSQLHelper);
 		}
 
 		Session session = null;
@@ -1335,15 +1333,14 @@ public class DLFolderFinderImpl
 		OrderByComparator<?> orderByComparator =
 			queryDefinition.getOrderByComparator();
 
-		if (orderByComparator != null) {
-			String orderBy = orderByComparator.getOrderBy();
+		if ((orderByComparator != null) &&
+			ArrayUtil.contains(
+				orderByComparator.getOrderByFields(), "readCount")) {
 
-			if (orderBy.contains("readCount")) {
-				sql = StringUtil.replace(
-					sql, "[$VC_JOIN$]",
-					CustomSQLUtil.get(
-						DLFolderFinderImpl.JOIN_VC_BY_DL_FILE_VERSION));
-			}
+			sql = StringUtil.replace(
+				sql, "[$VC_JOIN$]",
+				CustomSQLUtil.get(
+					DLFolderFinderImpl.JOIN_VC_BY_DL_FILE_VERSION));
 		}
 
 		if (ArrayUtil.isNotEmpty(mimeTypes)) {

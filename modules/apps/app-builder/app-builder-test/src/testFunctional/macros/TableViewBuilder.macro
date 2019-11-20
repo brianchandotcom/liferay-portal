@@ -1,5 +1,17 @@
 definition {
 
+	macro addBasicTableView {
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "${fieldType}");
+
+		TableViewBuilder.setName(tableViewName = "${tableViewName}");
+
+		TableViewBuilder.save();
+	}
+
 	macro addColumnByDoubleClick {
 
 		var key_fieldType = "${fieldType}";

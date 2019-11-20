@@ -239,6 +239,65 @@ definition {
 		AppBuilderAdmin.cancelNewCustomObject();
 	}
 
+	@description = "Delete an existing custom object with no associated relationships"
+	@priority = "5"
+	test DeleteCustomObjectWithAssociatedRelationship {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text Field",
+			formViewName = "My Form View");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Text Field",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "Test App",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "Test App");
+
+		AppBuilderAdmin.add();
+
+		FormFields.editText(
+			fieldName = "TextField",
+			fieldValue = "test");
+
+		AppBuilderAdmin.save();
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.deleteEntry(customObjectName = "my custom object");
+	}
+
+	@description = "Delete an existing custom object with no associated relationships"
+	@priority = "5"
+	test DeleteCustomObjectWithNoAssociatedRelationship {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.deleteEntry(customObjectName = "my custom object");
+	}
+
 	@description = "Validate empty list state of Apps listing screen"
 	@priority = "5"
 	test ValidateEmptyStateOfAppsListingScreen {

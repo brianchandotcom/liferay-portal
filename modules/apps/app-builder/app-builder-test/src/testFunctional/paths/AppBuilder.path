@@ -31,7 +31,7 @@
 
 <tr>
 	<td>ITEM_ON_THE_TABLE_CLICK</td>
-	<td>//table[contains(@class,'table')]//a[contains(text(),'${key_ItemName}')]</td>
+	<td>//table[contains(@class,'table')]//*[contains(text(),'${key_ItemName}')]</td>
 	<td></td>
 </tr>
 
@@ -43,6 +43,11 @@
 <tr>
 	<td>CHECKBOX_OPTION_LABEL</td>
 	<td>//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox']/../span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERTICAL_ELLIPSIS_BUTTON</td>
+	<td>//tr[contains(@data-testid,'item')][descendant::a[contains(.,'${key_customObjectName}')]]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 
@@ -113,7 +118,7 @@
 
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//div[contains(@class,'input-group-item')]//button[contains(@class,'btn-primary')]</td>
+	<td>//button[contains(@class,'btn-primary') and contains(text(),'Save')]</td>
 	<td></td>
 </tr>
 
@@ -123,7 +128,19 @@
 	<td></td>
 </tr>
 
+<!--APP_CREATION_SCREEN-->
+<tr>
+	<td>DEPLOY_APP_TOGGLE</td>
+	<td>//div[contains(@class,'autofit-row ')][descendant::h3[contains(.,'${key_deployOption}')]]//input[contains(@class,'toggle-switch-check')]</td>
+	<td></td>
+</tr>
 
+<!--CONTROL_PANEL-->
+<tr>
+	<td>CUSTOM_PORTLET</td>
+	<td>//div[contains(@class,'panel-app-root')]//a[contains(@data-title,'${key_portlet}')]</td>
+	<td></td>
+</tr>
 
 </tbody>
 </table>

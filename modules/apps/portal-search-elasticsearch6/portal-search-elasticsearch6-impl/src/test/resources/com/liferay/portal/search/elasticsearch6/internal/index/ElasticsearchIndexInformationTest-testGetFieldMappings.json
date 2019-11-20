@@ -53,6 +53,11 @@
 						"template_expando_keyword" : {
 							"mapping" : {
 								"analyzer" : "keyword_lowercase",
+								"fields" : {
+									"raw" : {
+										"type" : "keyword"
+									}
+								},
 								"store" : true,
 								"type" : "text"
 							},

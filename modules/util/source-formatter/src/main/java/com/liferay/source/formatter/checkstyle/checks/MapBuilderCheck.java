@@ -23,6 +23,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Hugo Huijser
@@ -31,12 +32,20 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.ASSIGN, TokenTypes.METHOD_CALL};
+		return new int[] {
+			TokenTypes.ASSIGN, TokenTypes.INSTANCE_INIT, TokenTypes.METHOD_CALL
+		};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
 		if (isExcludedPath(_RUN_OUTSIDE_PORTAL_EXCLUDES)) {
+			return;
+		}
+
+		if (detailAST.getType() == TokenTypes.INSTANCE_INIT) {
+			_checkAnonymousClass(detailAST);
+
 			return;
 		}
 
@@ -70,6 +79,73 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 		_checkNewInstance(
 			detailAST, variableName, parentDetailAST, nextSiblingDetailAST);
+	}
+
+	private void _checkAnonymousClass(DetailAST detailAST) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if (parentDetailAST.getType() != TokenTypes.OBJBLOCK) {
+			return;
+		}
+
+		parentDetailAST = parentDetailAST.getParent();
+
+		if (parentDetailAST.getType() != TokenTypes.LITERAL_NEW) {
+			return;
+		}
+
+		DetailAST identDetailAST = parentDetailAST.findFirstToken(
+			TokenTypes.IDENT);
+
+		if (identDetailAST == null) {
+			return;
+		}
+
+		String className = identDetailAST.getText();
+
+		List<String> mapTypeNames = getAttributeValues(_MAP_TYPE_NAMES_KEY);
+
+		if (!mapTypeNames.contains(className)) {
+			return;
+		}
+
+		List<DetailAST> loopDetailASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.DO_WHILE, TokenTypes.LITERAL_FOR,
+			TokenTypes.LITERAL_WHILE);
+
+		if (!loopDetailASTList.isEmpty()) {
+			return;
+		}
+
+		List<DetailAST> methodCallDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				detailAST, true, TokenTypes.METHOD_CALL);
+
+		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
+			parentDetailAST = methodCallDetailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.EXPR) {
+				continue;
+			}
+
+			parentDetailAST = parentDetailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.SLIST) {
+				continue;
+			}
+
+			DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
+
+			if ((firstChildDetailAST.getType() == TokenTypes.IDENT) &&
+				!Objects.equals(firstChildDetailAST.getText(), "put")) {
+
+				return;
+			}
+		}
+
+		log(
+			detailAST, _MSG_USE_MAP_BUILDER_INSTEAD, className + "Builder",
+			className);
 	}
 
 	private void _checkInline(
@@ -538,6 +614,9 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 	private static final String _MSG_INLINE_MAP_BUILDER = "map.builder.inline";
 
 	private static final String _MSG_USE_MAP_BUIDER = "map.builder.use";
+
+	private static final String _MSG_USE_MAP_BUILDER_INSTEAD =
+		"map.builder.use.instead";
 
 	private static final String _RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";

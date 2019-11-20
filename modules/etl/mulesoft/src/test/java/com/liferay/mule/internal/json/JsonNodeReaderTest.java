@@ -39,7 +39,7 @@ public class JsonNodeReaderTest {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"example.json");
+			"com/liferay/mule/internal/json/example.json");
 
 		_jsonNode = objectMapper.readTree(inputStream);
 	}

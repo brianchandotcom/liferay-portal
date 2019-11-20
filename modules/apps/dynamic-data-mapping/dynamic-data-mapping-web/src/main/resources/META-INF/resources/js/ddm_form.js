@@ -4115,21 +4115,21 @@ AUI.add(
 
 					fields.splice(newIndex, 0, fields.splice(oldIndex, 1)[0]);
 
-					var fieldInstance = fields[newIndex];
+					var field = fields[newIndex];
 
-					var field = fieldInstance.getFieldDefinition();
+					var fieldDefinition = field.getFieldDefinition();
 
-					if (field) {
-						var type = field.type;
+					if (fieldDefinition) {
+						var type = fieldDefinition.type;
 
 						if (type === 'ddm-text-html') {
-							var editor = fieldInstance.getEditor();
+							var editor = field.getEditor();
 
 							var usingCKEditor =
 								CKEDITOR &&
 								CKEDITOR.instances &&
 								CKEDITOR.instances[
-									fieldInstance.getInputName() + 'Editor'
+									field.getInputName() + 'Editor'
 								];
 
 							var usingAlloyEditor =

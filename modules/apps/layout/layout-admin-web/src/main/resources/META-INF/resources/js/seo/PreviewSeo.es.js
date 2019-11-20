@@ -135,23 +135,32 @@ const PreviewSeoContainer = ({
 			return {defaultValue, listener, node, type};
 		});
 
-		PreviewSeoOnChange(portletNamespace, setPreviewState);
+		const PreviewSeoOnChangeHandle = PreviewSeoOnChange(
+			portletNamespace,
+			setPreviewState
+		);
 
-		Liferay.on('inputLocalized:localeChanged', () => {
-			inputs.forEach(({defaultValue, node, type}) =>
-				setPreviewState({
-					defaultValue,
-					type,
-					value: node && node.value
-				})
-			);
-		});
+		const inputLocalizedLocaleChangedHandle = Liferay.on(
+			'inputLocalized:localeChanged',
+			() => {
+				inputs.forEach(({defaultValue, node, type}) =>
+					setPreviewState({
+						defaultValue,
+						type,
+						value: node && node.value
+					})
+				);
+			}
+		);
 
 		return () => {
 			inputs.forEach(
 				({listener, node}) =>
 					node && node.removeEventListener('input', listener)
 			);
+
+			Liferay.detach(inputLocalizedLocaleChangedHandle);
+			Liferay.detach(PreviewSeoOnChangeHandle);
 		};
 	}, [isMounted, portletNamespace, targets]);
 

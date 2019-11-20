@@ -30,6 +30,14 @@
 		<field name="modelMvccVersion" type="long" />
 		<field name="changeType" type="int" />
 	</model>
+	<model name="com.liferay.change.tracking.model.CTMessage">
+		<field name="mvccVersion" type="long" />
+		<field name="ctMessageId" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="messageContent" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
 	<model name="com.liferay.change.tracking.model.CTPreferences">
 		<field name="mvccVersion" type="long" />
 		<field name="ctPreferencesId" type="long" />

@@ -85,7 +85,7 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					serviceContext.getScopeGroupId(),
 					layoutPageTemplateCollectionId, name, type,
-					WorkflowConstants.STATUS_DRAFT, masterLayoutPlid,
+					masterLayoutPlid, WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
 
 			JSONObject jsonObject = JSONUtil.put(

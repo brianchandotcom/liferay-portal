@@ -174,15 +174,6 @@ public class AssigneeUserResourceImpl
 			slaTaskResultsBooleanQuery, tokensBooleanQuery);
 	}
 
-	private BooleanQuery _createCountFilterBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-tokens"));
-
-		return booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
-	}
-
 	private BooleanQuery _createSLATaskResultsBooleanQuery(
 		boolean completed, Date dateEnd, Date dateStart, long processId,
 		String[] taskKeys, Set<Long> userIds) {
@@ -279,21 +270,21 @@ public class AssigneeUserResourceImpl
 			"assigneeId", "assigneeId");
 
 		FilterAggregation countFilterAggregation = _aggregations.filter(
-			"countFilter", _createCountFilterBooleanQuery());
+			"countFilter", _resourceHelper.createTokensBooleanQuery(completed));
 
 		countFilterAggregation.addChildrenAggregations(
 			_aggregations.avg("durationTaskAvg", "duration"),
 			_aggregations.valueCount("taskCount", "taskId"));
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
-			"onTime", _resourceHelper.createMustNotBooleanQuery());
+			"onTime", _resourceHelper.createMustNotBooleanQuery(completed));
 
 		onTimeFilterAggregation.addChildAggregation(
 			_resourceHelper.
 				createOnTimeTaskByAssigneeScriptedMetricAggregation());
 
 		FilterAggregation overdueFilterAggregation = _aggregations.filter(
-			"overdue", _resourceHelper.createMustNotBooleanQuery());
+			"overdue", _resourceHelper.createMustNotBooleanQuery(completed));
 
 		overdueFilterAggregation.addChildAggregation(
 			_resourceHelper.

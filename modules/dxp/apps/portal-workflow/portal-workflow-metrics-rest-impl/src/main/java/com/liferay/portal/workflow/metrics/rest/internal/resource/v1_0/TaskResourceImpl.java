@@ -177,16 +177,6 @@ public class TaskResourceImpl
 			_queries.term("slaDefinitionId", 0));
 	}
 
-	private BooleanQuery _createCountFilterBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-tokens"));
-
-		return booleanQuery.addMustNotQueryClauses(
-			_queries.term("instanceId", 0));
-	}
-
 	private BooleanQuery _createFilterBooleanQuery(
 		boolean completed, String key, long processId, String version) {
 
@@ -373,26 +363,26 @@ public class TaskResourceImpl
 			"taskName", "taskName");
 
 		FilterAggregation breachedFilterAggregation = _aggregations.filter(
-			"breached", _resourceHelper.createMustNotBooleanQuery());
+			"breached", _resourceHelper.createMustNotBooleanQuery(completed));
 
 		breachedFilterAggregation.addChildAggregation(
 			_resourceHelper.createBreachedScriptedMetricAggregation());
 
 		FilterAggregation countFilterAggregation = _aggregations.filter(
-			"countFilter", _createCountFilterBooleanQuery());
+			"countFilter", _resourceHelper.createTokensBooleanQuery(completed));
 
 		countFilterAggregation.addChildrenAggregations(
 			_aggregations.avg("durationAvg", "duration"),
 			_aggregations.valueCount("instanceCount", "instanceId"));
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
-			"onTime", _resourceHelper.createMustNotBooleanQuery());
+			"onTime", _resourceHelper.createMustNotBooleanQuery(completed));
 
 		onTimeFilterAggregation.addChildAggregation(
 			_resourceHelper.createOnTimeScriptedMetricAggregation());
 
 		FilterAggregation overdueFilterAggregation = _aggregations.filter(
-			"overdue", _resourceHelper.createMustNotBooleanQuery());
+			"overdue", _resourceHelper.createMustNotBooleanQuery(completed));
 
 		overdueFilterAggregation.addChildAggregation(
 			_resourceHelper.createOverdueScriptedMetricAggregation());

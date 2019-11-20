@@ -125,6 +125,16 @@ public class ResourceHelper {
 			_queries.term("status", WorkflowMetricsSLAStatus.NEW.name()));
 	}
 
+	public BooleanQuery createMustNotBooleanQuery(boolean instanceCompleted) {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustQueryClauses(
+			_queries.term("instanceCompleted", instanceCompleted));
+
+		return booleanQuery.addMustNotQueryClauses(
+			_queries.term("status", WorkflowMetricsSLAStatus.NEW.name()));
+	}
+
 	public ScriptedMetricAggregation createOnTimeScriptedMetricAggregation() {
 		ScriptedMetricAggregation scriptedMetricAggregation =
 			_aggregations.scriptedMetric("instanceCount");
@@ -195,6 +205,19 @@ public class ResourceHelper {
 		return _scripts.script(
 			StringUtil.read(
 				clazz.getResourceAsStream("dependencies/" + resourceName)));
+	}
+
+	public BooleanQuery createTokensBooleanQuery(boolean instanceCompleted) {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addFilterQueryClauses(
+			_queries.term("_index", "workflow-metrics-tokens"));
+
+		booleanQuery.addMustQueryClauses(
+			_queries.term("instanceCompleted", instanceCompleted));
+
+		return booleanQuery.addMustNotQueryClauses(
+			_queries.term("instanceId", 0));
 	}
 
 	public ScriptedMetricAggregation

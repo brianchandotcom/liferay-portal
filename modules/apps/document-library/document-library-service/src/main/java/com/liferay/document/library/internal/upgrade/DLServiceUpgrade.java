@@ -56,7 +56,7 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register("1.1.0", "2.0.0", new UpgradeCompanyId());
 
 		registry.register(
-			"2.0.0", "2.0.1",
+			"2.0.0", "3.0.0",
 			new UpgradeViewCount(
 				"DlFileEntry", DLFileEntry.class, "fileEntryId", "readCount"));
 	}
@@ -67,8 +67,6 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference(target = "(dl.store.upgrade=true)")
 	private Store _store;
-
-	// See LPS-101083. The ViewCount table needs to exist.
 
 	@Reference
 	private ViewCountEntryLocalService _viewCountEntryLocalService;

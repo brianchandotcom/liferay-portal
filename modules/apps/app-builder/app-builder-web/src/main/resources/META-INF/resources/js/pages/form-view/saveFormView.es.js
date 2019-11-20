@@ -20,6 +20,30 @@ export default ({
 	dataLayout,
 	dataLayoutId
 }) => {
+	const normalizedDataLayout = {
+		...dataLayout,
+		dataLayoutPages: dataLayout.dataLayoutPages.map(dataLayoutPage => ({
+			...dataLayoutPage,
+			dataLayoutRows: (dataLayoutPage.dataLayoutRows || []).map(
+				dataLayoutRow => ({
+					...dataLayoutRow,
+					dataLayoutColumns: (
+						dataLayoutRow.dataLayoutColumns || []
+					).map(dataLayoutColumn => ({
+						...dataLayoutColumn,
+						fieldNames: dataLayoutColumn.fieldNames || []
+					}))
+				})
+			),
+			description: dataLayoutPage.description || {
+				[themeDisplay.getLanguageId()]: ''
+			},
+			title: dataLayoutPage.title || {
+				[themeDisplay.getLanguageId()]: ''
+			}
+		}))
+	};
+
 	const updateDefinition = () =>
 		updateItem(
 			`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`,
@@ -30,7 +54,7 @@ export default ({
 		return updateDefinition().then(() =>
 			updateItem(
 				`/o/data-engine/v1.0/data-layouts/${dataLayoutId}`,
-				dataLayout
+				normalizedDataLayout
 			)
 		);
 	}
@@ -38,7 +62,7 @@ export default ({
 	return updateDefinition().then(() =>
 		addItem(
 			`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-layouts`,
-			dataLayout
+			normalizedDataLayout
 		)
 	);
 };

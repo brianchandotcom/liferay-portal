@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusEventListener;
+import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -210,6 +211,16 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 
 	@Override
 	public void sendMessage(String destinationName, Message message) {
+		MessageBusThreadLocalUtil.populateMessageFromThreadLocals(message);
+
+		MessageBusInterceptor messageBusInterceptor = _messageBusInterceptor;
+
+		if ((messageBusInterceptor != null) &&
+			messageBusInterceptor.intercept(this, destinationName, message)) {
+
+			return;
+		}
+
 		Destination destination = _destinations.get(destinationName);
 
 		if (destination == null) {
@@ -568,6 +579,14 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		new ConcurrentHashMap<>();
 	private final Set<MessageBusEventListener> _messageBusEventListeners =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile MessageBusInterceptor _messageBusInterceptor;
+
 	private ServiceTracker
 		<MessageListener, ObjectValuePair<String, MessageListener>>
 			_messageListenerServiceTracker;

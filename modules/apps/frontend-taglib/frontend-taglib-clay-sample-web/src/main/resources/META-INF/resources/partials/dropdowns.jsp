@@ -18,7 +18,9 @@
 
 <h3>DROPDOWN MENU</h3>
 
-<blockquote><p>A dropdown is a list of options related to the element that triggers it.</p></blockquote>
+<blockquote>
+	<p>A dropdown is a list of options related to the element that triggers it.</p>
+</blockquote>
 
 <div class="row">
 	<div class="col-md-2">

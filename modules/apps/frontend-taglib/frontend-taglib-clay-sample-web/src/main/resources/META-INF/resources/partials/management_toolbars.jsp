@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<blockquote><p>Management toolbar is an extension of Toolbar. A combination of different components as filters, orders, search, visualization select and other actions, that allow to manage dataset.</p></blockquote>
+<blockquote>
+	<p>Management toolbar is an extension of Toolbar. A combination of different components as filters, orders, search, visualization select and other actions, that allow to manage dataset.</p>
+</blockquote>
 
 <h3>DEFAULT STATE</h3>
 

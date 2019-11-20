@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<blockquote><p>Labels are a mechanism to categorize information providing quick recognition.</p></blockquote>
+<blockquote>
+	<p>Labels are a mechanism to categorize information providing quick recognition.</p>
+</blockquote>
 
 <div class="mb-3 row">
 	<div class="col-2">

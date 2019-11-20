@@ -16,11 +16,15 @@
 
 <%@ include file="/init.jsp" %>
 
-<blockquote><p>A link (also known as hyperlink) is a clickable (text or image) element. The link control is used for navigation.</p></blockquote>
+<blockquote>
+	<p>A link (also known as hyperlink) is a clickable (text or image) element. The link control is used for navigation.</p>
+</blockquote>
 
 <h3>SINGLE LINK</h3>
 
-<blockquote><p>Used for stand-alone hyperlinks. Can be a text or an image.</p></blockquote>
+<blockquote>
+	<p>Used for stand-alone hyperlinks. Can be a text or an image.</p>
+</blockquote>
 
 <%
 Map<String, String> data = new HashMap<>();

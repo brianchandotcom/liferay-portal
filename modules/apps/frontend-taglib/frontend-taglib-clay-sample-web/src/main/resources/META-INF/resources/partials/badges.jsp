@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<blockquote><p>Badges help highlight important information such as notifications or new and unread messages. Badges have circular borders and are only used to specify a number.</p></blockquote>
+<blockquote>
+	<p>Badges help highlight important information such as notifications or new and unread messages. Badges have circular borders and are only used to specify a number.</p>
+</blockquote>
 
 <div class="row text-center">
 	<div class="col-md-1">

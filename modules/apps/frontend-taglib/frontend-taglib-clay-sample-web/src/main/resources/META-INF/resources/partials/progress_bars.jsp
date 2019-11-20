@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<blockquote><p>Progress bar is a progress indicator used to show the completion percentage of a task.</p></blockquote>
+<blockquote>
+	<p>Progress bar is a progress indicator used to show the completion percentage of a task.</p>
+</blockquote>
 
 <clay:progressbar
 	maxValue="<%= 100 %>"

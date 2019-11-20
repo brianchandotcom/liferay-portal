@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<blockquote><p>Tables are lists of properties of items arranged as rows and columns. Each table cell can use a custom renderer so that its data can be displayed in the best way.</p></blockquote>
+<blockquote>
+	<p>Tables are lists of properties of items arranged as rows and columns. Each table cell can use a custom renderer so that its data can be displayed in the best way.</p>
+</blockquote>
 
 <clay:table
 	contributorKey="SampleTable"

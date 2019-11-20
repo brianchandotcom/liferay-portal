@@ -18,7 +18,9 @@
 
 <h3>CHECKBOX</h3>
 
-<blockquote><p>A checkbox is a component that allows the user selecting something written in its associated text label. A list of consecutive checkboxes would allow the user to select multiple things.</p></blockquote>
+<blockquote>
+	<p>A checkbox is a component that allows the user selecting something written in its associated text label. A list of consecutive checkboxes would allow the user to select multiple things.</p>
+</blockquote>
 
 <table class="table">
 	<thead>
@@ -54,7 +56,9 @@
 
 <h3>RADIO</h3>
 
-<blockquote><p>A radio button is a component that allows the user selecting something written in its associated text label. A list of consecutive radio buttons would allow the user to select just one thing.</p></blockquote>
+<blockquote>
+	<p>A radio button is a component that allows the user selecting something written in its associated text label. A list of consecutive radio buttons would allow the user to select just one thing.</p>
+</blockquote>
 
 <table class="table">
 	<thead>
@@ -86,7 +90,9 @@
 
 <h3>SELECTOR</h3>
 
-<blockquote><p>Selectors are frequently used as a part of forms. This elements are used when we need to select one or more within several options. These options are displayed in the button once selected.</p></blockquote>
+<blockquote>
+	<p>Selectors are frequently used as a part of forms. This elements are used when we need to select one or more within several options. These options are displayed in the button once selected.</p>
+</blockquote>
 
 <%
 List<SelectOption> selectOptions = new ArrayList<>();

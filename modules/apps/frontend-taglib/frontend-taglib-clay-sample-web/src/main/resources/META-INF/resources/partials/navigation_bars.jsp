@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<blockquote><p>A navigation bar, navbar, is an horizontal bar that provides several access points to different parts of a system.</p></blockquote>
+<blockquote>
+	<p>A navigation bar, navbar, is an horizontal bar that provides several access points to different parts of a system.</p>
+</blockquote>
 
 <h3>NAVIGATION BARS USING DISPLAY CONTEXT</h3>
 

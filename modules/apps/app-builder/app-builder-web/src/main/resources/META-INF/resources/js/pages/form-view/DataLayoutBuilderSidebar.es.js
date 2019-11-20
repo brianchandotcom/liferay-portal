@@ -14,6 +14,7 @@
 
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {isEmptyRow} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import React, {
 	useEffect,
@@ -54,7 +55,16 @@ const DefaultSidebarBody = ({keywords}) => {
 				indexes: {
 					columnIndex: 0,
 					pageIndex: activePage,
-					rowIndex: pages[activePage].rows.length
+					rowIndex: pages[activePage].rows.reduce(
+						(lastEmptyRowIndex, row, rowIndex) => {
+							if (isEmptyRow(pages, activePage, rowIndex)) {
+								return rowIndex;
+							}
+
+							return lastEmptyRowIndex;
+						},
+						pages[activePage].rows.length
+					)
 				}
 			})
 		);

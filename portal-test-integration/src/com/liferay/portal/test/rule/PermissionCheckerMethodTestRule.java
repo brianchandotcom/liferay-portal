@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.rule.MethodTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.security.permission.SimplePermissionChecker;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
+
+import java.util.Objects;
 
 import org.junit.runner.Description;
 
@@ -54,21 +57,26 @@ public class PermissionCheckerMethodTestRule extends MethodTestRule<Void> {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
+		PermissionChecker permissionChecker =
+			PermissionCheckerHolder._permissionChecker;
+
+		PermissionChecker clonedPermissionChecker = permissionChecker.clone();
+
+		clonedPermissionChecker.init(TestPropsValues.getUser());
+
 		PermissionThreadLocal.setPermissionChecker(
-			new SimplePermissionChecker() {
-				{
-					init(TestPropsValues.getUser());
-				}
+			(PermissionChecker)ProxyUtil.newProxyInstance(
+				PermissionChecker.class.getClassLoader(),
+				new Class<?>[] {PermissionChecker.class},
+				(proxy, method, args) -> {
+					if (Objects.equals(
+							method.getName(), "hasOwnerPermission")) {
 
-				@Override
-				public boolean hasOwnerPermission(
-					long companyId, String name, String primKey, long ownerId,
-					String actionId) {
+						return true;
+					}
 
-					return true;
-				}
-
-			});
+					return method.invoke(clonedPermissionChecker, args);
+				}));
 	}
 
 	protected void setUpPrincipalThreadLocal() throws Exception {
@@ -82,5 +90,29 @@ public class PermissionCheckerMethodTestRule extends MethodTestRule<Void> {
 
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
+
+	private static class PermissionCheckerHolder {
+
+		private static PermissionChecker _getPermissionChecker() {
+			try {
+				ClassLoader portalClassLoader =
+					PortalClassLoaderUtil.getClassLoader();
+
+				Class<PermissionChecker> clazz =
+					(Class<PermissionChecker>)portalClassLoader.loadClass(
+						"com.liferay.portal.security.permission." +
+							"SimplePermissionChecker");
+
+				return clazz.newInstance();
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+		private static final PermissionChecker _permissionChecker =
+			_getPermissionChecker();
+
+	}
 
 }

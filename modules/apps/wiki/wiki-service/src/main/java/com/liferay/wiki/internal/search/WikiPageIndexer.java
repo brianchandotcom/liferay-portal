@@ -157,9 +157,7 @@ public class WikiPageIndexer
 	}
 
 	@Override
-	public boolean isVisibleRelatedEntry(long classPK, int status)
-		throws Exception {
-
+	public boolean isVisibleRelatedEntry(long classPK, int status) {
 		return true;
 	}
 

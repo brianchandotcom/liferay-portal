@@ -245,6 +245,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOVE_CATEGORY</td>
+	<td>//div[@class='input-group-item']//span[contains(.,'${key_categoryName}')]//button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOVE_TAG</td>
 	<td>//span[contains(.,'${key_removeTag}')]//..//button[contains(@class,'close')]</td>
 	<td></td>

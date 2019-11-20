@@ -20,6 +20,23 @@ public Map<String, Object> getUserMap(User user) {
 }
 ```
 
+Also incorrect:
+
+```java
+public Map<String, Object> getUserMap(User user) {
+    return new HashMap<String, Object>() {
+        {
+            put("addresses", user.getAddresses());
+            put("emailAddresses", user.getEmailAddress());
+            put("fullName", user.getFullName());
+            put("locale", user.getLocale());
+            put("jobTitle", user.getJobTitle());
+        }
+    };
+}
+
+```
+
 Correct:
 
 ```java

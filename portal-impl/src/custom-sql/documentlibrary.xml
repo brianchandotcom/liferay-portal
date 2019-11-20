@@ -505,8 +505,8 @@
 			INNER JOIN
 				DLFileEntry ON
 					(DLFileEntry.companyId = ViewCountEntry.companyId) AND
-					(DLFileEntry.fileEntryId = ViewCountEntry.classPK) AND
-					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$])
+					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$]) AND
+					(DLFileEntry.fileEntryId = ViewCountEntry.classPK)
 			WHERE
 				(DLFileEntry.groupId = ?) AND
 				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
@@ -520,8 +520,8 @@
 			LEFT JOIN
 				ViewCountEntry ON
 					(DLFileEntry.companyId = ViewCountEntry.companyId) AND
-					(DLFileEntry.fileEntryId = ViewCountEntry.classPK) AND
-					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$])
+					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$]) AND
+					(DLFileEntry.fileEntryId = ViewCountEntry.classPK)
 			WHERE
 				(ViewCountEntry.viewCount IS NULL) AND
 				(DLFileEntry.groupId = ?) AND
@@ -553,8 +553,8 @@
 			INNER JOIN
 				DLFileEntry ON
 					(DLFileEntry.companyId = ViewCountEntry.companyId) AND
-					(DLFileEntry.fileEntryId = ViewCountEntry.classPK) AND
-					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$])
+					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$]) AND
+					(DLFileEntry.fileEntryId = ViewCountEntry.classPK)
 			WHERE
 				(DLFileEntry.groupId = ?) AND
 				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
@@ -569,8 +569,8 @@
 			LEFT JOIN
 				ViewCountEntry ON
 					(DLFileEntry.companyId = ViewCountEntry.companyId) AND
-					(DLFileEntry.fileEntryId = ViewCountEntry.classPK) AND
-					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$])
+					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$]) AND
+					(DLFileEntry.fileEntryId = ViewCountEntry.classPK)
 			WHERE
 				(ViewCountEntry.viewCount IS NULL) AND
 				(DLFileEntry.groupId = ?) AND
@@ -607,8 +607,8 @@
 			INNER JOIN
 				ViewCountEntry ON
 					(DLFileEntry.companyId = ViewCountEntry.companyId) AND
-					(DLFileEntry.fileEntryId = ViewCountEntry.classPK) AND
-					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$])
+					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$]) AND
+					(DLFileEntry.fileEntryId = ViewCountEntry.classPK)
 			WHERE
 				(DLFileShortcut.groupId = ?) AND
 				(DLFileShortcut.active_ = ?) AND
@@ -625,8 +625,8 @@
 			LEFT JOIN
 				ViewCountEntry ON
 					(DLFileEntry.companyId = ViewCountEntry.companyId) AND
-					(DLFileEntry.fileEntryId = ViewCountEntry.classPK) AND
-					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$])
+					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$]) AND
+					(DLFileEntry.fileEntryId = ViewCountEntry.classPK)
 			WHERE
 				(ViewCountEntry.viewCount IS NULL) AND
 				(DLFileShortcut.groupId = ?) AND
@@ -660,7 +660,9 @@
 		<![CDATA[
 			INNER JOIN
 				DLFileVersion ON
-					ViewCountEntry.classPK = DLFileVersion.fileEntryId
+					(DLFileVersion.companyId = ViewCountEntry.companyId) AND
+					(ViewCountEntry.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$]) AND
+					(ViewCountEntry.classPK = DLFileVersion.fileEntryId)
 		]]>
 	</sql>
 </custom-sql>

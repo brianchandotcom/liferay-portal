@@ -151,8 +151,8 @@ public class DepotAdminManagementToolbarDisplayContext
 	public Map<String, Object> getRowData(Group curGroup)
 		throws PortalException {
 
-		return HashMapBuilder.put(
-			"actions", (Object)StringUtil.merge(_getAvailableActions(curGroup))
+		return HashMapBuilder.<String, Object>put(
+			"actions", StringUtil.merge(_getAvailableActions(curGroup))
 		).build();
 	}
 

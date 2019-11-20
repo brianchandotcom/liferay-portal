@@ -47,13 +47,13 @@ public class HashMapBuilderTest {
 
 	@Test
 	public void testNullValues() {
-		Map<String, Object> map = HashMapBuilder.put(
+		Map<String, Object> map = HashMapBuilder.<String, Object>put(
 			"Hello", null
 		).build();
 
 		Assert.assertEquals(map.toString(), 1, map.size());
 
-		map = HashMapBuilder.put(
+		map = HashMapBuilder.<String, Object>put(
 			"Hello", () -> null
 		).build();
 

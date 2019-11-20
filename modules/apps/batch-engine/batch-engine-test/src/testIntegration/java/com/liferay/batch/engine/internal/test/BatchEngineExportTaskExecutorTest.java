@@ -317,9 +317,10 @@ public class BatchEngineExportTaskExecutorTest
 	private void _exportBlogPostings(
 		String contentType, List<String> fieldNames) {
 
-		Map<String, Serializable> parameters = HashMapBuilder.put(
-			"siteId", (Serializable)group.getGroupId()
-		).build();
+		Map<String, Serializable> parameters =
+			HashMapBuilder.<String, Serializable>put(
+				"siteId", group.getGroupId()
+			).build();
 
 		_batchEngineExportTask =
 			_batchEngineExportTaskLocalService.addBatchEngineExportTask(

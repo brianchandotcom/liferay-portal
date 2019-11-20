@@ -257,17 +257,18 @@ public class KaleoLogLocalServiceTest {
 	}
 
 	private KaleoInstance _addKaleoInstance() throws Exception {
-		Map<String, Serializable> workflowContext = HashMapBuilder.put(
-			WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME,
-			(Serializable)BlogsEntry.class.getName()
-		).put(
-			WorkflowConstants.CONTEXT_ENTRY_CLASS_PK,
-			() -> {
-				BlogsEntry blogsEntry = _addBlogsEntry();
+		Map<String, Serializable> workflowContext =
+			HashMapBuilder.<String, Serializable>put(
+				WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME,
+				BlogsEntry.class.getName()
+			).put(
+				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK,
+				() -> {
+					BlogsEntry blogsEntry = _addBlogsEntry();
 
-				return String.valueOf(blogsEntry.getEntryId());
-			}
-		).build();
+					return String.valueOf(blogsEntry.getEntryId());
+				}
+			).build();
 
 		return _kaleoInstanceLocalService.addKaleoInstance(
 			1, "Test", 1, workflowContext, _serviceContext);

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
+import com.liferay.portal.search.elasticsearch7.internal.util.ClassLoaderUtil;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch7.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
@@ -307,11 +308,16 @@ public class EmbeddedElasticsearchConnection
 	protected RestHighLevelClient createRestHighLevelClient() {
 		startNode();
 
-		return new RestHighLevelClient(
-			RestClient.builder(
-				new HttpHost(
-					"localhost", elasticsearchConfiguration.embeddedHttpPort(),
-					"http")));
+		Class<? extends EmbeddedElasticsearchConnection> clazz = getClass();
+
+		return ClassLoaderUtil.getWithContextClassLoader(
+			() -> new RestHighLevelClient(
+				RestClient.builder(
+					new HttpHost(
+						"localhost",
+						elasticsearchConfiguration.embeddedHttpPort(),
+						"http"))),
+			clazz);
 	}
 
 	@Deactivate

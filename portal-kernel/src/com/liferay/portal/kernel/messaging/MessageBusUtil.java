@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.messaging;
 
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
@@ -95,8 +94,7 @@ public class MessageBusUtil {
 		throws MessageBusException {
 
 		SynchronousMessageSender synchronousMessageSender =
-			SingleDestinationMessageSenderFactoryUtil.
-				getSynchronousMessageSender(_synchronousMessageSenderMode);
+			_getSynchronousMessageSender();
 
 		return synchronousMessageSender.send(destinationName, message);
 	}
@@ -106,8 +104,7 @@ public class MessageBusUtil {
 		throws MessageBusException {
 
 		SynchronousMessageSender synchronousMessageSender =
-			SingleDestinationMessageSenderFactoryUtil.
-				getSynchronousMessageSender(_synchronousMessageSenderMode);
+			_getSynchronousMessageSender();
 
 		return synchronousMessageSender.send(destinationName, message, timeout);
 	}
@@ -173,6 +170,26 @@ public class MessageBusUtil {
 		_synchronousMessageSenderMode = synchronousMessageSenderMode;
 	}
 
+	private static SynchronousMessageSender _getSynchronousMessageSender() {
+		if (_synchronousMessageSenderMode ==
+				SynchronousMessageSender.Mode.DEFAULT) {
+
+			return _defaultSynchronousMessageSender;
+		}
+
+		return _directSynchronousMessageSender;
+	}
+
+	private static volatile SynchronousMessageSender
+		_defaultSynchronousMessageSender =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				SynchronousMessageSender.class, MessageBusUtil.class,
+				"_defaultSynchronousMessageSender", "(mode=DEFAULT)", true);
+	private static volatile SynchronousMessageSender
+		_directSynchronousMessageSender =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				SynchronousMessageSender.class, MessageBusUtil.class,
+				"_directSynchronousMessageSender", "(mode=DIRECT)", true);
 	private static volatile MessageBus _messageBus =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			MessageBus.class, MessageBusUtil.class, "_messageBus", true);

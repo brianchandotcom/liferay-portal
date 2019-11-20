@@ -25,13 +25,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.PortalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.service.base.PortalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
@@ -229,12 +229,7 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 			message.put("rollback", rollback);
 			message.put("text", transactionPortletBarText);
 
-			SynchronousMessageSender synchronousMessageSender =
-				SingleDestinationMessageSenderFactoryUtil.
-					getSynchronousMessageSender(
-						SynchronousMessageSender.Mode.DIRECT);
-
-			synchronousMessageSender.send(
+			_directSynchronousMessageSender.send(
 				DestinationNames.TEST_TRANSACTION, message);
 		}
 		catch (Exception e) {
@@ -244,5 +239,11 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalServiceImpl.class);
+
+	private static volatile SynchronousMessageSender
+		_directSynchronousMessageSender =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				SynchronousMessageSender.class, PortalServiceImpl.class,
+				"_directSynchronousMessageSender", "(mode=DIRECT)", true);
 
 }

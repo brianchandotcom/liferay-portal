@@ -34,7 +34,49 @@ class ItemSelectorDialog extends Component {
 		this._selectedItem = null;
 
 		const eventName = this.eventName;
-		const zIndex = this.zIndex;
+
+		const dialogConfig = this._getDialogConfig();
+
+		const dialogEvents = {
+			on: {
+				click: event => {
+					event.domEvent.preventDefault();
+				},
+				visibleChange: event => {
+					if (!event.newVal) {
+						this.selectedItem = this._selectedItem;
+
+						this.emit('selectedItemChange', {
+							selectedItem: this.selectedItem
+						});
+					}
+
+					this.emit('visibleChange', {visible: event.newVal});
+				}
+			}
+		};
+
+		Liferay.Util.selectEntity(
+			{
+				dialog: {...dialogConfig, ...dialogEvents},
+				eventName,
+				id: eventName,
+				stack: !this.zIndex,
+				title: this.title,
+				uri: this.url
+			},
+			this._onItemSelected.bind(this)
+		);
+	}
+
+	_getDialogConfig() {
+		const dialogConfig = {
+			constrain: true,
+			cssClass: this.dialogClasses,
+			destroyOnHide: true,
+			modal: true,
+			zIndex: this.zIndex
+		};
 
 		const dialogFooter = [
 			{
@@ -61,42 +103,11 @@ class ItemSelectorDialog extends Component {
 			}
 		];
 
-		const toolbarsFooter = this.multiSelection ? dialogFooter : null;
+		if (this.multiSelection) {
+			dialogConfig['toolbars.footer'] = dialogFooter;
+		}
 
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					cssClass: this.dialogClasses,
-					destroyOnHide: true,
-					modal: true,
-					on: {
-						click: event => {
-							event.domEvent.preventDefault();
-						},
-						visibleChange: event => {
-							if (!event.newVal) {
-								this.selectedItem = this._selectedItem;
-
-								this.emit('selectedItemChange', {
-									selectedItem: this.selectedItem
-								});
-							}
-
-							this.emit('visibleChange', {visible: event.newVal});
-						}
-					},
-					'toolbars.footer': toolbarsFooter,
-					zIndex
-				},
-				eventName,
-				id: eventName,
-				stack: !zIndex,
-				title: this.title,
-				uri: this.url
-			},
-			this._onItemSelected.bind(this)
-		);
+		return dialogConfig;
 	}
 
 	/**
@@ -118,8 +129,7 @@ class ItemSelectorDialog extends Component {
 				.one('#addButton');
 
 			Liferay.Util.toggleDisabled(addButton, !currentItem);
-		}
-		else {
+		} else {
 			this._selectedItem = currentItem;
 			this.close();
 		}
@@ -170,7 +180,6 @@ ItemSelectorDialog.STATE = {
 	 * @type {String}
 	 */
 	eventName: Config.string().required(),
-
 
 	/**
 	 * Enables multiple selection of items.

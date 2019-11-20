@@ -594,6 +594,10 @@
 					"store" : true,
 					"type" : "keyword"
 				},
+				"emailAddressDomain" : {
+					"store" : true,
+					"type" : "keyword"
+				},
 				"endTime" : {
 					"store" : true,
 					"type" : "long"

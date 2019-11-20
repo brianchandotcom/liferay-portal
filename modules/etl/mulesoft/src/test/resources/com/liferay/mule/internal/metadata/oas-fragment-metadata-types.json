@@ -1,0 +1,227 @@
+{
+	"components": {
+		"schemas": {
+			"Entity": {
+				"properties": {
+					"bigDecimalField": {
+						"format": "bigdecimal",
+						"type": "number"
+					},
+					"binaryField": {
+						"format": "binary",
+						"type": "string"
+					},
+					"booleanField": {
+						"type": "boolean"
+					},
+					"byteField": {
+						"format": "byte",
+						"type": "string"
+					},
+					"dateField": {
+						"format": "date",
+						"type": "string"
+					},
+					"dateTimeField": {
+						"format": "date-time",
+						"type": "string"
+					},
+					"dictionaryField": {
+						"additionalProperties": {
+							"type": "string"
+						},
+						"type": "object"
+					},
+					"doubleField": {
+						"format": "double",
+						"type": "number"
+					},
+					"floatField": {
+						"format": "float",
+						"type": "number"
+					},
+					"integerField": {
+						"format": "int32",
+						"type": "number"
+					},
+					"longField": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"nestedEntityArrayField": {
+						"items": {
+							"$ref": "#/components/schemas/NestedEntity"
+						},
+						"type": "array"
+					},
+					"nestedEntityField": {
+						"$ref": "#/components/schemas/NestedEntity"
+					},
+					"stringField": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"longField",
+					"booleanField"
+				],
+				"type": "object"
+			},
+			"NestedEntity": {
+				"properties": {
+					"nestedEntityStringField": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"PageEntity": {
+				"properties": {
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/Entity"
+						},
+						"type": "array"
+					},
+					"lastPage": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"page": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"pageSize": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"totalCount": {
+						"format": "int64",
+						"type": "integer"
+					}
+				},
+				"type": "object"
+			}
+		}
+	},
+	"paths": {
+		"/entities": {
+			"get": {
+				"operationId": "getEntitiesPage",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sort",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageEntity"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/entities/{id}": {
+			"delete": {
+				"operationId": "deleteEntity",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "getEntity",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Entity"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/nestedEntities/{id}": {
+			"get": {
+				"operationId": "getNestedEntity",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NestedEntity"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

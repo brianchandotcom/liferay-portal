@@ -1,0 +1,28 @@
+{
+	"paths": {
+		"/endpoint/with/delete/and/get/operation": {
+			"delete": {
+				"operationId": "deleteOperation1"
+			},
+			"get": {
+				"operationId": "getOperation1"
+			}
+		},
+		"/endpoint/with/get/and/patch/operation": {
+			"get": {
+				"operationId": "getOperation3"
+			},
+			"patch": {
+				"operationId": "patchOperation1"
+			}
+		},
+		"/endpoint/with/get/and/post/operation": {
+			"get": {
+				"operationId": "getOperation2"
+			},
+			"post": {
+				"operationId": "postOperation1"
+			}
+		}
+	}
+}

@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
+import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -51,7 +52,6 @@ const ExperienceDropdownHeader = ({
 				<ClayButton
 					aria-label={Liferay.Language.get('new-experience')}
 					displayType="secondary"
-					label={Liferay.Language.get('new-experience')}
 					onClick={onNewExperience}
 					small
 				>
@@ -59,6 +59,7 @@ const ExperienceDropdownHeader = ({
 				</ClayButton>
 			)}
 		</div>
+
 		{canCreateExperiences && (
 			<p className="mb-4 text-secondary">
 				{showEmptyStateMessage
@@ -102,6 +103,7 @@ const ExperiencesSelector = ({
 	selectedSegmentsEntryId
 }) => {
 	const dispatch = useDispatch();
+	const isMounted = useIsMounted();
 
 	const [open, setOpen] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
@@ -109,12 +111,18 @@ const ExperiencesSelector = ({
 
 	const {observer, onClose: onModalClose} = useModal({
 		onClose: () => {
-			setEditingExperience({});
-			setOpenModal(false);
+			if (isMounted()) {
+				setEditingExperience({});
+				setOpenModal(false);
+			}
 		}
 	});
 
-	const [debouncedSetOpen] = useDebounceCallback(setOpen, 100);
+	const [debouncedSetOpen] = useDebounceCallback(value => {
+		if (isMounted()) {
+			setOpen(value);
+		}
+	}, 100);
 
 	const _handleDropdownButtonClick = () => debouncedSetOpen(!open);
 	const _handleDropdownButtonBlur = () => debouncedSetOpen(false);
@@ -179,8 +187,9 @@ const ExperiencesSelector = ({
 				type: EDIT_SEGMENTS_EXPERIENCE
 			})
 				.done(() => {
-					onModalClose();
-
+					if (isMounted()) {
+						onModalClose();
+					}
 					Liferay.Util.openToast({
 						title: Liferay.Language.get(
 							'the-experience-was-updated-successfully'
@@ -189,14 +198,16 @@ const ExperiencesSelector = ({
 					});
 				})
 				.failed(() => {
-					setEditingExperience({
-						error: Liferay.Language.get(
-							'an-unexpected-error-occurred-while-creating-the-experience'
-						),
-						name,
-						segmentsEntryId,
-						segmentsExperienceId
-					});
+					if (isMounted()) {
+						setEditingExperience({
+							error: Liferay.Language.get(
+								'an-unexpected-error-occurred-while-creating-the-experience'
+							),
+							name,
+							segmentsEntryId,
+							segmentsExperienceId
+						});
+					}
 				});
 		} else {
 			dispatch({
@@ -205,8 +216,9 @@ const ExperiencesSelector = ({
 				type: CREATE_SEGMENTS_EXPERIENCE
 			})
 				.done(() => {
-					onModalClose();
-
+					if (isMounted()) {
+						onModalClose();
+					}
 					Liferay.Util.openToast({
 						title: Liferay.Language.get(
 							'the-experience-was-created-successfully'
@@ -215,14 +227,16 @@ const ExperiencesSelector = ({
 					});
 				})
 				.failed(_error => {
-					setEditingExperience({
-						error: Liferay.Language.get(
-							'an-unexpected-error-occurred-while-updating-the-experience'
-						),
-						name,
-						segmentsEntryId,
-						segmentsExperienceId
-					});
+					if (isMounted()) {
+						setEditingExperience({
+							error: Liferay.Language.get(
+								'an-unexpected-error-occurred-while-updating-the-experience'
+							),
+							name,
+							segmentsEntryId,
+							segmentsExperienceId
+						});
+					}
 				});
 		}
 	};

@@ -67,7 +67,7 @@ const ExperiencesList = ({
 	};
 
 	return (
-		<ul className="list-unstyled mt-4">
+		<ul className="list-unstyled mt-4" role="list">
 			{experiences.map((experience, i) => {
 				const active =
 					experience.segmentsExperienceId === activeExperienceId;

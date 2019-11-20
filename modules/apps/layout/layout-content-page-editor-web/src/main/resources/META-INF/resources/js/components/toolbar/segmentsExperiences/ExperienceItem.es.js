@@ -81,7 +81,7 @@ const ExperienceItem = ({
 	});
 
 	return (
-		<li className={itemClassName}>
+		<li aria-checked={active} className={itemClassName} role="listitem">
 			<span className="overflow-hidden p-2 w-100">
 				<button
 					className="align-items-baseline btn btn-unstyled d-flex justify-content-between p-2 text-dark title w-100"

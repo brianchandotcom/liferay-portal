@@ -49,6 +49,9 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Inácio Nery
@@ -144,6 +147,14 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				GetterUtil.getLong(document.get("instanceId")));
 
 			_slaTaskResultWorkflowMetricsIndexer.expireDocuments(
+				GetterUtil.getLong(document.get("companyId")),
+				GetterUtil.getLong(document.get("instanceId")));
+
+			_slaTaskResultWorkflowMetricsIndexer.completeDocuments(
+				GetterUtil.getLong(document.get("companyId")),
+				GetterUtil.getLong(document.get("instanceId")));
+
+			_tokenWorkflowMetricsIndexer.completeDocuments(
 				GetterUtil.getLong(document.get("companyId")),
 				GetterUtil.getLong(document.get("instanceId")));
 		}
@@ -263,12 +274,23 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	@Reference
 	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
-	@Reference
-	private SLAProcessResultWorkflowMetricsIndexer
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile SLAProcessResultWorkflowMetricsIndexer
 		_slaProcessResultWorkflowMetricsIndexer;
 
-	@Reference
-	private SLATaskResultWorkflowMetricsIndexer
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile SLATaskResultWorkflowMetricsIndexer
 		_slaTaskResultWorkflowMetricsIndexer;
+
+	@Reference
+	private TokenWorkflowMetricsIndexer _tokenWorkflowMetricsIndexer;
 
 }

@@ -22,19 +22,30 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
@@ -43,7 +54,10 @@ import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetri
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -73,6 +87,22 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 		indexDocumentRequest.setType(getIndexType());
 
 		searchEngineAdapter.execute(indexDocumentRequest);
+	}
+
+	public void completeDocuments(long companyId, long instanceId) {
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
+		updateDocuments(
+			document -> new DocumentImpl() {
+				{
+					addKeyword("instanceCompleted", true);
+					addKeyword(Field.UID, document.getString(Field.UID));
+				}
+			},
+			booleanQuery.addMustQueryClauses(
+				queries.term("companyId", companyId),
+				queries.term("instanceCompleted", false),
+				queries.term("instanceId", instanceId)));
 	}
 
 	public void deleteDocument(Document document) {
@@ -220,6 +250,59 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	protected void updateDocuments(
+		Function<com.liferay.portal.search.document.Document, Document>
+			transformDocumentFunction,
+		Query query) {
+
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(getIndexName());
+		searchSearchRequest.setQuery(query);
+		searchSearchRequest.setSelectedFieldNames(Field.UID);
+		searchSearchRequest.setSize(10000);
+
+		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
+			searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		if (searchHits.getTotalHits() == 0) {
+			return;
+		}
+
+		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
+		Stream.of(
+			searchHits.getSearchHits()
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).map(
+			document -> new UpdateDocumentRequest(
+				getIndexName(), document.getString(Field.UID),
+				transformDocumentFunction.apply(document)) {
+
+				{
+					setType(getIndexType());
+				}
+			}
+		).forEach(
+			bulkDocumentRequest::addBulkableDocumentRequest
+		);
+
+		if (ListUtil.isNotEmpty(
+				bulkDocumentRequest.getBulkableDocumentRequests())) {
+
+			searchEngineAdapter.execute(bulkDocumentRequest);
+		}
+	}
+
 	@Reference
 	protected CompanyLocalService companyLocalService;
 
@@ -229,6 +312,9 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 	@Reference
 	protected KaleoDefinitionVersionLocalService
 		kaleoDefinitionVersionLocalService;
+
+	@Reference
+	protected Queries queries;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

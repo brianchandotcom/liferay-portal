@@ -41,7 +41,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 					className="com.liferay.portal.kernel.model.Group"
 					cssClass="entry-display-style"
 					escapedModel="<%= true %>"
-					keyProperty="groupId"
+					keyProperty="classPK"
 					modelVar="curGroup"
 					rowIdProperty="groupId"
 				>

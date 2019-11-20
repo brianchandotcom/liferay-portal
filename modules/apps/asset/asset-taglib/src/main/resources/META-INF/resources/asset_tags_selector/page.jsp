@@ -18,6 +18,7 @@
 
 <%
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-asset:asset-tags-selector:data");
+
 String inputName = (String)data.get("inputName");
 List<Map<String, String>> selectedItems = (List<Map<String, String>>)data.get("selectedItems");
 %>

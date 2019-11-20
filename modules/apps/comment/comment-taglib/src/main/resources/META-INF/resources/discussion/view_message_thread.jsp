@@ -119,6 +119,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 									<%
 									Map<String, String> dataInReply = new HashMap<>();
+
 									dataInReply.put("inreply-content", parentDiscussionComment.getBody());
 									dataInReply.put("inreply-title", parentCommentUserBuffer);
 									%>

@@ -83,6 +83,7 @@
 							data.put("languageid", curLanguageId);
 
 							Map<String, Object> iconData = new HashMap<>();
+
 							iconData.put("index", index++);
 							iconData.put("languageid", curLanguageId);
 							iconData.put("value", curLanguageId);

@@ -20,6 +20,7 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 String modelResource = ParamUtil.getString(request, "modelResource");
+
 String modelResourceName = ResourceActionsUtil.getModelResource(request, modelResource);
 
 long columnId = ParamUtil.getLong(request, "columnId");

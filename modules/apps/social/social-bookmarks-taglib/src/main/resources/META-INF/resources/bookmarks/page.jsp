@@ -18,6 +18,7 @@
 
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social_bookmarks_page") + StringPool.UNDERLINE;
+
 String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu";
 %>
 

@@ -78,5 +78,6 @@ page import="javax.portlet.PortletURL" %>
 
 <%
 SiteNavigationAdminDisplayContext siteNavigationAdminDisplayContext = (SiteNavigationAdminDisplayContext)renderRequest.getAttribute(SiteNavigationAdminWebKeys.SITE_NAVIGATION_MENU_ADMIN_DISPLAY_CONTEXT);
+
 SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry = siteNavigationAdminDisplayContext.getSiteNavigationMenuItemTypeRegistry();
 %>

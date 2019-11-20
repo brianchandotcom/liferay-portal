@@ -22,6 +22,7 @@ int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "com.liferay
 int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 
 String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "com.liferay.product.navigation.control.menu.web_addPanelDisplayStyle", "descriptive"));
+
 String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleDefault);
 
 String keywords = ParamUtil.getString(request, "keywords");

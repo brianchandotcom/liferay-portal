@@ -18,6 +18,7 @@
 
 <%
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-asset:asset-categories-selector:data");
+
 String id = (String)data.get("id");
 String inputName = (String)data.get("inputName");
 List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vocabularies");

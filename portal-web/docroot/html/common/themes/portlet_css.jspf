@@ -27,11 +27,13 @@ String bgColor = bgData.getString("backgroundColor");
 String bgImage = bgData.getString("backgroundImage");
 
 JSONObject bgPos = bgData.getJSONObject("backgroundPosition");
+
 JSONObject bgPosLeft = bgPos.getJSONObject(_LEFT_KEY);
 JSONObject bgPosTop = bgPos.getJSONObject(_TOP_KEY);
 
 String bgPosLeftValue = bgPosLeft.getString(_VALUE_KEY) + bgPosLeft.getString(_UNIT_KEY);
 String bgPosTopValue = bgPosTop.getString(_VALUE_KEY) + bgPosTop.getString(_UNIT_KEY);
+
 String bgPosValue = bgPosLeftValue + " " + bgPosTopValue;
 
 boolean useBgImage = bgData.getBoolean("useBgImage");

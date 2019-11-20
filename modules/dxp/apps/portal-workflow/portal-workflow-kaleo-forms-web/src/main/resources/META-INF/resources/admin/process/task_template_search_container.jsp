@@ -25,6 +25,7 @@ long kaleoProcessId = BeanParamUtil.getLong(kaleoProcess, request, "kaleoProcess
 
 long ddmStructureId = KaleoFormsUtil.getKaleoProcessDDMStructureId(kaleoProcessId, portletSession);
 String workflowDefinition = ParamUtil.getString(request, "workflowDefinition");
+
 String initialStateName = KaleoFormsUtil.getInitialStateName(company.getCompanyId(), workflowDefinition);
 
 KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialStateKaleoTaskFormPair(kaleoProcessId, ddmStructureId, workflowDefinition, initialStateName, portletSession);

@@ -18,6 +18,7 @@
 
 <%
 String expandoAttribute = SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL;
+
 String expandoAttributeName = "ExpandoAttributeName--" + expandoAttribute + "--";
 String expandoAttributeValue = "ExpandoAttribute--" + expandoAttribute + "--";
 

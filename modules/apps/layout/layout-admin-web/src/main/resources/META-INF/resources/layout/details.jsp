@@ -23,6 +23,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 LayoutType selLayoutType = selLayout.getLayoutType();
 
 Locale defaultLocale = LocaleUtil.getDefault();
+
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 %>
 

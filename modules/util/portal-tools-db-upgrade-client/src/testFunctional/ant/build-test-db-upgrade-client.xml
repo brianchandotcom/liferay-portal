@@ -304,23 +304,6 @@
 				<arg value="${db.upgrade.client.home}/db_upgrade${file.suffix.bat}" />
 			</exec>
 
-			<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.secondprocess">
-				<resourcecontains
-					resource="temp.log"
-					substring="Database upgrade client is already running"
-				/>
-			</waitfor>
-
-			<if>
-				<isset property="upgrade.secondprocess" />
-				<then>
-					<fail message="FAILED. Upgrade Client is attempting to start a second upgrade process." />
-				</then>
-				<else>
-					<echo message="PASSED. Second Upgrade process is denied from starting." />
-				</else>
-			</if>
-
 			<sequential>
 				<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.startfailed">
 					<available file="${db.upgrade.client.log}" />
@@ -332,6 +315,23 @@
 					<arg value="-c" />
 					<arg value="${db.upgrade.client.home}/db_upgrade${file.suffix.bat} > temp.log" />
 				</exec>
+
+				<loadfile
+					property="upgrade.process.output"
+					srcFile="temp.log"
+				/>
+
+				<echo>${upgrade.process.output}</echo>
+
+				<if>
+					<contains string="${upgrade.process.output}" substring="Database upgrade client is already running" />
+					<then>
+						<echo message="PASSED. Second Upgrade process is denied from starting." />
+					</then>
+					<else>
+						<fail message="FAILED. Upgrade Client is attempting to start a second upgrade process." />
+					</else>
+				</if>
 			</sequential>
 		</parallel>
 

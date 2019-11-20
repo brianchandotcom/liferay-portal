@@ -364,7 +364,7 @@ private Model _getModel(String artifactId) {
 	return model
 }
 
-private String _isDigitalExperiencePlatform() {
+private Boolean _isDigitalExperiencePlatform() {
 	File releaseInfoFile = file("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
 
 	Matcher matcher = (releaseInfoFile.text =~ /private static final String _NAME = "(.+)";/)

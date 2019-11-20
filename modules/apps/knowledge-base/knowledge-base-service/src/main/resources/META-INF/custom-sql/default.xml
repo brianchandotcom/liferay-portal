@@ -59,10 +59,42 @@
 	</sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.findA_ByG_P">
 		SELECT
-		DISTINCT kbArticleId as modelId, 0 as modelFolder, KBArticle.modifiedDate as modifiedDate, KBArticle.priority as priority, KBArticle.title as title, KBArticle.viewCount as viewCount
+		DISTINCT kbArticleId as modelId, 0 as modelFolder, KBArticle.modifiedDate as modifiedDate, KBArticle.priority as priority, KBArticle.title as title, 0 as viewCount
 		FROM
 			KBArticle
 		WHERE
+			(KBArticle.groupId = ?) AND
+			(KBArticle.parentResourcePrimKey = ?) AND
+			(KBArticle.latest = ?) AND
+			([$STATUS$])
+	</sql>
+	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.findA_ByG_P_VC">
+		SELECT
+			KBArticle.kbArticleId as modelId, 0 as modelFolder, KBArticle.modifiedDate as modifiedDate, KBArticle.priority as priority, KBArticle.title as title, ViewCountEntry.viewCount as viewCount
+		FROM
+			KBArticle
+		INNER JOIN
+			ViewCountEntry ON
+				(ViewCountEntry.classNameId = ?) AND
+				(KBArticle.companyId = ViewCountEntry.companyId) AND
+				(KBArticle.kbArticleId = ViewCountEntry.classPK)
+		WHERE
+			(KBArticle.groupId = ?) AND
+			(KBArticle.parentResourcePrimKey = ?) AND
+			(KBArticle.latest = ?) AND
+			([$STATUS$])
+		UNION ALL
+		SELECT
+			KBArticle.kbArticleId as modelId, 0 as modelFolder, KBArticle.modifiedDate as modifiedDate, KBArticle.priority as priority, KBArticle.title as title, 0 as viewCount
+		FROM
+			KBArticle
+		LEFT JOIN
+			ViewCountEntry ON
+				(ViewCountEntry.classNameId = ?) AND
+				(KBArticle.companyId = ViewCountEntry.companyId) AND
+				(KBArticle.kbArticleId = ViewCountEntry.classPK)
+		WHERE
+			(ViewCountEntry.viewCount is NULL) AND
 			(KBArticle.groupId = ?) AND
 			(KBArticle.parentResourcePrimKey = ?) AND
 			(KBArticle.latest = ?) AND

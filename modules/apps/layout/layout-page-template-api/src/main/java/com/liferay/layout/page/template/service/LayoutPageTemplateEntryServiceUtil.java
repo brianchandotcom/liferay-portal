@@ -40,8 +40,8 @@ public class LayoutPageTemplateEntryServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addLayoutPageTemplateEntry(long, long, String, int, int,
-	 long, ServiceContext)}
+	 #addLayoutPageTemplateEntry(long, long, String, int, long,
+	 int, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry

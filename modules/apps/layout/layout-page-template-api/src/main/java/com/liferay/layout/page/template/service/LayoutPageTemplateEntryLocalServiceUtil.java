@@ -76,7 +76,7 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addLayoutPageTemplateEntry(long, long, long, long, long,
-	 String, int, boolean, long, long, long, int, long,
+	 String, int, long, boolean, long, long, long, int,
 	 ServiceContext)}
 	 */
 	@Deprecated
@@ -99,22 +99,6 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 			addLayoutPageTemplateEntry(
 				long userId, long groupId, long layoutPageTemplateCollectionId,
 				long classNameId, long classTypeId, String name, int type,
-				boolean defaultTemplate, long layoutPrototypeId,
-				long previewFileEntryId, long plid, long masterLayoutPlid,
-				int status,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, classNameId,
-			classTypeId, name, type, defaultTemplate, layoutPrototypeId,
-			previewFileEntryId, plid, masterLayoutPlid, status, serviceContext);
-	}
-
-	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
-			addLayoutPageTemplateEntry(
-				long userId, long groupId, long layoutPageTemplateCollectionId,
-				long classNameId, long classTypeId, String name, int type,
 				int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -124,10 +108,26 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 			classTypeId, name, type, status, serviceContext);
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+			addLayoutPageTemplateEntry(
+				long userId, long groupId, long layoutPageTemplateCollectionId,
+				long classNameId, long classTypeId, String name, int type,
+				long previewFileEntryId, boolean defaultTemplate,
+				long layoutPrototypeId, long plid, long masterLayoutPlid,
+				int status,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addLayoutPageTemplateEntry(
+			userId, groupId, layoutPageTemplateCollectionId, classNameId,
+			classTypeId, name, type, previewFileEntryId, defaultTemplate,
+			layoutPrototypeId, plid, masterLayoutPlid, status, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addLayoutPageTemplateEntry(long, long, long, String, int,
-	 int, long, ServiceContext)}
+	 long, int, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry

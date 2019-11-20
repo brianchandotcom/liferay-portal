@@ -21,8 +21,10 @@ import com.liferay.change.tracking.internal.CTServiceCopier;
 import com.liferay.change.tracking.internal.CTServiceRegistry;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.model.CTMessage;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTProcess;
+import com.liferay.change.tracking.service.CTMessageLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.base.CTCollectionLocalServiceBaseImpl;
@@ -175,6 +177,13 @@ public class CTCollectionLocalServiceImpl
 
 		for (CTProcess ctProcess : ctProcesses) {
 			_ctProcessLocalService.deleteCTProcess(ctProcess);
+		}
+
+		List<CTMessage> ctMessages = ctMessagePersistence.findByCTCollectionId(
+			ctCollection.getCtCollectionId());
+
+		for (CTMessage ctMessage : ctMessages) {
+			_ctMessageLocalService.deleteCTMessage(ctMessage);
 		}
 
 		return ctCollectionPersistence.remove(ctCollection);
@@ -341,6 +350,9 @@ public class CTCollectionLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTCollectionLocalServiceImpl.class);
+
+	@Reference
+	private CTMessageLocalService _ctMessageLocalService;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;

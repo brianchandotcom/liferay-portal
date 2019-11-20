@@ -47,6 +47,7 @@
 		<!-- References -->
 
 		<reference entity="CTEntry" package-path="com.liferay.change.tracking" />
+		<reference entity="CTMessage" package-path="com.liferay.change.tracking" />
 		<reference entity="CTPreferences" package-path="com.liferay.change.tracking" />
 		<reference entity="CTProcess" package-path="com.liferay.change.tracking" />
 	</entity>

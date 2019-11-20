@@ -37,3 +37,46 @@ public Map<String, Object> getUserMap(User user) {
     ).build();
 }
 ```
+
+---
+
+Inline using lambda, when possible.
+
+### Example
+
+Incorrect:
+
+```java
+public Map<String, Object> getMap() {
+    Company company = _getCompany();
+    User user = _getUser();
+
+    return HashMapBuilder.<String, Object>put(
+        "companyGroup", company.getGroup()
+    ).put(
+        "userGroup", user.getGroup()
+    ).build();
+}
+```
+
+Correct:
+
+```java
+public Map<String, Object> getMap() {
+    return HashMapBuilder.<String, Object>put(
+        "companyGroup",
+        () -> {
+             Company company = _getCompany();
+
+             return company.getGroup();
+        }
+    ).put(
+        "userGroup",
+        () -> {
+             User user = _getUser();
+
+             return user.getGroup();
+        }
+    ).build();
+}
+```

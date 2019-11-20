@@ -15,6 +15,7 @@
 package com.liferay.layout.page.template.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -457,7 +459,9 @@ public class LayoutPageTemplateCollectionServiceTest {
 		_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 			_group.getGroupId(),
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			"Layout Page Template Entry", serviceContext);
+			"Layout Page Template Entry",
+			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		_layoutPageTemplateCollectionService.deleteLayoutPageTemplateCollection(
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());

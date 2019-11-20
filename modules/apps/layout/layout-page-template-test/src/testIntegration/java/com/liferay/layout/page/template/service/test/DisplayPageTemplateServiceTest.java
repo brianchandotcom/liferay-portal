@@ -111,7 +111,7 @@ public class DisplayPageTemplateServiceTest {
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				_group.getGroupId(), 0, name,
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
-				serviceContext);
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		LayoutPageTemplateEntry persistedDisplayPageTemplate =
 			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(

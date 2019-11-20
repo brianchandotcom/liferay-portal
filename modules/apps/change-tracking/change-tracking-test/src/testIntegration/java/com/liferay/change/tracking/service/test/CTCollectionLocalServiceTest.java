@@ -15,10 +15,17 @@
 package com.liferay.change.tracking.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringPool;
@@ -27,6 +34,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -34,6 +42,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -68,10 +80,212 @@ public class CTCollectionLocalServiceTest {
 		_ctCollection = _ctCollectionLocalService.updateCTCollection(
 			_ctCollection);
 
+		_journalArticleClassNameId = _classNameLocalService.getClassNameId(
+			JournalArticle.class);
+		_journalFolderClassNameId = _classNameLocalService.getClassNameId(
+			JournalFolder.class);
 		_layoutClassNameId = _classNameLocalService.getClassNameId(
 			Layout.class);
 
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testCheckConflictsWithJournalArticles() throws Exception {
+		Map<Long, List<ConflictInfo>> conflictInfoMap =
+			_ctCollectionLocalService.checkConflicts(_ctCollection);
+
+		Assert.assertEquals(conflictInfoMap.size(), 0, conflictInfoMap.size());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle ctJournalArticle1 = null;
+		JournalArticle ctJournalArticle2 = null;
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(_group.getGroupId());
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			ctJournalArticle1 = _journalArticleLocalService.updateArticle(
+				journalArticle.getUserId(), journalArticle.getGroupId(),
+				journalArticle.getFolderId(), journalArticle.getArticleId(),
+				journalArticle.getVersion(), journalArticle.getContent(),
+				serviceContext);
+
+			ctJournalArticle2 = _journalArticleLocalService.updateArticle(
+				ctJournalArticle1.getUserId(), ctJournalArticle1.getGroupId(),
+				ctJournalArticle1.getFolderId(),
+				ctJournalArticle1.getArticleId(),
+				ctJournalArticle1.getVersion(), ctJournalArticle1.getContent(),
+				serviceContext);
+		}
+
+		JournalArticle productionJournalArticle1 =
+			_journalArticleLocalService.updateArticle(
+				journalArticle.getUserId(), journalArticle.getGroupId(),
+				journalArticle.getFolderId(), journalArticle.getArticleId(),
+				journalArticle.getVersion(), journalArticle.getContent(),
+				serviceContext);
+
+		JournalArticle productionJournalArticle2 =
+			_journalArticleLocalService.updateArticle(
+				productionJournalArticle1.getUserId(),
+				productionJournalArticle1.getGroupId(),
+				productionJournalArticle1.getFolderId(),
+				productionJournalArticle1.getArticleId(),
+				productionJournalArticle1.getVersion(),
+				productionJournalArticle1.getContent(), serviceContext);
+
+		Assert.assertNotEquals(productionJournalArticle1, ctJournalArticle1);
+
+		Assert.assertNotEquals(productionJournalArticle2, ctJournalArticle2);
+
+		Assert.assertEquals(1.0, journalArticle.getVersion(), 0.01);
+
+		Assert.assertEquals(1.1, productionJournalArticle1.getVersion(), 0.01);
+		Assert.assertEquals(1.2, productionJournalArticle2.getVersion(), 0.01);
+
+		Assert.assertEquals(1.1, ctJournalArticle1.getVersion(), 0.01);
+		Assert.assertEquals(1.2, ctJournalArticle2.getVersion(), 0.01);
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			List<JournalArticle> journalArticles =
+				_journalArticleLocalService.getArticlesByResourcePrimKey(
+					journalArticle.getResourcePrimKey());
+
+			Assert.assertEquals(
+				journalArticles.toString(), 3, journalArticles.size());
+
+			Assert.assertEquals(ctJournalArticle2, journalArticles.get(0));
+			Assert.assertEquals(ctJournalArticle1, journalArticles.get(1));
+			Assert.assertEquals(journalArticle, journalArticles.get(2));
+		}
+
+		List<JournalArticle> journalArticles =
+			_journalArticleLocalService.getArticlesByResourcePrimKey(
+				journalArticle.getResourcePrimKey());
+
+		Assert.assertEquals(
+			journalArticles.toString(), 3, journalArticles.size());
+
+		Assert.assertEquals(productionJournalArticle2, journalArticles.get(0));
+		Assert.assertEquals(productionJournalArticle1, journalArticles.get(1));
+		Assert.assertEquals(journalArticle, journalArticles.get(2));
+
+		conflictInfoMap = _ctCollectionLocalService.checkConflicts(
+			_ctCollection);
+
+		List<ConflictInfo> conflictInfos = conflictInfoMap.remove(
+			_journalArticleClassNameId);
+
+		Assert.assertEquals(
+			conflictInfoMap.toString(), 0, conflictInfoMap.size());
+
+		Assert.assertEquals(conflictInfos.toString(), 2, conflictInfos.size());
+
+		conflictInfos.sort(
+			Comparator.comparing(ConflictInfo::getTargetPrimaryKey));
+
+		ConflictInfo conflictInfo = conflictInfos.get(0);
+
+		Assert.assertTrue(conflictInfo.isResolved());
+		Assert.assertEquals(
+			productionJournalArticle1.getPrimaryKey(),
+			conflictInfo.getTargetPrimaryKey());
+		Assert.assertEquals(
+			ctJournalArticle1.getPrimaryKey(),
+			conflictInfo.getSourcePrimaryKey());
+
+		conflictInfo = conflictInfos.get(1);
+
+		Assert.assertTrue(conflictInfo.isResolved());
+		Assert.assertEquals(
+			productionJournalArticle2.getPrimaryKey(),
+			conflictInfo.getTargetPrimaryKey());
+		Assert.assertEquals(
+			ctJournalArticle2.getPrimaryKey(),
+			conflictInfo.getSourcePrimaryKey());
+	}
+
+	@Test
+	public void testCheckConflictsWithJournalFolders() throws Exception {
+		Map<Long, List<ConflictInfo>> conflictInfoMap =
+			_ctCollectionLocalService.checkConflicts(_ctCollection);
+
+		Assert.assertEquals(conflictInfoMap.size(), 0, conflictInfoMap.size());
+
+		String conflictingFolderName = "conflictingFolderName";
+
+		JournalFolder ctJournalFolder = null;
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			ctJournalFolder = JournalTestUtil.addFolder(
+				_group.getGroupId(), conflictingFolderName);
+		}
+
+		JournalFolder productionJournalFolder = JournalTestUtil.addFolder(
+			_group.getGroupId(), conflictingFolderName);
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			List<JournalFolder> journalFolders =
+				_journalFolderLocalService.getFolders(
+					_group.getGroupId(),
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			Assert.assertEquals(
+				journalFolders.toString(), 1, journalFolders.size());
+
+			Assert.assertEquals(ctJournalFolder, journalFolders.get(0));
+		}
+
+		List<JournalFolder> journalFolders =
+			_journalFolderLocalService.getFolders(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Assert.assertEquals(
+			journalFolders.toString(), 1, journalFolders.size());
+
+		Assert.assertEquals(productionJournalFolder, journalFolders.get(0));
+
+		conflictInfoMap = _ctCollectionLocalService.checkConflicts(
+			_ctCollection);
+
+		Assert.assertEquals(
+			conflictInfoMap.toString(), 1, conflictInfoMap.size());
+
+		List<ConflictInfo> conflictInfos = conflictInfoMap.remove(
+			_journalFolderClassNameId);
+
+		Assert.assertEquals(
+			conflictInfoMap.toString(), 0, conflictInfoMap.size());
+
+		Assert.assertEquals(conflictInfos.toString(), 1, conflictInfos.size());
+
+		ConflictInfo conflictInfo = conflictInfos.get(0);
+
+		Assert.assertFalse(conflictInfo.isResolved());
+		Assert.assertEquals(
+			productionJournalFolder.getPrimaryKey(),
+			conflictInfo.getTargetPrimaryKey());
+		Assert.assertEquals(
+			ctJournalFolder.getPrimaryKey(),
+			conflictInfo.getSourcePrimaryKey());
 	}
 
 	@Test
@@ -164,6 +378,16 @@ public class CTCollectionLocalServiceTest {
 
 	@Inject
 	private static CTProcessLocalService _ctProcessLocalService;
+
+	private static long _journalArticleClassNameId;
+
+	@Inject
+	private static JournalArticleLocalService _journalArticleLocalService;
+
+	private static long _journalFolderClassNameId;
+
+	@Inject
+	private static JournalFolderLocalService _journalFolderLocalService;
 
 	private static long _layoutClassNameId;
 

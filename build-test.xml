@@ -4012,21 +4012,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<parallel>
 				<daemons>
-					<if>
-						<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
-						<then>
-							<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
-								<arg line="${app.server.stop.executable.arg.line}" />
-								<env key="JAVA_HOME" path="${java.jdk.home}" />
-							</exec>
-						</then>
-						<else>
-							<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
-								<arg line="${app.server.stop.executable.arg.line}" />
-								<env key="JAVA_HOME" path="${java.jdk.home}" />
-							</exec>
-						</else>
-					</if>
+					<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
+						<arg line="${app.server.stop.executable.arg.line}" />
+						<env key="JAVA_HOME" path="${java.jdk.home}" />
+					</exec>
 				</daemons>
 				<sequential>
 					<if>

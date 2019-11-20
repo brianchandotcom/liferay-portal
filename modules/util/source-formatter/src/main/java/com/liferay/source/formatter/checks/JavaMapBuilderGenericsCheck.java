@@ -14,16 +14,19 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.io.IOException;
 
 import java.lang.reflect.Modifier;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,80 +41,84 @@ public class JavaMapBuilderGenericsCheck extends BaseJavaTermCheck {
 			String fileContent)
 		throws IOException {
 
-		String content = javaTerm.getContent();
-
-		JavaClass javaClass = (JavaClass)javaTerm;
-
-		if (javaClass.getParentJavaClass() != null) {
-			return content;
-		}
-
-		return _formatGenerics(content, javaClass);
+		return _formatGenerics(javaTerm, fileContent);
 	}
 
 	@Override
 	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_CLASS};
+		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD, JAVA_VARIABLE};
 	}
 
-	private String _formatGenerics(String content, JavaClass javaClass) {
+	private String _formatGenerics(JavaTerm javaTerm, String fileContent) {
+		String content = javaTerm.getContent();
+
 		Matcher matcher = _mapBuilderPattern.matcher(content);
 
 		while (matcher.find()) {
-			String genericTypes = matcher.group(3);
+			String[] genericTypesArray = null;
 
-			if (genericTypes == null) {
+			String genericTypes = matcher.group(6);
+
+			if (genericTypes != null) {
+				genericTypesArray = _getGenericTypesArray(genericTypes);
+			}
+			else {
+				genericTypesArray = _getGenericTypesArray(
+					javaTerm, fileContent, matcher);
+			}
+
+			if (genericTypesArray == null) {
 				continue;
 			}
 
-			int x = -1;
+			boolean requiresGenerics = false;
 
-			while (true) {
-				x = genericTypes.indexOf(",", x + 1);
+			String keyTypeName = genericTypesArray[0];
+			String valueTypeName = genericTypesArray[1];
 
-				if (x == -1) {
-					break;
+			if (keyTypeName.contains("<") || valueTypeName.contains("<")) {
+				requiresGenerics = true;
+			}
+			else {
+				Class<?> keyClazz = _getClass(keyTypeName, javaTerm);
+				Class<?> valueClazz = _getClass(valueTypeName, javaTerm);
+
+				if (_requiresGenerics(keyClazz) ||
+					_requiresGenerics(valueClazz)) {
+
+					requiresGenerics = true;
 				}
-
-				if (getLevel(genericTypes.substring(0, x), "<", ">") != 0) {
+				else if ((keyClazz == null) || (valueClazz == null)) {
 					continue;
 				}
+			}
 
-				String keyTypeName = StringUtil.trim(
-					genericTypes.substring(0, x));
+			if (!requiresGenerics && (genericTypes != null)) {
+				return StringUtil.replaceFirst(
+					content, matcher.group(5), StringPool.BLANK,
+					matcher.start());
+			}
 
-				Class<?> keyClazz = _getClass(keyTypeName, javaClass);
-
-				if (keyClazz == null) {
-					break;
-				}
-
-				String valueTypeName = StringUtil.trim(
-					genericTypes.substring(x + 1));
-
-				Class<?> valueClazz = _getClass(valueTypeName, javaClass);
-
-				if (valueClazz == null) {
-					break;
-				}
-
-				if (Modifier.isFinal(keyClazz.getModifiers()) &&
-					ArrayUtil.isEmpty(keyClazz.getTypeParameters()) &&
-					Modifier.isFinal(valueClazz.getModifiers()) &&
-					ArrayUtil.isEmpty(valueClazz.getTypeParameters())) {
-
-					return StringUtil.replaceFirst(
-						content, matcher.group(2), StringPool.BLANK,
-						matcher.start());
-				}
+			if (requiresGenerics && (genericTypes == null)) {
+				return StringUtil.replaceFirst(
+					content, "put(",
+					StringBundler.concat(
+						"<", keyTypeName, ", ", valueTypeName, ">put("),
+					matcher.end(4));
 			}
 		}
 
 		return content;
 	}
 
-	private Class<?> _getClass(String typeName, JavaClass javaClass) {
+	private Class<?> _getClass(String typeName, JavaTerm javaTerm) {
 		typeName = StringUtil.removeChars(typeName, '[', ']');
+
+		JavaClass javaClass = javaTerm.getParentJavaClass();
+
+		while (javaClass.getParentJavaClass() != null) {
+			javaClass = javaClass.getParentJavaClass();
+		}
 
 		for (String importName : javaClass.getImports()) {
 			if (!importName.endsWith("." + typeName)) {
@@ -146,8 +153,73 @@ public class JavaMapBuilderGenericsCheck extends BaseJavaTermCheck {
 		return null;
 	}
 
+	private String[] _getGenericTypesArray(
+		JavaTerm javaTerm, String fileContent, Matcher matcher) {
+
+		if (matcher.group(1) == null) {
+			return null;
+		}
+
+		String mapTypeName = null;
+
+		if (Objects.equals(matcher.group(2), "return")) {
+			JavaSignature javaSignature = javaTerm.getSignature();
+
+			mapTypeName = javaSignature.getReturnType();
+		}
+		else {
+			mapTypeName = getVariableTypeName(
+				javaTerm.getContent(), fileContent, matcher.group(3), true);
+		}
+
+		if (mapTypeName == null) {
+			return null;
+		}
+
+		int x = mapTypeName.indexOf("<");
+
+		if (x == -1) {
+			return null;
+		}
+
+		return _getGenericTypesArray(
+			mapTypeName.substring(x + 1, mapTypeName.length() - 1));
+	}
+
+	private String[] _getGenericTypesArray(String genericTypes) {
+		int x = -1;
+
+		while (true) {
+			x = genericTypes.indexOf(",", x + 1);
+
+			if (x == -1) {
+				return null;
+			}
+
+			if (getLevel(genericTypes.substring(0, x), "<", ">") != 0) {
+				continue;
+			}
+
+			return new String[] {
+				StringUtil.trim(genericTypes.substring(0, x)),
+				StringUtil.trim(genericTypes.substring(x + 1))
+			};
+		}
+	}
+
+	private boolean _requiresGenerics(Class<?> clazz) {
+		if ((clazz == null) ||
+			(Modifier.isFinal(clazz.getModifiers()) &&
+			 ArrayUtil.isEmpty(clazz.getTypeParameters()))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private static final Pattern _mapBuilderPattern = Pattern.compile(
-		"\\W(ConcurrentHash|Hash|LinkedHash|Tree)MapBuilder\\.\\s*" +
-			"(<([<>\\[\\],\\s\\.\\w\\?]+)>)?\\s*put\\(");
+		"((return|(\\w+) =)\\s*)?\\s(ConcurrentHash|Hash|LinkedHash|Tree)" +
+			"MapBuilder\\.\\s*(<([<>\\[\\],\\s\\.\\w\\?]+)>)?\\s*put\\(");
 
 }

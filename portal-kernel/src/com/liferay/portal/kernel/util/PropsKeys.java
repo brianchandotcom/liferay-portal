@@ -1200,6 +1200,9 @@ public interface PropsKeys {
 	public static final String HIBERNATE_JDBC_BATCH_SIZE =
 		"hibernate.jdbc.batch_size";
 
+	public static final String HIBERNATE_JDBC_USE_STREAMS_FOR_BINARY =
+		"hibernate.jdbc.use_streams_for_binary";
+
 	public static final String
 		HIBERNATE_SESSION_FACTORY_IMPORTED_CLASS_NAME_REGEXP =
 			"hibernate.session.factory.imported.class.name.regexp";

@@ -195,6 +195,18 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 	@Override
 	protected Configuration newConfiguration() {
+		Dialect dialect = DialectDetector.getDialect(getDataSource());
+
+		if (DBManagerUtil.getDBType(dialect) == DBType.ORACLE) {
+
+			// This must be done before the following Configuration creation, to
+			// make sure org.hibernate.cfg.Environment's static init block can
+			// see it.
+
+			System.setProperty(
+				PropsKeys.HIBERNATE_JDBC_USE_STREAMS_FOR_BINARY, "true");
+		}
+
 		Configuration configuration = new Configuration();
 
 		Properties properties = PropsUtil.getProperties();
@@ -207,8 +219,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 			properties.setProperty(key, value);
 		}
-
-		Dialect dialect = DialectDetector.getDialect(getDataSource());
 
 		if (DBManagerUtil.getDBType(dialect) == DBType.SYBASE) {
 			properties.setProperty(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");

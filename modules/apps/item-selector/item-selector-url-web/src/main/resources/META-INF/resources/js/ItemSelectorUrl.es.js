@@ -53,7 +53,6 @@ const ItemSelectorUrl = ({eventName}) => {
 		};
 
 		Liferay.Util.getOpener().Liferay.fire(eventName, eventData);
-		Liferay.Util.getOpener().Liferay.fire(`${eventName}AddItem`, eventData);
 	};
 
 	return (

@@ -47,9 +47,13 @@ public class UserModelDocumentContributor
 	@Override
 	public void contribute(Document document, User user) {
 		try {
-			document.addKeyword("accountEntryIds", getAccountEntryIds(user));
-			document.addKeyword(
-				"emailAddressDomain", getEmailAddressDomain(user));
+			long[] accountEntryIds = getAccountEntryIds(user);
+
+			if (ArrayUtil.isNotEmpty(accountEntryIds)) {
+				document.addKeyword("accountEntryIds", accountEntryIds);
+				document.addKeyword(
+					"emailAddressDomain", getEmailAddressDomain(user));
+			}
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

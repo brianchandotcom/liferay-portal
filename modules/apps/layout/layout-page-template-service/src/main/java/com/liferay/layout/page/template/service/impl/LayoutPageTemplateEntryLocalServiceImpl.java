@@ -117,13 +117,35 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return addLayoutPageTemplateEntry(groupId, layoutPrototype);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 *             String, int, boolean, long, long, long, long, int,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long classNameId, long classTypeId, String name, int type,
 			boolean defaultTemplate, long layoutPrototypeId,
 			long previewFileEntryId, long plid, int status,
-			long masterLayoutPlid, ServiceContext serviceContext)
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addLayoutPageTemplateEntry(
+			userId, groupId, layoutPageTemplateCollectionId, classNameId,
+			classTypeId, name, type, defaultTemplate, layoutPrototypeId,
+			previewFileEntryId, plid, 0, status, serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long userId, long groupId, long layoutPageTemplateCollectionId,
+			long classNameId, long classTypeId, String name, int type,
+			boolean defaultTemplate, long layoutPrototypeId,
+			long previewFileEntryId, long plid, long masterLayoutPlid,
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template entry
@@ -188,28 +210,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return layoutPageTemplateEntry;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
-	 *             String, int, boolean, long, long, long, int, long,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
-			long classNameId, long classTypeId, String name, int type,
-			boolean defaultTemplate, long layoutPrototypeId,
-			long previewFileEntryId, long plid, int status,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, classNameId,
-			classTypeId, name, type, defaultTemplate, layoutPrototypeId,
-			previewFileEntryId, plid, status, 0, serviceContext);
-	}
-
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
@@ -235,22 +235,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return layoutPageTemplateEntry;
 	}
 
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, int status, long masterLayoutPlid,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name, type,
-			false, 0, 0, 0, status, masterLayoutPlid, serviceContext);
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #addLayoutPageTemplateEntry(long, long, long, String, int,
-	 *             int, long, ServiceContext)}
+	 *             long, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -262,6 +250,18 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name, type,
 			false, 0, 0, 0, status, serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long userId, long groupId, long layoutPageTemplateCollectionId,
+			String name, int type, long masterLayoutPlid, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addLayoutPageTemplateEntry(
+			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name, type,
+			false, 0, 0, 0, masterLayoutPlid, status, serviceContext);
 	}
 
 	@Override

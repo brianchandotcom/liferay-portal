@@ -4123,23 +4123,7 @@ AUI.add(
 						var type = fieldDefinition.type;
 
 						if (type === 'ddm-text-html') {
-							var editor = field.getEditor();
-
-							var usingCKEditor =
-								CKEDITOR &&
-								CKEDITOR.instances &&
-								CKEDITOR.instances[
-									field.getInputName() + 'Editor'
-								];
-
-							var usingAlloyEditor =
-								editor.getNativeEditor()._editor &&
-								editor.getNativeEditor()._editor.window.$
-									.AlloyEditor;
-
-							if (usingCKEditor && !usingAlloyEditor) {
-								instance.recreateEditor(editor);
-							}
+							instance.recreateEditor(field);
 						}
 					}
 				},
@@ -4209,14 +4193,30 @@ AUI.add(
 					}
 				},
 
-				recreateEditor(editor) {
-					var html = editor.getHTML();
+				recreateEditor(field) {
+					var usingCKEditor =
+						CKEDITOR &&
+						CKEDITOR.instances &&
+						CKEDITOR.instances[field.getInputName() + 'Editor'];
 
-					editor.dispose();
+					var editor = field.getEditor();
 
-					editor.create();
+					var nativeEditor = editor.getNativeEditor();
 
-					editor.setHTML(html);
+					var usingAlloyEditor =
+						nativeEditor &&
+						nativeEditor._editor &&
+						nativeEditor._editor.window.$.AlloyEditor;
+
+					if (usingCKEditor && !usingAlloyEditor) {
+						var html = editor.getHTML();
+
+						editor.dispose();
+
+						editor.create();
+
+						editor.setHTML(html);
+					}
 				},
 
 				registerRepeatable(field) {

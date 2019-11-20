@@ -65,7 +65,7 @@ public class LayoutPageTemplateEntryServiceSoap {
 		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
 				addLayoutPageTemplateEntry(
 					long groupId, long layoutPageTemplateCollectionId,
-					String name, int type, int status, long masterLayoutPlid,
+					String name, int type, long masterLayoutPlid, int status,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws RemoteException {
@@ -76,7 +76,7 @@ public class LayoutPageTemplateEntryServiceSoap {
 					LayoutPageTemplateEntryServiceUtil.
 						addLayoutPageTemplateEntry(
 							groupId, layoutPageTemplateCollectionId, name, type,
-							status, masterLayoutPlid, serviceContext);
+							masterLayoutPlid, status, serviceContext);
 
 			return com.liferay.layout.page.template.model.
 				LayoutPageTemplateEntrySoap.toSoapModel(returnValue);

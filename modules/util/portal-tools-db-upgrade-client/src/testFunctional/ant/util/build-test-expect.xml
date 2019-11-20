@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
 <project basedir="." name="portal-test-expect" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="../../../../../../../build-test.xml" />
+
 	<macrodef name="run-expect">
 		<attribute name="db.upgrade.client.home" />
 		<attribute name="file.suffix.bat" />
@@ -15,6 +17,42 @@
 				force="true"
 				overwrite="true"
 				tofile="temp.expect"
+			/>
+
+			<get-database-property property.name="database.host" />
+
+			<replaceregexp
+				file="temp.expect"
+				flags="gi"
+				match="\[database.host\]"
+				replace="${database.host}"
+			/>
+
+			<get-database-property property.name="database.password" />
+
+			<replaceregexp
+				file="temp.expect"
+				flags="gi"
+				match="\[database.password\]"
+				replace="${database.password}"
+			/>
+
+			<get-database-property property.name="database.port" />
+
+			<replaceregexp
+				file="temp.expect"
+				flags="gi"
+				match="\[database.port\]"
+				replace="${database.port}"
+			/>
+
+			<get-database-property property.name="database.username" />
+
+			<replaceregexp
+				file="temp.expect"
+				flags="gi"
+				match="\[database.username\]"
+				replace="${database.username}"
 			/>
 
 			<replaceregexp

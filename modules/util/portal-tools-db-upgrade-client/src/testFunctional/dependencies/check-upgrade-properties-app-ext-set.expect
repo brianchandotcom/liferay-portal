@@ -15,11 +15,11 @@ expect "Please enter your database JDBC driver protocol" {
 }
 
 expect "Please enter your database host" {
-    send "\r"
+    send "[database.host]\r"
 }
 
 expect "Please enter your database port" {
-    send "\r"
+    send "[database.port]\r"
 }
 
 expect "Please enter your database name" {
@@ -27,11 +27,11 @@ expect "Please enter your database name" {
 }
 
 expect "Please enter your database username" {
-    send "root\r"
+    send "[database.username]\r"
 }
 
 expect "Please enter your database password" {
-    send "\r"
+    send "[database.password]\r"
 }
 
 set timeout 900

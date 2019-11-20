@@ -10186,7 +10186,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 									mysql ${arg.line} < /tmp/${database.type}.sql
 
-									mysql_upgrade --password=${database.password} --user=${database.username}
+									mysql_upgrade --force --password=${database.password} --user=${database.username}
 								]]>
 							</echo>
 

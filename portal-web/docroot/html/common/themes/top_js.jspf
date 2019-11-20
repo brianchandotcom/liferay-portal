@@ -194,7 +194,7 @@
 				String completeURL = PortalUtil.getCurrentCompleteURL(request);
 				%>
 
-				return '<%= PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout, false, false) %>';
+				return '<%= HtmlUtil.escapeJS(PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout, false, false)) %>';
 			},
 			getCDNBaseURL: function() {
 				return '<%= themeDisplay.getCDNBaseURL() %>';

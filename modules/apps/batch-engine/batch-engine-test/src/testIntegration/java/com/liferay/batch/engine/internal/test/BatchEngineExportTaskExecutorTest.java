@@ -52,7 +52,6 @@ import java.util.function.Function;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
-import org.apache.poi.EmptyFileException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -185,10 +184,6 @@ public class BatchEngineExportTaskExecutorTest
 
 			_testExportBlogPostingsToXLSFile(
 				Collections.emptyList(), rowValues -> new Object[0]);
-
-			Assert.fail();
-		}
-		catch (EmptyFileException efe) {
 		}
 	}
 
@@ -346,6 +341,14 @@ public class BatchEngineExportTaskExecutorTest
 			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
 				_batchEngineExportTask.getBatchEngineExportTaskId());
 
+		if (fieldNames.isEmpty()) {
+			Assert.assertEquals(
+				BatchEngineTaskExecuteStatus.FAILED.toString(),
+				batchEngineExportTask.getExecuteStatus());
+
+			return;
+		}
+
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(
 				_batchEngineExportTaskLocalService.openContentInputStream(
@@ -360,13 +363,7 @@ public class BatchEngineExportTaskExecutorTest
 			rowValuesList.add(filterFunction.apply(line));
 		}
 
-		if (fieldNames.isEmpty()) {
-			Assert.assertEquals(
-				rowValuesList.toString(), 0, rowValuesList.size());
-		}
-		else {
-			_assertExportedValues(blogsEntries, fieldNames, rowValuesList);
-		}
+		_assertExportedValues(blogsEntries, fieldNames, rowValuesList);
 	}
 
 	private void _testExportBlogPostingsToJSONFile(
@@ -456,6 +453,14 @@ public class BatchEngineExportTaskExecutorTest
 		BatchEngineExportTask batchEngineExportTask =
 			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
 				_batchEngineExportTask.getBatchEngineExportTaskId());
+
+		if (fieldNames.isEmpty()) {
+			Assert.assertEquals(
+				BatchEngineTaskExecuteStatus.FAILED.toString(),
+				batchEngineExportTask.getExecuteStatus());
+
+			return;
+		}
 
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(
 			_batchEngineExportTaskLocalService.openContentInputStream(

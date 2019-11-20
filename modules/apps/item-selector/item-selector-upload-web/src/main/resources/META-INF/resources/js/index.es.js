@@ -30,9 +30,5 @@ export default function(props) {
 
 	itemSelector.on('selectedItem', event => {
 		Liferay.Util.getOpener().Liferay.fire(props.eventName, event);
-		Liferay.Util.getOpener().Liferay.fire(
-			props.eventName + 'AddItem',
-			event
-		);
 	});
 }

@@ -540,9 +540,5 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 			'<%= itemSelectedEventName %>',
 			event
 		);
-
-		Liferay.Util.getOpener().Liferay.fire(
-			'<%= itemSelectedEventName %>AddItem'
-		);
 	});
 </aui:script>

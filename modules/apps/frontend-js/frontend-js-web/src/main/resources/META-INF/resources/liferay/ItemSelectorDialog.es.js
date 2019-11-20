@@ -33,8 +33,6 @@ class ItemSelectorDialog extends Component {
 		this._currentItem = null;
 		this._selectedItem = null;
 
-		let addItemHandler = null;
-
 		const eventName = this.eventName;
 		const zIndex = this.zIndex;
 
@@ -83,11 +81,6 @@ class ItemSelectorDialog extends Component {
 								this.emit('selectedItemChange', {
 									selectedItem: this.selectedItem
 								});
-
-								Liferay.detach(
-									eventName + 'AddItem',
-									addItemHandler
-								);
 							}
 
 							this.emit('visibleChange', {visible: event.newVal});
@@ -104,11 +97,6 @@ class ItemSelectorDialog extends Component {
 			},
 			this._onItemSelected.bind(this)
 		);
-
-		addItemHandler = Liferay.on(eventName + 'AddItem', () => {
-			this._selectedItem = this._currentItem;
-			this.close();
-		});
 	}
 
 	/**

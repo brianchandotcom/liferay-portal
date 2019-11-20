@@ -1,0 +1,84 @@
+@component-name = "portal-user-management-and-portal-configuration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Users and Organizations";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Contacts Center Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Contacts Center Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Contacts Center Page",
+			widgetName = "Contacts Center");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "This is a use case for LPS-100624."
+	@priority = "4"
+	test Smoke {
+		Navigator.gotoPage(pageName = "Contacts Center Page");
+
+		ContactsCenter.addPG(
+			contactName = "test1",
+			emailAddress = "test1@liferay.com");
+
+		ContactsCenter.viewContactPG(
+			contactName = "test1",
+			emailAddress = "test1@liferay.com");
+
+		AssertElementPresent(locator1 = "Button#EDIT");
+
+		AssertElementPresent(locator1 = "Button#DELETE");
+
+		ContactsCenter.editPG(
+			contactName = "test1",
+			contactNameEdit = "Edittest1");
+
+		ContactsCenter.viewContactPG(
+			contactName = "userfn",
+			emailAddress = "userea@liferay.com",
+			interactButton = "Connect,Follow,Block,vCard");
+
+		Navigator.gotoPage(pageName = "Contacts Center Page");
+
+		ContactsCenter.viewContactCenterContainerPG(
+			allUser = "3",
+			contactConnection = "0",
+			contactFollower = "0",
+			contactFollowing = "0",
+			myContact = "1");
+	}
+
+}

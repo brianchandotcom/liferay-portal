@@ -477,7 +477,7 @@
 
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="DDMStructureLink" remote-service="false">
+	<entity change-tracking-enabled="true" local-service="true" name="DDMStructureLink" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -661,7 +661,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="DDMTemplateLink" remote-service="false">
+	<entity change-tracking-enabled="true" local-service="true" name="DDMTemplateLink" remote-service="false">
 
 		<!-- PK fields -->
 

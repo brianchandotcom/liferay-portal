@@ -1197,8 +1197,20 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				BundleStartLevel bundleStartLevel = bundle.adapt(
 					BundleStartLevel.class);
 
-				bundleStartLevel.setStartLevel(
-					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
+				Dictionary<String, String> headers = bundle.getHeaders(
+					StringPool.BLANK);
+
+				String header = headers.get("Web-ContextPath");
+
+				if (header != null) {
+					bundleStartLevel.setStartLevel(
+						PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL);
+				}
+				else {
+					bundleStartLevel.setStartLevel(
+						PropsValues.
+							MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
+				}
 
 				if (!_isFragmentBundle(bundle)) {
 					bundle.start();
@@ -1863,6 +1875,28 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Started dynamic bundles");
+		}
+
+		DefaultNoticeableFuture<FrameworkEvent> webDefaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Starting web bundles");
+		}
+
+		frameworkStartLevel.setStartLevel(
+			PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL,
+			webFrameworkEvent -> webDefaultNoticeableFuture.set(
+				webFrameworkEvent));
+
+		FrameworkEvent webFrameworkEvent = webDefaultNoticeableFuture.get();
+
+		if (webFrameworkEvent.getType() == FrameworkEvent.ERROR) {
+			ReflectionUtil.throwException(webFrameworkEvent.getThrowable());
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Started web bundles");
 		}
 	}
 

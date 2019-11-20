@@ -317,10 +317,24 @@ public class LPKGBundleTrackerCustomizer
 			}
 
 			for (Bundle installedBundle : installedBundles) {
-				BundleStartLevelUtil.setStartLevelAndStart(
-					installedBundle,
-					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
-					_bundleContext);
+				Dictionary<String, String> headers = installedBundle.getHeaders(
+					StringPool.BLANK);
+
+				String header = headers.get("Web-ContextPath");
+
+				if (header != null) {
+					BundleStartLevelUtil.setStartLevelAndStart(
+						installedBundle,
+						PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL,
+						_bundleContext);
+				}
+				else {
+					BundleStartLevelUtil.setStartLevelAndStart(
+						installedBundle,
+						PropsValues.
+							MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
+						_bundleContext);
+				}
 			}
 
 			List<String> trackedBundleLocations = _reloadTrackedBundles(

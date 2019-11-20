@@ -1711,6 +1711,10 @@ public class PropsValues {
 				PropsKeys.
 					MODULE_FRAMEWORK_WEB_SERVLET_ANNOTATION_SCANNING_WHITELIST);
 
+	public static final int MODULE_FRAMEWORK_WEB_START_LEVEL =
+		GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_WEB_START_LEVEL));
+
 	public static final String[] MY_SITES_DIRECTORY_SITE_EXCLUDES =
 		PropsUtil.getArray(PropsKeys.MY_SITES_DIRECTORY_SITE_EXCLUDES);
 

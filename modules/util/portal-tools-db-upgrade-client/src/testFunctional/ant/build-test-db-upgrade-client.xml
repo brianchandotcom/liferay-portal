@@ -25,6 +25,16 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="rebuild-upgrade-database">
+		<sequential>
+			<antcall target="rebuild-legacy-database">
+				<param name="portal.version" value="6.2.5" />
+				<param name="data.archive.type" value="data-archive-polls" />
+				<param name="skip.get.testcase.database.properties" value="true" />
+			</antcall>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="send-sighup-to-upgrade-process">
 		<sequential>
 			<exec executable="/bin/bash" logError="true" output="true">
@@ -161,11 +171,7 @@
 	</target>
 
 	<target name="check-upgrade-client-gogoshell-failed-upgrade">
-		<antcall target="rebuild-legacy-database">
-			<param name="portal.version" value="6.2.5" />
-			<param name="data.archive.type" value="data-archive-polls" />
-			<param name="skip.get.testcase.database.properties" value="true" />
-		</antcall>
+		<rebuild-upgrade-database />
 
 		<get-database-upgrade-client-paths />
 
@@ -218,11 +224,7 @@
 			</sequential>
 		</parallel>
 
-		<antcall target="rebuild-legacy-database">
-			<param name="portal.version" value="6.2.5" />
-			<param name="data.archive.type" value="data-archive-polls" />
-			<param name="skip.get.testcase.database.properties" value="true" />
-		</antcall>
+		<rebuild-upgrade-database />
 
 		<clean-database-upgrade-client />
 	</target>
@@ -378,11 +380,7 @@
 	</target>
 
 	<target name="check-upgrade-client-upgrade-core-only">
-		<antcall target="rebuild-legacy-database">
-			<param name="portal.version" value="6.2.5" />
-			<param name="data.archive.type" value="data-archive-polls" />
-			<param name="skip.get.testcase.database.properties" value="true" />
-		</antcall>
+		<rebuild-upgrade-database />
 
 		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration.config">autoUpgrade="false"</echo>
 

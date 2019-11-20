@@ -4,6 +4,7 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.change.tracking.model.CTCollection" />
 	<import class="com.liferay.change.tracking.model.CTEntry" />
+	<import class="com.liferay.change.tracking.model.CTMessage" />
 	<import class="com.liferay.change.tracking.model.CTPreferences" />
 	<import class="com.liferay.change.tracking.model.CTProcess" />
 	<class dynamic-update="true" name="com.liferay.change.tracking.model.impl.CTCollectionImpl" table="CTCollection">
@@ -35,6 +36,14 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modelClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modelMvccVersion" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="changeType" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.change.tracking.model.impl.CTMessageImpl" table="CTMessage">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctMessageId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="messageContent" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.change.tracking.model.impl.CTPreferencesImpl" table="CTPreferences">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctPreferencesId" type="long">

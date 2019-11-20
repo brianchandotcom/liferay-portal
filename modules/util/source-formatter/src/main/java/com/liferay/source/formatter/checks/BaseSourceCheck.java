@@ -555,26 +555,26 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected String getVariableTypeName(
 		String content, String fileContent, String variableName) {
 
+		return getVariableTypeName(content, fileContent, variableName, false);
+	}
+
+	protected String getVariableTypeName(
+		String content, String fileContent, String variableName,
+		boolean includeArrayOrCollectionTypes) {
+
 		if (variableName == null) {
 			return null;
 		}
 
-		Pattern pattern = Pattern.compile(
-			"\\W(\\w+)\\s+" + variableName + "\\s*[;=),]");
+		String variableTypeName = _getVariableTypeName(
+			content, variableName, includeArrayOrCollectionTypes);
 
-		Matcher matcher = pattern.matcher(content);
-
-		if (matcher.find()) {
-			return matcher.group(1);
+		if ((variableTypeName != null) || content.equals(fileContent)) {
+			return variableTypeName;
 		}
 
-		matcher = pattern.matcher(fileContent);
-
-		if (matcher.find()) {
-			return matcher.group(1);
-		}
-
-		return null;
+		return _getVariableTypeName(
+			fileContent, variableName, includeArrayOrCollectionTypes);
 	}
 
 	protected boolean isAttributeValue(
@@ -721,6 +721,52 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
+
+	private String _getVariableTypeName(
+		String content, String variableName,
+		boolean includeArrayOrCollectionTypes) {
+
+		Pattern pattern = Pattern.compile(
+			"\\W(\\w+)\\s+" + variableName + "\\s*[;=),]");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		if (!includeArrayOrCollectionTypes) {
+			return null;
+		}
+
+		pattern = Pattern.compile("[\\]>]\\s+" + variableName + "\\s*[;=),]");
+
+		matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		int i = matcher.start() + 1;
+
+		for (int j = i - 2; j > 0; j--) {
+			if (Character.isLetterOrDigit(content.charAt(j)) ||
+				!Character.isLetterOrDigit(content.charAt(j + 1))) {
+
+				continue;
+			}
+
+			String typeName = content.substring(j + 1, i);
+
+			if ((getLevel(typeName, "<", ">") == 0) &&
+				(getLevel(typeName, "[", "]") == 0)) {
+
+				return typeName;
+			}
+		}
+
+		return null;
+	}
 
 	private static final String _MODULES_PROPERTIES_FILE_NAME =
 		"modules/modules.properties";

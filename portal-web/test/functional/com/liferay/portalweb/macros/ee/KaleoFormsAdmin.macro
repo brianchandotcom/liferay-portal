@@ -471,9 +471,7 @@ definition {
 	}
 
 	macro publishWorkflow {
-		Click.mouseDownMouseUp(
-			key_text = "Publish",
-			locator1 = "Button#ANY");
+		Button.clickPublish();
 
 		Alert.viewSuccessMessage();
 

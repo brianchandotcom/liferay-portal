@@ -700,6 +700,6 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	private static final Pattern _redundantEmptyLinePattern5 = Pattern.compile(
 		"\\}\n\n\t*(catch|else( if)?|finally) [\\(\\{]");
 	private static final Pattern _setVariablePattern = Pattern.compile(
-		"\t*[A-Z]\\w+(<.+>)? (\\w+) =\\s+((?!\\{\n).)*?;\n", Pattern.DOTALL);
+		"[\n\t][A-Z]\\w+(<.+>)? (\\w+) =\\s+((?!\\{\n).)*?;\n", Pattern.DOTALL);
 
 }

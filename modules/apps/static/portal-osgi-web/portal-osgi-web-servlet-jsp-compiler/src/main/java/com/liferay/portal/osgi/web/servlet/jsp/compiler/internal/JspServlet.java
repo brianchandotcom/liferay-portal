@@ -245,7 +245,7 @@ public class JspServlet extends HttpServlet {
 
 					if (fragmentHost.equals(symbolicName)) {
 						Enumeration<URL> enumeration = bundle.findEntries(
-							"META-INF/resources", "*.jsp", true);
+							"META-INF/resources", "*.jsp*", true);
 
 						if (enumeration != null) {
 							defaults.put("hasFragment", "true");

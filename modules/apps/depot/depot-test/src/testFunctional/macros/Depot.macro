@@ -43,9 +43,15 @@ definition {
 	}
 
 	macro deleteCP {
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Delete",
-			rowEntry = "${depotName}");
+		if (isSet(deletions)) {
+			ClickNoError(locator1 = "Icon#DELETE");
+		}
+
+		else {
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Delete",
+				rowEntry = "${depotName}");
+		}
 
 		AssertConfirm(value1 = "Removing a repository can affect sites that use the contents stored in it. Are you sure you want to continue removing this repository?");
 

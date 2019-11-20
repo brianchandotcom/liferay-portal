@@ -165,8 +165,6 @@ public class KBArticlePersistenceTest {
 
 		newKBArticle.setSections(RandomTestUtil.randomString());
 
-		newKBArticle.setViewCount(RandomTestUtil.nextInt());
-
 		newKBArticle.setLatest(RandomTestUtil.randomBoolean());
 
 		newKBArticle.setMain(RandomTestUtil.randomBoolean());
@@ -236,8 +234,6 @@ public class KBArticlePersistenceTest {
 			existingKBArticle.getPriority(), newKBArticle.getPriority());
 		Assert.assertEquals(
 			existingKBArticle.getSections(), newKBArticle.getSections());
-		Assert.assertEquals(
-			existingKBArticle.getViewCount(), newKBArticle.getViewCount());
 		Assert.assertEquals(
 			existingKBArticle.isLatest(), newKBArticle.isLatest());
 		Assert.assertEquals(existingKBArticle.isMain(), newKBArticle.isMain());
@@ -713,9 +709,9 @@ public class KBArticlePersistenceTest {
 			"parentResourceClassNameId", true, "parentResourcePrimKey", true,
 			"kbFolderId", true, "version", true, "title", true, "urlTitle",
 			true, "description", true, "priority", true, "sections", true,
-			"viewCount", true, "latest", true, "main", true, "sourceURL", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"latest", true, "main", true, "sourceURL", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -1015,8 +1011,6 @@ public class KBArticlePersistenceTest {
 		kbArticle.setPriority(RandomTestUtil.nextDouble());
 
 		kbArticle.setSections(RandomTestUtil.randomString());
-
-		kbArticle.setViewCount(RandomTestUtil.nextInt());
 
 		kbArticle.setLatest(RandomTestUtil.randomBoolean());
 

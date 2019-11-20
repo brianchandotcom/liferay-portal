@@ -87,11 +87,11 @@ public class KBArticleModelImpl
 		{"version", Types.INTEGER}, {"title", Types.VARCHAR},
 		{"urlTitle", Types.VARCHAR}, {"content", Types.CLOB},
 		{"description", Types.VARCHAR}, {"priority", Types.DOUBLE},
-		{"sections", Types.VARCHAR}, {"viewCount", Types.INTEGER},
-		{"latest", Types.BOOLEAN}, {"main", Types.BOOLEAN},
-		{"sourceURL", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"sections", Types.VARCHAR}, {"latest", Types.BOOLEAN},
+		{"main", Types.BOOLEAN}, {"sourceURL", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -119,7 +119,6 @@ public class KBArticleModelImpl
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("sections", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("viewCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("latest", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("main", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("sourceURL", Types.VARCHAR);
@@ -131,7 +130,7 @@ public class KBArticleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KBArticle (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,viewCount INTEGER,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table KBArticle (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table KBArticle";
 
@@ -216,7 +215,6 @@ public class KBArticleModelImpl
 		model.setDescription(soapModel.getDescription());
 		model.setPriority(soapModel.getPriority());
 		model.setSections(soapModel.getSections());
-		model.setViewCount(soapModel.getViewCount());
 		model.setLatest(soapModel.isLatest());
 		model.setMain(soapModel.isMain());
 		model.setSourceURL(soapModel.getSourceURL());
@@ -453,10 +451,6 @@ public class KBArticleModelImpl
 		attributeGetterFunctions.put("sections", KBArticle::getSections);
 		attributeSetterBiConsumers.put(
 			"sections", (BiConsumer<KBArticle, String>)KBArticle::setSections);
-		attributeGetterFunctions.put("viewCount", KBArticle::getViewCount);
-		attributeSetterBiConsumers.put(
-			"viewCount",
-			(BiConsumer<KBArticle, Integer>)KBArticle::setViewCount);
 		attributeGetterFunctions.put("latest", KBArticle::getLatest);
 		attributeSetterBiConsumers.put(
 			"latest", (BiConsumer<KBArticle, Boolean>)KBArticle::setLatest);
@@ -895,17 +889,6 @@ public class KBArticleModelImpl
 
 	@JSON
 	@Override
-	public int getViewCount() {
-		return _viewCount;
-	}
-
-	@Override
-	public void setViewCount(int viewCount) {
-		_viewCount = viewCount;
-	}
-
-	@JSON
-	@Override
 	public boolean getLatest() {
 		return _latest;
 	}
@@ -1210,7 +1193,6 @@ public class KBArticleModelImpl
 		kbArticleImpl.setDescription(getDescription());
 		kbArticleImpl.setPriority(getPriority());
 		kbArticleImpl.setSections(getSections());
-		kbArticleImpl.setViewCount(getViewCount());
 		kbArticleImpl.setLatest(isLatest());
 		kbArticleImpl.setMain(isMain());
 		kbArticleImpl.setSourceURL(getSourceURL());
@@ -1434,8 +1416,6 @@ public class KBArticleModelImpl
 			kbArticleCacheModel.sections = null;
 		}
 
-		kbArticleCacheModel.viewCount = getViewCount();
-
 		kbArticleCacheModel.latest = isLatest();
 
 		kbArticleCacheModel.main = isMain();
@@ -1591,7 +1571,6 @@ public class KBArticleModelImpl
 	private double _priority;
 	private String _sections;
 	private String _originalSections;
-	private int _viewCount;
 	private boolean _latest;
 	private boolean _originalLatest;
 	private boolean _setOriginalLatest;

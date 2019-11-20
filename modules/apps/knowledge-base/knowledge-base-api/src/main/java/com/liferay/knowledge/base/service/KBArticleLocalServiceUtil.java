@@ -679,6 +679,13 @@ public class KBArticleLocalServiceUtil {
 			groupId, userId, tempFolderName);
 	}
 
+	public static void incrementViewCount(
+			long userId, long resourcePrimKey, int increment)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().incrementViewCount(userId, resourcePrimKey, increment);
+	}
+
 	public static void moveKBArticle(
 			long userId, long resourcePrimKey, long parentResourceClassNameId,
 			long parentResourcePrimKey, double priority)
@@ -799,13 +806,6 @@ public class KBArticleLocalServiceUtil {
 
 		return getService().updateStatus(
 			userId, resourcePrimKey, status, serviceContext);
-	}
-
-	public static void updateViewCount(
-			long userId, long resourcePrimKey, int viewCount)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().updateViewCount(userId, resourcePrimKey, viewCount);
 	}
 
 	public static KBArticleLocalService getService() {

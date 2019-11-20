@@ -740,6 +740,15 @@ public class KBArticleLocalServiceWrapper
 	}
 
 	@Override
+	public void incrementViewCount(
+			long userId, long resourcePrimKey, int increment)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_kbArticleLocalService.incrementViewCount(
+			userId, resourcePrimKey, increment);
+	}
+
+	@Override
 	public void moveKBArticle(
 			long userId, long resourcePrimKey, long parentResourceClassNameId,
 			long parentResourcePrimKey, double priority)
@@ -873,15 +882,6 @@ public class KBArticleLocalServiceWrapper
 
 		return _kbArticleLocalService.updateStatus(
 			userId, resourcePrimKey, status, serviceContext);
-	}
-
-	@Override
-	public void updateViewCount(
-			long userId, long resourcePrimKey, int viewCount)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_kbArticleLocalService.updateViewCount(
-			userId, resourcePrimKey, viewCount);
 	}
 
 	@Override

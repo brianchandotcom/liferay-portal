@@ -76,7 +76,7 @@ public class KBArticleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -120,8 +120,6 @@ public class KBArticleCacheModel
 		sb.append(priority);
 		sb.append(", sections=");
 		sb.append(sections);
-		sb.append(", viewCount=");
-		sb.append(viewCount);
 		sb.append(", latest=");
 		sb.append(latest);
 		sb.append(", main=");
@@ -226,7 +224,6 @@ public class KBArticleCacheModel
 			kbArticleImpl.setSections(sections);
 		}
 
-		kbArticleImpl.setViewCount(viewCount);
 		kbArticleImpl.setLatest(latest);
 		kbArticleImpl.setMain(main);
 
@@ -300,8 +297,6 @@ public class KBArticleCacheModel
 
 		priority = objectInput.readDouble();
 		sections = objectInput.readUTF();
-
-		viewCount = objectInput.readInt();
 
 		latest = objectInput.readBoolean();
 
@@ -394,8 +389,6 @@ public class KBArticleCacheModel
 			objectOutput.writeUTF(sections);
 		}
 
-		objectOutput.writeInt(viewCount);
-
 		objectOutput.writeBoolean(latest);
 
 		objectOutput.writeBoolean(main);
@@ -444,7 +437,6 @@ public class KBArticleCacheModel
 	public String description;
 	public double priority;
 	public String sections;
-	public int viewCount;
 	public boolean latest;
 	public boolean main;
 	public String sourceURL;

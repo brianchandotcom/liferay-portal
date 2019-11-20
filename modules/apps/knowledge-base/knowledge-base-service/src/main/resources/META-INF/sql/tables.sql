@@ -20,7 +20,6 @@ create table KBArticle (
 	description STRING null,
 	priority DOUBLE,
 	sections STRING null,
-	viewCount INTEGER,
 	latest BOOLEAN,
 	main BOOLEAN,
 	sourceURL STRING null,

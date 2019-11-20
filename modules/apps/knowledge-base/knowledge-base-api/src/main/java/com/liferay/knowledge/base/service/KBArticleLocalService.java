@@ -471,6 +471,11 @@ public interface KBArticleLocalService
 			long groupId, long userId, String tempFolderName)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public void incrementViewCount(
+			long userId, long resourcePrimKey, int increment)
+		throws PortalException;
+
 	public void moveKBArticle(
 			long userId, long resourcePrimKey, long parentResourceClassNameId,
 			long parentResourcePrimKey, double priority)
@@ -535,10 +540,6 @@ public interface KBArticleLocalService
 	public KBArticle updateStatus(
 			long userId, long resourcePrimKey, int status,
 			ServiceContext serviceContext)
-		throws PortalException;
-
-	public void updateViewCount(
-			long userId, long resourcePrimKey, int viewCount)
 		throws PortalException;
 
 }

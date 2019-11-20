@@ -76,6 +76,8 @@ public interface KBArticle extends KBArticleModel, PersistedModel {
 	public String getParentTitle(java.util.Locale locale, int status)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public long getViewCount();
+
 	public boolean isFirstVersion();
 
 	public boolean isRoot();

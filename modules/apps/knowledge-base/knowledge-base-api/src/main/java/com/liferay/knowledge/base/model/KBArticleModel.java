@@ -401,20 +401,6 @@ public interface KBArticleModel
 	public void setSections(String sections);
 
 	/**
-	 * Returns the view count of this kb article.
-	 *
-	 * @return the view count of this kb article
-	 */
-	public int getViewCount();
-
-	/**
-	 * Sets the view count of this kb article.
-	 *
-	 * @param viewCount the view count of this kb article
-	 */
-	public void setViewCount(int viewCount);
-
-	/**
 	 * Returns the latest of this kb article.
 	 *
 	 * @return the latest of this kb article

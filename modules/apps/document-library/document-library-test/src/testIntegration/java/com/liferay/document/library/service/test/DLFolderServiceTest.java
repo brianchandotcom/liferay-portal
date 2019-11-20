@@ -15,7 +15,6 @@
 package com.liferay.document.library.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -30,13 +29,10 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -57,7 +53,6 @@ import java.util.List;
 
 import jodd.util.MimeTypes;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -74,29 +69,13 @@ public class DLFolderServiceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
-
-	@ClassRule
-	@Rule
-	public static final PermissionCheckerMethodTestRule
-		permissionCheckerTestRule = PermissionCheckerMethodTestRule.INSTANCE;
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
-		_name = PrincipalThreadLocal.getName();
-
 		_group = GroupTestUtil.addGroup();
-
-		try {
-			_dlAppService.deleteFolder(
-				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				"Test Folder");
-		}
-		catch (NoSuchFolderException nsfe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsfe, nsfe);
-			}
-		}
 
 		_parentFolder = _dlAppService.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -112,11 +91,6 @@ public class DLFolderServiceTest {
 			StringUtil.randomString(),
 			new long[] {_ddmStructure.getStructureId()},
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		PrincipalThreadLocal.setName(_name);
 	}
 
 	@Test
@@ -288,9 +262,6 @@ public class DLFolderServiceTest {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DLFolderServiceTest.class);
-
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;
 
@@ -315,7 +286,6 @@ public class DLFolderServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private String _name;
 	private Folder _parentFolder;
 
 }

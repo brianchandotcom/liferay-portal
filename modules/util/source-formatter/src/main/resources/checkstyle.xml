@@ -110,6 +110,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.AssertEqualsCheck">
 			<message key="assert.add.information" value="Add ''{0}'' as extra parameter at the beginning of the ''Assert.assertEquals'' call to provide more information to the test. See LPS-70411." />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.AttributeOrderCheck">
+			<message key="attribute.incorrect.order" value="Attribute ''{0}'' should come after attribute ''{1}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.CamelCaseNameCheck">
 			<message key="method.invalidName" value="''{0}'' should be followed by a lowercase character for method ''{1}''" />
 			<message key="parameter.invalidName" value="''{0}'' should be followed by a lowercase character for parameter ''{1}''" />
@@ -127,9 +130,6 @@
 			<message key="chaining.required" value="Chaining on ''{0}'' is preferred. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/chaining.markdown" />
 			<message key="concat.avoid.too.many" value="Use StringBundler instead of chaining concat when there is more than 3 parts" />
 			<message key="response.unsorted" value="Method calls between ''Response.status'' and ''Response.build'' should be sorted" />
-		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.AttributeOrderCheck">
-			<message key="attribute.incorrect.order" value="Attribute ''{0}'' should come after attribute ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ConcatCheck">
 			<message key="end.character.invalid" value="When concatenating multiple literal strings, only the last literal string can end with ''{0}''" />

@@ -234,13 +234,6 @@ public class DDMTemplateVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCTCollectionId() throws Exception {
-		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
-
-		_persistence.countByCTCollectionId(0L);
-	}
-
-	@Test
 	public void testCountByTemplateId() throws Exception {
 		_persistence.countByTemplateId(RandomTestUtil.nextLong());
 

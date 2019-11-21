@@ -122,15 +122,13 @@ public class AssetLinkModelImpl
 			"value.object.column.bitmask.enabled.com.liferay.asset.kernel.model.AssetLink"),
 		true);
 
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 1L;
+	public static final long ENTRYID1_COLUMN_BITMASK = 1L;
 
-	public static final long ENTRYID1_COLUMN_BITMASK = 2L;
+	public static final long ENTRYID2_COLUMN_BITMASK = 2L;
 
-	public static final long ENTRYID2_COLUMN_BITMASK = 4L;
+	public static final long TYPE_COLUMN_BITMASK = 4L;
 
-	public static final long TYPE_COLUMN_BITMASK = 8L;
-
-	public static final long WEIGHT_COLUMN_BITMASK = 16L;
+	public static final long WEIGHT_COLUMN_BITMASK = 8L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(
@@ -321,19 +319,7 @@ public class AssetLinkModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
-		}
-
 		_ctCollectionId = ctCollectionId;
-	}
-
-	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
 	}
 
 	@Override
@@ -600,11 +586,6 @@ public class AssetLinkModelImpl
 	public void resetOriginalValues() {
 		AssetLinkModelImpl assetLinkModelImpl = this;
 
-		assetLinkModelImpl._originalCtCollectionId =
-			assetLinkModelImpl._ctCollectionId;
-
-		assetLinkModelImpl._setOriginalCtCollectionId = false;
-
 		assetLinkModelImpl._originalEntryId1 = assetLinkModelImpl._entryId1;
 
 		assetLinkModelImpl._setOriginalEntryId1 = false;
@@ -734,8 +715,6 @@ public class AssetLinkModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private long _linkId;
 	private long _companyId;
 	private long _userId;

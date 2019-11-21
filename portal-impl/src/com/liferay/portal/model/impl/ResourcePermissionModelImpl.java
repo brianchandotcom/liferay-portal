@@ -129,21 +129,19 @@ public class ResourcePermissionModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 2L;
 
-	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long PRIMKEY_COLUMN_BITMASK = 4L;
 
-	public static final long PRIMKEY_COLUMN_BITMASK = 8L;
+	public static final long PRIMKEYID_COLUMN_BITMASK = 8L;
 
-	public static final long PRIMKEYID_COLUMN_BITMASK = 16L;
+	public static final long ROLEID_COLUMN_BITMASK = 16L;
 
-	public static final long ROLEID_COLUMN_BITMASK = 32L;
+	public static final long SCOPE_COLUMN_BITMASK = 32L;
 
-	public static final long SCOPE_COLUMN_BITMASK = 64L;
+	public static final long VIEWACTIONID_COLUMN_BITMASK = 64L;
 
-	public static final long VIEWACTIONID_COLUMN_BITMASK = 128L;
-
-	public static final long RESOURCEPERMISSIONID_COLUMN_BITMASK = 256L;
+	public static final long RESOURCEPERMISSIONID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -423,19 +421,7 @@ public class ResourcePermissionModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
-		}
-
 		_ctCollectionId = ctCollectionId;
-	}
-
-	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -757,11 +743,6 @@ public class ResourcePermissionModelImpl
 	public void resetOriginalValues() {
 		ResourcePermissionModelImpl resourcePermissionModelImpl = this;
 
-		resourcePermissionModelImpl._originalCtCollectionId =
-			resourcePermissionModelImpl._ctCollectionId;
-
-		resourcePermissionModelImpl._setOriginalCtCollectionId = false;
-
 		resourcePermissionModelImpl._originalCompanyId =
 			resourcePermissionModelImpl._companyId;
 
@@ -913,8 +894,6 @@ public class ResourcePermissionModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private long _resourcePermissionId;
 	private long _companyId;
 	private long _originalCompanyId;

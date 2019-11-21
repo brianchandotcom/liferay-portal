@@ -108,15 +108,13 @@ public class CTSContentModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 2L;
+	public static final long PATH_COLUMN_BITMASK = 2L;
 
-	public static final long PATH_COLUMN_BITMASK = 4L;
+	public static final long REPOSITORYID_COLUMN_BITMASK = 4L;
 
-	public static final long REPOSITORYID_COLUMN_BITMASK = 8L;
+	public static final long STORETYPE_COLUMN_BITMASK = 8L;
 
-	public static final long STORETYPE_COLUMN_BITMASK = 16L;
-
-	public static final long VERSION_COLUMN_BITMASK = 32L;
+	public static final long VERSION_COLUMN_BITMASK = 16L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -313,19 +311,7 @@ public class CTSContentModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
-		}
-
 		_ctCollectionId = ctCollectionId;
-	}
-
-	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
 	}
 
 	@Override
@@ -604,11 +590,6 @@ public class CTSContentModelImpl
 	public void resetOriginalValues() {
 		CTSContentModelImpl ctsContentModelImpl = this;
 
-		ctsContentModelImpl._originalCtCollectionId =
-			ctsContentModelImpl._ctCollectionId;
-
-		ctsContentModelImpl._setOriginalCtCollectionId = false;
-
 		ctsContentModelImpl._originalCompanyId = ctsContentModelImpl._companyId;
 
 		ctsContentModelImpl._setOriginalCompanyId = false;
@@ -761,8 +742,6 @@ public class CTSContentModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private long _ctsContentId;
 	private long _companyId;
 	private long _originalCompanyId;

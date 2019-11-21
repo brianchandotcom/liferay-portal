@@ -235,13 +235,6 @@ public class DDMStructureVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCTCollectionId() throws Exception {
-		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
-
-		_persistence.countByCTCollectionId(0L);
-	}
-
-	@Test
 	public void testCountByStructureId() throws Exception {
 		_persistence.countByStructureId(RandomTestUtil.nextLong());
 

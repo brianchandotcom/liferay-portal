@@ -176,13 +176,6 @@ public class JournalArticleLocalizationPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCTCollectionId() throws Exception {
-		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
-
-		_persistence.countByCTCollectionId(0L);
-	}
-
-	@Test
 	public void testCountByArticlePK() throws Exception {
 		_persistence.countByArticlePK(RandomTestUtil.nextLong());
 

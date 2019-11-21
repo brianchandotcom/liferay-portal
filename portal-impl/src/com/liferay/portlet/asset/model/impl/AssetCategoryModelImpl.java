@@ -150,21 +150,19 @@ public class AssetCategoryModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 2L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
 
-	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
 
-	public static final long NAME_COLUMN_BITMASK = 16L;
+	public static final long PARENTCATEGORYID_COLUMN_BITMASK = 16L;
 
-	public static final long PARENTCATEGORYID_COLUMN_BITMASK = 32L;
+	public static final long TREEPATH_COLUMN_BITMASK = 32L;
 
-	public static final long TREEPATH_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
-	public static final long UUID_COLUMN_BITMASK = 128L;
-
-	public static final long VOCABULARYID_COLUMN_BITMASK = 256L;
+	public static final long VOCABULARYID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -479,19 +477,7 @@ public class AssetCategoryModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
-		}
-
 		_ctCollectionId = ctCollectionId;
-	}
-
-	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1204,11 +1190,6 @@ public class AssetCategoryModelImpl
 	public void resetOriginalValues() {
 		AssetCategoryModelImpl assetCategoryModelImpl = this;
 
-		assetCategoryModelImpl._originalCtCollectionId =
-			assetCategoryModelImpl._ctCollectionId;
-
-		assetCategoryModelImpl._setOriginalCtCollectionId = false;
-
 		assetCategoryModelImpl._originalUuid = assetCategoryModelImpl._uuid;
 
 		assetCategoryModelImpl._originalExternalReferenceCode =
@@ -1427,8 +1408,6 @@ public class AssetCategoryModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

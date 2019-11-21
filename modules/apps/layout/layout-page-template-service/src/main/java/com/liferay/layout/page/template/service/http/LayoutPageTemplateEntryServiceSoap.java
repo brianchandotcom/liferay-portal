@@ -61,6 +61,34 @@ import java.rmi.RemoteException;
  */
 public class LayoutPageTemplateEntryServiceSoap {
 
+	public static
+		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
+				addLayoutPageTemplateEntry(
+					long groupId, long layoutPageTemplateCollectionId,
+					long classNameId, long classTypeId, String name, int status,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws RemoteException {
+
+		try {
+			com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+				returnValue =
+					LayoutPageTemplateEntryServiceUtil.
+						addLayoutPageTemplateEntry(
+							groupId, layoutPageTemplateCollectionId,
+							classNameId, classTypeId, name, status,
+							serviceContext);
+
+			return com.liferay.layout.page.template.model.
+				LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addLayoutPageTemplateEntry(long, long, String, int, long,
@@ -121,6 +149,12 @@ public class LayoutPageTemplateEntryServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, String,
+	 int, ServiceContext)}
+	 */
+	@Deprecated
 	public static
 		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
 				addLayoutPageTemplateEntry(

@@ -584,17 +584,17 @@ public class MessageBoardThread {
 	protected String threadType;
 
 	@Schema(description = "The number of views of this thread.")
-	public Integer getViewCount() {
+	public Long getViewCount() {
 		return viewCount;
 	}
 
-	public void setViewCount(Integer viewCount) {
+	public void setViewCount(Long viewCount) {
 		this.viewCount = viewCount;
 	}
 
 	@JsonIgnore
 	public void setViewCount(
-		UnsafeSupplier<Integer, Exception> viewCountUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> viewCountUnsafeSupplier) {
 
 		try {
 			viewCount = viewCountUnsafeSupplier.get();
@@ -609,7 +609,7 @@ public class MessageBoardThread {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Integer viewCount;
+	protected Long viewCount;
 
 	@Schema(
 		description = "A write-only property that specifies the thread's default permissions."

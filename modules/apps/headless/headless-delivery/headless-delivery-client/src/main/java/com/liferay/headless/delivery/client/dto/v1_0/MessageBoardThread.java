@@ -425,16 +425,16 @@ public class MessageBoardThread {
 
 	protected String threadType;
 
-	public Integer getViewCount() {
+	public Long getViewCount() {
 		return viewCount;
 	}
 
-	public void setViewCount(Integer viewCount) {
+	public void setViewCount(Long viewCount) {
 		this.viewCount = viewCount;
 	}
 
 	public void setViewCount(
-		UnsafeSupplier<Integer, Exception> viewCountUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> viewCountUnsafeSupplier) {
 
 		try {
 			viewCount = viewCountUnsafeSupplier.get();
@@ -444,7 +444,7 @@ public class MessageBoardThread {
 		}
 	}
 
-	protected Integer viewCount;
+	protected Long viewCount;
 
 	public ViewableBy getViewableBy() {
 		return viewableBy;

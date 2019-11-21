@@ -2525,7 +2525,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			if (Objects.equals("viewCount", fieldName)) {
 				if (!Objects.deepEquals(
 						messageBoardThread.getViewCount(),
-						jsonObject.getInt("viewCount"))) {
+						jsonObject.getLong("viewCount"))) {
 
 					return false;
 				}
@@ -2792,7 +2792,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				siteId = testGroup.getGroupId();
 				subscribed = RandomTestUtil.randomBoolean();
 				threadType = RandomTestUtil.randomString();
-				viewCount = RandomTestUtil.randomInt();
+				viewCount = RandomTestUtil.randomLong();
 			}
 		};
 	}

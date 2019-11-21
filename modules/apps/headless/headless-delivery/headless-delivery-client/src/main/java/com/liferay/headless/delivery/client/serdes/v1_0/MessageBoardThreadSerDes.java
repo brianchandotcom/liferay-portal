@@ -650,7 +650,7 @@ public class MessageBoardThreadSerDes {
 			else if (Objects.equals(jsonParserFieldName, "viewCount")) {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setViewCount(
-						Integer.valueOf((String)jsonParserFieldValue));
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "viewableBy")) {

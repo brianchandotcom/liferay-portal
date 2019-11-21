@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_USER_HEADER</td>
+	<td>//ul[contains(@class,'control-menu-nav')]//span[contains(@data-qa-id,'headerTitle') and contains(.,'Add New User to ${key_accountName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_ACCOUNT</td>
+	<td>//tr[contains(.,'${key_accountName}')]/td[3]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOMAIN_REMOVE_DOMAIN</td>
 	<td>//tr[contains(.,'${key_domainName}')]//span[contains(@class,' lfr-portal-tooltip')]</td>
 	<td></td>

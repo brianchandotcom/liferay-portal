@@ -119,6 +119,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_ACCOUNT</td>
+	<td>//iframe[@title='Select an Account']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_MEDIA_GALLERY_VIDEO</td>
 	<td>//iframe[@class='image-viewer-base-image']</td>
 	<td></td>

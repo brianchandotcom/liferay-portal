@@ -898,20 +898,6 @@ public class LayoutLocalServiceWrapper
 			uuid, groupId, privateLayout);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getLayoutChildLayouts(List)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.Map<Long, java.util.List<Layout>> getLayoutChildLayouts(
-		com.liferay.portal.kernel.model.LayoutSet layoutSet,
-		java.util.List<Layout> parentLayouts) {
-
-		return _layoutLocalService.getLayoutChildLayouts(
-			layoutSet, parentLayouts);
-	}
-
 	@Override
 	public java.util.Map<Long, java.util.List<Layout>> getLayoutChildLayouts(
 		java.util.List<Layout> parentLayouts) {

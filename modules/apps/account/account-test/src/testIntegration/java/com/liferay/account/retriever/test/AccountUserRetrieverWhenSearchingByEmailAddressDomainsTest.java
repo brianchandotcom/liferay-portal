@@ -158,12 +158,11 @@ public class AccountUserRetrieverWhenSearchingByEmailAddressDomainsTest {
 	}
 
 	private User _addUser(String emailAddressDomain) throws Exception {
-		String emailAddress =
-			RandomTestUtil.randomString() + StringPool.AT + emailAddressDomain;
-
 		return UserTestUtil.addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			StringPool.BLANK, emailAddress, RandomTestUtil.randomString(),
+			StringPool.BLANK,
+			RandomTestUtil.randomString() + StringPool.AT + emailAddressDomain,
+			RandomTestUtil.randomString(),
 			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null,
 			ServiceContextTestUtil.getServiceContext());

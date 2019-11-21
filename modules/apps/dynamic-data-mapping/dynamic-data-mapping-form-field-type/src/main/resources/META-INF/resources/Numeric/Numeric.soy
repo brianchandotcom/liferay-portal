@@ -20,6 +20,7 @@
 	{@param? tip: string}
 	{@param? tooltip: string}
 	{@param? valid: bool}
+	{@param? value: any}
 	{@param? visible: bool}
 
 	{call FieldBase.render}
@@ -33,7 +34,7 @@
 				{param placeholder: $placeholder /}
 				{param predefinedValue: $predefinedValue /}
 				{param readOnly: $readOnly /}
-				{param value: $_value /}
+				{param value: isNonnull($_value) ? $_value : $value /}
 			{/call}
 		{/param}
 		{param displayErrors: $displayErrors /}

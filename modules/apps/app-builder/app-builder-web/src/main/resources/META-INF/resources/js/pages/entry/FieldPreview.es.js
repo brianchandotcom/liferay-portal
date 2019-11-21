@@ -17,30 +17,11 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useEffect, useState} from 'react';
 
-const getDataDefinitionField = (dataDefinition, fieldName) => {
-	return dataDefinition.dataDefinitionFields.find(field => {
-		return field.name === fieldName;
-	}, fieldName);
-};
-
-const getFieldLabel = (dataDefinition, fieldName) => {
-	const field = getDataDefinitionField(dataDefinition, fieldName);
-
-	return field ? field.label[themeDisplay.getLanguageId()] : fieldName;
-};
-
-const getOptionLabel = (options = {}, value) => {
-	return (options[themeDisplay.getLanguageId()] || []).reduce(
-		(result, option) => {
-			if (option.value === value) {
-				return option.label;
-			}
-
-			return result;
-		},
-		value
-	);
-};
+import {
+	getDataDefinitionField,
+	getFieldLabel,
+	getOptionLabel
+} from '../../utils/dataDefinition.es';
 
 const createFileEntryPreviewURL = (groupId, fileEntryId) => {
 	const portletURL = Liferay.PortletURL.createURL(

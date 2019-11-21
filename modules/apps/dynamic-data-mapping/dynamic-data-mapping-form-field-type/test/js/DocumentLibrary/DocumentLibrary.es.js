@@ -102,9 +102,7 @@ describe('Field DocumentLibrary', () => {
 	it('has a value', () => {
 		component = new DocumentLibrary({
 			...defaultDocumentLibraryConfig,
-			value: {
-				id: '123'
-			}
+			value: '{"id":"123"}'
 		});
 
 		expect(component).toMatchSnapshot();

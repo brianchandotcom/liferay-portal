@@ -73,9 +73,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		HttpServletRequest httpServletRequest =
 			ddmFormFieldRenderingContext.getHttpServletRequest();
 
-		if (ddmFormFieldRenderingContext.isReadOnly() &&
-			Validator.isNotNull(ddmFormFieldRenderingContext.getValue())) {
-
+		if (Validator.isNotNull(ddmFormFieldRenderingContext.getValue())) {
 			JSONObject valueJSONObject = getValueJSONObject(
 				ddmFormFieldRenderingContext.getValue());
 
@@ -121,7 +119,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			value = "{}";
 		}
 
-		parameters.put("value", jsonFactory.looseDeserialize(value));
+		parameters.put("value", value);
 
 		return parameters;
 	}

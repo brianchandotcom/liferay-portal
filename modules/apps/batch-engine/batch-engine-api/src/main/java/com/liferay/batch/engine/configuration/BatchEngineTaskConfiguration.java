@@ -29,8 +29,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface BatchEngineTaskConfiguration {
 
-	@Meta.AD(deflt = "100", name = "batch-size", required = false)
-	public int batchSize();
+	@Meta.AD(deflt = "100", name = "import-batch-size", required = false)
+	public int importBatchSize();
+
+	@Meta.AD(deflt = "100", name = "export-batch-size", required = false)
+	public int exportBatchSize();
 
 	@Meta.AD(name = "csv-file-column-delimiter", required = false)
 	public String csvFileColumnDelimiter();

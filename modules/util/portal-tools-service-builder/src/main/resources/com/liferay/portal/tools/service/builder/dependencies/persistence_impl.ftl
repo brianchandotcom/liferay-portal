@@ -52,6 +52,7 @@ import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
 </#if>
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.change.tracking.CTMode;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -115,6 +116,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -792,31 +794,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		<#if entity.isChangeTrackingEnabled()>
 			if (${entity.varName}.getCtCollectionId() != 0) {
-				<#if columnBitmaskEnabled>
-					if (!${columnBitmaskCacheEnabled}) {
-						${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-					}
-					else
-				</#if>
-
-				if (isNew) {
-					Object[] args = new Object[] {${entity.varName}ModelImpl.getCtCollectionId()};
-
-					${finderCache}.removeResult(_finderPathCountByCTCollectionId, args);
-					${finderCache}.removeResult(_finderPathWithoutPaginationFindByCTCollectionId, args);
-				}
-				else if ((${entity.varName}ModelImpl.getColumnBitmask() & _finderPathWithoutPaginationFindByCTCollectionId.getColumnBitmask()) != 0) {
-					Object[] args = new Object[] {${entity.varName}ModelImpl.getOriginalCtCollectionId()};
-
-					${finderCache}.removeResult(_finderPathCountByCTCollectionId, args);
-					${finderCache}.removeResult(_finderPathWithoutPaginationFindByCTCollectionId, args);
-
-					args = new Object[] {${entity.varName}ModelImpl.getCtCollectionId()};
-
-					${finderCache}.removeResult(_finderPathCountByCTCollectionId, args);
-					${finderCache}.removeResult(_finderPathWithoutPaginationFindByCTCollectionId, args);
-				}
-
 				${entity.varName}.resetOriginalValues();
 
 				return ${entity.varName};
@@ -1822,20 +1799,20 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 	</#if>
 
-	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
-		return ${entity.name}ModelImpl.TABLE_COLUMNS_MAP;
-	}
-
 	<#if entity.isChangeTrackingEnabled()>
 		@Override
-		public Set<String> getCTIgnoredAttributeNames() {
-			return _ctIgnoredAttributeNames;
+		public Set<String> getCTAttributeNames(CTMode ctMode) {
+			return _ctModeAttributeNames.get(ctMode);
 		}
 
 		@Override
-		public Set<String> getCTMergeableAttributeNames() {
-			return _ctMergeableAttributeNames;
+		public Map<String, Integer> getTableColumnsMap() {
+			return ${entity.name}ModelImpl.TABLE_COLUMNS_MAP;
+		}
+
+		@Override
+		public String getTableName() {
+			return "${entity.table}";
 		}
 
 		@Override
@@ -1843,40 +1820,32 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			return _uniqueIndexColumnNames;
 		}
 
-		@Override
-		public ${entity.name} removeCTModel(${entity.name} ${entity.varName}, boolean quiet) {
-			if (quiet) {
-				return removeImpl(${entity.varName});
-			}
-
-			return remove(${entity.varName});
-		}
-
-		@Override
-		public ${entity.name} updateCTModel(${entity.name} ${entity.varName}, boolean quiet) {
-			if (quiet) {
-				return updateImpl(${entity.varName});
-			}
-
-			return update(${entity.varName});
-		}
-
-		private static final Set<String> _ctIgnoredAttributeNames = new HashSet<String>();
-		private static final Set<String> _ctMergeableAttributeNames = new HashSet<String>();
+		private static final Map<CTMode, Set<String>> _ctModeAttributeNames = new EnumMap<CTMode, Set<String>>(CTMode.class);
 		private static final List<String[]> _uniqueIndexColumnNames = new ArrayList<String[]>();
 
 		static {
+			Set<String> controlCTModeAttributeNames = new HashSet<String>();
+			Set<String> ignoreCTModeAttributeNames = new HashSet<String>();
+			Set<String> mergeCTModeAttributeNames = new HashSet<String>();
+			Set<String> strictCTModeAttributeNames = new HashSet<String>();
+
 			<#list entity.entityColumns as entityColumn>
-				<#if entityColumn.isChangeTrackingIgnore()>
-					_ctIgnoredAttributeNames.add("${entityColumn.name}");
+				<#if entityColumn.isChangeTrackingControl()>
+					controlCTModeAttributeNames.add("${entityColumn.DBName}");
+				<#elseif entityColumn.isChangeTrackingIgnore()>
+					ignoreCTModeAttributeNames.add("${entityColumn.DBName}");
+				<#elseif entityColumn.isChangeTrackingMerge()>
+					mergeCTModeAttributeNames.add("${entityColumn.DBName}");
+				<#elseif entityColumn.isChangeTrackingStrict()>
+					strictCTModeAttributeNames.add("${entityColumn.DBName}");
 				</#if>
 			</#list>
 
-			<#list entity.entityColumns as entityColumn>
-				<#if entityColumn.isChangeTrackingMerge()>
-					_ctMergeableAttributeNames.add("${entityColumn.name}");
-				</#if>
-			</#list>
+			_ctModeAttributeNames.put(CTMode.CONTROL, controlCTModeAttributeNames);
+			_ctModeAttributeNames.put(CTMode.IGNORE, ignoreCTModeAttributeNames);
+			_ctModeAttributeNames.put(CTMode.MERGE, mergeCTModeAttributeNames);
+			_ctModeAttributeNames.put(CTMode.PK, Collections.singleton("${entity.PKDBName}"));
+			_ctModeAttributeNames.put(CTMode.STRICT, strictCTModeAttributeNames);
 
 			<#list entity.entityFinders as entityFinder>
 				<#if entityFinder.isUnique()>
@@ -1894,6 +1863,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						});
 				</#if>
 			</#list>
+		}
+	<#else>
+		@Override
+		protected Map<String, Integer> getTableColumnsMap() {
+			return ${entity.name}ModelImpl.TABLE_COLUMNS_MAP;
 		}
 	</#if>
 

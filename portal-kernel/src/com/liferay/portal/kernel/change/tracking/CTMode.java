@@ -12,28 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.service.persistence.change.tracking;
-
-import com.liferay.portal.kernel.change.tracking.CTMode;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+package com.liferay.portal.kernel.change.tracking;
 
 /**
  * @author Preston Crary
  */
-public interface CTPersistence<T extends CTModel<T>>
-	extends BasePersistence<T> {
+public enum CTMode {
 
-	public Set<String> getCTAttributeNames(CTMode ctMode);
-
-	public Map<String, Integer> getTableColumnsMap();
-
-	public String getTableName();
-
-	public List<String[]> getUniqueIndexColumnNames();
+	CONTROL, IGNORE, MERGE, PK, STRICT
 
 }

@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.change.tracking.registry.CTModelRegistration;
 import com.liferay.portal.change.tracking.registry.CTModelRegistry;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.change.tracking.CTMode;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
@@ -151,9 +152,9 @@ public class CTServicePublisher<T extends CTModel<T>> {
 					ctModelRegistration.getPrimaryColumnName());
 				conflictColumnNames.removeAll(_ctControlColumnNames);
 				conflictColumnNames.removeAll(
-					ctPersistence.getCTIgnoredAttributeNames());
+					ctPersistence.getCTAttributeNames(CTMode.IGNORE));
 				conflictColumnNames.removeAll(
-					ctPersistence.getCTMergeableAttributeNames());
+					ctPersistence.getCTAttributeNames(CTMode.MERGE));
 
 				boolean hasBlobConflictColumn = false;
 
@@ -284,7 +285,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			sb.append("select ");
 
 			Set<String> ignoredAttributeNames =
-				ctPersistence.getCTIgnoredAttributeNames();
+				ctPersistence.getCTAttributeNames(CTMode.IGNORE);
 
 			for (String name : tableColumnsMap.keySet()) {
 				if (name.equals("ctCollectionId")) {

@@ -1,0 +1,39 @@
+dependencies {
+	compileInclude group: "commons-io", name: "commons-io", version: "2.6"
+	compileInclude group: "jline", name: "jline", version: "2.12"
+}
+
+deploy {
+	from "properties"
+	from "scripts"
+}
+
+distZip {
+	filesMatching("**/*.jar") {
+		it.path = it.name
+	}
+}
+
+distributions {
+	main {
+		contents {
+			from "properties"
+			from "scripts"
+			into "/"
+		}
+	}
+}
+
+jar {
+	archiveName "$baseName" + ".jar"
+}
+
+liferayOSGi {
+	expandCompileInclude = true
+}
+
+startScripts {
+	onlyIf {
+		false
+	}
+}

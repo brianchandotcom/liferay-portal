@@ -86,6 +86,28 @@ definition {
 	}
 
 	@priority = "4"
+	test AddUserViaUsersTab {
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is an Account with User.",
+			accountName = "Account with User");
+
+		Navigator.gotoNavItem(navItem = "Users");
+
+		Accounts.addUsers(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+	}
+
+	@priority = "4"
 	test CancelAccountCreation {
 		ProductMenu.gotoPortlet(
 			category = "Accounts",

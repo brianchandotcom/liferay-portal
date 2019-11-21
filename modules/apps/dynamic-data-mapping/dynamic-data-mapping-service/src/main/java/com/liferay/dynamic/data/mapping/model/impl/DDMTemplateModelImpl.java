@@ -154,23 +154,21 @@ public class DDMTemplateModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long LANGUAGE_COLUMN_BITMASK = 16L;
 
-	public static final long LANGUAGE_COLUMN_BITMASK = 32L;
+	public static final long MODE_COLUMN_BITMASK = 32L;
 
-	public static final long MODE_COLUMN_BITMASK = 64L;
+	public static final long SMALLIMAGEID_COLUMN_BITMASK = 64L;
 
-	public static final long SMALLIMAGEID_COLUMN_BITMASK = 128L;
+	public static final long TEMPLATEKEY_COLUMN_BITMASK = 128L;
 
-	public static final long TEMPLATEKEY_COLUMN_BITMASK = 256L;
+	public static final long TYPE_COLUMN_BITMASK = 256L;
 
-	public static final long TYPE_COLUMN_BITMASK = 512L;
+	public static final long UUID_COLUMN_BITMASK = 512L;
 
-	public static final long UUID_COLUMN_BITMASK = 1024L;
-
-	public static final long TEMPLATEID_COLUMN_BITMASK = 2048L;
+	public static final long TEMPLATEID_COLUMN_BITMASK = 1024L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -513,19 +511,7 @@ public class DDMTemplateModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
-		}
-
 		_ctCollectionId = ctCollectionId;
-	}
-
-	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1461,11 +1447,6 @@ public class DDMTemplateModelImpl
 	public void resetOriginalValues() {
 		DDMTemplateModelImpl ddmTemplateModelImpl = this;
 
-		ddmTemplateModelImpl._originalCtCollectionId =
-			ddmTemplateModelImpl._ctCollectionId;
-
-		ddmTemplateModelImpl._setOriginalCtCollectionId = false;
-
 		ddmTemplateModelImpl._originalUuid = ddmTemplateModelImpl._uuid;
 
 		ddmTemplateModelImpl._originalGroupId = ddmTemplateModelImpl._groupId;
@@ -1741,8 +1722,6 @@ public class DDMTemplateModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _templateId;

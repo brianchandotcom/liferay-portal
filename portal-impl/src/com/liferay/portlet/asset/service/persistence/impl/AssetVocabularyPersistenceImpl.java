@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -52,6 +53,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1526,522 +1528,6 @@ public class AssetVocabularyPersistenceImpl
 
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"assetVocabulary.companyId = ?";
-
-	private FinderPath _finderPathWithPaginationFindByCTCollectionId;
-	private FinderPath _finderPathWithoutPaginationFindByCTCollectionId;
-	private FinderPath _finderPathCountByCTCollectionId;
-
-	/**
-	 * Returns all the asset vocabularies where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByCTCollectionId(long ctCollectionId) {
-		return findByCTCollectionId(
-			ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset vocabularies where ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @return the range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByCTCollectionId(
-		long ctCollectionId, int start, int end) {
-
-		return findByCTCollectionId(ctCollectionId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset vocabularies where ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByCTCollectionId(
-		long ctCollectionId, int start, int end,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		return findByCTCollectionId(
-			ctCollectionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset vocabularies where ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByCTCollectionId(
-		long ctCollectionId, int start, int end,
-		OrderByComparator<AssetVocabulary> orderByComparator,
-		boolean useFinderCache) {
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			AssetVocabulary.class);
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
-				finderArgs = new Object[] {ctCollectionId};
-			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByCTCollectionId;
-			finderArgs = new Object[] {
-				ctCollectionId, start, end, orderByComparator
-			};
-		}
-
-		List<AssetVocabulary> list = null;
-
-		if (useFinderCache && productionMode) {
-			list = (List<AssetVocabulary>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (AssetVocabulary assetVocabulary : list) {
-					if (ctCollectionId != assetVocabulary.getCtCollectionId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_ASSETVOCABULARY_WHERE);
-
-			query.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				query.append(AssetVocabularyModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(ctCollectionId);
-
-				list = (List<AssetVocabulary>)QueryUtil.list(
-					q, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception e) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first asset vocabulary in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary findByCTCollectionId_First(
-			long ctCollectionId,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws NoSuchVocabularyException {
-
-		AssetVocabulary assetVocabulary = fetchByCTCollectionId_First(
-			ctCollectionId, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("ctCollectionId=");
-		msg.append(ctCollectionId);
-
-		msg.append("}");
-
-		throw new NoSuchVocabularyException(msg.toString());
-	}
-
-	/**
-	 * Returns the first asset vocabulary in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary fetchByCTCollectionId_First(
-		long ctCollectionId,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		List<AssetVocabulary> list = findByCTCollectionId(
-			ctCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary findByCTCollectionId_Last(
-			long ctCollectionId,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws NoSuchVocabularyException {
-
-		AssetVocabulary assetVocabulary = fetchByCTCollectionId_Last(
-			ctCollectionId, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("ctCollectionId=");
-		msg.append(ctCollectionId);
-
-		msg.append("}");
-
-		throw new NoSuchVocabularyException(msg.toString());
-	}
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary fetchByCTCollectionId_Last(
-		long ctCollectionId,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		int count = countByCTCollectionId(ctCollectionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetVocabulary> list = findByCTCollectionId(
-			ctCollectionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param vocabularyId the primary key of the current asset vocabulary
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary
-	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	 */
-	@Override
-	public AssetVocabulary[] findByCTCollectionId_PrevAndNext(
-			long vocabularyId, long ctCollectionId,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws NoSuchVocabularyException {
-
-		AssetVocabulary assetVocabulary = findByPrimaryKey(vocabularyId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetVocabulary[] array = new AssetVocabularyImpl[3];
-
-			array[0] = getByCTCollectionId_PrevAndNext(
-				session, assetVocabulary, ctCollectionId, orderByComparator,
-				true);
-
-			array[1] = assetVocabulary;
-
-			array[2] = getByCTCollectionId_PrevAndNext(
-				session, assetVocabulary, ctCollectionId, orderByComparator,
-				false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected AssetVocabulary getByCTCollectionId_PrevAndNext(
-		Session session, AssetVocabulary assetVocabulary, long ctCollectionId,
-		OrderByComparator<AssetVocabulary> orderByComparator,
-		boolean previous) {
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_ASSETVOCABULARY_WHERE);
-
-		query.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(AssetVocabularyModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(ctCollectionId);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						assetVocabulary)) {
-
-				qPos.add(orderByConditionValue);
-			}
-		}
-
-		List<AssetVocabulary> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the asset vocabularies where ctCollectionId = &#63; from the database.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 */
-	@Override
-	public void removeByCTCollectionId(long ctCollectionId) {
-		for (AssetVocabulary assetVocabulary :
-				findByCTCollectionId(
-					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(assetVocabulary);
-		}
-	}
-
-	/**
-	 * Returns the number of asset vocabularies where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the number of matching asset vocabularies
-	 */
-	@Override
-	public int countByCTCollectionId(long ctCollectionId) {
-		FinderPath finderPath = _finderPathCountByCTCollectionId;
-
-		Object[] finderArgs = new Object[] {ctCollectionId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_ASSETVOCABULARY_WHERE);
-
-			query.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(ctCollectionId);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2 =
-		"assetVocabulary.ctCollectionId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
@@ -6006,43 +5492,6 @@ public class AssetVocabularyPersistenceImpl
 		}
 
 		if (assetVocabulary.getCtCollectionId() != 0) {
-			if (!AssetVocabularyModelImpl.COLUMN_BITMASK_ENABLED) {
-				FinderCacheUtil.clearCache(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-			}
-			else if (isNew) {
-				Object[] args = new Object[] {
-					assetVocabularyModelImpl.getCtCollectionId()
-				};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByCTCollectionId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByCTCollectionId, args);
-			}
-			else if ((assetVocabularyModelImpl.getColumnBitmask() &
-					  _finderPathWithoutPaginationFindByCTCollectionId.
-						  getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					assetVocabularyModelImpl.getOriginalCtCollectionId()
-				};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByCTCollectionId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByCTCollectionId, args);
-
-				args = new Object[] {
-					assetVocabularyModelImpl.getCtCollectionId()
-				};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByCTCollectionId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByCTCollectionId, args);
-			}
-
 			assetVocabulary.resetOriginalValues();
 
 			return assetVocabulary;
@@ -6069,13 +5518,6 @@ public class AssetVocabularyPersistenceImpl
 			FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
 			FinderCacheUtil.removeResult(
 				_finderPathWithoutPaginationFindByUuid_C, args);
-
-			args = new Object[] {assetVocabularyModelImpl.getCtCollectionId()};
-
-			FinderCacheUtil.removeResult(
-				_finderPathCountByCTCollectionId, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByCTCollectionId, args);
 
 			args = new Object[] {assetVocabularyModelImpl.getGroupId()};
 
@@ -6135,29 +5577,6 @@ public class AssetVocabularyPersistenceImpl
 				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
 				FinderCacheUtil.removeResult(
 					_finderPathWithoutPaginationFindByUuid_C, args);
-			}
-
-			if ((assetVocabularyModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCTCollectionId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					assetVocabularyModelImpl.getOriginalCtCollectionId()
-				};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByCTCollectionId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByCTCollectionId, args);
-
-				args = new Object[] {
-					assetVocabularyModelImpl.getCtCollectionId()
-				};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByCTCollectionId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByCTCollectionId, args);
 			}
 
 			if ((assetVocabularyModelImpl.getColumnBitmask() &
@@ -6594,18 +6013,20 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.get(ctColumnResolutionType);
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return AssetVocabularyModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	@Override
-	public Set<String> getCTIgnoredAttributeNames() {
-		return _ctIgnoredAttributeNames;
-	}
-
-	@Override
-	public Set<String> getCTMergeableAttributeNames() {
-		return _ctMergeableAttributeNames;
+	public String getTableName() {
+		return "AssetVocabulary";
 	}
 
 	@Override
@@ -6613,37 +6034,43 @@ public class AssetVocabularyPersistenceImpl
 		return _uniqueIndexColumnNames;
 	}
 
-	@Override
-	public AssetVocabulary removeCTModel(
-		AssetVocabulary assetVocabulary, boolean quiet) {
-
-		if (quiet) {
-			return removeImpl(assetVocabulary);
-		}
-
-		return remove(assetVocabulary);
-	}
-
-	@Override
-	public AssetVocabulary updateCTModel(
-		AssetVocabulary assetVocabulary, boolean quiet) {
-
-		if (quiet) {
-			return updateImpl(assetVocabulary);
-		}
-
-		return update(assetVocabulary);
-	}
-
-	private static final Set<String> _ctIgnoredAttributeNames =
-		new HashSet<String>();
-	private static final Set<String> _ctMergeableAttributeNames =
-		new HashSet<String>();
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
 	private static final List<String[]> _uniqueIndexColumnNames =
 		new ArrayList<String[]>();
 
 	static {
-		_ctIgnoredAttributeNames.add("modifiedDate");
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("externalReferenceCode");
+		ctStrictColumnNames.add("groupId");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("userId");
+		ctStrictColumnNames.add("userName");
+		ctStrictColumnNames.add("createDate");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("name");
+		ctStrictColumnNames.add("title");
+		ctStrictColumnNames.add("description");
+		ctStrictColumnNames.add("settings_");
+		ctStrictColumnNames.add("lastPublishDate");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK, Collections.singleton("vocabularyId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
 
@@ -6739,31 +6166,6 @@ public class AssetVocabularyPersistenceImpl
 			AssetVocabularyModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
-
-		_finderPathWithPaginationFindByCTCollectionId = new FinderPath(
-			AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-			AssetVocabularyModelImpl.FINDER_CACHE_ENABLED,
-			AssetVocabularyImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCTCollectionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
-
-		_finderPathWithoutPaginationFindByCTCollectionId = new FinderPath(
-			AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-			AssetVocabularyModelImpl.FINDER_CACHE_ENABLED,
-			AssetVocabularyImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCTCollectionId",
-			new String[] {Long.class.getName()},
-			AssetVocabularyModelImpl.CTCOLLECTIONID_COLUMN_BITMASK |
-			AssetVocabularyModelImpl.NAME_COLUMN_BITMASK);
-
-		_finderPathCountByCTCollectionId = new FinderPath(
-			AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-			AssetVocabularyModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCTCollectionId",
-			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,

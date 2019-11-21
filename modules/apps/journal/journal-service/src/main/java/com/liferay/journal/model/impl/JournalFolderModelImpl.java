@@ -137,19 +137,17 @@ public class JournalFolderModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 2L;
+	public static final long FOLDERID_COLUMN_BITMASK = 2L;
 
-	public static final long FOLDERID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
 
-	public static final long NAME_COLUMN_BITMASK = 16L;
+	public static final long PARENTFOLDERID_COLUMN_BITMASK = 16L;
 
-	public static final long PARENTFOLDERID_COLUMN_BITMASK = 32L;
+	public static final long STATUS_COLUMN_BITMASK = 32L;
 
-	public static final long STATUS_COLUMN_BITMASK = 64L;
-
-	public static final long UUID_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -459,19 +457,7 @@ public class JournalFolderModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
-		}
-
 		_ctCollectionId = ctCollectionId;
-	}
-
-	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1206,11 +1192,6 @@ public class JournalFolderModelImpl
 	public void resetOriginalValues() {
 		JournalFolderModelImpl journalFolderModelImpl = this;
 
-		journalFolderModelImpl._originalCtCollectionId =
-			journalFolderModelImpl._ctCollectionId;
-
-		journalFolderModelImpl._setOriginalCtCollectionId = false;
-
 		journalFolderModelImpl._originalUuid = journalFolderModelImpl._uuid;
 
 		journalFolderModelImpl._originalFolderId =
@@ -1431,8 +1412,6 @@ public class JournalFolderModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _folderId;

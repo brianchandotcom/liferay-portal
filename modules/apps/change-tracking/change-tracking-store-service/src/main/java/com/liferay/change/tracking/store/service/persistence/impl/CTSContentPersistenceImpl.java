@@ -21,6 +21,7 @@ import com.liferay.change.tracking.store.model.impl.CTSContentModelImpl;
 import com.liferay.change.tracking.store.service.persistence.CTSContentPersistence;
 import com.liferay.change.tracking.store.service.persistence.impl.constants.CTSPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -47,6 +48,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -93,515 +95,6 @@ public class CTSContentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathWithPaginationFindByCTCollectionId;
-	private FinderPath _finderPathWithoutPaginationFindByCTCollectionId;
-	private FinderPath _finderPathCountByCTCollectionId;
-
-	/**
-	 * Returns all the cts contents where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the matching cts contents
-	 */
-	@Override
-	public List<CTSContent> findByCTCollectionId(long ctCollectionId) {
-		return findByCTCollectionId(
-			ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cts contents where ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTSContentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of cts contents
-	 * @param end the upper bound of the range of cts contents (not inclusive)
-	 * @return the range of matching cts contents
-	 */
-	@Override
-	public List<CTSContent> findByCTCollectionId(
-		long ctCollectionId, int start, int end) {
-
-		return findByCTCollectionId(ctCollectionId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cts contents where ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTSContentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of cts contents
-	 * @param end the upper bound of the range of cts contents (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cts contents
-	 */
-	@Override
-	public List<CTSContent> findByCTCollectionId(
-		long ctCollectionId, int start, int end,
-		OrderByComparator<CTSContent> orderByComparator) {
-
-		return findByCTCollectionId(
-			ctCollectionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cts contents where ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTSContentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of cts contents
-	 * @param end the upper bound of the range of cts contents (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching cts contents
-	 */
-	@Override
-	public List<CTSContent> findByCTCollectionId(
-		long ctCollectionId, int start, int end,
-		OrderByComparator<CTSContent> orderByComparator,
-		boolean useFinderCache) {
-
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CTSContent.class);
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
-				finderArgs = new Object[] {ctCollectionId};
-			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByCTCollectionId;
-			finderArgs = new Object[] {
-				ctCollectionId, start, end, orderByComparator
-			};
-		}
-
-		List<CTSContent> list = null;
-
-		if (useFinderCache && productionMode) {
-			list = (List<CTSContent>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CTSContent ctsContent : list) {
-					if (ctCollectionId != ctsContent.getCtCollectionId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_CTSCONTENT_WHERE);
-
-			query.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				query.append(CTSContentModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(ctCollectionId);
-
-				list = (List<CTSContent>)QueryUtil.list(
-					q, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception e) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first cts content in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching cts content
-	 * @throws NoSuchContentException if a matching cts content could not be found
-	 */
-	@Override
-	public CTSContent findByCTCollectionId_First(
-			long ctCollectionId,
-			OrderByComparator<CTSContent> orderByComparator)
-		throws NoSuchContentException {
-
-		CTSContent ctsContent = fetchByCTCollectionId_First(
-			ctCollectionId, orderByComparator);
-
-		if (ctsContent != null) {
-			return ctsContent;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("ctCollectionId=");
-		msg.append(ctCollectionId);
-
-		msg.append("}");
-
-		throw new NoSuchContentException(msg.toString());
-	}
-
-	/**
-	 * Returns the first cts content in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching cts content, or <code>null</code> if a matching cts content could not be found
-	 */
-	@Override
-	public CTSContent fetchByCTCollectionId_First(
-		long ctCollectionId, OrderByComparator<CTSContent> orderByComparator) {
-
-		List<CTSContent> list = findByCTCollectionId(
-			ctCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cts content in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content
-	 * @throws NoSuchContentException if a matching cts content could not be found
-	 */
-	@Override
-	public CTSContent findByCTCollectionId_Last(
-			long ctCollectionId,
-			OrderByComparator<CTSContent> orderByComparator)
-		throws NoSuchContentException {
-
-		CTSContent ctsContent = fetchByCTCollectionId_Last(
-			ctCollectionId, orderByComparator);
-
-		if (ctsContent != null) {
-			return ctsContent;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("ctCollectionId=");
-		msg.append(ctCollectionId);
-
-		msg.append("}");
-
-		throw new NoSuchContentException(msg.toString());
-	}
-
-	/**
-	 * Returns the last cts content in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content, or <code>null</code> if a matching cts content could not be found
-	 */
-	@Override
-	public CTSContent fetchByCTCollectionId_Last(
-		long ctCollectionId, OrderByComparator<CTSContent> orderByComparator) {
-
-		int count = countByCTCollectionId(ctCollectionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTSContent> list = findByCTCollectionId(
-			ctCollectionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the cts contents before and after the current cts content in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctsContentId the primary key of the current cts content
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cts content
-	 * @throws NoSuchContentException if a cts content with the primary key could not be found
-	 */
-	@Override
-	public CTSContent[] findByCTCollectionId_PrevAndNext(
-			long ctsContentId, long ctCollectionId,
-			OrderByComparator<CTSContent> orderByComparator)
-		throws NoSuchContentException {
-
-		CTSContent ctsContent = findByPrimaryKey(ctsContentId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTSContent[] array = new CTSContentImpl[3];
-
-			array[0] = getByCTCollectionId_PrevAndNext(
-				session, ctsContent, ctCollectionId, orderByComparator, true);
-
-			array[1] = ctsContent;
-
-			array[2] = getByCTCollectionId_PrevAndNext(
-				session, ctsContent, ctCollectionId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected CTSContent getByCTCollectionId_PrevAndNext(
-		Session session, CTSContent ctsContent, long ctCollectionId,
-		OrderByComparator<CTSContent> orderByComparator, boolean previous) {
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_CTSCONTENT_WHERE);
-
-		query.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(CTSContentModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(ctCollectionId);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(ctsContent)) {
-
-				qPos.add(orderByConditionValue);
-			}
-		}
-
-		List<CTSContent> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the cts contents where ctCollectionId = &#63; from the database.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 */
-	@Override
-	public void removeByCTCollectionId(long ctCollectionId) {
-		for (CTSContent ctsContent :
-				findByCTCollectionId(
-					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ctsContent);
-		}
-	}
-
-	/**
-	 * Returns the number of cts contents where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the number of matching cts contents
-	 */
-	@Override
-	public int countByCTCollectionId(long ctCollectionId) {
-		FinderPath finderPath = _finderPathCountByCTCollectionId;
-
-		Object[] finderArgs = new Object[] {ctCollectionId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_CTSCONTENT_WHERE);
-
-			query.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(ctCollectionId);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2 =
-		"ctsContent.ctCollectionId = ?";
-
 	private FinderPath _finderPathWithPaginationFindByC_R_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_R_S;
 	private FinderPath _finderPathCountByC_R_S;
@@ -3434,41 +2927,6 @@ public class CTSContentPersistenceImpl
 		}
 
 		if (ctsContent.getCtCollectionId() != 0) {
-			if (!_columnBitmaskEnabled) {
-				finderCache.clearCache(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-			}
-			else if (isNew) {
-				Object[] args = new Object[] {
-					ctsContentModelImpl.getCtCollectionId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCTCollectionId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCTCollectionId, args);
-			}
-			else if ((ctsContentModelImpl.getColumnBitmask() &
-					  _finderPathWithoutPaginationFindByCTCollectionId.
-						  getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					ctsContentModelImpl.getOriginalCtCollectionId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCTCollectionId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCTCollectionId, args);
-
-				args = new Object[] {ctsContentModelImpl.getCtCollectionId()};
-
-				finderCache.removeResult(
-					_finderPathCountByCTCollectionId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCTCollectionId, args);
-			}
-
 			ctsContent.resetOriginalValues();
 
 			return ctsContent;
@@ -3481,14 +2939,6 @@ public class CTSContentPersistenceImpl
 		}
 		else if (isNew) {
 			Object[] args = new Object[] {
-				ctsContentModelImpl.getCtCollectionId()
-			};
-
-			finderCache.removeResult(_finderPathCountByCTCollectionId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByCTCollectionId, args);
-
-			args = new Object[] {
 				ctsContentModelImpl.getCompanyId(),
 				ctsContentModelImpl.getRepositoryId(),
 				ctsContentModelImpl.getStoreType()
@@ -3514,27 +2964,6 @@ public class CTSContentPersistenceImpl
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
 		}
 		else {
-			if ((ctsContentModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCTCollectionId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					ctsContentModelImpl.getOriginalCtCollectionId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCTCollectionId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCTCollectionId, args);
-
-				args = new Object[] {ctsContentModelImpl.getCtCollectionId()};
-
-				finderCache.removeResult(
-					_finderPathCountByCTCollectionId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCTCollectionId, args);
-			}
-
 			if ((ctsContentModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByC_R_S.getColumnBitmask()) !=
 					 0) {
@@ -3978,18 +3407,20 @@ public class CTSContentPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.get(ctColumnResolutionType);
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return CTSContentModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	@Override
-	public Set<String> getCTIgnoredAttributeNames() {
-		return _ctIgnoredAttributeNames;
-	}
-
-	@Override
-	public Set<String> getCTMergeableAttributeNames() {
-		return _ctMergeableAttributeNames;
+	public String getTableName() {
+		return "CTSContent";
 	}
 
 	@Override
@@ -3997,32 +3428,38 @@ public class CTSContentPersistenceImpl
 		return _uniqueIndexColumnNames;
 	}
 
-	@Override
-	public CTSContent removeCTModel(CTSContent ctsContent, boolean quiet) {
-		if (quiet) {
-			return removeImpl(ctsContent);
-		}
-
-		return remove(ctsContent);
-	}
-
-	@Override
-	public CTSContent updateCTModel(CTSContent ctsContent, boolean quiet) {
-		if (quiet) {
-			return updateImpl(ctsContent);
-		}
-
-		return update(ctsContent);
-	}
-
-	private static final Set<String> _ctIgnoredAttributeNames =
-		new HashSet<String>();
-	private static final Set<String> _ctMergeableAttributeNames =
-		new HashSet<String>();
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
 	private static final List<String[]> _uniqueIndexColumnNames =
 		new ArrayList<String[]>();
 
 	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("repositoryId");
+		ctStrictColumnNames.add("path_");
+		ctStrictColumnNames.add("version");
+		ctStrictColumnNames.add("data_");
+		ctStrictColumnNames.add("size_");
+		ctStrictColumnNames.add("storeType");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK, Collections.singleton("ctsContentId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
 		_uniqueIndexColumnNames.add(
 			new String[] {
 				"companyId", "repositoryId", "path_", "version", "storeType"
@@ -4050,26 +3487,6 @@ public class CTSContentPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
-
-		_finderPathWithPaginationFindByCTCollectionId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, CTSContentImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCTCollectionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
-
-		_finderPathWithoutPaginationFindByCTCollectionId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, CTSContentImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCTCollectionId",
-			new String[] {Long.class.getName()},
-			CTSContentModelImpl.CTCOLLECTIONID_COLUMN_BITMASK |
-			CTSContentModelImpl.VERSION_COLUMN_BITMASK);
-
-		_finderPathCountByCTCollectionId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCTCollectionId",
-			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_R_S = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, CTSContentImpl.class,

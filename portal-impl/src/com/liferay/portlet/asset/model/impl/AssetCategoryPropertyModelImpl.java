@@ -137,9 +137,7 @@ public class AssetCategoryPropertyModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 4L;
-
-	public static final long KEY_COLUMN_BITMASK = 8L;
+	public static final long KEY_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -418,19 +416,7 @@ public class AssetCategoryPropertyModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
-		}
-
 		_ctCollectionId = ctCollectionId;
-	}
-
-	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -714,11 +700,6 @@ public class AssetCategoryPropertyModelImpl
 	public void resetOriginalValues() {
 		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl = this;
 
-		assetCategoryPropertyModelImpl._originalCtCollectionId =
-			assetCategoryPropertyModelImpl._ctCollectionId;
-
-		assetCategoryPropertyModelImpl._setOriginalCtCollectionId = false;
-
 		assetCategoryPropertyModelImpl._originalCompanyId =
 			assetCategoryPropertyModelImpl._companyId;
 
@@ -875,8 +856,6 @@ public class AssetCategoryPropertyModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private long _categoryPropertyId;
 	private long _companyId;
 	private long _originalCompanyId;

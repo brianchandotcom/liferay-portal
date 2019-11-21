@@ -170,19 +170,17 @@ public class AssetEntryModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 8L;
 
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 16L;
+	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 16L;
 
-	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 32L;
+	public static final long GROUPID_COLUMN_BITMASK = 32L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 64L;
+	public static final long LAYOUTUUID_COLUMN_BITMASK = 64L;
 
-	public static final long LAYOUTUUID_COLUMN_BITMASK = 128L;
+	public static final long PUBLISHDATE_COLUMN_BITMASK = 128L;
 
-	public static final long PUBLISHDATE_COLUMN_BITMASK = 256L;
+	public static final long VISIBLE_COLUMN_BITMASK = 256L;
 
-	public static final long VISIBLE_COLUMN_BITMASK = 512L;
-
-	public static final long ENTRYID_COLUMN_BITMASK = 1024L;
+	public static final long ENTRYID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -545,19 +543,7 @@ public class AssetEntryModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
-		}
-
 		_ctCollectionId = ctCollectionId;
-	}
-
-	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1547,11 +1533,6 @@ public class AssetEntryModelImpl
 	public void resetOriginalValues() {
 		AssetEntryModelImpl assetEntryModelImpl = this;
 
-		assetEntryModelImpl._originalCtCollectionId =
-			assetEntryModelImpl._ctCollectionId;
-
-		assetEntryModelImpl._setOriginalCtCollectionId = false;
-
 		assetEntryModelImpl._originalGroupId = assetEntryModelImpl._groupId;
 
 		assetEntryModelImpl._setOriginalGroupId = false;
@@ -1814,8 +1795,6 @@ public class AssetEntryModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private long _entryId;
 	private long _groupId;
 	private long _originalGroupId;

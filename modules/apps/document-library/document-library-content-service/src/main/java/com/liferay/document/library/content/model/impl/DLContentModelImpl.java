@@ -108,13 +108,11 @@ public class DLContentModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 2L;
+	public static final long PATH_COLUMN_BITMASK = 2L;
 
-	public static final long PATH_COLUMN_BITMASK = 4L;
+	public static final long REPOSITORYID_COLUMN_BITMASK = 4L;
 
-	public static final long REPOSITORYID_COLUMN_BITMASK = 8L;
-
-	public static final long VERSION_COLUMN_BITMASK = 16L;
+	public static final long VERSION_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -307,19 +305,7 @@ public class DLContentModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
-		}
-
 		_ctCollectionId = ctCollectionId;
-	}
-
-	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
 	}
 
 	@Override
@@ -583,11 +569,6 @@ public class DLContentModelImpl
 	public void resetOriginalValues() {
 		DLContentModelImpl dlContentModelImpl = this;
 
-		dlContentModelImpl._originalCtCollectionId =
-			dlContentModelImpl._ctCollectionId;
-
-		dlContentModelImpl._setOriginalCtCollectionId = false;
-
 		dlContentModelImpl._originalCompanyId = dlContentModelImpl._companyId;
 
 		dlContentModelImpl._setOriginalCompanyId = false;
@@ -732,8 +713,6 @@ public class DLContentModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private long _contentId;
 	private long _groupId;
 	private long _companyId;

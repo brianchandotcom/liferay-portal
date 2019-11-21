@@ -143,21 +143,19 @@ public class DDMStructureModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 4L;
+	public static final long DESCRIPTION_COLUMN_BITMASK = 4L;
 
-	public static final long DESCRIPTION_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long NAME_COLUMN_BITMASK = 16L;
 
-	public static final long NAME_COLUMN_BITMASK = 32L;
+	public static final long PARENTSTRUCTUREID_COLUMN_BITMASK = 32L;
 
-	public static final long PARENTSTRUCTUREID_COLUMN_BITMASK = 64L;
+	public static final long STRUCTUREKEY_COLUMN_BITMASK = 64L;
 
-	public static final long STRUCTUREKEY_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
-	public static final long UUID_COLUMN_BITMASK = 256L;
-
-	public static final long STRUCTUREID_COLUMN_BITMASK = 512L;
+	public static final long STRUCTUREID_COLUMN_BITMASK = 256L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -474,19 +472,7 @@ public class DDMStructureModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
-		}
-
 		_ctCollectionId = ctCollectionId;
-	}
-
-	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1289,11 +1275,6 @@ public class DDMStructureModelImpl
 	public void resetOriginalValues() {
 		DDMStructureModelImpl ddmStructureModelImpl = this;
 
-		ddmStructureModelImpl._originalCtCollectionId =
-			ddmStructureModelImpl._ctCollectionId;
-
-		ddmStructureModelImpl._setOriginalCtCollectionId = false;
-
 		ddmStructureModelImpl._originalUuid = ddmStructureModelImpl._uuid;
 
 		ddmStructureModelImpl._originalGroupId = ddmStructureModelImpl._groupId;
@@ -1538,8 +1519,6 @@ public class DDMStructureModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _structureId;

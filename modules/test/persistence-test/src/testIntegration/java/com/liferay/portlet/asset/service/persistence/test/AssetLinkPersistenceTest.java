@@ -174,13 +174,6 @@ public class AssetLinkPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCTCollectionId() throws Exception {
-		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
-
-		_persistence.countByCTCollectionId(0L);
-	}
-
-	@Test
 	public void testCountByE1() throws Exception {
 		_persistence.countByE1(RandomTestUtil.nextLong());
 

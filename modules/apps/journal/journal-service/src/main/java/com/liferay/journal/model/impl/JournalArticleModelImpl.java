@@ -169,33 +169,31 @@ public class JournalArticleModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 32L;
 
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 64L;
+	public static final long DISPLAYDATE_COLUMN_BITMASK = 64L;
 
-	public static final long DISPLAYDATE_COLUMN_BITMASK = 128L;
+	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 128L;
 
-	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 256L;
+	public static final long FOLDERID_COLUMN_BITMASK = 256L;
 
-	public static final long FOLDERID_COLUMN_BITMASK = 512L;
+	public static final long GROUPID_COLUMN_BITMASK = 512L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 1024L;
+	public static final long INDEXABLE_COLUMN_BITMASK = 1024L;
 
-	public static final long INDEXABLE_COLUMN_BITMASK = 2048L;
+	public static final long LAYOUTUUID_COLUMN_BITMASK = 2048L;
 
-	public static final long LAYOUTUUID_COLUMN_BITMASK = 4096L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 4096L;
 
-	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 8192L;
+	public static final long SMALLIMAGEID_COLUMN_BITMASK = 8192L;
 
-	public static final long SMALLIMAGEID_COLUMN_BITMASK = 16384L;
+	public static final long STATUS_COLUMN_BITMASK = 16384L;
 
-	public static final long STATUS_COLUMN_BITMASK = 32768L;
+	public static final long URLTITLE_COLUMN_BITMASK = 32768L;
 
-	public static final long URLTITLE_COLUMN_BITMASK = 65536L;
+	public static final long USERID_COLUMN_BITMASK = 65536L;
 
-	public static final long USERID_COLUMN_BITMASK = 131072L;
+	public static final long UUID_COLUMN_BITMASK = 131072L;
 
-	public static final long UUID_COLUMN_BITMASK = 262144L;
-
-	public static final long VERSION_COLUMN_BITMASK = 524288L;
+	public static final long VERSION_COLUMN_BITMASK = 262144L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -600,19 +598,7 @@ public class JournalArticleModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
-		}
-
 		_ctCollectionId = ctCollectionId;
-	}
-
-	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1711,11 +1697,6 @@ public class JournalArticleModelImpl
 	public void resetOriginalValues() {
 		JournalArticleModelImpl journalArticleModelImpl = this;
 
-		journalArticleModelImpl._originalCtCollectionId =
-			journalArticleModelImpl._ctCollectionId;
-
-		journalArticleModelImpl._setOriginalCtCollectionId = false;
-
 		journalArticleModelImpl._originalUuid = journalArticleModelImpl._uuid;
 
 		journalArticleModelImpl._originalResourcePrimKey =
@@ -2078,8 +2059,6 @@ public class JournalArticleModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _id;

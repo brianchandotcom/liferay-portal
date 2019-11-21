@@ -105,13 +105,11 @@ public class JournalArticleResourceModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
 
-	public static final long UUID_COLUMN_BITMASK = 16L;
-
-	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 32L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 16L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -316,19 +314,7 @@ public class JournalArticleResourceModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
-		}
-
 		_ctCollectionId = ctCollectionId;
-	}
-
-	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
 	}
 
 	@Override
@@ -543,11 +529,6 @@ public class JournalArticleResourceModelImpl
 	public void resetOriginalValues() {
 		JournalArticleResourceModelImpl journalArticleResourceModelImpl = this;
 
-		journalArticleResourceModelImpl._originalCtCollectionId =
-			journalArticleResourceModelImpl._ctCollectionId;
-
-		journalArticleResourceModelImpl._setOriginalCtCollectionId = false;
-
 		journalArticleResourceModelImpl._originalUuid =
 			journalArticleResourceModelImpl._uuid;
 
@@ -678,8 +659,6 @@ public class JournalArticleResourceModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _resourcePrimKey;

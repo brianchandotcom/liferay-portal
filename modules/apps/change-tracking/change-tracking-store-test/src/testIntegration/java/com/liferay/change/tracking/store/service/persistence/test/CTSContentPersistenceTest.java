@@ -189,13 +189,6 @@ public class CTSContentPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCTCollectionId() throws Exception {
-		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
-
-		_persistence.countByCTCollectionId(0L);
-	}
-
-	@Test
 	public void testCountByC_R_S() throws Exception {
 		_persistence.countByC_R_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");

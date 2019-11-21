@@ -190,13 +190,6 @@ public class ResourcePermissionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCTCollectionId() throws Exception {
-		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
-
-		_persistence.countByCTCollectionId(0L);
-	}
-
-	@Test
 	public void testCountByName() throws Exception {
 		_persistence.countByName("");
 

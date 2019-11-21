@@ -112,6 +112,8 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 
 	var STR_HEIGHT = 'height';
 
+	var selectLanguageNode = A.one('#<portlet:namespace />language');
+
 	var panelScriptContainer = A.one('#templateScriptContainer');
 
 	if (Util.getTop() !== A.config.win) {
@@ -346,6 +348,10 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 
 			Liferay.on('<portlet:namespace />saveTemplate', function(event) {
 				editorContentElement.val(getEditorContent());
+			});
+
+			selectLanguageNode.on('change', function(event) {
+				Liferay.fire('<portlet:namespace />refreshEditor');
 			});
 
 			setEditorPlugins();

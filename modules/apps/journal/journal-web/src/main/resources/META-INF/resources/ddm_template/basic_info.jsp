@@ -22,24 +22,62 @@ JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new 
 DDMTemplate ddmTemplate = journalEditDDMTemplateDisplayContext.getDDMTemplate();
 
 DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure();
+
+String[] templateLanguageTypes = journalEditDDMTemplateDisplayContext.getTemplateLanguageTypes();
 %>
 
 <aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
-<%
-StringBundler sb = new StringBundler(6);
+<c:choose>
+	<c:when test="<%= (templateLanguageTypes.length == 1) && ((ddmTemplate == null) || Objects.equals(templateLanguageTypes[0], ddmTemplate.getLanguage())) %>">
 
-sb.append(LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getLanguage() + "[stands-for]"));
-sb.append(StringPool.SPACE);
-sb.append(StringPool.OPEN_PARENTHESIS);
-sb.append(StringPool.PERIOD);
-sb.append(journalEditDDMTemplateDisplayContext.getLanguage());
-sb.append(StringPool.CLOSE_PARENTHESIS);
-%>
+		<%
+		StringBundler sb = new StringBundler(6);
 
-<p class="article-structure">
-	<b><liferay-ui:message key="language" /></b>: <%= sb.toString() %>
-</p>
+		sb.append(LanguageUtil.get(request, templateLanguageTypes[0] + "[stands-for]"));
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(StringPool.PERIOD);
+		sb.append(journalEditDDMTemplateDisplayContext.getLanguage());
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+		%>
+
+		<p class="article-structure">
+			<b><liferay-ui:message key="language" /></b>: <%= sb.toString() %>
+		</p>
+
+		<aui:input name="language" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getLanguage() %>" />
+	</c:when>
+	<c:otherwise>
+		<aui:select changesContext="<%= true %>" label="language" name="language">
+
+			<%
+			String[] extendedTemplateLanguageTypes = templateLanguageTypes;
+
+			if ((ddmTemplate != null) && !ArrayUtil.contains(templateLanguageTypes, ddmTemplate.getLanguage())) {
+				extendedTemplateLanguageTypes = ArrayUtil.append(templateLanguageTypes, ddmTemplate.getLanguage());
+			}
+
+			for (String curLangType : extendedTemplateLanguageTypes) {
+				StringBundler sb = new StringBundler(6);
+
+				sb.append(LanguageUtil.get(request, curLangType + "[stands-for]"));
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.PERIOD);
+				sb.append(curLangType);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			%>
+
+				<aui:option label="<%= sb.toString() %>" selected="<%= Objects.equals(journalEditDDMTemplateDisplayContext.getLanguage(), curLangType) %>" value="<%= curLangType %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+	</c:otherwise>
+</c:choose>
 
 <aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" wrapperCssClass='<%= ((ddmTemplate == null) || (ddmTemplate.getClassPK() == 0)) ? "mb-2" : StringPool.BLANK %>' />
 

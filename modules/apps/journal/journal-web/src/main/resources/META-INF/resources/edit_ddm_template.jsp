@@ -40,7 +40,6 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 	<aui:input name="ddmTemplateId" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getDDMTemplateId() %>" />
 	<aui:input name="groupId" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getGroupId() %>" />
 	<aui:input name="classPK" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getClassPK() %>" />
-	<aui:input name="language" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getLanguage() %>" />
 
 	<aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 

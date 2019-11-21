@@ -281,6 +281,10 @@ public class JournalEditDDMTemplateDisplayContext {
 			themeDisplay.getLocale());
 	}
 
+	public String[] getTemplateLanguageTypes() {
+		return _journalWebConfiguration.journalDDMTemplateLanguageTypes();
+	}
+
 	public Collection<TemplateVariableGroup> getTemplateVariableGroups()
 		throws Exception {
 
@@ -352,6 +356,10 @@ public class JournalEditDDMTemplateDisplayContext {
 			getDDMTemplate(), _httpServletRequest, "smallImage");
 
 		return _smallImage;
+	}
+
+	public void setLanguage(String language) {
+		_language = language;
 	}
 
 	public long smallImageMaxSize() {

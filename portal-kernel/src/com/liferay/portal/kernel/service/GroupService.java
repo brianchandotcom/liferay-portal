@@ -477,6 +477,11 @@ public interface GroupService extends BaseService {
 			int start, int end)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(
+		long companyId, long[] classNameIds, String keywords,
+		LinkedHashMap<String, Object> params);
+
 	/**
 	 * Returns the number of groups and organization groups that match the name
 	 * and description, optionally including the user's inherited organizations

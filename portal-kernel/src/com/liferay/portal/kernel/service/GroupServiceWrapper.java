@@ -600,6 +600,15 @@ public class GroupServiceWrapper
 			companyId, name, description, params, start, end);
 	}
 
+	@Override
+	public int searchCount(
+		long companyId, long[] classNameIds, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
+
+		return _groupService.searchCount(
+			companyId, classNameIds, keywords, params);
+	}
+
 	/**
 	 * Returns the number of groups and organization groups that match the name
 	 * and description, optionally including the user's inherited organizations

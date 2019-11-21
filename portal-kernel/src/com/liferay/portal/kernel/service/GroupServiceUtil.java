@@ -576,6 +576,14 @@ public class GroupServiceUtil {
 			companyId, name, description, params, start, end);
 	}
 
+	public static int searchCount(
+		long companyId, long[] classNameIds, String keywords,
+		java.util.LinkedHashMap<String, Object> params) {
+
+		return getService().searchCount(
+			companyId, classNameIds, keywords, params);
+	}
+
 	/**
 	 * Returns the number of groups and organization groups that match the name
 	 * and description, optionally including the user's inherited organizations

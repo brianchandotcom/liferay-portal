@@ -1290,18 +1290,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layoutPersistence.findByUUID_G_P(uuid, groupId, privateLayout);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getLayoutChildLayouts(List)}
-	 */
-	@Deprecated
-	@Override
-	public Map<Long, List<Layout>> getLayoutChildLayouts(
-		LayoutSet layoutSet, List<Layout> parentLayouts) {
-
-		return getLayoutChildLayouts(parentLayouts);
-	}
-
 	@Override
 	public Map<Long, List<Layout>> getLayoutChildLayouts(
 		List<Layout> parentLayouts) {

@@ -77,7 +77,7 @@ const getDocumentIcon = fileName => {
 	return 'document-default';
 };
 
-const DocumentRenderer = ({value = {}}) => {
+const DocumentRenderer = ({displayType, value = {}}) => {
 	let fileEntry = {};
 
 	if (typeof value === 'string' && value.startsWith('{')) {
@@ -111,7 +111,9 @@ const DocumentRenderer = ({value = {}}) => {
 
 	return (
 		<>
-			{fileEntryId && (
+			{displayType === 'list' ? (
+				<StringRenderer value={title} />
+			) : fileEntryId ? (
 				<ClayTooltipProvider>
 					<ClayButton.Group className="data-record-document-field">
 						<ClayButton
@@ -137,34 +139,52 @@ const DocumentRenderer = ({value = {}}) => {
 						/>
 					</ClayButton.Group>
 				</ClayTooltipProvider>
+			) : (
+				<StringRenderer value={' - '} />
 			)}
 		</>
 	);
 };
 
-const OptionsRenderer = ({options, values}) => (
-	<ul>
-		{values.map((value, index) => (
-			<li key={index}>{getOptionLabel(options, value)}</li>
-		))}
-	</ul>
+const OptionsRenderer = ({displayType, options, values}) => {
+	const labels = values.map(value => getOptionLabel(options, value));
+
+	if (displayType === 'list') {
+		return <StringRenderer value={labels.join(', ')} />;
+	}
+
+	return (
+		<ul>
+			{labels.map((label, index) => (
+				<li key={index}>{label}</li>
+			))}
+		</ul>
+	);
+};
+
+const StringRenderer = ({value}) => (
+	<p className="text-dark">{value || ' - '}</p>
 );
 
-const StringRenderer = ({value}) => <p>{value}</p>;
-
-const getFieldValueRenderer = dataDefinitionField => {
+const getFieldValueRenderer = (dataDefinitionField, displayType) => {
 	const {customProperties, fieldType} = dataDefinitionField;
 
 	if (fieldType === 'checkbox_multiple') {
 		const {options} = customProperties;
 
 		return ({value}) => (
-			<OptionsRenderer options={options} values={value} />
+			<OptionsRenderer
+				displayType={displayType}
+				options={options}
+				values={value}
+			/>
 		);
 	}
 
 	if (fieldType === 'document_library') {
-		return ({value}) => <DocumentRenderer value={value} />;
+		return ({value}) => (
+			<DocumentRenderer displayType={displayType} value={value} />
+		);
 	}
 
 	if (fieldType === 'grid') {
@@ -184,7 +204,11 @@ const getFieldValueRenderer = dataDefinitionField => {
 
 		if (multiple) {
 			return ({value}) => (
-				<OptionsRenderer options={options} values={value} />
+				<OptionsRenderer
+					displayType={displayType}
+					options={options}
+					values={value}
+				/>
 			);
 		}
 
@@ -196,21 +220,36 @@ const getFieldValueRenderer = dataDefinitionField => {
 	return ({value}) => <StringRenderer value={value} />;
 };
 
-export default ({dataDefinition, dataRecordValues, fieldName}) => {
+export const FieldValuePreview = ({
+	dataDefinition,
+	dataRecordValues,
+	displayType = 'form',
+	fieldName
+}) => {
 	const dataDefinitionField = getDataDefinitionField(
 		dataDefinition,
 		fieldName
 	);
-	const label = getFieldLabel(dataDefinition, fieldName);
+
+	const Renderer = getFieldValueRenderer(dataDefinitionField, displayType);
+
 	const value = dataRecordValues[fieldName];
 
-	const Renderer = getFieldValueRenderer(dataDefinitionField);
+	return <Renderer value={value} />;
+};
+
+export default ({dataDefinition, dataRecordValues, fieldName}) => {
+	const label = getFieldLabel(dataDefinition, fieldName);
 
 	return (
 		<div className="data-record-field-preview">
 			<label>{label}</label>
 
-			<Renderer value={value} />
+			<FieldValuePreview
+				dataDefinition={dataDefinition}
+				dataRecordValues={dataRecordValues}
+				fieldName={fieldName}
+			/>
 		</div>
 	);
 };

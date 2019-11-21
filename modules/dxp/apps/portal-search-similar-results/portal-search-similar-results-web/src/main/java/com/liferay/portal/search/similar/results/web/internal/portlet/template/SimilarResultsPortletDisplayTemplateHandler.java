@@ -96,7 +96,10 @@ public class SimilarResultsPortletDisplayTemplateHandler
 		templateVariableGroup.addCollectionVariable(
 			"documents", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"document", SimilarResultsDocumentDisplayContext.class,
-			"curDocument", "title");
+			PortletDisplayTemplateConstants.ENTRY, "getTitle()");
+		templateVariableGroup.addVariable(
+			"document-entry", SimilarResultsDocumentDisplayContext.class,
+			PortletDisplayTemplateConstants.ENTRY, "getTitle()");
 
 		TemplateVariableGroup categoriesServicesTemplateVariableGroup =
 			new TemplateVariableGroup(

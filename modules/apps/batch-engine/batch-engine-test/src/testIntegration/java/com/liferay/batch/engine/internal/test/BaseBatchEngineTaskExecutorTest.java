@@ -27,6 +27,7 @@ import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -35,11 +36,18 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.odata.entity.CollectionEntityField;
+import com.liferay.portal.odata.entity.DateTimeEntityField;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.IntegerEntityField;
+import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -48,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -59,6 +68,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.junit.After;
 import org.junit.Before;
@@ -166,8 +176,47 @@ public class BaseBatchEngineTaskExecutorTest {
 
 	}
 
+	public class BlogPostingEntityModel implements EntityModel {
+
+		public BlogPostingEntityModel() {
+			_entityFieldsMap = EntityModel.toEntityFieldsMap(
+				new CollectionEntityField(
+					new IntegerEntityField(
+						"taxonomyCategoryIds", locale -> "assetCategoryIds")),
+				new CollectionEntityField(
+					new StringEntityField(
+						"keywords", locale -> "assetTagNames.raw")),
+				new DateTimeEntityField(
+					"dateCreated",
+					locale -> Field.getSortableFieldName(Field.CREATE_DATE),
+					locale -> Field.CREATE_DATE),
+				new DateTimeEntityField(
+					"dateModified",
+					locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
+					locale -> Field.MODIFIED_DATE),
+				new IntegerEntityField("creatorId", locale -> Field.USER_ID),
+				new StringEntityField(
+					"headline",
+					locale -> Field.getSortableFieldName(Field.TITLE)));
+		}
+
+		@Override
+		public Map<String, EntityField> getEntityFieldsMap() {
+			return _entityFieldsMap;
+		}
+
+		@Override
+		public String getName() {
+			return "com_liferay_batch_engine_internal_test_" +
+				"BlogPostingEntityModel";
+		}
+
+		private final Map<String, EntityField> _entityFieldsMap;
+
+	}
+
 	public class TestBlogPostingResourceImpl
-		extends BaseBlogPostingResourceImpl {
+		extends BaseBlogPostingResourceImpl implements EntityModelResource {
 
 		@BatchEngineTaskMethod(
 			batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
@@ -198,6 +247,13 @@ public class BaseBatchEngineTaskExecutorTest {
 			throws Exception {
 
 			return null;
+		}
+
+		@Override
+		public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+			throws Exception {
+
+			return new BlogPostingEntityModel();
 		}
 
 		@BatchEngineTaskMethod(

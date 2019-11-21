@@ -33,6 +33,7 @@ import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 
@@ -77,6 +78,15 @@ public class BatchEngineExportTaskExecutorTest
 	}
 
 	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_parameters = HashMapBuilder.<String, Serializable>put(
+			"siteId", group.getGroupId()
+		).build();
+	}
+
+	@Override
 	public void tearDown() throws Exception {
 		super.tearDown();
 
@@ -96,7 +106,7 @@ public class BatchEngineExportTaskExecutorTest
 					Level.ERROR)) {
 
 			_testExportBlogPostingsToCSVFile(
-				Collections.emptyList(), line -> new Object[0]);
+				Collections.emptyList(), line -> new Object[0], _parameters);
 
 			_assertEmptyFieldNames(captureAppender);
 		}
@@ -108,13 +118,62 @@ public class BatchEngineExportTaskExecutorTest
 
 		_testExportBlogPostingsToCSVFile(
 			Arrays.asList("articleBody", "datePublished", "headline", "id"),
-			line -> {
-				String[] values = StringUtil.split(line, CharPool.COMMA);
+			_csvFilterFunction, _parameters);
+	}
 
-				return new Object[] {
-					values[0], values[1], values[2], values[3]
-				};
-			});
+	@Test
+	public void testExportBlogPostingsToCSVFileWithFilterParameter()
+		throws Exception {
+
+		_parameters.put("filter", "headline eq 'headline1'");
+
+		List<BlogsEntry> blogsEntries = addBlogsEntries();
+
+		Assert.assertEquals(
+			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		List<String> fieldNames = Arrays.asList(
+			"articleBody", "datePublished", "headline", "id");
+
+		_exportBlogPostings("CSV", fieldNames, _parameters);
+
+		BatchEngineExportTask batchEngineExportTask =
+			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
+				_batchEngineExportTask.getBatchEngineExportTaskId());
+
+		_assertExportedValues(
+			Collections.singletonList(blogsEntries.get(1)), fieldNames,
+			_readRowValuesList(_csvFilterFunction, batchEngineExportTask));
+	}
+
+	@Test
+	public void testExportBlogPostingsToCSVFileWithSortParameter()
+		throws Exception {
+
+		_parameters.put("sort", "headline:desc'");
+
+		List<BlogsEntry> blogsEntries = addBlogsEntries();
+
+		Assert.assertEquals(
+			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		List<String> fieldNames = Arrays.asList(
+			"articleBody", "datePublished", "headline", "id");
+
+		_exportBlogPostings("CSV", fieldNames, _parameters);
+
+		BatchEngineExportTask batchEngineExportTask =
+			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
+				_batchEngineExportTask.getBatchEngineExportTaskId());
+
+		blogsEntries.sort(
+			Comparator.comparing(
+				BlogsEntry::getEntryId,
+				(entryId1, entryId2) -> -entryId1.compareTo(entryId2)));
+
+		_assertExportedValues(
+			blogsEntries, fieldNames,
+			_readRowValuesList(_csvFilterFunction, batchEngineExportTask));
 	}
 
 	@Test
@@ -128,7 +187,8 @@ public class BatchEngineExportTaskExecutorTest
 				blogPosting.getArticleBody(), blogPosting.getDatePublished(),
 				blogPosting.getHeadline(), blogPosting.getId(),
 				blogPosting.getSiteId()
-			});
+			},
+			_parameters);
 	}
 
 	@Test
@@ -142,7 +202,8 @@ public class BatchEngineExportTaskExecutorTest
 				blogPosting.getAlternativeHeadline(),
 				blogPosting.getDatePublished(), blogPosting.getHeadline(),
 				blogPosting.getId()
-			});
+			},
+			_parameters);
 	}
 
 	@Test
@@ -156,7 +217,8 @@ public class BatchEngineExportTaskExecutorTest
 				blogPosting.getArticleBody(), blogPosting.getDatePublished(),
 				blogPosting.getHeadline(), blogPosting.getId(),
 				blogPosting.getSiteId()
-			});
+			},
+			_parameters);
 	}
 
 	@Test
@@ -170,7 +232,10 @@ public class BatchEngineExportTaskExecutorTest
 				blogPosting.getAlternativeHeadline(),
 				blogPosting.getDatePublished(), blogPosting.getHeadline(),
 				blogPosting.getId()
-			});
+			},
+			HashMapBuilder.<String, Serializable>put(
+				"siteId", group.getGroupId()
+			).build());
 	}
 
 	@Test
@@ -183,7 +248,10 @@ public class BatchEngineExportTaskExecutorTest
 					Level.ERROR)) {
 
 			_testExportBlogPostingsToXLSFile(
-				Collections.emptyList(), rowValues -> new Object[0]);
+				Collections.emptyList(), rowValues -> new Object[0],
+				HashMapBuilder.<String, Serializable>put(
+					"siteId", group.getGroupId()
+				).build());
 		}
 	}
 
@@ -195,7 +263,10 @@ public class BatchEngineExportTaskExecutorTest
 			Arrays.asList("articleBody", "datePublished", "headline", "id"),
 			rowValues -> new Object[] {
 				rowValues[0], rowValues[1], rowValues[2], rowValues[3]
-			});
+			},
+			HashMapBuilder.<String, Serializable>put(
+				"siteId", group.getGroupId()
+			).build());
 	}
 
 	public abstract class BlogPostingMixin {
@@ -310,12 +381,10 @@ public class BatchEngineExportTaskExecutorTest
 	}
 
 	private void _exportBlogPostings(
-		String contentType, List<String> fieldNames) {
+		String contentType, List<String> fieldNames,
+		Map<String, Serializable> parameters) {
 
-		Map<String, Serializable> parameters =
-			HashMapBuilder.<String, Serializable>put(
-				"siteId", group.getGroupId()
-			).build();
+		parameters.put("siteId", group.getGroupId());
 
 		_batchEngineExportTask =
 			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
@@ -327,28 +396,10 @@ public class BatchEngineExportTaskExecutorTest
 		_batchEngineExportTaskExecutor.execute(_batchEngineExportTask);
 	}
 
-	private void _testExportBlogPostingsToCSVFile(
-			List<String> fieldNames, Function<String, Object[]> filterFunction)
-		throws Exception {
-
-		List<BlogsEntry> blogsEntries = addBlogsEntries();
-
-		Assert.assertEquals(
-			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
-
-		_exportBlogPostings("CSV", fieldNames);
-
-		BatchEngineExportTask batchEngineExportTask =
-			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
-				_batchEngineExportTask.getBatchEngineExportTaskId());
-
-		if (fieldNames.isEmpty()) {
-			Assert.assertEquals(
-				BatchEngineTaskExecuteStatus.FAILED.toString(),
-				batchEngineExportTask.getExecuteStatus());
-
-			return;
-		}
+	private List<Object[]> _readRowValuesList(
+			Function<String, Object[]> filterFunction,
+			BatchEngineExportTask batchEngineExportTask)
+		throws IOException {
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(
@@ -364,12 +415,12 @@ public class BatchEngineExportTaskExecutorTest
 			rowValuesList.add(filterFunction.apply(line));
 		}
 
-		_assertExportedValues(blogsEntries, fieldNames, rowValuesList);
+		return rowValuesList;
 	}
 
-	private void _testExportBlogPostingsToJSONFile(
-			List<String> fieldNames,
-			Function<BlogPosting, Object[]> filterFunction)
+	private void _testExportBlogPostingsToCSVFile(
+			List<String> fieldNames, Function<String, Object[]> filterFunction,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
@@ -377,7 +428,37 @@ public class BatchEngineExportTaskExecutorTest
 		Assert.assertEquals(
 			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
 
-		_exportBlogPostings("JSON", fieldNames);
+		_exportBlogPostings("CSV", fieldNames, parameters);
+
+		BatchEngineExportTask batchEngineExportTask =
+			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
+				_batchEngineExportTask.getBatchEngineExportTaskId());
+
+		if (fieldNames.isEmpty()) {
+			Assert.assertEquals(
+				BatchEngineTaskExecuteStatus.FAILED.toString(),
+				batchEngineExportTask.getExecuteStatus());
+
+			return;
+		}
+
+		_assertExportedValues(
+			blogsEntries, fieldNames,
+			_readRowValuesList(filterFunction, batchEngineExportTask));
+	}
+
+	private void _testExportBlogPostingsToJSONFile(
+			List<String> fieldNames,
+			Function<BlogPosting, Object[]> filterFunction,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		List<BlogsEntry> blogsEntries = addBlogsEntries();
+
+		Assert.assertEquals(
+			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		_exportBlogPostings("JSON", fieldNames, parameters);
 
 		BatchEngineExportTask batchEngineExportTask =
 			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
@@ -400,7 +481,8 @@ public class BatchEngineExportTaskExecutorTest
 
 	private void _testExportBlogPostingsToJSONLFile(
 			List<String> fieldNames,
-			Function<BlogPosting, Object[]> filterFunction)
+			Function<BlogPosting, Object[]> filterFunction,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
@@ -408,7 +490,7 @@ public class BatchEngineExportTaskExecutorTest
 		Assert.assertEquals(
 			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
 
-		_exportBlogPostings("JSONL", fieldNames);
+		_exportBlogPostings("JSONL", fieldNames, parameters);
 
 		BatchEngineExportTask batchEngineExportTask =
 			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
@@ -441,7 +523,8 @@ public class BatchEngineExportTaskExecutorTest
 
 	private void _testExportBlogPostingsToXLSFile(
 			List<String> fieldNames,
-			Function<Object[], Object[]> filterFunction)
+			Function<Object[], Object[]> filterFunction,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
@@ -449,7 +532,7 @@ public class BatchEngineExportTaskExecutorTest
 		Assert.assertEquals(
 			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
 
-		_exportBlogPostings("XLS", fieldNames);
+		_exportBlogPostings("XLS", fieldNames, parameters);
 
 		BatchEngineExportTask batchEngineExportTask =
 			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
@@ -516,5 +599,13 @@ public class BatchEngineExportTaskExecutorTest
 	@Inject
 	private BatchEngineExportTaskLocalService
 		_batchEngineExportTaskLocalService;
+
+	private final Function<String, Object[]> _csvFilterFunction = line -> {
+		String[] values = StringUtil.split(line, CharPool.COMMA);
+
+		return new Object[] {values[0], values[1], values[2], values[3]};
+	};
+
+	private Map<String, Serializable> _parameters;
 
 }

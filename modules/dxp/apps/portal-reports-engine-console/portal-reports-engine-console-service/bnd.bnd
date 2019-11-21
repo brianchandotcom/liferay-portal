@@ -10,4 +10,4 @@ Liferay-Releng-Module-Group-Title: Reports Engine Console
 Liferay-Require-SchemaVersion: 1.0.1
 Liferay-Service: true
 -dsannotations-options: inherit
--includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
+-includeresource: @com.liferay.util.java-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/util/portlet/PortletProps.class

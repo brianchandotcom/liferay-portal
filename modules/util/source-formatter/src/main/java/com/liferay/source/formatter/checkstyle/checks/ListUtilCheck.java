@@ -42,11 +42,17 @@ public class ListUtilCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.VARIABLE_DEF};
+		return new int[] {TokenTypes.METHOD_CALL, TokenTypes.VARIABLE_DEF};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.METHOD_CALL) {
+			_checkFromArrayCall(detailAST);
+
+			return;
+		}
+
 		if (!Objects.equals(
 				DetailASTUtil.getTypeName(detailAST, false), "List") ||
 			!_isAssignNewArrayList(detailAST)) {
@@ -130,6 +136,44 @@ public class ListUtilCheck extends BaseCheck {
 		}
 
 		log(detailAST, _MSG_USE_LIST_UTIL);
+	}
+
+	private void _checkFromArrayCall(DetailAST methodCallDetailAST) {
+		DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+			return;
+		}
+
+		FullIdent fullIdent = FullIdent.createFullIdent(firstChildDetailAST);
+
+		if (!Objects.equals(fullIdent.getText(), "ListUtil.fromArray")) {
+			return;
+		}
+
+		DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+			TokenTypes.ELIST);
+
+		List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+			elistDetailAST, false, TokenTypes.EXPR);
+
+		if (exprDetailASTList.size() != 1) {
+			return;
+		}
+
+		DetailAST exprDetailAST = exprDetailASTList.get(0);
+
+		firstChildDetailAST = exprDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() != TokenTypes.LITERAL_NEW) {
+			return;
+		}
+
+		DetailAST lastChildDetailAST = firstChildDetailAST.getLastChild();
+
+		if (lastChildDetailAST.getType() == TokenTypes.ARRAY_INIT) {
+			log(methodCallDetailAST, _MSG_UNNEEDED_ARRAY);
+		}
 	}
 
 	private String _getBuildGradleContent(String absolutePath) {
@@ -289,6 +333,8 @@ public class ListUtilCheck extends BaseCheck {
 
 		return false;
 	}
+
+	private static final String _MSG_UNNEEDED_ARRAY = "array.unneeded";
 
 	private static final String _MSG_USE_LIST_UTIL = "list.util.use";
 

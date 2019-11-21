@@ -94,7 +94,7 @@ public class BatchEngineExportTaskExecutorImpl
 			ConfigurableUtil.createConfigurable(
 				BatchEngineTaskConfiguration.class, properties);
 
-		_batchSize = batchEngineTaskConfiguration.batchSize();
+		_batchSize = batchEngineTaskConfiguration.exportBatchSize();
 
 		_batchEngineExportTaskItemWriterFactory =
 			new BatchEngineExportTaskItemWriterFactory(

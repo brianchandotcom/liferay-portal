@@ -29,14 +29,17 @@ const getFieldLabel = (dataDefinition, fieldName) => {
 	return field ? field.label[themeDisplay.getLanguageId()] : fieldName;
 };
 
-const getOptionLabel = (options, value) => {
-	return options.reduce((result, option) => {
-		if (option.value === value) {
-			return option.label[themeDisplay.getLanguageId()];
-		}
+const getOptionLabel = (options = {}, value) => {
+	return (options[themeDisplay.getLanguageId()] || []).reduce(
+		(result, option) => {
+			if (option.value === value) {
+				return option.label;
+			}
 
-		return result;
-	}, value);
+			return result;
+		},
+		value
+	);
 };
 
 const createFileEntryPreviewURL = (groupId, fileEntryId) => {

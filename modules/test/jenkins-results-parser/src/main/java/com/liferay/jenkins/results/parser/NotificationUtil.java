@@ -118,4 +118,10 @@ public class NotificationUtil {
 
 	private static final int _DEFAULT_SMTP_PORT = 587;
 
+	static {
+		Thread thread = Thread.currentThread();
+
+		thread.setContextClassLoader(Message.class.getClassLoader());
+	}
+
 }

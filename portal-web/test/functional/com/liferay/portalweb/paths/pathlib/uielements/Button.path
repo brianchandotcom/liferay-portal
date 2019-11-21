@@ -605,7 +605,7 @@
 </tr>
 <tr>
 	<td>SELECT_CATEGORIES</td>
-	<td>//button[contains(@class,'btn-secondary')]</td>
+	<td>//div[@class='field-content']//button[contains(@class,'btn-secondary')]</td>
 	<td></td>
 </tr>
 <tr>

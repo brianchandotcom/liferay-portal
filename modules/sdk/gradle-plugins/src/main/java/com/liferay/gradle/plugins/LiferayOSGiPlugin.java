@@ -83,6 +83,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -1063,6 +1064,25 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		extensionContainer.add(
 			BundleExtension.class, "bundle", bundleExtension);
 
+		Map<String, String> portalUnrollMap = new HashMap<>();
+
+		portalUnrollMap.put(
+			"@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|).jar",
+			"@(com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|)|portal-impl).jar");
+		portalUnrollMap.put(
+			"@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar",
+			"@(com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|)|portal-kernel)." +
+				"jar");
+		portalUnrollMap.put(
+			"@com.liferay.util.bridges-[0-9.]*(-SNAPSHOT|).jar",
+			"@(com.liferay.util.bridges-[0-9.]*(-SNAPSHOT|)|util-bridges).jar");
+		portalUnrollMap.put(
+			"@com.liferay.util.java-[0-9.]*(-SNAPSHOT|).jar",
+			"@(com.liferay.util.java-[0-9.]*(-SNAPSHOT|)|util-java).jar");
+		portalUnrollMap.put(
+			"@com.liferay.util.taglib-[0-9.]*(-SNAPSHOT|).jar",
+			"@(com.liferay.util.taglib-[0-9.]*(-SNAPSHOT|)|util-taglib).jar");
+
 		File file = project.file("bnd.bnd");
 
 		if (file.exists()) {
@@ -1078,15 +1098,22 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					String value = utf8Properties.getProperty(key);
 
-					if (Objects.equals(key, Constants.INCLUDERESOURCE) &&
-						value.contains("[0-9]*")) {
+					if (Objects.equals(key, Constants.INCLUDERESOURCE)) {
+						if (value.contains("[0-9]*")) {
+							value = value.replace("[0-9]*", "[0-9.]*");
 
-						value = value.replace("[0-9]*", "[0-9.]*");
+							logger.lifecycle(
+								"DEPRECATED: Update \"{}\" to \"{}\" to " +
+									"remove this message",
+								Constants.INCLUDERESOURCE, value);
+						}
 
-						logger.lifecycle(
-							"DEPRECATED: Update \"{}\" to \"{}\" to remove " +
-								"this message",
-							Constants.INCLUDERESOURCE, value);
+						for (Map.Entry<String, String> entry :
+								portalUnrollMap.entrySet()) {
+
+							value = value.replace(
+								entry.getKey(), entry.getValue());
+						}
 					}
 
 					bundleExtension.put(key, value);

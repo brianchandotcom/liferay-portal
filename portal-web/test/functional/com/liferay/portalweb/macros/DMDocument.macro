@@ -717,6 +717,54 @@ definition {
 			value1 = "Download");
 	}
 
+	macro editCategoryTags {
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Edit Categories");
+
+		if ("${multipleDocuments}" == "true") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#BODY",
+				value1 = "You are editing the common categories for ${itemNumber} items. Select edit or replace current categories.");
+
+			Click(locator1 = "Modal#BODY");
+
+			if ("${editAction}" == "Append") {
+				FormFields.selectRadioOption(
+					fieldName = "add",
+					radioOption = "Add");
+			}
+			else if ("${editAction}" == "Replace") {
+				FormFields.selectRadioOption(
+					fieldName = "replace",
+					radioOption = "Replace");
+			}
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#BODY",
+				value1 = "You're editing the categories for the selected item.");
+		}
+
+		for (var categoryName : list "${categoryNameList}") {
+			Type(
+				locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
+				value1 = "${categoryName}");
+
+			KeyPress(
+				locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
+				value1 = "\RETURN");
+		}
+
+		Button.clickSave();
+
+		SelectFrame(value1 = "relative=top");
+
+		Alert.viewSuccessMessageText(successMessage = "Changes saved.");
+	}
+
 	macro editCmd {
 		if (!(contains("${dmDocumentFileEdit}", "{dmDocumentFileEdit}"))) {
 			UploadCommonFile(
@@ -1178,6 +1226,22 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 	}
 
+	macro removeCategories {
+		SelectFrame(value1 = "relative=top");
+
+		for (var categoryName : list "${categoriesNameList}") {
+			Click(
+				key_categoryName = "${categoryName}",
+				locator1 = "Icon#REMOVE_CATEGORY");
+		}
+
+		Button.clickSave();
+
+		SelectFrame(value1 = "relative=top");
+
+		Alert.viewSuccessMessageText(successMessage = "Changes saved.");
+	}
+
 	macro removeTag {
 		if (IsElementPresent(locator1 = "Button#EDIT")) {
 			Click(locator1 = "Button#EDIT");
@@ -1380,6 +1444,25 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "AssetCategorization#CATEGORY",
+				value1 = "${categoryName}");
+		}
+	}
+
+	macro viewCategoriesPG {
+		DMDocument.expandInfo();
+
+		if (isSet(categoryNameList)) {
+			for (var categoryName : list "${categoryNameList}") {
+				AssertTextEquals(
+					key_categoryName = "${categoryName}",
+					locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_CATEGORIES",
+					value1 = "${categoryName}");
+			}
+		}
+		else {
+			AssertTextEquals(
+				key_categoryName = "${categoryName}",
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_CATEGORIES",
 				value1 = "${categoryName}");
 		}
 	}
@@ -1790,6 +1873,21 @@ definition {
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "${dmDocumentTitle}");
+	}
+
+	macro viewNoCategoriesPG {
+		if (isSet(categoryNameList)) {
+			for (var categoryName : list "${categoryNameList}") {
+				AssertElementNotPresent(
+					key_categoryName = "${categoryName}",
+					locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_CATEGORIES");
+			}
+		}
+		else {
+			AssertElementNotPresent(
+				key_categoryName = "${categoryName}",
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_CATEGORIES");
+		}
 	}
 
 	macro viewNoTag {

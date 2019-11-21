@@ -15,7 +15,6 @@
 package com.liferay.item.selector.internal.provider;
 
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -50,14 +48,32 @@ public class GroupItemSelectorProviderImpl
 	public List<Group> getGroups(
 		long companyId, long groupId, String keywords, int start, int end) {
 
-		return ListUtil.subList(_searchGroups(companyId, keywords), start, end);
+		LinkedHashMap<String, Object> groupParams =
+			LinkedHashMapBuilder.<String, Object>put(
+				"site", Boolean.TRUE
+			).build();
+
+		try {
+			return _groupService.search(
+				companyId, _classNameIds, keywords, groupParams, start, end,
+				null);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+
+			return Collections.emptyList();
+		}
 	}
 
 	@Override
 	public int getGroupsCount(long companyId, long groupId, String keywords) {
-		List<Group> groups = _searchGroups(companyId, keywords);
+		LinkedHashMap<String, Object> groupParams =
+			LinkedHashMapBuilder.<String, Object>put(
+				"site", Boolean.TRUE
+			).build();
 
-		return groups.size();
+		return _groupService.searchCount(
+			companyId, _classNameIds, keywords, groupParams);
 	}
 
 	@Override
@@ -77,24 +93,6 @@ public class GroupItemSelectorProviderImpl
 			_classNameLocalService.getClassNameId(Group.class),
 			_classNameLocalService.getClassNameId(Organization.class)
 		};
-	}
-
-	private List<Group> _searchGroups(long companyId, String keywords) {
-		LinkedHashMap<String, Object> groupParams =
-			LinkedHashMapBuilder.<String, Object>put(
-				"site", Boolean.TRUE
-			).build();
-
-		try {
-			return _groupService.search(
-				companyId, _classNameIds, keywords, groupParams,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-
-			return Collections.emptyList();
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

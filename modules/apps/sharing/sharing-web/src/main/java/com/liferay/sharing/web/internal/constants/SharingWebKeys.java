@@ -27,4 +27,6 @@ public class SharingWebKeys {
 
 	public static final String SHARING_DIALOG_ID = "sharingDialog";
 
+	public static final String SHARING_REACT_DATA = "sharingReactData";
+
 }

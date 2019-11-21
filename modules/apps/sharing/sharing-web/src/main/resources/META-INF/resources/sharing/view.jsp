@@ -16,21 +16,7 @@
 
 <%@ include file="/sharing/init.jsp" %>
 
-<%
-Map<String, Object> data = new HashMap<>();
-
-data.put("classNameId", request.getAttribute("classNameId"));
-data.put("classPK", request.getAttribute("classPK"));
-data.put("dialogId", request.getAttribute("dialogId"));
-data.put("portletNamespace", request.getAttribute("portletNamespace"));
-data.put("shareActionURL", request.getAttribute("shareActionURL"));
-data.put("sharingEntryPermissionDisplays", request.getAttribute("sharingEntryPermissionDisplays"));
-data.put("sharingEntryPermissionDisplayActionId", request.getAttribute("sharingEntryPermissionDisplayActionId"));
-data.put("sharingUserAutocompleteURL", request.getAttribute("sharingUserAutocompleteURL"));
-data.put("sharingVerifyEmailAddressURL", request.getAttribute("sharingVerifyEmailAddressURL"));
-%>
-
 <react:component
-	data="<%= data %>"
+	data="<%= (Map<String, Object>)request.getAttribute(SharingWebKeys.SHARING_REACT_DATA) %>"
 	module="sharing/js/Sharing.es"
 />

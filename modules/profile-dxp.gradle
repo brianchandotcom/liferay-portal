@@ -13,7 +13,7 @@ String gitRepositoryURL = System.getProperty("profile.dxp.repository.url", "git@
 
 File gitRepositoryDir = new File(projectDir.parentFile, "git-clone-profile-dxp")
 
-if (System.getenv("JENKINS_HOME")) {
+if (System.getenv("JENKINS_HOME") && (gitRepositoryURL == "git@github.com:liferay/liferay-portal-ee.git")) {
 	gitRepositoryURL = "git@github-dev.liferay.com:liferay/liferay-portal-ee.git"
 }
 

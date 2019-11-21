@@ -16,39 +16,32 @@ import FilterDisplay from '../../../../src/main/resources/META-INF/resources/js/
 
 import '@testing-library/jest-dom/extend-expect';
 
+function renderTestFilterDisplay(props) {
+	return render(
+		<FilterDisplay
+			onClear={jest.fn()}
+			searchBarTerm={'example'}
+			totalResultsCount={250}
+			{...props}
+		/>
+	);
+}
+
 describe('FilterDisplay', () => {
 	it('renders', () => {
-		const {container} = render(
-			<FilterDisplay
-				onClear={jest.fn()}
-				searchBarTerm={'example'}
-				totalResultsCount={250}
-			/>
-		);
+		const {container} = renderTestFilterDisplay();
 
 		expect(container).not.toBeNull();
 	});
 
 	it('displays the total results count', () => {
-		const {getByText} = render(
-			<FilterDisplay
-				onClear={jest.fn()}
-				searchBarTerm={'example'}
-				totalResultsCount={250}
-			/>
-		);
+		const {getByText} = renderTestFilterDisplay();
 
 		expect(getByText('250', {exact: false})).toBeInTheDocument();
 	});
 
 	it('displays the search bar term', () => {
-		const {getByText} = render(
-			<FilterDisplay
-				onClear={jest.fn()}
-				searchBarTerm={'example'}
-				totalResultsCount={250}
-			/>
-		);
+		const {getByText} = renderTestFilterDisplay();
 
 		expect(getByText('example', {exact: false})).toBeInTheDocument();
 	});
@@ -56,13 +49,7 @@ describe('FilterDisplay', () => {
 	it('calls the onClear function when clicking on Clear', () => {
 		const onClear = jest.fn();
 
-		const {getByText} = render(
-			<FilterDisplay
-				onClear={onClear}
-				searchBarTerm={'example'}
-				totalResultsCount={250}
-			/>
-		);
+		const {getByText} = renderTestFilterDisplay({onClear});
 
 		fireEvent.click(getByText('clear'));
 

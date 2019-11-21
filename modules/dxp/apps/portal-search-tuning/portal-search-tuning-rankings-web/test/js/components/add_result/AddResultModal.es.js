@@ -31,19 +31,24 @@ const RESULTS_LIST_ID = 'add-result-items';
 
 const START_ID = 100;
 
+function renderTestAddResultModal(props) {
+	return render(
+		<AddResultModal
+			fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+			onAddResultSubmit={jest.fn()}
+			onCloseModal={jest.fn()}
+			{...props}
+		/>
+	);
+}
+
 describe('AddResultModal', () => {
 	beforeEach(() => {
 		fetch.mockResponse(JSON.stringify(getMockResultsData()));
 	});
 
 	it('renders the modal', async () => {
-		const {findByTestId} = render(
-			<AddResultModal
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				onAddResultSubmit={jest.fn()}
-				onCloseModal={jest.fn()}
-			/>
-		);
+		const {findByTestId} = renderTestAddResultModal();
 
 		const modalElement = await findByTestId(MODAL_ID);
 
@@ -59,13 +64,7 @@ describe('AddResultModal', () => {
 		// This should be removed after disabling the initial fetch.
 		fetch.mockResponse(JSON.stringify({}));
 
-		const {getByTestId} = render(
-			<AddResultModal
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				onAddResultSubmit={jest.fn()}
-				onCloseModal={jest.fn()}
-			/>
-		);
+		const {getByTestId} = renderTestAddResultModal();
 
 		await waitForElement(() => getByTestId(MODAL_ID));
 
@@ -79,13 +78,9 @@ describe('AddResultModal', () => {
 	it('searches for results and calls the onAddResultSubmit function after add is pressed', async () => {
 		const onAddResultSubmit = jest.fn();
 
-		const {getByTestId, getByText} = render(
-			<AddResultModal
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				onAddResultSubmit={onAddResultSubmit}
-				onCloseModal={jest.fn()}
-			/>
-		);
+		const {getByTestId, getByText} = renderTestAddResultModal({
+			onAddResultSubmit
+		});
 
 		await waitForElement(() => getByTestId(MODAL_ID));
 
@@ -109,13 +104,7 @@ describe('AddResultModal', () => {
 	});
 
 	it('disables the add button when the selected results are empty', async () => {
-		const {getByTestId, getByText} = render(
-			<AddResultModal
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				onAddResultSubmit={jest.fn()}
-				onCloseModal={jest.fn()}
-			/>
-		);
+		const {getByTestId, getByText} = renderTestAddResultModal();
 
 		await waitForElement(() => getByTestId(MODAL_ID));
 
@@ -123,13 +112,7 @@ describe('AddResultModal', () => {
 	});
 
 	it('shows the results in the modal after enter key is pressed', async () => {
-		const {getByTestId} = render(
-			<AddResultModal
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				onAddResultSubmit={jest.fn()}
-				onCloseModal={jest.fn()}
-			/>
-		);
+		const {getByTestId} = renderTestAddResultModal();
 
 		await waitForElement(() => getByTestId(MODAL_ID));
 
@@ -148,13 +131,7 @@ describe('AddResultModal', () => {
 	});
 
 	it('does not show the prompt in the modal after enter key is pressed', async () => {
-		const {getByTestId} = render(
-			<AddResultModal
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				onAddResultSubmit={jest.fn()}
-				onCloseModal={jest.fn()}
-			/>
-		);
+		const {getByTestId} = renderTestAddResultModal();
 
 		await waitForElement(() => getByTestId(MODAL_ID));
 
@@ -172,13 +149,7 @@ describe('AddResultModal', () => {
 	});
 
 	it('closes the modal when the cancel button gets clicked', async () => {
-		const {getByText, queryByTestId} = render(
-			<AddResultModal
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				onAddResultSubmit={jest.fn()}
-				onCloseModal={jest.fn()}
-			/>
-		);
+		const {getByText, queryByTestId} = renderTestAddResultModal();
 
 		await waitForElement(() => queryByTestId(MODAL_ID));
 
@@ -192,13 +163,7 @@ describe('AddResultModal', () => {
 	it('shows next page results in the modal after navigation is pressed', async () => {
 		const onAddResultSubmit = jest.fn();
 
-		const {getByTestId} = render(
-			<AddResultModal
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				onAddResultSubmit={onAddResultSubmit}
-				onCloseModal={jest.fn()}
-			/>
-		);
+		const {getByTestId} = renderTestAddResultModal({onAddResultSubmit});
 
 		await waitForElement(() => getByTestId(MODAL_ID));
 
@@ -231,13 +196,9 @@ describe('AddResultModal', () => {
 	it('updates results count in the modal after page delta is pressed', async () => {
 		const onAddResultSubmit = jest.fn();
 
-		const {getByTestId, queryAllByText} = render(
-			<AddResultModal
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				onAddResultSubmit={onAddResultSubmit}
-				onCloseModal={jest.fn()}
-			/>
-		);
+		const {getByTestId, queryAllByText} = renderTestAddResultModal({
+			onAddResultSubmit
+		});
 
 		await waitForElement(() => getByTestId(MODAL_ID));
 

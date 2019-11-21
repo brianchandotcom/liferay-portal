@@ -16,59 +16,40 @@ import PageToolbar from '../../../src/main/resources/META-INF/resources/js/compo
 
 import '@testing-library/jest-dom/extend-expect';
 
+function renderTestPageToolbar(props) {
+	return render(
+		<PageToolbar
+			inactive={false}
+			onCancel={'cancel'}
+			onChangeActive={jest.fn()}
+			onPublish={jest.fn()}
+			submitDisabled={false}
+			{...props}
+		/>
+	);
+}
+
 describe('PageToolbar', () => {
 	it('disables the save button', () => {
-		const {getByText} = render(
-			<PageToolbar
-				inactive={false}
-				onCancel={'cancel'}
-				onChangeActive={jest.fn()}
-				onPublish={jest.fn()}
-				submitDisabled={true}
-			/>
-		);
+		const {getByText} = renderTestPageToolbar({submitDisabled: true});
 
 		expect(getByText('save')).toBeDisabled();
 	});
 
 	it('enables the save button', () => {
-		const {getByText} = render(
-			<PageToolbar
-				inactive={false}
-				onCancel={'cancel'}
-				onChangeActive={jest.fn()}
-				onPublish={jest.fn()}
-				submitDisabled={false}
-			/>
-		);
+		const {getByText} = renderTestPageToolbar();
 
 		expect(getByText('save')).toBeEnabled();
 	});
 
 	it('shows the active state', () => {
-		const {getByLabelText} = render(
-			<PageToolbar
-				inactive={false}
-				onCancel={'cancel'}
-				onChangeActive={jest.fn()}
-				onPublish={jest.fn()}
-				submitDisabled={false}
-			/>
-		);
+		const {getByLabelText} = renderTestPageToolbar();
 
 		expect(getByLabelText('active')).toHaveAttribute('checked');
 	});
 
 	it('shows the inactive state', () => {
-		const {getByLabelText} = render(
-			<PageToolbar
-				inactive={true}
-				onCancel={'cancel'}
-				onChangeActive={jest.fn()}
-				onPublish={jest.fn()}
-				submitDisabled={false}
-			/>
-		);
+		const {getByLabelText} = renderTestPageToolbar({inactive: true});
 
 		expect(getByLabelText('inactive')).not.toHaveAttribute('checked');
 	});
@@ -76,15 +57,7 @@ describe('PageToolbar', () => {
 	it('calls the onChangeActive function', () => {
 		const onChangeActive = jest.fn();
 
-		const {getByLabelText} = render(
-			<PageToolbar
-				inactive={false}
-				onCancel={'cancel'}
-				onChangeActive={onChangeActive}
-				onPublish={jest.fn()}
-				submitDisabled={false}
-			/>
-		);
+		const {getByLabelText} = renderTestPageToolbar({onChangeActive});
 
 		fireEvent.click(getByLabelText('active'));
 

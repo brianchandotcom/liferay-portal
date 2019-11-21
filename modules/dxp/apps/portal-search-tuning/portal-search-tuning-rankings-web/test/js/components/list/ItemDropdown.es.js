@@ -14,138 +14,111 @@ import React from 'react';
 
 import ItemDropdown from '../../../../src/main/resources/META-INF/resources/js/components/list/ItemDropdown.es';
 
+const onClickHide = jest.fn();
+const onClickPin = jest.fn();
+
+function renderTestItemDropdown(props) {
+	return render(
+		<ItemDropdown
+			onClickHide={onClickHide}
+			onClickPin={onClickPin}
+			{...props}
+		/>
+	);
+}
+
 describe('ItemDropdown', () => {
-	it('has option to unpin a visible and pinned item', () => {
-		const {getByText} = render(
-			<ItemDropdown
-				hidden={false}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				pinned={true}
-			/>
-		);
+	it('has option to unpin visible', () => {
+		const {getByText} = renderTestItemDropdown({
+			hidden: false,
+			pinned: true
+		});
 
 		expect(getByText('unpin-result')).not.toBeNull();
 	});
 
 	it('has option to unpin multiple visible', () => {
-		const {getByText} = render(
-			<ItemDropdown
-				hidden={false}
-				itemCount={2}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				pinned={true}
-			/>
-		);
+		const {getByText} = renderTestItemDropdown({
+			hidden: false,
+			itemCount: 2,
+			pinned: true
+		});
 
 		expect(getByText('unpin-results')).not.toBeNull();
 	});
 
 	it('has option to pin visible', () => {
-		const {getByText} = render(
-			<ItemDropdown
-				hidden={false}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				pinned={false}
-			/>
-		);
+		const {getByText} = renderTestItemDropdown({
+			hidden: false,
+			pinned: false
+		});
 
 		expect(getByText('pin-result')).not.toBeNull();
 	});
 
-	it('has option to unpin multiple visible', () => {
-		const {getByText} = render(
-			<ItemDropdown
-				hidden={false}
-				itemCount={2}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				pinned={false}
-			/>
-		);
+	it('has option to pin multiple visible', () => {
+		const {getByText} = renderTestItemDropdown({
+			hidden: false,
+			itemCount: 2,
+			pinned: false
+		});
 
 		expect(getByText('pin-results')).not.toBeNull();
 	});
 
 	it('has option to hide visible', () => {
-		const {getByText} = render(
-			<ItemDropdown
-				hidden={false}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				pinned={false}
-			/>
-		);
+		const {getByText} = renderTestItemDropdown({
+			hidden: false,
+			pinned: false
+		});
 
 		expect(getByText('hide-result')).not.toBeNull();
 	});
 
 	it('has option to hide multiple visible', () => {
-		const {getByText} = render(
-			<ItemDropdown
-				hidden={false}
-				itemCount={2}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				pinned={false}
-			/>
-		);
+		const {getByText} = renderTestItemDropdown({
+			hidden: false,
+			itemCount: 2,
+			pinned: false
+		});
 
 		expect(getByText('hide-results')).not.toBeNull();
 	});
 
 	it('has option to show hidden', () => {
-		const {getByText} = render(
-			<ItemDropdown
-				hidden={true}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				pinned={false}
-			/>
-		);
+		const {getByText} = renderTestItemDropdown({
+			hidden: true,
+			pinned: false
+		});
 
 		expect(getByText('show-result')).not.toBeNull();
 	});
 
 	it('has option to show multiple hidden', () => {
-		const {getByText} = render(
-			<ItemDropdown
-				hidden={true}
-				itemCount={2}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				pinned={false}
-			/>
-		);
+		const {getByText} = renderTestItemDropdown({
+			hidden: true,
+			itemCount: 2,
+			pinned: false
+		});
 
 		expect(getByText('show-results')).not.toBeNull();
 	});
 
 	it('has option to pin hidden', () => {
-		const {getByText} = render(
-			<ItemDropdown
-				hidden={true}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				pinned={false}
-			/>
-		);
+		const {getByText} = renderTestItemDropdown({
+			hidden: true,
+			pinned: false
+		});
 
 		expect(getByText('pin-result')).not.toBeNull();
 	});
 
 	it('has option to pin multiple hidden', () => {
-		const {getByText} = render(
-			<ItemDropdown
-				hidden={true}
-				itemCount={2}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				pinned={false}
-			/>
-		);
+		const {getByText} = renderTestItemDropdown({
+			hidden: true,
+			itemCount: 2,
+			pinned: false
+		});
 
 		expect(getByText('pin-results')).not.toBeNull();
 	});
@@ -159,14 +132,10 @@ describe('ItemDropdown', () => {
 	});
 
 	it('shows the dropdown buttons when clicked on', () => {
-		const {getByText, getByTitle} = render(
-			<ItemDropdown
-				hidden={false}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				pinned={false}
-			/>
-		);
+		const {getByText, getByTitle} = renderTestItemDropdown({
+			hidden: false,
+			pinned: false
+		});
 
 		fireEvent.click(getByTitle('actions'));
 
@@ -175,16 +144,10 @@ describe('ItemDropdown', () => {
 	});
 
 	it('calls the onClickHide function when it gets clicked on', () => {
-		const onClickHide = jest.fn();
-
-		const {getByText} = render(
-			<ItemDropdown
-				hidden={false}
-				onClickHide={onClickHide}
-				onClickPin={jest.fn()}
-				pinned={false}
-			/>
-		);
+		const {getByText} = renderTestItemDropdown({
+			hidden: false,
+			pinned: false
+		});
 
 		fireEvent.click(getByText('hide-result'));
 
@@ -192,16 +155,10 @@ describe('ItemDropdown', () => {
 	});
 
 	it('calls the onClickPin function when it gets clicked on', () => {
-		const onClickPin = jest.fn();
-
-		const {getByText} = render(
-			<ItemDropdown
-				hidden={false}
-				onClickHide={jest.fn()}
-				onClickPin={onClickPin}
-				pinned={false}
-			/>
-		);
+		const {getByText} = renderTestItemDropdown({
+			hidden: false,
+			pinned: false
+		});
 
 		fireEvent.click(getByText('pin-result'));
 

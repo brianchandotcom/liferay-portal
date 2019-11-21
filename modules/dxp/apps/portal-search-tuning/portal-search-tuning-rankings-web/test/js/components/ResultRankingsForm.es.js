@@ -38,19 +38,24 @@ const INACTIVE_INPUT_SELECTOR = '#inactive';
 
 const SHOW_BUTTON_LABEL = 'show-result';
 
+function renderTestResultRankingsForm(props) {
+	return render(
+		<ResultRankingsForm
+			cancelUrl="cancel"
+			fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
+			fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+			fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+			formName={FORM_NAME}
+			initialInactive={false}
+			searchQuery=""
+			{...props}
+		/>
+	);
+}
+
 describe('ResultRankingsForm', () => {
 	it('renders the results ranking form', () => {
-		const {container} = render(
-			<ResultRankingsForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialInactive={false}
-				searchQuery="example"
-			/>
-		);
+		const {container} = renderTestResultRankingsForm();
 
 		expect(
 			container.querySelector('.results-ranking-form-root')
@@ -58,17 +63,7 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('renders the results ranking items after loading', async () => {
-		const {getByTestId} = render(
-			<ResultRankingsForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialInactive={false}
-				searchQuery=""
-			/>
-		);
+		const {getByTestId} = renderTestResultRankingsForm();
 
 		await waitForElement(() => getByTestId('100'));
 
@@ -77,17 +72,7 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('renders the results ranking items after loading hidden tab', async () => {
-		const {getByTestId, getByText} = render(
-			<ResultRankingsForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialInactive={false}
-				searchQuery=""
-			/>
-		);
+		const {getByTestId, getByText} = renderTestResultRankingsForm();
 
 		fireEvent.click(getByText('hidden'));
 
@@ -98,19 +83,9 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('includes the initial aliases', async () => {
-		const {container} = render(
-			<ResultRankingsForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialAliases={['one', 'two', 'three']}
-				initialInactive={false}
-				searchQuery=""
-			/>
-		);
-
+		const {container} = renderTestResultRankingsForm({
+			initialAliases: ['one', 'two', 'three']
+		});
 		const tagsElement = container.querySelectorAll('.label-item-expand');
 
 		expect(tagsElement[0]).toHaveTextContent('one');
@@ -119,19 +94,9 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('removes an initial alias after clicking delete', async () => {
-		const {container} = render(
-			<ResultRankingsForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialAliases={['one', 'two', 'three']}
-				initialInactive={false}
-				searchQuery=""
-			/>
-		);
-
+		const {container} = renderTestResultRankingsForm({
+			initialAliases: ['one', 'two', 'three']
+		});
 		const tagsElementClose = container.querySelectorAll(
 			'.label-item-after button'
 		);
@@ -144,17 +109,7 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('renders blank aliases', () => {
-		const {container} = render(
-			<ResultRankingsForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialInactive={false}
-				searchQuery=""
-			/>
-		);
+		const {container} = renderTestResultRankingsForm();
 
 		const input = container.querySelector('.form-control-inset');
 
@@ -170,19 +125,9 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('does not allow duplicate aliases', () => {
-		const {container} = render(
-			<ResultRankingsForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialAliases={['one', 'two', 'three']}
-				initialInactive={false}
-				searchQuery=""
-			/>
-		);
-
+		const {container} = renderTestResultRankingsForm({
+			initialAliases: ['one', 'two', 'three']
+		});
 		const input = container.querySelector('.form-control-inset');
 
 		fireEvent.change(input, {target: {value: 'one'}});
@@ -197,17 +142,7 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('updates the hiddenAdded', async () => {
-		const {container, getByTestId} = render(
-			<ResultRankingsForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialInactive={false}
-				searchQuery=""
-			/>
-		);
+		const {container, getByTestId} = renderTestResultRankingsForm();
 
 		await waitForElement(() => getByTestId('100'));
 
@@ -221,17 +156,11 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('updates the hiddenAdded back', async () => {
-		const {container, getByTestId, getByText} = render(
-			<ResultRankingsForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialInactive={false}
-				searchQuery=""
-			/>
-		);
+		const {
+			container,
+			getByTestId,
+			getByText
+		} = renderTestResultRankingsForm();
 
 		await waitForElement(() => getByTestId('105'));
 
@@ -251,17 +180,11 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('updates the hiddenRemoved', async () => {
-		const {container, getByTestId, getByText} = render(
-			<ResultRankingsForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialInactive={false}
-				searchQuery=""
-			/>
-		);
+		const {
+			container,
+			getByTestId,
+			getByText
+		} = renderTestResultRankingsForm();
 
 		fireEvent.click(getByText('hidden'));
 
@@ -277,17 +200,11 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('updates the hiddenRemoved back', async () => {
-		const {container, getByTestId, getByText} = render(
-			<ResultRankingsForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialInactive={false}
-				searchQuery=""
-			/>
-		);
+		const {
+			container,
+			getByTestId,
+			getByText
+		} = renderTestResultRankingsForm();
 
 		fireEvent.click(getByText('hidden'));
 
@@ -309,17 +226,7 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('fetches more results after clicking on load more button', async () => {
-		const {container, getByTestId} = render(
-			<ResultRankingsForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialInactive={false}
-				searchQuery=""
-			/>
-		);
+		const {container, getByTestId} = renderTestResultRankingsForm();
 
 		await waitForElement(() => getByTestId('100'));
 
@@ -336,16 +243,7 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('has the same pinned end index if there are no additional pinned items loaded', async () => {
-		const {container, getByTestId} = render(
-			<ResultRankingsForm
-				cancelUrl=""
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				searchQuery=""
-			/>
-		);
+		const {container, getByTestId} = renderTestResultRankingsForm();
 
 		const pinnedIdsEndIndexInput = container.querySelector(
 			'#pinnedIdsEndIndex'
@@ -363,17 +261,7 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('updates the state to inactive', async () => {
-		const {container, getByLabelText} = render(
-			<ResultRankingsForm
-				cancelUrl=""
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialInactive={false}
-				searchQuery=""
-			/>
-		);
+		const {container, getByLabelText} = renderTestResultRankingsForm();
 
 		fireEvent.click(getByLabelText('active'));
 
@@ -385,18 +273,9 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('updates the state to active', async () => {
-		const {container, getByLabelText} = render(
-			<ResultRankingsForm
-				cancelUrl=""
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				initialInactive={true}
-				searchQuery=""
-			/>
-		);
-
+		const {container, getByLabelText} = renderTestResultRankingsForm({
+			initialInactive: true
+		});
 		fireEvent.click(getByLabelText('inactive'));
 
 		expect(getByLabelText('active')).toBeInTheDocument();

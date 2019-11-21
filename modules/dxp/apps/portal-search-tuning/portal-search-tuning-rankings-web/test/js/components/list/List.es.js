@@ -22,19 +22,30 @@ const DATA_MAP = resultsDataToMap(
 	getMockResultsData(10, 0, '', false).documents
 );
 
+const mockLoad = jest.fn();
+
+function renderTestList(props) {
+	return render(
+		<List
+			dataLoading={false}
+			dataMap={DATA_MAP}
+			onClickHide={jest.fn()}
+			onClickPin={jest.fn()}
+			onLoadResults={mockLoad}
+			resultIds={[102, 104, 103]}
+			showLoadMore={true}
+			{...props}
+		/>
+	);
+}
+
 describe('List', () => {
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it('lists out results in order with expected titles', () => {
-		const {container} = render(
-			<List
-				dataLoading={false}
-				dataMap={DATA_MAP}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onLoadResults={jest.fn()}
-				resultIds={[102, 104, 103]}
-				showLoadMore={true}
-			/>
-		);
+		const {container} = renderTestList();
 
 		const listItems = container.querySelectorAll('.text-truncate-inline');
 
@@ -50,51 +61,21 @@ describe('List', () => {
 	});
 
 	it('has no loading icon when dataLoading is false', () => {
-		const {container} = render(
-			<List
-				dataLoading={false}
-				dataMap={DATA_MAP}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				resultIds={[]}
-				showLoadMore={true}
-			/>
-		);
+		const {container} = renderTestList();
 
 		expect(container.querySelector('.loading-animation')).toBeNull();
 		expect(container.querySelector('.load-more-button')).not.toBeNull();
 	});
 
 	it('has a loading icon when dataLoading is true', () => {
-		const {container} = render(
-			<List
-				dataLoading={true}
-				dataMap={DATA_MAP}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				resultIds={[]}
-				showLoadMore={true}
-			/>
-		);
+		const {container} = renderTestList({dataLoading: true});
 
 		expect(container.querySelector('.loading-animation')).not.toBeNull();
 		expect(container.querySelector('.load-more-button')).toBeNull();
 	});
 
 	it('calls the onLoadResults function when the loading button is clicked', () => {
-		const mockLoad = jest.fn();
-
-		const {getByText} = render(
-			<List
-				dataLoading={false}
-				dataMap={DATA_MAP}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onLoadResults={mockLoad}
-				resultIds={[102, 104, 103]}
-				showLoadMore={true}
-			/>
-		);
+		const {getByText} = renderTestList();
 
 		const loadButton = getByText('load-more-results');
 
@@ -104,19 +85,7 @@ describe('List', () => {
 	});
 
 	it('updates the selected ids', () => {
-		const mockLoad = jest.fn();
-
-		const {getByTestId, getByText} = render(
-			<List
-				dataLoading={false}
-				dataMap={DATA_MAP}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onLoadResults={mockLoad}
-				resultIds={[102, 104, 103]}
-				showLoadMore={true}
-			/>
-		);
+		const {getByTestId, getByText} = renderTestList();
 
 		fireEvent.click(getByLabelText(getByTestId('102'), 'select'));
 		fireEvent.click(getByLabelText(getByTestId('104'), 'select'));
@@ -125,19 +94,7 @@ describe('List', () => {
 	});
 
 	it('updates the selected ids back', () => {
-		const mockLoad = jest.fn();
-
-		const {getByTestId, queryByText} = render(
-			<List
-				dataLoading={false}
-				dataMap={DATA_MAP}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onLoadResults={mockLoad}
-				resultIds={[102, 104, 103]}
-				showLoadMore={true}
-			/>
-		);
+		const {getByTestId, queryByText} = renderTestList();
 
 		fireEvent.click(
 			getByTestId('102').querySelector('.custom-control-input')
@@ -150,19 +107,7 @@ describe('List', () => {
 	});
 
 	it('focuses on the id', () => {
-		const mockLoad = jest.fn();
-
-		const {getByTestId} = render(
-			<List
-				dataLoading={false}
-				dataMap={DATA_MAP}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onLoadResults={mockLoad}
-				resultIds={[102, 104, 103]}
-				showLoadMore={true}
-			/>
-		);
+		const {getByTestId} = renderTestList();
 
 		fireEvent.focus(getByTestId('102'));
 
@@ -172,19 +117,7 @@ describe('List', () => {
 	});
 
 	it('adds classes of focus and reorder on the id', () => {
-		const mockLoad = jest.fn();
-
-		const {getByTestId} = render(
-			<List
-				dataLoading={false}
-				dataMap={DATA_MAP}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onLoadResults={mockLoad}
-				resultIds={[102, 104, 103]}
-				showLoadMore={true}
-			/>
-		);
+		const {getByTestId} = renderTestList();
 
 		fireEvent.focus(getByTestId('102'));
 

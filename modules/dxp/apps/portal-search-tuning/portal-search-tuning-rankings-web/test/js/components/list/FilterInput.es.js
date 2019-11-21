@@ -14,16 +14,21 @@ import React from 'react';
 
 import FilterInput from '../../../../src/main/resources/META-INF/resources/js/components/list/FilterInput.es';
 
+function renderTestFilterInput(props) {
+	return render(
+		<FilterInput
+			disableSearch={false}
+			onChange={jest.fn()}
+			onSubmit={jest.fn()}
+			searchBarTerm={'test'}
+			{...props}
+		/>
+	);
+}
+
 describe('FilterInput', () => {
 	it('has the searchbar term in the filter input', () => {
-		const {getByPlaceholderText} = render(
-			<FilterInput
-				disableSearch={false}
-				onChange={jest.fn()}
-				onSubmit={jest.fn()}
-				searchBarTerm={'test'}
-			/>
-		);
+		const {getByPlaceholderText} = renderTestFilterInput();
 
 		const input = getByPlaceholderText('contains-text');
 
@@ -33,14 +38,7 @@ describe('FilterInput', () => {
 	it('calls the onChange function when adding to the input', () => {
 		const onChange = jest.fn();
 
-		const {queryByPlaceholderText} = render(
-			<FilterInput
-				disableSearch={false}
-				onChange={onChange}
-				onSubmit={jest.fn()}
-				searchBarTerm={'test'}
-			/>
-		);
+		const {queryByPlaceholderText} = renderTestFilterInput({onChange});
 
 		const input = queryByPlaceholderText('contains-text');
 
@@ -52,14 +50,7 @@ describe('FilterInput', () => {
 	it('calls the onLoadResults function when the searchbar enter is pressed', () => {
 		const onSubmit = jest.fn();
 
-		const {queryByPlaceholderText} = render(
-			<FilterInput
-				disableSearch={false}
-				onChange={jest.fn()}
-				onSubmit={onSubmit}
-				searchBarTerm={'test'}
-			/>
-		);
+		const {queryByPlaceholderText} = renderTestFilterInput({onSubmit});
 
 		const input = queryByPlaceholderText('contains-text');
 

@@ -14,18 +14,14 @@
 
 import ClayButton from '@clayui/button';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
-import React, {useContext, useEffect, useCallback} from 'react';
+import React, {useContext, useEffect, useCallback, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import {ControlMenuBase} from '../../components/control-menu/ControlMenu.es';
 import {addItem, updateItem} from '../../utils/client.es';
 
-export default ({
-	dataDefinitionId,
-	dataRecordId,
-	editEntryContainerElementId
-}) => {
+export const EditEntry = ({dataDefinitionId, dataRecordId, ddmForm}) => {
 	const {basePortletURL} = useContext(AppContext);
 
 	const onCancel = useCallback(() => {
@@ -33,7 +29,7 @@ export default ({
 	}, [basePortletURL]);
 
 	const onSave = useCallback(() => {
-		const {pages} = Liferay.component(editEntryContainerElementId);
+		const {pages} = ddmForm;
 		const visitor = new PagesVisitor(pages);
 
 		const dataRecord = {
@@ -55,17 +51,16 @@ export default ({
 				dataRecord
 			).then(onCancel);
 		}
-	}, [dataDefinitionId, dataRecordId, editEntryContainerElementId, onCancel]);
+	}, [dataDefinitionId, dataRecordId, ddmForm, onCancel]);
 
 	useEffect(() => {
-		const component = Liferay.component(editEntryContainerElementId);
-		const formNode = component.getFormNode();
+		const formNode = ddmForm.getFormNode();
 		const onSubmit = () => onSave();
 
 		formNode.addEventListener('submit', onSubmit);
 
 		return () => formNode.removeEventListener('submit', onSubmit);
-	}, [editEntryContainerElementId, onSave]);
+	}, [ddmForm, onSave]);
 
 	return (
 		<>
@@ -83,4 +78,14 @@ export default ({
 			</ClayButton.Group>
 		</>
 	);
+};
+
+export default ({editEntryContainerElementId, ...props}) => {
+	const [ddmForm, setDDMForm] = useState();
+
+	if (!ddmForm) {
+		Liferay.componentReady(editEntryContainerElementId).then(setDDMForm);
+	}
+
+	return ddmForm ? <EditEntry ddmForm={ddmForm} {...props} /> : null;
 };

@@ -99,10 +99,10 @@ public class AccountUserRetrieverWhenSearchingByEmailAddressDomainsTest {
 
 		List<User> domainUsers = new ArrayList<>();
 
-		for (String emailDomain : emailAddressDomains) {
-			domainUsers.add(_addAccountUser(emailDomain));
+		for (String emailAddressDomain : emailAddressDomains) {
+			domainUsers.add(_addAccountUser(emailAddressDomain));
 
-			_users.add(_addUser(emailDomain));
+			_users.add(_addUser(emailAddressDomain));
 		}
 
 		_users.addAll(domainUsers);
@@ -157,9 +157,9 @@ public class AccountUserRetrieverWhenSearchingByEmailAddressDomainsTest {
 		return user;
 	}
 
-	private User _addUser(String emailDomain) throws Exception {
+	private User _addUser(String emailAddressDomain) throws Exception {
 		String emailAddress =
-			RandomTestUtil.randomString() + StringPool.AT + emailDomain;
+			RandomTestUtil.randomString() + StringPool.AT + emailAddressDomain;
 
 		return UserTestUtil.addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),

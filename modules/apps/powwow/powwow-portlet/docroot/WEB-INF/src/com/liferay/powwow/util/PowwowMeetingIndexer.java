@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.QueryTermImpl;
@@ -203,9 +203,9 @@ public class PowwowMeetingIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		PowwowMeeting powwowMeeting = (PowwowMeeting)obj;
 
-		SearchEngineUtil.updateDocument(
+		IndexWriterHelperUtil.updateDocument(
 			getSearchEngineId(), powwowMeeting.getCompanyId(),
-			getDocument(powwowMeeting));
+			getDocument(powwowMeeting), false);
 	}
 
 	@Override
@@ -225,8 +225,8 @@ public class PowwowMeetingIndexer extends BaseIndexer {
 
 		final Collection<Document> documents = new ArrayList<>();
 
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
+		IndexWriterHelperUtil.updateDocuments(
+			getSearchEngineId(), companyId, documents, false);
 	}
 
 }

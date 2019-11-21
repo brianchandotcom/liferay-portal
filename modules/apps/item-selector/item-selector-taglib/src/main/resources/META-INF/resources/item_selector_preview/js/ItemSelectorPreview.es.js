@@ -253,8 +253,8 @@ class ItemSelectorPreview extends Component {
 			<div className="fullscreen item-selector-preview">
 				<Header
 					disabledAddButton={!currentItem.url}
+					handleClickAdd={this.handleClickDone}
 					handleClickClose={this.handleClickClose}
-					handleClickDone={this.handleClickDone}
 					handleClickEdit={this.handleClickEdit}
 					headerTitle={this.props.headerTitle}
 					infoButtonRef={this.infoButtonRef}

@@ -68,21 +68,26 @@ PreviewSeo.propTypes = {
 };
 
 const PreviewSeoContainer = ({
+	defaultValues = {},
 	displayType,
 	portletNamespace,
 	targets,
 	titleSuffix
 }) => {
-	const [description, setDescription] = useState('');
-	const [title, setTitle] = useState('');
-	const [url, setUrl] = useState('');
-	const [imgUrl, setImgUrl] = useState('');
+	const [description, setDescription] = useState(
+		defaultValues['description']
+	);
+	const [imgUrl, setImgUrl] = useState(defaultValues['imgUrl']);
+	const [title, setTitle] = useState(defaultValues['title']);
+	const [url, setUrl] = useState(defaultValues['canonicalURL']);
 
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
-		const setPreviewState = ({defaultValue = '', type, value}) => {
+		const setPreviewState = ({type, value = ''}) => {
 			if (!isMounted()) return;
+
+			const defaultValue = defaultValues[type];
 
 			if (value === '' && defaultValue) {
 				value = defaultValue;
@@ -92,14 +97,14 @@ const PreviewSeoContainer = ({
 				setDescription(value);
 			} else if (type === 'title') {
 				setTitle(value);
-			} else if (type === 'canonicalURL') {
+			} else if (type === 'url') {
 				setUrl(value);
 			} else if (type === 'imgUrl') {
 				setImgUrl(value);
 			}
 		};
 
-		const handleInputChange = ({defaultValue, event, type}) => {
+		const handleInputChange = ({event, type}) => {
 			const target = event.target;
 
 			if (!target) {
@@ -107,16 +112,14 @@ const PreviewSeoContainer = ({
 			}
 
 			setPreviewState({
-				defaultValue,
 				type,
 				value: target.value
 			});
 		};
 
-		const inputs = targets.map(({defaultValue, id, type}) => {
+		const inputs = targets.map(({id, type}) => {
 			const listener = event => {
 				handleInputChange({
-					defaultValue,
 					event,
 					type
 				});
@@ -127,12 +130,11 @@ const PreviewSeoContainer = ({
 			if (node) node.addEventListener('input', listener);
 
 			setPreviewState({
-				defaultValue,
 				type,
 				value: node && node.value
 			});
 
-			return {defaultValue, listener, node, type};
+			return {listener, node, type};
 		});
 
 		const PreviewSeoOnChangeHandle = PreviewSeoOnChange(
@@ -143,9 +145,8 @@ const PreviewSeoContainer = ({
 		const inputLocalizedLocaleChangedHandle = Liferay.on(
 			'inputLocalized:localeChanged',
 			() => {
-				inputs.forEach(({defaultValue, node, type}) =>
+				inputs.forEach(({node, type}) =>
 					setPreviewState({
-						defaultValue,
 						type,
 						value: node && node.value
 					})
@@ -162,7 +163,7 @@ const PreviewSeoContainer = ({
 			Liferay.detach(inputLocalizedLocaleChangedHandle);
 			Liferay.detach(PreviewSeoOnChangeHandle);
 		};
-	}, [isMounted, portletNamespace, targets]);
+	}, [defaultValues, isMounted, portletNamespace, targets]);
 
 	return (
 		<PreviewSeo
@@ -177,9 +178,9 @@ const PreviewSeoContainer = ({
 };
 
 PreviewSeoContainer.propTypes = {
+	defaultValues: PropTypes.object,
 	targets: PropTypes.arrayOf(
 		PropTypes.shape({
-			defaultValue: PropTypes.string,
 			id: PropTypes.string.isRequired,
 			type: PropTypes.string.isRequired
 		})

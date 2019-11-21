@@ -101,24 +101,15 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 				<div>
 
 					<%
-					Map<String, Object> dataOG = new HashMap<>();
+					Map<String, Object> data = new HashMap<>();
 
-					dataOG.put(
+					data.put(
 						"targets",
 						JSONUtil.putAll(
 							JSONUtil.put(
-								"defaultValue", layoutsAdminDisplayContext.getOpenGraphImageURL()
-							).put(
 								"id", "openGraphImageURL"
 							).put(
 								"type", "imgUrl"
-							),
-							JSONUtil.put(
-								"defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURL()
-							).put(
-								"id", "canonicalURL"
-							).put(
-								"type", "canonicalURL"
 							),
 							JSONUtil.put(
 								"id", "openGraphDescription"
@@ -126,19 +117,25 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 								"type", "description"
 							),
 							JSONUtil.put(
-								"defaultValue", layoutsAdminDisplayContext.getPageTitle()
-							).put(
 								"id", "openGraphTitle"
 							).put(
 								"type", "title"
 							)));
 
-					dataOG.put("displayType", "og");
-					dataOG.put("titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix());
+					data.put(
+						"defaultValues",
+							JSONUtil.put(
+								"canonicalURL", layoutsAdminDisplayContext.getCanonicalLayoutURL()
+							).put(
+								"title", layoutsAdminDisplayContext.getPageTitle()
+							));
+
+					data.put("displayType", "og");
+					data.put("titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix());
 					%>
 
 					<react:component
-						data="<%= dataOG %>"
+						data="<%= data %>"
 						module="js/seo/PreviewSeo.es"
 					/>
 				</div>

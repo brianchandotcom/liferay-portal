@@ -135,8 +135,6 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 							"targets",
 							JSONUtil.putAll(
 								JSONUtil.put(
-									"defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURL()
-								).put(
 									"id", "canonicalURL"
 								).put(
 									"type", "canonicalURL"
@@ -147,12 +145,18 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 									"type", "description"
 								),
 								JSONUtil.put(
-									"defaultValue", layoutsAdminDisplayContext.getPageTitle()
-								).put(
 									"id", "title"
 								).put(
 									"type", "title"
 								)));
+
+						data.put(
+						"defaultValues",
+							JSONUtil.put(
+								"canonicalURL", layoutsAdminDisplayContext.getCanonicalLayoutURL()
+							).put(
+								"title", layoutsAdminDisplayContext.getPageTitle()
+							));
 
 						data.put("titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix());
 						%>

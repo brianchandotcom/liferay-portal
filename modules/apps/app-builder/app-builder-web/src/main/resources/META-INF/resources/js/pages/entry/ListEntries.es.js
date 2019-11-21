@@ -21,6 +21,7 @@ import ListView from '../../components/list-view/ListView.es';
 import {Loading} from '../../components/loading/Loading.es';
 import {toQuery, toQueryString} from '../../hooks/useQuery.es';
 import {confirmDelete, getItem} from '../../utils/client.es';
+import {getFieldLabel} from '../../utils/dataDefinition.es';
 import {FieldValuePreview} from './FieldPreview.es';
 
 const ListEntries = withRouter(({history, location}) => {
@@ -113,7 +114,7 @@ const ListEntries = withRouter(({history, location}) => {
 				)}
 				columns={columns.map(column => ({
 					key: column,
-					value: column
+					value: getFieldLabel(dataDefinition, column)
 				}))}
 				emptyState={{
 					button: () => (

@@ -18,8 +18,6 @@ import React, {useState, useEffect} from 'react';
 import {useRouter} from '../../hooks/useRouter.es';
 import {parse, stringify} from '../router/queryString.es';
 
-const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
-
 const SearchField = props => {
 	const {
 		history,
@@ -30,6 +28,8 @@ const SearchField = props => {
 	const {search = ''} = query;
 
 	const {disabled, placeholder = Liferay.Language.get('search-for')} = props;
+
+	const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
 
 	const [searchValue, setSearchValue] = useState('');
 	const [redirect, setRedirect] = useState(false);

@@ -30,9 +30,7 @@ const ProcessListPage = ({page, pageSize, query, sort}) => {
 	usePageTitle(Liferay.Language.get('metrics'));
 	const {search = ''} = parse(query);
 
-	let title;
-
-	if (search.length) title = search;
+	const title = search.length ? search : null;
 
 	const {data, promises} = useResource('/processes', {
 		page,

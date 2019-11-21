@@ -90,6 +90,10 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 
 		ddmFormFieldValue.setName(name);
 
+		if (dataRecordValues == null) {
+			return ddmFormFieldValue;
+		}
+
 		Object value = dataRecordValues.get(name);
 
 		if (value != null) {

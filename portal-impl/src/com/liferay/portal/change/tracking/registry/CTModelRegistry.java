@@ -14,8 +14,6 @@
 
 package com.liferay.portal.change.tracking.registry;
 
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
-
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,12 +22,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Preston Crary
  */
 public class CTModelRegistry {
-
-	public static CTModelRegistration getCTModelRegistration(
-		Class<? extends CTModel<?>> modelClass) {
-
-		return _classCTModelRegistrationMap.get(modelClass);
-	}
 
 	public static CTModelRegistration getCTModelRegistration(String tableName) {
 		return _tableNameCTModelRegistrationMap.get(tableName);
@@ -44,26 +36,15 @@ public class CTModelRegistry {
 
 		_tableNameCTModelRegistrationMap.put(
 			ctModelRegistration.getTableName(), ctModelRegistration);
-
-		_classCTModelRegistrationMap.put(
-			ctModelRegistration.getModelClass(), ctModelRegistration);
 	}
 
 	public static void unregisterCTModel(String tableName) {
-		CTModelRegistration ctModelRegistration =
-			_tableNameCTModelRegistrationMap.remove(tableName);
-
-		if (ctModelRegistration != null) {
-			_classCTModelRegistrationMap.remove(
-				ctModelRegistration.getModelClass());
-		}
+		_tableNameCTModelRegistrationMap.remove(tableName);
 	}
 
 	private CTModelRegistry() {
 	}
 
-	private static final Map<Class<?>, CTModelRegistration>
-		_classCTModelRegistrationMap = new ConcurrentHashMap<>();
 	private static final Map<String, CTModelRegistration>
 		_tableNameCTModelRegistrationMap = new ConcurrentHashMap<>();
 

@@ -15,10 +15,10 @@
 package com.liferay.change.tracking.internal;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.change.tracking.registry.CTModelRegistration;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import java.sql.Blob;
 import java.sql.Connection;
@@ -36,19 +36,19 @@ import java.util.Map;
 public class CTRowUtil {
 
 	public static int copyCTRows(
-			CTModelRegistration ctModelRegistration, Connection connection,
+			CTPersistence<?> ctPersistence, Connection connection,
 			String selectSQL)
 		throws SQLException {
 
 		Map<String, Integer> tableColumnsMap =
-			ctModelRegistration.getTableColumnsMap();
+			ctPersistence.getTableColumnsMap();
 
 		if (_isPostgresBlobTable(tableColumnsMap)) {
 			StringBundler sb = new StringBundler(
 				3 * tableColumnsMap.size() + 4);
 
 			sb.append("insert into ");
-			sb.append(ctModelRegistration.getTableName());
+			sb.append(ctPersistence.getTableName());
 			sb.append(" (");
 
 			for (String columnName : tableColumnsMap.keySet()) {
@@ -104,7 +104,7 @@ public class CTRowUtil {
 		StringBundler sb = new StringBundler(2 * tableColumnsMap.size() + 4);
 
 		sb.append("insert into ");
-		sb.append(ctModelRegistration.getTableName());
+		sb.append(ctPersistence.getTableName());
 		sb.append(" (");
 
 		for (String name : tableColumnsMap.keySet()) {

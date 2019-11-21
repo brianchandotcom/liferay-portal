@@ -15,8 +15,6 @@
 package com.liferay.change.tracking.internal;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.change.tracking.registry.CTModelRegistration;
-import com.liferay.portal.change.tracking.registry.CTModelRegistry;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
@@ -45,21 +43,11 @@ public class CTServiceCopier<T extends CTModel<T>> {
 	}
 
 	private Void _copy(CTPersistence<T> ctPersistence) throws Exception {
-		CTModelRegistration ctModelRegistration =
-			CTModelRegistry.getCTModelRegistration(
-				ctPersistence.getModelClass());
-
-		if (ctModelRegistration == null) {
-			throw new IllegalStateException(
-				"Unable find CTModelRegistration for " +
-					_ctService.getModelClass());
-		}
-
 		Connection connection = CurrentConnectionUtil.getConnection(
 			ctPersistence.getDataSource());
 
 		Map<String, Integer> tableColumnsMap =
-			ctModelRegistration.getTableColumnsMap();
+			ctPersistence.getTableColumnsMap();
 
 		StringBundler sb = new StringBundler(3 * tableColumnsMap.size() + 5);
 
@@ -80,11 +68,11 @@ public class CTServiceCopier<T extends CTModel<T>> {
 
 		sb.setStringAt(" from ", sb.index() - 1);
 
-		sb.append(ctModelRegistration.getTableName());
+		sb.append(ctPersistence.getTableName());
 		sb.append(" t1 where t1.ctCollectionId = ");
 		sb.append(_sourceCTCollectionId);
 
-		CTRowUtil.copyCTRows(ctModelRegistration, connection, sb.toString());
+		CTRowUtil.copyCTRows(ctPersistence, connection, sb.toString());
 
 		return null;
 	}

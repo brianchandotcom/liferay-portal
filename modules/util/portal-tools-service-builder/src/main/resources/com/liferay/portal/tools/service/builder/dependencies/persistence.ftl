@@ -69,10 +69,6 @@ public interface ${entity.name}Persistence extends BasePersistence<${entity.name
 
 			<#assign parameters = method.parameters />
 
-			<#if entity.isChangeTrackingEnabled() && stringUtil.equals(method.name, "findByCTCollectionId") && (parameters?size == 1)>
-				@Override
-			</#if>
-
 			<#if stringUtil.equals(method.name, "getBadColumnNames")>
 				@Override
 			</#if>

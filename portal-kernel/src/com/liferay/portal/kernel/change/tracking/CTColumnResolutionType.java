@@ -12,35 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.change.tracking.registry;
+package com.liferay.portal.kernel.change.tracking;
 
 /**
  * @author Preston Crary
  */
-public class CTModelRegistration {
+public enum CTColumnResolutionType {
 
-	public CTModelRegistration(
-		Class<?> modelClass, String tableName, String primaryColumnName) {
-
-		_modelClass = modelClass;
-		_tableName = tableName;
-		_primaryColumnName = primaryColumnName;
-	}
-
-	public Class<?> getModelClass() {
-		return _modelClass;
-	}
-
-	public String getPrimaryColumnName() {
-		return _primaryColumnName;
-	}
-
-	public String getTableName() {
-		return _tableName;
-	}
-
-	private final Class<?> _modelClass;
-	private final String _primaryColumnName;
-	private final String _tableName;
+	CONTROL, IGNORE, MERGE, PK, STRICT
 
 }

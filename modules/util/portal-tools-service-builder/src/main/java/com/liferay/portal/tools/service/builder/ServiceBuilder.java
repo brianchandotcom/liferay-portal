@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.Dom4jUtil;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1699,21 +1700,20 @@ public class ServiceBuilder {
 			methodName.equals("deactivate") || methodName.equals("destroy") ||
 			methodName.equals("equals") ||
 			methodName.equals("getAopInterfaces") ||
-			methodName.equals("getCTIgnoredAttributeNames") ||
-			methodName.equals("getCTMergeableAttributeNames") ||
+			methodName.equals("getCTColumnNames") ||
 			methodName.equals("getCTPersistence") ||
 			methodName.equals("getClass") ||
 			methodName.equals("getModelClass") ||
 			methodName.equals("getService") ||
+			methodName.equals("getTableColumnsMap") ||
+			methodName.equals("getTableName") ||
 			methodName.equals("getUniqueIndexColumnNames") ||
 			methodName.equals("getWrappedService") ||
 			methodName.equals("hashCode") || methodName.equals("notify") ||
 			methodName.equals("notifyAll") ||
-			methodName.equals("removeCTModel") ||
 			methodName.equals("setAopProxy") ||
 			methodName.equals("setWrappedService") ||
 			methodName.equals("toString") ||
-			methodName.equals("updateCTModel") ||
 			methodName.equals("updateWithUnsafeFunction") ||
 			methodName.equals("wait")) {
 
@@ -5753,6 +5753,8 @@ public class ServiceBuilder {
 		if (mvccEnabled && !columnElements.isEmpty()) {
 			Element columnElement = DocumentHelper.createElement("column");
 
+			columnElement.addAttribute(
+				"change-tracking-resolution-type", "CONTROL");
 			columnElement.addAttribute("name", "mvccVersion");
 			columnElement.addAttribute("type", "long");
 
@@ -5762,6 +5764,8 @@ public class ServiceBuilder {
 		if (changeTrackingEnabled) {
 			Element columnElement = DocumentHelper.createElement("column");
 
+			columnElement.addAttribute(
+				"change-tracking-resolution-type", "CONTROL");
 			columnElement.addAttribute("name", "ctCollectionId");
 			columnElement.addAttribute("type", "long");
 
@@ -5869,17 +5873,25 @@ public class ServiceBuilder {
 			boolean colJsonEnabled = GetterUtil.getBoolean(
 				columnElement.attributeValue("json-enabled"), jsonEnabled);
 
-			String changeTrackingMode = "strict";
+			String changeTrackingResolutionType = "STRICT";
 
-			if (columnName.equals("modifiedDate") &&
-				columnType.equals("Date")) {
+			if (primary) {
+				changeTrackingResolutionType = "PK";
+			}
+			else if (columnName.equals("modifiedDate") &&
+					 columnType.equals("Date")) {
 
-				changeTrackingMode = "ignore";
+				changeTrackingResolutionType = "IGNORE";
 			}
 
-			changeTrackingMode = GetterUtil.getString(
-				columnElement.attributeValue("change-tracking-mode"),
-				changeTrackingMode);
+			changeTrackingResolutionType = StringUtil.toUpperCase(
+				GetterUtil.getString(
+					columnElement.attributeValue(
+						"change-tracking-resolution-type"),
+					changeTrackingResolutionType));
+
+			CTColumnResolutionType ctColumnResolutionType =
+				CTColumnResolutionType.valueOf(changeTrackingResolutionType);
 
 			boolean containerModel = GetterUtil.getBoolean(
 				columnElement.attributeValue("container-model"));
@@ -5904,7 +5916,7 @@ public class ServiceBuilder {
 				columnName, columnDBName, columnType, primary, accessor,
 				filterPrimary, columnEntityName, mappingTableName, idType,
 				idParam, convertNull, lazy, localized, colJsonEnabled,
-				changeTrackingMode, containerModel, parentContainerModel,
+				ctColumnResolutionType, containerModel, parentContainerModel,
 				uadAnonymizeFieldName, uadNonanonymizable);
 
 			if (primary) {
@@ -5918,17 +5930,6 @@ public class ServiceBuilder {
 				}
 
 				pkEntityColumns.add(entityColumn);
-			}
-
-			if (!changeTrackingMode.equals("strict") &&
-				(primary ||
-				 (!changeTrackingMode.equals("ignore") &&
-				  !changeTrackingMode.equals("merge")))) {
-
-				throw new ServiceBuilderException(
-					StringBundler.concat(
-						"Illegal change-tracking-mode ", changeTrackingMode,
-						" for entity ", entityName, " on column ", columnName));
 			}
 
 			if (columnType.equals("Collection")) {
@@ -6023,20 +6024,6 @@ public class ServiceBuilder {
 		List<EntityFinder> entityFinders = new ArrayList<>();
 
 		List<Element> finderElements = entityElement.elements("finder");
-
-		if (changeTrackingEnabled) {
-			Element finderElement = DocumentHelper.createElement("finder");
-
-			finderElement.addAttribute("name", "CTCollectionId");
-			finderElement.addAttribute("return-type", "Collection");
-
-			Element finderColumnElement = finderElement.addElement(
-				"finder-column");
-
-			finderColumnElement.addAttribute("name", "ctCollectionId");
-
-			finderElements.add(0, finderElement);
-		}
 
 		if (uuid) {
 			if (entityColumns.contains(new EntityColumn("companyId"))) {
@@ -6355,6 +6342,34 @@ public class ServiceBuilder {
 					"Primary key must be of type long to enable change " +
 						"tracking for " + entityName);
 			}
+
+			if (pkEntityColumn.getCTColumnResolutionType() !=
+					CTColumnResolutionType.PK) {
+
+				throw new ServiceBuilderException(
+					StringBundler.concat(
+						"Illegal change-tracking-resolution-type ",
+						String.valueOf(
+							pkEntityColumn.getCTColumnResolutionType()),
+						" for entity ", entityName, " on column ",
+						pkEntityColumn.getName()));
+			}
+
+			for (EntityFinder entityFinder : entityFinders) {
+				for (EntityColumn entityColumn :
+						entityFinder.getEntityColumns()) {
+
+					if (entityColumn.isChangeTrackingMerge()) {
+						throw new ServiceBuilderException(
+							StringBundler.concat(
+								"Illegal change-tracking-resolution-type ",
+								String.valueOf(
+									entityColumn.getCTColumnResolutionType()),
+								" for entity ", entityName, " on column ",
+								pkEntityColumn.getName()));
+					}
+				}
+			}
 		}
 
 		_entities.add(entity);
@@ -6389,8 +6404,8 @@ public class ServiceBuilder {
 		if (versioned) {
 			EntityColumn headEntityColumn = new EntityColumn(
 				"head", "head", "boolean", false, false, false, null, null,
-				null, null, true, false, false, false, "strict", false, false,
-				null, false);
+				null, null, true, false, false, false,
+				CTColumnResolutionType.STRICT, false, false, null, false);
 
 			headEntityColumn.setComparator("=");
 			headEntityColumn.setFinderPath(true);

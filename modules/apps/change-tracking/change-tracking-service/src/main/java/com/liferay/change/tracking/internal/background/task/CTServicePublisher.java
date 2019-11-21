@@ -19,9 +19,8 @@ import com.liferay.change.tracking.internal.CTRowUtil;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.change.tracking.registry.CTModelRegistration;
-import com.liferay.portal.change.tracking.registry.CTModelRegistry;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
@@ -36,10 +35,9 @@ import java.sql.ResultSet;
 import java.sql.Types;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -93,15 +91,21 @@ public class CTServicePublisher<T extends CTModel<T>> {
 	}
 
 	private Void _publish(CTPersistence<T> ctPersistence) throws Exception {
-		CTModelRegistration ctModelRegistration =
-			CTModelRegistry.getCTModelRegistration(
-				ctPersistence.getModelClass());
+		String tableName = ctPersistence.getTableName();
 
-		if (ctModelRegistration == null) {
-			throw new IllegalStateException(
-				"Unable find CTModelRegistration for " +
-					_ctService.getModelClass());
+		Set<String> primaryKeyNames = ctPersistence.getCTColumnNames(
+			CTColumnResolutionType.PK);
+
+		if (primaryKeyNames.size() != 1) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"{tableName=", tableName, ", primaryKeyNames=",
+					primaryKeyNames, "}"));
 		}
+
+		Iterator<String> iterator = primaryKeyNames.iterator();
+
+		String primaryKeyName = iterator.next();
 
 		// Order matters to avoid causing constraint violations
 
@@ -112,83 +116,70 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 		if (_additionCTEntries != null) {
 			_updateCTCollectionId(
-				ctModelRegistration.getTableName(), ctModelRegistration,
-				connection, _additionCTEntries.values(), _sourceCTCollectionId,
+				connection, tableName, primaryKeyName,
+				_additionCTEntries.values(), _sourceCTCollectionId,
 				tempCTCollectionId, false, false);
 		}
 
 		if (_modificationCTEntries != null) {
 			_updateCTCollectionId(
-				ctModelRegistration.getTableName(), ctModelRegistration,
-				connection, _modificationCTEntries.values(),
-				_sourceCTCollectionId, tempCTCollectionId, false, true);
+				connection, tableName, primaryKeyName,
+				_modificationCTEntries.values(), _sourceCTCollectionId,
+				tempCTCollectionId, false, true);
 		}
 
 		if (_deletionCTEntries != null) {
 			_updateCTCollectionId(
-				ctModelRegistration.getTableName(), ctModelRegistration,
-				connection, _deletionCTEntries.values(), _targetCTCollectionId,
+				connection, tableName, primaryKeyName,
+				_deletionCTEntries.values(), _targetCTCollectionId,
 				_sourceCTCollectionId, true, true);
 
 			_updateModelMvccVersion(
-				ctModelRegistration.getTableName(), ctModelRegistration,
-				connection, _deletionCTEntries, _sourceCTCollectionId);
+				connection, tableName, primaryKeyName, _deletionCTEntries,
+				_sourceCTCollectionId);
 		}
 
 		if (_modificationCTEntries != null) {
 			int rowCount = _updateCTCollectionId(
-				ctModelRegistration.getTableName(), ctModelRegistration,
-				connection, _modificationCTEntries.values(),
-				_targetCTCollectionId, _sourceCTCollectionId, true, false);
+				connection, tableName, primaryKeyName,
+				_modificationCTEntries.values(), _targetCTCollectionId,
+				_sourceCTCollectionId, true, false);
 
 			if (rowCount != _modificationCTEntries.size()) {
-				Map<String, Integer> conflictColumnsMap = new HashMap<>(
-					ctModelRegistration.getTableColumnsMap());
-
-				Set<String> conflictColumnNames = conflictColumnsMap.keySet();
-
-				conflictColumnNames.remove(
-					ctModelRegistration.getPrimaryColumnName());
-				conflictColumnNames.removeAll(_ctControlColumnNames);
-				conflictColumnNames.removeAll(
-					ctPersistence.getCTIgnoredAttributeNames());
-				conflictColumnNames.removeAll(
-					ctPersistence.getCTMergeableAttributeNames());
-
-				boolean hasBlobConflictColumn = false;
-
-				for (Map.Entry<String, Integer> entry :
-						conflictColumnsMap.entrySet()) {
-
-					if (entry.getValue() == Types.BLOB) {
-						hasBlobConflictColumn = true;
-
-						break;
-					}
-				}
-
 				StringBundler sb = new StringBundler();
 
 				sb.append("select t1.");
-				sb.append(ctModelRegistration.getPrimaryColumnName());
+				sb.append(primaryKeyName);
 				sb.append(" from ");
-				sb.append(ctModelRegistration.getTableName());
+				sb.append(tableName);
 				sb.append(" t1 inner join ");
-				sb.append(ctModelRegistration.getTableName());
+				sb.append(tableName);
 				sb.append(" t2 on t1.");
-				sb.append(ctModelRegistration.getPrimaryColumnName());
+				sb.append(primaryKeyName);
 				sb.append(" = t2.");
-				sb.append(ctModelRegistration.getPrimaryColumnName());
+				sb.append(primaryKeyName);
 				sb.append(" and t1.ctCollectionId = ");
 				sb.append(tempCTCollectionId);
 				sb.append(" and t2.ctCollectionId = ");
 				sb.append(_targetCTCollectionId);
 
-				if (!hasBlobConflictColumn) {
+				Map<String, Integer> strictColumnsMap = new HashMap<>(
+					ctPersistence.getTableColumnsMap());
+
+				Set<String> strictColumnNames = strictColumnsMap.keySet();
+
+				strictColumnNames.retainAll(
+					ctPersistence.getCTColumnNames(
+						CTColumnResolutionType.STRICT));
+
+				Collection<Integer> strictColumnTypes =
+					strictColumnsMap.values();
+
+				if (!strictColumnTypes.contains(Types.BLOB)) {
 					sb.append(" and (");
 
 					for (Map.Entry<String, Integer> entry :
-							conflictColumnsMap.entrySet()) {
+							strictColumnsMap.entrySet()) {
 
 						String conflictColumnName = entry.getKey();
 
@@ -218,7 +209,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 				sb.append(" and ctEntry.modelClassNameId = ");
 				sb.append(_modelClassNameId);
 				sb.append(" and ctEntry.modelClassPK = t2.");
-				sb.append(ctModelRegistration.getPrimaryColumnName());
+				sb.append(primaryKeyName);
 				sb.append(" and ctEntry.changeType = ");
 				sb.append(CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 				sb.append(" and ctEntry.modelMvccVersion != t2.mvccVersion");
@@ -246,9 +237,9 @@ public class CTServicePublisher<T extends CTModel<T>> {
 				}
 
 				rowCount += _updateCTCollectionId(
-					ctModelRegistration.getTableName(), ctModelRegistration,
-					connection, _modificationCTEntries.values(),
-					_targetCTCollectionId, _sourceCTCollectionId, false, false);
+					connection, tableName, primaryKeyName,
+					_modificationCTEntries.values(), _targetCTCollectionId,
+					_sourceCTCollectionId, false, false);
 
 				if (rowCount != _modificationCTEntries.size()) {
 					throw new SystemException(
@@ -260,38 +251,38 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			}
 
 			_updateModelMvccVersion(
-				ctModelRegistration.getTableName(), ctModelRegistration,
-				connection, _modificationCTEntries, _sourceCTCollectionId);
+				connection, tableName, primaryKeyName, _modificationCTEntries,
+				_sourceCTCollectionId);
 		}
 
 		if (_additionCTEntries != null) {
 			_updateCTCollectionId(
-				ctModelRegistration.getTableName(), ctModelRegistration,
-				connection, _additionCTEntries.values(), tempCTCollectionId,
+				connection, tableName, primaryKeyName,
+				_additionCTEntries.values(), tempCTCollectionId,
 				_targetCTCollectionId, false, false);
 
 			_updateModelMvccVersion(
-				ctModelRegistration.getTableName(), ctModelRegistration,
-				connection, _additionCTEntries, _targetCTCollectionId);
+				connection, tableName, primaryKeyName, _additionCTEntries,
+				_targetCTCollectionId);
 		}
 
 		if (_modificationCTEntries != null) {
 			StringBundler sb = new StringBundler();
 
 			Map<String, Integer> tableColumnsMap =
-				ctModelRegistration.getTableColumnsMap();
+				ctPersistence.getTableColumnsMap();
 
 			sb.append("select ");
 
-			Set<String> ignoredAttributeNames =
-				ctPersistence.getCTIgnoredAttributeNames();
+			Set<String> ignoredColumnNames = ctPersistence.getCTColumnNames(
+				CTColumnResolutionType.IGNORE);
 
 			for (String name : tableColumnsMap.keySet()) {
 				if (name.equals("ctCollectionId")) {
 					sb.append(_targetCTCollectionId);
 					sb.append(" as ");
 				}
-				else if (ignoredAttributeNames.contains(name)) {
+				else if (ignoredColumnNames.contains(name)) {
 					sb.append("t2.");
 				}
 				else {
@@ -304,25 +295,24 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 			sb.setStringAt(" from ", sb.index() - 1);
 
-			sb.append(ctModelRegistration.getTableName());
+			sb.append(tableName);
 			sb.append(" t1, ");
-			sb.append(ctModelRegistration.getTableName());
+			sb.append(tableName);
 			sb.append(" t2 where t1.");
-			sb.append(ctModelRegistration.getPrimaryColumnName());
+			sb.append(primaryKeyName);
 			sb.append(" = t2.");
-			sb.append(ctModelRegistration.getPrimaryColumnName());
+			sb.append(primaryKeyName);
 			sb.append(" and t1.ctCollectionId = ");
 			sb.append(tempCTCollectionId);
 			sb.append(" and t2.ctCollectionId = ");
 			sb.append(_sourceCTCollectionId);
 
-			CTRowUtil.copyCTRows(
-				ctModelRegistration, connection, sb.toString());
+			CTRowUtil.copyCTRows(ctPersistence, connection, sb.toString());
 
 			sb.setIndex(0);
 
 			sb.append("delete from ");
-			sb.append(ctModelRegistration.getTableName());
+			sb.append(tableName);
 			sb.append(" where ctCollectionId = ");
 			sb.append(tempCTCollectionId);
 
@@ -349,10 +339,10 @@ public class CTServicePublisher<T extends CTModel<T>> {
 	}
 
 	private int _updateCTCollectionId(
-			String tableName, CTModelRegistration ctModelRegistration,
-			Connection connection, Collection<CTEntry> ctEntries,
-			long fromCTCollectionId, long toCTCollectionId,
-			boolean includeMvccVersion, boolean checkRowCount)
+			Connection connection, String tableName, String primaryKeyName,
+			Collection<CTEntry> ctEntries, long fromCTCollectionId,
+			long toCTCollectionId, boolean includeMvccVersion,
+			boolean checkRowCount)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -374,7 +364,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 				sb.append("(");
 				sb.append(tableName);
 				sb.append(".");
-				sb.append(ctModelRegistration.getPrimaryColumnName());
+				sb.append(primaryKeyName);
 				sb.append(" = ");
 				sb.append(ctEntry.getModelClassPK());
 				sb.append(" and ");
@@ -390,7 +380,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		else {
 			sb.append(tableName);
 			sb.append(".");
-			sb.append(ctModelRegistration.getPrimaryColumnName());
+			sb.append(primaryKeyName);
 			sb.append(" in (");
 
 			for (CTEntry ctEntry : ctEntries) {
@@ -418,21 +408,20 @@ public class CTServicePublisher<T extends CTModel<T>> {
 	}
 
 	private void _updateModelMvccVersion(
-			String tableName, CTModelRegistration ctModelRegistration,
-			Connection connection, Map<Serializable, CTEntry> ctEntries,
-			long ctCollectionId)
+			Connection connection, String tableName, String primaryKeyName,
+			Map<Serializable, CTEntry> ctEntries, long ctCollectionId)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
 
 		sb.append("select ");
-		sb.append(ctModelRegistration.getPrimaryColumnName());
+		sb.append(primaryKeyName);
 		sb.append(", mvccVersion from ");
 		sb.append(tableName);
 		sb.append(" where ctCollectionId = ");
 		sb.append(ctCollectionId);
 		sb.append(" and ");
-		sb.append(ctModelRegistration.getPrimaryColumnName());
+		sb.append(primaryKeyName);
 		sb.append(" in (");
 
 		for (Serializable serializable : ctEntries.keySet()) {
@@ -461,9 +450,6 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			}
 		}
 	}
-
-	private static final Set<String> _ctControlColumnNames = new HashSet<>(
-		Arrays.asList("ctCollectionId", "mvccVersion"));
 
 	private Map<Serializable, CTEntry> _additionCTEntries;
 	private final CTEntryLocalService _ctEntryLocalService;

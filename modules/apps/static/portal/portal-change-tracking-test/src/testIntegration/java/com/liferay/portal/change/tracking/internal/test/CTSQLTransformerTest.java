@@ -83,7 +83,7 @@ public class CTSQLTransformerTest {
 
 		CTModelRegistry.registerCTModel(
 			new CTModelRegistration(
-				MainTable.class, "MainTable", "mainTableId", null));
+				MainTable.class, "MainTable", "mainTableId"));
 
 		_createCTEntries(1, MainTable.class, 6L, null, null);
 		_createCTEntries(2, MainTable.class, null, 1L, null);
@@ -123,8 +123,7 @@ public class CTSQLTransformerTest {
 
 		CTModelRegistry.registerCTModel(
 			new CTModelRegistration(
-				ReferenceTable.class, "ReferenceTable", "referenceTableId",
-				null));
+				ReferenceTable.class, "ReferenceTable", "referenceTableId"));
 
 		_createCTEntries(1, ReferenceTable.class, 6L, null, null);
 		_createCTEntries(2, ReferenceTable.class, null, 1L, null);

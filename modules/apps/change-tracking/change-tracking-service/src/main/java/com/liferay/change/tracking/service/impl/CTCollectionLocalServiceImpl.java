@@ -28,8 +28,6 @@ import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.base.CTCollectionLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.change.tracking.registry.CTModelRegistration;
-import com.liferay.portal.change.tracking.registry.CTModelRegistry;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -125,16 +123,6 @@ public class CTCollectionLocalServiceImpl
 				continue;
 			}
 
-			CTModelRegistration ctModelRegistration =
-				CTModelRegistry.getCTModelRegistration(
-					ctService.getModelClass());
-
-			if (ctModelRegistration == null) {
-				throw new SystemException(
-					"Unable find CTModelRegistration for " +
-						ctService.getModelClass());
-			}
-
 			ctService.updateWithUnsafeFunction(
 				ctPersistence -> {
 					Connection connection = CurrentConnectionUtil.getConnection(
@@ -144,7 +132,7 @@ public class CTCollectionLocalServiceImpl
 							connection.prepareStatement(
 								StringBundler.concat(
 									"delete from ",
-									ctModelRegistration.getTableName(),
+									ctPersistence.getTableName(),
 									" where ctCollectionId = ",
 									ctCollection.getCtCollectionId()))) {
 

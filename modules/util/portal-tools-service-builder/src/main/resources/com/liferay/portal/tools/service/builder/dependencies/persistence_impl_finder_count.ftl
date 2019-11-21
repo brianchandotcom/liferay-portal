@@ -29,7 +29,7 @@ public int countBy${entityFinder.name}(
 		</#if>
 	</#list>
 
-	<#if entity.isChangeTrackingEnabled() && !stringUtil.equals(entityFinder.name, "CTCollectionId")>
+	<#if entity.isChangeTrackingEnabled()>
 		boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
 
 		FinderPath finderPath = null;
@@ -104,7 +104,7 @@ public int countBy${entityFinder.name}(
 
 			count = (Long)q.uniqueResult();
 
-			<#if entity.isChangeTrackingEnabled() && !stringUtil.equals(entityFinder.name, "CTCollectionId")>
+			<#if entity.isChangeTrackingEnabled()>
 				if (productionMode) {
 					${finderCache}.putResult(finderPath, finderArgs, count);
 				}
@@ -113,7 +113,7 @@ public int countBy${entityFinder.name}(
 			</#if>
 		}
 		catch (Exception e) {
-			<#if entity.isChangeTrackingEnabled() && !stringUtil.equals(entityFinder.name, "CTCollectionId")>
+			<#if entity.isChangeTrackingEnabled()>
 				if (productionMode) {
 					${finderCache}.removeResult(finderPath, finderArgs);
 				}

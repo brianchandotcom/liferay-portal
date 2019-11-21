@@ -392,21 +392,10 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 						outerJoinLoadable.getPropertyColumnNames(
 							outerJoinLoadable.getIdentifierPropertyName());
 
-					try {
-						Class<?> superClass = modelClass.getSuperclass();
-
-						Field field = superClass.getField("TABLE_COLUMNS_MAP");
-
-						CTModelRegistry.registerCTModel(
-							new CTModelRegistration(
-								interfaceClazz,
-								outerJoinLoadable.getTableName(),
-								identifierColumnNames[0],
-								(Map<String, Integer>)field.get(null)));
-					}
-					catch (ReflectiveOperationException roe) {
-						ReflectionUtil.throwException(roe);
-					}
+					CTModelRegistry.registerCTModel(
+						new CTModelRegistration(
+							interfaceClazz, outerJoinLoadable.getTableName(),
+							identifierColumnNames[0]));
 
 					return interfaceClazz;
 				}

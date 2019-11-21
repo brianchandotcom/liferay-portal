@@ -74,7 +74,9 @@ public class NotificationUtil {
 
 			multipart.addBodyPart(messageBodyPart);
 
-			if (attachmentFileName != null) {
+			if ((attachmentFileName != null) &&
+				!attachmentFileName.equals("")) {
+
 				BodyPart attachmentBodyPart = new MimeBodyPart();
 
 				DataSource source = new FileDataSource(attachmentFileName);

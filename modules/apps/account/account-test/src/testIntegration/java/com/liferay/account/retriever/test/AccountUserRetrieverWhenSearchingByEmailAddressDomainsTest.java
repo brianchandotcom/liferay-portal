@@ -97,15 +97,15 @@ public class AccountUserRetrieverWhenSearchingByEmailAddressDomainsTest {
 
 		String[] emailAddressDomains = {"test1.com", "test2.com"};
 
-		List<User> domainUsers = new ArrayList<>();
+		List<User> users = new ArrayList<>();
 
 		for (String emailAddressDomain : emailAddressDomains) {
-			domainUsers.add(_addAccountUser(emailAddressDomain));
+			users.add(_addAccountUser(emailAddressDomain));
 
 			_users.add(_addUser(emailAddressDomain));
 		}
 
-		_users.addAll(domainUsers);
+		_users.addAll(users);
 
 		_accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService, emailAddressDomains);
@@ -117,9 +117,9 @@ public class AccountUserRetrieverWhenSearchingByEmailAddressDomainsTest {
 				QueryUtil.ALL_POS, "email-address", false);
 
 		Assert.assertEquals(
-			domainUsers.size(), baseModelSearchResult.getLength());
+			users.size(), baseModelSearchResult.getLength());
 		Assert.assertEquals(
-			ListUtil.sort(domainUsers, new UserEmailAddressComparator(true)),
+			ListUtil.sort(users, new UserEmailAddressComparator(true)),
 			baseModelSearchResult.getBaseModels());
 	}
 

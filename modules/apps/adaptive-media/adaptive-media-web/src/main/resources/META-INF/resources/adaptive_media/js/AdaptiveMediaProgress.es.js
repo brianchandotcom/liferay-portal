@@ -39,7 +39,7 @@ const AdaptiveMediaProgress = ({
 		autoStartProgress
 	);
 	const [percentage, setPercentage] = useState(
-		(adaptedImages / totalImages) * 100
+		(adaptedImages / totalImages) * 100 || 0
 	);
 	const [progressBarTooltip, setProgressBarTooltip] = useState(
 		adaptedImages + '/' + totalImages

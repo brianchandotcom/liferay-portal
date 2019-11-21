@@ -194,6 +194,7 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AddBlogsEntryWithInlineImageViaURL {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");

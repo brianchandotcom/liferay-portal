@@ -481,6 +481,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-95711. It ensures that an image can be added to the front page via URL."
+	@ignore = "true"
 	@priority = "4"
 	test AddPageWithImageViaURL {
 		Navigator.gotoPage(pageName = "Wiki Test Page");

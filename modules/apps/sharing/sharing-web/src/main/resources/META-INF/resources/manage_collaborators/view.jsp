@@ -16,18 +16,7 @@
 
 <%@ include file="/manage_collaborators/init.jsp" %>
 
-<%
-Map<String, Object> data = new HashMap<>();
-
-data.put("actionUrl", request.getAttribute("actionUrl"));
-data.put("classNameId", request.getAttribute("classNameId"));
-data.put("classPK", request.getAttribute("classPK"));
-data.put("collaborators", request.getAttribute("collaborators"));
-data.put("dialogId", request.getAttribute("dialogId"));
-data.put("portletNamespace", request.getAttribute("portletNamespace"));
-%>
-
 <react:component
-	data="<%= data %>"
+	data="<%= (Map<String, Object>)request.getAttribute(SharingWebKeys.SHARING_REACT_DATA) %>"
 	module="manage_collaborators/js/ManageCollaborators.es"
 />

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -72,26 +73,26 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		throws PortletException {
 
 		renderRequest.setAttribute(
-			"actionUrl", _getManageCollaboratorsActionURL(renderResponse));
-
-		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
-
-		renderRequest.setAttribute("classNameId", classNameId);
-
-		long classPK = ParamUtil.getLong(renderRequest, "classPK");
-
-		renderRequest.setAttribute("classPK", classPK);
-
-		renderRequest.setAttribute(
-			"collaborators",
-			_getCollaboratorsJSONArray(classNameId, classPK, renderRequest));
-
-		renderRequest.setAttribute(
-			"dialogId",
-			ParamUtil.getString(
-				renderRequest, SharingWebKeys.MANAGE_COLLABORATORS_DIALOG_ID));
-		renderRequest.setAttribute(
-			"portletNamespace", renderResponse.getNamespace());
+			SharingWebKeys.SHARING_REACT_DATA,
+			HashMapBuilder.<String, Object>put(
+				"actionUrl", _getManageCollaboratorsActionURL(renderResponse)
+			).put(
+				"classNameId", ParamUtil.getLong(renderRequest, "classNameId")
+			).put(
+				"classPK", ParamUtil.getLong(renderRequest, "classPK")
+			).put(
+				"collaborators",
+				_getCollaboratorsJSONArray(
+					ParamUtil.getLong(renderRequest, "classNameId"),
+					ParamUtil.getLong(renderRequest, "classPK"), renderRequest)
+			).put(
+				"dialogId",
+				ParamUtil.getString(
+					renderRequest,
+					SharingWebKeys.MANAGE_COLLABORATORS_DIALOG_ID)
+			).put(
+				"portletNamespace", renderResponse.getNamespace()
+			).build());
 
 		return "/manage_collaborators/view.jsp";
 	}

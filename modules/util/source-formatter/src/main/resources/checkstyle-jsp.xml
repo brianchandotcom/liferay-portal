@@ -107,5 +107,8 @@
 			<message key="name.invalidConstantPattern" value="{0} constant ''{1}'' must match pattern ''{2}''" />
 			<message key="name.invalidConstantTypePattern" value="{0} constant ''{1}'' of type ''{2}'' must match pattern ''{3}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.ContractionsCheck">
+			<message key="contraction.avoid" value="Avoid using contraction ''{0}''" />
+		</module>
 	</module>
 </module>

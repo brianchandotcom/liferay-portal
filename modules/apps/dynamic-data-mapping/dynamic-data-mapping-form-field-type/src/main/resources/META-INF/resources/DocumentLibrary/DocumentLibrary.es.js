@@ -29,19 +29,17 @@ import templates from './DocumentLibrary.soy.js';
 
 class DocumentLibrary extends Component {
 	prepareStateForRender(state) {
-		let {fileEntryTitle, fileEntryURL, value} = state;
+		let {fileEntryTitle = '', fileEntryURL = ''} = state;
+		const {value} = state;
 
 		if (value) {
-			if (typeof value === 'object') {
-				fileEntryTitle = value.title;
-				fileEntryURL = value.url;
+			try {
+				const fileEntry = JSON.parse(value);
 
-				value = JSON.stringify(value);
-			} else if (typeof value === 'string') {
-				const object = JSON.parse(value);
-
-				fileEntryTitle = object.title;
-				fileEntryURL = object.url;
+				fileEntryTitle = fileEntry.title;
+				fileEntryURL = fileEntry.url;
+			} catch (e) {
+				console.warn('Unable to parse JSON', value);
 			}
 		}
 
@@ -110,12 +108,12 @@ class DocumentLibrary extends Component {
 	_handleClearButtonClicked() {
 		this.setState(
 			{
-				value: ''
+				value: '{}'
 			},
 			() => {
 				this.emit('fieldEdited', {
 					fieldInstance: this,
-					value: ''
+					value: '{}'
 				});
 			}
 		);

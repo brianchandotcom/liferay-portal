@@ -31,10 +31,10 @@ const Arrow = ({direction, handleClick}) => (
 	</div>
 );
 
-const InfoPanel = metadata => {
+const InfoPanel = ({metadata}) => {
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
 
-	const imageData = JSON.parse(metadata.metadata);
+	const imageData = JSON.parse(metadata);
 
 	const itemsHeader = imageData.groups.map((group, index) => {
 		return (

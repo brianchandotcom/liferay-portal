@@ -38,7 +38,7 @@ class ItemSelectorPreview extends Component {
 		items: PropTypes.arrayOf(
 			PropTypes.shape({
 				base64: PropTypes.string,
-				metadata: PropTypes.object,
+				metadata: PropTypes.string,
 				returntype: PropTypes.string.isRequired,
 				title: PropTypes.string.isRequired,
 				url: PropTypes.string,

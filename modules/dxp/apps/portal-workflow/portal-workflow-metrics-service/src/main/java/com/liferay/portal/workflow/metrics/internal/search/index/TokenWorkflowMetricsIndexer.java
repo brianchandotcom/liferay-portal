@@ -25,8 +25,10 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 
@@ -95,7 +97,15 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			document.addNumber("duration", duration.toMillis());
 		}
 
-		document.addKeyword("instanceCompleted", false);
+		KaleoInstance kaleoInstance =
+			_kaleoInstanceLocalService.fetchKaleoInstance(
+				kaleoTaskInstanceToken.getKaleoInstanceId());
+
+		if (kaleoInstance != null) {
+			document.addKeyword(
+				"instanceCompleted", kaleoInstance.isCompleted());
+		}
+
 		document.addKeyword(
 			"instanceId", kaleoTaskInstanceToken.getKaleoInstanceId());
 		document.addDateSortable(
@@ -171,6 +181,9 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	@Reference
+	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 	@Reference
 	private KaleoTaskAssignmentInstanceLocalService

@@ -50,22 +50,6 @@ public abstract class BaseSLAWorkflowMetricsIndexer
 				queries.term("slaDefinitionId", slaDefinitionId)));
 	}
 
-	public void expireDocuments(long companyId, long instanceId) {
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		updateDocuments(
-			document -> new DocumentImpl() {
-				{
-					addKeyword(
-						"status", WorkflowMetricsSLAStatus.EXPIRED.name());
-					addKeyword(Field.UID, document.getString(Field.UID));
-				}
-			},
-			booleanQuery.addMustQueryClauses(
-				queries.term("companyId", companyId),
-				queries.term("instanceId", instanceId)));
-	}
-
 	private void _deleteDocuments(BooleanQuery booleanQuery) {
 		updateDocuments(
 			document -> new DocumentImpl() {

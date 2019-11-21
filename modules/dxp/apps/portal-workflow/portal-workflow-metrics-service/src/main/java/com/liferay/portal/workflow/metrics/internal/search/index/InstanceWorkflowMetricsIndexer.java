@@ -30,15 +30,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.time.Duration;
 
@@ -139,21 +142,47 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		super.updateDocument(document);
 
 		if (GetterUtil.getBoolean(document.get("completed"))) {
-			_slaProcessResultWorkflowMetricsIndexer.expireDocuments(
-				GetterUtil.getLong(document.get("companyId")),
-				GetterUtil.getLong(document.get("instanceId")));
+			BooleanQuery booleanQuery = queries.booleanQuery();
 
-			_slaTaskResultWorkflowMetricsIndexer.expireDocuments(
-				GetterUtil.getLong(document.get("companyId")),
-				GetterUtil.getLong(document.get("instanceId")));
+			booleanQuery.addMustQueryClauses(
+				queries.term(
+					"companyId", GetterUtil.getLong(document.get("companyId"))),
+				queries.term(
+					"instanceId",
+					GetterUtil.getLong(document.get("instanceId"))));
 
-			_slaTaskResultWorkflowMetricsIndexer.completeDocuments(
-				GetterUtil.getLong(document.get("companyId")),
-				GetterUtil.getLong(document.get("instanceId")));
+			_slaProcessResultWorkflowMetricsIndexer.updateDocuments(
+				documentImpl -> new DocumentImpl() {
+					{
+						addKeyword(
+							"status", WorkflowMetricsSLAStatus.EXPIRED.name());
+						addKeyword(
+							Field.UID, documentImpl.getString(Field.UID));
+					}
+				},
+				booleanQuery);
 
-			_tokenWorkflowMetricsIndexer.completeDocuments(
-				GetterUtil.getLong(document.get("companyId")),
-				GetterUtil.getLong(document.get("instanceId")));
+			_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
+				documentImpl -> new DocumentImpl() {
+					{
+						addKeyword("instanceCompleted", true);
+						addKeyword(
+							"status", WorkflowMetricsSLAStatus.EXPIRED.name());
+						addKeyword(
+							Field.UID, documentImpl.getString(Field.UID));
+					}
+				},
+				booleanQuery);
+
+			_tokenWorkflowMetricsIndexer.updateDocuments(
+				documentImpl -> new DocumentImpl() {
+					{
+						addKeyword("instanceCompleted", true);
+						addKeyword(
+							Field.UID, documentImpl.getString(Field.UID));
+					}
+				},
+				booleanQuery);
 		}
 	}
 

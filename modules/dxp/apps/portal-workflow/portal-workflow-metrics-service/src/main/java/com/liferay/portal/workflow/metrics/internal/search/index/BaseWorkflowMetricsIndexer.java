@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -43,7 +42,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
@@ -87,22 +85,6 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 		indexDocumentRequest.setType(getIndexType());
 
 		searchEngineAdapter.execute(indexDocumentRequest);
-	}
-
-	public void completeDocuments(long companyId, long instanceId) {
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		updateDocuments(
-			document -> new DocumentImpl() {
-				{
-					addKeyword("instanceCompleted", true);
-					addKeyword(Field.UID, document.getString(Field.UID));
-				}
-			},
-			booleanQuery.addMustQueryClauses(
-				queries.term("companyId", companyId),
-				queries.term("instanceCompleted", false),
-				queries.term("instanceId", instanceId)));
 	}
 
 	public void deleteDocument(Document document) {

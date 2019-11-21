@@ -231,8 +231,9 @@ class ItemSelectorPreview extends Component {
 		};
 
 		const editedItem = {
-			metadata: editedItemMetadata,
+			metadata: JSON.stringify(editedItemMetadata),
 			returnType: this.props.uploadItemReturnType,
+			title: itemData.title,
 			url: itemData.url,
 			value: itemData.resolvedValue
 		};

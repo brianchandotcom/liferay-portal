@@ -2394,6 +2394,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			_configureConfigurationTransitive(
 				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
 				false);
+
+			_configureDependenciesGroupPortal(
+				project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
+				liferayExtension);
+			_configureDependenciesGroupPortal(
+				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
+				liferayExtension);
 		}
 
 		_configureDependenciesTransitive(
@@ -2477,6 +2484,129 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, name);
 
 		configuration.setTransitive(transitive);
+	}
+
+	private void _configureDependenciesGroupPortal(
+		final Project project, String configurationName,
+		LiferayExtension liferayExtension) {
+
+		final Logger logger = project.getLogger();
+
+		Map<String, File> portalJarFileMap = new HashMap<>();
+
+		File appServerLibGlobalDir =
+			liferayExtension.getAppServerLibGlobalDir();
+		File appServerLibPortalDir = new File(
+			liferayExtension.getAppServerPortalDir(), "WEB-INF/lib");
+
+		portalJarFileMap.put(
+			"com.liferay.portal.impl",
+			new File(appServerLibPortalDir, "portal-impl.jar"));
+		portalJarFileMap.put(
+			"com.liferay.portal.kernel",
+			new File(appServerLibGlobalDir, "portal-kernel.jar"));
+		portalJarFileMap.put(
+			"com.liferay.util.bridges",
+			new File(appServerLibPortalDir, "util-bridges.jar"));
+		portalJarFileMap.put(
+			"com.liferay.util.java",
+			new File(appServerLibPortalDir, "util-java.jar"));
+		portalJarFileMap.put(
+			"com.liferay.util.taglib",
+			new File(appServerLibPortalDir, "util-taglib.jar"));
+
+		final Configuration configuration = GradleUtil.getConfiguration(
+			project, configurationName);
+
+		DependencySet dependencySet = configuration.getAllDependencies();
+
+		dependencySet.withType(
+			ExternalModuleDependency.class,
+			new Action<ExternalModuleDependency>() {
+
+				@Override
+				public void execute(
+					ExternalModuleDependency externalModuleDependency) {
+
+					String group = externalModuleDependency.getGroup();
+
+					if (!group.equals(_GROUP_PORTAL)) {
+						return;
+					}
+
+					String version = externalModuleDependency.getVersion();
+
+					if (!version.equals("default")) {
+						return;
+					}
+
+					String name = externalModuleDependency.getName();
+
+					if (!portalJarFileMap.containsKey(name)) {
+						return;
+					}
+
+					File portalJarFile = portalJarFileMap.get(name);
+
+					if (!portalJarFile.exists()) {
+						return;
+					}
+
+					Map<String, String> args = new HashMap<>();
+
+					args.put("group", group);
+					args.put("module", name);
+
+					configuration.exclude(args);
+				}
+
+			});
+
+		ResolvableDependencies resolvableDependencies =
+			configuration.getIncoming();
+
+		resolvableDependencies.beforeResolve(
+			new Action<ResolvableDependencies>() {
+
+				@Override
+				public void execute(
+					ResolvableDependencies resolvableDependencies) {
+
+					for (ExcludeRule excludeRule :
+							configuration.getExcludeRules()) {
+
+						String group = excludeRule.getGroup();
+
+						if (!group.equals(_GROUP_PORTAL)) {
+							return;
+						}
+
+						String name = excludeRule.getModule();
+
+						if (!portalJarFileMap.containsKey(name)) {
+							return;
+						}
+
+						File portalJarFile = portalJarFileMap.get(name);
+
+						if (!portalJarFile.exists()) {
+							return;
+						}
+
+						if (logger.isLifecycleEnabled()) {
+							logger.lifecycle(
+								"Compiling files of {} with {} as dependency " +
+									"in place of '{}:{}'",
+								project, portalJarFile.getAbsolutePath(), group,
+								name);
+						}
+
+						GradleUtil.addDependency(
+							project, configuration.getName(), portalJarFile);
+					}
+				}
+
+			});
 	}
 
 	private void _configureDependenciesTransitive(

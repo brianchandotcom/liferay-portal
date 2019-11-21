@@ -680,7 +680,9 @@ definition {
 
 		Panel.expandPanel(panel = "Filter");
 
-		AssertElementNotPresent(locator1 = "APConfiguration#FILTER_CATEGORIZATION_SELECT");
+		AssertElementNotPresent(
+			key_categoryName = "Category Name",
+			locator1 = "AssetCategorization#CATEGORY");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 

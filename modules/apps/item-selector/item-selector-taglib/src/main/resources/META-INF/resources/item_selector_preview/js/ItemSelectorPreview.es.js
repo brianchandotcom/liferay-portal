@@ -159,31 +159,35 @@ class ItemSelectorPreview extends Component {
 	handleClickNext = () => {
 		const {currentItemIndex, items} = this.state;
 
-		const lastIndex = items.length - 1;
-		const shouldResetIndex = currentItemIndex === lastIndex;
-		const index = shouldResetIndex ? 0 : currentItemIndex + 1;
+		if (items.length > 1) {
+			const lastIndex = items.length - 1;
+			const shouldResetIndex = currentItemIndex === lastIndex;
+			const index = shouldResetIndex ? 0 : currentItemIndex + 1;
 
-		const currentItem = items[index];
+			const currentItem = items[index];
 
-		this.setState({
-			currentItem,
-			currentItemIndex: index
-		});
+			this.setState({
+				currentItem,
+				currentItemIndex: index
+			});
+		}
 	};
 
 	handleClickPrevious = () => {
 		const {currentItemIndex, items} = this.state;
 
-		const lastIndex = items.length - 1;
-		const shouldResetIndex = currentItemIndex === 0;
-		const index = shouldResetIndex ? lastIndex : currentItemIndex - 1;
+		if (items.length > 1) {
+			const lastIndex = items.length - 1;
+			const shouldResetIndex = currentItemIndex === 0;
+			const index = shouldResetIndex ? lastIndex : currentItemIndex - 1;
 
-		const currentItem = items[index];
+			const currentItem = items[index];
 
-		this.setState({
-			currentItem,
-			currentItemIndex: index
-		});
+			this.setState({
+				currentItem,
+				currentItemIndex: index
+			});
+		}
 	};
 
 	handleOnKeyDown = e => {

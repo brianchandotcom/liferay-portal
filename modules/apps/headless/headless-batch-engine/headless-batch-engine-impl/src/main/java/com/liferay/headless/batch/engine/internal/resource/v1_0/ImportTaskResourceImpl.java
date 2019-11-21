@@ -115,7 +115,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			ConfigurableUtil.createConfigurable(
 				BatchEngineTaskConfiguration.class, properties);
 
-		_batchSize = batchEngineTaskConfiguration.batchSize();
+		_batchSize = batchEngineTaskConfiguration.importBatchSize();
 
 		if (_batchSize <= 0) {
 			_batchSize = 1;

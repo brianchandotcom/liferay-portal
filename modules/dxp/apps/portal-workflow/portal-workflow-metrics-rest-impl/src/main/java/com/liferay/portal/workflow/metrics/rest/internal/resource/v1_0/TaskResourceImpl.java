@@ -363,7 +363,8 @@ public class TaskResourceImpl
 			"taskName", "taskName");
 
 		FilterAggregation breachedFilterAggregation = _aggregations.filter(
-			"breached", _resourceHelper.createMustNotBooleanQuery(completed));
+			"breached",
+			_resourceHelper.createInstanceCompletedBooleanQuery(completed));
 
 		breachedFilterAggregation.addChildAggregation(
 			_resourceHelper.createBreachedScriptedMetricAggregation());
@@ -376,13 +377,15 @@ public class TaskResourceImpl
 			_aggregations.valueCount("instanceCount", "instanceId"));
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
-			"onTime", _resourceHelper.createMustNotBooleanQuery(completed));
+			"onTime",
+			_resourceHelper.createInstanceCompletedBooleanQuery(completed));
 
 		onTimeFilterAggregation.addChildAggregation(
 			_resourceHelper.createOnTimeScriptedMetricAggregation());
 
 		FilterAggregation overdueFilterAggregation = _aggregations.filter(
-			"overdue", _resourceHelper.createMustNotBooleanQuery(completed));
+			"overdue",
+			_resourceHelper.createInstanceCompletedBooleanQuery(completed));
 
 		overdueFilterAggregation.addChildAggregation(
 			_resourceHelper.createOverdueScriptedMetricAggregation());

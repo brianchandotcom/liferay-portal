@@ -118,18 +118,17 @@ public class ResourceHelper {
 		return bucketSortPipelineAggregation;
 	}
 
-	public BooleanQuery createMustNotBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+	public BooleanQuery createInstanceCompletedBooleanQuery(
+		boolean instanceCompleted) {
 
-		return booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkflowMetricsSLAStatus.NEW.name()));
+		BooleanQuery booleanQuery = createMustNotBooleanQuery();
+
+		return booleanQuery.addMustQueryClauses(
+			_queries.term("instanceCompleted", instanceCompleted));
 	}
 
-	public BooleanQuery createMustNotBooleanQuery(boolean instanceCompleted) {
+	public BooleanQuery createMustNotBooleanQuery() {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addMustQueryClauses(
-			_queries.term("instanceCompleted", instanceCompleted));
 
 		return booleanQuery.addMustNotQueryClauses(
 			_queries.term("status", WorkflowMetricsSLAStatus.NEW.name()));

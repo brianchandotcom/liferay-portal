@@ -277,14 +277,16 @@ public class AssigneeUserResourceImpl
 			_aggregations.valueCount("taskCount", "taskId"));
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
-			"onTime", _resourceHelper.createMustNotBooleanQuery(completed));
+			"onTime",
+			_resourceHelper.createInstanceCompletedBooleanQuery(completed));
 
 		onTimeFilterAggregation.addChildAggregation(
 			_resourceHelper.
 				createOnTimeTaskByAssigneeScriptedMetricAggregation());
 
 		FilterAggregation overdueFilterAggregation = _aggregations.filter(
-			"overdue", _resourceHelper.createMustNotBooleanQuery(completed));
+			"overdue",
+			_resourceHelper.createInstanceCompletedBooleanQuery(completed));
 
 		overdueFilterAggregation.addChildAggregation(
 			_resourceHelper.

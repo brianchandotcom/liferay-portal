@@ -1601,6 +1601,10 @@ definition {
 	macro impersonateCP {
 		Pause(locator1 = "1000");
 
+		if (isSet(userName)) {
+			var userScreenName = "${userName}";
+		}
+
 		Search.searchCP(searchTerm = "${userScreenName}");
 
 		var key_rowEntry = "${userScreenName}";

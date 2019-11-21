@@ -136,6 +136,12 @@ public class StringMethodsCheck extends BaseFileCheck {
 	private void _checkStringUtilReplaceCalls(String fileName, String content)
 		throws ReflectiveOperationException {
 
+		if (content.contains("com.liferay.poshi.runner.util.StringUtil") ||
+			content.contains("package com.liferay.poshi.runner.util;")) {
+
+			return;
+		}
+
 		Matcher matcher = _stringUtilReplacePattern.matcher(content);
 
 		while (matcher.find()) {

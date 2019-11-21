@@ -3862,114 +3862,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="start-analytics-cloud">
-		<sequential>
-			<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />
-
-			<replaceregexp
-				file="${analytics.cloud.asah.dir}/docker-compose.yml"
-				match="container_name: com-liferay-osb-faro-private"
-				replace="container_name: ${analytics.cloud.faro.container.name}"
-			/>
-
-			<replaceregexp
-				file="${analytics.cloud.asah.dir}/docker-compose.yml"
-				match="image: liferay/com-liferay-osb-faro:\s+"
-				replace="image: ${analytics.cloud.faro.image.name}"
-			/>
-
-			<replaceregexp
-				file="${analytics.cloud.asah.dir}/docker-compose.yml"
-				match="\&quot;8080:8080\&quot;"
-				replace="&quot;${analytics.cloud.faro.dxp.port}:8080&quot;"
-			/>
-
-			<replaceregexp
-				file="${analytics.cloud.asah.dir}/docker-compose.yml"
-				match="\&quot;11311:11311\&quot;"
-				replace="&quot;${analytics.cloud.faro.osgi.console.port}:11311&quot;"
-			/>
-
-			<replaceregexp
-				file="${analytics.cloud.faro.dir}/build-ext.gradle"
-				match="def dockerContainerId = \&quot;([^\&quot;]+)\&quot;"
-				replace="def dockerContainerId = \&quot;${analytics.cloud.faro.container.name}\&quot;"
-			/>
-
-			<replaceregexp
-				file="${analytics.cloud.faro.dir}/build-ext.gradle"
-				match="def dockerImageId = \&quot;([^\&quot;]+)\&quot;"
-				replace="def dockerImageId = \&quot;${analytics.cloud.faro.image.name}\&quot;"
-			/>
-
-			<replaceregexp
-				file="${analytics.cloud.faro.dir}/build-ext.gradle"
-				match="network \&quot;([^\&quot;]+)\&quot;"
-				replace="network \&quot;${analytics.cloud.project.name}_default\&quot;"
-			/>
-
-			<if>
-				<equals arg1="${analytics.cloud.asah.build}" arg2="true" />
-				<then>
-					<execute dir="${analytics.cloud.asah.dir}">
-						touch local.env
-
-						./gradlew jar
-
-						./gradlew clean assemble
-
-						docker-compose --file=docker-compose.yml --project-name=${analytics.cloud.project.name} build
-					</execute>
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${analytics.cloud.faro.build}" arg2="true" />
-				<then>
-					<execute dir="${analytics.cloud.faro.dir}">
-						./gradlew createDocker -Pcom.liferay.osb.faro.environment.name=asah-local
-					</execute>
-				</then>
-			</if>
-
-			<property location="${analytics.cloud.asah.dir}/start_analytics_cloud.sh" name="analytics.cloud.start.sh" />
-
-			<echo file="${analytics.cloud.start.sh}">
-				#!/bin/bash
-
-				touch local.env
-
-				docker-compose --file=docker-compose.yml --project-name=${analytics.cloud.project.name} up --detach
-
-				while [[ -n $(docker ps | grep "health: starting") ]] || [[ -n $(docker ps | grep "unhealthy") ]]
-				do
-					echo "Waiting for docker compose to be healthy."
-
-					sleep 30
-				done
-
-				while [[ -z $(docker logs ${analytics.cloud.faro.container.name} | grep "Completed demo data creation") ]]
-				do
-					echo "Waiting for faro to startup."
-
-					sleep 15
-				done
-
-				docker logs ${analytics.cloud.faro.container.name}
-
-				docker container prune -f
-				docker image prune -f
-				docker volume prune -f
-			</echo>
-
-			<exec dir="${analytics.cloud.asah.dir}" executable="/bin/bash">
-				<arg value="${analytics.cloud.start.sh}" />
-			</exec>
-
-			<delete file="${analytics.cloud.start.sh}" />
-		</sequential>
-	</macrodef>
-
 	<macrodef name="start-appium">
 		<sequential>
 			<if>
@@ -4060,22 +3952,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</java>
 				</daemons>
 			</parallel>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="stop-analytics-cloud">
-		<sequential>
-			<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />
-
-			<execute dir="${analytics.cloud.asah.dir}">
-				touch local.env
-
-				docker-compose --file=docker-compose.yml --project-name=${analytics.cloud.project.name} down --volumes
-
-				docker container prune -f
-				docker image prune -f
-				docker volume prune -f
-			</execute>
 		</sequential>
 	</macrodef>
 

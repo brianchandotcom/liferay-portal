@@ -302,6 +302,12 @@ public class AnalyticsMessageLocalServiceWrapper
 		return _analyticsMessageLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public java.io.InputStream openBodyInputStream(long analyticsMessageId) {
+		return _analyticsMessageLocalService.openBodyInputStream(
+			analyticsMessageId);
+	}
+
 	/**
 	 * Updates the analytics message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

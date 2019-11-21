@@ -279,6 +279,12 @@ public class AnalyticsMessageLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.io.InputStream openBodyInputStream(
+		long analyticsMessageId) {
+
+		return getService().openBodyInputStream(analyticsMessageId);
+	}
+
 	/**
 	 * Updates the analytics message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

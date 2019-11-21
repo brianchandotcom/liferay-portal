@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -72,6 +73,9 @@ public interface LazyBlobEntityLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public LazyBlobEntity addLazyBlobEntity(LazyBlobEntity lazyBlobEntity);
+
+	public LazyBlobEntity addLazyBlobEntity(
+		long groupId, byte[] bytes, ServiceContext serviceContext);
 
 	/**
 	 * Creates a new lazy blob entity with the primary key. Does not add the lazy blob entity to the database.

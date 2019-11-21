@@ -164,12 +164,6 @@ definition {
 		Navigator._gotoPage(pageName = "${pageName}");
 	}
 
-	macro gotoSEOPanel {
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		Panel.expandPanel(panel = "SEO");
-	}
-
 	macro gotoSitePage {
 		Navigator.openSiteURL(
 			baseURL = "${baseURL}",

@@ -94,7 +94,7 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 		);
 	}, [appId, entryIndex, query]);
 
-	const {dataRecordValues} = dataRecord;
+	const {dataRecordValues = {}} = dataRecord;
 	const {dataLayoutPages} = dataLayout;
 
 	const onCancel = () => {
@@ -149,6 +149,7 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 					<div className="justify-content-center row">
 						<div className="col-lg-8">
 							{dataLayoutPages &&
+								dataRecordValues &&
 								dataLayoutPages.map((dataLayoutPage, index) => (
 									<div className="sheet" key={index}>
 										<ViewDataLayoutPageValues

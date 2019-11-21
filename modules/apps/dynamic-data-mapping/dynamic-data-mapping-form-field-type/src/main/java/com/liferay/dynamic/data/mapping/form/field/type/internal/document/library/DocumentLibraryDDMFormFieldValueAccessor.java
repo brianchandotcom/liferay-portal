@@ -57,7 +57,9 @@ public class DocumentLibraryDDMFormFieldValueAccessor
 			return jsonFactory.createJSONObject(value.getString(locale));
 		}
 		catch (JSONException jsone) {
-			_log.error("Unable to parse JSON object", jsone);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to parse JSON object", jsone);
+			}
 
 			return jsonFactory.createJSONObject();
 		}

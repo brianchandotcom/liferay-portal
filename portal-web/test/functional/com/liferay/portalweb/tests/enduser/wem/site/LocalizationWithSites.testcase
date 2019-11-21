@@ -495,7 +495,7 @@ definition {
 			menuItem = "Configurar",
 			pageName = "Site Page 1");
 
-		Navigator.gotoSEOPanel();
+		Navigator.gotoNavTab(navTab = "SEO");
 
 		Page.viewPageLocalization(
 			defaultSiteLanguageKey = "es-ES",
@@ -516,7 +516,7 @@ definition {
 			menuItem = "Configurar",
 			pageName = "Site Page 2");
 
-		Navigator.gotoSEOPanel();
+		Navigator.gotoNavTab(navTab = "SEO");
 
 		Page.viewPageLocalization(
 			defaultSiteLanguageKey = "es-ES",

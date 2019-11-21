@@ -213,7 +213,7 @@ definition {
 
 		Navigator.gotoEditPageViaControlMenu(pageName = "Site Page Edit");
 
-		Navigator.gotoSEOPanel();
+		Navigator.gotoNavTab(navTab = "SEO");
 
 		Page.editPageMetadata(
 			HTMLTitle = "S.P.A.C.E.Home",
@@ -224,7 +224,7 @@ definition {
 
 		Navigator.gotoEditPageViaControlMenu(pageName = "Site Page Edit");
 
-		Navigator.gotoSEOPanel();
+		Navigator.gotoNavTab(navTab = "SEO");
 
 		Page.viewPageMetadata(
 			HTMLTitle = "S.P.A.C.E.Home",

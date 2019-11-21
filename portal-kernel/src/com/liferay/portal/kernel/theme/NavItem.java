@@ -63,8 +63,7 @@ public class NavItem implements Serializable {
 		}
 
 		Map<Long, List<Layout>> layoutChildLayouts =
-			LayoutLocalServiceUtil.getLayoutChildLayouts(
-				themeDisplay.getLayoutSet(), parentLayouts);
+			LayoutLocalServiceUtil.getLayoutChildLayouts(parentLayouts);
 
 		for (List<Layout> childLayouts : layoutChildLayouts.values()) {
 			Iterator<Layout> iterator = childLayouts.iterator();

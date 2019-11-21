@@ -2,6 +2,14 @@ definition {
 
 	var dmDocumentTypeName = "File Upload";
 
+	macro gotoAddCategoriesPG {
+		for (var key_dmDocumentTitle : list "${dmDocumentTitleList}") {
+			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		}
+
+		Click(locator1 = "Icon#EDIT_CATEGORIES");
+	}
+
 	macro gotoAddDocumentTypeCP {
 		LexiconEntry.gotoAdd();
 

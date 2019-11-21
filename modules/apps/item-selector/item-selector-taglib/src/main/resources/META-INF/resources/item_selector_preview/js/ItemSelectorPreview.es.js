@@ -248,6 +248,8 @@ class ItemSelectorPreview extends Component {
 
 	render() {
 		const {currentItem, currentItemIndex, items} = this.state;
+		const showEditIcon = !!this.props.editItemURL;
+		const showInfoIcon = !!currentItem.metadata;
 
 		return (
 			<div className="fullscreen item-selector-preview">
@@ -258,8 +260,8 @@ class ItemSelectorPreview extends Component {
 					handleClickEdit={this.handleClickEdit}
 					headerTitle={this.props.headerTitle}
 					infoButtonRef={this.infoButtonRef}
-					showEditIcon={this.props.editItemURL}
-					showInfoIcon={currentItem.metadata}
+					showEditIcon={showEditIcon}
+					showInfoIcon={showInfoIcon}
 				/>
 
 				<Carousel

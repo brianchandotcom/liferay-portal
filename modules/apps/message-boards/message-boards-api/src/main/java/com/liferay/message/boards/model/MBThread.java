@@ -69,6 +69,8 @@ public interface MBThread extends MBThreadModel, PersistedModel {
 
 	public long[] getParticipantUserIds();
 
+	public long getViewCount();
+
 	public boolean hasLock(long userId);
 
 	public boolean isLocked();

@@ -529,9 +529,7 @@ public class MBThreadLocalServiceWrapper
 	}
 
 	@Override
-	public void incrementViewCounter(long threadId, int increment)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public void incrementViewCounter(long threadId, int increment) {
 		_mbThreadLocalService.incrementViewCounter(threadId, increment);
 	}
 

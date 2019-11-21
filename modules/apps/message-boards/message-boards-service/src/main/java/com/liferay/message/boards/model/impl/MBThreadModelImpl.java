@@ -86,12 +86,11 @@ public class MBThreadModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"categoryId", Types.BIGINT}, {"rootMessageId", Types.BIGINT},
 		{"rootMessageUserId", Types.BIGINT}, {"title", Types.VARCHAR},
-		{"messageCount", Types.INTEGER}, {"viewCount", Types.INTEGER},
-		{"lastPostByUserId", Types.BIGINT}, {"lastPostDate", Types.TIMESTAMP},
-		{"priority", Types.DOUBLE}, {"question", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"messageCount", Types.INTEGER}, {"lastPostByUserId", Types.BIGINT},
+		{"lastPostDate", Types.TIMESTAMP}, {"priority", Types.DOUBLE},
+		{"question", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -111,7 +110,6 @@ public class MBThreadModelImpl
 		TABLE_COLUMNS_MAP.put("rootMessageUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("messageCount", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("viewCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPostByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lastPostDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
@@ -124,7 +122,7 @@ public class MBThreadModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBThread (uuid_ VARCHAR(75) null,threadId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,rootMessageId LONG,rootMessageUserId LONG,title VARCHAR(75) null,messageCount INTEGER,viewCount INTEGER,lastPostByUserId LONG,lastPostDate DATE null,priority DOUBLE,question BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table MBThread (uuid_ VARCHAR(75) null,threadId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,rootMessageId LONG,rootMessageUserId LONG,title VARCHAR(75) null,messageCount INTEGER,lastPostByUserId LONG,lastPostDate DATE null,priority DOUBLE,question BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table MBThread";
 
@@ -190,7 +188,6 @@ public class MBThreadModelImpl
 		model.setRootMessageUserId(soapModel.getRootMessageUserId());
 		model.setTitle(soapModel.getTitle());
 		model.setMessageCount(soapModel.getMessageCount());
-		model.setViewCount(soapModel.getViewCount());
 		model.setLastPostByUserId(soapModel.getLastPostByUserId());
 		model.setLastPostDate(soapModel.getLastPostDate());
 		model.setPriority(soapModel.getPriority());
@@ -393,9 +390,6 @@ public class MBThreadModelImpl
 		attributeSetterBiConsumers.put(
 			"messageCount",
 			(BiConsumer<MBThread, Integer>)MBThread::setMessageCount);
-		attributeGetterFunctions.put("viewCount", MBThread::getViewCount);
-		attributeSetterBiConsumers.put(
-			"viewCount", (BiConsumer<MBThread, Integer>)MBThread::setViewCount);
 		attributeGetterFunctions.put(
 			"lastPostByUserId", MBThread::getLastPostByUserId);
 		attributeSetterBiConsumers.put(
@@ -692,17 +686,6 @@ public class MBThreadModelImpl
 	@Override
 	public void setMessageCount(int messageCount) {
 		_messageCount = messageCount;
-	}
-
-	@JSON
-	@Override
-	public int getViewCount() {
-		return _viewCount;
-	}
-
-	@Override
-	public void setViewCount(int viewCount) {
-		_viewCount = viewCount;
 	}
 
 	@JSON
@@ -1186,7 +1169,6 @@ public class MBThreadModelImpl
 		mbThreadImpl.setRootMessageUserId(getRootMessageUserId());
 		mbThreadImpl.setTitle(getTitle());
 		mbThreadImpl.setMessageCount(getMessageCount());
-		mbThreadImpl.setViewCount(getViewCount());
 		mbThreadImpl.setLastPostByUserId(getLastPostByUserId());
 		mbThreadImpl.setLastPostDate(getLastPostDate());
 		mbThreadImpl.setPriority(getPriority());
@@ -1372,8 +1354,6 @@ public class MBThreadModelImpl
 
 		mbThreadCacheModel.messageCount = getMessageCount();
 
-		mbThreadCacheModel.viewCount = getViewCount();
-
 		mbThreadCacheModel.lastPostByUserId = getLastPostByUserId();
 
 		Date lastPostDate = getLastPostDate();
@@ -1518,7 +1498,6 @@ public class MBThreadModelImpl
 	private long _rootMessageUserId;
 	private String _title;
 	private int _messageCount;
-	private int _viewCount;
 	private long _lastPostByUserId;
 	private Date _lastPostDate;
 	private Date _originalLastPostDate;

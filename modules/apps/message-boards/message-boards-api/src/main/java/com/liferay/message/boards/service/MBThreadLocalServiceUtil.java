@@ -488,9 +488,7 @@ public class MBThreadLocalServiceUtil {
 		return getService().hasAnswerMessage(threadId);
 	}
 
-	public static void incrementViewCounter(long threadId, int increment)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void incrementViewCounter(long threadId, int increment) {
 		getService().incrementViewCounter(threadId, increment);
 	}
 

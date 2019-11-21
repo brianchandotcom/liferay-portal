@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.increment.BufferedIncrement;
-import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Hits;
@@ -370,11 +368,8 @@ public interface MBThreadLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasAnswerMessage(long threadId);
 
-	@BufferedIncrement(
-		configuration = "MBThread", incrementClass = NumberIncrement.class
-	)
-	public void incrementViewCounter(long threadId, int increment)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public void incrementViewCounter(long threadId, int increment);
 
 	public void moveDependentsToTrash(
 			long groupId, long threadId, long trashEntryId)

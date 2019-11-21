@@ -56,7 +56,6 @@ public class MBThreadWrapper
 		attributes.put("rootMessageUserId", getRootMessageUserId());
 		attributes.put("title", getTitle());
 		attributes.put("messageCount", getMessageCount());
-		attributes.put("viewCount", getViewCount());
 		attributes.put("lastPostByUserId", getLastPostByUserId());
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("priority", getPriority());
@@ -148,12 +147,6 @@ public class MBThreadWrapper
 
 		if (messageCount != null) {
 			setMessageCount(messageCount);
-		}
-
-		Integer viewCount = (Integer)attributes.get("viewCount");
-
-		if (viewCount != null) {
-			setViewCount(viewCount);
 		}
 
 		Long lastPostByUserId = (Long)attributes.get("lastPostByUserId");
@@ -575,13 +568,8 @@ public class MBThreadWrapper
 		return model.getUuid();
 	}
 
-	/**
-	 * Returns the view count of this message boards thread.
-	 *
-	 * @return the view count of this message boards thread
-	 */
 	@Override
-	public int getViewCount() {
+	public long getViewCount() {
 		return model.getViewCount();
 	}
 
@@ -1013,16 +1001,6 @@ public class MBThreadWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
-	}
-
-	/**
-	 * Sets the view count of this message boards thread.
-	 *
-	 * @param viewCount the view count of this message boards thread
-	 */
-	@Override
-	public void setViewCount(int viewCount) {
-		model.setViewCount(viewCount);
 	}
 
 	@Override

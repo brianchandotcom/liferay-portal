@@ -149,8 +149,6 @@ public class MBThreadPersistenceTest {
 
 		newMBThread.setMessageCount(RandomTestUtil.nextInt());
 
-		newMBThread.setViewCount(RandomTestUtil.nextInt());
-
 		newMBThread.setLastPostByUserId(RandomTestUtil.nextLong());
 
 		newMBThread.setLastPostDate(RandomTestUtil.nextDate());
@@ -203,8 +201,6 @@ public class MBThreadPersistenceTest {
 			existingMBThread.getTitle(), newMBThread.getTitle());
 		Assert.assertEquals(
 			existingMBThread.getMessageCount(), newMBThread.getMessageCount());
-		Assert.assertEquals(
-			existingMBThread.getViewCount(), newMBThread.getViewCount());
 		Assert.assertEquals(
 			existingMBThread.getLastPostByUserId(),
 			newMBThread.getLastPostByUserId());
@@ -415,10 +411,10 @@ public class MBThreadPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "categoryId", true, "rootMessageId",
 			true, "rootMessageUserId", true, "title", true, "messageCount",
-			true, "viewCount", true, "lastPostByUserId", true, "lastPostDate",
-			true, "priority", true, "question", true, "lastPublishDate", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			true, "lastPostByUserId", true, "lastPostDate", true, "priority",
+			true, "question", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -676,8 +672,6 @@ public class MBThreadPersistenceTest {
 		mbThread.setTitle(RandomTestUtil.randomString());
 
 		mbThread.setMessageCount(RandomTestUtil.nextInt());
-
-		mbThread.setViewCount(RandomTestUtil.nextInt());
 
 		mbThread.setLastPostByUserId(RandomTestUtil.nextLong());
 

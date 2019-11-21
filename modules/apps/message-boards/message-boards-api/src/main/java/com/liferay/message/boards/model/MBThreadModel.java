@@ -293,20 +293,6 @@ public interface MBThreadModel
 	public void setMessageCount(int messageCount);
 
 	/**
-	 * Returns the view count of this message boards thread.
-	 *
-	 * @return the view count of this message boards thread
-	 */
-	public int getViewCount();
-
-	/**
-	 * Sets the view count of this message boards thread.
-	 *
-	 * @param viewCount the view count of this message boards thread
-	 */
-	public void setViewCount(int viewCount);
-
-	/**
 	 * Returns the last post by user ID of this message boards thread.
 	 *
 	 * @return the last post by user ID of this message boards thread

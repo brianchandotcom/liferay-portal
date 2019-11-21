@@ -61,7 +61,7 @@ public class MBThreadCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -89,8 +89,6 @@ public class MBThreadCacheModel
 		sb.append(title);
 		sb.append(", messageCount=");
 		sb.append(messageCount);
-		sb.append(", viewCount=");
-		sb.append(viewCount);
 		sb.append(", lastPostByUserId=");
 		sb.append(lastPostByUserId);
 		sb.append(", lastPostDate=");
@@ -163,7 +161,6 @@ public class MBThreadCacheModel
 		}
 
 		mbThreadImpl.setMessageCount(messageCount);
-		mbThreadImpl.setViewCount(viewCount);
 		mbThreadImpl.setLastPostByUserId(lastPostByUserId);
 
 		if (lastPostDate == Long.MIN_VALUE) {
@@ -229,8 +226,6 @@ public class MBThreadCacheModel
 
 		messageCount = objectInput.readInt();
 
-		viewCount = objectInput.readInt();
-
 		lastPostByUserId = objectInput.readLong();
 		lastPostDate = objectInput.readLong();
 
@@ -288,8 +283,6 @@ public class MBThreadCacheModel
 
 		objectOutput.writeInt(messageCount);
 
-		objectOutput.writeInt(viewCount);
-
 		objectOutput.writeLong(lastPostByUserId);
 		objectOutput.writeLong(lastPostDate);
 
@@ -325,7 +318,6 @@ public class MBThreadCacheModel
 	public long rootMessageUserId;
 	public String title;
 	public int messageCount;
-	public int viewCount;
 	public long lastPostByUserId;
 	public long lastPostDate;
 	public double priority;

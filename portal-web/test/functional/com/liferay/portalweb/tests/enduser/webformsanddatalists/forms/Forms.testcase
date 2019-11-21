@@ -1609,9 +1609,11 @@ definition {
 			configurationScope = "System Scope");
 
 		FormFields.viewTextField(
-			fieldHelpText = "How long a lock is held before releasing due to suspected deadlock",
-			fieldLabel = "Lock timeout milliseconds",
+			fieldHelpText = "Configure how long a lock is held before releasing due to suspected deadlock.",
+			fieldLabel = "Lock Timeout Milliseconds",
 			fieldName = "ds.lock.timeout.milliseconds");
+
+		Refresh();
 
 		FormFields.editTextWithBackspace(fieldName = "ds.lock.timeout.milliseconds");
 

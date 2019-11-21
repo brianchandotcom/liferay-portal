@@ -5963,16 +5963,7 @@ information. Make sure to commit in all build services results.
 			<test-action>
 				<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
 
-				<trycatch property="failure.property">
-					<try>
-						<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" refreshdependencies="true" task="assemble" />
-					</try>
-					<catch>
-						<echo message="${gradle.output.error}" />
-
-						<fail message="${failure.property}" />
-					</catch>
-				</trycatch>
+				<gradle-execute checktask="true" dir="${module.base.dir}" refreshdependencies="true" task="assemble" />
 			</test-action>
 
 			<test-set-up>
@@ -5986,16 +5977,7 @@ information. Make sure to commit in all build services results.
 
 		<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
 
-		<trycatch property="failure.property">
-			<try>
-				<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" refreshdependencies="true" task="compileJava" />
-			</try>
-			<catch>
-				<echo message="${gradle.output.error}" />
-
-				<fail message="${failure.property}" />
-			</catch>
-		</trycatch>
+		<gradle-execute checktask="true" dir="${module.base.dir}" refreshdependencies="true" task="compileJava" />
 	</target>
 
 	<target name="subrepository-functional-tomcat90-mysql57-jdk8">
@@ -6019,19 +6001,10 @@ information. Make sure to commit in all build services results.
 
 		<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
 
-		<trycatch property="failure.property">
-			<try>
-				<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" refreshdependencies="true" task="pmdMain">
-					<arg value="pmdTest" />
-					<arg value="pmdTestIntegration" />
-				</gradle-execute>
-			</try>
-			<catch>
-				<echo message="${gradle.output.error}" />
-
-				<fail message="${failure.property}" />
-			</catch>
-		</trycatch>
+		<gradle-execute checktask="true" dir="${module.base.dir}" refreshdependencies="true" task="pmdMain">
+			<arg value="pmdTest" />
+			<arg value="pmdTestIntegration" />
+		</gradle-execute>
 	</target>
 
 	<target name="subrepository-semantic-versioning-jdk8">
@@ -6054,16 +6027,7 @@ information. Make sure to commit in all build services results.
 
 		<echo>Executing baseline on ${module.base.dir}.</echo>
 
-		<trycatch property="failure.property">
-			<try>
-				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" refreshdependencies="true" task="baseline" />
-			</try>
-			<catch>
-				<echo message="${gradle.output.error}" />
-
-				<fail message="${failure.property}" />
-			</catch>
-		</trycatch>
+		<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" refreshdependencies="true" task="baseline" />
 
 		<echo>Checking for baseline log files.</echo>
 
@@ -6102,65 +6066,47 @@ information. Make sure to commit in all build services results.
 
 		<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
 
-		<trycatch property="failure.property">
-			<try>
-				<gradle-execute dir="${module.base.dir}" outputproperty="gradle.output" refreshdependencies="true" task="checkSourceFormatting">
-					<arg value="-PdependencyCheckerIgnoreFailures=false" />
-				</gradle-execute>
-			</try>
-			<catch>
-				<echo message="${gradle.output.error}" />
-
-				<fail message="${failure.property}" />
-			</catch>
-		</trycatch>
+		<gradle-execute dir="${module.base.dir}" refreshdependencies="true" task="checkSourceFormatting">
+			<arg value="-PdependencyCheckerIgnoreFailures=false" />
+		</gradle-execute>
 	</target>
 
 	<target name="subrepository-unit-jdk8">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
-		<trycatch property="failure.property">
-			<try>
-				<gradle-execute dir="${project.dir}/modules/apps/petra" task="deploy">
-					<arg value="-Dportal.build=true" />
+		<gradle-execute dir="${project.dir}/modules/apps/petra" task="deploy">
+			<arg value="-Dportal.build=true" />
+		</gradle-execute>
+
+		<if>
+			<equals arg1="${subrepository.validation}" arg2="true" />
+			<then>
+				<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
+
+				<move
+					file="${module.base.dir}/settings.gradle"
+					tofile="${module.base.dir}/settings.gradle.temp"
+					verbose="true"
+				/>
+
+				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" refreshdependencies="true" task="test" />
+
+				<move
+					file="${module.base.dir}/settings.gradle.temp"
+					tofile="${module.base.dir}/settings.gradle"
+				/>
+			</then>
+			<else>
+				<antcall inheritAll="false" target="record-test-class-file-names">
+					<param name="test.class.groups.size" value="${test.batch.size}" />
+				</antcall>
+
+				<gradle-execute checktask="true" dir="modules" forcedcacheenabled="false" refreshdependencies="true" task="test">
+					<arg value="-Dbuild.exclude.ant.plugin=true" />
+					<arg value="-Dtest.class.group.index=${axis.variable}" />
 				</gradle-execute>
-
-				<if>
-					<equals arg1="${subrepository.validation}" arg2="true" />
-					<then>
-						<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
-
-						<move
-							file="${module.base.dir}/settings.gradle"
-							tofile="${module.base.dir}/settings.gradle.temp"
-							verbose="true"
-						/>
-
-						<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" refreshdependencies="true" task="test" />
-
-						<move
-							file="${module.base.dir}/settings.gradle.temp"
-							tofile="${module.base.dir}/settings.gradle"
-						/>
-					</then>
-					<else>
-						<antcall inheritAll="false" target="record-test-class-file-names">
-							<param name="test.class.groups.size" value="${test.batch.size}" />
-						</antcall>
-
-						<gradle-execute checktask="true" dir="modules" forcedcacheenabled="false" outputproperty="gradle.output" refreshdependencies="true" task="test">
-							<arg value="-Dbuild.exclude.ant.plugin=true" />
-							<arg value="-Dtest.class.group.index=${axis.variable}" />
-						</gradle-execute>
-					</else>
-				</if>
-			</try>
-			<catch>
-				<echo message="${gradle.output.error}" />
-
-				<fail message="${failure.property}" />
-			</catch>
-		</trycatch>
+			</else>
+		</if>
 
 		<merge-test-results />
 	</target>

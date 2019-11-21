@@ -33,9 +33,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,8 +52,8 @@ public class UpgradeCTModelTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_db = DBManagerUtil.getDB();
 
 		_db.runSQL(
@@ -66,15 +66,25 @@ public class UpgradeCTModelTest {
 		_db.runSQL(
 			"insert into UpgradeCTModelTest values (0, 'uuid', 1, 2, NULL, " +
 				"NULL, 'name');");
+
+		_db.runSQL(
+			StringBundler.concat(
+				"create table UpgradeCTModelMappingTest (companyId LONG not ",
+				"null, leftId LONG not null, rightId LONG not null, primary ",
+				"key (leftId, rightId));"));
+
+		_db.runSQL("insert into UpgradeCTModelMappingTest values (1, 2, 3);");
 	}
 
-	@After
-	public void tearDown() throws Exception {
+	@AfterClass
+	public static void tearDownClass() throws Exception {
 		_db.runSQL("drop table UpgradeCTModelTest");
+
+		_db.runSQL("drop table UpgradeCTModelMappingTest");
 	}
 
 	@Test
-	public void testUpgrade() throws Exception {
+	public void testUpgradeCTModel() throws Exception {
 		UpgradeCTModel upgradeCTModel = new UpgradeCTModel(
 			"UpgradeCTModelTest");
 
@@ -130,6 +140,65 @@ public class UpgradeCTModelTest {
 		}
 	}
 
-	private DB _db;
+	@Test
+	public void testUpgradeCTModelMapping() throws Exception {
+		UpgradeCTModel upgradeCTModel = new UpgradeCTModel(
+			"UpgradeCTModelMappingTest");
+
+		upgradeCTModel.upgrade();
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement ps = connection.prepareStatement(
+				"select * from UpgradeCTModelMappingTest");
+			ResultSet rs1 = ps.executeQuery()) {
+
+			Assert.assertTrue(rs1.next());
+
+			Assert.assertEquals(1, rs1.getLong("companyId"));
+			Assert.assertEquals(2, rs1.getLong("leftId"));
+			Assert.assertEquals(3, rs1.getLong("rightId"));
+			Assert.assertEquals(0, rs1.getLong("ctCollectionId"));
+			Assert.assertFalse(rs1.getBoolean("changeType"));
+
+			Assert.assertFalse(rs1.next());
+
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			DBInspector dbInspector = new DBInspector(connection);
+
+			List<String> pkNames = new ArrayList<>();
+
+			try (ResultSet rs2 = databaseMetaData.getPrimaryKeys(
+					dbInspector.getCatalog(), dbInspector.getSchema(),
+					dbInspector.normalizeName(
+						"UpgradeCTModelMappingTest", databaseMetaData))) {
+
+				Assert.assertTrue("Missing PK", rs2.next());
+
+				pkNames.add(
+					StringUtil.toUpperCase(rs2.getString("COLUMN_NAME")));
+
+				Assert.assertTrue("Missing PK", rs2.next());
+
+				pkNames.add(
+					StringUtil.toUpperCase(rs2.getString("COLUMN_NAME")));
+
+				Assert.assertTrue("Missing PK", rs2.next());
+
+				pkNames.add(
+					StringUtil.toUpperCase(rs2.getString("COLUMN_NAME")));
+
+				Assert.assertFalse(pkNames.toString(), rs2.next());
+			}
+
+			pkNames.sort(null);
+
+			Assert.assertArrayEquals(
+				new String[] {"CTCOLLECTIONID", "LEFTID", "RIGHTID"},
+				pkNames.toArray(new String[0]));
+		}
+	}
+
+	private static DB _db;
 
 }

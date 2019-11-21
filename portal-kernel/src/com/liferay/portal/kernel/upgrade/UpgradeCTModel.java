@@ -72,24 +72,29 @@ public class UpgradeCTModel extends UpgradeProcess {
 			}
 		}
 
-		String primaryKeyColumnName = null;
+		String primaryKeyColumnName1 = null;
+		String primaryKeyColumnName2 = null;
 
 		try (ResultSet rs = databaseMetaData.getPrimaryKeys(
 				dbInspector.getCatalog(), dbInspector.getSchema(),
 				normalizedTableName)) {
 
 			if (rs.next()) {
-				primaryKeyColumnName = rs.getString("COLUMN_NAME");
+				primaryKeyColumnName1 = rs.getString("COLUMN_NAME");
+			}
+
+			if (rs.next()) {
+				primaryKeyColumnName2 = rs.getString("COLUMN_NAME");
 			}
 
 			if (rs.next()) {
 				throw new UpgradeException(
-					"Single column primary key is required to upgrade " +
+					"Too many primary key columns to upgrade " +
 						normalizedTableName);
 			}
 		}
 
-		if (primaryKeyColumnName == null) {
+		if (primaryKeyColumnName1 == null) {
 			throw new UpgradeException(
 				"No primary key column found for " + normalizedTableName);
 		}
@@ -98,6 +103,15 @@ public class UpgradeCTModel extends UpgradeProcess {
 			StringBundler.concat(
 				"alter table ", normalizedTableName,
 				" add ctCollectionId LONG default 0 not null"));
+
+		// Assume table is a mapping table
+
+		if (primaryKeyColumnName2 != null) {
+			runSQL(
+				StringBundler.concat(
+					"alter table ", normalizedTableName,
+					" add changeType BOOLEAN default null"));
+		}
 
 		DB db = DBManagerUtil.getDB();
 
@@ -153,10 +167,21 @@ public class UpgradeCTModel extends UpgradeProcess {
 					"alter table ", normalizedTableName, " drop primary key"));
 		}
 
-		runSQL(
-			StringBundler.concat(
-				"alter table ", normalizedTableName, " add primary key (",
-				primaryKeyColumnName, ", ctCollectionId)"));
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("alter table ");
+		sb.append(normalizedTableName);
+		sb.append(" add primary key (");
+		sb.append(primaryKeyColumnName1);
+
+		if (primaryKeyColumnName2 != null) {
+			sb.append(", ");
+			sb.append(primaryKeyColumnName2);
+		}
+
+		sb.append(", ctCollectionId)");
+
+		runSQL(sb.toString());
 	}
 
 	private final String[] _tableNames;

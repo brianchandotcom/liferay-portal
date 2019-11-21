@@ -87,8 +87,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 
 		sb.append("javascript:");
 		sb.append(renderResponse.getNamespace());
-		sb.append("exportFormInstance");
-		sb.append("('");
+		sb.append("exportFormInstance('");
 		sb.append(exportFormInstanceURL);
 		sb.append("');");
 		%>

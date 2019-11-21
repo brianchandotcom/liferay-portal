@@ -64,8 +64,7 @@ Calendar calendar = (Calendar)row.getObject();
 
 		sb.append("javascript:");
 		sb.append(renderResponse.getNamespace());
-		sb.append("importCalendar");
-		sb.append("('");
+		sb.append("importCalendar('");
 		sb.append(importURL);
 		sb.append("');");
 		%>

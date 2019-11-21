@@ -29,8 +29,7 @@ StringBundler sb = new StringBundler(6);
 
 sb.append("javascript:");
 sb.append(renderResponse.getNamespace());
-sb.append("exportRecordSet");
-sb.append("('");
+sb.append("exportRecordSet('");
 sb.append(exportRecordSetURL);
 sb.append("');");
 %>

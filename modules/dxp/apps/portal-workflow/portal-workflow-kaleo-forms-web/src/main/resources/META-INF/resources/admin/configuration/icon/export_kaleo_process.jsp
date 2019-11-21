@@ -29,8 +29,7 @@ StringBundler sb = new StringBundler(6);
 
 sb.append("javascript:");
 sb.append(renderResponse.getNamespace());
-sb.append("exportKaleoProcess");
-sb.append("('");
+sb.append("exportKaleoProcess('");
 sb.append(exportURL);
 sb.append("');");
 %>

@@ -52,8 +52,7 @@ KaleoProcess kaleoProcess = (KaleoProcess)row.getObject();
 
 		sb.append("javascript:");
 		sb.append(renderResponse.getNamespace());
-		sb.append("exportKaleoProcess");
-		sb.append("('");
+		sb.append("exportKaleoProcess('");
 		sb.append(exportURL);
 		sb.append("');");
 		%>

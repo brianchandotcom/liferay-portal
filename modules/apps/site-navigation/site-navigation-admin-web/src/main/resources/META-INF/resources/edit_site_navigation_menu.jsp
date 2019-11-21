@@ -144,8 +144,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 <%
 StringBundler sb = new StringBundler(4);
 
-sb.append("metal-dom/src/dom as dom, ");
-sb.append("metal-dom/src/globalEval as globalEval, ");
+sb.append("metal-dom/src/dom as dom, metal-dom/src/globalEval as globalEval, ");
 sb.append("frontend-js-web/liferay/util/form/object_to_form_data.es as objectToFormDataModule, ");
 sb.append(npmResolvedPackageName);
 sb.append("/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule, ");

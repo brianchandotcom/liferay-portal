@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.FacetedSearcher;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -30,6 +29,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
+import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
+import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManagerUtil
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -48,7 +49,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.Map
 
 dialect "java"
 
@@ -103,9 +104,9 @@ function List getAssetEntries(
 
 	List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
 
-	Indexer indexer = FacetedSearcher.getInstance();
+	FacetedSearcher facetedSearcher = FacetedSearcherManagerUtil.createFacetedSearcher();
 
-	Hits hits = indexer.search(searchContext);
+	Hits hits = facetedSearcher.search(searchContext);
 
 	for (int i = 0; i < hits.getDocs().length; i++) {
 		Document document = hits.doc(i);

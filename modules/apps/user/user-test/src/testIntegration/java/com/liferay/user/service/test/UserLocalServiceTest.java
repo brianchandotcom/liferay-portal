@@ -320,7 +320,7 @@ public class UserLocalServiceTest {
 		Assert.assertFalse(ArrayUtil.contains(user.getRoleIds(), roleId));
 	}
 
-	@Test(expected = RequiredRoleException.RequiredAdminRoleException.class)
+	@Test(expected = RequiredRoleException.MustNotRemoveLastAdministator.class)
 	public void testUnsetRoleUsersLastAdministratorRole() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
@@ -335,7 +335,7 @@ public class UserLocalServiceTest {
 		_userLocalService.unsetRoleUsers(role.getRoleId(), groupUsers);
 	}
 
-	@Test(expected = RequiredRoleException.RequiredUserRoleException.class)
+	@Test(expected = RequiredRoleException.MustNotRemoveUserRole.class)
 	public void testUnsetRoleUsersUserRole() throws Exception {
 		_group = GroupTestUtil.addGroup();
 

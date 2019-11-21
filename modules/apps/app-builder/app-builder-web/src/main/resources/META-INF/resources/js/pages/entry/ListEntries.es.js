@@ -21,8 +21,10 @@ import ListView from '../../components/list-view/ListView.es';
 import {Loading} from '../../components/loading/Loading.es';
 import {toQuery, toQueryString} from '../../hooks/useQuery.es';
 import {confirmDelete, getItem} from '../../utils/client.es';
+import {FieldValuePreview} from './FieldPreview.es';
 
 const ListEntries = withRouter(({history, location}) => {
+	const [dataDefinition, setDataDefinition] = useState();
 	const [state, setState] = useState({
 		dataDefinitionId: null,
 		dataLayoutId: null,
@@ -37,20 +39,25 @@ const ListEntries = withRouter(({history, location}) => {
 	useEffect(() => {
 		getItem(`/o/app-builder/v1.0/apps/${appId}`).then(
 			({dataDefinitionId, dataLayoutId, dataListViewId}) => {
-				getItem(
-					`/o/data-engine/v1.0/data-list-views/${dataListViewId}`
-				).then(dataListView => {
-					setState(prevState => ({
-						...prevState,
-						dataDefinitionId,
-						dataLayoutId,
-						dataListView: {
-							...prevState.dataListView,
-							...dataListView
-						},
-						isLoading: false
-					}));
-				});
+				return Promise.all([
+					getItem(
+						`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`
+					).then(dataDefinition => setDataDefinition(dataDefinition)),
+					getItem(
+						`/o/data-engine/v1.0/data-list-views/${dataListViewId}`
+					).then(dataListView => {
+						setState(prevState => ({
+							...prevState,
+							dataDefinitionId,
+							dataLayoutId,
+							dataListView: {
+								...prevState.dataListView,
+								...dataListView
+							},
+							isLoading: false
+						}));
+					})
+				]);
 			}
 		);
 	}, [appId]);
@@ -61,7 +68,7 @@ const ListEntries = withRouter(({history, location}) => {
 	const defaultDataRecordValues = {};
 
 	columns.forEach(column => {
-		defaultDataRecordValues[column] = '';
+		defaultDataRecordValues[column] = ' - ';
 	});
 
 	const getEditURL = (dataRecordId = 0) =>
@@ -123,8 +130,6 @@ const ListEntries = withRouter(({history, location}) => {
 			>
 				{(item, index) => {
 					const {dataRecordValues = {}, id} = item;
-					const firstColumn = columns[0] || '';
-					const firstDataRecordValue = dataRecordValues[firstColumn];
 					const query = toQuery(location.search, {
 						keywords: '',
 						page: 1,
@@ -139,15 +144,25 @@ const ListEntries = withRouter(({history, location}) => {
 						query
 					)}`;
 
-					dataRecordValues[firstColumn] = (
-						<Link to={viewURL}>
-							{firstDataRecordValue || ' - '}
-						</Link>
-					);
+					const displayedDataRecordValues = {};
+
+					columns.forEach(fieldName => {
+						displayedDataRecordValues[
+							fieldName
+						] = dataDefinition && (
+							<Link to={viewURL}>
+								<FieldValuePreview
+									dataDefinition={dataDefinition}
+									dataRecordValues={dataRecordValues}
+									displayType="list"
+									fieldName={fieldName}
+								/>
+							</Link>
+						);
+					});
 
 					return {
-						...defaultDataRecordValues,
-						...dataRecordValues,
+						...displayedDataRecordValues,
 						id,
 						viewURL
 					};

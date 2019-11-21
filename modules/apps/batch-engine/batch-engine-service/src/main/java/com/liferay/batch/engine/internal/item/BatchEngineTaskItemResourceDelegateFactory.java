@@ -17,8 +17,12 @@ package com.liferay.batch.engine.internal.item;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.internal.BatchEngineTaskMethodRegistry;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 
 import java.io.Serializable;
 
@@ -32,10 +36,16 @@ public class BatchEngineTaskItemResourceDelegateFactory {
 	public BatchEngineTaskItemResourceDelegateFactory(
 		BatchEngineTaskMethodRegistry batchEngineTaskMethodRegistry,
 		CompanyLocalService companyLocalService,
+		ExpressionConvert<Filter> expressionConvert,
+		FilterParserProvider filterParserProvider,
+		SortParserProvider sortParserProvider,
 		UserLocalService userLocalService) {
 
 		_batchEngineTaskMethodRegistry = batchEngineTaskMethodRegistry;
 		_companyLocalService = companyLocalService;
+		_expressionConvert = expressionConvert;
+		_filterParserProvider = filterParserProvider;
+		_sortParserProvider = sortParserProvider;
 		_userLocalService = userLocalService;
 	}
 
@@ -63,12 +73,16 @@ public class BatchEngineTaskItemResourceDelegateFactory {
 		}
 
 		return batchEngineTaskItemResourceDelegateCreator.create(
-			_companyLocalService.getCompany(companyId), parameters,
+			_companyLocalService.getCompany(companyId), _expressionConvert,
+			_filterParserProvider, parameters, _sortParserProvider,
 			_userLocalService.getUser(userId));
 	}
 
 	private final BatchEngineTaskMethodRegistry _batchEngineTaskMethodRegistry;
 	private final CompanyLocalService _companyLocalService;
+	private final ExpressionConvert<Filter> _expressionConvert;
+	private final FilterParserProvider _filterParserProvider;
+	private final SortParserProvider _sortParserProvider;
 	private final UserLocalService _userLocalService;
 
 }

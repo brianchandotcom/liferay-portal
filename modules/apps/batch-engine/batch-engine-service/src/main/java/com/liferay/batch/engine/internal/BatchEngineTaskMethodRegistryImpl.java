@@ -22,6 +22,8 @@ import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegat
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegateCreator;
 import com.liferay.batch.engine.internal.writer.ItemClassIndexUtil;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.lang.reflect.Method;
@@ -190,12 +192,15 @@ public class BatchEngineTaskMethodRegistryImpl
 
 					_batchEngineTaskItemResourceDelegateCreators.put(
 						creatorKey,
-						(company, parameters, user) ->
+						(company, expressionConvert, filterParserProvider,
+						 parameters, sortParserProvider, user) ->
 							new BatchEngineTaskItemResourceDelegate(
-								company, ItemClassIndexUtil.index(itemClass),
-								parameters, resourceMethod,
+								company, expressionConvert,
+								ItemClassIndexUtil.index(itemClass),
+								filterParserProvider, parameters,
+								resourceMethod,
 								resourceMethodArgNameTypeEntries,
-								serviceObjects, user));
+								serviceObjects, sortParserProvider, user));
 				}
 				catch (NoSuchMethodException nsme) {
 					throw new IllegalStateException(nsme);
@@ -300,7 +305,10 @@ public class BatchEngineTaskMethodRegistryImpl
 
 					parameter = parentResourceMethodParameters[i];
 
-					if (parameterType == Pagination.class) {
+					if ((parameterType == Filter.class) ||
+						(parameterType == Pagination.class) ||
+						(parameterType == Sort[].class)) {
+
 						resourceMethodArgNameTypeEntries[i] =
 							new AbstractMap.SimpleImmutableEntry<>(
 								parameter.getName(), parameterType);

@@ -103,8 +103,8 @@ public class BatchEngineImportTaskExecutorImpl
 
 		_batchEngineTaskItemResourceDelegateFactory =
 			new BatchEngineTaskItemResourceDelegateFactory(
-				_batchEngineTaskMethodRegistry, _companyLocalService,
-				_userLocalService);
+				_batchEngineTaskMethodRegistry, _companyLocalService, null,
+				null, null, _userLocalService);
 	}
 
 	private void _commitItems(

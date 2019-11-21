@@ -32,9 +32,13 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Collection;
@@ -105,6 +109,7 @@ public class BatchEngineExportTaskExecutorImpl
 		_batchEngineTaskItemResourceDelegateFactory =
 			new BatchEngineTaskItemResourceDelegateFactory(
 				_batchEngineTaskMethodRegistry, _companyLocalService,
+				_expressionConvert, _filterParserProvider, _sortParserProvider,
 				_userLocalService);
 	}
 
@@ -206,6 +211,17 @@ public class BatchEngineExportTaskExecutorImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference(
+		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
+	)
+	private ExpressionConvert<Filter> _expressionConvert;
+
+	@Reference
+	private FilterParserProvider _filterParserProvider;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

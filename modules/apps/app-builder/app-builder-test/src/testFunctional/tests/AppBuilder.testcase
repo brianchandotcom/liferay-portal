@@ -349,6 +349,73 @@ definition {
 		AppBuilderAdmin.deleteEntry(customObjectName = "my custom object");
 	}
 
+	@description = "Choose between the existing Form Views of an object when deploying an app"
+	@priority = "5"
+	test DeployAnAppChoosingBetweenTheExistingFormViews {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text Field",
+			formViewName = "My Form View 1");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Numeric",
+			formViewName = "My Form View 2");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Text Field",
+			tableViewName = "My Table View 1");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Numeric",
+			tableViewName = "My Table View 2");
+
+		App.add(
+			appTitle = "Test App 1",
+			deployOption = "Product Menu",
+			formViewName = "My Form View 1",
+			tableViewName = "My Table View 1");
+
+		App.add(
+			appTitle = "Test App 2",
+			deployOption = "Product Menu",
+			formViewName = "My Form View 2",
+			tableViewName = "My Table View 2");
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "Test App 1");
+
+		AppBuilderAdmin.add();
+
+		FormFields.editText(
+			fieldName = "TextField",
+			fieldValue = "content of form 1");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "content of form 1");
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "Test App 1");
+
+		AppBuilderAdmin.add();
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "123");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "123");
+	}
+
 	@description = "Validate empty list state of Apps listing screen"
 	@priority = "5"
 	test ValidateEmptyStateOfAppsListingScreen {

@@ -121,27 +121,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
-	public void testGetParametersShouldNotContainFileEntryURL() {
-		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
-
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy();
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setHttpServletRequest(
-			createHttpServletRequest());
-		ddmFormFieldRenderingContext.setReadOnly(false);
-		ddmFormFieldRenderingContext.setValue(
-			"{\"uuid\": \"0000-1111\", \"title\": \"File Title\"}");
-
-		Map<String, Object> parameters = spy.getParameters(
-			ddmFormField, ddmFormFieldRenderingContext);
-
-		Assert.assertFalse(parameters.containsKey("fileEntryURL"));
-	}
-
-	@Test
 	public void testGetParametersShouldUseFileEntryTitle() {
 		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
 

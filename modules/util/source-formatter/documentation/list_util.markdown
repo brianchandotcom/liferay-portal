@@ -1,9 +1,9 @@
 ## ListUtil
 
-Use `ListUtil.toList` to simplify code, when possible:
+Use `ListUtil.fromArray` to simplify code, when possible:
 
 ```java
-addUsers(ListUtil.toList(UserLocalServiceUtil.getUser(userId)));
+addUsers(ListUtil.fromArray(UserLocalServiceUtil.getUser(userId)));
 ```
 
 Instead of

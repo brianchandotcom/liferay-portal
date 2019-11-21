@@ -43,7 +43,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -73,21 +72,14 @@ public class RenderFragmentEntryStrutsActionTest {
 		_bundle = FrameworkUtil.getBundle(getClass());
 
 		_group = GroupTestUtil.addGroup();
-
-		_groupUser = UserTestUtil.addOmniAdminUser();
-
-		_guestUser = UserTestUtil.addGroupUser(_group, RoleConstants.GUEST);
-
-		ServiceTestUtil.setUser(_groupUser);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		GroupTestUtil.deleteGroup(_group);
 	}
 
 	@Test
 	public void testRenderFragment() throws Exception {
+		_user = UserTestUtil.addOmniAdminUser();
+
+		ServiceTestUtil.setUser(_user);
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(
 				Method.POST, "/portal/fragment/render_fragment_entry");
@@ -122,7 +114,7 @@ public class RenderFragmentEntryStrutsActionTest {
 			"js", StringUtil.read(jsUrl.openStream()));
 
 		_setUpEnvironment(
-			mockHttpServletRequest, mockHttpServletResponse, _groupUser);
+			mockHttpServletRequest, mockHttpServletResponse, _user);
 
 		_renderFragmentEntryStrutsAction.execute(
 			mockHttpServletRequest, pipingServletResponse);
@@ -140,6 +132,10 @@ public class RenderFragmentEntryStrutsActionTest {
 
 	@Test(expected = PrincipalException.class)
 	public void testRenderFragmentWithoutPermissions() throws Exception {
+		_user = UserTestUtil.addGroupUser(_group, RoleConstants.GUEST);
+
+		ServiceTestUtil.setUser(_user);
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(
 				Method.POST, "/portal/fragment/render_fragment_entry");
@@ -148,7 +144,7 @@ public class RenderFragmentEntryStrutsActionTest {
 			new MockHttpServletResponse();
 
 		_setUpEnvironment(
-			mockHttpServletRequest, mockHttpServletResponse, _guestUser);
+			mockHttpServletRequest, mockHttpServletResponse, _user);
 
 		mockHttpServletRequest.setParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
@@ -212,13 +208,14 @@ public class RenderFragmentEntryStrutsActionTest {
 		"com/liferay/fragment/dependencies/fragments/";
 
 	private Bundle _bundle;
-	private Group _group;
-	private User _groupUser;
 
 	@DeleteAfterTestRun
-	private User _guestUser;
+	private Group _group;
 
 	@Inject(filter = "component.name=*.RenderFragmentEntryStrutsAction")
 	private StrutsAction _renderFragmentEntryStrutsAction;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

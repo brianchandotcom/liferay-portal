@@ -102,10 +102,8 @@ public class DepotItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new URLItemSelectorReturnType(),
-					new UUIDItemSelectorReturnType()
-				}));
+				new URLItemSelectorReturnType(),
+				new UUIDItemSelectorReturnType()));
 
 	@Reference
 	private DepotAdminGroupSearchProvider _depotAdminGroupSearchProvider;

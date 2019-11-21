@@ -19,8 +19,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -157,29 +155,6 @@ public class UpgradeAsset extends UpgradeProcess {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void updateAssetVocabulary(long vocabularyId, String settings)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update AssetVocabulary set settings_ = ? where vocabularyId " +
-					"= ?")) {
-
-			ps.setString(1, settings);
-			ps.setLong(2, vocabularyId);
-
-			ps.executeUpdate();
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to update vocabulary " + vocabularyId, e);
-			}
-		}
-	}
-
 	protected String upgradeVocabularySettings(String settings) {
 		UnicodeProperties properties = new UnicodeProperties(true);
 
@@ -213,7 +188,5 @@ public class UpgradeAsset extends UpgradeProcess {
 
 		return vocabularySettingsHelper.toString();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(UpgradeAsset.class);
 
 }

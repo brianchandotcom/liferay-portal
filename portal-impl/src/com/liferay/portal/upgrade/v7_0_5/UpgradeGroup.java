@@ -20,22 +20,15 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.TreeModel;
-import com.liferay.portal.kernel.tree.TreeModelTasksAdapter;
-import com.liferay.portal.kernel.tree.TreePathUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.util.PortalInstances;
 
 import java.io.Serializable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Roberto Díaz
@@ -45,80 +38,6 @@ public class UpgradeGroup extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateParentGroup();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void rebuildTree(
-			long companyId, PreparedStatement preparedStatement)
-		throws PortalException {
-
-		TreePathUtil.rebuildTree(
-			companyId, GroupConstants.DEFAULT_PARENT_GROUP_ID, StringPool.SLASH,
-			new TreeModelTasksAdapter<GroupTreeModel>() {
-
-				@Override
-				public List<GroupTreeModel> findTreeModels(
-					long previousId, long companyId, long parentPrimaryKey,
-					int size) {
-
-					List<GroupTreeModel> treeModels = new ArrayList<>();
-
-					try (PreparedStatement ps = connection.prepareStatement(
-							"select groupId from Group_ group_ where group_." +
-								"groupId > ? and group_.companyId = ? and " +
-									"group_.parentGroupId = ?")) {
-
-						ps.setLong(1, previousId);
-						ps.setLong(2, companyId);
-						ps.setLong(3, parentPrimaryKey);
-						ps.setFetchSize(size);
-
-						try (ResultSet rs = ps.executeQuery()) {
-							while (rs.next()) {
-								long folderId = rs.getLong(1);
-
-								GroupTreeModel treeModel = new GroupTreeModel(
-									preparedStatement);
-
-								treeModel.setPrimaryKeyObj(folderId);
-
-								treeModels.add(treeModel);
-							}
-						}
-					}
-					catch (SQLException sqle) {
-						_log.error(
-							"Unable to get groups with parent primary key " +
-								parentPrimaryKey,
-							sqle);
-					}
-
-					return treeModels;
-				}
-
-				@Override
-				public void rebuildDependentModelsTreePaths(
-						long parentPrimaryKey, String treePath)
-					throws PortalException {
-
-					try {
-						preparedStatement.setString(1, treePath);
-						preparedStatement.setLong(2, parentPrimaryKey);
-
-						preparedStatement.addBatch();
-					}
-					catch (SQLException sqle) {
-						_log.error(
-							"Unable to update groups with tree path " +
-								treePath,
-							sqle);
-					}
-				}
-
-			});
 	}
 
 	protected void updateParentGroup() throws Exception {
@@ -188,40 +107,6 @@ public class UpgradeGroup extends UpgradeProcess {
 				}
 
 				ps3.executeBatch();
-			}
-		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void updateTreePath() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-
-			for (long companyId : companyIds) {
-				try (PreparedStatement preparedStatement =
-						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-							connection,
-							"update Group_ set treePath = ? where groupId = " +
-								"?")) {
-
-					try {
-						rebuildTree(companyId, preparedStatement);
-					}
-					catch (PortalException pe) {
-						_log.error(
-							"Unable to update tree paths for company " +
-								companyId,
-							pe);
-					}
-
-					preparedStatement.executeBatch();
-				}
-				catch (SQLException sqle) {
-					_log.error("Unable to update tree paths", sqle);
-				}
 			}
 		}
 	}

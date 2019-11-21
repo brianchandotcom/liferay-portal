@@ -492,10 +492,6 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="com.liferay.portal.security.lang.PortalSecurityManager">
-		<priority value="INFO" />
-	</category>
-
 	<category name="com.liferay.portal.security.permission.AdvancedPermissionChecker">
 		<priority value="ERROR" />
 	</category>

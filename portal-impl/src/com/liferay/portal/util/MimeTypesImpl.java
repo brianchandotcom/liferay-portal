@@ -240,15 +240,6 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		return ContentTypes.APPLICATION_OCTET_STREAM;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #read(InputStream,
-	 *             Map)}
-	 */
-	@Deprecated
-	protected void read(InputStream stream) throws Exception {
-		read(stream, _extensionsMap);
-	}
-
 	protected void read(
 			InputStream stream, Map<String, Set<String>> extensionsMap)
 		throws Exception {
@@ -282,15 +273,6 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 				readMimeType(childElement, extensionsMap);
 			}
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #readMimeType(Element, Map)}
-	 */
-	@Deprecated
-	protected void readMimeType(Element element) {
-		readMimeType(element, _extensionsMap);
 	}
 
 	protected void readMimeType(

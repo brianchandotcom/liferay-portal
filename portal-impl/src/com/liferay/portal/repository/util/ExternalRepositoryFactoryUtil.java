@@ -17,7 +17,6 @@ package com.liferay.portal.repository.util;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -26,18 +25,6 @@ import java.util.concurrent.ConcurrentMap;
  * @author Mika Koivisto
  */
 public class ExternalRepositoryFactoryUtil {
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             com.liferay.portal.repository.registry.RepositoryDefinitionCatalogUtil#getExternalRepositoryClassNames(
-	 *             )}
-	 */
-	@Deprecated
-	public static String[] getExternalRepositoryClassNames() {
-		Set<String> classNames = _externalRepositoryFactories.keySet();
-
-		return classNames.toArray(new String[0]);
-	}
 
 	public static BaseRepository getInstance(String className)
 		throws Exception {

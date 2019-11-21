@@ -67,8 +67,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.httpclient.HostConfiguration;
-import org.apache.commons.httpclient.HttpState;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -491,16 +489,6 @@ public class HttpImpl implements Http {
 		catch (URISyntaxException urise) {
 			return StringPool.BLANK;
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public HostConfiguration getHostConfiguration(String location)
-		throws IOException {
-
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -927,14 +915,6 @@ public class HttpImpl implements Http {
 	@Override
 	public String protocolize(String url, RenderRequest renderRequest) {
 		return protocolize(url, renderRequest.isSecure());
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void proxifyState(
-		HttpState httpState, HostConfiguration hostConfiguration) {
 	}
 
 	@Override

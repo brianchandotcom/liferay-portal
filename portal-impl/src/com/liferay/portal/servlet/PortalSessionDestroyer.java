@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionEvent;
 
 /**
  * @author Michael Young
@@ -46,15 +45,6 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 		_httpSession = httpSession;
 
 		registerPortalLifecycle(METHOD_INIT);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #PortalSessionDestroyer(HttpSession)}
-	 */
-	@Deprecated
-	public PortalSessionDestroyer(HttpSessionEvent httpSessionEvent) {
-		this(httpSessionEvent.getSession());
 	}
 
 	@Override

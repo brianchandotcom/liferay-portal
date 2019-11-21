@@ -191,13 +191,6 @@ public class LicenseUtil {
 		).build();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void init() {
-	}
-
 	public static void registerOrder(HttpServletRequest httpServletRequest) {
 		String orderUuid = ParamUtil.getString(httpServletRequest, "orderUuid");
 		String productEntryName = ParamUtil.getString(

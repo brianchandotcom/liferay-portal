@@ -86,14 +86,6 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected int getCounterIncrement() throws Exception {
-		return (int)_getCounterIncrement();
-	}
-
 	protected long getDelta(long increment) throws Exception {
 		try (Statement s = connection.createStatement()) {
 			try (ResultSet rs = s.executeQuery(

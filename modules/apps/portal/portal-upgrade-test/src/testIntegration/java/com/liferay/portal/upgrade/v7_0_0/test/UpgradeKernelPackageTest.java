@@ -78,38 +78,6 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 	}
 
 	@Test
-	public void testDeprecatedUpgradeLongTextTable() throws Exception {
-		try {
-			upgradeLongTextTable(
-				"UpgradeKernelPackageTest", "textData", _TEST_CLASS_NAMES,
-				WildcardMode.SURROUND);
-
-			Assert.fail("Should throw UnsupportedOperationException");
-		}
-		catch (UnsupportedOperationException uoe) {
-			Assert.assertEquals(
-				"This method is deprecated and replaced by " +
-					"upgradeLongTextTable(String, String, String, " +
-						"String[][], WildcardMode)",
-				uoe.getMessage());
-		}
-
-		try {
-			upgradeLongTextTable(
-				"textData", "selectSQL", "updateSQL", _TEST_CLASS_NAMES[0]);
-
-			Assert.fail("Should throw UnsupportedOperationException");
-		}
-		catch (UnsupportedOperationException uoe) {
-			Assert.assertEquals(
-				"This method is deprecated and replaced by " +
-					"upgradeLongTextTable(String, String, String, String, " +
-						"String[])",
-				uoe.getMessage());
-		}
-	}
-
-	@Test
 	public void testDoUpgrade() throws Exception {
 
 		// For code coverage

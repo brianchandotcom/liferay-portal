@@ -41,26 +41,8 @@ public class SQLTransformer {
 		return sqlTransformer.transform(sql);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #transformFromHQLToJQPL(String)}
-	 */
-	@Deprecated
-	public static String transformFromHqlToJpql(String sql) {
-		return transformFromHQLToJQPL(sql);
-	}
-
 	public static String transformFromHQLToJQPL(String sql) {
 		return _instance._transformFromHQLToJPQL(sql);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #transformFromJPQLToHQL(String)}
-	 */
-	@Deprecated
-	public static String transformFromJpqlToHql(String sql) {
-		return transformFromJPQLToHQL(sql);
 	}
 
 	public static String transformFromJPQLToHQL(String sql) {

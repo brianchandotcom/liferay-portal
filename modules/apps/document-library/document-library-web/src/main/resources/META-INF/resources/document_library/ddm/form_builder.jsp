@@ -205,7 +205,9 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 	<c:if test="<%= Validator.isNotNull(dlEditFileEntryTypeDisplayContext.getAvailableFields()) %>">
 		availableFields = A.Object.getValue(
 			window,
-			'<%= HtmlUtil.escapeJS(dlEditFileEntryTypeDisplayContext.getAvailableFields()) %>'.split('.')
+			'<%= HtmlUtil.escapeJS(dlEditFileEntryTypeDisplayContext.getAvailableFields()) %>'.split(
+				'.'
+			)
 		);
 
 		if (A.Lang.isFunction(availableFields)) {

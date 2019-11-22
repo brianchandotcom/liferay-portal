@@ -103,16 +103,22 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 					<%
 					Map<String, Object> data = HashMapBuilder.<String, Object>put(
 						"targets",
-						Arrays.<Object>asList(
-								HashMapBuilder.<String, String>put(
-									"id", "openGraphImageURL"
-								).put("type", "imgUrl").build(),
-								HashMapBuilder.<String, String>put(
-									"id", "openGraphDescription"
-								).put("type", "description").build(),
-								HashMapBuilder.<String, String>put(
-									"id", "openGraphTitle"
-								).put("type", "title").build())
+						Arrays.asList(
+							HashMapBuilder.put(
+								"id", "openGraphImageURL"
+							).put(
+								"type", "imgUrl"
+							).build(),
+							HashMapBuilder.put(
+								"id", "openGraphDescription"
+							).put(
+								"type", "description"
+							).build(),
+							HashMapBuilder.put(
+								"id", "openGraphTitle"
+							).put(
+								"type", "title"
+							).build())
 					).put(
 						"defaultValues",
 						HashMapBuilder.<String, String>put(
@@ -122,7 +128,11 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 						).put(
 							"url", layoutsAdminDisplayContext.getCanonicalLayoutURL()
 						).build()
-					).put("displayType", "og").put("titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix()).build();
+					).put(
+						"displayType", "og"
+					).put(
+						"titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix()
+					).build();
 					%>
 
 					<react:component

@@ -16,19 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-Group group = (Group)request.getAttribute("site.group");
-Group liveGroup = (Group)request.getAttribute("site.liveGroup");
-
-long groupId = group.getGroupId();
-
-if (liveGroup != null) {
-	groupId = liveGroup.getGroupId();
-}
-%>
-
 <div class="form-group" id="<portlet:namespace />idOptions">
-	<aui:input id="openGraphEnabled" label="enable-open-graph" name="openGraphEnabled" type="checkbox" value="<%= siteAdminDisplayContext.isOpenGraphEnabled(groupId) %>" />
+	<aui:input id="openGraphEnabled" label="enable-open-graph" name="openGraphEnabled" type="checkbox" value="<%= siteAdminDisplayContext.isOpenGraphEnabled() %>" />
 </div>
 
 <p class="text-muted">
@@ -48,7 +37,7 @@ if (liveGroup != null) {
 
 	<div class="input-group">
 		<div class="input-group-item">
-			<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="<%= siteAdminDisplayContext.getOpenGraphImageURL(groupId) %>" wrapperCssClass="w-100" />
+			<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="<%= siteAdminDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="w-100" />
 		</div>
 
 		<div class="input-group-item input-group-item-shrink">

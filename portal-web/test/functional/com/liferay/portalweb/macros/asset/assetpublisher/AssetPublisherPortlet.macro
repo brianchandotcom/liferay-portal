@@ -172,16 +172,18 @@ definition {
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
 				value1 = "Select More Than One...");
 
-			for (var contentName : list "${selectContent}") {
-				var key_contentName = "${contentName}";
+			if (isSet(selectContent)) {
+				for (var contentName : list "${selectContent}") {
+					var key_contentName = "${contentName}";
 
-				Click(locator1 = "APConfiguration#SELECT_MORE_THAN_ONE_ASSET_TYPE_CONTENT");
+					Click(locator1 = "APConfiguration#SELECT_MORE_THAN_ONE_ASSET_TYPE_CONTENT");
 
-				if ("${moveSelected}" == "true") {
-					Click(locator1 = "APConfiguration#SELECT_MORE_THAN_ONE_ASSET_SUBTYPE_MOVE_SELECTED");
-				}
-				else {
-					Click(locator1 = "APConfiguration#SELECT_MORE_THAN_ONE_ASSET_SUBTYPE_MOVE_AVAILABLE");
+					if ("${moveSelected}" == "true") {
+						Click(locator1 = "APConfiguration#SELECT_MORE_THAN_ONE_ASSET_SUBTYPE_MOVE_SELECTED");
+					}
+					else {
+						Click(locator1 = "APConfiguration#SELECT_MORE_THAN_ONE_ASSET_SUBTYPE_MOVE_AVAILABLE");
+					}
 				}
 			}
 		}

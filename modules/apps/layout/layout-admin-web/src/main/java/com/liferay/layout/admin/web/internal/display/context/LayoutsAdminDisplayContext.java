@@ -99,6 +99,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.LayoutDescription;
 import com.liferay.portal.util.LayoutListUtil;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
+import com.liferay.portal.util.RobotsUtil;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
@@ -1049,6 +1050,24 @@ public class LayoutsAdminDisplayContext {
 		return breadcrumbEntries;
 	}
 
+	public String getRobots() {
+		String robots = StringPool.BLANK;
+
+		try {
+			robots = ParamUtil.getString(
+				_httpServletRequest, "robots",
+				RobotsUtil.getRobots(
+					getSelLayoutSet(), _httpServletRequest.isSecure()));
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return robots;
+	}
+
 	public String getRootNodeName() {
 		if (_rootNodeName != null) {
 			return _rootNodeName;
@@ -1241,6 +1260,36 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return layoutFullURL;
+	}
+
+	public String getVirtualHostName() {
+		String virtualHostName = StringPool.BLANK;
+
+		try {
+			LayoutSet layoutSet = getSelLayoutSet();
+
+			virtualHostName = PortalUtil.getVirtualHostname(layoutSet);
+
+			Group scopeGroup = _themeDisplay.getScopeGroup();
+
+			if (Validator.isNull(virtualHostName) &&
+				scopeGroup.isStagingGroup()) {
+
+				Group liveGroup = scopeGroup.getLiveGroup();
+
+				virtualHostName = PortalUtil.getVirtualHostname(
+					layoutSet.isPrivateLayout() ?
+					liveGroup.getPrivateLayoutSet() :
+					liveGroup.getPublicLayoutSet());
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return virtualHostName;
 	}
 
 	public boolean hasLayouts() {

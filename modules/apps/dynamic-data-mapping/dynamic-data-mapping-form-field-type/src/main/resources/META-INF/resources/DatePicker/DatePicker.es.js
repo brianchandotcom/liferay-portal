@@ -263,11 +263,16 @@ class DatePicker extends Component {
 			this._handlePreviousMonth();
 		}
 
-		this._daySelected = ariaLabel;
-		this.expanded = false;
-		this.value = selectedDate;
-
-		this._handleFieldEdited();
+		this.setState(
+			{
+				_daySelected: ariaLabel,
+				expanded: false,
+				value: selectedDate
+			},
+			() => {
+				this._handleFieldEdited();
+			}
+		);
 	}
 
 	_handleDocClick(event) {

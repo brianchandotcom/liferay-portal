@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.Properties;
@@ -93,7 +94,9 @@ public class NotificationUtil {
 
 				attachmentBodyPart.setDataHandler(new DataHandler(source));
 
-				attachmentBodyPart.setFileName(attachmentFileName);
+				File attachmentFile = new File(attachmentFileName);
+
+				attachmentBodyPart.setFileName(attachmentFile.getName());
 
 				multipart.addBodyPart(attachmentBodyPart);
 			}

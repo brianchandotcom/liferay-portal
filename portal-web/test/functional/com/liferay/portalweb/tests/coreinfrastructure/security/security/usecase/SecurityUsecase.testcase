@@ -102,6 +102,25 @@ out.println(PortalUtil.escapeRedirect("/"));
 			locator1 = "Portlet#BODY");
 	}
 
+	@description = "This is a test for LPS-57776."
+	@priority = "5"
+	test RemoteCodeExecutionThrouhLARFiles {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		LAR.importPortlet(
+			failureExpected = "true",
+			larFileName = "LPS-57776-71x-72x-master.lar",
+			portletName = "Blogs",
+			uploadFrom = "dependencies");
+
+		AssertConsoleTextPresent(value1 = "com.thoughtworks.xstream.security.ForbiddenClassException");
+	}
+
 	@priority = "5"
 	test ValidateCannotOverwriteOSGiServiceIdentifier {
 		property portal.acceptance = "true";

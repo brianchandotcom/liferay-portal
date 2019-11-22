@@ -238,7 +238,7 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 			changeableDefaultLanguage: <%= dlEditFileEntryTypeDisplayContext.isChangeableDefaultLanguage() %>,
 			defaultLocale:
 				'<%= HtmlUtil.escapeJS(dlEditFileEntryTypeDisplayContext.getDefaultLanguageId()) %>',
-			localesMap: <%= dlEditFileEntryTypeDisplayContext.getLocalesMap() %>,
+			localesMap: <%= dlEditFileEntryTypeDisplayContext.getLocalesMapString() %>,
 			srcNode:
 				'#<portlet:namespace />translationManager .lfr-translation-manager-content'
 		}

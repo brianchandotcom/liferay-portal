@@ -138,7 +138,7 @@ public class DLEditFileEntryTypeDisplayContext {
 		return _fieldsJSONArrayString;
 	}
 
-	public String getLocalesMap() {
+	public String getLocalesMapString() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

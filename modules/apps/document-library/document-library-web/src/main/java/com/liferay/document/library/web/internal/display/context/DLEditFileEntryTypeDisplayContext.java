@@ -66,24 +66,6 @@ public class DLEditFileEntryTypeDisplayContext {
 		return ddmDisplay.getAvailableFields();
 	}
 
-	public boolean isFieldNameEditionDisabled() {
-		DDMStructure ddmStructure = _getDDMStructure();
-
-		if (ddmStructure == null) {
-			return false;
-		}
-
-		int structureStorageLinksCount =
-			_ddmStorageLinkLocalService.getStructureStorageLinksCount(
-				ddmStructure.getStructureId());
-
-		if (structureStorageLinksCount > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public String getFieldsJSONArrayString() {
 		DDMStructure ddmStructure = _getDDMStructure();
 
@@ -150,6 +132,24 @@ public class DLEditFileEntryTypeDisplayContext {
 		return new TranslationManagerInfo(
 			new Locale[] {LocaleUtil.getSiteDefault()}, false,
 			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
+	}
+
+	public boolean isFieldNameEditionDisabled() {
+		DDMStructure ddmStructure = _getDDMStructure();
+
+		if (ddmStructure == null) {
+			return false;
+		}
+
+		int structureStorageLinksCount =
+			_ddmStorageLinkLocalService.getStructureStorageLinksCount(
+				ddmStructure.getStructureId());
+
+		if (structureStorageLinksCount > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public class TranslationManagerInfo {

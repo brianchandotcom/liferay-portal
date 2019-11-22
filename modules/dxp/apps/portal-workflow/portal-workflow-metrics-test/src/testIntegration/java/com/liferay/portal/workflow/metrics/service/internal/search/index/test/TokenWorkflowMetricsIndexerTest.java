@@ -15,10 +15,8 @@
 package com.liferay.portal.workflow.metrics.service.internal.search.index.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
@@ -151,7 +149,6 @@ public class TokenWorkflowMetricsIndexerTest
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		assertReindex(
-			_tokenWorkflowMetricsIndexer,
 			new String[] {"workflow-metrics-tokens"},
 			new String[] {"WorkflowMetricsTokenType"}, "companyId",
 			kaleoDefinition.getCompanyId(), "completed", false, "processId",
@@ -160,10 +157,5 @@ public class TokenWorkflowMetricsIndexerTest
 			"tokenId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
 			"version", "1.0");
 	}
-
-	@Inject(
-		filter = "(&(objectClass=com.liferay.portal.workflow.metrics.internal.search.index.TokenWorkflowMetricsIndexer))"
-	)
-	private Indexer<Object> _tokenWorkflowMetricsIndexer;
 
 }

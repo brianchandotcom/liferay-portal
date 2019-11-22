@@ -19,7 +19,6 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -111,7 +110,6 @@ public class SLAProcessResultWorkflowMetricsIndexerTest
 				KaleoInstance kaleoInstance = getKaleoInstance(blogsEntry);
 
 				assertReindex(
-					_slaProcessResultWorkflowMetricsIndexer,
 					new String[] {"workflow-metrics-sla-process-results"},
 					new String[] {"WorkflowMetricsSLAProcessResultType"},
 					"companyId", kaleoDefinition.getCompanyId(), "instanceId",
@@ -126,11 +124,6 @@ public class SLAProcessResultWorkflowMetricsIndexerTest
 	@Inject
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
-
-	@Inject(
-		filter = "(&(objectClass=com.liferay.portal.workflow.metrics.internal.search.index.SLAProcessResultWorkflowMetricsIndexer))"
-	)
-	private Indexer<Object> _slaProcessResultWorkflowMetricsIndexer;
 
 	@Inject
 	private WorkflowMetricsSLADefinitionLocalService

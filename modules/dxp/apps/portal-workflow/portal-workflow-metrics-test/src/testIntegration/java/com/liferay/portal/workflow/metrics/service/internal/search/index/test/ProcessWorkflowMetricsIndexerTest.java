@@ -15,9 +15,7 @@
 package com.liferay.portal.workflow.metrics.service.internal.search.index.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.metrics.service.util.BaseWorkflowMetricsIndexerTestCase;
@@ -78,7 +76,6 @@ public class ProcessWorkflowMetricsIndexerTest
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		assertReindex(
-			_processWorkflowMetricsIndexer,
 			new String[] {
 				"workflow-metrics-processes", "workflow-metrics-instances",
 				"workflow-metrics-sla-process-results"
@@ -109,10 +106,5 @@ public class ProcessWorkflowMetricsIndexerTest
 			"processId", kaleoDefinition.getKaleoDefinitionId(), "version",
 			"2.0");
 	}
-
-	@Inject(
-		filter = "(&(objectClass=com.liferay.portal.workflow.metrics.internal.search.index.ProcessWorkflowMetricsIndexer))"
-	)
-	private Indexer<Object> _processWorkflowMetricsIndexer;
 
 }

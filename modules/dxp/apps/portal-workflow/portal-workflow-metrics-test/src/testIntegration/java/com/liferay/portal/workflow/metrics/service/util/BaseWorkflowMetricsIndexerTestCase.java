@@ -223,8 +223,8 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	}
 
 	protected void assertReindex(
-			Indexer<?> indexer, Map<String, Integer> indexNamesMap,
-			String[] indexTypes, Object... parameters)
+			Map<String, Integer> indexNamesMap, String[] indexTypes,
+			Object... parameters)
 		throws Exception {
 
 		if (searchEngineAdapter == null) {
@@ -247,7 +247,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 				ArrayUtil.append(new Object[] {"deleted", true}, parameters));
 		}
 
-		indexer.reindex(
+		_workflowMetricsIndexer.reindex(
 			new String[] {String.valueOf(TestPropsValues.getCompanyId())});
 
 		for (int i = 0; i < indexNames.length; i++) {
@@ -258,8 +258,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	}
 
 	protected void assertReindex(
-			Indexer<?> indexer, String[] indexNames, String[] indexTypes,
-			Object... parameters)
+			String[] indexNames, String[] indexTypes, Object... parameters)
 		throws Exception {
 
 		Map<String, Integer> indexNamesMap = Stream.of(
@@ -269,7 +268,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 			Map::putAll
 		);
 
-		assertReindex(indexer, indexNamesMap, indexTypes, parameters);
+		assertReindex(indexNamesMap, indexTypes, parameters);
 	}
 
 	protected KaleoTaskInstanceToken assignKaleoTaskInstanceToken(
@@ -546,5 +545,10 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 	@Inject
 	private WorkflowDefinitionManager _workflowDefinitionManager;
+
+	@Inject(
+		filter = "(&(objectClass=com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndexer))"
+	)
+	private Indexer<Object> _workflowMetricsIndexer;
 
 }

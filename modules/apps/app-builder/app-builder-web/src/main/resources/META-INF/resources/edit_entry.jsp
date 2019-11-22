@@ -39,6 +39,7 @@
 								data.put("dataDefinitionId", ParamUtil.getLong(request, "dataDefinitionId"));
 								data.put("dataRecordId", ParamUtil.getLong(request, "dataRecordId"));
 								data.put("editEntryContainerElementId", renderResponse.getNamespace() + "container");
+								data.put("redirect", ParamUtil.getString(request, "redirect"));
 								%>
 
 								<react:component

@@ -336,13 +336,13 @@ public class SiteSEOEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.layout.seo.model.SiteSEOEntry updateSiteSEOEntry(
-			long userId, long groupId, long openGraphImageFileEntryId,
-			boolean openGraphEnabled,
+			long userId, long groupId, boolean openGraphEnabled,
+			long openGraphImageFileEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateSiteSEOEntry(
-			userId, groupId, openGraphImageFileEntryId, openGraphEnabled,
+			userId, groupId, openGraphEnabled, openGraphImageFileEntryId,
 			serviceContext);
 	}
 

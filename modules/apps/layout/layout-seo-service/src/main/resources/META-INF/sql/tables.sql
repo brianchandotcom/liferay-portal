@@ -30,6 +30,6 @@ create table SiteSEOEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	openGraphImageFileEntryId LONG,
-	openGraphEnabled BOOLEAN
+	openGraphEnabled BOOLEAN,
+	openGraphImageFileEntryId LONG
 );

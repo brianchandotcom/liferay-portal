@@ -52,9 +52,9 @@ public class SiteSEOEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("openGraphEnabled", isOpenGraphEnabled());
 		attributes.put(
 			"openGraphImageFileEntryId", getOpenGraphImageFileEntryId());
-		attributes.put("openGraphEnabled", isOpenGraphEnabled());
 
 		return attributes;
 	}
@@ -115,17 +115,17 @@ public class SiteSEOEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Boolean openGraphEnabled = (Boolean)attributes.get("openGraphEnabled");
+
+		if (openGraphEnabled != null) {
+			setOpenGraphEnabled(openGraphEnabled);
+		}
+
 		Long openGraphImageFileEntryId = (Long)attributes.get(
 			"openGraphImageFileEntryId");
 
 		if (openGraphImageFileEntryId != null) {
 			setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
-		}
-
-		Boolean openGraphEnabled = (Boolean)attributes.get("openGraphEnabled");
-
-		if (openGraphEnabled != null) {
-			setOpenGraphEnabled(openGraphEnabled);
 		}
 	}
 

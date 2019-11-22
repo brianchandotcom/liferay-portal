@@ -24,7 +24,6 @@ import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.ValidationResult;
-import org.talend.daikon.properties.ValidationResultMutable;
 
 /**
  * @author Zoltán Takács
@@ -44,33 +43,34 @@ public class LiferaySink extends LiferaySourceOrSink implements Sink {
 			return validationResult;
 		}
 
-		ValidationResultMutable validationResultMutable =
-			new ValidationResultMutable(validationResult);
+		Object componentData = runtimeContainer.getComponentData(
+			runtimeContainer.getCurrentComponentId(),
+			"COMPONENT_RUNTIME_PROPERTIES");
 
-		Class<?> propertiesClass =
-			liferayConnectionPropertiesProvider.getClass();
-
-		if (!(liferayConnectionPropertiesProvider instanceof
-				TLiferayOutputProperties)) {
-
-			validationResultMutable.setMessage(
-				i18nMessages.getMessage(
-					"error.validation.properties",
-					propertiesClass.getCanonicalName()));
-			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
-
-			return validationResultMutable;
+		if (!(componentData instanceof TLiferayOutputProperties)) {
+			return new ValidationResult(
+				ValidationResult.Result.ERROR,
+				String.format(
+					"Unable to locate %s in given runtime container",
+					TLiferayOutputProperties.class));
 		}
 
-		_tLiferayOutputProperties =
-			(TLiferayOutputProperties)liferayConnectionPropertiesProvider;
+		_tLiferayOutputProperties = (TLiferayOutputProperties)componentData;
 
-		_tLiferayOutputProperties.connection = getEffectiveConnection(
-			runtimeContainer);
-		_tLiferayOutputProperties.resource.connection = getEffectiveConnection(
-			runtimeContainer);
+		System.out.println(
+			"(LiferaySink - 1) TEST new method gains same result: " +
+				(_tLiferayOutputProperties.connection ==
+					getLiferayConnectionProperties()));
+		System.out.println(
+			"(LiferaySink - 2) TEST new method gains same result: " +
+				(_tLiferayOutputProperties.resource.connection ==
+					getLiferayConnectionProperties()));
 
-		return validationResultMutable;
+		_tLiferayOutputProperties.connection = getLiferayConnectionProperties();
+		_tLiferayOutputProperties.resource.connection =
+			getLiferayConnectionProperties();
+
+		return validationResult;
 	}
 
 	protected static final I18nMessages i18nMessages;

@@ -36,25 +36,27 @@ import javax.json.JsonValue;
 
 import org.apache.avro.generic.IndexedRecord;
 
+import org.joda.time.Instant;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.talend.components.api.component.runtime.AbstractBoundedReader;
+import org.talend.components.api.component.runtime.Reader;
 import org.talend.components.api.component.runtime.Result;
-import org.talend.components.api.container.RuntimeContainer;
+import org.talend.components.api.component.runtime.Source;
 import org.talend.components.api.exception.ComponentException;
 
 /**
  * @author Zoltán Takács
  * @author Igor Beslic
  */
-public class LiferayReader extends AbstractBoundedReader<IndexedRecord> {
+public class LiferayReader implements Reader<IndexedRecord> {
 
 	public LiferayReader(
-		RuntimeContainer runtimeContainer, LiferaySource liferaySource,
+		LiferaySource liferaySource,
 		TLiferayInputProperties tLiferayInputProperties) {
 
-		super(liferaySource);
+		_currentSource = liferaySource;
 
 		_liferayConnectionResourceBaseProperties = tLiferayInputProperties;
 
@@ -64,7 +66,7 @@ public class LiferayReader extends AbstractBoundedReader<IndexedRecord> {
 	}
 
 	@Override
-	public boolean advance() throws IOException {
+	public boolean advance() {
 		if (!_started) {
 			throw new IllegalStateException("Reader was not started");
 		}
@@ -99,6 +101,10 @@ public class LiferayReader extends AbstractBoundedReader<IndexedRecord> {
 		_dataCount++;
 
 		return true;
+	}
+
+	@Override
+	public void close() throws IOException {
 	}
 
 	@Override
@@ -137,6 +143,16 @@ public class LiferayReader extends AbstractBoundedReader<IndexedRecord> {
 
 		throw new NoSuchElementException(
 			"JSON array does not have more elements");
+	}
+
+	@Override
+	public Source getCurrentSource() {
+		return _currentSource;
+	}
+
+	@Override
+	public Instant getCurrentTimestamp() throws NoSuchElementException {
+		return _currentTimestamp;
 	}
 
 	@Override
@@ -189,6 +205,8 @@ public class LiferayReader extends AbstractBoundedReader<IndexedRecord> {
 
 		_currentItemIndex = 0;
 
+		_currentTimestamp = Instant.now();
+
 		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
 
 		if (_logger.isDebugEnabled()) {
@@ -234,6 +252,8 @@ public class LiferayReader extends AbstractBoundedReader<IndexedRecord> {
 
 	private transient int _currentItemIndex;
 	private int _currentPage;
+	private final Source _currentSource;
+	private Instant _currentTimestamp = Instant.now();
 	private int _dataCount;
 	private boolean _hasMore;
 	private transient JsonArray _itemsJsonArray;

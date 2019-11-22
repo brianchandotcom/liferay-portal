@@ -128,6 +128,19 @@ public abstract class BaseDDMServiceTestCase {
 	}
 
 	protected DDMStructure addStructure(
+			Group group, long classNameId, String name)
+		throws Exception {
+
+		DDMForm ddmForm = toDDMForm(read("test-structure.xsd"));
+
+		return ddmStructureTestHelper.addStructure(
+			group, 0, classNameId, null, name, StringPool.BLANK, ddmForm,
+			DDMUtil.getDefaultDDMFormLayout(ddmForm),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	protected DDMStructure addStructure(
 			long parentStructureId, long classNameId, String structureKey,
 			String name, String definition, String storageType, int type)
 		throws Exception {

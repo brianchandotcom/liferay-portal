@@ -62,7 +62,7 @@ describe('FragmentsSidebar', () => {
 		);
 
 		expect(getByText('Basic Components')).toBeInTheDocument();
-		expect(getByText('layouts')).toBeInTheDocument();
+		expect(getByText('layout-elements')).toBeInTheDocument();
 		expect(getByLabelText('search-form')).toBeInTheDocument();
 
 		expect(queryByText('Button')).toBe(null);
@@ -102,7 +102,7 @@ describe('FragmentsSidebar', () => {
 		expect(queryByText('Heading')).toBe(null);
 	});
 
-	it('expands all categories when you type something in search form and hides layouts', () => {
+	it('expands all categories when you type something in search form and hides layout elements', () => {
 		const {getByLabelText, getByText, queryByText} = render(
 			<RenderFragmentsSidebar />
 		);
@@ -113,6 +113,6 @@ describe('FragmentsSidebar', () => {
 			getByText('Basic Components').getAttribute('aria-expanded')
 		).toBe('true');
 
-		expect(queryByText('layouts')).toBe(null);
+		expect(queryByText('layout-elements')).toBe(null);
 	});
 });

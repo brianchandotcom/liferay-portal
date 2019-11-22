@@ -165,7 +165,7 @@ const ListEntries = withRouter(({history, location}) => {
 						displayedDataRecordValues[
 							fieldName
 						] = dataDefinition && (
-							<Link to={viewURL}>
+							<Link className="text-dark" to={viewURL}>
 								<FieldValuePreview
 									dataDefinition={dataDefinition}
 									dataRecordValues={dataRecordValues}

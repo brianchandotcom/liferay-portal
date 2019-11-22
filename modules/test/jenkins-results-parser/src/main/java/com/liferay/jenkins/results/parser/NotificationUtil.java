@@ -73,8 +73,7 @@ public class NotificationUtil {
 
 		try {
 			mimeMessage.setFrom(new InternetAddress(senderEmail, senderName));
-			mimeMessage.setRecipient(
-				Message.RecipientType.TO, new InternetAddress(recipientEmail));
+			mimeMessage.setRecipients(Message.RecipientType.TO, recipientEmail);
 			mimeMessage.setSubject(subject);
 
 			Multipart multipart = new MimeMultipart();

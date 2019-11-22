@@ -70,11 +70,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 			String childGroupsHREF = null;
 
 			if (!childGroups.isEmpty()) {
-				LiferayPortletURL childGroupsURL = (LiferayPortletURL)siteItemSelectorViewDisplayContext.getPortletURL();
-
-				if (childGroupsURL.getParameter("keywords") != null) {
-					childGroupsURL.setParameter("keywords", "");
-				}
+				PortletURL childGroupsURL = siteItemSelectorViewDisplayContext.getPortletURL();
 
 				childGroupsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 

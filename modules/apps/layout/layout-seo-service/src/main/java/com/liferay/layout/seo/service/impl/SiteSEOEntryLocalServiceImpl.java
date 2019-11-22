@@ -43,7 +43,7 @@ public class SiteSEOEntryLocalServiceImpl
 
 	public SiteSEOEntry updateSiteSEOEntry(
 			long userId, long groupId, long openGraphImageFileEntryId,
-			boolean openSiteGraphEnabled, ServiceContext serviceContext)
+			boolean openGraphEnabled, ServiceContext serviceContext)
 		throws PortalException {
 
 		SiteSEOEntry siteSEOEntry = siteSEOEntryPersistence.fetchByGroupId(
@@ -55,9 +55,9 @@ public class SiteSEOEntryLocalServiceImpl
 
 		siteSEOEntry.setModifiedDate(DateUtil.newDate());
 
-		siteSEOEntry.setOpenGraphSiteEnabled(openSiteGraphEnabled);
+		siteSEOEntry.setOpenGraphEnabled(openGraphEnabled);
 
-		if (openSiteGraphEnabled) {
+		if (openGraphEnabled) {
 			siteSEOEntry.setOpenGraphImageFileEntryId(
 				openGraphImageFileEntryId);
 		}

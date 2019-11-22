@@ -25,12 +25,10 @@ long groupId = group.getGroupId();
 if (liveGroup != null) {
 	groupId = liveGroup.getGroupId();
 }
-
-SiteSEOEntry siteSEOEntry = siteAdminDisplayContext.getSelSiteSEOEntry(groupId);
 %>
 
 <div class="form-group" id="<portlet:namespace />idOptions">
-	<aui:input id="openSiteGraphEnabled" label="enable-open-graph" name="openSiteGraphEnabled" type="checkbox" value="<%= siteSEOEntry.isOpenGraphSiteEnabled() %>" />
+	<aui:input id="openGraphEnabled" label="enable-open-graph" name="openGraphEnabled" type="checkbox" value="<%= siteAdminDisplayContext.isOpenGraphEnabled(groupId) %>" />
 </div>
 
 <p class="text-muted">
@@ -111,12 +109,12 @@ SiteSEOEntry siteSEOEntry = siteAdminDisplayContext.getSelSiteSEOEntry(groupId);
 			itemSelectorDialog.open();
 		});
 	}
-	var openSiteGraphEnabledCheck = document.getElementById(
-		'<portlet:namespace />openSiteGraphEnabled'
+	var openGraphEnabledCheck = document.getElementById(
+		'<portlet:namespace />openGraphEnabled'
 	);
 
-	if (openSiteGraphEnabledCheck && openGraphImageButton) {
-		openSiteGraphEnabledCheck.addEventListener('click', function(event) {
+	if (openGraphEnabledCheck && openGraphImageButton) {
+		openGraphEnabledCheck.addEventListener('click', function(event) {
 			Liferay.Util.toggleDisabled(
 				openGraphImageButton,
 				!event.target.checked

@@ -1,7 +1,7 @@
 definition {
 
 	macro _addPageTemplate {
-		if (!(isSet(pageTemplateType)) {
+		if (!(isSet(pageTemplateType))) {
 			var pageTemplateType = "Content Page Template";
 		}
 
@@ -10,6 +10,10 @@ definition {
 		}
 		else {
 			LexiconEntry.gotoAddMenuItem(menuItem = "${pageTemplateType}");
+		}
+
+		if ("${pageTemplateType}" == "Content Page Template") {
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Blank");
 		}
 
 		PortletEntry.inputName(name = "${pageTemplateName}");

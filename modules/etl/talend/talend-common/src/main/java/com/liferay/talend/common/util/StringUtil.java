@@ -22,8 +22,14 @@ import java.util.Locale;
  */
 public class StringUtil {
 
-	public static boolean isEmpty(final CharSequence cs) {
-		if ((cs == null) || (cs.length() == 0)) {
+	public static boolean isEmpty(final String value) {
+		if (value == null) {
+			return true;
+		}
+
+		String trimmedValue = value.trim();
+
+		if (trimmedValue.isEmpty()) {
 			return true;
 		}
 

@@ -20,7 +20,7 @@ import {withRouter} from 'react-router-dom';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import Lang from '../../utils/lang.es';
 
-export default withRouter(({onCancel, onEdit, onNext, onPrev, page, total}) => {
+export default withRouter(({onDelete, onEdit, onNext, onPrev, page, total}) => {
 	return (
 		<UpperToolbar>
 			<UpperToolbar.Item className="text-left" expand={true}>
@@ -53,8 +53,8 @@ export default withRouter(({onCancel, onEdit, onNext, onPrev, page, total}) => {
 			</UpperToolbar.Group>
 
 			<UpperToolbar.Group>
-				<UpperToolbar.Button displayType="secondary" onClick={onCancel}>
-					{Liferay.Language.get('cancel')}
+				<UpperToolbar.Button displayType="secondary" onClick={onDelete}>
+					{Liferay.Language.get('delete')}
 				</UpperToolbar.Button>
 
 				<UpperToolbar.Button onClick={onEdit}>

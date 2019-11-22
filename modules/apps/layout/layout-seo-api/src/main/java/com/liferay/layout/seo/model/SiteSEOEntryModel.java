@@ -222,20 +222,6 @@ public interface SiteSEOEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the open graph image file entry ID of this site seo entry.
-	 *
-	 * @return the open graph image file entry ID of this site seo entry
-	 */
-	public long getOpenGraphImageFileEntryId();
-
-	/**
-	 * Sets the open graph image file entry ID of this site seo entry.
-	 *
-	 * @param openGraphImageFileEntryId the open graph image file entry ID of this site seo entry
-	 */
-	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId);
-
-	/**
 	 * Returns the open graph enabled of this site seo entry.
 	 *
 	 * @return the open graph enabled of this site seo entry
@@ -255,5 +241,19 @@ public interface SiteSEOEntryModel
 	 * @param openGraphEnabled the open graph enabled of this site seo entry
 	 */
 	public void setOpenGraphEnabled(boolean openGraphEnabled);
+
+	/**
+	 * Returns the open graph image file entry ID of this site seo entry.
+	 *
+	 * @return the open graph image file entry ID of this site seo entry
+	 */
+	public long getOpenGraphImageFileEntryId();
+
+	/**
+	 * Sets the open graph image file entry ID of this site seo entry.
+	 *
+	 * @param openGraphImageFileEntryId the open graph image file entry ID of this site seo entry
+	 */
+	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId);
 
 }

@@ -12,6 +12,7 @@
  * details.
  */
 
+import openToast from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import React, {useEffect, useState, useContext} from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -19,7 +20,7 @@ import {AppContext} from '../../AppContext.es';
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import {Loading} from '../../components/loading/Loading.es';
 import useQuery, {toQueryString} from '../../hooks/useQuery.es';
-import {getItem} from '../../utils/client.es';
+import {confirmDelete, getItem} from '../../utils/client.es';
 import FieldPreview from './FieldPreview.es';
 import ViewEntryUpperToolbar from './ViewEntryUpperToolbar.es';
 
@@ -97,8 +98,20 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 	const {dataRecordValues = {}} = dataRecord;
 	const {dataLayoutPages} = dataLayout;
 
-	const onCancel = () => {
-		history.push('/');
+	const onDelete = () => {
+		confirmDelete('/o/data-engine/v1.0/data-records/')({
+			id: dataRecord.id
+		}).then(confirmed => {
+			if (confirmed) {
+				openToast({
+					message: Liferay.Language.get('entry-deleted'),
+					title: Liferay.Language.get('success'),
+					type: 'success'
+				});
+
+				history.push('/');
+			}
+		});
 	};
 
 	const onEdit = () => {
@@ -136,7 +149,7 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 			/>
 
 			<ViewEntryUpperToolbar
-				onCancel={onCancel}
+				onDelete={onDelete}
 				onEdit={onEdit}
 				onNext={onNext}
 				onPrev={onPrev}

@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -365,7 +364,7 @@ public abstract class CTSContentLocalServiceBaseImpl
 
 			Blob blob = CTSContentDataBlobModel.getDataBlob();
 
-			if (Validator.isNull(blob)) {
+			if (blob == null) {
 				return _EMPTY_INPUT_STREAM;
 			}
 
@@ -478,9 +477,9 @@ public abstract class CTSContentLocalServiceBaseImpl
 	@Reference
 	protected File _file;
 
-	private boolean _useTempFile;
-
 	private static final InputStream _EMPTY_INPUT_STREAM =
 		new UnsyncByteArrayInputStream(new byte[0]);
+
+	private boolean _useTempFile;
 
 }

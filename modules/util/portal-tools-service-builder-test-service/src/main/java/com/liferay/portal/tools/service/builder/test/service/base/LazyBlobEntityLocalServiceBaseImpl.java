@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntity;
 import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntityBlob1BlobModel;
@@ -461,7 +460,7 @@ public abstract class LazyBlobEntityLocalServiceBaseImpl
 
 			Blob blob = LazyBlobEntityBlob1BlobModel.getBlob1Blob();
 
-			if (Validator.isNull(blob)) {
+			if (blob == null) {
 				return _EMPTY_INPUT_STREAM;
 			}
 
@@ -508,7 +507,7 @@ public abstract class LazyBlobEntityLocalServiceBaseImpl
 
 			Blob blob = LazyBlobEntityBlob2BlobModel.getBlob2Blob();
 
-			if (Validator.isNull(blob)) {
+			if (blob == null) {
 				return _EMPTY_INPUT_STREAM;
 			}
 
@@ -607,10 +606,10 @@ public abstract class LazyBlobEntityLocalServiceBaseImpl
 	@Reference
 	protected File _file;
 
-	private boolean _useTempFile;
-
 	private static final InputStream _EMPTY_INPUT_STREAM =
 		new UnsyncByteArrayInputStream(new byte[0]);
+
+	private boolean _useTempFile;
 
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry

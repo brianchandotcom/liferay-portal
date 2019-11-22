@@ -47,6 +47,8 @@ if (privateVirtualHostnames.isEmpty()) {
 
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
+<liferay-ui:error exception="<%= AvailableLocaleException.class %>" message="please-select-a-valid-language-for-each-virtual-host" />
+
 <liferay-ui:error exception="<%= GroupFriendlyURLException.class %>">
 
 	<%

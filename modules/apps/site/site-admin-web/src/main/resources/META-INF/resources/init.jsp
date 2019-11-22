@@ -35,6 +35,7 @@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem
 page import="com.liferay.map.constants.MapProviderWebKeys" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.exception.AvailableLocaleException" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateGroupException" %><%@
 page import="com.liferay.portal.kernel.exception.GroupFriendlyURLException" %><%@
 page import="com.liferay.portal.kernel.exception.GroupInheritContentException" %><%@

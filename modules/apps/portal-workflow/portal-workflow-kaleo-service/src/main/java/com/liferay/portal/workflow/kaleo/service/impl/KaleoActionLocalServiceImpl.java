@@ -17,6 +17,8 @@ package com.liferay.portal.workflow.kaleo.service.impl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.definition.Action;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
@@ -39,6 +41,7 @@ import org.osgi.service.component.annotations.Component;
 public class KaleoActionLocalServiceImpl
 	extends KaleoActionLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoAction addKaleoAction(
 			String kaleoClassName, long kaleoClassPK,
@@ -86,15 +89,23 @@ public class KaleoActionLocalServiceImpl
 
 	@Override
 	public void deleteCompanyKaleoActions(long companyId) {
-		kaleoActionPersistence.removeByCompanyId(companyId);
+		for (KaleoAction kaleoAction :
+				kaleoActionPersistence.findByCompanyId(companyId)) {
+
+			kaleoActionLocalService.deleteKaleoAction(kaleoAction);
+		}
 	}
 
 	@Override
 	public void deleteKaleoDefinitionVersionKaleoActions(
 		long kaleoDefinitionVersionId) {
 
-		kaleoActionPersistence.removeByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId);
+		for (KaleoAction kaleoAction :
+				kaleoActionPersistence.findByKaleoDefinitionVersionId(
+					kaleoDefinitionVersionId)) {
+
+			kaleoActionLocalService.deleteKaleoAction(kaleoAction);
+		}
 	}
 
 	@Override

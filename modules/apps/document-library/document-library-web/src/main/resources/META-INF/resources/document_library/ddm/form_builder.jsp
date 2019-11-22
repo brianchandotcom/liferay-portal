@@ -23,9 +23,7 @@ String fieldsJSONArrayString = dlEditFileEntryTypeDisplayContext.getFieldsJSONAr
 
 String availableFields = dlEditFileEntryTypeDisplayContext.getAvailableFields();
 
-DLEditFileEntryTypeDisplayContext.TranslationManagerInfo translationManagerInfo = dlEditFileEntryTypeDisplayContext.getTranslationManagerInfo();
-
-String availableLocalesString = translationManagerInfo.getAvailableLocalesString();
+String availableLocalesString = dlEditFileEntryTypeDisplayContext.getAvailableLocalesString();
 %>
 
 <liferay-util:html-top>
@@ -42,7 +40,7 @@ String availableLocalesString = translationManagerInfo.getAvailableLocalesString
 >
 	<liferay-ui:section>
 		<div id="<portlet:namespace />formBuilderTab">
-			<aui:translation-manager availableLocales="<%= translationManagerInfo.getAvailableLocales() %>" changeableDefaultLanguage="<%= translationManagerInfo.isChangeableDefaultLanguage() %>" defaultLanguageId="<%= translationManagerInfo.getDefaultLanguageId() %>" id="translationManager" initialize="<%= false %>" readOnly="<%= false %>" />
+			<aui:translation-manager availableLocales="<%= dlEditFileEntryTypeDisplayContext.getAvailableLocales() %>" changeableDefaultLanguage="<%= dlEditFileEntryTypeDisplayContext.isChangeableDefaultLanguage() %>" defaultLanguageId="<%= dlEditFileEntryTypeDisplayContext.getDefaultLanguageId() %>" id="translationManager" initialize="<%= false %>" readOnly="<%= false %>" />
 
 			<div class="diagram-builder form-builder" id="<portlet:namespace />formBuilder">
 				<div class="diagram-builder-content" id="<portlet:namespace />formBuilderContent">
@@ -243,9 +241,9 @@ String availableLocalesString = translationManagerInfo.getAvailableLocalesString
 			</c:if>
 
 			boundingBox: '#<portlet:namespace />translationManager',
-			changeableDefaultLanguage: <%= translationManagerInfo.isChangeableDefaultLanguage() %>,
+			changeableDefaultLanguage: <%= dlEditFileEntryTypeDisplayContext.isChangeableDefaultLanguage() %>,
 			defaultLocale:
-				'<%= HtmlUtil.escapeJS(translationManagerInfo.getDefaultLanguageId()) %>',
+				'<%= HtmlUtil.escapeJS(dlEditFileEntryTypeDisplayContext.getDefaultLanguageId()) %>',
 			localesMap: <%= dlEditFileEntryTypeDisplayContext.getLocalesMap() %>,
 			srcNode:
 				'#<portlet:namespace />translationManager .lfr-translation-manager-content'

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -107,33 +108,6 @@ public class DLEditFileEntryTypeDisplayContext {
 		return jsonObject.toString();
 	}
 
-	public TranslationManagerInfo getTranslationManagerInfo() {
-		String definition = BeanParamUtil.getString(
-			_getDDMStructure(), _liferayPortletRequest, "definition");
-
-		if (Validator.isNotNull(definition)) {
-			try {
-				DDMForm ddmForm = _ddm.getDDMForm(definition);
-
-				Set<Locale> locales = ddmForm.getAvailableLocales();
-
-				return new TranslationManagerInfo(
-					locales.toArray(new Locale[0]),
-					!Objects.equals(
-						LocaleUtil.getSiteDefault(),
-						ddmForm.getDefaultLocale()),
-					LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()));
-			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
-			}
-		}
-
-		return new TranslationManagerInfo(
-			new Locale[] {LocaleUtil.getSiteDefault()}, false,
-			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
-	}
-
 	public boolean isFieldNameEditionDisabled() {
 		DDMStructure ddmStructure = _getDDMStructure();
 
@@ -152,46 +126,67 @@ public class DLEditFileEntryTypeDisplayContext {
 		return false;
 	}
 
-	public class TranslationManagerInfo {
+	public Locale[] getAvailableLocales() throws PortalException {
+		DDMForm ddmForm = _getDDMForm();
 
-		public TranslationManagerInfo(
-			Locale[] availableLocales, boolean changeableDefaultLanguage,
-			String defaultLanguageId) {
-
-			_availableLocales = availableLocales;
-			_changeableDefaultLanguage = changeableDefaultLanguage;
-			_defaultLanguageId = defaultLanguageId;
+		if (ddmForm == null) {
+			return new Locale[]{LocaleUtil.getSiteDefault()};
 		}
 
-		public Locale[] getAvailableLocales() {
-			return _availableLocales;
+		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
+
+		return availableLocales.toArray(new Locale[0]);
+	}
+
+	public String getAvailableLocalesString() throws PortalException {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			Stream.of(
+				getAvailableLocales()
+			).map(
+				_language::getLanguageId
+			).collect(
+				Collectors.toList()
+			));
+
+		return jsonArray.toString();
+	}
+
+	public String getDefaultLanguageId() throws PortalException {
+		DDMForm ddmForm = _getDDMForm();
+
+		if (ddmForm == null) {
+			return LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 		}
 
-		public String getAvailableLocalesString() {
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-				Stream.of(
-					_availableLocales
-				).map(
-					_language::getLanguageId
-				).collect(
-					Collectors.toList()
-				));
+		return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
+	}
 
-			return jsonArray.toString();
+	public boolean isChangeableDefaultLanguage() throws PortalException {
+		DDMForm ddmForm = _getDDMForm();
+
+		if ((ddmForm == null) ||
+			Objects.equals(
+				LocaleUtil.getSiteDefault(), ddmForm.getDefaultLocale())) {
+
+			return false;
 		}
 
-		public String getDefaultLanguageId() {
-			return _defaultLanguageId;
+		return true;
+	}
+
+	private DDMForm _getDDMForm() throws PortalException {
+		if (_ddmForm != null) {
+			return _ddmForm;
 		}
 
-		public boolean isChangeableDefaultLanguage() {
-			return _changeableDefaultLanguage;
+		String definition = BeanParamUtil.getString(
+			_getDDMStructure(), _liferayPortletRequest, "definition");
+
+		if (Validator.isNotNull(definition)) {
+			_ddmForm = _ddm.getDDMForm(definition);
 		}
 
-		private final Locale[] _availableLocales;
-		private final boolean _changeableDefaultLanguage;
-		private final String _defaultLanguageId;
-
+		return _ddmForm;
 	}
 
 	private DDMStructure _getDDMStructure() {
@@ -199,10 +194,8 @@ public class DLEditFileEntryTypeDisplayContext {
 			WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DLEditFileEntryTypeDisplayContext.class);
-
 	private final DDM _ddm;
+	private DDMForm _ddmForm;
 	private final DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final Language _language;

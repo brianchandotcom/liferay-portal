@@ -139,7 +139,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 	}
 
 	@Test
-	public void testGetTranslationManagerInfo() {
+	public void testGetTranslationManagerInfo() throws Exception {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
 				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
@@ -152,16 +152,14 @@ public class DLEditFileEntryTypeDisplayContextTest {
 						"definition", RandomTestUtil.randomString()
 					).build()));
 
-		DLEditFileEntryTypeDisplayContext.TranslationManagerInfo
-			translationManagerInfo =
-				dlEditFileEntryTypeDisplayContext.getTranslationManagerInfo();
-
 		Assert.assertEquals(
-			"pt_BR", translationManagerInfo.getDefaultLanguageId());
+			"pt_BR", dlEditFileEntryTypeDisplayContext.getDefaultLanguageId());
 		Assert.assertEquals(
-			"[\"pt_BR\"]", translationManagerInfo.getAvailableLocalesString());
+			"[\"pt_BR\"]",
+			dlEditFileEntryTypeDisplayContext.getAvailableLocalesString());
 		Assert.assertEquals(
-			true, translationManagerInfo.isChangeableDefaultLanguage());
+			true,
+			dlEditFileEntryTypeDisplayContext.isChangeableDefaultLanguage());
 	}
 
 	private DDMForm _getRandomDDMForm() {
